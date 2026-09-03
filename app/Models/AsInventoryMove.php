@@ -45,7 +45,7 @@ class AsInventoryMove extends BaseModel
     protected $fillable = [
         'croppingScheduleId', 'itemId', 'delta', 'qtyBefore', 'qtyAfter',
         'reason', 'activityId', 'happenedOn', 'note', 'byUserId', 'deleteStatus',
-        'enteredQty', 'enteredUnit',
+        'enteredQty', 'enteredUnit', 'boardSort',
     ];
 
     protected $casts = [
@@ -59,6 +59,7 @@ class AsInventoryMove extends BaseModel
         'enteredQty' => 'decimal:3',
         'happenedOn' => 'date:Y-m-d',
         'deleteStatus' => 'integer',
+        'boardSort' => 'integer',
     ];
 
     public function item()

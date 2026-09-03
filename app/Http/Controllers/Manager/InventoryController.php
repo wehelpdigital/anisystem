@@ -156,6 +156,7 @@ class InventoryController extends BaseScheduleController
             // the hand wrote rather than the book's conversion of it.
             'enteredQty' => $m->enteredQty !== null ? (float) $m->enteredQty : null,
             'enteredUnit' => $m->enteredUnit,
+            'boardSort' => $m->boardSort,
         ])->values()->all();
     }
 
@@ -422,6 +423,7 @@ class InventoryController extends BaseScheduleController
             'unit' => 'nullable|string|max:20',
             'on' => 'nullable|date',
             'note' => 'nullable|string|max:500',
+            'boardSort' => 'nullable|integer',
         ]);
         if ($v->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $v->errors()]);
@@ -433,6 +435,19 @@ class InventoryController extends BaseScheduleController
         if (! $move) {
             return $this->jsonFail('That entry is gone already.', 404);
         }
+
+        /* A drop between the day's cards moves no figure, so the chain
+         * stays untouched — which is also why the Start may take a seat
+         * here even though its numbers are edited elsewhere. */
+        if ($request->has('boardSort') && ! $request->filled('qty') && ! $request->filled('on') && ! $request->has('note')) {
+            if (in_array($move->reason, [AsInventoryMove::ACTIVITY, AsInventoryMove::CREATED], true)) {
+                return $this->jsonFail('Only hand-typed lines sit on the board.', 422);
+            }
+            $move->update(['boardSort' => $request->input('boardSort') === null ? null : (int) $request->input('boardSort')]);
+
+            return $this->jsonOk('Entry placed.');
+        }
+
         if (! in_array($move->reason, [AsInventoryMove::IN, AsInventoryMove::OUT, AsInventoryMove::ADJUST], true)) {
             return $this->jsonFail(
                 $move->reason === AsInventoryMove::ACTIVITY
@@ -470,12 +485,22 @@ class InventoryController extends BaseScheduleController
             $entered = $fromUnit !== $item->unit ? ['qty' => $typed, 'unit' => $fromUnit] : null;
         }
 
+        /* A line carried to another day gives its seat up — the number was
+         * relative to neighbours it no longer has — unless the drop named a
+         * new seat on the new day. */
+        $dayChanged = $request->filled('on')
+            && substr((string) $request->input('on'), 0, 10) !== $move->happenedOn?->format('Y-m-d');
+        $boardSort = $request->has('boardSort')
+            ? ($request->input('boardSort') === null ? null : (int) $request->input('boardSort'))
+            : ($dayChanged ? null : $move->boardSort);
+
         $this->stock->amend(
             $move,
             $delta,
             $request->input('on') ?: null,
             $request->has('note') ? (trim((string) $request->input('note')) ?: null) : $move->note,
-            $entered
+            $entered,
+            $boardSort
         );
 
         return $this->jsonOk('Entry updated — ' . $item->say($this->stock->onHand($item->id)) . ' on hand.');

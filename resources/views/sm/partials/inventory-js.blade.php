@@ -811,7 +811,9 @@
             if (o.reason === 'open') {
                 return api(U.restart, { method: 'POST', body: { itemId: Number(o.itemId), qty: Number(o.qty) || 0, on: o.on } });
             }
-            return api(U.moveUpdate, { method: 'POST', body: { id: Number(o.id), on: o.on } });
+            const body = { id: Number(o.id), on: o.on };
+            if (o.boardSort !== undefined) body.boardSort = o.boardSort;
+            return api(U.moveUpdate, { method: 'POST', body });
         };
 
         /* ---------------- undoing one hand-typed entry ---------------- */

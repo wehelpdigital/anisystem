@@ -116,6 +116,7 @@ class ActivityController extends BaseScheduleController
                     'qty' => abs((float) $m->delta),
                     'enteredQty' => $m->enteredQty !== null ? (float) $m->enteredQty : null,
                     'enteredUnit' => $m->enteredUnit,
+                    'boardSort' => $m->boardSort,
                     'name' => $item->name ?? 'Removed item',
                     'icon' => $item?->icon() ?? '📦',
                     'isIn' => $m->isIn(),

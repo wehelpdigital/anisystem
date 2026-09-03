@@ -2796,6 +2796,14 @@
         .ivn-kebab:hover { opacity: 1; background: rgba(0,0,0,.06); }
         .ivn-kebab svg { width: 1rem; height: 1rem; }
         html.dark .ivn-kebab:hover { background: rgba(255,255,255,.1); }
+        /* The grip after the dots: the drag's face. Seated rows keep a small
+           margin of their own between the cards. */
+        .ivn-grip { flex: none; align-self: center; width: 1.05rem; height: 1.35rem; display: none;
+            color: inherit; opacity: .4; cursor: grab; }
+        .ivn-grip svg { width: 100%; height: 100%; }
+        .ivn-row[draggable="true"] .ivn-grip { display: inline-flex; }
+        .ivn-row:hover .ivn-grip { opacity: .85; }
+        .date-activities > .ivn-row { margin: .45rem 0; }
         html.dark .ivn-row { background: #1d2716; border-color: #2e3d20; color: #c5d8b0; }
         html.dark .ivn-row.is-out { background: #292112; border-color: #423618; color: #dcc48c; }
         .progress-marker-line {

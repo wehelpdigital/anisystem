@@ -1997,6 +1997,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isNoDate && inBlock && !paintIncomeInto(inBlock, dateKey)) {
             setTimeout(() => renderDayIncome(dateKey), 0);
         }
+        // The shed strip vanished on every rebuild before this: the shell was
+        // built with an empty hidden host and nobody repainted it.
+        const ivHost = el.querySelector('.day-ivnotes');
+        if (ivHost && typeof renderIvNotes === 'function') renderIvNotes(ivHost);
         return el;
     }
 
@@ -2253,6 +2257,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         const markersByDate = snapshotMarkers(list);
 
+        // Seated shed notes ride the rebuild the way sticky notes do: the
+        // element survives, anchored to the card it sat above.
+        const ivnByDate = {};
+        $qsa('.date-activities .ivn-row[data-move-id]', list).forEach((el) => {
+            const key = (el.closest('.date-activities')?.getAttribute('data-date') || '').trim();
+            if (!key) return;
+            let anchor = el.nextElementSibling;
+            while (anchor && !anchor.matches('.activity-card[data-id]')) anchor = anchor.nextElementSibling;
+            (ivnByDate[key] = ivnByDate[key] || []).push({ el, beforeId: anchor ? anchor.getAttribute('data-id') : null });
+        });
+
         // Wipe + rebuild.
         list.innerHTML = '';
         timeline.forEach((item) => {
@@ -2292,6 +2307,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
             delete inlineByDate[key];
+            (ivnByDate[key] || []).forEach((n) => {
+                const anchor = n.beforeId ? $qs(`.activity-card[data-id="${n.beforeId}"]`, holder) : null;
+                holder.insertBefore(n.el, anchor);
+            });
+            // A seat is derived from its neighbours' order; a reorder can
+            // leave it pointing at the wrong slot, so the fresh one persists.
+            if (/^\d{4}-\d{2}-\d{2}$/.test(key)) {
+                (ivnByDate[key] || []).forEach((n) => {
+                    const fresh = ivnFlowKey(n.el);
+                    if (fresh === (parseInt(n.el.getAttribute('data-sort-key') || '0', 10) || 0)) return;
+                    n.el.setAttribute('data-sort-key', String(fresh));
+                    saveIvnSlot(n.el.getAttribute('data-move-id'), fresh, true);
+                });
+            }
+            delete ivnByDate[key];
             list.appendChild(groupEl);
             if (markerInfo) {
                 list.insertAdjacentHTML('beforeend', buildMarkerHtml(key, markerInfo));
@@ -2301,6 +2331,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Orphan markers (no matching group) at the bottom.
         Object.keys(markersByDate).forEach((k) => list.insertAdjacentHTML('beforeend', buildMarkerHtml(k, markersByDate[k])));
+        // A seated row whose day lost its card flow falls back to its strip.
+        Object.keys(ivnByDate).forEach((k) => {
+            const host = $qs(`#activitiesList .day-ivnotes[data-date="${k}"]`);
+            if (!host) return;
+            ivnByDate[k].forEach((n) => { host.hidden = false; host.appendChild(n.el); });
+        });
     }
 
     function snapshotMarkers(list) {
@@ -7224,14 +7260,12 @@ document.addEventListener('DOMContentLoaded', () => {
         && !Array.isArray(window.DAY_IV_NOTES)) ? window.DAY_IV_NOTES : {};
     window.DAY_IV_NOTES = DAY_IV_NOTES;
 
-    function renderIvNotes(host) {
-        if (!host) return;
-        const dateKey = (host.getAttribute('data-date') || '').trim();
-        const rows = (dateKey && Array.isArray(DAY_IV_NOTES[dateKey])) ? DAY_IV_NOTES[dateKey] : [];
-        if (!rows.length) { host.innerHTML = ''; host.hidden = true; return; }
-        host.hidden = false;
-        host.innerHTML = rows.map((r) => `
-            <div class="ivn-row ${r.isIn ? '' : 'is-out'}" data-move-id="${r.id}" data-date="${esc(dateKey)}" data-reason="${esc(r.reason || '')}" data-item-id="${r.itemId || ''}" data-qty="${r.qty || 0}"${MAY_DRAG ? ' draggable="true" title="Drag to another day · tap the dots for options"' : ''}>
+    const IVN_GRIP = MAY_DRAG
+        ? '<span class="ivn-grip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg></span>'
+        : '';
+
+    function ivnRowHtml(r, dateKey) {
+        return `<div class="ivn-row ${r.isIn ? '' : 'is-out'}" data-move-id="${r.id}" data-date="${esc(dateKey)}" data-reason="${esc(r.reason || '')}" data-item-id="${r.itemId || ''}" data-qty="${r.qty || 0}"${MAY_DRAG ? ' draggable="true" title="Drag between the day\u2019s activities, or to another day \u00b7 tap the dots for options"' : ''}>
                 <span class="ivn-e">${r.isIn ? '📥' : '📤'}</span>
                 <span class="ivn-t">
                     <b>${r.isIn ? 'Added' : 'Expensed'} ${esc(r.says)}</b> · ${esc(r.icon)} ${esc(r.name)}
@@ -7240,11 +7274,102 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button type="button" class="ivn-kebab${LOCK_EDIT_CLS}"${LOCK_EDIT} data-ivn-menu="${r.id}" title="${esc(editTitle('Entry options'))}" aria-label="Entry options">
                     <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg>
                 </button>
-            </div>`).join('');
+                ${IVN_GRIP}
+            </div>`;
+    }
+
+    /* The strip holds the rows that have not taken a seat (boardSort null);
+       a seated row renders among the day's cards instead. */
+    function renderIvNotes(host) {
+        if (!host) return;
+        const dateKey = (host.getAttribute('data-date') || '').trim();
+        const all = (dateKey && Array.isArray(DAY_IV_NOTES[dateKey])) ? DAY_IV_NOTES[dateKey] : [];
+        const rows = all.filter((r) => r.boardSort === null || r.boardSort === undefined);
+        if (!rows.length) { host.innerHTML = ''; host.hidden = true; return; }
+        host.hidden = false;
+        host.innerHTML = rows.map((r) => ivnRowHtml(r, dateKey)).join('');
+    }
+
+    /* One number line for everything that sits between a day's cards. */
+    function ivnOrderOf(n) {
+        if (!n || !n.matches) return null;
+        if (n.matches('.activity-card[data-id]')) return parseInt(n.getAttribute('data-sequence-order') || '0', 10);
+        if (n.matches('.inline-note')) return parseInt(n.getAttribute('data-sort-key') || '0', 10);
+        if (n.matches('.ivn-row[data-sort-key]')) return parseInt(n.getAttribute('data-sort-key') || '0', 10);
+        return null;
+    }
+    function ivnFlowKey(el) {
+        let prev = el.previousElementSibling, next = el.nextElementSibling;
+        while (prev && ivnOrderOf(prev) === null) prev = prev.previousElementSibling;
+        while (next && ivnOrderOf(next) === null) next = next.nextElementSibling;
+        const p = ivnOrderOf(prev), n = ivnOrderOf(next);
+        if (p === null && n === null) return 0;
+        if (p === null) return n - 5;
+        if (n === null) return p + 5;
+        return Math.floor((p + n) / 2);
+    }
+    function ivnDragPosition(container, cursorY, exclude) {
+        const items = $qsa('.activity-card[data-id], .inline-note, .ivn-row', container).filter((c) => c !== exclude);
+        for (const it of items) { const r = it.getBoundingClientRect(); if (cursorY < r.top + r.height / 2) return it; }
+        return null;
+    }
+
+    /* Seated rows, placed among their day's cards by their stored key. A day
+       with no card flow to sit in (a rest day) keeps them in its strip. */
+    function placeIvnFlowRows() {
+        $qsa('#activitiesList .date-activities .ivn-row').forEach((el) => el.remove());
+        Object.keys(DAY_IV_NOTES).forEach((day) => {
+            const seated = (DAY_IV_NOTES[day] || [])
+                .filter((r) => r.boardSort !== null && r.boardSort !== undefined)
+                .sort((a, b) => a.boardSort - b.boardSort);
+            if (!seated.length) return;
+            const container = $qs(`#activitiesList .date-activities[data-date="${day}"]`);
+            seated.forEach((r) => {
+                const wrap = document.createElement('div');
+                wrap.innerHTML = ivnRowHtml(r, day);
+                const el = wrap.firstElementChild;
+                el.setAttribute('data-sort-key', String(r.boardSort));
+                if (!container) {
+                    const host = $qs(`#activitiesList .day-ivnotes[data-date="${day}"]`);
+                    if (host) { host.hidden = false; host.appendChild(el); }
+                    return;
+                }
+                let before = null;
+                for (const ch of container.children) {
+                    const o = ivnOrderOf(ch);
+                    if (o !== null && o > r.boardSort) { before = ch; break; }
+                }
+                container.insertBefore(el, before);
+            });
+        });
+    }
+
+    async function saveIvnSlot(id, key, silent) {
+        if (!mayEditBoard()) return;
+        Object.keys(DAY_IV_NOTES).some((d) => {
+            const r = (DAY_IV_NOTES[d] || []).find((x) => String(x.id) === String(id));
+            if (r) { r.boardSort = key; return true; }
+            return false;
+        });
+        try {
+            await api(`{{ route('sm.inventory.move.update') }}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { id: Number(id), boardSort: key } });
+            if (!silent) toast('Placed.');
+        } catch (err) { toast(err.message, 'error'); window.ivDayChanged?.(); }
+    }
+
+    /* Carried to another day AND seated there in one write. */
+    async function moveShedNoteAndPlace(ctx, toDate, key) {
+        if (!mayEditBoard()) return;
+        try {
+            const res = await window.ivMoveShedMove({ id: parseInt(ctx.id, 10), reason: ctx.reason, itemId: ctx.itemId, qty: ctx.qty, on: toDate, boardSort: key });
+            toast((res && res.message) || ('Moved to ' + prettyDateWords(toDate) + '.'));
+            window.ivDayChanged?.();
+        } catch (err) { toast(err.message, 'error'); window.ivDayChanged?.(); }
     }
 
     function hydrateIvNotes() {
         $qsa('#activitiesList .day-ivnotes').forEach(renderIvNotes);
+        placeIvnFlowRows();
     }
 
     /* The move sheet tells the board a day changed; the board re-reads the
@@ -7261,6 +7386,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     typedSays: m.typedSays || null, note: m.note,
                     reason: m.reason, itemId: m.itemId, qty: Math.abs(Number(m.delta) || 0),
                     enteredQty: m.enteredQty ?? null, enteredUnit: m.enteredUnit || null,
+                    boardSort: m.boardSort ?? null,
                 });
             });
             Object.keys(byDay).forEach((d) => byDay[d].reverse());
@@ -8569,6 +8695,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!n || !n.matches) return null;
             if (n.matches('.activity-card[data-id]')) return parseInt(n.getAttribute('data-sequence-order') || '0', 10);
             if (n.matches('.inline-note')) return parseInt(n.getAttribute('data-sort-key') || '0', 10);
+            if (n.matches('.ivn-row[data-sort-key]')) return parseInt(n.getAttribute('data-sort-key') || '0', 10);
             return null;
         };
         let prev = el.previousElementSibling, next = el.nextElementSibling;
@@ -8583,7 +8710,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function inlineDragPosition(container, cursorY, exclude) {
         exclude = exclude || dragInlineEl;
-        const items = $qsa('.activity-card[data-id], .inline-note', container).filter((c) => c !== exclude);
+        const items = $qsa('.activity-card[data-id], .inline-note, .ivn-row', container).filter((c) => c !== exclude);
         for (const it of items) { const r = it.getBoundingClientRect(); if (cursorY < r.top + r.height / 2) return it; }
         return null;
     }
@@ -9339,7 +9466,12 @@ document.addEventListener('DOMContentLoaded', () => {
         dxOrigin = null;
         dragMarkerDate = null;
         dragInlineEl = null;
-        dragIvn = null;
+        if (dragIvn) {
+            // Ended without a drop we understood: put the rows back the way
+            // the book says they are.
+            dragIvn = null;
+            hydrateIvNotes();
+        }
         $qsa('.ivn-row.dragging').forEach((el) => el.classList.remove('dragging'));
     });
 
@@ -9353,7 +9485,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * aim above or below.
      */
     function dragoverPosition(container, cursorY) {
-        const items = $qsa('.activity-card[data-id], .inline-note, .day-expense-block, .day-income-block', container)
+        const items = $qsa('.activity-card[data-id], .inline-note, .ivn-row, .day-expense-block, .day-income-block', container)
             .filter((el) => el !== dragSourceCard && !el.matches('.day-expense-block:empty, .day-income-block:empty'));
         for (const el of items) {
             const rect = el.getBoundingClientRect();
@@ -9449,13 +9581,25 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // A shed note in the air: any day can take it, quiet ones included.
+        // A shed note in the air: over a day's card flow it follows the
+        // cursor and shows its seat; anywhere else on a day, the day lights
+        // up and a drop lands in its strip. Quiet days included.
         if (dragIvn) {
+            const container = e.target.closest && e.target.closest('.date-activities[data-date]');
+            const rowEl = $qs(`.ivn-row[data-move-id="${dragIvn.id}"]`);
+            $qsa('.date-group.drag-over-group, .rest-day-marker.drag-over').forEach((el) => el.classList.remove('drag-over-group', 'drag-over'));
+            if (container && rowEl) {
+                e.preventDefault();
+                if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+                const before = ivnDragPosition(container, e.clientY, rowEl);
+                if (before) { if (before !== rowEl && before.previousElementSibling !== rowEl) container.insertBefore(rowEl, before); }
+                else if (container.lastElementChild !== rowEl) container.appendChild(rowEl);
+                return;
+            }
             const rest = e.target.closest && e.target.closest('.rest-day-marker[data-date]');
             const group = rest ? null : (e.target.closest && e.target.closest('.date-group[data-date]'));
             const to = ((rest || group)?.getAttribute('data-date') || '').trim();
-            $qsa('.date-group.drag-over-group, .rest-day-marker.drag-over').forEach((el) => el.classList.remove('drag-over-group', 'drag-over'));
-            if (!to || to === '__no-date__' || to === dragIvn.date) return;
+            if (!to || to === '__no-date__') return;
             e.preventDefault();
             if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
             if (rest) rest.classList.add('drag-over');
@@ -9592,15 +9736,31 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Shed note drop → the move takes the day it landed on.
+        // Shed note drop: inside a card flow it takes that seat (same day is
+        // a reseat, another day travels and sits); elsewhere on a day it
+        // lands in that day's strip. The Start travels through restart, which
+        // cannot carry a seat — it lands in the strip when it changes day.
         if (dragIvn) {
             const ctx = dragIvn; dragIvn = null;
             $qsa('.ivn-row.dragging').forEach((el) => el.classList.remove('dragging'));
             $qsa('.date-group.drag-over-group, .rest-day-marker.drag-over').forEach((el) => el.classList.remove('drag-over-group', 'drag-over'));
+            const rowEl = $qs(`.ivn-row[data-move-id="${ctx.id}"]`);
+            const sitting = rowEl ? rowEl.closest('.date-activities[data-date]') : null;
+            const overC = e.target.closest && e.target.closest('.date-activities[data-date]');
+            if (sitting && overC === sitting) {
+                e.preventDefault();
+                const day = sitting.getAttribute('data-date');
+                const key = ivnFlowKey(rowEl);
+                rowEl.setAttribute('data-sort-key', String(key));
+                if (day === ctx.date) saveIvnSlot(ctx.id, key, false);
+                else if (ctx.reason === 'open') moveShedNoteTo(ctx, day);
+                else moveShedNoteAndPlace(ctx, day, key);
+                return;
+            }
             const rest = e.target.closest && e.target.closest('.rest-day-marker[data-date]');
             const group = rest ? null : (e.target.closest && e.target.closest('.date-group[data-date]'));
             const to = ((rest || group)?.getAttribute('data-date') || '').trim();
-            if (!to || to === '__no-date__' || to === ctx.date) return;
+            if (!to || to === '__no-date__' || to === ctx.date) { hydrateIvNotes(); return; }
             e.preventDefault();
             moveShedNoteTo(ctx, to);
             return;
@@ -9971,12 +10131,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 dragGroupDate = null;
                 if (commit && to && to !== '__no-date__' && to !== td.groupDate) moveGroupToDate(td.groupDate, to);
             } else if (td.ivn) {
-                const group = target?.closest?.('.date-group');
-                const to = (group?.getAttribute('data-date') || rest?.getAttribute('data-date') || '').trim();
                 td.ivn.classList.remove('dragging');
                 clearDropHighlights();
                 dragIvn = null;
-                if (commit && to && to !== '__no-date__' && to !== td.ivnCtx.date) moveShedNoteTo(td.ivnCtx, to);
+                const sitting = td.ivn.closest('.date-activities[data-date]');
+                const overC = target?.closest?.('.date-activities[data-date]');
+                const group = target?.closest?.('.date-group');
+                const to = (group?.getAttribute('data-date') || rest?.getAttribute('data-date') || '').trim();
+                if (commit && sitting && overC === sitting) {
+                    const day = sitting.getAttribute('data-date');
+                    const key = ivnFlowKey(td.ivn);
+                    td.ivn.setAttribute('data-sort-key', String(key));
+                    if (day === td.ivnCtx.date) saveIvnSlot(td.ivnCtx.id, key, false);
+                    else if (td.ivnCtx.reason === 'open') moveShedNoteTo(td.ivnCtx, day);
+                    else moveShedNoteAndPlace(td.ivnCtx, day, key);
+                } else if (commit && to && to !== '__no-date__' && to !== td.ivnCtx.date) moveShedNoteTo(td.ivnCtx, to);
+                else hydrateIvNotes();
             } else if (td.note) {
                 const container = target?.closest?.('.date-activities');
                 td.note.classList.remove('dragging');
@@ -10135,9 +10305,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (touchDrag.ivn) {
+            const container = target?.closest?.('.date-activities[data-date]');
+            if (container) {
+                const before = ivnDragPosition(container, t.clientY, touchDrag.ivn);
+                if (before) { if (before !== touchDrag.ivn) container.insertBefore(touchDrag.ivn, before); }
+                else if (container.lastElementChild !== touchDrag.ivn) container.appendChild(touchDrag.ivn);
+                container.closest('.date-group')?.classList.add('drag-over-group');
+                return;
+            }
             const group = rest ? null : target?.closest?.('.date-group');
             const to = ((rest || group)?.getAttribute('data-date') || '').trim();
-            if (!to || to === '__no-date__' || to === touchDrag.ivnCtx.date) return;
+            if (!to || to === '__no-date__') return;
             if (rest) rest.classList.add('drag-over');
             else group.classList.add('drag-over-group');
             return;

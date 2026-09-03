@@ -231,15 +231,16 @@ class InventoryService
      * stands where it was written. (rebuildChain's callers: startCount,
      * restart, and this.)
      */
-    public function amend(AsInventoryMove $move, float $delta, ?string $on, ?string $note, ?array $entered): void
+    public function amend(AsInventoryMove $move, float $delta, ?string $on, ?string $note, ?array $entered, ?int $boardSort = null): void
     {
-        DB::transaction(function () use ($move, $delta, $on, $note, $entered) {
+        DB::transaction(function () use ($move, $delta, $on, $note, $entered, $boardSort) {
             $move->update([
                 'delta' => $delta,
                 'happenedOn' => $on ?: $move->happenedOn,
                 'note' => $note,
                 'enteredQty' => $entered['qty'] ?? null,
                 'enteredUnit' => $entered['unit'] ?? null,
+                'boardSort' => $boardSort,
             ]);
             $this->rebuildChain($move->itemId);
         });
