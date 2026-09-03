@@ -44,9 +44,8 @@ class CommunityRank
         'posts' => ['emoji' => '📝', 'pts' => 10, 'group' => 'Say something',
             'label' => 'Write a wall post',
             'how' => 'Share news, a question, or a photo from your field on the community wall.'],
-        'reels' => ['emoji' => '🎬', 'pts' => 15, 'group' => 'Say something',
-            'label' => 'Post a reel',
-            'how' => 'A short video from the bukid — reels carry more than words.'],
+        // 'reels' left the ladder when reels left the app: score() walks
+        // these keys, so removing the entry is what stops the scoring too.
         'shares' => ['emoji' => '🔁', 'pts' => 5, 'group' => 'Say something',
             'label' => 'Share a post',
             'how' => 'Pass on something worth reading, with your own words above it.'],
@@ -387,7 +386,6 @@ class CommunityRank
             foreach ($rows as $r) {
                 $u = (int) $r->u;
                 if ($u > 0) {
-                    $out[$u]['reels'] = ($out[$u]['reels'] ?? 0) + (int) $r->reels;
                     $out[$u]['shares'] = ($out[$u]['shares'] ?? 0) + (int) $r->shares;
                 }
             }
