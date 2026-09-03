@@ -1959,7 +1959,7 @@ document.addEventListener('DOMContentLoaded', () => {
               // The twin of the Blade host div. Every day-card thing in this
               // module has two renderers, and the one that forgets is the one
               // whose strip vanishes on the next redraw.
-              + `<div class="day-inv-block" data-date="${esc(dateKey)}" hidden></div>`;
+              ;
 
         const wrap = document.createElement('div');
         // Today's card wears a ring that breathes, so the eye finds the day
@@ -5864,7 +5864,6 @@ document.addEventListener('DOMContentLoaded', () => {
                the server says it moved — most activities carry no inventory
                line, and a request per tick for nothing is a request for
                nothing. */
-            if (res.data?.stockMoved > 0) window.ivDayChanged?.(null);
         } catch (err) {
             toast(err.message, 'error');
             const cardNow = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
@@ -7155,83 +7154,11 @@ document.addEventListener('DOMContentLoaded', () => {
         $qsa('#activitiesList .day-income-block[data-date]').forEach((el) => {
             if (typeof window.renderDayIncome === 'function') window.renderDayIncome(el.getAttribute('data-date'));
         });
-        $qsa('#activitiesList .day-inv-block').forEach(renderInvBlock);
         placeMoneyBlocks();
     }
 
-    /* ---- WHAT THE SHED DID ON THIS DAY ----
-     *
-     * The same card the money strips use, in the same place, because it is
-     * the same kind of fact: something that happened on this day and is not
-     * an activity. Each line says the item, what it was, and what it became
-     * — "300 → 220 kg" — because that is the reading somebody wants when
-     * they are standing in front of the shelf wondering whether the board
-     * and the shed agree.
-     *
-     * Read-only here. A move made by an activity is undone by unticking it,
-     * and a hand-typed one is undone in the Inventory module, where the whole
-     * log is in front of you rather than one day of it.
-     */
-    const DAY_INVENTORY = (window.DAY_INVENTORY && typeof window.DAY_INVENTORY === 'object'
-        && !Array.isArray(window.DAY_INVENTORY)) ? window.DAY_INVENTORY : {};
-    window.DAY_INVENTORY = DAY_INVENTORY;
-
-    const trimQ = (n) => (Math.round((Number(n) || 0) * 1000) / 1000)
-        .toLocaleString(undefined, { maximumFractionDigits: 3 });
-
-    function renderInvBlock(block) {
-        if (!block) return;
-        const dateKey = (block.getAttribute('data-date') || '').trim();
-        const rows = (dateKey && Array.isArray(DAY_INVENTORY[dateKey])) ? DAY_INVENTORY[dateKey] : [];
-        if (!rows.length) { block.innerHTML = ''; block.hidden = true; return; }
-        block.hidden = false;
-
-        const items = rows.map((r) => `<div class="dx-row iv-day-row">
-            <span class="dx-amt ${r.isIn ? 'iv-in' : 'iv-out'}">${r.isIn ? '+' : '−'}${esc(trimQ(Math.abs(r.delta)))} ${esc(r.unit)}</span>
-            <span class="dx-note">
-                <b>${esc(r.name)}</b>
-                <span class="iv-day-was">${esc(r.reasonLabel)} · ${esc(trimQ(r.before))} → ${esc(trimQ(r.after))}${r.note ? ' · ' + esc(r.note) : ''}</span>
-            </span>
-        </div>`).join('');
-
-        block.innerHTML = `<div class="dx-card iv-day-card">
-            <div class="dx-head"><span>📦 Inventory</span><span class="dx-total">${rows.length} ${rows.length === 1 ? 'change' : 'changes'}</span></div>
-            <div class="dx-list">${items}</div>
-        </div>`;
-    }
-
-    /** One day's strip, after something moved. */
-    function renderInvBlockFor(dateKey) {
-        $qsa(`#activitiesList .day-inv-block[data-date="${dateKey}"]`).forEach(renderInvBlock);
-    }
-    window.renderInvBlockFor = renderInvBlockFor;
-
-    /* The move sheet tells the board a day changed. The board holds its own
-       copy of the day's rows, so it re-reads the whole lot rather than trying
-       to guess what one save did to a running total. */
-    window.ivDayChanged = async function ivDayChanged(dateKey) {
-        try {
-            const res = await api(`{{ route('sm.inventory.list') }}?id=${SCHEDULE_ID}`, { method: 'GET' });
-            const byDay = {};
-            (res.data?.moves || []).forEach((m) => {
-                if (!m.on) return;
-                (byDay[m.on] = byDay[m.on] || []).push({
-                    id: m.id, name: m.itemName, icon: m.icon, unit: m.unit,
-                    delta: m.delta, before: m.before, after: m.after, isIn: m.isIn,
-                    reason: m.reason, reasonLabel: m.reasonLabel, reasonIcon: m.reasonIcon, note: m.note,
-                });
-            });
-            // The log comes back newest-first; a day reads oldest-first.
-            Object.keys(byDay).forEach((d) => byDay[d].reverse());
-            Object.keys(DAY_INVENTORY).forEach((k) => delete DAY_INVENTORY[k]);
-            Object.assign(DAY_INVENTORY, byDay);
-            $qsa('#activitiesList .day-inv-block').forEach(renderInvBlock);
-        } catch (_) {
-            // The next full load will have it; a failed repaint is not worth
-            // a message on top of the one the save already showed.
-            if (dateKey) renderInvBlockFor(dateKey);
-        }
-    };
+    /* The per-day inventory strip lived here. Removed whole: the Inventory
+       module is the log's home, and the board does not need a second one. */
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', hydrateAllExpenseBlocks, { once: true });
     else hydrateAllExpenseBlocks();

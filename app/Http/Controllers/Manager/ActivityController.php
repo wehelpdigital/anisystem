@@ -92,31 +92,9 @@ class ActivityController extends BaseScheduleController
          * a whole season of them is smaller than one day's activities, and
          * fetching per day would mean a request for every day that has
          * nothing to show. */
-        $inventoryByDate = \App\Models\AsInventoryMove::where('croppingScheduleId', $schedule->id)
-            ->where('deleteStatus', 1)
-            ->orderBy('id')
-            ->get()
-            ->groupBy(fn ($m) => $m->happenedOn?->format('Y-m-d'));
-        $inventoryNames = \App\Models\AsInventoryItem::where('croppingScheduleId', $schedule->id)
-            ->get()->keyBy('id');
-        $inventoryForJs = $inventoryByDate->map(fn ($grp) => $grp->map(function ($m) use ($inventoryNames) {
-            $item = $inventoryNames->get($m->itemId);
-
-            return [
-                'id' => $m->id,
-                'name' => $item->name ?? 'Removed item',
-                'icon' => $item?->icon() ?? '📦',
-                'unit' => $item->unit ?? '',
-                'delta' => (float) $m->delta,
-                'before' => (float) $m->qtyBefore,
-                'after' => (float) $m->qtyAfter,
-                'isIn' => $m->isIn(),
-                'reason' => $m->reason,
-                'reasonLabel' => $m->reasonLabel(),
-                'reasonIcon' => $m->reasonIcon(),
-                'note' => $m->note,
-            ];
-        })->values());
+        /* The per-day inventory strip these queries fed was removed from the
+         * board — the Inventory module is the log's home. Two queries fewer
+         * on a page that fires plenty. */
 
         $activeVersion = $schedule->versions->firstWhere('isActive', true)
             ?? $schedule->versions->firstWhere('isOriginal', true)
@@ -160,7 +138,6 @@ class ActivityController extends BaseScheduleController
             'expensesByDate'    => $expensesByDate,
             'expenseSortByDate' => $expenseSortByDate,
             'incomeSortByDate'  => $incomeSortByDate,
-            'inventoryForJs'    => $inventoryForJs,
             'markersByDate'     => $markersByDate,
             'activeVersion'     => $activeVersion,
             'activityTypes'   => AsScheduleActivity::ACTIVITY_TYPES,

@@ -676,8 +676,6 @@
                 toast(res.message);
                 closeSheet('ivMoveSheet');
                 await load();
-                // The board keeps its own copy of the day's rows.
-                window.ivDayChanged?.($id('ivMoveDate').value);
             } catch (err) { toast(err.message, 'error'); }
             finally { btn.disabled = false; }
         }

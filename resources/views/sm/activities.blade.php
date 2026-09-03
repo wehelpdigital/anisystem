@@ -2689,17 +2689,6 @@
            The money strips' card in a different colour, because it is the
            same kind of fact — something that happened on this day and is not
            an activity — counted in kilos rather than pesos. */
-        .day-inv-block { margin: .55rem .7rem 0; }
-        .date-activities > .day-inv-block { margin: .5rem 0; }
-        .day-inv-block[hidden] { display: none; }
-        .iv-day-card { background: #f5f8fb; border-color: #dbe6ef; }
-        .iv-day-card .dx-head { color: #33566f; }
-        .iv-day-row { align-items: flex-start; }
-        .iv-day-row .dx-amt { flex: none; font-variant-numeric: tabular-nums; }
-        .iv-day-row .dx-amt.iv-in { color: var(--color-brand-700); }
-        .iv-day-row .dx-amt.iv-out { color: #b45309; }
-        .iv-day-row .dx-note { display: flex; flex-direction: column; gap: .05rem; }
-        .iv-day-was { font-size: .68rem; opacity: .7; }
         html.dark .iv-day-card { background: #141b21; border-color: #26333d; }
         html.dark .iv-day-card .dx-head { color: #9fc0d6; }
         .activity-na-tag { background: #f3f4f6; color: #6b7280; border: 1px dashed #d1d5db; }
@@ -3807,7 +3796,6 @@
                              same reason the income strip's is — a strip that
                              only the JS renderer ever creates has nowhere to
                              land on a freshly loaded page. --}}
-                        <div class="day-inv-block" data-date="{{ $dateKey }}" hidden></div>
                     @endif
                     @php
                         // Interleave positioned inline notes with the day's cards by order.
@@ -5347,8 +5335,6 @@
     // What the shed did, by day. Seeded whole rather than fetched per day:
     // most days have none of these, and a request per empty day is a request
     // for nothing. { 'YYYY-MM-DD': [{name, delta, before, after, ...}, ...] }
-    window.DAY_INVENTORY = @json($inventoryForJs ?? (object) []);
-    if (Array.isArray(window.DAY_INVENTORY)) window.DAY_INVENTORY = {};
 </script>
 @include('sm.partials.activities-js', [
     'schedule' => $schedule,
