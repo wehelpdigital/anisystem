@@ -207,6 +207,7 @@ class AiController extends Controller
             'scheduleId' => 'nullable|integer',
             // A saved when-to-plant analysis, riding as context.
             'attachAnalysisId' => 'nullable|integer',
+            'attachReportId' => 'nullable|integer',
         ]);
         if ($validator->fails()) {
             return $this->json(false, 'Validation failed.', ['errors' => $validator->errors()], 422);
@@ -261,6 +262,15 @@ class AiController extends Controller
             }
             $analysisCtx = $found['text'];
             $priced .= $analysisCtx;
+        }
+        /* A frozen farm report rides the same way the analysis does. */
+        if ($request->filled('attachReportId')) {
+            $foundR = \App\Http\Controllers\Manager\FarmReportController::contextFor((int) $request->input('attachReportId'), (int) $userId);
+            if (! $foundR) {
+                return $this->json(false, 'That report could not be attached. Remove it and try again.', [], 422);
+            }
+            $analysisCtx .= $foundR['text'];
+            $priced .= $foundR['text'];
         }
         $estimate = $this->credits->estimate($settings, $priced, count($images));
         if ($balance < $estimate && ! $this->credits->unlimited($payerId)) {

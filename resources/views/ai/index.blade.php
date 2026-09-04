@@ -546,6 +546,14 @@
             <span class="ai-planchip-txt"><b id="aiWtpName">Analysis</b><i id="aiWtpSub">Anee reads this first — the estimate below includes it</i></span>
             <button type="button" id="aiWtpX" class="ai-planchip-x" aria-label="Remove the analysis">✕</button>
         </div>
+        {{-- A frozen farm report, riding the next question the same way. --}}
+        <div id="aiRptChip" class="ai-planchip" hidden>
+            <span class="ai-planchip-ic">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-4m3 4v-6m3 6v-2M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            </span>
+            <span class="ai-planchip-txt"><b id="aiRptName">Report</b><i id="aiRptSub">Anee reads this first — the estimate below includes it</i></span>
+            <button type="button" id="aiRptX" class="ai-planchip-x" aria-label="Remove the report">✕</button>
+        </div>
         <div id="aiAttachBusy" class="ai-busyline hidden" role="status"><span class="sp" aria-hidden="true"></span><span class="tx">Attaching photo…</span></div>
         <div class="aichat-box">
             <button type="button" class="ai-cam shrink-0" id="aiAttachBtn" title="Add photos" aria-label="Add photos" aria-haspopup="dialog">
@@ -735,7 +743,7 @@ const __init = () => {
         if (!hint) return;
         const msg = (input?.value || '').trim();
         const shots = chips ? chips.children.length : 0;
-        if (!msg && !shots && !attachedPlan && !attachedAnalysis) { hint.textContent = hint.dataset.idle || ''; return; }
+        if (!msg && !shots && !attachedPlan && !attachedAnalysis && !attachedReport) { hint.textContent = hint.dataset.idle || ''; return; }
         /* What a question weighs before its own words: the house prompt
            and the persona, measured server-side from the text actually
            sent, plus room for the turns before it. Not a number typed
@@ -743,13 +751,16 @@ const __init = () => {
            of one constant is four chances to disagree with the wall. */
         const OVERHEAD = @json(\App\Services\AiCreditService::overheadTokens());
         const tin = Math.ceil(msg.length / 4) + OVERHEAD + (attachedPlan ? attachedPlan.tokens : 0)
-            + (attachedAnalysis ? attachedAnalysis.tokens : 0);
+            + (attachedAnalysis ? attachedAnalysis.tokens : 0)
+            + (attachedReport ? attachedReport.tokens : 0);
         const cost = Math.max(.01, Math.round((tin / 1000 * PRICE.inK + PRICE.halfOut / 1000 * PRICE.outK + shots * PRICE.img) * 100) / 100);
         hint.textContent = attachedPlan
             ? `≈ ${cost} credits — your plan is attached`
             : (attachedAnalysis
                 ? `≈ ${cost} credits — your analysis is attached`
-                : `≈ ${cost} credits for this question`);
+                : (attachedReport
+                    ? `≈ ${cost} credits — your report is attached`
+                    : `≈ ${cost} credits for this question`));
     }
 
     const BOT_SVG = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>';
@@ -1102,6 +1113,31 @@ const __init = () => {
         if (bootAnalysis) attachAnalysis(bootAnalysis);
     }
 
+    /* ---- A frozen farm report as an attachment (?freport=ID). ---- */
+    let attachedReport = null;
+    function drawRptChip() {
+        const chip = byId('aiRptChip');
+        if (!chip) return;
+        if (!attachedReport) { chip.hidden = true; sayEstimate(); return; }
+        byId('aiRptName').textContent = attachedReport.title;
+        chip.hidden = false;
+        sayEstimate();
+    }
+    async function attachReport(id) {
+        try {
+            const res = await api(@json(url('/app/sm-report-preview')) + '/' + encodeURIComponent(id), { method: 'GET' });
+            const d = res.data || {};
+            attachedReport = { id: d.id, title: d.title || 'Farm report', tokens: d.tokens || 0 };
+            drawRptChip();
+            toast('Report attached — ask Anee about it.');
+        } catch (err) { toast(err.message || 'That report could not be attached.', 'error'); }
+    }
+    byId('aiRptX')?.addEventListener('click', () => { attachedReport = null; drawRptChip(); });
+    {
+        const bootReport = new URLSearchParams(location.search).get('freport');
+        if (bootReport) attachReport(bootReport);
+    }
+
     /* ---- The attach chooser (house sheet). The picker now travels with
             this page, so the gallery door shows for anyone with a season to
             pick from. Which season: the chosen plan, or the only one there
@@ -1178,6 +1214,7 @@ const __init = () => {
                     scheduleId: attachedPlan ? attachedPlan.id : null,
                     attachPlan: attachedPlan ? 1 : 0,
                     attachAnalysisId: attachedAnalysis ? attachedAnalysis.id : null,
+                    attachReportId: attachedReport ? attachedReport.id : null,
                 },
             });
             conversationId = res.data.conversationId;
