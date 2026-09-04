@@ -99,8 +99,16 @@
     <div id="cpGen">
         <div class="card p-4 mb-4" id="cpWizard">
             <p class="text-sm font-bold text-gray-900">Pick two saved reports</p>
-            <p class="text-xs text-gray-500 mt-1 mb-3">Anything on your shelf, from any season — two protocols, two season reads, a profit report against last year's. They stack top and bottom, easy on a phone.</p>
+            <p class="text-xs text-gray-500 mt-1 mb-3">Same kind against same kind — two protocols, two season reads, this year's profit against last year's. Pick the type first; they stack top and bottom, easy on a phone.</p>
             <div class="grid grid-cols-1 gap-2">
+                <div>
+                    <span class="form-label text-xs! mb-1!">What kind of report?</span>
+                    <button type="button" class="crop-tag" id="cpKindBtn">
+                        <span class="crop-tag-e" id="cpKindE">🗂️</span>
+                        <span class="crop-tag-t is-none" id="cpKindNow">Choose the type</span>
+                        <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                </div>
                 <div>
                     <span class="form-label text-xs! mb-1!">Report A (top)</span>
                     <button type="button" class="crop-tag" id="cpABtn">
@@ -151,6 +159,14 @@
 @endsection
 
 @push('sheets')
+<div class="sheet hidden" id="cpKindSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">What kind of report?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="cpKindList"></div>
+</div>
 <div class="sheet hidden" id="cpPickSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -179,7 +195,9 @@ const __init = () => {
         del: (id) => @json(route('sm.anee.delete', ['id' => '__ID__'])).replace('__ID__', id),
         ai: @json(route('ai.index')),
     };
+    const KIND_L = { labor: 'Labor Report', expenses: 'Expenses Report', profit: 'Profit Report', season: 'Anee Season Report', sofar: 'Analyze So Far', protocol: 'Protocol' };
     let OPTS = null;
+    let KIND = null;
     let SEL = { a: null, b: null };
     let picking = 'a';
 
@@ -203,16 +221,51 @@ const __init = () => {
         } catch (err) { toast(err.message, 'error'); }
     }
 
-    function openPick(which) {
-        picking = which;
-        $id('cpPickTitle').textContent = which === 'a' ? 'Report A (top)' : 'Report B (below)';
-        const other = which === 'a' ? SEL.b : SEL.a;
-        $id('cpPickList').innerHTML = (OPTS?.reports || []).map((r) => `
-            <button type="button" class="dt-row${(SEL[which] && SEL[which].id === r.id) ? ' is-on' : ''}" data-cp-pick="${r.id}" ${other && other.id === r.id ? 'disabled style="opacity:.4"' : ''}>
-                <span class="dt-row-e">${KIND_E[r.kind] || '📄'}</span>
-                <span class="dt-row-body"><b>${esc(r.title)}</b><i>${esc(r.kind)} · ${esc(r.when || '')}</i></span>
+    /* Apples with apples: the type comes first, and the A/B shelves only
+       ever show that type. Changing the type clears both picks. */
+    function openKindSheet() {
+        const counts = {};
+        (OPTS?.reports || []).forEach((r) => { counts[r.kind] = (counts[r.kind] || 0) + 1; });
+        $id('cpKindList').innerHTML = Object.keys(KIND_L).filter((k) => counts[k]).map((k) => `
+            <button type="button" class="dt-row${KIND === k ? ' is-on' : ''}" data-cp-kind="${k}" ${counts[k] < 2 ? 'disabled style="opacity:.4"' : ''}>
+                <span class="dt-row-e">${KIND_E[k] || '📄'}</span>
+                <span class="dt-row-body"><b>${KIND_L[k]}</b><i>${counts[k]} saved${counts[k] < 2 ? ' — it takes two to compare' : ''}</i></span>
                 <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>`).join('') || '<p class="text-sm text-gray-400 text-center py-6">Nothing on the shelf yet — generate some reports first.</p>';
+        openSheet('cpKindSheet');
+    }
+    $id('cpKindBtn').addEventListener('click', openKindSheet);
+    $id('cpKindList').addEventListener('click', (e) => {
+        const row = e.target.closest('[data-cp-kind]');
+        if (!row || row.disabled) return;
+        const k = row.dataset.cpKind;
+        closeSheet('cpKindSheet');
+        if (k === KIND) return;
+        KIND = k;
+        $id('cpKindE').textContent = KIND_E[k] || '📄';
+        const t = $id('cpKindNow');
+        t.textContent = KIND_L[k];
+        t.classList.remove('is-none');
+        SEL = { a: null, b: null };
+        ['cpANow', 'cpBNow'].forEach((id) => {
+            const el = $id(id);
+            el.textContent = 'Choose a saved report';
+            el.classList.add('is-none');
+        });
+        $id('cpGenBtn').disabled = true;
+    });
+
+    function openPick(which) {
+        if (!KIND) { openKindSheet(); return; }
+        picking = which;
+        $id('cpPickTitle').textContent = (which === 'a' ? 'Report A (top)' : 'Report B (below)') + ' — ' + KIND_L[KIND];
+        const other = which === 'a' ? SEL.b : SEL.a;
+        $id('cpPickList').innerHTML = (OPTS?.reports || []).filter((r) => r.kind === KIND).map((r) => `
+            <button type="button" class="dt-row${(SEL[which] && SEL[which].id === r.id) ? ' is-on' : ''}" data-cp-pick="${r.id}" ${other && other.id === r.id ? 'disabled style="opacity:.4"' : ''}>
+                <span class="dt-row-e">${KIND_E[r.kind] || '📄'}</span>
+                <span class="dt-row-body"><b>${esc(r.title)}</b><i>${esc(r.when || '')}</i></span>
+                <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>`).join('') || `<p class="text-sm text-gray-400 text-center py-6">No saved ${esc(KIND_L[KIND])} yet.</p>`;
         openSheet('cpPickSheet');
     }
     $id('cpABtn').addEventListener('click', () => openPick('a'));

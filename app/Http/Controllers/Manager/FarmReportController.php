@@ -888,6 +888,9 @@ class FarmReportController extends BaseScheduleController
         if (! $a || ! $b || $a->id === $b->id) {
             return $this->jsonFail('Pick two different saved reports.', 422);
         }
+        if ($a->kind !== $b->kind) {
+            return $this->jsonFail('Compare two reports of the same type — apples with apples.', 422);
+        }
 
         $meta = fn (AsFarmReport $r) => ['id' => $r->id, 'kind' => $r->kind, 'title' => $r->title, 'body' => (string) $r->body];
         $report = ['a' => $meta($a), 'b' => $meta($b), 'analysis' => null];
@@ -930,8 +933,8 @@ class FarmReportController extends BaseScheduleController
         ]);
 
         $prompt = 'You are an agricultural analyst for a Philippine smallholder farm. Below are two of the farm\'s own '
-            . 'saved reports. Compare them honestly and usefully — same warm, plain voice as a debrief between friends. '
-            . 'Where the two are different kinds of report, compare what CAN be compared and say so.'
+            . 'saved reports of the same kind. Compare them honestly and usefully — same warm, plain voice as a '
+            . 'debrief between friends.'
             . "\n\n### REPORT A: " . $a->title . " ###\n" . mb_substr((string) $a->body, 0, 9000)
             . "\n\n### REPORT B: " . $b->title . " ###\n" . mb_substr((string) $b->body, 0, 9000)
             . "\n\nReturn ONLY a single JSON object, no fences, exactly this shape:\n"
