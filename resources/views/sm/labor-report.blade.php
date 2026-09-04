@@ -3,9 +3,10 @@
 @section('title', 'Labor Report — ' . $schedule->title)
 @section('page-title', 'Labor Report')
 @section('page-subtitle', $schedule->title)
-@section('back', route('sm.activities', ['id' => $schedule->id]))
+@section('back', route('sm.reports', ['id' => $schedule->id]))
 
 @push('head')
+@include('partials.tag-sheet-css')
 <style>
     /* ===== Labor Report =============================================
        Charts paint with entity colors validated for both surfaces:
@@ -84,11 +85,20 @@
     .lr-tip .r b { color: var(--color-gray-900); font-variant-numeric: tabular-nums; }
     .lr-tip .r span { color: var(--color-gray-500); }
 
-    /* Breakdown tables */
-    .labor-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
-    .labor-table th { text-align: left; font-size: .7rem; text-transform: uppercase; letter-spacing: .04em; color: var(--color-gray-400); padding: .4rem .5rem; border-bottom: 1px solid var(--color-gray-200); }
-    .labor-table td { padding: .45rem .5rem; border-bottom: 1px solid var(--color-gray-100); color: var(--color-gray-700); }
-    .labor-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+    /* Breakdown cards — tables asked a phone to scroll sideways twice. */
+    .lr-bcards { display: grid; gap: .5rem; margin-top: .6rem; }
+    .lr-bcard { border: 1px solid var(--color-gray-100); border-radius: .8rem; background: var(--color-white);
+        padding: .65rem .8rem; }
+    .lr-bcard-top { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; }
+    .lr-bcard-top b { font-size: .9rem; color: var(--color-gray-900); min-width: 0; overflow-wrap: anywhere; }
+    .lr-bcard-amt { font-weight: 800; font-size: .95rem; color: var(--color-gray-900); white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .lr-bcard-meta { display: flex; flex-wrap: wrap; gap: .3rem .5rem; margin-top: .35rem; align-items: center; }
+    .lr-bcard-meta .badge { font-variant-numeric: tabular-nums; }
+    .lr-bphase { display: flex; flex-wrap: wrap; gap: .35rem .9rem; margin-top: .4rem; font-size: .75rem; color: var(--color-gray-600); }
+    .lr-bphase i { display: inline-block; width: .6rem; height: .6rem; border-radius: .2rem; margin-right: .3rem; vertical-align: -1px; font-style: normal; }
+    .lr-bzero { color: var(--color-gray-400); }
+    html.dark .lr-bcard { background: #151b12; border-color: #2b3a1c; }
+    html.dark .lr-bcard-top b, html.dark .lr-bcard-amt { color: #e8efe1; }
 
     @media print {
         header, nav, .lr-filters, .lr-tabs, .lr-actions, .bottom-nav, #aiFloat { display: none !important; }
@@ -104,21 +114,17 @@
     {{-- One filter row scoping everything below --}}
     <div class="card p-4 mb-4 lr-filters">
         @if ($schedule->workers->count())
-                <div class="mb-2">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-gray-500 uppercase">Workers</span>
-                        <span>
-                            <button type="button" id="laborSelectAllWorkers" class="text-xs font-semibold text-brand-700">All</button>
-                            <span class="text-gray-300">·</span>
-                            <button type="button" id="laborClearWorkers" class="text-xs font-semibold text-brand-700">None</button>
-                        </span>
-                    </div>
-                    <div class="scroll-chips mt-1" id="laborWorkersContainer" data-chip-group>
-                        @foreach ($schedule->workers as $w)
-                            <button type="button" class="chip shrink-0 min-h-9! py-1! text-xs" data-value="{{ $w->id }}">{{ $w->workerName }}</button>
-                        @endforeach
-                    </div>
-                </div>
+            <div class="mb-2">
+                <span class="form-label text-xs! mb-1!">Workers</span>
+                {{-- A tag that opens a chooser, not chips sliding sideways —
+                     the owner's call: a scroll you cannot see the end of
+                     hides half the crew. --}}
+                <button type="button" class="crop-tag" id="lrWorkersBtn">
+                    <span class="crop-tag-e">👥</span>
+                    <span class="crop-tag-t is-none" id="lrWorkersNow">All workers</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+            </div>
         @endif
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <div>
@@ -138,15 +144,19 @@
                 @include('partials.date-tag', ['id' => 'laborEndDate', 'empty' => 'To'])
             </div>
         </div>
-        <div class="flex items-center gap-2 flex-wrap mt-3">
-            <button type="button" id="laborApplyFiltersBtn" class="btn btn-primary btn-sm">Apply Filters</button>
-            <button type="button" id="laborResetFiltersBtn" class="btn btn-white btn-sm">Reset</button>
-            <span id="laborFilterHint" class="text-xs text-gray-500"></span>
-            <span class="grow"></span>
-            <span class="lr-actions flex items-center gap-2">
-                <button type="button" id="laborCopyBtn" class="btn btn-white btn-sm">Copy as Text</button>
-                <button type="button" id="laborPrintBtn" class="btn btn-white btn-sm">Print</button>
-            </span>
+        <p id="laborFilterHint" class="text-xs text-gray-500 mt-2"></p>
+        {{-- Full-width actions: two rows of whole buttons, no thumb-hunting. --}}
+        <div class="grid grid-cols-2 gap-2 mt-3">
+            <button type="button" id="laborApplyFiltersBtn" class="btn btn-primary w-full">Apply Filters</button>
+            <button type="button" id="laborResetFiltersBtn" class="btn btn-white w-full">Reset</button>
+        </div>
+        <div class="lr-actions grid grid-cols-1 sm:grid-cols-3 gap-2 mt-2">
+            <button type="button" id="laborCopyBtn" class="btn btn-white w-full">Copy as Text</button>
+            <button type="button" id="laborPrintBtn" class="btn btn-white w-full">Print</button>
+            <button type="button" id="laborAttachBtn" class="btn btn-white w-full">
+                <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" class="w-4 h-4 rounded-full object-cover mr-1" style="width:1rem;height:1rem;">
+                Attach to {{ \App\Models\AiSetting::current()->assistantName }}
+            </button>
         </div>
     </div>
 
@@ -162,11 +172,15 @@
                 <div class="lr-tiles" id="lrTiles"></div>
             </div>
 
-            {{-- Tabs --}}
-            <div class="lr-tabs" role="tablist">
-                <button type="button" class="lr-tab is-active" data-pane="lrPaneMonths" role="tab">Busiest Months</button>
-                <button type="button" class="lr-tab" data-pane="lrPaneWorkers" role="tab">Worker Earnings</button>
-                <button type="button" class="lr-tab" data-pane="lrPaneBreakdown" role="tab">Breakdown</button>
+            {{-- The view, chosen from a sheet — three underlined words in a
+                 row read fine on a desk and jostled on a phone. --}}
+            <div class="my-4 lr-tabs">
+                <span class="form-label text-xs! mb-1!">Report view</span>
+                <button type="button" class="crop-tag" id="lrPaneBtn">
+                    <span class="crop-tag-e" id="lrPaneIcon">📊</span>
+                    <span class="crop-tag-t" id="lrPaneNow">Busiest Months</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
             </div>
 
             <div class="lr-pane is-active" id="lrPaneMonths">
@@ -206,6 +220,60 @@
 </div>
 @endsection
 
+@push('sheets')
+@if ($schedule->workers->count())
+<div class="sheet hidden" id="lrWorkersSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Which workers?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="flex items-center gap-3 mb-2">
+            <button type="button" id="lrWorkersAll" class="text-xs font-bold text-brand-700">Select all</button>
+            <span class="text-gray-300">·</span>
+            <button type="button" id="lrWorkersNone" class="text-xs font-bold text-brand-700">None (= everyone)</button>
+        </div>
+        <div class="dt-rows" id="lrWorkersList">
+            @foreach ($schedule->workers as $w)
+                <button type="button" class="dt-row" data-lr-worker="{{ $w->id }}">
+                    <span class="dt-row-e">👤</span>
+                    <span class="dt-row-body"><b>{{ $w->workerName }}</b><i>₱{{ number_format((float) $w->costPerHalfDay, 2) }} per half day</i></span>
+                    <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                </button>
+            @endforeach
+        </div>
+        <button type="button" class="btn btn-primary w-full mt-3" data-sheet-close>Done</button>
+    </div>
+</div>
+@endif
+
+<div class="sheet hidden" id="lrPaneSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Which view?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="lrPaneList">
+        <button type="button" class="dt-row is-on" data-lr-pane="lrPaneMonths" data-icon="📊">
+            <span class="dt-row-e">📊</span>
+            <span class="dt-row-body"><b>Busiest Months</b><i>Labor cost month by month</i></span>
+            <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
+        <button type="button" class="dt-row" data-lr-pane="lrPaneWorkers" data-icon="🏅">
+            <span class="dt-row-e">🏅</span>
+            <span class="dt-row-body"><b>Worker Earnings</b><i>Who earns the most, by phase</i></span>
+            <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
+        <button type="button" class="dt-row" data-lr-pane="lrPaneBreakdown" data-icon="🧾">
+            <span class="dt-row-e">🧾</span>
+            <span class="dt-row-body"><b>Breakdown</b><i>Every worker and every activity, card by card</i></span>
+            <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
+    </div>
+</div>
+@endpush
+
 @push('scripts')
 <script>
 (() => {
@@ -224,9 +292,45 @@ const __init = () => {
     let METRIC = 'cost';
 
     /* ---------------- filters (same contract as before) ---------------- */
+    /* The chosen workers, held as a set the tag and the sheet both read.
+       Empty means everyone — a filter, not a requirement. */
+    const WORKER_SEL = new Set();
+    function sayWorkersTag() {
+        const t = $id('lrWorkersNow');
+        if (!t) return;
+        const rows = document.querySelectorAll('#lrWorkersList [data-lr-worker]');
+        if (!WORKER_SEL.size) { t.textContent = 'All workers'; t.classList.add('is-none'); }
+        else if (WORKER_SEL.size === 1) {
+            const row = document.querySelector(`#lrWorkersList [data-lr-worker="${[...WORKER_SEL][0]}"] b`);
+            t.textContent = row ? row.textContent : '1 worker';
+            t.classList.remove('is-none');
+        } else { t.textContent = `${WORKER_SEL.size} of ${rows.length} workers`; t.classList.remove('is-none'); }
+    }
+    $id('lrWorkersBtn')?.addEventListener('click', () => openSheet('lrWorkersSheet'));
+    $id('lrWorkersList')?.addEventListener('click', (e) => {
+        const row = e.target.closest('[data-lr-worker]');
+        if (!row) return;
+        const id = Number(row.getAttribute('data-lr-worker'));
+        if (WORKER_SEL.has(id)) WORKER_SEL.delete(id); else WORKER_SEL.add(id);
+        row.classList.toggle('is-on', WORKER_SEL.has(id));
+        sayWorkersTag(); updateHint();
+    });
+    $id('lrWorkersAll')?.addEventListener('click', () => {
+        document.querySelectorAll('#lrWorkersList [data-lr-worker]').forEach((r) => {
+            WORKER_SEL.add(Number(r.getAttribute('data-lr-worker')));
+            r.classList.add('is-on');
+        });
+        sayWorkersTag(); updateHint();
+    });
+    $id('lrWorkersNone')?.addEventListener('click', () => {
+        WORKER_SEL.clear();
+        document.querySelectorAll('#lrWorkersList [data-lr-worker]').forEach((r) => r.classList.remove('is-on'));
+        sayWorkersTag(); updateHint();
+    });
+
     function filterPayload() {
         const p = {};
-        const w = $id('laborWorkersContainer') ? chipValues($id('laborWorkersContainer')).map(Number) : [];
+        const w = [...WORKER_SEL];
         if (w.length) p.workerIds = w;
         const dmin = ($id('laborDasMin')?.value || '').trim();
         const dmax = ($id('laborDasMax')?.value || '').trim();
@@ -440,58 +544,59 @@ const __init = () => {
         });
     }
 
-    /* ---------------- breakdown tables ---------------- */
+    /* ---------------- breakdown cards ----------------
+     * Tables asked a phone to scroll sideways twice; a card says one
+     * worker or one activity whole, and stacks however narrow it gets. */
     function renderBreakdown() {
         const d = DATA;
         const showUna = ((d.phases || {}).unanchored || {}).count > 0;
-        let workerRows = (d.perWorker || []).map((w) => `
-            <tr>
-                <td><strong class="text-gray-900">${esc(w.name)}</strong></td>
-                <td class="num">${fmtPeso(w.costPerHalfDay)}</td>
-                <td class="num">${w.halfDays}H / ${w.wholeDays}W${w.naCount > 0 ? ` / ${w.naCount}N` : ''}</td>
-                <td class="num" style="color:${PHASE.pre}">${fmtPeso(w.preDayZeroTotal || 0)}</td>
-                <td class="num" style="color:${PHASE.crop}">${fmtPeso(w.croppingTotal || 0)}</td>
-                ${showUna ? `<td class="num" style="color:${PHASE.una}">${fmtPeso(w.unanchoredTotal || 0)}</td>` : ''}
-                <td class="num"><strong>${fmtPeso(w.total)}</strong></td>
-            </tr>`).join('');
-        if (!workerRows) workerRows = `<tr><td colspan="${showUna ? 7 : 6}" class="text-center text-gray-400 py-4">No workers assigned yet.</td></tr>`;
 
-        const row = (a) => {
+        const workerCards = (d.perWorker || []).map((w) => `
+            <div class="lr-bcard">
+                <div class="lr-bcard-top"><b>${esc(w.name)}</b><span class="lr-bcard-amt">${fmtPeso(w.total)}</span></div>
+                <div class="lr-bcard-meta">
+                    <span class="badge badge-gray">${fmtPeso(w.costPerHalfDay)} / half-day</span>
+                    <span class="badge badge-gray">${w.halfDays}H / ${w.wholeDays}W${w.naCount > 0 ? ` / ${w.naCount}N` : ''}</span>
+                </div>
+                <div class="lr-bphase">
+                    <span><i style="background:${PHASE.pre}"></i>Land Prep ${fmtPeso(w.preDayZeroTotal || 0)}</span>
+                    <span><i style="background:${PHASE.crop}"></i>Cropping ${fmtPeso(w.croppingTotal || 0)}</span>
+                    ${showUna ? `<span><i style="background:${PHASE.una}"></i>Unanchored ${fmtPeso(w.unanchoredTotal || 0)}</span>` : ''}
+                </div>
+            </div>`).join('')
+            || '<p class="text-sm text-gray-400 py-4 text-center">No workers assigned yet.</p>';
+
+        const card = (a) => {
             const s = a.targetDate ? parseD(a.targetDate) : null;
             const e = a.targetEndDate ? parseD(a.targetEndDate) : null;
             let pretty = 'No date';
             if (s && e && e > s) pretty = `${MONTH_SHORT[s.getMonth()]} ${s.getDate()} → ${MONTH_SHORT[e.getMonth()]} ${e.getDate()}, ${e.getFullYear()}`;
             else if (s) pretty = `${MONTH_SHORT[s.getMonth()]} ${s.getDate()}, ${s.getFullYear()}`;
-            const dasLbl = (a.das === null || a.das === undefined) ? '—' : `${DAY_TYPE}${a.das >= 0 ? '+' : ''}${a.das}`;
-            const tr = a.timeRequired === 'whole' ? 'Whole' : (a.timeRequired === 'half' ? 'Half' : 'N/A');
-            return `<tr class="${a.cost === 0 ? 'text-gray-400' : ''}">
-                <td><strong class="text-gray-900">${esc(a.activityTitle)}</strong></td>
-                <td>${esc(pretty)}${(a.rangeDays || 1) > 1 ? ` <span class="badge badge-yellow">${a.rangeDays}d</span>` : ''}</td>
-                <td><span class="badge badge-gray">${esc(dasLbl)}</span></td>
-                <td><span class="badge badge-gray">${tr}</span></td>
-                <td class="num">${a.workerCount}</td>
-                <td class="num"><strong>${fmtPeso(a.cost)}</strong></td>
-            </tr>`;
+            const dasLbl = (a.das === null || a.das === undefined) ? null : `${DAY_TYPE}${a.das >= 0 ? '+' : ''}${a.das}`;
+            const tr = a.timeRequired === 'whole' ? 'Whole day' : (a.timeRequired === 'half' ? 'Half day' : 'N/A');
+            return `<div class="lr-bcard${a.cost === 0 ? ' lr-bzero' : ''}">
+                <div class="lr-bcard-top"><b>${esc(a.activityTitle)}</b><span class="lr-bcard-amt">${fmtPeso(a.cost)}</span></div>
+                <div class="lr-bcard-meta">
+                    <span class="badge badge-gray">${esc(pretty)}</span>
+                    ${(a.rangeDays || 1) > 1 ? `<span class="badge badge-yellow">${a.rangeDays} days</span>` : ''}
+                    ${dasLbl ? `<span class="badge badge-gray">${esc(dasLbl)}</span>` : ''}
+                    <span class="badge badge-gray">${tr}</span>
+                    <span class="badge badge-gray">${a.workerCount} ${a.workerCount === 1 ? 'worker' : 'workers'}</span>
+                </div>
+            </div>`;
         };
         const section = (items, label, color, subtotal) => !items.length ? '' : `
             <div class="mt-4 pl-3" style="border-left:3px solid ${color}">
-                <div class="flex items-center justify-between flex-wrap gap-2 mb-2">
+                <div class="flex items-center justify-between flex-wrap gap-2">
                     <p class="font-bold text-sm mb-0" style="color:${color}">${esc(label)} <span class="text-gray-400 font-normal">· ${items.length} ${items.length === 1 ? 'activity' : 'activities'}</span></p>
                     <p class="text-sm mb-0">Subtotal: <strong style="color:${color}">${fmtPeso(subtotal)}</strong></p>
                 </div>
-                <div class="overflow-x-auto"><table class="labor-table">
-                    <thead><tr><th>Activity</th><th>Date</th><th>${esc(DAY_TYPE)}</th><th>Time</th><th class="num">Workers</th><th class="num">Cost</th></tr></thead>
-                    <tbody>${items.map(row).join('')}</tbody>
-                </table></div>
+                <div class="lr-bcards">${items.map(card).join('')}</div>
             </div>`;
         const ph = d.phases || {};
         $id('lrBreakdown').innerHTML = `
             <h3>By worker</h3>
-            <div class="overflow-x-auto mt-2"><table class="labor-table">
-                <thead><tr><th>Worker</th><th class="num">Rate</th><th class="num">Assignments</th>
-                    <th class="num">Land Prep</th><th class="num">Cropping</th>${showUna ? '<th class="num">Unanchored</th>' : ''}<th class="num">Earned</th></tr></thead>
-                <tbody>${workerRows}</tbody>
-            </table></div>
+            <div class="lr-bcards">${workerCards}</div>
             <h3 class="mt-5">By activity</h3>
             ${section((d.perActivity || []).filter((a) => a.phase === 'preDayZero'), 'Land Preparation', PHASE.pre, (ph.preDayZero || {}).cost || 0)}
             ${section((d.perActivity || []).filter((a) => a.phase === 'cropping'), 'Main Cropping', PHASE.crop, (ph.cropping || {}).cost || 0)}
@@ -513,27 +618,32 @@ const __init = () => {
         renderHero(); renderMonths(); renderWorkers(); renderBreakdown();
     }
 
-    /* ---------------- tabs ---------------- */
-    document.querySelectorAll('.lr-tab').forEach((tab) => tab.addEventListener('click', () => {
-        document.querySelectorAll('.lr-tab').forEach((t) => t.classList.toggle('is-active', t === tab));
-        document.querySelectorAll('.lr-pane').forEach((p) => p.classList.toggle('is-active', p.id === tab.dataset.pane));
-    }));
+    /* ---------------- the view chooser ---------------- */
+    $id('lrPaneBtn')?.addEventListener('click', () => openSheet('lrPaneSheet'));
+    $id('lrPaneList')?.addEventListener('click', (e) => {
+        const row = e.target.closest('[data-lr-pane]');
+        if (!row) return;
+        document.querySelectorAll('#lrPaneList [data-lr-pane]').forEach((r) => r.classList.toggle('is-on', r === row));
+        document.querySelectorAll('.lr-pane').forEach((p) => p.classList.toggle('is-active', p.id === row.dataset.lrPane));
+        $id('lrPaneNow').textContent = row.querySelector('b').textContent;
+        $id('lrPaneIcon').textContent = row.dataset.icon || '📊';
+        closeSheet('lrPaneSheet');
+    });
 
     /* ---------------- filter wiring ---------------- */
     $id('laborApplyFiltersBtn')?.addEventListener('click', reload);
     $id('laborResetFiltersBtn')?.addEventListener('click', () => {
-        document.querySelectorAll('#laborWorkersContainer .chip').forEach((c) => c.classList.remove('is-selected'));
+        WORKER_SEL.clear();
+        document.querySelectorAll('#lrWorkersList [data-lr-worker]').forEach((r) => r.classList.remove('is-on'));
+        sayWorkersTag();
         ['laborDasMin', 'laborDasMax', 'laborStartDate', 'laborEndDate'].forEach((i) => { if ($id(i)) $id(i).value = ''; });
         reload();
     });
-    $id('laborSelectAllWorkers')?.addEventListener('click', () => { document.querySelectorAll('#laborWorkersContainer .chip').forEach((c) => c.classList.add('is-selected')); updateHint(); });
-    $id('laborClearWorkers')?.addEventListener('click', () => { document.querySelectorAll('#laborWorkersContainer .chip').forEach((c) => c.classList.remove('is-selected')); updateHint(); });
     $id('laborStartDate')?.addEventListener('change', reload);
     $id('laborEndDate')?.addEventListener('change', reload);
 
-    /* ---------------- copy + print ---------------- */
-    $id('laborCopyBtn')?.addEventListener('click', () => {
-        if (!DATA) { toast('Wait for the report to finish loading.', 'info'); return; }
+    /* ---------------- copy + print + attach ---------------- */
+    function buildText() {
         const d = DATA, t = d.totals || {}, ph = d.phases || {};
         const pre = ph.preDayZero || { count: 0, cost: 0 };
         const main = ph.cropping || { count: 0, cost: 0 };
@@ -556,12 +666,37 @@ const __init = () => {
         lines.push('BY ACTIVITY');
         lines.push('-'.repeat(50));
         (d.perActivity || []).forEach((a) => lines.push(`${a.activityTitle} — ${a.targetDate || 'no date'} — ${fmtPeso(a.cost)}`));
-        const text = lines.join('\n');
+        return lines.join('\n');
+    }
+    $id('laborCopyBtn')?.addEventListener('click', () => {
+        if (!DATA) { toast('Wait for the report to finish loading.', 'info'); return; }
+        const text = buildText();
         (navigator.clipboard?.writeText(text) || Promise.reject(new Error('Clipboard unavailable')))
             .then(() => toast('Labor report copied to clipboard.'))
             .catch(() => toast('Copy failed on this browser.', 'error'));
     });
     $id('laborPrintBtn')?.addEventListener('click', () => window.print());
+
+    /* Freeze the report exactly as computed and walk it into the chat —
+       the when-to-plant attach, worn by a report. */
+    $id('laborAttachBtn')?.addEventListener('click', async (e) => {
+        if (!DATA) { toast('Wait for the report to finish loading.', 'info'); return; }
+        const btn = e.currentTarget;
+        btn.disabled = true;
+        try {
+            const res = await api(@json(route('sm.report.snapshot')), { method: 'POST', body: {
+                scheduleId: @json($schedule->id),
+                kind: 'labor',
+                title: @json('Labor Report — ' . $schedule->title),
+                body: buildText(),
+                params: filterPayload(),
+            } });
+            window.location.href = @json(route('ai.index')) + '?freport=' + res.data.id;
+        } catch (err) {
+            toast(err.message, 'error');
+            btn.disabled = false;
+        }
+    });
 
     reload();
 };
