@@ -432,7 +432,12 @@
             const res = await window.api(src + '?' + params.toString());
             if (myGen !== gen) return;               // superseded while flying
             const fresh = (res.data && res.data.items) || [];
-            more = !!(res.data && res.data.more);
+            // Two servers answer this sheet and they never agreed on the
+            // word: the season picker says 'more', the whole-gallery hub
+            // says 'hasMore' — and reading only one of them froze every
+            // all-seasons picker at its first page, scroll asking politely
+            // and nothing answering.
+            more = !!(res.data && (res.data.more ?? res.data.hasMore));
             page += 1;
             if (page === 1) grid.innerHTML = '';     // the skeletons go
             // Appended, not repainted: a repaint would restart every lazy
