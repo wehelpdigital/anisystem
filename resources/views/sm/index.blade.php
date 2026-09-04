@@ -266,6 +266,10 @@
         /* ---- the shelf's own controls: how it is arranged, and shutting
            all of it at once ---- */
         .sch-bar { display: flex; align-items: center; gap: .5rem; margin-bottom: .75rem; }
+        /* In the Archives the search field stands bare (the main page's
+           wrapper and its gap belong to the other branch), so the bar
+           brings its own air — the same 1rem the shelf view gets. */
+        .sch-bar.is-arch { margin-top: 1rem; }
         /* ---- The Archives banner --------------------------------------
            The way back wears the community Search button's shape — a green
            outline with its icon — because it is the one deliberate thing on
@@ -914,7 +918,7 @@
          cost a row of the screen every time you open the page, and the row
          they cost is the one the seasons wanted. --}}
     @if ($schedules->total() > 0)
-        <div class="sch-bar">
+        <div class="sch-bar{{ ($showArchived ?? false) ? ' is-arch' : '' }}">
             <button type="button" id="schFilterBtn" class="sch-pill{{ $sort !== 'updated' ? ' is-set' : '' }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M6 12h12M10 20h4"/></svg>
                 Filter
