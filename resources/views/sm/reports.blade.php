@@ -25,6 +25,13 @@
                 'badge' => null,
             ],
             [
+                'label' => 'Profit Report',
+                'desc' => 'The harvest against the whole spend — per lot, with margins, cost per kilo and honest warnings.',
+                'url' => route('sm.profit.report', ['id' => $schedule->id]),
+                'icon' => 'M3 17l6-6 4 4 8-8m0 0v5m0-5h-5',
+                'badge' => null,
+            ],
+            [
                 'label' => 'Post Harvest Report',
                 'desc' => 'Yield & revenue vs. materials + labour + expenses, with savable copies.',
                 'url' => route('sm.revenue-report', ['id' => $schedule->id]),
