@@ -583,10 +583,6 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-post-harvest-delete', [App\Http\Controllers\Manager\PostHarvestController::class, 'destroy'])->name('sm.post-harvest.destroy');
     Route::post('/app/sm-post-harvest-restore', [App\Http\Controllers\Manager\PostHarvestController::class, 'restore'])->name('sm.post-harvest.restore');
     Route::post('/app/sm-post-harvest-image-upload', [App\Http\Controllers\Manager\PostHarvestController::class, 'uploadImage'])->name('sm.post-harvest.image-upload');
-    Route::get('/app/sm-revenue-report', [App\Http\Controllers\Manager\RevenueReportController::class, 'page'])->name('sm.revenue-report');
-    Route::get('/app/sm-revenue-report-compute', [App\Http\Controllers\Manager\RevenueReportController::class, 'compute'])->name('sm.revenue-report.compute');
-    Route::post('/app/sm-revenue-report-store', [App\Http\Controllers\Manager\RevenueReportController::class, 'store'])->name('sm.revenue-report.store');
-    Route::delete('/app/sm-revenue-report-delete', [App\Http\Controllers\Manager\RevenueReportController::class, 'destroy'])->name('sm.revenue-report.destroy');
     Route::get('/app/sm-activities-labor', [App\Http\Controllers\Manager\ActivityController::class, 'laborSummary'])->name('sm.activities.labor');
     Route::get('/app/sm-labor-report', [App\Http\Controllers\Manager\ActivityController::class, 'laborReportPage'])->name('sm.labor.report');
     Route::get('/app/sm-reports', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'reports'])->name('sm.reports');

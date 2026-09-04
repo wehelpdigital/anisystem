@@ -93,8 +93,6 @@ class WorkerModuleAccess
 
         ['sm.reports',           'reports'],
         ['sm.labor.report',      'reports'],
-        ['sm.revenue-report',    'reports'],
-        ['sm.revenue-report.*',  'reports'],
 
         // ---- the two that are tools rather than places -------------------
         // Taking a picture and filing it: the camera right, wherever the
