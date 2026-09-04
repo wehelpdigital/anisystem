@@ -82,7 +82,7 @@
 
     <div id="ptGen">
         <div class="card p-4 mb-4 pt-wizard" id="ptWizard">
-            <p class="text-sm font-bold text-gray-900 dark:text-gray-100">Which lot's season becomes the recipe?</p>
+            <p class="text-sm font-bold text-gray-900">Which lot's season becomes the recipe?</p>
             <p class="text-xs text-gray-500 mt-1 mb-3">Only work that was ticked done goes in — this is the record of what you actually did, step by step on the lot's own day count. When a season turns out well, this is the page you keep.</p>
             <button type="button" class="crop-tag" id="ptLotBtn">
                 <span class="crop-tag-e">🌾</span>
@@ -98,7 +98,7 @@
         <div class="card !p-0 overflow-hidden">
             <div id="ptSavedList"></div>
             <div id="ptSavedEmpty" class="hidden text-center py-10">
-                <p class="font-bold text-gray-900 dark:text-gray-100">Nothing saved yet</p>
+                <p class="font-bold text-gray-900">Nothing saved yet</p>
                 <p class="text-sm text-gray-400">Every protocol you write lands here by itself.</p>
             </div>
         </div>

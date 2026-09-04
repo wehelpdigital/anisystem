@@ -98,7 +98,7 @@
 
     <div id="cpGen">
         <div class="card p-4 mb-4" id="cpWizard">
-            <p class="text-sm font-bold text-gray-900 dark:text-gray-100">Pick two saved reports</p>
+            <p class="text-sm font-bold text-gray-900">Pick two saved reports</p>
             <p class="text-xs text-gray-500 mt-1 mb-3">Anything on your shelf, from any season — two protocols, two season reads, a profit report against last year's. They stack top and bottom, easy on a phone.</p>
             <div class="grid grid-cols-1 gap-2">
                 <div>
@@ -134,7 +134,7 @@
         <div class="card !p-0 overflow-hidden">
             <div id="cpSavedList"></div>
             <div id="cpSavedEmpty" class="hidden text-center py-10">
-                <p class="font-bold text-gray-900 dark:text-gray-100">Nothing saved yet</p>
+                <p class="font-bold text-gray-900">Nothing saved yet</p>
                 <p class="text-sm text-gray-400">Every comparison lands here by itself.</p>
             </div>
         </div>

@@ -176,7 +176,7 @@
 
         {{-- Readiness --}}
         <div class="card p-4 mb-4" id="arReadyCard">
-            <p class="text-sm font-bold text-gray-900 dark:text-gray-100 mb-2" id="arReadyTitle">Checking the season…</p>
+            <p class="text-sm font-bold text-gray-900 mb-2" id="arReadyTitle">Checking the season…</p>
             <div id="arChecks"></div>
             @if ($isSofar && $schedule->lots->count())
                 <div class="mt-3">
@@ -201,7 +201,7 @@
         <div class="card !p-0 overflow-hidden">
             <div id="arSavedList"></div>
             <div id="arSavedEmpty" class="hidden text-center py-10">
-                <p class="font-bold text-gray-900 dark:text-gray-100">Nothing saved yet</p>
+                <p class="font-bold text-gray-900">Nothing saved yet</p>
                 <p class="text-sm text-gray-400">Every finished report lands here by itself.</p>
             </div>
         </div>
