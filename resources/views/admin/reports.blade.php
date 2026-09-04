@@ -16,7 +16,7 @@
     <div class="card !p-0 overflow-hidden">
         <div id="rpList"></div>
         <div id="rpEmpty" class="hidden text-center py-10">
-            <p class="font-bold text-gray-900 dark:text-gray-100">Nothing flagged</p>
+            <p class="font-bold text-gray-900">Nothing flagged</p>
             <p class="text-sm text-gray-400">A quiet plaza is a healthy one.</p>
         </div>
     </div>
@@ -69,7 +69,7 @@
                 <span class="rp-who ml-auto">${esc(r.at || '')}</span>
             </div>
             ${r.snapshot ? `<div class="rp-snap">“${esc(r.snapshot)}”</div>` : ''}
-            ${r.details ? `<p class="text-xs text-gray-500 dark:text-gray-400">${esc(r.details)}</p>` : ''}
+            ${r.details ? `<p class="text-xs text-gray-500">${esc(r.details)}</p>` : ''}
             <p class="rp-who">Reported by <b>${esc(r.reporter)}</b>${r.target ? ` · about <b>${esc(r.target)}</b>` : ''}</p>
             <div class="rp-acts">
                 <a class="btn btn-white btn-sm" href="${esc(r.url)}" target="_blank" rel="noopener">Open where it lives ↗</a>

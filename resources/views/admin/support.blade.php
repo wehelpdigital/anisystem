@@ -27,7 +27,7 @@
         <div class="card !p-0 overflow-hidden">
             <div id="tkList"></div>
             <div id="tkEmpty" class="hidden text-center py-10">
-                <p class="font-bold text-gray-900 dark:text-gray-100">No tickets here</p>
+                <p class="font-bold text-gray-900">No tickets here</p>
                 <p class="text-sm text-gray-400">Quiet is good.</p>
             </div>
         </div>
@@ -36,7 +36,7 @@
 
     <div id="tabCanned" class="hidden">
         <div class="card p-3.5 mb-3 space-y-2">
-            <p class="font-bold text-sm text-gray-900 dark:text-gray-100">Merge fields</p>
+            <p class="font-bold text-sm text-gray-900">Merge fields</p>
             <p class="text-xs text-gray-400 -mt-1.5">Write these into a template (or any reply) and they become the client's own facts at send time. Tap one to copy it.</p>
             <div class="flex flex-wrap gap-1.5" id="mfChips">
                 <button type="button" class="chip" data-mf="{first_name}">{first_name}</button>
@@ -49,7 +49,7 @@
         </div>
 
         <div class="card p-3.5 mb-3 space-y-2">
-            <p class="font-bold text-sm text-gray-900 dark:text-gray-100" id="cnFormTitle">New template</p>
+            <p class="font-bold text-sm text-gray-900" id="cnFormTitle">New template</p>
             <input type="text" id="cnTitle" class="form-input" maxlength="120" placeholder="What this answer is for — e.g. Welcome & first steps">
             <div class="tk-toolbar" data-editor="cnBody">
                 <button type="button" data-cmd="bold" title="Bold"><b>B</b></button>
@@ -68,7 +68,7 @@
         <div class="card !p-0 overflow-hidden">
             <div id="cnList"></div>
             <div id="cnEmpty" class="hidden text-center py-10">
-                <p class="font-bold text-gray-900 dark:text-gray-100">The shelf is empty</p>
+                <p class="font-bold text-gray-900">The shelf is empty</p>
                 <p class="text-sm text-gray-400">Write the first answer above.</p>
             </div>
         </div>

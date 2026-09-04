@@ -357,7 +357,7 @@
         <div class="card !p-0 overflow-hidden">
             <div id="wtpSavedList"></div>
             <div id="wtpSavedEmpty" class="hidden text-center py-10">
-                <p class="font-bold text-gray-900 dark:text-gray-100">Nothing saved yet</p>
+                <p class="font-bold text-gray-900">Nothing saved yet</p>
                 <p class="text-sm text-gray-400">Run an analysis and keep the ones worth keeping.</p>
             </div>
         </div>

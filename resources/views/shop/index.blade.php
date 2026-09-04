@@ -66,7 +66,7 @@
         <div class="shop-tile"><span>👕</span>Fashion<i>Farm wear that works</i></div>
     </div>
 
-    <p class="text-center text-xs text-gray-500 dark:text-gray-400 mt-6">
+    <p class="text-center text-xs text-gray-500 mt-6">
         We will say so here — and in your notices — the day the doors open.
     </p>
 </div>

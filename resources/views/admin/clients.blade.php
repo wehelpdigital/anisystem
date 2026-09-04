@@ -11,7 +11,7 @@
     <div class="card !p-0 overflow-hidden">
         <div id="clList"></div>
         <div id="clEmpty" class="hidden text-center py-10">
-            <p class="font-bold text-gray-900 dark:text-gray-100">Nobody matches</p>
+            <p class="font-bold text-gray-900">Nobody matches</p>
             <p class="text-sm text-gray-400">Try fewer letters.</p>
         </div>
     </div>
@@ -110,7 +110,7 @@
             </div>
 
             <div class="card p-3.5 space-y-3">
-                <p class="font-bold text-sm text-gray-900 dark:text-gray-100">Who they are</p>
+                <p class="font-bold text-sm text-gray-900">Who they are</p>
                 <div class="grid grid-cols-2 gap-2.5">
                     <div><label class="form-label !mb-1 text-xs!">First name</label><input id="ceFirst" class="form-input" value="${esc(c.firstName || '')}"></div>
                     <div><label class="form-label !mb-1 text-xs!">Last name</label><input id="ceLast" class="form-input" value="${esc(c.lastName || '')}"></div>
@@ -121,13 +121,13 @@
             </div>
 
             <div class="card p-3.5 space-y-2.5">
-                <p class="font-bold text-sm text-gray-900 dark:text-gray-100">Password</p>
+                <p class="font-bold text-sm text-gray-900">Password</p>
                 <p class="text-xs text-gray-400 -mt-1.5">Two ways: the polite one emails them a link, the direct one sets it here and now.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <button type="button" class="btn btn-white btn-sm" id="cePwLink">✉️ Email a reset link</button>
                     <button type="button" class="btn btn-white btn-sm" id="cePwManualBtn">⌨️ Set it manually</button>
                 </div>
-                <div id="cePwManual" class="hidden space-y-2 rounded-xl border border-dashed border-gray-300 dark:border-gray-700 p-3">
+                <div id="cePwManual" class="hidden space-y-2 rounded-xl border border-dashed border-gray-300 p-3">
                     <div class="flex gap-2">
                         <input id="cePwInput" class="form-input font-mono" placeholder="New password (min 8)" autocomplete="off">
                         <button type="button" class="btn btn-white btn-sm shrink-0" id="cePwGen" title="Generate a strong one">🎲</button>
@@ -138,9 +138,9 @@
             </div>
 
             <div class="card p-3.5 space-y-2">
-                <p class="font-bold text-sm text-gray-900 dark:text-gray-100">Subscription</p>
+                <p class="font-bold text-sm text-gray-900">Subscription</p>
                 ${c.subscription ? `
-                    <p class="text-sm text-gray-700 dark:text-gray-300">${esc(c.subscription.planName || 'Plan')}
+                    <p class="text-sm text-gray-700">${esc(c.subscription.planName || 'Plan')}
                         <span class="ad-badge ${c.subscription.status === 'active' ? 'is-answered' : 'is-closed'} ml-1">${esc(c.subscription.status)}</span></p>
                     <p class="text-xs text-gray-400">${esc(c.subscription.startsAt || '—')} → ${esc(c.subscription.expiresAt || '—')} · ₱${Number(c.subscription.price).toLocaleString()}</p>`
                     : '<p class="text-sm text-gray-400">No subscription yet.</p>'}
@@ -150,7 +150,7 @@
             </div>
 
             <div class="card p-3.5 space-y-2.5">
-                <p class="font-bold text-sm text-gray-900 dark:text-gray-100">Community</p>
+                <p class="font-bold text-sm text-gray-900">Community</p>
                 ${c.suspendedSays ? `
                     <p class="text-sm text-red-700 dark:text-red-400">Suspended until <b>${esc(c.suspendedSays)}</b> — the Community module will not open for them.</p>
                     <button type="button" class="btn btn-white btn-sm w-full" id="ceLift">Lift the suspension now</button>`
@@ -163,7 +163,7 @@
             </div>
 
             <div class="card p-3.5 space-y-2.5">
-                <p class="font-bold text-sm text-gray-900 dark:text-gray-100">AI credits</p>
+                <p class="font-bold text-sm text-gray-900">AI credits</p>
                 <p class="text-xs text-gray-400 -mt-1.5">Balance: <b>${Number(c.creditBalance).toLocaleString()}</b>. Positive adds, negative takes back; the client sees the reason in their own credits log.</p>
                 ${(c.workerFarms && c.workerFarms.length) ? `
                     <div>
@@ -182,13 +182,13 @@
             </div>
 
             <div class="card p-3.5 space-y-2">
-                <p class="font-bold text-sm text-gray-900 dark:text-gray-100">See what they see</p>
+                <p class="font-bold text-sm text-gray-900">See what they see</p>
                 <p class="text-xs text-gray-400 -mt-1">Opens the client panel signed in as them. A bar up top brings you back here.</p>
                 <button type="button" class="btn btn-white btn-sm w-full" id="ceLoginAs">👁 Log in as ${esc(c.firstName || c.name)}</button>
             </div>
 
             <div class="card p-3.5 space-y-2">
-                <p class="font-bold text-sm text-gray-900 dark:text-gray-100">Admin access</p>
+                <p class="font-bold text-sm text-gray-900">Admin access</p>
                 ${c.isAdmin ? `
                     <p class="text-xs text-gray-400 -mt-1">This account can open the admin panel — everything you can do here, they can.</p>
                     <button type="button" class="btn btn-white btn-sm w-full" id="ceAdminOff">Remove admin access</button>`

@@ -15,12 +15,12 @@
 
     <div class="grid gap-3 md:grid-cols-2 mt-3">
         <div class="card p-4">
-            <p class="font-bold text-gray-900 dark:text-gray-100 text-sm">New clients</p>
+            <p class="font-bold text-gray-900 text-sm">New clients</p>
             <p class="text-xs text-gray-400 mb-1">Registrations, last 12 months</p>
             <div class="ch-wrap" id="chartClients"><div class="ad-skel w-full h-24"></div></div>
         </div>
         <div class="card p-4">
-            <p class="font-bold text-gray-900 dark:text-gray-100 text-sm">Sales</p>
+            <p class="font-bold text-gray-900 text-sm">Sales</p>
             <p class="text-xs text-gray-400 mb-1">Paid subscriptions per month (&#8369;)</p>
             <div class="ch-wrap" id="chartSales"><div class="ad-skel w-full h-24"></div></div>
         </div>
