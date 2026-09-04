@@ -145,6 +145,15 @@
                      the app — in the green this one has always been, whatever
                      the utility that paints it is called. Reopening stays a
                      plain white button: undoing is not an event. --}}
+                {{-- Closing and archiving are two different acts: a closed
+                     season stays on the shelf with its reports one tap away,
+                     and this button is the only thing that moves it out of
+                     the lists — or brings it back. --}}
+                <button type="button" id="archiveToggleBtn"
+                        data-archived="{{ $schedule->status === \App\Models\AsCroppingSchedule::STATUS_ARCHIVED ? 1 : 0 }}"
+                        class="btn btn-sm btn-white">
+                    {{ $schedule->status === \App\Models\AsCroppingSchedule::STATUS_ARCHIVED ? 'Back to the shelf' : 'To the Archives' }}
+                </button>
                 <button type="button" id="statusToggleBtn" data-locked="{{ $schedule->isLocked() ? 1 : 0 }}"
                         class="btn btn-sm {{ $schedule->isLocked() ? 'btn-white' : 'btn-accent sweep-fill sweep-green' }}"
                         style="--sw-t:{{ 9 + ($schedule->id % 7) }}s;--sw-d:-{{ $schedule->id % 11 }}s">
@@ -569,6 +578,28 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             toast(err.message || 'Could not save that.', 'error');
         } finally { btn.disabled = false; }
+    });
+
+    // To the Archives / back to the shelf. Archiving is its own act — the
+    // season keeps its status story (closed stays closed on return).
+    document.getElementById('archiveToggleBtn')?.addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        const archived = btn.getAttribute('data-archived') === '1';
+        if (!archived) {
+            const ok = await confirmAction({
+                title: 'Move this season to the Archives?',
+                message: 'It leaves the seasons list and the home screen, but nothing is deleted — open it from Archives any time, and its reports keep working.',
+                confirmText: 'To the Archives',
+                confirmClass: 'btn-primary',
+            });
+            if (!ok) return;
+        }
+        btn.disabled = true;
+        try {
+            const res = await api(@json(route('sm.status')), { method: 'POST', body: { id: {{ $schedule->id }}, status: archived ? 'completed' : 'archived' } });
+            toast(res.message);
+            setTimeout(() => window.location.reload(), 500);
+        } catch (err) { toast(err.message || 'Could not update.', 'error'); btn.disabled = false; }
     });
 
     // Close the season (lock) / reopen it.

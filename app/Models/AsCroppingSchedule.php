@@ -48,44 +48,38 @@ class AsCroppingSchedule extends BaseModel
         'notifyLastSentDate' => 'date:Y-m-d',
 ];
 
-    /** Lifecycle status. 'setup' = still being built, 'completed' = locked. */
+    /**
+     * Lifecycle status. 'setup' = still being built, 'completed' = closed and
+     * locked, 'archived' = put away on purpose. Closing and archiving are two
+     * different acts now: a closed season stays on the shelf — locked, but in
+     * sight, still generating its reports — and only the explicit "To the
+     * Archives" button moves it out of the lists. (It used to move on close,
+     * and the first thing that taught anyone was a customer hunting for the
+     * season whose reports they had just come to read.)
+     */
     public const STATUS_SETUP = 'setup';
     public const STATUS_COMPLETED = 'completed';
+    public const STATUS_ARCHIVED = 'archived';
 
-    /**
-     * The states that mean "not being farmed any more".
-     *
-     * The column is an ENUM of draft, setup, generated, completed, archived.
-     * Closing a season writes 'completed'; 'archived' is the column's own
-     * older word for the same thing and no row uses it today — but a scope
-     * that only knew one of them would quietly leave such a row on the shelf
-     * for ever, which is the kind of bug nobody finds until a customer does.
-     */
-    public const CLOSED = ['completed', 'archived'];
-
-    /** A completed schedule is locked — read-only until the owner reopens it. */
+    /** A closed or archived schedule is locked — read-only until reopened. */
     public function isLocked(): bool
     {
-        return $this->status === self::STATUS_COMPLETED;
+        return in_array($this->status, [self::STATUS_COMPLETED, self::STATUS_ARCHIVED], true);
     }
 
     /**
-     * The seasons still being farmed.
-     *
-     * Closing a season means it is done, so it stops appearing on the home
-     * screen and on the seasons page — the two places that answer "what am I
-     * working on". It is not deleted and nothing about it changes; it moves to
-     * the Archives, and reopening it brings it straight back here.
+     * Everything that is not archived: the seasons being farmed AND the
+     * closed ones the owner still wants in sight.
      */
     public function scopeOnShelf($q)
     {
-        return $q->whereNotIn($this->getTable() . '.status', self::CLOSED);
+        return $q->where($this->getTable() . '.status', '!=', self::STATUS_ARCHIVED);
     }
 
-    /** The seasons that have been closed. */
+    /** The seasons put away on purpose. */
     public function scopeArchived($q)
     {
-        return $q->whereIn($this->getTable() . '.status', self::CLOSED);
+        return $q->where($this->getTable() . '.status', self::STATUS_ARCHIVED);
     }
 
     /**

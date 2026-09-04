@@ -316,7 +316,7 @@ class FarmReportController extends BaseScheduleController
             if ($ran > $expected + 15) {
                 $warnings[] = $lot->lotName . ': the crop ran about ' . $ran . ' days against a typical ' . $expected
                     . ' to maturity — delays (weather, replanting, late harvest) stretch costs, worth a look.';
-            } elseif ($schedule->status === \App\Models\AsCroppingSchedule::STATUS_COMPLETED && $ran < max(1, $expected - 15)) {
+            } elseif ($schedule->isLocked() && $ran < max(1, $expected - 15)) {
                 $warnings[] = $lot->lotName . ': the season closed at about ' . $ran . ' days against a typical '
                     . $expected . ' to maturity — an early cut usually means yield was left in the field.';
             }
@@ -503,7 +503,7 @@ class FarmReportController extends BaseScheduleController
             $blockers[] = 'The season has no activities yet — there is nothing to analyze.';
         }
         if ($kind === 'season') {
-            if ($schedule->status !== \App\Models\AsCroppingSchedule::STATUS_COMPLETED) {
+            if (! $schedule->isLocked()) {
                 $blockers[] = 'The season is not marked completed yet. Finish it in the Hub first — a season read is a look BACK.';
             }
             if ($undone > 0) {
@@ -1120,7 +1120,7 @@ class FarmReportController extends BaseScheduleController
         if ($crops->isNotEmpty() && $kind === 'season') {
             $past = \App\Models\AsCroppingSchedule::where('anisystemUserId', $schedule->anisystemUserId)
                 ->where('id', '!=', $schedule->id)
-                ->where('status', \App\Models\AsCroppingSchedule::STATUS_COMPLETED)
+                ->whereIn('status', [\App\Models\AsCroppingSchedule::STATUS_COMPLETED, \App\Models\AsCroppingSchedule::STATUS_ARCHIVED])
                 ->where('deleteStatus', 1)
                 ->whereHas('lots', fn ($q) => $q->whereIn('crop', $crops))
                 ->orderByDesc('id')->limit(3)->get();

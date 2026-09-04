@@ -22,10 +22,10 @@ class AppController extends Controller
         // 404'd when tapped, because the modules resolve schedules against the
         // effective owner and these ids belonged to somebody else's context.
         $ownerId = \App\Support\WorkerContext::effectiveOwnerId();
-        /* Closed seasons are done: they leave the home screen for the
-         * Archives on the seasons page, and come back the moment one is
-         * reopened. Everything on this dashboard reads through this, so the
-         * counts, the shelf and "open today's board" all agree. */
+        /* Only ARCHIVED seasons leave the home screen — a closed season
+         * stays in sight with its reports one tap away, until the owner
+         * archives it on purpose. Everything on this dashboard reads through
+         * this, so the counts, the shelf and "open today's board" all agree. */
         $schedulesQ = fn () => \App\Models\AsCroppingSchedule::active()->forClient($ownerId)->onShelf();
 
         $scheduleCount = $schedulesQ()->count();

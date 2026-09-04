@@ -694,9 +694,9 @@
                 </span>
                 <div class="min-w-0">
                     <h1 class="sch-arch-h">Archives</h1>
-                    <p class="sch-arch-p">{{ $archivedCount }} closed
-                        {{ \Illuminate\Support\Str::plural('season', $archivedCount) }}. Open any of them to
-                        read or reopen — reopening puts it back on the shelf.</p>
+                    <p class="sch-arch-p">{{ $archivedCount }} archived
+                        {{ \Illuminate\Support\Str::plural('season', $archivedCount) }}. Nothing here is gone —
+                        open one to read it, or send it back to the shelf from its page.</p>
                 </div>
             </div>
         </div>

@@ -193,8 +193,11 @@ class CroppingScheduleController extends Controller
             /* "Active" meant status = 'active', which is not one of the five
              * values the column allows (draft, setup, generated, completed,
              * archived) — so this counted zero on every farm in the app and
-             * always had. It is the seasons still being farmed. */
-            'active' => AsCroppingSchedule::active()->forClient($ownerId)->onShelf()->count(),
+             * always had. It is the seasons still being farmed — the shelf
+             * also carries closed seasons now, and a closed season is not
+             * "running". */
+            'active' => AsCroppingSchedule::active()->forClient($ownerId)->onShelf()
+                ->where('status', '!=', AsCroppingSchedule::STATUS_COMPLETED)->count(),
             'lots' => \App\Models\AsScheduleLot::where('deleteStatus', 1)
                 ->whereIn('croppingScheduleId', AsCroppingSchedule::active()->forClient($ownerId)->select('id'))
                 ->count(),
@@ -597,14 +600,21 @@ class CroppingScheduleController extends Controller
             return response()->json(['success' => false, 'message' => 'You have view-only access to this schedule.'], 403);
         }
         $schedule = $this->findOwnedOrFail($request->input('id'), true);
-        $completed = $request->input('status') === AsCroppingSchedule::STATUS_COMPLETED;
-        $schedule->update(['status' => $completed ? AsCroppingSchedule::STATUS_COMPLETED : AsCroppingSchedule::STATUS_SETUP]);
+        // Three acts: close (locks, stays on the shelf), archive (out of the
+        // lists), reopen (back to farming). Anything else reads as reopen.
+        $want = (string) $request->input('status');
+        if (! in_array($want, [AsCroppingSchedule::STATUS_COMPLETED, AsCroppingSchedule::STATUS_ARCHIVED], true)) {
+            $want = AsCroppingSchedule::STATUS_SETUP;
+        }
+        $schedule->update(['status' => $want]);
 
         return response()->json([
             'success' => true,
-            'message' => $completed
-                ? 'Schedule marked completed — it is now locked.'
-                : 'Schedule reopened for editing.',
+            'message' => match ($want) {
+                AsCroppingSchedule::STATUS_COMPLETED => 'Season closed — it stays on the shelf, locked, and its reports keep working.',
+                AsCroppingSchedule::STATUS_ARCHIVED => 'Season moved to the Archives.',
+                default => 'Schedule reopened for editing.',
+            },
             'data' => ['status' => $schedule->status, 'locked' => $schedule->isLocked()],
         ]);
     }
