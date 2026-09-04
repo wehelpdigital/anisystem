@@ -4138,7 +4138,9 @@
     // Public share links (unguessable token) — read by the activity share sheet.
     window.SM_SHARE = {
         token: @json($schedule->shareToken),
-        scheduleUrl: @json(route('share.schedule', $schedule->shareToken)),
+        {{-- A tokenless schedule (old rows, seeded data) must not 500 the
+             whole board over a share link. --}}
+        scheduleUrl: @json($schedule->shareToken ? route('share.schedule', $schedule->shareToken) : null),
         title: @json($schedule->title),
         scheduleId: {{ $schedule->id }},
         emailUrl: @json(route('sm.quick-share.email')),
