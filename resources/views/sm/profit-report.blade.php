@@ -70,7 +70,9 @@
 
 @section('content')
 <div class="pr-wrap">
-    <div class="card p-4 mb-4 pr-actions">
+    {{-- Stays hidden until there is a report to copy, print or attach —
+         a blocked season has nothing for these buttons to act on. --}}
+    <div class="card p-4 mb-4 pr-actions hidden" id="prActions">
         <p class="text-xs text-gray-500 mb-2">The whole plan's costs against the recorded harvest. Numbers refresh every time this page opens.</p>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <button type="button" id="prCopyBtn" class="btn btn-white w-full">Copy as Text</button>
@@ -152,6 +154,7 @@ const __init = () => {
             }
             render();
             $id('prContent').classList.remove('hidden');
+            $id('prActions').classList.remove('hidden');
         } catch (err) { toast(err.message, 'error'); }
     }
 
