@@ -18,6 +18,13 @@
                 'badge' => null,
             ],
             [
+                'label' => 'Expenses Report',
+                'desc' => 'Every peso the season spends — materials, labor, services, stock buys and the day book — with the income beside it.',
+                'url' => route('sm.expenses.report', ['id' => $schedule->id]),
+                'icon' => 'M9 17v-4m3 4v-6m3 6v-2M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z',
+                'badge' => null,
+            ],
+            [
                 'label' => 'Post Harvest Report',
                 'desc' => 'Yield & revenue vs. materials + labour + expenses, with savable copies.',
                 'url' => route('sm.revenue-report', ['id' => $schedule->id]),

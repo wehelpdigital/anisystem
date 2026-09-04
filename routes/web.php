@@ -593,6 +593,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // The report shelf: frozen copies that can ride into an Anee chat.
     Route::post('/app/sm-report-snapshot', [App\Http\Controllers\Manager\FarmReportController::class, 'snapshot'])->name('sm.report.snapshot');
     Route::get('/app/sm-report-preview/{id}', [App\Http\Controllers\Manager\FarmReportController::class, 'preview'])->whereNumber('id')->name('sm.report.preview');
+    Route::get('/app/sm-expenses-report', [App\Http\Controllers\Manager\FarmReportController::class, 'expensesPage'])->name('sm.expenses.report');
+    Route::get('/app/sm-expenses-report-data', [App\Http\Controllers\Manager\FarmReportController::class, 'expensesData'])->name('sm.expenses.report.data');
     Route::post('/app/sm-status', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'setStatus'])->name('sm.status');
     Route::post('/app/sm-activities-date-note-save', [App\Http\Controllers\Manager\ActivityController::class, 'saveDateNote'])->name('sm.activities.date-note.save');
     Route::delete('/app/sm-activities-date-note-delete', [App\Http\Controllers\Manager\ActivityController::class, 'deleteDateNote'])->name('sm.activities.date-note.delete');
