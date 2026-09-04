@@ -52,6 +52,20 @@
                 'icon' => 'M13 10V3L4 14h7v7l9-11h-7z',
                 'badge' => null,
             ],
+            [
+                'label' => 'View as Protocol',
+                'desc' => 'Turn a lot\'s season into an easy-to-read recipe — every step by its day count, ending on the yield it made.',
+                'url' => route('sm.protocol.report', ['id' => $schedule->id]),
+                'icon' => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 7h6m-6 4h4',
+                'badge' => null,
+            ],
+            [
+                'label' => 'Compare Reports',
+                'desc' => 'Two saved reports, one above the other — with Anee\'s read of the difference if you want it (30 credits).',
+                'url' => route('sm.compare.report', ['id' => $schedule->id]),
+                'icon' => 'M9 4v16m6-16v16M4 8h4m8 0h4M4 16h4m8 0h4',
+                'badge' => null,
+            ],
             // Post Harvest Observations lived here too, but it was only a link
             // to the module that already has its own tile in the hub — the
             // same screen offered twice.

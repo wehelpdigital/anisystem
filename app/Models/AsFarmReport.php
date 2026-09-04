@@ -12,7 +12,7 @@ class AsFarmReport extends BaseModel
 {
     protected $table = 'as_farm_reports';
 
-    public const KINDS = ['labor', 'expenses', 'profit', 'season', 'sofar'];
+    public const KINDS = ['labor', 'expenses', 'profit', 'season', 'sofar', 'protocol', 'compare'];
 
     protected $fillable = [
         'userId', 'croppingScheduleId', 'kind', 'title',

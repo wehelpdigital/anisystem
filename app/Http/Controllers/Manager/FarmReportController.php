@@ -664,7 +664,7 @@ class FarmReportController extends BaseScheduleController
     public function aneeList(Request $request)
     {
         $schedule = $this->schedule($request->query('id'));
-        $kind = $request->query('kind') === 'sofar' ? 'sofar' : 'season';
+        $kind = in_array($request->query('kind'), AsFarmReport::KINDS, true) ? $request->query('kind') : 'season';
         $rows = AsFarmReport::where('userId', Auth::id())
             ->where('croppingScheduleId', $schedule->id)
             ->where('kind', $kind)->where('status', 'ready')->where('deleteStatus', 1)
@@ -697,6 +697,319 @@ class FarmReportController extends BaseScheduleController
         AsFarmReport::where('userId', Auth::id())->where('id', $id)->update(['deleteStatus' => 0]);
 
         return $this->jsonOk('Report removed.');
+    }
+
+    /* ========================= VIEW AS PROTOCOL ========================= */
+
+    public function protocolPage(Request $request)
+    {
+        $schedule = $this->schedule($request->query('id'));
+        $schedule->load('lots');
+
+        return view('sm.protocol-report', ['schedule' => $schedule]);
+    }
+
+    /**
+     * A lot's season, said as a recipe: every DONE activity keyed to the
+     * lot's own day count, with materials and crew, ending on the yield it
+     * produced. Saved to the shelf the moment it is made — a protocol that
+     * worked is exactly the thing to keep and to hand to Anee.
+     */
+    public function protocolGenerate(Request $request)
+    {
+        $schedule = $this->schedule($request->input('scheduleId'));
+        $lot = $schedule->lots()->where('id', (int) $request->input('lotId'))->first();
+        if (! $lot) {
+            return $this->jsonFail('Pick a lot first.', 422);
+        }
+        $schedule->load(['activities.items', 'activities.workers', 'activities.lots']);
+
+        $dayType = $lot->dayType ?: ($schedule->dayType ?: 'DAS');
+        $zero = $lot->dayZeroDate ? \Carbon\Carbon::parse((string) $lot->dayZeroDate) : null;
+
+        $steps = [];
+        $skippedPlanned = 0;
+        foreach ($schedule->activities as $a) {
+            $touches = $a->lots->isEmpty() || $a->lots->contains('id', $lot->id);
+            if (! $touches) continue;
+            if (! $a->isDone) { $skippedPlanned++; continue; }
+            $day = ($zero && $a->targetDate) ? (int) $zero->diffInDays($a->targetDate, false) : null;
+            $steps[] = [
+                'day' => $day,
+                'dayLabel' => $day === null ? null : $dayType . ' ' . ($day > 0 ? '+' : '') . $day,
+                'date' => $a->targetDate?->format('M j'),
+                'endDate' => ($a->targetEndDate && $a->targetDate && ! $a->targetEndDate->equalTo($a->targetDate))
+                    ? $a->targetEndDate->format('M j') : null,
+                'title' => (string) $a->activityTitle,
+                'type' => (string) ($a->activityType ?: ''),
+                'time' => $a->timeRequired === 'whole' ? 'whole day' : ($a->timeRequired === 'half' ? 'half day' : null),
+                'crew' => $a->workers->count(),
+                'wholeFarm' => $a->lots->isEmpty(),
+                'materials' => $a->items->map(fn ($it) => trim(
+                    rtrim(rtrim(number_format((float) $it->quantity, 2), '0'), '.')
+                    . ($it->unitOfMeasure ? ' ' . $it->unitOfMeasure : '') . ' ' . $it->itemName
+                ))->values()->all(),
+            ];
+        }
+        usort($steps, function ($x, $y) {
+            if ($x['day'] === null && $y['day'] === null) return 0;
+            if ($x['day'] === null) return 1;
+            if ($y['day'] === null) return -1;
+
+            return $x['day'] <=> $y['day'];
+        });
+
+        // The payoff line: what this recipe actually produced.
+        $yields = \App\Models\AsSchedulePostHarvest::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)->where('lotId', $lot->id)
+            ->whereNotNull('yieldAmount')->get()
+            ->map(fn ($h) => rtrim(rtrim(number_format((float) $h->yieldAmount, 2), '0'), '.')
+                . ' ' . ($h->yieldUnit ?: '')
+                . ($h->pricePerUnit ? ' sold at ₱' . number_format((float) $h->pricePerUnit, 2) : ''))
+            ->values()->all();
+
+        $dates = array_values(array_filter(array_map(fn ($s2) => $s2['day'], $steps), fn ($v) => $v !== null));
+        $report = [
+            'lot' => $lot->lotName,
+            'crop' => $lot->crop ? (\App\Support\CropStages::label($lot->crop) ?: $lot->crop) : null,
+            'variety' => $lot->variety,
+            'size' => $lot->lotSize ? rtrim(rtrim(number_format((float) $lot->lotSize, 2), '0'), '.') . ' ' . ($lot->lotSizeUnit ?: '') : null,
+            'daySystem' => $dayType,
+            'zeroDate' => $zero?->format('M j, Y'),
+            'span' => $dates ? ($dayType . ' ' . min($dates) . ' → ' . $dayType . ' +' . max($dates)) : null,
+            'steps' => $steps,
+            'yields' => $yields,
+            'skippedPlanned' => $skippedPlanned,
+            'schedule' => $schedule->title,
+        ];
+
+        $title = 'Protocol — ' . $lot->lotName
+            . ($lot->variety ? ' (' . $lot->variety . ')' : ($report['crop'] ? ' (' . $report['crop'] . ')' : ''))
+            . ' · ' . $schedule->title;
+        $row = AsFarmReport::create([
+            'userId' => Auth::id(),
+            'croppingScheduleId' => $schedule->id,
+            'kind' => 'protocol',
+            'title' => mb_substr($title, 0, 190),
+            'params' => ['lotId' => $lot->id],
+            'report' => $report,
+            'body' => mb_substr($this->protocolBodyText($title, $report), 0, 60000),
+            'status' => 'ready',
+            'deleteStatus' => 1,
+        ]);
+
+        return $this->jsonOk('Protocol written and saved to the shelf.', ['data' => [
+            'id' => $row->id, 'title' => $row->title, 'report' => $report, 'kind' => 'protocol',
+        ]]);
+    }
+
+    private function protocolBodyText(string $title, array $r): string
+    {
+        $L = [];
+        $L[] = 'FARM PROTOCOL — ' . $title;
+        $L[] = str_repeat('=', 50);
+        $L[] = trim(($r['crop'] ?? '') . (($r['variety'] ?? null) ? ' · ' . $r['variety'] : '')
+            . (($r['size'] ?? null) ? ' · ' . $r['size'] : ''));
+        $L[] = 'Day system: ' . $r['daySystem'] . (($r['zeroDate'] ?? null) ? ' (day zero: ' . $r['zeroDate'] . ')' : '');
+        if ($r['yields']) {
+            $L[] = 'PRODUCED: ' . implode('; ', $r['yields']);
+        }
+        $L[] = '';
+        $L[] = 'THE STEPS';
+        $L[] = str_repeat('-', 50);
+        foreach ($r['steps'] as $s2) {
+            $head = ($s2['dayLabel'] ?? ($s2['date'] ?? 'undated')) . ' — ' . $s2['title'];
+            $bits = [];
+            if ($s2['date']) $bits[] = $s2['date'] . ($s2['endDate'] ? '→' . $s2['endDate'] : '');
+            if ($s2['time']) $bits[] = $s2['time'];
+            if ($s2['crew']) $bits[] = $s2['crew'] . ' worker' . ($s2['crew'] === 1 ? '' : 's');
+            if ($s2['wholeFarm']) $bits[] = 'whole-farm task';
+            $L[] = $head . ($bits ? ' (' . implode(', ', $bits) . ')' : '');
+            foreach ($s2['materials'] as $m) {
+                $L[] = '    • ' . $m;
+            }
+        }
+        if (($r['skippedPlanned'] ?? 0) > 0) {
+            $L[] = '';
+            $L[] = 'Note: ' . $r['skippedPlanned'] . ' planned but never-ticked activities are left out — this is what was actually done.';
+        }
+
+        return implode("\n", $L);
+    }
+
+    /* ============================ COMPARISON ============================ */
+
+    public const PRICE_COMPARE = 30;
+
+    public function comparePage(Request $request)
+    {
+        $schedule = $this->schedule($request->query('id'));
+
+        return view('sm.compare-report', ['schedule' => $schedule]);
+    }
+
+    /** Everything comparable: the user's saved reports across ALL seasons. */
+    public function compareOptions(Request $request)
+    {
+        $this->schedule($request->query('id'));   // access check only
+        $credits = app(AiCreditService::class);
+        $payer = $this->aneePayer();
+        $rows = AsFarmReport::where('userId', Auth::id())
+            ->where('status', 'ready')->where('deleteStatus', 1)
+            ->where('kind', '!=', 'compare')
+            ->orderByDesc('id')->limit(100)
+            ->get(['id', 'kind', 'title', 'created_at']);
+
+        return $this->jsonOk('ok', ['data' => [
+            'reports' => $rows->map(fn ($r) => [
+                'id' => $r->id, 'kind' => $r->kind, 'title' => $r->title,
+                'when' => $r->created_at?->format('M j, Y'),
+            ])->values(),
+            'price' => self::PRICE_COMPARE,
+            'balance' => round($credits->balance($payer->id), 2),
+            'unlimited' => $credits->unlimited((int) $payer->id),
+            'canUseAi' => $payer->canUseAi() && AiSetting::current()->isUsable(),
+        ]]);
+    }
+
+    /**
+     * Two saved reports, side by side. By hand it is free and instant; with
+     * Anee's read (30 credits) her verdict on the difference rides along —
+     * the same job walk as her other reports.
+     */
+    public function compareGenerate(Request $request)
+    {
+        $schedule = $this->schedule($request->input('scheduleId'));
+        $withAi = (bool) $request->boolean('withAi');
+        $a = AsFarmReport::where('userId', Auth::id())->where('status', 'ready')
+            ->where('deleteStatus', 1)->where('id', (int) $request->input('aId'))->first();
+        $b = AsFarmReport::where('userId', Auth::id())->where('status', 'ready')
+            ->where('deleteStatus', 1)->where('id', (int) $request->input('bId'))->first();
+        if (! $a || ! $b || $a->id === $b->id) {
+            return $this->jsonFail('Pick two different saved reports.', 422);
+        }
+
+        $meta = fn (AsFarmReport $r) => ['id' => $r->id, 'kind' => $r->kind, 'title' => $r->title, 'body' => (string) $r->body];
+        $report = ['a' => $meta($a), 'b' => $meta($b), 'analysis' => null];
+        $title = 'Comparison — ' . mb_substr($a->title, 0, 80) . ' vs ' . mb_substr($b->title, 0, 80);
+        $body = "COMPARISON\n" . str_repeat('=', 50)
+            . "\n\n### REPORT A ###\n" . mb_substr((string) $a->body, 0, 25000)
+            . "\n\n### REPORT B ###\n" . mb_substr((string) $b->body, 0, 25000);
+
+        if (! $withAi) {
+            $row = AsFarmReport::create([
+                'userId' => Auth::id(), 'croppingScheduleId' => $schedule->id,
+                'kind' => 'compare', 'title' => mb_substr($title, 0, 190),
+                'params' => ['aId' => $a->id, 'bId' => $b->id, 'withAi' => false],
+                'report' => $report, 'body' => mb_substr($body, 0, 60000),
+                'status' => 'ready', 'deleteStatus' => 1,
+            ]);
+
+            return $this->jsonOk('Comparison saved.', ['data' => [
+                'id' => $row->id, 'title' => $row->title, 'report' => $report, 'kind' => 'compare',
+            ]]);
+        }
+
+        $payer = $this->aneePayer();
+        $settings = AiSetting::current();
+        $credits = app(AiCreditService::class);
+        if (! $payer->canUseAi() || ! $settings->isUsable()) {
+            return $this->jsonFail('The AI analysis needs the AI Technician (Boss or Lifetime plan). You can still compare by hand.', 403);
+        }
+        $balance = $credits->balance($payer->id);
+        if ($balance < self::PRICE_COMPARE && ! $credits->unlimited((int) $payer->id)) {
+            return $this->jsonFail('You need ' . self::PRICE_COMPARE . ' credits for the AI analysis and have '
+                . rtrim(rtrim(number_format($balance, 2), '0'), '.') . '. You can still compare by hand.', 402, ['outOfCredits' => true]);
+        }
+
+        $row = AsFarmReport::create([
+            'userId' => Auth::id(), 'croppingScheduleId' => $schedule->id,
+            'kind' => 'compare', 'title' => mb_substr($title, 0, 190),
+            'params' => ['aId' => $a->id, 'bId' => $b->id, 'withAi' => true],
+            'report' => $report, 'status' => 'pending', 'deleteStatus' => 1,
+        ]);
+
+        $prompt = 'You are an agricultural analyst for a Philippine smallholder farm. Below are two of the farm\'s own '
+            . 'saved reports. Compare them honestly and usefully — same warm, plain voice as a debrief between friends. '
+            . 'Where the two are different kinds of report, compare what CAN be compared and say so.'
+            . "\n\n### REPORT A: " . $a->title . " ###\n" . mb_substr((string) $a->body, 0, 9000)
+            . "\n\n### REPORT B: " . $b->title . " ###\n" . mb_substr((string) $b->body, 0, 9000)
+            . "\n\nReturn ONLY a single JSON object, no fences, exactly this shape:\n"
+            . '{"headline": string (one sentence on the biggest difference), "verdict": string (3-4 plain sentences), '
+            . '"differences": [3-6 strings — the concrete differences that matter], '
+            . '"betterInA": [1-4 strings — where A comes out ahead], "betterInB": [1-4 strings — where B comes out ahead], '
+            . '"advice": [2-4 strings — what to carry forward from this comparison]}';
+
+        if (function_exists('fastcgi_finish_request')) {
+            ignore_user_abort(true);
+            @set_time_limit(0);
+            response()->json(['success' => true, 'message' => 'Working…', 'data' => [
+                'pending' => true, 'id' => $row->id,
+            ]])->send();
+            fastcgi_finish_request();
+            $this->runCompareJob($row->id, (int) $payer->id, $settings, $prompt, $body);
+            exit;
+        }
+        @set_time_limit(300);
+        $this->runCompareJob($row->id, (int) $payer->id, $settings, $prompt, $body);
+
+        return $this->aneeJob($row->id);
+    }
+
+    private function runCompareJob(int $id, int $payerId, AiSetting $settings, string $prompt, string $plainBody): void
+    {
+        $ai = app(AiClient::class);
+        $credits = app(AiCreditService::class);
+        try {
+            $result = $ai->ask($settings, [], $prompt, null, 2500);
+            if (! ($result['ok'] ?? false)) {
+                sleep(3);
+                $result = $ai->ask($settings, [], $prompt, null, 2500);
+            }
+            if (! ($result['ok'] ?? false)) {
+                throw new \RuntimeException($result['error'] ?? 'The AI could not be reached. Nothing was charged.');
+            }
+            $analysis = $this->parseAneeReport((string) $result['text']);
+            if ($analysis === null) {
+                $retry = $ai->ask($settings, [
+                    ['role' => 'user', 'text' => $prompt],
+                    ['role' => 'assistant', 'text' => (string) $result['text']],
+                ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.', null, 2500);
+                if ($retry['ok'] ?? false) {
+                    $analysis = $this->parseAneeReport((string) $retry['text']);
+                }
+            }
+            if ($analysis === null) {
+                Log::warning('compare-report: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
+                throw new \RuntimeException('The analysis came back unreadable. Nothing was charged — please try again.');
+            }
+
+            $row = AsFarmReport::find($id);
+            $credits->chargeAllowingNegative($payerId, (float) self::PRICE_COMPARE,
+                'Comparison analysis — ' . mb_substr((string) $row->title, 0, 140));
+
+            $rep = $row->report;
+            $rep['analysis'] = $analysis;
+            $aiText = "\n\n### ANEE'S READ OF THE DIFFERENCE ###\n" . ($analysis['headline'] ?? '') . "\n" . ($analysis['verdict'] ?? '')
+                . "\nDifferences: " . implode(' | ', (array) ($analysis['differences'] ?? []))
+                . "\nBetter in A: " . implode(' | ', (array) ($analysis['betterInA'] ?? []))
+                . "\nBetter in B: " . implode(' | ', (array) ($analysis['betterInB'] ?? []))
+                . "\nAdvice: " . implode(' | ', (array) ($analysis['advice'] ?? []));
+            $row->update([
+                'report' => $rep,
+                'body' => mb_substr($plainBody . $aiText, 0, 60000),
+                'credits' => self::PRICE_COMPARE,
+                'status' => 'ready',
+                'error' => null,
+            ]);
+        } catch (\Throwable $e) {
+            report($e);
+            AsFarmReport::where('id', $id)->update([
+                'status' => 'failed',
+                'error' => mb_substr($e->getMessage(), 0, 500),
+                'deleteStatus' => 0,
+            ]);
+        }
     }
 
     private function aneePayer(): \App\Models\User

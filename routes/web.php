@@ -606,6 +606,11 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-anee-report-list', [App\Http\Controllers\Manager\FarmReportController::class, 'aneeList'])->name('sm.anee.list');
     Route::get('/app/sm-anee-report-one/{id}', [App\Http\Controllers\Manager\FarmReportController::class, 'aneeOne'])->whereNumber('id')->name('sm.anee.one');
     Route::delete('/app/sm-anee-report-delete/{id}', [App\Http\Controllers\Manager\FarmReportController::class, 'aneeDelete'])->whereNumber('id')->name('sm.anee.delete');
+    Route::get('/app/sm-protocol-report', [App\Http\Controllers\Manager\FarmReportController::class, 'protocolPage'])->name('sm.protocol.report');
+    Route::post('/app/sm-protocol-generate', [App\Http\Controllers\Manager\FarmReportController::class, 'protocolGenerate'])->name('sm.protocol.generate');
+    Route::get('/app/sm-compare-report', [App\Http\Controllers\Manager\FarmReportController::class, 'comparePage'])->name('sm.compare.report');
+    Route::get('/app/sm-compare-options', [App\Http\Controllers\Manager\FarmReportController::class, 'compareOptions'])->name('sm.compare.options');
+    Route::post('/app/sm-compare-generate', [App\Http\Controllers\Manager\FarmReportController::class, 'compareGenerate'])->name('sm.compare.generate');
     Route::post('/app/sm-status', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'setStatus'])->name('sm.status');
     Route::post('/app/sm-activities-date-note-save', [App\Http\Controllers\Manager\ActivityController::class, 'saveDateNote'])->name('sm.activities.date-note.save');
     Route::delete('/app/sm-activities-date-note-delete', [App\Http\Controllers\Manager\ActivityController::class, 'deleteDateNote'])->name('sm.activities.date-note.delete');
