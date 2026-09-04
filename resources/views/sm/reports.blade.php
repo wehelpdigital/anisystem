@@ -38,6 +38,20 @@
                 'icon' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
                 'badge' => null,
             ],
+            [
+                'label' => 'Anee Season Report',
+                'desc' => 'Anee reads the whole finished season — money, weather, harvest, your notes — and writes the debrief. 300 credits.',
+                'url' => route('sm.anee.season', ['id' => $schedule->id]),
+                'icon' => 'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5',
+                'badge' => null,
+            ],
+            [
+                'label' => 'Analyze So Far',
+                'desc' => 'A mid-season read: where the crop stands, the risks, and what to do next — rescue calls included. 200 credits.',
+                'url' => route('sm.anee.sofar', ['id' => $schedule->id]),
+                'icon' => 'M13 10V3L4 14h7v7l9-11h-7z',
+                'badge' => null,
+            ],
             // Post Harvest Observations lived here too, but it was only a link
             // to the module that already has its own tile in the hub — the
             // same screen offered twice.

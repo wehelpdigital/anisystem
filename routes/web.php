@@ -597,6 +597,15 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-expenses-report-data', [App\Http\Controllers\Manager\FarmReportController::class, 'expensesData'])->name('sm.expenses.report.data');
     Route::get('/app/sm-profit-report', [App\Http\Controllers\Manager\FarmReportController::class, 'profitPage'])->name('sm.profit.report');
     Route::get('/app/sm-profit-report-data', [App\Http\Controllers\Manager\FarmReportController::class, 'profitData'])->name('sm.profit.report.data');
+    // Anee's own reports: the season debrief and the mid-season read.
+    Route::get('/app/sm-anee-season-report', [App\Http\Controllers\Manager\FarmReportController::class, 'seasonPage'])->name('sm.anee.season');
+    Route::get('/app/sm-anee-sofar-report', [App\Http\Controllers\Manager\FarmReportController::class, 'sofarPage'])->name('sm.anee.sofar');
+    Route::get('/app/sm-anee-report-status', [App\Http\Controllers\Manager\FarmReportController::class, 'aneeStatus'])->name('sm.anee.status');
+    Route::post('/app/sm-anee-report-generate', [App\Http\Controllers\Manager\FarmReportController::class, 'aneeGenerate'])->name('sm.anee.generate');
+    Route::get('/app/sm-anee-report-job/{id}', [App\Http\Controllers\Manager\FarmReportController::class, 'aneeJob'])->whereNumber('id')->name('sm.anee.job');
+    Route::get('/app/sm-anee-report-list', [App\Http\Controllers\Manager\FarmReportController::class, 'aneeList'])->name('sm.anee.list');
+    Route::get('/app/sm-anee-report-one/{id}', [App\Http\Controllers\Manager\FarmReportController::class, 'aneeOne'])->whereNumber('id')->name('sm.anee.one');
+    Route::delete('/app/sm-anee-report-delete/{id}', [App\Http\Controllers\Manager\FarmReportController::class, 'aneeDelete'])->whereNumber('id')->name('sm.anee.delete');
     Route::post('/app/sm-status', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'setStatus'])->name('sm.status');
     Route::post('/app/sm-activities-date-note-save', [App\Http\Controllers\Manager\ActivityController::class, 'saveDateNote'])->name('sm.activities.date-note.save');
     Route::delete('/app/sm-activities-date-note-delete', [App\Http\Controllers\Manager\ActivityController::class, 'deleteDateNote'])->name('sm.activities.date-note.delete');
