@@ -155,8 +155,13 @@
         </div>
     </div>
 
-    {{-- EVERY CHANGE, newest first, grouped by the day it happened. --}}
+    {{-- EVERY CHANGE, newest first, grouped by the day it happened.
+         READ-ONLY on purpose (the owner's call, 2026-09-04): a log is a
+         record, not a form. Activity lines come off by unticking or
+         editing the activity; hand entries are corrected from their day
+         on the activities board. --}}
     <div class="iv-pane" id="ivPaneLogs">
+        <p class="form-hint mb-2">A record, not a form — activity lines come off by unticking or editing the activity, and hand entries can be fixed from their day on the board.</p>
         <div id="ivLog" class="iv-log"></div>
         <div id="ivLogEmpty" class="card hidden">
             <div class="card-body iv-empty">

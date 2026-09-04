@@ -239,11 +239,6 @@
                     ${m.reason === 'created'
                         ? '<span class="iv-move-d" style="color:var(--color-gray-300)">·</span>'
                         : `<span class="iv-move-d ${m.isIn ? 'is-in' : 'is-out'}">${m.isIn ? '+' : '−'}${convable(Math.abs(m.delta), itemById(m.itemId)?.unit || 'piece')}</span>`}
-                    ${m.reason === 'activity'
-                        ? '<span class="iv-move-x" title="This one came from an activity. Untick the activity to take it back.">🔒</span>'
-                        : (m.reason === 'open' || m.reason === 'created')
-                            ? `<button type="button" class="iv-move-x" data-iv-start-edit="${m.itemId}" data-qty="${m.reason === 'open' ? Math.abs(m.delta) : 0}" data-on="${esc(m.on || '')}" title="Move the start — change the amount or the day and recalculate" aria-label="Move the start">✏️</button>`
-                            : `<button type="button" class="iv-move-x" data-iv-move-del="${m.id}" title="Remove this entry" aria-label="Remove this entry">✕</button>`}
                 </div>`;
             });
             box.innerHTML = html;
