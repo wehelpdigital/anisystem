@@ -74,8 +74,8 @@ class PostHarvestFields
             ]]],
         ],
         'lesson' => [
-            ['whatHappened', 'What went wrong or right', 'text', ['placeholder' => 'e.g. transplanted too late']],
-            ['changeNext', 'What to do differently next season', 'text', ['placeholder' => 'e.g. sow by the first week of June']],
+            ['whatHappened', 'What went wrong or right', 'textarea', ['placeholder' => 'e.g. transplanted too late']],
+            ['changeNext', 'What to do differently next season', 'textarea', ['placeholder' => 'e.g. sow by the first week of June']],
             ['priority', 'How much it matters', 'select', ['options' => [
                 'high' => 'Must not repeat', 'medium' => 'Worth changing', 'low' => 'Minor',
             ]]],

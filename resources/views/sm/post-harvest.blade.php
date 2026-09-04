@@ -476,6 +476,9 @@ const __init = () => {
                     <span class="crop-tag-t${said ? '' : ' is-none'}">${said ? escapeHtml(said) : 'Choose…'}</span>
                     <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>`;
+        } else if (f.type === 'textarea') {
+            // A lesson is sentences, not a phrase — give it room to breathe.
+            input = `<textarea class="form-textarea" data-ph-field="${f.key}" rows="3" maxlength="2000"${ph}>${escapeHtml(v)}</textarea>`;
         } else if (f.type === 'number' || f.type === 'money') {
             input = `<input type="number" class="form-input" data-ph-field="${f.key}" step="0.01" min="0" inputmode="decimal" value="${escapeHtml(v)}"${ph}>`;
         } else if (f.type === 'percent') {
