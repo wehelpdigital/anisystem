@@ -147,7 +147,7 @@ class SeasonMedia
             ->where(fn ($q) => $q->whereNotNull('imagePath')->orWhereNotNull('imagePaths'))
             ->orderByDesc('id')
             ->get(['id', 'title', 'observationDate', 'imagePath', 'imagePaths', 'updated_at']) as $ph) {
-            $label = $ph->title ?: 'Post-harvest observation';
+            $label = $ph->title ?: 'Observation';
             $paths = array_filter(array_merge(
                 [$ph->imagePath],
                 is_array($ph->imagePaths) ? $ph->imagePaths : []

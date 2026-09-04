@@ -1,7 +1,7 @@
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Post-harvest — ' . $schedule->title)
-@section('page-title', 'Post-harvest')
+@section('title', 'Observations — ' . $schedule->title)
+@section('page-title', 'Observations')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'post-harvest')
 @section('back', route('sm.hub', ['id' => $schedule->id]))

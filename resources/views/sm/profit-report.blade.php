@@ -88,7 +88,7 @@
 
     <div id="prBlocked" class="hidden">
         <div class="pr-block" id="prBlockedText"></div>
-        <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => 'post-harvest']) }}" class="btn btn-primary w-full mt-3">Open Post-harvest</a>
+        <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => 'post-harvest']) }}" class="btn btn-primary w-full mt-3">Open Observations</a>
     </div>
 
     <div id="prContent" class="hidden">

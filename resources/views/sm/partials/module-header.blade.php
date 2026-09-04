@@ -10,7 +10,7 @@
         'inventory' => ['label' => 'Inventory', 'route' => 'sm.inventory'],
         'documentation' => ['label' => 'Documentation', 'route' => 'sm.documentation'],
         'activities' => ['label' => 'Activities', 'route' => 'sm.activities'],
-        'post-harvest' => ['label' => 'Post-harvest', 'route' => 'sm.post-harvest'],
+        'post-harvest' => ['label' => 'Observations', 'route' => 'sm.post-harvest'],
         'notes' => ['label' => 'Notes', 'route' => 'sm.notes'],
         'growth' => ['label' => 'Growth Stages', 'route' => 'sm.growth'],
         'gallery' => ['label' => 'Gallery', 'route' => 'sm.gallery'],

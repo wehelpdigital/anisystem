@@ -9,7 +9,7 @@
         <input type="hidden" id="publishScheduleId">
         <p class="text-sm text-gray-600">
             <strong class="text-gray-900" id="publishScheduleTitle"></strong> will be readable by every member.
-            Workers, costs and post-harvest figures are not shared.
+            Workers, costs and observations are not shared.
         </p>
         <div>
             <label class="form-label" for="publishSummary">What should people know about it?</label>

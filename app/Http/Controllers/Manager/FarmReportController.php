@@ -290,7 +290,7 @@ class FarmReportController extends BaseScheduleController
         $blockers = [];
         $warnings = [];
         if ($yieldRows->isEmpty()) {
-            $blockers[] = 'No yield has been recorded in Post-harvest yet — a profit report needs the harvest side. Add a Yield observation with the amount (and its selling price) first.';
+            $blockers[] = 'No yield has been recorded in Observations yet — a profit report needs the harvest side. Add a Yield observation with the amount (and its selling price) first.';
         }
         if ($undone->count() > 0) {
             $warnings[] = $undone->count() . ' ' . ($undone->count() === 1 ? 'activity is' : 'activities are')
@@ -510,7 +510,7 @@ class FarmReportController extends BaseScheduleController
                 $blockers[] = $undone . ' ' . ($undone === 1 ? 'activity is' : 'activities are') . ' not ticked done. Tick what happened (or delete what did not) so the read is honest.';
             }
             if ($harvestCount === 0) {
-                $blockers[] = 'No post-harvest observations yet. Add at least the yield in Post-harvest — the harvest is half the story.';
+                $blockers[] = 'No observations yet. Add at least the yield in Observations — the harvest is half the story.';
             }
         } else {
             if ($undone === 0 && $schedule->activities->isNotEmpty()) {
