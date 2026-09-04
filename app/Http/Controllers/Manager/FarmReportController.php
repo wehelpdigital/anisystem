@@ -725,7 +725,17 @@ class FarmReportController extends BaseScheduleController
         $schedule->load(['activities.items', 'activities.workers', 'activities.lots']);
 
         $dayType = $lot->dayType ?: ($schedule->dayType ?: 'DAS');
+        // Day zero the way the activities board counts it: the lot's own
+        // date, or the earliest activity ticked "this is day zero" that
+        // covers this lot — whichever is earliest. Many farms never fill
+        // the lot column and anchor purely by that tick.
         $zero = $lot->dayZeroDate ? \Carbon\Carbon::parse((string) $lot->dayZeroDate) : null;
+        foreach ($schedule->activities as $a) {
+            if (! $a->isDayZero || ! $a->targetDate) continue;
+            if (! $a->lots->contains('id', $lot->id)) continue;
+            $d = \Carbon\Carbon::parse((string) $a->targetDate->format('Y-m-d'));
+            if (! $zero || $d->lt($zero)) $zero = $d;
+        }
 
         $steps = [];
         $skippedPlanned = 0;
