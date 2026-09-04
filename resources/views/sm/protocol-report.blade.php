@@ -241,10 +241,12 @@ const __init = () => {
             } catch (err) { toast('Copy failed on this browser.', 'error'); }
         });
         host.querySelector('[data-pt-del]')?.addEventListener('click', async (e) => {
+            // currentTarget is gone after any await — take the id first.
+            const delId = e.currentTarget.getAttribute('data-pt-del');
             const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this protocol?', message: 'It leaves the shelf.', confirmText: 'Delete' }) : true;
             if (!ok) return;
             try {
-                await api(U.del(e.currentTarget.getAttribute('data-pt-del')), { method: 'DELETE' });
+                await api(U.del(delId), { method: 'DELETE' });
                 toast('Protocol removed.');
                 host.hidden = true;
                 loadSaved();

@@ -343,10 +343,12 @@ const __init = () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
         host.querySelector('[data-cp-del]')?.addEventListener('click', async (e) => {
+            // currentTarget is gone after any await — take the id first.
+            const delId = e.currentTarget.getAttribute('data-cp-del');
             const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this comparison?', message: 'It leaves the shelf.', confirmText: 'Delete' }) : true;
             if (!ok) return;
             try {
-                await api(U.del(e.currentTarget.getAttribute('data-cp-del')), { method: 'DELETE' });
+                await api(U.del(delId), { method: 'DELETE' });
                 toast('Comparison removed.');
                 host.hidden = true;
                 $id('cpWizard').hidden = false;
