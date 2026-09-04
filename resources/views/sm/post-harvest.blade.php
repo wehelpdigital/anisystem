@@ -140,16 +140,17 @@
             <label class="form-label" for="phTitle">What are you recording? <span class="text-red-500">*</span></label>
             <input type="text" id="phTitle" class="form-input" maxlength="191" placeholder="e.g. Lot A harvest — 92 sacks">
         </div>
-        {{-- What kind of observation this is, picked as a tag rather than
-             hidden in a dropdown — it decides what the rest of the form asks,
-             so it should be the most visible thing on it. --}}
+        {{-- What kind of observation this is — a tag that opens a chooser
+             (the owner's call, 2026-09-05): it decides what the rest of the
+             form asks, and eight pills wrapped to three cramped lines on a
+             phone. --}}
         <div class="mb-4">
             <label class="form-label">What kind of observation?</label>
-            <div class="ph-cats" id="phCatPick">
-                @foreach ($categories as $key => $label)
-                    <button type="button" class="ph-catopt{{ $loop->first ? ' is-on' : '' }}" data-cat="{{ $key }}">{{ $label }}</button>
-                @endforeach
-            </div>
+            <button type="button" class="crop-tag" id="phCatBtn">
+                <span class="crop-tag-e" id="phCatIcon">🌾</span>
+                <span class="crop-tag-t" id="phCatNow">{{ $categories[array_key_first($categories)] }}</span>
+                <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
             <input type="hidden" id="phCategory" value="{{ array_key_first($categories) }}">
         </div>
         <div class="mb-4">
@@ -157,13 +158,18 @@
             @include('partials.date-tag', ['id' => 'phDate', 'empty' => 'Pick a date'])
         </div>
         <div class="mb-4">
-            <label class="form-label" for="phLot">Lot</label>
-            <select id="phLot" class="form-select">
+            <label class="form-label">Lot</label>
+            <select id="phLot" class="hidden" aria-hidden="true" tabindex="-1">
                 <option value="">Whole schedule</option>
                 @foreach ($schedule->lots as $lot)
                     <option value="{{ $lot->id }}">{{ $lot->lotName }}</option>
                 @endforeach
             </select>
+            <button type="button" class="crop-tag" id="phLotBtn">
+                <span class="crop-tag-e">🌾</span>
+                <span class="crop-tag-t is-none" id="phLotNow">Whole schedule</span>
+                <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
         </div>
 
         {{-- Built from the category above. A harvest figure and a lesson for
@@ -215,23 +221,71 @@
         <button type="button" class="btn btn-primary" id="phSaveBtn">Save observation</button>
     </div>
 </div>
+
+@php
+    $phCatIcons = ['yield' => '🌾', 'quality' => '✨', 'pest' => '🐛', 'weather' => '🌦️',
+        'storage' => '🏬', 'market' => '💰', 'lesson' => '📔', 'other' => '📝'];
+@endphp
+{{-- Which kind of observation — the category tag's chooser. --}}
+<div class="sheet hidden" id="phCatSheet" style="--sheet-width:24rem; z-index:150">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">What kind of observation?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="phCatList">
+        @foreach ($categories as $key => $label)
+            <button type="button" class="dt-row{{ $loop->first ? ' is-on' : '' }}" data-ph-cat="{{ $key }}" data-icon="{{ $phCatIcons[$key] ?? '📝' }}">
+                <span class="dt-row-e">{{ $phCatIcons[$key] ?? '📝' }}</span>
+                <span class="dt-row-body"><b>{{ $label }}</b></span>
+                <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>
+        @endforeach
+    </div>
+</div>
+
+{{-- Which lot — the lot tag's chooser. --}}
+<div class="sheet hidden" id="phLotSheet" style="--sheet-width:24rem; z-index:150">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Which lot?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="phLotList">
+        <button type="button" class="dt-row is-on" data-ph-lot="">
+            <span class="dt-row-e">🗺️</span>
+            <span class="dt-row-body"><b>Whole schedule</b><i>Not tied to one lot</i></span>
+            <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
+        @foreach ($schedule->lots as $lot)
+            <button type="button" class="dt-row" data-ph-lot="{{ $lot->id }}">
+                <span class="dt-row-e">🌾</span>
+                <span class="dt-row-body"><b>{{ $lot->lotName }}</b><i>{{ \App\Support\CropStages::label($lot->crop) ?: 'No crop set' }}</i></span>
+                <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>
+        @endforeach
+    </div>
+</div>
+
+{{-- One chooser serves every category-driven select (wet or dry, severity,
+     drying method…) — the rows are poured in when a tag is tapped. --}}
+<div class="sheet hidden" id="phSelSheet" style="--sheet-width:24rem; z-index:150">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="phSelTitle">Choose</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="phSelList"></div>
+</div>
 @endpush
 
 @push('head')
+@include('partials.tag-sheet-css')
 <style>
-    .ph-cats { display: flex; flex-wrap: wrap; gap: .35rem; }
-    .ph-catopt { padding: .38rem .7rem; border: 2px solid var(--color-gray-200); background: var(--color-white);
-        border-radius: 999px; font-size: .78rem; font-weight: 700; color: #374151; cursor: pointer;
-        transition: background .25s ease, border-color .25s ease, color .25s ease; }
-    .ph-catopt:hover { border-color: #a8cc7e; background: #f3f8ec; }
-    .ph-catopt.is-on,
-    html.dark .ph-catopt.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
     .ph-detail { display: flex; gap: .4rem; font-size: .78rem; }
     .ph-detail dt { color: var(--color-gray-400); }
     .ph-detail dd { color: var(--color-gray-800); font-weight: 600; }
-    html.dark .ph-catopt { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
     html.dark .ph-detail dd { color: #e5e9f5; }
-    @media (prefers-reduced-motion: reduce) { .ph-catopt { transition: none; } }
 </style>
 @endpush
 
@@ -409,10 +463,19 @@ const __init = () => {
         const ph = f.placeholder ? ` placeholder="${escapeHtml(f.placeholder)}"` : '';
         let input;
         if (f.type === 'select') {
+            /* The select stays as the value store (readFields and the save
+               read it unchanged); the tag is its face, one shared sheet its
+               list — the house idiom, not a dropdown. */
             const opts = Object.keys(f.options || {})
                 .map((k) => `<option value="${escapeHtml(k)}"${v === k ? ' selected' : ''}>${escapeHtml(f.options[k])}</option>`)
                 .join('');
-            input = `<select class="form-select" data-ph-field="${f.key}"><option value="">—</option>${opts}</select>`;
+            const said = (f.options && f.options[v]) ? f.options[v] : '';
+            input = `<select class="hidden" aria-hidden="true" tabindex="-1" data-ph-field="${f.key}"><option value="">—</option>${opts}</select>
+                <button type="button" class="crop-tag" data-ph-selbtn="${f.key}">
+                    <span class="crop-tag-e">🔹</span>
+                    <span class="crop-tag-t${said ? '' : ' is-none'}">${said ? escapeHtml(said) : 'Choose…'}</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>`;
         } else if (f.type === 'number' || f.type === 'money') {
             input = `<input type="number" class="form-input" data-ph-field="${f.key}" step="0.01" min="0" inputmode="decimal" value="${escapeHtml(v)}"${ph}>`;
         } else if (f.type === 'percent') {
@@ -457,14 +520,84 @@ const __init = () => {
             : '';
     }
 
-    document.getElementById('phCatPick')?.addEventListener('click', (e) => {
-        const opt = e.target.closest('.ph-catopt');
-        if (!opt) return;
-        const cat = opt.getAttribute('data-cat');
+    /* ---- the three choosers: category, lot, and the generic select ---- */
+    function sayPhCat(cat) {
+        const row = document.querySelector(`#phCatList [data-ph-cat="${cat}"]`);
+        document.querySelectorAll('#phCatList [data-ph-cat]').forEach((r) => r.classList.toggle('is-on', r === row));
+        const icon = fld('phCatIcon');
+        const now = fld('phCatNow');
+        if (icon) icon.textContent = row?.getAttribute('data-icon') || '📝';
+        if (now) now.textContent = row?.querySelector('b')?.textContent || cat;
+    }
+    document.getElementById('phCatBtn')?.addEventListener('click', () => openSheet('phCatSheet'));
+    document.getElementById('phCatList')?.addEventListener('click', (e) => {
+        const row = e.target.closest('[data-ph-cat]');
+        if (!row) return;
+        const cat = row.getAttribute('data-ph-cat');
         fld('phCategory').value = cat;
-        document.querySelectorAll('#phCatPick .ph-catopt').forEach((b) => b.classList.toggle('is-on', b === opt));
+        sayPhCat(cat);
+        closeSheet('phCatSheet');
         paintFields(cat);
     });
+
+    function sayPhLot() {
+        const sel = fld('phLot');
+        const now = fld('phLotNow');
+        if (!sel || !now) return;
+        const row = document.querySelector(`#phLotList [data-ph-lot="${sel.value}"]`);
+        document.querySelectorAll('#phLotList [data-ph-lot]').forEach((r) => r.classList.toggle('is-on', r === row));
+        now.textContent = sel.value ? (row?.querySelector('b')?.textContent || sel.options[sel.selectedIndex]?.text || 'Lot') : 'Whole schedule';
+        now.classList.toggle('is-none', !sel.value);
+    }
+    document.getElementById('phLotBtn')?.addEventListener('click', () => openSheet('phLotSheet'));
+    document.getElementById('phLotList')?.addEventListener('click', (e) => {
+        const row = e.target.closest('[data-ph-lot]');
+        if (!row) return;
+        fld('phLot').value = row.getAttribute('data-ph-lot');
+        sayPhLot();
+        closeSheet('phLotSheet');
+    });
+
+    /* One sheet for every category-driven select — poured on each open. */
+    let phSelKey = null;
+    document.getElementById('phFields')?.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-ph-selbtn]');
+        if (!btn) return;
+        phSelKey = btn.getAttribute('data-ph-selbtn');
+        const f = (PH_FIELDS[fld('phCategory').value] || []).find((x) => x.key === phSelKey);
+        if (!f) return;
+        const sel = document.querySelector(`#phFields select[data-ph-field="${phSelKey}"]`);
+        const cur = sel ? sel.value : '';
+        fld('phSelTitle').textContent = f.label;
+        fld('phSelList').innerHTML = `
+            <button type="button" class="dt-row${cur === '' ? ' is-on' : ''}" data-ph-sel="">
+                <span class="dt-row-e">➖</span>
+                <span class="dt-row-body"><b>Not saying</b></span>
+                <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>`
+            + Object.keys(f.options || {}).map((k) => `
+            <button type="button" class="dt-row${cur === k ? ' is-on' : ''}" data-ph-sel="${escapeHtml(k)}">
+                <span class="dt-row-e">🔹</span>
+                <span class="dt-row-body"><b>${escapeHtml(f.options[k])}</b></span>
+                <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>`).join('');
+        openSheet('phSelSheet');
+    });
+    document.getElementById('phSelList')?.addEventListener('click', (e) => {
+        const row = e.target.closest('[data-ph-sel]');
+        if (!row || !phSelKey) return;
+        const val = row.getAttribute('data-ph-sel');
+        const sel = document.querySelector(`#phFields select[data-ph-field="${phSelKey}"]`);
+        if (sel) {
+            sel.value = val;
+            const btn = document.querySelector(`#phFields [data-ph-selbtn="${phSelKey}"] .crop-tag-t`);
+            const said = val ? (sel.options[sel.selectedIndex]?.text || val) : '';
+            if (btn) { btn.textContent = said || 'Choose…'; btn.classList.toggle('is-none', !said); }
+            sel.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        closeSheet('phSelSheet');
+    });
+
     document.getElementById('phFields')?.addEventListener('input', refreshValueHint);
 
     // Everything hanging off this observation, held as {type, path, url} while
@@ -595,9 +728,7 @@ const __init = () => {
         fld('phTitle').value = o ? o.title : '';
         const cat = o ? (o.category || 'yield') : 'yield';
         fld('phCategory').value = cat;
-        document.querySelectorAll('#phCatPick .ph-catopt').forEach((b) => {
-            b.classList.toggle('is-on', b.getAttribute('data-cat') === cat);
-        });
+        sayPhCat(cat);
         // The columns and the JSON details are one set of answers as far as
         // the form is concerned.
         paintFields(cat, o ? Object.assign({}, o.details || {}, {
@@ -606,6 +737,7 @@ const __init = () => {
         }) : {});
         fld('phDate').value = o ? (o.observationDate || '') : new Date().toISOString().slice(0, 10);
         fld('phLot').value = o && o.lotId ? String(o.lotId) : '';
+        sayPhLot();
         // A failed upload leaves its red row behind on purpose; it should not
         // still be there next time the sheet opens.
         window.smAttachBar?.(attachBar).reset();
