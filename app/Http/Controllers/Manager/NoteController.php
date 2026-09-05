@@ -85,6 +85,10 @@ class NoteController extends BaseScheduleController
             'deleteStatus' => 1,
         ]);
 
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'note', (int) $note->id, $request->input('tags', []));
+        }
+
         return $this->jsonOk('Note saved.', ['data' => $this->present($note)]);
     }
 
@@ -102,6 +106,10 @@ class NoteController extends BaseScheduleController
         }
 
         $note->update($data);
+
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'note', (int) $note->id, $request->input('tags', []));
+        }
 
         return $this->jsonOk('Note updated.', ['data' => $this->present($note->fresh())]);
     }

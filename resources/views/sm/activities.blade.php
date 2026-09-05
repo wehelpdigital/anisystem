@@ -3659,6 +3659,11 @@
             </div>
         </div>
 
+        <div id="tagFilterWrap" class="hidden">
+            <label class="text-xs font-semibold text-gray-500">Tags</label>
+            <div class="flex flex-wrap gap-1.5 mt-1.5" id="tagFilterChips" data-chip-group></div>
+        </div>
+
         @if ($schedule->lots->count())
             <div>
                 <div class="flex items-center justify-between">
@@ -4159,6 +4164,7 @@
         @if (! $isWorker)
         documentation: { label: 'Documentation', url: @json(route('sm.documentation', ['id' => $schedule->id])) },
         'post-harvest': { label: 'Observations', url: @json(route('sm.post-harvest',  ['id' => $schedule->id])) },
+        'tags': { label: 'Tags', url: @json(route('sm.tags', ['id' => $schedule->id])) },
         @endif
         @if ($may('notes'))
         notes:         { label: 'Notes',         url: @json(route('sm.notes',        ['id' => $schedule->id])) },
@@ -4581,6 +4587,15 @@
         const pickTitle = document.getElementById('mirrorPickTitle');
         const lotsOn = new Set();
         const typesOn = new Set();
+        const tagsOn = new Set();
+        const tagNameById = new Map();
+        function fillTagNames() {
+            if (!window.smTags) return Promise.resolve();
+            return smTags.all().then((all) => {
+                tagNameById.clear();
+                (all || []).forEach((t) => tagNameById.set(String(t.id), t.name));
+            }).catch(() => {});
+        }
         // id/slug -> the name a person would call it, read off the board.
         const lotNameById = new Map();
         const typeNameBySlug = new Map();
@@ -4649,8 +4664,13 @@
             });
         }
 
+        function setAndNames(which) {
+            if (which === 'lots') return [lotsOn, lotNameById];
+            if (which === 'tags') return [tagsOn, tagNameById];
+            return [typesOn, typeNameBySlug];
+        }
         function chosenNames(which) {
-            const [set, names] = which === 'lots' ? [lotsOn, lotNameById] : [typesOn, typeNameBySlug];
+            const [set, names] = setAndNames(which);
             return [...set].map((k) => names.get(k) || k);
         }
 
@@ -4660,7 +4680,9 @@
          * because three names do not fit and would only trail off. */
         function sayPicks() {
             [['lots', lotsBtn, 'Every lot', 'lots'],
-             ['types', typesBtn, 'Activity Type', 'types']].forEach(([which, btn, empty, word]) => {
+             ['types', typesBtn, 'Activity Type', 'types'],
+             ['tags', document.getElementById('mirrorTagsBtn'), 'Tags', 'tags']].forEach(([which, btn, empty, word]) => {
+                if (!btn) return;
                 const names = chosenNames(which);
                 const t = btn.querySelector('.mir-pickbtn-t');
                 t.textContent = !names.length ? empty
@@ -4672,8 +4694,8 @@
 
         function openPick(which) {
             picking = which;
-            const [set, names] = which === 'lots' ? [lotsOn, lotNameById] : [typesOn, typeNameBySlug];
-            pickTitle.textContent = which === 'lots' ? 'Which lots?' : 'Activity Type';
+            const [set, names] = setAndNames(which);
+            pickTitle.textContent = which === 'lots' ? 'Which lots?' : (which === 'tags' ? 'Which tags?' : 'Activity Type');
             pickBody.innerHTML = '';
             [...names.entries()].sort((a, b) => a[1].localeCompare(b[1])).forEach(([key, name]) => {
                 const b = document.createElement('button');
@@ -4717,6 +4739,7 @@
             readVocabulary();
             lotsOn.clear();
             typesOn.clear();
+            tagsOn.clear();
             sayPicks();
             const groups = document.querySelectorAll('#activitiesList .date-group[data-date]');
             groups.forEach((g) => {
@@ -4870,7 +4893,7 @@
                     ? (said(fromInput.value) || 'the start') + ' → ' + (said(toInput.value) || 'the end')
                     : '')
                 : (qInput.value || '').trim().toLowerCase();
-            const asking = !!raw || lotsOn.size > 0 || typesOn.size > 0;
+            const asking = !!raw || lotsOn.size > 0 || typesOn.size > 0 || tagsOn.size > 0;
             let days = 0;
             let acts = 0;
             body.querySelectorAll('.date-group').forEach((g) => {
@@ -4885,13 +4908,15 @@
                     const kinds = (c.getAttribute('data-activity-types')
                         || c.getAttribute('data-activity-type') || '').split(',').map((s) => s.trim());
                     const onType = typesOn.size === 0 || kinds.some((k) => typesOn.has(k));
-                    const ok = onLot && onType && matches(g, c, raw);
+                    const onTag = tagsOn.size === 0
+                        || String(c.getAttribute('data-tag-ids') || '').split(',').filter(Boolean).some((id) => tagsOn.has(id));
+                    const ok = onLot && onType && onTag && matches(g, c, raw);
                     c.classList.toggle('mir-away', !ok);
                     if (ok) shown++;
                 });
                 // A date range keeps its days even where they hold nothing:
                 // "that week is empty" is the answer, not a blank screen.
-                const keep = mode === 'date' && raw && !lotsOn.size && !typesOn.size
+                const keep = mode === 'date' && raw && !lotsOn.size && !typesOn.size && !tagsOn.size
                     ? inRange(g)
                     : shown > 0;
                 g.classList.toggle('mir-away', !keep);
@@ -4916,7 +4941,7 @@
         function sayFilters(raw) {
             const bits = [];
             if (raw) bits.push((mode === 'day' ? 'Day ' : '') + raw);
-            const names = [...chosenNames('lots'), ...chosenNames('types')];
+            const names = [...chosenNames('lots'), ...chosenNames('types'), ...chosenNames('tags')];
             if (names.length) bits.push(names.join(', '));
             findN.textContent = String(bits.length);
             findN.classList.toggle('hidden', bits.length === 0);
@@ -4960,6 +4985,7 @@
          * as the tap stalls the animation before it starts. The dots hold the
          * space while it happens. */
         function open() {
+            fillTagNames().then(() => sayPicks());
             if (!panel.hidden) return;
             body.innerHTML = '';
             load.classList.add('is-on');
@@ -5047,10 +5073,11 @@
 
         lotsBtn?.addEventListener('click', () => openPick('lots'));
         typesBtn?.addEventListener('click', () => openPick('types'));
+        document.getElementById('mirrorTagsBtn')?.addEventListener('click', () => openPick('tags'));
         document.getElementById('mirrorPickClose')?.addEventListener('click', closePick);
         document.getElementById('mirrorPickDone')?.addEventListener('click', closePick);
         document.getElementById('mirrorPickClear')?.addEventListener('click', () => {
-            (picking === 'lots' ? lotsOn : typesOn).clear();
+            setAndNames(picking)[0].clear();
             pickBody.querySelectorAll('.mir-lot').forEach((b) => {
                 b.classList.remove('is-on');
                 b.setAttribute('aria-pressed', 'false');
@@ -5527,6 +5554,8 @@
      actually asks for it. --}}
 @include('sm.partials.inventory-move-sheet')
 @include('sm.partials.inventory-js', ['schedule' => $schedule, 'standalone' => false])
+{{-- The tag picker: one shared sheet for every form on the board. --}}
+@include('sm.partials.tag-picker')
 @include('community.partials.lightbox-js')
 <script>
     // Filter-sheet extras: active-filter count badge on the toolbar button, and
@@ -5539,6 +5568,7 @@
             let n = (byId('activitySearchInput')?.value || '').trim() ? 1 : 0;
             n += document.querySelectorAll('#typeFilterChips .chip.is-selected').length;
             n += document.querySelectorAll('#lotFilterChips .chip.is-selected').length;
+            n += document.querySelectorAll('#tagFilterChips .chip.is-selected').length;
             return n;
         }
         function refreshBadge() {
@@ -5568,7 +5598,7 @@
         byId('activitySearchInput')?.addEventListener('input', refreshBadge);
         document.addEventListener('chips:change', (e) => {
             const id = e.target?.id;
-            if (id === 'typeFilterChips' || id === 'lotFilterChips') refreshBadge();
+            if (id === 'typeFilterChips' || id === 'lotFilterChips' || id === 'tagFilterChips') refreshBadge();
         });
 
         byId('clearFiltersBtn')?.addEventListener('click', () => {
@@ -5577,7 +5607,7 @@
                 search.value = '';
                 search.dispatchEvent(new Event('input', { bubbles: true }));
             }
-            ['typeFilterChips', 'lotFilterChips'].forEach((gid) => {
+            ['typeFilterChips', 'lotFilterChips', 'tagFilterChips'].forEach((gid) => {
                 const group = byId(gid);
                 if (!group) return;
                 let changed = false;

@@ -124,6 +124,7 @@
          lightbox; a second copy would only duplicate their ids. --}}
     @if (! request()->boolean('partial'))
         @include('sm.partials.draw-canvas')
+@include('sm.partials.tag-picker')
         @include('sm.partials.note-lightbox')
     @endif
     {{-- Unlike those two, no shell carries the gallery picker — so the pad's
@@ -153,6 +154,7 @@
                  with the vertical padding a multi-line box needs. --}}
             <textarea id="drNote" class="form-input form-textarea" rows="3" maxlength="2000" placeholder="What this shows, and why it was worth drawing."></textarea>
             <p class="text-xs text-gray-400 mt-1.5" id="drKind"></p>
+            <div class="tp-mount mt-3" id="drTagsMount" data-tags data-tags-kind="note"></div>
             <button type="button" class="btn btn-primary w-full mt-3" id="drConfirm">Save drawing</button>
         </div>
     </div>
@@ -403,7 +405,7 @@
                 const btn = e.currentTarget;
                 btn.disabled = true;
                 try {
-                    const r = await api(U.save, { method: 'POST', body: Object.assign({ title, note }, pending) });
+                    const r = await api(U.save, { method: 'POST', body: Object.assign({ title, note, tags: window.smTags ? smTags.value(document.getElementById('drTagsMount')) : [] }, pending) });
                     const d = r.data || {};
                     const row = {
                         noteId: d.noteId, index: d.index, title: d.title || title,

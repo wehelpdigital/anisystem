@@ -67,6 +67,11 @@ class WorkerModuleAccess
         ['sm.map',     'maps'],
         ['sm.map.*',   'maps'],
 
+        // Tags ride the activity forms, so whoever may work the board may
+        // read and coin them; the writes still pass canEdit inside.
+        ['sm.tags',    'activities'],
+        ['sm.tags.*',  'activities'],
+
         ['sm.draw',    'draw'],
         ['sm.draw.*',  'draw'],
         // A drawing filed into the notebook is both things at once.

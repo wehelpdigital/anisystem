@@ -229,6 +229,9 @@ class InventoryController extends BaseScheduleController
             'croppingScheduleId' => $schedule->id,
             'deleteStatus' => 1,
         ]);
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'item', (int) $item->id, $request->input('tags', []));
+        }
 
         /* An opening count is part of adding the thing, not a second errand.
          * Nobody adds Urea to a list in order to say they have none of it. */
@@ -296,6 +299,10 @@ class InventoryController extends BaseScheduleController
         }
 
         $item->update($this->fields($request));
+
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'item', (int) $item->id, $request->input('tags', []));
+        }
 
         return $this->jsonOk('Saved.', ['data' => $this->oneItem($item->fresh())]);
     }
@@ -409,6 +416,10 @@ class InventoryController extends BaseScheduleController
             // the row is stamped after the fact rather than widening every
             // signature between here and there.
             $move->update($entered ? ['enteredQty' => $entered['qty'], 'enteredUnit' => $entered['unit']] : []);
+        }
+
+        if ($move && $request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'move', (int) $move->id, $request->input('tags', []));
         }
 
         $have = $this->stock->onHand($item->id);
@@ -573,6 +584,10 @@ class InventoryController extends BaseScheduleController
             $entered,
             $boardSort
         );
+
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'move', (int) $move->id, $request->input('tags', []));
+        }
 
         return $this->jsonOk('Entry updated — ' . $item->say($this->stock->onHand($item->id)) . ' on hand.');
     }

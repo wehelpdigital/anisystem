@@ -725,6 +725,10 @@ class ScheduleMapController extends BaseScheduleController
             // Everyone in the room is looking at these same shapes. Tell them
             // WHICH file they now belong to, so the next person to nudge one
             // writes back into it instead of forking a second copy.
+            if ($request->has('tags')) {
+                \App\Support\ScheduleTags::sync($schedule, 'map', (int) $saveId, $request->input('tags', []));
+            }
+
             $this->emit($schedule->id, [
                 'action' => 'saved',
                 'saveId' => (int) $saveId,

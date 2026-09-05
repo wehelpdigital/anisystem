@@ -235,6 +235,7 @@
                 <input type="text" id="cmapSaveName" class="form-input" placeholder="e.g. North lot irrigation plan" autocomplete="off">
                 <label class="cmap-save-label" for="cmapSaveDesc">What is this map about? (optional)</label>
                 <textarea id="cmapSaveDesc" class="form-textarea" rows="3"></textarea>
+                <div class="tp-mount" id="cmapTagsMount" data-tags data-tags-kind="map" style="margin-top:.6rem"></div>
                 {{-- Shown only when the shapes on screen came from a saved
                      map: the usual answer is "this one, changed". --}}
                 <button type="button" class="cmap-save-go cmap-save-over" id="cmapSaveOver" hidden><span id="cmapSaveOverLabel">Save over this map</span></button>
@@ -3593,6 +3594,7 @@
                 // Drawn with the team or drawn alone: the same tool, but not
                 // the same thing to whoever loads it later.
                 source: @json(request()->routeIs('sm.collab') ? 'team' : 'solo'),
+                tags: window.smTags ? smTags.value(document.getElementById('cmapTagsMount')) : [],
                 image,
                 title: document.getElementById('cmapSaveName').value.trim(),
                 description: document.getElementById('cmapSaveDesc').value.trim(),

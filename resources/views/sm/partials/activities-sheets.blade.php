@@ -654,6 +654,10 @@
                     <span id="activityVideoUploadLabel">Add videos</span>
                 </button>
             </div>
+
+            {{-- Tags: a word or two tied to this activity, findable later in
+                 the Tags module and the board's filters. --}}
+            <div class="tp-mount" id="activityTagsMount" data-tags data-tags-kind="activity"></div>
         </div>
     </div>
     {{-- No Cancel. The ✕ in the header and the tap outside both already
@@ -687,8 +691,9 @@
                 ['workers', 'Workers', 'M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4z'],
                 ['inventory', 'Inventory', 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4'],
                 ['documentation', 'Documentation', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
-                ['post-harvest', 'Post-harvest', 'M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z'],
+                ['post-harvest', 'Observations', 'M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z'],
                 ['notes', 'Notes', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
+                ['tags', 'Tags', 'M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-5 5a2 2 0 01-2.828 0l-7-7A2 2 0 013 11V5a2 2 0 012-2h2z'],
                 ['maps', 'Maps', 'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2M15 11.5a2 2 0 11-4 0 2 2 0 014 0z'],
                 ['gallery', 'Gallery', 'M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM8 14l2.5-3 2 2.5L15 10l3 4'],
                 ['growth', 'Growth Stages', 'M12 21c0-4 1-7 4-9M12 21c0-5-2-8-6-9m6 9V8m0 0c0-2.5 1.5-4 4-4 0 2.5-1.5 4-4 4zm0 0C12 5.5 10.5 4 6.5 4c0 2.5 1.5 4 5.5 4z'],
@@ -980,6 +985,10 @@
                         <button type="button" class="mir-pickbtn" id="mirrorTypesBtn" data-pick="types">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5a2 2 0 011.41.59l7 7a2 2 0 010 2.82l-5 5a2 2 0 01-2.82 0l-7-7A2 2 0 013 10V5a2 2 0 012-2z"/></svg>
                             <span class="mir-pickbtn-t">Activity Type</span>
+                        </button>
+                        <button type="button" class="mir-pickbtn" id="mirrorTagsBtn" data-pick="tags">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-5 5a2 2 0 01-2.828 0l-7-7A2 2 0 013 11V5a2 2 0 012-2h2z"/></svg>
+                            <span class="mir-pickbtn-t">Tags</span>
                         </button>
                     </div>
                 </div>
@@ -1635,6 +1644,7 @@
             </div>
         </div>
         <p class="form-hint">Notes are scoped to the current version — forks carry their own copies. They render on printed documents too. Use <b>Draw</b> to sketch and drop it straight into the note.</p>
+        <div class="tp-mount" id="dateNoteTagsMount" data-tags data-tags-kind="daynote"></div>
     </div>
     <div class="sheet-footer">
         <button type="button" id="dateNoteClearBtn" class="btn btn-danger-outline mr-auto hidden">Clear Note</button>
@@ -1663,6 +1673,7 @@
             <input type="text" id="dayExpenseNote" class="form-input" maxlength="500" placeholder="e.g. Fuel for the water pump">
         </div>
         <p class="form-hint">Extra costs beyond materials &amp; labour — logged against this date and rolled into your reports.</p>
+        <div class="tp-mount" id="dayExpenseTagsMount" data-tags data-tags-kind="expense"></div>
     </div>
     <div class="sheet-footer">
         <button type="button" id="dayExpenseDeleteBtn" class="btn btn-danger-outline mr-auto hidden">Delete</button>
@@ -1714,6 +1725,7 @@
         </div>
         <div id="dayIncomeList" class="space-y-1"></div>
         <p class="form-hint">Earnings during the season that are not the harvest itself &mdash; logged against this date.</p>
+        <div class="tp-mount" id="dayIncomeTagsMount" data-tags data-tags-kind="income"></div>
     </div>
     <div class="sheet-footer">
         <button type="button" id="dayIncomeDeleteBtn" class="btn btn-danger-outline mr-auto hidden">Delete</button>

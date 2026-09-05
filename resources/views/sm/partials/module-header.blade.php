@@ -12,6 +12,7 @@
         'activities' => ['label' => 'Activities', 'route' => 'sm.activities'],
         'post-harvest' => ['label' => 'Observations', 'route' => 'sm.post-harvest'],
         'notes' => ['label' => 'Notes', 'route' => 'sm.notes'],
+        'tags' => ['label' => 'Tags', 'route' => 'sm.tags'],
         'growth' => ['label' => 'Growth Stages', 'route' => 'sm.growth'],
         'gallery' => ['label' => 'Gallery', 'route' => 'sm.gallery'],
         'ai' => ['label' => 'AI Technician', 'route' => 'sm.ai'],

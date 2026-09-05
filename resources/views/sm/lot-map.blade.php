@@ -66,6 +66,7 @@
 <div class="lm-stage">
     {{-- 'lot' mode: same engine, none of the room. --}}
     @include('sm.partials.schedule-map', ['schedule' => $schedule, 'mapChrome' => 'lot'])
+    @include('sm.partials.tag-picker')
 </div>
 @endsection
 

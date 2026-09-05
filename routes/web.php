@@ -608,6 +608,13 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-compare-options', [App\Http\Controllers\Manager\FarmReportController::class, 'compareOptions'])->name('sm.compare.options');
     Route::post('/app/sm-compare-generate', [App\Http\Controllers\Manager\FarmReportController::class, 'compareGenerate'])->name('sm.compare.generate');
     Route::post('/app/sm-status', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'setStatus'])->name('sm.status');
+    // Tags: the words a farmer ties to the season's things.
+    Route::get('/app/sm-tags-module', [App\Http\Controllers\Manager\TagController::class, 'page'])->name('sm.tags');
+    Route::get('/app/sm-tags', [App\Http\Controllers\Manager\TagController::class, 'list'])->name('sm.tags.list');
+    Route::post('/app/sm-tags', [App\Http\Controllers\Manager\TagController::class, 'store'])->name('sm.tags.store');
+    Route::delete('/app/sm-tags/{id}', [App\Http\Controllers\Manager\TagController::class, 'destroy'])->whereNumber('id')->name('sm.tags.destroy');
+    Route::get('/app/sm-tag-items', [App\Http\Controllers\Manager\TagController::class, 'items'])->name('sm.tags.items');
+    Route::get('/app/sm-tags-of', [App\Http\Controllers\Manager\TagController::class, 'of'])->name('sm.tags.of');
     Route::post('/app/sm-activities-date-note-save', [App\Http\Controllers\Manager\ActivityController::class, 'saveDateNote'])->name('sm.activities.date-note.save');
     Route::delete('/app/sm-activities-date-note-delete', [App\Http\Controllers\Manager\ActivityController::class, 'deleteDateNote'])->name('sm.activities.date-note.delete');
     Route::post('/app/sm-activities-inline-note-save', [App\Http\Controllers\Manager\ActivityController::class, 'inlineNoteSave'])->name('sm.activities.inline-note.save');

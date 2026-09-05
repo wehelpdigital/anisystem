@@ -239,6 +239,7 @@
                 </button>
                 <span class="js-video-chip"></span>
             </div>
+            <div class="tp-mount mt-3" id="noteTagsMount" data-tags data-tags-kind="note"></div>
             <p class="form-hint">Photos and videos are attached to the note, not placed inside the text — they are compressed on the way up, and there is no limit on how many. Drawings are their own thing: make them in the Draw module and they arrive here as an attachment.</p>
         </div>
     </div>
@@ -251,6 +252,7 @@
      already ships the pad), bring our own drawing canvas. --}}
 @if (! request()->boolean('partial'))
 @include('sm.partials.draw-canvas')
+@include('sm.partials.tag-picker')
 @include('sm.partials.note-lightbox')
 @endif
 @include('community.partials.video-js')
@@ -364,6 +366,8 @@ const __init = () => {
 
     async function openNoteSheet(note = null) {
         fld('noteId').value = note ? note.id : '';
+        if (note) window.smTags?.load(fld('noteTagsMount'), 'note', note.id);
+        else window.smTags?.clear(fld('noteTagsMount'));
         fld('noteSheetTitle').textContent = note ? 'Edit note' : 'New note';
         fld('noteTitle').value = note ? note.title : '';
         fld('notePhoto').value = '';
@@ -754,6 +758,7 @@ const __init = () => {
             // title/description ride with a recording; dropping them here
             // would strip a named clip on its first edit.
             media: media.map((m) => ({ type: m.type, path: m.path, poster: m.poster || null, title: m.title || null, description: m.description || null, strokes: m.strokes || null })),
+            tags: window.smTags ? smTags.value(fld('noteTagsMount')) : [],
         };
 
         const btn = fld('noteSaveBtn'); btn.disabled = true;

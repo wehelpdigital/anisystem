@@ -863,6 +863,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const searchBits = [String(a.activityTitle || '').toLowerCase(), typeLabel.toLowerCase()];
         lotIds.forEach((id) => searchBits.push(((LOT_NAMES[id] || '') + ' ' + (LOT_VARIETIES[id] || '')).toLowerCase()));
         workerIds.forEach((id) => searchBits.push((WORKER_NAMES[id] || '').toLowerCase()));
+        (a.tagList || []).forEach((t) => searchBits.push(String(t.name || '').toLowerCase()));
         (a.items || []).forEach((it) => {
             searchBits.push(String(it.itemName || it.material?.materialName || it.service?.serviceName || '').toLowerCase());
         });
@@ -994,7 +995,8 @@ document.addEventListener('DOMContentLoaded', () => {
      data-activity-type="${esc(a.activityType || '')}"
      data-activity-types="${esc([a.activityType, ...(Array.isArray(a.extraTypes) ? a.extraTypes : [])].filter(Boolean).join(','))}"
      data-is-hidden="${isHiddenFlag}"
-     data-search="${esc(searchText)}"${lotAccentStyle}>
+     data-search="${esc(searchText)}"
+     data-tag-ids="${(a.tagList || []).map((t) => t.id).join(',')}"${lotAccentStyle}>
     <div class="flex items-start justify-between gap-2">
         <div class="flex items-start gap-2.5 min-w-0 grow">
             <button type="button" class="done-check${isDoneFlag ? ' is-checked' : ''}${LOCK_EDIT_CLS}" data-id="${a.id}"${LOCK_EDIT}
@@ -2915,8 +2917,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const q = ($id('activitySearchInput')?.value || '').trim();
         const types = $id('typeFilterChips') ? chipValues($id('typeFilterChips')) : [];
         const lots = $id('lotFilterChips') ? chipValues($id('lotFilterChips')) : [];
-        return q !== '' || types.length > 0 || lots.length > 0 || ttActive;
+        const tags = $id('tagFilterChips') ? chipValues($id('tagFilterChips')) : [];
+        return q !== '' || types.length > 0 || lots.length > 0 || tags.length > 0 || ttActive;
     }
+
+    // The Tags row of the filter sheet: chips for whatever words the season
+    // has coined. Painted when the dictionary answers; absent tags, the row
+    // stays hidden and the sheet reads exactly as before.
+    async function paintTagFilterChips() {
+        const wrap = $id('tagFilterWrap');
+        const group = $id('tagFilterChips');
+        if (!wrap || !group || !window.smTags) return;
+        const all = await smTags.all();
+        const keep = new Set(chipValues(group));
+        group.innerHTML = (all || []).map((t) =>
+            `<button type="button" class="chip min-h-9! py-1! text-xs${keep.has(String(t.id)) ? ' is-selected' : ''}" data-value="${t.id}">\u{1F3F7}\uFE0F ${escapeHtml(t.name)}</button>`).join('');
+        wrap.classList.toggle('hidden', !(all || []).length);
+    }
+    window.__paintTagFilterChips = paintTagFilterChips;
+    paintTagFilterChips();
 
     function _cardAllLotsHidden(card, hiddenLotIds) {
         const sig = String(card.getAttribute('data-lot-signature') || '').trim();
@@ -2932,13 +2951,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const needle = raw.replace(/\s+/g, ' ');
         const activeTypes = $id('typeFilterChips') ? chipValues($id('typeFilterChips')) : [];
         const hiddenLotIds = $id('lotFilterChips') ? chipValues($id('lotFilterChips')) : [];
+        const activeTags = $id('tagFilterChips') ? chipValues($id('tagFilterChips')) : [];
         const hasType = activeTypes.length > 0;
         const hasLots = hiddenLotIds.length > 0;
+        const hasTags = activeTags.length > 0;
         const cards = $qsa('.activity-card[data-id]', list);
 
         $id('lotFilterClearBtn')?.classList.toggle('hidden', !hasLots);
 
-        if (!needle && !hasType && !hasLots && !ttActive) {
+        if (!needle && !hasType && !hasLots && !hasTags && !ttActive) {
             cards.forEach((c) => c.classList.remove('filter-hidden'));
             $qsa('.date-group', list).forEach((g) => {
                 g.classList.remove('group-collapsed');
@@ -2956,8 +2977,10 @@ document.addEventListener('DOMContentLoaded', () => {
         cards.forEach((card) => {
             const text = ((card.getAttribute('data-search') || '') + ' ' + card.textContent.toLowerCase()).replace(/\s+/g, ' ');
             const cardType = String(card.getAttribute('data-activity-type') || '');
+            const cardTags = String(card.getAttribute('data-tag-ids') || '').split(',').filter(Boolean);
             const matches = (!needle || text.includes(needle))
                 && (!hasType || activeTypes.includes(cardType))
+                && (!hasTags || cardTags.some((id) => activeTags.includes(id)))
                 && (!ttActive || _cardInTodayTomorrow(card))
                 && (!hasLots || !_cardAllLotsHidden(card, hiddenLotIds));
             card.classList.toggle('filter-hidden', !matches);
@@ -3002,7 +3025,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('chips:change', (e) => {
         const group = e.target;
         if (!group || !group.id) return;
-        if (group.id === 'typeFilterChips' || group.id === 'lotFilterChips') applyActivityFilter();
+        if (group.id === 'typeFilterChips' || group.id === 'lotFilterChips' || group.id === 'tagFilterChips') applyActivityFilter();
         if (group.id === 'laborGroupsContainer' || group.id === 'laborWorkersContainer') updateLaborFilterHint();
     });
 
@@ -4688,6 +4711,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---- Sheet open/reset/fill ----
     function resetActivitySheet() {
         setActivityReminders([]);
+        window.smTags?.clear($id('activityTagsMount'));
         $id('activityId').value = '';
         $id('activityTitle').value = '';
         setTargetDate('');
@@ -4780,6 +4804,7 @@ document.addEventListener('DOMContentLoaded', () => {
             resetActivitySheet();
             BEFORE_SNAPSHOT = JSON.parse(JSON.stringify(a));
             $id('activityId').value = a.id;
+            window.smTags?.load($id('activityTagsMount'), 'activity', a.id);
             $id('activityTitle').value = a.activityTitle || '';
             setTargetDate((a.targetDate || '').slice(0, 10));
             $id('activityTargetEndDate').value = (a.targetEndDate || '').slice(0, 10);
@@ -4943,6 +4968,7 @@ document.addEventListener('DOMContentLoaded', () => {
             workerPay: getWorkerPay(),
             items: (isService || isReminders) ? [] : items,
             reminders: isReminders ? getActivityReminders() : null,
+            tags: window.smTags ? smTags.value($id('activityTagsMount')) : [],
         };
         if (isReminders && !payload.reminders.length) {
             toast('Add at least one reminder to the checklist.', 'error');
@@ -5580,6 +5606,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function resetIncomeForm() {
         $id('dayIncomeList')?.classList.remove('hidden');
+        window.smTags?.clear($id('dayIncomeTagsMount'));
         $id('dayIncomeId').value = '';
         $id('dayIncomeAmount').value = '';
         $id('dayIncomeTitle').value = '';
@@ -5619,6 +5646,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /** Put one entry into the sheet's fields, ready to be corrected. */
     function fillIncomeForm(r) {
         $id('dayIncomeId').value = r.id;
+        window.smTags?.load($id('dayIncomeTagsMount'), 'income', r.id);
         $id('dayIncomeAmount').value = r.amount;
         $id('dayIncomeTitle').value = r.title || '';
         $id('dayIncomeNote').value = r.note || '';
@@ -5650,6 +5678,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 amount,
                 title: $id('dayIncomeTitle').value.trim(),
                 note: $id('dayIncomeNote').value.trim(),
+                tags: window.smTags ? smTags.value($id('dayIncomeTagsMount')) : [],
             } });
             incomeRows = res.data || [];
             resetIncomeForm();
@@ -7125,6 +7154,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!dateKey || dateKey === '__no-date__') dateKey = isoFromDate(new Date());
         const existing = _dateNoteContentFor(dateKey);
         $id('dateNoteDate').value = dateKey;
+        window.smTags?.load($id('dateNoteTagsMount'), 'daynote', 0, '&date=' + encodeURIComponent(dateKey));
         if ($id('dateNoteDatePicker')) $id('dateNoteDatePicker').value = dateKey;
         $id('dateNoteSheetTitle').textContent = existing ? 'Edit note' : 'Add note';
         $id('dateNoteClearBtn').classList.toggle('hidden', !existing);
@@ -7289,7 +7319,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!dateKey) return;
         btn.disabled = true;
         try {
-            const res = await api(U.dateNoteSave(), { method: 'POST', body: { noteDate: dateKey, noteContent: content } });
+            const res = await api(U.dateNoteSave(), { method: 'POST', body: { noteDate: dateKey, noteContent: content, tags: window.smTags ? smTags.value($id('dateNoteTagsMount')) : [] } });
             // This sheet edits only the words; the server keeps the note's
             // attachments and its answer says what the note now holds.
             const d = res && res.data;
@@ -7718,6 +7748,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('dayExpenseNote').value = existing ? (existing.note || '') : '';
         $id('dayExpenseSheetTitle').textContent = existing ? 'Edit expense' : 'Add extra expense';
         $id('dayExpenseDeleteBtn').classList.toggle('hidden', !existing);
+        window.smTags?.load($id('dayExpenseTagsMount'), 'expense', existing ? existing.id : 0);
         openSheet('dayExpenseSheet');
         window.smFocus($id('dayExpenseAmount'), { delay: 250 });
     }
@@ -8277,7 +8308,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const res = await api(U.dayExpenseSave(), {
                 method: 'POST',
-                body: { expenseId: expenseId || '', expenseDate: dateKey, amount, note },
+                body: { expenseId: expenseId || '', expenseDate: dateKey, amount, note, tags: window.smTags ? smTags.value($id('dayExpenseTagsMount')) : [] },
             });
             DAY_EXPENSES[dateKey] = (res && res.data) || [];
             renderExpenseBlockFor(dateKey);

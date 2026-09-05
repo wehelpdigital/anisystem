@@ -22,6 +22,9 @@
     foreach ($a->items as $it) {
         $searchBits[] = mb_strtolower($it->itemType === 'material' ? ($it->material->materialName ?? '') : ($it->service->serviceName ?? ''));
     }
+    // The card's tags: searchable words AND an exact handle for filters.
+    $cardTags = ($activityTags ?? [])[$a->id] ?? [];
+    foreach ($cardTags as $tg) { $searchBits[] = mb_strtolower($tg['name']); }
     $searchText = trim(implode(' ', array_filter($searchBits)));
 
     // What this viewer may do to the plan. A control they may not use is still
@@ -57,6 +60,7 @@
      data-activity-types="{{ implode(',', $a->typeSlugs()) }}"
      data-is-hidden="{{ $a->isHidden ? 1 : 0 }}"
      data-search="{{ $searchText }}"
+     data-tag-ids="{{ collect($cardTags)->pluck('id')->implode(',') }}"
      @if($cardLots->count()) style="--lot-accent: hsl({{ ($cardLots->first()->id * 137) % 360 }}, 55%, 40%)" @endif>
     <div class="flex items-start justify-between gap-2">
         <div class="flex items-start gap-2.5 min-w-0 grow">

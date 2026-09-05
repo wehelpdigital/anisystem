@@ -306,6 +306,8 @@
         function openItemSheet(item = null) {
             $id('ivItemTitle').textContent = item ? 'Edit item' : 'Add an item';
             $id('ivItemId').value = item ? item.id : '';
+            if (item) window.smTags?.load($id('ivItemTagsMount'), 'item', item.id);
+            else window.smTags?.clear($id('ivItemTagsMount'));
             $id('ivName').value = item ? item.name : '';
             $id('ivKind').value = item ? item.kind : 'granular';
             $id('ivUnit').dataset.touched = item ? '1' : '';
@@ -351,6 +353,7 @@
                 opening: (!id && Number($id('ivOpenQty').value) > 0) ? Number($id('ivOpenQty').value) : null,
                 // Creating on a board with a past: when the count begins.
                 countFrom: (!id && CTX.done > 0) ? startDateOf(START.item) : null,
+                tags: window.smTags ? smTags.value($id('ivItemTagsMount')) : [],
             };
             btn.disabled = true;
             try {
@@ -718,6 +721,7 @@
             $id('ivMoveGo').textContent = dir === 'in' ? 'Add it' : 'Take it out';
             $id('ivMoveQty').value = '';
             $id('ivMoveNote').value = '';
+            window.smTags?.clear($id('ivMoveTagsMount'));
             const newName = $id('ivMoveNewName');
             if (newName) newName.value = '';
             $id('ivMoveDate').value = o.date || todayISO();
@@ -768,6 +772,7 @@
                             opening: qty,
                             on: when,
                             openingNote: $id('ivMoveNote').value.trim() || null,
+                            tags: window.smTags ? smTags.value($id('ivMoveTagsMount')) : [],
                         },
                     })
                     : await api(U.move, {
@@ -788,6 +793,7 @@
                             // and says it in the log line.
                             unitPrice: ($id('ivMoveDir').value === 'in' && ($id('ivMoveBuyPrice')?.value || '').trim() !== '')
                                 ? $id('ivMoveBuyPrice').value : null,
+                            tags: window.smTags ? smTags.value($id('ivMoveTagsMount')) : [],
                         },
                     });
                 toast(res.message);
@@ -846,6 +852,7 @@
             const item = itemById(o.itemId);
             if (!item) { toast('That item is gone.', 'error'); return; }
             $id('ivMEdId').value = String(o.id);
+            window.smTags?.load($id('ivMEdTagsMount'), 'move', o.id);
             $id('ivMEdWhat').textContent = `${item.icon} ${item.name}`;
             $id('ivMEdQty').value = o.enteredQty ?? o.qty ?? '';
             const sel = $id('ivMEdUnitSel');
@@ -883,6 +890,7 @@
                         unit: !sel.classList.contains('hidden') ? sel.value : null,
                         on: $id('ivMEdDate').value || null,
                         note: $id('ivMEdNote').value.trim() || null,
+                        tags: window.smTags ? smTags.value($id('ivMEdTagsMount')) : [],
                     },
                 });
                 toast(res.message);

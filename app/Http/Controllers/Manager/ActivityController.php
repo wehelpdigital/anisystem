@@ -153,9 +153,18 @@ class ActivityController extends BaseScheduleController
             ->values()
             ->all();
 
+        // Every card's tags in one query — the chips they wear and the
+        // handle both filter panels grab them by.
+        $activityTags = \App\Support\ScheduleTags::forMany(
+            $schedule->id,
+            'activity',
+            $schedule->activities->pluck('id')->map(fn ($v) => (int) $v)->all()
+        );
+
         return view('sm.activities', [
             'savedWeatherDates' => $savedWeatherDates,
             'schedule'          => $schedule,
+            'activityTags'      => $activityTags,
             'draftsCount'       => $draftsCount,
             'dateNotesByDate'   => $dateNotesByDate,
             // Where a note's map attachment leads: its saved map in Maps.
@@ -1708,8 +1717,13 @@ class ActivityController extends BaseScheduleController
             return $this->jsonFail('Failed to save activity: ' . $e->getMessage(), 500);
         }
 
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'activity', (int) $activity->id, $request->input('tags', []));
+        }
+
         $fresh = $activity->fresh(['items.material', 'items.service', 'lots', 'workers']);
         $data = $fresh->toArray();
+        $data['tagList'] = \App\Support\ScheduleTags::forMany($schedule->id, 'activity', [(int) $fresh->id])[(int) $fresh->id] ?? [];
         $data['lotIds'] = $fresh->lots->pluck('id');
         $data['workerIds'] = $fresh->workers->pluck('id');
         $data = array_merge($data, $this->serializeWorkerPay($fresh));
@@ -1799,6 +1813,10 @@ class ActivityController extends BaseScheduleController
                 'media'              => $media,
                 'deleteStatus'       => 1,
             ] + $tags);
+        }
+
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'daynote', (int) $note->id, $request->input('tags', []));
         }
 
         $this->broadcastBoard($schedule, 'reload', ['noteDate' => $note->noteDate->format('Y-m-d')], $versionId);
@@ -2807,6 +2825,10 @@ class ActivityController extends BaseScheduleController
             ]);
         }
 
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'income', (int) $income->id, $request->input('tags', []));
+        }
+
         $rows = \App\Models\AsScheduleDayIncome::active()
             ->forSchedule($schedule->id)
             ->forVersion($versionId)
@@ -3004,6 +3026,10 @@ class ActivityController extends BaseScheduleController
                 'sortOrder'          => $nextOrder + 1,
                 'deleteStatus'       => 1,
             ]);
+        }
+
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'expense', (int) $expense->id, $request->input('tags', []));
         }
 
         // Return the whole day's list + total so the UI can re-render cleanly.

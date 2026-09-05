@@ -194,6 +194,10 @@ class ScheduleDrawController extends BaseScheduleController
             ]);
         }
 
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'note', (int) $note->id, $request->input('tags', []));
+        }
+
         return response()->json(['success' => true, 'message' => 'Drawing saved.', 'data' => [
             'noteId' => (int) $note->id,
             'index' => (int) $request->input('index', 0),

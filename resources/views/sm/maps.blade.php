@@ -238,6 +238,7 @@
                  a second line saying "Team map" above the tools was the same
                  sentence twice. --}}
             @include('sm.partials.schedule-map', ['schedule' => $schedule, 'mapChrome' => 'maps'])
+    @include('sm.partials.tag-picker')
         </div>
     </div>
 

@@ -136,6 +136,8 @@
             <textarea id="ivMoveNote" rows="2" maxlength="500" class="form-textarea" placeholder="What it went on, who delivered it, anything worth remembering"></textarea>
         </div>
 
+        <div class="tp-mount" id="ivMoveTagsMount" data-tags data-tags-kind="move"></div>
+
         <p class="iv-move-warn hidden" id="ivMoveWarn"></p>
     </div>
     <div class="sheet-footer">
@@ -181,6 +183,7 @@
             <label for="ivMEdNote" class="form-label">Note <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="ivMEdNote" rows="2" maxlength="500" class="form-textarea" placeholder="What it went on, who delivered it"></textarea>
         </div>
+        <div class="tp-mount" id="ivMEdTagsMount" data-tags data-tags-kind="move"></div>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>

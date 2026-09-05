@@ -270,6 +270,7 @@
             <label for="ivNote" class="form-label">Note <span class="text-gray-400 font-normal">(optional)</span></label>
             <input type="text" id="ivNote" maxlength="500" class="form-input" placeholder="Where it is kept, the supplier, anything worth remembering">
         </div>
+        <div class="tp-mount" id="ivItemTagsMount" data-tags data-tags-kind="item"></div>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
@@ -279,4 +280,5 @@
 
 @include('sm.partials.inventory-move-sheet')
 @include('sm.partials.inventory-js', ['schedule' => $schedule, 'standalone' => true])
+@include('sm.partials.tag-picker')
 @endpush
