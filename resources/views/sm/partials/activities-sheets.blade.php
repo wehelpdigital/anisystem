@@ -1108,6 +1108,7 @@
             // The tools that have a drawn face elsewhere wear the same one
             // here; Undo/Redo/Drafts and the view toggles keep their glyphs.
             $actPics = [
+                'openDraftsBtn' => 'card-index.png',
                 'openReportBtn' => 'pie-chart.png',
                 'weatherBtn' => 'weather.png',
                 'growthStageBtn' => 'plant.png',

@@ -3626,7 +3626,7 @@
     @if (\App\Models\AiSetting::current()?->isUsable() && ! $isWorker)
         <button type="button" id="aiTechBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
                 title="Ask the AI technician" aria-label="Ask the AI technician">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
+            <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" class="w-5 h-5 rounded-full object-cover">
         </button>
     @endif
 </div>
