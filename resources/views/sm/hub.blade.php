@@ -440,7 +440,11 @@
                 <div class="p-4 flex flex-col gap-3">
                     <div class="flex items-start justify-between">
                         <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
-                            <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $iconPath }}"/></svg>
+                            @if ($moduleKey === 'settings')
+                                <img src="{{ asset('images/gear.png') }}" alt="" class="w-6 h-6 object-contain">
+                            @else
+                                <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $iconPath }}"/></svg>
+                            @endif
                         </div>
                         @if ($count !== null)
                             <span class="badge {{ $count > 0 ? 'badge-green' : 'badge-gray' }}">{{ $count }}</span>

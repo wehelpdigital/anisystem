@@ -718,7 +718,11 @@
             <button type="button" class="module-nav-row w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50"
                     data-module="{{ $key }}">
                 <span class="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg>
+                    @if ($key === 'settings')
+                        <img src="{{ asset('images/gear.png') }}" alt="" class="w-5 h-5 object-contain">
+                    @else
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg>
+                    @endif
                 </span>
                 <span class="grow">{{ $label }}</span>
                 <svg class="w-4 h-4 text-gray-300 module-nav-check hidden" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
