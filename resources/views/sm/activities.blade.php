@@ -1995,16 +1995,22 @@
         /* Type chip before the title: task / irrigation / service at a glance. */
         .type-ico { width: 2.1rem; height: 2.1rem; border-radius: .6rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: .05rem; }
         /* The star, the menu and the fold chevron sit in the same row as
-           the check and the type chip — same footprint, same soft wash, so
-           the row reads as five equal chips. */
+           the check and the type chip — same footprint, each in its own
+           soft wash, so the row reads as five equal, distinct chips. */
         .activity-card .star-btn, .activity-card .card-menu-btn, .activity-card .act-fold-chip {
             width: 2.1rem; height: 2.1rem; margin-top: .05rem; border-radius: .6rem; flex-shrink: 0;
-            background: var(--color-brand-50); color: var(--color-brand-700);
             display: inline-flex; align-items: center; justify-content: center;
         }
-        .activity-card .star-btn:hover, .activity-card .card-menu-btn:hover {
-            background: var(--color-brand-100); color: var(--color-brand-800);
-        }
+        .activity-card .star-btn { background: #fef9c3; color: #a16207; }
+        .activity-card .star-btn:hover { background: #fef08a; }
+        .activity-card .card-menu-btn { background: #ffe4e6; color: #be123c; }
+        .activity-card .card-menu-btn:hover { background: #fecdd3; color: #9f1239; }
+        .activity-card .act-fold-chip { background: #e0f2fe; color: #0284c7; }
+        html.dark .activity-card .star-btn { background: rgb(161 98 7 / .3); color: #fde047; }
+        html.dark .activity-card .star-btn:hover { background: rgb(161 98 7 / .45); }
+        html.dark .activity-card .card-menu-btn { background: rgb(190 18 60 / .28); color: #fda4af; }
+        html.dark .activity-card .card-menu-btn:hover { background: rgb(190 18 60 / .42); }
+        html.dark .activity-card .act-fold-chip { background: rgb(2 132 199 / .25); color: #7dd3fc; }
         .activity-card .card-menu-btn svg { width: 1.1rem; height: 1.1rem; }
         /* Folding is a touch affair; pointers that hover see whole cards. */
         .activity-card .act-fold-chip { display: none; pointer-events: none; }
