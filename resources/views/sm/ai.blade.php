@@ -1134,7 +1134,7 @@ const __init = () => {
         t.classList.toggle('is-on', on);
         if (t.id === 'aiUsePlan') {
             sayEstimate();
-            toast(on ? 'She will read this season\u2019s plan — it is added to the question.'
+            toast(on ? 'Anee will include in your question the current history of your cropping schedule - ' + @json($schedule->title) + '. This will add credit usage.'
                      : 'She will answer without your plan.');
         } else {
             toast(on ? 'She will read the rest of this chat.'

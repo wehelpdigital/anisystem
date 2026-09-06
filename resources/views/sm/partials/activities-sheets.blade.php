@@ -1141,7 +1141,6 @@
                 ['activityUndoBtn', 'Undo', 'M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4', 'actUndoBadge', ''],
                 ['activityRedoBtn', 'Redo', 'M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4', 'actRedoBadge', ''],
                 ['openDraftsBtn', 'Drafts', 'M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4', 'actDraftsBadge', ''],
-                ['openReportBtn', 'Report', 'M11 3.055A9 9 0 1020.945 13H12a1 1 0 01-1-1V3.055zM15 3.936A9.02 9.02 0 0120.064 9H15V3.936z', '', ''],
                 ['weatherBtn', 'Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z', '', ''],
                 // The same view the plant pill in a day header opens, for
                 // today — so it can be reached without hunting for the day.
@@ -1175,7 +1174,6 @@
             // here; Undo/Redo/Drafts and the view toggles keep their glyphs.
             $actPics = [
                 'openDraftsBtn' => 'card-index.png',
-                'openReportBtn' => 'pie-chart.png',
                 'weatherBtn' => 'weather.png',
                 'growthStageBtn' => 'plant.png',
                 'openNotesBtn' => 'sticky-note.png',

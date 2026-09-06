@@ -498,7 +498,7 @@
         t.classList.toggle('is-on', on);
         if (window.toast) {
             if (t.id === 'saiUsePlan') {
-                toast(on ? 'She will read this season\u2019s crop, variety and lots.'
+                toast(on ? 'Anee will include in your question the current history of your cropping schedule - ' + @json($schedule->title) + '. This will add credit usage.'
                          : 'She will answer without the plan.');
             } else {
                 toast(on ? 'She will read the rest of this thread.'
