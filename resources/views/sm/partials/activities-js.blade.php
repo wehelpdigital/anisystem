@@ -1006,7 +1006,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </button>
             ${typeIco}
             <button type="button" class="icon-btn star-btn${LOCK_EDIT_CLS}" data-star-btn data-id="${a.id}" data-star="${starOf(a)}"${LOCK_EDIT} title="${esc(editTitle(starOf(a) ? `Marker: ${starName(starOf(a))}` : 'Marker — tap to pick a colour'))}" aria-label="Marker: ${esc(starName(starOf(a)))}">${SVG.star}</button>
-            <button type="button" class="icon-btn card-menu-btn md:hidden done-hide" data-id="${a.id}" data-name="${nameAttr}" title="Actions">${SVG.kebab}</button>
+            <button type="button" class="icon-btn card-menu-btn" data-id="${a.id}" data-name="${nameAttr}" title="Actions">${SVG.kebab}</button>
             <div class="min-w-0 grow">
             <div class="activity-card-lots activity-card-lothead">${isReminderCard
                 ? '<span class="badge reminder-head-badge">Reminder Checklist</span>'
