@@ -1005,6 +1005,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>
             ${typeIco}
+            <button type="button" class="icon-btn star-btn${LOCK_EDIT_CLS}" data-star-btn data-id="${a.id}" data-star="${starOf(a)}"${LOCK_EDIT} title="${esc(editTitle(starOf(a) ? `Marker: ${starName(starOf(a))}` : 'Marker — tap to pick a colour'))}" aria-label="Marker: ${esc(starName(starOf(a)))}">${SVG.star}</button>
+            <button type="button" class="icon-btn card-menu-btn md:hidden done-hide" data-id="${a.id}" data-name="${nameAttr}" title="Actions">${SVG.kebab}</button>
             <div class="min-w-0 grow">
             <div class="activity-card-lots activity-card-lothead">${isReminderCard
                 ? '<span class="badge reminder-head-badge">Reminder Checklist</span>'
@@ -1036,8 +1038,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button type="button" class="icon-btn to-draft-activity-btn${LOCK_EDIT_CLS}" data-id="${a.id}" data-name="${nameAttr}"${LOCK_EDIT} title="${esc(editTitle('Move to drafts (hide without deleting)'))}">${SVG.archive}</button>
                 <button type="button" class="icon-btn icon-btn-danger delete-activity-btn${LOCK_EDIT_CLS}" data-id="${a.id}" data-name="${nameAttr}"${LOCK_EDIT} title="${esc(editTitle('Delete'))}">${SVG.trash}</button>
             </div>
-            <button type="button" class="icon-btn card-menu-btn md:hidden done-hide" data-id="${a.id}" data-name="${nameAttr}" title="Actions">${SVG.kebab}</button>
-            <button type="button" class="icon-btn star-btn${LOCK_EDIT_CLS}" data-star-btn data-id="${a.id}" data-star="${starOf(a)}"${LOCK_EDIT} title="${esc(editTitle(starOf(a) ? `Marker: ${starName(starOf(a))}` : 'Marker — tap to pick a colour'))}" aria-label="Marker: ${esc(starName(starOf(a)))}">${SVG.star}</button>
         </div>
     </div>
     ${descHtml ? `<div class="activity-description-content text-sm text-gray-700 mt-2" data-lightbox>${descHtml}</div>` : ''}

@@ -1507,10 +1507,7 @@
             .activity-card .activity-card-title,
             .activity-card .activity-card-badges,
             .activity-card .activity-card-lotmeta { order: 2; }
-            /* Wide enough for the grip AND the fold chevron, which now share
-               the head line with the star and the dots instead of the chevron
-               waiting a row below. */
-            .activity-card > .flex.items-start.justify-between { padding-right: 2.6rem; }
+            .activity-card > .flex.items-start.justify-between { padding-right: 1.9rem; }
             .activity-card .card-menu-btn { flex: 0 0 auto; }
 
             /* ---- Card accordion (phones) ----
@@ -1600,7 +1597,7 @@
             /* A chevron says the card folds — drawn by CSS so the twin Blade
                and JS renderers stay byte-identical. */
             .activity-card::before {
-                content: ''; position: absolute; right: 1.15rem; top: 1.5rem;
+                content: ''; position: absolute; right: .68rem; top: 1.65rem;
                 width: .5rem; height: .5rem; pointer-events: none;
                 border-right: 2px solid var(--tl-text-faint, #9ca3af);
                 border-bottom: 2px solid var(--tl-text-faint, #9ca3af);

@@ -85,6 +85,27 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
                 @endif
             </span>
+            {{-- A star, and nothing behind it.
+                 The board already tells you a line's priority, its type, its
+                 status and its tags. This one is not another of those: it is
+                 a mark somebody put here for a reason they never had to give
+                 the app. Tap it and the colours open, each with its name.
+                 Twin of the star in renderActivityCard(). --}}
+            @php
+                $starInk = (int) ($a->markerColor ?? 0);
+                // Same order as STAR_NAMES in activities-js and the swatches
+                // in #markerPickGrid — one list, said in three places.
+                $starInkName = ['None', 'Leaf', 'Sun', 'Ember', 'Rose', 'Orchid', 'Dusk', 'Sky', 'Tide'][$starInk] ?? 'None';
+            @endphp
+            <button type="button" class="icon-btn star-btn{{ $lockCls }}" data-star-btn data-id="{{ $a->id }}"
+                    data-star="{{ $starInk }}" @disabled(! $mayEdit)
+                    title="{{ $editTitle($starInk ? 'Marker: ' . $starInkName : 'Marker — tap to pick a colour') }}"
+                    aria-label="Marker: {{ $starInkName }}">
+                <svg viewBox="0 0 24 24" stroke-linejoin="round"><path d="m12 3.4 2.63 5.33 5.88.86-4.25 4.15 1 5.86L12 16.85l-5.26 2.75 1-5.86-4.25-4.15 5.88-.86z"/></svg>
+            </button>
+            <button type="button" class="icon-btn card-menu-btn md:hidden done-hide" data-id="{{ $a->id }}" data-name="{{ $a->activityTitle }}" title="Actions">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
+            </button>
             <div class="min-w-0 grow">
             {{-- Lot(s) first, as a prominent label — so it's clear which lot the
                  activity is for before you read the title. --}}
@@ -241,27 +262,6 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
                 </button>
             </div>
-            <button type="button" class="icon-btn card-menu-btn md:hidden done-hide" data-id="{{ $a->id }}" data-name="{{ $a->activityTitle }}" title="Actions">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>
-            </button>
-            {{-- A star, and nothing behind it.
-                 The board already tells you a line's priority, its type, its
-                 status and its tags. This one is not another of those: it is
-                 a mark somebody put here for a reason they never had to give
-                 the app. Tap it and the colours open, each with its name.
-                 Twin of the star in renderActivityCard(). --}}
-            @php
-                $starInk = (int) ($a->markerColor ?? 0);
-                // Same order as STAR_NAMES in activities-js and the swatches
-                // in #markerPickGrid — one list, said in three places.
-                $starInkName = ['None', 'Leaf', 'Sun', 'Ember', 'Rose', 'Orchid', 'Dusk', 'Sky', 'Tide'][$starInk] ?? 'None';
-            @endphp
-            <button type="button" class="icon-btn star-btn{{ $lockCls }}" data-star-btn data-id="{{ $a->id }}"
-                    data-star="{{ $starInk }}" @disabled(! $mayEdit)
-                    title="{{ $editTitle($starInk ? 'Marker: ' . $starInkName : 'Marker — tap to pick a colour') }}"
-                    aria-label="Marker: {{ $starInkName }}">
-                <svg viewBox="0 0 24 24" stroke-linejoin="round"><path d="m12 3.4 2.63 5.33 5.88.86-4.25 4.15 1 5.86L12 16.85l-5.26 2.75 1-5.86-4.25-4.15 5.88-.86z"/></svg>
-            </button>
         </div>
     </div>
     @if($a->description)
