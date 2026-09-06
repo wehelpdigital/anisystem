@@ -1594,19 +1594,9 @@
             .vsr-edit:disabled { opacity: .4; cursor: not-allowed; }
             @media (prefers-reduced-motion: reduce) { .vsr-edit { transition: none; } }
 
-            /* A chevron says the card folds — drawn by CSS so the twin Blade
-               and JS renderers stay byte-identical. It rides just after the
-               dots, centred on the head row's line. */
-            .activity-card .card-menu-btn { position: relative; }
-            .activity-card .card-menu-btn::after {
-                content: ''; position: absolute; left: calc(100% + .5rem); top: 50%;
-                width: .5rem; height: .5rem; margin-top: -.34rem; pointer-events: none;
-                border-right: 2px solid var(--tl-text-faint, #9ca3af);
-                border-bottom: 2px solid var(--tl-text-faint, #9ca3af);
-                transform: rotate(45deg);
-                transition: transform .28s cubic-bezier(.22,1,.36,1);
-            }
-            .activity-card:not(.act-collapsed) .card-menu-btn::after { transform: rotate(225deg); margin-top: -.12rem; }
+            /* The fold chevron chip shows where folding exists at all.
+               Doubled class outranks the later global display:none. */
+            .activity-card .act-fold-chip.act-fold-chip { display: inline-flex; }
 
             /* A grip says the card can be dragged — the same six dots the
                inline notes use, drawn in CSS like the chevron so the twin
@@ -2004,10 +1994,23 @@
 
         /* Type chip before the title: task / irrigation / service at a glance. */
         .type-ico { width: 2.1rem; height: 2.1rem; border-radius: .6rem; flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: .05rem; }
-        /* The star and the dots sit in the same row as the check and the
-           type chip; a 2.75rem tap box beside 2rem chips read as three
-           different gaps. Same footprint, same rhythm. */
-        .activity-card .star-btn, .activity-card .card-menu-btn { width: 2.1rem; height: 2.1rem; margin-top: .05rem; }
+        /* The star, the menu and the fold chevron sit in the same row as
+           the check and the type chip — same footprint, same soft wash, so
+           the row reads as five equal chips. */
+        .activity-card .star-btn, .activity-card .card-menu-btn, .activity-card .act-fold-chip {
+            width: 2.1rem; height: 2.1rem; margin-top: .05rem; border-radius: .6rem; flex-shrink: 0;
+            background: var(--color-brand-50); color: var(--color-brand-700);
+            display: inline-flex; align-items: center; justify-content: center;
+        }
+        .activity-card .star-btn:hover, .activity-card .card-menu-btn:hover {
+            background: var(--color-brand-100); color: var(--color-brand-800);
+        }
+        .activity-card .card-menu-btn svg { width: 1.1rem; height: 1.1rem; }
+        /* Folding is a touch affair; pointers that hover see whole cards. */
+        .activity-card .act-fold-chip { display: none; pointer-events: none; }
+        .activity-card .act-fold-chip svg { width: 1.05rem; height: 1.05rem;
+            transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .activity-card:not(.act-collapsed) .act-fold-chip svg { transform: rotate(180deg); }
         .type-ico svg { width: 1.2rem; height: 1.2rem; }
         .type-ico-task { background: var(--color-brand-50); color: var(--color-brand-700); }
         .type-ico-irrigation { background: rgb(47 143 216 / .14); color: #2f8fd8; }
