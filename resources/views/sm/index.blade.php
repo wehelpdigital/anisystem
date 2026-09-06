@@ -814,6 +814,14 @@
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
+            <a href="{{ route('whatp.page') }}" class="qa-tile qa-wtp">
+                <span class="qa-ico"><img src="{{ asset('images/plant.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
+                <span class="qa-txt">
+                    <b>What to Plant Analysis</b>
+                    <i>The crops your ground argues for — soil, water and season weighed, ranked by fit. Uses AI credits.</i>
+                </span>
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </a>
             <a href="{{ route('gallery.hub') }}" class="qa-tile qa-gallery">
                 <span class="qa-ico"><img src="{{ asset('images/gallery.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
@@ -846,7 +854,7 @@
                     <span class="qa-ico"><img src="{{ asset('images/video-camera-b.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                     <span class="qa-txt">
                         <b>Quick Record</b>
-                        <i>Film it when a picture will not do — a sound, a leak, a machine.</i>
+                        <i>Record a video if a picture is not enough, explain your observations while recording.</i>
                     </span>
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>

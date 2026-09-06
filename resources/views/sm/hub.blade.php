@@ -405,7 +405,7 @@
                     <span class="cta-title text-lg font-bold leading-tight">Activities</span>
                     <span class="badge badge-yellow">{{ $schedule->activities_count }}</span>
                 </span>
-                <span class="cta-sub block text-sm leading-snug mt-0.5">The heart of your schedule — the day-by-day timeline.</span>
+                <span class="cta-sub block text-sm leading-snug mt-0.5">The heart of your cropping plan, the day by day goals and milestones.</span>
             </span>
             <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
@@ -518,7 +518,7 @@
     <div class="card border-red-100 danger-head">
         <div class="card-body">
             <h3 class="font-bold text-red-700 mb-1">Danger zone</h3>
-            <p class="text-sm text-gray-500 mb-4">Deleting hides this schedule and all its modules from your account.</p>
+            <p class="text-sm text-gray-500 mb-4">Delete this schedule and all its modules from your account. Deleted plans cannot be restored.</p>
             <button type="button" id="deleteScheduleBtn" class="btn btn-danger-outline">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
                 Delete schedule

@@ -1119,7 +1119,7 @@
                     <img class="dash-anee-face" src="{{ $aiSettings->faceUrl() }}" alt="" width="56" height="56">
                     <div class="min-w-0">
                         <h2 class="dash-anee-h" id="dashAneeH">{{ $aneeName }}</h2>
-                        <p class="dash-anee-p">Your Smart Agricultural Technician. Ask anything about your crops, show a photo, or explain your observations. Anee is available 24/7, ask in English or Tagalog.{{ $canUseAi ? '' : ' On Boss and Lifetime plans.' }}</p>
+                        <p class="dash-anee-p">Your Smart Agricultural Technician. Ask anything about your crops, show a photo, or ask your observations. Anee is available 24/7 vs. paying a technician that you have to wait. You can ask Anee in English or Tagalog.{{ $canUseAi ? '' : ' On Boss and Lifetime plans.' }}</p>
                     </div>
                 </div>
 
@@ -1177,7 +1177,7 @@
                     <span class="dash-wtp-ic"><img src="{{ asset('images/plant.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                     <span class="min-w-0">
                         <b>What to Plant Analysis</b>
-                        <i>Your soil, your water, your timing — and the crops that fit them best, ranked across grains, vegetables, root crops and fruit trees. One deep analysis, 100 AI credits.</i>
+                        <i>Analyze the type of crops that are best to plant based in your location, season forecast, soil type, and more. Anee will deeply analyze and provide you the most recommended.</i>
                     </span>
                     <svg class="dash-wtp-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </a>
