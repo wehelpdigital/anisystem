@@ -807,7 +807,7 @@
                  pictures. Looking for a photo is remembering a picture, not a
                  season, so it does not ask which one first. --}}
             <a href="{{ route('wtp.page') }}" class="qa-tile qa-wtp">
-                <span class="qa-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></span>
+                <span class="qa-ico"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
                     <b>When to Plant Analysis</b>
                     <i>The best planting window for your crop and place, argued from the climate. Uses AI credits.</i>

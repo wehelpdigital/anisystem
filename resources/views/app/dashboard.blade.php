@@ -1161,7 +1161,7 @@
                  not a conversation. --}}
             <section class="dash-wtp-card" aria-label="When to Plant Analysis">
                 <a href="{{ route('wtp.page') }}" class="dash-wtp">
-                    <span class="dash-wtp-ic">⚡</span>
+                    <span class="dash-wtp-ic"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                     <span class="min-w-0">
                         <b>When to Plant Analysis</b>
                         <i>Your crop, your place, the field's troubles — and the window the climate argues for, with the risks of missing it. One analysis, a few AI credits.</i>
