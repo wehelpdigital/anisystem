@@ -3845,8 +3845,13 @@ document.addEventListener('DOMContentLoaded', () => {
             <input type="text" class="form-input rem-text" maxlength="255" placeholder="e.g. Collect the seed permit" value="${esc((r && r.text) || '')}">
             <button type="button" class="btn-ghost rem-del" aria-label="Remove this reminder">✕</button>
             <div class="rem-money${kind === 'none' ? ' is-free' : ''}">
-                <select class="form-select rem-kind">
-                    <option value="none"${kind === 'none' ? ' selected' : ''}>No money</option>
+                <button type="button" class="crop-tag rem-kind-btn">
+                    <span class="crop-tag-e rem-kind-e">${REM_KIND_FACE[kind] || REM_KIND_FACE.none}</span>
+                    <span class="crop-tag-t rem-kind-t">${REM_KIND_SAYS[kind] || REM_KIND_SAYS.none}</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <select class="form-select rem-kind hidden" aria-hidden="true" tabindex="-1">
+                    <option value="none"${kind === 'none' ? ' selected' : ''}>No money involved</option>
                     <option value="expense"${kind === 'expense' ? ' selected' : ''}>Costs money</option>
                     <option value="income"${kind === 'income' ? ' selected' : ''}>Brings money in</option>
                 </select>
@@ -3915,6 +3920,55 @@ document.addEventListener('DOMContentLoaded', () => {
         const kind = e.target.closest('.rem-kind');
         if (!kind) return;
         kind.closest('.rem-money')?.classList.toggle('is-free', kind.value === 'none');
+    });
+
+    /* ---- the two dropdowns that became tags ---- */
+    const REM_KIND_FACE = { none: '\u{1F6AB}', expense: '\u{1F4B8}', income: '\u{1F4B0}' };
+    const REM_KIND_SAYS = { none: 'No money involved', expense: 'Costs money', income: 'Brings money in' };
+
+    function sayWaterTask() {
+        const sel = $id('activityWaterTask');
+        const t = $id('activityWaterTaskNow');
+        if (sel && t) t.textContent = WATER_TASK_LABELS[sel.value] || sel.value || 'Irrigate';
+    }
+    $id('activityWaterTaskBtn')?.addEventListener('click', () => {
+        const now = $id('activityWaterTask')?.value;
+        $qsa('#waterTaskList [data-water-task]').forEach((r) => r.classList.toggle('is-on', r.dataset.waterTask === now));
+        openSheet('waterTaskSheet');
+    });
+    $id('waterTaskList')?.addEventListener('click', (e) => {
+        const row = e.target.closest('[data-water-task]');
+        if (!row) return;
+        const sel = $id('activityWaterTask');
+        if (sel) sel.value = row.dataset.waterTask;
+        sayWaterTask();
+        closeSheet('waterTaskSheet');
+    });
+
+    let REM_KIND_ROW = null;
+    $id('reminderRows')?.addEventListener('click', (e) => {
+        const btn = e.target.closest('.rem-kind-btn');
+        if (!btn) return;
+        REM_KIND_ROW = btn.closest('.rem-money');
+        const now = REM_KIND_ROW.querySelector('.rem-kind')?.value || 'none';
+        $qsa('#remKindList [data-rem-kind]').forEach((r) => r.classList.toggle('is-on', r.dataset.remKind === now));
+        openSheet('remKindSheet');
+    });
+    $id('remKindList')?.addEventListener('click', (e) => {
+        const row = e.target.closest('[data-rem-kind]');
+        if (!row || !REM_KIND_ROW) return;
+        const kind = row.dataset.remKind;
+        const sel = REM_KIND_ROW.querySelector('.rem-kind');
+        if (sel) {
+            sel.value = kind;
+            // The existing change listener owns the amount's visibility.
+            sel.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        const face = REM_KIND_ROW.querySelector('.rem-kind-e');
+        const says = REM_KIND_ROW.querySelector('.rem-kind-t');
+        if (face) face.textContent = REM_KIND_FACE[kind];
+        if (says) says.textContent = REM_KIND_SAYS[kind];
+        closeSheet('remKindSheet');
     });
     $id('reminderRows')?.addEventListener('input', (e) => {
         if (e.target.closest('.rem-text')) paintReminderCount();
@@ -4720,7 +4774,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('activityPriority').value = 'medium';
         $id('activityType').value = '';
         setTaskTypes([]);
-        if ($id('activityWaterTask')) $id('activityWaterTask').value = 'irrigate';
+        if ($id('activityWaterTask')) { $id('activityWaterTask').value = 'irrigate'; sayWaterTask(); }
         if ($id('activityServicePrice')) $id('activityServicePrice').value = '';
         setActivityMode('task');
         $id('activityTimeRequired').value = 'half';
@@ -4812,7 +4866,7 @@ document.addEventListener('DOMContentLoaded', () => {
             $id('activityPriority').value = a.priority || 'medium';
             if (a.activityType === 'irrigation') {
                 setActivityMode('irrigation');
-                if ($id('activityWaterTask')) $id('activityWaterTask').value = a.waterTask || 'irrigate';
+                if ($id('activityWaterTask')) { $id('activityWaterTask').value = a.waterTask || 'irrigate'; sayWaterTask(); }
             } else if (a.activityType === 'service') {
                 setActivityMode('service');
                 if ($id('activityServicePrice')) $id('activityServicePrice').value = a.servicePrice != null ? a.servicePrice : '';

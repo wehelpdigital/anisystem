@@ -329,8 +329,14 @@
                 </select>
             </div>
             <div id="activityWaterTaskWrap" class="hidden">
-                <label class="form-label" for="activityWaterTask">Water task</label>
-                <select id="activityWaterTask" class="form-select">
+                <span class="form-label">Water task</span>
+                <button type="button" class="crop-tag" id="activityWaterTaskBtn">
+                    <span class="crop-tag-e">💧</span>
+                    <span class="crop-tag-t" id="activityWaterTaskNow">Irrigate</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                {{-- The select stays as the value store the save path reads. --}}
+                <select id="activityWaterTask" class="form-select hidden" aria-hidden="true" tabindex="-1">
                     @foreach ($waterTasks as $slug => $label)
                         <option value="{{ $slug }}">{{ $label }}</option>
                     @endforeach
@@ -668,6 +674,50 @@
              another way, the Save is the last door and it is shut too. --}}
         <button type="button" id="saveActivityBtn" class="btn btn-primary w-full{{ $sheetLock }}"
                 @disabled(! $mayEdit) @if (! $mayEdit) title="{{ $whyNoEdit }}" @endif>Save Activity</button>
+    </div>
+</div>
+
+{{-- Which water errand an irrigation task is. --}}
+<div class="sheet hidden" id="waterTaskSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Water task</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">×</button>
+    </div>
+    <div class="sheet-body dt-rows" id="waterTaskList">
+        @foreach ($waterTasks as $slug => $label)
+            <button type="button" class="dt-row" data-water-task="{{ $slug }}">
+                <span class="dt-row-e">💧</span>
+                <span class="dt-row-body"><b>{{ $label }}</b></span>
+                <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>
+        @endforeach
+    </div>
+</div>
+
+{{-- Whether one reminder line moves money, and which way. --}}
+<div class="sheet hidden" id="remKindSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Money on this line?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">×</button>
+    </div>
+    <div class="sheet-body dt-rows" id="remKindList">
+        <button type="button" class="dt-row" data-rem-kind="none">
+            <span class="dt-row-e">🛇</span>
+            <span class="dt-row-body"><b>No money involved</b><i>Just a thing to remember</i></span>
+            <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
+        <button type="button" class="dt-row" data-rem-kind="expense">
+            <span class="dt-row-e">💸</span>
+            <span class="dt-row-body"><b>Costs money</b><i>Spends on the day it is ticked</i></span>
+            <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
+        <button type="button" class="dt-row" data-rem-kind="income">
+            <span class="dt-row-e">💰</span>
+            <span class="dt-row-body"><b>Brings money in</b><i>Earns on the day it is ticked</i></span>
+            <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
     </div>
 </div>
 
