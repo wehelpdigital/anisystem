@@ -687,6 +687,7 @@
             // Rows whose icon is a drawn picture — the twin of the hub's
             // $modulePics, kept in step by hand.
             $modNavPics = [
+                'activities' => 'thunder.png',
                 'settings' => 'gear.png',
                 'lots' => 'treasure-map.png',
                 'workers' => 'tractor.png',
