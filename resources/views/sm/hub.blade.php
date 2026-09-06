@@ -433,7 +433,7 @@
         <button type="button" id="quickRecordBtn"
             class="cta-tile qr-cta rounded-2xl p-5 flex items-center gap-4 text-left">
             <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
-                <img src="{{ asset('images/video-camera.png') }}" alt="" style="width:1.75rem;height:1.75rem;object-fit:contain">
+                <img src="{{ asset('images/video-camera-b.png') }}" alt="" style="width:1.75rem;height:1.75rem;object-fit:contain">
             </span>
             <span class="min-w-0 grow">
                 <span class="cta-title block text-lg font-bold leading-tight">Quick Record</span>

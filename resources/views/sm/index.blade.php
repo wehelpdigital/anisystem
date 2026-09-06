@@ -843,7 +843,7 @@
             @endif
             @if ($allSchedules->isNotEmpty() && $qMayVideo)
                 <button type="button" id="quickRecordBtn" class="qa-tile qa-rec">
-                    <span class="qa-ico"><img src="{{ asset('images/video-camera.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
+                    <span class="qa-ico"><img src="{{ asset('images/video-camera-b.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                     <span class="qa-txt">
                         <b>Quick Record</b>
                         <i>Film it when a picture will not do — a sound, a leak, a machine.</i>
