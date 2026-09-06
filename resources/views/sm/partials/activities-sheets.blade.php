@@ -1076,7 +1076,6 @@
                 ['activityRedoBtn', 'Redo', 'M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4', 'actRedoBadge', ''],
                 ['openDraftsBtn', 'Drafts', 'M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4', 'actDraftsBadge', ''],
                 ['openReportBtn', 'Report', 'M11 3.055A9 9 0 1020.945 13H12a1 1 0 01-1-1V3.055zM15 3.936A9.02 9.02 0 0120.064 9H15V3.936z', '', ''],
-                ['quickShareBtn', 'Quick Share', 'M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z', '', ''],
                 ['weatherBtn', 'Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z', '', ''],
                 // The same view the plant pill in a day header opens, for
                 // today — so it can be reached without hunting for the day.
@@ -1106,12 +1105,31 @@
                 $closedTools = ['captureTodayPhotoBtn', 'recordTodayVideoBtn', 'openDrawBtn', 'openMapsBtn'];
                 $actRows = array_values(array_filter($actRows, fn ($r) => ! in_array($r[0], $closedTools, true)));
             }
+            // The tools that have a drawn face elsewhere wear the same one
+            // here; Undo/Redo/Drafts and the view toggles keep their glyphs.
+            $actPics = [
+                'openReportBtn' => 'pie-chart.png',
+                'weatherBtn' => 'weather.png',
+                'growthStageBtn' => 'plant.png',
+                'openNotesBtn' => 'sticky-note.png',
+                'captureTodayPhotoBtn' => 'camera.png',
+                'recordTodayVideoBtn' => 'video-camera-b.png',
+                'openDrawBtn' => 'writting.png',
+                'openMapsBtn' => 'location-marker.png',
+                'collabRoomBtn' => 'united.png',
+            ];
         @endphp
         @foreach ($actRows as [$target, $label, $icon, $badgeId, $labelId])
             <button type="button" class="activity-action-row w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:pointer-events-none"
                     data-forward="{{ $target }}">
                 <span class="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg>
+                    @if ($target === 'aiFloatFab')
+                        <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" class="w-6 h-6 rounded-full object-cover">
+                    @elseif (isset($actPics[$target]))
+                        <img src="{{ asset('images/' . $actPics[$target]) }}" alt="" class="w-5 h-5 object-contain">
+                    @else
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg>
+                    @endif
                 </span>
                 <span class="grow"@if ($labelId) id="{{ $labelId }}"@endif>{{ $label }}</span>
                 @if ($badgeId)
