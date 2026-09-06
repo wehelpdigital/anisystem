@@ -768,8 +768,8 @@
                  "Mainit na hapon", "Mahanging gabi" — and the scene beside it
                  becomes that weather. Until then, and forever if no location
                  is set, it stays as it was. --}}
-            <h2 class="dash-hero-h">Today, {{ now('Asia/Manila')->format('F jS, Y') }}</h2>
-            <p class="dash-hero-p">{{ $scheduleCount === 0 ? 'You have no active cropping schedules yet.' : 'You have ' . $scheduleCount . ' active cropping ' . \Illuminate\Support\Str::plural('schedule', $scheduleCount) . '.' }}</p>
+            <h2 class="dash-hero-h"><span id="dashGreetWord">{{ $__greet }}</span>, {{ \Illuminate\Support\Str::title($user->firstName ?: 'kaibigan') }}</h2>
+            <p class="dash-hero-p">Today, {{ now('Asia/Manila')->format('F jS, Y') }} — {{ $scheduleCount === 0 ? 'no active cropping schedules yet.' : 'you have ' . $scheduleCount . ' active cropping ' . \Illuminate\Support\Str::plural('schedule', $scheduleCount) . '.' }}</p>
             @if ($expiringSoon)
                 <a href="{{ route('purchase.plans') }}" class="dash-hero-warn">
                     Renew before your subscription expires
