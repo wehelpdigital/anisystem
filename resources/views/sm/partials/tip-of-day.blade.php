@@ -26,7 +26,7 @@
     </svg>
     <div class="tod-head">
         <span class="tod-bulb" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 17h5M10 21h4M12 3a6 6 0 00-3.5 10.9c.6.45.9 1.1.9 1.8V16h5.2v-.3c0-.7.3-1.35.9-1.8A6 6 0 0012 3z"/></svg>
+            <img src="{{ asset('images/idea.png') }}" alt="" style="width:1.35rem;height:1.35rem;object-fit:contain">
         </span>
         <span class="min-w-0">
             <span class="tod-kicker">Tip of the day</span>

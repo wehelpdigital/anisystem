@@ -61,6 +61,14 @@
         'workers' => 'tractor.png',
         'inventory' => 'sack.png',
         'documentation' => 'document.png',
+        'post-harvest' => 'pencil.png',
+        'tags' => 'label.png',
+        'notes' => 'sticky-note.png',
+        'weather' => 'weather.png',
+        'growth' => 'plant.png',
+        'gallery' => 'gallery.png',
+        'maps' => 'location-marker.png',
+        'draw' => 'writting.png',
     ];
     $moduleCards = [
         ['Settings', 'settings', null,
@@ -449,7 +457,9 @@
                 <div class="p-4 flex flex-col gap-3">
                     <div class="flex items-start justify-between">
                         <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
-                            @if (isset($modulePics[$moduleKey]))
+                            @if ($moduleKey === 'ai')
+                                <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" class="w-7 h-7 rounded-full object-cover">
+                            @elseif (isset($modulePics[$moduleKey]))
                                 <img src="{{ asset('images/' . $modulePics[$moduleKey]) }}" alt="" class="w-6 h-6 object-contain">
                             @else
                                 <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $iconPath }}"/></svg>
@@ -471,29 +481,19 @@
             <a href="{{ route('sm.collab', ['id' => $schedule->id]) }}" data-collab-open class="card card-hover block">
                 <div class="p-4 flex flex-col gap-3">
                     <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
-                        <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M5 4v11a2 2 0 002 2h10a2 2 0 002-2V4M8 9h8M8 12h5M12 17v4m-3 0h6"/></svg>
+                        <img src="{{ asset('images/united.png') }}" alt="" class="w-6 h-6 object-contain">
                     </div>
                     <span class="font-bold text-gray-900 text-sm">Collab Room</span>
                 </div>
             </a>
         @endif
 
-        {{-- Share this schedule --}}
-        <button type="button" id="shareScheduleBtn" class="card card-hover block w-full text-left">
-            <div class="p-4 flex flex-col gap-3">
-                <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
-                    <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
-                </div>
-                <span class="font-bold text-gray-900 text-sm">Share</span>
-            </div>
-        </button>
-
         {{-- Reports --}}
         @if ($may('reports'))
         <a href="{{ route('sm.reports', ['id' => $schedule->id]) }}" data-nav-loader class="card card-hover block">
             <div class="p-4 flex flex-col gap-3">
                 <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
-                    <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9 9 0 1020.945 13H12a1 1 0 01-1-1V3.055zM15 3.936A9.02 9.02 0 0120.064 9H15V3.936z"/></svg>
+                    <img src="{{ asset('images/pie-chart.png') }}" alt="" class="w-6 h-6 object-contain">
                 </div>
                 <span class="font-bold text-gray-900 text-sm">Reports</span>
             </div>

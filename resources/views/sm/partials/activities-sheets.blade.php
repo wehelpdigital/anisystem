@@ -692,6 +692,13 @@
                 'workers' => 'tractor.png',
                 'inventory' => 'sack.png',
                 'documentation' => 'document.png',
+                'post-harvest' => 'pencil.png',
+                'tags' => 'label.png',
+                'notes' => 'sticky-note.png',
+                'weather' => 'weather.png',
+                'growth' => 'plant.png',
+                'gallery' => 'gallery.png',
+                'maps' => 'location-marker.png',
             ];
             $modNav = [
                 ['activities', 'Activities', 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01'],
@@ -727,7 +734,9 @@
             <button type="button" class="module-nav-row w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50"
                     data-module="{{ $key }}">
                 <span class="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
-                    @if (isset($modNavPics[$key]))
+                    @if ($key === 'ai')
+                        <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" class="w-6 h-6 rounded-full object-cover">
+                    @elseif (isset($modNavPics[$key]))
                         <img src="{{ asset('images/' . $modNavPics[$key]) }}" alt="" class="w-5 h-5 object-contain">
                     @else
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg>
