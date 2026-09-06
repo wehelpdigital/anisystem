@@ -58,6 +58,9 @@
     $modulePics = [
         'settings' => 'gear.png',
         'lots' => 'treasure-map.png',
+        'workers' => 'tractor.png',
+        'inventory' => 'sack.png',
+        'documentation' => 'document.png',
     ];
     $moduleCards = [
         ['Settings', 'settings', null,
