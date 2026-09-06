@@ -225,6 +225,14 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/when-to-plant/one/{id}', [App\Http\Controllers\WhenToPlantController::class, 'one'])->whereNumber('id')->name('wtp.one');
     Route::delete('/app/when-to-plant/{id}', [App\Http\Controllers\WhenToPlantController::class, 'destroy'])->whereNumber('id')->name('wtp.delete');
     Route::get('/app/when-to-plant/preview/{id}', [App\Http\Controllers\WhenToPlantController::class, 'preview'])->whereNumber('id')->name('wtp.preview');
+    // What to Plant — the sister analysis: the ground asks which crop.
+    Route::get('/app/what-to-plant', [App\Http\Controllers\WhatToPlantController::class, 'page'])->name('whatp.page');
+    Route::get('/app/what-to-plant/options', [App\Http\Controllers\WhatToPlantController::class, 'options'])->name('whatp.options');
+    Route::post('/app/what-to-plant/generate', [App\Http\Controllers\WhatToPlantController::class, 'generate'])->name('whatp.generate');
+    Route::get('/app/what-to-plant/list', [App\Http\Controllers\WhatToPlantController::class, 'list'])->name('whatp.list');
+    Route::get('/app/what-to-plant/one/{id}', [App\Http\Controllers\WhatToPlantController::class, 'one'])->whereNumber('id')->name('whatp.one');
+    Route::get('/app/what-to-plant/job/{id}', [App\Http\Controllers\WhatToPlantController::class, 'jobState'])->whereNumber('id')->name('whatp.job');
+    Route::delete('/app/what-to-plant/{id}', [App\Http\Controllers\WhatToPlantController::class, 'destroy'])->whereNumber('id')->name('whatp.delete');
     Route::get('/app/when-to-plant/job/{id}', [App\Http\Controllers\WhenToPlantController::class, 'jobState'])->whereNumber('id')->name('wtp.job');
     Route::get('/app/weather', [App\Http\Controllers\WeatherController::class, 'forecast'])->name('app.weather');
     Route::get('/app/sm-weather', [App\Http\Controllers\WeatherController::class, 'scheduleForecast'])->name('sm.weather');

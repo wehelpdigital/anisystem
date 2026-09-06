@@ -768,8 +768,8 @@
                  "Mainit na hapon", "Mahanging gabi" — and the scene beside it
                  becomes that weather. Until then, and forever if no location
                  is set, it stays as it was. --}}
-            <h2 class="dash-hero-h"><span id="dashGreetWord">{{ $__greet }}</span>, {{ \Illuminate\Support\Str::title($user->firstName ?: 'kaibigan') }}</h2>
-            <p class="dash-hero-p">{{ now('Asia/Manila')->format('l, F j') }} — {{ $scheduleCount === 0 ? 'no seasons planned yet.' : $scheduleCount . ' ' . \Illuminate\Support\Str::plural('season', $scheduleCount) . ' on the shelf.' }}</p>
+            <h2 class="dash-hero-h">Today, {{ now('Asia/Manila')->format('F jS, Y') }}</h2>
+            <p class="dash-hero-p">{{ $scheduleCount === 0 ? 'You have no active cropping schedules yet.' : 'You have ' . $scheduleCount . ' active cropping ' . \Illuminate\Support\Str::plural('schedule', $scheduleCount) . '.' }}</p>
             @if ($expiringSoon)
                 <a href="{{ route('purchase.plans') }}" class="dash-hero-warn">
                     Renew before your subscription expires
@@ -1119,7 +1119,7 @@
                     <img class="dash-anee-face" src="{{ $aiSettings->faceUrl() }}" alt="" width="56" height="56">
                     <div class="min-w-0">
                         <h2 class="dash-anee-h" id="dashAneeH">{{ $aneeName }}</h2>
-                        <p class="dash-anee-p">Your Smart Agricultural Technician. Pests, fertiliser, weather, prices — ask in Tagalog or English, any hour.{{ $canUseAi ? '' : ' On Boss and Lifetime plans.' }}</p>
+                        <p class="dash-anee-p">Your Smart Agricultural Technician. Ask anything about your crops, show a photo, or explain your observations. Anee is available 24/7, ask in English or Tagalog.{{ $canUseAi ? '' : ' On Boss and Lifetime plans.' }}</p>
                     </div>
                 </div>
 
@@ -1164,7 +1164,20 @@
                     <span class="dash-wtp-ic"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                     <span class="min-w-0">
                         <b>When to Plant Analysis</b>
-                        <i>Your crop, your place, the field's troubles — and the window the climate argues for, with the risks of missing it. One analysis, a few AI credits.</i>
+                        <i>Analyze and forecast through Anee when is the best time to start your cropping season to lower the risk of climate risks.</i>
+                    </span>
+                    <svg class="dash-wtp-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </a>
+            </section>
+
+            {{-- The sister question, asked the other way round: not when to
+                 plant a chosen crop, but which crop this ground argues for. --}}
+            <section class="dash-wtp-card" aria-label="What to Plant Analysis">
+                <a href="{{ route('whatp.page') }}" class="dash-wtp">
+                    <span class="dash-wtp-ic"><img src="{{ asset('images/plant.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
+                    <span class="min-w-0">
+                        <b>What to Plant Analysis</b>
+                        <i>Your soil, your water, your timing — and the crops that fit them best, ranked across grains, vegetables, root crops and fruit trees. One deep analysis, 100 AI credits.</i>
                     </span>
                     <svg class="dash-wtp-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </a>

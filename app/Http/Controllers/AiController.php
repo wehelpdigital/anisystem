@@ -256,7 +256,8 @@ class AiController extends Controller
          * refused loudly when it cannot be read, not silently dropped. */
         $analysisCtx = '';
         if ($request->filled('attachAnalysisId')) {
-            $found = \App\Http\Controllers\WhenToPlantController::contextFor((int) $request->input('attachAnalysisId'), (int) $userId);
+            $found = \App\Http\Controllers\WhenToPlantController::contextFor((int) $request->input('attachAnalysisId'), (int) $userId)
+                ?? \App\Http\Controllers\WhatToPlantController::contextFor((int) $request->input('attachAnalysisId'), (int) $userId);
             if (! $found) {
                 return $this->json(false, 'That analysis could not be attached. Remove it and try again.', [], 422);
             }

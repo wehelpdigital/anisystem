@@ -148,6 +148,7 @@ class WhenToPlantController extends Controller
         /* One in flight at a time: a double press must not buy two. A
          * standing job is simply handed back for the page to keep polling. */
         $standing = DB::table('as_plant_analyses')->where('userId', Auth::id())
+            ->where('kind', 'when')
             ->where('status', 'pending')->where('deleteStatus', 1)
             ->where('created_at', '>', now()->subMinutes(10))
             ->orderByDesc('id')->first();
@@ -325,6 +326,7 @@ class WhenToPlantController extends Controller
     public function list()
     {
         $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())
+            ->where('kind', 'when')
             ->where('deleteStatus', 1)->where('status', 'ready')->orderByDesc('id')
             ->get(['id', 'title', 'credits', 'created_at']);
 
@@ -360,7 +362,8 @@ class WhenToPlantController extends Controller
     public static function contextFor(int $id, int $userId): ?array
     {
         $r = DB::table('as_plant_analyses')->where('userId', $userId)
-            ->where('id', $id)->where('deleteStatus', 1)->where('status', 'ready')->first();
+            ->where('id', $id)->where('kind', 'when')
+            ->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
             return null;
         }
@@ -385,7 +388,8 @@ class WhenToPlantController extends Controller
     /** Weighed for the composer, the way a plan is before it is attached. */
     public function preview(int $id)
     {
-        $ctx = self::contextFor($id, (int) Auth::id());
+        $ctx = self::contextFor($id, (int) Auth::id())
+            ?? \App\Http\Controllers\WhatToPlantController::contextFor($id, (int) Auth::id());
         if (! $ctx) {
             return $this->json(false, 'That analysis is gone.', [], 404);
         }
