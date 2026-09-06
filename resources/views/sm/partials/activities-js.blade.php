@@ -3232,6 +3232,18 @@ document.addEventListener('DOMContentLoaded', () => {
         renderWorkerPay();
     }
 
+    /* The tag on the form says who is on the task, in words. */
+    function sayActivityWorkers() {
+        const t = $id('activityWorkersNow');
+        if (!t) return;
+        const names = $qsa('#activityWorkersContainer .worker-chip.is-selected')
+            .map((c) => (c.textContent || '').trim()).filter(Boolean);
+        t.textContent = !names.length ? 'Nobody assigned (N/A)'
+            : (names.length <= 2 ? names.join(', ') : names.length + ' workers');
+        t.classList.toggle('is-none', !names.length);
+    }
+    $id('activityWorkersBtn')?.addEventListener('click', () => openSheet('activityWorkersSheet'));
+
     function getActivityWorkerIds() {
         return $qsa('#activityWorkersContainer .worker-chip.is-selected')
             .map((c) => parseInt(c.getAttribute('data-worker-id'), 10))
@@ -3308,6 +3320,7 @@ document.addEventListener('DOMContentLoaded', () => {
             panel.classList.add('hidden');
             rows.innerHTML = '';
             paintWorkerCount();
+            sayActivityWorkers();
             return;
         }
 
@@ -3336,6 +3349,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         $id('workerPayTotal').textContent = money([...on].reduce((t, id) => t + payFor(id), 0));
         paintWorkerCount();
+        sayActivityWorkers();
     }
 
     /* Ticking a name is the same act as picking that worker — the chips above

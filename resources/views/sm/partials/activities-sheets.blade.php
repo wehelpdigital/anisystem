@@ -426,17 +426,12 @@
             </div>
 
             <div id="activityWorkersPane">
-                <span class="form-label">Workers
-                    <span class="text-gray-400 font-normal">— pick none for nobody assigned (N/A)</span>
-                </span>
-                <div id="activityWorkersContainer" class="flex flex-wrap gap-2">
-                    @foreach ($schedule->workers as $w)
-                        <button type="button" class="chip worker-chip" data-worker-id="{{ $w->id }}" aria-pressed="false">
-                            {{ $w->workerName }}
-                        </button>
-                    @endforeach
-                    <button type="button" class="chip chip-dashed" id="quickAddWorkerBtn" data-chip-manual>+ Worker</button>
-                </div>
+                <span class="form-label">Workers</span>
+                <button type="button" class="crop-tag" id="activityWorkersBtn">
+                    <span class="crop-tag-e">👷</span>
+                    <span class="crop-tag-t is-none" id="activityWorkersNow">Nobody assigned (N/A)</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
                 {{-- Who is on this, for how much of the day, and at what rate.
                      It appears once someone is picked: an empty checklist is
                      just a heading in the way. --}}
@@ -474,37 +469,6 @@
                      because without one this person cannot be sent the day's
                      work — which is the first thing somebody tries after
                      adding them. --}}
-                <div id="quickAddWorkerForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2.5">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold text-gray-500 uppercase">New worker</span>
-                        <button type="button" class="btn-ghost rounded-full w-7 h-7 flex items-center justify-center text-gray-400 hover:text-gray-700 js-quick-form-close" data-form="quickAddWorkerForm" aria-label="Close">✕</button>
-                    </div>
-
-                    <input type="text" id="qawName" class="form-input bg-white!" placeholder="Worker name *" maxlength="255">
-
-                    <div class="grid grid-cols-2 gap-2">
-                        <input type="email" id="qawEmail" class="form-input bg-white!" placeholder="Email — for the day's work" maxlength="255">
-                        <input type="tel" id="qawPhone" class="form-input bg-white!" placeholder="Phone (optional)" maxlength="32">
-                    </div>
-
-                    <div>
-                        <label class="form-label text-xs! mb-1!" for="qawRate">Rate per half-day (₱)</label>
-                        <input type="number" id="qawRate" class="form-input bg-white!" placeholder="0.00" min="0" step="0.01" inputmode="decimal">
-                    </div>
-
-                    <div>
-                        <span class="form-label text-xs! mb-1!">Skills</span>
-                        <div id="qawSkills" data-chip-group class="flex flex-wrap gap-2">
-                            @foreach (\App\Models\AsScheduleWorker::SKILLS as $slug => $label)
-                                <button type="button" class="chip" data-value="{{ $slug }}">{{ $label }}</button>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    <textarea id="qawNotes" rows="2" maxlength="2000" class="form-textarea bg-white!" placeholder="Notes (optional)"></textarea>
-
-                    <button type="button" id="qawSave" class="btn btn-primary btn-sm w-full">Add worker</button>
-                </div>
             </div>
 
             <div class="keep-on-workers">
@@ -674,6 +638,58 @@
              another way, the Save is the last door and it is shut too. --}}
         <button type="button" id="saveActivityBtn" class="btn btn-primary w-full{{ $sheetLock }}"
                 @disabled(! $mayEdit) @if (! $mayEdit) title="{{ $whyNoEdit }}" @endif>Save Activity</button>
+    </div>
+</div>
+
+{{-- Who is on this task. The chips and the quick-add form moved here
+     whole, so every listener they had still finds them. --}}
+<div class="sheet hidden" id="activityWorkersSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Workers on this task</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">×</button>
+    </div>
+    <div class="sheet-body">
+        <p class="form-hint mt-0 mb-2">Pick none for nobody assigned (N/A).</p>
+                <div id="activityWorkersContainer" class="flex flex-wrap gap-2">
+                    @foreach ($schedule->workers as $w)
+                        <button type="button" class="chip worker-chip" data-worker-id="{{ $w->id }}" aria-pressed="false">
+                            {{ $w->workerName }}
+                        </button>
+                    @endforeach
+                    <button type="button" class="chip chip-dashed" id="quickAddWorkerBtn" data-chip-manual>+ Worker</button>
+                </div>
+                <div id="quickAddWorkerForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-gray-500 uppercase">New worker</span>
+                        <button type="button" class="btn-ghost rounded-full w-7 h-7 flex items-center justify-center text-gray-400 hover:text-gray-700 js-quick-form-close" data-form="quickAddWorkerForm" aria-label="Close">✕</button>
+                    </div>
+
+                    <input type="text" id="qawName" class="form-input bg-white!" placeholder="Worker name *" maxlength="255">
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="email" id="qawEmail" class="form-input bg-white!" placeholder="Email — for the day's work" maxlength="255">
+                        <input type="tel" id="qawPhone" class="form-input bg-white!" placeholder="Phone (optional)" maxlength="32">
+                    </div>
+
+                    <div>
+                        <label class="form-label text-xs! mb-1!" for="qawRate">Rate per half-day (₱)</label>
+                        <input type="number" id="qawRate" class="form-input bg-white!" placeholder="0.00" min="0" step="0.01" inputmode="decimal">
+                    </div>
+
+                    <div>
+                        <span class="form-label text-xs! mb-1!">Skills</span>
+                        <div id="qawSkills" data-chip-group class="flex flex-wrap gap-2">
+                            @foreach (\App\Models\AsScheduleWorker::SKILLS as $slug => $label)
+                                <button type="button" class="chip" data-value="{{ $slug }}">{{ $label }}</button>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <textarea id="qawNotes" rows="2" maxlength="2000" class="form-textarea bg-white!" placeholder="Notes (optional)"></textarea>
+
+                    <button type="button" id="qawSave" class="btn btn-primary btn-sm w-full">Add worker</button>
+                </div>
     </div>
 </div>
 
