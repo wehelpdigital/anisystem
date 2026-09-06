@@ -785,7 +785,7 @@
              is. --}}
         <section class="qa-panel" id="globalTools">
             <button type="button" class="qa-panel-head" id="globalToolsHead" aria-expanded="true" aria-controls="globalToolsBody">
-                <span class="qa-panel-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 4a2 2 0 012 2v1.2a6.9 6.9 0 011.7.7l.85-.85a2 2 0 012.83 0l.7.7a2 2 0 010 2.83l-.85.85c.31.53.55 1.1.7 1.7H20a2 2 0 012 2v1a2 2 0 01-2 2h-1.2M4 13a2 2 0 01-2-2v-1a2 2 0 012-2h1.2c.15-.6.39-1.17.7-1.7"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 100-6 3 3 0 000 6zM7 20l5-5 5 5"/></svg></span>
+                <span class="qa-panel-ico"><img src="{{ asset('images/time.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                 <span class="qa-panel-txt">
                     <b>Global and Quick Tools</b>
                     <i>Notes and pictures across every season, and the two ways to add one now.</i>
