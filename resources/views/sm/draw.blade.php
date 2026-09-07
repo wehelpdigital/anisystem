@@ -94,9 +94,6 @@
 @endpush
 
 @section('content')
-    @include('sm.partials.module-note', [
-        'say' => 'Every drawing in this schedule — your own and the team’s. Each one is kept as an attachment on a note, so the tag on a card opens the words that explain it.',
-    ])
     {{-- A drawing kept as a flat picture stops being a drawing: this module
          lists the ones that still carry their strokes, so a card for it would
          disappear on the next refresh. Rather than that small lie, say where
