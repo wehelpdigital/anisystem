@@ -8,47 +8,75 @@
 @section('content')
 
     {{-- ================= HERO ================= --}}
-    <section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900">
+    <section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900 spark-field">
         <div class="absolute inset-0 bg-dot-grid opacity-50" aria-hidden="true"></div>
-        <div class="relative max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center animate-fade-up">
+        <div class="relative max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center animate-fade-up" style="z-index:1">
             <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Simple, farmer-sized pricing</p>
-            <h1 class="mt-2 font-heading text-4xl sm:text-5xl font-bold text-white text-balance">One Plan Runs the Whole Farm</h1>
+            <h1 class="mt-2 font-heading text-4xl sm:text-5xl font-bold text-white text-balance">Start Free. Grow When You're Ready.</h1>
             <p class="mt-5 text-brand-100 text-base sm:text-lg">
-                Pay in pesos, through GCash, with no card required. The AI technician runs on credits
-                on top — so you only ever pay Anee for what you actually ask.
+                The Libre plan is free forever — no card, no trial clock. Upgrades are paid in pesos,
+                through GCash. The AI technician runs on credits on top, so you only ever pay Anee
+                for what you actually ask.
             </p>
         </div>
     </section>
 
-    {{-- ================= PLANS (live store rows) ================= --}}
-    <section class="py-16 sm:py-20 bg-gray-50">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6">
-            <div class="pr-grid">
-                @foreach ($plans as $plan)
-                    @php $isBest = $plans->count() > 1 && $loop->iteration === $plans->count(); @endphp
-                    <div class="pr-card reveal {{ $isBest ? 'is-star' : '' }}" style="--reveal-delay: {{ $loop->index * 0.07 }}s">
-                        @if ($isBest)<span class="pr-flag">Most complete</span>@endif
-                        <span class="pr-name">{{ $plan->planName }}</span>
-                        @if ($plan->description)<span class="pr-for">{{ $plan->description }}</span>@endif
-                        <span class="pr-price">
-                            <span class="pr-amount">₱{{ number_format((float) $plan->price, fmod((float) $plan->price, 1) > 0 ? 2 : 0) }}</span>
-                            <span class="pr-per">/ {{ $plan->duration_label }}</span>
-                        </span>
-                        <span class="pr-year">Paid once via GCash — days stack when you renew early.</span>
-                        @if (is_array($plan->features) && count($plan->features))
-                            <ul class="pr-list">
-                                @foreach ($plan->features as $feature)
-                                    <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ $feature }}</li>
-                                @endforeach
-                            </ul>
+    {{-- ================= THE THREE TIERS ================= --}}
+    <section class="py-16 sm:py-20 bg-gray-50 bg-drift" x-data="{ yearly: false }">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center reveal">
+                <div class="inline-flex rounded-full bg-white ring-1 ring-gray-200 p-1 gap-1">
+                    <button type="button" class="rounded-full px-4 py-1.5 text-sm font-bold transition"
+                            :class="yearly ? 'text-gray-500' : 'bg-brand-600 text-white'" @click="yearly = false">Monthly</button>
+                    <button type="button" class="rounded-full px-4 py-1.5 text-sm font-bold transition"
+                            :class="yearly ? 'bg-brand-600 text-white' : 'text-gray-500'" @click="yearly = true">Yearly <span class="font-normal">· save more</span></button>
+                </div>
+            </div>
+            <div class="pr-grid mt-8">
+                @foreach ($tiers as $key => $tier)
+                    @php $isStar = $key === 'owner'; @endphp
+                    <div class="pr-card reveal {{ $isStar ? 'is-star' : '' }}" style="--reveal-delay: {{ $loop->index * 0.07 }}s">
+                        @if ($isStar)<span class="pr-flag">Most complete</span>@endif
+                        <span class="pr-name">{{ $tier['name'] }}</span>
+                        <span class="pr-for">{{ $tier['tagline'] }}</span>
+
+                        @if (empty($tier['price']))
+                            <span class="pr-price">
+                                <span class="pr-amount is-free">Free</span>
+                                <span class="pr-per">forever</span>
+                            </span>
+                            <span class="pr-year">No card. No trial clock. Yours to keep.</span>
+                        @else
+                            <span class="pr-price" x-show="!yearly">
+                                <span class="pr-amount">₱{{ number_format($tier['price']) }}</span>
+                                <span class="pr-per">/ month</span>
+                            </span>
+                            <span class="pr-price" x-show="yearly" x-cloak>
+                                <span class="pr-amount">₱{{ number_format($tier['priceYear']) }}</span>
+                                <span class="pr-per">/ year</span>
+                            </span>
+                            <span class="pr-year" x-show="!yearly">or ₱{{ number_format($tier['priceYear']) }}/year — about ₱{{ number_format((int) round($tier['priceYear'] / 12)) }}/mo</span>
+                            <span class="pr-year" x-show="yearly" x-cloak>That's about ₱{{ number_format((int) round($tier['priceYear'] / 12)) }}/mo, paid once via GCash</span>
                         @endif
-                        <a href="{{ route('signup') }}" class="btn {{ $isBest ? 'btn-accent' : 'btn-primary' }}">Choose {{ $plan->planName }}</a>
+
+                        <ul class="pr-list">
+                            @foreach ($tier['features'] as $feature)
+                                <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ $feature }}</li>
+                            @endforeach
+                            @foreach ($tier['excludes'] as $missing)
+                                <li class="is-off"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>{{ $missing }}</li>
+                            @endforeach
+                        </ul>
+
+                        <a href="{{ route('signup') }}" class="btn {{ $isStar ? 'btn-accent' : (empty($tier['price']) ? 'btn-primary' : 'btn-outline') }}">
+                            {{ empty($tier['price']) ? 'Start for Free' : 'Start free, then upgrade' }}
+                        </a>
                     </div>
                 @endforeach
             </div>
             <p class="mt-6 text-center text-sm text-gray-500 reveal">
-                Every plan includes the activities board, lots, notes with photos and voice, maps, weather,
-                growth stages, reports, the gallery and the farmer community.
+                Every plan includes the activities board, lots, notes with photos and voice, growth stages,
+                the gallery and the farmer community. Upgrading happens inside the app, verified by our team.
             </p>
         </div>
     </section>

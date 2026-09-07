@@ -3,13 +3,13 @@
 @include('public.partials.site-css')
 
 @section('title', 'Cropping Schedule Manager for Filipino Farmers')
-@section('meta_description', 'anee.io — plan every cropping season like a pro. Manage lots, activities, workers and costs, ask the built-in AI Technician, and learn from a community of Filipino farmers — all in one mobile-friendly web app.')
+@section('meta_description', 'anee.io — plan every cropping season like a pro. Manage lots, activities, workers and costs, ask the built-in AI Technician, and learn from a community of Filipino farmers — all in one mobile-friendly web app. Start free.')
 
 @section('content')
 
     {{-- ================= HERO ================= --}}
     <section class="relative isolate overflow-hidden">
-        <img src="{{ asset('images/hero-bg.jpg') }}" alt="Rice field in the Philippines at golden hour"
+        <img src="{{ asset('images/site/photos/hero-planting.jpg') }}" alt="Filipino farmers planting rice, one checking anee.io on his phone"
              class="absolute inset-0 -z-20 h-full w-full object-cover" loading="eager" fetchpriority="high">
         {{-- Layered overlays: legibility gradient + brand tint --}}
         <div class="absolute inset-0 -z-10 bg-gradient-to-t from-black/85 via-black/60 to-black/35"></div>
@@ -36,11 +36,12 @@
                         all from your phone, wherever your farm is.
                     </p>
 
-                    <div class="mt-8">
+                    <div class="mt-8 flex flex-col items-start gap-2">
                         <a href="{{ route('signup') }}" class="btn btn-accent btn-lg shadow-lg shadow-accent-500/20">
-                            Get Started
+                            Start for Free
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
                         </a>
+                        <span class="text-xs text-gray-300">Free forever on the Libre plan — no card, no trial clock.</span>
                     </div>
 
                     {{-- Capability strip — generic capability statements, not fabricated metrics --}}
@@ -108,8 +109,8 @@
         </div>
     </section>
 
-    {{-- ================= FEATURES ================= --}}
-    <section class="py-16 sm:py-24 bg-white">
+    {{-- ================= FEATURES (nine, balanced) ================= --}}
+    <section class="py-16 sm:py-24 bg-white bg-drift">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="max-w-2xl mx-auto text-center reveal">
                 <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Everything in one place</p>
@@ -134,23 +135,33 @@
                             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6m0 0L9 8"/>',
                         ],
                         [
-                            'title' => 'Workers & Labor Costs',
-                            'text' => 'Keep a roster of workers with skills and daily rates, assign them to activities and see labor cost summaries in ₱.',
-                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6-2a3 3 0 10-3-3"/>',
-                        ],
-                        [
-                            'title' => 'Materials & Services',
-                            'text' => 'List fertilizers, biostimulants, seeds and hired services with quantities and prices so the season budget is always clear.',
-                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>',
-                        ],
-                        [
                             'title' => 'Activities Timeline',
                             'text' => 'Build the full timeline — land prep, sowing, fertilization, spraying, harvest — with dates, priorities, drafts and versions.',
                             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>',
                         ],
                         [
+                            'title' => 'Workers & Labor Costs',
+                            'text' => 'Keep a roster of workers with skills and daily rates, assign them to activities and see labor cost summaries in ₱.',
+                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6-2a3 3 0 10-3-3"/>',
+                        ],
+                        [
+                            'title' => 'Materials & Inventory',
+                            'text' => 'List fertilizers, seeds and services with quantities and prices, and watch stock move in and out as the season runs.',
+                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>',
+                        ],
+                        [
+                            'title' => 'Farm Maps & Drawings',
+                            'text' => 'Pin your lots on a live map, sketch layouts and plans, and keep every drawing tied to the note it explains.',
+                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/>',
+                        ],
+                        [
+                            'title' => 'Weather & Growth Stages',
+                            'text' => 'A forecast for every lot and a reading of where your crop stands — what the stage means and what to do now.',
+                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999A5.002 5.002 0 105.9 12.1 4 4 0 003 15z"/>',
+                        ],
+                        [
                             'title' => 'AI Technician',
-                            'text' => 'Ask crop questions anytime — fertilizer rates, pests, timing — or snap a photo of a leaf and let the AI Technician take a look.',
+                            'text' => 'Ask crop questions anytime — fertilizer rates, pests, timing — or snap a photo of a leaf and let Anee take a look.',
                             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/>',
                         ],
                         [
@@ -174,22 +185,27 @@
                     </div>
                 @endforeach
             </div>
+
+            <div class="sec-cta reveal">
+                <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start for Free</a>
+                <span class="sec-cta-note">Every one of these is waiting on the free plan.</span>
+            </div>
         </div>
     </section>
 
-    {{-- ================= THE PRODUCT, SHOWN ================= --}}
+    {{-- ================= THE PRODUCT, SHOWN ON VIDEO ================= --}}
     <section class="py-16 sm:py-24 bg-gray-50 overflow-hidden">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="max-w-2xl mx-auto text-center reveal">
-                <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Real screens, not mockups</p>
-                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">See It on Your Own Phone</h2>
-                <p class="mt-4 text-gray-600">Every screenshot below is the live app, exactly as it runs in the field.</p>
+                <p class="text-sm font-bold uppercase tracking-wider text-brand-600">See it working</p>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">Watch the App Do Its Job</h2>
+                <p class="mt-4 text-gray-600">Short clips of the live app, exactly as it runs in the field.</p>
             </div>
 
             <div class="mt-14 space-y-20 sm:space-y-24">
                 <div class="fx-row reveal">
-                    <div class="fx-media fx-glow">
-                        <span class="ph-frame ph-tilt-l site-float"><img src="{{ asset('images/site/app/board.png') }}" alt="The anee.io activities board" loading="lazy"></span>
+                    <div class="fx-media fx-glow w-full">
+                        @include('public.partials.feature-video', ['slug' => 'board', 'poster' => 'images/site/photos/palay-phone.jpg', 'label' => 'The activities board'])
                     </div>
                     <div>
                         <p class="fx-kicker">The activities board</p>
@@ -200,12 +216,14 @@
                             <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Photos, videos and voice notes ride on any activity</li>
                             <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Workers see exactly what the owner lets them see</li>
                         </ul>
+                        <a href="{{ route('signup') }}" class="btn btn-outline mt-6">Start for free
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg></a>
                     </div>
                 </div>
 
                 <div class="fx-row is-flip reveal">
-                    <div class="fx-media fx-glow">
-                        <span class="ph-frame ph-tilt-r"><img src="{{ asset('images/site/app/growth.png') }}" alt="Growth stages reading the crop" loading="lazy"></span>
+                    <div class="fx-media fx-glow w-full">
+                        @include('public.partials.feature-video', ['slug' => 'growth-weather', 'poster' => 'images/site/photos/transplant.jpg', 'label' => 'Growth stages & weather'])
                     </div>
                     <div>
                         <p class="fx-kicker">Growth stages &amp; weather</p>
@@ -216,12 +234,32 @@
                             <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Do-lists and watch-lists written per stage</li>
                             <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Weather panels for the week ahead, lot by lot</li>
                         </ul>
+                        <a href="{{ route('signup') }}" class="btn btn-outline mt-6">Start for free
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg></a>
                     </div>
                 </div>
 
                 <div class="fx-row reveal">
-                    <div class="fx-media fx-glow">
-                        <span class="ph-frame ph-tilt-l"><img src="{{ asset('images/site/app/community.png') }}" alt="The anee.io farmer community" loading="lazy"></span>
+                    <div class="fx-media fx-glow w-full">
+                        @include('public.partials.feature-video', ['slug' => 'reports', 'poster' => 'images/site/photos/sacks.jpg', 'label' => 'Reports & money'])
+                    </div>
+                    <div>
+                        <p class="fx-kicker">Reports &amp; money</p>
+                        <h3 class="fx-h">Know your true cost — and your true profit</h3>
+                        <p class="fx-p">Labor, expenses and profit reports add themselves up from the records you keep, to the peso. At season's end, Anee reads everything and tells you what to change.</p>
+                        <ul class="fx-list">
+                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Every peso spent this season, itemized</li>
+                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Harvest income vs your whole spend</li>
+                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Anee's season report: what went wrong, what to improve</li>
+                        </ul>
+                        <a href="{{ route('signup') }}" class="btn btn-outline mt-6">Start for free
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg></a>
+                    </div>
+                </div>
+
+                <div class="fx-row is-flip reveal">
+                    <div class="fx-media fx-glow w-full">
+                        @include('public.partials.feature-video', ['slug' => 'community', 'poster' => 'images/site/photos/farmer-hijab.jpg', 'label' => 'The farmer community'])
                     </div>
                     <div>
                         <p class="fx-kicker">The farmer community</p>
@@ -232,19 +270,21 @@
                             <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Follow co-farmers growing the same crops</li>
                             <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Level up from Bagong Binhi to the top of the ladder</li>
                         </ul>
+                        <a href="{{ route('signup') }}" class="btn btn-outline mt-6">Start for free
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg></a>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-14 text-center reveal">
+            <div class="sec-cta reveal">
                 <a href="{{ route('features') }}" class="btn btn-outline btn-lg">Tour every feature</a>
             </div>
         </div>
     </section>
 
     {{-- ================= ANEE, THE AI TECHNICIAN ================= --}}
-    <section class="anee-band">
-        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+    <section class="anee-band spark-field">
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24" style="z-index:1">
             <div class="fx-row">
                 <div class="reveal">
                     <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Meet Anee</p>
@@ -260,24 +300,19 @@
                         <li style="color:#e8efe1"><svg fill="none" stroke="#a8cc7e" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Full season reports that read every record you kept</li>
                         <li style="color:#e8efe1"><svg fill="none" stroke="#a8cc7e" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Runs on credits — pay only for what you ask</li>
                     </ul>
-                    <div class="mt-8">
-                        <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Ask Anee your first question</a>
+                    <div class="mt-8 flex flex-col items-start gap-2">
+                        <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start free &amp; ask Anee your first question</a>
+                        <span class="text-xs text-[#8fa383]">Every new account gets starter credits on the house.</span>
                     </div>
                 </div>
                 <div class="reveal">
-                    {{-- A conversation the way it actually looks: question, answer. --}}
-                    <div class="rounded-2xl bg-white/5 ring-1 ring-white/15 backdrop-blur p-5 space-y-3 max-w-md mx-auto">
-                        <div class="flex justify-end"><span class="rounded-2xl rounded-br-md bg-accent-500 text-[#14210c] font-medium text-sm px-4 py-2.5 max-w-[85%]">Anee, may dilaw na dahon ang palay ko sa Lot 2. Ano gagawin ko?</span></div>
-                        <div class="flex items-start gap-2.5">
-                            <span class="w-8 h-8 rounded-full bg-[#a8cc7e]/20 ring-1 ring-[#a8cc7e]/40 flex items-center justify-center text-base">🌾</span>
-                            <span class="rounded-2xl rounded-tl-md bg-white/10 ring-1 ring-white/10 text-[#e8efe1] text-sm px-4 py-2.5 max-w-[85%] leading-relaxed">Lot 2 is at active tillering (DAS 24), so yellowing lower leaves usually point to nitrogen hunger — right on time for your second top-dress. Before spraying anything, send me a photo of the leaves so I can rule out tungro…</span>
+                    <div class="grid gap-6 max-w-md mx-auto">
+                        <div class="anee-halo">
+                            <div class="anee-portrait">
+                                <img src="{{ asset('images/site/anee-feature.jpg') }}" alt="Anee, the anee.io AI technician, giving a thumbs up in a rice field">
+                            </div>
                         </div>
-                        <div class="flex justify-end"><span class="rounded-2xl rounded-br-md bg-accent-500 text-[#14210c] font-medium text-sm px-4 py-2.5 max-w-[85%]">📷 photo</span></div>
-                        <div class="flex items-start gap-2.5">
-                            <span class="w-8 h-8 rounded-full bg-[#a8cc7e]/20 ring-1 ring-[#a8cc7e]/40 flex items-center justify-center text-base">🌾</span>
-                            <span class="rounded-2xl rounded-tl-md bg-white/10 ring-1 ring-white/10 text-[#e8efe1] text-sm px-4 py-2.5 max-w-[85%] leading-relaxed">Good news — even yellowing from the tips, no streaking. That's hunger, not disease. Here's the urea rate for your lot size…</span>
-                        </div>
-                        <p class="text-[11px] text-[#8fa383] text-center pt-1">A sample conversation — Anee answers from your farm's own records.</p>
+                        @include('public.partials.feature-video', ['slug' => 'anee-how', 'poster' => 'images/site/photos/anee-chat-hand.jpg', 'label' => 'How we use Anee'])
                     </div>
                 </div>
             </div>
@@ -285,12 +320,12 @@
     </section>
 
     {{-- ================= HOW IT WORKS ================= --}}
-    <section class="py-16 sm:py-24 bg-brand-mesh">
+    <section class="py-16 sm:py-24 bg-brand-mesh bg-drift">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="max-w-2xl mx-auto text-center reveal">
                 <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Getting started is easy</p>
                 <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">How It Works</h2>
-                <p class="mt-4 text-gray-600">Three simple steps between you and a fully planned season.</p>
+                <p class="mt-4 text-gray-600">Three simple steps between you and a fully planned season — and the first one is free.</p>
             </div>
 
             <div class="relative mt-14">
@@ -302,9 +337,9 @@
                 <div class="grid gap-8 md:gap-6 md:grid-cols-3">
                     @php
                         $steps = [
-                            ['n' => '1', 'title' => 'Sign Up', 'text' => 'Create your free account in under a minute — just your name, email and a password.'],
-                            ['n' => '2', 'title' => 'Pay via GCash', 'text' => 'Choose a plan, send payment through GCash and upload your receipt. Our team verifies it and emails you once your access is active.'],
-                            ['n' => '3', 'title' => 'Manage Your Season', 'text' => 'Set up your lots, workers and materials, then run your whole cropping calendar from any phone or computer.'],
+                            ['n' => '1', 'title' => 'Sign Up Free', 'text' => 'Create your account with your email or your Google account — under a minute, no card, and the Libre plan is free forever.'],
+                            ['n' => '2', 'title' => 'Set Up Your Farm', 'text' => 'Add your first cropping schedule, register your lots with their Day-0 dates, and list your workers and materials.'],
+                            ['n' => '3', 'title' => 'Grow — and Upgrade When Ready', 'text' => 'Run your whole season from any phone. When the farm needs more, upgrade in-app via GCash — Solo at ₱200/mo or Farm Owner at ₱600/mo.'],
                         ];
                     @endphp
                     @foreach ($steps as $i => $s)
@@ -323,8 +358,9 @@
                 </div>
             </div>
 
-            <div class="mt-12 text-center reveal">
-                <a href="{{ route('tutorial') }}" class="btn btn-outline btn-lg">See the full tutorial</a>
+            <div class="sec-cta reveal">
+                <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Create your free account</a>
+                <span class="sec-cta-note">Or <a href="{{ route('tutorial') }}" class="font-semibold text-brand-700 hover:underline">see the full tutorial</a> first.</span>
             </div>
         </div>
     </section>
@@ -356,14 +392,15 @@
                         </li>
                     @endforeach
                 </ul>
-                <div class="mt-8">
-                    <a href="{{ route('about') }}" class="btn btn-primary">Learn more about anee.io</a>
+                <div class="mt-8 flex flex-wrap gap-3">
+                    <a href="{{ route('signup') }}" class="btn btn-accent">Start for Free</a>
+                    <a href="{{ route('about') }}" class="btn btn-outline">Learn more about anee.io</a>
                 </div>
             </div>
             <div class="order-1 lg:order-2 reveal">
                 <div class="relative">
                     <div class="absolute -inset-3 rounded-[1.75rem] bg-gradient-to-br from-brand-100 to-accent-500/20 -rotate-1"></div>
-                    <img src="{{ asset('images/rice-comparison.png') }}" alt="Rice yield comparison — before and after following the protocol"
+                    <img src="{{ asset('images/site/photos/powered-by.jpg') }}" alt="Three Filipino farmers in their rice field with a Powered by anee.io sign"
                          class="relative rounded-2xl shadow-card-lg w-full object-cover ring-1 ring-black/5" loading="lazy">
                 </div>
             </div>
@@ -473,9 +510,9 @@
                 </div>
             </div>
 
-            <div class="mt-10 text-center reveal">
+            <div class="sec-cta reveal">
                 <a href="{{ route('signup') }}" class="btn btn-primary btn-lg">
-                    Start planning the anee.io way
+                    Start planning the anee.io way — free
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
                 </a>
             </div>
@@ -485,17 +522,17 @@
     {{-- ================= BENEFITS CHECKLIST ================= --}}
     <section class="py-16 sm:py-24 bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900 shadow-card-lg reveal">
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900 shadow-card-lg reveal spark-field">
                 <div class="absolute inset-0 bg-dot-grid opacity-60" aria-hidden="true"></div>
-                <div class="relative px-5 sm:px-10 lg:px-14 py-12 sm:py-16">
+                <div class="relative px-5 sm:px-10 lg:px-14 py-12 sm:py-16" style="z-index:1">
                     <div class="max-w-2xl">
                         <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Everything you gain</p>
                         <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-white text-balance">
                             What You Get with anee.io
                         </h2>
                         <p class="mt-4 text-brand-100 leading-relaxed">
-                            One subscription, every feature — the concrete benefits that keep your season on track
-                            from land prep to harvest.
+                            The concrete benefits that keep your season on track from land prep to harvest —
+                            starting on the free plan.
                         </p>
                     </div>
 
@@ -511,7 +548,7 @@
                             'Export, print and share the plan with your whole team.',
                             'Run it from any phone, right in the middle of the field.',
                             'Follow the same protocol our technicians use.',
-                            'Renew easily via GCash — remaining days stack, nothing wasted.',
+                            'Start free, upgrade easily via GCash — remaining days stack.',
                             'Your data stays organized and safe, season to season.',
                         ];
                     @endphp
@@ -529,7 +566,7 @@
                     </ul>
 
                     <div class="mt-10 flex flex-col sm:flex-row gap-3">
-                        <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Get Started</a>
+                        <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start for Free</a>
                         <a href="{{ route('tutorial') }}" class="btn btn-lg border-2 border-white/70 text-white bg-white/5 hover:bg-white/15">See how it works</a>
                     </div>
                 </div>
@@ -537,62 +574,70 @@
         </div>
     </section>
 
-    {{-- ================= PRICING ================= --}}
-    @if ($plans->isNotEmpty())
-        <section class="py-16 sm:py-24 bg-gray-50" id="pricing">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6">
-                <div class="max-w-2xl mx-auto text-center reveal">
-                    <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Simple pricing</p>
-                    <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">Choose Your Plan</h2>
-                    <p class="mt-4 text-gray-600">Pay easily via GCash. One subscription, every feature included.</p>
+    {{-- ================= PRICING: THE THREE TIERS ================= --}}
+    <section class="py-16 sm:py-24 bg-gray-50 bg-drift" id="pricing" x-data="{ yearly: false }">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="max-w-2xl mx-auto text-center reveal">
+                <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Simple pricing</p>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">Choose Your Plan</h2>
+                <p class="mt-4 text-gray-600">Start free forever. Upgrade in-app via GCash when the farm asks for more.</p>
+                <div class="mt-6 inline-flex rounded-full bg-white ring-1 ring-gray-200 p-1 gap-1">
+                    <button type="button" class="rounded-full px-4 py-1.5 text-sm font-bold transition"
+                            :class="yearly ? 'text-gray-500' : 'bg-brand-600 text-white'" @click="yearly = false">Monthly</button>
+                    <button type="button" class="rounded-full px-4 py-1.5 text-sm font-bold transition"
+                            :class="yearly ? 'bg-brand-600 text-white' : 'text-gray-500'" @click="yearly = true">Yearly <span class="font-normal">· save more</span></button>
                 </div>
-
-                <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto items-start">
-                    @foreach ($plans as $plan)
-                        @php $isBest = $loop->count > 1 && $loop->iteration === $loop->count; @endphp
-                        <div class="relative card card-hover flex flex-col reveal {{ $isBest ? 'ring-2 ring-accent-500 lg:-translate-y-3 shadow-card-lg' : '' }}"
-                             style="--reveal-delay: {{ $loop->index * 0.06 }}s">
-                            @if ($isBest)
-                                <div class="absolute -top-3 left-1/2 -translate-x-1/2">
-                                    <span class="badge badge-yellow shadow-sm ring-1 ring-accent-500/40 px-3 py-1">★ Best value</span>
-                                </div>
-                            @endif
-                            <div class="card-body flex flex-col grow {{ $isBest ? 'pt-7' : '' }}">
-                                <h3 class="font-heading text-xl font-bold text-ink">{{ $plan->planName }}</h3>
-                                @if ($plan->description)
-                                    <p class="mt-1 text-sm text-gray-500">{{ $plan->description }}</p>
-                                @endif
-                                <div class="mt-4 flex items-baseline gap-1.5">
-                                    <span class="font-heading text-4xl font-bold {{ $isBest ? 'text-brand-700' : 'text-ink' }}">₱{{ number_format((float) $plan->price, fmod((float) $plan->price, 1) > 0 ? 2 : 0) }}</span>
-                                    <span class="text-sm text-gray-500">/ {{ $plan->duration_label }}</span>
-                                </div>
-                                @if (is_array($plan->features) && count($plan->features))
-                                    <ul class="mt-5 space-y-2.5 text-sm text-gray-700">
-                                        @foreach ($plan->features as $feature)
-                                            <li class="flex items-start gap-2.5">
-                                                <svg class="w-5 h-5 shrink-0 text-brand-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                                                <span>{{ $feature }}</span>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                @endif
-                                <div class="mt-6 pt-4 grow flex items-end">
-                                    <a href="{{ route('signup') }}" class="btn {{ $isBest ? 'btn-accent' : 'btn-primary' }} w-full">
-                                        Choose {{ $plan->planName }}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                <p class="mt-8 text-center text-sm text-gray-500">
-                    Payments are verified manually by our team — you'll receive an email as soon as your access is activated.
-                    <a href="{{ route('pricing') }}" class="font-semibold text-brand-700 hover:text-brand-800">See the full pricing page →</a>
-                </p>
             </div>
-        </section>
-    @endif
+
+            <div class="mt-12 pr-grid">
+                @foreach ($tiers as $key => $tier)
+                    @php $isStar = $key === 'owner'; @endphp
+                    <div class="pr-card reveal {{ $isStar ? 'is-star' : '' }}" style="--reveal-delay: {{ $loop->index * 0.07 }}s">
+                        @if ($isStar)<span class="pr-flag">Most complete</span>@endif
+                        <span class="pr-name">{{ $tier['name'] }}</span>
+                        <span class="pr-for">{{ $tier['tagline'] }}</span>
+
+                        @if (empty($tier['price']))
+                            <span class="pr-price">
+                                <span class="pr-amount is-free">Free</span>
+                                <span class="pr-per">forever</span>
+                            </span>
+                            <span class="pr-year">No card. No trial clock. Yours to keep.</span>
+                        @else
+                            <span class="pr-price" x-show="!yearly">
+                                <span class="pr-amount">₱{{ number_format($tier['price']) }}</span>
+                                <span class="pr-per">/ month</span>
+                            </span>
+                            <span class="pr-price" x-show="yearly" x-cloak>
+                                <span class="pr-amount">₱{{ number_format($tier['priceYear']) }}</span>
+                                <span class="pr-per">/ year</span>
+                            </span>
+                            <span class="pr-year" x-show="!yearly">or ₱{{ number_format($tier['priceYear']) }}/year — about ₱{{ number_format((int) round($tier['priceYear'] / 12)) }}/mo</span>
+                            <span class="pr-year" x-show="yearly" x-cloak>That's about ₱{{ number_format((int) round($tier['priceYear'] / 12)) }}/mo, paid once via GCash</span>
+                        @endif
+
+                        <ul class="pr-list">
+                            @foreach ($tier['features'] as $feature)
+                                <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ $feature }}</li>
+                            @endforeach
+                            @foreach ($tier['excludes'] as $missing)
+                                <li class="is-off"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>{{ $missing }}</li>
+                            @endforeach
+                        </ul>
+
+                        <a href="{{ route('signup') }}" class="btn {{ $isStar ? 'btn-accent' : (empty($tier['price']) ? 'btn-primary' : 'btn-outline') }}">
+                            {{ empty($tier['price']) ? 'Start for Free' : 'Start free, then upgrade' }}
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+
+            <p class="mt-8 text-center text-sm text-gray-500 reveal">
+                Every account starts on Libre, free — upgrading happens inside the app, paid via GCash and verified by our team.
+                <a href="{{ route('pricing') }}" class="font-semibold text-brand-700 hover:text-brand-800">See the full pricing page →</a>
+            </p>
+        </div>
+    </section>
 
     {{-- ================= LIVE NUMBERS ================= --}}
     @if (! empty($stats))
@@ -610,17 +655,20 @@
     @endif
 
     {{-- ================= FINAL CTA ================= --}}
-    <section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900">
-        <div class="absolute inset-0 bg-dot-grid opacity-50" aria-hidden="true"></div>
+    <section class="relative isolate overflow-hidden">
+        <img src="{{ asset('images/site/photos/team-thumbs.jpg') }}" alt="Two Filipino farmers giving a thumbs up beside their rice field"
+             class="absolute inset-0 -z-20 h-full w-full object-cover" loading="lazy">
+        <div class="absolute inset-0 -z-10 bg-gradient-to-br from-brand-900/90 via-brand-900/75 to-brand-800/70"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center reveal">
             <h2 class="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-balance">
                 Ready for Your Best Season Yet?
             </h2>
             <p class="mt-4 max-w-xl mx-auto text-brand-100 text-base sm:text-lg">
-                Join the farmers already planning smarter with anee.io. Reach your crop's maximum potential this season.
+                Join the farmers already planning smarter with anee.io. Start free today —
+                reach your crop's maximum potential this season.
             </p>
             <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
-                <a href="{{ route('signup') }}" class="btn btn-accent btn-lg shadow-lg shadow-black/20">Get Started Now</a>
+                <a href="{{ route('signup') }}" class="btn btn-accent btn-lg shadow-lg shadow-black/20">Start for Free</a>
                 <a href="{{ route('contact') }}" class="btn btn-lg border-2 border-white/70 text-white bg-white/5 hover:bg-white/15">Talk to Us</a>
             </div>
         </div>

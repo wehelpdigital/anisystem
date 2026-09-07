@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactMessage;
-use App\Models\Plan;
 use App\Services\MailService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -12,9 +11,10 @@ class PublicController extends Controller
 {
     public function home()
     {
-        $plans = Plan::visible()->get();
-
-        return view('public.home', ['plans' => $plans, 'stats' => $this->liveStats()]);
+        return view('public.home', [
+            'tiers' => \Illuminate\Support\Arr::except(config('tiers'), ['admin']),
+            'stats' => $this->liveStats(),
+        ]);
     }
 
     public function about()
@@ -29,9 +29,11 @@ class PublicController extends Controller
 
     public function pricing()
     {
-        // The same rows checkout sells — the page can never promise a price
-        // the store doesn't charge.
-        return view('public.pricing', ['plans' => Plan::visible()->get()]);
+        // The same table the in-app gates read — the page can never promise
+        // a wall the app doesn't have.
+        return view('public.pricing', [
+            'tiers' => \Illuminate\Support\Arr::except(config('tiers'), ['admin']),
+        ]);
     }
 
     /**

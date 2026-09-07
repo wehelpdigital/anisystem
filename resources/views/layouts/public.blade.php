@@ -69,7 +69,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="flex items-center justify-between h-16 md:h-20">
                 <a href="{{ route('home') }}" class="flex items-center shrink-0">
-                    <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-10 md:h-12 w-auto">
+                    <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-7 md:h-8 w-auto">
                 </a>
 
                 <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-gray-700">
@@ -121,7 +121,7 @@
     <footer class="bg-gray-900 text-gray-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 grid gap-10 md:grid-cols-3">
             <div>
-                <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-10 w-auto mb-4">
+                <img src="{{ asset('images/site/logo-white.png') }}?v=anee" alt="anee.io" class="h-8 w-auto mb-4">
                 <p class="text-sm leading-relaxed text-gray-400">
                     anee.io is the cropping schedule manager empowering Filipino farmers with
                     education, technology, and quality products for a sustainable agricultural future.
