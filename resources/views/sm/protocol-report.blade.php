@@ -324,6 +324,20 @@ const __init = () => {
         } catch (err) { toast(err.message, 'error'); }
     });
 
+    /* A tag shelf names one saved protocol (?open=<id>): draw it straight
+       away, exactly as tapping its row on the shelf would. */
+    {
+        const want = new URLSearchParams(location.search).get('open');
+        if (want) (async () => {
+            try {
+                const res = await api(U.one(String(want).replace(/[^\d]/g, '')));
+                drawProtocol($id('ptSavedReport'), res.data.report, res.data, 'saved');
+                $id('ptSavedReport').hidden = false;
+                $id('ptSavedReport').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } catch (err) { toast(err.message || 'That saved protocol could not be opened.', 'error'); }
+        })();
+    }
+
     /* One quick jump: ?lot=ID pre-picks and generates. */
     const bootLot = new URLSearchParams(location.search).get('lot');
     if (bootLot && document.querySelector(`#ptLotList [data-pt-lot="${bootLot}"]`)) {

@@ -381,6 +381,20 @@ const __init = () => {
         } catch (err) { toast(err.message, 'error'); }
     });
 
+    /* A tag shelf names one saved comparison (?open=<id>): draw it straight
+       away, exactly as tapping its row on the shelf would. */
+    {
+        const want = new URLSearchParams(location.search).get('open');
+        if (want) (async () => {
+            try {
+                const res = await api(U.one(String(want).replace(/[^\d]/g, '')));
+                drawCompare($id('cpSavedReport'), res.data.report, res.data, 'saved');
+                $id('cpSavedReport').hidden = false;
+                $id('cpSavedReport').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } catch (err) { toast(err.message || 'That saved comparison could not be opened.', 'error'); }
+        })();
+    }
+
     loadOptions();
 };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', __init, { once: true });
