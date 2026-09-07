@@ -630,6 +630,35 @@ class CroppingScheduleController extends Controller
         return view('sm.settings', compact('schedule'));
     }
 
+    /**
+     * The Logs tab: the season's diary of hands, newest first, with the
+     * name of whoever's hand each line was.
+     */
+    public function settingsLogs(Request $request)
+    {
+        $schedule = $this->findOwnedOrFail($request->query('id'), true);
+
+        $rows = \App\Models\AsScheduleAudit::where('croppingScheduleId', $schedule->id)
+            ->orderByDesc('id')
+            ->limit(120)
+            ->get();
+        $users = \App\Models\User::whereIn('id', $rows->pluck('userId')->filter()->unique()->all() ?: [0])
+            ->get()->keyBy('id');
+
+        return response()->json(['success' => true, 'data' => [
+            'logs' => $rows->map(fn ($r) => [
+                'id' => (int) $r->id,
+                'label' => (string) $r->label,
+                'by' => $r->userId && $users->get($r->userId)
+                    ? trim($users->get($r->userId)->firstName . ' ' . $users->get($r->userId)->lastName)
+                    : 'Someone',
+                'when' => $r->created_at?->timezone('Asia/Manila')->format('g:i A'),
+                'day' => $r->created_at?->timezone('Asia/Manila')->format('Y-m-d'),
+                'daySays' => $r->created_at?->timezone('Asia/Manila')->format('M j, Y'),
+            ])->values(),
+        ]]);
+    }
+
     public function update(Request $request)
     {
         $schedule = $this->findOwnedOrFail($request->query('id'), true);
@@ -895,6 +924,9 @@ class CroppingScheduleController extends Controller
             }
             abort(403);
         }
+
+        // Same stash the shared resolver makes, for the audit middleware.
+        request()->attributes->set('auditScheduleId', (int) $schedule->id);
 
         return $schedule;
     }

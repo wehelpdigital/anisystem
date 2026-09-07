@@ -7,17 +7,19 @@
 @section('back', route('sm.hub', ['id' => $schedule->id]))
 
 @push('head')
+    @include('partials.tag-sheet-css')
     <style>
-        /* Same segmented strip the rest of the app uses for panes. */
-        .set-tabs { display: inline-flex; gap: .25rem; padding: .25rem; border-radius: .8rem;
-            background: var(--color-gray-100); width: 100%; }
-        .set-tab { flex: 1 1 0; padding: .5rem .6rem; border-radius: .6rem; font-size: .85rem; font-weight: 700;
-            color: var(--color-gray-500); cursor: pointer;
-            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
-        .set-tab.is-on { background: var(--color-white); color: var(--color-brand-700);
-            box-shadow: 0 1px 3px rgb(0 0 0 / .08); }
-        html.dark .set-tab.is-on { background: #1c2416; }
-        @media (prefers-reduced-motion: reduce) { .set-tab { transition: none; } }
+        /* The Logs pane: the season's diary of hands, one quiet row each. */
+        .set-log-day { font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
+            color: var(--color-gray-400); margin: .9rem 0 .35rem; }
+        .set-log-day:first-child { margin-top: 0; }
+        .set-log { display: flex; align-items: baseline; gap: .6rem; padding: .45rem 0;
+            border-bottom: 1px solid var(--color-gray-100); font-size: .82rem; }
+        .set-log:last-child { border-bottom: 0; }
+        .set-log b { font-weight: 700; color: var(--color-gray-900); }
+        .set-log i { font-style: normal; color: var(--color-gray-500); }
+        .set-log time { margin-left: auto; flex: none; font-size: .7rem; color: var(--color-gray-400); }
+        html.dark .set-log { border-color: #222b1a; }
     </style>
 @endpush
 
@@ -40,12 +42,15 @@
             </p>
         @endif
 
-        {{-- Two things live here now, and they are not the same job: what this
-             schedule IS, and who hears about it each morning. --}}
-        <div class="set-tabs" id="setTabs" role="tablist">
-            <button type="button" class="set-tab is-on" data-set-tab="basic" aria-selected="true">Basic info</button>
-            <button type="button" class="set-tab" data-set-tab="notify" aria-selected="false">Notifications</button>
-        </div>
+        {{-- Three things live here now: what this schedule IS, who hears
+             about it each morning, and the diary of every hand that touched
+             it. The chooser is the house tag button, like every other pick. --}}
+        <input type="hidden" id="setTabNowVal" value="basic">
+        <button type="button" class="crop-tag" id="setTabBtn">
+            <span class="crop-tag-e" id="setTabFace">📋</span>
+            <span class="crop-tag-t" id="setTabNow">Basic info</span>
+            <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+        </button>
 
         <div data-set-pane="basic">
         {{-- Basic Info --}}
@@ -154,6 +159,28 @@
             </div>
         </div>
 
+        {{-- The diary of hands: everything done in this schedule's modules,
+             and whose hand it was. Written by the audit middleware; read
+             here; owned by nobody's memory. --}}
+        <div data-set-pane="logs" hidden>
+            <div class="card">
+                <div class="card-body">
+                    <div class="nt-head">
+                        <span class="nt-head-mark" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </span>
+                        <div class="min-w-0">
+                            <h2 class="nt-head-h">Logs</h2>
+                            <p class="nt-head-p">Everything done in this schedule's modules, newest first,
+                                with the name of whoever did it. Workers' hands show here too.</p>
+                        </div>
+                    </div>
+                    <div id="setLogsList" class="mt-3"></div>
+                    <p id="setLogsEmpty" class="text-sm text-gray-400 text-center py-6" hidden>Nothing recorded yet. From now on, every change made in this schedule lands here.</p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 @push('head')
@@ -211,20 +238,62 @@
 const __init = () => {
     const SCHEDULE_ID = {{ $schedule->id }};
 
-    /* ---------------- Panes ---------------- */
-    document.getElementById('setTabs')?.addEventListener('click', (e) => {
-        const tab = e.target.closest('[data-set-tab]');
-        if (!tab) return;
-        const which = tab.getAttribute('data-set-tab');
-        document.querySelectorAll('[data-set-tab]').forEach((b) => {
-            const on = b === tab;
-            b.classList.toggle('is-on', on);
-            b.setAttribute('aria-selected', on ? 'true' : 'false');
-        });
+    /* ---------------- Panes, chosen through the tag button ---------------- */
+    const TAB_SAYS = {
+        basic: { face: '📋', label: 'Basic info' },
+        notify: { face: '✉️', label: 'Notifications' },
+        logs: { face: '🕒', label: 'Logs' },
+    };
+    function showPane(which) {
+        document.getElementById('setTabNowVal').value = which;
+        const say = TAB_SAYS[which] || TAB_SAYS.basic;
+        document.getElementById('setTabFace').textContent = say.face;
+        document.getElementById('setTabNow').textContent = say.label;
         document.querySelectorAll('[data-set-pane]').forEach((p) => {
             p.hidden = p.getAttribute('data-set-pane') !== which;
         });
+        document.querySelectorAll('[data-set-tab-row]').forEach((r) => {
+            r.classList.toggle('is-on', r.getAttribute('data-set-tab-row') === which);
+        });
+        if (which === 'logs') loadLogs();
+    }
+    // Delegated: the chooser sheet lives in the layout's sheet stack, which
+    // is not in the DOM yet when this inline script runs.
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('#setTabBtn')) { openSheet('setTabSheet'); return; }
+        const row = e.target.closest('[data-set-tab-row]');
+        if (!row) return;
+        showPane(row.getAttribute('data-set-tab-row'));
+        closeSheet('setTabSheet');
     });
+
+    /* ---------------- The diary of hands ---------------- */
+    let LOGS_LOADED = false;
+    async function loadLogs() {
+        if (LOGS_LOADED) return;
+        LOGS_LOADED = true;
+        const list = document.getElementById('setLogsList');
+        list.innerHTML = '<p class="text-sm text-gray-400 text-center py-4">Reading the diary…</p>';
+        try {
+            const res = await api(`{{ route('sm.settings.logs') }}?id=${SCHEDULE_ID}`);
+            const logs = res.data.logs || [];
+            document.getElementById('setLogsEmpty').hidden = logs.length > 0;
+            let html = '';
+            let day = null;
+            logs.forEach((l) => {
+                if (l.day !== day) {
+                    day = l.day;
+                    html += `<p class="set-log-day">${escapeHtml(l.daySays || '')}</p>`;
+                }
+                html += `<div class="set-log"><span class="min-w-0"><b>${escapeHtml(l.label)}</b> <i>· ${escapeHtml(l.by)}</i></span><time>${escapeHtml(l.when || '')}</time></div>`;
+            });
+            list.innerHTML = html;
+        } catch (err) {
+            LOGS_LOADED = false;
+            list.innerHTML = '';
+            toast(err.message, 'error');
+        }
+    }
 
     /* ---------------- Daily digest ---------------- */
     document.getElementById('saveNotifyBtn')?.addEventListener('click', async (e) => {
@@ -327,4 +396,33 @@ const __init = () => {
     else __init();
 })();
 </script>
+@endpush
+
+@push('sheets')
+{{-- Which of the settings' three rooms — the same chooser shape as every
+     other tag button in the app. --}}
+<div class="sheet hidden" id="setTabSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Which page?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows">
+        <button type="button" class="dt-row is-on" data-set-tab-row="basic">
+            <span class="dt-row-e">📋</span>
+            <span class="dt-row-body"><b>Basic info</b><i>Title, description and how days are counted.</i></span>
+            <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
+        <button type="button" class="dt-row" data-set-tab-row="notify">
+            <span class="dt-row-e">✉️</span>
+            <span class="dt-row-body"><b>Notifications</b><i>The morning schedule email.</i></span>
+            <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
+        <button type="button" class="dt-row" data-set-tab-row="logs">
+            <span class="dt-row-e">🕒</span>
+            <span class="dt-row-body"><b>Logs</b><i>Everything done in this schedule, and by whose hand.</i></span>
+            <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
+    </div>
+</div>
 @endpush

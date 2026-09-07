@@ -41,6 +41,12 @@ abstract class BaseScheduleController extends Controller
             ], 403));
         }
 
+        // Stashed for the audit middleware: every module resolves its season
+        // through this method, so this one line is what lets the Logs tab
+        // say which season a write belonged to without guessing at query
+        // parameter names.
+        request()->attributes->set('auditScheduleId', (int) $schedule->id);
+
         return $schedule;
     }
 
