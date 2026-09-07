@@ -171,6 +171,7 @@
             let drawings = @json($drawings);
             let pending = null;   // what the pad handed back, waiting for a name
             let askedForOne = false;   // arrived here to see one drawing, from elsewhere
+            let returnAfterSave = false;   // that drawing was saved over — go back once it is kept
 
             const grid = document.getElementById('drGrid');
             const empty = document.getElementById('drEmpty');
@@ -294,9 +295,18 @@
                 // Closing the drawing a note sent us to returns to that note.
                 if (askedForOne) {
                     askedForOne = false;
-                    const goBack = () => {
+                    const goBack = (e) => {
                         document.removeEventListener('sm:draw-pad-closed', goBack);
-                        window.smReturnToOrigin?.();
+                        // Saving is not leaving: the naming sheet is about to
+                        // ask for a title, and walking back now would hide it
+                        // under the note. The walk happens after the drawing
+                        // is put away — see the drConfirm handler.
+                        if (e && e.detail && e.detail.saving) { returnAfterSave = true; return; }
+                        // Claiming the event tells the pad not to rewind its
+                        // history entry: that rewind races the push this
+                        // navigation makes, and the pop that lands after it
+                        // put the reader right back on the Draw shelf.
+                        if (window.smReturnToOrigin?.() && e && e.cancelable) e.preventDefault();
                     };
                     document.addEventListener('sm:draw-pad-closed', goBack);
                 }
@@ -431,8 +441,13 @@
                     }
                     pending = null;
                     paint();
+                    // Going back to the note that sent us: drop the sheet's
+                    // history entry rather than rewinding it, or the queued
+                    // pop races the walk's own push and lands on this shelf.
+                    if (returnAfterSave) window.forgetOverlay?.('sheet:drSaveSheet');
                     window.closeSheet('drSaveSheet');
                     toast(row.editable ? 'Drawing saved.' : 'Kept as a picture — see the Gallery and its note.');
+                    if (returnAfterSave) { returnAfterSave = false; window.smReturnToOrigin?.(); }
                 } catch (err) {
                     toast(err.message || 'Could not save that.', 'error');
                 } finally { btn.disabled = false; }

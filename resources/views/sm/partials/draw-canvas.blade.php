@@ -1246,11 +1246,10 @@
     }
     window.addEventListener('resize', () => { if (modal.classList.contains('show')) fitStage(); });
 
-    function close() {
+    function close(saving) {
         showAsk(false);
         showTextAsk(false);
         showImgAsk(false);
-        window.unregisterOverlay?.('drawPad');
         modal.classList.remove('show'); modal.setAttribute('aria-hidden', 'true');
         document.documentElement.classList.remove('draw-pad-open');
         // The lift belongs to a question this pad is asking. Nothing outside the
@@ -1262,8 +1261,18 @@
         // pick that never happened.
         if (!picking) document.documentElement.classList.remove('draw-pad-picking');
         onSave = null; document.body.style.overflow = '';
-        // Whoever opened this may have somewhere to send you afterwards.
-        document.dispatchEvent(new CustomEvent('sm:draw-pad-closed'));
+        // Whoever opened this may have somewhere to send you afterwards. A
+        // listener that navigates claims our history entry by cancelling the
+        // event: rewinding the entry here would race the navigation's own
+        // push — the pop lands after it and drags the reader straight back
+        // to the module they just left. `saving` says the pad shut behind
+        // the naming sheet, not because the reader is leaving — and only an
+        // explicit true counts: the Back and Cancel buttons hand this
+        // function their click event, which is anything but a save.
+        const told = new CustomEvent('sm:draw-pad-closed', { cancelable: true, detail: { saving: saving === true } });
+        document.dispatchEvent(told);
+        if (told.defaultPrevented) window.forgetOverlay?.('drawPad');
+        else window.unregisterOverlay?.('drawPad');
     }
     document.getElementById('drawCancel').addEventListener('click', close);
     document.getElementById('drawBack').addEventListener('click', close);
@@ -1355,7 +1364,7 @@
         // which file it lands in, which is the caller's business.
         const strokes = (mode === 'drawing' || mode === 'overwrite') ? strokePayload() : null;
         if (onSave) onSave(data, strokes, mode);
-        close();
+        close(true);
     }
     document.getElementById('drawSaveBtn').addEventListener('click', () => {
         // Nothing to ask when only one kind is on offer — a dialog with one
