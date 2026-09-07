@@ -87,6 +87,15 @@ h1, h2, h3, h4, h5, h6 {
 body.has-offline-bar { padding-top: 2.2rem; }
 body.has-offline-bar header.sticky { top: 2.2rem; }
 
+/* The row a deep link named, flashed so it stands out of its list —
+   window.smSpot() puts this on for a moment and takes it off again. */
+.sm-spotted {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 3px;
+    border-radius: .9rem;
+    transition: outline-color .28s cubic-bezier(.22, 1, .36, 1);
+}
+
 /* …and `hidden md:flex` still has to mean "shown from md up".
    The !important above beat Tailwind's responsive display utilities too, and
    that is not a subtlety: the app's desktop navigation IS `hidden md:flex`,

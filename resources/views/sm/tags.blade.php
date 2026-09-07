@@ -45,6 +45,19 @@
     .tg-head b { font-size: .92rem; color: var(--color-gray-900); }
     html.dark .tg-head b { color: #e8efe1; }
     .tg-none { text-align: center; color: var(--color-gray-400); font-size: .85rem; padding: 2.2rem 1rem; }
+
+    .tg-title { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin: 0 0 .7rem; }
+    html.dark .tg-title p { color: #e8efe1; }
+    /* The module's own question mark — the guide the top header used to
+       carry, standing where this module's reader will find it. */
+    .tg-help { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem;
+        border-radius: 999px; font-size: .95rem; font-weight: 800; text-decoration: none;
+        background: var(--color-white); color: var(--color-gray-500);
+        border: 1px solid var(--color-gray-200); box-shadow: var(--shadow-card);
+        transition: transform .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1),
+            border-color .28s cubic-bezier(.22,1,.36,1); }
+    .tg-help:hover { transform: translateY(-1px); color: var(--color-brand-700); border-color: var(--color-brand-500); }
+    html.dark .tg-help { background: #151b12; border-color: #2b3a1c; color: #b7c2ad; }
 </style>
 @endpush
 
@@ -52,11 +65,12 @@
 <div class="tg-wrap">
     @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'tags'])
 
-    <div class="card p-4 mb-4">
+    {{-- The explanation moved behind the question mark, where every other
+         module keeps its guide — one the mother app can edit. --}}
+    <div class="tg-title">
         <p class="text-sm font-bold text-gray-900">The season's tags</p>
-        <p class="text-xs text-gray-500 mt-1">A tag is a word you tie to things as you add them — an activity, a note,
-            an expense, a photo. Tap one to see everything it is tied to. New tags are coined right on the forms,
-            under <b>Add tags</b>.</p>
+        <a class="tg-help" href="{{ url('/app/help/tags') }}?from={{ urlencode(route('sm.tags', ['id' => $schedule->id], false)) }}"
+           title="How to use tags" aria-label="How to use tags">?</a>
     </div>
 
     <div class="tg-cloud" id="tgCloud"></div>

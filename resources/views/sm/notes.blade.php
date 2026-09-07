@@ -484,7 +484,11 @@ const __init = () => {
        it on screen and mark it for a second, so it is obvious which of forty
        cards was meant. */
     function openAsked() {
-        const want = new URLSearchParams(location.search).get('open');
+        // In the shell the pane is fetched with the query while the address
+        // bar keeps the shell's own URL — the server-rendered fallback is
+        // what makes a deep link work there (the draw module's pattern).
+        const want = new URLSearchParams(location.search).get('open')
+            || @json(request()->query('open'));
         if (!want) return;
         const card = list.querySelector(`.note-card[data-id="${CSS.escape(want)}"]`);
         if (!card) return;

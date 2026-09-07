@@ -34,6 +34,7 @@ class AsTutorialPage extends BaseModel
         'ai' => 'AI Technician',
         'hub' => 'Schedule Hub',
         'schedules' => 'Schedules',
+        'tags' => 'Tags',
 
         /* Outside the cropping schedule.
          *

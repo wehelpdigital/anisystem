@@ -165,7 +165,7 @@ class TagController extends BaseScheduleController
                         'title' => (string) $a->activityTitle,
                         'sub' => trim(($a->activityType ?: 'activity') . ($a->isDone ? ' · done' : '')),
                         'when' => optional($a->targetDate)->format('Y-m-d'),
-                        'url' => route('sm.activities', ['id' => $schedule->id]) . '&highlight=' . $a->id];
+                        'url' => route('sm.activities', ['id' => $schedule->id, 'highlight' => $a->id])];
                 }
                 break;
             case 'expense':
@@ -175,7 +175,7 @@ class TagController extends BaseScheduleController
                         'title' => (trim((string) $e->note) ?: 'Expense') . ' — ₱' . number_format((float) $e->amount, 2),
                         'sub' => 'expense · ' . $day($e->expenseDate),
                         'when' => (string) $e->expenseDate,
-                        'url' => route('sm.activities', ['id' => $schedule->id])];
+                        'url' => route('sm.activities', ['id' => $schedule->id, 'day' => substr((string) $e->expenseDate, 0, 10)])];
                 }
                 break;
             case 'income':
@@ -185,7 +185,7 @@ class TagController extends BaseScheduleController
                         'title' => (trim((string) ($i->title ?: $i->note)) ?: 'Income') . ' — ₱' . number_format((float) $i->amount, 2),
                         'sub' => 'income · ' . $day($i->incomeDate),
                         'when' => (string) $i->incomeDate,
-                        'url' => route('sm.activities', ['id' => $schedule->id])];
+                        'url' => route('sm.activities', ['id' => $schedule->id, 'day' => substr((string) $i->incomeDate, 0, 10)])];
                 }
                 break;
             case 'move':
@@ -197,7 +197,7 @@ class TagController extends BaseScheduleController
                         'title' => ($m->item?->name ?: 'Stock') . ' — ' . ($in ? '+' : '−') . $qty . ' ' . ($m->enteredUnit ?: ''),
                         'sub' => 'stock ' . ($in ? 'in' : 'out') . ' · ' . $day($m->happenedOn ?? $m->created_at),
                         'when' => (string) ($m->happenedOn ?: $m->created_at?->format('Y-m-d')),
-                        'url' => $boardUrl('inventory')];
+                        'url' => route('sm.inventory', ['id' => $schedule->id, 'move' => $m->id])];
                 }
                 break;
             case 'daynote':
@@ -207,7 +207,7 @@ class TagController extends BaseScheduleController
                         'title' => mb_substr(trim(strip_tags((string) $n->noteContent)) ?: 'Day note', 0, 90),
                         'sub' => 'day note · ' . $day($n->noteDate),
                         'when' => optional($n->noteDate)->format('Y-m-d'),
-                        'url' => route('sm.activities', ['id' => $schedule->id])];
+                        'url' => route('sm.activities', array_filter(['id' => $schedule->id, 'day' => optional($n->noteDate)->format('Y-m-d')]))];
                 }
                 break;
             case 'note':
@@ -218,7 +218,7 @@ class TagController extends BaseScheduleController
                         'title' => trim((string) $n->title) ?: mb_substr(trim(strip_tags((string) $n->body)) ?: 'Note', 0, 90),
                         'sub' => ($draw ? 'drawing · ' : 'note · ') . $n->created_at?->format('M j, Y'),
                         'when' => $n->created_at?->format('Y-m-d'),
-                        'url' => $boardUrl('notes')];
+                        'url' => route('sm.notes', ['id' => $schedule->id, 'open' => $n->id])];
                 }
                 break;
             case 'inote':
@@ -232,7 +232,7 @@ class TagController extends BaseScheduleController
                         'title' => trim((string) $n->title) ?: (mb_substr(trim(strip_tags((string) $n->content)), 0, 90) ?: 'Board note'),
                         'sub' => 'board note · ' . $day($n->noteDate ?: $n->created_at),
                         'when' => (string) ($n->noteDate ?: $n->created_at?->format('Y-m-d')),
-                        'url' => route('sm.activities', ['id' => $schedule->id])];
+                        'url' => route('sm.activities', array_filter(['id' => $schedule->id, 'day' => substr((string) ($n->noteDate ?: $n->created_at?->format('Y-m-d')), 0, 10)]))];
                 }
                 break;
             case 'item':
@@ -242,7 +242,7 @@ class TagController extends BaseScheduleController
                         'title' => (string) $i->name,
                         'sub' => trim(($i->kind ?: 'inventory item') . ($i->unit ? ' · counted in ' . $i->unit : '')),
                         'when' => $i->created_at?->format('Y-m-d'),
-                        'url' => $boardUrl('inventory')];
+                        'url' => route('sm.inventory', ['id' => $schedule->id, 'open' => $i->id])];
                 }
                 break;
             case 'map':
@@ -252,7 +252,7 @@ class TagController extends BaseScheduleController
                         'title' => trim((string) $m->title) ?: 'Saved map',
                         'sub' => 'map · ' . $m->created_at?->format('M j, Y'),
                         'when' => $m->created_at?->format('Y-m-d'),
-                        'url' => $boardUrl('maps')];
+                        'url' => route('sm.maps', ['id' => $schedule->id, 'save' => $m->id])];
                 }
                 break;
             case 'doc':
@@ -262,7 +262,7 @@ class TagController extends BaseScheduleController
                         'title' => trim((string) $d->title) ?: (string) $d->type_label,
                         'sub' => 'document · ' . $d->type_label,
                         'when' => $d->created_at?->format('Y-m-d'),
-                        'url' => $boardUrl('documentation')];
+                        'url' => route('sm.documentation', ['id' => $schedule->id, 'open' => $d->id])];
                 }
                 break;
             case 'worker':
@@ -272,7 +272,7 @@ class TagController extends BaseScheduleController
                         'title' => (string) $w->workerName,
                         'sub' => trim('worker' . ($w->skills ? ' · ' . implode(', ', array_slice((array) $w->skills, 0, 3)) : '')),
                         'when' => $w->created_at?->format('Y-m-d'),
-                        'url' => $boardUrl('workers')];
+                        'url' => route('sm.workers', ['id' => $schedule->id, 'open' => $w->id])];
                 }
                 break;
             case 'lot':
@@ -282,7 +282,7 @@ class TagController extends BaseScheduleController
                         'title' => (string) $l->lotName,
                         'sub' => trim('lot' . ($l->crop ? ' · ' . $l->crop : '') . ($l->variety ? ' · ' . $l->variety : '')),
                         'when' => $l->created_at?->format('Y-m-d'),
-                        'url' => $boardUrl('lots')];
+                        'url' => route('sm.lots', ['id' => $schedule->id, 'open' => $l->id])];
                 }
                 break;
             case 'report':
@@ -292,7 +292,7 @@ class TagController extends BaseScheduleController
                         'title' => trim((string) $fr->title) ?: 'Saved report',
                         'sub' => 'report · ' . $fr->kind,
                         'when' => $fr->created_at?->format('Y-m-d'),
-                        'url' => route('sm.reports', ['id' => $schedule->id])];
+                        'url' => $this->reportUrl($schedule, $fr)];
                 }
                 break;
             case 'observation':
@@ -302,11 +302,29 @@ class TagController extends BaseScheduleController
                         'title' => trim((string) ($o->title ?? '')) ?: 'Observation',
                         'sub' => 'observation · ' . $o->created_at?->format('M j, Y'),
                         'when' => $o->created_at?->format('Y-m-d'),
-                        'url' => $boardUrl('post-harvest')];
+                        'url' => route('sm.post-harvest', ['id' => $schedule->id, 'open' => $o->id])];
                 }
                 break;
         }
 
         return $out;
+    }
+
+    /**
+     * The page a saved report actually lives on, by its kind — and, where
+     * that page can open a named save (the Anee reports), the exact one.
+     */
+    private function reportUrl($schedule, \App\Models\AsFarmReport $fr): string
+    {
+        return match ($fr->kind) {
+            'labor' => route('sm.labor.report', ['id' => $schedule->id]),
+            'expenses' => route('sm.expenses.report', ['id' => $schedule->id]),
+            'profit' => route('sm.profit.report', ['id' => $schedule->id]),
+            'protocol' => route('sm.protocol.report', ['id' => $schedule->id]),
+            'compare' => route('sm.compare.report', ['id' => $schedule->id]),
+            'season' => route('sm.anee.season', ['id' => $schedule->id, 'open' => $fr->id]),
+            'sofar' => route('sm.anee.sofar', ['id' => $schedule->id, 'open' => $fr->id]),
+            default => route('sm.reports', ['id' => $schedule->id]),
+        };
     }
 }

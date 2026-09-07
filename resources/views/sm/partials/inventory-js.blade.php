@@ -1073,6 +1073,17 @@
 
         @if ($standalone ?? false)
         load().catch((err) => toast(err.message, 'error'));
+        // A tag shelf names one item (?open=) or one stock move (?move=) —
+        // land on it once the shelf has painted. The fallback is the
+        // server-rendered query: in the shell the pane is fetched with the
+        // deep link while the address bar keeps the shell's own URL.
+        {
+            const q = new URLSearchParams(location.search);
+            const spotItem = q.get('open') || @json(request()->query('open'));
+            const spotMove = q.get('move') || @json(request()->query('move'));
+            if (spotItem) window.smSpot?.('[data-iv-card="' + String(spotItem).replace(/[^\d]/g, '') + '"]');
+            else if (spotMove) window.smSpot?.('[data-iv-move="' + String(spotMove).replace(/[^\d]/g, '') + '"]');
+        }
         @endif
     };
 

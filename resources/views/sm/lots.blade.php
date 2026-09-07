@@ -1208,6 +1208,14 @@ const __init = () => {
     });
 
     renderList();
+
+    // A tag shelf names one lot — land on its card. The fallback is the
+    // server-rendered query: in the shell the pane is fetched with the deep
+    // link while the address bar keeps the shell's own URL.
+    {
+        const spot = new URLSearchParams(location.search).get('open') || @json(request()->query('open'));
+        if (spot) window.smSpot?.('[data-lot-card="' + String(spot).replace(/[^\d]/g, '') + '"]');
+    }
 };
     // First load: wait for app.js (deferred) to define the globals.
     // SPA injection: document is already complete, so run now.

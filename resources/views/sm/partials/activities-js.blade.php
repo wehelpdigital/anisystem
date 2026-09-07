@@ -11311,6 +11311,46 @@ document.addEventListener('DOMContentLoaded', () => {
         const v = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
         return window.matchMedia('(min-width: 768px)').matches ? 7.7 * v : 6.9 * v;
     }
+
+    /* Arrive on the thing a link named. A tag shelf points at one activity
+       (?highlight=<id>) or at the day something lives on (?day=<iso> — an
+       expense, an income, a day note), and the board answers by unfolding
+       that day, landing on it, and flashing the exact card when one was
+       named. The shell hands the query over via showModule (the board is
+       the page, it cannot be re-fetched with a deep link the way the other
+       panes are); a full-page arrival reads its own location. Hunted with
+       retries, because the board paints after its data lands. */
+    window.smBoardSpot = function (qs) {
+        const p = new URLSearchParams(qs || location.search);
+        const actId = p.get('highlight');
+        const dayIso = p.get('day');
+        if (!actId && !dayIso) return;
+        // Patient: the board paints only after its data crosses a farm
+        // connection, and giving up before it does reads as a dead link.
+        let tries = 120;
+        const hunt = () => {
+            let card = null;
+            let group = null;
+            if (actId) {
+                card = document.querySelector(`#activitiesList .activity-card[data-id="${actId}"]`);
+                group = card ? card.closest('.date-group') : null;
+            } else {
+                group = document.querySelector(`#activitiesList .date-group[data-date="${dayIso}"]`);
+            }
+            if (!group) { tries -= 1; if (tries > 0) setTimeout(hunt, 250); return; }
+            if (window.smSetActivitiesView) window.smSetActivitiesView('list');
+            _jumpToDay(group, [group]);
+            if (card) setTimeout(() => {
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                card.classList.add('sm-spotted');
+                setTimeout(() => card.classList.remove('sm-spotted'), 2600);
+            }, 700);
+        };
+        hunt();
+    };
+    // The shell scrubs the address bar to its clean form on boot; the saved
+    // copy is the query the reader actually arrived with.
+    window.smBoardSpot(window.__boardArriveQuery || location.search);
     ttBtn?.addEventListener('click', () => {
         // Scrolling needs the list; hop out of calendar view first.
         if (window.smSetActivitiesView) window.smSetActivitiesView('list');

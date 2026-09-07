@@ -532,6 +532,20 @@ const __init = () => {
     });
 
     loadStatus();
+
+    // A tag shelf names one saved report (?open=<id>): draw it straight
+    // away, exactly as tapping its row on the shelf below would.
+    {
+        const want = new URLSearchParams(location.search).get('open');
+        if (want) (async () => {
+            try {
+                const res = await api(U.one(String(want).replace(/[^\d]/g, '')));
+                drawReport($id('arSavedReport'), res.data.report, res.data, 'saved');
+                $id('arSavedReport').hidden = false;
+                $id('arSavedReport').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } catch (err) { toast(err.message || 'That saved report could not be opened.', 'error'); }
+        })();
+    }
 };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', __init, { once: true });
     else __init();

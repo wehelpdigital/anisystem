@@ -2122,3 +2122,24 @@ document.addEventListener('pointerdown', (e) => {
         paint();
     }
 })();
+
+/* ------------------------------------------------------------------ */
+/* Arriving on the exact thing a link named.                           */
+/*                                                                     */
+/* A tag shelf (and anything else that points into a module) sends the */
+/* reader to one row of a long list. The module boots, fetches, paints */
+/* — and only then does the row exist, so this hunts for a while       */
+/* before giving up quietly. Found, the row is scrolled to the middle  */
+/* of the screen and flashed, because "which of forty cards was meant" */
+/* is the whole question.                                              */
+/* ------------------------------------------------------------------ */
+window.smSpot = function smSpot(selector, tries = 120) {
+    const hunt = () => {
+        const el = document.querySelector(selector);
+        if (!el) { if (--tries > 0) setTimeout(hunt, 250); return; }
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.classList.add('sm-spotted');
+        setTimeout(() => el.classList.remove('sm-spotted'), 2600);
+    };
+    hunt();
+};

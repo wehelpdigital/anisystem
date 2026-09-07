@@ -529,6 +529,14 @@
     } else {
         renderAll();
     }
+
+    // A tag shelf names one document — land on its card. The fallback is
+    // the server-rendered query: in the shell the pane is fetched with the
+    // deep link while the address bar keeps the shell's own URL.
+    {
+        const spot = new URLSearchParams(location.search).get('open') || @json(request()->query('open'));
+        if (spot) window.smSpot?.('.doc-entry-card[data-id="' + String(spot).replace(/[^\d]/g, '') + '"]');
+    }
 })();
 </script>
 @endpush

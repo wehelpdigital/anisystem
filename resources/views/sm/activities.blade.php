@@ -4515,6 +4515,9 @@
         // The kept pane has the screen again — hand it the deep link it was
         // asked for, now that the thing that answers it is visible.
         if (handOffExtra) handOffExtra();
+        // The board is the page itself — its deep links (a tag's activity,
+        // a day an expense lives on) are handed over rather than fetched.
+        if (key === 'activities' && extra) window.smBoardSpot?.(extra);
 
         // The button says what it opens, not where you are — so it reads the
         // same in every module and the switch has nothing to rewrite. The app
@@ -5339,6 +5342,11 @@
     // script but has by DOMContentLoaded.
     const applyDeepLink = () => {
         const wanted = new URLSearchParams(location.search).get('module');
+        // The replaceStates below scrub the query to the shell's clean form,
+        // and the board's own deep links (?highlight=, ?day= — a tag's
+        // activity, the day an expense lives on) would be scrubbed with it.
+        // Keep the arriving query where the board's spotter can read it.
+        window.__boardArriveQuery = location.search;
         if (wanted && MODULES[wanted] && wanted !== 'activities') {
             /* Opened straight into a module, so the reader has never seen the
                board — "back to Activities" would send them somewhere new, and
