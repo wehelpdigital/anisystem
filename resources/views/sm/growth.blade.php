@@ -44,25 +44,31 @@
         animation: grTide 7s ease-in-out infinite alternate; }
     @keyframes grTide { from { background-position: 0% 0; } to { background-position: 100% 0; } }
     @media (prefers-reduced-motion: reduce) { .gr-stage-chip { animation: none; } }
-    .gr-card { position: relative; border: 1px solid rgb(168 204 126 / .18); border-radius: 1rem;
-        overflow: hidden; margin-bottom: .9rem; color: #e8efe1;
-        background: linear-gradient(135deg, #10160c 0%, #1c2416 55%, #24301a 100%);
-        box-shadow: 0 16px 40px -30px rgb(16 22 12 / .9); }
+    /* The deep-green gradient belongs to the HEADER alone: the fold below it
+       opens onto the plain card ground, where a paragraph is actually
+       readable. The header keeps the Tip-of-the-Day look — the same header
+       in light and dark mode — and the body follows the app's theme. */
+    .gr-card { position: relative; border: 1px solid var(--color-gray-200); border-radius: 1rem;
+        overflow: hidden; margin-bottom: .9rem;
+        background: var(--color-white);
+        box-shadow: 0 16px 40px -30px rgb(16 22 12 / .35); }
+    .gr-top, .gr-fold { position: relative; }
+    .gr-top { display: flex; align-items: center; gap: .7rem; padding: .8rem .9rem;
+        cursor: pointer; user-select: none; overflow: hidden; color: #e8efe1;
+        background: linear-gradient(135deg, #10160c 0%, #1c2416 55%, #24301a 100%); }
     /* The tip card's slow sweep of light, borrowed whole (its keyframes live
        with the tip partial, which this page does not include — so the sweep
        is restated here under its own name). */
-    .gr-card::before { content: ''; position: absolute; inset: -40% -10%; pointer-events: none;
+    .gr-top::before { content: ''; position: absolute; inset: -40% -10%; pointer-events: none;
         background: radial-gradient(closest-side, rgb(134 181 86 / .28), transparent 70%);
         animation: grGlow 7s ease-in-out infinite; }
     @keyframes grGlow {
         0%, 100% { transform: translateX(-30%) scale(.9); opacity: .5; }
         50% { transform: translateX(30%) scale(1.1); opacity: .85; }
     }
-    @media (prefers-reduced-motion: reduce) { .gr-card::before { animation: none; } }
-    .gr-top, .gr-fold { position: relative; }
-    .gr-top { display: flex; align-items: center; gap: .7rem; padding: .8rem .9rem;
-        cursor: pointer; user-select: none; }
-    .gr-top:hover { background: rgb(255 255 255 / .05); }
+    @media (prefers-reduced-motion: reduce) { .gr-top::before { animation: none; } }
+    .gr-top:hover { filter: brightness(1.12); }
+    .gr-top > * { position: relative; }
     /* Accordion, the same one the activities board uses: a lot folds down to
        its header, the chevron flags state, and max-height carries the fold —
        the shared concertina in app.js supplies the slide. */
@@ -96,23 +102,27 @@
     .gr-age-n { font-size: 1.35rem; font-weight: 800; line-height: 1; color: #d6e8bf; }
     .gr-age-l { font-size: .62rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #9dc178; }
 
+    /* The body reads on the plain card ground — tokens, so both themes come
+       out right; the greens go deep in the light theme and pale in the dark
+       one, the same trade the amber note below already makes. */
     .gr-body { padding: .85rem .9rem; }
-    .gr-stage { font-size: 1.05rem; font-weight: 800; color: #f1f6ec; }
-    .gr-what { font-size: .85rem; line-height: 1.5; color: #cdd8c0; margin-top: .2rem; }
+    .gr-stage { font-size: 1.05rem; font-weight: 800; color: var(--color-gray-900); }
+    .gr-what { font-size: .85rem; line-height: 1.5; color: var(--color-gray-600); margin-top: .2rem; }
     /* The one line of guidance a patterned crop carries. Same shape as the
        do-list below it, so a crop with the short answer and a crop with the
        long one read as the same kind of page. */
     .gr-needs { font-size: .84rem; line-height: 1.5; margin-top: .7rem;
         padding: .6rem .7rem; border-radius: .7rem;
-        background: rgb(107 159 61 / .18); color: #cfe6b5; }
+        background: rgb(107 159 61 / .14); color: #3f6220; }
+    html.dark .gr-needs { background: rgb(107 159 61 / .18); color: #cfe6b5; }
     .gr-needs b { font-weight: 800; }
-    .gr-bar { height: .4rem; border-radius: 999px; background: rgb(255 255 255 / .14); overflow: hidden; margin-top: .6rem; }
+    .gr-bar { height: .4rem; border-radius: 999px; background: var(--color-gray-200); overflow: hidden; margin-top: .6rem; }
     .gr-bar span { display: block; height: 100%; border-radius: 999px;
         background: linear-gradient(90deg, #4a7c2a, #a8cc7e, #4a7c2a);
         background-size: 220% 100%;
         animation: grTide 7s ease-in-out infinite alternate; }
     @media (prefers-reduced-motion: reduce) { .gr-bar span { animation: none; } }
-    .gr-next { font-size: .72rem; color: #a3b295; margin-top: .3rem; }
+    .gr-next { font-size: .72rem; color: var(--color-gray-500); margin-top: .3rem; }
 
     .gr-lists { display: grid; gap: .5rem; margin-top: .8rem; }
     @media (min-width: 720px) { .gr-lists { grid-template-columns: 1fr 1fr; } }
@@ -123,19 +133,22 @@
     .gr-list li { font-size: .8rem; line-height: 1.45; display: flex; gap: .4rem; }
     .gr-list li::before { content: ''; flex: 0 0 auto; width: .35rem; height: .35rem; border-radius: 999px;
         margin-top: .5rem; background: currentColor; opacity: .5; }
-    .gr-do { background: rgb(107 159 61 / .2); color: #cfe6b5; }
-    .gr-watch { background: rgb(217 130 20 / .18); color: #f3c08a; }
+    .gr-do { background: rgb(107 159 61 / .14); color: #3f6220; }
+    .gr-watch { background: rgb(217 130 20 / .12); color: #92400e; }
+    html.dark .gr-do { background: rgb(107 159 61 / .2); color: #cfe6b5; }
+    html.dark .gr-watch { background: rgb(217 130 20 / .18); color: #f3c08a; }
 
-    .gr-steps { margin-top: .85rem; border-top: 1px dashed rgb(255 255 255 / .14); padding-top: .65rem; display: grid; gap: .3rem; }
-    .gr-step { display: flex; align-items: flex-start; gap: .5rem; font-size: .78rem; color: #a3b295; }
-    .gr-dot { flex: 0 0 auto; width: .6rem; height: .6rem; border-radius: 999px; margin-top: .35rem; background: rgb(255 255 255 / .22); }
-    .gr-step.is-past .gr-dot { background: #a8cc7e; }
-    .gr-step.is-now { color: #f1f6ec; font-weight: 700; }
-    .gr-step.is-now .gr-dot { background: #a8cc7e; box-shadow: 0 0 0 3px rgb(168 204 126 / .25); }
+    .gr-steps { margin-top: .85rem; border-top: 1px dashed var(--color-gray-200); padding-top: .65rem; display: grid; gap: .3rem; }
+    .gr-step { display: flex; align-items: flex-start; gap: .5rem; font-size: .78rem; color: var(--color-gray-500); }
+    .gr-dot { flex: 0 0 auto; width: .6rem; height: .6rem; border-radius: 999px; margin-top: .35rem; background: var(--color-gray-300); }
+    .gr-step.is-past .gr-dot { background: #6b9f3d; }
+    .gr-step.is-now { color: var(--color-gray-900); font-weight: 700; }
+    .gr-step.is-now .gr-dot { background: #6b9f3d; box-shadow: 0 0 0 3px rgb(107 159 61 / .25); }
+    html.dark .gr-step.is-past .gr-dot, html.dark .gr-step.is-now .gr-dot { background: #a8cc7e; }
     .gr-when { margin-left: auto; flex: 0 0 auto; font-variant-numeric: tabular-nums; opacity: .7; }
 
-    .gr-blocked { padding: .9rem; font-size: .83rem; line-height: 1.5; color: #cdd8c0;
-        background: rgb(255 255 255 / .06); border-radius: .7rem; }
+    .gr-blocked { padding: .9rem; font-size: .83rem; line-height: 1.5; color: var(--color-gray-600);
+        background: var(--color-gray-100); border-radius: .7rem; }
     .gr-note { display: flex; gap: .6rem; align-items: flex-start; margin: .2rem 0 .6rem;
         padding: .7rem .8rem; border-radius: .8rem; background: #fffbeb; border: 1px solid #fde68a; }
     .gr-note p { font-size: .78rem; line-height: 1.5; color: #92400e; margin: 0; }
@@ -145,8 +158,9 @@
     html.dark .gr-note p { color: #fcd34d; }
     html.dark .gr-note-ico { color: #fcd34d; }
 
-    /* One committed look: the deep-green card is the same card in light and
-       dark mode, exactly as the Tip of the Day is. */
+    /* One committed look for the HEADER: the deep-green band is the same in
+       light and dark mode, exactly as the Tip of the Day is. The body under
+       it follows the app's theme, because guidance is for reading. */
 </style>
 @endpush
 
