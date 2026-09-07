@@ -14,6 +14,24 @@
         $goesToModule = in_array($kind, ['drawing', 'map'], true) && filled($it['href'] ?? null);
         $href = $goesToModule ? $it['href'] : $it['url'];
     @endphp
+    @if ($kind === 'audio')
+        {{-- A recording plays where it stands — the tile unfolds a player,
+             the same file the note keeps. --}}
+        <div class="ga-wrap">
+            <button type="button" class="ga-item ga-item-audio" data-audio-url="{{ $it['url'] }}">
+                <span class="ga-shot ga-shot-audio">
+                    <img src="{{ asset('images/voice-recorder.png') }}" alt="" class="is-loaded" style="object-fit:contain;padding:1.4rem">
+                    <span class="ga-kind is-audio">voice</span>
+                </span>
+                <span class="ga-info">
+                    <span class="ga-it">{{ $it['title'] ?: 'Voice note' }}</span>
+                    <span class="gh-season">{{ $it['scheduleTitle'] }}</span>
+                    <span class="ga-is">{{ $it['source'] }}@if (! empty($it['when'])) · {{ $it['when'] }}@endif</span>
+                </span>
+            </button>
+        </div>
+        @continue
+    @endif
     <div class="ga-wrap">
         <a class="ga-item" href="{{ $href }}"
            @if (! $goesToModule && $it['type'] === 'image') data-lightbox

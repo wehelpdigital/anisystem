@@ -52,18 +52,22 @@ class GalleryHubController extends Controller
          * being looked at is built — the Team box alone is three queries a
          * season, and paying for it to render a number nobody asked for is how
          * a page with forty seasons behind it stops opening. */
-        $tab = in_array($request->query('tab'), ['albums', 'videos', 'team'], true)
+        $tab = in_array($request->query('tab'), ['albums', 'videos', 'voice', 'team'], true)
             ? $request->query('tab')
             : 'all';
 
         $schedules = $this->schedules();
         $stills = array_values(array_filter($items, fn ($m) => $m['type'] !== 'video'));
         $clips = array_values(array_filter($items, fn ($m) => $m['type'] === 'video'));
+        // Every recording kept anywhere — quick voice notes, spoken notes on
+        // a season — one shelf, each tile pointing at the one stored file.
+        $voices = array_values(array_filter($items, fn ($m) => ($m['kind'] ?? '') === 'audio'));
 
         $shelf = match ($tab) {
             'albums' => $this->albums($schedules, $q),
             'team' => $this->teamBox($schedules, $q),
             'videos' => $clips,
+            'voice' => $voices,
             default => $stills,
         };
 
@@ -79,6 +83,7 @@ class GalleryHubController extends Controller
             'counts' => [
                 'all' => count($stills),
                 'videos' => count($clips),
+                'voice' => count($voices),
                 // Counted only when its own shelf is open; the button shows a
                 // dash otherwise rather than a number bought at that price.
                 'albums' => $tab === 'albums' ? count($shelf) : null,
@@ -218,7 +223,7 @@ class GalleryHubController extends Controller
                 }
                 $out[] = [
                     'kind' => $m['kind'] ?? 'image',
-                    'type' => ($m['kind'] ?? '') === 'video' ? 'video' : 'image',
+                    'type' => match ($m['kind'] ?? '') { 'video' => 'video', 'audio' => 'audio', default => 'image' },
                     'path' => $path,
                     'poster' => MediaStore::pathFromUrl($m['posterUrl'] ?? null),
                     'url' => $m['url'] ?? null,
@@ -239,6 +244,49 @@ class GalleryHubController extends Controller
             }
             if (count($out) > 1200) {
                 break;
+            }
+        }
+
+        /* And the viewer's own GLOBAL notes — the hub's free-standing notes
+         * and every Quick Voice recording, which files there now. They
+         * belong to no season, so the season walk above never sees them. */
+        $meId = (int) \Illuminate\Support\Facades\Auth::id();
+        if ($meId) {
+            $globals = \App\Models\AsScheduleNote::active()
+                ->where('userId', $meId)
+                ->where('croppingScheduleId', 0)
+                ->orderByDesc('id')
+                ->limit(300)
+                ->get();
+            foreach ($globals as $gn) {
+                foreach ((is_array($gn->media) ? $gn->media : []) as $m) {
+                    if (empty($m['path'])) {
+                        continue;
+                    }
+                    $kind = (string) ($m['type'] ?? 'image');
+                    if ($kinds !== [] && ! $this->wanted($kind, $kinds)) {
+                        continue;
+                    }
+                    $title = (string) ($m['title'] ?? $gn->title ?? '');
+                    if ($q !== '' && stripos($title . ' ' . $gn->title . ' global note', $q) === false) {
+                        continue;
+                    }
+                    $out[] = [
+                        'kind' => $kind,
+                        'type' => match ($kind) { 'video' => 'video', 'audio' => 'audio', default => 'image' },
+                        'path' => (string) $m['path'],
+                        'poster' => $m['poster'] ?? null,
+                        'url' => MediaStore::url($m['path']),
+                        'posterUrl' => ! empty($m['poster']) ? MediaStore::url($m['poster']) : null,
+                        'title' => $title ?: 'Untitled',
+                        'source' => 'Global note',
+                        'href' => route('notes.hub'),
+                        'when' => $gn->updated_at?->timezone('Asia/Manila')->format('M j, Y'),
+                        'scheduleId' => 0,
+                        'scheduleTitle' => 'Global notes',
+                        'sortKey' => (int) ($gn->updated_at?->timestamp ?? 0),
+                    ];
+                }
             }
         }
 

@@ -138,8 +138,9 @@ class WorkerModuleAccess
         ['sm.notes.video-upload',   'video'],
         ['notes.hub.video-upload',  'video'],
         ['quick-record.clip',       'video'],
-        // Speaking a note is recording, same as filming one.
-        ['quick-voice.clip',        'video'],
+        // quick-voice.clip is deliberately absent: a quick voice note is the
+        // speaker's own GLOBAL note now, not a season's record, so it needs
+        // no farm grant — same rule as writing a global note.
         ['sm.notes.audio-upload',   'video'],
 
         // ---- the toggle that never did anything --------------------------

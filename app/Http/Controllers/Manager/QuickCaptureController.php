@@ -234,17 +234,15 @@ class QuickCaptureController extends BaseScheduleController
      *
      * No transcoding: a minute of Opus is under a megabyte already, and the
      * whole point of speaking instead of typing is that it costs nothing.
-     * The recording lands as a note wearing an 'audio' media entry, which
-     * the notebook plays in place and the Gallery lists beside the photos.
+     * The recording is the speaker's own, not a season's: it lands as a
+     * GLOBAL note (croppingScheduleId 0, the hub's convention), so the tool
+     * never has to ask which schedule a thought belongs to. Global Notes
+     * plays it in place and the Global Gallery lists it under Voice —
+     * both pointing at this one stored file.
      */
     public function storeVoice(Request $request)
     {
-        $schedule = $this->schedule($request->input('scheduleId'));
-        $this->assertCanEdit();
-        $this->assertUnlocked($schedule);
-
         $request->validate([
-            'scheduleId' => 'required|integer',
             'title' => 'nullable|string|max:191',
             'note' => 'nullable|string|max:50000',
             'clip' => 'required|file|max:51200|mimetypes:audio/webm,audio/ogg,audio/mp4,audio/mpeg,audio/aac,audio/wav,audio/x-wav,audio/x-m4a,video/webm',
@@ -254,7 +252,7 @@ class QuickCaptureController extends BaseScheduleController
             'clip.mimetypes' => 'That does not sound like an audio recording.',
         ]);
 
-        $path = \App\Support\MediaStore::putFile($request->file('clip'), 'schedule-notes', $schedule->id);
+        $path = \App\Support\MediaStore::putFile($request->file('clip'), 'global-notes', (int) Auth::id());
         if ($path === null) {
             return $this->jsonFail('The recording could not be saved. Try again.', 422);
         }
@@ -268,7 +266,7 @@ class QuickCaptureController extends BaseScheduleController
         $plainBody = $body !== null ? trim(strip_tags($body)) : '';
 
         $note = AsScheduleNote::create([
-            'croppingScheduleId' => $schedule->id,
+            'croppingScheduleId' => \App\Http\Controllers\NotesHubController::GLOBAL_SCHEDULE_ID,
             'userId' => Auth::id(),
             'title' => $title,
             'body' => $body,
@@ -282,11 +280,11 @@ class QuickCaptureController extends BaseScheduleController
             'deleteStatus' => 1,
         ]);
 
-        return $this->jsonOk('Voice note saved.', [
+        return $this->jsonOk('Voice note saved to your Global Notes.', [
             'noteId' => $note->id,
             'path' => $path,
             'url' => \App\Support\MediaStore::url($path),
-            'notesUrl' => route('sm.notes', ['id' => $schedule->id]),
+            'notesUrl' => route('notes.hub'),
         ]);
     }
 

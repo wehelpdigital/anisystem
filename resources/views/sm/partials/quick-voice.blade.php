@@ -2,13 +2,11 @@
 
      Quick Record's spoken sibling. Talking is the fastest way a farmer in a
      field records anything, so the recorder opens straight into listening:
-     one big button, a clock, stop, and then the same short form the video
-     tool asks. The result is a note wearing an audio player, and the
-     Gallery lists it beside the photos.
-
-     Expects $allSchedules (and optionally $fixedScheduleId, when opened
-     from inside a schedule). Also exposes window.smRecordVoice(onFile) so
-     other composers (the notes editor) can borrow just the recorder. --}}
+     one big button, a clock, stop, and then a name and an optional line.
+     The result is a GLOBAL note wearing an audio player — no schedule is
+     asked for — and the Global Gallery lists the same recording under
+     Voice. Also exposes window.smRecordVoice so other composers (the notes
+     editor) can borrow just the recorder. --}}
 <div class="qv-modal hidden" id="quickVoiceModal" role="dialog" aria-modal="true" aria-label="Quick Voice">
     <div class="qv-backdrop" data-qv-cancel></div>
     <div class="qv-card">
@@ -49,20 +47,10 @@
                           placeholder="Anything worth adding in writing?"></textarea>
             </div>
 
-            @if (!empty($fixedScheduleId))
-                <input type="hidden" id="qvSchedule" value="{{ $fixedScheduleId }}">
-            @else
-                <div>
-                    <label class="form-label" for="qvSchedule">Connect to schedule</label>
-                    <select id="qvSchedule" class="form-select">
-                        @foreach ($allSchedules as $s)
-                            <option value="{{ $s->id }}">{{ $s->title }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            @endif
-
-            <p class="form-hint">Saves as a note in the schedule's notebook, and the Gallery lists it with the season's media.</p>
+            {{-- No schedule question: a spoken thought is the speaker's own.
+                 It files straight into Global Notes, and the Global Gallery
+                 lists the same recording under Voice. --}}
+            <p class="form-hint">Saves to your Global Notes, and the Global Gallery lists it under Voice — same recording, both places.</p>
         </div>
 
         <div class="qv-foot">
@@ -259,7 +247,6 @@
         btn.disabled = true;
         const form = new FormData();
         form.append('clip', clip, clip.name);
-        form.append('scheduleId', $('qvSchedule').value);
         form.append('title', title);
         form.append('note', $('qvNote').value.trim());
         try {

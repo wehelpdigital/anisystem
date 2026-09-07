@@ -34,6 +34,11 @@
     @keyframes ghDot { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
     .gh-spin[hidden], .gh-end[hidden], .gh-tail[hidden] { display: none; }
     .gh-end { font-size: .82rem; font-weight: 600; color: var(--color-gray-400); }
+    /* Voice tiles: the tile is a button (it unfolds a player, it does not
+       navigate), so it needs the anchor's manners restated. */
+    .ga-item-audio { cursor: pointer; text-align: left; width: 100%; }
+    .gh-audio-player { display: block; margin-top: .35rem; }
+    .gh-audio-player audio { height: 2rem; }
     @media (prefers-reduced-motion: reduce) {
         /* Slowed, not stopped: a still loader reads as a stuck page. */
         .gh-spin i { animation-duration: 2.4s; }
@@ -47,6 +52,7 @@
         ['all', 'All Media', $counts['all'], 'Every picture your seasons have kept, newest first.'],
         ['albums', 'Albums', $counts['albums'], 'The ones you put together on purpose, from every season.'],
         ['videos', 'Videos', $counts['videos'], 'Clips on their own, because you pick a video and scan photos.'],
+        ['voice', 'Voice', $counts['voice'] ?? 0, 'Every voice recording you have kept — quick voice notes included — played right here.'],
         ['team', 'Team box', $counts['team'], 'What the Collab Rooms made: recordings, whiteboards, saved maps.'],
     ];
     $now = collect($shelves)->firstWhere(0, $tab) ?: $shelves[0];
@@ -228,7 +234,9 @@
             <p class="ga-none">
                 {{ $q !== ''
                     ? 'Nothing in any season matches that.'
-                    : 'Nothing here yet. Photos you take, drawings you make and maps you save all gather here on their own.' }}
+                    : ($tab === 'voice'
+                        ? 'No recordings yet. Quick Voice files them here on its own — tap the mic on the schedules page and just talk.'
+                        : 'Nothing here yet. Photos you take, drawings you make and maps you save all gather here on their own.') }}
             </p>
         @else
             <div class="ga-all" id="ghGrid">
@@ -292,6 +300,7 @@
             const params = new URLSearchParams({ json: '1', page: more.dataset.page || '2' });
             if (more.dataset.q) params.set('q', more.dataset.q);
             if (more.dataset.tab === 'videos') params.set('kinds', 'video');
+            if (more.dataset.tab === 'voice') params.set('kinds', 'audio');
             const r = await fetch(@json(route('gallery.hub')) + '?' + params.toString(), {
                 headers: { Accept: 'application/json' }, credentials: 'same-origin',
             });
@@ -299,9 +308,19 @@
             const d = (await r.json()).data || {};
             (d.items || []).forEach((it) => {
                 if (more.dataset.tab === 'all' && it.type === 'video') return;   // stills shelf
-                const shot = it.posterUrl || (it.type === 'image' ? it.url : null);
                 const wrap = document.createElement('div');
                 wrap.className = 'ga-wrap';
+                if (it.kind === 'audio') {
+                    // The server-rendered voice tile, mirrored.
+                    wrap.innerHTML = '<button type="button" class="ga-item ga-item-audio" data-audio-url="' + (it.url || '') + '">'
+                        + '<span class="ga-shot ga-shot-audio"><img src="' + @json(asset('images/voice-recorder.png')) + '" alt="" class="is-loaded" style="object-fit:contain;padding:1.4rem">'
+                        + '<span class="ga-kind is-audio">voice</span></span>'
+                        + '<span class="ga-info"><span class="ga-it">' + (it.title || 'Voice note') + '</span>'
+                        + '<span class="gh-season">' + (it.scheduleTitle || '') + '</span></span></button>';
+                    grid.appendChild(wrap);
+                    return;
+                }
+                const shot = it.posterUrl || (it.type === 'image' ? it.url : null);
                 const wants = (!shot && it.type === 'video' && it.path)
                     ? ' data-needs-frame="' + it.path.replace(/"/g, '&quot;') + '" data-clip-url="' + (it.url || '') + '"'
                     : '';
@@ -347,6 +366,24 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
     near();
+})();
+
+/* A voice tile unfolds its player where it stands — one at a time, the
+   same delegated rule the notes use. */
+(function ghAudio() {
+    if (window.__ghAudioBound) return;
+    window.__ghAudioBound = true;
+    document.addEventListener('click', (e) => {
+        const tile = e.target.closest('[data-audio-url]');
+        if (!tile || e.target.closest('audio')) return;
+        const open = tile.querySelector('.gh-audio-player');
+        document.querySelectorAll('.gh-audio-player').forEach((p) => p.remove());
+        if (open) return;                       // second tap folds it away
+        const span = document.createElement('span');
+        span.className = 'gh-audio-player';
+        span.innerHTML = '<audio controls autoplay src="' + tile.getAttribute('data-audio-url') + '" style="width:100%"></audio>';
+        (tile.querySelector('.ga-info') || tile).appendChild(span);
+    });
 })();
 </script>
 @endpush
