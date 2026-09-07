@@ -192,6 +192,13 @@ class AdminPanelController extends Controller
             'creditBalance' => round(app(AiCreditService::class)->balance($u->id), 2),
             'schedules' => DB::table('as_cropping_schedules')->where('anisystemUserId', $u->id)->where('deleteStatus', 1)->count(),
             'tickets' => SupportTicket::active()->where('userId', $u->id)->count(),
+            // The tier ladder: what plan governs this account right now,
+            // when it lapses back to Libre, and how full their shelf is.
+            'tier' => $u->planTier(),
+            'tierName' => $u->tierConfig()['name'] ?? ucfirst($u->planTier()),
+            'tierExpires' => $u->activeSubscription()?->expiresAt?->format('Y-m-d'),
+            'storageUsedGb' => round(\App\Support\Tier::storageUsed($u) / 1073741824, 2),
+            'storageCapGb' => $u->tierConfig()['storageGb'] ?? null,
         ]]);
     }
 
@@ -211,7 +218,71 @@ class AdminPanelController extends Controller
             'online' => $u->isOnline(),
             'suspendedUntil' => ($until && now()->lt($until)) ? $until->format('Y-m-d') : null,
             'suspendedSays' => ($until && now()->lt($until)) ? $until->format('M j, Y') : null,
+            'tier' => $u->planTier(),
         ];
+    }
+
+    /**
+     * Assign a tier by hand — the testing lever the ladder launches with.
+     *
+     * Libre cancels every active subscription (the floor needs no row);
+     * Solo/Owner write a zero-price manual subscription whose expiry is the
+     * assignment's own, and grant the tier's welcome credits. Real payments
+     * keep flowing through the mother app's orders exactly as before — a
+     * manual row is just another subscription to planTier's eyes.
+     */
+    public function setTier(Request $request, int $id)
+    {
+        $u = User::active()->findOrFail($id);
+        $data = $request->validate([
+            'tier' => 'required|in:libre,solo,owner',
+            'expiresAt' => 'nullable|date|after:today',
+        ]);
+
+        // Whatever governed before steps aside — one voice at a time.
+        Subscription::where('userId', $u->id)
+            ->where('deleteStatus', 1)
+            ->where('status', Subscription::STATUS_ACTIVE)
+            ->update(['status' => Subscription::STATUS_CANCELLED, 'cancelledAt' => now('Asia/Manila')]);
+
+        $granted = 0;
+        if ($data['tier'] === 'libre') {
+            // The starter credits, once in an account's lifetime.
+            $had = DB::table('anisystem_ai_credit_ledger')
+                ->where('userId', $u->id)->where('source', 'tier-grant')
+                ->where('reason', 'like', 'Libre starter%')->exists();
+            if (! $had) {
+                $granted = (int) config('tiers.libre.creditsOnGrant', 0);
+                app(AiCreditService::class)->grant($u->id, $granted, 'Libre starter credits', 'tier-grant', (int) auth()->id());
+            }
+        } else {
+            $cfg = config('tiers.' . $data['tier']);
+            $expires = ! empty($data['expiresAt'])
+                ? \Carbon\Carbon::parse($data['expiresAt'], 'Asia/Manila')->endOfDay()
+                : now('Asia/Manila')->addYears(10);
+            Subscription::create([
+                'userId' => $u->id,
+                'planKey' => 'manual-' . $data['tier'],
+                'planName' => ($cfg['name'] ?? ucfirst($data['tier'])) . ' (assigned)',
+                'price' => 0,
+                'durationDays' => (int) now('Asia/Manila')->diffInDays($expires),
+                'status' => Subscription::STATUS_ACTIVE,
+                'startsAt' => now('Asia/Manila'),
+                'expiresAt' => $expires,
+                'verifiedAt' => now('Asia/Manila'),
+                'notes' => 'Assigned from the admin panel.',
+                'deleteStatus' => 1,
+            ]);
+            $granted = (int) ($cfg['creditsOnGrant'] ?? 0);
+            if ($granted > 0) {
+                app(AiCreditService::class)->grant($u->id, $granted, ($cfg['name'] ?? 'Tier') . ' welcome credits', 'tier-grant', (int) auth()->id());
+            }
+        }
+
+        return response()->json(['success' => true,
+            'message' => 'Tier set to ' . (config('tiers.' . $data['tier'] . '.name') ?? $data['tier'])
+                . ($granted ? ' — ' . $granted . ' credits granted.' : '.'),
+        ]);
     }
 
     /** Name, phone, email — the facts a support call corrects. */

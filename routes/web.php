@@ -188,6 +188,7 @@ Route::middleware(['auth', 'admin.panel'])->prefix('admin')->group(function () {
     Route::get('/data/overview', [App\Http\Controllers\Admin\AdminPanelController::class, 'overview'])->name('admin.data.overview');
     Route::get('/data/clients', [App\Http\Controllers\Admin\AdminPanelController::class, 'clientsData'])->name('admin.data.clients');
     Route::get('/data/client/{id}', [App\Http\Controllers\Admin\AdminPanelController::class, 'clientOne'])->whereNumber('id')->name('admin.data.client');
+    Route::post('/client/{id}/tier', [App\Http\Controllers\Admin\AdminPanelController::class, 'setTier'])->whereNumber('id')->name('admin.client.tier');
     Route::put('/client/{id}/info', [App\Http\Controllers\Admin\AdminPanelController::class, 'updateInfo'])->whereNumber('id')->name('admin.client.info');
     Route::post('/client/{id}/password-link', [App\Http\Controllers\Admin\AdminPanelController::class, 'sendPasswordLink'])->whereNumber('id')->name('admin.client.password-link');
     Route::put('/client/{id}/password', [App\Http\Controllers\Admin\AdminPanelController::class, 'setPassword'])->whereNumber('id')->name('admin.client.password');

@@ -267,8 +267,9 @@ class CroppingScheduleController extends Controller
         if ($user && ! $user->canCreateSchedule()) {
             $limit = $user->scheduleLimit();
             return redirect()->route('sm.index')->with('error',
-                'Your ' . ucfirst($user->planTier()) . ' plan allows ' . ($limit === 0 ? 'no' : ('up to ' . $limit))
-                . ' cropping schedules. Upgrade to Boss for unlimited schedules.');
+                'Your ' . ($user->tierConfig()['name'] ?? ucfirst($user->planTier())) . ' plan allows '
+                . ($limit === 0 ? 'no' : ('up to ' . $limit)) . ' active cropping schedule' . ($limit == 1 ? '' : 's')
+                . '. Finish or archive a season, or upgrade for more.');
         }
 
         return null;

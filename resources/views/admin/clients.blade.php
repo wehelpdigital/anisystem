@@ -50,6 +50,7 @@
         credits: (id) => '{{ url('/admin/client') }}/' + id + '/credits',
         loginAs: (id) => '{{ url('/admin/client') }}/' + id + '/impersonate',
         admin: (id) => '{{ url('/admin/client') }}/' + id + '/admin',
+        tier: (id) => '{{ url('/admin/client') }}/' + id + '/tier',
     };
 
     /* ---------------- the list ---------------- */
@@ -137,16 +138,31 @@
                 </div>
             </div>
 
-            <div class="card p-3.5 space-y-2">
-                <p class="font-bold text-sm text-gray-900">Subscription</p>
+            <div class="card p-3.5 space-y-2.5">
+                <p class="font-bold text-sm text-gray-900">Tier & subscription</p>
+                <div class="flex flex-wrap items-center gap-1.5 text-xs">
+                    <span class="ad-badge is-role">tier: ${esc(c.tierName || c.tier || 'Libre')}</span>
+                    ${c.tierExpires ? `<span class="badge badge-gray">until ${esc(c.tierExpires)}</span>` : ''}
+                    ${c.storageCapGb !== null ? `<span class="badge badge-gray">storage ${Number(c.storageUsedGb).toLocaleString()} / ${c.storageCapGb} GB</span>` : `<span class="badge badge-gray">storage ${Number(c.storageUsedGb).toLocaleString()} GB</span>`}
+                </div>
                 ${c.subscription ? `
-                    <p class="text-sm text-gray-700">${esc(c.subscription.planName || 'Plan')}
-                        <span class="ad-badge ${c.subscription.status === 'active' ? 'is-answered' : 'is-closed'} ml-1">${esc(c.subscription.status)}</span></p>
-                    <p class="text-xs text-gray-400">${esc(c.subscription.startsAt || '—')} → ${esc(c.subscription.expiresAt || '—')} · ₱${Number(c.subscription.price).toLocaleString()}</p>`
-                    : '<p class="text-sm text-gray-400">No subscription yet.</p>'}
-                {{-- Blank on purpose: plan changes will live here, and saying so
-                     beats a button that does nothing. --}}
-                <p class="text-xs text-gray-400 italic">Changing the plan from here is coming — for now subscriptions move with payments.</p>
+                    <p class="text-xs text-gray-400">${esc(c.subscription.planName || 'Plan')} · ${esc(c.subscription.status)} · ${esc(c.subscription.startsAt || '—')} → ${esc(c.subscription.expiresAt || '—')} · ₱${Number(c.subscription.price).toLocaleString()}</p>`
+                    : '<p class="text-xs text-gray-400">No subscription rows yet — this account stands on the Libre floor.</p>'}
+                {{-- The testing lever: hand-assign a tier and its expiry. A
+                     manual row is just another subscription to planTier's
+                     eyes; Libre cancels the active rows instead. --}}
+                <div class="grid grid-cols-2 gap-2">
+                    <div><label class="form-label !mb-1 text-xs!">Assign tier</label>
+                        <select id="ceTierSel" class="form-input">
+                            <option value="libre" ${c.tier === 'libre' ? 'selected' : ''}>Libre (free)</option>
+                            <option value="solo" ${c.tier === 'solo' ? 'selected' : ''}>Solo Farmer</option>
+                            <option value="owner" ${c.tier === 'owner' ? 'selected' : ''}>Farm Owner</option>
+                        </select></div>
+                    <div><label class="form-label !mb-1 text-xs!">Expires (paid tiers)</label>
+                        <input id="ceTierExp" type="date" class="form-input" value="${esc(c.tierExpires || '')}"></div>
+                </div>
+                <button type="button" class="btn btn-primary btn-sm w-full" id="ceTierSet">Set tier</button>
+                <p class="text-xs text-gray-400">Assigning grants the tier's welcome credits (Libre's starter only once). Leave the date empty for a 10-year assignment.</p>
             </div>
 
             <div class="card p-3.5 space-y-2.5">
@@ -221,6 +237,18 @@
         $id('cePwLink').onclick = busyable($id('cePwLink'), async () => {
             const res = await api(U.pwLink(c.id), { method: 'POST', body: {} });
             toast(res.message);
+        });
+
+        // The tier lever: assign and re-read, so the sheet shows the truth.
+        $id('ceTierSet').onclick = busyable($id('ceTierSet'), async () => {
+            const res = await api(U.tier(c.id), { method: 'POST', body: {
+                tier: $id('ceTierSel').value,
+                expiresAt: $id('ceTierExp').value || null,
+            } });
+            toast(res.message);
+            const fresh = await api(U.one(c.id), { method: 'GET' });
+            CUR = fresh.data;
+            paint();
         });
 
         $id('cePwManualBtn').onclick = () => $id('cePwManual').classList.toggle('hidden');
