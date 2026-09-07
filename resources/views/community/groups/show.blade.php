@@ -537,8 +537,10 @@
     <div class="card disc-hero group-hero {{ CommunityAvatar::hue($group->name) }}{{ $group->bannerImagePath ? ' has-banner' : '' }}">
         @if ($group->bannerImagePath)
             <div class="disc-banner">
+                {{-- onerror: a banner or face whose file is gone steps aside
+                     for the hue band / monogram — never a broken-image glyph. --}}
                 <img src="{{ \App\Support\MediaStore::url($group->bannerImagePath) }}" alt="" loading="lazy"
-                     style="object-position:50% {{ $group->bannerBand() }}%">
+                     style="object-position:50% {{ $group->bannerBand() }}%" onerror="this.remove()">
                 {{-- data-gz-*: a tapped photo opens the photo viewer with the
                      room's facts. No data-gz-url — the viewer offers no door
                      to the page you are already on. --}}
@@ -547,7 +549,7 @@
                         data-gz-name="{{ $group->name }}"
                         data-gz-members="{{ $memberCount }}" data-gz-topics="{{ $topicCount }}"
                     @endif>
-                    @if ($group->coverImagePath)<img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="">@else{{ CommunityAvatar::monogram($group->name) }}@endif
+                    @if ($group->coverImagePath)<img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="" onerror="this.hidden = true; this.nextElementSibling.hidden = false"><span hidden>{{ CommunityAvatar::monogram($group->name) }}</span>@else{{ CommunityAvatar::monogram($group->name) }}@endif
                 </span>
             </div>
         @endif
@@ -558,7 +560,7 @@
                         data-gz-name="{{ $group->name }}"
                         data-gz-members="{{ $memberCount }}" data-gz-topics="{{ $topicCount }}"
                     @endif>
-                    @if ($group->coverImagePath)<img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="">@else{{ CommunityAvatar::monogram($group->name) }}@endif
+                    @if ($group->coverImagePath)<img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="" onerror="this.hidden = true; this.nextElementSibling.hidden = false"><span hidden>{{ CommunityAvatar::monogram($group->name) }}</span>@else{{ CommunityAvatar::monogram($group->name) }}@endif
                 </span>
             @endunless
             <h2 class="disc-hero-title">{{ $group->name }}</h2>

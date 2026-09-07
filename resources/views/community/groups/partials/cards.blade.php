@@ -18,8 +18,11 @@
         <div class="dc-top">
             <div class="dc-cover {{ $hue }}">
                 @if ($g->bannerImagePath)
+                    {{-- A banner whose file is gone (lost disk, cleaned store)
+                         leaves quietly and the hue band stands in — never the
+                         browser's broken-image glyph. --}}
                     <img src="{{ \App\Support\MediaStore::url($g->bannerImagePath) }}" alt="" loading="lazy"
-                         style="object-position:50% {{ $g->bannerBand() }}%">
+                         style="object-position:50% {{ $g->bannerBand() }}%" onerror="this.remove()">
                 @endif
             </div>
             {{-- With a real photo the face opens the photo viewer (see
@@ -33,7 +36,11 @@
                     data-gz-url="{{ route('community.groups.show', ['id' => $g->id]) }}"
                 @endif>
                 @if ($g->coverImagePath)
-                    <img src="{{ \App\Support\MediaStore::url($g->coverImagePath) }}" alt="">
+                    {{-- Same courtesy for the face: a dead file uncovers the
+                         monogram waiting behind it. --}}
+                    <img src="{{ \App\Support\MediaStore::url($g->coverImagePath) }}" alt=""
+                         onerror="this.hidden = true; this.nextElementSibling.hidden = false">
+                    <span hidden>{{ CommunityAvatar::monogram($g->name) }}</span>
                 @else
                     {{ CommunityAvatar::monogram($g->name) }}
                 @endif
