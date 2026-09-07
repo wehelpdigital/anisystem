@@ -218,17 +218,11 @@
                         html.dark .notif-sheet { background: #151b12; }
                     </style>
 
-                    {{-- "You are working on a saved file" — set by a module
-                         (the map, so far) when what is on screen came from
-                         somewhere and will go back there. Hidden until one
-                         says so, because on a new file there is nothing to
-                         say. window.setEditingNotice(text) turns it on;
-                         calling it with nothing turns it off. --}}
-                    <button type="button" id="editingNoticeBtn" hidden
-                        class="relative flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full text-brand-700 bg-brand-50 hover:bg-brand-100 transition"
-                        aria-label="What you are editing">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 11v5m0-8h.01"/></svg>
-                    </button>
+                    {{-- The "you are working on a saved file" (i) button left
+                         the top bar by request (2026-09-07). The stagebar's
+                         own hint already names the open map;
+                         window.setEditingNotice below stays as a no-op so
+                         the map's call keeps landing safely. --}}
                     {{-- A page's own header controls, seated beside the bell —
                          the AI chat parks its session menu here instead of
                          spending a banner on it. --}}
@@ -436,21 +430,9 @@
     </header>
 
     <script>
-        /* One line for any module to say what file is open. It shows an info
-           button beside the bell, and tapping it says the same thing in
-           words — a badge nobody can read is decoration. */
-        window.setEditingNotice = function (text) {
-            const btn = document.getElementById('editingNoticeBtn');
-            if (!btn) return;
-            btn.hidden = !text;
-            btn.dataset.notice = text || '';
-        };
-        document.addEventListener('click', (e) => {
-            const btn = e.target.closest('#editingNoticeBtn');
-            if (!btn) return;
-            const text = btn.dataset.notice || '';
-            if (text && window.toast) window.toast(text);
-        });
+        /* The info button this used to drive left the top bar; the map still
+           calls it, so it stays as a shrug rather than a TypeError. */
+        window.setEditingNotice = function () {};
 
         // Top-bar notification bell (Alpine component). Defined before Alpine
         // inits so x-data="notificationBell()" resolves.
