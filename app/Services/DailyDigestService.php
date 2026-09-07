@@ -12,9 +12,11 @@ use Illuminate\Support\Facades\Log;
 /**
  * The morning email: what is on today, and what is coming tomorrow.
  *
- * A worker is sent only the work they are actually on — a list of everyone
- * else's jobs is noise, and noise is what makes people stop reading these.
- * The owner gets the whole day.
+ * Two switches, two shapes of message. "Email the workers" sends each worker
+ * only the work they are actually on — a list of everyone else's jobs is
+ * noise, and noise is what makes people stop reading these. "Email everyone
+ * in the team" sends the whole day — every activity, today and tomorrow — to
+ * the owner and to every worker with an address on file.
  *
  * Sending goes through {@see anee.ioMailer}, which uses the SMTP credentials
  * configured in the mother app rather than this app's own mail config.
@@ -53,13 +55,31 @@ class DailyDigestService
         $sent = 0;
         $skipped = 0;
 
+        // Whole-team addresses that already got the full-day message, so the
+        // per-worker pass below never mails the same person twice.
+        $gotFullDay = [];
+
         if ($schedule->notifyOwnerDaily || $ownerOnly) {
             $owner = User::find($schedule->anisystemUserId ?: $schedule->usersId);
             if ($owner && filled($owner->email)) {
                 $this->deliver($schedule, $owner->email, $owner->full_name ?? 'there', $activities, $today, $tomorrow)
                     ? $sent++ : $skipped++;
+                $gotFullDay[strtolower($owner->email)] = true;
             } else {
                 $skipped++;
+            }
+        }
+
+        // "Email everyone in the team": the whole day, to every worker with an
+        // address on file — not just the ones with work assigned.
+        if ($schedule->notifyOwnerDaily && ! $ownerOnly) {
+            foreach ($schedule->workers as $worker) {
+                if (blank($worker->email) || isset($gotFullDay[strtolower($worker->email)])) {
+                    continue;
+                }
+                $this->deliver($schedule, $worker->email, $worker->workerName, $activities, $today, $tomorrow)
+                    ? $sent++ : $skipped++;
+                $gotFullDay[strtolower($worker->email)] = true;
             }
         }
 
@@ -68,6 +88,9 @@ class DailyDigestService
                 if (blank($worker->email)) {
                     $skipped++;          // no address on file; not an error
                     continue;
+                }
+                if (isset($gotFullDay[strtolower($worker->email)])) {
+                    continue;            // already has the whole day in hand
                 }
                 $theirs = $activities->filter(
                     fn ($a) => $a->workers->contains(fn ($w) => (int) $w->id === (int) $worker->id)

@@ -8,11 +8,11 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 /**
- * Runs every hour and sends the digests whose hour has come round.
+ * Runs every hour; the digests all go out on the 6 AM Manila pass.
  *
- * Hourly rather than daily because each schedule picks its own send time, and
- * a farm that starts at five should not be told at eight. The last-sent date
- * is what makes a re-run — or a second worker on the same cron — harmless.
+ * The send hour used to be per-schedule. It is fixed at six now: one morning
+ * time for every farm, and no control to explain. The last-sent date is what
+ * makes a re-run — or a second worker on the same cron — harmless.
  */
 class SendDailyDigests extends Command
 {
@@ -39,8 +39,8 @@ class SendDailyDigests extends Command
 
         foreach ($query->with('workers')->get() as $schedule) {
             if (! $force) {
-                if ((int) $schedule->notifyHour !== (int) $now->hour) {
-                    continue;
+                if ((int) $now->hour !== 6) {
+                    continue;            // everyone's morning email leaves at six, Manila time
                 }
                 if ($schedule->notifyLastSentDate
                     && $schedule->notifyLastSentDate->toDateString() === $today->toDateString()) {

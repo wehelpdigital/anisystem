@@ -116,7 +116,8 @@
                         <div class="min-w-0">
                             <h2 class="nt-head-h">Daily schedule email</h2>
                             <p class="nt-head-p">One message each morning with what is on today and what is
-                                coming tomorrow, so nobody has to open the app to find out where to be.</p>
+                                coming tomorrow, so nobody has to open the app to find out where to be.
+                                It goes out at 6:00 AM Philippine time.</p>
                         </div>
                     </div>
 
@@ -136,24 +137,11 @@
                         <label class="nt-pick">
                             <input type="checkbox" id="notifyOwnerDaily" @disabled($setWorker) @checked($schedule->notifyOwnerDaily)>
                             <span class="nt-pick-body">
-                                <b>Email me</b>
-                                <i>The whole day — every activity, and whoever is on it.</i>
+                                <b>Email everyone in the team</b>
+                                <i>Everyone with an email address gets the schedule for the current day
+                                   and tomorrow, the whole day in one message.</i>
                             </span>
                         </label>
-                    </div>
-
-                    <div class="nt-when">
-                        <div class="min-w-0">
-                            <label class="form-label mb-1!" for="notifyHour">Send at</label>
-                            <p class="nt-when-p">Philippine time. Once a day — a re-run never sends twice.</p>
-                        </div>
-                        <select id="notifyHour" class="form-select nt-hour" @disabled($setWorker)>
-                            @for ($h = 0; $h < 24; $h++)
-                                <option value="{{ $h }}" @selected((int) $schedule->notifyHour === $h)>
-                                    {{ \Carbon\Carbon::createFromTime($h)->format('g:00 A') }}
-                                </option>
-                            @endfor
-                        </select>
                     </div>
 
                     <div class="nt-acts">
@@ -204,12 +192,6 @@
     .nt-pick-body i { display: block; font-style: normal; margin-top: .18rem;
         font-size: .76rem; line-height: 1.55; color: var(--color-gray-500); }
 
-    /* The hour stands beside its own sentence rather than under it. */
-    .nt-when { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
-        margin-top: 1.1rem; padding: .9rem; border-radius: .9rem;
-        background: var(--color-gray-50); border: 1px solid var(--color-gray-200); }
-    .nt-when-p { font-size: .74rem; line-height: 1.5; color: var(--color-gray-500); }
-    .nt-hour { width: 9.5rem; flex: none; margin-left: auto; }
     .nt-acts { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.1rem; }
     .nt-acts .btn { flex: 1 1 auto; justify-content: center; }
     @media (min-width: 480px) { .nt-acts .btn { flex: 0 0 auto; } }
@@ -218,7 +200,6 @@
     html.dark .nt-pick { background: #151b12; border-color: #2b3a1c; }
     html.dark .nt-pick:has(input:checked) { background: rgb(74 124 42 / .18); border-color: #4a7c2a; }
     html.dark .nt-pick-body b { color: #e8efe1; }
-    html.dark .nt-when { background: rgb(255 255 255 / .04); border-color: #2b3a1c; }
     @media (prefers-reduced-motion: reduce) { .nt-pick { transition: none; } }
 </style>
 @endpush
@@ -259,7 +240,6 @@ const __init = () => {
                     description: document.getElementById('settingsDescription').value,
                     notifyWorkersDaily: document.getElementById('notifyWorkersDaily').checked,
                     notifyOwnerDaily: document.getElementById('notifyOwnerDaily').checked,
-                    notifyHour: parseInt(document.getElementById('notifyHour').value, 10),
                 },
             });
             toast(res.message);
