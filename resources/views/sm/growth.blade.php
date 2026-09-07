@@ -29,30 +29,21 @@
     html.dark .gr-date-tag:hover { background: rgb(61 104 35 / .4); }
     @media (prefers-reduced-motion: reduce) { .gr-date-tag { transition: none; } }
 
-    /* ---- the season, said in colour --------------------------------------
-       Soil brown at the start, the greens through establishment and
-       tillering, water teal where the crop's demand for it peaks, the golds
-       through flowering and filling, and a deep harvest amber at the end.
-       The same eight bands the growth tool in Activities wears, so a lot is
-       the same colour in both places. */
     /* The card wears the Tip of the Day's clothes: the same deep-green
        gradient ground, light words, and the slow drifting glow — one
        committed look in both modes, the way the tip card is. The stage
-       colour lives in a chip under the lot's name (translucent band colour
-       on the dark ground) and in the progress bar. No moving border. */
-    .gr-c0 { --gr-accent: #c58f57; --gr-chip-bg: rgb(138 90 43 / .35); --gr-chip-fg: #e8c49a; }
-    .gr-c1 { --gr-accent: #9cc973; --gr-chip-bg: rgb(143 194 103 / .26); --gr-chip-fg: #cfe6ae; }
-    .gr-c2 { --gr-accent: #8fbf60; --gr-chip-bg: rgb(107 159 61 / .3); --gr-chip-fg: #c2e097; }
-    .gr-c3 { --gr-accent: #7fae53; --gr-chip-bg: rgb(74 124 42 / .38); --gr-chip-fg: #b3d68a; }
-    .gr-c4 { --gr-accent: #43c2b6; --gr-chip-bg: rgb(13 148 136 / .3); --gr-chip-fg: #94e0d7; }
-    .gr-c5 { --gr-accent: #f0c454; --gr-chip-bg: rgb(240 180 41 / .26); --gr-chip-fg: #f6dc9b; }
-    .gr-c6 { --gr-accent: #f0a94e; --gr-chip-bg: rgb(217 130 20 / .28); --gr-chip-fg: #f2c891; }
-    .gr-c7 { --gr-accent: #e08a3c; --gr-chip-bg: rgb(180 83 9 / .3); --gr-chip-fg: #efb888; }
+       chip and the progress bar wear the SAME deep green, animated —
+       the per-stage colour bands (soil brown, water teal, flowering gold)
+       read as random next to each other and are gone by request. */
     .gr-stage-chip { display: inline-flex; align-items: center; max-width: 100%;
-        margin-top: .3rem; padding: .16rem .55rem; border-radius: 999px;
+        margin-top: .3rem; padding: .18rem .6rem; border-radius: 999px;
         font-size: .68rem; font-weight: 800; letter-spacing: .01em;
-        background: var(--gr-chip-bg, rgb(255 255 255 / .12));
-        color: var(--gr-chip-fg, #e8efe1); }
+        color: #dcedc8; border: 1px solid rgb(168 204 126 / .3);
+        background: linear-gradient(115deg, #223618, #3d6823, #4a7c2a, #223618);
+        background-size: 280% 100%;
+        animation: grTide 7s ease-in-out infinite alternate; }
+    @keyframes grTide { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+    @media (prefers-reduced-motion: reduce) { .gr-stage-chip { animation: none; } }
     .gr-card { position: relative; border: 1px solid rgb(168 204 126 / .18); border-radius: 1rem;
         overflow: hidden; margin-bottom: .9rem; color: #e8efe1;
         background: linear-gradient(135deg, #10160c 0%, #1c2416 55%, #24301a 100%);
@@ -117,7 +108,10 @@
     .gr-needs b { font-weight: 800; }
     .gr-bar { height: .4rem; border-radius: 999px; background: rgb(255 255 255 / .14); overflow: hidden; margin-top: .6rem; }
     .gr-bar span { display: block; height: 100%; border-radius: 999px;
-        background: var(--gr-accent, #a8cc7e); }
+        background: linear-gradient(90deg, #4a7c2a, #a8cc7e, #4a7c2a);
+        background-size: 220% 100%;
+        animation: grTide 7s ease-in-out infinite alternate; }
+    @media (prefers-reduced-motion: reduce) { .gr-bar span { animation: none; } }
     .gr-next { font-size: .72rem; color: #a3b295; margin-top: .3rem; }
 
     .gr-lists { display: grid; gap: .5rem; margin-top: .8rem; }
@@ -181,17 +175,7 @@
 
 <div id="grCards">
 @forelse ($rows as $r)
-    @php
-        /* Which of the eight colour bands this lot's stage sits in.
-           By fraction through the season, not by the stage's name: rice has
-           eight stages and a mango tree has five, and the question the colour
-           answers — how far through is this — is the same either way. */
-        $grStage = $r['stage'] ?? [];
-        $grSteps = max(1, count($r['timeline'] ?? []) - 1);
-        $grBand = (int) round((($grStage['index'] ?? 0) / $grSteps) * 7);
-        $grBand = max(0, min(7, $grBand));
-    @endphp
-    <div class="gr-card gr-c{{ $grBand }}" data-lot="{{ $r['lot']->id }}">
+    <div class="gr-card" data-lot="{{ $r['lot']->id }}">
         <div class="gr-top" title="Tap to fold or open this lot">
             <svg class="gr-chev" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             <span class="gr-emoji">{{ $r['icon'] }}</span>
