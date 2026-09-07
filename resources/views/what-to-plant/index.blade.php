@@ -46,9 +46,9 @@
     .q-c { flex: none; width: 1rem; height: 1rem; color: #3d5226; opacity: .6;
         transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .is-min .q-c { transform: rotate(-90deg); }
-    .q-body { display: grid; grid-template-rows: 1fr; opacity: 1;
-        transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
-    .is-min .q-body { grid-template-rows: 0fr; opacity: 0; }
+    .q-body { overflow: hidden; opacity: 1;
+        transition: max-height .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    .is-min .q-body { max-height: 0; opacity: 0; }
     .q-body-in { overflow: hidden; min-height: 0; display: grid; gap: .5rem; padding: 0 .9rem; }
     .q-body-in::after { content: ''; height: .4rem; }
     .q-card { border-radius: .7rem; padding: .6rem .75rem; font-size: .82rem; color: #3d5226;

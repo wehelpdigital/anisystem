@@ -1847,3 +1847,88 @@ document.addEventListener('pointerdown', (e) => {
     window.addEventListener('pointermove', move);
     window.addEventListener('pointerup', up);
 });
+
+/* ======================================================================
+ * The concertina: every fold in the app closes by max-height.
+ *
+ * These folds used to close by `grid-template-rows: 1fr → 0fr`, which is
+ * the modern trick — and on at least one real phone the row simply never
+ * collapsed: the chevron turned and the body stood still. max-height is
+ * as old as CSS and closes everywhere, so the stylesheets now carry the
+ * resting states (`max-height: 0` shut, nothing when open) and this
+ * watcher supplies the animation: it sees a fold's state class flip,
+ * measures the content, and slides an inline max-height between the two
+ * real heights on the house curve. Engines that cannot animate still
+ * fold — they just snap, which is also what reduced-motion asks for.
+ *
+ * A class flip alone cannot animate (none ↔ 0 has no midpoint), so
+ * folds applied in bulk at load or on insert land silently instead of
+ * rippling — the old permanent 1fr transition re-animated on every
+ * relayout, and several screens grew `.is-folding` armings to fight it.
+ * Those armings are now inert and can stay.
+ * ==================================================================== */
+(() => {
+    // Every accordion in the app: who carries the state class, which class
+    // it is, and where the sliding wrapper lives (null = the carrier
+    // itself). `open: true` marks folds whose class means OPEN, not shut.
+    const FOLDS = [
+        { sel: '.note-card', cls: 'is-collapsed', fold: '.note-fold' },
+        { sel: '.nh-card', cls: 'is-folded', fold: '.nh-fold' },
+        { sel: '.mir-find', cls: 'is-shut', fold: '.mir-find-body' },
+        { sel: '.adv-rest', cls: 'is-open', fold: null, open: true },
+        { sel: '.gs-lot', cls: 'is-folded', fold: '.gs-fold' },
+        { sel: '.date-group', cls: 'is-folded', fold: '.date-body' },
+        { sel: '.ipp-fold', cls: 'is-shut', fold: null },
+        { sel: '.ds-card', cls: 'is-folded', fold: '.ds-fold-wrap' },
+        { sel: '.tk-group', cls: 'is-folded', fold: '.tk-group-body' },
+        { sel: '.gr-card', cls: 'is-folded', fold: '.gr-fold' },
+        { sel: '.qa-panel', cls: 'is-folded', fold: '.qa-panel-fold' },
+        { sel: '.se-card', cls: 'is-folded', fold: '.se-fold-wrap' },
+        { sel: '.set-log-detail', cls: 'is-open', fold: null, open: true },
+        { sel: '.mod-say-wrap', cls: 'is-away', fold: null },
+        { sel: '.cw-panel', cls: 'is-folded', fold: '.cw-fold' },
+        { sel: '.wx-open', cls: 'is-on', fold: null, open: true },
+        { sel: '.wtp-quote', cls: 'is-min', fold: '.q-body' },
+    ];
+    const ANY = FOLDS.map((f) => f.sel).join(',');
+
+    function slide(el, toShut) {
+        // Snap when motion is unwelcome, or before anyone has touched the
+        // page — a page arranging itself at load is not a gesture answered.
+        if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (!(navigator.userActivation && navigator.userActivation.hasBeenActive)) return;
+        const full = el.scrollHeight;
+        if (!full) return;
+        // Mid-flight the inline pin says where the fold really is; settled,
+        // direction says it. scrollHeight ignores max-height, so `full` is
+        // honest either way.
+        const from = el.style.maxHeight ? el.getBoundingClientRect().height : (toShut ? full : 0);
+        const to = toShut ? 0 : full;
+        if (Math.abs(from - to) < 1) return;
+        clearTimeout(el.__concertina);
+        el.style.transition = 'none';
+        el.style.maxHeight = from + 'px';
+        void el.offsetHeight;
+        el.style.transition = '';
+        el.style.maxHeight = to + 'px';
+        // After the ride the stylesheet resumes: 0 when shut, free when
+        // open — so content that grows later is never clipped at old size.
+        el.__concertina = setTimeout(() => { el.style.maxHeight = ''; el.style.transition = ''; }, 340);
+    }
+
+    new MutationObserver((muts) => {
+        for (const m of muts) {
+            const el = m.target;
+            if (el.nodeType !== 1 || !el.matches(ANY)) continue;
+            const had = (m.oldValue || '').split(/\s+/);
+            for (const f of FOLDS) {
+                if (!el.matches(f.sel)) continue;
+                const wasShut = f.open ? !had.includes(f.cls) : had.includes(f.cls);
+                const isShut = f.open ? !el.classList.contains(f.cls) : el.classList.contains(f.cls);
+                if (wasShut === isShut) continue;
+                const wrap = f.fold ? el.querySelector(f.fold) : el;
+                if (wrap) slide(wrap, isShut);
+            }
+        }
+    }).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['class'], attributeOldValue: true });
+})();

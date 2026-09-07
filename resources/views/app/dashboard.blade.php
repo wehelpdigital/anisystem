@@ -443,9 +443,9 @@
 
     /* ---- a season on the home page folds too -------------------------
        Same idea as the schedules page: the name stays, the working detail
-       goes. The transition is armed only while a fold is happening —
-       grid-template-rows: 1fr resolves against content, so a permanently
-       transitioned row re-animates on every relayout the card has. */
+       goes. max-height carries the fold — a class flip alone cannot
+       animate (none and 0 have no midpoint), so relayouts never re-animate
+       the card; the shared concertina in app.js supplies the slide. */
     /* The schedules page's tilled-soil cover, worn here too: the same
        ground, the same slow drift on the shared gradSweep tide, each card
        on its own clock — so a season looks like the same season on both
@@ -513,9 +513,9 @@
     .dn-when-said { font-weight: 600; color: var(--color-gray-500); cursor: default; }
     html.dark .dn-when-said { color: #a8bd93; }
 
-    .ds-fold-wrap { display: grid; grid-template-rows: 1fr; min-height: 0; }
-    .ds-card.is-folding .ds-fold-wrap { transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
-    .ds-card.is-folded .ds-fold-wrap { grid-template-rows: 0fr; }
+    .ds-fold-wrap { overflow: hidden; min-height: 0;
+        transition: max-height .28s cubic-bezier(.22,1,.36,1); }
+    .ds-card.is-folded .ds-fold-wrap { max-height: 0; }
     /* Padding is incompressible: a 0fr row still stands as tall as its
        child's padding-top, so a folded card wore a 12px ghost strip under
        the title — more below the name than above it. Folded, the padding

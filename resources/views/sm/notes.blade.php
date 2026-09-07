@@ -40,9 +40,9 @@
         /* Accordion: each note folds to its header; the chevron flags state. */
         .note-head { cursor: pointer; }
         .note-origin { margin-top: .2rem; display: inline-flex; }
-        .note-fold { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
-        .note-fold-inner { overflow: hidden; min-height: 0; }
-        .note-card.is-collapsed .note-fold { grid-template-rows: 0fr; }
+        .note-fold { overflow: hidden; transition: max-height .28s cubic-bezier(.22,1,.36,1); }
+        .note-fold-inner { min-height: 0; }
+        .note-card.is-collapsed .note-fold { max-height: 0; }
         .note-chevron { transition: transform .2s ease; color: #9ca3af; }
         .note-card:not(.is-collapsed) .note-chevron { transform: rotate(90deg); }
         @media (prefers-reduced-motion: reduce) { .note-fold, .note-chevron { transition: none; } }

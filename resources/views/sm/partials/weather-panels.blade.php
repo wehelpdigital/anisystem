@@ -43,11 +43,11 @@
     .wx-day-caret { display: block; margin: .1rem auto 0; width: .7rem; height: .7rem; color: var(--color-gray-400);
         transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .wx-day.is-open .wx-day-caret { transform: rotate(180deg); color: #4a7c2a; }
-    .wx-open { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
-    .wx-open.is-on { grid-template-rows: 1fr; }
+    .wx-open { overflow: hidden; max-height: 0; transition: max-height .28s cubic-bezier(.22,1,.36,1); }
+    .wx-open.is-on { max-height: none; }
     /* Slide and fade together — the slide alone leaves the forecast at full
        strength against a shutting edge, which reads as a clip. */
-    .wx-open-in { overflow: hidden; min-height: 0; opacity: 0; transition: opacity .22s ease; }
+    .wx-open-in { min-height: 0; opacity: 0; transition: opacity .22s ease; }
     .wx-open.is-on .wx-open-in { opacity: 1; }
     .wx-open-hd { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem;
         margin: .75rem 0 .35rem; }

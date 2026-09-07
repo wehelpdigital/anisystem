@@ -79,14 +79,14 @@
        row so height animates without knowing the content size. */
     .gr-chev { width: 1rem; height: 1rem; flex-shrink: 0; color: #6b9f3d; transition: transform .18s ease; }
     .gr-card:not(.is-folded) .gr-chev { transform: rotate(90deg); }
-    .gr-fold { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+    .gr-fold { overflow: hidden; transition: max-height .28s cubic-bezier(.22,1,.36,1); }
     /* Sliding and fading together, as every other fold in the app now
        does. The slide alone leaves the contents at full strength against a
        shutting edge, which reads as a clip rather than a movement. */
-    .gr-fold-inner { overflow: hidden; min-height: 0; opacity: 1;
+    .gr-fold-inner { min-height: 0; opacity: 1;
         transition: opacity .22s ease; }
     .gr-card.is-folded .gr-fold-inner { opacity: 0; }
-    .gr-card.is-folded .gr-fold { grid-template-rows: 0fr; }
+    .gr-card.is-folded .gr-fold { max-height: 0; }
     /* Folded, the header answers for the body: the stage takes the counter
        explainer's line, so a folded page reads lot | stage | day. */
     .gr-fold-stage { display: none; font-size: .72rem; font-weight: 700; color: var(--color-gray-500); margin-top: .1rem; }

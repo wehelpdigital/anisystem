@@ -181,7 +181,7 @@
         };
         if (animate === false || reduced()) { settle(); syncToggle(zone); return; }
         fold.addEventListener('transitionend', function done(ev) {
-            if (ev.target !== fold || ev.propertyName !== 'grid-template-rows') return;
+            if (ev.target !== fold || ev.propertyName !== 'max-height') return;
             fold.removeEventListener('transitionend', done);
             settle();
         });
@@ -189,7 +189,13 @@
         // would leave the tail wrapped forever; the height is already right by
         // then, so flattening late costs nothing.
         setTimeout(settle, 600);
+        // Slide between measured heights: the class alone cannot animate
+        // (0 and none have no midpoint), and the inline pin dies with the
+        // wrapper when settle() flattens it.
         fold.classList.add('is-open');
+        fold.style.maxHeight = '0px';
+        void fold.offsetHeight;
+        fold.style.maxHeight = fold.scrollHeight + 'px';
         syncToggle(zone);
     }
 
@@ -200,10 +206,11 @@
         const fold = zone.querySelector(':scope > .thread-fold');
         if (fold && !reduced()) {
             // The wrapper is born collapsed, so there is nothing to travel from.
-            // Paint it open, force the measurement, then let go.
-            fold.classList.add('is-open');
+            // Pin it open at its measured height, then let the stylesheet's 0
+            // pull it shut.
+            fold.style.maxHeight = fold.scrollHeight + 'px';
             void fold.offsetHeight;
-            fold.classList.remove('is-open');
+            fold.style.maxHeight = '';
         }
         observer?.takeRecords();
         syncToggle(zone);

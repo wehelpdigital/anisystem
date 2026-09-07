@@ -45,9 +45,9 @@
     .nh-meta { display: flex; align-items: center; gap: .35rem; flex-wrap: wrap; margin-top: .25rem; }
     .nh-where, .nh-when { font-size: .68rem; color: var(--color-gray-400); }
     .nh-where { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 12rem; }
-    .nh-fold { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
-    .nh-fold-inner { overflow: hidden; min-height: 0; }
-    .nh-card.is-folded .nh-fold { grid-template-rows: 0fr; }
+    .nh-fold { overflow: hidden; transition: max-height .28s cubic-bezier(.22,1,.36,1); }
+    .nh-fold-inner { min-height: 0; }
+    .nh-card.is-folded .nh-fold { max-height: 0; }
     .nh-body { padding: 0 .8rem .8rem; }
     #nhList.no-fold-anim .nh-fold, #nhList.no-fold-anim .nh-chev { transition: none; }
     html.dark .nh-card { background: #151b12; border-color: #2b3a1c; }

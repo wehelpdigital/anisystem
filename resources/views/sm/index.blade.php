@@ -209,10 +209,10 @@
         .qa-panel-chev { width: 1.1rem; height: 1.1rem; flex: none; color: var(--color-gray-400);
             transition: transform .28s cubic-bezier(.22,1,.36,1); }
         .qa-panel.is-folded .qa-panel-chev { transform: rotate(-90deg); }
-        .qa-panel-fold { display: grid; grid-template-rows: 1fr;
-            transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
-        .qa-panel.is-folded .qa-panel-fold { grid-template-rows: 0fr; }
-        .qa-panel-fold > div { overflow: hidden; min-height: 0; }
+        .qa-panel-fold { overflow: hidden;
+            transition: max-height .28s cubic-bezier(.22,1,.36,1); }
+        .qa-panel.is-folded .qa-panel-fold { max-height: 0; }
+        .qa-panel-fold > div { min-height: 0; }
         .qa-panel .qa-stack { padding: 0 .55rem .55rem; }
         /* Inside the panel the tiles are rows of a list, not cards on a page. */
         .qa-panel .qa-tile { border-color: var(--color-gray-100); }
@@ -385,19 +385,16 @@
         html.dark .se-chev { color: #d5dfc9; }
         .se-card.is-folded .se-chev { transform: rotate(-90deg); }
         /* Height animates, so folding reads as the card closing rather than
-           the card vanishing. grid-template-rows does it without anyone
-           having to measure the content first. */
+           the card vanishing. */
         .se-body { display: block; }
-        .se-card .se-fold-wrap { display: grid; grid-template-rows: 1fr; }
-        /* The transition is on ONLY while a fold is actually happening.
-           `1fr` resolves against the content, so a permanently-transitioned
-           row animates on every relayout the card ever has — and swiping the
-           lot strip is a relayout. That is what made the whole card bounce
-           up and down under the finger: not the strip moving, but the row
-           height being re-animated a hundred times on the way past. */
-        .se-card.is-folding .se-fold-wrap { transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
-        .se-card.is-folded .se-fold-wrap { grid-template-rows: 0fr; }
-        .se-card .se-fold-wrap > * { min-height: 0; overflow: hidden; }
+        /* max-height carries the fold: a class flip alone cannot animate
+           (none and 0 have no midpoint), so relayouts never re-animate the
+           card — the shared concertina in app.js supplies the slide only
+           when a fold actually flips. */
+        .se-card .se-fold-wrap { overflow: hidden;
+            transition: max-height .28s cubic-bezier(.22,1,.36,1); }
+        .se-card.is-folded .se-fold-wrap { max-height: 0; }
+        .se-card .se-fold-wrap > * { min-height: 0; }
         .se-card.is-folded .se-body { padding-top: 0; padding-bottom: 0; }
         .se-card.is-folded { align-self: start; }
         @media (prefers-reduced-motion: reduce) {

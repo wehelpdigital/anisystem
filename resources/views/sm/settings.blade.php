@@ -27,10 +27,10 @@
         html.dark .set-log:hover { background: rgb(255 255 255 / .04); }
 
         /* The row's particulars, unfolded under it. */
-        .set-log-detail { display: grid; grid-template-rows: 0fr;
-            transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
-        .set-log-detail.is-open { grid-template-rows: 1fr; }
-        .set-log-detail > div { overflow: hidden; min-height: 0; }
+        .set-log-detail { overflow: hidden; max-height: 0;
+            transition: max-height .28s cubic-bezier(.22,1,.36,1); }
+        .set-log-detail.is-open { max-height: none; }
+        .set-log-detail > div { min-height: 0; }
         .set-log-card { margin: .15rem 0 .55rem; padding: .6rem .75rem; border-radius: .7rem;
             background: var(--color-gray-50); border: 1px solid var(--color-gray-100);
             font-size: .76rem; line-height: 1.55; color: var(--color-gray-600); }

@@ -617,16 +617,16 @@
     .reply-media img { max-height:none; }
 
     /* --- Long threads fold: the first two entries stay, the rest slide behind
-       a toggle. grid-template-rows 0fr → 1fr animates to the content's real
-       height; a max-height would have to be guessed, and a comment carrying a
-       photo makes that guess either a clip or a crawl. --- */
-    .thread-fold { display:grid; grid-template-rows:0fr;
-        transition: grid-template-rows var(--dur) var(--ease-house); }
-    .thread-fold > * { overflow:hidden; min-height:0; display:flex; flex-direction:column; gap:.375rem; }
+       a toggle. max-height carries the fold — the JS measures the real height
+       and slides an inline value, so nothing is guessed; the resting states
+       here close on any engine (the grid 0fr trick did not). --- */
+    .thread-fold { overflow:hidden; max-height:0;
+        transition: max-height var(--dur) var(--ease-house); }
+    .thread-fold > * { min-height:0; display:flex; flex-direction:column; gap:.375rem; }
     /* Folded entries stop being direct children, so the zone's own spacing no
        longer reaches them — the wrapper has to reproduce it. */
     .cp-replies > .thread-fold > * { gap:.75rem; }
-    .thread-fold.is-open { grid-template-rows:1fr; }
+    .thread-fold.is-open { max-height:none; }
     /* align-self keeps the hit area (and the hover underline) to the words, in
        a reply zone that is itself a stretching column. */
     .thread-toggle { display:inline-flex; align-self:flex-start; align-items:center; gap:.25rem; border:0;

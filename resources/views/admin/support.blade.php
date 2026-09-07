@@ -81,10 +81,10 @@
     .tk-group { border-bottom: 1px solid var(--color-gray-100); }
     .tk-group:last-child { border-bottom: 0; }
     .tk-group-head .ad-face { font-size: .85rem; }
-    .tk-group-body { display: grid; grid-template-rows: 1fr;
-        transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
-    .tk-group.is-folded .tk-group-body { grid-template-rows: 0fr; }
-    .tk-group-body > div { overflow: hidden; min-height: 0; }
+    .tk-group-body { overflow: hidden;
+        transition: max-height .28s cubic-bezier(.22,1,.36,1); }
+    .tk-group.is-folded .tk-group-body { max-height: 0; }
+    .tk-group-body > div { min-height: 0; }
     .tk-row { padding-left: 2rem; background: var(--color-gray-50); }
     .tk-row:hover { background: var(--color-gray-100); }
     .tk-chev { width: 1rem; height: 1rem; color: var(--color-gray-400);

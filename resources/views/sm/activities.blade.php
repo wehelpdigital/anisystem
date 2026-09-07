@@ -22,7 +22,7 @@
        so inside the embed the line must not be dismissible — otherwise it
        goes away with no way back. */
     html.collab-embed .mod-say-x { display: none; }
-    html.collab-embed .mod-say-wrap.is-away { grid-template-rows: 1fr; opacity: 1; margin-bottom: .85rem; }
+    html.collab-embed .mod-say-wrap.is-away { max-height: none; opacity: 1; margin-bottom: .85rem; }
     /* Enough headroom for the count badges, which hang ABOVE the buttons they
        belong to: at .6rem the bell's number was sliced in half by the tab's
        own "Team tasks" line sitting directly over the frame. */
@@ -299,10 +299,10 @@
          * an empty box and snapped at the end. They fade with it now, on the
          * same curve, and only stop taking clicks once they have gone. */
         .mir-find { contain: layout style; }
-        .mir-find-body { display: grid; grid-template-rows: 1fr;
-            transition: grid-template-rows .28s cubic-bezier(.22, 1, .36, 1); }
-        .mir-find.is-shut .mir-find-body { grid-template-rows: 0fr; }
-        .mir-find-in { overflow: hidden; min-height: 0; }
+        .mir-find-body { overflow: hidden;
+            transition: max-height .28s cubic-bezier(.22, 1, .36, 1); }
+        .mir-find.is-shut .mir-find-body { max-height: 0; }
+        .mir-find-in { min-height: 0; }
         /* Padding on the wrapper, not margins on the fields: a .form-input is
            width:100%, and 100% of the card plus a margin either side is wider
            than the card — which is exactly how the inputs ran off its edge. */
@@ -769,11 +769,11 @@
         /* Folds on grid rows, and the transition is armed only while a fold is
            actually happening — the same reasoning as .se-fold-wrap: a
            permanently transitioned 1fr re-animates on every relayout. */
-        .adv-rest { display: grid; grid-template-rows: 0fr; }
-        .adv-rest.is-open { grid-template-rows: 1fr; }
-        .adv-rest.is-folding { transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+        .adv-rest { overflow: hidden; max-height: 0;
+            transition: max-height .28s cubic-bezier(.22,1,.36,1); }
+        .adv-rest.is-open { max-height: none; }
         /* The fade that rides on the slide, as on every other fold here. */
-        .adv-rest > .adv-rest-in { min-height: 0; overflow: hidden;
+        .adv-rest > .adv-rest-in { min-height: 0;
             opacity: 0; transition: opacity .22s ease; }
         .adv-rest.is-open > .adv-rest-in { opacity: 1; }
         /* Breathing room that folds away with the list it belongs to. */
@@ -997,15 +997,15 @@
            its header, and the folded header borrows the stage's name. */
         .gs-chev { width: .9rem; height: .9rem; flex-shrink: 0; color: #6b9f3d; transition: transform .18s ease; }
         .gs-lot:not(.is-folded) .gs-chev { transform: rotate(90deg); }
-        .gs-fold { display: grid; grid-template-rows: 1fr;
-            transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+        .gs-fold { overflow: hidden;
+            transition: max-height .28s cubic-bezier(.22,1,.36,1); }
         /* Sliding and fading together, like every other fold on this board.
            The slide alone leaves the content full-strength against a shutting
            edge, which is what makes a fold read as a clip rather than a
            movement. */
-        .gs-fold-inner { overflow: hidden; min-height: 0; opacity: 1;
+        .gs-fold-inner { min-height: 0; opacity: 1;
             transition: opacity .22s ease; }
-        .gs-lot.is-folded .gs-fold { grid-template-rows: 0fr; }
+        .gs-lot.is-folded .gs-fold { max-height: 0; }
         .gs-lot.is-folded .gs-fold-inner { opacity: 0; }
         .gs-fold-stage { display: none; }
         .gs-lot.is-folded .gs-fold-stage { display: inline; }
@@ -1131,12 +1131,12 @@
          * nothing, and it covers the two or three frames the slide cannot
          * afford — the eye follows the arriving content rather than counting
          * the steps of the edge. */
-        .date-body { display: grid; grid-template-rows: 1fr;
-            transition: grid-template-rows .28s cubic-bezier(.22, 1, .36, 1); }
-        .date-body-inner { overflow: hidden; min-height: 0; opacity: 1;
+        .date-body { overflow: hidden;
+            transition: max-height .28s cubic-bezier(.22, 1, .36, 1); }
+        .date-body-inner { min-height: 0; opacity: 1;
             transition: opacity .22s ease; }
         .date-group.is-folded .date-body-inner { opacity: 0; }
-        .date-group.is-folded .date-body { grid-template-rows: 0fr; }
+        .date-group.is-folded .date-body { max-height: 0; }
         .date-group:not(.is-folded) .date-body-inner > * {
             animation: foldReveal .26s cubic-bezier(.22, 1, .36, 1) both;
         }
@@ -2063,15 +2063,15 @@
         /* The item panel folds open and shut rather than snapping: grid
            rows carry the height, opacity the presence, and visibility waits
            for the fold so a shut panel is not tabbed into. */
-        .ipp-fold { display: grid; grid-template-rows: 1fr; opacity: 1;
-            transition-property: grid-template-rows, opacity, visibility;
+        .ipp-fold { overflow: hidden; opacity: 1;
+            transition-property: max-height, opacity, visibility;
             transition-duration: .28s, .28s, 0s;
             transition-timing-function: cubic-bezier(.22,1,.36,1);
             transition-delay: 0s; }
-        .ipp-fold.is-shut { grid-template-rows: 0fr; opacity: 0; visibility: hidden;
+        .ipp-fold.is-shut { max-height: 0; opacity: 0; visibility: hidden;
             /* Only the delay differs: visibility waits for the fold. */
             transition-delay: 0s, 0s, .28s; }
-        .ipp-clip { overflow: hidden; min-height: 0; }
+        .ipp-clip { min-height: 0; }
 
         /* A new line lands with a small rise; leaving is animateOut's job. */
         #itemsContainer .mline { animation: mlineIn .28s cubic-bezier(.22,1,.36,1) both; }

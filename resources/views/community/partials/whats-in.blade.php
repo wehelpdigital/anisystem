@@ -23,10 +23,10 @@
     .cw-chev { width: 1.1rem; height: 1.1rem; flex: none; color: var(--color-gray-400);
         transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .cw-panel.is-folded .cw-chev { transform: rotate(-90deg); }
-    .cw-fold { display: grid; grid-template-rows: 1fr;
-        transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
-    .cw-panel.is-folded .cw-fold { grid-template-rows: 0fr; }
-    .cw-fold > div { overflow: hidden; min-height: 0; }
+    .cw-fold { overflow: hidden;
+        transition: max-height .28s cubic-bezier(.22,1,.36,1); }
+    .cw-panel.is-folded .cw-fold { max-height: 0; }
+    .cw-fold > div { min-height: 0; }
     .cw-stack { display: grid; gap: .5rem; padding: .35rem .55rem .55rem; }
     .cw-tile { display: flex; align-items: center; gap: .7rem; width: 100%; text-align: left;
         padding: .7rem .8rem; border-radius: .9rem; text-decoration: none;

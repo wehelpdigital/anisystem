@@ -15,11 +15,11 @@
 @once
     @push('head')
         <style>
-            .mod-say-wrap { display: grid; grid-template-rows: 1fr; margin-bottom: .85rem;
-                transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1),
+            .mod-say-wrap { overflow: hidden; margin-bottom: .85rem;
+                transition: max-height .28s cubic-bezier(.22,1,.36,1),
                     opacity .28s cubic-bezier(.22,1,.36,1), margin-bottom .28s cubic-bezier(.22,1,.36,1); }
-            .mod-say-wrap.is-away { grid-template-rows: 0fr; opacity: 0; margin-bottom: 0; }
-            .mod-say-inner { overflow: hidden; min-height: 0; }
+            .mod-say-wrap.is-away { max-height: 0; opacity: 0; margin-bottom: 0; }
+            .mod-say-inner { min-height: 0; }
             .mod-say { display: flex; align-items: flex-start; gap: .5rem;
                 padding: .6rem .75rem; border-radius: .8rem; font-size: .78rem; line-height: 1.5;
                 color: #4a6b34; background: #f3f8ec; border: 1px solid #d9e8c4; }
