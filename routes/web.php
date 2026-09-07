@@ -375,6 +375,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-draw-delete', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'remove'])->name('sm.draw.destroy');
     Route::get('/app/sm-maps', [App\Http\Controllers\Manager\ScheduleMapController::class, 'page'])->name('sm.maps');
     Route::post('/app/sm-map-save', [App\Http\Controllers\Manager\ScheduleMapController::class, 'saveMap'])->name('sm.map.save');
+    Route::post('/app/sm-map-save-meta', [App\Http\Controllers\Manager\ScheduleMapController::class, 'saveMeta'])->name('sm.map.save.meta');
     Route::post('/app/sm-map-load', [App\Http\Controllers\Manager\ScheduleMapController::class, 'loadSave'])->name('sm.map.load');
     // Drawing sessions: a fresh page 1 per session, past drawings kept as drafts.
     Route::post('/app/sm-board-open', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'open'])->name('sm.board.open');

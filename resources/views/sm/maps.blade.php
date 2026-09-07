@@ -27,7 +27,16 @@
         .mp-thumb img.is-loaded { opacity: 1; }
         .mp-meta { padding: .5rem .6rem .6rem; display: flex; flex-direction: column; gap: .3rem; }
         .mp-name { font-size: .8rem; font-weight: 700; color: var(--color-gray-900); line-height: 1.25;
-            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+            display: flex; align-items: flex-start; gap: .3rem; }
+        .mp-name > button ~ * { min-width: 0; }
+        /* The pencil beside the name: quiet until wanted, big enough to tap. */
+        .mp-pen { flex: none; margin-left: auto; width: 1.5rem; height: 1.5rem; border-radius: .45rem;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: var(--color-gray-400); background: transparent;
+            transition: color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+        .mp-pen:hover { color: var(--color-brand-700); background: var(--color-brand-50); }
+        .mp-pen svg { width: .85rem; height: .85rem; }
+        html.dark .mp-pen:hover { background: rgb(107 159 61 / .18); color: #a5c97e; }
         .mp-tags { display: flex; flex-wrap: wrap; gap: .25rem; }
         .mp-innote { display: inline-flex; align-items: center; gap: .2rem; text-decoration: none; }
         .mp-innote:hover { background: #e4efd4; color: #3d6823; }
@@ -178,12 +187,9 @@
         // skips the shelf and opens the stage on that map.
         $openSaveQ = (int) request()->query('save');
     @endphp
-    {{-- The shelf explains itself; the stage does not need explaining, and on
-         a phone this paragraph was eating the map. It lives with the grid. --}}
+    {{-- No info card up here: How to use maps already covers it, and the
+         paragraph was one more thing between a farmer and their maps. --}}
     <div id="smapHome" @if ($openSaveQ) class="hidden" @endif>
-        @include('sm.partials.module-note', [
-            'say' => 'Every map this schedule has saved — the team’s and your own. Open one to keep working on it, or start a new map. A saved map files its picture in the notebook, so a save can carry a note explaining what it was for.',
-        ])
         <div class="mp-grid" id="mpGrid"></div>
         <p class="mp-empty hidden" id="mpEmpty">No maps yet. Start one above — draw over the real ground, measure it, and save the plan with a name.</p>
     </div>
@@ -287,7 +293,11 @@
                 return `<div class="mp-card" data-save="${sv.id}">
                     <div class="mp-thumb">${thumb}</div>
                     <div class="mp-meta">
-                        <span class="mp-name">${esc(sv.title || 'Map')}</span>
+                        <span class="mp-name">${esc(sv.title || 'Map')}
+                            <button type="button" class="mp-pen" data-edit-save="${sv.id}" title="Edit name, description and tags" aria-label="Edit ${esc(sv.title || 'Map')}">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                            </button>
+                        </span>
                         <div class="mp-tags">
                             <span class="badge ${sv.source === 'team' ? 'badge-blue' : 'badge-green'}">${sv.source === 'team' ? 'Team map' : 'My map'}</span>
                             <span class="badge badge-gray">${sv.count} shape${sv.count === 1 ? '' : 's'}</span>
@@ -439,10 +449,53 @@
             shelfBtn.addEventListener('click', goHome);
             grid.addEventListener('click', (e) => {
                 if (e.target.closest('a[href]')) return;   // "In a note" goes where it says
+                // The pencil edits the card; it must not also open the map.
+                const pen = e.target.closest('[data-edit-save]');
+                if (pen) { openMeta(parseInt(pen.getAttribute('data-edit-save'), 10)); return; }
                 if (e.target.closest('[data-new]')) { enterStage('blank'); return; }
                 if (e.target.closest('[data-current]')) { enterStage(null); return; }
                 const c = e.target.closest('.mp-card[data-save]');
                 if (c) enterStage(parseInt(c.getAttribute('data-save'), 10));
+            });
+
+            /* ---- rename, reword, retag a save without opening it ---- */
+            let metaSave = null;
+            function openMeta(id) {
+                metaSave = saves.find((s) => s.id === id);
+                if (!metaSave) return;
+                document.getElementById('mpMetaTitle').value = metaSave.title || '';
+                document.getElementById('mpMetaDesc').value = metaSave.description || '';
+                const mount = document.getElementById('mpMetaTags');
+                if (window.smTags && mount) {
+                    window.smTags.mount(mount);
+                    window.smTags.load(mount, 'map', id);
+                }
+                openSheet('mpMetaSheet');
+            }
+            // Delegated: the sheet lives in the layout's stack, which is not
+            // in the DOM yet when this inline script runs.
+            document.addEventListener('click', async (e) => {
+                const btn = e.target.closest('#mpMetaSave');
+                if (!btn || !metaSave) return;
+                btn.disabled = true;
+                try {
+                    const res = await api(@json(route('sm.map.save.meta')) + '?scheduleId=' + @json($schedule->id), {
+                        method: 'POST',
+                        body: {
+                            saveId: metaSave.id,
+                            title: document.getElementById('mpMetaTitle').value.trim(),
+                            description: document.getElementById('mpMetaDesc').value.trim(),
+                            // Always sent, even empty, so removing every tag clears them.
+                            tags: window.smTags ? window.smTags.value(document.getElementById('mpMetaTags')) : [],
+                        },
+                    });
+                    metaSave.title = res.data.title;
+                    metaSave.description = res.data.description;
+                    paint();
+                    closeSheet('mpMetaSheet');
+                    toast(res.message);
+                } catch (err) { toast(err.message, 'error'); }
+                finally { btn.disabled = false; }
             });
 
             paint();
@@ -556,3 +609,33 @@
         })();
     </script>
 @endsection
+
+@push('sheets')
+{{-- Edit a saved map's name, what it was for, and its tags. --}}
+<div class="sheet hidden" id="mpMetaSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Edit this map</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-4">
+        <div>
+            <label class="form-label" for="mpMetaTitle">Name</label>
+            <input type="text" id="mpMetaTitle" class="form-input" maxlength="180" placeholder="e.g. Lot A drainage plan">
+        </div>
+        <div>
+            <label class="form-label" for="mpMetaDesc">What is this map about? <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea id="mpMetaDesc" class="form-textarea" rows="3" maxlength="2000"></textarea>
+            <p class="form-hint">Also updates the note this map filed in the notebook.</p>
+        </div>
+        <div>
+            <span class="form-label">Tags</span>
+            <div class="tp-mount" data-tags data-tags-kind="map" id="mpMetaTags"></div>
+        </div>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" class="btn btn-primary" id="mpMetaSave">Save changes</button>
+    </div>
+</div>
+@endpush

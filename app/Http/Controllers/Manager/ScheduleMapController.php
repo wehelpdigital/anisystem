@@ -494,12 +494,27 @@ class ScheduleMapController extends BaseScheduleController
             return null;
         };
 
-        return $rows->map(function ($r) use ($users, $picture) {
+        // What the save's note says the map was for, with the boilerplate
+        // line the save itself wrote stripped back off — this is what the
+        // edit sheet shows as the description.
+        $sayDescription = function ($noteId) use ($notes) {
+            $note = $noteId ? $notes->get($noteId) : null;
+            if (! $note) {
+                return '';
+            }
+            $txt = trim(strip_tags((string) $note->body));
+            $txt = trim((string) preg_replace('/Saved team map — tap View map to open it\.?\s*$/u', '', $txt));
+
+            return $txt;
+        };
+
+        return $rows->map(function ($r) use ($users, $picture, $sayDescription) {
             $path = $picture($r->noteId ? (int) $r->noteId : null);
 
             return [
                 'id' => (int) $r->id,
                 'title' => $r->title,
+                'description' => $sayDescription($r->noteId ? (int) $r->noteId : null),
                 'by' => (string) \Illuminate\Support\Str::of(optional($users->get($r->userId))->full_name ?? 'Someone')->explode(' ')->first(),
                 'when' => $r->created_at?->timezone('Asia/Manila')->format('M j, Y g:ia'),
                 'count' => count(json_decode((string) $r->objects, true) ?: []),
@@ -752,6 +767,63 @@ class ScheduleMapController extends BaseScheduleController
     }
 
     /** Replace the live team map with a saved snapshot, for everyone. */
+    /**
+     * Rename a saved map, reword what it was for, retie its tags — without
+     * opening the stage. The note the save filed keeps saying the same thing
+     * as the shelf: same title, and the description ahead of the boilerplate
+     * line the save itself wrote.
+     */
+    public function saveMeta(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        if (! ScheduleTeam::canAccess($schedule, (int) Auth::id())) {
+            return $this->jsonFail('You are not part of this schedule team.', 403);
+        }
+        if (! \App\Support\WorkerContext::canAddNotes()) {
+            return $this->jsonFail('You are not allowed to save to this schedule.', 403);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'saveId' => 'required|integer',
+            'title' => 'nullable|string|max:180',
+            'description' => 'nullable|string|max:2000',
+            'tags' => 'nullable',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail($validator->errors()->first(), 422);
+        }
+
+        $save = \App\Models\ScheduleMapSave::active()
+            ->where('scheduleId', $schedule->id)
+            ->find((int) $request->input('saveId'));
+        if (! $save) {
+            return $this->jsonFail('That saved map no longer exists.', 404);
+        }
+
+        $title = trim((string) $request->input('title')) ?: 'Team map';
+        $save->update(['title' => mb_substr($title, 0, 180)]);
+
+        if ($save->noteId && ($note = AsScheduleNote::active()->find($save->noteId))) {
+            $description = trim((string) $request->input('description'));
+            $bodyText = trim(($description !== '' ? $description . "\n\n" : '')
+                . 'Saved team map — tap View map to open it.');
+            $note->update([
+                'title' => mb_substr($title, 0, 180),
+                'body' => \App\Support\HtmlSanitizer::rich('<p>' . nl2br(e($bodyText)) . '</p>'),
+            ]);
+        }
+
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'map', (int) $save->id, $request->input('tags', []));
+        }
+
+        return $this->jsonOk('Map updated.', ['data' => [
+            'id' => (int) $save->id,
+            'title' => $save->title,
+            'description' => trim((string) $request->input('description')),
+        ]]);
+    }
+
     public function loadSave(Request $request)
     {
         $schedule = $this->schedule($request->query('scheduleId'));
