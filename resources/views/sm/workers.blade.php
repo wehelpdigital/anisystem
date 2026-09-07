@@ -71,6 +71,12 @@
         </div>
     </div>
 
+    {{-- The team chat float, the same one the Collab Room wears: the chat
+         button on a worker's card opens the PM panel right here instead of
+         walking the page off to the community. Renders itself only when the
+         schedule has a real team. --}}
+    @include('sm.partials.schedule-chat-float', ['schedule' => $schedule])
+
 @endsection
 
 @push('sheets')
@@ -371,11 +377,12 @@ const __init = () => {
         if (login.status === 'pending') return '<span class="inline-flex items-center gap-1 text-xs font-semibold text-amber-700 bg-amber-50 border border-amber-100 rounded-full px-2 py-0.5">🔑 Invite sent</span>';
         return '';
     }
-    // PM a worker who has a login: reuse the in-schedule float if present (shell),
-    // else deep-link into the community DM (same conversation + history).
+    // PM a worker who has a login: the same floating chat the Collab Room
+    // wears, opened right here. The page carries the float itself now, so
+    // this never has to leave for the community to say hello.
     function openWorkerPm(userId, name) {
         if (typeof window.scheduleTeamPm === 'function') window.scheduleTeamPm(userId, name);
-        else window.location.href = '{{ route('community.index') }}?dm=' + userId;
+        else toast('Chat opens once this schedule has a team: a worker with their own login.', 'info');
     }
 
     const fmtDate = (iso) => new Date(`${iso}T00:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
