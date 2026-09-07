@@ -6,12 +6,22 @@
 
 @push('head')
 <style>
-    /* Tabs: one today, but the shape is here for the next one. */
+    /* Tabs: Accessibility and Offline Mode. */
     .st-tabs { display: flex; gap: .35rem; border-bottom: 1px solid var(--color-gray-200); margin-bottom: 1.1rem; }
     .st-tab { padding: .55rem .9rem; font-size: .85rem; font-weight: 700; color: var(--color-gray-500);
-        border-bottom: 2px solid transparent; margin-bottom: -1px; }
+        border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; background: transparent; }
     .st-tab.is-on { color: #3d6823; border-bottom-color: #4a7c2a; }
     html.dark .st-tab.is-on { color: #a5c97e; }
+
+    /* The offline explainer: what works today, what's next, who wins. */
+    .st-offline-say { margin-top: .9rem; padding: .8rem .95rem; border-radius: .9rem;
+        background: #fdf6e3; border: 1px solid #f0dfa8; }
+    .st-offline-say p { font-size: .8rem; line-height: 1.6; color: #6b5b23; }
+    .st-offline-say p + p { margin-top: .55rem; }
+    .st-offline-say b { color: #4d3f10; }
+    html.dark .st-offline-say { background: rgb(240 180 41 / .12); border-color: rgb(240 180 41 / .3); }
+    html.dark .st-offline-say p { color: #e7d194; }
+    html.dark .st-offline-say b { color: #f6dc9b; }
 
     .st-group { margin-bottom: 1.4rem; }
     .st-group h3 { font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
@@ -75,10 +85,40 @@
 @section('content')
 <div class="max-w-3xl">
     <div class="st-tabs">
-        <span class="st-tab is-on">Accessibility</span>
+        <button type="button" class="st-tab is-on" data-st-tab="a11y">Accessibility</button>
+        <button type="button" class="st-tab" data-st-tab="offline">Offline Mode</button>
     </div>
 
-    <div class="card card-body">
+    {{-- ---- Offline Mode ---- --}}
+    <div class="card card-body" data-st-pane="offline" hidden>
+        <div class="st-group">
+            <h3>Offline Mode</h3>
+            <p class="st-why">For the field, where the signal isn't. Off by default; kept on this device.</p>
+
+            <button type="button" class="st-switch" id="stOffline" role="switch" aria-checked="false">
+                <span class="st-switch-txt">
+                    <b>Keep working without a signal</b>
+                    <span>When on, anee keeps a copy on this phone of every page you visit, so they still
+                    open when the internet drops — and a yellow bar tells you you're in offline mode.</span>
+                </span>
+                <span class="st-knob" aria-hidden="true"></span>
+            </button>
+
+            <div class="st-offline-say">
+                <p><b>What works offline today.</b> This first tier is <b>read-only</b>: any screen you've
+                already opened — the board, notes, growth stages — opens again from the copy. One action
+                also writes offline: <b>ticking an activity done</b>. The tick is saved on this phone and
+                syncs itself, automatically, the moment the connection returns.</p>
+                <p><b>What's coming.</b> More offline actions ride the same queue next — adding a note,
+                a photo capture, a record — module by module, once each one's sync is proven.</p>
+                <p><b>If something changed while you were away.</b> No merge screens: the last write wins.
+                If the server moved while you were offline, your change still lands and the sync note
+                tells you the farm may have moved — refresh and you'll see everything as it now is.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-body" data-st-pane="a11y">
         <div class="st-group">
             <h3>Text size</h3>
             <p class="st-why">Everything grows together — the board, the notes, the buttons — so nothing is left small next to something big.</p>
@@ -175,6 +215,37 @@
     wire('stContrast', 'sm-contrast', 'sm-a11y-contrast');
     wire('stUnderline', 'sm-underline', 'sm-a11y-underline');
     wire('stMotion', 'sm-still', 'sm-a11y-motion');
+
+    /* ---- the tabs ---- */
+    document.querySelectorAll('[data-st-tab]').forEach((t) => t.addEventListener('click', () => {
+        document.querySelectorAll('[data-st-tab]').forEach((x) => x.classList.toggle('is-on', x === t));
+        document.querySelectorAll('[data-st-pane]').forEach((p) => {
+            p.hidden = p.getAttribute('data-st-pane') !== t.getAttribute('data-st-tab');
+        });
+    }));
+
+    /* ---- Offline Mode (state lives with window.aneeOffline in app.js) ---- */
+    const off = document.getElementById('stOffline');
+    if (off) {
+        const paintOff = () => {
+            const v = !!(window.aneeOffline && window.aneeOffline.on());
+            off.classList.toggle('is-on', v);
+            off.setAttribute('aria-checked', v ? 'true' : 'false');
+        };
+        off.addEventListener('click', () => {
+            if (!window.aneeOffline) { window.toast?.('Offline mode needs the app to finish loading — try again.', 'error'); return; }
+            window.aneeOffline.set(!window.aneeOffline.on());
+            paintOff();
+            window.toast?.(window.aneeOffline.on()
+                ? 'Offline mode is on — pages you visit are kept on this phone.'
+                : 'Offline mode is off. The kept copies were cleared.');
+        });
+        // app.js is a deferred module and may land after this block: paint
+        // now with what we can read directly, then again on its signal.
+        try { off.classList.toggle('is-on', localStorage.getItem('anee-offline-mode') === '1'); } catch (_) {}
+        document.addEventListener('anee:offline-mode', paintOff);
+        paintOff();
+    }
 })();
 </script>
 @endpush

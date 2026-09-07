@@ -469,7 +469,12 @@ class ActivityController extends BaseScheduleController
             ->first();
         if (!$activity) return $this->jsonFail('Activity not found.', 404);
 
-        $next = !((bool) $activity->isDone);
+        // ?to= makes the toggle a SET, which is what an offline replay
+        // needs: replaying a pure toggle twice would invert somebody
+        // else's intervening change, while a set is last-write-wins.
+        $next = $request->filled('to')
+            ? $request->boolean('to')
+            : !((bool) $activity->isDone);
         $activity->update(['isDone' => $next]);
 
         /* WHAT IT USED COMES OFF THE SHELF.

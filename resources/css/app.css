@@ -70,6 +70,23 @@ h1, h2, h3, h4, h5, h6 {
    for all of them. Nothing in this app uses `hidden` to mean anything else. */
 .hidden { display: none !important; }
 
+/* ---- the offline-mode bar ----------------------------------------------
+   A yellow line above the top bar, built by app.js when Offline Mode is on
+   and the connection is gone. The body class pushes every sticky top-0
+   header down under it (unlayered CSS beats the utility, deliberately). */
+#aneeOfflineBar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 230;
+    display: flex; align-items: center; justify-content: center; gap: .5rem;
+    min-height: 2.2rem; padding: .3rem .9rem;
+    background: linear-gradient(90deg, #f5b829, #f0a92e);
+    color: #422f06; font-size: .78rem; font-weight: 600; line-height: 1.35;
+    box-shadow: 0 6px 18px -12px rgb(66 47 6 / .6);
+}
+#aneeOfflineBar svg { width: 1rem; height: 1rem; flex: none; }
+#aneeOfflineBar b { font-weight: 800; }
+body.has-offline-bar { padding-top: 2.2rem; }
+body.has-offline-bar header.sticky { top: 2.2rem; }
+
 /* …and `hidden md:flex` still has to mean "shown from md up".
    The !important above beat Tailwind's responsive display utilities too, and
    that is not a subtlety: the app's desktop navigation IS `hidden md:flex`,
@@ -902,6 +919,8 @@ html.theme-animating * {
 }
 #themeToggle.is-on .theme-switch { @apply bg-brand-600; }
 #themeToggle.is-on .theme-switch-knob { transform: translateX(1rem); }
+#offlineModeToggle.is-on .theme-switch { @apply bg-brand-600; }
+#offlineModeToggle.is-on .theme-switch-knob { transform: translateX(1rem); }
 
 /* ------------------------------------------------------------------ */
 /* Quill (WYSIWYG) — night mode                                        */

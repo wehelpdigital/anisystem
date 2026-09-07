@@ -1932,3 +1932,174 @@ document.addEventListener('pointerdown', (e) => {
         }
     }).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['class'], attributeOldValue: true });
 })();
+
+/* ======================================================================
+ * Offline Mode, first tier.
+ *
+ * Off by default; a per-device choice, like the accessibility settings.
+ * When on: the service worker keeps a copy of every page and file this
+ * browser fetches, so screens already visited still open with no signal
+ * (read-only), and the one write that works offline so far — ticking an
+ * activity done — queues in an outbox here and replays itself the moment
+ * the connection returns. Conflicts are last-write-wins: the offline tick
+ * lands as a SET (?to=), and the toast says the server may have moved.
+ * More offline actions ride the same outbox as they are added.
+ *
+ * The yellow bar above the top bar is the whole indicator: offline and
+ * working, with the count of changes waiting to sync.
+ * ==================================================================== */
+(() => {
+    const KEY = 'anee-offline-mode';
+    const on = () => { try { return localStorage.getItem(KEY) === '1'; } catch (_) { return false; } };
+    const tellSw = (v) => {
+        try {
+            navigator.serviceWorker?.ready?.then((reg) => reg.active?.postMessage({ type: 'anee-offline', on: !!v }));
+        } catch (_) { /* no SW here */ }
+    };
+
+    /* ---- the outbox ---- */
+    const dbp = () => new Promise((res, rej) => {
+        const r = indexedDB.open('anee-offline', 1);
+        r.onupgradeneeded = () => r.result.createObjectStore('outbox', { keyPath: 'id', autoIncrement: true });
+        r.onsuccess = () => res(r.result);
+        r.onerror = () => rej(r.error);
+    });
+    async function outboxAll() {
+        try {
+            const db = await dbp();
+            return await new Promise((res, rej) => {
+                const rq = db.transaction('outbox').objectStore('outbox').getAll();
+                rq.onsuccess = () => res(rq.result || []);
+                rq.onerror = () => rej(rq.error);
+            });
+        } catch (_) { return []; }
+    }
+    async function outboxDrop(id) {
+        const db = await dbp();
+        return new Promise((res) => {
+            const tx = db.transaction('outbox', 'readwrite');
+            tx.objectStore('outbox').delete(id);
+            tx.oncomplete = res;
+            tx.onerror = res;
+        });
+    }
+    async function enqueue(action) {
+        const db = await dbp();
+        await new Promise((res, rej) => {
+            const tx = db.transaction('outbox', 'readwrite');
+            tx.objectStore('outbox').add(Object.assign({ ts: Date.now() }, action));
+            tx.oncomplete = res;
+            tx.onerror = () => rej(tx.error);
+        });
+        paintBar();
+    }
+
+    /* ---- the drain: in order, stopping if the line drops again ---- */
+    let draining = false;
+    let retryTimer = null;
+    async function drain() {
+        if (draining || !navigator.onLine || !on()) return;
+        draining = true;
+        let leftover = 0;
+        try {
+            const rows = await outboxAll();
+            if (!rows.length) return;
+            let ok = 0;
+            let done = 0;
+            for (const row of rows.sort((a, b) => a.id - b.id)) {
+                try {
+                    const r = await fetch(row.url, {
+                        method: row.method || 'POST',
+                        credentials: 'same-origin',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '',
+                            Accept: 'application/json',
+                        },
+                    });
+                    if (r.status >= 500) throw new Error('server busy');
+                    // 2xx landed; 4xx means the thing is gone or refused —
+                    // dropping it beats replaying it forever.
+                    await outboxDrop(row.id);
+                    done++;
+                    if (r.ok) ok++;
+                } catch (_) { break; }
+            }
+            leftover = rows.length - done;
+            if (ok) {
+                window.toast?.(ok + ' offline change' + (ok > 1 ? 's' : '') + ' synced. If the farm moved while you were away, your change won — refresh to see everything.', 'success', 5000);
+                document.dispatchEvent(new CustomEvent('anee:offline-synced', { detail: { count: ok } }));
+            }
+        } finally {
+            draining = false;
+            paintBar();
+            // The first try after "online" can land on a stack still waking
+            // up — anything left behind gets another go shortly, and again
+            // after that, until the box is empty.
+            if (leftover > 0 && navigator.onLine) {
+                clearTimeout(retryTimer);
+                retryTimer = setTimeout(drain, 4000);
+            }
+        }
+    }
+
+    /* ---- the yellow bar above the top bar ---- */
+    async function paintBar() {
+        let bar = document.getElementById('aneeOfflineBar');
+        const want = on() && !navigator.onLine;
+        if (!want) {
+            bar?.remove();
+            document.body.classList.remove('has-offline-bar');
+            return;
+        }
+        const pending = (await outboxAll()).length;
+        if (!bar) {
+            bar = document.createElement('div');
+            bar.id = 'aneeOfflineBar';
+            bar.setAttribute('role', 'status');
+            document.body.prepend(bar);
+        }
+        document.body.classList.add('has-offline-bar');
+        bar.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M18.36 6.64L5.64 19.36M8.53 8.53A6 6 0 0118 12m-2.47 3.47A6 6 0 016 12M12 20h.01M2 8.82A15 15 0 0112 5c1.61 0 3.16.25 4.61.72M22 8.82a14.98 14.98 0 00-3.3-2.18"/></svg>'
+            + '<span>Offline mode — anee keeps working. '
+            + (pending ? '<b>' + pending + ' change' + (pending > 1 ? 's' : '') + ' waiting to sync.</b>' : 'Changes will sync when you\'re back.')
+            + '</span>';
+    }
+
+    window.addEventListener('online', () => { paintBar(); drain(); });
+    window.addEventListener('offline', paintBar);
+    paintBar();
+    tellSw(on());
+    drain();
+
+    window.aneeOffline = {
+        on,
+        set(v) {
+            try { localStorage.setItem(KEY, v ? '1' : '0'); } catch (_) { /* private mode */ }
+            tellSw(v);
+            paintBar();
+            if (v) drain();
+            document.dispatchEvent(new CustomEvent('anee:offline-mode', { detail: { on: !!v } }));
+        },
+        enqueue,
+        drain,
+        pending: () => outboxAll().then((r) => r.length),
+    };
+
+    /* The account-menu switch, wherever the app layout rendered one. */
+    const menuBtn = document.getElementById('offlineModeToggle');
+    if (menuBtn) {
+        const paint = () => {
+            const v = on();
+            menuBtn.setAttribute('aria-checked', v ? 'true' : 'false');
+            menuBtn.classList.toggle('is-on', v);
+        };
+        menuBtn.addEventListener('click', () => {
+            window.aneeOffline.set(!on());
+            paint();
+            window.toast?.(on()
+                ? 'Offline mode is on — pages you visit are kept for the field.'
+                : 'Offline mode is off.');
+        });
+        paint();
+    }
+})();

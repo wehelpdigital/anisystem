@@ -27,13 +27,75 @@ self.addEventListener('activate', (event) => {
     );
 });
 
-/* Network first, always. Only a navigation that cannot reach the server
-   falls back, and it falls back to a page that says so rather than to a
-   yesterday's copy of the board. */
+/* ---- Offline Mode (opt-in, per device) --------------------------------
+   The page flips it with a message; the flag survives SW restarts as a
+   marker entry in its own cache. Off (the default) keeps the original
+   contract: network first, nothing cached but the offline notice. On, the
+   worker keeps a copy of every successful same-origin GET this browser
+   makes, and serves the copy only when the network fails — so nothing is
+   ever stale while online, and everything already visited still opens in
+   the field. */
+const RUNTIME = 'anee-offline-runtime-v1';
+const FLAGS = 'anee-flags';
+const FLAG_URL = '/__offline-mode-on';
+
+self.addEventListener('message', (event) => {
+    const d = event.data || {};
+    if (d.type !== 'anee-offline') return;
+    event.waitUntil(caches.open(FLAGS).then((c) => (d.on
+        ? c.put(FLAG_URL, new Response('1'))
+        // Turning it off also empties the copies — the person asked the
+        // device to stop keeping the farm on disk.
+        : Promise.all([c.delete(FLAG_URL), caches.delete(RUNTIME)]))));
+});
+
+const offlineOn = () => caches.open(FLAGS)
+    .then((c) => c.match(FLAG_URL))
+    .then((r) => !!r)
+    .catch(() => false);
+
+/* Network first, always — being online never shows yesterday's board.
+   A navigation that cannot reach the server falls back to the kept copy
+   (Offline Mode) or to the page that says so. */
 self.addEventListener('fetch', (event) => {
     const req = event.request;
-    if (req.method !== 'GET' || req.mode !== 'navigate') return;
-    event.respondWith(fetch(req).catch(() => caches.match(OFFLINE_URL)));
+    if (req.method !== 'GET') return;
+    const sameOrigin = new URL(req.url).origin === self.location.origin;
+
+    if (req.mode === 'navigate') {
+        event.respondWith((async () => {
+            const keep = await offlineOn();
+            try {
+                const res = await fetch(req);
+                if (keep && res.ok) {
+                    const c = await caches.open(RUNTIME);
+                    c.put(req, res.clone());
+                }
+                return res;
+            } catch (_) {
+                if (keep) {
+                    const hit = await caches.match(req, { cacheName: RUNTIME });
+                    if (hit) return hit;
+                }
+                return caches.match(OFFLINE_URL);
+            }
+        })());
+        return;
+    }
+
+    if (!sameOrigin) return;
+    event.respondWith((async () => {
+        const keep = await offlineOn();
+        if (!keep) return fetch(req);
+        const cache = await caches.open(RUNTIME);
+        try {
+            const res = await fetch(req);
+            if (res.ok) cache.put(req, res.clone());
+            return res;
+        } catch (_) {
+            return (await cache.match(req)) || Response.error();
+        }
+    })());
 });
 
 /* A notification raised from the page (see app.js) or pushed by a server

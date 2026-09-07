@@ -372,6 +372,19 @@
                                     <span class="badge badge-green">{{ $openTickets }}</span>
                                 @endif
                             </a>
+                            {{-- The field has no signal; the phone still has
+                                 the farm. Off by default — see Settings for
+                                 the long explanation this row is too small
+                                 to hold. --}}
+                            <button type="button" id="offlineModeToggle"
+                                class="w-full flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                                role="switch" aria-checked="false" title="Keep pages on this phone for when the signal drops">
+                                <span class="flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 8.82A15 15 0 0112 5a15 15 0 0110 3.82M5.5 12.05A10 10 0 0112 9.5c2.44 0 4.68.87 6.42 2.32M8.8 15.3A5.5 5.5 0 0112 14c1.18 0 2.28.37 3.18 1M12 19h.01"/></svg>
+                                    <span>Offline mode</span>
+                                </span>
+                                <span class="theme-switch" aria-hidden="true"><span class="theme-switch-knob"></span></span>
+                            </button>
                             <button type="button" id="themeToggle"
                                 class="w-full flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
                                 role="switch" aria-checked="false">

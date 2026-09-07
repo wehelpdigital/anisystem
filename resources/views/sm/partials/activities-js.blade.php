@@ -6397,6 +6397,19 @@ document.addEventListener('DOMContentLoaded', () => {
                line, and a request per tick for nothing is a request for
                nothing. */
         } catch (err) {
+            /* Offline Mode's first synced action: with the mode on and the
+               line down, the tick keeps its optimistic state and queues as a
+               SET (?to=) in the outbox — replayed in order on reconnect,
+               last write wins. */
+            if (window.aneeOffline?.on() && !navigator.onLine) {
+                window.aneeOffline.enqueue({
+                    url: U.toggleDone(id) + '&to=' + (wantDone ? 1 : 0),
+                    method: 'POST',
+                    says: 'Tick: ' + (wantDone ? 'done' : 'not done'),
+                });
+                toast('Offline — the tick is saved on this phone and will sync when you\'re back.');
+                return;
+            }
             toast(err.message, 'error');
             const cardNow = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
             if (cardNow) animateDoneSwap(cardNow, !wantDone);
