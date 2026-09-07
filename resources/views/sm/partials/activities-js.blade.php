@@ -1394,6 +1394,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return '<div class="adv-list">' + rows.map(advRow).join('') + '</div>';
     }
 
+    /* A section wears its own card — head inside it, rows on its ground. */
+    function advCard(title, inner, extraCls) {
+        return `<div class="adv-card${extraCls ? ' ' + extraCls : ''}"><p class="adv-head">${esc(title)}</p>${inner}</div>`;
+    }
+
     /* The answer, in words, before the table says it again in numbers. The
      * person opening this sheet has one question and it is nearly always this
      * one; making them read a table to find it was the whole complaint. */
@@ -1422,29 +1427,41 @@ document.addEventListener('DOMContentLoaded', () => {
              * last granular answers a different question, so it waits behind
              * a button instead of crowding the one they asked. */
             const rows = d.rows || [];
+            /* Only ground with a history. A list padded with "never on this
+             * ground" rows answered questions nobody asked — the lede keeps
+             * its honest "Never — this is the first" for the kind the task
+             * itself is, and everything listed under it actually happened. */
+            const happened = (r) => r.daysBefore !== null && r.daysBefore !== undefined;
             const own = rows.filter((r) => r.own);
-            const kin = rows.filter((r) => !r.own && r.related);
-            const rest = rows.filter((r) => !r.own && !r.related);
+            const kin = rows.filter((r) => !r.own && r.related && happened(r));
+            const rest = rows.filter((r) => !r.own && !r.related && happened(r));
 
             let html = '';
             if (own.length) html += advLede(own[0]);
-            if (own.length > 1) html += '<p class="adv-head">Also this kind of work</p>' + advList(own.slice(1));
+            const ownMore = own.slice(1).filter(happened);
+            if (ownMore.length) html += advCard('Also this kind of work', advList(ownMore));
             if (kin.length) {
-                html += `<p class="adv-head">${d.narrowed ? 'Worth knowing before you mix' : 'On this ground'}</p>`
-                    + advList(kin);
+                html += advCard(d.narrowed ? 'Worth knowing before you mix' : 'On this ground', advList(kin));
             }
             if (rest.length) {
                 // The count rides the button as a badge and the chevron says
                 // which way this goes, so the label can stay the same words in
                 // both states instead of rewriting itself.
-                html += `<button type="button" class="adv-more" id="advMore" aria-expanded="false" aria-controls="advRest">`
+                html += `<div class="adv-card">`
+                    + `<button type="button" class="adv-more" id="advMore" aria-expanded="false" aria-controls="advRest">`
                     + `<span>From other kinds of work</span>`
                     + `<span class="adv-more-n">${rest.length}</span>`
                     + `<svg class="adv-more-chev" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>`
                     + `</button>`
-                    + `<div class="adv-rest" id="advRest" aria-hidden="true"><div class="adv-rest-in">${advList(rest)}</div></div>`;
+                    + `<div class="adv-rest" id="advRest" aria-hidden="true"><div class="adv-rest-in">${advList(rest)}</div></div>`
+                    + `</div>`;
             }
-            html += '<p class="adv-foot">Counted from this task’s own date, against the lots it covers. Drafts are not counted — a draft has not happened.</p>';
+            // All quiet is an answer too — say it, rather than showing a
+            // sheet of nothing but the footnote.
+            if (!html) {
+                html = '<div class="adv-card"><p class="adv-empty">Nothing has happened on this ground before this task — no earlier work connects to it.</p></div>';
+            }
+            html += '<p class="adv-foot">Counted from this task’s own date, against the lots it covers. Only work that has actually happened on this ground is listed; drafts are not counted — a draft has not happened.</p>';
             $id('advInfoBody').innerHTML = html;
 
             const more = $id('advMore');

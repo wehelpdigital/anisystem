@@ -737,6 +737,7 @@
         .adv-none { font-size: .72rem; color: var(--color-gray-400); font-style: italic; }
         .adv-row.is-none { background: var(--color-gray-50); }
         .adv-foot { margin-top: .7rem; font-size: .72rem; line-height: 1.5; color: var(--color-gray-400); }
+        .adv-empty { font-size: .8rem; line-height: 1.5; color: var(--color-gray-500); text-align: center; padding: .3rem .2rem; }
 
         /* The answer they came for, said in words before the table repeats it. */
         .adv-lede { border-radius: .9rem; padding: .8rem .9rem; margin-bottom: .8rem;
@@ -749,13 +750,17 @@
         .adv-lede.is-none .adv-lede-k { color: var(--color-gray-400); }
         .adv-lede.is-none .adv-lede-a { color: var(--color-gray-600); }
 
+        /* Each section is its own card: the head inside it, the white rows
+           on the card's quieter ground, so the sheet reads as a small stack
+           of answers rather than one undifferentiated list. */
+        .adv-card { border: 1px solid var(--color-gray-200); border-radius: .9rem;
+            background: var(--color-gray-50); padding: .7rem .75rem; margin-top: .8rem; }
         .adv-head { font-size: .68rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
-            color: var(--color-gray-400); margin: .9rem 0 .35rem; }
-        .adv-head:first-child { margin-top: 0; }
+            color: var(--color-gray-400); margin: 0 0 .5rem; }
         .adv-more { display: flex; align-items: center; justify-content: center; gap: .45rem;
-            width: 100%; margin-top: .8rem; font-size: .75rem; font-weight: 700;
-            color: var(--color-gray-500); padding: .5rem .7rem; border-radius: .7rem;
-            border: 1px dashed var(--color-gray-300); background: transparent; cursor: pointer;
+            width: 100%; font-size: .75rem; font-weight: 700;
+            color: var(--color-gray-500); padding: .45rem .5rem; border-radius: .7rem;
+            border: 0; background: transparent; cursor: pointer;
             transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
         .adv-more:hover { background: var(--color-gray-50); color: var(--color-gray-700); }
         /* How many wait behind the button — the reason to press it. */
