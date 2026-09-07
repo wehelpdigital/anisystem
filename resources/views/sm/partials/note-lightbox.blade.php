@@ -262,12 +262,13 @@
      * that prefix is the only thing stopping one account reading another's
      * attachments back — and then handed to whichever AI composer this page
      * has. window.smAskAiAbout is provided by the AI tab or the float; where
-     * neither is present the button does not appear at all. */
+     * neither is on the page (the notes hub, the Global Gallery) the photo
+     * rides to her own page instead, arriving as an attached chip there. */
     document.getElementById('noteLbAsk')?.addEventListener('click', async (e) => {
         e.preventDefault();
         e.stopPropagation();
         const url = e.currentTarget.dataset.url;
-        if (!url || !window.smAskAiAbout) return;
+        if (!url) return;
         const waiting = window.smBusy?.('Attaching the photo…');
         try {
             const res = await fetch(@json(route('ai.photo.existing')), {
@@ -284,7 +285,13 @@
             if (!json.success) throw new Error(json.message || 'Could not attach that photo.');
             waiting?.close();
             close();
-            window.smAskAiAbout({ path: json.data.path, url: json.data.url });
+            if (window.smAskAiAbout) {
+                window.smAskAiAbout({ path: json.data.path, url: json.data.url });
+            } else {
+                window.location.href = @json(route('ai.index'))
+                    + '?photo=' + encodeURIComponent(json.data.path)
+                    + '&purl=' + encodeURIComponent(json.data.url);
+            }
         } catch (err) {
             waiting?.close();
             window.toast?.(err.message, 'error');
@@ -339,7 +346,9 @@
         const ask = document.getElementById('noteLbAsk');
         if (ask) {
             // The technician reads stills, so a clip has no button to press.
-            ask.classList.toggle('is-gone', type === 'video' || !window.smAskAiAbout);
+            // No composer on this page (the notes hub, say) is not "no way to
+            // ask" any more — the click below hands the photo to her page.
+            ask.classList.toggle('is-gone', type === 'video');
             ask.dataset.url = url || '';
         }
         lb.classList.add('is-open'); lb.setAttribute('aria-hidden', 'false');

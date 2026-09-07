@@ -21,11 +21,21 @@
         opacity:0; transition:opacity .28s cubic-bezier(.22,1,.36,1); }
     .plaza-lightbox.is-open { opacity:1; }
     .plaza-lightbox.hidden { display:none; }
-    .plaza-lightbox img { max-width:min(92vw, 60rem); max-height:86vh; border-radius:.75rem;
+    /* The photograph itself is the box's own child — the bar can hold small
+       images of its own (her face on the ask button) that must not inherit
+       a photograph's sizing. */
+    .plaza-lightbox > img { max-width:min(92vw, 60rem); max-height:86vh; border-radius:.75rem;
         box-shadow:0 24px 64px rgb(0 0 0 / .5); transform:scale(.94);
         transition:transform .28s cubic-bezier(.22,1,.36,1); cursor:default;
         touch-action:none; user-select:none; -webkit-user-drag:none; }
-    .plaza-lightbox.is-open img { transform:none; }
+    .plaza-lightbox.is-open > img { transform:none; }
+    /* Her portrait as a button, ringed so it reads as one. Only pages that
+       declare window.plazaAskAnee grow it. */
+    .plaza-lightbox-ask { width:2.5rem; height:2.5rem; border-radius:9999px; padding:0; border:none;
+        cursor:pointer; background:transparent; box-shadow:0 0 0 2px rgb(255 255 255 / .35);
+        transition:box-shadow .2s ease, transform .2s ease; }
+    .plaza-lightbox-ask img { width:100%; height:100%; border-radius:9999px; object-fit:cover; display:block; }
+    .plaza-lightbox-ask:hover { box-shadow:0 0 0 2px #4a7c2a; transform:translateY(-1px); }
     /* The two controls, on one row, out of the picture's way. */
     .plaza-lightbox-bar { position:absolute; top:1rem; right:1rem; z-index:2;
         display:flex; align-items:center; gap:.5rem; }
@@ -42,7 +52,7 @@
         padding:.6rem .8rem 1.1rem; text-align:center; pointer-events:none;
         font-size:.72rem; font-weight:700; color:rgb(255 255 255 / .55); }
     @media (prefers-reduced-motion: reduce) {
-        .plaza-lightbox, .plaza-lightbox img { transition:none !important; }
+        .plaza-lightbox, .plaza-lightbox > img, .plaza-lightbox-ask { transition:none !important; }
     }
 </style>
 <script>
@@ -57,7 +67,13 @@
         box.className = 'plaza-lightbox hidden';
         box.setAttribute('role', 'dialog');
         box.setAttribute('aria-modal', 'true');
+        // A page that declares window.plazaAskAnee grows her portrait as a
+        // button: the photo rides to her page (or the page's own composer)
+        // as an attached chip.
+        const ASK = window.plazaAskAnee || null;
         box.innerHTML = '<div class="plaza-lightbox-bar">'
+            + (ASK ? '<button type="button" class="plaza-lightbox-ask" title="Ask ' + ASK.name
+                + ' about this" aria-label="Ask ' + ASK.name + '"><img src="' + ASK.face + '" alt=""></button>' : '')
             + '<a class="plaza-lightbox-get" download href="#" target="_blank" rel="noopener">'
             + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">'
             + '<path stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14"/></svg>Save</a>'
@@ -68,9 +84,41 @@
         box.addEventListener('click', (e) => {
             if (e.target === box || e.target.closest('.plaza-lightbox-x')) close();
         });
+        box.querySelector('.plaza-lightbox-ask')?.addEventListener('click', async () => {
+            const url = box.querySelector(':scope > img').src;
+            if (!url) return;
+            const waiting = window.smBusy?.('Attaching the photo…');
+            try {
+                const res = await fetch(ASK.copy, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '',
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                    },
+                    body: JSON.stringify({ url }),
+                    credentials: 'same-origin',
+                });
+                const json = await res.json().catch(() => ({}));
+                if (!json.success) throw new Error(json.message || 'Could not attach that photo.');
+                waiting?.close();
+                if (window.smAskAiAbout) {
+                    close();
+                    window.smAskAiAbout({ path: json.data.path, url: json.data.url });
+                } else {
+                    window.location.href = ASK.to
+                        + '?photo=' + encodeURIComponent(json.data.path)
+                        + '&purl=' + encodeURIComponent(json.data.url);
+                }
+            } catch (err) {
+                waiting?.close();
+                window.toast?.(err.message, 'error');
+            }
+        });
         // Zoom lives on the image: pinch or wheel to any level, double-tap
-        // to jump in and out, one finger pans while zoomed.
-        const img = box.querySelector('img');
+        // to jump in and out, one finger pans while zoomed. :scope > img is
+        // the photograph — a plain 'img' would find her face in the bar.
+        const img = box.querySelector(':scope > img');
         let scale = 1, tx = 0, ty = 0, start = null;
         const ptrs = new Map();
         function apply(animated) {
@@ -122,7 +170,7 @@
     function open(src, alt) {
         const el = ensure();
         if (el.__reset) el.__reset();
-        const img = el.querySelector('img');
+        const img = el.querySelector(':scope > img');
         img.src = src;
         img.alt = alt || '';
         const get = el.querySelector('.plaza-lightbox-get');

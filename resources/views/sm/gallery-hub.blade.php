@@ -255,6 +255,17 @@
 @endsection
 
 @push('scripts')
+{{-- The lightbox grows her portrait as an ask button: this page has no AI
+     composer, so the photo rides to her own page as an attached chip. --}}
+@php($aneeGal = \App\Models\AiSetting::current())
+<script>
+    window.plazaAskAnee = {
+        name: @json($aneeGal->assistantName),
+        face: @json($aneeGal->faceUrl()),
+        copy: @json(route('ai.photo.existing')),
+        to: @json(route('ai.index')),
+    };
+</script>
 @include('community.partials.lightbox-js')
 <script>
 (function galleryHub() {

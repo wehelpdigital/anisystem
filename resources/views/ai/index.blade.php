@@ -1113,6 +1113,25 @@ const __init = () => {
         if (bootAnalysis) attachAnalysis(bootAnalysis);
     }
 
+    /* ---- A photo sent from elsewhere (?photo=path&purl=url) — the notes
+            hub's or Global Gallery's lightbox, whose pages have no composer
+            of their own. Already copied into this user's AI folder by
+            ai.photo.existing, so the chip lands done. ---- */
+    {
+        const p = new URLSearchParams(location.search);
+        const bootPhotoPath = p.get('photo');
+        const bootPhotoUrl = p.get('purl');
+        if (bootPhotoPath && bootPhotoUrl) {
+            // After the whole script has initialised: attaching re-prices the
+            // question, and the pricing reads bindings declared further down
+            // this file — synchronously they are still in their dead zone.
+            setTimeout(() => {
+                attachFromGallery({ path: bootPhotoPath, url: bootPhotoUrl }, null);
+                toast('Photo attached — what would you like to ask about it?');
+            }, 0);
+        }
+    }
+
     /* ---- A frozen farm report as an attachment (?freport=ID). ---- */
     let attachedReport = null;
     function drawRptChip() {
