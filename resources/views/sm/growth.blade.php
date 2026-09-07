@@ -31,52 +31,45 @@
 
     /* ---- the season, said in colour --------------------------------------
        Soil brown at the start, the greens through establishment and
-       tillering, water blue where the crop's demand for it peaks, the golds
+       tillering, water teal where the crop's demand for it peaks, the golds
        through flowering and filling, and a deep harvest amber at the end.
-       Held under a fifth of an alpha: the words on top are what anybody came
-       to read. The same eight the growth tool in Activities wears, so a lot
-       is the same colour in both places. */
-    /* The tint used to wash the WHOLE card, and everything written on it —
-       do-lists, warnings, the steps — sat on a coloured ground that turned
-       muddy olive in the dark. The stage colour now lives in two honest
-       places: the header band, and an accent bar down the card's left edge.
-       The body is plain surface, which is what words want under them. */
-    .gr-c0 { --gr-accent: #8a5a2b; }
-    .gr-c1 { --gr-accent: #8fc267; }
-    .gr-c2 { --gr-accent: #6b9f3d; }
-    .gr-c3 { --gr-accent: #2f5219; }
-    .gr-c4 { --gr-accent: #0d9488; }
-    .gr-c5 { --gr-accent: #f0b429; }
-    .gr-c6 { --gr-accent: #d98214; }
-    .gr-c7 { --gr-accent: #b45309; }
-    .gr-c0 .gr-top { background-image: linear-gradient(135deg, rgb(138 90 43 / .18), rgb(180 130 80 / .10) 45%, rgb(110 70 32 / .18)); }
-    .gr-c1 .gr-top { background-image: linear-gradient(135deg, rgb(143 194 103 / .22), rgb(190 220 150 / .12) 45%, rgb(107 159 61 / .20)); }
-    .gr-c2 .gr-top { background-image: linear-gradient(135deg, rgb(107 159 61 / .22), rgb(143 194 103 / .14) 45%, rgb(74 124 42 / .20)); }
-    .gr-c3 .gr-top { background-image: linear-gradient(135deg, rgb(47 82 25 / .22), rgb(74 124 42 / .14) 45%, rgb(31 61 16 / .20)); }
-    .gr-c4 .gr-top { background-image: linear-gradient(135deg, rgb(13 148 136 / .20), rgb(56 189 248 / .14) 45%, rgb(30 64 175 / .20)); }
-    .gr-c5 .gr-top { background-image: linear-gradient(135deg, rgb(251 191 36 / .24), rgb(253 224 71 / .14) 45%, rgb(240 180 41 / .22)); }
-    .gr-c6 .gr-top { background-image: linear-gradient(135deg, rgb(249 168 37 / .24), rgb(251 191 36 / .14) 45%, rgb(217 130 20 / .22)); }
-    .gr-c7 .gr-top { background-image: linear-gradient(135deg, rgb(180 83 9 / .24), rgb(217 178 60 / .14) 45%, rgb(120 53 15 / .22)); }
-    html.dark .gr-c0 .gr-top { background-image: linear-gradient(135deg, rgb(138 90 43 / .34), rgb(180 130 80 / .20) 45%, rgb(110 70 32 / .34)); }
-    html.dark .gr-c1 .gr-top { background-image: linear-gradient(135deg, rgb(143 194 103 / .30), rgb(190 220 150 / .18) 45%, rgb(107 159 61 / .30)); }
-    html.dark .gr-c2 .gr-top { background-image: linear-gradient(135deg, rgb(107 159 61 / .34), rgb(143 194 103 / .20) 45%, rgb(74 124 42 / .32)); }
-    html.dark .gr-c3 .gr-top { background-image: linear-gradient(135deg, rgb(74 124 42 / .36), rgb(107 159 61 / .20) 45%, rgb(47 82 25 / .34)); }
-    html.dark .gr-c4 .gr-top { background-image: linear-gradient(135deg, rgb(13 148 136 / .34), rgb(56 189 248 / .20) 45%, rgb(30 64 175 / .32)); }
-    html.dark .gr-c5 .gr-top { background-image: linear-gradient(135deg, rgb(251 191 36 / .30), rgb(253 224 71 / .18) 45%, rgb(240 180 41 / .28)); }
-    html.dark .gr-c6 .gr-top { background-image: linear-gradient(135deg, rgb(249 168 37 / .30), rgb(251 191 36 / .18) 45%, rgb(217 130 20 / .28)); }
-    html.dark .gr-c7 .gr-top { background-image: linear-gradient(135deg, rgb(217 119 6 / .32), rgb(217 178 60 / .18) 45%, rgb(146 64 14 / .30)); }
+       The same eight bands the growth tool in Activities wears, so a lot is
+       the same colour in both places. */
+    /* The colour used to wash the header as a gradient band, and the words
+       fought it in both modes. The card is now the same plain surface every
+       other module's card is, and the stage colour lives in one honest
+       place: a chip under the lot's name — the way a note wears its "Team
+       map" badge — plus the progress bar, which is the same fact drawn. */
+    .gr-c0 { --gr-accent: #8a5a2b; --gr-chip-bg: #f3e8dc; --gr-chip-fg: #6d4520; }
+    .gr-c1 { --gr-accent: #7dab55; --gr-chip-bg: #e9f4dd; --gr-chip-fg: #3d6823; }
+    .gr-c2 { --gr-accent: #6b9f3d; --gr-chip-bg: #e4f0d5; --gr-chip-fg: #33591b; }
+    .gr-c3 { --gr-accent: #46702a; --gr-chip-bg: #dcead0; --gr-chip-fg: #274513; }
+    .gr-c4 { --gr-accent: #0d9488; --gr-chip-bg: #dcf2f0; --gr-chip-fg: #0f5f58; }
+    .gr-c5 { --gr-accent: #d9a616; --gr-chip-bg: #fdf3d7; --gr-chip-fg: #8a6116; }
+    .gr-c6 { --gr-accent: #d98214; --gr-chip-bg: #fcecd4; --gr-chip-fg: #8a5310; }
+    .gr-c7 { --gr-accent: #b45309; --gr-chip-bg: #f8e5d2; --gr-chip-fg: #7c3c08; }
+    html.dark .gr-c0 { --gr-chip-bg: rgb(138 90 43 / .3); --gr-chip-fg: #e0b285; }
+    html.dark .gr-c1 { --gr-chip-bg: rgb(143 194 103 / .24); --gr-chip-fg: #c4e39f; }
+    html.dark .gr-c2 { --gr-chip-bg: rgb(107 159 61 / .26); --gr-chip-fg: #b5d98c; }
+    html.dark .gr-c3 { --gr-chip-bg: rgb(74 124 42 / .3); --gr-chip-fg: #a8cc7e; }
+    html.dark .gr-c4 { --gr-chip-bg: rgb(13 148 136 / .26); --gr-chip-fg: #7fd4cb; }
+    html.dark .gr-c5 { --gr-chip-bg: rgb(240 180 41 / .22); --gr-chip-fg: #f2d489; }
+    html.dark .gr-c6 { --gr-chip-bg: rgb(217 130 20 / .24); --gr-chip-fg: #edbf80; }
+    html.dark .gr-c7 { --gr-chip-bg: rgb(180 83 9 / .26); --gr-chip-fg: #e8ac74; }
+    .gr-stage-chip { display: inline-flex; align-items: center; max-width: 100%;
+        margin-top: .3rem; padding: .16rem .55rem; border-radius: 999px;
+        font-size: .68rem; font-weight: 800; letter-spacing: .01em;
+        background: var(--gr-chip-bg, var(--color-gray-100));
+        color: var(--gr-chip-fg, var(--color-gray-600)); }
     .gr-card { border: 1px solid var(--color-gray-200); border-radius: 1rem; overflow: hidden;
-        background-color: var(--color-white); margin-bottom: .9rem;
-        border-left: 4px solid var(--gr-accent, var(--color-gray-300)); }
+        background-color: var(--color-white); margin-bottom: .9rem; }
     .gr-top { display: flex; align-items: center; gap: .7rem; padding: .8rem .9rem;
-        cursor: pointer; user-select: none;
-        background-size: 240% 240%; animation: gradSweep 16s ease-in-out infinite alternate; }
-    .gr-top:hover { filter: brightness(1.03); }
-    html.dark .gr-top:hover { filter: brightness(1.12); }
-    @media (prefers-reduced-motion: reduce) { .gr-top { animation: none; } }
+        cursor: pointer; user-select: none; }
+    .gr-top:hover { background: var(--color-gray-50); }
+    html.dark .gr-top:hover { background: rgb(255 255 255 / .05); }
     /* Accordion, the same one the activities board uses: a lot folds down to
-       its header, the chevron flags state, and the body is a 1fr→0fr grid
-       row so height animates without knowing the content size. */
+       its header, the chevron flags state, and max-height carries the fold —
+       the shared concertina in app.js supplies the slide. */
     .gr-chev { width: 1rem; height: 1rem; flex-shrink: 0; color: #6b9f3d; transition: transform .18s ease; }
     .gr-card:not(.is-folded) .gr-chev { transform: rotate(90deg); }
     .gr-fold { overflow: hidden; transition: max-height .28s cubic-bezier(.22,1,.36,1); }
@@ -87,11 +80,10 @@
         transition: opacity .22s ease; }
     .gr-card.is-folded .gr-fold-inner { opacity: 0; }
     .gr-card.is-folded .gr-fold { max-height: 0; }
-    /* Folded, the header answers for the body: the stage takes the counter
-       explainer's line, so a folded page reads lot | stage | day. */
-    .gr-fold-stage { display: none; font-size: .72rem; font-weight: 700; color: var(--color-gray-500); margin-top: .1rem; }
+    /* Folded, the header answers for the body: the chip already names the
+       stage, so a folded page reads lot | chip | day and only the counter
+       explainer steps aside. */
     .gr-card.is-folded .gr-mode { display: none; }
-    .gr-card.is-folded .gr-fold-stage { display: block; }
     /* Restoring the remembered folds on load applies instantly. */
     #grCards.no-fold-anim .gr-fold, #grCards.no-fold-anim .gr-chev,
     #grCards.no-fold-anim .gr-fold-inner { transition: none; }
@@ -131,7 +123,7 @@
     html.dark .gr-needs { background: rgb(61 104 35 / .25); color: #bfe19a; }
     .gr-bar { height: .4rem; border-radius: 999px; background: var(--color-gray-200); overflow: hidden; margin-top: .6rem; }
     .gr-bar span { display: block; height: 100%; border-radius: 999px;
-        background: linear-gradient(90deg, #6b9f3d, #4a7c2a); }
+        background: var(--gr-accent, #4a7c2a); }
     .gr-next { font-size: .72rem; color: var(--color-gray-500); margin-top: .3rem; }
 
     .gr-lists { display: grid; gap: .5rem; margin-top: .8rem; }
@@ -168,8 +160,6 @@
     html.dark .gr-note-ico { color: #fcd34d; }
 
     html.dark .gr-card { background-color: #151b12; border-color: #2b3a1c; }
-    html.dark .gr-top { background: rgb(0 0 0 / .18); }
-    html.dark .gr-top:hover { background: rgb(0 0 0 / .26); }
     html.dark .gr-lot, html.dark .gr-stage, html.dark .gr-step.is-now { color: #e8efe1; }
     html.dark .gr-blocked { background: rgb(255 255 255 / .04); }
 </style>
@@ -220,8 +210,9 @@
                 {{-- Which ruler this lot is read against, because the same crop
                      on the next block may be read against another one. --}}
                 <span class="gr-mode">{{ \App\Http\Controllers\Manager\GrowthStageController::counterSays($r['lot']->dayType) }}</span>
-                {{-- Folded, the stage stands in for the explainer above. --}}
-                <span class="gr-fold-stage">{{ $r['blocked'] ? 'Not readable yet' : ($r['stage']['label'] ?? '') }}</span>
+                {{-- The stage, said as a chip in its band's colour — open or
+                     folded, the header names where the crop is. --}}
+                <span class="gr-stage-chip">{{ $r['blocked'] ? 'Not readable yet' : ($r['stage']['label'] ?? '') }}</span>
             </span>
             @if ($r['age'])
                 {{-- A tree's number is months, not days, and the label has to
