@@ -9,8 +9,11 @@
 --}}
 @php
     $aiFloatSettings = \App\Models\AiSetting::current();
+    // The farm's purse, not the visitor's: a worker with the Chat Anee right
+    // spends their boss's credits, so that is the balance worth showing.
+    $aiFloatPayer = \App\Support\WorkerContext::effectiveOwnerId();
     $aiFloatBalance = $aiFloatSettings
-        ? app(\App\Services\AiCreditService::class)->balance(auth()->id())
+        ? app(\App\Services\AiCreditService::class)->balance($aiFloatPayer)
         : 0;
     // Her own portrait unless an admin has set another — the same face the
     // full page and the collab tab wear, so the button you tap and the person
@@ -18,11 +21,11 @@
     $aiFloatAvatar = $aiFloatSettings ? $aiFloatSettings->faceUrl() : null;
     // Same free-rider rule as the full pages: an account that is never
     // charged is never shown a price, a balance, or a purchase card.
-    $aiFloatUnlimited = app(\App\Services\AiCreditService::class)->unlimited((int) auth()->id());
+    $aiFloatUnlimited = app(\App\Services\AiCreditService::class)->unlimited($aiFloatPayer);
     // The menu's "save onto a task" picker — rendered with the page, since
     // the float already knows its schedule and tasks change rarely enough.
 @endphp
-@if ($aiFloatSettings && $aiFloatSettings->isUsable())
+@if ($aiFloatSettings && $aiFloatSettings->isUsable() && \App\Support\WorkerContext::canUseModule('ai'))
 <div id="aiFloat" class="ai-float{{ request('module') === 'ai' ? ' ai-float-off' : '' }}">
     <button type="button" id="aiFloatFab" class="ai-float-fab" aria-label="Ask {{ $aiFloatSettings->assistantName }}" title="Ask {{ $aiFloatSettings->assistantName }}">
         <img data-ai-face src="{{ $aiFloatAvatar }}" alt="">

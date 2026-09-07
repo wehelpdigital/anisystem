@@ -133,6 +133,15 @@
             fillMovePicker();
         }
 
+        /* View-level shed: the rows are readable, the pens are not drawn.
+           The server refuses these writes anyway; this keeps the page from
+           offering buttons that could only ever answer no. */
+        const IV_RO = !!window.IV_READONLY;
+        const kebabHtml = (i) => IV_RO ? '' : `
+                            <button type="button" class="iv-kebab" data-iv-menu="${i.id}" title="Edit, add stock, take stock, delete" aria-label="Actions for ${esc(i.name)}">
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                            </button>`;
+
         /** One card's inside — shared by fresh cards and refreshed ones. */
         const cardInner = (i) => `
                     <div class="iv-card">
@@ -154,11 +163,7 @@
                             ${i.unitPrice != null ? `<div class="iv-note">\u20b1${trim(i.unitPrice)} per ${esc(unitSays(i.unit, true))}</div>` : ''}
                             ${i.note ? `<div class="iv-note">${esc(i.note)}</div>` : ''}
                         </span>
-                        <span class="iv-acts">
-                            <button type="button" class="iv-kebab" data-iv-menu="${i.id}" title="Edit, add stock, take stock, delete" aria-label="Actions for ${esc(i.name)}">
-                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
-                            </button>
-                        </span>
+                        <span class="iv-acts">${kebabHtml(i)}</span>
                     </div>`;
 
         function paintShelf() {
@@ -996,6 +1001,10 @@
             document.addEventListener('click', (e) => {
                 const A = window.__ivApi;
                 if (!A) return;
+                // A view-level worker reads the shed; every write door below
+                // stays shut even if a stray element still carries the hook.
+                const RO = !!window.IV_READONLY;
+                if (RO && e.target.closest('[data-add-item],[data-iv-edit],[data-iv-menu],[data-iv-menu-act],[data-iv-move-del],[data-iv-start-edit],#ivStartBtn,#ivStartEditBtn,#ivItemStartBtn')) return;
                 if (e.target.closest('[data-add-item]')) { A.openItemSheet(); return; }
                 const ed = e.target.closest('[data-iv-edit]');
                 if (ed) { A.openItemSheet(A.itemById(ed.getAttribute('data-iv-edit'))); return; }

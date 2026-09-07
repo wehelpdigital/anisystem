@@ -38,9 +38,9 @@
     // is the owner's answer for this person, not a rule about workers.
     $doorOpen = [
         'workers' => ! $isWorker,
-        // What the farm owns and what it cost is the owner's ledger, and a
-        // worker's tick of "done" spends from it without ever opening it.
-        'inventory' => ! $isWorker,
+        // The shed is a grant level now, like Notes: the owner says who may
+        // read the stock and who may write the ledger.
+        'inventory' => $may('inventory'),
         'notes' => $mayNotes,
         // What the season is documented as, and what came off it at the end,
         // are the owner's record of their own farm — not a shelf a worker

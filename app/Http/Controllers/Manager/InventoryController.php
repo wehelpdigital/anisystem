@@ -219,7 +219,7 @@ class InventoryController extends BaseScheduleController
 
     public function store(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForShed($request);
         $v = Validator::make($request->all(), $this->rules());
         if ($v->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $v->errors()]);
@@ -288,7 +288,7 @@ class InventoryController extends BaseScheduleController
 
     public function update(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForShed($request);
         $item = $this->itemOf($schedule->id, $this->queryId($request));
         if (! $item) {
             return $this->jsonFail('Item not found.', 404);
@@ -317,7 +317,7 @@ class InventoryController extends BaseScheduleController
      */
     public function destroy(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForShed($request);
         $item = $this->itemOf($schedule->id, $this->queryId($request));
         if (! $item) {
             return $this->jsonFail('Item not found.', 404);
@@ -336,7 +336,7 @@ class InventoryController extends BaseScheduleController
      */
     public function moveStock(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForShed($request);
         $v = Validator::make($request->all(), [
             'itemId' => 'required|integer',
             'qty' => 'required|numeric|min:0.001|max:9999999',
@@ -443,7 +443,7 @@ class InventoryController extends BaseScheduleController
      */
     public function restart(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForShed($request);
         $v = Validator::make($request->all(), [
             'itemId' => 'required|integer',
             // Zero allowed: a book may open with nothing on the shelf.
@@ -472,7 +472,7 @@ class InventoryController extends BaseScheduleController
     /** Undo one hand-typed move. Activity moves are undone by unticking. */
     public function deleteMove(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForShed($request);
         $move = AsInventoryMove::where('croppingScheduleId', $schedule->id)
             ->where('id', $this->queryId($request))
             ->where('deleteStatus', 1)->first();
@@ -498,7 +498,7 @@ class InventoryController extends BaseScheduleController
      */
     public function updateMove(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        $schedule = $this->scheduleForShed($request);
         $v = Validator::make($request->all(), [
             'id' => 'required|integer',
             'qty' => 'nullable|numeric|min:0.001|max:9999999',

@@ -22,14 +22,15 @@
 @php
     // level rows: [id suffix, mark, label, hint]
     $wrLevels = [
-        ['Access', '🗓️', 'The schedule', 'The plan itself — activities, lots, workers, the calendar.'],
+        ['Access', '🗓️', 'Activities', 'The day to day plan: the activities board, lots and the calendar.'],
         ['NotesAccess', '📝', 'Notes', 'Day notes, and the photos and videos filed with them.'],
-        ['ReportsAccess', '📊', 'Reports', 'Labour and revenue reports for this farm.'],
+        ['ReportsAccess', '📊', 'Reports', 'Labour and money reports for this farm.'],
+        ['InventoryAccess', '📦', 'Inventory', 'Items on hand, stock moves and what they cost.'],
     ];
     $wrSwitches = [
         ['MapsAccess', '🗺️', 'Maps', 'Field maps, traces and saved maps.'],
         ['DrawAccess', '✏️', 'Draw', 'The drawing module and its saved pictures.'],
-        ['AiAccess', '🤖', 'AI Technician', 'Asking the technician — answers are paid from your credits.'],
+        ['AiAccess', '🤖', 'Chat Anee', 'Asking Anee questions. Answers are paid from your credits.'],
         ['CameraAccess', '📷', 'Camera', 'Taking photos and filing them on this farm.'],
         ['VideoAccess', '🎥', 'Video record', 'Recording clips and attaching them.'],
     ];
@@ -69,7 +70,7 @@
     @endforeach
 
     <label class="wr-row wr-switch" for="{{ $p }}Community">
-        <span class="wr-mark">🌾</span>
+        <span class="wr-mark"><img src="{{ asset('images/social-media.png') }}" alt=""></span>
         <span class="wr-what">
             <b>Community</b>
             <i>Their own profile, and posting in the community.</i>
@@ -78,7 +79,7 @@
         <span class="wr-toggle" aria-hidden="true"></span>
     </label>
 
-    <p class="wr-foot">A worker with <strong>no schedule access</strong> has none of the modules above it — they belong to the farm they cannot see.</p>
+    <p class="wr-foot">A worker with <strong>no Activities access</strong> has none of the modules above. Those belong to the farm they cannot see.</p>
 </div>
 
 @once

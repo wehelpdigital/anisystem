@@ -65,7 +65,7 @@
                     <svg class="w-7 h-7 text-brand-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
                 </div>
                 <h2 class="font-bold text-gray-900 mb-1">No workers yet</h2>
-                <p class="text-sm text-gray-500 mb-4">Add the people who will work this schedule — their cost, skills and off days feed labor costs and assignments.</p>
+                <p class="text-sm text-gray-500 mb-4">Add the people who will work this schedule. Their cost, skills and off days feed labor costs and assignments.</p>
                 <button type="button" class="btn btn-primary" data-add-worker>Add your first worker</button>
             </div>
         </div>
@@ -173,7 +173,7 @@
                     <p class="form-hint">Share the email above + this password so they can sign in.</p>
                 </div>
 
-                <p class="form-hint mt-0!">Uses the worker's <strong>email</strong> above — add one if it's blank.</p>
+                <p class="form-hint mt-0!">Uses the worker's <strong>email</strong> above. Add one if it's blank.</p>
             </div>
         </div>
         @endif
@@ -234,6 +234,7 @@
     .wr-switch { cursor:pointer; user-select:none; }
     .wr-mark { flex:none; width:2rem; height:2rem; border-radius:.6rem; display:flex;
         align-items:center; justify-content:center; font-size:1rem; background:var(--color-brand-50); }
+    .wr-mark img { width:1.25rem; height:1.25rem; object-fit:contain; }
     .wr-what { min-width:0; flex:1 1 auto; }
     .wr-what b { display:block; font-size:.82rem; font-weight:700; color:var(--color-gray-900); line-height:1.25; }
     .wr-what i { display:block; font-style:normal; font-size:.7rem; line-height:1.35; color:var(--color-gray-500); }
@@ -252,8 +253,14 @@
     .wr-seg button.is-on { background:var(--color-white); color:var(--color-brand-700);
         box-shadow:0 1px 3px rgb(0 0 0 / .12); }
     .wr-seg button[data-wr-val="none"].is-on { color:var(--color-gray-600); }
-    html.dark .wr-seg { background:rgb(255 255 255 / .06); border-color:rgb(255 255 255 / .12); }
-    html.dark .wr-seg button.is-on { background:rgb(255 255 255 / .14); color:var(--color-brand-200); }
+    /* Explicit paint in the dark: the token-inverted tints left the chosen
+       answer nearly invisible, and an access level you cannot read is an
+       access level you cannot trust. */
+    html.dark .wr-seg { background:#151b12; border-color:#2b3a1c; }
+    html.dark .wr-seg button { color:#93a48a; }
+    html.dark .wr-seg button:hover { color:#cfe3bd; }
+    html.dark .wr-seg button.is-on { background:#3f5626; color:#e8efe1; box-shadow:0 1px 3px rgb(0 0 0 / .4); }
+    html.dark .wr-seg button[data-wr-val="none"].is-on { background:#3a3f36; color:#e8efe1; }
 
     /* A row that is switched off says so quietly rather than looking broken. */
     .wr-row.is-off .wr-mark, .wr-row.is-off .wr-what { opacity:.55; }
@@ -314,7 +321,7 @@
  * one name and written by another is how a permission ends up not applying.
  * The keys are the grant's own column names. */
 window.workerRights = (() => {
-    const LEVELS = ['notesAccess', 'reportsAccess'];
+    const LEVELS = ['notesAccess', 'reportsAccess', 'inventoryAccess'];
     const SWITCHES = ['mapsAccess', 'drawAccess', 'aiAccess', 'cameraAccess', 'videoAccess'];
     const id = (p, key) => p + key.charAt(0).toUpperCase() + key.slice(1);
     return {
@@ -331,7 +338,9 @@ window.workerRights = (() => {
             LEVELS.forEach((k) => {
                 const el = document.getElementById(id(p, k));
                 if (!el) return;
-                el.value = (grant && grant[k]) || 'view';
+                // The shed starts shut for a new login; the older levels
+                // start readable, which is where the app has always put them.
+                el.value = (grant && grant[k]) || (k === 'inventoryAccess' ? 'none' : 'view');
                 // The level is a hidden input under a segmented control; the
                 // buttons learn what it says from this.
                 el.dispatchEvent(new Event('change', { bubbles: true }));
@@ -476,8 +485,8 @@ const __init = () => {
         if (!show) return;
         const login = w.login || null;
         const statusEl = document.getElementById('wlStatus');
-        if (login && login.status === 'active') statusEl.textContent = 'Active — this worker can log in.';
-        else if (login && login.status === 'pending') statusEl.textContent = 'Invite sent — waiting for them to set a password.';
+        if (login && login.status === 'active') statusEl.textContent = 'Active. This worker can log in.';
+        else if (login && login.status === 'pending') statusEl.textContent = 'Invite sent. Waiting for them to set a password.';
         else statusEl.textContent = 'No login yet.';
         const wlAccess = document.getElementById('wlAccess');
         wlAccess.value = (login && login.scheduleAccess) || 'view';
@@ -632,7 +641,7 @@ const __init = () => {
 
     async function openRulesSheet(worker) {
         document.getElementById('rulesWorkerId').value = worker.id;
-        document.getElementById('rulesSheetTitle').textContent = `Rules — ${worker.workerName}`;
+        document.getElementById('rulesSheetTitle').textContent = `Rules for ${worker.workerName}`;
         document.getElementById('rulesDateInput').value = '';
 
         // Prefill from local state, then refresh from the server.

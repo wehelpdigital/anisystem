@@ -52,6 +52,7 @@ class WorkerAccessController extends Controller
             'communityAccess'  => 'nullable|boolean',
             'notesAccess'      => 'nullable|in:none,view,edit',
             'reportsAccess'    => 'nullable|in:none,view,edit',
+            'inventoryAccess'  => 'nullable|in:none,view,edit',
             'mapsAccess'       => 'nullable|boolean',
             'drawAccess'       => 'nullable|boolean',
             'aiAccess'         => 'nullable|boolean',
@@ -86,6 +87,7 @@ class WorkerAccessController extends Controller
              * can disagree is how a setting starts lying. */
             'notesAccess'      => $request->input('notesAccess', 'view'),
             'reportsAccess'    => $request->input('reportsAccess', 'view'),
+            'inventoryAccess'  => $request->input('inventoryAccess', 'none'),
             'mapsAccess'       => $request->boolean('mapsAccess'),
             'drawAccess'       => $request->boolean('drawAccess'),
             'aiAccess'         => $request->boolean('aiAccess'),
@@ -161,6 +163,7 @@ class WorkerAccessController extends Controller
             'communityAccess'  => 'nullable|boolean',
             'notesAccess'      => 'nullable|in:none,view,edit',
             'reportsAccess'    => 'nullable|in:none,view,edit',
+            'inventoryAccess'  => 'nullable|in:none,view,edit',
             'mapsAccess'       => 'nullable|boolean',
             'drawAccess'       => 'nullable|boolean',
             'aiAccess'         => 'nullable|boolean',
@@ -190,6 +193,7 @@ class WorkerAccessController extends Controller
              * can disagree is how a setting starts lying. */
             'notesAccess'      => $request->input('notesAccess', 'view'),
             'reportsAccess'    => $request->input('reportsAccess', 'view'),
+            'inventoryAccess'  => $request->input('inventoryAccess', 'none'),
             'mapsAccess'       => $request->boolean('mapsAccess'),
             'drawAccess'       => $request->boolean('drawAccess'),
             'aiAccess'         => $request->boolean('aiAccess'),

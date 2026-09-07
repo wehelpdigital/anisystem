@@ -4171,14 +4171,19 @@
         lots:          { label: 'Lots',          url: @json(route('sm.lots',          ['id' => $schedule->id])) },
         @if (! $isWorker)
         workers:       { label: 'Workers',       url: @json(route('sm.workers',       ['id' => $schedule->id])) },
+        @endif
         {{-- Fresh every time: what is on the shelf changes whenever an
              activity is ticked done, and a kept pane would go on showing
              the stock as it stood when the module was first opened. --}}
+        @if ($may('inventory'))
         inventory:     { label: 'Inventory',     url: @json(route('sm.inventory',     ['id' => $schedule->id])), fresh: true },
         @endif
         @if (! $isWorker)
         documentation: { label: 'Documentation', url: @json(route('sm.documentation', ['id' => $schedule->id])) },
         'post-harvest': { label: 'Observations', url: @json(route('sm.post-harvest',  ['id' => $schedule->id])) },
+        @endif
+        {{-- Tags ride the board's own forms, so the door follows the board. --}}
+        @if ($may('activities'))
         'tags': { label: 'Tags', url: @json(route('sm.tags', ['id' => $schedule->id])) },
         @endif
         @if ($may('notes'))
@@ -4210,7 +4215,7 @@
         gallery:       { label: 'Gallery',       url: @json(route('sm.gallery',      ['id' => $schedule->id])) },
         weather:       { label: 'Weather',       url: @json(route('sm.weather.page', ['id' => $schedule->id])) },
         @if ($may('ai'))
-        ai:            { label: 'AI Technician', url: @json(route('sm.ai',           ['id' => $schedule->id])) },
+        ai:            { label: 'Chat Anee',     url: @json(route('sm.ai',           ['id' => $schedule->id])) },
         @endif
     };
 
@@ -5568,6 +5573,14 @@
      the module's renderers, and the shelf is only fetched when something
      actually asks for it. --}}
 @include('sm.partials.inventory-move-sheet')
+@push('scripts')
+<script>
+    // The shell carries inventory-js for the board's stock picker; the shed
+    // pane itself arrives as a partial that sets this again. Set it here too
+    // so the first copy already knows whether this visitor holds the pen.
+    window.IV_READONLY = @json(! \App\Support\WorkerContext::canWriteModule('inventory'));
+</script>
+@endpush
 @include('sm.partials.inventory-js', ['schedule' => $schedule, 'standalone' => false])
 {{-- The tag picker: one shared sheet for every form on the board. --}}
 @include('sm.partials.tag-picker')

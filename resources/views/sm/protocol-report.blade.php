@@ -74,9 +74,13 @@
 @endpush
 
 @section('content')
+@php
+    // A view-level worker reads the shelf; writing a protocol is edit work.
+    $ptMayGen = \App\Support\WorkerContext::canWriteModule('reports');
+@endphp
 <div class="pt-wrap">
     <div class="pt-tabs" role="tablist">
-        <button type="button" class="pt-tab is-on" id="ptTabGen">Generate</button>
+        <button type="button" class="pt-tab is-on" id="ptTabGen" @unless($ptMayGen) hidden @endunless>Generate</button>
         <button type="button" class="pt-tab" id="ptTabSaved">Saved</button>
     </div>
 
@@ -155,6 +159,8 @@ const __init = () => {
     };
     $id('ptTabGen').addEventListener('click', () => showTab(true));
     $id('ptTabSaved').addEventListener('click', () => showTab(false));
+    // A read-only visitor lands on the shelf.
+    if (@json(! $ptMayGen)) showTab(false);
 
     $id('ptLotBtn').addEventListener('click', () => openSheet('ptLotSheet'));
     $id('ptLotList').addEventListener('click', (e) => {

@@ -67,6 +67,12 @@ class WorkerModuleAccess
         ['sm.map',     'maps'],
         ['sm.map.*',   'maps'],
 
+        // The shed: what the farm owns, what moved, what it cost. A level
+        // like Notes — a worker can be shown the stock without being handed
+        // the ledger's pen.
+        ['sm.inventory',   'inventory'],
+        ['sm.inventory.*', 'inventory'],
+
         // Tags ride the activity forms, so whoever may work the board may
         // read and coin them; the writes still pass canEdit inside.
         ['sm.tags',    'activities'],
@@ -92,12 +98,28 @@ class WorkerModuleAccess
         ['sm.documentation',   'owner'],
         ['sm.doc-entries.*',   'owner'],
         ['sm.doc-tags.*',      'owner'],
-        ['sm.protocol.*',      'owner'],
+        // Named singly rather than sm.protocol.*: the documentation module's
+        // protocol sheet shares the prefix with the protocol REPORT below,
+        // and the wildcard was refusing a report the grant may well allow.
+        ['sm.protocol.save',     'owner'],
+        ['sm.protocol.download', 'owner'],
         ['sm.post-harvest',    'owner'],
         ['sm.post-harvest.*',  'owner'],
 
+        // Reports wear many route names — one per engine — and a name left
+        // off this list is a door with no lock, which is how the expenses
+        // and profit pages stood open while sm.reports itself was gated.
         ['sm.reports',           'reports'],
         ['sm.labor.report',      'reports'],
+        ['sm.report.*',          'reports'],
+        ['sm.expenses.report',   'reports'],
+        ['sm.expenses.report.*', 'reports'],
+        ['sm.profit.report',     'reports'],
+        ['sm.profit.report.*',   'reports'],
+        ['sm.anee.*',            'reports'],
+        ['sm.compare.*',         'reports'],
+        ['sm.protocol.report',   'reports'],
+        ['sm.protocol.generate', 'reports'],
 
         // ---- the two that are tools rather than places -------------------
         // Taking a picture and filing it: the camera right, wherever the
@@ -127,9 +149,10 @@ class WorkerModuleAccess
     /** What to call each module when refusing it. */
     private const LABELS = [
         'notes' => 'Notes',
+        'inventory' => 'the Inventory',
         'maps' => 'the Maps module',
         'draw' => 'the Drawing module',
-        'ai' => 'the AI Technician',
+        'ai' => 'Chat Anee',
         'camera' => 'the camera',
         'video' => 'video recording',
         'reports' => 'Reports',

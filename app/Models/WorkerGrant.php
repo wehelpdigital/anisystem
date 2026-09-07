@@ -19,19 +19,20 @@ class WorkerGrant extends BaseModel
      * a permission ends up being a setting that does nothing.
      */
     public const MODULES = [
-        'notes'   => ['column' => 'notesAccess',   'shape' => 'level'],
-        'reports' => ['column' => 'reportsAccess', 'shape' => 'level'],
-        'maps'    => ['column' => 'mapsAccess',    'shape' => 'open'],
-        'draw'    => ['column' => 'drawAccess',    'shape' => 'open'],
-        'ai'      => ['column' => 'aiAccess',      'shape' => 'open'],
-        'camera'  => ['column' => 'cameraAccess',  'shape' => 'open'],
-        'video'   => ['column' => 'videoAccess',   'shape' => 'open'],
+        'notes'     => ['column' => 'notesAccess',     'shape' => 'level'],
+        'reports'   => ['column' => 'reportsAccess',   'shape' => 'level'],
+        'inventory' => ['column' => 'inventoryAccess', 'shape' => 'level'],
+        'maps'      => ['column' => 'mapsAccess',      'shape' => 'open'],
+        'draw'      => ['column' => 'drawAccess',      'shape' => 'open'],
+        'ai'        => ['column' => 'aiAccess',        'shape' => 'open'],
+        'camera'    => ['column' => 'cameraAccess',    'shape' => 'open'],
+        'video'     => ['column' => 'videoAccess',     'shape' => 'open'],
     ];
 
     protected $fillable = [
         'bossUserId', 'workerUserId', 'scheduleWorkerId', 'invitedEmail',
         'inviteToken', 'scheduleAccess', 'canAddNotes', 'communityAccess', 'status',
-        'notesAccess', 'reportsAccess', 'mapsAccess', 'drawAccess', 'aiAccess',
+        'notesAccess', 'reportsAccess', 'inventoryAccess', 'mapsAccess', 'drawAccess', 'aiAccess',
         'cameraAccess', 'videoAccess',
         'acceptedAt', 'deleteStatus',
     ];
@@ -78,6 +79,17 @@ class WorkerGrant extends BaseModel
      */
     public function moduleAccess(string $key): string
     {
+        // The board itself is not a module column: 'activities' answers with
+        // the schedule access, so the gate, the hub doors and the tag picker
+        // can ask about the board in the same words they ask about a module.
+        if ($key === 'activities') {
+            if ($this->status !== self::STATUS_ACTIVE || ! $this->canViewSchedules()) {
+                return 'none';
+            }
+
+            return in_array($this->scheduleAccess, ['view', 'edit'], true) ? $this->scheduleAccess : 'none';
+        }
+
         $spec = self::MODULES[$key] ?? null;
         if (! $spec || $this->status !== self::STATUS_ACTIVE || ! $this->canViewSchedules()) {
             return 'none';

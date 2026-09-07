@@ -123,14 +123,28 @@
 @section('content')
     @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'inventory'])
 
+    @php
+        // What this visitor may do to the shed, as their owner set it in the
+        // Workers module. An owner gets 'edit' throughout.
+        $ivMayWrite = \App\Support\WorkerContext::canWriteModule('inventory');
+    @endphp
+
+    @unless ($ivMayWrite)
+        <p class="card card-body text-sm text-gray-500 mb-3">
+            👁️ You can read this farm's inventory. Adding items and moving stock is for the owner, or a worker with edit access.
+        </p>
+    @endunless
+
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <p class="text-sm text-gray-500">
             <span id="ivCount" class="font-bold text-gray-900">0</span> <span id="ivCountLabel">items</span> in this season's shed
         </p>
+        @if ($ivMayWrite)
         <button type="button" class="btn btn-primary w-full sm:w-auto shrink-0" data-add-item>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
             Add an item
         </button>
+        @endif
     </div>
 
     <div class="iv-tabs" role="tablist">
@@ -150,7 +164,9 @@
                 </div>
                 <h2 class="font-bold text-gray-900 mb-1">Nothing on the shelf yet</h2>
                 <p class="text-sm text-gray-500 mb-4">Add the fertiliser, chemicals and seed this season will spend. Ticking an activity done then takes what it used straight off the count.</p>
+                @if ($ivMayWrite)
                 <button type="button" class="btn btn-primary" data-add-item>Add the first item</button>
+                @endif
             </div>
         </div>
     </div>
@@ -279,6 +295,13 @@
 </div>
 
 @include('sm.partials.inventory-move-sheet')
+@push('scripts')
+<script>
+    // Read before inventory-js binds: a view-level worker gets the shelves
+    // without the pens.
+    window.IV_READONLY = @json(! $ivMayWrite);
+</script>
+@endpush
 @include('sm.partials.inventory-js', ['schedule' => $schedule, 'standalone' => true])
 @include('sm.partials.tag-picker')
 @endpush

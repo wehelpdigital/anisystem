@@ -781,15 +781,24 @@
                 ['gallery', 'Gallery', 'M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM8 14l2.5-3 2 2.5L15 10l3 4'],
                 ['growth', 'Growth Stages', 'M12 21c0-4 1-7 4-9M12 21c0-5-2-8-6-9m6 9V8m0 0c0-2.5 1.5-4 4-4 0 2.5-1.5 4-4 4zm0 0C12 5.5 10.5 4 6.5 4c0 2.5 1.5 4 5.5 4z'],
                 ['weather', 'Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z'],
-                ['ai', 'AI Technician', 'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5'],
+                ['ai', 'Chat Anee', 'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5'],
             ];
-            // Filtered rather than wrapped row by row: the shell's own MODULES
-            // table drops the same three, so a row left here would open onto
-            // nothing at all.
-            if ($isWorker) {
-                $closed = ['workers', 'maps', 'ai'];
-                $modNav = array_values(array_filter($modNav, fn ($m) => ! in_array($m[0], $closed, true)));
-            }
+            // Filtered by the same doors the shell's MODULES table answers,
+            // permission by permission: a row pointing at a module the table
+            // dropped opens onto nothing at all, and a row for a module the
+            // owner granted must not vanish just because the visitor is a
+            // worker.
+            $navDoor = [
+                'workers' => ! $isWorker,
+                'documentation' => ! $isWorker,
+                'post-harvest' => ! $isWorker,
+                'inventory' => $may('inventory'),
+                'tags' => $may('activities'),
+                'notes' => $may('notes'),
+                'maps' => $may('maps'),
+                'ai' => $may('ai'),
+            ];
+            $modNav = array_values(array_filter($modNav, fn ($m) => $navDoor[$m[0]] ?? true));
         @endphp
         <a href="{{ route('sm.index') }}" class="w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-500 hover:bg-gray-50">
             <span class="w-9 h-9 rounded-xl bg-gray-100 text-gray-500 flex items-center justify-center shrink-0">
@@ -1158,18 +1167,22 @@
             // The AI chat bubble is hidden on phones (it covered the board), so
             // the menu is how it opens there. Forwarding to the bubble's own
             // launcher keeps a single open/close code path.
-            if (\App\Models\AiSetting::current()?->isUsable() && ! $isWorker) {
-                $actRows[] = ['aiFloatFab', 'AI Technician', 'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5', '', ''];
+            if (\App\Models\AiSetting::current()?->isUsable() && $may('ai')) {
+                $actRows[] = ['aiFloatFab', 'Chat Anee', 'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5', '', ''];
             }
-            // The other four the owner closed (the technician is dropped just
-            // above). Each row only forwards a click to a real toolbar button,
-            // and those are not rendered for a worker either — a row left
-            // standing would be a tap that does nothing, which reads as a
-            // broken menu rather than a closed door.
-            if ($isWorker) {
-                $closedTools = ['captureTodayPhotoBtn', 'recordTodayVideoBtn', 'openDrawBtn', 'openMapsBtn'];
-                $actRows = array_values(array_filter($actRows, fn ($r) => ! in_array($r[0], $closedTools, true)));
-            }
+            // Each row only forwards a click to a real toolbar button, and
+            // those render per permission — a row left standing without its
+            // button would be a tap that does nothing, which reads as a
+            // broken menu rather than a closed door. So the rows follow the
+            // same grants the buttons do.
+            $toolDoor = [
+                'captureTodayPhotoBtn' => $may('camera'),
+                'recordTodayVideoBtn' => $may('video'),
+                'openDrawBtn' => $may('draw'),
+                'openMapsBtn' => $may('maps'),
+                'openNotesBtn' => $may('notes'),
+            ];
+            $actRows = array_values(array_filter($actRows, fn ($r) => $toolDoor[$r[0]] ?? true));
             // The tools that have a drawn face elsewhere wear the same one
             // here; Undo/Redo/Drafts and the view toggles keep their glyphs.
             $actPics = [

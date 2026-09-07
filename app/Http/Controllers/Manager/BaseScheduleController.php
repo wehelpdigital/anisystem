@@ -86,6 +86,30 @@ abstract class BaseScheduleController extends Controller
     }
 
     /**
+     * Same again, for the shed. Inventory is its own grant level: a worker
+     * can hold the shed's pen without holding the plan's, so its writes ask
+     * about the Inventory right rather than about editing the board. A
+     * completed season still refuses, as everywhere.
+     */
+    protected function scheduleForShed(Request $request, string $key = 'scheduleId'): AsCroppingSchedule
+    {
+        $schedule = $this->schedule($request->query($key));
+
+        if (! $request->isMethodSafe()) {
+            if (! \App\Support\WorkerContext::canWriteModule('inventory')) {
+                abort(response()->json([
+                    'success' => false,
+                    'message' => 'You have view-only access to the Inventory on this farm.',
+                ], 403));
+            }
+
+            $this->assertUnlocked($schedule);
+        }
+
+        return $schedule;
+    }
+
+    /**
      * Pull a query-string integer or abort with 400.
      */
     protected function queryId(Request $request, string $key = 'id'): int

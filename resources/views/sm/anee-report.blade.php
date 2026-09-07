@@ -148,9 +148,13 @@
 @endpush
 
 @section('content')
+@php
+    // A view-level worker reads the shelf; running a new report is edit work.
+    $arMayGen = \App\Support\WorkerContext::canWriteModule('reports');
+@endphp
 <div class="ar-wrap">
     <div class="ar-tabs" role="tablist">
-        <button type="button" class="ar-tab is-on" id="arTabGen">Generate</button>
+        <button type="button" class="ar-tab is-on" id="arTabGen" @unless($arMayGen) hidden @endunless>Generate</button>
         <button type="button" class="ar-tab" id="arTabSaved">Saved</button>
     </div>
 
@@ -284,6 +288,9 @@ const __init = () => {
     };
     $id('arTabGen').addEventListener('click', () => showTab(true));
     $id('arTabSaved').addEventListener('click', () => showTab(false));
+    // A visitor who may only read lands on the shelf, not on a Run button
+    // that could only ever answer no.
+    if (@json(! $arMayGen)) showTab(false);
 
     /* ---------------- readiness ---------------- */
     async function loadStatus() {
