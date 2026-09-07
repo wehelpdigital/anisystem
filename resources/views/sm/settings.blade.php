@@ -56,7 +56,11 @@
             border: 1px solid var(--color-gray-200); background: var(--color-white); font-size: .85rem; }
         .set-log-find svg { position: absolute; left: .65rem; top: 50%; transform: translateY(-50%);
             width: 1rem; height: 1rem; color: var(--color-gray-400); }
-        .set-log-actor { flex: 0 1 11rem; }
+        .set-log-actor { flex: 0 0 auto; width: auto; max-width: 12rem; }
+        /* The pane chooser is a chip, not a form field: it names the page,
+           it does not stretch across it. */
+        .set-tab-tag { width: auto; display: inline-flex; }
+        .set-tab-tag .crop-tag-t { flex: 0 1 auto; }
         .set-log-chips { display: flex; gap: .35rem; overflow-x: auto; padding: .6rem 0 .35rem;
             -webkit-overflow-scrolling: touch; scrollbar-width: none; }
         .set-log-chips::-webkit-scrollbar { display: none; }
@@ -103,7 +107,7 @@
              about it each morning, and the diary of every hand that touched
              it. The chooser is the house tag button, like every other pick. --}}
         <input type="hidden" id="setTabNowVal" value="basic">
-        <button type="button" class="crop-tag" id="setTabBtn">
+        <button type="button" class="crop-tag set-tab-tag" id="setTabBtn">
             <span class="crop-tag-e" id="setTabFace">📋</span>
             <span class="crop-tag-t" id="setTabNow">Basic info</span>
             <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
@@ -239,9 +243,13 @@
                             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
                             <input type="search" id="setLogsFind" placeholder="Search the logs…" autocomplete="off">
                         </label>
-                        <select id="setLogsActor" class="form-select set-log-actor" aria-label="Whose hand">
-                            <option value="">Everyone</option>
-                        </select>
+                        {{-- Whose hand — the house tag button, not a native
+                             dropdown; the choices arrive with the first page. --}}
+                        <button type="button" class="crop-tag set-log-actor" id="setLogsActorBtn" aria-label="Whose hand">
+                            <span class="crop-tag-e">👥</span>
+                            <span class="crop-tag-t" id="setLogsActorNow">Everyone</span>
+                            <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                        </button>
                     </div>
                     <div class="set-log-chips" id="setLogsChips">
                         <button type="button" class="set-log-chip is-on" data-log-family="">All</button>
@@ -364,25 +372,28 @@ const __init = () => {
         const entity = d.entity && d.entity.name ? d.entity.name : null;
         const changes = d.changes || null;
         const input = d.input || null;
-        let card = `<p class="who">${escapeHtml(l.by)} · ${escapeHtml(l.whenFull || '')} · ${escapeHtml(l.method)} · <span style="opacity:.7">${escapeHtml(l.routeName)}</span></p>`;
-        if (entity) card += `<p>On: <span class="set-log-entity">${escapeHtml(entity)}</span>${d.entity.id ? ` <span style="opacity:.6">#${d.entity.id}</span>` : ''}</p>`;
+        // Everything reads as a person doing a thing — never a route name,
+        // never an HTTP verb. "Ticked an activity" said by the middleware
+        // becomes "John ticked an activity — Water the corn".
+        const deed = l.label ? l.label.charAt(0).toLowerCase() + l.label.slice(1) : 'did something';
+        let card = `<p class="who">${escapeHtml(l.by)} ${escapeHtml(deed)}${entity ? ` — <span class="set-log-entity">${escapeHtml(entity)}</span>` : ''} · ${escapeHtml(l.whenFull || '')}</p>`;
         if (changes && Object.keys(changes).length) {
             card += Object.entries(changes).map(([f, c]) => `
                 <span class="set-log-change"><span class="f">${escapeHtml(logSay(f))}:</span>
-                    <span class="from">${escapeHtml(String(c.from ?? '—'))}</span>
+                    from <span class="from">${escapeHtml(String(c.from ?? '—'))}</span>
                     <span class="arrow">→</span>
-                    <span class="to">${escapeHtml(String(c.to ?? '—'))}</span></span>`).join('');
+                    to <span class="to">${escapeHtml(String(c.to ?? '—'))}</span></span>`).join('');
         } else if (input && Object.keys(input).length) {
             card += Object.entries(input).slice(0, 12).map(([f, v]) => `
                 <span class="set-log-change"><span class="f">${escapeHtml(logSay(f))}:</span>
                     <span class="to">${escapeHtml(String(v))}</span></span>`).join('');
         } else if (!entity) {
-            card += '<p style="opacity:.7">No details recorded for this line (logged before details shipped).</p>';
+            card += '<p style="opacity:.7">No further details were recorded for this line (it was logged before details shipped).</p>';
         }
         return `
             <button type="button" class="set-log" data-log-row="${l.id}">
                 <svg class="set-log-chev" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                <span class="min-w-0"><b>${escapeHtml(l.label)}</b>${entity ? ` <i>— ${escapeHtml(entity)}</i>` : ''} <i>· ${escapeHtml(l.by)}</i></span>
+                <span class="min-w-0"><b>${escapeHtml(l.by)}</b> ${escapeHtml(deed)}${entity ? ` <i>— ${escapeHtml(entity)}</i>` : ''}</span>
                 <span class="set-log-fam">${escapeHtml(l.family || '')}</span>
                 <time>${escapeHtml(l.when || '')}</time>
             </button>
@@ -432,11 +443,15 @@ const __init = () => {
             document.getElementById('setLogsEmpty').hidden = list.querySelector('.set-log') !== null;
             // The filters' choices arrive with the first page.
             if (res.data.actors) {
-                const sel = document.getElementById('setLogsActor');
-                const keep = sel.value;
-                sel.innerHTML = '<option value="">Everyone</option>'
-                    + res.data.actors.map((a) => `<option value="${a.id}">${escapeHtml(a.name)}</option>`).join('');
-                sel.value = keep;
+                const rows = document.getElementById('setLogsActorRows');
+                rows.innerHTML = `<button type="button" class="dt-row${LOG_STATE.userId === '' ? ' is-on' : ''}" data-log-actor="" data-log-actor-name="Everyone">
+                        <span class="dt-row-e">👥</span><span class="dt-row-body"><b>Everyone</b></span>
+                        <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    </button>`
+                    + res.data.actors.map((a) => `<button type="button" class="dt-row${String(a.id) === LOG_STATE.userId ? ' is-on' : ''}" data-log-actor="${a.id}" data-log-actor-name="${escapeHtml(a.name)}">
+                        <span class="dt-row-e">🧑‍🌾</span><span class="dt-row-body"><b>${escapeHtml(a.name)}</b></span>
+                        <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    </button>`).join('');
             }
             if (res.data.families) {
                 const chips = document.getElementById('setLogsChips');
@@ -476,8 +491,16 @@ const __init = () => {
                 fetchLogs(true);
             }, 350);
         });
-        document.getElementById('setLogsActor').addEventListener('change', (e) => {
-            LOG_STATE.userId = e.target.value;
+        // Whose hand: the tag opens a chooser sheet; a row picks a person.
+        // Delegated — the sheet lives in the layout stack, not here.
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('#setLogsActorBtn')) { openSheet('setLogsActorSheet'); return; }
+            const row = e.target.closest('[data-log-actor]');
+            if (!row) return;
+            LOG_STATE.userId = row.getAttribute('data-log-actor');
+            document.getElementById('setLogsActorNow').textContent = row.getAttribute('data-log-actor-name') || 'Everyone';
+            document.querySelectorAll('#setLogsActorRows .dt-row').forEach((r) => r.classList.toggle('is-on', r === row));
+            closeSheet('setLogsActorSheet');
             fetchLogs(true);
         });
         document.getElementById('setLogsChips').addEventListener('click', (e) => {
@@ -622,6 +645,22 @@ const __init = () => {
         <button type="button" class="dt-row" data-set-tab-row="logs">
             <span class="dt-row-e">🕒</span>
             <span class="dt-row-body"><b>Logs</b><i>Everything done in this schedule, and by whose hand.</i></span>
+            <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
+    </div>
+</div>
+
+{{-- Whose hand wrote the line — the log filter's chooser. Rows are poured
+     by the logs fetch when the first page arrives. --}}
+<div class="sheet hidden" id="setLogsActorSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Whose hand?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="setLogsActorRows">
+        <button type="button" class="dt-row is-on" data-log-actor="" data-log-actor-name="Everyone">
+            <span class="dt-row-e">👥</span><span class="dt-row-body"><b>Everyone</b></span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </button>
     </div>

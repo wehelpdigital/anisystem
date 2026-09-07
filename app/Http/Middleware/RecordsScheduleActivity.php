@@ -75,6 +75,51 @@ class RecordsScheduleActivity
         'sm.gallery.image.store' => 'Added a picture to the gallery',
         'quick-capture.notes' => 'Filed quick-capture photos',
         'quick-capture.gallery' => 'Filed photos to an album',
+        'sm.anee.meta' => 'Renamed a saved report',
+        'sm.activities.restore' => 'Restored an activity',
+        'sm.critical-rules.store' => 'Added a critical rule',
+        'sm.critical-rules.update' => 'Edited a critical rule',
+        'sm.critical-rules.destroy' => 'Deleted a critical rule',
+        'sm.critical-rules.reorder' => 'Reordered the critical rules',
+        'sm.destroy' => 'Deleted the schedule',
+        'sm.duplicate' => 'Duplicated the schedule',
+        'sm.digest.test' => 'Sent a test morning email',
+        'sm.doc-tags.store' => 'Added a document tag',
+        'sm.draw.destroy' => 'Deleted a drawing',
+        'sm.email.activity' => 'Emailed an activity',
+        'sm.email.day' => 'Emailed a day plan',
+        'sm.gallery.album.save' => 'Saved an album',
+        'sm.gallery.album.destroy' => 'Deleted an album',
+        'sm.gallery.image.destroy' => 'Removed a picture from the gallery',
+        'sm.gallery.image.move' => 'Moved a picture to another album',
+        'sm.gallery.image.rename' => 'Renamed a picture',
+        'sm.inventory.restart' => 'Restarted the inventory count',
+        'sm.lots.pin' => 'Pinned a lot',
+        'sm.map.clear' => 'Cleared the map',
+        'sm.markers.save' => 'Saved map markers',
+        'sm.markers.destroy' => 'Removed map markers',
+        'sm.media-picker.poster' => 'Set a video cover',
+        'sm.media-picker.poster-save' => 'Set a video cover',
+        'sm.photo.save' => 'Saved a photo drawing',
+        'sm.post-harvest.image-upload' => 'Attached a photo to an observation',
+        'sm.post-harvest.restore' => 'Restored an observation',
+        'sm.protocol.save' => 'Saved a protocol report',
+        'sm.quick-share.email' => 'Shared by email',
+        'sm.store' => 'Created the schedule',
+        'sm.store.wizard' => 'Created the schedule',
+        'sm.workers.rules.save' => 'Saved worker permissions',
+    ];
+
+    /**
+     * Live-sync packets, not deeds: the collab map and the drawing pad fire
+     * these on every stroke and marker nudge. A diary that records each
+     * one is unreadable — the deliberate saves (sm.map.save, sm.draw.save,
+     * sm.photo.save) are the lines a person wants.
+     */
+    private const QUIET = [
+        'sm.map.update', 'sm.map.push', 'sm.map.remove', 'sm.map.trace',
+        'sm.map.loc', 'sm.map.load', 'sm.photo.push', 'sm.photo.set',
+        'sm.photo.undo', 'sm.default-groupings.save',
     ];
 
     public function handle(Request $request, Closure $next): Response
@@ -175,8 +220,9 @@ class RecordsScheduleActivity
             return;
         }
         // Bookkeeping, not farming: the undo journal mirrors itself on every
-        // step, and a diary that logs its own pen is unreadable.
-        if (str_starts_with($name, 'sm.undo')) {
+        // step, and the live canvases sync on every gesture — a diary that
+        // logs its own pen is unreadable.
+        if (str_starts_with($name, 'sm.undo') || in_array($name, self::QUIET, true)) {
             return;
         }
 
