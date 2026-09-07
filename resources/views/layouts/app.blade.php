@@ -185,11 +185,24 @@
                         <a href="{{ route('account.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('account.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Account</a>
                     </nav>
 
-                    {{-- The per-page help button left the top bar by request
-                         (2026-09-07). The guides themselves still live in the
-                         How-to-use module; the wiring below no-ops without
-                         the button and pages still declare help-key
-                         harmlessly. --}}
+                    {{-- How to use this page. Only appears where a module has
+                         declared itself, so it never points at a guide that
+                         does not describe what is on screen. It blinks until
+                         the reader has opened it once — after that it is just
+                         a button, per module, remembered in this browser.
+                         (Left the bar for a day in 2026-09-07 and was asked
+                         straight back — the guides ARE how modules explain
+                         themselves.) --}}
+                    @hasSection('help-key')
+                        <a href="#" id="appHelpBtn" data-help-key="@yield('help-key')"
+                           class="help-btn" title="How to use this page" aria-label="How to use this page">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="9"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.6 9.4a2.5 2.5 0 014.9.6c0 1.2-1 1.7-1.8 2.2-.5.4-.7.8-.7 1.4M12 16.6h.01"/>
+                            </svg>
+                            <span class="help-btn-label">How to use</span>
+                        </a>
+                    @endif
 
                     <style>
                         /* Sits above the app (z-50 sheets) and below the drawing

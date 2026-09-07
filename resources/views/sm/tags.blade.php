@@ -2,6 +2,7 @@
 
 @section('title', 'Tags — ' . $schedule->title)
 @section('page-title', 'Tags')
+@section('help-key', 'tags')
 @section('page-subtitle', $schedule->title)
 @section('back', route('sm.hub', ['id' => $schedule->id]))
 

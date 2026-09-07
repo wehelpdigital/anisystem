@@ -222,6 +222,25 @@ Route::post('/admin/return', [App\Http\Controllers\Admin\AdminPanelController::c
 
 Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app', [App\Http\Controllers\AppController::class, 'dashboard'])->name('app.dashboard');
+    // What Offline Mode keeps on the shelf: the handful of pages a farm day
+    // actually opens. app.js fetches each through the service worker while
+    // the mode is on and the line is up, so their copies are cached BEFORE
+    // the signal goes — walking to a not-yet-visited module offline used to
+    // hit the browser's own "no connection" page.
+    Route::get('/app/offline-manifest', function () {
+        $owner = \App\Support\WorkerContext::effectiveOwnerId();
+        $urls = [
+            route('app.dashboard', absolute: false),
+            route('notes.hub', absolute: false),
+        ];
+        foreach (\App\Models\AsCroppingSchedule::active()->forClient($owner)
+            ->orderByDesc('updated_at')->limit(5)->pluck('id') as $sid) {
+            $urls[] = route('sm.hub', ['id' => $sid], false);
+            $urls[] = route('sm.activities', ['id' => $sid], false);
+        }
+
+        return response()->json(['success' => true, 'data' => ['urls' => $urls]]);
+    })->name('offline.manifest');
     // The storefront's promise, ahead of the storefront.
     Route::view('/app/shop', 'shop.index')->name('shop.index');
     // When to Plant — a bought analysis: wizard in, planting window out.

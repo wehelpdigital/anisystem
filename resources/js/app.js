@@ -2082,13 +2082,48 @@ document.addEventListener('pointerdown', (e) => {
             + '<span>Offline mode — anee keeps working. '
             + (pending ? '<b>' + pending + ' change' + (pending > 1 ? 's' : '') + ' waiting to sync.</b>' : 'Changes will sync when you\'re back.')
             + '</span>';
+        // The bar wraps to two lines on a narrow phone, so the offsets that
+        // clear it are measured, not guessed — a fixed rem left the top bar
+        // glued to (or under) a taller bar.
+        document.body.style.setProperty('--offbar-h', Math.ceil(bar.getBoundingClientRect().height) + 'px');
     }
 
     window.addEventListener('online', () => { paintBar(); drain(); });
+    /* ---- warming the shelf ----
+       The runtime cache only holds pages the reader has VISITED with the
+       mode on, so walking to a not-yet-visited module offline hit the
+       browser's own "no connection" page. While the mode is on and the
+       line is up, the app asks the server which pages matter — the
+       dashboard, each season's hub and shell, the notes hub — and fetches
+       them through the service worker so their copies are on the shelf
+       before the signal goes. At most once per half hour, and one page
+       failing is not a reason to stop the rest. */
+    async function warm(force) {
+        if (!on() || !navigator.onLine || !('serviceWorker' in navigator)) return;
+        try {
+            if (!force) {
+                const at = Number(sessionStorage.getItem('anee-offline-warmed') || 0);
+                if (Date.now() - at < 1800000) return;
+            }
+            sessionStorage.setItem('anee-offline-warmed', String(Date.now()));
+        } catch (_) { /* private mode: warm anyway */ }
+        try {
+            const res = await fetch('/app/offline-manifest', { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
+            const urls = (((await res.json()) || {}).data || {}).urls || [];
+            for (const u of urls.slice(0, 16)) {
+                try { await fetch(u, { credentials: 'same-origin' }); } catch (_) { /* next */ }
+            }
+        } catch (_) { /* the next load tries again */ }
+    }
+
     window.addEventListener('offline', paintBar);
+    window.addEventListener('online', () => setTimeout(() => warm(), 2000));
     paintBar();
     tellSw(on());
     drain();
+    // After the service worker has been told the marker is on — a warm
+    // fetch that beats the message would pass the SW uncopied.
+    setTimeout(() => warm(), 1500);
 
     window.aneeOffline = {
         on,
@@ -2096,11 +2131,12 @@ document.addEventListener('pointerdown', (e) => {
             try { localStorage.setItem(KEY, v ? '1' : '0'); } catch (_) { /* private mode */ }
             tellSw(v);
             paintBar();
-            if (v) drain();
+            if (v) { drain(); setTimeout(() => warm(true), 800); }
             document.dispatchEvent(new CustomEvent('anee:offline-mode', { detail: { on: !!v } }));
         },
         enqueue,
         drain,
+        warm,
         pending: () => outboxAll().then((r) => r.length),
     };
 
