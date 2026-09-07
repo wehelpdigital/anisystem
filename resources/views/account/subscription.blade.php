@@ -206,12 +206,16 @@
         <p class="text-sm text-gray-500 mb-3">Pricing is set in the anee.io store; choose the tier that fits your farm.</p>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             @foreach (config('tiers') as $key => $tier)
+                @continue($key === 'admin')
                 <div class="card p-4 {{ $currentTier === $key ? 'ring-2 ring-brand-500' : '' }}">
                     <div class="flex items-center justify-between gap-2">
                         <span class="font-bold text-gray-900" style="font-family:var(--font-heading)">{{ $tier['name'] }}</span>
                         @if ($currentTier === $key)<span class="badge badge-green">Current</span>@endif
                     </div>
-                    <p class="text-2xl font-extrabold text-gray-900 mt-1">₱{{ number_format($tier['price']) }}<span class="text-xs font-medium text-gray-400">/{{ $tier['period'] }}</span></p>
+                    <p class="text-2xl font-extrabold text-gray-900 mt-1">{{ $tier['price'] ? '₱' . number_format($tier['price']) : 'Free' }}@if ($tier['price'])<span class="text-xs font-medium text-gray-400">/{{ $tier['period'] }}</span>@endif</p>
+                    @if (! empty($tier['priceYear']))
+                        <p class="text-xs text-gray-500">or ₱{{ number_format($tier['priceYear']) }}/year</p>
+                    @endif
                     <p class="text-xs text-gray-500 mt-0.5">{{ $tier['tagline'] }}</p>
                     <ul class="mt-3 space-y-1.5">
                         @foreach ($tier['features'] as $f)

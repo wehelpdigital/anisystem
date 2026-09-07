@@ -91,6 +91,20 @@ h1, h2, h3, h4, h5, h6 {
 body.has-offline-bar { padding-top: calc(var(--offbar-h, 2.2rem) + .5rem); }
 body.has-offline-bar header.sticky { top: calc(var(--offbar-h, 2.2rem) + .5rem); }
 
+/* The upgrade sheet a tier wall opens (window.aneeUpgrade). */
+#aneeUpgradeBox { position: fixed; inset: 0; z-index: 420; display: none; align-items: center;
+    justify-content: center; padding: 1.25rem; background: rgb(15 23 42 / .5); }
+#aneeUpgradeBox.is-open { display: flex; animation: auIn .28s cubic-bezier(.22, 1, .36, 1) both; }
+@keyframes auIn { from { opacity: 0; } to { opacity: 1; } }
+#aneeUpgradeBox .au-card { width: min(22rem, 100%); background: var(--color-white);
+    border: 1px solid var(--color-gray-200); border-radius: 1.1rem; padding: 1.35rem 1.25rem;
+    text-align: center; box-shadow: 0 24px 60px rgb(0 0 0 / .3); }
+#aneeUpgradeBox .au-emo { font-size: 2rem; line-height: 1; margin-bottom: .5rem; }
+#aneeUpgradeBox h3 { font-size: 1.02rem; font-weight: 800; color: var(--color-gray-900); }
+#aneeUpgradeBox p { font-size: .85rem; line-height: 1.55; color: var(--color-gray-600); margin-top: .4rem; }
+#aneeUpgradeBox .au-acts { display: flex; flex-direction: column; gap: .45rem; margin-top: 1rem; }
+@media (prefers-reduced-motion: reduce) { #aneeUpgradeBox.is-open { animation: none; } }
+
 /* The row a deep link named, flashed so it stands out of its list —
    window.smSpot() puts this on for a moment and takes it off again. */
 .sm-spotted {

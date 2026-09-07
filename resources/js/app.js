@@ -223,6 +223,14 @@ window.api = async function api(url, { method = 'GET', body = null, headers = {}
     if (res.status === 419) {
         throw new Error('Your session expired. Please refresh the page.');
     }
+    // A tier wall: the feature exists, this plan does not include it. The
+    // upgrade sheet says so kindly instead of a bare red toast.
+    if (res.status === 403 && json?.tierLock) {
+        window.aneeUpgrade?.(json.message);
+        const err = new Error(json.message || 'This feature is for subscribers.');
+        err.tierLock = true;
+        throw err;
+    }
     if (res.status === 403 && json?.locked) {
         window.location.href = '/account/subscription';
         throw new Error(json.message || 'Subscription required.');
@@ -268,6 +276,11 @@ function toastStack() {
  * waiting case is `const t = toast(msg, 'info', 0); ...; t.close()`.
  */
 window.toast = function toast(message, type = 'success', timeout = 3200) {
+    // The upgrade sheet already said this; the caller's catch-all error
+    // toast repeating it underneath is noise, not information.
+    if (type === 'error' && window.__tierLockMsg === message && Date.now() - (window.__tierLockAt || 0) < 2500) {
+        return;
+    }
     const el = document.createElement('div');
     el.className = `toast toast-${type}`;
     el.innerHTML = `<span class="grow">${escapeHtml(message)}</span>`;
@@ -1773,6 +1786,43 @@ document.addEventListener('pointerdown', (e) => {
         paint();
     }
 })();
+
+/* ------------------------------------------------------------------ */
+/* The upgrade sheet — what a tier wall says.                          */
+/*                                                                     */
+/* Server gates refuse with {tierLock: true} and api() routes the      */
+/* message here: a small centred card naming what the plan lacks and   */
+/* offering the plans page, instead of a bare red toast. Locked        */
+/* buttons stay visible and faded across the app; this is what they    */
+/* open onto.                                                          */
+/* ------------------------------------------------------------------ */
+window.aneeUpgrade = function aneeUpgrade(message) {
+    window.__tierLockMsg = message;
+    window.__tierLockAt = Date.now();
+    let box = document.getElementById('aneeUpgradeBox');
+    if (!box) {
+        box = document.createElement('div');
+        box.id = 'aneeUpgradeBox';
+        box.innerHTML = '<div class="au-card" role="dialog" aria-modal="true" aria-label="Upgrade">'
+            + '<div class="au-emo">🔒</div>'
+            + '<h3>Oops — this one is for subscribers</h3>'
+            + '<p id="aneeUpgradeSay"></p>'
+            + '<div class="au-acts">'
+            + '<a class="btn btn-primary" href="/account/subscription">See the plans</a>'
+            + '<button type="button" class="btn btn-white" data-au-close>Not now</button>'
+            + '</div></div>';
+        document.body.appendChild(box);
+        box.addEventListener('click', (e) => {
+            if (e.target === box || e.target.closest('[data-au-close]')) box.classList.remove('is-open');
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') box.classList.remove('is-open');
+        });
+    }
+    box.querySelector('#aneeUpgradeSay').textContent = message
+        || 'Your current plan does not include this feature. Upgrade to unlock it.';
+    box.classList.add('is-open');
+};
 
 /* ------------------------------------------------------------------ */
 /* Arriving on the exact thing a link named.                           */

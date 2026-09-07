@@ -9,9 +9,15 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Locks the schedule manager behind an active subscription. Pending, expired,
- * suspended, cancelled and rejected subscribers are redirected to the
- * subscription page, which explains their status and offers renewal.
+ * The subscription doorman — reshaped for the tier ladder (2026-09-08).
+ *
+ * There is no locked-out state any more: a member with no active
+ * subscription IS a tier — Libre, the free floor — and walks in with
+ * Libre's limits. This middleware now only (a) requires login, and
+ * (b) keeps the member's subscription rows synced so a payment the
+ * admin just verified upgrades their tier on the very next request.
+ * What each tier may actually do is asked feature-by-feature through
+ * App\Support\Tier at the gates themselves.
  */
 class EnsureSubscriptionActive
 {
@@ -27,79 +33,12 @@ class EnsureSubscriptionActive
             return redirect()->route('login');
         }
 
-        // Mother-site super admins get full access without an anee.io
-        // subscription (they're bridged in via SuperAdminBridge).
-        if ($user->isSuperAdmin()) {
-            return $next($request);
+        // Super admins hold no subscription rows to sync.
+        if (! $user->isSuperAdmin()) {
+            // Throttled sync so admin verifications unlock access quickly.
+            $this->subscriptions->syncUser($user);
         }
 
-        // Throttled sync so admin verifications in /ecom-orders unlock access quickly.
-        $this->subscriptions->syncUser($user);
-
-        // Access is granted whenever ANY subscription is currently usable — not
-        // just the newest row. Otherwise buying a renewal while still active
-        // (which creates a newer PENDING row) would lock the user out until the
-        // admin verifies the new payment, and a rejected renewal would lock them
-        // out for the rest of their already-paid period.
-        if ($user->hasActiveSubscription()) {
-            return $next($request);
-        }
-
-        // An invited worker never buys a subscription — access is inherited from
-        // the farm owner who invited them, so gating on the worker's own (always
-        // empty) subscription locked every worker out of the app the moment they
-        // logged in. Let them through while at least one of their bosses is
-        // paying; WorkerContext then scopes what they can actually see.
-        if ($this->hasSubscribedBoss()) {
-            return $next($request);
-        }
-
-        // Workers cannot renew a plan that was never theirs, so send them a
-        // message about the farm owner rather than a bill they cannot settle.
-        // Which farm they are standing in decides whose bill this is.
-        $isWorker = WorkerContext::inWorkerContext();
-        $message = $isWorker
-            ? 'This farm\'s subscription is not active. Please ask the farm owner to renew.'
-            : 'Your subscription is not active. Please renew to continue.';
-
-        if ($request->expectsJson() || $request->ajax()) {
-            return response()->json([
-                'success' => false,
-                'message' => $message,
-                'locked' => true,
-            ], 403);
-        }
-
-        return redirect()->route('account.subscription')
-            ->with('locked', true)
-            ->with('error', $isWorker ? $message : null);
-    }
-
-    /**
-     * True when the member works for at least one farm owner who is currently
-     * subscribed. Each boss is synced first for the same reason the member is:
-     * a payment the admin just verified should unlock the worker immediately.
-     */
-    private function hasSubscribedBoss(): bool
-    {
-        foreach (WorkerContext::grants() as $grant) {
-            $boss = $grant->boss;
-
-            if (! $boss) {
-                continue;
-            }
-
-            if ($boss->isSuperAdmin()) {
-                return true;
-            }
-
-            $this->subscriptions->syncUser($boss);
-
-            if ($boss->hasActiveSubscription()) {
-                return true;
-            }
-        }
-
-        return false;
+        return $next($request);
     }
 }

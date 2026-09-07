@@ -43,6 +43,11 @@ class MediaStore
         $scope = null,
         string $namePrefix = ''
     ): ?string {
+        // The same storage wall putFile meets — drawings and map snapshots
+        // are uploads too.
+        $bytes = strlen($binary);
+        Tier::assertStorage($bytes);
+
         if (self::enabled()) {
             // A clip is not an image, and saying so is what makes the other
             // side willing to read it.
@@ -56,6 +61,8 @@ class MediaStore
                 'prefix' => $namePrefix,
             ]);
             if ($remote !== null) {
+                Tier::recordUpload($bytes, self::REMOTE_PREFIX . $remote, $folder);
+
                 return self::REMOTE_PREFIX . $remote;
             }
             // Falling through to the local disk is deliberate: a file kept
@@ -65,6 +72,7 @@ class MediaStore
 
         $path = self::localPath($folder, $scope, $ext, $namePrefix);
         Storage::disk('public')->put($path, $binary);
+        Tier::recordUpload($bytes, $path, $folder);
 
         return $path;
     }
@@ -72,14 +80,28 @@ class MediaStore
     /** Keep a file the browser uploaded. */
     public static function putFile(UploadedFile $file, string $folder, $scope = null): ?string
     {
+        // The tier's storage wall, met at the one door every upload uses —
+        // notes, activities, community, chat alike. Counted against the
+        // uploader; refuses with the upgrade shape before a byte is stored.
+        $bytes = (int) $file->getSize();
+        Tier::assertStorage($bytes);
+
+        $path = null;
         if (self::enabled()) {
             $remote = self::sendFile($file, $folder, $scope);
             if ($remote !== null) {
-                return self::REMOTE_PREFIX . $remote;
+                $path = self::REMOTE_PREFIX . $remote;
             }
         }
+        if ($path === null) {
+            $path = $file->store(self::localFolder($folder, $scope), 'public') ?: null;
+        }
 
-        return $file->store(self::localFolder($folder, $scope), 'public') ?: null;
+        if ($path !== null) {
+            Tier::recordUpload($bytes, $path, $folder);
+        }
+
+        return $path;
     }
 
     /** Forget a file — a superseded drawing, a removed attachment. */
@@ -88,6 +110,9 @@ class MediaStore
         if (blank($path)) {
             return;
         }
+
+        // Give the bytes back to whoever the ledger charged them to.
+        Tier::releaseUpload($path);
 
         if (Str::startsWith($path, self::REMOTE_PREFIX)) {
             if (! self::enabled()) {

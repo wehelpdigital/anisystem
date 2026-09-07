@@ -174,15 +174,16 @@ class User extends Authenticatable
      */
     public function planTier(): string
     {
-        // Mother-site super admins get the top tier so every feature is unlocked.
+        // Mother-site super admins are the house account — everything,
+        // admin panel included, never sold.
         if ($this->isSuperAdmin()) {
-            return 'lifetime';
+            return 'admin';
         }
 
-        $sub = $this->activeSubscription()
-            ?? $this->subscriptions()->where('status', 'active')->first();
+        // No active subscription IS a tier now: Libre, the free floor.
+        $sub = $this->activeSubscription();
         if (! $sub) {
-            return 'none';
+            return 'libre';
         }
 
         $hay = mb_strtolower(($sub->planKey ?? '') . ' ' . ($sub->planName ?? ''));
@@ -194,42 +195,41 @@ class User extends Authenticatable
             }
         }
 
-        return 'boss';
+        // A paid plan that matches nothing maps UP, never down.
+        return 'owner';
     }
 
-    /** The config block for this member's current tier (falls back to boss). */
+    /** The config block for this member's current tier (falls back to libre). */
     public function tierConfig(): array
     {
-        return config('tiers.' . $this->planTier(), config('tiers.boss', []));
+        return config('tiers.' . $this->planTier(), config('tiers.libre', []));
     }
 
-    /** Basic tier (and no-subscription) cannot use AI or buy AI credits. */
+    /** Every tier can open the AI — credits gate its use, not the plan. */
     public function canUseAi(): bool
     {
-        // Admins ride the AI free of credits, and free of the plan wall too —
-        // a bridged admin account holds no subscription, and asking the house
-        // to upgrade its own plan is the "asks for credits" the owner reported.
-        return $this->isSuperAdmin()
-            || ($this->planTier() !== 'none' && (bool) ($this->tierConfig()['ai'] ?? true));
+        return $this->isSuperAdmin() || (bool) ($this->tierConfig()['ai'] ?? true);
     }
 
-    /** Only Boss/Lifetime can create worker logins + send worker notifications. */
+    /** Only Farm Owner (and admin) can create worker logins + notifications. */
     public function canWorkerAccounts(): bool
     {
-        return $this->planTier() !== 'none' && (bool) ($this->tierConfig()['workers'] ?? true);
+        return (bool) ($this->tierConfig()['workerLogins'] ?? false);
     }
 
-    /** Max schedules the tier allows (null = unlimited, 0 = none). */
+    /** Max ACTIVE schedules the tier allows (null = unlimited). */
     public function scheduleLimit(): ?int
     {
-        if ($this->planTier() === 'none') {
-            return 0;
-        }
+        $limit = $this->tierConfig()['schedulesActive'] ?? null;
 
-        return $this->tierConfig()['maxSchedules'] ?? null;
+        return $limit === null ? null : (int) $limit;
     }
 
-    /** Whether this member may create another cropping schedule right now. */
+    /**
+     * Whether this member may create another cropping schedule right now.
+     * Only ACTIVE seasons count against the cap — a completed or archived
+     * season is history, not a slot in use.
+     */
     public function canCreateSchedule(): bool
     {
         $limit = $this->scheduleLimit();
@@ -237,7 +237,9 @@ class User extends Authenticatable
             return true;
         }
 
-        return $this->schedules()->count() < $limit;
+        return $this->schedules()
+            ->whereNotIn('status', [AsCroppingSchedule::STATUS_COMPLETED, AsCroppingSchedule::STATUS_ARCHIVED])
+            ->count() < $limit;
     }
 
     public function schedules()
