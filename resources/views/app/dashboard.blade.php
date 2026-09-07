@@ -1190,8 +1190,10 @@
                          Sized in em so it follows the heading between the
                          phone's size and the desk's, and aligned on the text
                          rather than the line box so it sits ON the words. --}}
+                    {{-- The same picture the community nav's News Feed wears,
+                         so the block and the page it opens read as one. --}}
                     <h2 class="text-base md:text-lg font-bold text-gray-900 flex items-center gap-2">
-                        <img src="{{ asset('images/icons/chat.png') }}" alt=""
+                        <img src="{{ asset('images/newspaper.png') }}" alt=""
                              width="512" height="512"
                              style="width:auto;height:1.15em;flex:none">
                         News Feed
