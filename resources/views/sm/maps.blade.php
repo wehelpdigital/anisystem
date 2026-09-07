@@ -138,6 +138,10 @@
            over the ground you are drawing on — and unlike a list, a map has no
            dead corner. It stands down while the map is open. */
         body.smap-open #aiFloat { display: none !important; }
+        /* No ruled line over the stagebar while a map is open — the divider
+           under the sticky toolbar sat right on top of "All maps" and Save
+           and read as clutter. (Unlayered, so it beats the border-b utility.) */
+        body.smap-open main .sticky { border-bottom-color: transparent; }
 
         @media (max-width: 767px) {
             /* The map already fills everything below the toolbar, so there is
