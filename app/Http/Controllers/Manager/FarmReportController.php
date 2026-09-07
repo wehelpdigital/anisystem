@@ -669,12 +669,50 @@ class FarmReportController extends BaseScheduleController
             ->where('croppingScheduleId', $schedule->id)
             ->where('kind', $kind)->where('status', 'ready')->where('deleteStatus', 1)
             ->orderByDesc('id')->limit(30)
-            ->get(['id', 'title', 'credits', 'created_at']);
+            ->get(['id', 'title', 'description', 'credits', 'created_at']);
 
         return $this->jsonOk('ok', ['data' => ['rows' => $rows->map(fn ($r) => [
-            'id' => $r->id, 'title' => $r->title, 'credits' => (float) $r->credits,
+            'id' => $r->id, 'title' => $r->title, 'description' => $r->description,
+            'credits' => (float) $r->credits,
             'when' => $r->created_at?->format('M j, Y g:i A'),
         ])->values()]]);
+    }
+
+    /**
+     * Rename a saved report, describe it, retie its tags. The shelf stops
+     * being a list of machine-written titles.
+     */
+    public function aneeMeta(Request $request)
+    {
+        $r = AsFarmReport::where('userId', Auth::id())
+            ->where('id', (int) $request->input('id'))
+            ->where('deleteStatus', 1)->first();
+        if (! $r) {
+            return $this->jsonFail('That saved report no longer exists.', 404);
+        }
+        $schedule = $this->schedule($r->croppingScheduleId);
+
+        $v = Validator::make($request->all(), [
+            'title' => 'required|string|max:191',
+            'description' => 'nullable|string|max:2000',
+            'tags' => 'nullable',
+        ]);
+        if ($v->fails()) {
+            return $this->jsonFail($v->errors()->first(), 422);
+        }
+
+        $r->update([
+            'title' => trim((string) $request->input('title')),
+            'description' => filled($request->input('description')) ? trim((string) $request->input('description')) : null,
+        ]);
+
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'report', (int) $r->id, $request->input('tags', []));
+        }
+
+        return $this->jsonOk('Report updated.', ['data' => [
+            'id' => (int) $r->id, 'title' => $r->title, 'description' => $r->description,
+        ]]);
     }
 
     /** One saved report, whole. */

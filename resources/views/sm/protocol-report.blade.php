@@ -78,6 +78,7 @@
     // A view-level worker reads the shelf; writing a protocol is edit work.
     $ptMayGen = \App\Support\WorkerContext::canWriteModule('reports');
 @endphp
+@include('sm.partials.tag-picker')
 <div class="pt-wrap">
     <div class="pt-tabs" role="tablist">
         <button type="button" class="pt-tab is-on" id="ptTabGen" @unless($ptMayGen) hidden @endunless>Generate</button>
@@ -262,18 +263,57 @@ const __init = () => {
 
     async function loadSaved() {
         try {
-            const res = await api(U.list);
+            const res = await api(U.list + '&_=' + Date.now());
             const rows = res.data.rows || [];
             $id('ptSavedEmpty').classList.toggle('hidden', rows.length > 0);
+            PT_ROWS = rows;
             $id('ptSavedList').innerHTML = rows.map((r) => `
                 <button type="button" class="pt-saved-row" data-pt-open="${r.id}">
                     <span style="font-size:1.2rem;flex:none;">📋</span>
-                    <span class="min-w-0 grow"><b>${esc(r.title)}</b><small>${esc(r.when || '')}</small></span>
+                    <span class="min-w-0 grow"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.when || '')}</small></span>
+                    ${@json($ptMayGen) ? `<span role="button" tabindex="0" class="ar-pen" data-pt-meta="${r.id}" title="Edit name, description and tags" aria-label="Edit ${esc(r.title)}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:.85rem;height:.85rem"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    </span>` : ''}
                     <svg style="width:1rem;height:1rem;flex:none;color:var(--color-gray-300)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>`).join('');
         } catch (err) { toast(err.message, 'error'); }
     }
+    let PT_ROWS = [];
+    let PT_META_ID = null;
+    document.addEventListener('click', async (e) => {
+        const saveBtn = e.target.closest('#ptMetaSave');
+        if (!saveBtn || PT_META_ID === null) return;
+        saveBtn.disabled = true;
+        try {
+            const res = await api(@json(route('sm.anee.meta')), {
+                method: 'POST',
+                body: {
+                    id: PT_META_ID,
+                    title: document.getElementById('ptMetaTitle').value.trim(),
+                    description: document.getElementById('ptMetaDesc').value.trim(),
+                    tags: window.smTags ? window.smTags.value(document.getElementById('ptMetaTags')) : [],
+                },
+            });
+            toast(res.message);
+            closeSheet('ptMetaSheet');
+            loadSaved();
+        } catch (err) { toast(err.message, 'error'); }
+        finally { saveBtn.disabled = false; }
+    });
     $id('ptSavedList').addEventListener('click', async (e) => {
+        const pen = e.target.closest('[data-pt-meta]');
+        if (pen) {
+            e.stopPropagation();
+            const r = PT_ROWS.find((x) => String(x.id) === pen.getAttribute('data-pt-meta'));
+            if (!r) return;
+            PT_META_ID = r.id;
+            document.getElementById('ptMetaTitle').value = r.title || '';
+            document.getElementById('ptMetaDesc').value = r.description || '';
+            const mount = document.getElementById('ptMetaTags');
+            if (window.smTags && mount) { window.smTags.mount(mount); window.smTags.load(mount, 'report', r.id); }
+            openSheet('ptMetaSheet');
+            return;
+        }
         const row = e.target.closest('[data-pt-open]');
         if (!row) return;
         try {
@@ -294,4 +334,42 @@ const __init = () => {
     else __init();
 })();
 </script>
+@endpush
+
+@push('head')
+<style>
+    .ar-pen { flex: none; width: 1.6rem; height: 1.6rem; border-radius: .45rem; display: inline-flex;
+        align-items: center; justify-content: center; color: var(--color-gray-400); }
+    .ar-pen:hover { color: var(--color-brand-700); background: var(--color-brand-50); }
+    html.dark .ar-pen:hover { background: rgb(107 159 61 / .18); color: #a5c97e; }
+</style>
+@endpush
+
+@push('sheets')
+{{-- Rename a saved protocol, describe it, retie its tags. --}}
+<div class="sheet hidden" id="ptMetaSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Edit this report</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-4">
+        <div>
+            <label class="form-label" for="ptMetaTitle">Name</label>
+            <input type="text" id="ptMetaTitle" class="form-input" maxlength="191">
+        </div>
+        <div>
+            <label class="form-label" for="ptMetaDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea id="ptMetaDesc" class="form-textarea" rows="3" maxlength="2000"></textarea>
+        </div>
+        <div>
+            <span class="form-label">Tags</span>
+            <div class="tp-mount" data-tags data-tags-kind="report" id="ptMetaTags"></div>
+        </div>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" class="btn btn-primary" id="ptMetaSave">Save changes</button>
+    </div>
+</div>
 @endpush

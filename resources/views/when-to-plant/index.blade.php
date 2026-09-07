@@ -416,6 +416,7 @@
         del: (id) => '{{ url('/app/when-to-plant') }}/' + id,
         anee: '{{ route('ai.index') }}',
     };
+    const WTP_META_URL = '{{ route('wtp.meta') }}';
     const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const SEG_HUES = ['#4a7c2a', '#6b9f3d', '#b45309', '#1d4ed8', '#5b21b6', '#0e7490', '#9f1239'];
 
@@ -796,18 +797,51 @@
     async function loadSaved() {
         try {
             // eslint-disable-next-line no-empty
-            const res = await api(U.list, { method: 'GET' });
+            const res = await api(U.list + '?_=' + Date.now(), { method: 'GET' });
             const rows = res.data.rows || [];
+            WTP_ROWS = rows;
             $id('wtpSavedList').innerHTML = rows.map((r) => `
                 <button type="button" class="wtp-saved" data-saved="${r.id}">
-                    <span class="grow min-w-0"><b>${esc(r.title)}</b><small>${esc(r.at)} · ${r.credits} credits</small></span>
+                    <span class="grow min-w-0"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.at)} · ${r.credits} credits</small></span>
+                    <span role="button" tabindex="0" class="wtp-pen" data-meta="${r.id}" title="Edit name and description" aria-label="Edit ${esc(r.title)}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:.85rem;height:.85rem"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                </span>
                     <svg class="w-4 h-4 text-gray-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>`).join('');
             $id('wtpSavedEmpty').classList.toggle('hidden', rows.length > 0);
         } catch (err) { toast(err.message, 'error'); }
     }
 
+    let WTP_ROWS = [];
+    let WTP_META_ID = null;
     document.addEventListener('click', async (e) => {
+        const saveBtn = e.target.closest('#wtpMetaSave');
+        if (saveBtn && WTP_META_ID !== null) {
+            saveBtn.disabled = true;
+            try {
+                const res = await api(WTP_META_URL, { method: 'POST', body: {
+                    id: WTP_META_ID,
+                    title: $id('wtpMetaTitle').value.trim(),
+                    description: $id('wtpMetaDesc').value.trim(),
+                } });
+                toast(res.message);
+                closeSheet('wtpMetaSheet');
+                loadSaved();
+            } catch (err) { toast(err.message, 'error'); }
+            finally { saveBtn.disabled = false; }
+            return;
+        }
+        const pen = e.target.closest('[data-meta]');
+        if (pen && pen.closest('#wtpSavedList')) {
+            e.stopPropagation();
+            const r = WTP_ROWS.find((x) => String(x.id) === pen.getAttribute('data-meta'));
+            if (!r) return;
+            WTP_META_ID = r.id;
+            $id('wtpMetaTitle').value = r.title || '';
+            $id('wtpMetaDesc').value = r.description || '';
+            openSheet('wtpMetaSheet');
+            return;
+        }
         const b = e.target.closest('[data-saved]');
         if (!b) return;
         try {
@@ -837,3 +871,37 @@
 })();
 </script>
 @endsection
+
+@push('sheets')
+{{-- Rename a saved analysis and describe it in your own words. --}}
+<div class="sheet hidden" id="wtpMetaSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Edit this analysis</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-4">
+        <div>
+            <label class="form-label" for="wtpMetaTitle">Name</label>
+            <input type="text" id="wtpMetaTitle" class="form-input" maxlength="191">
+        </div>
+        <div>
+            <label class="form-label" for="wtpMetaDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea id="wtpMetaDesc" class="form-textarea" rows="3" maxlength="2000"></textarea>
+        </div>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" class="btn btn-primary" id="wtpMetaSave">Save changes</button>
+    </div>
+</div>
+@endpush
+
+@push('head')
+<style>
+    .wtp-pen { flex: none; width: 1.6rem; height: 1.6rem; border-radius: .45rem; display: inline-flex;
+        align-items: center; justify-content: center; color: var(--color-gray-400); }
+    .wtp-pen:hover { color: var(--color-brand-700); background: var(--color-brand-50); }
+    html.dark .wtp-pen:hover { background: rgb(107 159 61 / .18); color: #a5c97e; }
+</style>
+@endpush

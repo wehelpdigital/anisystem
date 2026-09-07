@@ -328,11 +328,12 @@ class WhenToPlantController extends Controller
         $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())
             ->where('kind', 'when')
             ->where('deleteStatus', 1)->where('status', 'ready')->orderByDesc('id')
-            ->get(['id', 'title', 'credits', 'created_at']);
+            ->get(['id', 'title', 'description', 'credits', 'created_at']);
 
         return $this->json(true, 'ok', ['rows' => $rows->map(fn ($r) => [
             'id' => $r->id,
             'title' => $r->title,
+            'description' => $r->description,
             'credits' => (float) $r->credits,
             'at' => \Illuminate\Support\Carbon::parse($r->created_at)->format('M j, Y'),
         ])->values()]);
@@ -407,6 +408,31 @@ class WhenToPlantController extends Controller
             ->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
         return $this->json(true, 'Analysis removed.');
+    }
+
+    /** Rename a saved analysis and describe it in your own words. */
+    public function meta(\Illuminate\Http\Request $request)
+    {
+        $title = trim((string) $request->input('title'));
+        if ($title === '' || mb_strlen($title) > 191) {
+            return $this->json(false, 'Give it a name up to 191 characters.', [], 422);
+        }
+        $description = trim((string) $request->input('description'));
+        $updated = DB::table('as_plant_analyses')
+            ->where('userId', Auth::id())
+            ->where('kind', 'when')
+            ->where('id', (int) $request->input('id'))
+            ->where('deleteStatus', 1)
+            ->update([
+                'title' => $title,
+                'description' => $description !== '' ? mb_substr($description, 0, 2000) : null,
+                'updated_at' => now(),
+            ]);
+        if (! $updated) {
+            return $this->json(false, 'That analysis is not on your shelf.', [], 404);
+        }
+
+        return $this->json(true, 'Analysis updated.', ['title' => $title, 'description' => $description ?: null]);
     }
 
     /* ------------------------------------------------------------ helpers */

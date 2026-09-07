@@ -223,6 +223,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/when-to-plant/save', [App\Http\Controllers\WhenToPlantController::class, 'save'])->name('wtp.save');
     Route::get('/app/when-to-plant/list', [App\Http\Controllers\WhenToPlantController::class, 'list'])->name('wtp.list');
     Route::get('/app/when-to-plant/one/{id}', [App\Http\Controllers\WhenToPlantController::class, 'one'])->whereNumber('id')->name('wtp.one');
+    Route::post('/app/when-to-plant/meta', [App\Http\Controllers\WhenToPlantController::class, 'meta'])->name('wtp.meta');
     Route::delete('/app/when-to-plant/{id}', [App\Http\Controllers\WhenToPlantController::class, 'destroy'])->whereNumber('id')->name('wtp.delete');
     Route::get('/app/when-to-plant/preview/{id}', [App\Http\Controllers\WhenToPlantController::class, 'preview'])->whereNumber('id')->name('wtp.preview');
     // What to Plant — the sister analysis: the ground asks which crop.
@@ -231,6 +232,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/what-to-plant/generate', [App\Http\Controllers\WhatToPlantController::class, 'generate'])->name('whatp.generate');
     Route::get('/app/what-to-plant/list', [App\Http\Controllers\WhatToPlantController::class, 'list'])->name('whatp.list');
     Route::get('/app/what-to-plant/one/{id}', [App\Http\Controllers\WhatToPlantController::class, 'one'])->whereNumber('id')->name('whatp.one');
+    Route::post('/app/what-to-plant/meta', [App\Http\Controllers\WhatToPlantController::class, 'meta'])->name('whatp.meta');
     Route::get('/app/what-to-plant/job/{id}', [App\Http\Controllers\WhatToPlantController::class, 'jobState'])->whereNumber('id')->name('whatp.job');
     Route::delete('/app/what-to-plant/{id}', [App\Http\Controllers\WhatToPlantController::class, 'destroy'])->whereNumber('id')->name('whatp.delete');
     Route::get('/app/when-to-plant/job/{id}', [App\Http\Controllers\WhenToPlantController::class, 'jobState'])->whereNumber('id')->name('wtp.job');
@@ -617,6 +619,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-anee-report-list', [App\Http\Controllers\Manager\FarmReportController::class, 'aneeList'])->name('sm.anee.list');
     Route::get('/app/sm-anee-report-one/{id}', [App\Http\Controllers\Manager\FarmReportController::class, 'aneeOne'])->whereNumber('id')->name('sm.anee.one');
     Route::delete('/app/sm-anee-report-delete/{id}', [App\Http\Controllers\Manager\FarmReportController::class, 'aneeDelete'])->whereNumber('id')->name('sm.anee.delete');
+    Route::post('/app/sm-anee-report-meta', [App\Http\Controllers\Manager\FarmReportController::class, 'aneeMeta'])->name('sm.anee.meta');
     Route::get('/app/sm-protocol-report', [App\Http\Controllers\Manager\FarmReportController::class, 'protocolPage'])->name('sm.protocol.report');
     Route::post('/app/sm-protocol-generate', [App\Http\Controllers\Manager\FarmReportController::class, 'protocolGenerate'])->name('sm.protocol.generate');
     Route::get('/app/sm-compare-report', [App\Http\Controllers\Manager\FarmReportController::class, 'comparePage'])->name('sm.compare.report');

@@ -285,6 +285,16 @@ class TagController extends BaseScheduleController
                         'url' => $boardUrl('lots')];
                 }
                 break;
+            case 'report':
+                foreach (\App\Models\AsFarmReport::whereIn('id', $refIds)
+                    ->where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->get() as $fr) {
+                    $out[] = ['kind' => 'report', 'refId' => (int) $fr->id, 'icon' => '📊',
+                        'title' => trim((string) $fr->title) ?: 'Saved report',
+                        'sub' => 'report · ' . $fr->kind,
+                        'when' => $fr->created_at?->format('Y-m-d'),
+                        'url' => route('sm.reports', ['id' => $schedule->id])];
+                }
+                break;
             case 'observation':
                 foreach (\App\Models\AsSchedulePostHarvest::whereIn('id', $refIds)
                     ->where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->get() as $o) {

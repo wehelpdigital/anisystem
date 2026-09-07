@@ -25,6 +25,7 @@ class AsScheduleTagLink extends BaseModel
         'worker',     // as_schedule_workers (the roster)
         'lot',        // as_schedule_lots
         'observation', // as_schedule_post_harvests (the Observations module)
+        'report',     // as_farm_reports (the saved report shelves)
     ];
 
     protected $fillable = [

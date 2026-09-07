@@ -15,7 +15,7 @@ class AsFarmReport extends BaseModel
     public const KINDS = ['labor', 'expenses', 'profit', 'season', 'sofar', 'protocol', 'compare'];
 
     protected $fillable = [
-        'userId', 'croppingScheduleId', 'kind', 'title',
+        'userId', 'croppingScheduleId', 'kind', 'title', 'description',
         'params', 'body', 'report', 'credits',
         'status', 'error', 'deleteStatus',
     ];

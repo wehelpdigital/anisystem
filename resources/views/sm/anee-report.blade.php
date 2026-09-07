@@ -152,6 +152,7 @@
     // A view-level worker reads the shelf; running a new report is edit work.
     $arMayGen = \App\Support\WorkerContext::canWriteModule('reports');
 @endphp
+@include('sm.partials.tag-picker')
 <div class="ar-wrap">
     <div class="ar-tabs" role="tablist">
         <button type="button" class="ar-tab is-on" id="arTabGen" @unless($arMayGen) hidden @endunless>Generate</button>
@@ -467,18 +468,59 @@ const __init = () => {
     /* ---------------- saved shelf ---------------- */
     async function loadSaved() {
         try {
-            const res = await api(U.list);
+            const res = await api(U.list + '&_=' + Date.now());
             const rows = res.data.rows || [];
             $id('arSavedEmpty').classList.toggle('hidden', rows.length > 0);
+            SAVED_ROWS = rows;
             $id('arSavedList').innerHTML = rows.map((r) => `
                 <button type="button" class="ar-saved-row" data-ar-open="${r.id}">
                     <img src="${esc(FACE)}" alt="" style="width:1.6rem;height:1.6rem;border-radius:999px;object-fit:cover;flex:none;">
-                    <span class="min-w-0 grow"><b>${esc(r.title)}</b><small>${esc(r.when || '')} · ${r.credits} credits</small></span>
+                    <span class="min-w-0 grow"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.when || '')} · ${r.credits} credits</small></span>
+                    ${@json($arMayGen) ? `<span role="button" tabindex="0" class="ar-pen" data-ar-meta="${r.id}" title="Edit name, description and tags" aria-label="Edit ${esc(r.title)}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:.85rem;height:.85rem"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    </span>` : ''}
                     <svg style="width:1rem;height:1rem;flex:none;color:var(--color-gray-300)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>`).join('');
         } catch (err) { toast(err.message, 'error'); }
     }
+    let SAVED_ROWS = [];
+    let META_ID = null;
+    function openReportMeta(id) {
+        const r = SAVED_ROWS.find((x) => String(x.id) === String(id));
+        if (!r) return;
+        META_ID = r.id;
+        document.getElementById('arMetaTitle').value = r.title || '';
+        document.getElementById('arMetaDesc').value = r.description || '';
+        const mount = document.getElementById('arMetaTags');
+        if (window.smTags && mount) {
+            window.smTags.mount(mount);
+            window.smTags.load(mount, 'report', r.id);
+        }
+        openSheet('arMetaSheet');
+    }
+    document.addEventListener('click', async (e) => {
+        const saveBtn = e.target.closest('#arMetaSave');
+        if (!saveBtn || META_ID === null) return;
+        saveBtn.disabled = true;
+        try {
+            const res = await api(@json(route('sm.anee.meta')), {
+                method: 'POST',
+                body: {
+                    id: META_ID,
+                    title: document.getElementById('arMetaTitle').value.trim(),
+                    description: document.getElementById('arMetaDesc').value.trim(),
+                    tags: window.smTags ? window.smTags.value(document.getElementById('arMetaTags')) : [],
+                },
+            });
+            toast(res.message);
+            closeSheet('arMetaSheet');
+            loadSaved();
+        } catch (err) { toast(err.message, 'error'); }
+        finally { saveBtn.disabled = false; }
+    });
     $id('arSavedList').addEventListener('click', async (e) => {
+        const pen = e.target.closest('[data-ar-meta]');
+        if (pen) { e.stopPropagation(); openReportMeta(pen.getAttribute('data-ar-meta')); return; }
         const row = e.target.closest('[data-ar-open]');
         if (!row) return;
         try {
@@ -495,4 +537,42 @@ const __init = () => {
     else __init();
 })();
 </script>
+@endpush
+
+@push('head')
+<style>
+    .ar-pen { flex: none; width: 1.6rem; height: 1.6rem; border-radius: .45rem; display: inline-flex;
+        align-items: center; justify-content: center; color: var(--color-gray-400); }
+    .ar-pen:hover { color: var(--color-brand-700); background: var(--color-brand-50); }
+    html.dark .ar-pen:hover { background: rgb(107 159 61 / .18); color: #a5c97e; }
+</style>
+@endpush
+
+@push('sheets')
+{{-- Rename a saved report, describe it, retie its tags. --}}
+<div class="sheet hidden" id="arMetaSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Edit this report</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-4">
+        <div>
+            <label class="form-label" for="arMetaTitle">Name</label>
+            <input type="text" id="arMetaTitle" class="form-input" maxlength="191">
+        </div>
+        <div>
+            <label class="form-label" for="arMetaDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea id="arMetaDesc" class="form-textarea" rows="3" maxlength="2000"></textarea>
+        </div>
+        <div>
+            <span class="form-label">Tags</span>
+            <div class="tp-mount" data-tags data-tags-kind="report" id="arMetaTags"></div>
+        </div>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" class="btn btn-primary" id="arMetaSave">Save changes</button>
+    </div>
+</div>
 @endpush
