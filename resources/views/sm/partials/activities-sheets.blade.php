@@ -1891,6 +1891,11 @@
         <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
+        {{-- Typing filters the shelf live — title, lot, date, priority. --}}
+        <div id="draftsSearchWrap" class="draft-search hidden">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            <input type="text" id="draftsSearch" class="form-input" placeholder="Search drafts…" autocomplete="off" aria-label="Search drafts">
+        </div>
         <div id="draftsListContainer" class="space-y-2"></div>
         <div id="draftsEmpty" class="text-center text-gray-500 py-8 hidden">
             <p class="font-bold text-gray-800 mb-1">No drafts.</p>
@@ -1898,6 +1903,12 @@
         </div>
     </div>
 </div>
+<style>
+    #draftsSheet .draft-search { position: relative; margin-bottom: .75rem; }
+    #draftsSheet .draft-search svg { position: absolute; left: .7rem; top: 50%; transform: translateY(-50%);
+        width: 1rem; height: 1rem; color: var(--color-gray-400); pointer-events: none; }
+    #draftsSheet .draft-search .form-input { padding-left: 2.1rem; width: 100%; }
+</style>
 
 {{-- ============================ REPORT PICKER ============================ --}}
 <div class="sheet hidden" id="reportPickerSheet" style="--sheet-width:28rem">

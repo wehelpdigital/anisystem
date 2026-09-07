@@ -10858,45 +10858,125 @@ document.addEventListener('DOMContentLoaded', () => {
         badge.textContent = Math.max(0, (parseInt(badge.textContent, 10) || 0) + delta);
     }
 
+    /* ---- Drafts: one fetch, searched and paged on the client.
+       The shelf arrives whole (a season's drafts are dozens, not
+       thousands); typing filters it live, and the sheet paints a page at
+       a time as it scrolls, appending rather than repainting so the
+       scroll never jumps. ---- */
+    const DRAFT_PAGE = 15;
+    let ALL_DRAFTS = [];
+    let draftQuery = '';
+    let draftShown = DRAFT_PAGE;
+
+    /* '2028-01-22 13:00' → 'January 22, 2028 1:00pm' — the drafted stamp,
+       written the way the owner asked for it. */
+    function draftedWhen(s) {
+        const m = String(s || '').match(/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})/);
+        if (!m) return String(s || '');
+        const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'];
+        let h = parseInt(m[4], 10);
+        const ap = h >= 12 ? 'pm' : 'am';
+        h = (h % 12) || 12;
+        return MONTHS[parseInt(m[2], 10) - 1] + ' ' + parseInt(m[3], 10) + ', ' + m[1] + ' ' + h + ':' + m[5] + ap;
+    }
+
     function renderDraftRow(d) {
         const lots = (d.lots || []).map((l) => esc(l.lotName)).join(', ') || '—';
         const dateLabel = d.targetDate ? prettyDateFull(d.targetDate) : 'No date';
         const priority = d.priority || 'medium';
         const priorityCap = priority.charAt(0).toUpperCase() + priority.slice(1);
         return `<div class="card p-3 draft-row" data-id="${d.id}" style="border-left:3px solid #50a5f1;">
-            <div class="flex items-start justify-between gap-3 flex-wrap">
-                <div class="min-w-0 grow">
-                    <p class="font-bold text-gray-900 text-sm">${esc(d.activityTitle)}</p>
-                    <p class="text-xs text-gray-500 mt-0.5">${esc(dateLabel)} · Lots: ${lots}</p>
-                    ${d.updatedAt ? `<p class="text-xs text-gray-400 mt-0.5">Drafted ${esc(d.updatedAt)}</p>` : ''}
-                </div>
-                <div class="flex items-center gap-2 shrink-0">
-                    <span class="pill pill-${esc(priority)}">${esc(priorityCap)}</span>
-                    <button type="button" class="btn btn-primary btn-sm restore-draft-btn${LOCK_EDIT_CLS}" data-id="${d.id}" data-name="${esc(d.activityTitle)}"${LOCK_EDIT} title="${esc(editTitle('Put this draft back on the board'))}">Restore</button>
-                    <button type="button" class="icon-btn icon-btn-danger delete-draft-btn${LOCK_EDIT_CLS}" data-id="${d.id}" data-name="${esc(d.activityTitle)}"${LOCK_EDIT} title="${esc(editTitle('Delete draft'))}">${SVG.trash}</button>
-                </div>
+            <p class="font-bold text-gray-900 text-sm">${esc(d.activityTitle)}</p>
+            <p class="text-xs text-gray-500 mt-0.5">${esc(dateLabel)} · Lots: ${lots}</p>
+            ${d.updatedAt ? `<p class="text-xs text-gray-400 mt-0.5">Drafted ${esc(draftedWhen(d.updatedAt))}</p>` : ''}
+            <div class="mt-2"><span class="pill pill-${esc(priority)}">${esc(priorityCap)}</span></div>
+            <div class="mt-2 flex items-center justify-between gap-2">
+                <button type="button" class="btn btn-primary btn-sm restore-draft-btn${LOCK_EDIT_CLS}" data-id="${d.id}" data-name="${esc(d.activityTitle)}"${LOCK_EDIT} title="${esc(editTitle('Put this draft back on the board'))}">Restore</button>
+                <button type="button" class="icon-btn icon-btn-danger delete-draft-btn${LOCK_EDIT_CLS}" data-id="${d.id}" data-name="${esc(d.activityTitle)}"${LOCK_EDIT} title="${esc(editTitle('Delete draft'))}">${SVG.trash}</button>
             </div>
         </div>`;
     }
 
-    function renderDraftsList(drafts) {
+    function draftHits() {
+        if (!draftQuery) return ALL_DRAFTS;
+        return ALL_DRAFTS.filter((d) => [
+            d.activityTitle, d.priority,
+            d.targetDate ? prettyDateFull(d.targetDate) : '',
+            d.updatedAt ? draftedWhen(d.updatedAt) : '',
+            ...(d.lots || []).map((l) => l.lotName),
+        ].join(' ').toLowerCase().includes(draftQuery));
+    }
+
+    const DRAFTS_MORE_HINT = '<p class="text-center text-gray-400 py-2 text-xs" id="draftsMoreHint">Scroll for more…</p>';
+
+    function paintDrafts() {
         const container = $id('draftsListContainer');
-        if (!drafts || drafts.length === 0) {
+        const searchWrap = $id('draftsSearchWrap');
+        if (!ALL_DRAFTS.length) {
             container.innerHTML = '';
             container.classList.add('hidden');
+            searchWrap?.classList.add('hidden');
             $id('draftsEmpty').classList.remove('hidden');
             return;
         }
         $id('draftsEmpty').classList.add('hidden');
+        searchWrap?.classList.remove('hidden');
         container.classList.remove('hidden');
-        container.innerHTML = drafts.map(renderDraftRow).join('');
+        const hits = draftHits();
+        if (!hits.length) {
+            container.innerHTML = '<p class="text-center text-gray-400 py-6 text-sm">No drafts match your search.</p>';
+            return;
+        }
+        container.innerHTML = hits.slice(0, draftShown).map(renderDraftRow).join('')
+            + (hits.length > draftShown ? DRAFTS_MORE_HINT : '');
     }
+
+    function renderDraftsList(drafts) {
+        ALL_DRAFTS = drafts || [];
+        draftShown = DRAFT_PAGE;
+        paintDrafts();
+    }
+
+    /* One exit for every row removal, so the search and the paging stay
+       truthful about what is left. */
+    function dropDraftRow(id) {
+        ALL_DRAFTS = ALL_DRAFTS.filter((d) => String(d.id) !== String(id));
+        paintDrafts();
+    }
+
+    let draftSearchTimer = null;
+    $id('draftsSearch')?.addEventListener('input', (e) => {
+        clearTimeout(draftSearchTimer);
+        draftSearchTimer = setTimeout(() => {
+            draftQuery = e.target.value.trim().toLowerCase();
+            draftShown = DRAFT_PAGE;
+            paintDrafts();
+        }, 150);
+    });
+
+    // Nearing the bottom of the sheet appends the next page in place.
+    $qs('#draftsSheet .sheet-body')?.addEventListener('scroll', (e) => {
+        const el = e.target;
+        if (el.scrollTop + el.clientHeight < el.scrollHeight - 140) return;
+        const hits = draftHits();
+        if (draftShown >= hits.length) return;
+        const from = draftShown;
+        draftShown += DRAFT_PAGE;
+        $id('draftsMoreHint')?.remove();
+        $id('draftsListContainer').insertAdjacentHTML('beforeend',
+            hits.slice(from, draftShown).map(renderDraftRow).join('')
+            + (hits.length > draftShown ? DRAFTS_MORE_HINT : ''));
+    });
 
     $id('openDraftsBtn')?.addEventListener('click', async () => {
         const container = $id('draftsListContainer');
         container.classList.remove('hidden');
         container.innerHTML = '<div class="text-center text-gray-400 py-6 text-sm">Loading…</div>';
         $id('draftsEmpty').classList.add('hidden');
+        const searchEl = $id('draftsSearch');
+        if (searchEl) searchEl.value = '';
+        draftQuery = '';
         openSheet('draftsSheet');
         try {
             const res = await api(U.drafts());
@@ -10922,9 +11002,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 toast(`"${name}" restored`);
                 _renderCardOrReplace(res.data);
                 bumpDraftsBadge(-1);
-                const row = restoreBtn.closest('.draft-row');
-                row?.remove();
-                if ($qsa('#draftsListContainer .draft-row').length === 0) renderDraftsList([]);
+                dropDraftRow(id);
                 pushUndo(`Restore '${name}' from drafts`, async () => {
                     const r = await api(U.toDraft(id), { method: 'POST' });
                     if (!r || !r.success) throw new Error((r && r.message) || 'undo failed');
@@ -10935,7 +11013,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');
                     _renderCardOrReplace(r.data);
                     bumpDraftsBadge(-1);
-                    $qs(`#draftsListContainer .draft-row[data-id="${id}"]`)?.remove();
+                    dropDraftRow(id);
                 });
             } catch (err) {
                 toast(err.message, 'error');
@@ -10958,9 +11036,8 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 await api(U.destroy(id), { method: 'DELETE' });
                 toast(`Draft "${name}" deleted`);
-                $qs(`#draftsListContainer .draft-row[data-id="${id}"]`)?.remove();
+                dropDraftRow(id);
                 bumpDraftsBadge(-1);
-                if ($qsa('#draftsListContainer .draft-row').length === 0) renderDraftsList([]);
                 pushUndo(`Delete draft '${name}'`, async () => {
                     const r = await api(U.restore(id), { method: 'POST' });
                     if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');
@@ -10968,24 +11045,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     // If the drafts sheet is open, surface the returned row again.
                     const sheet = $id('draftsSheet');
                     if (sheet && sheet.classList.contains('is-open')) {
-                        $id('draftsEmpty').classList.add('hidden');
-                        const container = $id('draftsListContainer');
-                        container.classList.remove('hidden');
-                        container.insertAdjacentHTML('beforeend', renderDraftRow({
+                        ALL_DRAFTS.unshift({
                             id: r.data.id,
                             activityTitle: r.data.activityTitle,
                             targetDate: r.data.targetDate,
                             lots: r.data.lots || [],
                             priority: r.data.priority,
                             updatedAt: r.data.updated_at || null,
-                        }));
+                        });
+                        paintDrafts();
                     }
                 }, async () => {
                     const r = await api(U.destroy(id), { method: 'DELETE' });
                     if (!r || !r.success) throw new Error((r && r.message) || 'delete failed');
                     bumpDraftsBadge(-1);
-                    $qs(`#draftsListContainer .draft-row[data-id="${id}"]`)?.remove();
-                    if ($qsa('#draftsListContainer .draft-row').length === 0) renderDraftsList([]);
+                    dropDraftRow(id);
                 });
             } catch (err) {
                 toast(err.message, 'error');
