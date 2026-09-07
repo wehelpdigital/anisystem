@@ -17,9 +17,12 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v10m0 0l-3.5-3.5M12 14l3.5-3.5M5 19h14"/></svg>
     </a>
     {{-- Looking at a leaf and wondering what is wrong with it are the same
-         moment. Hidden for video: the technician reads stills. --}}
-    <button type="button" class="note-lb-ai" id="noteLbAsk" title="Ask the AI Technician about this" aria-label="Ask the AI">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
+         moment. Hidden for video: the technician reads stills. The button
+         wears her portrait, not a robot glyph — the same face that answers
+         when the photo arrives in the chat. --}}
+    @php($aneeLb = \App\Models\AiSetting::current())
+    <button type="button" class="note-lb-ai" id="noteLbAsk" title="Ask {{ $aneeLb->assistantName }} about this" aria-label="Ask {{ $aneeLb->assistantName }}">
+        <img src="{{ $aneeLb->faceUrl() }}" alt="">
     </button>
     <button type="button" class="note-lb-close" aria-label="Close">✕</button>
     {{-- A video takes seconds to arrive over farm internet, and until now the
@@ -104,10 +107,11 @@
     .note-lb-dl svg { width: 1.25rem; height: 1.25rem; }
     .note-lb-ai { position: fixed; top: 1rem; right: 7.5rem; width: 2.75rem; height: 2.75rem;
         border-radius: 999px; display: flex; align-items: center; justify-content: center;
-        background: rgb(255 255 255 / .16); color: #fff; cursor: pointer; z-index: 2;
-        transition: background .28s cubic-bezier(.22,1,.36,1); }
-    .note-lb-ai:hover { background: #4a7c2a; }
-    .note-lb-ai svg { width: 1.3rem; height: 1.3rem; }
+        background: rgb(255 255 255 / .16); color: #fff; cursor: pointer; z-index: 2; padding: 0;
+        box-shadow: 0 0 0 2px rgb(255 255 255 / .35);
+        transition: box-shadow .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .note-lb-ai:hover { box-shadow: 0 0 0 2px #4a7c2a; transform: translateY(-1px); }
+    .note-lb-ai img { width: 100%; height: 100%; border-radius: 999px; object-fit: cover; display: block; }
     .note-lb-ai.is-gone { display: none; }
     @media (prefers-reduced-motion: reduce) { .note-lb-ai { transition: none; } }
     /* The wait spinner. pointer-events: none so the backdrop tap that closes
