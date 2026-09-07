@@ -35,42 +35,47 @@
        through flowering and filling, and a deep harvest amber at the end.
        The same eight bands the growth tool in Activities wears, so a lot is
        the same colour in both places. */
-    /* The colour used to wash the header as a gradient band, and the words
-       fought it in both modes. The card is now the same plain surface every
-       other module's card is, and the stage colour lives in one honest
-       place: a chip under the lot's name — the way a note wears its "Team
-       map" badge — plus the progress bar, which is the same fact drawn. */
-    .gr-c0 { --gr-accent: #8a5a2b; --gr-chip-bg: #f3e8dc; --gr-chip-fg: #6d4520; }
-    .gr-c1 { --gr-accent: #7dab55; --gr-chip-bg: #e9f4dd; --gr-chip-fg: #3d6823; }
-    .gr-c2 { --gr-accent: #6b9f3d; --gr-chip-bg: #e4f0d5; --gr-chip-fg: #33591b; }
-    .gr-c3 { --gr-accent: #46702a; --gr-chip-bg: #dcead0; --gr-chip-fg: #274513; }
-    .gr-c4 { --gr-accent: #0d9488; --gr-chip-bg: #dcf2f0; --gr-chip-fg: #0f5f58; }
-    .gr-c5 { --gr-accent: #d9a616; --gr-chip-bg: #fdf3d7; --gr-chip-fg: #8a6116; }
-    .gr-c6 { --gr-accent: #d98214; --gr-chip-bg: #fcecd4; --gr-chip-fg: #8a5310; }
-    .gr-c7 { --gr-accent: #b45309; --gr-chip-bg: #f8e5d2; --gr-chip-fg: #7c3c08; }
-    html.dark .gr-c0 { --gr-chip-bg: rgb(138 90 43 / .3); --gr-chip-fg: #e0b285; }
-    html.dark .gr-c1 { --gr-chip-bg: rgb(143 194 103 / .24); --gr-chip-fg: #c4e39f; }
-    html.dark .gr-c2 { --gr-chip-bg: rgb(107 159 61 / .26); --gr-chip-fg: #b5d98c; }
-    html.dark .gr-c3 { --gr-chip-bg: rgb(74 124 42 / .3); --gr-chip-fg: #a8cc7e; }
-    html.dark .gr-c4 { --gr-chip-bg: rgb(13 148 136 / .26); --gr-chip-fg: #7fd4cb; }
-    html.dark .gr-c5 { --gr-chip-bg: rgb(240 180 41 / .22); --gr-chip-fg: #f2d489; }
-    html.dark .gr-c6 { --gr-chip-bg: rgb(217 130 20 / .24); --gr-chip-fg: #edbf80; }
-    html.dark .gr-c7 { --gr-chip-bg: rgb(180 83 9 / .26); --gr-chip-fg: #e8ac74; }
+    /* The card wears the Tip of the Day's clothes: the same deep-green
+       gradient ground, light words, and the slow drifting glow — one
+       committed look in both modes, the way the tip card is. The stage
+       colour lives in a chip under the lot's name (translucent band colour
+       on the dark ground) and in the progress bar. No moving border. */
+    .gr-c0 { --gr-accent: #c58f57; --gr-chip-bg: rgb(138 90 43 / .35); --gr-chip-fg: #e8c49a; }
+    .gr-c1 { --gr-accent: #9cc973; --gr-chip-bg: rgb(143 194 103 / .26); --gr-chip-fg: #cfe6ae; }
+    .gr-c2 { --gr-accent: #8fbf60; --gr-chip-bg: rgb(107 159 61 / .3); --gr-chip-fg: #c2e097; }
+    .gr-c3 { --gr-accent: #7fae53; --gr-chip-bg: rgb(74 124 42 / .38); --gr-chip-fg: #b3d68a; }
+    .gr-c4 { --gr-accent: #43c2b6; --gr-chip-bg: rgb(13 148 136 / .3); --gr-chip-fg: #94e0d7; }
+    .gr-c5 { --gr-accent: #f0c454; --gr-chip-bg: rgb(240 180 41 / .26); --gr-chip-fg: #f6dc9b; }
+    .gr-c6 { --gr-accent: #f0a94e; --gr-chip-bg: rgb(217 130 20 / .28); --gr-chip-fg: #f2c891; }
+    .gr-c7 { --gr-accent: #e08a3c; --gr-chip-bg: rgb(180 83 9 / .3); --gr-chip-fg: #efb888; }
     .gr-stage-chip { display: inline-flex; align-items: center; max-width: 100%;
         margin-top: .3rem; padding: .16rem .55rem; border-radius: 999px;
         font-size: .68rem; font-weight: 800; letter-spacing: .01em;
-        background: var(--gr-chip-bg, var(--color-gray-100));
-        color: var(--gr-chip-fg, var(--color-gray-600)); }
-    .gr-card { border: 1px solid var(--color-gray-200); border-radius: 1rem; overflow: hidden;
-        background-color: var(--color-white); margin-bottom: .9rem; }
+        background: var(--gr-chip-bg, rgb(255 255 255 / .12));
+        color: var(--gr-chip-fg, #e8efe1); }
+    .gr-card { position: relative; border: 1px solid rgb(168 204 126 / .18); border-radius: 1rem;
+        overflow: hidden; margin-bottom: .9rem; color: #e8efe1;
+        background: linear-gradient(135deg, #10160c 0%, #1c2416 55%, #24301a 100%);
+        box-shadow: 0 16px 40px -30px rgb(16 22 12 / .9); }
+    /* The tip card's slow sweep of light, borrowed whole (its keyframes live
+       with the tip partial, which this page does not include — so the sweep
+       is restated here under its own name). */
+    .gr-card::before { content: ''; position: absolute; inset: -40% -10%; pointer-events: none;
+        background: radial-gradient(closest-side, rgb(134 181 86 / .28), transparent 70%);
+        animation: grGlow 7s ease-in-out infinite; }
+    @keyframes grGlow {
+        0%, 100% { transform: translateX(-30%) scale(.9); opacity: .5; }
+        50% { transform: translateX(30%) scale(1.1); opacity: .85; }
+    }
+    @media (prefers-reduced-motion: reduce) { .gr-card::before { animation: none; } }
+    .gr-top, .gr-fold { position: relative; }
     .gr-top { display: flex; align-items: center; gap: .7rem; padding: .8rem .9rem;
         cursor: pointer; user-select: none; }
-    .gr-top:hover { background: var(--color-gray-50); }
-    html.dark .gr-top:hover { background: rgb(255 255 255 / .05); }
+    .gr-top:hover { background: rgb(255 255 255 / .05); }
     /* Accordion, the same one the activities board uses: a lot folds down to
        its header, the chevron flags state, and max-height carries the fold —
        the shared concertina in app.js supplies the slide. */
-    .gr-chev { width: 1rem; height: 1rem; flex-shrink: 0; color: #6b9f3d; transition: transform .18s ease; }
+    .gr-chev { width: 1rem; height: 1rem; flex-shrink: 0; color: #a8cc7e; transition: transform .18s ease; }
     .gr-card:not(.is-folded) .gr-chev { transform: rotate(90deg); }
     .gr-fold { overflow: hidden; transition: max-height .28s cubic-bezier(.22,1,.36,1); }
     /* Sliding and fading together, as every other fold in the app now
@@ -92,39 +97,28 @@
        everything below, and a control for the whole list belongs at the
        start of the line the list begins on. */
     .gr-foldall { margin-right: auto; }
-    html.dark .gr-chev { color: #86b556; }
     .gr-emoji { font-size: 1.7rem; line-height: 1; }
-    .gr-lot { font-size: .98rem; font-weight: 800; color: var(--color-gray-900); }
-    .gr-mode { display: block; font-size: .68rem; color: var(--color-gray-400); margin-top: .1rem; }
-    /* Was #3d6823 — a dark green on a card that is now itself tinted, and
-       on the green bands the two were near enough the same colour to make
-       the line disappear. Dark mode had no rule at all, so the same green
-       sat on a near-black card. Neutral in both, which is what a line of
-       supporting text should have been anyway. */
-    .gr-crop { font-size: .72rem; font-weight: 700; color: var(--color-gray-600); }
-    html.dark .gr-crop { color: #c7d4ba; }
-    html.dark .gr-mode { color: #8fa383; }
+    .gr-lot { font-size: .98rem; font-weight: 800; color: #f1f6ec; }
+    .gr-mode { display: block; font-size: .68rem; color: #8fa383; margin-top: .1rem; }
+    .gr-crop { font-size: .72rem; font-weight: 700; color: #cdd8c0; }
     .gr-age { margin-left: auto; text-align: right; flex: 0 0 auto; }
-    .gr-age-n { font-size: 1.35rem; font-weight: 800; line-height: 1; color: #2f5219; }
-    .gr-age-l { font-size: .62rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #4f7c2c; }
-    html.dark .gr-age-n { color: #d6e8bf; }
-    html.dark .gr-age-l { color: #9dc178; }
+    .gr-age-n { font-size: 1.35rem; font-weight: 800; line-height: 1; color: #d6e8bf; }
+    .gr-age-l { font-size: .62rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #9dc178; }
 
     .gr-body { padding: .85rem .9rem; }
-    .gr-stage { font-size: 1.05rem; font-weight: 800; color: var(--color-gray-900); }
-    .gr-what { font-size: .85rem; line-height: 1.5; color: var(--tl-text-muted, #4b5563); margin-top: .2rem; }
+    .gr-stage { font-size: 1.05rem; font-weight: 800; color: #f1f6ec; }
+    .gr-what { font-size: .85rem; line-height: 1.5; color: #cdd8c0; margin-top: .2rem; }
     /* The one line of guidance a patterned crop carries. Same shape as the
        do-list below it, so a crop with the short answer and a crop with the
        long one read as the same kind of page. */
     .gr-needs { font-size: .84rem; line-height: 1.5; margin-top: .7rem;
         padding: .6rem .7rem; border-radius: .7rem;
-        background: var(--color-brand-50); color: #3d6823; }
+        background: rgb(107 159 61 / .18); color: #cfe6b5; }
     .gr-needs b { font-weight: 800; }
-    html.dark .gr-needs { background: rgb(61 104 35 / .25); color: #bfe19a; }
-    .gr-bar { height: .4rem; border-radius: 999px; background: var(--color-gray-200); overflow: hidden; margin-top: .6rem; }
+    .gr-bar { height: .4rem; border-radius: 999px; background: rgb(255 255 255 / .14); overflow: hidden; margin-top: .6rem; }
     .gr-bar span { display: block; height: 100%; border-radius: 999px;
-        background: var(--gr-accent, #4a7c2a); }
-    .gr-next { font-size: .72rem; color: var(--color-gray-500); margin-top: .3rem; }
+        background: var(--gr-accent, #a8cc7e); }
+    .gr-next { font-size: .72rem; color: #a3b295; margin-top: .3rem; }
 
     .gr-lists { display: grid; gap: .5rem; margin-top: .8rem; }
     @media (min-width: 720px) { .gr-lists { grid-template-columns: 1fr 1fr; } }
@@ -135,21 +129,19 @@
     .gr-list li { font-size: .8rem; line-height: 1.45; display: flex; gap: .4rem; }
     .gr-list li::before { content: ''; flex: 0 0 auto; width: .35rem; height: .35rem; border-radius: 999px;
         margin-top: .5rem; background: currentColor; opacity: .5; }
-    .gr-do { background: #f0f7e8; color: #2d5016; }
-    .gr-watch { background: #fff7ed; color: #9a3412; }
-    html.dark .gr-do { background: rgb(61 104 35 / .22); color: #bfe19a; }
-    html.dark .gr-watch { background: rgb(154 52 18 / .2); color: #fdba74; }
+    .gr-do { background: rgb(107 159 61 / .2); color: #cfe6b5; }
+    .gr-watch { background: rgb(217 130 20 / .18); color: #f3c08a; }
 
-    .gr-steps { margin-top: .85rem; border-top: 1px dashed var(--color-gray-200); padding-top: .65rem; display: grid; gap: .3rem; }
-    .gr-step { display: flex; align-items: flex-start; gap: .5rem; font-size: .78rem; color: var(--color-gray-500); }
-    .gr-dot { flex: 0 0 auto; width: .6rem; height: .6rem; border-radius: 999px; margin-top: .35rem; background: var(--color-gray-300); }
+    .gr-steps { margin-top: .85rem; border-top: 1px dashed rgb(255 255 255 / .14); padding-top: .65rem; display: grid; gap: .3rem; }
+    .gr-step { display: flex; align-items: flex-start; gap: .5rem; font-size: .78rem; color: #a3b295; }
+    .gr-dot { flex: 0 0 auto; width: .6rem; height: .6rem; border-radius: 999px; margin-top: .35rem; background: rgb(255 255 255 / .22); }
     .gr-step.is-past .gr-dot { background: #a8cc7e; }
-    .gr-step.is-now { color: var(--color-gray-900); font-weight: 700; }
-    .gr-step.is-now .gr-dot { background: #4a7c2a; box-shadow: 0 0 0 3px rgb(74 124 42 / .2); }
+    .gr-step.is-now { color: #f1f6ec; font-weight: 700; }
+    .gr-step.is-now .gr-dot { background: #a8cc7e; box-shadow: 0 0 0 3px rgb(168 204 126 / .25); }
     .gr-when { margin-left: auto; flex: 0 0 auto; font-variant-numeric: tabular-nums; opacity: .7; }
 
-    .gr-blocked { padding: .9rem; font-size: .83rem; line-height: 1.5; color: var(--color-gray-500);
-        background: var(--color-gray-50); border-radius: .7rem; }
+    .gr-blocked { padding: .9rem; font-size: .83rem; line-height: 1.5; color: #cdd8c0;
+        background: rgb(255 255 255 / .06); border-radius: .7rem; }
     .gr-note { display: flex; gap: .6rem; align-items: flex-start; margin: .2rem 0 .6rem;
         padding: .7rem .8rem; border-radius: .8rem; background: #fffbeb; border: 1px solid #fde68a; }
     .gr-note p { font-size: .78rem; line-height: 1.5; color: #92400e; margin: 0; }
@@ -159,9 +151,8 @@
     html.dark .gr-note p { color: #fcd34d; }
     html.dark .gr-note-ico { color: #fcd34d; }
 
-    html.dark .gr-card { background-color: #151b12; border-color: #2b3a1c; }
-    html.dark .gr-lot, html.dark .gr-stage, html.dark .gr-step.is-now { color: #e8efe1; }
-    html.dark .gr-blocked { background: rgb(255 255 255 / .04); }
+    /* One committed look: the deep-green card is the same card in light and
+       dark mode, exactly as the Tip of the Day is. */
 </style>
 @endpush
 
