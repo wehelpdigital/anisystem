@@ -26,7 +26,7 @@
         'followingIds' => $followingIds,
         'savedIds' => $savedIds,
     ])
-    <a href="{{ route('community.index') }}" class="btn btn-white btn-sm pp-back">Back to the wall</a>
+    <a href="{{ route('community.index') }}" class="btn btn-white btn-sm pp-back">Back to the News Feed</a>
 </div>
 
 @include('community.partials.post-actions')

@@ -60,7 +60,7 @@
                     When a post is worth coming back to — a fertiliser rate, a price, a photo of a pest —
                     tap its bookmark and it waits here.
                 </p>
-                <a href="{{ route('community.index') }}" class="btn btn-primary btn-sm mt-4">Go to the wall</a>
+                <a href="{{ route('community.index') }}" class="btn btn-primary btn-sm mt-4">Go to the News Feed</a>
             </div>
         @endforelse
     </div>

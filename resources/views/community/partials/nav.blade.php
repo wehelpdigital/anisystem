@@ -15,48 +15,55 @@
     ];
     $badgeTotal = array_sum($badges);
 
+    // Each section wears a drawn picture ('pic'); the stroked 'icon' path
+    // stays as the fallback for anything that has not been given one yet.
     $sections = [
         'wall' => [
-            'label' => 'Wall', 'short' => 'Wall',
+            'label' => 'News Feed', 'short' => 'News Feed',
             'url' => route('community.index'),
+            'pic' => 'newspaper.png',
             'icon' => 'M3 12l9-9 9 9M5 10v10h14V10',
         ],
         'groups' => [
             'label' => 'Discussions', 'short' => 'Discussions',
             'url' => route('community.groups.index'),
+            'pic' => 'discussion.png',
             'icon' => 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.29-.94L3 20l1.05-3.15A7.6 7.6 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z',
         ],
         'ranking' => [
-        'label' => 'Community Rankings', 'short' => 'Rankings',
-        'url' => route('community.ranking'),
-        // A crown: the ladder has a top, and this is what sits on it.
-        'icon' => 'M3 8l4.5 4.5L12 5l4.5 7.5L21 8l-1.6 8.5a1 1 0 01-1 .8H5.6a1 1 0 01-1-.8L3 8zM7.5 21h9',
-    ],
-    'blog' => [
+            'label' => 'Community Rankings', 'short' => 'Rankings',
+            'url' => route('community.ranking'),
+            'pic' => 'crown.png',
+            'icon' => 'M3 8l4.5 4.5L12 5l4.5 7.5L21 8l-1.6 8.5a1 1 0 01-1 .8H5.6a1 1 0 01-1-.8L3 8zM7.5 21h9',
+        ],
+        'blog' => [
             'label' => 'Tech Blog', 'short' => 'Blog',
             'url' => route('community.blog'),
-            // A lightbulb, not a document: the blog is ideas, and the
-            // dashboard's band wears the same bulb artwork.
+            'pic' => 'blog.png',
             'icon' => 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z',
         ],
         'members' => [
             'label' => 'Members', 'short' => 'Members',
             'url' => route('community.connect.members'),
+            'pic' => 'connect.png',
             'icon' => 'M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4z',
         ],
         'cofarmers' => [
             'label' => 'My Co-Farmers', 'short' => 'Co-Farmers',
             'url' => route('community.cofarmers'),
+            'pic' => 'friends.png',
             'icon' => 'M12 21c-4.5 0-8-2.5-8-5.5V13a3 3 0 013-3h10a3 3 0 013 3v2.5c0 3-3.5 5.5-8 5.5zM9 7a3 3 0 106 0 3 3 0 00-6 0z',
         ],
         'requests' => [
-            'label' => 'Requests', 'short' => 'Requests',
+            'label' => 'Co-Farmer Requests', 'short' => 'Requests',
             'url' => route('community.connect.requests'),
+            'pic' => 'friend-request.png',
             'icon' => 'M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM19 8v6M22 11h-6',
         ],
         'profile' => [
             'label' => 'Profile', 'short' => 'Profile',
             'url' => route('community.connect.profile', ['userId' => auth()->id()]),
+            'pic' => 'user.png',
             'icon' => 'M5.1 19a7 7 0 0113.8 0M12 11a4 4 0 100-8 4 4 0 000 8z',
         ],
     ];
@@ -165,7 +172,11 @@
             aria-haspopup="dialog" title="Community sections">
         {{-- The section you are in wears its own mark, so the button says
              where you are twice over — the lines alone said only "menu". --}}
-        <svg class="w-4 h-4 cn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $sections[$active]['icon'] ?? 'M4 6h16M4 12h16M4 18h16' }}"/></svg>
+        @if (! empty($sections[$active]['pic']))
+            <img src="{{ asset('images/' . $sections[$active]['pic']) }}" alt="" class="w-4 h-4 cn-icon" style="object-fit:contain">
+        @else
+            <svg class="w-4 h-4 cn-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $sections[$active]['icon'] ?? 'M4 6h16M4 12h16M4 18h16' }}"/></svg>
+        @endif
         <span class="cn-current"><span class="cn-prefix">Community &middot; </span>{{ $currentShort }}</span>
         @if ($badgeTotal > 0)
             {{-- Closed, the button still says there is something inside. --}}
@@ -196,7 +207,11 @@
             <a href="{{ $section['url'] }}" class="cn-row{{ $key === $currentKey ? ' is-current' : '' }}"
                @if ($key === $currentKey) aria-current="page" @endif>
                 <span class="cn-ico">
-                    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $section['icon'] }}"/></svg>
+                    @if (! empty($section['pic']))
+                        <img src="{{ asset('images/' . $section['pic']) }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain">
+                    @else
+                        <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $section['icon'] }}"/></svg>
+                    @endif
                 </span>
                 <span class="cn-row-label">{{ $section['label'] }}</span>
                 {{-- Which section the news is actually in, so the total on the
