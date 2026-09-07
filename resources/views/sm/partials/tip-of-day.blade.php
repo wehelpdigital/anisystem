@@ -45,7 +45,7 @@
              technician opens with it already in the box. --}}
         @php $todAsk = 'About today\'s tip: "' . $tip['text'] . '" — what should I do about this on my farm?'; @endphp
         <a class="tod-ask" href="{{ $aiHref }}" data-ai-ask="{{ $todAsk }}">
-            Ask the AI technician about this
+            Ask {{ \App\Models\AiSetting::current()->assistantName }}, your smart agricultural technician about this
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
     @endif
