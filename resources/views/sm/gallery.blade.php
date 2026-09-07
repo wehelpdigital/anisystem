@@ -505,7 +505,8 @@
          * explained. Videos get their own tab because you pick a video and
          * scan photos, and mixing them makes both harder.
          * ============================================================= */
-        const KIND_LABEL = { drawing: 'Drawing', map: 'Map', video: 'Video', image: '' };
+        const KIND_LABEL = { drawing: 'Drawing', map: 'Map', video: 'Video', audio: 'Voice', image: '' };
+        const VOICE_ICON = @json(asset('images/voice-recorder.png'));
         let findText = '';
         let findSource = '';
 
@@ -560,8 +561,15 @@
                    </button>`
                 : '';
             // Photos and videos open in the lightbox; drawings and maps open
-            // where they can be worked on.
-            const tile = (kind === 'drawing' || kind === 'map') && m.href
+            // where they can be worked on; a voice note unfolds its player
+            // right on the shelf (the chip handler the notes use).
+            const tile = kind === 'audio'
+                ? `<button type="button" class="ga-item ga-item-audio" data-audio-url="${esc(m.url)}">
+                        <div class="ga-shot ga-shot-audio"><img src="${VOICE_ICON}" alt="" class="is-loaded" style="object-fit:contain;padding:1.4rem">${badge}</div>
+                        <div class="ga-info"><span class="ga-it">${esc(m.title)}</span>
+                        <span class="ga-is">${esc(m.source)}${m.when ? ' · ' + esc(m.when) : ''}</span></div>
+                   </button>`
+                : (kind === 'drawing' || kind === 'map') && m.href
                 ? `<a class="ga-item" href="${esc(m.href)}">${inner}</a>`
                 // The same strip the Albums tab hangs on the lightbox reads
                 // these. Without them one album picture said its name when

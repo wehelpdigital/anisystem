@@ -237,6 +237,10 @@
                     <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/></svg>
                     Record
                 </button>
+                <button type="button" class="btn btn-white btn-sm" id="noteVoiceBtn">
+                    <img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:1rem;height:1rem;object-fit:contain">
+                    <span id="noteVoiceLabel">Voice</span>
+                </button>
                 <span class="js-video-chip"></span>
             </div>
             <div class="tp-mount mt-3" id="noteTagsMount" data-tags data-tags-kind="note"></div>
@@ -272,6 +276,7 @@ const __init = () => {
         destroy: (id) => @json(route('sm.notes.destroy')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + id,
         upload: @json(route('sm.notes.image-upload')) + '?scheduleId=' + SCHEDULE_ID,
         videoUpload: @json(route('sm.notes.video-upload')) + '?scheduleId=' + SCHEDULE_ID,
+        audioUpload: @json(route('sm.notes.audio-upload')) + '?scheduleId=' + SCHEDULE_ID,
         // This schedule's Gallery albums, for the post-recording sheet's
         // "file it in an album too" select.
         albums: @json(route('quick-capture.albums')),
@@ -662,6 +667,55 @@ const __init = () => {
             toast(json.message || 'Video attached.');
         } catch (err) { toast(err.message, 'error'); }
     }
+
+    /* ---- a spoken attachment: tap Voice to record, tap again to stop ----
+       The button is the whole recorder — no sheet, because the person is
+       mid-note. The clip uploads like a video and joins the media strip. */
+    let vRec = null, vChunks = [], vStream = null, vTimer = null, vT0 = 0;
+    const voiceBtn = fld('noteVoiceBtn');
+    const voiceLabel = fld('noteVoiceLabel');
+    voiceBtn?.addEventListener('click', async () => {
+        if (vRec) {
+            const r = vRec;
+            vRec = null;
+            clearInterval(vTimer);
+            r.onstop = async () => {
+                vStream?.getTracks().forEach((t) => t.stop());
+                vStream = null;
+                const type = r.mimeType || 'audio/webm';
+                const blob = new Blob(vChunks, { type });
+                vChunks = [];
+                voiceLabel.textContent = 'Voice';
+                voiceBtn.classList.remove('text-red-600');
+                const file = new File([blob], 'voice-note.' + (type.includes('mp4') ? 'm4a' : 'webm'), { type });
+                try {
+                    const json = await uploadWithProgress(URLS.audioUpload, 'audio', file);
+                    media.push({ type: 'audio', path: json.data.path, url: json.data.url, title: json.data.title || null });
+                    renderMthumbs();
+                    toast(json.message || 'Voice note attached.');
+                } catch (err) { toast(err.message, 'error'); }
+            };
+            try { r.stop(); } catch (_) { }
+            return;
+        }
+        if (!navigator.mediaDevices || !window.MediaRecorder) { toast('This browser cannot record audio.', 'error'); return; }
+        try { vStream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+        catch (_) { toast('Microphone blocked. Allow it for this site.', 'error'); return; }
+        vChunks = [];
+        const mime = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4'].find((t) => MediaRecorder.isTypeSupported(t)) || '';
+        try { vRec = new MediaRecorder(vStream, mime ? { mimeType: mime } : undefined); }
+        catch (_) { vRec = new MediaRecorder(vStream); }
+        vRec.ondataavailable = (e) => { if (e.data && e.data.size) vChunks.push(e.data); };
+        vRec.start(250);
+        vT0 = Date.now();
+        voiceBtn.classList.add('text-red-600');
+        const tick = () => {
+            const s = Math.floor((Date.now() - vT0) / 1000);
+            voiceLabel.textContent = 'Stop ' + Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+        };
+        tick();
+        vTimer = setInterval(tick, 500);
+    });
 
     noteVideoInput?.addEventListener('change', async () => {
         const file = noteVideoInput.files && noteVideoInput.files[0]; if (!file) return;

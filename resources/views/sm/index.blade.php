@@ -858,6 +858,14 @@
                     </span>
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
+                <button type="button" id="quickVoiceBtn" class="qa-tile qa-rec">
+                    <span class="qa-ico"><img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
+                    <span class="qa-txt">
+                        <b>Quick Voice</b>
+                        <i>Say what you are seeing and file it as a note, faster than typing in the field.</i>
+                    </span>
+                    <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </button>
             @endif
         </div>
               </div>
@@ -1209,6 +1217,7 @@
     @endif
     @if (\App\Support\WorkerContext::canUseModule('video'))
         @include('sm.partials.quick-record', ['allSchedules' => $allSchedules])
+        @include('sm.partials.quick-voice', ['allSchedules' => $allSchedules])
     @endif
     {{-- Whether the tools panel is open. Kept per farm beside the folds this
          page already remembers, so a worker standing in somebody else's farm

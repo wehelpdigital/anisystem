@@ -39,6 +39,10 @@ class SeasonMedia
      */
     public static function kindOf(?string $path): string
     {
+        if (preg_match('~\.(m4a|mp3|ogg|oga|wav|aac|opus)$~i', (string) $path)) {
+            return 'audio';
+        }
+
         return preg_match('~\.(mp4|mov|webm|mkv|m4v|3gp|avi)$~i', (string) $path) ? 'video' : 'image';
     }
 
@@ -59,8 +63,9 @@ class SeasonMedia
             $type = (string) ($m['type'] ?? 'image');
             // A saved map is a picture of a plan; a drawing is a picture with
             // strokes behind it. Both belong in "everything" — they were the
-            // two things a grower could never find again.
-            if ($type !== 'video' && $type !== 'drawing' && $type !== 'map') {
+            // two things a grower could never find again. A voice note is
+            // the season's media too, even with nothing to look at.
+            if (! in_array($type, ['video', 'drawing', 'map', 'audio'], true)) {
                 $type = 'image';
             }
 

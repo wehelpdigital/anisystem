@@ -264,6 +264,41 @@ class NoteController extends BaseScheduleController
         ]);
     }
 
+    /**
+     * A voice note onto a note — recorded in the editor, no transcoding:
+     * a minute of Opus is already smaller than one photo.
+     */
+    public function uploadAudio(Request $request)
+    {
+        $schedule = $this->scheduleForNote($request);
+
+        $validator = Validator::make($request->all(), [
+            'audio' => 'required|file|max:51200|mimetypes:audio/webm,audio/ogg,audio/mp4,audio/mpeg,audio/aac,audio/wav,audio/x-wav,audio/x-m4a,video/webm',
+            'title' => 'nullable|string|max:191',
+        ], [
+            'audio.required' => 'Record something first.',
+            'audio.max' => 'That recording is larger than 50 MB — record a shorter one.',
+            'audio.mimetypes' => 'That does not sound like an audio recording.',
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+
+        $path = \App\Support\MediaStore::putFile($request->file('audio'), 'notes', $schedule->id);
+        if ($path === null) {
+            return $this->jsonFail('The recording could not be saved. Try again.', 422);
+        }
+
+        return $this->jsonOk('Voice note attached.', [
+            'data' => [
+                'type' => 'audio',
+                'path' => $path,
+                'url' => \App\Support\MediaStore::url($path),
+                'title' => filled($request->input('title')) ? trim((string) $request->input('title')) : null,
+            ],
+        ]);
+    }
+
     // ------------------------------------------------------------------
 
     private function find(int $scheduleId, int $id): ?AsScheduleNote
@@ -286,7 +321,7 @@ class NoteController extends BaseScheduleController
             'media' => 'nullable|array|max:20',
             // 'drawing' is an image that also carries its strokes, so it can be
             // reopened and edited; 'map' is a saved map picture.
-            'media.*.type' => 'required_with:media|in:image,video,drawing,map',
+            'media.*.type' => 'required_with:media|in:image,video,drawing,map,audio',
             'media.*.path' => 'required_with:media|string|max:500',
             'media.*.poster' => 'nullable|string|max:500',
             // A recording is asked for its name and story the moment it
@@ -306,7 +341,7 @@ class NoteController extends BaseScheduleController
         $data['body'] = filled($data['body'] ?? null) ? HtmlSanitizer::rich($data['body']) : null;
         $data['imagePath'] = $data['imagePath'] ?? null;
         $data['media'] = collect($data['media'] ?? [])
-            ->filter(fn ($m) => in_array($m['type'] ?? '', ['image', 'video', 'drawing', 'map'], true) && filled($m['path'] ?? null))
+            ->filter(fn ($m) => in_array($m['type'] ?? '', ['image', 'video', 'drawing', 'map', 'audio'], true) && filled($m['path'] ?? null))
             ->map(fn ($m) => array_filter([
                 'type' => $m['type'],
                 'path' => $m['path'],

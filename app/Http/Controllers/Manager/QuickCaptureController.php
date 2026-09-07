@@ -230,6 +230,67 @@ class QuickCaptureController extends BaseScheduleController
     }
 
     /**
+     * Quick Voice — a spoken note, filed the way a photo is.
+     *
+     * No transcoding: a minute of Opus is under a megabyte already, and the
+     * whole point of speaking instead of typing is that it costs nothing.
+     * The recording lands as a note wearing an 'audio' media entry, which
+     * the notebook plays in place and the Gallery lists beside the photos.
+     */
+    public function storeVoice(Request $request)
+    {
+        $schedule = $this->schedule($request->input('scheduleId'));
+        $this->assertCanEdit();
+        $this->assertUnlocked($schedule);
+
+        $request->validate([
+            'scheduleId' => 'required|integer',
+            'title' => 'nullable|string|max:191',
+            'note' => 'nullable|string|max:50000',
+            'clip' => 'required|file|max:51200|mimetypes:audio/webm,audio/ogg,audio/mp4,audio/mpeg,audio/aac,audio/wav,audio/x-wav,audio/x-m4a,video/webm',
+        ], [
+            'clip.required' => 'Record something first.',
+            'clip.max' => 'That recording is larger than 50 MB — record a shorter one.',
+            'clip.mimetypes' => 'That does not sound like an audio recording.',
+        ]);
+
+        $path = \App\Support\MediaStore::putFile($request->file('clip'), 'schedule-notes', $schedule->id);
+        if ($path === null) {
+            return $this->jsonFail('The recording could not be saved. Try again.', 422);
+        }
+
+        $title = filled($request->input('title'))
+            ? trim((string) $request->input('title'))
+            : 'Voice note — ' . Carbon::now()->format('M j, Y g:i A');
+        $body = filled($request->input('note'))
+            ? HtmlSanitizer::rich($request->input('note'))
+            : null;
+        $plainBody = $body !== null ? trim(strip_tags($body)) : '';
+
+        $note = AsScheduleNote::create([
+            'croppingScheduleId' => $schedule->id,
+            'userId' => Auth::id(),
+            'title' => $title,
+            'body' => $body,
+            'imagePath' => null,
+            'media' => [array_filter([
+                'type' => 'audio',
+                'path' => $path,
+                'title' => $title,
+                'description' => $plainBody !== '' ? $plainBody : null,
+            ], fn ($v) => $v !== null)],
+            'deleteStatus' => 1,
+        ]);
+
+        return $this->jsonOk('Voice note saved.', [
+            'noteId' => $note->id,
+            'path' => $path,
+            'url' => \App\Support\MediaStore::url($path),
+            'notesUrl' => route('sm.notes', ['id' => $schedule->id]),
+        ]);
+    }
+
+    /**
      * The album a capture is going into: the one chosen, or a new one.
      *
      * Never refuses the pictures for want of a name — the typed name wins,

@@ -51,6 +51,13 @@
                 @else
                     </button>
                 @endif
+            @elseif ($type === 'audio')
+                {{-- A voice note: the chip unfolds a player in place (the
+                     delegated handler lives with the lightbox partial). --}}
+                <button type="button" class="na na-audio" data-audio-url="{{ $m['url'] }}" title="{{ filled($m['title'] ?? null) ? 'Play: ' . $m['title'] : 'Play this voice note' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 003-3V6a3 3 0 10-6 0v6a3 3 0 003 3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-14 0M12 18v3m-3 0h6"/></svg>
+                    <span style="max-width: 11rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ filled($m['title'] ?? null) ? $m['title'] : 'Voice note' }}</span>
+                </button>
             @elseif ($type === 'video')
                 {{-- A recording carries the name it was given the moment it
                      stopped; the chip wears it so three clips on one note

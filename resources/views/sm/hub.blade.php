@@ -441,6 +441,20 @@
             </span>
             <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
+
+        {{-- Quick Voice — for the walk when both hands are busy and the
+             observation is a sentence, not a picture. --}}
+        <button type="button" id="quickVoiceBtn"
+            class="cta-tile qr-cta rounded-2xl p-5 flex items-center gap-4 text-left">
+            <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
+                <img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:1.75rem;height:1.75rem;object-fit:contain">
+            </span>
+            <span class="min-w-0 grow">
+                <span class="cta-title block text-lg font-bold leading-tight">Quick Voice</span>
+                <span class="cta-sub block text-sm leading-snug mt-0.5">Say it, and it files itself as a note.</span>
+            </span>
+            <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
         @endif
     </div>
 
@@ -537,6 +551,7 @@
          one you meant. Quick Record borrows the shared recorder. --}}
     @if ($may('video'))
     @include('sm.partials.quick-record', ['fixedScheduleId' => $schedule->id, 'allSchedules' => collect()])
+    @include('sm.partials.quick-voice', ['fixedScheduleId' => $schedule->id, 'allSchedules' => collect()])
     @endif
     @include('community.partials.video-js')
     {{-- The bubble is the AI technician wearing a different hat: removing its

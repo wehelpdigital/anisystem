@@ -45,6 +45,12 @@
     .na-video svg { color: #b91c1c; }
     .na-draw svg { color: #7c3aed; }
     .na-map svg { color: #15803d; }
+    .na-audio svg { color: #d97706; }
+    .na-audio.is-playing { border-color: #d97706; color: #92400e; }
+    /* The player a voice chip unfolds: a full row of its own, so the
+       controls are not squeezed into a pill. */
+    .na-audio-player { display: block; width: 100%; margin: .2rem 0; }
+    .na-audio-player audio { width: 100%; max-width: 24rem; height: 2.2rem; display: block; }
     html.dark .na { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
     html.dark .na:hover { background: #24301a; border-color: #3d6823; }
     @media (prefers-reduced-motion: reduce) { .na { transition: none; } }
@@ -130,6 +136,13 @@
         + ` onerror="this.closest('.nm')?.classList.add('is-gone'); this.remove();"`;
     window.noteMediaThumb = function (m, extra, editIndex) {
         const url = m.url || '', poster = m.posterUrl || '';
+        if (m.type === 'audio') {
+            // A voice note in the editor's media strip: a tile that plays in
+            // place through the same chip handler the note cards use.
+            return `<div class="nm nm-audio" data-audio-url="${esc(url)}" title="Play this voice note" style="display:flex;align-items:center;justify-content:center;background:#3a2f14">`
+                + '<svg viewBox="0 0 24 24" fill="none" stroke="#f0b429" stroke-width="1.8" style="width:2rem;height:2rem"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 003-3V6a3 3 0 10-6 0v6a3 3 0 003 3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-14 0M12 18v3m-3 0h6"/></svg>'
+                + `${extra || ''}</div>`;
+        }
         if (m.type === 'drawing') {
             // In the editor (editIndex given) the tile reopens the drawing; in
             // a read view it behaves like any other picture.
@@ -169,7 +182,40 @@
             video: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>',
             draw: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4"/></svg>',
             map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>',
+            audio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 003-3V6a3 3 0 10-6 0v6a3 3 0 003 3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-14 0M12 18v3m-3 0h6"/></svg>',
         };
+        return `<div class="note-atts">${window.__naCells(items, ICON, esc)}</div>`;
+    };
+
+    /* A voice chip unfolds a player right where it stands — no lightbox for
+       something with nothing to look at. One player at a time; tapping the
+       chip again folds it away. Delegated once, for every chip everywhere. */
+    if (!window.__naAudioBound) {
+        window.__naAudioBound = true;
+        document.addEventListener('click', (e) => {
+            const chip = e.target.closest('[data-audio-url]');
+            if (!chip) return;
+            e.preventDefault();
+            const wasOpen = chip.nextElementSibling?.classList?.contains('na-audio-player');
+            document.querySelectorAll('.na-audio-player').forEach((p) => {
+                p.querySelector('audio')?.pause();
+                p.remove();
+            });
+            document.querySelectorAll('.na-audio.is-playing').forEach((c) => c.classList.remove('is-playing'));
+            if (wasOpen) return;   // the sweep just closed it
+            const wrap = document.createElement('span');
+            wrap.className = 'na-audio-player';
+            const audio = document.createElement('audio');
+            audio.controls = true;
+            audio.autoplay = true;
+            audio.src = chip.dataset.audioUrl;
+            wrap.appendChild(audio);
+            chip.after(wrap);
+            chip.classList.add('is-playing');
+        });
+    }
+
+    window.__naCells = function (items, ICON, esc) {
         const cells = items.map((m) => {
             // Only the item's OWN links are honoured — a page-level fallback
             // here made the chips diverge from the Blade twin the moment
@@ -194,9 +240,12 @@
             if (m.type === 'video') {
                 return `<button type="button" class="na na-video" data-lb-type="video" data-lb-url="${esc(m.url || '')}" data-lb-poster="${esc(m.posterUrl || '')}" title="Play this video">${ICON.video}<span>Video</span></button>`;
             }
+            if (m.type === 'audio') {
+                return `<button type="button" class="na na-audio" data-audio-url="${esc(m.url || '')}" title="Play this voice note">${ICON.audio}<span style="max-width: 11rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${esc(m.title || 'Voice note')}</span></button>`;
+            }
             return `<button type="button" class="na na-photo" data-lb-type="image" data-lb-url="${esc(m.url || '')}" title="Open this photo">${ICON.photo}<span>Photo</span></button>`;
         }).join('');
-        return `<div class="note-atts">${cells}</div>`;
+        return cells;
     };
 
     const lb = document.getElementById('noteLightbox');

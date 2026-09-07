@@ -138,6 +138,9 @@ class WorkerModuleAccess
         ['sm.notes.video-upload',   'video'],
         ['notes.hub.video-upload',  'video'],
         ['quick-record.clip',       'video'],
+        // Speaking a note is recording, same as filming one.
+        ['quick-voice.clip',        'video'],
+        ['sm.notes.audio-upload',   'video'],
 
         // ---- the toggle that never did anything --------------------------
         // communityAccess has been on the grant since worker logins existed

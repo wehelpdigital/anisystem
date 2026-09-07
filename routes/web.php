@@ -269,6 +269,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-notes-delete', [App\Http\Controllers\Manager\NoteController::class, 'destroy'])->name('sm.notes.destroy');
     Route::post('/app/sm-notes-image-upload', [App\Http\Controllers\Manager\NoteController::class, 'uploadImage'])->name('sm.notes.image-upload');
     Route::post('/app/sm-notes-video-upload', [App\Http\Controllers\Manager\NoteController::class, 'uploadVideo'])->name('sm.notes.video-upload');
+    Route::post('/app/sm-notes-audio-upload', [App\Http\Controllers\Manager\NoteController::class, 'uploadAudio'])->name('sm.notes.audio-upload');
 
     // Quick Share — email today's / tomorrow's plan to workers with an email.
     Route::post('/app/sm-quick-share-email', [App\Http\Controllers\Manager\ScheduleShareController::class, 'emailWorkers'])->name('sm.quick-share.email');
@@ -276,6 +277,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // Quick Capture — save a captured photo group as notes on a schedule.
     Route::post('/app/quick-capture-notes', [App\Http\Controllers\Manager\QuickCaptureController::class, 'storeNotes'])->name('quick-capture.notes');
     Route::post('/app/quick-record-clip', [App\Http\Controllers\Manager\QuickCaptureController::class, 'storeClip'])->name('quick-record.clip');
+    Route::post('/app/quick-voice-clip', [App\Http\Controllers\Manager\QuickCaptureController::class, 'storeVoice'])->name('quick-voice.clip');
     Route::get('/app/quick-capture-albums', [App\Http\Controllers\Manager\QuickCaptureController::class, 'albums'])->name('quick-capture.albums');
     Route::post('/app/quick-capture-gallery', [App\Http\Controllers\Manager\QuickCaptureController::class, 'storeGallery'])->name('quick-capture.gallery');
 
