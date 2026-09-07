@@ -67,13 +67,23 @@ class NotesHubController extends Controller
             $items->push($this->row($n->id, 'global', $n->title, $n->body, $n->imagePath, 'Global note', null, $n->updated_at, $n->media));
         }
 
+        // A note the map save created points at its own save, so a map chip
+        // can open the map itself rather than the module's front door. One
+        // lookup for the whole shelf; note ids are unique across seasons.
+        $savesByNote = empty($scheduleIds) ? collect() : \App\Models\ScheduleMapSave::active()
+            ->whereIn('scheduleId', $scheduleIds)
+            ->whereNotNull('noteId')
+            ->orderByDesc('id')
+            ->pluck('id', 'noteId');
+
         // Per-schedule notebook notes.
         foreach (AsScheduleNote::active()->whereIn('croppingScheduleId', $scheduleIds)->where('croppingScheduleId', '!=', self::GLOBAL_SCHEDULE_ID)->orderByDesc('id')->get() as $n) {
             $items->push($this->row(
                 $n->id, 'schedule', $n->title, $n->body, $n->imagePath,
                 $titles[$n->croppingScheduleId] ?? 'Schedule',
                 route('sm.notes', ['id' => $n->croppingScheduleId]),
-                $n->updated_at, $n->media
+                $n->updated_at, $n->media,
+                (int) $n->croppingScheduleId, $savesByNote[$n->id] ?? null
             ));
         }
 
@@ -253,16 +263,38 @@ class NotesHubController extends Controller
             ->values()->all() ?: null;
     }
 
-    private function mediaWithUrls($media): array
+    private function mediaWithUrls($media, ?int $scheduleId = null, ?int $noteId = null, $mapSaveId = null): array
     {
+        $inWorker = \App\Support\WorkerContext::inWorkerContext();
+
         return collect(is_array($media) ? $media : [])
-            ->map(fn ($m) => empty($m['path']) ? null : [
-                'type' => $m['type'] ?? 'image',
-                // The chip wears a recording's own name instead of "Video".
-                'title' => $m['title'] ?? null,
-                'url' => \App\Support\MediaStore::url($m['path']),
-                'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
-            ])
+            ->map(function ($m, $i) use ($scheduleId, $noteId, $mapSaveId, $inWorker) {
+                if (empty($m['path'])) {
+                    return null;
+                }
+                // A map saved before the type existed is known by the filename
+                // the map save writes — the same recognition the chips use.
+                $isMap = ($m['type'] ?? '') === 'map'
+                    || (bool) preg_match('~/map-[A-Za-z0-9]+\.png$~', (string) $m['path']);
+
+                return [
+                    'type' => $isMap ? 'map' : ($m['type'] ?? 'image'),
+                    // The chip wears a recording's own name instead of "Video".
+                    'title' => $m['title'] ?? null,
+                    'url' => \App\Support\MediaStore::url($m['path']),
+                    'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
+                    // A season's drawing or map opens in its module, exactly as
+                    // the season's own Notes shelf links it. A global note has
+                    // no module, so its chip keeps opening the picture — and a
+                    // worker is not sent to a module that would only say no.
+                    'mapUrl' => ($isMap && $scheduleId && ! $inWorker)
+                        ? route('sm.maps', array_filter(['id' => $scheduleId, 'save' => $mapSaveId]))
+                        : null,
+                    'drawUrl' => (($m['type'] ?? '') === 'drawing' && $scheduleId && $noteId)
+                        ? route('sm.draw', ['id' => $scheduleId, 'open' => $noteId . ':' . $i])
+                        : null,
+                ];
+            })
             ->filter()->values()->all();
     }
 
@@ -309,7 +341,7 @@ class NotesHubController extends Controller
         ]);
     }
 
-    private function row($id, string $type, ?string $title, ?string $body, ?string $imagePath, string $address, ?string $url, $ts, $media = null): array
+    private function row($id, string $type, ?string $title, ?string $body, ?string $imagePath, string $address, ?string $url, $ts, $media = null, ?int $scheduleId = null, $mapSaveId = null): array
     {
         return [
             'id' => $id,
@@ -317,7 +349,7 @@ class NotesHubController extends Controller
             'title' => $title ?: 'Untitled',
             'body' => $body,
             'imageUrl' => $imagePath ? \App\Support\MediaStore::url($imagePath) : null,
-            'media' => $this->mediaWithUrls($media),
+            'media' => $this->mediaWithUrls($media, $scheduleId, is_int($id) ? $id : null, $mapSaveId),
             'address' => $address,
             'url' => $url,
             'ts' => $ts,
