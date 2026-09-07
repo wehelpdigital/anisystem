@@ -1892,28 +1892,47 @@ document.addEventListener('pointerdown', (e) => {
     ];
     const ANY = FOLDS.map((f) => f.sel).join(',');
 
+    // The stylesheet resumes after any ride or skip: 0 when shut, free when
+    // open. Every path below ends here — a fold whose class says open but
+    // whose inline pin says 0px is a card that LOOKS shut with its chevron
+    // down, which is the ghost this function exists to make impossible.
+    function settle(el) {
+        clearTimeout(el.__concertina);
+        el.__concertina = null;
+        el.style.maxHeight = '';
+        el.style.transition = '';
+    }
+
     function slide(el, toShut) {
+        // Whatever happens next, no previous ride's pin may outlive this
+        // flip — the skip paths used to leave one behind.
+        clearTimeout(el.__concertina);
         // Snap when motion is unwelcome, or before anyone has touched the
         // page — a page arranging itself at load is not a gesture answered.
-        if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        if (!(navigator.userActivation && navigator.userActivation.hasBeenActive)) return;
+        if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { settle(el); return; }
+        if (!(navigator.userActivation && navigator.userActivation.hasBeenActive)) { settle(el); return; }
         const full = el.scrollHeight;
-        if (!full) return;
+        if (!full) { settle(el); return; }
         // Mid-flight the inline pin says where the fold really is; settled,
         // direction says it. scrollHeight ignores max-height, so `full` is
         // honest either way.
         const from = el.style.maxHeight ? el.getBoundingClientRect().height : (toShut ? full : 0);
         const to = toShut ? 0 : full;
-        if (Math.abs(from - to) < 1) return;
-        clearTimeout(el.__concertina);
+        if (Math.abs(from - to) < 1) { settle(el); return; }
         el.style.transition = 'none';
         el.style.maxHeight = from + 'px';
         void el.offsetHeight;
         el.style.transition = '';
         el.style.maxHeight = to + 'px';
-        // After the ride the stylesheet resumes: 0 when shut, free when
-        // open — so content that grows later is never clipped at old size.
-        el.__concertina = setTimeout(() => { el.style.maxHeight = ''; el.style.transition = ''; }, 340);
+        // Two ways home: the transition's own end, and a timer for frames a
+        // busy phone drops — whichever comes first clears the pin.
+        const done = (ev) => {
+            if (ev && (ev.target !== el || ev.propertyName !== 'max-height')) return;
+            el.removeEventListener('transitionend', done);
+            settle(el);
+        };
+        el.addEventListener('transitionend', done);
+        el.__concertina = setTimeout(done, 420);
     }
 
     new MutationObserver((muts) => {

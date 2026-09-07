@@ -879,6 +879,18 @@ const __init = () => {
             if (card.classList.contains('is-collapsed')) collapsedIds.add(String(id)); else collapsedIds.delete(String(id));
             persistFold();
             syncFoldButton();
+            // Self-healing: a card whose class says open must LOOK open. If
+            // the fold still stands at zero once the ride should be over —
+            // a stranded inline pin, a dropped frame — strip the inline
+            // styles and let the stylesheet have it.
+            setTimeout(() => {
+                if (card.classList.contains('is-collapsed')) return;
+                const f = card.querySelector('.note-fold');
+                if (f && f.scrollHeight > 2 && f.getBoundingClientRect().height < 2) {
+                    f.style.maxHeight = '';
+                    f.style.transition = '';
+                }
+            }, 800);
             return;
         }
         if (e.target.closest('.js-delete')) {
