@@ -552,15 +552,18 @@ html.rl-open, html.rl-open body { overflow: hidden; }
 .help-btn.is-new::after { content: ''; position: absolute; inset: 0; border-radius: inherit;
     border: 2px solid var(--color-brand-500); animation: helpRipple 2.2s cubic-bezier(.22,1,.36,1) infinite; }
 @keyframes helpPulse { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+/* The ring grows by a fixed DISTANCE on every side, not by a scale: a scale
+   tuned for the wide desktop pill (more Y than X) squeezed the phone's round
+   button into an oblong. Growing the inset keeps every shape its own —
+   circle stays circle, pill stays pill — and the overhang is the same
+   handful of pixels on all sides. */
 @keyframes helpRipple {
-    0% { transform: scale(1); opacity: .7; }
-    70% { transform: scale(1.14, 1.45); opacity: 0; }
-    100% { transform: scale(1.14, 1.45); opacity: 0; }
+    0% { inset: 0; opacity: .7; }
+    70% { inset: -.45rem; opacity: 0; }
+    100% { inset: -.45rem; opacity: 0; }
 }
-/* The ripple used to swell 45% past a WIDE pill on the X axis too, throwing
-   its ring into the bell's gap — the bell then read as sitting off-centre
-   between the help button and the avatar. The swell is tamed sideways and
-   the pill buys the remaining overhang back as real margin. */
+/* The overhang toward the bell is bought back as real margin, so the bell
+   never reads as sitting off-centre between the button and the avatar. */
 .help-btn.is-new { margin-right: .45rem; }
 /* And the bell leans toward the help side outright — asked for by eye, not
    by measurement: equal gaps still read right-heavy beside a round photo. */
