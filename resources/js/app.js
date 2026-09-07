@@ -226,7 +226,7 @@ window.api = async function api(url, { method = 'GET', body = null, headers = {}
     // A tier wall: the feature exists, this plan does not include it. The
     // upgrade sheet says so kindly instead of a bare red toast.
     if (res.status === 403 && json?.tierLock) {
-        window.aneeUpgrade?.(json.message);
+        window.aneeUpgrade?.(json.message, json.tier || 'solo');
         const err = new Error(json.message || 'This feature is for subscribers.');
         err.tierLock = true;
         throw err;
@@ -1790,27 +1790,43 @@ document.addEventListener('pointerdown', (e) => {
 /* ------------------------------------------------------------------ */
 /* The upgrade sheet — what a tier wall says.                          */
 /*                                                                     */
-/* Server gates refuse with {tierLock: true} and api() routes the      */
-/* message here: a small centred card naming what the plan lacks and   */
-/* offering the plans page, instead of a bare red toast. Locked        */
-/* buttons stay visible and faded across the app; this is what they    */
-/* open onto.                                                          */
+/* Server gates refuse with {tierLock: true, tier: 'solo'|'owner'} and */
+/* api() routes both here. The sheet sells the exact rung that opens   */
+/* the door — name, price, what it brings — instead of a vague         */
+/* "subscribers". Locked buttons across the app stay visible with a    */
+/* lock chip ([data-tier-lock], wired below); this is what they open.  */
 /* ------------------------------------------------------------------ */
-window.aneeUpgrade = function aneeUpgrade(message) {
+const AU_TIERS = {
+    solo: {
+        name: 'Solo Farmer',
+        price: '₱200', per: '/month', year: 'or ₱1,800/year — about ₱150/mo',
+        points: [
+            '3 active seasons, 5 lots each',
+            'Full weather, all reports, unlimited maps',
+            'Video & voice recording, document uploads',
+            '30 AI credits every renewal · 6 GB storage',
+        ],
+    },
+    owner: {
+        name: 'Farm Owner',
+        price: '₱600', per: '/month', year: 'or ₱6,500/year — about ₱542/mo',
+        points: [
+            'Everything in Solo Farmer, unlimited',
+            'Worker logins and access levels',
+            'Collab room: team chat, whiteboard, calls',
+            '100 AI credits every renewal · 15 GB storage',
+        ],
+    },
+};
+
+window.aneeUpgrade = function aneeUpgrade(message, tier = 'solo') {
     window.__tierLockMsg = message;
     window.__tierLockAt = Date.now();
+    const t = AU_TIERS[tier] || AU_TIERS.solo;
     let box = document.getElementById('aneeUpgradeBox');
     if (!box) {
         box = document.createElement('div');
         box.id = 'aneeUpgradeBox';
-        box.innerHTML = '<div class="au-card" role="dialog" aria-modal="true" aria-label="Upgrade">'
-            + '<div class="au-emo">🔒</div>'
-            + '<h3>Oops — this one is for subscribers</h3>'
-            + '<p id="aneeUpgradeSay"></p>'
-            + '<div class="au-acts">'
-            + '<a class="btn btn-primary" href="/account/subscription">See the plans</a>'
-            + '<button type="button" class="btn btn-white" data-au-close>Not now</button>'
-            + '</div></div>';
         document.body.appendChild(box);
         box.addEventListener('click', (e) => {
             if (e.target === box || e.target.closest('[data-au-close]')) box.classList.remove('is-open');
@@ -1819,10 +1835,38 @@ window.aneeUpgrade = function aneeUpgrade(message) {
             if (e.key === 'Escape') box.classList.remove('is-open');
         });
     }
-    box.querySelector('#aneeUpgradeSay').textContent = message
-        || 'Your current plan does not include this feature. Upgrade to unlock it.';
+    const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    box.innerHTML = '<div class="au-card" role="dialog" aria-modal="true" aria-label="Upgrade">'
+        + '<div class="au-head">'
+        + '<span class="au-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>'
+        + '<div class="au-head-say"><span class="au-kicker">Locked on your plan</span>'
+        + '<h3>This comes with ' + esc(t.name) + '</h3></div>'
+        + '</div>'
+        + '<p class="au-msg">' + esc(message || 'Your current plan does not include this feature. Upgrade to unlock it.') + '</p>'
+        + '<div class="au-tier">'
+        + '<div class="au-tier-top"><span class="au-tier-name">' + esc(t.name) + '</span>'
+        + '<span class="au-tier-price">' + esc(t.price) + '<em>' + esc(t.per) + '</em></span></div>'
+        + '<div class="au-tier-year">' + esc(t.year) + '</div>'
+        + '<ul class="au-tier-list">' + t.points.map((p) => '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>' + esc(p) + '</li>').join('') + '</ul>'
+        + '</div>'
+        + '<div class="au-acts">'
+        + '<a class="btn btn-accent" href="/account/subscription">Upgrade your access</a>'
+        + '<button type="button" class="btn btn-white" data-au-close>Not now</button>'
+        + '</div></div>';
     box.classList.add('is-open');
 };
+
+/* Locked doors, wired once for the whole app: any element carrying
+   data-tier-lock="solo|owner" (with data-lock-say for the sentence)
+   opens the upgrade sheet instead of doing what it looks like it does.
+   Capture phase, so the element's own handlers never fire. */
+document.addEventListener('click', (e) => {
+    const locked = e.target.closest?.('[data-tier-lock]');
+    if (!locked) return;
+    e.preventDefault();
+    e.stopPropagation();
+    window.aneeUpgrade(locked.dataset.lockSay || '', locked.dataset.tierLock || 'solo');
+}, true);
 
 /* ------------------------------------------------------------------ */
 /* Arriving on the exact thing a link named.                           */

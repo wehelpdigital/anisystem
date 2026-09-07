@@ -139,7 +139,23 @@
     const skyArt = (d, size, night) => (window.wxSky ? window.wxSky(skyOf(d, night), size) : (d.emoji || ''));
 
     function dayStrip(days) {
-        return '<div class="flex gap-1">' + days.map((d) => `
+        return '<div class="flex gap-1">' + days.map((d) => {
+            /* A day past the plan's horizon arrives as a locked husk — name
+               and date, no forecast. It stands greyed in the strip with a
+               lock, and the tap opens the upgrade sheet: the missing days
+               do the selling. */
+            if (d.locked) {
+                return `
+            <button type="button" class="wx-day" style="opacity:.72" data-tier-lock="solo"
+                    data-lock-say="The full forecast comes with the Solo Farmer plan — Libre reads today and tomorrow."
+                    title="Upgrade to unlock ${esc(d.dow || 'this day')}">
+                <div class="wx-day-dow">${esc(d.dow || '')}</div>
+                <div class="wx-day-emoji" style="display:flex;align-items:center;justify-content:center;min-height:42px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;color:var(--color-gray-400)"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></div>
+                <div class="wx-day-temp" style="color:var(--color-gray-400)">Locked</div>
+                <div class="wx-day-pop" style="color:var(--color-gray-400);font-weight:700">Upgrade</div>
+            </button>`;
+            }
+            return `
             <button type="button" class="wx-day ${d.isToday ? 'is-today' : ''}" data-wx-day="${esc(d.date || '')}"
                     aria-expanded="false" title="${esc(d.text)} — tap for this day's hours">
                 <div class="wx-day-dow">${esc(d.isToday ? 'Today' : d.dow)}</div>
@@ -147,7 +163,8 @@
                 <div class="wx-day-temp">${d.max != null ? d.max + '&deg;' : '&ndash;'}<small>${d.min != null ? '/' + d.min + '&deg;' : ''}</small></div>
                 <div class="wx-day-pop">${d.pop != null ? '&#128167;' + d.pop + '%' : '&nbsp;'}</div>
                 <svg class="wx-day-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
-            </button>`).join('') + '</div>';
+            </button>`;
+        }).join('') + '</div>';
     }
 
     /* The hours of one day, with the sentence a grower actually wants: when

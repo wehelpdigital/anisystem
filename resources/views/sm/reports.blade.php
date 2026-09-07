@@ -9,6 +9,11 @@
 @section('content')
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
     @php
+        /* The tier wall, worn openly: on Libre every report card stays on
+           the shelf, but only Labor opens — the rest wear a lock where the
+           chevron sat and the tap opens the upgrade sheet. Judged by the
+           schedule OWNER's plan, like every schedule-scoped limit. */
+        $shelfOpen = \App\Support\Tier::scheduleCan($schedule, 'reportsAll');
         $reports = [
             [
                 'label' => 'Labor Report',
@@ -16,6 +21,7 @@
                 'url' => route('sm.labor.report', ['id' => $schedule->id]),
                 'img' => asset('images/icons/tea.png'),
                 'badge' => null,
+                'free' => true,
             ],
             [
                 'label' => 'Expenses Report',
@@ -67,19 +73,25 @@
         ];
     @endphp
     @foreach ($reports as $r)
-        <a href="{{ $r['url'] }}" class="card card-hover block">
+        @php $rLocked = ! $shelfOpen && empty($r['free']); @endphp
+        <a href="{{ $r['url'] }}" class="card card-hover block"
+           @if ($rLocked) data-tier-lock="solo" data-lock-say="The {{ $r['label'] }} comes with the Solo Farmer plan — Libre includes the Labor report." @endif>
             <div class="p-4 flex items-start gap-3">
-                <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center shrink-0">
+                <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center shrink-0 {{ $rLocked ? 'tl-dim' : '' }}">
                     <img src="{{ $r['img'] }}" alt="" class="w-7 h-7" style="object-fit:contain" loading="lazy">
                 </div>
-                <div class="min-w-0 grow">
+                <div class="min-w-0 grow {{ $rLocked ? 'tl-dim' : '' }}">
                     <div class="flex items-center gap-2">
                         <span class="font-bold text-gray-900">{{ $r['label'] }}</span>
                         @if ($r['badge'] !== null && $r['badge'] > 0)<span class="badge badge-green">{{ $r['badge'] }}</span>@endif
                     </div>
                     <p class="text-sm text-gray-500 mt-0.5">{{ $r['desc'] }}</p>
                 </div>
-                <svg class="w-4 h-4 text-gray-300 shrink-0 mt-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                @if ($rLocked)
+                    <span class="tl-lock shrink-0 mt-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+                @else
+                    <svg class="w-4 h-4 text-gray-300 shrink-0 mt-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                @endif
             </div>
         </a>
     @endforeach

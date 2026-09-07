@@ -335,7 +335,7 @@ class CommunityGroupController extends Controller
     public function store(Request $request)
     {
         if (! \App\Support\Tier::can('discussionCreate')) {
-            \App\Support\Tier::deny('Creating discussions comes with the Farm Owner plan. You can join any open room.');
+            \App\Support\Tier::deny('Creating discussions comes with the Farm Owner plan. You can join any open room.', 'owner');
         }
         $data = $request->validate([
             'name' => 'required|string|max:150',
@@ -450,6 +450,13 @@ class CommunityGroupController extends Controller
         // answer for the whole community and are never kept out of part of it.
         if (! $group->isPrivate() || $group->isCreator($user) || $user->isSuperAdmin()) {
             return $this->seat($group, (int) $user->id);
+        }
+
+        // A locked room at all — password or approval — is a paid privilege.
+        // Judged before the password/ask branches so Libre never even gets
+        // to knock.
+        if (! \App\Support\Tier::can('discussionPrivateJoin')) {
+            \App\Support\Tier::deny('Private discussions come with the Solo Farmer plan. Every open room is yours to join.');
         }
 
         if ($group->asksForPassword()) {

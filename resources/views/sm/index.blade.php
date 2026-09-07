@@ -803,21 +803,34 @@
             {{-- Its twin: the notes hub gathers the words, this gathers the
                  pictures. Looking for a photo is remembering a picture, not a
                  season, so it does not ask which one first. --}}
-            <a href="{{ route('wtp.page') }}" class="qa-tile qa-wtp">
+            {{-- On Libre these two stay in the row, wearing a lock where the
+                 chevron sat — the tap opens the upgrade sheet, not the page. --}}
+            @php $qWtpLocked = ! \App\Support\Tier::can('reportsAll'); @endphp
+            <a href="{{ route('wtp.page') }}" class="qa-tile qa-wtp"
+               @if ($qWtpLocked) data-tier-lock="solo" data-lock-say="The When to Plant analysis comes with the Solo Farmer plan — Anee reads your town's climate and ENSO outlook to name your safest planting window." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
-                <span class="qa-txt">
+                <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>When to Plant Analysis</b>
                     <i>The best planting window for your crop and place, argued from the climate. Uses AI credits.</i>
                 </span>
-                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                @if ($qWtpLocked)
+                    <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+                @else
+                    <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                @endif
             </a>
-            <a href="{{ route('whatp.page') }}" class="qa-tile qa-wtp">
+            <a href="{{ route('whatp.page') }}" class="qa-tile qa-wtp"
+               @if ($qWtpLocked) data-tier-lock="solo" data-lock-say="The What to Plant analysis comes with the Solo Farmer plan — Anee weighs your location, season forecast and soil to recommend the crop." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/plant.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
-                <span class="qa-txt">
+                <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>What to Plant Analysis</b>
                     <i>The crops your ground argues for — soil, water and season weighed, ranked by fit. Uses AI credits.</i>
                 </span>
-                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                @if ($qWtpLocked)
+                    <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+                @else
+                    <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                @endif
             </a>
             <a href="{{ route('gallery.hub') }}" class="qa-tile qa-gallery">
                 <span class="qa-ico"><img src="{{ asset('images/gallery.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
@@ -846,14 +859,26 @@
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
             @endif
+            @php
+                /* The tier's own wall on video, judged for an OWNER acting as
+                   themselves — a worker rides the schedule owner's plan, so
+                   their doors are the grant's business, not this lock's. */
+                $qVidLocked = \App\Support\WorkerContext::effectiveOwnerId() === (int) auth()->id()
+                    && ! \App\Support\Tier::can('videoRecording');
+            @endphp
             @if ($allSchedules->isNotEmpty() && $qMayVideo)
-                <button type="button" id="quickRecordBtn" class="qa-tile qa-rec">
+                <button type="button" id="quickRecordBtn" class="qa-tile qa-rec"
+                        @if ($qVidLocked) data-tier-lock="solo" data-lock-say="Video recording comes with the Solo Farmer plan. Photos and voice notes are yours on Libre." @endif>
                     <span class="qa-ico"><img src="{{ asset('images/video-camera-b.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
-                    <span class="qa-txt">
+                    <span class="qa-txt {{ $qVidLocked ? 'tl-dim' : '' }}">
                         <b>Quick Record</b>
                         <i>Record a video if a picture is not enough, explain your observations while recording.</i>
                     </span>
-                    <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    @if ($qVidLocked)
+                        <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+                    @else
+                        <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    @endif
                 </button>
                 <button type="button" id="quickVoiceBtn" class="qa-tile qa-rec">
                     <span class="qa-ico"><img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>

@@ -266,8 +266,16 @@
     <h2 class="disc-head-title">Sali ka sa usapan</h2>
     <p class="disc-head-sub">Post questions, share what works — every room here is a conversation somebody started.</p>
     <div class="disc-head-acts">
-        <button type="button" id="createGroupBtn" class="btn btn-outline btn-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
+        {{-- Starting a room is the Farm Owner plan's privilege. The button
+             stays for everyone — locked, it opens the upgrade sheet. --}}
+        @php $mayStartRoom = \App\Support\Tier::can('discussionCreate'); @endphp
+        <button type="button" id="createGroupBtn" class="btn btn-outline btn-sm"
+                @unless ($mayStartRoom) data-tier-lock="owner" data-lock-say="Creating discussions comes with the Farm Owner plan. You can join any open room." @endunless>
+            @if ($mayStartRoom)
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
+            @else
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
+            @endif
             New discussion
         </button>
         <button type="button" id="discSearchBtn" class="btn btn-outline btn-sm" title="Search discussions" aria-label="Search discussions">
@@ -817,6 +825,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         setTimeout(finish, 500);   // safety if transitionend is missed
                     }, 300);
                 }
+            } else if (data.tierLock) {
+                // A tier wall answers with the upgrade sheet, never a toast.
+                window.aneeUpgrade?.(data.message, data.tier || 'solo');
+                btn.style.opacity = '';
             } else { toast(data.message, 'error'); btn.style.opacity = ''; }
         } catch (_) { toast('Network error — try again.', 'error'); btn.style.opacity = ''; }
         finally { delete btn.dataset.busy; }

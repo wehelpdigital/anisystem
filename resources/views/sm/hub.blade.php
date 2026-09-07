@@ -429,17 +429,28 @@
         {{-- Quick Record (1/4). Some of what a field does is only legible
              moving — a pump that sounds wrong, water finding a path — and
              the Hub is where somebody standing in that field arrives. --}}
+        @php
+            /* The tier's wall on video, judged by the schedule OWNER's plan
+               (a worker rides it). Locked, the tile stays and sells: the
+               tap opens the upgrade sheet. */
+            $hubVidLocked = ! \App\Support\Tier::scheduleCan($schedule, 'videoRecording');
+        @endphp
         @if ($may('video'))
         <button type="button" id="quickRecordBtn"
-            class="cta-tile qr-cta rounded-2xl p-5 flex items-center gap-4 text-left">
-            <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
+            class="cta-tile qr-cta rounded-2xl p-5 flex items-center gap-4 text-left"
+            @if ($hubVidLocked) data-tier-lock="solo" data-lock-say="Video recording comes with the Solo Farmer plan. Photos and voice notes are yours on Libre." @endif>
+            <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0 {{ $hubVidLocked ? 'tl-dim' : '' }}">
                 <img src="{{ asset('images/video-camera-b.png') }}" alt="" style="width:1.75rem;height:1.75rem;object-fit:contain">
             </span>
-            <span class="min-w-0 grow">
+            <span class="min-w-0 grow {{ $hubVidLocked ? 'tl-dim' : '' }}">
                 <span class="cta-title block text-lg font-bold leading-tight">Quick Record</span>
                 <span class="cta-sub block text-sm leading-snug mt-0.5">Film it when a picture will not do.</span>
             </span>
-            <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            @if ($hubVidLocked)
+                <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+            @else
+                <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            @endif
         </button>
 
         {{-- Quick Voice — for the walk when both hands are busy and the
@@ -488,8 +499,24 @@
             </a>
         @endforeach
 
-        {{-- Collab Room — right after AI Technician --}}
-        @if (\App\Support\ScheduleTeam::hasTeam($schedule))
+        {{-- Collab Room — right after AI Technician. When the tier lacks it
+             the tile shows anyway, locked, so the door advertises the Farm
+             Owner plan; with the tier it keeps its old has-a-team rule. --}}
+        @php $collabLocked = ! \App\Support\Tier::scheduleCan($schedule, 'collab'); @endphp
+        @if ($collabLocked)
+            <a href="{{ route('sm.collab', ['id' => $schedule->id]) }}" class="card card-hover block"
+               data-tier-lock="owner" data-lock-say="The Collab Room — team chat, whiteboard and calls — comes with the Farm Owner plan.">
+                <div class="p-4 flex flex-col gap-3">
+                    <div class="flex items-start justify-between">
+                        <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center tl-dim">
+                            <img src="{{ asset('images/united.png') }}" alt="" class="w-6 h-6 object-contain">
+                        </div>
+                        <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+                    </div>
+                    <span class="font-bold text-gray-900 text-sm tl-dim">Collab Room</span>
+                </div>
+            </a>
+        @elseif (\App\Support\ScheduleTeam::hasTeam($schedule))
             {{-- No data-nav-loader: data-collab-open intercepts this click to
                  ask about the team first, so the tap does not always leave. --}}
             <a href="{{ route('sm.collab', ['id' => $schedule->id]) }}" data-collab-open class="card card-hover block">

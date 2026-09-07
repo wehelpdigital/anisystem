@@ -45,14 +45,16 @@ class WeatherController extends Controller
         }
 
         // Resolve each distinct location once (bounded for safety).
-        // The tier's horizon: Libre sees today and tomorrow; paid sees it all.
+        // The tier's horizon: Libre reads today and tomorrow; the days past
+        // the cap still arrive, but as locked husks — date and name only —
+        // so the panel can show what an upgrade would open.
         $dayCap = \App\Support\Tier::limit('weatherDays');
         $resolved = [];
         foreach (array_slice($locations, 0, self::MAX_LOCATIONS, true) as $key => $info) {
             $forecast = $this->weather->forecastForPlace($info['query']);
             $resolved[$key] = $forecast
                 ? ['ok' => true, 'place' => $forecast['place'],
-                    'days' => $dayCap !== null ? array_slice($forecast['days'], 0, $dayCap) : $forecast['days'],
+                    'days' => self::lockBeyond($forecast['days'], $dayCap),
                     'capped' => $dayCap]
                 : ['ok' => false, 'place' => $info['label']];
         }
@@ -127,14 +129,16 @@ class WeatherController extends Controller
         // location would treble that response for nothing.
         $wantHourly = $request->boolean('hourly');
 
-        // The tier's horizon, judged by the schedule owner's plan.
+        // The tier's horizon, judged by the schedule owner's plan. Days past
+        // the cap arrive as locked husks so the module can show the missing
+        // days instead of pretending the week is two days long.
         $dayCap = \App\Support\Tier::scheduleLimit(
             \App\Models\AsCroppingSchedule::find($scheduleId), 'weatherDays');
         $resolved = [];
         foreach (array_slice($locations, 0, self::MAX_LOCATIONS, true) as $key => $info) {
             $fc = $this->weather->forecastForPlace($info['query'], 6);
-            if ($fc && $dayCap !== null) {
-                $fc['days'] = array_slice($fc['days'], 0, $dayCap);
+            if ($fc) {
+                $fc['days'] = self::lockBeyond($fc['days'], $dayCap);
             }
             $resolved[$key] = $fc
                 ? ['ok' => true, 'place' => $fc['place'], 'days' => $fc['days'], 'capped' => $dayCap]
@@ -142,8 +146,14 @@ class WeatherController extends Controller
             if ($wantHourly && $fc) {
                 // Hours belong to the day you tapped, so they arrive grouped
                 // that way. The flat 24-hour list the old tab used is gone
-                // with the tab.
-                $resolved[$key]['hoursByDay'] = $this->weather->hourlyByDay($fc['lat'], $fc['lon'], 6) ?: [];
+                // with the tab. Hours for locked days stay home — a husk
+                // with its hours attached would be no husk at all.
+                $hours = $this->weather->hourlyByDay($fc['lat'], $fc['lon'], 6) ?: [];
+                if ($dayCap !== null) {
+                    $open = array_column(array_slice($fc['days'], 0, $dayCap), 'date');
+                    $hours = array_intersect_key($hours, array_flip($open));
+                }
+                $resolved[$key]['hoursByDay'] = $hours;
             }
         }
 
@@ -160,6 +170,32 @@ class WeatherController extends Controller
                 'savedDates' => $savedDates,
             ],
         ]);
+    }
+
+    /**
+     * The tier wall, worn as frosted glass: days past the cap keep their
+     * name and date but lose the forecast itself, and carry locked=true so
+     * the panels can grey them and offer the upgrade. null cap = all open.
+     */
+    private static function lockBeyond(array $days, ?int $cap): array
+    {
+        if ($cap === null) {
+            return $days;
+        }
+
+        return array_values(array_map(function ($day, $i) use ($cap) {
+            if ($i < $cap) {
+                return $day;
+            }
+
+            return [
+                'date' => $day['date'] ?? null,
+                'isToday' => false,
+                'dow' => $day['dow'] ?? '',
+                'label' => $day['label'] ?? '',
+                'locked' => true,
+            ];
+        }, $days, array_keys($days)));
     }
 
     /**

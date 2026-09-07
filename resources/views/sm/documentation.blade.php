@@ -79,10 +79,12 @@
         </div>
 
         <div class="mb-2">
-            <label class="form-label">Files <span class="text-gray-400 font-normal">(optional)</span></label>
+            @php $docUpLocked = ! \App\Support\Tier::scheduleCan($schedule, 'docUploads'); @endphp
+            <label class="form-label">Files <span class="text-gray-400 font-normal">(optional)</span> {{ $docUpLocked ? '🔒' : '' }}</label>
             <input type="file" id="docFiles" multiple accept="image/*,.pdf,.doc,.docx,.txt,.xls,.xlsx"
-                class="flex items-center w-full text-sm text-gray-600 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-700 file:font-semibold file:px-4 file:py-2.5 file:cursor-pointer cursor-pointer">
-            <p class="form-hint">Add any number of files — images, PDF, Word, Excel or TXT. Max 10 MB each.</p>
+                @if ($docUpLocked) data-tier-lock="solo" data-lock-say="Attaching files to documentation comes with the Solo Farmer plan. The entry's words still save." @endif
+                class="flex items-center w-full text-sm text-gray-600 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-700 file:font-semibold file:px-4 file:py-2.5 file:cursor-pointer cursor-pointer {{ $docUpLocked ? 'tl-dim' : '' }}">
+            <p class="form-hint">{{ $docUpLocked ? 'File attachments come with the Solo Farmer plan — tap to see it.' : 'Add any number of files — images, PDF, Word, Excel or TXT. Max 10 MB each.' }}</p>
             <div id="docFileList" class="flex flex-wrap gap-2 mt-3"></div>
         </div>
     </div>

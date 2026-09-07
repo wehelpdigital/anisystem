@@ -58,9 +58,18 @@
             <span>Upload</span>
         </button>
         @if (filled($videoUrl ?? null))
-            <button type="button" class="ab-btn js-video-record" title="Record a video">
+            @php
+                /* Locked on the tier, the Record button stays and sells —
+                   see note-editor for the same judgement. */
+                $abVidLocked = isset($schedule)
+                    ? ! \App\Support\Tier::scheduleCan($schedule, 'videoRecording')
+                    : (\App\Support\WorkerContext::effectiveOwnerId() === (int) auth()->id()
+                        && ! \App\Support\Tier::can('videoRecording'));
+            @endphp
+            <button type="button" class="ab-btn js-video-record {{ $abVidLocked ? 'tl-dim' : '' }}" title="Record a video"
+                    @if ($abVidLocked) data-tier-lock="solo" data-lock-say="Video recording comes with the Solo Farmer plan. Photos and voice stay yours on Libre." @endif>
                 <svg viewBox="0 0 24 24" fill="currentColor" class="text-red-500"><circle cx="12" cy="12" r="7"/></svg>
-                <span>Record</span>
+                <span>Record {{ $abVidLocked ? '🔒' : '' }}</span>
             </button>
         @endif
         <button type="button" class="ab-btn" data-ab="camera" title="Take a photo now">

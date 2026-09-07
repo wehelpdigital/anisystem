@@ -91,19 +91,50 @@ h1, h2, h3, h4, h5, h6 {
 body.has-offline-bar { padding-top: calc(var(--offbar-h, 2.2rem) + .5rem); }
 body.has-offline-bar header.sticky { top: calc(var(--offbar-h, 2.2rem) + .5rem); }
 
-/* The upgrade sheet a tier wall opens (window.aneeUpgrade). */
+/* The upgrade sheet a tier wall opens (window.aneeUpgrade). It sells the
+   exact next rung: header names the tier, a mini plan card carries price
+   and highlights, and the yellow button does the upgrading. */
 #aneeUpgradeBox { position: fixed; inset: 0; z-index: 420; display: none; align-items: center;
-    justify-content: center; padding: 1.25rem; background: rgb(15 23 42 / .5); }
+    justify-content: center; padding: 1.25rem; background: rgb(15 23 42 / .55); }
 #aneeUpgradeBox.is-open { display: flex; animation: auIn .28s cubic-bezier(.22, 1, .36, 1) both; }
 @keyframes auIn { from { opacity: 0; } to { opacity: 1; } }
-#aneeUpgradeBox .au-card { width: min(22rem, 100%); background: var(--color-white);
-    border: 1px solid var(--color-gray-200); border-radius: 1.1rem; padding: 1.35rem 1.25rem;
-    text-align: center; box-shadow: 0 24px 60px rgb(0 0 0 / .3); }
-#aneeUpgradeBox .au-emo { font-size: 2rem; line-height: 1; margin-bottom: .5rem; }
-#aneeUpgradeBox h3 { font-size: 1.02rem; font-weight: 800; color: var(--color-gray-900); }
-#aneeUpgradeBox p { font-size: .85rem; line-height: 1.55; color: var(--color-gray-600); margin-top: .4rem; }
-#aneeUpgradeBox .au-acts { display: flex; flex-direction: column; gap: .45rem; margin-top: 1rem; }
-@media (prefers-reduced-motion: reduce) { #aneeUpgradeBox.is-open { animation: none; } }
+#aneeUpgradeBox .au-card { width: min(24.5rem, 100%); max-height: calc(100dvh - 2rem); overflow: auto;
+    background: var(--color-white); border: 1px solid var(--color-gray-200); border-radius: 1.25rem;
+    padding: 1.35rem 1.3rem 1.25rem; box-shadow: 0 24px 60px rgb(0 0 0 / .35);
+    animation: auCard .28s cubic-bezier(.22, 1, .36, 1) both; }
+@keyframes auCard { from { transform: translateY(14px) scale(.97); } to { transform: none; } }
+#aneeUpgradeBox .au-head { display: flex; align-items: center; gap: .8rem; }
+#aneeUpgradeBox .au-lock { flex: none; width: 2.9rem; height: 2.9rem; border-radius: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--color-brand-600), var(--color-brand-800)); color: #fff; }
+#aneeUpgradeBox .au-lock svg { width: 1.4rem; height: 1.4rem; }
+#aneeUpgradeBox .au-kicker { display: block; font-size: .68rem; font-weight: 800;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--color-gray-400); }
+#aneeUpgradeBox h3 { font-size: 1.05rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.25; }
+#aneeUpgradeBox .au-msg { font-size: .86rem; line-height: 1.55; color: var(--color-gray-600); margin-top: .8rem; }
+#aneeUpgradeBox .au-tier { margin-top: .9rem; border: 1px solid var(--color-brand-200, var(--color-gray-200));
+    background: var(--color-brand-50, var(--color-gray-50)); border-radius: 1rem; padding: .9rem 1rem; }
+#aneeUpgradeBox .au-tier-top { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; }
+#aneeUpgradeBox .au-tier-name { font-weight: 800; color: var(--color-gray-900); }
+#aneeUpgradeBox .au-tier-price { font-weight: 800; font-size: 1.15rem; color: var(--color-brand-700); white-space: nowrap; }
+#aneeUpgradeBox .au-tier-price em { font-style: normal; font-weight: 600; font-size: .75rem; color: var(--color-gray-500); }
+#aneeUpgradeBox .au-tier-year { margin-top: .1rem; font-size: .72rem; font-weight: 700; color: var(--color-brand-700); }
+#aneeUpgradeBox .au-tier-list { margin-top: .65rem; display: grid; gap: .4rem; }
+#aneeUpgradeBox .au-tier-list li { display: flex; gap: .5rem; align-items: flex-start;
+    font-size: .8rem; line-height: 1.45; color: var(--color-gray-700); }
+#aneeUpgradeBox .au-tier-list svg { flex: none; width: .95rem; height: .95rem; margin-top: .15rem; color: var(--color-brand-600); }
+#aneeUpgradeBox .au-acts { display: flex; flex-direction: column; gap: .45rem; margin-top: 1.05rem; }
+@media (prefers-reduced-motion: reduce) { #aneeUpgradeBox.is-open, #aneeUpgradeBox .au-card { animation: none; } }
+
+/* The lock chip a tier-locked button wears in place of its usual arrow —
+   pairs with the [data-tier-lock] click handler in app.js. */
+.tl-lock { display: inline-flex; align-items: center; justify-content: center;
+    width: 1.55rem; height: 1.55rem; border-radius: 999px; flex: none;
+    background: var(--color-gray-100); color: var(--color-gray-500); }
+.tl-lock svg { width: .85rem; height: .85rem; }
+[data-tier-lock] { cursor: pointer; }
+/* Opt-in dimming for a locked door's own content (never the lock chip). */
+[data-tier-lock] .tl-dim { opacity: .62; }
 
 /* The row a deep link named, flashed so it stands out of its list —
    window.smSpot() puts this on for a moment and takes it off again. */

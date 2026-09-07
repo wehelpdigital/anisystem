@@ -6,6 +6,12 @@
 
      Expects: $groups (each carrying member_count, post_count and joined). --}}
 @php use App\Support\CommunityAvatar; @endphp
+@php
+    /* Libre may join open rooms only. A private room's Join button stays on
+       the card, but carries the tier lock: the tap opens the upgrade sheet
+       before any password sheet or ask-to-join confirm gets a word in. */
+    $privLocked = ! \App\Support\Tier::can('discussionPrivateJoin');
+@endphp
 @foreach ($groups as $g)
     @php $hue = CommunityAvatar::hue($g->name); @endphp
     {{-- Its own colour along the top and bottom, by id: the same room wears
@@ -95,6 +101,9 @@
                 <button type="button" class="btn btn-primary disc-join {{ $g->joined ? 'is-off' : '' }}"
                         data-group-id="{{ $g->id }}" data-name="{{ $g->name }}"
                         data-door="{{ $g->privacy === \App\Models\CommunityGroup::PRIVATE ? ($g->joinMode ?: 'approval') : 'open' }}"
+                        @if ($privLocked && $g->privacy === \App\Models\CommunityGroup::PRIVATE && ! $g->joined)
+                            data-tier-lock="solo" data-lock-say="Private discussions come with the Solo Farmer plan. Every open room is yours to join."
+                        @endif
                         @if (($g->askedToJoin ?? false)) data-asked="1" @endif>{{
                     $g->privacy !== \App\Models\CommunityGroup::PRIVATE ? 'Join'
                         : (($g->askedToJoin ?? false) ? 'Asked'

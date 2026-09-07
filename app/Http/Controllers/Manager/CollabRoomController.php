@@ -21,7 +21,7 @@ class CollabRoomController extends BaseScheduleController
             abort(403);
         }
         if (! \App\Support\Tier::scheduleCan($schedule, 'collab')) {
-            \App\Support\Tier::deny('The Collab Room comes with the Farm Owner plan.');
+            \App\Support\Tier::deny('The Collab Room comes with the Farm Owner plan.', 'owner');
         }
 
         /* Opening the room is joining it.

@@ -798,7 +798,7 @@
             @elseif ($status === 'pending')
                 <span class="dash-chip is-warn">Verification pending</span>
             @else
-                <a href="{{ route('purchase.plans') }}" class="btn btn-primary btn-sm">Subscribe now</a>
+                <a href="{{ route('purchase.plans') }}" class="btn btn-primary btn-sm">Upgrade your access</a>
             @endif
         </div>
     </div>
@@ -1158,28 +1158,41 @@
 
             {{-- The technician's other trick: one bought analysis that names
                  your planting window. Its own card, because it is a decision,
-                 not a conversation. --}}
+                 not a conversation. On Libre the card stays — with a lock
+                 where the chevron was, opening the upgrade sheet instead of
+                 the page, so the door advertises what upgrading buys. --}}
+            @php $wtpLocked = ! \App\Support\Tier::can('reportsAll'); @endphp
             <section class="dash-wtp-card" aria-label="When to Plant Analysis">
-                <a href="{{ route('wtp.page') }}" class="dash-wtp">
+                <a href="{{ route('wtp.page') }}" class="dash-wtp"
+                   @if ($wtpLocked) data-tier-lock="solo" data-lock-say="The When to Plant analysis comes with the Solo Farmer plan — Anee reads your town's climate and ENSO outlook to name your safest planting window." @endif>
                     <span class="dash-wtp-ic"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
-                    <span class="min-w-0">
+                    <span class="min-w-0 {{ $wtpLocked ? 'tl-dim' : '' }}">
                         <b>When to Plant Analysis</b>
                         <i>Analyze and forecast through Anee when is the best time to start your cropping season to lower the risk of climate risks.</i>
                     </span>
-                    <svg class="dash-wtp-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    @if ($wtpLocked)
+                        <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+                    @else
+                        <svg class="dash-wtp-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    @endif
                 </a>
             </section>
 
             {{-- The sister question, asked the other way round: not when to
                  plant a chosen crop, but which crop this ground argues for. --}}
             <section class="dash-wtp-card" aria-label="What to Plant Analysis">
-                <a href="{{ route('whatp.page') }}" class="dash-wtp">
+                <a href="{{ route('whatp.page') }}" class="dash-wtp"
+                   @if ($wtpLocked) data-tier-lock="solo" data-lock-say="The What to Plant analysis comes with the Solo Farmer plan — Anee weighs your location, season forecast and soil to recommend the crop." @endif>
                     <span class="dash-wtp-ic"><img src="{{ asset('images/plant.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
-                    <span class="min-w-0">
+                    <span class="min-w-0 {{ $wtpLocked ? 'tl-dim' : '' }}">
                         <b>What to Plant Analysis</b>
                         <i>Analyze the type of crops that are best to plant based in your location, season forecast, soil type, and more. Anee will deeply analyze and provide you the most recommended.</i>
                     </span>
-                    <svg class="dash-wtp-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    @if ($wtpLocked)
+                        <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+                    @else
+                        <svg class="dash-wtp-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    @endif
                 </a>
             </section>
 
@@ -1775,6 +1788,16 @@
     const skyOf = (d) => (window.wxKeyFor ? window.wxKeyFor(d.code, false, d.max) : 'cloudy');
 
     function dayCell(d, isToday) {
+        // A day past the tier's horizon arrives as a locked husk: name and
+        // date, no forecast. It stands in the row greyed with a lock, and
+        // tapping it opens the upgrade sheet — the missing days SELL.
+        if (d.locked) {
+            return `<div class="flex-1 min-w-0 text-center rounded-lg px-1 py-1.5 wx-locked-day" data-tier-lock="solo" data-lock-say="The full 5-day forecast comes with the Solo Farmer plan — Libre reads today and tomorrow.">
+                <p class="text-[0.625rem] font-bold text-gray-400 truncate">${esc(d.dow || '')}</p>
+                <div class="dash-wx-art" style="display:flex;align-items:center;justify-content:center;opacity:.55"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:1.1rem;height:1.1rem;color:var(--color-gray-400)"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></div>
+                <p class="text-[0.562rem] font-bold text-gray-400">Locked</p>
+            </div>`;
+        }
         const today = isToday || d.isToday;
         const key = skyOf(d);
         const name = window.wxName ? window.wxName(key, true) : (d.text || '');

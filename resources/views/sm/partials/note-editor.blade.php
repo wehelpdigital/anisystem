@@ -28,15 +28,28 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="8.5" r="1.3"/></svg>
                 <span>Upload</span>
             </button>
+            @php
+                /* The tier's wall on video: judged by the schedule owner's
+                   plan inside a schedule, by the acting owner's own plan on
+                   the global notes hub (a worker's doors are the grant's
+                   business). Locked, the buttons stay — the tap sells. */
+                $neVidLocked = isset($schedule)
+                    ? ! \App\Support\Tier::scheduleCan($schedule, 'videoRecording')
+                    : (\App\Support\WorkerContext::effectiveOwnerId() === (int) auth()->id()
+                        && ! \App\Support\Tier::can('videoRecording'));
+                $neVidLockAttrs = $neVidLocked
+                    ? 'data-tier-lock=solo data-lock-say="Video on notes comes with the Solo Farmer plan. Photos, drawings and voice stay yours on Libre."'
+                    : '';
+            @endphp
             <span class="ne-vid" data-video-host>
                 <input type="file" class="js-video-file hidden" accept="video/*">
-                <button type="button" class="ne-tool js-video-attach" title="Attach a video" aria-label="Attach a video">
+                <button type="button" class="ne-tool js-video-attach {{ $neVidLocked ? 'tl-dim' : '' }}" {!! $neVidLockAttrs !!} title="Attach a video" aria-label="Attach a video">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>
-                    <span>Video</span>
+                    <span>Video {{ $neVidLocked ? '🔒' : '' }}</span>
                 </button>
-                <button type="button" class="ne-tool js-video-record" title="Record a video" aria-label="Record a video">
+                <button type="button" class="ne-tool js-video-record {{ $neVidLocked ? 'tl-dim' : '' }}" {!! $neVidLockAttrs !!} title="Record a video" aria-label="Record a video">
                     <svg viewBox="0 0 24 24" fill="currentColor" class="text-red-500"><circle cx="12" cy="12" r="7"/></svg>
-                    <span>Record</span>
+                    <span>Record {{ $neVidLocked ? '🔒' : '' }}</span>
                 </button>
                 <span class="js-video-chip"></span>
             </span>

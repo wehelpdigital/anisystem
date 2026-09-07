@@ -75,9 +75,11 @@ final class Tier
     /**
      * The uniform refusal. JSON callers get the shape the upgrade modal
      * listens for; page loads bounce to the subscription page with the
-     * message as a flash.
+     * message as a flash. `$unlocksAt` names the cheapest tier that opens
+     * this door ('solo' or 'owner') so the modal can sell that rung, not
+     * a vague "subscribers".
      */
-    public static function deny(string $message)
+    public static function deny(string $message, string $unlocksAt = 'solo')
     {
         $request = request();
         if ($request->expectsJson() || $request->ajax()) {
@@ -85,6 +87,7 @@ final class Tier
                 'success' => false,
                 'tierLock' => true,
                 'message' => $message,
+                'tier' => $unlocksAt,
             ], 403));
         }
 

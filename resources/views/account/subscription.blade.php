@@ -319,11 +319,33 @@
                 </div>
             @endif
 
+            {{-- Storage — the tier's cap and how much of it the account's
+                 uploads (farm AND community) have already claimed. --}}
+            @php
+                $storageCapGb = \App\Support\Tier::limit('storageGb');
+                $storageUsedGb = round(\App\Support\Tier::storageUsed() / 1073741824, 2);
+                $storagePct = $storageCapGb ? min(100, (int) round($storageUsedGb / $storageCapGb * 100)) : 0;
+            @endphp
+            <div class="rounded-xl bg-gray-50 px-3 py-2.5 mt-3 text-sm">
+                <div class="flex items-center justify-between gap-3">
+                    <p class="text-xs text-gray-500">Storage used <span class="text-gray-400">(photos, clips, files — farm and community)</span></p>
+                    <p class="font-semibold text-gray-800 whitespace-nowrap">
+                        {{ $storageUsedGb }} GB
+                        <span class="text-gray-400 font-medium">/ {{ $storageCapGb === null ? 'unlimited' : $storageCapGb . ' GB' }}</span>
+                    </p>
+                </div>
+                @if ($storageCapGb !== null)
+                    <div class="mt-2 h-2 rounded-full bg-gray-200 overflow-hidden">
+                        <div class="h-full rounded-full {{ $storagePct >= 90 ? 'bg-red-500' : 'bg-brand-600' }}" style="width: {{ max(2, $storagePct) }}%"></div>
+                    </div>
+                @endif
+            </div>
+
             {{-- CTAs --}}
             <div class="flex flex-col sm:flex-row gap-3 mt-5">
                 @if ($showRenewCta)
                     <a href="{{ route('purchase.plans') }}" class="btn btn-accent btn-lg flex-1">
-                        {{ $status === 'active' || $status === 'expired' ? 'Renew Subscription' : 'Subscribe Now' }}
+                        {{ $status === 'active' || $status === 'expired' ? 'Renew Subscription' : 'Upgrade Your Access' }}
                     </a>
                 @endif
                 <form method="POST" action="{{ route('account.subscription.refresh') }}" class="flex-1">

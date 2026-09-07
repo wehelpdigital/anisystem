@@ -69,8 +69,17 @@ class WhatToPlantController extends Controller
     {
     }
 
+    /** The tier wall: analyses ride the Solo Farmer plan and up. */
+    private function guardTier(): void
+    {
+        if (! \App\Support\Tier::can('reportsAll')) {
+            \App\Support\Tier::deny('The What to Plant analysis comes with the Solo Farmer plan.');
+        }
+    }
+
     public function page()
     {
+        $this->guardTier();
         return view('what-to-plant.index');
     }
 
@@ -111,6 +120,7 @@ class WhatToPlantController extends Controller
     /** Run the analysis — the sister's job walk, question swapped. */
     public function generate(Request $request)
     {
+        $this->guardTier();
         $payer = $this->payer();
         $settings = AiSetting::current();
         if (! $payer->canUseAi() || ! $settings->isUsable()) {

@@ -38,6 +38,7 @@ return [
         'reportsAll'        => false,   // labor report only
         'discussionCreate'  => false,
         'discussionJoin'    => 1,
+        'discussionPrivateJoin' => false,   // open rooms only — locked doors are a paid privilege
         'communityVideo'    => false,
         'communityVoice'    => false,
         'storageGb'         => 1,
@@ -84,6 +85,7 @@ return [
         'reportsAll'        => true,
         'discussionCreate'  => false,
         'discussionJoin'    => null,
+        'discussionPrivateJoin' => true,
         'communityVideo'    => true,
         'communityVoice'    => true,
         'storageGb'         => 6,
@@ -129,6 +131,7 @@ return [
         'reportsAll'        => true,
         'discussionCreate'  => true,
         'discussionJoin'    => null,
+        'discussionPrivateJoin' => true,
         'communityVideo'    => true,
         'communityVoice'    => true,
         'storageGb'         => 15,
@@ -170,6 +173,7 @@ return [
         'reportsAll'        => true,
         'discussionCreate'  => true,
         'discussionJoin'    => null,
+        'discussionPrivateJoin' => true,
         'communityVideo'    => true,
         'communityVoice'    => true,
         'storageGb'         => null,
