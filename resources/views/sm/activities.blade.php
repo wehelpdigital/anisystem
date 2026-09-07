@@ -1256,7 +1256,10 @@
            (dressNote), so nothing here can be seen before it runs — and if
            it never runs there is no .note-fold at all and the note simply
            shows itself. */
-        .note-head { display: flex; align-items: center; gap: .3rem; min-width: 0; }
+        /* Anchored to the board's note homes — the Notes module's own
+           .note-head lives on this page inside the shell and dresses itself. */
+        .inline-note > .note-head, .date-note-block > .note-head {
+            display: flex; align-items: center; gap: .3rem; min-width: 0; }
         .note-head .inline-note-tag { margin-bottom: 0; flex: none; }
         .note-head .inline-note-title,
         .note-gist {
@@ -1289,13 +1292,21 @@
            the class changed — five and a half pixels of jump at the very
            start of a movement whose whole job is to look continuous, which
            is the sort of thing you feel without being able to name. */
-        .note-fold { overflow: hidden; max-height: 0; opacity: 0; margin-top: 0;
+        /* Scoped to the board's own note homes ON PURPOSE: the Notes MODULE,
+           injected into this shell, has its own .note-fold — and this bare
+           selector used to reach it, pinning every opened note back to
+           max-height 0 and opacity 0. Two folds, one name; each now stays
+           on its side (dressNote dresses .inline-note and .date-note-block). */
+        .inline-note > .note-fold, .date-note-block > .note-fold {
+            overflow: hidden; max-height: 0; opacity: 0; margin-top: 0;
             transition: max-height .28s cubic-bezier(.22,1,.36,1), opacity .22s ease,
                 margin-top .28s cubic-bezier(.22,1,.36,1); }
-        .is-open > .note-fold { opacity: 1; }
-        .is-open > .note-head + .note-fold { margin-top: .35rem; }
+        .inline-note.is-open > .note-fold, .date-note-block.is-open > .note-fold { opacity: 1; }
+        .inline-note.is-open > .note-head + .note-fold,
+        .date-note-block.is-open > .note-head + .note-fold { margin-top: .35rem; }
         @media (prefers-reduced-motion: reduce) {
-            .note-fold, .note-fold-btn, .note-fold-btn svg { transition: none; }
+            .inline-note > .note-fold, .date-note-block > .note-fold,
+            .note-fold-btn, .note-fold-btn svg { transition: none; }
         }
 
         /* Desktop keeps the full date, the word "activities" and the arrow

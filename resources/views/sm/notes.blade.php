@@ -37,12 +37,15 @@
             .note-attach-box .btn { flex: 1 1 8.5rem; justify-content: center; }
         }
 
-        /* Accordion: each note folds to its header; the chevron flags state. */
-        .note-head { cursor: pointer; }
+        /* Accordion: each note folds to its header; the chevron flags state.
+           Every rule anchors to .note-card ON PURPOSE: the activities board
+           has its own .note-fold/.note-head (the day-note block), and inside
+           the shell the two families share one page. */
+        .note-card > .note-head { cursor: pointer; }
         .note-origin { margin-top: .2rem; display: inline-flex; }
-        .note-fold { overflow: hidden; transition: max-height .28s cubic-bezier(.22,1,.36,1); }
+        .note-card > .note-fold { overflow: hidden; transition: max-height .28s cubic-bezier(.22,1,.36,1); }
         .note-fold-inner { min-height: 0; }
-        .note-card.is-collapsed .note-fold { max-height: 0; }
+        .note-card.is-collapsed > .note-fold { max-height: 0; }
         .note-chevron { transition: transform .2s ease; color: #9ca3af; }
         .note-card:not(.is-collapsed) .note-chevron { transform: rotate(90deg); }
         @media (prefers-reduced-motion: reduce) { .note-fold, .note-chevron { transition: none; } }
