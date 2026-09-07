@@ -8,6 +8,7 @@
 
 @section('content')
     @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'lots'])
+    @include('sm.partials.tag-picker')
 
     <div>
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
@@ -213,6 +214,11 @@
         <div>
             <label for="lotNotes" class="form-label">Notes</label>
             <textarea id="lotNotes" rows="3" maxlength="2000" class="form-textarea" placeholder="Anything worth remembering about this lot…"></textarea>
+        </div>
+
+        <div>
+            <span class="form-label">Tags</span>
+            <div class="tp-mount" data-tags data-tags-kind="lot" id="lotTagsMount"></div>
         </div>
     </div>
     <div class="sheet-footer">
@@ -790,6 +796,13 @@ const __init = () => {
         document.getElementById('lotBarangay').value = lot ? (lot.locBarangay || '') : '';
         document.getElementById('lotZone').value = lot ? (lot.locZone || '') : '';
         document.getElementById('lotNotes').value = lot ? (lot.notes || '') : '';
+        // The word-tags this lot wears (the shared picker).
+        const lotTagsMount = document.getElementById('lotTagsMount');
+        if (window.smTags && lotTagsMount) {
+            window.smTags.mount(lotTagsMount);
+            if (lot && lot.id) window.smTags.load(lotTagsMount, 'lot', lot.id);
+            else window.smTags.clear(lotTagsMount);
+        }
         // Province → town/city selects (async: the dataset loads once, cached).
         const prov = lot ? (lot.locProvince || '') : '';
         const town = lot ? (lot.locTown || '') : '';
@@ -1148,6 +1161,8 @@ const __init = () => {
             locProvince: document.getElementById('lotProvince').value.trim() || null,
             dayType: document.getElementById('lotDayType').value || 'DAT',
             notes: document.getElementById('lotNotes').value || null,
+            // Always sent, even empty, so removing every tag clears them.
+            tags: window.smTags ? window.smTags.value(document.getElementById('lotTagsMount')) : [],
         };
 
         if (!body.lotName) {

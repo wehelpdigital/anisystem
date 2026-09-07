@@ -265,6 +265,36 @@ class TagController extends BaseScheduleController
                         'url' => $boardUrl('documentation')];
                 }
                 break;
+            case 'worker':
+                foreach (\App\Models\AsScheduleWorker::whereIn('id', $refIds)
+                    ->where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->get() as $w) {
+                    $out[] = ['kind' => 'worker', 'refId' => (int) $w->id, 'icon' => '🧑‍🌾',
+                        'title' => (string) $w->workerName,
+                        'sub' => trim('worker' . ($w->skills ? ' · ' . implode(', ', array_slice((array) $w->skills, 0, 3)) : '')),
+                        'when' => $w->created_at?->format('Y-m-d'),
+                        'url' => $boardUrl('workers')];
+                }
+                break;
+            case 'lot':
+                foreach (\App\Models\AsScheduleLot::whereIn('id', $refIds)
+                    ->where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->get() as $l) {
+                    $out[] = ['kind' => 'lot', 'refId' => (int) $l->id, 'icon' => '🌾',
+                        'title' => (string) $l->lotName,
+                        'sub' => trim('lot' . ($l->crop ? ' · ' . $l->crop : '') . ($l->variety ? ' · ' . $l->variety : '')),
+                        'when' => $l->created_at?->format('Y-m-d'),
+                        'url' => $boardUrl('lots')];
+                }
+                break;
+            case 'observation':
+                foreach (\App\Models\AsSchedulePostHarvest::whereIn('id', $refIds)
+                    ->where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->get() as $o) {
+                    $out[] = ['kind' => 'observation', 'refId' => (int) $o->id, 'icon' => '📝',
+                        'title' => trim((string) ($o->title ?? '')) ?: 'Observation',
+                        'sub' => 'observation · ' . $o->created_at?->format('M j, Y'),
+                        'when' => $o->created_at?->format('Y-m-d'),
+                        'url' => $boardUrl('post-harvest')];
+                }
+                break;
         }
 
         return $out;

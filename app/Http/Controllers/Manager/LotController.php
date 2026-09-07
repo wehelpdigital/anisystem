@@ -200,6 +200,10 @@ class LotController extends BaseScheduleController
             $this->addressFields($request)
         ));
 
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'lot', (int) $lot->id, $request->input('tags', []));
+        }
+
         return $this->jsonOk('Lot added.', ['data' => $this->lotPayload($lot)]);
     }
 
@@ -245,6 +249,10 @@ class LotController extends BaseScheduleController
                 : [],
             $this->addressFields($request)
         ));
+
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'lot', (int) $lot->id, $request->input('tags', []));
+        }
 
         return $this->jsonOk('Lot updated.', ['data' => $this->lotPayload($lot)]);
     }

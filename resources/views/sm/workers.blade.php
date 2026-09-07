@@ -9,6 +9,7 @@
 @section('content')
     @php $canWorkerLogins = auth()->user()->canWorkerAccounts(); @endphp
     @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'workers'])
+    @include('sm.partials.tag-picker')
 
     <div>
         {{-- Worker logins (Boss/Lifetime only) --}}
@@ -127,6 +128,11 @@
         <div>
             <label for="workerNotes" class="form-label">Notes</label>
             <textarea id="workerNotes" rows="3" maxlength="2000" class="form-textarea" placeholder="Anything worth remembering about this worker…"></textarea>
+        </div>
+
+        <div>
+            <span class="form-label">Tags</span>
+            <div class="tp-mount" data-tags data-tags-kind="worker" id="workerTagsMount"></div>
         </div>
 
         @if ($canWorkerLogins)
@@ -476,6 +482,13 @@ const __init = () => {
         document.querySelectorAll('#workerSkills .chip').forEach((c) => {
             c.classList.toggle('is-selected', selected.includes(c.getAttribute('data-value')));
         });
+        // The word-tags this worker wears (the shared picker).
+        const tagsMount = document.getElementById('workerTagsMount');
+        if (window.smTags && tagsMount) {
+            window.smTags.mount(tagsMount);
+            if (w && w.id) window.smTags.load(tagsMount, 'worker', w.id);
+            else window.smTags.clear(tagsMount);
+        }
         // Login controls only make sense for a saved worker (needs an id to link).
         editingWorker = w;
         paintLogin(w);
@@ -586,6 +599,8 @@ const __init = () => {
             costPerHalfDay: document.getElementById('workerCost').value || 0,
             skills: chipValues(document.getElementById('workerSkills')),
             notes: document.getElementById('workerNotes').value || null,
+            // Always sent, even empty, so removing every tag clears them.
+            tags: window.smTags ? window.smTags.value(document.getElementById('workerTagsMount')) : [],
         };
 
         if (!body.workerName) {

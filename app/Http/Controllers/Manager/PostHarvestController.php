@@ -67,6 +67,10 @@ class PostHarvestController extends BaseScheduleController
             'deleteStatus' => 1,
         ]);
 
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'observation', (int) $observation->id, $request->input('tags', []));
+        }
+
         return $this->jsonOk('Observation added.', ['data' => $this->present($observation)]);
     }
 
@@ -84,6 +88,10 @@ class PostHarvestController extends BaseScheduleController
         }
 
         $observation->update($data);
+
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'observation', (int) $observation->id, $request->input('tags', []));
+        }
 
         return $this->jsonOk('Observation updated.', ['data' => $this->present($observation->fresh())]);
     }

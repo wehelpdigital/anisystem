@@ -116,6 +116,10 @@ class WorkerController extends BaseScheduleController
             'deleteStatus' => 1,
         ]);
 
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'worker', (int) $worker->id, $request->input('tags', []));
+        }
+
         return $this->jsonOk('Worker added.', ['data' => $worker]);
     }
 
@@ -153,6 +157,10 @@ class WorkerController extends BaseScheduleController
             'skills' => $this->normalizeSkills($request->input('skills', []), $allowedSkillKeys),
             'notes' => $request->notes,
         ]);
+
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'worker', (int) $worker->id, $request->input('tags', []));
+        }
 
         return $this->jsonOk('Worker updated.', ['data' => $worker]);
     }

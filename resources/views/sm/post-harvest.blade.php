@@ -65,6 +65,7 @@
 
 @section('content')
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'post-harvest'])
+@include('sm.partials.tag-picker')
 
 {{-- Season totals: only shown once something has been recorded --}}
 <div class="card p-4 mb-4 {{ $summary['count'] > 0 ? '' : 'hidden' }}" id="phSummary">
@@ -214,6 +215,11 @@
                 <p class="form-hint">Capture as many as you need, then tap Done.</p>
             </div>
             <div id="phGallery" class="mt-2 grid grid-cols-3 gap-2"></div>
+        </div>
+
+        <div class="mt-4">
+            <span class="form-label">Tags</span>
+            <div class="tp-mount" data-tags data-tags-kind="observation" id="phTagsMount"></div>
         </div>
     </div>
     <div class="sheet-footer">
@@ -746,6 +752,13 @@ const __init = () => {
         window.smAttachBar?.(attachBar).reset();
         stopCamera();
         setImages(o ? (o.images || []) : []);
+        // The word-tags this observation wears (the shared picker).
+        const phTagsMount = fld('phTagsMount');
+        if (window.smTags && phTagsMount) {
+            window.smTags.mount(phTagsMount);
+            if (o && o.id) window.smTags.load(phTagsMount, 'observation', o.id);
+            else window.smTags.clear(phTagsMount);
+        }
         refreshValueHint();
         openSheet('phSheet');
         // Notes round-trip as sanitised rich HTML through the WYSIWYG editor.
@@ -780,6 +793,8 @@ const __init = () => {
             // Rich HTML from the WYSIWYG; the server sanitises it (HtmlSanitizer::rich).
             notes: notesHtml(),
             imagePaths: phImages.map((im) => im.path),
+            // Always sent, even empty, so removing every tag clears them.
+            tags: window.smTags ? window.smTags.value(fld('phTagsMount')) : [],
         };
 
         const btn = document.getElementById('phSaveBtn');

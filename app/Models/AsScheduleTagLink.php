@@ -22,6 +22,9 @@ class AsScheduleTagLink extends BaseModel
         'item',       // as_inventory_items
         'map',        // as_schedule_map_saves
         'doc',        // as_schedule_doc_entries (the Documentation shelf)
+        'worker',     // as_schedule_workers (the roster)
+        'lot',        // as_schedule_lots
+        'observation', // as_schedule_post_harvests (the Observations module)
     ];
 
     protected $fillable = [
