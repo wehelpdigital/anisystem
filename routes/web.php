@@ -255,6 +255,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-digest-test', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'sendTestDigest'])->name('sm.digest.test');
     Route::get('/app/sm-settings', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'settingsPage'])->name('sm.settings');
     Route::get('/app/sm-settings-logs', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'settingsLogs'])->name('sm.settings.logs');
+    // The persisted way back: each module's undo/redo stacks, per user.
+    Route::get('/app/sm-undo', [App\Http\Controllers\Manager\UndoJournalController::class, 'get'])->name('sm.undo.get');
+    Route::post('/app/sm-undo', [App\Http\Controllers\Manager\UndoJournalController::class, 'put'])->name('sm.undo.put');
     Route::post('/app/sm-day-type', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'setDayType'])->name('sm.day-type');
     Route::get('/app/sm-lots', [App\Http\Controllers\Manager\LotController::class, 'page'])->name('sm.lots');
     Route::get('/app/sm-workers', [App\Http\Controllers\Manager\WorkerController::class, 'page'])->name('sm.workers');

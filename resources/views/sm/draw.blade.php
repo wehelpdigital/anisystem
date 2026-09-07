@@ -333,6 +333,9 @@
                     objects: seed.objects || null,
                     title: seed.title || 'Drawing',
                     overwrite: !!seed.noteId,
+                    // The kept way back is per drawing, so only a drawing
+                    // with a name gets one.
+                    undoKey: seed.noteId ? (seed.noteId + ':' + (seed.index || 0)) : null,
                     overwriteLabel: seed.title ? `“${seed.title}”` : 'the one you opened',
                     // Lights the pad's "From the gallery" door for this season.
                     scheduleId: SCHEDULE_ID,

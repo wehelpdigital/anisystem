@@ -751,16 +751,82 @@ document.addEventListener('DOMContentLoaded', () => {
      *                            activities must pass their own — a board replay
      *                            cannot resurrect a row that no longer exists.
      */
-    function pushUndo(label, undoFn, redoFn) {
+    function pushUndo(label, undoFn, redoFn, persist) {
         if (!redoFn) {
             const after = captureBoardSnapshot();
             redoFn = () => restoreBoardSnapshot(after);
         }
-        UNDO_STACK.push({ label, undoFn, redoFn });
+        UNDO_STACK.push({ label, undoFn, redoFn, persist: persist || null });
         if (UNDO_STACK.length > UNDO_MAX) UNDO_STACK.shift();
         REDO_STACK.length = 0;   // a fresh action abandons the redo branch
         refreshHistoryBtns();
+        persistBoardHist();
     }
+
+    /* ================================================================
+     * The kept way back. Steps whose inverse is a plain API call carry a
+     * `persist` descriptor; those mirror to the undo journal and come back
+     * as working steps on the next visit — so deleting an activity, walking
+     * away and returning still leaves Ctrl+Z able to bring it back. Steps
+     * that only replay the board's layout stay session-local.
+     * ================================================================ */
+    const JOURNAL_CALLS = {
+        restore: async (id) => {
+            const r = await api(U.restore(id), { method: 'POST' });
+            if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');
+            _renderCardOrReplace(r.data);
+        },
+        destroy: async (id) => {
+            const r = await api(U.destroy(id), { method: 'DELETE' });
+            if (!r || !r.success) throw new Error((r && r.message) || 'delete failed');
+            _removeCardById(id);
+        },
+        fromDraft: async (id) => {
+            const r = await api(U.fromDraft(id), { method: 'POST' });
+            if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');
+            _renderCardOrReplace(r.data);
+            bumpDraftsBadge(-1);
+        },
+        toDraft: async (id) => {
+            const r = await api(U.toDraft(id), { method: 'POST' });
+            if (!r || !r.success) throw new Error((r && r.message) || 'move failed');
+            _removeCardById(id);
+            bumpDraftsBadge(1);
+        },
+    };
+    const UNDO_JOURNAL_URL = @json(route('sm.undo.get')) + '?scheduleId=' + SCHEDULE_ID + '&module=activities';
+    function stepFromPersist(p) {
+        return {
+            label: p.label,
+            undoFn: () => JOURNAL_CALLS[p.undo.call](p.undo.id),
+            redoFn: () => JOURNAL_CALLS[p.redo.call](p.redo.id),
+            persist: p,
+        };
+    }
+    function persistBoardHist() {
+        clearTimeout(persistBoardHist._t);
+        persistBoardHist._t = setTimeout(() => {
+            api(UNDO_JOURNAL_URL, {
+                method: 'POST',
+                body: {
+                    undo: UNDO_STACK.map((a) => a.persist).filter(Boolean).slice(-15),
+                    redo: REDO_STACK.map((a) => a.persist).filter(Boolean).slice(-15),
+                },
+            }).catch(() => {});
+        }, 900);
+    }
+    (async function seedBoardHist() {
+        try {
+            const res = await api(UNDO_JOURNAL_URL);
+            if (!UNDO_STACK.length && Array.isArray(res.data.undo)) {
+                res.data.undo.forEach((p) => { if (p && p.undo && JOURNAL_CALLS[p.undo.call]) UNDO_STACK.push(stepFromPersist(p)); });
+            }
+            if (!REDO_STACK.length && Array.isArray(res.data.redo)) {
+                res.data.redo.forEach((p) => { if (p && p.undo && JOURNAL_CALLS[p.undo.call]) REDO_STACK.push(stepFromPersist(p)); });
+            }
+            refreshHistoryBtns();
+        } catch (_) { /* a blank journal reads the same as none */ }
+    })();
 
     function refreshHistoryBtns() {
         [['activityUndoBtn', 'activityUndoCount', UNDO_STACK, 'undo', 'Ctrl+Z'],
@@ -798,6 +864,7 @@ document.addEventListener('DOMContentLoaded', () => {
             to.push(action);
             if (to.length > UNDO_MAX) to.shift();
             toast(doneWord + ': ' + action.label);
+            persistBoardHist();
         } catch (err) {
             // Put it back so the user can retry rather than silently losing a step.
             from.push(action);
@@ -5168,7 +5235,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const r = await api(U.destroy(id), { method: 'DELETE' });
                 if (!r || !r.success) throw new Error((r && r.message) || 'delete failed');
                 _removeCardById(id);
-            });
+            }, { label: `Delete '${name}'`, undo: { call: 'restore', id }, redo: { call: 'destroy', id } });
         } catch (err) {
             toast(err.message, 'error');
         }
@@ -5190,7 +5257,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!r || !r.success) throw new Error((r && r.message) || 'move failed');
                 _removeCardById(id);
                 bumpDraftsBadge(1);
-            });
+            }, { label: `Move '${name}' to drafts`, undo: { call: 'fromDraft', id }, redo: { call: 'toDraft', id } });
         } catch (err) {
             toast(err.message, 'error');
         }

@@ -668,11 +668,38 @@
        Every change snapshots the scene first. A new change after undoing is a
        new branch, so the redo trail is dropped then — keeping it would let a
        redo paste back work that no longer follows from what is on screen. */
+    /* The kept way back: a drawing opened by name mirrors its snapshots to
+       the undo journal (last fifteen), and seeds itself from it on open —
+       so closing the pad, or the browser, no longer forfeits Undo. */
+    let undoKey = null;
+    let undoScheduleId = null;
+    const UNDO_URL = @json(route('sm.undo.get'));
+    function persistPadHist() {
+        if (!undoKey || !undoScheduleId || !window.api) return;
+        clearTimeout(persistPadHist._t);
+        persistPadHist._t = setTimeout(() => {
+            api(`${UNDO_URL}?scheduleId=${undoScheduleId}&module=draw:${undoKey}`, {
+                method: 'POST',
+                body: { undo: undoStack.slice(-15), redo: redoStack.slice(-15) },
+            }).catch(() => {});
+        }, 900);
+    }
+    async function seedPadHist() {
+        if (!undoKey || !undoScheduleId || !window.api) return;
+        try {
+            const res = await api(`${UNDO_URL}?scheduleId=${undoScheduleId}&module=draw:${undoKey}`);
+            if (!undoStack.length && Array.isArray(res.data.undo)) undoStack.push(...res.data.undo);
+            if (!redoStack.length && Array.isArray(res.data.redo)) redoStack.push(...res.data.redo);
+            paintHistory();
+        } catch (_) { /* a blank journal reads the same as none */ }
+    }
+
     function pushUndo() {
         undoStack.push(JSON.stringify(objects));
         if (undoStack.length > 60) undoStack.shift();
         redoStack.length = 0;
         paintHistory();
+        persistPadHist();
     }
     function paintHistory() {
         const u = document.getElementById('drawUndo'), r = document.getElementById('drawRedo');
@@ -689,6 +716,7 @@
         uid = Math.max(uid, ...objects.map((o) => (+o.id || 0) + 1), 1);
         selected.clear(); cur = null; mode = null; marquee = null;
         paintHistory(); render();
+        persistPadHist();
     }
     const undo = () => step(undoStack, redoStack);
     const redo = () => step(redoStack, undoStack);
@@ -1428,6 +1456,9 @@
         opts = opts || {};
         onSave = cb || null;
         editableAllowed = !!opts.editable;
+        // Which drawing's kept history this pad session belongs to, if the
+        // caller opened one that already has a name.
+        undoKey = opts.undoKey || null;
         // Whose gallery the picture chooser may borrow. Callers that know
         // their season say so; on the schedule shell every module is one
         // season, so its tag answers for the callers that predate the chooser.
@@ -1464,6 +1495,8 @@
         window.registerOverlay?.('drawPad', close);
         document.body.style.overflow = 'hidden';
         reset(existingUrl, opts.objects);
+        undoScheduleId = scheduleId;
+        seedPadHist();
         requestAnimationFrame(fitStage);
     };
 })();

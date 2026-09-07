@@ -788,6 +788,7 @@
         basemap: @json(route('sm.map.basemap')),
         save: @json(route('sm.map.save')),
         load: @json(route('sm.map.load')),
+        undoJournal: @json(route('sm.undo.get')),
     };
     /* THE ERRAND, IF THERE IS ONE.
      *
@@ -1534,6 +1535,31 @@
        between the stacks, so chains keep working. */
     const objIndex = new Map();     // id -> shaped object (latest)
     const histUndo = [], histRedo = [];
+    /* The way back, kept on the server: the stacks mirror to the undo
+     * journal (last fifteen each) a moment after they change, and a fresh
+     * page seeds itself from what was kept — so leaving the map does not
+     * forfeit Undo. Stale steps are tolerated: applyStep already shrugs at
+     * a shape a teammate removed meanwhile. */
+    let histSeeded = false;
+    function persistHist() {
+        clearTimeout(persistHist._t);
+        persistHist._t = setTimeout(() => {
+            api(`${URLS.undoJournal}?scheduleId=${SID}&module=map`, {
+                method: 'POST',
+                body: { undo: histUndo.slice(-15), redo: histRedo.slice(-15) },
+            }).catch(() => {});
+        }, 900);
+    }
+    async function seedHist() {
+        if (histSeeded) return;
+        histSeeded = true;
+        try {
+            const res = await api(`${URLS.undoJournal}?scheduleId=${SID}&module=map`);
+            if (!histUndo.length && Array.isArray(res.data.undo)) histUndo.push(...res.data.undo);
+            if (!histRedo.length && Array.isArray(res.data.redo)) histRedo.push(...res.data.redo);
+            syncHistBtns();
+        } catch (_) { /* a blank journal reads the same as none */ }
+    }
     function syncHistBtns() {
         const u = document.getElementById('cmapUndo'), r = document.getElementById('cmapRedo');
         // Corners pending on a half-drawn shape are the first thing either
@@ -1556,6 +1582,7 @@
         if (histUndo.length > 30) histUndo.shift();
         histRedo.length = 0;
         syncHistBtns();
+        persistHist();
         // Every change this client makes to the map passes through here, which
         // makes it the one place the autosave has to listen. Shapes arriving
         // from the room do not — the person who moved it is the one who saves.
@@ -1656,6 +1683,7 @@
         // applyStep files its inverse straight onto the other stack rather than
         // through pushHist, so undo and redo have to say so themselves.
         markMapDirty();
+        persistHist();
     }
     /** `extra` overrides the pen's own settings — a label's width is a type
         size, not a stroke, and it brings a font with it. */
@@ -4131,6 +4159,7 @@
     }
 
     window.initCollabMap = function () {
+        seedHist();   // the kept way back, before the first press can want it
         if (booted) { window.cmapRefresh(); armErrand(); return; }
         if (window.google && window.google.maps) { booted = true; buildMap(); armErrand(); return; }
         if (loading) return;
