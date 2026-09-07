@@ -36,36 +36,44 @@
        Held under a fifth of an alpha: the words on top are what anybody came
        to read. The same eight the growth tool in Activities wears, so a lot
        is the same colour in both places. */
-    .gr-c0 { background-image: linear-gradient(135deg, rgb(138 90 43 / .16), rgb(180 130 80 / .10) 45%, rgb(110 70 32 / .16)); }
-    .gr-c1 { background-image: linear-gradient(135deg, rgb(143 194 103 / .18), rgb(190 220 150 / .10) 45%, rgb(107 159 61 / .16)); }
-    .gr-c2 { background-image: linear-gradient(135deg, rgb(107 159 61 / .20), rgb(143 194 103 / .12) 45%, rgb(74 124 42 / .18)); }
-    .gr-c3 { background-image: linear-gradient(135deg, rgb(47 82 25 / .20), rgb(74 124 42 / .12) 45%, rgb(31 61 16 / .18)); }
-    .gr-c4 { background-image: linear-gradient(135deg, rgb(13 148 136 / .18), rgb(56 189 248 / .12) 45%, rgb(30 64 175 / .18)); }
-    .gr-c5 { background-image: linear-gradient(135deg, rgb(251 191 36 / .20), rgb(253 224 71 / .12) 45%, rgb(240 180 41 / .18)); }
-    .gr-c6 { background-image: linear-gradient(135deg, rgb(249 168 37 / .20), rgb(251 191 36 / .12) 45%, rgb(217 130 20 / .18)); }
-    .gr-c7 { background-image: linear-gradient(135deg, rgb(180 83 9 / .20), rgb(217 178 60 / .12) 45%, rgb(120 53 15 / .18)); }
-    .gr-card { background-size: 240% 240%; animation: gradSweep 16s ease-in-out infinite alternate; }
-    @media (prefers-reduced-motion: reduce) { .gr-card { animation: none; } }
-    html.dark .gr-c0 { background-image: linear-gradient(135deg, rgb(138 90 43 / .30), rgb(180 130 80 / .18) 45%, rgb(110 70 32 / .30)); }
-    html.dark .gr-c1 { background-image: linear-gradient(135deg, rgb(143 194 103 / .26), rgb(190 220 150 / .16) 45%, rgb(107 159 61 / .26)); }
-    html.dark .gr-c2 { background-image: linear-gradient(135deg, rgb(107 159 61 / .30), rgb(143 194 103 / .18) 45%, rgb(74 124 42 / .28)); }
-    html.dark .gr-c3 { background-image: linear-gradient(135deg, rgb(74 124 42 / .32), rgb(107 159 61 / .18) 45%, rgb(47 82 25 / .30)); }
-    html.dark .gr-c4 { background-image: linear-gradient(135deg, rgb(13 148 136 / .30), rgb(56 189 248 / .18) 45%, rgb(30 64 175 / .28)); }
-    html.dark .gr-c5 { background-image: linear-gradient(135deg, rgb(251 191 36 / .28), rgb(253 224 71 / .16) 45%, rgb(240 180 41 / .26)); }
-    html.dark .gr-c6 { background-image: linear-gradient(135deg, rgb(249 168 37 / .28), rgb(251 191 36 / .16) 45%, rgb(217 130 20 / .26)); }
-    html.dark .gr-c7 { background-image: linear-gradient(135deg, rgb(217 119 6 / .30), rgb(217 178 60 / .16) 45%, rgb(146 64 14 / .28)); }
-    /* background-COLOR, not the shorthand: the shorthand resets
-       background-image, and the stage's tint is an image. A white card with
-       a coloured wash over it is what this is meant to be. */
+    /* The tint used to wash the WHOLE card, and everything written on it —
+       do-lists, warnings, the steps — sat on a coloured ground that turned
+       muddy olive in the dark. The stage colour now lives in two honest
+       places: the header band, and an accent bar down the card's left edge.
+       The body is plain surface, which is what words want under them. */
+    .gr-c0 { --gr-accent: #8a5a2b; }
+    .gr-c1 { --gr-accent: #8fc267; }
+    .gr-c2 { --gr-accent: #6b9f3d; }
+    .gr-c3 { --gr-accent: #2f5219; }
+    .gr-c4 { --gr-accent: #0d9488; }
+    .gr-c5 { --gr-accent: #f0b429; }
+    .gr-c6 { --gr-accent: #d98214; }
+    .gr-c7 { --gr-accent: #b45309; }
+    .gr-c0 .gr-top { background-image: linear-gradient(135deg, rgb(138 90 43 / .18), rgb(180 130 80 / .10) 45%, rgb(110 70 32 / .18)); }
+    .gr-c1 .gr-top { background-image: linear-gradient(135deg, rgb(143 194 103 / .22), rgb(190 220 150 / .12) 45%, rgb(107 159 61 / .20)); }
+    .gr-c2 .gr-top { background-image: linear-gradient(135deg, rgb(107 159 61 / .22), rgb(143 194 103 / .14) 45%, rgb(74 124 42 / .20)); }
+    .gr-c3 .gr-top { background-image: linear-gradient(135deg, rgb(47 82 25 / .22), rgb(74 124 42 / .14) 45%, rgb(31 61 16 / .20)); }
+    .gr-c4 .gr-top { background-image: linear-gradient(135deg, rgb(13 148 136 / .20), rgb(56 189 248 / .14) 45%, rgb(30 64 175 / .20)); }
+    .gr-c5 .gr-top { background-image: linear-gradient(135deg, rgb(251 191 36 / .24), rgb(253 224 71 / .14) 45%, rgb(240 180 41 / .22)); }
+    .gr-c6 .gr-top { background-image: linear-gradient(135deg, rgb(249 168 37 / .24), rgb(251 191 36 / .14) 45%, rgb(217 130 20 / .22)); }
+    .gr-c7 .gr-top { background-image: linear-gradient(135deg, rgb(180 83 9 / .24), rgb(217 178 60 / .14) 45%, rgb(120 53 15 / .22)); }
+    html.dark .gr-c0 .gr-top { background-image: linear-gradient(135deg, rgb(138 90 43 / .34), rgb(180 130 80 / .20) 45%, rgb(110 70 32 / .34)); }
+    html.dark .gr-c1 .gr-top { background-image: linear-gradient(135deg, rgb(143 194 103 / .30), rgb(190 220 150 / .18) 45%, rgb(107 159 61 / .30)); }
+    html.dark .gr-c2 .gr-top { background-image: linear-gradient(135deg, rgb(107 159 61 / .34), rgb(143 194 103 / .20) 45%, rgb(74 124 42 / .32)); }
+    html.dark .gr-c3 .gr-top { background-image: linear-gradient(135deg, rgb(74 124 42 / .36), rgb(107 159 61 / .20) 45%, rgb(47 82 25 / .34)); }
+    html.dark .gr-c4 .gr-top { background-image: linear-gradient(135deg, rgb(13 148 136 / .34), rgb(56 189 248 / .20) 45%, rgb(30 64 175 / .32)); }
+    html.dark .gr-c5 .gr-top { background-image: linear-gradient(135deg, rgb(251 191 36 / .30), rgb(253 224 71 / .18) 45%, rgb(240 180 41 / .28)); }
+    html.dark .gr-c6 .gr-top { background-image: linear-gradient(135deg, rgb(249 168 37 / .30), rgb(251 191 36 / .18) 45%, rgb(217 130 20 / .28)); }
+    html.dark .gr-c7 .gr-top { background-image: linear-gradient(135deg, rgb(217 119 6 / .32), rgb(217 178 60 / .18) 45%, rgb(146 64 14 / .30)); }
     .gr-card { border: 1px solid var(--color-gray-200); border-radius: 1rem; overflow: hidden;
-        background-color: var(--color-white); margin-bottom: .9rem; }
-    /* The header is transparent so the card's own stage colour shows
-       through it: the tint belongs to the lot, not to one band of it, and a
-       header painting its own green over the top was the reason only the
-       top inch of the card was coloured. */
+        background-color: var(--color-white); margin-bottom: .9rem;
+        border-left: 4px solid var(--gr-accent, var(--color-gray-300)); }
     .gr-top { display: flex; align-items: center; gap: .7rem; padding: .8rem .9rem;
-        background: rgb(255 255 255 / .28); cursor: pointer; user-select: none; }
-    .gr-top:hover { background: rgb(255 255 255 / .45); }
+        cursor: pointer; user-select: none;
+        background-size: 240% 240%; animation: gradSweep 16s ease-in-out infinite alternate; }
+    .gr-top:hover { filter: brightness(1.03); }
+    html.dark .gr-top:hover { filter: brightness(1.12); }
+    @media (prefers-reduced-motion: reduce) { .gr-top { animation: none; } }
     /* Accordion, the same one the activities board uses: a lot folds down to
        its header, the chevron flags state, and the body is a 1fr→0fr grid
        row so height animates without knowing the content size. */
