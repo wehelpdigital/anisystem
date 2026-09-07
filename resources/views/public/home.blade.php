@@ -109,6 +109,133 @@
         </div>
     </section>
 
+    {{-- ================= WHY: FARMING BY INTERVENTION ================= --}}
+    {{-- The argument the whole site rests on: the calendar stopped being
+         enough. Successful modern farming is intervention-based — read the
+         change early, act on the right day — and that is precisely the job
+         this app does. --}}
+    <section class="relative isolate overflow-hidden spark-field">
+        <img src="{{ asset('images/site/photos/storm-paddies.jpg') }}" alt="Farmers transplanting rice under a heavy grey sky"
+             class="absolute inset-0 -z-20 h-full w-full object-cover" loading="lazy">
+        <div class="absolute inset-0 -z-10 bg-gradient-to-b from-brand-900/95 via-brand-900/85 to-brand-900/95"></div>
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24" style="z-index:1">
+            <div class="max-w-3xl mx-auto text-center reveal">
+                <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Why plans must bend</p>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white text-balance">
+                    Modern Farming Wins by <span class="bg-gradient-to-r from-accent-300 to-accent-500 bg-clip-text text-transparent">Intervention</span>
+                </h2>
+                <p class="mt-5 text-brand-100 text-base sm:text-lg leading-relaxed">
+                    The old way follows a fixed calendar and hopes. But the seasons stopped cooperating —
+                    El Niño and La Niña swing, storms land early, pests arrive before the book says they should,
+                    prices move after harvest is already committed. The farmers who succeed today are the ones
+                    who <span class="font-semibold text-white">see the change coming and intervene on the right day</span>.
+                    That is exactly the job anee.io was built to do.
+                </p>
+            </div>
+
+            <div class="mt-12 grid gap-4 sm:gap-5 sm:grid-cols-2">
+                @php
+                    $interventions = [
+                        [
+                            't' => 'The weather turns',
+                            'w' => 'A dry spell stretches, or a week of rain moves in ahead of your spray day.',
+                            'a' => 'Per-lot forecasts and ENSO-aware planting analyses see it early — and when the plan must move, you drag it and every date follows.',
+                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999A5.002 5.002 0 105.9 12.1 4 4 0 003 15zM13 21l-2 2m6-4l-2 2m-8-2l-2 2"/>',
+                        ],
+                        [
+                            't' => 'A pest lands first',
+                            'w' => 'Yellowing leaves, streaks, holes — and the technician\'s next visit is days away.',
+                            'a' => 'Snap a photo and Anee reads it against your crop and stage, so you treat the right problem at the right dose, today.',
+                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/>',
+                        ],
+                        [
+                            't' => 'The crop runs ahead — or behind',
+                            'w' => 'Heat pushed the stages faster than the plan; a cold snap held them back.',
+                            'a' => 'Growth stages are read per date, per lot, with do-lists and watch-lists — so you act on what the crop is, not what the calendar assumed.',
+                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+                        ],
+                        [
+                            't' => 'Costs drift mid-season',
+                            'w' => 'An extra spray here, a rework there — and the margin quietly disappears.',
+                            'a' => 'Labor, materials and services total live in ₱ as you adjust, so every intervention is decided knowing what it costs.',
+                            'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+                        ],
+                    ];
+                @endphp
+                @foreach ($interventions as $i => $iv)
+                    <div class="rounded-2xl bg-white/10 backdrop-blur ring-1 ring-white/15 p-5 sm:p-6 reveal" style="--reveal-delay: {{ $i * 0.07 }}s">
+                        <div class="flex items-center gap-3">
+                            <span class="w-11 h-11 shrink-0 rounded-2xl bg-accent-500/15 ring-1 ring-accent-500/30 text-accent-400 flex items-center justify-center">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">{!! $iv['icon'] !!}</svg>
+                            </span>
+                            <h3 class="font-heading text-lg font-bold text-white">{{ $iv['t'] }}</h3>
+                        </div>
+                        <p class="mt-3 text-sm text-brand-100/90 leading-relaxed">{{ $iv['w'] }}</p>
+                        <p class="mt-2.5 text-sm text-white leading-relaxed flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 shrink-0 text-accent-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+                            <span>{{ $iv['a'] }}</span>
+                        </p>
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="sec-cta on-dark reveal">
+                <a href="{{ route('signup') }}" class="btn btn-accent btn-lg shadow-lg shadow-black/20">Start for Free</a>
+                <span class="sec-cta-note">Farm by intervention, not by hope — from your first free season.</span>
+            </div>
+        </div>
+    </section>
+
+    {{-- ================= YOUR FARM IS A BUSINESS ================= --}}
+    {{-- The second half of the argument: every other business already took
+         the technology upgrade and pulled ahead. Agriculture is a business
+         too — this is its turn. --}}
+    <section class="py-16 sm:py-24 bg-brand-mesh bg-drift">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="grid gap-10 lg:gap-14 lg:grid-cols-[1.15fr_1fr] items-center">
+                <div class="reveal">
+                    <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Your farm is a business</p>
+                    <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">
+                        Every Business Already Upgraded. <span class="text-brand-600">It's the Farm's Turn.</span>
+                    </h2>
+                    <p class="mt-4 text-gray-600 leading-relaxed">
+                        The sari-sari store takes e-wallet payments. The tricycle line runs on an app.
+                        The trader who buys your palay works from a spreadsheet. Every business that took
+                        the technology step got faster, leaner and more profitable — while most farms
+                        still run from memory and a worn notebook.
+                    </p>
+                    <p class="mt-3 text-gray-600 leading-relaxed">
+                        Agriculture is a business too: inputs, labor, timing, margins. It deserves the
+                        same upgrade — sized for the field, priced for the farmer, in your own pocket.
+                    </p>
+                    <div class="mt-8 flex flex-col items-start gap-2">
+                        <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start for Free — take the upgrade</a>
+                        <span class="text-xs text-gray-500">Free forever on Libre. Your notebook can retire gently.</span>
+                    </div>
+                </div>
+                <div class="grid gap-4 reveal">
+                    @foreach ([
+                        ['t' => 'Efficiency', 'p' => 'No wasted days and no forgotten tasks — every activity lands on the right date, counted from each lot\'s own Day-0.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>'],
+                        ['t' => 'Output', 'p' => 'Science-backed timing and stage-by-stage guidance — the same protocol our technicians use to chase maximum yield.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>'],
+                        ['t' => 'Control', 'p' => 'Know your margin before you spend, not after — labor, materials and services totalled live in ₱ across the season.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>'],
+                    ] as $i => $b)
+                        <div class="card card-hover reveal" style="--reveal-delay: {{ $i * 0.08 }}s">
+                            <div class="card-body flex items-start gap-4">
+                                <span class="w-11 h-11 shrink-0 rounded-2xl bg-gradient-to-br from-brand-50 to-brand-100 text-brand-600 ring-1 ring-brand-100 flex items-center justify-center">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">{!! $b['icon'] !!}</svg>
+                                </span>
+                                <div>
+                                    <h3 class="font-heading text-lg font-bold text-ink">{{ $b['t'] }}</h3>
+                                    <p class="mt-1 text-sm text-gray-600 leading-relaxed">{{ $b['p'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
     {{-- ================= FEATURES (nine, balanced) ================= --}}
     <section class="py-16 sm:py-24 bg-white bg-drift">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
