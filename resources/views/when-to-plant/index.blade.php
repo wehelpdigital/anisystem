@@ -3,6 +3,24 @@
 @section('page-title', 'When to Plant')
 @section('page-subtitle', 'The right window, argued from the climate')
 
+@section('back', route('app.dashboard'))
+@push('scripts')
+<script>
+    // Back goes to wherever you actually came from - the home card or the
+    // schedules page - and only falls back to Home on a cold open.
+    document.getElementById('appBackLink')?.addEventListener('click', (e) => {
+        try {
+            const ref = document.referrer ? new URL(document.referrer) : null;
+            if (ref && ref.origin === location.origin && window.history.length > 1) {
+                e.preventDefault();
+                history.back();
+            }
+        } catch (_) { /* the href already points home */ }
+    });
+</script>
+@endpush
+
+
 @section('content')
 <style>
     /* ---- WHEN TO PLANT -------------------------------------------------
