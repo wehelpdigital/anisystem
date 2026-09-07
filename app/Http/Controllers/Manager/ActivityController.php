@@ -41,7 +41,7 @@ class ActivityController extends BaseScheduleController
      * in a media extension. No traversal, no absolute path, no backslash, and
      * nothing that could name a file outside the public media disk.
      */
-    private const ATTACHABLE_PATH = '#^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*\.(?:jpe?g|png|webp|gif|avif|mp4|mov|m4v|webm|ogv|3gp)$#i';
+    private const ATTACHABLE_PATH = '#^[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*\.(?:jpe?g|png|webp|gif|avif|mp4|mov|m4v|webm|ogv|3gp|weba|m4a|mp3|ogg|oga|wav|aac|opus)$#i';
 
     /**
      * Module page — the activity timeline. Server-renders the initial
