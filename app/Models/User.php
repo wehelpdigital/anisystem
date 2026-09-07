@@ -21,6 +21,16 @@ class User extends Authenticatable
      */
     public const ASSISTANT_EMAIL = 'ai-technician@anisenso.system';
 
+    /** Ids of the SYSTEM_EMAILS accounts, cached — people-lists (the
+     *  suggestions strip, the connect directory) exclude the lot: there is
+     *  nobody on the other end to accept a request. */
+    public static function systemAccountIds(): array
+    {
+        return \Illuminate\Support\Facades\Cache::remember('users.system-ids', 3600, function () {
+            return self::whereIn('email', self::SYSTEM_EMAILS)->pluck('id')->map(fn ($id) => (int) $id)->all();
+        });
+    }
+
     protected $table = 'anisystem_users';
 
     protected $fillable = [
