@@ -393,7 +393,7 @@ class WhatToPlantController extends Controller
         $problems = collect($p['problems'])->map(fn ($k) => self::PROBLEMS[$k] ?? $k)->implode('; ') ?: 'none reported';
         $area = $p['area'] !== '' ? $p['area'] : 'not stated';
         $notes = $p['notes'] !== '' ? $p['notes'] : 'none';
-        $enso = $this->ensoFacts();
+        $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
 
         return <<<PROMPT
@@ -424,36 +424,6 @@ Rules for the shape:
 - avoid: two to four crops a farmer in this region might otherwise try, each with the plain reason this ground argues against it.
 - confidence "low"/"moderate"/"high"; dataGaps at most three; summary ≤ 90 words, plain and warm but factual.
 PROMPT;
-    }
-
-    /** The observed ENSO state — the sister module's reader, same cache. */
-    private function ensoFacts(): string
-    {
-        try {
-            return Cache::remember('wtp-oni-facts', 86400, function () {
-                $txt = Http::timeout(6)->get('https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt')->body();
-                $rows = array_values(array_filter(array_map('trim', explode("\n", $txt))));
-                $parsed = [];
-                foreach (array_slice($rows, -4) as $r) {
-                    $p = preg_split('/\s+/', $r);
-                    if (count($p) >= 4 && is_numeric($p[3])) {
-                        $parsed[] = $p[0] . ' ' . $p[1] . ' anomaly ' . $p[3] . '°C';
-                    }
-                }
-                if (! $parsed) {
-                    return '';
-                }
-                preg_match('/(-?\d+(?:\.\d+)?)°C$/', end($parsed), $m);
-                $last = (float) ($m[1] ?? 0);
-                $state = $last >= 0.5 ? 'El Niño conditions'
-                    : ($last <= -0.5 ? 'La Niña conditions' : 'ENSO-neutral conditions');
-
-                return 'Observed ENSO state (NOAA CPC ONI, 3-month running anomalies, most recent last): '
-                    . implode('; ', $parsed) . ' — i.e. currently ' . $state . '.';
-            });
-        } catch (\Throwable $e) {
-            return '';
-        }
     }
 
     /** The model's JSON, taken carefully. Null when it cannot be trusted. */

@@ -1131,10 +1131,12 @@ class FarmReportController extends BaseScheduleController
             })->implode(' | ');
         }
 
-        // The sky's records: ENSO plus the season's own daily archive.
-        $enso = $this->ensoFacts();
+        // The sky's records: the live ENSO picture (observed state AND the
+        // official NOAA CPC forecast) plus the season's own daily archive.
+        $enso = \App\Support\EnsoOutlook::forPrompt();
         if ($enso !== '') {
-            $ctx[] = $enso;
+            $ctx[] = 'THE ENSO PICTURE (the Pacific climate driver — weigh it in the read'
+                . ($kind === 'season' ? ' and in next-season advice' : ' and in every forward-looking call') . '): ' . $enso;
         }
         $weather = $this->weatherHistory($schedule);
         if ($weather !== '') {
@@ -1186,36 +1188,6 @@ class FarmReportController extends BaseScheduleController
             . ' Say protocol timings in ' . $schedule->dayType . ' day-counts, not bare dates. Use plain language a farmer reads easily; short sentences. No emoji shortcodes like :name:.'
             . "\n\n=== THE RECORDS ===\n" . implode("\n\n", $ctx)
             . "\n\n=== YOUR ANSWER ===\nReturn ONLY a single JSON object, no fences, no commentary, exactly this shape:\n" . $schema;
-    }
-
-    /** NOAA's ONI, cached a day — the same facts when-to-plant reads. */
-    private function ensoFacts(): string
-    {
-        try {
-            return Cache::remember('wtp-oni-facts', 86400, function () {
-                $txt = Http::timeout(6)->get('https://www.cpc.ncep.noaa.gov/data/indices/oni.ascii.txt')->body();
-                $rows = array_values(array_filter(array_map('trim', explode("\n", $txt))));
-                $parsed = [];
-                foreach (array_slice($rows, -4) as $r) {
-                    $p = preg_split('/\s+/', $r);
-                    if (count($p) >= 4 && is_numeric($p[3])) {
-                        $parsed[] = $p[0] . ' ' . $p[1] . ' anomaly ' . $p[3] . '°C';
-                    }
-                }
-                if (! $parsed) {
-                    return '';
-                }
-                preg_match('/(-?\d+(?:\.\d+)?)°C$/', end($parsed), $m);
-                $last = (float) ($m[1] ?? 0);
-                $state = $last >= 0.5 ? 'El Niño conditions'
-                    : ($last <= -0.5 ? 'La Niña conditions' : 'ENSO-neutral conditions');
-
-                return 'Observed ENSO state (NOAA CPC ONI, 3-month running anomalies, most recent last): '
-                    . implode('; ', $parsed) . ' — i.e. currently ' . $state . '.';
-            });
-        } catch (\Throwable $e) {
-            return '';
-        }
     }
 
     /**
