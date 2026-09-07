@@ -44,7 +44,10 @@
         .note-card > .note-head { cursor: pointer; }
         .note-origin { margin-top: .2rem; display: inline-flex; }
         .note-card > .note-fold { overflow: hidden; transition: max-height .28s cubic-bezier(.22,1,.36,1); }
-        .note-fold-inner { min-height: 0; }
+        /* The body and its chips stand in the title's own column — indented
+           past the chevron, not against the card's edge, so an open note
+           reads as one aligned block from title to attachments. */
+        .note-fold-inner { min-height: 0; padding-left: 1.5rem; }
         .note-card.is-collapsed > .note-fold { max-height: 0; }
         .note-chevron { transition: transform .2s ease; color: #9ca3af; }
         .note-card:not(.is-collapsed) .note-chevron { transform: rotate(90deg); }
