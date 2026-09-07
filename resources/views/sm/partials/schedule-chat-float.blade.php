@@ -12,28 +12,26 @@
     $teamAiPresent = $teamAiSettings && $teamAiSettings->isUsable();
 @endphp
 @if ($teamHasTeam && $teamCanAccess)
-<div id="teamChat" class="team-float{{ $teamAiPresent ? ' has-ai' : '' }}{{ request('module') === 'ai' ? ' team-float-off' : '' }}">
+<div id="teamChat" class="team-float{{ $teamAiPresent ? ' has-ai' : '' }}{{ request('module') === 'ai' ? ' team-float-off' : '' }}{{ request('module') === 'workers' || request()->routeIs('sm.workers') ? ' team-fab-off' : '' }}">
     <button type="button" id="teamChatFab" class="team-fab" aria-label="Open team chat" title="Team chat">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-3-3.87M9 20H4v-1a4 4 0 013-3.87m0 0a4 4 0 115.5-5.8M7 15.13A4 4 0 0012 8m5 7.13A4 4 0 0012 8m0 0a3 3 0 100-2"/></svg>
         <span id="teamChatDot" class="team-dot hidden"></span>
     </button>
 
+    {{-- The shade sits under the panel and over everything else — the page,
+         the floats, the sticky header — so an open chat is the only thing
+         being looked at. Tapping it is closing. --}}
+    <div id="teamShade" class="team-shade hidden"></div>
     <div id="teamChatPanel" class="team-panel hidden">
+        {{-- One verb per corner: the title says where you are, ✕ leaves.
+             The call and whiteboard buttons moved out by request, and a PM
+             opened from a worker's card is its own room — no back arrow
+             into a team chat the tap never asked for. --}}
         <div class="team-head">
-            <button type="button" id="teamBack" class="team-icon hidden" aria-label="Back to team chat">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-            </button>
             <div class="min-w-0 grow">
                 <p class="team-title truncate" id="teamTitle">Team chat</p>
                 <p class="team-sub truncate" id="teamSub">Loading…</p>
             </div>
-            <button type="button" id="teamCallBtn" class="team-callbtn" title="Start a group call" aria-label="Start a group call">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6.6 10.8a15.5 15.5 0 006.6 6.6l2.2-2.2a1 1 0 011-.24 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.6a1 1 0 01-.24 1l-2.23 2.2z"/></svg>
-                <span id="teamCallLabel">Group call</span>
-            </button>
-            <button type="button" id="teamBoardBtn" class="team-icon" title="Open the team whiteboard" aria-label="Team whiteboard">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2h-5l-4 4v-4H6a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 9h8M8 12h5"/></svg>
-            </button>
             <button type="button" id="teamClose" class="team-icon" aria-label="Close">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
@@ -101,6 +99,19 @@
     .team-float { position: fixed; right: 1rem; bottom: 5.5rem; z-index: 61; }
     .team-float.has-ai { bottom: 9.5rem; }
     .team-float.team-float-off { display: none; }
+    {{-- The Workers module has its own door to this chat — the message
+         button on every worker card — so the floating one only crowds the
+         cards there. The shell's module switcher keeps the class in step. --}}
+    .team-float.team-fab-off .team-fab { display: none; }
+    /* Open, the chat outranks everything on the page — the AI float
+       (200 when open), the sticky header, the lot. The shade under the
+       panel makes that visible: one room, nothing else competing. */
+    .team-float.is-open { z-index: 400; }
+    .team-shade { position: fixed; inset: 0; background: rgb(15 23 42 / .48);
+        animation: teamShadeIn .28s cubic-bezier(.22,1,.36,1) both; }
+    .team-shade.hidden { display: none; }
+    @keyframes teamShadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .team-shade { animation: none; } }
     /* 1024, where the tab bar goes — below that both buttons clear it. */
     @media (min-width: 1024px) {
         .team-float { right: 1.25rem; bottom: 1.25rem; }
@@ -133,9 +144,8 @@
        tap the member stack in the header and the list opened BEHIND the
        chat. Docked, the panel is furniture, not a float. */
     .team-panel.team-panel-docked { position: static; inset: auto; width: 100%; height: 100%; max-height: none; border: 0; border-radius: 0; box-shadow: none; animation: none; z-index: auto; }
-    /* The board owns close + whiteboard toggles while docked. */
-    .team-panel.team-panel-docked #teamClose,
-    .team-panel.team-panel-docked #teamBoardBtn { display: none; }
+    /* The board owns the close toggle while docked. */
+    .team-panel.team-panel-docked #teamClose { display: none; }
     /* Docked means the Collab Room, and the room's page header already
        carries the member faces — the strip under this header was the same
        people twice, spending a row the thread needs. PMs from inside the
@@ -294,8 +304,23 @@
 (() => {
     const init = () => {
         const $ = (id) => document.getElementById(id);
+        /* One float per page, whichever road included it. The shell can
+           inject the workers pane again (a deep link re-fetches it), and
+           each injection brings its own copy of this markup — the first
+           copy, already moved to <body>, is the live one; late arrivals
+           are shed before their duplicate ids can shadow it. */
+        if (window.__teamChatAlive) {
+            document.querySelectorAll('.team-float').forEach((el, i) => { if (i > 0) el.remove(); });
+            return;
+        }
         const fab = $('teamChatFab'), panel = $('teamChatPanel'), thread = $('teamThread');
         if (!fab || !panel) return;
+        window.__teamChatAlive = true;
+        /* Out of <main>: born inside a module's pane, the float's fixed
+           children were painted in the pane's own order and the shade came
+           out UNDER the sticky header and OVER the panel. A full-screen
+           overlay belongs to the body, like every sheet in the app. */
+        document.body.appendChild($('teamChat'));
 
         const SCHEDULE_ID = @json($schedule->id);
         const ME = @json((int) auth()->id());
@@ -496,19 +521,29 @@
         }
 
         /* ---------- PM mode (reuses community DM → shared history) ---------- */
+        /* What the thread last looked like. The poll used to clear and
+           rebuild the whole window every five seconds — which read as the
+           chat "refreshing in a loop" and yanked the scroll — so it now
+           repaints only when the messages actually changed. */
+        let pmSig = '';
         async function loadPmThread(initial) {
             try {
                 const res = await fetch(`${U.dmBase}/${pmUser}`, { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
                 const d = (await res.json()).data;
                 canSend = d.canMessage !== false;
                 $('teamComposerState')?.remove();
-                clearThread();
-                (d.messages || []).forEach((m) => bubble({ mine: m.mine, body: m.body, image: m.image, at: m.at }, { showSender: false }));
+                const msgs = d.messages || [];
+                const last = msgs[msgs.length - 1] || {};
+                const sig = msgs.length + ':' + (last.at || '') + ':' + (last.body || '') + ':' + (last.image || '');
+                if (initial || sig !== pmSig) {
+                    pmSig = sig;
+                    clearThread();
+                    msgs.forEach((m) => bubble({ mine: m.mine, body: m.body, image: m.image, at: m.at }, { showSender: false }));
+                    scrollDown();
+                }
                 // The PM thread refetches on its own beat, so typing rides it.
                 setTyping(d.typing ? [pmName] : []);
                 setComposerEnabled(canSend);
-                if (initial) scrollDown();
-                else scrollDown();
             } catch (_) { /* transient */ }
         }
         async function sendPm() {
@@ -542,11 +577,8 @@
         }
         function toGroup() {
             mode = 'group'; pmUser = null;
-            $('teamBack').classList.add('hidden');
             $('teamMembers').classList.remove('hidden');
             $('teamTitle').textContent = 'Team chat';
-            $('teamCallLabel').textContent = 'Group call';
-            $('teamCallBtn').title = 'Start a group call';
             lastGroupId = 0; clearThread();
             setComposerEnabled(true);
             startTimers();
@@ -554,12 +586,10 @@
         }
         function toPm(userId, name) {
             mode = 'pm'; pmUser = userId; pmName = name || 'Worker';
-            $('teamBack').classList.remove('hidden');
+            pmSig = '';
             $('teamMembers').classList.add('hidden');
             $('teamTitle').textContent = pmName;
             $('teamSub').textContent = 'Private message';
-            $('teamCallLabel').textContent = 'Call';
-            $('teamCallBtn').title = 'Call ' + pmName;
             clearThread();
             startTimers();
             loadPmThread(true);
@@ -621,6 +651,10 @@
         function openPanel(open) {
             panel.classList.toggle('hidden', !open);
             $('teamChat').classList.toggle('is-open', open);
+            // The shade belongs to the floating window only — docked into the
+            // whiteboard the panel is furniture, and a shade would sit over
+            // the very board being drawn on.
+            $('teamShade')?.classList.toggle('hidden', !open || panel.classList.contains('team-panel-docked'));
             if (open) {
                 $('teamChatDot').classList.add('hidden');
                 if (mode === 'group') { toGroup(); } else { startTimers(); }
@@ -631,23 +665,19 @@
                 if (!window.matchMedia('(pointer: coarse)').matches) {
                     window.smFocus($('teamText'), { delay: 60 });
                 }
-            } else { stopTimers(); }
+            } else {
+                stopTimers();
+                // A closed PM is finished with: with no back arrow inside,
+                // the next open of the fab must be the team chat, not the
+                // last private room this window happened to be left in.
+                mode = 'group'; pmUser = null;
+            }
         }
 
         fab.addEventListener('click', () => openPanel(panel.classList.contains('hidden')));
         $('teamClose').addEventListener('click', () => openPanel(false));
-        $('teamBack').addEventListener('click', toGroup);
-        $('teamBoardBtn')?.addEventListener('click', () => { if (typeof window.openScheduleBoard === 'function') window.openScheduleBoard(); });
-        // Call button: in a PM it calls that worker; in group mode it's a team call.
-        $('teamCallBtn')?.addEventListener('click', () => {
-            if (mode === 'pm' && pmUser) {
-                if (typeof window.callWorker === 'function') window.callWorker(pmUser, pmName);
-                else if (window.toast) toast('Calls are only available in the Collab Room.', 'error');
-                return;
-            }
-            if (typeof window.startTeamCall === 'function') window.startTeamCall();
-            else if (window.toast) toast('Calls are only available in the Collab Room.', 'error');
-        });
+        // Tapping the shade is closing — the same verb every sheet answers.
+        $('teamShade')?.addEventListener('click', () => openPanel(false));
 
         // Click a member tile to open their private message (which has a Call button).
         $('teamMembers').addEventListener('click', (e) => {

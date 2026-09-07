@@ -369,6 +369,8 @@ const __init = () => {
     const SCHEDULE_ID = {{ $schedule->id }};
     const SKILLS = @json(\App\Models\AsScheduleWorker::SKILLS);
     const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    // The house chat mark — the same picture every chat door now wears.
+    const CHAT_ICON = @json(asset('images/icons/chat.png'));
 
     let WORKERS = @json($jsWorkers);
     const CAN_LOGINS = @json($canWorkerLogins);
@@ -441,7 +443,7 @@ const __init = () => {
                 </div>
 
                 <div class="flex items-center gap-1.5 pt-3 border-t border-gray-100">
-                    ${w.login && w.login.workerUserId ? `<button type="button" class="btn btn-white btn-sm px-2.5!" data-pm-worker="${w.login.workerUserId}" data-pm-name="${escapeHtml(w.workerName)}" title="Message ${escapeHtml(w.workerName)}" aria-label="Message ${escapeHtml(w.workerName)}"><svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12a8 8 0 01-11.6 7.1L3 20l1-5.5A8 8 0 1121 12z"/></svg></button>` : ''}
+                    ${w.login && w.login.workerUserId ? `<button type="button" class="btn btn-white btn-sm px-2.5!" data-pm-worker="${w.login.workerUserId}" data-pm-name="${escapeHtml(w.workerName)}" title="Message ${escapeHtml(w.workerName)}" aria-label="Message ${escapeHtml(w.workerName)}"><img src="${CHAT_ICON}" alt="" class="w-4.5 h-4.5" style="object-fit:contain"></button>` : ''}
                     <button type="button" class="btn btn-white btn-sm" data-rules-worker="${w.id}">Rules</button>
                     <button type="button" class="btn btn-white btn-sm" data-edit-worker="${w.id}">Edit</button>
                     <button type="button" class="btn btn-ghost btn-sm px-2.5! text-red-500 hover:bg-red-50! ml-auto" data-delete-worker="${w.id}" aria-label="Delete worker">

@@ -4540,6 +4540,9 @@
         backBtn?.classList.toggle('hidden', key === 'activities' || backBtn.dataset.homeward === '1');
         // The AI module IS the technician chat — hide the floating one there.
         document.getElementById('aiFloat')?.classList.toggle('ai-float-off', key === 'ai');
+        // Workers has its own door to the team chat on every worker card, so
+        // the floating button only crowds that module's cards.
+        document.getElementById('teamChat')?.classList.toggle('team-fab-off', key === 'workers');
         // ...and it takes the toolbar's row, so the arrow has to lead home.
         aiBackArrow(key === 'ai');
         // On phones the fab hides only while the ACTIVITIES module is showing
