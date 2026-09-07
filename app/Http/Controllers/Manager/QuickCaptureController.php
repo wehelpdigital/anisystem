@@ -32,6 +32,9 @@ class QuickCaptureController extends BaseScheduleController
         $schedule = $this->schedule($request->input('scheduleId'));
         $this->assertCanEdit();
         $this->assertUnlocked($schedule);
+        if (! \App\Support\Tier::scheduleCan($schedule, 'videoRecording')) {
+            \App\Support\Tier::deny('Video recording is not included in this plan. Upgrade to record clips.');
+        }
 
         $request->validate([
             'scheduleId' => 'required|integer',

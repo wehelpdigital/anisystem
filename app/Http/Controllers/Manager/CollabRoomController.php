@@ -20,6 +20,9 @@ class CollabRoomController extends BaseScheduleController
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
             abort(403);
         }
+        if (! \App\Support\Tier::scheduleCan($schedule, 'collab')) {
+            \App\Support\Tier::deny('The Collab Room comes with the Farm Owner plan.');
+        }
 
         /* Opening the room is joining it.
          *

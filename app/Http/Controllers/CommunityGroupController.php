@@ -334,6 +334,9 @@ class CommunityGroupController extends Controller
 
     public function store(Request $request)
     {
+        if (! \App\Support\Tier::can('discussionCreate')) {
+            \App\Support\Tier::deny('Creating discussions comes with the Farm Owner plan. You can join any open room.');
+        }
         $data = $request->validate([
             'name' => 'required|string|max:150',
             'description' => 'nullable|string|max:500',
@@ -423,6 +426,17 @@ class CommunityGroupController extends Controller
         // Shown out is not the same as walked out. Somebody the organiser
         // removed cannot let themselves back in — otherwise removing them
         // from a password room means nothing, they just retype it.
+        // The tier's membership cap: Libre joins one room at a time.
+        $joinCap = \App\Support\Tier::limit('discussionJoin');
+        if ($joinCap !== null) {
+            $joined = CommunityGroupMember::where('userId', $user->id)
+                ->where('deleteStatus', 1)->whereNull('removedAt')
+                ->where('groupId', '!=', $group->id)->count();
+            if ($joined >= $joinCap) {
+                \App\Support\Tier::deny('Your plan joins ' . $joinCap . ' discussion at a time. Leave one first, or upgrade to join more.');
+            }
+        }
+
         $row = CommunityGroupMember::where('groupId', $group->id)
             ->where('userId', $user->id)->first();
         if ($row && $row->wasRemoved() && ! $user->isSuperAdmin()) {

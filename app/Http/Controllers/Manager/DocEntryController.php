@@ -217,6 +217,10 @@ class DocEntryController extends BaseScheduleController
      */
     private function storeUploads(Request $request, int $scheduleId): array
     {
+        if ($request->hasFile('files')
+            && ! \App\Support\Tier::scheduleCan(\App\Models\AsCroppingSchedule::find($scheduleId), 'docUploads')) {
+            \App\Support\Tier::deny('Document uploads come with the paid plans. The entry\'s words still save.');
+        }
         if (! $request->hasFile('files')) {
             return [];
         }

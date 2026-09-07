@@ -555,6 +555,12 @@ class ScheduleMapController extends BaseScheduleController
         if (! \App\Support\WorkerContext::canAddNotes()) {
             return $this->jsonFail('You are not allowed to save to this schedule.', 403);
         }
+        // The tier's map shelf: how many saved maps this member may keep.
+        $mapCap = \App\Support\Tier::limit('mapsTotal');
+        if ($mapCap !== null && ! $request->input('saveId')
+            && \App\Models\ScheduleMapSave::active()->where('userId', $meId)->count() >= $mapCap) {
+            \App\Support\Tier::deny('Your plan keeps up to ' . $mapCap . ' saved maps. Delete one or upgrade for more.');
+        }
 
         $validator = Validator::make($request->all(), [
             'mode' => 'required|in:map,image',

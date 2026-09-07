@@ -281,6 +281,9 @@ class CommunityMessageController extends Controller
             // .weba on purpose: the one media column tells its kinds apart
             // by extension, and audio/webm's honest audio extension is what
             // keeps a voice message from wearing a video's clothes.
+            if (! \App\Support\Tier::can('communityVoice')) {
+                \App\Support\Tier::deny('Voice messages come with the paid plans.');
+            }
             $mediaPath = $request->file('voice')->storeAs(
                 'community/messages',
                 uniqid('voice-') . '.weba',

@@ -44,6 +44,11 @@ class VideoOptimizer
         if (! str_starts_with((string) $file->getMimeType(), 'video/')) {
             throw new \RuntimeException('That file is not a video.');
         }
+        // Community video is a plan feature; the farm-side video doors ask
+        // their own schedule-scoped question before reaching here.
+        if (str_starts_with($dir, 'community') && ! Tier::can('communityVideo')) {
+            Tier::deny('Uploading videos to the community comes with the paid plans.');
+        }
 
         $ffmpeg = self::binary();
 

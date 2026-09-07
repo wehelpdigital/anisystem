@@ -45,11 +45,15 @@ class WeatherController extends Controller
         }
 
         // Resolve each distinct location once (bounded for safety).
+        // The tier's horizon: Libre sees today and tomorrow; paid sees it all.
+        $dayCap = \App\Support\Tier::limit('weatherDays');
         $resolved = [];
         foreach (array_slice($locations, 0, self::MAX_LOCATIONS, true) as $key => $info) {
             $forecast = $this->weather->forecastForPlace($info['query']);
             $resolved[$key] = $forecast
-                ? ['ok' => true, 'place' => $forecast['place'], 'days' => $forecast['days']]
+                ? ['ok' => true, 'place' => $forecast['place'],
+                    'days' => $dayCap !== null ? array_slice($forecast['days'], 0, $dayCap) : $forecast['days'],
+                    'capped' => $dayCap]
                 : ['ok' => false, 'place' => $info['label']];
         }
 
@@ -123,11 +127,17 @@ class WeatherController extends Controller
         // location would treble that response for nothing.
         $wantHourly = $request->boolean('hourly');
 
+        // The tier's horizon, judged by the schedule owner's plan.
+        $dayCap = \App\Support\Tier::scheduleLimit(
+            \App\Models\AsCroppingSchedule::find($scheduleId), 'weatherDays');
         $resolved = [];
         foreach (array_slice($locations, 0, self::MAX_LOCATIONS, true) as $key => $info) {
             $fc = $this->weather->forecastForPlace($info['query'], 6);
+            if ($fc && $dayCap !== null) {
+                $fc['days'] = array_slice($fc['days'], 0, $dayCap);
+            }
             $resolved[$key] = $fc
-                ? ['ok' => true, 'place' => $fc['place'], 'days' => $fc['days']]
+                ? ['ok' => true, 'place' => $fc['place'], 'days' => $fc['days'], 'capped' => $dayCap]
                 : ['ok' => false, 'place' => $info['label']];
             if ($wantHourly && $fc) {
                 // Hours belong to the day you tapped, so they arrive grouped

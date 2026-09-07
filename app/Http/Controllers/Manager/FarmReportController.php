@@ -78,6 +78,7 @@ class FarmReportController extends BaseScheduleController
     public function expensesPage(Request $request)
     {
         $schedule = $this->schedule($request->query('id'));
+        $this->guardReports($schedule);
         $schedule->load('lots');
 
         return view('sm.expenses-report', ['schedule' => $schedule]);
@@ -96,6 +97,7 @@ class FarmReportController extends BaseScheduleController
     public function expensesData(Request $request)
     {
         $schedule = $this->schedule($request->query('id'));
+        $this->guardReports($schedule);
 
         $from = $this->isoOrNull($request->query('from'));
         $to = $this->isoOrNull($request->query('to'));
@@ -254,6 +256,7 @@ class FarmReportController extends BaseScheduleController
     public function profitPage(Request $request)
     {
         $schedule = $this->schedule($request->query('id'));
+        $this->guardReports($schedule);
 
         return view('sm.profit-report', ['schedule' => $schedule]);
     }
@@ -271,6 +274,7 @@ class FarmReportController extends BaseScheduleController
     public function profitData(Request $request)
     {
         $schedule = $this->schedule($request->query('id'));
+        $this->guardReports($schedule);
 
         return $this->jsonOk('ok', ['data' => $this->profitFacts($schedule)]);
     }
@@ -446,6 +450,7 @@ class FarmReportController extends BaseScheduleController
     public function seasonPage(Request $request)
     {
         $schedule = $this->schedule($request->query('id'));
+        $this->guardReports($schedule);
         $schedule->load('lots');
 
         return view('sm.anee-report', ['schedule' => $schedule, 'kind' => 'season']);
@@ -454,6 +459,7 @@ class FarmReportController extends BaseScheduleController
     public function sofarPage(Request $request)
     {
         $schedule = $this->schedule($request->query('id'));
+        $this->guardReports($schedule);
         $schedule->load('lots');
 
         return view('sm.anee-report', ['schedule' => $schedule, 'kind' => 'sofar']);
@@ -524,6 +530,7 @@ class FarmReportController extends BaseScheduleController
     public function aneeGenerate(Request $request)
     {
         $schedule = $this->schedule($request->input('scheduleId'));
+        $this->guardReports($schedule);
         $kind = $request->input('kind') === 'sofar' ? 'sofar' : 'season';
         $lotId = (int) $request->input('lotId', 0);
         $payer = $this->aneePayer();
@@ -742,6 +749,7 @@ class FarmReportController extends BaseScheduleController
     public function protocolPage(Request $request)
     {
         $schedule = $this->schedule($request->query('id'));
+        $this->guardReports($schedule);
         $schedule->load('lots');
 
         return view('sm.protocol-report', ['schedule' => $schedule]);
@@ -892,6 +900,7 @@ class FarmReportController extends BaseScheduleController
     public function comparePage(Request $request)
     {
         $schedule = $this->schedule($request->query('id'));
+        $this->guardReports($schedule);
 
         return view('sm.compare-report', ['schedule' => $schedule]);
     }
@@ -1368,5 +1377,16 @@ class FarmReportController extends BaseScheduleController
             . "\n--- END OF ATTACHED REPORT ---\n";
 
         return ['title' => $r->title, 'text' => $text];
+    }
+
+    /**
+     * All reports beyond Labor belong to the paid tiers, judged by the
+     * schedule owner's plan.
+     */
+    private function guardReports($schedule): void
+    {
+        if (! \App\Support\Tier::scheduleCan($schedule, 'reportsAll')) {
+            \App\Support\Tier::deny('This plan includes the Labor report only. Upgrade to open the full report shelf.');
+        }
     }
 }

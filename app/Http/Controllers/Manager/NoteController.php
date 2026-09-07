@@ -191,6 +191,9 @@ class NoteController extends BaseScheduleController
     public function uploadVideo(Request $request)
     {
         $schedule = $this->scheduleForNote($request);
+        if (! \App\Support\Tier::scheduleCan($schedule, 'videoRecording')) {
+            \App\Support\Tier::deny('Video recording is not included in this plan. Upgrade to attach clips.');
+        }
 
         $validator = Validator::make($request->all(), [
             'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-msvideo|max:2097152',

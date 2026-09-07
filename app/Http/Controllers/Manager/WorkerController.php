@@ -83,6 +83,12 @@ class WorkerController extends BaseScheduleController
 
         $schedule = $this->scheduleFromRequest($request);
 
+        // The tier's worker cap, judged by the schedule owner's plan.
+        $wCap = \App\Support\Tier::scheduleLimit($schedule, 'workersPerSchedule');
+        if ($wCap !== null && AsScheduleWorker::active()->where('croppingScheduleId', $schedule->id)->count() >= $wCap) {
+            \App\Support\Tier::deny('This plan allows up to ' . $wCap . ' workers per schedule. Upgrade to add more.');
+        }
+
         $allowedSkillKeys = array_keys(AsScheduleWorker::SKILLS);
         $validator = Validator::make($request->all(), [
             'workerName' => 'required|string|max:255',
