@@ -1,5 +1,7 @@
 @extends('layouts.public')
 
+@include('public.partials.site-css')
+
 @section('title', 'Cropping Schedule Manager for Filipino Farmers')
 @section('meta_description', 'anee.io — plan every cropping season like a pro. Manage lots, activities, workers and costs, ask the built-in AI Technician, and learn from a community of Filipino farmers — all in one mobile-friendly web app.')
 
@@ -171,6 +173,113 @@
                         </div>
                     </div>
                 @endforeach
+            </div>
+        </div>
+    </section>
+
+    {{-- ================= THE PRODUCT, SHOWN ================= --}}
+    <section class="py-16 sm:py-24 bg-gray-50 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="max-w-2xl mx-auto text-center reveal">
+                <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Real screens, not mockups</p>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">See It on Your Own Phone</h2>
+                <p class="mt-4 text-gray-600">Every screenshot below is the live app, exactly as it runs in the field.</p>
+            </div>
+
+            <div class="mt-14 space-y-20 sm:space-y-24">
+                <div class="fx-row reveal">
+                    <div class="fx-media fx-glow">
+                        <span class="ph-frame ph-tilt-l site-float"><img src="{{ asset('images/site/app/board.png') }}" alt="The anee.io activities board" loading="lazy"></span>
+                    </div>
+                    <div>
+                        <p class="fx-kicker">The activities board</p>
+                        <h3 class="fx-h">Your whole season, day by day, drag by drag</h3>
+                        <p class="fx-p">Every task from land prep to harvest lands on the right date, counted from each lot's own Day-0. Drag to move, tick to finish, and undo survives even a logout.</p>
+                        <ul class="fx-list">
+                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Tasks, irrigation, services, payroll and reminders — one board</li>
+                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Photos, videos and voice notes ride on any activity</li>
+                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Workers see exactly what the owner lets them see</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="fx-row is-flip reveal">
+                    <div class="fx-media fx-glow">
+                        <span class="ph-frame ph-tilt-r"><img src="{{ asset('images/site/app/growth.png') }}" alt="Growth stages reading the crop" loading="lazy"></span>
+                    </div>
+                    <div>
+                        <p class="fx-kicker">Growth stages &amp; weather</p>
+                        <h3 class="fx-h">The app reads your crop so you don't have to guess</h3>
+                        <p class="fx-p">Pick a date and anee tells you where every lot stands — what the stage means, what to do now, and what to watch for, with the forecast beside it.</p>
+                        <ul class="fx-list">
+                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>85 Philippine crops, from palay to mango</li>
+                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Do-lists and watch-lists written per stage</li>
+                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Weather panels for the week ahead, lot by lot</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="fx-row reveal">
+                    <div class="fx-media fx-glow">
+                        <span class="ph-frame ph-tilt-l"><img src="{{ asset('images/site/app/community.png') }}" alt="The anee.io farmer community" loading="lazy"></span>
+                    </div>
+                    <div>
+                        <p class="fx-kicker">The farmer community</p>
+                        <h3 class="fx-h">Thousands of seasons of experience, one tap away</h3>
+                        <p class="fx-p">A news feed, focused discussions, direct messages with photos, clips and voice notes — and a ranking ladder that celebrates the farmers who help the most.</p>
+                        <ul class="fx-list">
+                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Ask with a photo of the problem, not just words</li>
+                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Follow co-farmers growing the same crops</li>
+                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Level up from Bagong Binhi to the top of the ladder</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-14 text-center reveal">
+                <a href="{{ route('features') }}" class="btn btn-outline btn-lg">Tour every feature</a>
+            </div>
+        </div>
+    </section>
+
+    {{-- ================= ANEE, THE AI TECHNICIAN ================= --}}
+    <section class="anee-band">
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+            <div class="fx-row">
+                <div class="reveal">
+                    <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Meet Anee</p>
+                    <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-white text-balance">An AI technician who already knows your farm</h2>
+                    <p class="mt-4 text-[#cdd8c0] leading-relaxed">
+                        Anee isn't a generic chatbot. She reads your schedules, your lots, your growth stages and your
+                        weather before she answers — so "should I spray tomorrow?" gets an answer about <em>your</em>
+                        tomorrow, on <em>your</em> field. Ask anything, anytime, from the floating button on every screen.
+                    </p>
+                    <ul class="fx-list mt-5">
+                        <li style="color:#e8efe1"><svg fill="none" stroke="#a8cc7e" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Send a photo of a sick leaf and get a reading</li>
+                        <li style="color:#e8efe1"><svg fill="none" stroke="#a8cc7e" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>When-to-plant and what-to-plant analyses for your exact town</li>
+                        <li style="color:#e8efe1"><svg fill="none" stroke="#a8cc7e" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Full season reports that read every record you kept</li>
+                        <li style="color:#e8efe1"><svg fill="none" stroke="#a8cc7e" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Runs on credits — pay only for what you ask</li>
+                    </ul>
+                    <div class="mt-8">
+                        <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Ask Anee your first question</a>
+                    </div>
+                </div>
+                <div class="reveal">
+                    {{-- A conversation the way it actually looks: question, answer. --}}
+                    <div class="rounded-2xl bg-white/5 ring-1 ring-white/15 backdrop-blur p-5 space-y-3 max-w-md mx-auto">
+                        <div class="flex justify-end"><span class="rounded-2xl rounded-br-md bg-accent-500 text-[#14210c] font-medium text-sm px-4 py-2.5 max-w-[85%]">Anee, may dilaw na dahon ang palay ko sa Lot 2. Ano gagawin ko?</span></div>
+                        <div class="flex items-start gap-2.5">
+                            <span class="w-8 h-8 rounded-full bg-[#a8cc7e]/20 ring-1 ring-[#a8cc7e]/40 flex items-center justify-center text-base">🌾</span>
+                            <span class="rounded-2xl rounded-tl-md bg-white/10 ring-1 ring-white/10 text-[#e8efe1] text-sm px-4 py-2.5 max-w-[85%] leading-relaxed">Lot 2 is at active tillering (DAS 24), so yellowing lower leaves usually point to nitrogen hunger — right on time for your second top-dress. Before spraying anything, send me a photo of the leaves so I can rule out tungro…</span>
+                        </div>
+                        <div class="flex justify-end"><span class="rounded-2xl rounded-br-md bg-accent-500 text-[#14210c] font-medium text-sm px-4 py-2.5 max-w-[85%]">📷 photo</span></div>
+                        <div class="flex items-start gap-2.5">
+                            <span class="w-8 h-8 rounded-full bg-[#a8cc7e]/20 ring-1 ring-[#a8cc7e]/40 flex items-center justify-center text-base">🌾</span>
+                            <span class="rounded-2xl rounded-tl-md bg-white/10 ring-1 ring-white/10 text-[#e8efe1] text-sm px-4 py-2.5 max-w-[85%] leading-relaxed">Good news — even yellowing from the tips, no streaking. That's hunger, not disease. Here's the urea rate for your lot size…</span>
+                        </div>
+                        <p class="text-[11px] text-[#8fa383] text-center pt-1">A sample conversation — Anee answers from your farm's own records.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -479,9 +588,25 @@
 
                 <p class="mt-8 text-center text-sm text-gray-500">
                     Payments are verified manually by our team — you'll receive an email as soon as your access is activated.
+                    <a href="{{ route('pricing') }}" class="font-semibold text-brand-700 hover:text-brand-800">See the full pricing page →</a>
                 </p>
             </div>
         </section>
+    @endif
+
+    {{-- ================= LIVE NUMBERS ================= --}}
+    @if (! empty($stats))
+    <section class="py-14 sm:py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="stat-band reveal">
+                <div class="stat-card"><div class="stat-n">{{ $stats['seasons'] }}</div><div class="stat-l">Cropping seasons planned</div></div>
+                <div class="stat-card"><div class="stat-n">{{ $stats['activities'] }}</div><div class="stat-l">Farm activities scheduled</div></div>
+                <div class="stat-card"><div class="stat-n">{{ $stats['notes'] }}</div><div class="stat-l">Field notes &amp; records kept</div></div>
+                <div class="stat-card"><div class="stat-n">{{ $stats['members'] }}</div><div class="stat-l">Members in the community</div></div>
+            </div>
+            <p class="mt-3 text-center text-xs text-gray-400">Live counts from the platform, refreshed hourly.</p>
+        </div>
+    </section>
     @endif
 
     {{-- ================= FINAL CTA ================= --}}

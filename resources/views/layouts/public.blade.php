@@ -72,11 +72,13 @@
                     <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-10 md:h-12 w-auto">
                 </a>
 
-                <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-gray-700">
+                <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-gray-700">
                     <a href="{{ route('home') }}" class="hover:text-brand-600 {{ request()->routeIs('home') ? 'text-brand-700' : '' }}">Home</a>
+                    <a href="{{ route('features') }}" class="hover:text-brand-600 {{ request()->routeIs('features') ? 'text-brand-700' : '' }}">Features</a>
+                    <a href="{{ route('pricing') }}" class="hover:text-brand-600 {{ request()->routeIs('pricing') ? 'text-brand-700' : '' }}">Pricing</a>
                     <a href="{{ route('about') }}" class="hover:text-brand-600 {{ request()->routeIs('about') ? 'text-brand-700' : '' }}">About</a>
                     <a href="{{ route('tutorial') }}" class="hover:text-brand-600 {{ request()->routeIs('tutorial') ? 'text-brand-700' : '' }}">Tutorial</a>
-                    <a href="{{ route('contact') }}" class="hover:text-brand-600 {{ request()->routeIs('contact') ? 'text-brand-700' : '' }}">Contact Us</a>
+                    <a href="{{ route('contact') }}" class="hover:text-brand-600 {{ request()->routeIs('contact') ? 'text-brand-700' : '' }}">Contact</a>
                 </nav>
 
                 <div class="hidden md:flex items-center gap-3">
@@ -97,7 +99,7 @@
 
         {{-- Mobile menu --}}
         <div x-show="open" x-cloak x-transition.opacity class="md:hidden border-t border-gray-100 bg-white px-4 pb-5 pt-3 space-y-1">
-            @foreach ([['home','Home'],['about','About'],['tutorial','Tutorial'],['contact','Contact Us']] as [$r, $label])
+            @foreach ([['home','Home'],['features','Features'],['pricing','Pricing'],['about','About'],['tutorial','Tutorial'],['contact','Contact Us']] as [$r, $label])
                 <a href="{{ route($r) }}" class="block rounded-xl px-4 py-3 text-base font-semibold {{ request()->routeIs($r) ? 'bg-brand-50 text-brand-700' : 'text-gray-700 hover:bg-gray-50' }}">{{ $label }}</a>
             @endforeach
             <div class="pt-3 flex flex-col gap-2">
@@ -128,6 +130,8 @@
             <div>
                 <h4 class="text-white font-bold mb-4">Quick Links</h4>
                 <ul class="space-y-2 text-sm">
+                    <li><a href="{{ route('features') }}" class="hover:text-accent-500">Features</a></li>
+                    <li><a href="{{ route('pricing') }}" class="hover:text-accent-500">Pricing</a></li>
                     <li><a href="{{ route('about') }}" class="hover:text-accent-500">About anee.io</a></li>
                     <li><a href="{{ route('tutorial') }}" class="hover:text-accent-500">Tutorial</a></li>
                     <li><a href="{{ route('contact') }}" class="hover:text-accent-500">Contact Us</a></li>

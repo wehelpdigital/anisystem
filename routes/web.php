@@ -69,6 +69,8 @@ Route::post('/worker-invite/{token}', [App\Http\Controllers\WorkerInviteControll
 
 Route::get('/', [App\Http\Controllers\PublicController::class, 'home'])->name('home');
 Route::get('/about', [App\Http\Controllers\PublicController::class, 'about'])->name('about');
+Route::get('/features', [App\Http\Controllers\PublicController::class, 'features'])->name('features');
+Route::get('/pricing', [App\Http\Controllers\PublicController::class, 'pricing'])->name('pricing');
 
 // Editable legal / info pages (Privacy, Terms, Cookies, About) — public.
 Route::get('/legal/{slug}', [App\Http\Controllers\LegalController::class, 'show'])->where('slug', '[a-z0-9\-]+')->name('legal.show');

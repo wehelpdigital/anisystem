@@ -14,12 +14,57 @@ class PublicController extends Controller
     {
         $plans = Plan::visible()->get();
 
-        return view('public.home', compact('plans'));
+        return view('public.home', ['plans' => $plans, 'stats' => $this->liveStats()]);
     }
 
     public function about()
     {
         return view('public.about');
+    }
+
+    public function features()
+    {
+        return view('public.features');
+    }
+
+    public function pricing()
+    {
+        // The same rows checkout sells — the page can never promise a price
+        // the store doesn't charge.
+        return view('public.pricing', ['plans' => Plan::visible()->get()]);
+    }
+
+    /**
+     * Honest social proof: real counts off the platform, cached for an hour
+     * so the marketing page never becomes five queries per visit. Rounded
+     * down to friendly steps — a live counter that says 1,203 reads as a
+     * test; one that says 1,200+ reads as a fact.
+     */
+    private function liveStats(): array
+    {
+        return \Illuminate\Support\Facades\Cache::remember('public.live-stats', 3600, function () {
+            $soften = function (int $n): string {
+                if ($n >= 1000) {
+                    return number_format(floor($n / 100) * 100) . '+';
+                }
+                if ($n >= 100) {
+                    return (floor($n / 10) * 10) . '+';
+                }
+
+                return max(1, $n) . '';
+            };
+
+            try {
+                return [
+                    'seasons' => $soften((int) \Illuminate\Support\Facades\DB::table('as_cropping_schedules')->where('deleteStatus', 1)->count()),
+                    'activities' => $soften((int) \Illuminate\Support\Facades\DB::table('as_schedule_activities')->where('deleteStatus', 1)->count()),
+                    'notes' => $soften((int) \Illuminate\Support\Facades\DB::table('as_schedule_notes')->where('deleteStatus', 1)->count()),
+                    'members' => $soften((int) \Illuminate\Support\Facades\DB::table('anisystem_users')->where('deleteStatus', 1)->count()),
+                ];
+            } catch (\Throwable $e) {
+                return ['seasons' => '—', 'activities' => '—', 'notes' => '—', 'members' => '—'];
+            }
+        });
     }
 
     public function tutorial()
