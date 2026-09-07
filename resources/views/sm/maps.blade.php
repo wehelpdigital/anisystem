@@ -340,6 +340,21 @@
                because the way back has to say it out loud. Null when the shelf
                sent you, which is its own way back. */
             let origin = null;
+            /* Reached by a full navigation from another page — the Global
+               Gallery, the notes hub — rather than through the shell: the
+               sender is one history step behind, and the back button should
+               say its name. Only the pages that link maps this way are
+               named; anything else keeps the shelf as the way back. */
+            const REF_ORIGIN = (() => {
+                try {
+                    const r = new URL(document.referrer);
+                    if (r.origin !== location.origin || r.pathname === location.pathname) return null;
+                    if (/\/gallery$/.test(r.pathname)) return 'Gallery';
+                    if (/\/notes$/.test(r.pathname)) return 'Notes';
+                    return null;
+                } catch (_) { return null; }
+            })();
+            let originIsRef = false;   // back means history.back(), not a module switch
             const backBtn = document.getElementById('mpBackHome');
             const backWord = backBtn.querySelector('.mp-backword');
             const shelfBtn = document.getElementById('mpAllMaps');
@@ -381,6 +396,7 @@
                 // Standing on the shelf, the errand is over — the button must
                 // not still be offering to finish it.
                 origin = null;
+                originIsRef = false;
                 paintBack();
                 stageWrap.classList.add('hidden');
                 home.classList.remove('hidden');
@@ -439,6 +455,8 @@
                     origin = null;
                     paintBack();
                     if (window.smReturnToOrigin?.()) return;
+                    // A full-page arrival: the sender is one step behind.
+                    if (originIsRef) { originIsRef = false; history.back(); return; }
                     // The shell has forgotten the way back; the shelf is the
                     // honest fallback, and the label already reads that way.
                 }
@@ -512,7 +530,11 @@
             // Nobody pressing "Attach a map" is asking for the field plan the
             // team drew this morning to be thrown away.
             if (ATTACH) enterStage(ATTACH.mapSaveId || 0, window.smOriginLabel?.());
-            else if (OPEN_SAVE) enterStage(OPEN_SAVE, window.smOriginLabel?.());
+            else if (OPEN_SAVE) {
+                const fromShell = window.smOriginLabel?.();
+                originIsRef = !fromShell && !!REF_ORIGIN;
+                enterStage(OPEN_SAVE, fromShell || REF_ORIGIN);
+            }
 
             /* The shell keeps this pane alive between visits; when it shows
                again the shelf re-reads the saves so nothing new is missing.

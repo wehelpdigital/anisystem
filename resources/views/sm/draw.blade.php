@@ -172,6 +172,18 @@
             let pending = null;   // what the pad handed back, waiting for a name
             let askedForOne = false;   // arrived here to see one drawing, from elsewhere
             let returnAfterSave = false;   // that drawing was saved over — go back once it is kept
+            /* The way back when this page was reached by a full navigation —
+               a drawing tapped in the Global Gallery or on the notes hub. No
+               shell, no smReturnToOrigin: the sender is simply one history
+               step behind. Null when there is no same-origin sender (a pasted
+               link, a new tab), and then closing the pad leaves you on the
+               shelf, which is the honest fallback. */
+            const REF_BACK = (() => {
+                try {
+                    const r = new URL(document.referrer);
+                    return (r.origin === location.origin && r.pathname !== location.pathname) ? r.href : null;
+                } catch (_) { return null; }
+            })();
 
             const grid = document.getElementById('drGrid');
             const empty = document.getElementById('drEmpty');
@@ -306,7 +318,12 @@
                         // history entry: that rewind races the push this
                         // navigation makes, and the pop that lands after it
                         // put the reader right back on the Draw shelf.
-                        if (window.smReturnToOrigin?.() && e && e.cancelable) e.preventDefault();
+                        if (window.smReturnToOrigin?.()) { if (e && e.cancelable) e.preventDefault(); return; }
+                        // Standing on the page alone: one step back for the
+                        // pad's own entry (its rewind rides ahead of this),
+                        // one more for the page — together they land on the
+                        // Gallery or hub that sent us here.
+                        if (REF_BACK) history.back();
                     };
                     document.addEventListener('sm:draw-pad-closed', goBack);
                 }
@@ -447,7 +464,14 @@
                     if (returnAfterSave) window.forgetOverlay?.('sheet:drSaveSheet');
                     window.closeSheet('drSaveSheet');
                     toast(row.editable ? 'Drawing saved.' : 'Kept as a picture — see the Gallery and its note.');
-                    if (returnAfterSave) { returnAfterSave = false; window.smReturnToOrigin?.(); }
+                    // In the shell the walk back is a module switch; standing
+                    // alone it is a plain navigation to whoever sent us. Not
+                    // history math — the pad and its sheets left abandoned
+                    // entries behind, and counting them is how you land wrong.
+                    if (returnAfterSave) {
+                        returnAfterSave = false;
+                        if (!window.smReturnToOrigin?.() && REF_BACK) location.href = REF_BACK;
+                    }
                 } catch (err) {
                     toast(err.message || 'Could not save that.', 'error');
                 } finally { btn.disabled = false; }
