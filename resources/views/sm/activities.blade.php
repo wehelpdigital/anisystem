@@ -1224,8 +1224,11 @@
            them — the order an expense row wears, so "carry me" is always the
            thing furthest out. .date-note-block has no grip, so its menu keeps
            the corner to itself (see below). */
+        {{-- top matches the note homes' .4rem padding, so the three dots sit
+             on the head row's own line, centred against the chevron beside
+             the title rather than floating a notch above it. --}}
         .note-kebab {
-            position: absolute; top: .2rem; right: .2rem;
+            position: absolute; top: .4rem; right: .2rem;
             width: 1.5rem; height: 1.5rem; border-radius: .4rem;
             display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
             color: #b45309; background: transparent;
@@ -1701,7 +1704,9 @@
         /* On the right, beside the three dots — the same corner an expense row
            wears its six in, so "carry me" is in one place on this board. */
         .inline-note .note-kebab { right: 1.78rem; }
-        .inline-note-grip { position: absolute; right: .28rem; top: .28rem; display: inline-flex; align-items: center; justify-content: center; padding: .22rem; color: var(--tl-note-border); cursor: grab; touch-action: none; }
+        /* Down in step with the kebab beside it, so the right-edge rail of
+           handles reads as one centred line. */
+        .inline-note-grip { position: absolute; right: .28rem; top: .48rem; display: inline-flex; align-items: center; justify-content: center; padding: .22rem; color: var(--tl-note-border); cursor: grab; touch-action: none; }
         .inline-note-grip svg { width: .8rem; height: .8rem; }
         .inline-note-grip:active { cursor: grabbing; }
         /* A finger needs more than the six dots to aim at — the note's left
