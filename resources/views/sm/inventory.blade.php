@@ -177,7 +177,7 @@
          editing the activity; hand entries are corrected from their day
          on the activities board. --}}
     <div class="iv-pane" id="ivPaneLogs">
-        <p class="form-hint mb-2">A record, not a form — activity lines come off by unticking or editing the activity, and hand entries can be fixed from their day on the board.</p>
+        <p class="form-hint mb-2">This logs all the changes you made in your inventory for audit trail. Each line names who made it.</p>
         <div id="ivLog" class="iv-log"></div>
         <div id="ivLogEmpty" class="card hidden">
             <div class="card-body iv-empty">

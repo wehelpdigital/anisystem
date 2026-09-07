@@ -185,8 +185,16 @@ class InventoryController extends BaseScheduleController
 
     private function movesPayload(int $scheduleId): array
     {
-        return $this->recentMoves($scheduleId)->map(fn ($m) => [
+        $moves = $this->recentMoves($scheduleId);
+
+        // Whose hand made each line. Workers with the shed's pen write here
+        // too now, so an audit line without a name is only half a record.
+        $movers = \App\Models\User::whereIn('id', $moves->pluck('byUserId')->filter()->unique()->all() ?: [0])
+            ->get()->mapWithKeys(fn ($u) => [$u->id => trim($u->firstName . ' ' . $u->lastName) ?: $u->email]);
+
+        return $moves->map(fn ($m) => [
             'id' => $m->id,
+            'by' => $m->byUserId ? ($movers[$m->byUserId] ?? null) : null,
             'itemId' => $m->itemId,
             'itemName' => $m->item->name ?? 'Removed item',
             'icon' => $m->item?->icon() ?? '📦',

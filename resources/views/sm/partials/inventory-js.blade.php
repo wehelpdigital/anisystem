@@ -239,7 +239,7 @@
                     <span class="iv-move-e" title="${esc(m.reasonLabel)}">${m.reasonIcon}</span>
                     <span class="iv-move-t">
                         <span class="iv-move-n">${esc(m.itemName)}</span>
-                        <span class="iv-move-s">${esc(m.reasonLabel)}${m.reason === 'created' ? '' : ` · <b>${esc(trim(m.before))}</b> → <b>${esc(trim(m.after))}</b> ${esc(m.unit)}`}${m.typedSays ? ` · <b>typed as ${esc(m.typedSays)}</b>` : ''}${m.note ? ' · ' + esc(m.note) : ''}</span>
+                        <span class="iv-move-s">${esc(m.reasonLabel)}${m.reason === 'created' ? '' : ` · <b>${esc(trim(m.before))}</b> → <b>${esc(trim(m.after))}</b> ${esc(m.unit)}`}${m.typedSays ? ` · <b>typed as ${esc(m.typedSays)}</b>` : ''}${m.by ? ` · by <b>${esc(m.by)}</b>` : ''}${m.note ? ' · ' + esc(m.note) : ''}</span>
                     </span>
                     ${m.reason === 'created'
                         ? '<span class="iv-move-d" style="color:var(--color-gray-300)">·</span>'
