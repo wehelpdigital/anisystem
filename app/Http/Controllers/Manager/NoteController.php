@@ -24,12 +24,32 @@ class NoteController extends BaseScheduleController
     {
         $schedule = $this->scheduleFromRequest($request, 'id');
 
-        // A season's notebook runs to hundreds; it arrives a page at a time.
-        $notes = AsScheduleNote::active()
-            ->where('croppingScheduleId', $schedule->id)
-            ->orderByDesc('id')
-            ->paginate(15)
-            ->withQueryString();
+        // The module reads like the Global Notes shelf, scoped to this one
+        // season: the notebook, the day notes pinned to dates, and the notes
+        // written on the board's days — one stream, each card saying where
+        // it lives. Three tables meet here, so the page is cut on the merged
+        // collection rather than in SQL (the hub does the same).
+        $items = collect();
+        foreach (AsScheduleNote::active()->where('croppingScheduleId', $schedule->id)->orderByDesc('id')->get() as $n) {
+            $items->push(['kind' => 'note', 'm' => $n, 'ts' => $n->updated_at?->timestamp ?? 0]);
+        }
+        foreach (\App\Models\AsScheduleDateNote::active()->where('croppingScheduleId', $schedule->id)->orderByDesc('id')->get() as $n) {
+            $items->push(['kind' => 'day', 'm' => $n, 'ts' => $n->updated_at?->timestamp ?? 0]);
+        }
+        foreach (\App\Models\AsInlineNote::active()->where('croppingScheduleId', $schedule->id)->orderByDesc('id')->get() as $n) {
+            $items->push(['kind' => 'inote', 'm' => $n, 'ts' => $n->updated_at?->timestamp ?? 0]);
+        }
+        $all = $items->sortByDesc('ts')->values();
+
+        $perPage = 15;
+        $pageNo = max(1, (int) $request->query('page', 1));
+        $notes = new \Illuminate\Pagination\LengthAwarePaginator(
+            $all->forPage($pageNo, $perPage)->values(),
+            $all->count(),
+            $perPage,
+            $pageNo,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
 
         // Saved team maps belong here too: a map the team named and kept is a
         // record of the season like any note, and hunting for it inside the

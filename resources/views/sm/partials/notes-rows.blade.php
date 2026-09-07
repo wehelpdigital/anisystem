@@ -1,7 +1,14 @@
 {{-- One stretch of the notebook. Rendered on its own for the phone's
      scroller and inside the page for the first load, so both roads paint the
-     same card. Expects $notes, $schedule, $mapSaves. --}}
-@foreach ($notes as $n)
+     same card. Expects $notes (a page of ['kind' => note|day|inote, 'm' =>
+     model] rows), $schedule, $mapSaves.
+
+     The shelf reads like Global Notes scoped to one season: every card
+     folds to its name, wears a tag saying where it lives (the notebook, or
+     a day on the board), and a day's note links back to the day. --}}
+@foreach ($notes as $noteRow)
+@php $rowKind = $noteRow['kind'] ?? 'note'; $n = $noteRow['m'] ?? $noteRow; @endphp
+@if ($rowKind === 'note')
     @php
         $mediaItems = [];
         $editorMedia = [];
@@ -81,25 +88,20 @@
         <div class="note-head flex items-start justify-between gap-3">
             <div class="flex items-start gap-2 min-w-0 grow">
                 <svg class="note-chevron w-4 h-4 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                {{-- Every note wears the note icon, drawings included. A
-                     drawing note used to arrive with neither icon nor text
-                     and read as something else entirely. --}}
-                <span class="note-ico" aria-hidden="true">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                </span>
                 <div class="min-w-0 grow">
                     <h3 class="font-bold text-gray-900 leading-snug js-title">{{ $n->title }}</h3>
                     @if ($saveIdForNote)
-                        {{-- Where this note came from. The card that used to
-                             list saved maps separately said the same thing
-                             twice; the note is the record, this is its
-                             provenance. --}}
                         <span class="badge badge-green note-origin">Team map</span>
                     @endif
                     @if ($fromBoard)
                         <span class="badge badge-blue note-origin">Team drawing</span>
                     @endif
-                    <p class="text-xs text-gray-400 mt-0.5 js-time">{{ $n->updated_at?->diffForHumans() }}</p>
+                    {{-- Where this note lives, the way the Global Notes shelf
+                         says it — here the scope is just this one season. --}}
+                    <p class="note-meta js-time">
+                        <span class="note-kindtag is-notebook">Notebook</span>
+                        <span class="note-when">{{ $n->updated_at?->diffForHumans() }}</span>
+                    </p>
                 </div>
             </div>
             @php $mayNote = \App\Support\WorkerContext::canWriteModule('notes'); @endphp
@@ -121,4 +123,46 @@
             @include('sm.partials.note-attachments', ['media' => $mediaItems])
         </div></div>
     </div>
+@else
+    @php
+        // A note pinned to a day on the board — read here, edited there.
+        $isDate = $rowKind === 'day';
+        $dayDate = ($isDate ? $n->noteDate : $n->noteDate)?->format('M j, Y');
+        $dayTitle = ! $isDate && filled($n->title ?? null) ? $n->title : ('Day note — ' . ($dayDate ?: 'the board'));
+        $dayBody = $isDate ? $n->noteContent : $n->content;
+        $dayMedia = collect(is_array($n->media) ? $n->media : [])->filter(fn ($m) => ! empty($m['path']))->map(fn ($m) => [
+            'type' => $m['type'] ?? 'image',
+            'url' => \App\Support\MediaStore::url($m['path']),
+            'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
+            'title' => $m['title'] ?? null,
+        ])->values()->all();
+        $dayId = ($isDate ? 'd' : 'i') . $n->id;
+    @endphp
+    <div class="card p-4 note-card is-collapsed" data-id="{{ $dayId }}">
+        <div class="note-head flex items-start justify-between gap-3">
+            <div class="flex items-start gap-2 min-w-0 grow">
+                <svg class="note-chevron w-4 h-4 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                <div class="min-w-0 grow">
+                    <h3 class="font-bold text-gray-900 leading-snug js-title">{{ $dayTitle }}</h3>
+                    <p class="note-meta js-time">
+                        <span class="note-kindtag is-day">Day</span>
+                        <span class="note-when">{{ $dayDate }}{{ $dayDate ? ' · ' : '' }}{{ $n->updated_at?->diffForHumans() }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="note-fold"><div class="note-fold-inner js-note-body-wrap">
+            @if (filled($dayBody))
+                <div class="note-body mt-2 whitespace-pre-line break-words">{!! \App\Support\CommunityText::safeHtml($dayBody) !!}</div>
+            @endif
+            @include('sm.partials.note-attachments', ['media' => $dayMedia])
+            <div class="note-lives">
+                <a href="{{ route('sm.activities', ['id' => $schedule->id]) }}" class="note-lives-act">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    Open where it lives
+                </a>
+            </div>
+        </div></div>
+    </div>
+@endif
 @endforeach

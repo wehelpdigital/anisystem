@@ -47,6 +47,26 @@
         .note-card:not(.is-collapsed) .note-chevron { transform: rotate(90deg); }
         @media (prefers-reduced-motion: reduce) { .note-fold, .note-chevron { transition: none; } }
 
+        /* Where a note lives, said the way the Global Notes shelf says it —
+           a small kind tag plus the when, under the title. */
+        .note-meta { display: flex; align-items: center; gap: .35rem .45rem; flex-wrap: wrap; margin-top: .2rem; }
+        .note-kindtag { font-size: .6rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+            padding: .1rem .4rem; border-radius: .35rem; flex-shrink: 0; }
+        .note-kindtag.is-notebook { background: #dcfce7; color: #15803d; }
+        .note-kindtag.is-day { background: #fef3c7; color: #b45309; }
+        html.dark .note-kindtag.is-notebook { background: rgb(21 128 61 / .2); color: #86efac; }
+        html.dark .note-kindtag.is-day { background: rgb(180 83 9 / .2); color: #eec155; }
+        .note-when { font-size: .72rem; color: var(--color-gray-400); }
+        .note-lives { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .7rem;
+            border-top: 1px dashed var(--color-gray-200); padding-top: .6rem; }
+        .note-lives-act { display: inline-flex; align-items: center; gap: .3rem; padding: .3rem .65rem;
+            border-radius: 999px; border: 1px solid var(--color-gray-200); background: var(--color-gray-50);
+            font-size: .72rem; font-weight: 700; color: var(--color-gray-600); text-decoration: none; }
+        .note-lives-act svg { width: .85rem; height: .85rem; }
+        .note-lives-act:hover { background: var(--color-gray-100); color: var(--color-gray-800); }
+        html.dark .note-lives { border-color: #2b3a1c; }
+        html.dark .note-lives-act { background: rgb(255 255 255 / .05); border-color: #2b3a1c; color: #cdd8c0; }
+
         /* Toolbar: find a note, fold the lot, write a new one — one bar. */
         .note-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: .85rem; }
         .note-bar-acts { display: flex; align-items: center; gap: .5rem; flex: 0 0 auto; }
@@ -311,10 +331,14 @@ const __init = () => {
             })->filter()->values()->all();
         };
         $mapNoteIds = ($mapSaves ?? collect())->pluck('noteId')->filter()->flip();
-        $fromBoardIds = $notes->filter(fn ($n) => collect(is_array($n->media) ? $n->media : [])
+        // The page now carries three kinds of note; only the notebook's own
+        // rows are editable here, so only those seed the editor fallback.
+        $notebookOnPage = collect($notes->items())
+            ->where('kind', 'note')->pluck('m')->values();
+        $fromBoardIds = $notebookOnPage->filter(fn ($n) => collect(is_array($n->media) ? $n->media : [])
             ->contains(fn ($m) => (bool) preg_match('~/board-[A-Za-z0-9]+\.png$~', (string) ($m['path'] ?? ''))))
             ->pluck('id')->flip();
-        $seed = $notes->mapWithKeys(fn ($n) => [$n->id => [
+        $seed = $notebookOnPage->mapWithKeys(fn ($n) => [$n->id => [
             'fromMap' => $mapNoteIds->has($n->id),
             'fromDraw' => $fromBoardIds->has($n->id),
             'id' => $n->id, 'title' => $n->title, 'body' => $n->body,
@@ -466,7 +490,11 @@ const __init = () => {
     function applyFold() {
         cards().forEach((c) => {
             const id = String(c.dataset.id);
-            if (foldNewOnes && !collapsedIds.has(id) && !c.dataset.foldSeen) collapsedIds.add(id);
+            // Day notes arrive folded to their names like the Global Notes
+            // shelf — this module is for finding one, the board is for
+            // working on one. Opening it is remembered like any fold.
+            const startsFolded = foldNewOnes || /^[di]\d+$/.test(id);
+            if (startsFolded && !collapsedIds.has(id) && !c.dataset.foldSeen) collapsedIds.add(id);
             c.dataset.foldSeen = '1';
             c.classList.toggle('is-collapsed', collapsedIds.has(id));
         });
@@ -764,12 +792,11 @@ const __init = () => {
             <div class="note-head flex items-start justify-between gap-3">
                 <div class="flex items-start gap-2 min-w-0 grow">
                     <svg class="note-chevron w-4 h-4 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                    <span class="note-ico" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
                     <div class="min-w-0 grow">
                         <h3 class="font-bold text-gray-900 leading-snug js-title">${escapeHtml(n.title)}</h3>
                         ${n.fromMap ? '<span class="badge badge-green note-origin">Team map</span>' : ''}
                         ${n.fromDraw ? '<span class="badge badge-blue note-origin">Team drawing</span>' : ''}
-                        <p class="text-xs text-gray-400 mt-0.5 js-time">just now</p>
+                        <p class="note-meta js-time"><span class="note-kindtag is-notebook">Notebook</span><span class="note-when">just now</span></p>
                     </div>
                 </div>
                 <div class="flex gap-1 shrink-0 note-acts">
