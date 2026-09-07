@@ -844,8 +844,10 @@
 
     @stack('scripts')
     <script>
-        @if (session('success')) toast(@json(session('success')), 'success'); @endif
-        @if (session('error')) toast(@json(session('error')), 'error'); @endif
+        {{-- window.toast lives in the Vite module bundle, which runs after
+             inline scripts parse — so flashes wait for DOMContentLoaded. --}}
+        @if (session('success')) document.addEventListener('DOMContentLoaded', () => window.toast?.(@json(session('success')), 'success')); @endif
+        @if (session('error')) document.addEventListener('DOMContentLoaded', () => window.toast?.(@json(session('error')), 'error')); @endif
 
         // Night mode. The class is already on <html> from the head script; this
         // only keeps the switch in sync and handles flipping it.
