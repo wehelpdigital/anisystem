@@ -205,6 +205,12 @@ Route::middleware(['auth', 'admin.panel'])->prefix('admin')->group(function () {
     Route::get('/reports', [App\Http\Controllers\Admin\AdminReportsController::class, 'page'])->name('admin.reports');
     Route::get('/data/reports', [App\Http\Controllers\Admin\AdminReportsController::class, 'reports'])->name('admin.data.reports');
     Route::put('/report/{id}/status', [App\Http\Controllers\Admin\AdminReportsController::class, 'setStatus'])->whereNumber('id')->name('admin.report.status');
+    // Sales Analysis: what a peso of advertising actually bought.
+    Route::get('/sales', [App\Http\Controllers\Admin\AdminSalesController::class, 'page'])->name('admin.sales');
+    Route::get('/data/sales', [App\Http\Controllers\Admin\AdminSalesController::class, 'list'])->name('admin.data.sales');
+    Route::get('/data/sales/{id}', [App\Http\Controllers\Admin\AdminSalesController::class, 'one'])->whereNumber('id')->name('admin.data.sales.one');
+    Route::post('/sales', [App\Http\Controllers\Admin\AdminSalesController::class, 'store'])->name('admin.sales.store');
+    Route::delete('/sales/{id}', [App\Http\Controllers\Admin\AdminSalesController::class, 'destroy'])->whereNumber('id')->name('admin.sales.destroy');
 });
 
 // The way back from looking through a client's eyes. Auth only: the signed-in

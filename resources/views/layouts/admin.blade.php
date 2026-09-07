@@ -194,7 +194,8 @@
         @php
             $adminHere = request()->routeIs('admin.clients') ? 'Clients'
                 : (request()->routeIs('admin.support') ? 'Support'
-                : (request()->routeIs('admin.reports') ? 'Reports' : 'Dashboard'));
+                : (request()->routeIs('admin.reports') ? 'Reports'
+                : (request()->routeIs('admin.sales') ? 'Sales Analysis' : 'Dashboard')));
         @endphp
         <div class="ad-navwrap">
             <button type="button" class="ad-navtag" id="adminNavBtn" aria-haspopup="dialog" title="Open another module">
@@ -234,6 +235,10 @@
             <a class="ad-nav-row {{ request()->routeIs('admin.reports') ? 'is-on' : '' }}" href="{{ route('admin.reports') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21V4m0 1l9-2 9 4-9 2-9-4zm0 8l9-2 9 4-9 2-9-4z"/></svg>
                 <span class="min-w-0"><b>Reports</b><i>What the community flagged</i></span>
+            </a>
+            <a class="ad-nav-row {{ request()->routeIs('admin.sales') ? 'is-on' : '' }}" href="{{ route('admin.sales') }}">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8m0 0v5m0-5h-5"/></svg>
+                <span class="min-w-0"><b>Sales Analysis</b><i>What a peso of advertising actually bought</i></span>
             </a>
         </div>
     </div>
