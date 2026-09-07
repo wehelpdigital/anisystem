@@ -1191,10 +1191,10 @@
                          phone's size and the desk's, and aligned on the text
                          rather than the line box so it sits ON the words. --}}
                     <h2 class="text-base md:text-lg font-bold text-gray-900 flex items-center gap-2">
-                        <img src="{{ asset('images/community-post.png') }}" alt=""
-                             width="64" height="72"
+                        <img src="{{ asset('images/icons/chat.png') }}" alt=""
+                             width="512" height="512"
                              style="width:auto;height:1.15em;flex:none">
-                        Community Wall
+                        News Feed
                     </h2>
                     <a href="{{ route('community.index') }}" class="text-sm font-bold text-brand-700 hover:underline shrink-0">See more</a>
                 </div>

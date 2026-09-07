@@ -34,7 +34,8 @@
     </div>
     <div class="msgr-windows" id="msgrWindows"></div>
     <button type="button" class="msgr-launcher" id="msgrLauncher" aria-label="Messages">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.29-.94L3 20l1.05-3.15A7.6 7.6 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        {{-- The house chat mark — the same picture every chat door wears. --}}
+        <img src="{{ asset('images/icons/chat.png') }}" alt="" class="msgr-launcher-ic">
         {{-- A word only when the button sits in a row of worded buttons; the
              floating circle stays a circle. --}}
         <span class="msgr-launcher-word">Chat</span>
@@ -79,10 +80,12 @@
      * sitting in the same corner — two floating controls, one of them
      * shouting. A stack of buttons is a stack when they are the same size. */
     .msgr-launcher { position:relative; width:2.6rem; height:2.6rem; border-radius:9999px; border:0;
-        background:var(--color-brand-600); color:#fff; cursor:pointer;
+        background:var(--color-white); color:var(--color-gray-800); cursor:pointer;
         box-shadow:0 0 0 2px #fff, 0 0 0 4px rgb(61 104 35 / .22), 0 10px 26px rgb(0 0 0 / .32);
         display:flex; align-items:center; justify-content:center; transition:transform .15s ease, background .2s ease, box-shadow .2s ease; }
-    .msgr-launcher:hover { background:var(--color-brand-700);
+    .msgr-launcher-ic { width:1.5rem; height:1.5rem; object-fit:contain; display:block; }
+    .msgr-launcher.is-seated .msgr-launcher-ic { width:1.05rem; height:1.05rem; }
+    .msgr-launcher:hover { background:var(--color-gray-100);
         box-shadow:0 0 0 2px #fff, 0 0 0 4px rgb(61 104 35 / .3), 0 12px 30px rgb(0 0 0 / .38); }
     html.dark .msgr-launcher { box-shadow:0 0 0 2px #151b12, 0 0 0 4px rgb(255 255 255 / .16), 0 10px 26px rgb(0 0 0 / .6); }
     html.dark .msgr-launcher:hover { box-shadow:0 0 0 2px #151b12, 0 0 0 4px rgb(255 255 255 / .24), 0 12px 30px rgb(0 0 0 / .65); }
