@@ -1274,6 +1274,14 @@
             Record a video
         </button>
         @endif
+        {{-- The spoken note: tap, talk, tap to stop — it lands on the day
+             exactly the way a captured photo does. --}}
+        @if (! $isWorker)
+        <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetNoteLock }}" data-action="record-voice" @disabled(! $mayNote) @if(! $mayNote) title="{{ $whyNoNote }}" @endif>
+            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 003-3V6a3 3 0 10-6 0v6a3 3 0 003 3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-14 0M12 18v3m-3 0h6"/></svg>
+            Record a voice
+        </button>
+        @endif
         {{-- A drawing and a map are things a day has, like a note — not things
              buried inside the note editor, which is where they used to hide. --}}
         @if (! $isWorker)
@@ -1904,6 +1912,18 @@
     </div>
 </div>
 <style>
+    /* The day-voice recorder's floating pill: the whole recorder while a
+       spoken note is being taken — the red dot says live, tapping stops. */
+    #dayVoicePill { position: fixed; left: 50%; bottom: 5.5rem; transform: translateX(-50%); z-index: 260;
+        display: inline-flex; align-items: center; gap: .5rem; padding: .6rem 1.1rem; border-radius: 999px;
+        border: 0; background: #131a10; color: #fff; font-weight: 800; font-size: .85rem; cursor: pointer;
+        box-shadow: 0 12px 30px rgb(0 0 0 / .35); }
+    @media (min-width: 1024px) { #dayVoicePill { bottom: 2rem; } }
+    #dayVoicePill .dv-dot { width: .6rem; height: .6rem; border-radius: 999px; background: #ef4444;
+        animation: dvBlink 1.1s ease-in-out infinite; }
+    @keyframes dvBlink { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+    @media (prefers-reduced-motion: reduce) { #dayVoicePill .dv-dot { animation: none; } }
+
     #draftsSheet .draft-search { position: relative; margin-bottom: .75rem; }
     #draftsSheet .draft-search svg { position: absolute; left: .7rem; top: 50%; transform: translateY(-50%);
         width: 1rem; height: 1rem; color: var(--color-gray-400); pointer-events: none; }

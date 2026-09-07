@@ -5602,6 +5602,11 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => recordDayVideo(date), 260);
             return;
         }
+        if (cls === 'record-voice') {
+            const date = dayMenuDate;
+            setTimeout(() => recordDayVoice(date), 260);
+            return;
+        }
         if (cls === 'add-drawing') {
             const date = dayMenuDate;
             setTimeout(() => addDayDrawing(date), 260);
@@ -5720,6 +5725,68 @@ document.addEventListener('DOMContentLoaded', () => {
             noteFromCapture(dateKey, f, U.noteVideoUpload(), 'video', 'video', 'Video');
         };
         host.querySelector('.js-video-record').click();
+    }
+
+    /* ---- The microphone, kept with the day -----------------------------
+     * Tap the row and the pill at the bottom of the screen IS the recorder:
+     * a red dot while it listens, tap to stop — then the clip uploads
+     * through the notes' audio door and opens the note editor carrying it,
+     * exactly the way a captured photo becomes a note. */
+    let dayVoice = null;
+    async function recordDayVoice(dateKey) {
+        if (!mayWriteNotes()) return;
+        if (dayVoice) return;   // one recording at a time
+        dateKey = (dateKey || '').trim() || isoFromDate(new Date());
+        if (!navigator.mediaDevices || !window.MediaRecorder) { toast('This browser cannot record audio.', 'error'); return; }
+        let stream;
+        try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+        catch (_) { toast('Microphone blocked. Allow it for this site.', 'error'); return; }
+        const mime = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4'].find((t) => MediaRecorder.isTypeSupported(t)) || '';
+        let rec;
+        try { rec = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined); }
+        catch (_) { rec = new MediaRecorder(stream); }
+        const chunks = [];
+        rec.ondataavailable = (ev) => { if (ev.data && ev.data.size) chunks.push(ev.data); };
+        const pill = document.createElement('button');
+        pill.type = 'button';
+        pill.id = 'dayVoicePill';
+        pill.innerHTML = '<span class="dv-dot"></span><span id="dayVoiceTime">0:00</span>&nbsp;· recording — tap to stop';
+        document.body.appendChild(pill);
+        const t0 = Date.now();
+        const timer = setInterval(() => {
+            const s = Math.floor((Date.now() - t0) / 1000);
+            const el = $id('dayVoiceTime');
+            if (el) el.textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+        }, 500);
+        dayVoice = { rec, stream, pill, timer };
+        pill.addEventListener('click', () => {
+            const dv = dayVoice;
+            if (!dv) return;
+            dayVoice = null;
+            clearInterval(dv.timer);
+            dv.pill.remove();
+            dv.rec.onstop = async () => {
+                dv.stream.getTracks().forEach((t) => t.stop());
+                const type = dv.rec.mimeType || 'audio/webm';
+                const blob = new Blob(chunks, { type });
+                if (!blob.size) { toast('Nothing was recorded.', 'error'); return; }
+                // .weba, deliberately — see VOICE_ENDINGS above.
+                const file = new File([blob], 'voice-note.' + (type.includes('mp4') ? 'm4a' : 'weba'), { type });
+                const done = window.smBusy('Uploading the voice note…');
+                try {
+                    const fd = new FormData();
+                    fd.append('audio', file);
+                    const res = await api(`{{ route('sm.notes.audio-upload') }}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: fd });
+                    done.close();
+                    newInlineNoteWith(dateKey, [{ type: 'audio', path: res.data.path, url: res.data.url }], 'Voice note');
+                } catch (err) {
+                    done.close();
+                    toast(err.message || 'Could not save the voice note.', 'error');
+                }
+            };
+            try { dv.rec.stop(); } catch (_) { }
+        });
+        rec.start(250);
     }
 
     // Tools offers both for today, so the camera does not require first
