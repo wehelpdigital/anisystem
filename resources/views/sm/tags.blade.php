@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
 @section('title', 'Tags — ' . $schedule->title)
 @section('page-title', 'Tags')
