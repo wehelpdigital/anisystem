@@ -93,13 +93,19 @@
         html.dark .mp-act { background: rgb(255 255 255 / .06); color: #cdd8c0; }
         html.dark .mp-act:hover { background: rgb(255 255 255 / .12); color: #e8efe1; }
         html.dark .mp-actdiv { background: #2b3a1c; }
-        /* Their originals stay in the map's toolbar for the Collab Room, but
-           inside this module they would be the same button twice. */
-        #smapStageWrap .cmap-bar #cmapUndo,
-        #smapStageWrap .cmap-bar #cmapRedo,
-        #smapStageWrap .cmap-bar #cmapFindMe,
+        /* Save's original stays hidden — its proxy lives in the stagebar
+           beside the way out. Undo, redo and centre-on-me show HERE, in the
+           map's own bar, ordered after the trashcan (by request: the
+           right-hand cluster on the stagebar read as strays). */
         #smapStageWrap .cmap-bar #cmapSaveMenuBtn,
         #smapStageWrap .cmap-bar .cmap-div { display: none; }
+        #smapStageWrap .cmap-bar #cmapGps { order: 1; }
+        #smapStageWrap .cmap-bar #cmapLayer { order: 2; }
+        #smapStageWrap .cmap-bar #cmapClear { order: 3; }
+        #smapStageWrap .cmap-bar #cmapFindMe { order: 4; }
+        #smapStageWrap .cmap-bar #cmapUndo { order: 5; }
+        #smapStageWrap .cmap-bar #cmapRedo { order: 6; }
+        #smapStageWrap .cmap-bar #cmapFinish { order: 7; }
         @media (max-width: 520px) {
             /* The words stay: an arrow on its own said nothing about where
                it went, and "Save" is the whole point of the green button. */
@@ -149,10 +155,10 @@
             /* Nothing above the toolbar — the row tucks under the header —
                but the map keeps clear of the bar's divider underneath it,
                which otherwise looked like the map was hanging off the row. */
-            /* Half a rem, not none. At zero the row of buttons sat flush
-               against the header's underside and read as cut off — and on a
-               page tall enough to scroll it went behind it. */
-            body.smap-open main { padding-top: .5rem; }
+            /* Three quarters of a rem, not none. At zero the row of buttons
+               sat flush against the header's underside and read as cut off —
+               and on a page tall enough to scroll it went behind it. */
+            body.smap-open main { padding-top: .75rem; }
             body.smap-open main > .sticky { margin-bottom: .5rem; }
         }
 
@@ -214,28 +220,16 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
                 <span class="mp-backword">All maps</span>
             </button>
+            {{-- Save stands beside the way out, where a thumb expects it;
+                 undo, redo and centre-on-me went home to the map's own bar,
+                 after the trashcan — see the order rules above. --}}
+            @if (\App\Support\WorkerContext::canAddNotes())
+            <button type="button" class="mp-act is-save" data-proxy="cmapSaveMenuBtn" title="Open or save a map" aria-label="Open or save a map">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
+                <span class="mp-actword">Save</span>
+            </button>
+            @endif
             <span class="mp-stagehint" id="mpStageHint"></span>
-            <div class="mp-stageacts">
-                <button type="button" class="mp-act" data-proxy="cmapUndo" title="Undo" aria-label="Undo">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
-                </button>
-                <button type="button" class="mp-act" data-proxy="cmapRedo" title="Redo" aria-label="Redo">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg>
-                </button>
-                {{-- The map's own Centre-on-me, driven from out here like the
-                     rest. On this screen the map's toolbar is off looking after
-                     the drawing tools, and "take me to where I am standing" is
-                     the one thing a person in a field wants without hunting. --}}
-                <button type="button" class="mp-act" data-proxy="cmapFindMe" title="Centre the map on me" aria-label="Centre the map on my position">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.25"/><circle cx="12" cy="12" r="8"/><path stroke-linecap="round" d="M12 1.5v2.5M12 20v2.5M1.5 12h2.5M20 12h2.5"/></svg>
-                </button>
-                @if (\App\Support\WorkerContext::canAddNotes())
-                <button type="button" class="mp-act is-save" data-proxy="cmapSaveMenuBtn" title="Open or save a map" aria-label="Open or save a map">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
-                    <span class="mp-actword">Save</span>
-                </button>
-                @endif
-            </div>
         </div>
         <div class="smap-stage">
             {{-- 'maps' keeps the room's tools — sharing a position, clearing
