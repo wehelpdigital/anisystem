@@ -15,6 +15,7 @@
         display: inline-flex; align-items: center; justify-content: center;
         background: var(--color-brand-50); color: var(--color-brand-700); }
     .cw-head-ico svg { width: 1.25rem; height: 1.25rem; }
+    .cw-head-ico img { width: 1.4rem; height: 1.4rem; object-fit: contain; }
     .cw-head-txt { min-width: 0; flex: 1 1 auto; }
     .cw-head-txt b { display: block; font-size: .875rem; font-weight: 700; color: var(--color-gray-900); }
     .cw-head-txt i { display: block; font-style: normal; font-size: .75rem; color: var(--color-gray-500);
@@ -36,6 +37,7 @@
         display: inline-flex; align-items: center; justify-content: center;
         background: rgb(255 255 255 / .75); }
     .cw-ico svg { width: 1.3rem; height: 1.3rem; }
+    .cw-ico img { width: 1.5rem; height: 1.5rem; object-fit: contain; }
     .cw-txt { display: flex; flex-direction: column; gap: .1rem; min-width: 0; flex: 1 1 auto; }
     .cw-txt b { font-size: .88rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.25; }
     .cw-txt i { font-style: normal; font-size: .72rem; font-weight: 500; line-height: 1.4;
@@ -73,10 +75,9 @@
 
 <section class="cw-panel" id="whatsInCommunity">
     <button type="button" class="cw-head" id="whatsInHead" aria-expanded="true" aria-controls="whatsInBody">
-        <span class="cw-head-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8M8 14h5m8-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+        <span class="cw-head-ico"><img src="{{ asset('images/social-media.png') }}" alt=""></span>
         <span class="cw-head-txt">
             <b>What's in Community?</b>
-            <i>Besides the wall: the rooms, the reading, and the people.</i>
         </span>
         <svg class="cw-chev" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
     </button>
@@ -84,15 +85,15 @@
         <div>
             <div class="cw-stack">
                 <a href="{{ route('community.groups.index') }}" class="cw-tile cw-disc">
-                    <span class="cw-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8m-8 4h5M21 12a8 8 0 01-11.6 7.1L4 21l1.9-5.4A8 8 0 1121 12z"/></svg></span>
+                    <span class="cw-ico"><img src="{{ asset('images/discussion.png') }}" alt=""></span>
                     <span class="cw-txt">
                         <b>Discussions</b>
-                        <i>Rooms for one topic at a time — join one, or open your own.</i>
+                        <i>Focused discussion on topics, or open your own.</i>
                     </span>
                     <svg class="cw-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </a>
                 <a href="{{ route('community.blog') }}" class="cw-tile cw-blog">
-                    <span class="cw-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.25c-2.1-1.6-4.8-1.85-8-1.1v13.6c3.2-.75 5.9-.5 8 1.1 2.1-1.6 4.8-1.85 8-1.1V5.15c-3.2-.75-5.9-.5-8 1.1zm0 0V19.5"/></svg></span>
+                    <span class="cw-ico"><img src="{{ asset('images/blog.png') }}" alt=""></span>
                     <span class="cw-txt">
                         <b>Tech Blog</b>
                         <i>Growing guides and field science, written to be used.</i>
@@ -100,10 +101,10 @@
                     <svg class="cw-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </a>
                 <a href="{{ route('community.connect.members') }}" class="cw-tile cw-mem">
-                    <span class="cw-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg></span>
+                    <span class="cw-ico"><img src="{{ asset('images/connect.png') }}" alt=""></span>
                     <span class="cw-txt">
-                        <b>Members</b>
-                        <i>Every co-farmer here — find them, follow them, connect.</i>
+                        <b>Co-Farmers</b>
+                        <i>Discover members here and connect with them, build a community.</i>
                     </span>
                     <svg class="cw-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </a>
