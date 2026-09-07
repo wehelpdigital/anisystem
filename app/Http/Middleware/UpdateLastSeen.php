@@ -52,8 +52,43 @@ class UpdateLastSeen
                 'userId' => $userId,
                 'day' => $day,
             ]);
+            // Once the day is witnessed, ask the ladder whether it moved.
+            $this->cheerRankUp($userId);
         } catch (\Throwable $e) {
             // The diary is a nicety; the request is the point.
         }
+    }
+
+    /**
+     * A level-up rings the bell exactly once. The first look sets the
+     * baseline silently — nobody is congratulated for standing still on
+     * the day the ladder learned to speak.
+     */
+    private function cheerRankUp(int $userId): void
+    {
+        $last = (int) \Illuminate\Support\Facades\DB::table('anisystem_users')
+            ->where('id', $userId)->value('lastRankNotified');
+        $rank = \App\Support\CommunityRank::rankFor($userId);
+        $now = (int) ($rank['n'] ?? 1);
+
+        if ($last === 0 || $now <= $last) {
+            if ($now !== $last) {
+                \Illuminate\Support\Facades\DB::table('anisystem_users')
+                    ->where('id', $userId)->update(['lastRankNotified' => $now]);
+            }
+
+            return;
+        }
+
+        $title = (string) ($rank['name'] ?? 'Farmer');
+        app(\App\Services\NotificationService::class)->notify(
+            $userId,
+            'rank-up',
+            'Level up! You are now Level ' . $now . ' 🎉',
+            'You have climbed to ' . $title . '. Tap to see your new rank and celebrate.',
+            route('community.ranking') . '?celebrate=' . $now,
+        );
+        \Illuminate\Support\Facades\DB::table('anisystem_users')
+            ->where('id', $userId)->update(['lastRankNotified' => $now]);
     }
 }

@@ -237,6 +237,26 @@
         @endforeach
     </div>
 </div>
+
+{{-- The level-up party: rays turning behind the card, confetti over it,
+     and one honest close button. Opened by the bell's congratulations
+     (?celebrate=N) or by the page noticing the climb itself. --}}
+<div id="rkParty" class="rk-party" hidden>
+    <div class="rk-party-back"></div>
+    <div class="rk-rays" aria-hidden="true"></div>
+    <div class="rk-confetti" aria-hidden="true"></div>
+    <div class="rk-party-card" role="dialog" aria-modal="true" aria-label="Level up">
+        <button type="button" id="rkPartyClose" class="rk-party-x" aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <img src="{{ asset('images/crown.png') }}" alt="" class="rk-party-crown">
+        <p class="rk-party-word">Congratulations!</p>
+        <p class="rk-party-level" id="rkPartyLevel">Level 2</p>
+        <p class="rk-party-title" id="rkPartyTitle"></p>
+        <p class="rk-party-sub">Your work in the community moved you up the ladder. Keep showing up — the next rung is already counting.</p>
+    </div>
+</div>
+
 @endsection
 
 @push('styles')
@@ -536,17 +556,59 @@ document.addEventListener('DOMContentLoaded', () => {
      * news worth a bounce and a word. Written back either way, so the moment
      * happens once. */
     const me = document.getElementById('rkMe');
+
+    /* ---- the party: rays turning, confetti falling, one close button ----
+     * Opened by the bell's level-up notification (?celebrate=N) and by the
+     * page's own climb detection. Closable always; reduced motion gets the
+     * card without the weather. */
+    function rankParty(level, title) {
+        const wrap = document.getElementById('rkParty');
+        if (!wrap) return;
+        document.getElementById('rkPartyLevel').textContent = 'Level ' + level;
+        document.getElementById('rkPartyTitle').textContent = title || '';
+        wrap.hidden = false;
+        void wrap.offsetWidth;
+        wrap.classList.add('is-on');
+        document.body.style.overflow = 'hidden';
+        // Confetti: a handful of pieces with their own colours and clocks.
+        const holder = wrap.querySelector('.rk-confetti');
+        if (holder && !holder.childElementCount
+            && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const hues = ['#f0b429', '#6b9f3d', '#38bdf8', '#f472b6', '#f87171', '#a78bfa', '#fbbf24'];
+            for (let i = 0; i < 60; i++) {
+                const p = document.createElement('i');
+                p.style.left = (Math.random() * 100) + '%';
+                p.style.background = hues[i % hues.length];
+                p.style.animationDelay = (Math.random() * 2.4) + 's';
+                p.style.animationDuration = (2.6 + Math.random() * 2) + 's';
+                p.style.width = (5 + Math.random() * 5) + 'px';
+                p.style.height = (8 + Math.random() * 7) + 'px';
+                p.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+                holder.appendChild(p);
+            }
+        }
+    }
+    function rankPartyClose() {
+        const wrap = document.getElementById('rkParty');
+        if (!wrap) return;
+        wrap.classList.remove('is-on');
+        document.body.style.overflow = '';
+        setTimeout(() => { wrap.hidden = true; }, 300);
+    }
+    document.getElementById('rkPartyClose')?.addEventListener('click', rankPartyClose);
+    document.querySelector('#rkParty .rk-party-back')?.addEventListener('click', rankPartyClose);
+
     try {
         const now = parseInt(me.getAttribute('data-rank-n') || '1', 10);
+        const title = me.getAttribute('data-rank-name');
         const seen = parseInt(localStorage.getItem('as-rank-seen') || '0', 10);
-        if (seen && now > seen && !still) {
+        // Sent here by the bell's congratulations — the party opens at once.
+        const asked = parseInt(new URLSearchParams(location.search).get('celebrate') || '0', 10);
+        if (asked > 0) {
+            rankParty(now, title);
+        } else if (seen && now > seen && !still) {
             me.classList.add('is-up');
-            // A new decade is a new NAME; inside a decade the number is the news.
-            const title = me.getAttribute('data-rank-name');
-            const newTitle = Math.ceil(now / 10) > Math.ceil(seen / 10);
-            window.smToast?.(newTitle
-                ? 'Bagong titulo! You are now a ' + title + ' — Level ' + now + ' 🎉'
-                : 'Level up! Level ' + now + ' na 🎉');
+            rankParty(now, title);
         }
         localStorage.setItem('as-rank-seen', String(now));
     } catch (_) { /* no storage, no ceremony */ }
@@ -580,4 +642,52 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 </script>
+@endpush
+
+@push('head')
+<style>
+    .rk-party { position: fixed; inset: 0; z-index: 130; display: flex; align-items: center;
+        justify-content: center; padding: 1.2rem; opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .rk-party.is-on { opacity: 1; }
+    .rk-party[hidden] { display: none; }
+    .rk-party-back { position: absolute; inset: 0; background: rgb(10 14 7 / .72); }
+    /* The rays: a slow-turning sunburst behind the card. */
+    .rk-rays { position: absolute; width: 160vmax; height: 160vmax; border-radius: 999px; pointer-events: none;
+        background: repeating-conic-gradient(from 0deg, rgb(240 180 41 / .22) 0deg 9deg, transparent 9deg 24deg);
+        animation: rkRays 26s linear infinite; }
+    @keyframes rkRays { to { transform: rotate(360deg); } }
+    .rk-confetti { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .rk-confetti i { position: absolute; top: -3rem; border-radius: 2px; opacity: .95;
+        animation: rkFall linear infinite; }
+    @keyframes rkFall {
+        0% { transform: translateY(-4rem) rotate(0deg); }
+        100% { transform: translateY(110vh) rotate(540deg); }
+    }
+    .rk-party-card { position: relative; width: min(24rem, 100%); text-align: center;
+        background: var(--color-white); border-radius: 1.4rem; padding: 2rem 1.5rem 1.7rem;
+        box-shadow: 0 40px 90px -40px rgb(0 0 0 / .8);
+        transform: translateY(1rem) scale(.96); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .rk-party.is-on .rk-party-card { transform: none; }
+    .rk-party-x { position: absolute; top: .7rem; right: .7rem; width: 2.1rem; height: 2.1rem;
+        border-radius: 999px; display: inline-flex; align-items: center; justify-content: center;
+        color: var(--color-gray-400); background: var(--color-gray-50); }
+    .rk-party-x:hover { color: var(--color-gray-700); background: var(--color-gray-100); }
+    .rk-party-x svg { width: 1rem; height: 1rem; }
+    .rk-party-crown { width: 4.2rem; height: 4.2rem; object-fit: contain; margin: 0 auto .4rem;
+        animation: rkCrown 2.4s ease-in-out infinite; }
+    @keyframes rkCrown { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-6px) rotate(3deg); } }
+    .rk-party-word { font-size: .8rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase;
+        color: #b45309; }
+    .rk-party-level { font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800;
+        color: var(--color-gray-900); line-height: 1.15; }
+    .rk-party-title { font-size: 1rem; font-weight: 800; color: var(--color-brand-700); }
+    .rk-party-sub { font-size: .82rem; line-height: 1.55; color: var(--color-gray-500); margin-top: .6rem; }
+    html.dark .rk-party-card { background: #151b12; }
+    html.dark .rk-party-x { background: rgb(255 255 255 / .07); }
+    @media (prefers-reduced-motion: reduce) {
+        .rk-party, .rk-party-card { transition: none; }
+        .rk-rays, .rk-party-crown, .rk-confetti i { animation: none; }
+        .rk-rays { display: none; }
+    }
+</style>
 @endpush
