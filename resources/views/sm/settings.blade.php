@@ -13,13 +13,70 @@
         .set-log-day { font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
             color: var(--color-gray-400); margin: .9rem 0 .35rem; }
         .set-log-day:first-child { margin-top: 0; }
-        .set-log { display: flex; align-items: baseline; gap: .6rem; padding: .45rem 0;
-            border-bottom: 1px solid var(--color-gray-100); font-size: .82rem; }
-        .set-log:last-child { border-bottom: 0; }
+        .set-log { width: 100%; text-align: left; display: flex; align-items: baseline; gap: .6rem;
+            padding: .5rem .15rem; border-bottom: 1px solid var(--color-gray-100); font-size: .82rem;
+            cursor: pointer; background: none; border-left: 0; border-right: 0; border-top: 0; }
+        .set-log:hover { background: var(--color-gray-50); }
         .set-log b { font-weight: 700; color: var(--color-gray-900); }
         .set-log i { font-style: normal; color: var(--color-gray-500); }
         .set-log time { margin-left: auto; flex: none; font-size: .7rem; color: var(--color-gray-400); }
+        .set-log .set-log-chev { flex: none; align-self: center; width: .8rem; height: .8rem;
+            color: var(--color-gray-300); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .set-log.is-open .set-log-chev { transform: rotate(90deg); }
         html.dark .set-log { border-color: #222b1a; }
+        html.dark .set-log:hover { background: rgb(255 255 255 / .04); }
+
+        /* The row's particulars, unfolded under it. */
+        .set-log-detail { display: grid; grid-template-rows: 0fr;
+            transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+        .set-log-detail.is-open { grid-template-rows: 1fr; }
+        .set-log-detail > div { overflow: hidden; min-height: 0; }
+        .set-log-card { margin: .15rem 0 .55rem; padding: .6rem .75rem; border-radius: .7rem;
+            background: var(--color-gray-50); border: 1px solid var(--color-gray-100);
+            font-size: .76rem; line-height: 1.55; color: var(--color-gray-600); }
+        .set-log-card .who { font-size: .7rem; color: var(--color-gray-400); margin-bottom: .3rem; }
+        .set-log-entity { font-weight: 700; color: var(--color-gray-900); }
+        .set-log-change { display: flex; flex-wrap: wrap; gap: .25rem .45rem; align-items: baseline;
+            padding: .18rem 0; }
+        .set-log-change .f { font-weight: 700; color: var(--color-gray-700); }
+        .set-log-change .from { text-decoration: line-through; color: #b91c1c; opacity: .85; }
+        .set-log-change .arrow { color: var(--color-gray-400); }
+        .set-log-change .to { font-weight: 700; color: #2d5016; }
+        html.dark .set-log-card { background: rgb(255 255 255 / .04); border-color: #222b1a; }
+        html.dark .set-log-change .to { color: #a5c97e; }
+        .set-log-fam { flex: none; align-self: center; font-size: .6rem; font-weight: 800;
+            letter-spacing: .04em; text-transform: uppercase; padding: .12rem .45rem;
+            border-radius: 999px; background: var(--color-brand-50); color: var(--color-brand-700); }
+        html.dark .set-log-fam { background: rgb(107 159 61 / .18); color: #a5c97e; }
+
+        /* Find a line: words, a shelf, a hand. */
+        .set-log-tools { display: flex; gap: .5rem; flex-wrap: wrap; }
+        .set-log-find { position: relative; flex: 1 1 12rem; }
+        .set-log-find input { width: 100%; padding: .5rem .7rem .5rem 2.1rem; border-radius: .7rem;
+            border: 1px solid var(--color-gray-200); background: var(--color-white); font-size: .85rem; }
+        .set-log-find svg { position: absolute; left: .65rem; top: 50%; transform: translateY(-50%);
+            width: 1rem; height: 1rem; color: var(--color-gray-400); }
+        .set-log-actor { flex: 0 1 11rem; }
+        .set-log-chips { display: flex; gap: .35rem; overflow-x: auto; padding: .6rem 0 .35rem;
+            -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .set-log-chips::-webkit-scrollbar { display: none; }
+        .set-log-chip { flex: none; padding: .3rem .7rem; border-radius: 999px; font-size: .74rem;
+            font-weight: 700; color: var(--color-gray-500); background: var(--color-white);
+            border: 1px solid var(--color-gray-200); cursor: pointer; }
+        .set-log-chip.is-on { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
+        html.dark .set-log-find input, html.dark .set-log-chip { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
+        html.dark .set-log-chip.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+
+        .set-log-more { display: flex; align-items: center; justify-content: center; gap: .5rem;
+            padding: .8rem 0; font-size: .74rem; color: var(--color-gray-400); }
+        .set-log-spin { width: 1rem; height: 1rem; border-radius: 999px; flex: none;
+            border: 2px solid var(--color-gray-200); border-top-color: var(--color-brand-600);
+            animation: setLogSpin .8s linear infinite; }
+        @keyframes setLogSpin { to { transform: rotate(360deg); } }
+        @media (prefers-reduced-motion: reduce) {
+            .set-log-detail, .set-log .set-log-chev { transition: none; }
+            .set-log-spin { animation-duration: 1.6s; }
+        }
     </style>
 @endpush
 
@@ -172,11 +229,30 @@
                         <div class="min-w-0">
                             <h2 class="nt-head-h">Logs</h2>
                             <p class="nt-head-p">Everything done in this schedule's modules, newest first,
-                                with the name of whoever did it. Workers' hands show here too.</p>
+                                with the name of whoever did it. Tap a line for the particulars.</p>
                         </div>
                     </div>
-                    <div id="setLogsList" class="mt-3"></div>
-                    <p id="setLogsEmpty" class="text-sm text-gray-400 text-center py-6" hidden>Nothing recorded yet. From now on, every change made in this schedule lands here.</p>
+
+                    {{-- Find a line: words, a shelf, a hand. --}}
+                    <div class="set-log-tools mt-3">
+                        <label class="set-log-find">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+                            <input type="search" id="setLogsFind" placeholder="Search the logs…" autocomplete="off">
+                        </label>
+                        <select id="setLogsActor" class="form-select set-log-actor" aria-label="Whose hand">
+                            <option value="">Everyone</option>
+                        </select>
+                    </div>
+                    <div class="set-log-chips" id="setLogsChips">
+                        <button type="button" class="set-log-chip is-on" data-log-family="">All</button>
+                    </div>
+
+                    <div id="setLogsList" class="mt-2"></div>
+                    <p id="setLogsEmpty" class="text-sm text-gray-400 text-center py-6" hidden>Nothing here matches. From now on, every change made in this schedule lands in these logs.</p>
+                    {{-- The endless scroll's foothold: watched, not clicked. --}}
+                    <div id="setLogsMore" class="set-log-more" hidden>
+                        <span class="set-log-spin"></span> Loading older lines…
+                    </div>
                 </div>
             </div>
         </div>
@@ -267,32 +343,157 @@ const __init = () => {
         closeSheet('setTabSheet');
     });
 
-    /* ---------------- The diary of hands ---------------- */
-    let LOGS_LOADED = false;
-    async function loadLogs() {
-        if (LOGS_LOADED) return;
-        LOGS_LOADED = true;
-        const list = document.getElementById('setLogsList');
-        list.innerHTML = '<p class="text-sm text-gray-400 text-center py-4">Reading the diary…</p>';
-        try {
-            const res = await api(`{{ route('sm.settings.logs') }}?id=${SCHEDULE_ID}`);
-            const logs = res.data.logs || [];
-            document.getElementById('setLogsEmpty').hidden = logs.length > 0;
-            let html = '';
-            let day = null;
-            logs.forEach((l) => {
-                if (l.day !== day) {
-                    day = l.day;
-                    html += `<p class="set-log-day">${escapeHtml(l.daySays || '')}</p>`;
-                }
-                html += `<div class="set-log"><span class="min-w-0"><b>${escapeHtml(l.label)}</b> <i>· ${escapeHtml(l.by)}</i></span><time>${escapeHtml(l.when || '')}</time></div>`;
-            });
-            list.innerHTML = html;
-        } catch (err) {
-            LOGS_LOADED = false;
-            list.innerHTML = '';
-            toast(err.message, 'error');
+    /* ---------------- The diary of hands, in full ----------------
+     * Searchable, filterable by shelf and by hand, expandable rows with the
+     * particulars, and an endless scroll that fetches older lines as the
+     * watcher reaches the foot of the list. */
+    const LOG_STATE = { booted: false, q: '', module: '', userId: '', nextBeforeId: null, loading: false, lastDay: null, seq: 0 };
+    const LOG_FIELD_SAYS = {
+        activityTitle: 'Title', targetDate: 'Date', activityType: 'Type', priority: 'Priority',
+        timeRequired: 'Time needed', isDone: 'Done', isHidden: 'Hidden', isDraft: 'Draft',
+        lotName: 'Lot name', lotSize: 'Size', lotSizeUnit: 'Size unit', variety: 'Variety',
+        workerName: 'Worker name', email: 'Email', phone: 'Phone', costPerHalfDay: 'Cost per half day',
+        name: 'Name', kind: 'Kind', unit: 'Unit', lowAt: 'Low-stock mark', unitPrice: 'Unit price',
+        title: 'Title', type: 'Type', category: 'Category', observationDate: 'Observed on',
+        yieldAmount: 'Yield', yieldUnit: 'Yield unit', pricePerUnit: 'Price per unit', buyer: 'Buyer',
+    };
+    const logSay = (f) => LOG_FIELD_SAYS[f] || f;
+
+    function logRowHtml(l) {
+        const d = l.detail || {};
+        const entity = d.entity && d.entity.name ? d.entity.name : null;
+        const changes = d.changes || null;
+        const input = d.input || null;
+        let card = `<p class="who">${escapeHtml(l.by)} · ${escapeHtml(l.whenFull || '')} · ${escapeHtml(l.method)} · <span style="opacity:.7">${escapeHtml(l.routeName)}</span></p>`;
+        if (entity) card += `<p>On: <span class="set-log-entity">${escapeHtml(entity)}</span>${d.entity.id ? ` <span style="opacity:.6">#${d.entity.id}</span>` : ''}</p>`;
+        if (changes && Object.keys(changes).length) {
+            card += Object.entries(changes).map(([f, c]) => `
+                <span class="set-log-change"><span class="f">${escapeHtml(logSay(f))}:</span>
+                    <span class="from">${escapeHtml(String(c.from ?? '—'))}</span>
+                    <span class="arrow">→</span>
+                    <span class="to">${escapeHtml(String(c.to ?? '—'))}</span></span>`).join('');
+        } else if (input && Object.keys(input).length) {
+            card += Object.entries(input).slice(0, 12).map(([f, v]) => `
+                <span class="set-log-change"><span class="f">${escapeHtml(logSay(f))}:</span>
+                    <span class="to">${escapeHtml(String(v))}</span></span>`).join('');
+        } else if (!entity) {
+            card += '<p style="opacity:.7">No details recorded for this line (logged before details shipped).</p>';
         }
+        return `
+            <button type="button" class="set-log" data-log-row="${l.id}">
+                <svg class="set-log-chev" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                <span class="min-w-0"><b>${escapeHtml(l.label)}</b>${entity ? ` <i>— ${escapeHtml(entity)}</i>` : ''} <i>· ${escapeHtml(l.by)}</i></span>
+                <span class="set-log-fam">${escapeHtml(l.family || '')}</span>
+                <time>${escapeHtml(l.when || '')}</time>
+            </button>
+            <div class="set-log-detail" data-log-detail="${l.id}"><div><div class="set-log-card">${card}</div></div></div>`;
+    }
+
+    function logAppend(logs) {
+        const list = document.getElementById('setLogsList');
+        let html = '';
+        logs.forEach((l) => {
+            if (l.day !== LOG_STATE.lastDay) {
+                LOG_STATE.lastDay = l.day;
+                html += `<p class="set-log-day">${escapeHtml(l.daySays || '')}</p>`;
+            }
+            html += logRowHtml(l);
+        });
+        list.insertAdjacentHTML('beforeend', html);
+    }
+
+    async function fetchLogs(fresh) {
+        // A scroll-append can wait its turn; a fresh ask (new words, new
+        // filter) supersedes whatever is in flight rather than being lost.
+        if (!fresh && LOG_STATE.loading) return;
+        const mySeq = ++LOG_STATE.seq;
+        LOG_STATE.loading = true;
+        const list = document.getElementById('setLogsList');
+        const more = document.getElementById('setLogsMore');
+        if (fresh) {
+            LOG_STATE.nextBeforeId = null;
+            LOG_STATE.lastDay = null;
+            list.innerHTML = '<p class="text-sm text-gray-400 text-center py-4">Reading the diary…</p>';
+        }
+        more.hidden = false;
+        try {
+            const p = new URLSearchParams({ id: SCHEDULE_ID });
+            if (LOG_STATE.q) p.set('q', LOG_STATE.q);
+            if (LOG_STATE.module) p.set('module', LOG_STATE.module);
+            if (LOG_STATE.userId) p.set('userId', LOG_STATE.userId);
+            if (!fresh && LOG_STATE.nextBeforeId) p.set('beforeId', LOG_STATE.nextBeforeId);
+            p.set('_', Date.now());
+            const res = await api(`{{ route('sm.settings.logs') }}?` + p.toString());
+            if (mySeq !== LOG_STATE.seq) return;   // a newer ask took over
+            const logs = res.data.logs || [];
+            if (fresh) list.innerHTML = '';
+            logAppend(logs);
+            LOG_STATE.nextBeforeId = res.data.nextBeforeId || null;
+            document.getElementById('setLogsEmpty').hidden = list.querySelector('.set-log') !== null;
+            // The filters' choices arrive with the first page.
+            if (res.data.actors) {
+                const sel = document.getElementById('setLogsActor');
+                const keep = sel.value;
+                sel.innerHTML = '<option value="">Everyone</option>'
+                    + res.data.actors.map((a) => `<option value="${a.id}">${escapeHtml(a.name)}</option>`).join('');
+                sel.value = keep;
+            }
+            if (res.data.families) {
+                const chips = document.getElementById('setLogsChips');
+                if (chips.children.length <= 1) {
+                    chips.insertAdjacentHTML('beforeend', res.data.families.map((f) =>
+                        `<button type="button" class="set-log-chip" data-log-family="${f}">${f[0].toUpperCase() + f.slice(1)}</button>`).join(''));
+                }
+            }
+        } catch (err) {
+            if (mySeq === LOG_STATE.seq) toast(err.message, 'error');
+        } finally {
+            if (mySeq === LOG_STATE.seq) {
+                LOG_STATE.loading = false;
+                document.getElementById('setLogsMore').hidden = !LOG_STATE.nextBeforeId;
+            }
+        }
+    }
+
+    function loadLogs() {
+        if (LOG_STATE.booted) return;
+        LOG_STATE.booted = true;
+        fetchLogs(true);
+        // Rows unfold their particulars.
+        document.getElementById('setLogsList').addEventListener('click', (e) => {
+            const row = e.target.closest('[data-log-row]');
+            if (!row) return;
+            const pane = document.querySelector(`[data-log-detail="${row.getAttribute('data-log-row')}"]`);
+            row.classList.toggle('is-open');
+            pane?.classList.toggle('is-open');
+        });
+        // Words, typed: settle for a moment, then ask again.
+        let findT = null;
+        document.getElementById('setLogsFind').addEventListener('input', (e) => {
+            clearTimeout(findT);
+            findT = setTimeout(() => {
+                LOG_STATE.q = e.target.value.trim();
+                fetchLogs(true);
+            }, 350);
+        });
+        document.getElementById('setLogsActor').addEventListener('change', (e) => {
+            LOG_STATE.userId = e.target.value;
+            fetchLogs(true);
+        });
+        document.getElementById('setLogsChips').addEventListener('click', (e) => {
+            const chip = e.target.closest('[data-log-family]');
+            if (!chip) return;
+            document.querySelectorAll('#setLogsChips .set-log-chip').forEach((c) => c.classList.toggle('is-on', c === chip));
+            LOG_STATE.module = chip.getAttribute('data-log-family');
+            fetchLogs(true);
+        });
+        // Older lines arrive as the foot of the list comes into view.
+        const more = document.getElementById('setLogsMore');
+        new IntersectionObserver((entries) => {
+            if (entries.some((x) => x.isIntersecting) && LOG_STATE.nextBeforeId && !LOG_STATE.loading) {
+                fetchLogs(false);
+            }
+        }, { rootMargin: '300px' }).observe(more);
     }
 
     /* ---------------- Daily digest ---------------- */

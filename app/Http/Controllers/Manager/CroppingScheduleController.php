@@ -631,32 +631,125 @@ class CroppingScheduleController extends Controller
     }
 
     /**
+     * Which shelf of the app a diary line belongs to, by route-name prefix.
+     * One vocabulary for the filter chips and for the chip each row wears.
+     */
+    private const LOG_FAMILIES = [
+        'activities' => ['sm.activities', 'sm.activity-versions'],
+        'lots' => ['sm.lots'],
+        'workers' => ['sm.workers'],
+        'inventory' => ['sm.inventory'],
+        'notes' => ['sm.notes', 'notes.hub', 'sm.board.save-notes'],
+        'documents' => ['sm.doc-entries', 'sm.doc-tags', 'sm.documentation', 'sm.protocol.save', 'sm.protocol.download'],
+        'observations' => ['sm.post-harvest'],
+        'maps' => ['sm.map'],
+        'draw' => ['sm.draw'],
+        'reports' => ['sm.anee', 'sm.report', 'sm.compare', 'sm.protocol.report', 'sm.protocol.generate', 'sm.labor.report', 'sm.expenses.report', 'sm.profit.report'],
+        'tags' => ['sm.tags'],
+        'media' => ['quick-capture', 'quick-record', 'quick-voice', 'sm.gallery', 'sm.photo'],
+        'settings' => ['sm.update', 'sm.day-type', 'sm.status', 'sm.digest'],
+    ];
+
+    /**
      * The Logs tab: the season's diary of hands, newest first, with the
-     * name of whoever's hand each line was.
+     * name of whoever's hand each line was — searchable, filterable by
+     * shelf and by hand, and paged by cursor for an endless scroll.
      */
     public function settingsLogs(Request $request)
     {
         $schedule = $this->findOwnedOrFail($request->query('id'), true);
 
-        $rows = \App\Models\AsScheduleAudit::where('croppingScheduleId', $schedule->id)
-            ->orderByDesc('id')
-            ->limit(120)
-            ->get();
+        $q = \App\Models\AsScheduleAudit::where('croppingScheduleId', $schedule->id);
+
+        // Family filter: any of the shelf's route-name prefixes.
+        $family = (string) $request->query('module', '');
+        if ($family !== '' && isset(self::LOG_FAMILIES[$family])) {
+            $q->where(function ($w) use ($family) {
+                foreach (self::LOG_FAMILIES[$family] as $prefix) {
+                    $w->orWhere('routeName', 'like', $prefix . '%');
+                }
+            });
+        }
+
+        // Whose hand.
+        if ((int) $request->query('userId') > 0) {
+            $q->where('userId', (int) $request->query('userId'));
+        }
+
+        // Words: the label, the particulars, or the actor's name.
+        $find = trim((string) $request->query('q', ''));
+        if ($find !== '') {
+            $matchingUsers = \App\Models\User::where('deleteStatus', 1)
+                ->where(function ($w) use ($find) {
+                    $w->where('firstName', 'like', '%' . $find . '%')
+                        ->orWhere('lastName', 'like', '%' . $find . '%');
+                })->pluck('id')->all();
+            $q->where(function ($w) use ($find, $matchingUsers) {
+                $w->where('label', 'like', '%' . $find . '%')
+                    ->orWhere('detail', 'like', '%' . $find . '%')
+                    ->orWhere('routeName', 'like', '%' . $find . '%');
+                if ($matchingUsers) {
+                    $w->orWhereIn('userId', $matchingUsers);
+                }
+            });
+        }
+
+        // Cursor: everything older than the last row the screen holds.
+        $beforeId = (int) $request->query('beforeId');
+        if ($beforeId > 0) {
+            $q->where('id', '<', $beforeId);
+        }
+
+        $limit = max(10, min(60, (int) $request->query('limit', 30)));
+        $rows = $q->orderByDesc('id')->limit($limit + 1)->get();
+        $hasMore = $rows->count() > $limit;
+        $rows = $rows->take($limit);
+
         $users = \App\Models\User::whereIn('id', $rows->pluck('userId')->filter()->unique()->all() ?: [0])
             ->get()->keyBy('id');
 
-        return response()->json(['success' => true, 'data' => [
+        $familyOf = function (string $route): string {
+            foreach (self::LOG_FAMILIES as $fam => $prefixes) {
+                foreach ($prefixes as $p) {
+                    if (str_starts_with($route, $p)) {
+                        return $fam;
+                    }
+                }
+            }
+
+            return 'other';
+        };
+
+        $payload = [
             'logs' => $rows->map(fn ($r) => [
                 'id' => (int) $r->id,
                 'label' => (string) $r->label,
+                'family' => $familyOf((string) $r->routeName),
+                'routeName' => (string) $r->routeName,
+                'method' => (string) $r->method,
+                'detail' => $r->detail ? json_decode((string) $r->detail, true) : null,
                 'by' => $r->userId && $users->get($r->userId)
                     ? trim($users->get($r->userId)->firstName . ' ' . $users->get($r->userId)->lastName)
                     : 'Someone',
                 'when' => $r->created_at?->timezone('Asia/Manila')->format('g:i A'),
+                'whenFull' => $r->created_at?->timezone('Asia/Manila')->format('M j, Y g:i:s A'),
                 'day' => $r->created_at?->timezone('Asia/Manila')->format('Y-m-d'),
                 'daySays' => $r->created_at?->timezone('Asia/Manila')->format('M j, Y'),
             ])->values(),
-        ]]);
+            'nextBeforeId' => $hasMore ? (int) $rows->last()->id : null,
+        ];
+
+        // The people filter's choices ride the first page only.
+        if ($beforeId === 0) {
+            $actorIds = \App\Models\AsScheduleAudit::where('croppingScheduleId', $schedule->id)
+                ->select('userId')->distinct()->pluck('userId')->filter()->all();
+            $payload['actors'] = \App\Models\User::whereIn('id', $actorIds ?: [0])
+                ->get()->map(fn ($u) => ['id' => (int) $u->id, 'name' => trim($u->firstName . ' ' . $u->lastName)])
+                ->values();
+            $payload['families'] = array_keys(self::LOG_FAMILIES);
+        }
+
+        return response()->json(['success' => true, 'data' => $payload]);
     }
 
     public function update(Request $request)

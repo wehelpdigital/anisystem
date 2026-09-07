@@ -13,6 +13,6 @@ class AsScheduleAudit extends BaseModel
     public const UPDATED_AT = null;
 
     protected $fillable = [
-        'croppingScheduleId', 'userId', 'routeName', 'method', 'label',
+        'croppingScheduleId', 'userId', 'routeName', 'method', 'label', 'detail',
     ];
 }
