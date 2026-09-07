@@ -193,6 +193,24 @@ class AppController extends Controller
             \App\Models\CommunityReaction::attach($lifted, 'wallpost', $meId);
             $connectedWall = $lifted->concat($connectedWall)->take(6)->values();
         }
+        /* A brand-new member has no co-farmers yet and follows nobody, and
+         * an empty News Feed reads as a dead town. Fall back to the open
+         * community wall — recent public posts, shuffled so the same five
+         * don't greet every newcomer every morning. */
+        if ($connectedWall->isEmpty()) {
+            $connectedWall = \App\Models\CommunityWallPost::where('deleteStatus', 1)
+                ->wallOnly()
+                ->where(fn ($q) => $q->where('isRestricted', 0)->orWhereNull('isRestricted'))
+                ->with(['author', 'comments.author'])
+                ->withCount('comments')
+                ->orderByDesc('id')
+                ->limit(15)
+                ->get()
+                ->filter(fn ($p) => $p->author && (int) $p->author->deleteStatus === 1)
+                ->shuffle()
+                ->take(6)
+                ->values();
+        }
         $connectedWall->loadMissing('sharedPost');
         $wallSaved = $social->bookmarkedIds($meId);
 
