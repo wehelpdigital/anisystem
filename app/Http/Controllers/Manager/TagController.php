@@ -255,6 +255,16 @@ class TagController extends BaseScheduleController
                         'url' => $boardUrl('maps')];
                 }
                 break;
+            case 'doc':
+                foreach (\App\Models\AsScheduleDocEntry::whereIn('id', $refIds)
+                    ->where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->get() as $d) {
+                    $out[] = ['kind' => 'doc', 'refId' => (int) $d->id, 'icon' => '📄',
+                        'title' => trim((string) $d->title) ?: (string) $d->type_label,
+                        'sub' => 'document · ' . $d->type_label,
+                        'when' => $d->created_at?->format('Y-m-d'),
+                        'url' => $boardUrl('documentation')];
+                }
+                break;
         }
 
         return $out;

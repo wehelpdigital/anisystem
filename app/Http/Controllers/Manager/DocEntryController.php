@@ -55,6 +55,10 @@ class DocEntryController extends BaseScheduleController
             'deleteStatus' => 1,
         ]);
 
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'doc', (int) $entry->id, $request->input('tags', []));
+        }
+
         return $this->jsonOk('Document added.', ['data' => $this->present($entry->fresh('tag'))]);
     }
 
@@ -85,6 +89,10 @@ class DocEntryController extends BaseScheduleController
             'content' => $data['content'],
             'files' => $files ?: null,
         ]);
+
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'doc', (int) $entry->id, $request->input('tags', []));
+        }
 
         return $this->jsonOk('Document updated.', ['data' => $this->present($entry->fresh('tag'))]);
     }
@@ -258,6 +266,11 @@ class DocEntryController extends BaseScheduleController
             'title' => $entry->title,
             'content' => $entry->content,
             'files' => $files,
+            // The schedule's word-tags this document wears (the shared
+            // picker), not the doc-type tags above.
+            'tagList' => \App\Support\ScheduleTags::forMany(
+                (int) $entry->croppingScheduleId, 'doc', [(int) $entry->id]
+            )[(int) $entry->id] ?? [],
         ];
     }
 }

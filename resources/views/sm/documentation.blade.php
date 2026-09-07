@@ -8,6 +8,7 @@
 
 @section('content')
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'documentation'])
+@include('sm.partials.tag-picker')
 
 <div>
     <button type="button" class="btn btn-primary w-full mb-4 inline-flex" data-doc-add>
@@ -39,8 +40,15 @@
         <input type="hidden" id="docId" value="">
 
         <div class="mb-4">
-            <label class="form-label" for="docType">Type <span class="text-red-500">*</span></label>
-            <select id="docType" class="form-select"></select>
+            <span class="form-label">Type <span class="text-red-500">*</span></span>
+            {{-- The value store. The tag button is how it is written; the
+                 change handler below still reads it the old way. --}}
+            <select id="docType" class="hidden" aria-hidden="true" tabindex="-1"></select>
+            <button type="button" class="crop-tag" id="docTypeBtn">
+                <span class="crop-tag-e" id="docTypeFace">📋</span>
+                <span class="crop-tag-t" id="docTypeNow">Protocol</span>
+                <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
         </div>
 
         {{-- New-tag inline creator (shown when "+ Add new tag" is picked) --}}
@@ -56,6 +64,11 @@
         <div class="mb-4">
             <label class="form-label" for="docTitle">Title <span class="text-gray-400 font-normal">(optional)</span></label>
             <input type="text" id="docTitle" class="form-input" maxlength="255" placeholder="e.g. Foliar mixing chart">
+        </div>
+
+        <div class="mb-4">
+            <span class="form-label">Tags</span>
+            <div class="tp-mount" data-tags data-tags-kind="doc" id="docTagsMount"></div>
         </div>
 
         <div class="mb-4">
@@ -78,11 +91,24 @@
         <button type="button" class="btn btn-primary" id="docSaveBtn">Save Document</button>
     </div>
 </div>
+
+{{-- What kind of document — the choices the dropdown used to hold. --}}
+<div class="sheet hidden" id="docTypeSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">What kind of document?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="docTypeList"></div>
+</div>
 @endpush
 
 @push('scripts')
 @php
     // Shape each entry for the front-end: resolve the label + public file URLs.
+    $docWordTags = \App\Support\ScheduleTags::forMany(
+        (int) $schedule->id, 'doc', $schedule->docEntries->pluck('id')->all()
+    );
     $docEntriesSeed = $schedule->docEntries->mapWithKeys(fn ($e) => [$e->id => [
         'id' => $e->id,
         'type' => $e->type,
@@ -90,6 +116,7 @@
         'typeLabel' => $e->type_label,
         'title' => $e->title,
         'content' => $e->content,
+        'tagList' => $docWordTags[$e->id] ?? [],
         'files' => collect($e->files ?? [])->map(fn ($f) => [
             'path' => $f['path'] ?? null,
             'name' => $f['name'] ?? 'file',
@@ -206,6 +233,9 @@
         const badgeClass = TYPE_CLASS[e.type] || 'doc-badge-custom';
         const title = e.title ? `<span class="font-bold text-gray-900 leading-snug">${escapeHtml(e.title)}</span>` : '';
         const content = e.content ? `<div class="rich-text text-sm text-gray-700 mt-2 js-content">${e.content}</div>` : '';
+        const wordTags = (e.tagList && e.tagList.length)
+            ? `<div class="flex flex-wrap gap-1.5 mt-2">${e.tagList.map((t) => `<span class="tp-chip"><span>${escapeHtml(t.name)}</span></span>`).join('')}</div>`
+            : '';
         const files = (e.files && e.files.length)
             ? `<div class="flex flex-wrap gap-2 mt-3 js-files">${e.files.map(fileChipHtml).join('')}</div>`
             : '';
@@ -217,6 +247,7 @@
                         ${title}
                     </div>
                     ${content}
+                    ${wordTags}
                     ${files}
                 </div>
                 <div class="flex gap-1 shrink-0">
@@ -253,9 +284,31 @@
         refreshEmptyState();
     }
 
-    /* ---- type dropdown ---- */
+    /* ---- the type, worn as a tag ----
+       The select stays as the value store; the crop-tag button and the
+       choices sheet are how it is written. sayDocType() runs after EVERY
+       programmatic set, so the tag never lags the value. */
+    const TYPE_FACE = {
+        protocol: '📋', introduction: '📖', critical_rule: '⚠️',
+        miscellaneous: '🗂️', __new__: '➕',
+    };
     function typeSelectValue(e) {
         return e.type === 'custom' ? ('custom:' + e.tagId) : e.type;
+    }
+    function typeSays(value) {
+        const b = BUILTIN.find((x) => x.value === value);
+        if (b) return { face: TYPE_FACE[value] || '📄', label: b.label };
+        if (value === '__new__') return { face: '➕', label: 'New tag…' };
+        if (value && value.startsWith('custom:')) {
+            const t = TAGS.find((x) => 'custom:' + x.id === value);
+            if (t) return { face: '🏷️', label: t.name };
+        }
+        return { face: '📄', label: 'Choose a type' };
+    }
+    function sayDocType() {
+        const { face, label } = typeSays(fld('docType').value);
+        fld('docTypeFace').textContent = face;
+        fld('docTypeNow').textContent = label;
     }
     function buildTypeOptions(selectedValue) {
         const sel = fld('docType');
@@ -269,12 +322,39 @@
         html += '<option value="__new__">+ Add new tag…</option>';
         sel.innerHTML = html;
         if (selectedValue) sel.value = selectedValue;
+        sayDocType();
     }
+    function paintTypeSheet() {
+        const now = fld('docType').value;
+        const rows = [];
+        BUILTIN.forEach((b) => rows.push({ v: b.value, face: TYPE_FACE[b.value] || '📄', name: b.label, sub: '' }));
+        TAGS.forEach((t) => rows.push({ v: 'custom:' + t.id, face: '🏷️', name: t.name, sub: 'your own tag' }));
+        rows.push({ v: '__new__', face: '➕', name: 'Add new tag…', sub: 'name a new kind and keep it' });
+        fld('docTypeList').innerHTML = rows.map((r) => `
+            <button type="button" class="dt-row${r.v === now ? ' is-on' : ''}" data-doc-type="${escapeHtml(r.v)}">
+                <span class="dt-row-e">${r.face}</span>
+                <span class="dt-row-body"><b>${escapeHtml(r.name)}</b>${r.sub ? `<i>${escapeHtml(r.sub)}</i>` : ''}</span>
+                <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>`).join('');
+    }
+    fld('docTypeBtn').addEventListener('click', () => {
+        paintTypeSheet();
+        openSheet('docTypeSheet');
+    });
+    fld('docTypeList').addEventListener('click', (e) => {
+        const row = e.target.closest('[data-doc-type]');
+        if (!row) return;
+        fld('docType').value = row.dataset.docType;
+        fld('docType').dispatchEvent(new Event('change'));
+        sayDocType();
+        closeSheet('docTypeSheet');
+    });
 
     fld('docType').addEventListener('change', () => {
         const isNew = fld('docType').value === '__new__';
         fld('docNewTagWrap').classList.toggle('hidden', !isNew);
         if (isNew) fld('docNewTag').focus();
+        sayDocType();
     });
 
     fld('docNewTagAdd').addEventListener('click', async () => {
@@ -343,6 +423,14 @@
         fld('docNewTagWrap').classList.add('hidden');
         fld('docNewTag').value = '';
         fld('docTitle').value = entry ? (entry.title || '') : '';
+        // The schedule's word-tags this document wears.
+        const mount = fld('docTagsMount');
+        if (window.smTags && mount) {
+            window.smTags.mount(mount);
+            if (entry && entry.tagList) window.smTags.set(mount, entry.tagList);
+            else if (entry) window.smTags.load(mount, 'doc', entry.id);
+            else window.smTags.clear(mount);
+        }
         newFiles = [];
         keepFiles = entry && entry.files ? entry.files.slice() : [];
         renderSheetFiles();
@@ -378,6 +466,11 @@
         if (tagId) fd.append('tagId', tagId);
         fd.append('title', title);
         fd.append('content', content);
+        // The word-tags ride along; an emptied row still sends the key so
+        // the server clears what was there.
+        const chosenTags = window.smTags ? window.smTags.value(fld('docTagsMount')) : [];
+        if (chosenTags.length) chosenTags.forEach((id) => fd.append('tags[]', id));
+        else fd.append('tags', '');
         newFiles.forEach((f) => fd.append('files[]', f));
         keepFiles.forEach((f) => fd.append('keepPaths[]', f.path));
 
