@@ -12,9 +12,6 @@
 
 @section('content')
 @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'gallery'])
-@include('sm.partials.module-note', [
-    'say' => 'Everything the season produced, wherever it was taken — photos and clips from notes, days, drawings, maps and the AI — plus the albums you put together yourself. Nothing here is a copy: delete a picture where it lives and it leaves here too, and an album picture can be deleted from here because here is where it lives.',
-])
 
 
 {{-- One button, not a strip that scrolls.

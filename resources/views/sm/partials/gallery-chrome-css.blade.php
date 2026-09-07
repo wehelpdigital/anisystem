@@ -223,7 +223,9 @@
     .ga-pane.is-in { animation: gaPaneIn .3s cubic-bezier(.22,1,.36,1) both; }
     @keyframes gaPaneIn { from { opacity: 0; transform: translateY(.5rem); } }
     @media (prefers-reduced-motion: reduce) { .ga-pane.is-in { animation: none; } }
-    .ga-tools { display: flex; gap: .5rem; align-items: center; margin-bottom: .7rem; flex-wrap: wrap; }
+    /* Row gap is its own answer: when the filters wrap under the search box
+       they used to sit right against it, and the two rows read as one clot. */
+    .ga-tools { display: flex; gap: .85rem .5rem; align-items: center; margin-bottom: .7rem; flex-wrap: wrap; }
     .ga-search { position: relative; flex: 1 1 12rem; }
     .ga-search input { width: 100%; padding: .5rem .7rem .5rem 2.1rem; border-radius: .7rem;
         border: 1px solid var(--color-gray-200); background: var(--color-white); font-size: .85rem; }
