@@ -293,6 +293,15 @@
     }
     function busyHide() { $('qrBusy').hidden = true; }
     function wire(url, fd) {
+        // No signal but Offline Mode on: the clip waits in the outbox and
+        // uploads itself when the line returns.
+        if (window.aneeOffline?.on() && !navigator.onLine) {
+            return window.aneeOffline.enqueueForm(url, fd).then(() => ({
+                success: true,
+                offline: true,
+                message: 'Saved on this phone — the clip will upload when the signal returns.',
+            }));
+        }
         return new Promise((resolve, reject) => {
             const x = new XMLHttpRequest();
             x.open('POST', url);

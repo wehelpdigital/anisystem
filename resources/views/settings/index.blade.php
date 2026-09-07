@@ -105,12 +105,14 @@
             </button>
 
             <div class="st-offline-say">
-                <p><b>What works offline today.</b> This first tier is <b>read-only</b>: any screen you've
-                already opened — the board, notes, growth stages — opens again from the copy. One action
-                also writes offline: <b>ticking an activity done</b>. The tick is saved on this phone and
-                syncs itself, automatically, the moment the connection returns.</p>
+                <p><b>What works offline today.</b> Reading: your main pages — the dashboard, each
+                season's board, the notes hub — are kept ready while this is on, and any other screen
+                you've opened reopens from its copy. Writing: <b>ticking an activity done</b> and the
+                <b>Quick Tools captures</b> — a photo (taken or picked from the phone), a voice note,
+                a video clip. Each one is saved on this phone and uploads itself, automatically, the
+                moment the connection returns; the yellow bar counts what's waiting.</p>
                 <p><b>What's coming.</b> More offline actions ride the same queue next — adding a note,
-                a photo capture, a record — module by module, once each one's sync is proven.</p>
+                editing an activity — module by module, once each one's sync is proven.</p>
                 <p><b>If something changed while you were away.</b> No merge screens: the last write wins.
                 If the server moved while you were offline, your change still lands and the sync note
                 tells you the farm may have moved — refresh and you'll see everything as it now is.</p>

@@ -814,6 +814,15 @@ document.addEventListener('DOMContentLoaded', () => {
     /* fetch() cannot watch an upload - only XHR reports bytes as they leave,
      * and the bytes leaving are the whole reason the veil has a bar. */
     function wire(url, fd) {
+        // No signal but Offline Mode on: the capture waits in the outbox,
+        // shrunk photos and all, and uploads itself when the line returns.
+        if (window.aneeOffline?.on() && !navigator.onLine) {
+            return window.aneeOffline.enqueueForm(url, fd).then(() => ({
+                success: true,
+                offline: true,
+                message: 'Saved on this phone — it will upload when the signal returns.',
+            }));
+        }
         return new Promise((resolve, reject) => {
             const x = new XMLHttpRequest();
             x.open('POST', url);
@@ -947,6 +956,19 @@ document.addEventListener('DOMContentLoaded', () => {
     $('qcAlbum').addEventListener('change', syncAlbumField);
     $('qcSchedule')?.addEventListener('change', () => { albumsFor = null; if (currentTarget() === 'gallery') loadAlbums(); });
 
+    /* The offline verdict panel: the capture is safe on the phone, and the
+       links to a gallery or notebook that has not received it yet would lie. */
+    function paintOfflineResult(message) {
+        $('qcResult').innerHTML = `<div class="flex items-start gap-2 text-amber-700 font-semibold mb-1">
+            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>${escapeHtml(message)}</span></div>
+            <p class="text-gray-500 text-sm">The yellow bar keeps the count of changes waiting to sync.</p>`;
+        $('qcResultLink').classList.add('hidden');
+        $('qcTitle').textContent = 'Kept for later';
+        showStep('result');
+        toast(message);
+    }
+
     async function saveGallery(scheduleId) {
         const fd = new FormData();
         fd.append('scheduleId', scheduleId);
@@ -970,6 +992,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (item.desc.trim()) fd.append('descriptions[' + i + ']', item.desc.trim());
         }
         const data = await wire(GALLERY_URL, fd);
+        if (data.offline) { paintOfflineResult(data.message); return; }
         // Some of it saved and some of it did not. A green tick and a success
         // toast over "Could not process the video" is how a lost clip goes
         // unnoticed until somebody goes looking for it, so a partial save
@@ -1001,6 +1024,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const shots = items.filter((it) => it.kind === 'image');
         for (const it of shots) fd.append('images[]', await shrunk(it));
         const data = await wire(NOTES_URL, fd);
+        if (data.offline) { paintOfflineResult(data.message); return; }
         $('qcResult').innerHTML = `<div class="flex items-center gap-2 text-brand-700 font-semibold mb-1">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             ${escapeHtml(data.message)}</div><p class="text-gray-500 text-sm">Find it anytime in this schedule's Notes module.</p>`;

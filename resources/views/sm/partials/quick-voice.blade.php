@@ -249,6 +249,19 @@
         form.append('clip', clip, clip.name);
         form.append('title', title);
         form.append('note', $('qvNote').value.trim());
+        // No signal but Offline Mode on: the recording waits in the outbox
+        // and uploads itself when the line returns.
+        if (window.aneeOffline?.on() && !navigator.onLine) {
+            try {
+                await window.aneeOffline.enqueueForm(VOICE_URL, form);
+                window.toast?.('Saved on this phone — the voice note will upload when the signal returns.');
+                close();
+            } catch (_) {
+                window.toast?.('Could not keep the recording on this phone.', 'error');
+                btn.disabled = false;
+            }
+            return;
+        }
         try {
             const res = await fetch(VOICE_URL, {
                 method: 'POST', credentials: 'same-origin', body: form,
