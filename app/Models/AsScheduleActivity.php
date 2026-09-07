@@ -345,10 +345,13 @@ class AsScheduleActivity extends BaseModel
     {
         return array_map(function ($p) {
             $ext = strtolower(pathinfo((string) $p, PATHINFO_EXTENSION));
+            // Voice notes are saved as .weba on purpose: the list keeps only
+            // paths, so the extension carries "this is audio" across reloads.
+            $voice = in_array($ext, ['weba', 'm4a', 'mp3', 'ogg', 'oga', 'wav', 'aac', 'opus'], true);
             return [
                 'path' => $p,
                 'url' => \App\Support\MediaStore::url($p),
-                'kind' => in_array($ext, self::CLIP_EXTENSIONS, true) ? 'video' : 'image',
+                'kind' => $voice ? 'audio' : (in_array($ext, self::CLIP_EXTENSIONS, true) ? 'video' : 'image'),
             ];
         }, $this->imagePathList());
     }

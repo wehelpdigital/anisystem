@@ -623,6 +623,16 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                     <span id="activityVideoUploadLabel">Add videos</span>
                 </button>
+
+                {{-- Spoken instructions ride with the task the same way a
+                     photo does: tap, talk, tap to stop, and the clip joins
+                     the activity's attachments. --}}
+                <span class="form-label mt-4">Voice notes <span class="text-gray-400 font-normal">(optional)</span></span>
+                <div id="activityVoiceGrid" class="act-voice-rows mb-2"></div>
+                <button type="button" id="activityVoiceBtn" class="btn btn-white w-full">
+                    <img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:1.1rem;height:1.1rem;object-fit:contain">
+                    <span id="activityVoiceLabel">Record a voice note</span>
+                </button>
             </div>
 
             {{-- Tags: a word or two tied to this activity, findable later in

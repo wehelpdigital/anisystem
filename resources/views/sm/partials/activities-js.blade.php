@@ -1039,9 +1039,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const cardImages = (a.images && a.images.length) ? a.images : (imageUrl ? [{ url: imageUrl }] : []);
         const imagesHtml = cardImages.length
             ? `<div class="activity-card-images mt-2" data-lightbox>${cardImages.map((im) => (
-                // A clip plays where it sits; an <img> pointed at an .mp4 is
-                // a broken-image glyph. Mirrors activity-card.blade.php.
-                (im.kind === 'video' || /\.(mp4|mov|m4v|webm|ogv|3gp)(\?|$)/i.test(im.path || im.url || ''))
+                // A voice note is a chip that unfolds its player; a clip
+                // plays where it sits; an <img> pointed at an .mp4 is a
+                // broken-image glyph. Mirrors activity-card.blade.php.
+                (im.kind === 'audio' || /\.(weba|m4a|mp3|ogg|oga|wav|aac|opus)(\?|$)/i.test(im.path || im.url || ''))
+                    ? `<button type="button" class="act-voice-chip" data-audio-url="${esc(im.url)}"><img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:.95rem;height:.95rem;object-fit:contain"> Voice note</button>`
+                    : (im.kind === 'video' || /\.(mp4|mov|m4v|webm|ogv|3gp)(\?|$)/i.test(im.path || im.url || ''))
                     ? `<video src="${esc(im.url)}" controls playsinline preload="metadata"></video>`
                     : `<img src="${esc(im.url)}" alt="Reference image" loading="lazy">`)).join('')}</div>`
             : '';
@@ -4165,7 +4168,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let ACTIVITY_IMAGES = [];   // [{ path, url, kind }]
 
     const CLIP_ENDINGS = /\.(mp4|mov|m4v|webm|ogv|3gp)(\?|$)/i;
-    const isClip = (m) => (m.kind || '') === 'video' || CLIP_ENDINGS.test(m.path || '');
+    // Voice clips are saved as .weba on purpose: the activity keeps only
+    // paths, so the extension is what carries "this is audio" across a
+    // reload — a .webm would come back wearing a video's clothes.
+    const VOICE_ENDINGS = /\.(weba|m4a|mp3|ogg|oga|wav|aac|opus)(\?|$)/i;
+    const isVoice = (m) => (m.kind || '') === 'audio' || VOICE_ENDINGS.test(m.path || '');
+    const isClip = (m) => !isVoice(m) && ((m.kind || '') === 'video' || CLIP_ENDINGS.test(m.path || ''));
 
     function renderActivityImages() {
         const draw = (grid, rows, empty) => {
@@ -4184,22 +4192,92 @@ document.addEventListener('DOMContentLoaded', () => {
         // The index carried on the button is the index in the ONE list, so
         // removing a clip from the second grid removes the right thing.
         const all = ACTIVITY_IMAGES.map((m, i) => ({ m, i }));
-        draw($id('activityImagesGrid'), all.filter(({ m }) => !isClip(m)));
+        draw($id('activityImagesGrid'), all.filter(({ m }) => !isClip(m) && !isVoice(m)));
         draw($id('activityVideosGrid'), all.filter(({ m }) => isClip(m)));
+        // Voice rows are chips, not thumbnails — a recording has nothing to
+        // look at, only a player to unfold.
+        const vg = $id('activityVoiceGrid');
+        if (vg) {
+            const voices = all.filter(({ m }) => isVoice(m));
+            vg.innerHTML = voices.map(({ m, i }) => `
+                <span class="act-voice-row">
+                    <button type="button" class="act-voice-chip" data-audio-url="${esc(m.url)}">
+                        <img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:.95rem;height:.95rem;object-fit:contain"> Voice note
+                    </button>
+                    <button type="button" class="activity-image-x" data-remove-image="${i}" aria-label="Remove" style="position:static">✕</button>
+                </span>`).join('');
+            vg.classList.toggle('hidden', voices.length === 0);
+        }
     }
 
     function setActivityImages(list) {
         ACTIVITY_IMAGES = (list || []).filter((x) => x && x.path)
-            .map((x) => ({ path: x.path, url: x.url, kind: x.kind || (CLIP_ENDINGS.test(x.path) ? 'video' : 'image') }));
+            .map((x) => ({ path: x.path, url: x.url, kind: x.kind || (VOICE_ENDINGS.test(x.path) ? 'audio' : (CLIP_ENDINGS.test(x.path) ? 'video' : 'image')) }));
         renderActivityImages();
     }
 
     document.addEventListener('click', (e) => {
-        const btn = e.target.closest('#activityImagesGrid [data-remove-image], #activityVideosGrid [data-remove-image]');
+        const btn = e.target.closest('#activityImagesGrid [data-remove-image], #activityVideosGrid [data-remove-image], #activityVoiceGrid [data-remove-image]');
         if (!btn) return;
         ACTIVITY_IMAGES.splice(Number(btn.dataset.removeImage), 1);
         renderActivityImages();
     });
+
+    /* ---- a spoken attachment on the task: tap to record, tap to stop ----
+       The button is the whole recorder, exactly as the notes editor does
+       it; the clip uploads through the notes' audio door and joins the
+       activity's own attachment list as a voice chip. */
+    (() => {
+        let vRec = null, vChunks = [], vStream = null, vTimer = null, vT0 = 0;
+        const label = () => $id('activityVoiceLabel');
+        document.addEventListener('click', async (e) => {
+            const btn = e.target.closest('#activityVoiceBtn');
+            if (!btn) return;
+            if (vRec) {
+                const r = vRec;
+                vRec = null;
+                clearInterval(vTimer);
+                r.onstop = async () => {
+                    vStream?.getTracks().forEach((t) => t.stop());
+                    vStream = null;
+                    const type = r.mimeType || 'audio/webm';
+                    const blob = new Blob(vChunks, { type });
+                    vChunks = [];
+                    if (label()) label().textContent = 'Record a voice note';
+                    btn.classList.remove('text-red-600');
+                    // .weba, deliberately — see VOICE_ENDINGS above.
+                    const file = new File([blob], 'voice-note.' + (type.includes('mp4') ? 'm4a' : 'weba'), { type });
+                    const fd = new FormData();
+                    fd.append('audio', file);
+                    try {
+                        const res = await api(`{{ route('sm.notes.audio-upload') }}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: fd });
+                        ACTIVITY_IMAGES.push({ path: res.data.path, url: res.data.url, kind: 'audio' });
+                        renderActivityImages();
+                        toast('Voice note attached.');
+                    } catch (err) { toast(err.message, 'error'); }
+                };
+                try { r.stop(); } catch (_) { }
+                return;
+            }
+            if (!navigator.mediaDevices || !window.MediaRecorder) { toast('This browser cannot record audio.', 'error'); return; }
+            try { vStream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+            catch (_) { toast('Microphone blocked. Allow it for this site.', 'error'); return; }
+            vChunks = [];
+            const mime = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4'].find((t) => MediaRecorder.isTypeSupported(t)) || '';
+            try { vRec = new MediaRecorder(vStream, mime ? { mimeType: mime } : undefined); }
+            catch (_) { vRec = new MediaRecorder(vStream); }
+            vRec.ondataavailable = (ev) => { if (ev.data && ev.data.size) vChunks.push(ev.data); };
+            vRec.start(250);
+            vT0 = Date.now();
+            btn.classList.add('text-red-600');
+            const tick = () => {
+                const s = Math.floor((Date.now() - vT0) / 1000);
+                if (label()) label().textContent = 'Stop ' + Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+            };
+            tick();
+            vTimer = setInterval(tick, 500);
+        });
+    })();
 
     function addReference(kind) {
         if (typeof window.smAttachMedia !== 'function') {

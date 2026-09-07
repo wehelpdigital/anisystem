@@ -2672,7 +2672,17 @@
         html.dark .service-badge { background: #22331c; color: #b7d69a; border-color: #33502a; }
 
         /* Reference-image thumbnails on cards (multiple) */
-        .activity-card-images { display: flex; flex-wrap: wrap; gap: .4rem; }
+        .activity-card-images { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+        /* A spoken attachment: a chip, not a thumbnail — tapping it unfolds
+           the player right where it stands (note-lightbox's handler). */
+        .act-voice-chip { display: inline-flex; align-items: center; gap: .35rem; padding: .35rem .7rem;
+            border-radius: 999px; border: 1px solid #d9e8c4; background: #f3f8ec;
+            font-size: .74rem; font-weight: 700; color: #3d6823; cursor: pointer; }
+        .act-voice-chip:hover { background: #e4efd4; }
+        html.dark .act-voice-chip { background: rgb(61 104 35 / .25); border-color: #3f5626; color: #bfe19a; }
+        .act-voice-rows { display: flex; flex-direction: column; gap: .35rem; }
+        .act-voice-rows.hidden { display: none; }
+        .act-voice-row { display: flex; align-items: center; gap: .45rem; }
         .activity-card-images img { width: 84px; height: 84px; object-fit: cover; border-radius: .6rem; border: 1px solid #eef0f3; }
         /* A clip on a card is wider than a photo, because a square film with
            a scrub bar squeezed into it is neither watchable nor scrubbable. */

@@ -305,6 +305,7 @@
         .msgr-intro { animation:none; transition:none; }
     }
     .msgr-bubble video { max-width:100%; max-height:16rem; border-radius:.65rem; margin-top:.15rem; display:block; background:#000; }
+    .msgr-bubble .msgr-voice { display:block; width:13rem; max-width:100%; height:2.1rem; margin-top:.15rem; }
     /* A clip mid-upload: a quiet dark tile instead of a player that cannot play yet. */
     .msgr-vid-pending { display:flex; align-items:center; justify-content:center; width:11rem; max-width:100%;
         height:6.5rem; border-radius:.65rem; margin-top:.15rem; background:rgb(0 0 0 / .35); font-size:1.4rem; }
@@ -549,7 +550,7 @@
                 if (m.id > lastSeenId) lastSeenId = m.id;
                 if (openWins[m.senderId]) {
                     // Window already open → append the new bubble live + mark read.
-                    appendBubble(openWins[m.senderId].querySelector('.msgr-window-body'), { id: m.id, body: m.body, image: m.image, video: m.video, poster: m.poster, mine: false, replyTo: m.replyTo }, true);
+                    appendBubble(openWins[m.senderId].querySelector('.msgr-window-body'), { id: m.id, body: m.body, image: m.image, video: m.video, voice: m.voice, poster: m.poster, mine: false, replyTo: m.replyTo }, true);
                     fetch(`/app/community/messages/${m.senderId}`, { headers: { Accept: 'application/json' }, credentials: 'same-origin' }).then(refreshBadge).catch(() => {});
                 } else {
                     // Otherwise pop a chat window open (FB-style), which loads the thread.
@@ -745,22 +746,25 @@
     let recorder = null, recChunks = [], recStream = null, recWin = null, recTimer = null;
     const bestRecMime = () => ['video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm', 'video/mp4']
         .find((t) => MediaRecorder.isTypeSupported(t)) || '';
-    async function startRec(win, onClip) {
+    const bestVoiceMime = () => ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4']
+        .find((t) => MediaRecorder.isTypeSupported(t)) || '';
+    async function startRec(win, onClip, voice) {
         if (recorder) { stopRec(); return; }
         try {
-            recStream = await navigator.mediaDevices.getUserMedia({ audio: true,
+            // A voice note wants no camera — just the mic.
+            recStream = await navigator.mediaDevices.getUserMedia(voice ? { audio: true } : { audio: true,
                 video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } } });
         } catch (_) {
-            if (window.toast) toast('Camera or microphone blocked. Allow it for this site.', 'error');
+            if (window.toast) toast((voice ? 'Microphone' : 'Camera or microphone') + ' blocked. Allow it for this site.', 'error');
             return;
         }
         recWin = win; recChunks = [];
-        const mime = bestRecMime();
+        const mime = voice ? bestVoiceMime() : bestRecMime();
         try { recorder = new MediaRecorder(recStream, mime ? { mimeType: mime } : undefined); }
         catch (_) { recorder = new MediaRecorder(recStream); }
         recorder.ondataavailable = (e) => { if (e.data && e.data.size) recChunks.push(e.data); };
         recorder.onstop = () => {
-            const type = recorder.mimeType || 'video/webm';
+            const type = recorder.mimeType || (voice ? 'audio/webm' : 'video/webm');
             const blob = new Blob(recChunks, { type });
             recStream.getTracks().forEach((t) => t.stop());
             const forWin = recWin;
@@ -769,11 +773,17 @@
             forWin?.querySelector('.msgr-recbar')?.classList.add('hidden');
             // A window shut mid-recording has nowhere to put the clip.
             if (blob.size && forWin && document.body.contains(forWin)) {
-                onClip(new File([blob], 'clip.' + (type.includes('mp4') ? 'mp4' : 'webm'), { type }));
+                // Voice saves as .weba on purpose — the one media column
+                // tells kinds apart by extension.
+                onClip(voice
+                    ? new File([blob], 'voice.' + (type.includes('mp4') ? 'm4a' : 'weba'), { type })
+                    : new File([blob], 'clip.' + (type.includes('mp4') ? 'mp4' : 'webm'), { type }));
             }
         };
         recorder.start();
-        win.querySelector('.msgr-recbar').classList.remove('hidden');
+        const bar = win.querySelector('.msgr-recbar');
+        bar.querySelector('.msgr-rec-what').textContent = voice ? 'Recording voice note…' : 'Recording video…';
+        bar.classList.remove('hidden');
         // Never leave one running — five minutes outruns any DM-worthy clip.
         recTimer = setTimeout(stopRec, 5 * 60 * 1000);
     }
@@ -864,6 +874,7 @@
                             <button type="button" class="msgr-plus-opt" data-msgr-add="upload"><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>Upload photo or video</button>
                             <button type="button" class="msgr-plus-opt" data-msgr-add="camera"><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>Take a photo</button>
                             <button type="button" class="msgr-plus-opt" data-msgr-add="record"><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg></span>Record a video</button>
+                            <button type="button" class="msgr-plus-opt" data-msgr-add="voice"><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 003-3V6a3 3 0 10-6 0v6a3 3 0 003 3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-14 0M12 18v3m-3 0h6"/></svg></span>Record a voice note</button>
                             <button type="button" class="msgr-plus-opt" data-msgr-add="gallery"><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3v13H4V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 13l2.5-2.5L14 14l2-2 2 2"/></svg></span>Share from gallery</button>
                         </div>
                     </div>
@@ -898,6 +909,8 @@
                 cell.title = att.label || '';
                 cell.innerHTML = att.kind === 'image'
                     ? `<img src="${esc(att.url)}" alt="">`
+                    : att.kind === 'voice'
+                    ? '<span class="msgr-att-clip">🎙</span>'
                     : (att.poster ? `<img src="${esc(att.poster)}" alt="">` : '<span class="msgr-att-clip">🎬</span>')
                     ;
                 const x = document.createElement('button');
@@ -932,13 +945,14 @@
                 freeAtt(att);
                 return;
             }
-            att.label = label || (att.kind === 'video' ? 'Video' : 'Photo');
+            att.label = label || (att.kind === 'voice' ? 'Voice note' : (att.kind === 'video' ? 'Video' : 'Photo'));
             win._atts.push(att);
             drawAttach();
         };
         const attachFile = (f) => {
             if (!f) return;
-            const kind = (f.type || '').startsWith('video/') ? 'video' : 'image';
+            const kind = (f.type || '').startsWith('audio/') ? 'voice'
+                : (f.type || '').startsWith('video/') ? 'video' : 'image';
             if (kind === 'video' && f.size > MAX_VIDEO_BYTES) {
                 if (window.toast) toast('That video is over 300 MB — pick or record a shorter one.', 'error');
                 return;
@@ -972,6 +986,7 @@
         };
         // Doors that cannot open here stay off the menu — no dead buttons.
         if (!canRecord) plusMenu.querySelector('[data-msgr-add="record"]').classList.add('hidden');
+        if (!canRecord) plusMenu.querySelector('[data-msgr-add="voice"]').classList.add('hidden');
         if (!canGallery()) plusMenu.querySelector('[data-msgr-add="gallery"]').classList.add('hidden');
         plusBtn.addEventListener('click', () => toggleMenu());
         plusMenu.addEventListener('click', (e) => {
@@ -982,6 +997,7 @@
             if (how === 'upload') fileInput.click();
             else if (how === 'camera') camInput.click();
             else if (how === 'record') startRec(win, attachFile);
+            else if (how === 'voice') startRec(win, attachFile, true);
             else if (how === 'gallery') pickFromGallery(setAttach);
         });
         win.querySelector('.msgr-rec-stop').addEventListener('click', stopRec);
@@ -1028,14 +1044,14 @@
                 const q = queue[i];
                 const fd = new FormData();
                 if (q.text) fd.append('body', q.text);
-                if (q.att && q.att.file) fd.append(q.att.kind === 'video' ? 'video' : 'image', q.att.file, q.att.file.name || (q.att.kind === 'video' ? 'clip' : 'photo'));
+                if (q.att && q.att.file) fd.append(q.att.kind === 'voice' ? 'voice' : (q.att.kind === 'video' ? 'video' : 'image'), q.att.file, q.att.file.name || (q.att.kind === 'voice' ? 'voice.weba' : (q.att.kind === 'video' ? 'clip' : 'photo')));
                 if (q.att && q.att.pick) fd.append('galleryPath', q.att.pick.path);
                 if (reply && i === 0) fd.append('replyToId', reply);
                 try {
                     const r = await fetch(`/app/community/messages/${userId}`, { method: 'POST',
                         headers: { 'X-CSRF-TOKEN': CSRF(), Accept: 'application/json' }, body: fd });
                     const d = await r.json();
-                    if (d.success) { finalizePending(bodyEl, pendings[i], { id: d.data.id, body: d.data.body, image: d.data.image, video: d.data.video, poster: d.data.poster, replyTo: d.data.replyTo }); }
+                    if (d.success) { finalizePending(bodyEl, pendings[i], { id: d.data.id, body: d.data.body, image: d.data.image, video: d.data.video, voice: d.data.voice, poster: d.data.poster, replyTo: d.data.replyTo }); }
                     else { failPending(pendings[i], d.message); if (q.text && !input.value) input.value = q.text; }
                 } catch (_) { failPending(pendings[i], 'Network error — try again.'); if (q.text && !input.value) input.value = q.text; }
             }
@@ -1169,10 +1185,17 @@
             b.dataset.msgKind = 'video';   // so a reply to it can say "🎬 Video"
             b.appendChild(buildVideo(m, bodyEl));
         }
+        if (m.voice) {
+            b.dataset.msgKind = 'voice';   // so a reply to it can say "🎙 Voice note"
+            const a = document.createElement('audio');
+            a.controls = true; a.preload = 'metadata'; a.src = m.voice;
+            a.className = 'msgr-voice';
+            b.appendChild(a);
+        }
         if (m.body) {
             const t = document.createElement('div');
             t.textContent = m.body;
-            if (m.image || m.video) t.className = 'msgr-caption';
+            if (m.image || m.video || m.voice) t.className = 'msgr-caption';
             b.appendChild(t);
         }
         row.appendChild(b);
@@ -1219,9 +1242,10 @@
         if (row.querySelector('.msgr-acts')) return;
         const actsHtml =
             (m.id ? '<button type="button" class="msgr-act" data-msgr-act="reply" aria-label="Reply" title="Reply">' + ICON_REPLY + '</button>' : '') +
-            // A photo or a clip is worth passing on even with nothing typed
-            // over it — the old rule offered Forward only for words.
-            ((m.body || m.image || m.video) && m.id
+            // A photo, a clip or a voice note is worth passing on even with
+            // nothing typed over it — the old rule offered Forward only for
+            // words.
+            ((m.body || m.image || m.video || m.voice) && m.id
                 ? '<button type="button" class="msgr-act" data-msgr-act="forward" aria-label="Forward" title="Forward">' + ICON_FWD + '</button>'
                 : '');
         if (!actsHtml) return;
@@ -1257,10 +1281,13 @@
             // A tile, not a player: a half-uploaded clip cannot play yet.
             mediaEl = document.createElement('div'); mediaEl.className = 'msgr-vid-pending'; mediaEl.textContent = '🎬';
             b.appendChild(mediaEl);
+        } else if (m.media && m.media.kind === 'voice') {
+            mediaEl = document.createElement('div'); mediaEl.className = 'msgr-vid-pending'; mediaEl.textContent = '🎙';
+            b.appendChild(mediaEl);
         }
         const load = document.createElement('div');
         load.className = 'msgr-uploading';
-        load.innerHTML = '<span class="msgr-spin"></span><span>' + (m.media ? (m.media.kind === 'video' ? 'Sending video…' : 'Sending photo…') : 'Sending…') + '</span>';
+        load.innerHTML = '<span class="msgr-spin"></span><span>' + (m.media ? (m.media.kind === 'voice' ? 'Sending voice note…' : (m.media.kind === 'video' ? 'Sending video…' : 'Sending photo…')) : 'Sending…') + '</span>';
         b.appendChild(load);
         row.appendChild(b);
         bodyEl.appendChild(row);
@@ -1277,6 +1304,13 @@
             p.b.dataset.msgKind = 'video';
             if (p.mediaEl) p.mediaEl.remove();
             p.b.appendChild(buildVideo(m, bodyEl));
+        } else if (m.voice) {
+            p.b.dataset.msgKind = 'voice';
+            if (p.mediaEl) p.mediaEl.remove();
+            const a = document.createElement('audio');
+            a.controls = true; a.preload = 'metadata'; a.src = m.voice;
+            a.className = 'msgr-voice';
+            p.b.appendChild(a);
         } else if (m.image) {
             let img = (p.mediaEl && p.mediaEl.tagName === 'IMG') ? p.mediaEl : null;
             if (!img) { img = document.createElement('img'); img.alt = ''; p.b.appendChild(img); }

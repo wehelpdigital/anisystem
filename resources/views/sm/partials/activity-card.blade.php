@@ -272,7 +272,12 @@
     @if(count($cardImages))
         <div class="activity-card-images mt-2" data-lightbox>
             @foreach($cardImages as $img)
-                @if (($img['kind'] ?? 'image') === 'video')
+                @if (($img['kind'] ?? 'image') === 'audio')
+                    {{-- A voice note is a chip that unfolds its player. --}}
+                    <button type="button" class="act-voice-chip" data-audio-url="{{ $img['url'] }}">
+                        <img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:.95rem;height:.95rem;object-fit:contain"> Voice note
+                    </button>
+                @elseif (($img['kind'] ?? 'image') === 'video')
                     {{-- A clip plays where it sits. Pointing an <img> at an
                          .mp4 is what a broken-image glyph is made of. --}}
                     <video src="{{ $img['url'] }}" controls playsinline preload="metadata"></video>

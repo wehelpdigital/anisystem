@@ -39,7 +39,7 @@ class SeasonMedia
      */
     public static function kindOf(?string $path): string
     {
-        if (preg_match('~\.(m4a|mp3|ogg|oga|wav|aac|opus)$~i', (string) $path)) {
+        if (preg_match('~\.(m4a|mp3|ogg|oga|wav|aac|opus|weba)$~i', (string) $path)) {
             return 'audio';
         }
 

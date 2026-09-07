@@ -178,7 +178,17 @@ class CommunityMessageController extends Controller
     /** How this media is described in words (previews, notifications). */
     private function mediaLabel(?string $path): string
     {
+        if ($this->isVoice($path)) {
+            return '🎙 Voice note';
+        }
+
         return $this->isVideo($path) ? '🎬 Video' : '📷 Photo';
+    }
+
+    /** A spoken message, told apart by extension (voice clips are .weba). */
+    private function isVoice(?string $path): bool
+    {
+        return (bool) preg_match('/\.(weba|m4a|mp3|ogg|oga|wav|aac|opus)$/i', (string) $path);
     }
 
     /**
@@ -192,10 +202,13 @@ class CommunityMessageController extends Controller
     private function mediaPayload(?string $path): array
     {
         if (blank($path)) {
-            return ['image' => null, 'video' => null, 'poster' => null];
+            return ['image' => null, 'video' => null, 'voice' => null, 'poster' => null];
+        }
+        if ($this->isVoice($path)) {
+            return ['image' => null, 'video' => null, 'voice' => \App\Support\MediaStore::url($path), 'poster' => null];
         }
         if (! $this->isVideo($path)) {
-            return ['image' => \App\Support\MediaStore::url($path), 'video' => null, 'poster' => null];
+            return ['image' => \App\Support\MediaStore::url($path), 'video' => null, 'voice' => null, 'poster' => null];
         }
 
         $poster = null;
@@ -206,7 +219,7 @@ class CommunityMessageController extends Controller
             }
         }
 
-        return ['image' => null, 'video' => \App\Support\MediaStore::url($path), 'poster' => $poster];
+        return ['image' => null, 'video' => \App\Support\MediaStore::url($path), 'voice' => null, 'poster' => $poster];
     }
 
     /**
@@ -239,6 +252,8 @@ class CommunityMessageController extends Controller
             // 300 MB ceiling and the mime list every clip path enforces;
             // VideoOptimizer re-encodes to a streamable size on the way in.
             'video' => 'nullable|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v|max:2097152',
+            // A spoken message — Opus is small already, so it stores as-is.
+            'voice' => 'nullable|file|max:51200|mimetypes:audio/webm,audio/ogg,audio/mp4,audio/mpeg,audio/aac,audio/wav,audio/x-wav,audio/x-m4a,video/webm',
             // A stored path picked from the season gallery — a reference,
             // not a copy (validated in galleryShare()).
             'galleryPath' => 'nullable|string|max:500',
@@ -262,7 +277,19 @@ class CommunityMessageController extends Controller
 
         $body = trim((string) ($data['body'] ?? ''));
         $mediaPath = null;
-        if ($request->hasFile('video')) {
+        if ($request->hasFile('voice')) {
+            // .weba on purpose: the one media column tells its kinds apart
+            // by extension, and audio/webm's honest audio extension is what
+            // keeps a voice message from wearing a video's clothes.
+            $mediaPath = $request->file('voice')->storeAs(
+                'community/messages',
+                uniqid('voice-') . '.weba',
+                'public'
+            ) ?: null;
+            if ($mediaPath === null) {
+                return response()->json(['success' => false, 'message' => 'The recording could not be saved.'], 422);
+            }
+        } elseif ($request->hasFile('video')) {
             // The same pass every clip in the app takes (Quick Record, walls):
             // ≤720p MP4 with a poster frame beside it, because these travel
             // over a farm's phone signal in both directions.
