@@ -54,6 +54,8 @@
         </div>
 
         <div class="card card-body">
+            @include('auth.partials.google-button')
+
             <form id="loginForm" method="POST" action="{{ route('login.attempt') }}" class="space-y-4" novalidate>
                 @csrf
 

@@ -29,6 +29,8 @@ class User extends Authenticatable
         'phone',
         'email',
         'password',
+        'emailVerifiedAt',
+        'googleId',
         'clientId',
         'status',
         'city',
@@ -62,6 +64,7 @@ class User extends Authenticatable
     {
         return [
             'password' => 'hashed',
+            'emailVerifiedAt' => 'datetime',
             'deleteStatus' => 'integer',
             'adminUserId' => 'integer',
             'lastSeenAt' => 'datetime',

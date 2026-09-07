@@ -48,6 +48,18 @@ return [
         ],
     ],
 
+    /*
+     * "Continue with Google" on the login and signup pages. Create an OAuth
+     * client (type: Web application) in Google Cloud Console, add
+     * <app-url>/auth/google/callback to its authorised redirect URIs, and
+     * put the id + secret in the environment. With no client id the buttons
+     * simply do not render — email signup keeps working on its own.
+     */
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+    ],
+
     // Community GIF search. The key stays server-side; the app proxies searches.
     'giphy' => [
         'key' => env('GIPHY_API_KEY'),

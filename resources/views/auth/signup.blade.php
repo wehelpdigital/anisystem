@@ -6,12 +6,14 @@
 <div class="bg-gray-50 py-10 md:py-16 px-4 min-h-[70vh] flex items-start justify-center">
     <div class="w-full max-w-md">
         <div class="text-center mb-6">
-            <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-12 w-auto mx-auto mb-4">
-            <h1 class="text-2xl font-bold text-gray-900">Create your account</h1>
-            <p class="text-sm text-gray-500 mt-1">Sign up, choose a plan, and start planning your cropping season.</p>
+            <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-9 w-auto mx-auto mb-4">
+            <h1 class="text-2xl font-bold text-gray-900">Create your free account</h1>
+            <p class="text-sm text-gray-500 mt-1">The Libre plan is free forever — no card, no trial clock.</p>
         </div>
 
         <div class="card card-body">
+            @include('auth.partials.google-button')
+
             <form method="POST" action="{{ route('signup.attempt') }}" class="space-y-4" novalidate>
                 @csrf
                 @if ($plan)
@@ -61,7 +63,8 @@
                         class="form-input" placeholder="Repeat your password" required autocomplete="new-password">
                 </div>
 
-                <button type="submit" class="btn btn-accent btn-lg w-full">Create Account</button>
+                <button type="submit" class="btn btn-accent btn-lg w-full">Create Free Account</button>
+                <p class="text-center text-xs text-gray-400">We'll email you a confirmation link before your first login.</p>
             </form>
         </div>
 

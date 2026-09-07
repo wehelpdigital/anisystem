@@ -93,6 +93,19 @@ Route::middleware(['guest', 'no-cache'])->group(function () {
     Route::get('/signup', [App\Http\Controllers\Auth\RegisterController::class, 'show'])->name('signup');
     Route::post('/signup', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('signup.attempt');
 
+    // Email confirmation: the notice page, the resend button, and the signed
+    // link the mail carries. Guests only — a logged-in member has no business
+    // here, and the verify link itself logs the person in.
+    Route::get('/verify-notice', [App\Http\Controllers\Auth\RegisterController::class, 'notice'])->name('verify.notice');
+    Route::post('/verify-resend', [App\Http\Controllers\Auth\RegisterController::class, 'resend'])
+        ->name('verify.resend')->middleware('throttle:5,10');
+    Route::get('/verify-email/{id}/{hash}', [App\Http\Controllers\Auth\RegisterController::class, 'verify'])
+        ->name('verify.email')->middleware('signed');
+
+    // "Continue with Google" — the buttons render only when configured.
+    Route::get('/auth/google', [App\Http\Controllers\Auth\GoogleAuthController::class, 'redirect'])->name('google.redirect');
+    Route::get('/auth/google/callback', [App\Http\Controllers\Auth\GoogleAuthController::class, 'callback'])->name('google.callback');
+
     Route::get('/forgot-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'show'])->name('password.request');
     Route::post('/forgot-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLink'])->name('password.email');
     Route::get('/reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'show'])->name('password.reset');

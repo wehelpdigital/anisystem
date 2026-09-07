@@ -48,6 +48,15 @@ class LoginController extends Controller
             ]);
         }
 
+        if ($user->status === 'pending') {
+            // Right person, right password — the address just hasn't been
+            // proven yet. Park the email so the notice page can resend.
+            $request->session()->put('signup.email', $user->email);
+
+            return redirect()->route('verify.notice')
+                ->with('error', 'Please confirm your email first — check your inbox for the link.');
+        }
+
         if ($user->status !== 'active') {
             throw ValidationException::withMessages([
                 'email' => 'Your account is disabled.',
