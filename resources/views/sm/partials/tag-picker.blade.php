@@ -61,6 +61,31 @@
 @push('scripts')
 <script>
 (() => {
+    /* The activities shell renders module panes as their own documents and
+       injects them, so this partial can arrive TWICE on one page — the
+       known double-render trap. Two copies meant two sheets sharing one
+       set of listeners: the sheet a finger saw could be the dead twin,
+       with an Add button that answers nothing. One copy rules: the first
+       script claims its sheet, every later arrival sweeps its own markup
+       away and leaves, and the sweep re-runs at every use in case a pane
+       injected markup without running its script. */
+    const claimSheet = () => {
+        const s = document.getElementById('tagPickSheet');
+        if (s && !s.dataset.tpAlive) s.dataset.tpAlive = '1';
+    };
+    const sweepDupes = () => {
+        document.querySelectorAll('[id=tagPickSheet]:not([data-tp-alive])').forEach((el) => el.remove());
+    };
+    if (window.__smTagsAlive) {
+        // Only the owner claims; a later copy just clears its own markup.
+        // (Claiming here would bless the dead twin the moment it arrived.)
+        sweepDupes();
+        return;
+    }
+    window.__smTagsAlive = true;
+    claimSheet();
+    sweepDupes();
+
     const U = {
         list: @json(route('sm.tags.list') . '?id=' . $schedule->id),
         store: @json(route('sm.tags.store')),
@@ -69,15 +94,18 @@
     const SCHED = {{ (int) $schedule->id }};
     const esc = (s) => (window.escapeHtml ? window.escapeHtml(String(s ?? '')) : String(s ?? ''));
     let ALL = null;          // the schedule's tags, fetched once and kept fresh on writes
+    let ALLP = null;         // the fetch in flight, so two callers share one trip
     let HOST = null;         // the mount the sheet is currently editing
 
-    async function ensureAll() {
-        if (ALL) return ALL;
-        try {
-            const res = await api(U.list);
-            ALL = (res.data.tags || []);
-        } catch (err) { ALL = []; }
-        return ALL;
+    function ensureAll() {
+        if (ALL) return Promise.resolve(ALL);
+        if (!ALLP) {
+            ALLP = api(U.list)
+                .then((res) => { ALL = (res.data.tags || []); return ALL; })
+                .catch(() => { ALL = []; return ALL; })
+                .finally(() => { ALLP = null; });
+        }
+        return ALLP;
     }
 
     function paintRow(el) {
@@ -107,9 +135,14 @@
     window.smTags = {
         mount(el, tags) {
             if (!el || el._tpMounted) { if (el && tags) this.set(el, tags); return; }
+            sweepDupes();   // a pane may have injected a dead twin since load
             el._tpMounted = true;
             el._tags = tags || [];
             paintRow(el);
+            // Warm the dictionary now, quietly — by the time a finger finds
+            // the chip, the list is usually already home. Over a slow line
+            // this is the difference between "instant" and "is it broken?".
+            ensureAll();
             el.addEventListener('click', async (e) => {
                 const off = e.target.closest('[data-tp-off]');
                 if (off) {
@@ -118,10 +151,22 @@
                     return;
                 }
                 if (e.target.closest('[data-tp-open]')) {
+                    sweepDupes();
                     HOST = el;
+                    // The sheet opens THE MOMENT the chip is tapped — a tap
+                    // that answers seconds later reads as a hang. If the
+                    // dictionary is still travelling, the sheet says so and
+                    // fills in when it lands.
+                    if (ALL) {
+                        paintSheet();
+                    } else {
+                        document.getElementById('tagPickList').innerHTML =
+                            '<p id="tagPickLoading" style="font-size:.8rem;color:var(--color-gray-400);text-align:center;padding:1.2rem 0">Getting your tags…</p>';
+                        document.getElementById('tagPickEmpty').hidden = true;
+                    }
+                    openSheet('tagPickSheet');
                     await ensureAll();
                     paintSheet();
-                    openSheet('tagPickSheet');
                 }
             });
         },
@@ -164,7 +209,8 @@
         try {
             const res = await api(U.store, { method: 'POST', body: { scheduleId: SCHED, name } });
             const t = res.data.tag;
-            await ensureAll();
+            // The server's answer IS the fresh fact — no second round-trip.
+            if (!ALL) ALL = [];
             if (!ALL.some((x) => x.id === t.id)) ALL.push(t);
             if (HOST && !(HOST._tags || []).some((x) => x.id === t.id)) {
                 HOST._tags = [...(HOST._tags || []), { id: t.id, name: t.name }];
