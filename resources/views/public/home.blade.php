@@ -44,28 +44,6 @@
                         <span class="text-xs text-gray-300">Free forever on the Libre plan — no card, no trial clock.</span>
                     </div>
 
-                    {{-- Capability strip — generic capability statements, not fabricated metrics --}}
-                    <dl class="mt-10 grid grid-cols-2 gap-3 max-w-md">
-                        @php
-                            $trust = [
-                                ['t' => 'Mobile-first', 's' => 'Runs on any phone'],
-                                ['t' => 'Day-0 / DAS', 's' => 'Accurate timing'],
-                                ['t' => '₱ Costing', 's' => 'Built right in'],
-                                ['t' => 'AI Technician', 's' => 'Ask anytime, 24/7'],
-                            ];
-                        @endphp
-                        @foreach ($trust as $item)
-                            <div class="rounded-2xl bg-white/10 backdrop-blur px-3.5 py-3 ring-1 ring-white/15">
-                                <dt class="font-heading text-sm sm:text-base font-bold text-white">{{ $item['t'] }}</dt>
-                                <dd class="text-[11px] sm:text-xs text-gray-300 mt-0.5">{{ $item['s'] }}</dd>
-                            </div>
-                        @endforeach
-                    </dl>
-
-                    <p class="mt-6 text-sm text-gray-300 max-w-xl">
-                        <span class="font-semibold text-white">Ani</span> (Yield) + <span class="font-semibold text-white">Senso</span>
-                        (Sensei means Teacher, Asenso means Success) — science-backed farm planning for Filipino farmers.
-                    </p>
                 </div>
 
                 {{-- Right column: "how it works" video --}}
