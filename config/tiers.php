@@ -36,6 +36,7 @@ return [
         'docUploads'        => false,
         'collab'            => false,
         'reportsAll'        => false,   // labor report only
+        'auditLogs'         => false,   // the Logs diary is the Owner tier's story
         'discussionCreate'  => false,
         'discussionJoin'    => 1,
         'discussionPrivateJoin' => false,   // open rooms only — locked doors are a paid privilege
@@ -83,6 +84,7 @@ return [
         'docUploads'        => true,
         'collab'            => false,   // the room is the Owner tier's story
         'reportsAll'        => true,
+        'auditLogs'         => false,
         'discussionCreate'  => false,
         'discussionJoin'    => null,
         'discussionPrivateJoin' => true,
@@ -129,6 +131,7 @@ return [
         'docUploads'        => true,
         'collab'            => true,
         'reportsAll'        => true,
+        'auditLogs'         => true,
         'discussionCreate'  => true,
         'discussionJoin'    => null,
         'discussionPrivateJoin' => true,
@@ -171,6 +174,7 @@ return [
         'docUploads'        => true,
         'collab'            => true,
         'reportsAll'        => true,
+        'auditLogs'         => true,
         'discussionCreate'  => true,
         'discussionJoin'    => null,
         'discussionPrivateJoin' => true,

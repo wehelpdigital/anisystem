@@ -660,6 +660,12 @@ class CroppingScheduleController extends Controller
     {
         $schedule = $this->findOwnedOrFail($request->query('id'), true);
 
+        // The diary is the Farm Owner plan's story — the tab stays visible
+        // below it, locked, and this wall answers anyone who slips past.
+        if (! \App\Support\Tier::scheduleCan($schedule, 'auditLogs')) {
+            \App\Support\Tier::deny('The activity Logs come with the Farm Owner plan — every change in the schedule, and by whose hand.', 'owner');
+        }
+
         $q = \App\Models\AsScheduleAudit::where('croppingScheduleId', $schedule->id);
 
         // Family filter: any of the shelf's route-name prefixes.

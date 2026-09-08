@@ -642,10 +642,19 @@ const __init = () => {
             <span class="dt-row-body"><b>Notifications</b><i>The morning schedule email.</i></span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </button>
-        <button type="button" class="dt-row" data-set-tab-row="logs">
-            <span class="dt-row-e">🕒</span>
-            <span class="dt-row-body"><b>Logs</b><i>Everything done in this schedule, and by whose hand.</i></span>
-            <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        {{-- The diary is a Farm Owner privilege. Below that tier the row
+             stays — locked — and the tap opens the upgrade sheet instead
+             of the pane (the capture-phase handler wins the click). --}}
+        @php $setLogsLocked = ! \App\Support\Tier::scheduleCan($schedule, 'auditLogs'); @endphp
+        <button type="button" class="dt-row" data-set-tab-row="logs"
+                @if ($setLogsLocked) data-tier-lock="owner" data-lock-say="The activity Logs come with the Farm Owner plan — every change in the schedule, and by whose hand." @endif>
+            <span class="dt-row-e {{ $setLogsLocked ? 'tl-dim' : '' }}">🕒</span>
+            <span class="dt-row-body {{ $setLogsLocked ? 'tl-dim' : '' }}"><b>Logs</b><i>Everything done in this schedule, and by whose hand.</i></span>
+            @if ($setLogsLocked)
+                <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+            @else
+                <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            @endif
         </button>
     </div>
 </div>
