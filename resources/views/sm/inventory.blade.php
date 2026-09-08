@@ -131,7 +131,7 @@
 
     @unless ($ivMayWrite)
         <p class="card card-body text-sm text-gray-500 mb-3">
-            👁️ You can read this farm's inventory. Adding items and moving stock is for the owner, or a worker with edit access.
+            🔒 You can read this farm's inventory. Adding items and moving stock is for the owner, or a worker with edit access.
         </p>
     @endunless
 
