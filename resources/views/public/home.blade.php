@@ -201,41 +201,20 @@
                 </p>
             </div>
 
-            <div class="mt-12 grid gap-8 lg:grid-cols-[1fr_1.25fr] items-center">
-                <figure class="loss-photo reveal">
-                    <img src="{{ asset('images/site/photos/sacks-shed.jpg') }}" alt="A farmer beside his stored harvest, counting sacks" loading="lazy">
-                    <figcaption>The difference between these sacks and the ones that never made it is usually a decision that came days late.</figcaption>
-                </figure>
-
-                <div class="grid gap-4 sm:grid-cols-2">
-                    @php
-                        $losses = [
-                            ['n' => 40, 'l' => 'Yield lost to pests and diseases', 'p' => 'When the intervention comes late — or never comes at all.'],
-                            ['n' => 30, 'l' => 'Wasted on the wrong solution', 'p' => 'A misread problem means the wrong product, at full price, while the real problem keeps eating.'],
-                            ['n' => 25, 'l' => 'Yield lost to mistimed fertilizer', 'p' => 'The right sack on the wrong week feeds the field a fraction of what it paid for.'],
-                            ['n' => 20, 'l' => 'Yield lost to delayed decisions', 'p' => 'Waiting days for someone else\'s answer — the technician\'s next visit, a reply that never comes — while the problem keeps growing.'],
-                        ];
-                    @endphp
-                    @foreach ($losses as $i => $loss)
-                        <div class="loss-card reveal" style="--loss: {{ $loss['n'] }}%; --reveal-delay: {{ $i * 0.08 }}s">
-                            <p class="loss-upto">Up to</p>
-                            <p class="loss-n"><span data-countup="{{ $loss['n'] }}">0</span><small>%</small></p>
-                            <p class="loss-l">{{ $loss['l'] }}</p>
-                            <p class="loss-p">{{ $loss['p'] }}</p>
-                            <div class="loss-bar" aria-hidden="true"><i></i></div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-
-            {{-- The leaks that didn't fit beside the photo — same cards, own row. --}}
-            <div class="mt-4 grid gap-4 sm:grid-cols-3">
+            {{-- Eight leaks, one level grid: 4×2 on desk, 2-up on tablet,
+                 a single column on the phone. Ordered by how much they take. --}}
+            <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 @foreach ([
+                    ['n' => 40, 'l' => 'Yield lost to pests and diseases', 'p' => 'When the intervention comes late — or never comes at all.'],
                     ['n' => 35, 'l' => 'Yield lost to weeds left too long', 'p' => 'Miss the critical weeding window and the weeds eat first — every day past it costs.'],
+                    ['n' => 30, 'l' => 'Wasted on the wrong solution', 'p' => 'A misread problem means the wrong product, at full price, while the real problem keeps eating.'],
                     ['n' => 30, 'l' => 'Yield lost to the wrong crop or variety', 'p' => 'Seed that never fit this ground, this season, this water — decided before it was checked.'],
+                    ['n' => 25, 'l' => 'Yield lost to mistimed fertilizer', 'p' => 'The right sack on the wrong week feeds the field a fraction of what it paid for.'],
                     ['n' => 25, 'l' => 'Yield lost to water at the wrong time', 'p' => 'Dry at flowering, flooded at ripening — the stage the water missed never comes back.'],
+                    ['n' => 20, 'l' => 'Yield lost to delayed decisions', 'p' => 'Waiting days for someone else\'s answer — the technician\'s next visit, a reply that never comes — while the problem keeps growing.'],
+                    ['n' => 20, 'l' => 'Yield lost to planting outside the window', 'p' => 'A season started on habit instead of the climate\'s actual calendar pays for it at harvest.'],
                 ] as $i => $loss)
-                    <div class="loss-card reveal" style="--loss: {{ $loss['n'] }}%; --reveal-delay: {{ $i * 0.08 }}s">
+                    <div class="loss-card reveal" style="--loss: {{ $loss['n'] }}%; --reveal-delay: {{ ($i % 4) * 0.08 }}s">
                         <p class="loss-upto">Up to</p>
                         <p class="loss-n"><span data-countup="{{ $loss['n'] }}">0</span><small>%</small></p>
                         <p class="loss-l">{{ $loss['l'] }}</p>
@@ -265,6 +244,7 @@
                     ['k' => 'Weeds → the critical window is on the board', 'p' => 'Weeding lands on the timeline inside its critical window, counted from each lot\'s Day-0 — the weeds never get their head start.'],
                     ['k' => 'Wrong crop → checked before the seed is bought', 'p' => 'The What-to-Plant analysis weighs your ground, water, season forecast and the ENSO outlook, and ranks what actually fits — before a single peso goes to seed.'],
                     ['k' => 'Water timing → scheduled by stage, read against the sky', 'p' => 'Irrigation sits on the same board as everything else, stage by stage, with each lot\'s forecast beside it — so the water arrives when the crop asks, and the rain that\'s coming isn\'t paid for twice.'],
+                    ['k' => 'Planting on habit → the window named first', 'p' => 'The When-to-Plant analysis reads your town\'s climate record and the ENSO outlook and names the safest window to start — before Day-0 is chosen, not after.'],
                 ] as $i => $fix)
                     <div class="fix-row reveal" style="--reveal-delay: {{ $i * 0.08 }}s">
                         <span class="fix-badge"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
