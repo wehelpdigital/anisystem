@@ -233,7 +233,7 @@ const __init = () => {
                 <button type="button" class="btn btn-white w-full" onclick="window.print()">Print</button>
                 ${mode === 'fresh'
                     ? '<button type="button" class="btn btn-white w-full" data-pt-again>Another lot</button>'
-                    : `<button type="button" class="btn btn-white w-full" data-pt-del="${meta.id}">Delete</button>`}
+                    : (meta.mine !== false ? `<button type="button" class="btn btn-white w-full" data-pt-del="${meta.id}">Delete</button>` : '')}
             </div>`;
         host.querySelector('[data-pt-again]')?.addEventListener('click', () => {
             host.hidden = true;
@@ -271,7 +271,7 @@ const __init = () => {
                 <button type="button" class="pt-saved-row" data-pt-open="${r.id}">
                     <span style="font-size:1.2rem;flex:none;">📋</span>
                     <span class="min-w-0 grow"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.when || '')}</small></span>
-                    ${@json($ptMayGen) ? `<span role="button" tabindex="0" class="ar-pen" data-pt-meta="${r.id}" title="Edit name, description and tags" aria-label="Edit ${esc(r.title)}">
+                    ${(@json($ptMayGen) && r.mine !== false) ? `<span role="button" tabindex="0" class="ar-pen" data-pt-meta="${r.id}" title="Edit name, description and tags" aria-label="Edit ${esc(r.title)}">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:.85rem;height:.85rem"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     </span>` : ''}
                     <svg style="width:1rem;height:1rem;flex:none;color:var(--color-gray-300)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>

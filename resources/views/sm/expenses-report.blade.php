@@ -67,17 +67,52 @@
     html.dark .xr-row-e { background: #1c2416; }
     .xr-refetch { opacity: .5; pointer-events: none; }
 
+    /* The page's two doors: make a report, or read the shelf. */
+    .xr-mtabs { display: flex; gap: .4rem; margin-bottom: 1rem; }
+    .xr-mtab { flex: 1 1 0; padding: .6rem; border-radius: .8rem; font-weight: 800; font-size: .9rem;
+        text-align: center; color: var(--color-gray-500); background: var(--color-white);
+        border: 1px solid var(--color-gray-200); cursor: pointer; }
+    .xr-mtab.is-on { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
+    html.dark .xr-mtab { background: #151b12; border-color: #2b3a1c; color: #93a684; }
+    html.dark .xr-mtab.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+
+    .xr-saved-row { display: flex; align-items: center; gap: .6rem; width: 100%; text-align: left;
+        padding: .7rem .8rem; border-bottom: 1px solid var(--color-gray-100); cursor: pointer; }
+    .xr-saved-row:hover { background: var(--color-brand-50); }
+    .xr-saved-row b { display: block; font-size: .86rem; color: var(--color-gray-900); }
+    .xr-saved-row small { color: var(--color-gray-400); font-size: .72rem; }
+    html.dark .xr-saved-row { border-color: #222b1a; }
+    html.dark .xr-saved-row:hover { background: #161e10; }
+    html.dark .xr-saved-row b { color: #e8efe1; }
+    .ar-pen { flex: none; width: 1.6rem; height: 1.6rem; border-radius: .45rem; display: inline-flex;
+        align-items: center; justify-content: center; color: var(--color-gray-400); }
+    .ar-pen:hover { color: var(--color-brand-700); background: var(--color-brand-50); }
+    html.dark .ar-pen:hover { background: rgb(107 159 61 / .18); color: #a5c97e; }
+
     @media print {
-        header, nav, .xr-filters, .bottom-nav, .tabbar, #aiFloat { display: none !important; }
+        header, nav, .xr-filters, .xr-mtabs, .xr-actions, #xrSavedPane, .bottom-nav, .tabbar, #aiFloat { display: none !important; }
         .xr-card { box-shadow: none; page-break-inside: avoid; }
     }
 </style>
 @endpush
 
 @section('content')
+@php
+    // A view-level worker reads the shelf; generating a report writes to it.
+    $xrMayGen = \App\Support\WorkerContext::canWriteModule('reports');
+@endphp
+@include('sm.partials.tag-picker')
 <div class="xr-wrap">
-    {{-- Filters --}}
-    <div class="card p-4 mb-4 xr-filters">
+    <div class="xr-mtabs" role="tablist">
+        <button type="button" class="xr-mtab is-on" id="xrTabGen" @unless($xrMayGen) hidden @endunless>Generate</button>
+        <button type="button" class="xr-mtab" id="xrTabSaved">Saved Reports</button>
+    </div>
+
+    <div id="xrGenPane">
+    {{-- The wizard: set the slice, then generate. Results come after, not under. --}}
+    <div class="card p-4 mb-4 xr-filters" id="xrWizard">
+        <p class="text-sm font-bold text-gray-900">What should the report cover?</p>
+        <p class="text-xs text-gray-500 mt-1 mb-3">Every filter is optional — left alone, the report adds up the whole season. The finished report lands on the Saved shelf by itself.</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
             <div>
                 <span class="form-label text-xs! mb-1!">Lots</span>
@@ -123,21 +158,38 @@
             </div>
         </div>
         <p id="xrHint" class="text-xs text-gray-500 mt-2"></p>
-        <div class="grid grid-cols-2 gap-2 mt-3">
-            <button type="button" id="xrApplyBtn" class="btn btn-primary w-full">Apply Filters</button>
+        <div class="grid grid-cols-1 sm:grid-cols-[2fr_1fr] gap-2 mt-3">
+            <button type="button" id="xrGenerateBtn" class="btn btn-primary w-full">Generate the report</button>
             <button type="button" id="xrResetBtn" class="btn btn-white w-full">Reset</button>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-2">
-            <button type="button" id="xrCopyBtn" class="btn btn-white w-full">Copy as Text</button>
-            <button type="button" id="xrPrintBtn" class="btn btn-white w-full">Print</button>
-            <button type="button" id="xrAttachBtn" class="btn btn-white w-full">
-                <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" class="w-4 h-4 rounded-full object-cover mr-1" style="width:1rem;height:1rem;">
-                Attach to {{ \App\Models\AiSetting::current()->assistantName }}
-            </button>
+    </div>
+    </div>
+
+    {{-- The shelf: every generated expenses report, newest first. --}}
+    <div id="xrSavedPane" class="hidden">
+        <div class="card !p-0 overflow-hidden">
+            <div id="xrSavedList"></div>
+            <div id="xrSavedEmpty" class="hidden text-center py-10">
+                <p class="font-bold text-gray-900">Nothing saved yet</p>
+                <p class="text-sm text-gray-400">Every expenses report that is generated lands here by itself.</p>
+            </div>
         </div>
     </div>
 
-    <div class="text-center text-gray-400 py-16 text-sm" id="xrLoading">Adding the season up…</div>
+    <div id="xrBody" hidden>
+        <div class="xr-actions grid grid-cols-2 sm:grid-cols-5 gap-2 mb-4">
+            <a class="btn btn-primary w-full" id="xrAskBtn" href="#">
+                <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" class="w-4 h-4 rounded-full object-cover mr-1" style="width:1rem;height:1rem;">
+                Ask {{ \App\Models\AiSetting::current()->assistantName }}
+            </a>
+            <button type="button" id="xrCopyBtn" class="btn btn-white w-full">Copy as Text</button>
+            <button type="button" id="xrPrintBtn" class="btn btn-white w-full">Print</button>
+            <button type="button" id="xrDeleteBtn" class="btn btn-white w-full !text-red-600" hidden>Delete</button>
+            <button type="button" id="xrBackBtn" class="btn btn-white w-full">New report</button>
+        </div>
+
+        {{-- An older save carries only its text; it is shown as it was written. --}}
+        <div id="xrBodyText" class="xr-card" hidden><pre class="whitespace-pre-wrap text-sm text-gray-700" id="xrBodyPre" style="font-family:inherit"></pre></div>
 
     <div id="xrContent" class="hidden">
         <div class="xr-hero">
@@ -159,6 +211,7 @@
             <p class="sub" id="xrLedgerSub"></p>
             <div id="xrLedger"></div>
         </div>
+    </div>
     </div>
 </div>
 @endsection
@@ -243,6 +296,33 @@
         </button>
     </div>
 </div>
+
+{{-- Rename a saved report, describe it, retie its tags. --}}
+<div class="sheet hidden" id="xrMetaSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Edit this report</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-4">
+        <div>
+            <label class="form-label" for="xrMetaTitle">Name</label>
+            <input type="text" id="xrMetaTitle" class="form-input" maxlength="191">
+        </div>
+        <div>
+            <label class="form-label" for="xrMetaDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea id="xrMetaDesc" class="form-textarea" rows="3" maxlength="2000"></textarea>
+        </div>
+        <div>
+            <span class="form-label">Tags</span>
+            <div class="tp-mount" data-tags data-tags-kind="report" id="xrMetaTags"></div>
+        </div>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" class="btn btn-primary" id="xrMetaSave">Save changes</button>
+    </div>
+</div>
 @endpush
 
 @push('scripts')
@@ -264,12 +344,27 @@ const __init = () => {
         income:    { label: 'Income', e: '💰', color: '#a16207' },
     };
     const LOT_NAMES = @json($schedule->lots->pluck('lotName', 'id'));
+    const SCHEDULE_TITLE = @json($schedule->title);
+    const MAY_GEN = @json($xrMayGen);
+    const U = {
+        snapshot: @json(route('sm.report.snapshot')),
+        list: @json(route('sm.anee.list') . '?id=' . $schedule->id . '&kind=expenses'),
+        one: (id) => @json(route('sm.anee.one', ['id' => '__ID__'])).replace('__ID__', id),
+        del: (id) => @json(route('sm.anee.delete', ['id' => '__ID__'])).replace('__ID__', id),
+        meta: @json(route('sm.anee.meta')),
+        ai: @json(route('ai.index')),
+    };
 
     let DATA = null;
     const LOT_SEL = new Set();
     const CAT_SEL = new Set();
     let KIND = '';
     let STATUS = 'all';
+    // What the report area is showing: a fresh generate, or a shelf row.
+    let MODE = 'fresh';
+    let SAVED = { id: null, mine: true };
+    let XR_ROWS = [];
+    let META_ID = null;
 
     /* ---------------- the four chooser tags ---------------- */
     $id('xrCatsList').innerHTML = Object.entries(CATS).map(([k, c]) => `
@@ -350,23 +445,58 @@ const __init = () => {
         return parts.length ? '&' + parts.join('&') : '';
     }
 
-    async function reload() {
+    /* Generate: compute the slice, save it to the shelf, then show it. */
+    async function generate() {
         sayTags();
-        const content = $id('xrContent');
-        const refetching = !content.classList.contains('hidden');
-        if (refetching) content.classList.add('xr-refetch');
+        const loader = screenLoader('Adding the season up…');
         try {
             const res = await api(DATA_URL + queryString());
             DATA = res.data;
             render();
-            $id('xrLoading').classList.add('hidden');
-            content.classList.remove('hidden');
+            // The shelf copy: the text Anee reads plus the dataset that lets
+            // the Saved tab redraw this exact report later.
+            const params = { lotIds: [...LOT_SEL], cats: [...CAT_SEL], invKind: KIND, status: STATUS, from: $id('xrFrom')?.value || null, to: $id('xrTo')?.value || null };
+            const filtered = LOT_SEL.size || CAT_SEL.size || KIND || STATUS !== 'all' || params.from || params.to;
+            let savedNote = '';
+            try {
+                const snap = await api(U.snapshot, { method: 'POST', body: {
+                    scheduleId: @json($schedule->id),
+                    kind: 'expenses',
+                    title: 'Expenses Report — ' + SCHEDULE_TITLE + (filtered ? ' (filtered)' : ''),
+                    body: buildText(),
+                    params,
+                    report: DATA,
+                } });
+                SAVED = { id: snap.data.id, mine: true };
+                savedNote = ' It is saved on the Saved Reports shelf — rename it there any time.';
+            } catch (err) {
+                SAVED = { id: null, mine: true };
+                toast(err.message, 'error');
+            }
+            showReport('fresh');
+            toast('Expenses report generated.' + savedNote);
         } catch (err) { toast(err.message, 'error'); }
-        finally { content.classList.remove('xr-refetch'); }
+        finally { loader.hide(); }
+    }
+
+    /* One report area, two ways in. */
+    function showReport(mode) {
+        MODE = mode;
+        $id('xrGenPane').classList.add('hidden');
+        $id('xrSavedPane').classList.add('hidden');
+        $id('xrBody').hidden = false;
+        $id('xrBackBtn').textContent = mode === 'fresh' ? 'New report' : 'Back to the shelf';
+        $id('xrDeleteBtn').hidden = ! (mode === 'saved' && SAVED.mine && MAY_GEN);
+        const ask = $id('xrAskBtn');
+        ask.hidden = ! SAVED.id;
+        if (SAVED.id) ask.href = U.ai + '?freport=' + SAVED.id;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     /* ---------------- rendering ---------------- */
     function render() {
+        $id('xrContent').classList.remove('hidden');
+        $id('xrBodyText').hidden = true;
         const d = DATA;
         $id('xrTotal').textContent = fmtPeso(d.spend);
         const net = $id('xrNet');
@@ -452,41 +582,137 @@ const __init = () => {
         });
         return lines.join('\n');
     }
-    $id('xrApplyBtn').addEventListener('click', reload);
+    $id('xrGenerateBtn').addEventListener('click', generate);
     $id('xrResetBtn').addEventListener('click', () => {
         LOT_SEL.clear(); CAT_SEL.clear(); KIND = ''; STATUS = 'all';
         document.querySelectorAll('#xrLotsList .is-on, #xrCatsList .is-on').forEach((r) => r.classList.remove('is-on'));
         document.querySelectorAll('#xrKindList [data-xr-kind]').forEach((r) => r.classList.toggle('is-on', r.dataset.xrKind === ''));
         document.querySelectorAll('#xrStatusList [data-xr-status]').forEach((r) => r.classList.toggle('is-on', r.dataset.xrStatus === 'all'));
         ['xrFrom', 'xrTo'].forEach((i) => { if ($id(i)) $id(i).value = ''; });
-        reload();
+        sayTags();
     });
-    $id('xrFrom')?.addEventListener('change', reload);
-    $id('xrTo')?.addEventListener('change', reload);
+    $id('xrFrom')?.addEventListener('change', sayTags);
+    $id('xrTo')?.addEventListener('change', sayTags);
     $id('xrCopyBtn').addEventListener('click', () => {
-        if (!DATA) { toast('Wait for the report to finish loading.', 'info'); return; }
-        (navigator.clipboard?.writeText(buildText()) || Promise.reject(new Error('no')))
+        // A rich report copies its text rendering; an older text-only save
+        // copies exactly what it holds.
+        const text = $id('xrBodyText').hidden ? (DATA ? buildText() : '') : $id('xrBodyPre').textContent;
+        if (!text) { toast('Nothing to copy yet.', 'info'); return; }
+        (navigator.clipboard?.writeText(text) || Promise.reject(new Error('no')))
             .then(() => toast('Expenses report copied to clipboard.'))
             .catch(() => toast('Copy failed on this browser.', 'error'));
     });
     $id('xrPrintBtn').addEventListener('click', () => window.print());
-    $id('xrAttachBtn').addEventListener('click', async (e) => {
-        if (!DATA) { toast('Wait for the report to finish loading.', 'info'); return; }
+
+    /* ---------------- the two doors: Generate | Saved ---------------- */
+    const showTab = (gen) => {
+        $id('xrTabGen').classList.toggle('is-on', gen);
+        $id('xrTabSaved').classList.toggle('is-on', !gen);
+        $id('xrGenPane').classList.toggle('hidden', !gen);
+        $id('xrSavedPane').classList.toggle('hidden', gen);
+        $id('xrBody').hidden = true;
+        if (!gen) loadSaved();
+    };
+    $id('xrTabGen').addEventListener('click', () => showTab(true));
+    $id('xrTabSaved').addEventListener('click', () => showTab(false));
+
+    $id('xrBackBtn').addEventListener('click', () => showTab(MODE === 'fresh' && MAY_GEN));
+
+    /* ---------------- the shelf ---------------- */
+    async function loadSaved() {
+        try {
+            const res = await api(U.list + '&_=' + Date.now());
+            XR_ROWS = res.data.rows || [];
+            $id('xrSavedEmpty').classList.toggle('hidden', XR_ROWS.length > 0);
+            $id('xrSavedList').innerHTML = XR_ROWS.map((r) => `
+                <button type="button" class="xr-saved-row" data-xr-open="${r.id}">
+                    <span style="font-size:1.2rem;flex:none;">💸</span>
+                    <span class="min-w-0 grow"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.when || '')}</small></span>
+                    ${(MAY_GEN && r.mine) ? `<span role="button" tabindex="0" class="ar-pen" data-xr-meta="${r.id}" title="Edit name, description and tags" aria-label="Edit ${esc(r.title)}">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:.85rem;height:.85rem"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    </span>` : ''}
+                    <svg style="width:1rem;height:1rem;flex:none;color:var(--color-gray-300)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </button>`).join('');
+        } catch (err) { toast(err.message, 'error'); }
+    }
+
+    async function openSaved(id) {
+        try {
+            const res = await api(U.one(id));
+            SAVED = { id: res.data.id, mine: res.data.mine !== false };
+            if (res.data.report) {
+                // The dataset rode along when it was saved — redraw it whole.
+                DATA = res.data.report;
+                render();
+            } else {
+                // An older save: only its text came down the years.
+                DATA = null;
+                $id('xrContent').classList.add('hidden');
+                $id('xrBodyPre').textContent = res.data.body || 'This saved report holds no text.';
+                $id('xrBodyText').hidden = false;
+            }
+            showReport('saved');
+        } catch (err) { toast(err.message, 'error'); }
+    }
+
+    $id('xrSavedList').addEventListener('click', (e) => {
+        const pen = e.target.closest('[data-xr-meta]');
+        if (pen) {
+            e.stopPropagation();
+            const r = XR_ROWS.find((x) => String(x.id) === pen.getAttribute('data-xr-meta'));
+            if (!r) return;
+            META_ID = r.id;
+            $id('xrMetaTitle').value = r.title || '';
+            $id('xrMetaDesc').value = r.description || '';
+            const mount = $id('xrMetaTags');
+            if (window.smTags && mount) { window.smTags.mount(mount); window.smTags.load(mount, 'report', r.id); }
+            openSheet('xrMetaSheet');
+            return;
+        }
+        const row = e.target.closest('[data-xr-open]');
+        if (row) openSaved(row.getAttribute('data-xr-open'));
+    });
+
+    $id('xrMetaSave')?.addEventListener('click', async (e) => {
+        if (META_ID === null) return;
         const btn = e.currentTarget;
         btn.disabled = true;
         try {
-            const res = await api(@json(route('sm.report.snapshot')), { method: 'POST', body: {
-                scheduleId: @json($schedule->id),
-                kind: 'expenses',
-                title: @json('Expenses Report — ' . $schedule->title),
-                body: buildText(),
-                params: { lotIds: [...LOT_SEL], cats: [...CAT_SEL], invKind: KIND, status: STATUS, from: $id('xrFrom')?.value || null, to: $id('xrTo')?.value || null },
+            const res = await api(U.meta, { method: 'POST', body: {
+                id: META_ID,
+                title: $id('xrMetaTitle').value.trim(),
+                description: $id('xrMetaDesc').value.trim(),
+                tags: window.smTags ? window.smTags.value($id('xrMetaTags')) : [],
             } });
-            window.location.href = @json(route('ai.index')) + '?freport=' + res.data.id;
-        } catch (err) { toast(err.message, 'error'); btn.disabled = false; }
+            toast(res.message);
+            closeSheet('xrMetaSheet');
+            loadSaved();
+        } catch (err) { toast(err.message, 'error'); }
+        finally { btn.disabled = false; }
     });
 
-    reload();
+    $id('xrDeleteBtn').addEventListener('click', async () => {
+        if (!SAVED.id) return;
+        const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this saved report?', message: 'It leaves the shelf. The season\'s numbers stay — a new report can always be generated.', confirmText: 'Delete' }) : true;
+        if (!ok) return;
+        try {
+            await api(U.del(SAVED.id), { method: 'DELETE' });
+            toast('Report removed.');
+            showTab(false);
+        } catch (err) { toast(err.message, 'error'); }
+    });
+
+    /* A view-level worker lands on the shelf; a tag shelf can name one
+       saved report (?open=<id>) and it opens as if tapped. */
+    const want = new URLSearchParams(location.search).get('open');
+    if (want) {
+        showTab(false);
+        openSaved(String(want).replace(/[^\d]/g, ''));
+    } else if (!MAY_GEN) {
+        showTab(false);
+    } else {
+        sayTags();
+    }
 };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', __init, { once: true });
     else __init();

@@ -34,11 +34,19 @@ class FarmReportController extends BaseScheduleController
     {
         $schedule = $this->schedule($request->input('scheduleId'));
 
+        // Writing to the shelf is edit work; a view-level worker reads it.
+        if (! \App\Support\WorkerContext::canWriteModule('reports')) {
+            return $this->jsonFail('Generating and saving reports is for the owner, or a worker with edit access to Reports.', 403);
+        }
+
         $v = Validator::make($request->all(), [
             'kind' => 'required|in:labor,expenses,profit',
             'title' => 'required|string|max:180',
             'body' => 'required|string|max:60000',
             'params' => 'nullable|array',
+            // The computed dataset, so the shelf can redraw the report
+            // exactly as it looked — not only say it in text.
+            'report' => 'nullable|array',
         ]);
         if ($v->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $v->errors()]);
@@ -50,12 +58,13 @@ class FarmReportController extends BaseScheduleController
             'kind' => $request->input('kind'),
             'title' => trim($request->input('title')),
             'params' => $request->input('params') ?: null,
+            'report' => $request->input('report') ?: null,
             'body' => $request->input('body'),
             'status' => 'ready',
             'deleteStatus' => 1,
         ]);
 
-        return $this->jsonOk('Report frozen for the chat.', ['data' => ['id' => $row->id]]);
+        return $this->jsonOk('Report saved to the shelf.', ['data' => ['id' => $row->id]]);
     }
 
     /** What an attached report adds to a question — the composer's estimate. */
@@ -667,21 +676,26 @@ class FarmReportController extends BaseScheduleController
         ]]);
     }
 
-    /** The saved shelf, per kind and schedule. */
+    /**
+     * The saved shelf, per kind and schedule — the whole team's rows, not
+     * only the asker's. A worker given view access to Reports reads what
+     * the owner saved; that is the point of saving. Renaming and deleting
+     * stay with the row's author (see aneeMeta / aneeDelete).
+     */
     public function aneeList(Request $request)
     {
         $schedule = $this->schedule($request->query('id'));
         $kind = in_array($request->query('kind'), AsFarmReport::KINDS, true) ? $request->query('kind') : 'season';
-        $rows = AsFarmReport::where('userId', Auth::id())
-            ->where('croppingScheduleId', $schedule->id)
+        $rows = AsFarmReport::where('croppingScheduleId', $schedule->id)
             ->where('kind', $kind)->where('status', 'ready')->where('deleteStatus', 1)
             ->orderByDesc('id')->limit(30)
-            ->get(['id', 'title', 'description', 'credits', 'created_at']);
+            ->get(['id', 'userId', 'title', 'description', 'credits', 'created_at']);
 
         return $this->jsonOk('ok', ['data' => ['rows' => $rows->map(fn ($r) => [
             'id' => $r->id, 'title' => $r->title, 'description' => $r->description,
             'credits' => (float) $r->credits,
             'when' => $r->created_at?->format('M j, Y g:i A'),
+            'mine' => (int) $r->userId === (int) Auth::id(),
         ])->values()]]);
     }
 
@@ -722,18 +736,22 @@ class FarmReportController extends BaseScheduleController
         ]]);
     }
 
-    /** One saved report, whole. */
+    /** One saved report, whole. Anyone who can stand on the schedule reads it. */
     public function aneeOne(int $id)
     {
-        $r = AsFarmReport::where('userId', Auth::id())->where('id', $id)
+        $r = AsFarmReport::where('id', $id)
             ->where('status', 'ready')->where('deleteStatus', 1)->first();
         if (! $r) {
             return $this->jsonFail('That report is gone.', 404);
         }
+        // Throws if the asker has no standing on the report's schedule.
+        $this->schedule($r->croppingScheduleId);
 
         return $this->jsonOk('ok', ['data' => [
             'id' => $r->id, 'title' => $r->title, 'report' => $r->report,
+            'body' => $r->body,
             'credits' => (float) $r->credits, 'kind' => $r->kind,
+            'mine' => (int) $r->userId === (int) Auth::id(),
         ]]);
     }
 
