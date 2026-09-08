@@ -830,7 +830,10 @@
             : null,
     ])
 
-    {{-- My Cropping Schedules (top — the primary workspace) --}}
+    {{-- My Cropping Schedules — ONLY the seasons with work on the board
+         today. A quiet day shows no shelf at all; the schedules page
+         still lists every season. --}}
+    @if ($latestSchedules->isNotEmpty())
     <div>
         <div class="flex items-center justify-between gap-3 mb-3 px-1">
             {{-- The same calendar the Schedules shelf puts on its own card,
@@ -846,35 +849,6 @@
             @endif
         </div>
 
-        @if ($latestSchedules->isEmpty())
-            <div class="card">
-                <div class="card-body text-center py-10 md:py-14">
-                    <svg class="w-24 h-24 mx-auto mb-4 text-brand-300" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 13c0-3 2-5.5 5.5-5.5.2 2.8-1.6 5.5-5.5 5.5z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 13c0-3-2-5.5-5.5-5.5C6.3 10.3 8.1 13 12 13z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 21h16"/>
-                    </svg>
-                    @if ($scheduleCount > 0)
-                        <h3 class="text-lg font-bold text-gray-900">Nothing planned for {{ $shelfYear }}</h3>
-                        <p class="text-sm text-gray-500 mt-1 max-w-sm mx-auto">
-                            This shelf shows the seasons with activities dated in {{ $shelfYear }}. Your other
-                            schedules are all still there — open them to review, or start this year's.
-                        </p>
-                        <div class="flex flex-wrap items-center justify-center gap-2 mt-5">
-                            <a href="{{ route('sm.index') }}" class="btn btn-white btn-lg">View all schedules</a>
-                            <a href="{{ route('sm.create') }}" class="btn btn-primary btn-lg">+ New Schedule</a>
-                        </div>
-                    @else
-                        <h3 class="text-lg font-bold text-gray-900">Plant your first schedule</h3>
-                        <p class="text-sm text-gray-500 mt-1 max-w-xs mx-auto">
-                            Create a cropping schedule to plan your lots, workers, activities and irrigation for the season.
-                        </p>
-                        <a href="{{ route('sm.create') }}" class="btn btn-primary btn-lg mt-5">+ New Cropping Schedule</a>
-                    @endif
-                </div>
-            </div>
-        @else
             {{-- One active schedule fills the row; two or more go side by side. --}}
             <div class="grid gap-3 {{ $latestSchedules->count() > 1 ? 'sm:grid-cols-2' : 'grid-cols-1' }}">
                 @foreach ($latestSchedules as $schedule)
@@ -1069,8 +1043,8 @@
                  its own floating button for it and is one tap away. Here it
                  was a full-width green bar under every visit, for the one
                  errand nobody opens the dashboard to do. --}}
-        @endif
     </div>
+    @endif
 
     {{-- ===================== Feed + sidebar shell ===================== --}}
     <div class="dash-shell">
@@ -1103,6 +1077,13 @@
                     </div>
                 </section>
             @endif
+
+            {{-- ============== Global and Quick Tools ==============
+                 Moved here from the schedules page: the cross-season
+                 doors and the quick add tools, one fold above Anee. --}}
+            <div style="margin-bottom:.85rem">
+                @include('partials.global-tools')
+            </div>
 
             {{-- ===================== Meet the technician =====================
                  Above the wall on purpose: a farmer who has arrived with a
@@ -1156,45 +1137,6 @@
 
             </section>
 
-            {{-- The technician's other trick: one bought analysis that names
-                 your planting window. Its own card, because it is a decision,
-                 not a conversation. On Libre the card stays — with a lock
-                 where the chevron was, opening the upgrade sheet instead of
-                 the page, so the door advertises what upgrading buys. --}}
-            @php $wtpLocked = ! \App\Support\Tier::can('reportsAll'); @endphp
-            <section class="dash-wtp-card" aria-label="When to Plant Analysis">
-                <a href="{{ route('wtp.page') }}" class="dash-wtp"
-                   @if ($wtpLocked) data-tier-lock="solo" data-lock-say="The When to Plant analysis comes with the Solo Farmer plan — Anee reads your town's climate and ENSO outlook to name your safest planting window." @endif>
-                    <span class="dash-wtp-ic"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
-                    <span class="min-w-0 {{ $wtpLocked ? 'tl-dim' : '' }}">
-                        <b>When to Plant Analysis</b>
-                        <i>Analyze and forecast through Anee when is the best time to start your cropping season to lower the risk of climate risks.</i>
-                    </span>
-                    @if ($wtpLocked)
-                        <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
-                    @else
-                        <svg class="dash-wtp-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                    @endif
-                </a>
-            </section>
-
-            {{-- The sister question, asked the other way round: not when to
-                 plant a chosen crop, but which crop this ground argues for. --}}
-            <section class="dash-wtp-card" aria-label="What to Plant Analysis">
-                <a href="{{ route('whatp.page') }}" class="dash-wtp"
-                   @if ($wtpLocked) data-tier-lock="solo" data-lock-say="The What to Plant analysis comes with the Solo Farmer plan — Anee weighs your location, season forecast and soil to recommend the crop." @endif>
-                    <span class="dash-wtp-ic"><img src="{{ asset('images/plant.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
-                    <span class="min-w-0 {{ $wtpLocked ? 'tl-dim' : '' }}">
-                        <b>What to Plant Analysis</b>
-                        <i>Analyze the type of crops that are best to plant based in your location, season forecast, soil type, and more. Anee will deeply analyze and provide you the most recommended.</i>
-                    </span>
-                    @if ($wtpLocked)
-                        <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
-                    @else
-                        <svg class="dash-wtp-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                    @endif
-                </a>
-            </section>
 
             @if (\App\Support\WorkerContext::canUseCommunity())
             <div>

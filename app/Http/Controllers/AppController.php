@@ -63,52 +63,6 @@ class AppController extends Controller
 
         $activeScheduleIds = array_values(array_unique(array_merge($thisYearIds, $bareThisYearIds)));
 
-        // Most recently worked on, first.
-        //
-        // A season's own row barely changes — a title, a status — while the
-        // work happens in its activities, so ordering by the schedule's
-        // updated_at put a plan edited all morning below one renamed in
-        // March. The shelf reads the later of the two.
-        $latestSchedules = $schedulesQ()
-            ->whereIn('id', $activeScheduleIds ?: [-1])
-            ->select('as_cropping_schedules.*')
-            ->selectRaw('GREATEST(
-                as_cropping_schedules.updated_at,
-                COALESCE((SELECT MAX(a.updated_at)
-                            FROM as_schedule_activities a
-                           WHERE a.croppingScheduleId = as_cropping_schedules.id
-                             AND a.deleteStatus = 1), as_cropping_schedules.updated_at)
-            ) as lastTouchedAt')
-            ->orderByDesc('lastTouchedAt')
-            ->limit(4)
-            ->get();
-
-        // Which of the shown schedules have a lot with a geocodeable address —
-        // so the dashboard knows whether to show a weather widget or a prompt.
-        $latestSchedules->load(['lots' => fn ($q) => $q->select('id', 'croppingScheduleId', 'locTown', 'locProvince', 'crop')]);
-        /* The crops growing on each season, as the schedules page draws them
-         * on its covers: one icon per distinct crop, at most three. */
-        $scheduleCrops = $latestSchedules->mapWithKeys(function ($s) {
-            $icons = [];
-            foreach ($s->lots as $lot) {
-                $icons[\App\Support\CropStages::icon($lot->crop)] = true;
-            }
-
-            return [$s->id => array_slice(array_keys($icons), 0, 3)];
-        });
-        $scheduleHasLocation = $latestSchedules->mapWithKeys(fn ($s) => [
-            $s->id => $s->lots->contains(fn ($l) => filled($l->geocode_query)),
-        ])->all();
-
-        $aiBalance = app(\App\Services\AiCreditService::class)->balance($user->id);
-
-        $latestBlog = \App\Models\AsCommunityBlogPost::active()
-            ->published()
-            ->orderByDesc('publishedAt')
-            ->orderByDesc('id')
-            ->limit(6)
-            ->get();
-
         // Quick view: what's happening today across my schedules, or the nearest
         // upcoming day if nothing is due today. (Active versions + today are
         // already resolved above for the active-schedule filter.)
@@ -145,6 +99,62 @@ class AppController extends Controller
                 'moreCount' => max(0, $sameDay->count() - 3),
             ];
         }
+
+        /* The dashboard shelf shows ONLY the seasons with work on the board
+         * TODAY — a quiet day means no shelf at all (the schedules page
+         * still lists everything). scheduleNext above already read every
+         * active season's nearest day, so today is a filter, not a query. */
+        $todayIds = array_keys(array_filter($scheduleNext, fn ($n) => $n['isToday']));
+
+        // Most recently worked on, first.
+        //
+        // A season's own row barely changes — a title, a status — while the
+        // work happens in its activities, so ordering by the schedule's
+        // updated_at put a plan edited all morning below one renamed in
+        // March. The shelf reads the later of the two.
+        $latestSchedules = $schedulesQ()
+            ->whereIn('id', $todayIds ?: [-1])
+            ->select('as_cropping_schedules.*')
+            ->selectRaw('GREATEST(
+                as_cropping_schedules.updated_at,
+                COALESCE((SELECT MAX(a.updated_at)
+                            FROM as_schedule_activities a
+                           WHERE a.croppingScheduleId = as_cropping_schedules.id
+                             AND a.deleteStatus = 1), as_cropping_schedules.updated_at)
+            ) as lastTouchedAt')
+            ->orderByDesc('lastTouchedAt')
+            ->limit(4)
+            ->get();
+
+        // Which of the shown schedules have a lot with a geocodeable address —
+        // so the dashboard knows whether to show a weather widget or a prompt.
+        $latestSchedules->load(['lots' => fn ($q) => $q->select('id', 'croppingScheduleId', 'locTown', 'locProvince', 'crop')]);
+        /* The crops growing on each season, as the schedules page draws them
+         * on its covers: one icon per distinct crop, at most three. */
+        $scheduleCrops = $latestSchedules->mapWithKeys(function ($s) {
+            $icons = [];
+            foreach ($s->lots as $lot) {
+                $icons[\App\Support\CropStages::icon($lot->crop)] = true;
+            }
+
+            return [$s->id => array_slice(array_keys($icons), 0, 3)];
+        });
+        $scheduleHasLocation = $latestSchedules->mapWithKeys(fn ($s) => [
+            $s->id => $s->lots->contains(fn ($l) => filled($l->geocode_query)),
+        ])->all();
+
+        // Every on-shelf season, for the Global & Quick Tools schedule picker.
+        $allSchedules = $schedulesQ()->orderByDesc('id')->get(['id', 'title']);
+
+        $aiBalance = app(\App\Services\AiCreditService::class)->balance($user->id);
+
+        $latestBlog = \App\Models\AsCommunityBlogPost::active()
+            ->published()
+            ->orderByDesc('publishedAt')
+            ->orderByDesc('id')
+            ->limit(6)
+            ->get();
+
 
         $meId = (int) $user->id;
 
@@ -254,6 +264,7 @@ class AppController extends Controller
             'scheduleCount' => $scheduleCount,
             'shelfYear' => $year,
             'latestSchedules' => $latestSchedules,
+            'allSchedules' => $allSchedules,
             'scheduleCrops' => $scheduleCrops,
             'scheduleHasLocation' => $scheduleHasLocation,
             'aiBalance' => $aiBalance,
