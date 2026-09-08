@@ -840,6 +840,16 @@
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
+            {{-- The farm's phonebook — every tier, no locks. Workers, tractor
+                 rentals, harvesters, buyers: tagged, searchable, one tap away. --}}
+            <a href="{{ route('contacts.page') }}" class="qa-tile qa-contacts">
+                <span class="qa-ico"><img src="{{ asset('images/list.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
+                <span class="qa-txt">
+                    <b>Contact List</b>
+                    <i>Your farm's phonebook — workers, tractor rentals, harvesters, buyers, all tagged and one tap from a call.</i>
+                </span>
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </a>
             @php
                 /* The camera and the recorder are modules the owner grants,
                    and the Hub has always drawn these two tiles only for

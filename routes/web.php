@@ -148,6 +148,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/app/notes', [App\Http\Controllers\NotesHubController::class, 'index'])->name('notes.hub');
     // Every picture from every season, the way Global Notes gathers the words.
     Route::get('/app/gallery', [App\Http\Controllers\GalleryHubController::class, 'index'])->name('gallery.hub');
+
+    // The Contact List — the member's own farm phonebook (every tier, no gates).
+    Route::get('/app/contacts', [App\Http\Controllers\ContactListController::class, 'page'])->name('contacts.page');
+    Route::get('/app/contacts-data', [App\Http\Controllers\ContactListController::class, 'list'])->name('contacts.list');
+    Route::post('/app/contacts', [App\Http\Controllers\ContactListController::class, 'store'])->name('contacts.store');
+    Route::post('/app/contacts/{id}', [App\Http\Controllers\ContactListController::class, 'update'])->name('contacts.update');
+    Route::post('/app/contacts/{id}/delete', [App\Http\Controllers\ContactListController::class, 'destroy'])->name('contacts.destroy');
     Route::post('/app/notes-store', [App\Http\Controllers\NotesHubController::class, 'store'])->name('notes.hub.store');
     Route::delete('/app/notes-delete', [App\Http\Controllers\NotesHubController::class, 'destroy'])->name('notes.hub.destroy');
     Route::post('/app/notes-draw', [App\Http\Controllers\NotesHubController::class, 'drawUpload'])->name('notes.hub.draw');
