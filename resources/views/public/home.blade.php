@@ -228,6 +228,23 @@
                 </div>
             </div>
 
+            {{-- The leaks that didn't fit beside the photo — same cards, own row. --}}
+            <div class="mt-4 grid gap-4 sm:grid-cols-3">
+                @foreach ([
+                    ['n' => 35, 'l' => 'Yield lost to weeds left too long', 'p' => 'Miss the critical weeding window and the weeds eat first — every day past it costs.'],
+                    ['n' => 30, 'l' => 'Yield lost to the wrong crop or variety', 'p' => 'Seed that never fit this ground, this season, this water — decided before it was checked.'],
+                    ['n' => 25, 'l' => 'Yield lost to water at the wrong time', 'p' => 'Dry at flowering, flooded at ripening — the stage the water missed never comes back.'],
+                ] as $i => $loss)
+                    <div class="loss-card reveal" style="--loss: {{ $loss['n'] }}%; --reveal-delay: {{ $i * 0.08 }}s">
+                        <p class="loss-upto">Up to</p>
+                        <p class="loss-n"><span data-countup="{{ $loss['n'] }}">0</span><small>%</small></p>
+                        <p class="loss-l">{{ $loss['l'] }}</p>
+                        <p class="loss-p">{{ $loss['p'] }}</p>
+                        <div class="loss-bar" aria-hidden="true"><i></i></div>
+                    </div>
+                @endforeach
+            </div>
+
             <p class="mt-4 text-center text-xs text-gray-400 reveal">
                 Ranges drawn from FAO crop-loss and Philippine rice research estimates — your farm's exact numbers vary, which is the point.
             </p>
@@ -245,6 +262,9 @@
                     ['k' => 'Wrong solution → right diagnosis first', 'p' => 'Snap a photo of the leaf and Anee reads it against your crop and its exact stage before a peso is spent — the treatment fits the problem, at the right dose.'],
                     ['k' => 'Mistimed fertilizer → anchored to Day-0', 'p' => 'Every application lands on the right day, counted from each lot\'s own sowing date. Move the plan and every date follows — the timing never lives in memory.'],
                     ['k' => 'Waiting for answers → Anee answers now', 'p' => 'No more holding the sprayer while waiting for a callback. Ask Anee anytime, in English or Tagalog — she reads your lots, stages and weather and answers in minutes, so the decision happens today.'],
+                    ['k' => 'Weeds → the critical window is on the board', 'p' => 'Weeding lands on the timeline inside its critical window, counted from each lot\'s Day-0 — the weeds never get their head start.'],
+                    ['k' => 'Wrong crop → checked before the seed is bought', 'p' => 'The What-to-Plant analysis weighs your ground, water, season forecast and the ENSO outlook, and ranks what actually fits — before a single peso goes to seed.'],
+                    ['k' => 'Water timing → scheduled by stage, read against the sky', 'p' => 'Irrigation sits on the same board as everything else, stage by stage, with each lot\'s forecast beside it — so the water arrives when the crop asks, and the rain that\'s coming isn\'t paid for twice.'],
                 ] as $i => $fix)
                     <div class="fix-row reveal" style="--reveal-delay: {{ $i * 0.08 }}s">
                         <span class="fix-badge"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
