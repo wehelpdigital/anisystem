@@ -1100,7 +1100,6 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="flex items-center shrink-0">
             ${hasChecklist(a) ? '<span class="badge payroll-badge mr-1">Worker checklist</span>' : ''}
-            <button type="button" class="icon-btn add-note-activity-btn${LOCK_EDIT_CLS}" data-id="${a.id}" data-name="${nameAttr}"${LOCK_EDIT} title="${esc(editTitle('Add a note (activity is locked)'))}">${SVG.note}</button>
             <div class="hidden md:flex items-center gap-0.5 done-hide">
                 <button type="button" class="icon-btn hide-activity-toggle${LOCK_EDIT_CLS}" data-id="${a.id}"${LOCK_EDIT} title="${esc(editTitle('Toggle visibility in presentations and exports'))}" aria-pressed="${isHiddenFlag ? 'true' : 'false'}">${SVG.eye}</button>
                 <button type="button" class="icon-btn edit-activity-btn${LOCK_EDIT_CLS}" data-id="${a.id}"${LOCK_EDIT} title="${esc(editTitle('Edit'))}">${SVG.edit}</button>
@@ -2137,7 +2136,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * the page shipped gets the same treatment. */
     const WRITE_CONTROLS = [
         '.done-check', '.edit-activity-btn', '.duplicate-activity-btn', '.to-draft-activity-btn',
-        '.delete-activity-btn', '.tag-activity-btn', '.hide-activity-toggle', '.add-note-activity-btn',
+        '.delete-activity-btn', '.tag-activity-btn', '.hide-activity-toggle',
         '.group-add-activity-btn', '.rest-day-add-btn', '.day-expense-btn', '.date-marker-btn',
         '.change-group-date-btn', '.move-group-das-btn', '.delete-group-date-btn',
         // The resume-here marker's own pencil and bin. They carry .icon-btn so
@@ -6396,10 +6395,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // desktop card is already showing what the accordion would reveal, so
         // there is nothing to open and the body is simply not a control.
         if (!CAN_EDIT) return;
-        if (card.getAttribute('data-is-done') === '1') {
-            openDoneNoteSheet(card.getAttribute('data-id'), $qs('.activity-card-title', card)?.textContent || 'Activity');
-            return;
-        }
+        // A done card is locked: its body is not a door to the edit sheet.
+        if (card.getAttribute('data-is-done') === '1') return;
         openEditActivitySheet(card.getAttribute('data-id'));
     });
 
@@ -6414,9 +6411,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return () => { btn.innerHTML = prev; btn.disabled = false; delete btn.dataset.busy; };
     }
 
-    /* ---- Done checkbox: lock a finished activity (notes still allowed) ---- */
-    let DONE_NOTE = { id: null };
-
+    /* ---- Done checkbox: lock a finished activity ---- */
     function setDoneMeta(card, done) {
         card.setAttribute('data-is-done', done ? 1 : 0);
         card.setAttribute('draggable', (done || !MAY_DRAG) ? 'false' : 'true');
@@ -6434,12 +6429,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function applyDoneState(card, done) {
         setDoneMeta(card, done);
         card.classList.toggle('is-done', done);
-        // The done-hide/add-note-activity-btn CSS pair swaps the action
-        // buttons automatically off the card's is-done class.
+        // The .done-hide CSS drops the action buttons off the card's
+        // is-done class.
     }
 
-    // Interactive check/uncheck: fade the outgoing buttons, flip the class
-    // (the CSS pair does the display swap), then pop the incoming one in.
+    // Interactive check/uncheck: fade the action buttons out when a card is
+    // done (the .done-hide CSS does the display swap), pop them back in when
+    // it is unchecked.
     // The lock metadata flips immediately so a mid-animation drag can't start.
     function animateDoneSwap(card, done) {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -6448,8 +6444,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (card.__doneSwapTimer) { clearTimeout(card.__doneSwapTimer); card.__doneSwapTimer = null; }
         setDoneMeta(card, done);
-        const out = $qsa(done ? '.done-hide' : '.add-note-activity-btn', card)
-            .filter((el) => el.offsetParent !== null);
+        const out = done ? $qsa('.done-hide', card).filter((el) => el.offsetParent !== null) : [];
         out.forEach((el) => {
             el.style.transition = 'opacity .18s cubic-bezier(.22,1,.36,1), transform .18s cubic-bezier(.22,1,.36,1)';
             el.style.opacity = '0';
@@ -6459,7 +6454,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.__doneSwapTimer = null;
             card.classList.toggle('is-done', done);
             out.forEach((el) => { el.style.transition = ''; el.style.opacity = ''; el.style.transform = ''; });
-            $qsa(done ? '.add-note-activity-btn' : '.done-hide', card).forEach((el) => {
+            if (!done) $qsa('.done-hide', card).forEach((el) => {
                 el.classList.remove('btn-pop-in');
                 void el.offsetWidth;
                 el.classList.add('btn-pop-in');
@@ -6500,83 +6495,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function openDoneNoteSheet(id, name) {
-        // A note on an activity goes through the write gate (appendNote), so it
-        // is an edit — and this sheet is reached by clicking a done card, which
-        // is not a button anyone could grey out.
-        if (!mayEditBoard()) return;
-        DONE_NOTE.id = id;
-        DONE_NOTE.images = [];
-        $id('doneNoteTitle').textContent = name || 'This activity';
-        $id('doneNoteText').value = '';
-        renderDoneNoteThumbs();
-        openSheet('doneNoteSheet');
-        window.smFocus($id('doneNoteText'), { delay: 250 });
-    }
-
-    function renderDoneNoteThumbs() {
-        const grid = $id('doneNoteThumbs');
-        if (!grid) return;
-        grid.textContent = '';
-        (DONE_NOTE.images || []).forEach((img, i) => {
-            const cell = document.createElement('div');
-            cell.className = 'relative';
-            const im = document.createElement('img');
-            im.src = img.url;
-            im.className = 'w-full h-16 object-cover rounded-lg';
-            const x = document.createElement('button');
-            x.type = 'button';
-            x.textContent = '✕';
-            x.className = 'absolute -top-1.5 -right-1.5 w-6 h-6 rounded-full bg-red-500 text-white text-xs font-bold';
-            x.addEventListener('click', () => { DONE_NOTE.images.splice(i, 1); renderDoneNoteThumbs(); });
-            cell.appendChild(im); cell.appendChild(x);
-            grid.appendChild(cell);
-        });
-    }
-
-    $id('doneNoteAddImages')?.addEventListener('click', () => $id('doneNoteImages').click());
-    $id('doneNoteImages')?.addEventListener('change', async (e) => {
-        const files = [...(e.target.files || [])];
-        e.target.value = '';
-        for (const file of files) {
-            const fd = new FormData();
-            fd.append('image', file);
-            try {
-                const res = await api(U.imageUpload(), { method: 'POST', body: fd });
-                DONE_NOTE.images.push({ path: res.data.imagePath, url: res.data.imageUrl });
-                renderDoneNoteThumbs();
-            } catch (err) { toast(err.message, 'error'); }
-        }
-    });
-
-    $id('saveDoneNoteBtn')?.addEventListener('click', async (e) => {
-        if (!mayEditBoard()) return;
-        const btn = e.currentTarget;
-        const note = ($id('doneNoteText').value || '').trim();
-        if (!note && !(DONE_NOTE.images || []).length) { toast('Write a note or add a photo first.', 'error'); return; }
-        btn.disabled = true;
-        try {
-            const res = await api(U.appendNote(DONE_NOTE.id), { method: 'POST', body: { note, images: (DONE_NOTE.images || []).map((i) => i.path) } });
-            closeSheet('doneNoteSheet');
-            const card = $qs(`#activitiesList .activity-card[data-id="${DONE_NOTE.id}"]`);
-            if (card) {
-                let desc = $qs('.activity-description-content', card);
-                if (!desc) {
-                    desc = document.createElement('div');
-                    desc.className = 'activity-description-content text-sm text-gray-700 mt-2';
-                    desc.setAttribute('data-lightbox', '');
-                    $qs('.flex.items-start.justify-between', card)?.after(desc);
-                }
-                desc.innerHTML = res.data.description;
-            }
-            toast('Note added.');
-        } catch (err) {
-            toast(err.message, 'error');
-        } finally {
-            btn.disabled = false;
-        }
-    });
-
     // Card + timeline click delegation.
     document.addEventListener('click', (e) => {
         const doneCheck = e.target.closest('.done-check');
@@ -6585,11 +6503,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 doneCheck.dataset.busy = '1';
                 toggleActivityDone(doneCheck.getAttribute('data-id')).finally(() => delete doneCheck.dataset.busy);
             }
-            return;
-        }
-        const noteBtn = e.target.closest('.add-note-activity-btn');
-        if (noteBtn) {
-            openDoneNoteSheet(noteBtn.getAttribute('data-id'), noteBtn.getAttribute('data-name') || 'Activity');
             return;
         }
         const editBtn = e.target.closest('.edit-activity-btn');
@@ -6646,7 +6559,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // while the editor/duplicate fetch is in flight.
             const kebab = $qs(`#activitiesList .activity-card[data-id="${id}"] .card-menu-btn`);
             const cardIsDone = $qs(`#activitiesList .activity-card[data-id="${id}"]`)?.getAttribute('data-is-done') === '1';
-            if (cardIsDone && (action === 'edit' || action === 'move')) { openDoneNoteSheet(id, name); return; }
+            if (cardIsDone && (action === 'edit' || action === 'move')) {
+                toast('This activity is marked done and locked — untick it first.');
+                return;
+            }
             if (action === 'edit') { const done = spinBtn(kebab); openEditActivitySheet(id).finally(() => done && done()); }
             else if (action === 'duplicate') { const done = spinBtn(kebab); duplicateActivity(id, name).finally(() => done && done()); }
             else if (action === 'email') openEmailWho({ activityId: id, name });
@@ -11383,7 +11299,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.smOpenActivity = (id) => {
         const card = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
         if (card && card.getAttribute('data-is-done') === '1') {
-            openDoneNoteSheet(id, $qs('.activity-card-title', card)?.textContent || 'Activity');
+            toast('This activity is marked done and locked — untick it first.');
             return Promise.resolve();
         }
         return openEditActivitySheet(id);

@@ -1992,9 +1992,8 @@
         /* Photos embedded in description notes stay thumbnail-sized on cards. */
         .activity-description-content img { max-height: 9rem; border-radius: .5rem; display: inline-block; margin: .3rem .3rem 0 0; vertical-align: top; }
 
-        /* Done cards: every action collapses down to a single "add note" button. */
+        /* Done cards: the action buttons step aside; the tick is the control. */
         .activity-card.is-done .done-hide { display: none !important; }
-        .activity-card:not(.is-done) .add-note-activity-btn { display: none; }
 
         /* Big "done" checkbox: checking locks the activity (no drag/edit). */
         .done-check {
@@ -2309,10 +2308,6 @@
            otherwise beat Tailwind's layered `hidden` / `md:hidden` utilities. */
         @media (max-width: 767px) {
             .toolbar-desktop-action { display: none !important; }
-            /* Done cards keep their "add note" button on desktop only — on a
-               phone it sat alone above the fold chevron and read as clutter.
-               !important for the same unlayered-CSS reason as above. */
-            .add-note-activity-btn { display: none !important; }
             /* Both day filters live behind the eye button here; the real
                buttons stay in the DOM so the sheet can forward to them. */
             #toggleEmptyDatesBtn, #toggleDoneDaysBtn { display: none !important; }
@@ -4674,7 +4669,7 @@
         const STRIP = [
             '.date-header-btn', '.day-menu-btn', '.date-header-stage',
             '.date-header-weather', '.wx-mini-btn', '.rest-day-add-btn',
-            '.icon-btn', '.card-menu-btn', '.note-kebab', '.add-note-activity-btn',
+            '.icon-btn', '.card-menu-btn', '.note-kebab',
             '.note-fold-btn', '.act-fab-add', '.group-add-activity-btn',
             // The money strips carry their own kebab, drag grip and buttons
             // (dx-* — see the expense/income blocks in activities-js). The

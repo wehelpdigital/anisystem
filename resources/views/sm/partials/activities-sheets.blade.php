@@ -1951,35 +1951,6 @@
     </div>
 </div>
 
-{{-- ==================== NOTE ON A DONE (LOCKED) ACTIVITY ==================== --}}
-<div class="sheet hidden" id="doneNoteSheet" style="--sheet-width:26rem">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header">
-        <h3 class="sheet-title">Add a note</h3>
-        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
-    </div>
-    <div class="sheet-body">
-        <p class="text-sm text-gray-500 mb-2">
-            <strong class="text-gray-800" id="doneNoteTitle">This activity</strong> is marked done and locked.
-            You can still add a note — it is stamped with the date and appended to the activity.
-        </p>
-        <textarea id="doneNoteText" class="form-textarea" rows="4" maxlength="2000"
-            placeholder="e.g. Harvested 40 sacks; left the wet rows for tomorrow."></textarea>
-        <div class="mt-3">
-            <input type="file" id="doneNoteImages" accept="image/*" class="hidden" multiple>
-            <div id="doneNoteThumbs" class="grid grid-cols-4 gap-2 mb-2"></div>
-            <button type="button" id="doneNoteAddImages" class="btn btn-white btn-sm w-full">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                Add photos or use camera
-            </button>
-        </div>
-    </div>
-    <div class="sheet-footer">
-        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
-        <button type="button" id="saveDoneNoteBtn" class="btn btn-primary">Save note</button>
-    </div>
-</div>
-
 {{-- ============================ NEW VERSION ============================ --}}
 <div class="sheet hidden" id="versionSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>
