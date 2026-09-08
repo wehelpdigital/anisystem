@@ -66,6 +66,11 @@ class WorkerModuleAccess
         ['sm.maps',    'maps'],
         ['sm.map',     'maps'],
         ['sm.map.*',   'maps'],
+        // A lot's map is the Maps module wearing the lot's name: opening it
+        // is looking at a map, and attaching, detaching or pinning writes one.
+        ['sm.lots.map',   'maps'],
+        ['sm.lots.map.*', 'maps'],
+        ['sm.lots.pin',   'maps'],
 
         // The shed: what the farm owns, what moved, what it cost. A level
         // like Notes — a worker can be shown the stock without being handed

@@ -18,6 +18,15 @@
      *         own header and its own Save.
      */
     $mapChrome = $mapChrome ?? 'team';
+
+    /* Whether this visitor may CHANGE the map. A worker with view-level
+     * Maps access gets the ground, the layers, search and find-me — and
+     * none of the pens. The server refuses their writes anyway; this keeps
+     * the bar from offering doors that only lead to a refusal. The chrome
+     * is hidden by CSS rather than left out: the engine binds several of
+     * these buttons without null guards, and a missing element would take
+     * the whole map down with it. */
+    $cmapMayDraw = \App\Support\WorkerContext::canWriteModule('maps');
 @endphp
 @if ($mapChrome === 'team')
     {{-- Only the Collab Room draws it: there the map is one tab among
@@ -48,7 +57,20 @@
             </span>
         </div>
     @endif
-    <div class="cmap-bar">
+    @unless ($cmapMayDraw)
+    <style>
+        /* View-only maps: the writing chrome steps aside, the looking
+           chrome stays. Elements, not markup removal — see the note above.
+           Bare ids, no ancestor: openSheet re-parents the pin and text
+           sheets to <body>, out from under any scoping class — and this
+           block only renders for a view-only visitor anyway. */
+        #cmapToolsBtn, #cmapColorBtn, #cmapSizeBtn, #cmapUndo, #cmapRedo,
+        #cmapFinish, #cmapClear, #cmapLotSave, #cmapSaveMenuBtn,
+        #cmapPinDel, #cmapTextGo,
+        #cmapPinSheet [data-pin-when="new"] { display: none !important; }
+    </style>
+    @endunless
+    <div class="cmap-bar{{ $cmapMayDraw ? '' : ' cmap-readonly' }}">
         {{-- One labelled menu instead of a row of mystery glyphs: each tool
              carries its name, and the button always shows what is active. --}}
         {{-- A bottom sheet, not a dropdown: the bar is an overflow-x scroller,

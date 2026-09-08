@@ -380,8 +380,8 @@
  * one name and written by another is how a permission ends up not applying.
  * The keys are the grant's own column names. */
 window.workerRights = (() => {
-    const LEVELS = ['notesAccess', 'reportsAccess', 'inventoryAccess'];
-    const SWITCHES = ['mapsAccess', 'drawAccess', 'aiAccess', 'cameraAccess', 'videoAccess'];
+    const LEVELS = ['notesAccess', 'reportsAccess', 'inventoryAccess', 'mapsAccess', 'drawAccess'];
+    const SWITCHES = ['aiAccess', 'cameraAccess', 'videoAccess'];
     const id = (p, key) => p + key.charAt(0).toUpperCase() + key.slice(1);
     return {
         read(p) {
@@ -397,9 +397,11 @@ window.workerRights = (() => {
             LEVELS.forEach((k) => {
                 const el = document.getElementById(id(p, k));
                 if (!el) return;
-                // The shed starts shut for a new login; the older levels
-                // start readable, which is where the app has always put them.
-                el.value = (grant && grant[k]) || (k === 'inventoryAccess' ? 'none' : 'view');
+                // The shed, the maps and the drawing pad start shut for a new
+                // login; the older levels start readable, which is where the
+                // app has always put them.
+                el.value = (grant && grant[k])
+                    || (['inventoryAccess', 'mapsAccess', 'drawAccess'].includes(k) ? 'none' : 'view');
                 // The level is a hidden input under a segmented control; the
                 // buttons learn what it says from this.
                 el.dispatchEvent(new Event('change', { bubbles: true }));

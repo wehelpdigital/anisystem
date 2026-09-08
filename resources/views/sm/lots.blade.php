@@ -693,6 +693,9 @@ const __init = () => {
      * opened the modules sheet. */
     const MAP_URL = @json(route('sm.lots.map', ['id' => $schedule->id]))
         + '&from=' + encodeURIComponent(location.pathname + location.search);
+    // The lot's map doors follow the MAPS grant: 'view' may open a map that
+    // exists, only 'edit' may attach, detach or start one.
+    const MAPS_ACCESS = @json(\App\Support\WorkerContext::moduleAccess('maps'));
 
     function lotCardHtml(lot) {
         // Same golden-angle hue the lot gets on its activity cards, so the colour
@@ -738,15 +741,25 @@ const __init = () => {
                     <svg class="go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </a>` : ''}
 
-                ${MAY_EDIT_LOTS ? `
-                <div class="flex items-center flex-wrap gap-1.5 pt-3 border-t border-gray-100">
-                    <button type="button" class="btn btn-white btn-sm" data-edit-lot="${lot.id}">Edit</button>
-                    <a class="btn btn-white btn-sm" href="${MAP_URL}&lot=${lot.id}">${lot.mapSaveId ? 'Open the map' : 'Attach a map'}</a>
-                    ${lot.mapSaveId ? `<button type="button" class="btn btn-white btn-sm text-red-600" data-detach-map="${lot.id}">Detach map</button>` : ''}
-                    <button type="button" class="btn btn-ghost btn-sm px-2.5! text-red-500 hover:bg-red-50! ml-auto" data-delete-lot="${lot.id}" aria-label="Delete lot">
+                ${(() => {
+                    /* The row draws only the doors this visitor may walk
+                       through. Editing a lot stays the owner's (a lot is the
+                       farm itself); the MAP doors follow the Maps grant —
+                       'view' opens a map that exists, attaching or detaching
+                       one asks for maps edit AND the board's pen, which is
+                       what the server demands of those writes. */
+                    const btns = [];
+                    if (MAY_EDIT_LOTS) btns.push(`<button type="button" class="btn btn-white btn-sm" data-edit-lot="${lot.id}">Edit</button>`);
+                    const mayAttach = MAPS_ACCESS === 'edit' && MAY_EDIT_BOARD;
+                    if (lot.mapSaveId ? MAPS_ACCESS !== 'none' : mayAttach) {
+                        btns.push(`<a class="btn btn-white btn-sm" href="${MAP_URL}&lot=${lot.id}">${lot.mapSaveId ? 'Open the map' : 'Attach a map'}</a>`);
+                    }
+                    if (lot.mapSaveId && mayAttach) btns.push(`<button type="button" class="btn btn-white btn-sm text-red-600" data-detach-map="${lot.id}">Detach map</button>`);
+                    if (MAY_EDIT_LOTS) btns.push(`<button type="button" class="btn btn-ghost btn-sm px-2.5! text-red-500 hover:bg-red-50! ml-auto" data-delete-lot="${lot.id}" aria-label="Delete lot">
                         <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
-                    </button>
-                </div>` : ''}
+                    </button>`);
+                    return btns.length ? `<div class="flex items-center flex-wrap gap-1.5 pt-3 border-t border-gray-100">${btns.join('')}</div>` : '';
+                })()}
             </div>`;
     }
 
@@ -754,6 +767,9 @@ const __init = () => {
        owner's, the same as adding: a worker who cannot add a lot has no
        business being offered a Delete beside every one of them. */
     const MAY_EDIT_LOTS = @json(! \App\Support\WorkerContext::inWorkerContext());
+    // The board's pen — attaching or detaching a lot's map writes the lot,
+    // and the server asks for this alongside the maps grant.
+    const MAY_EDIT_BOARD = @json(\App\Support\WorkerContext::canEdit());
 
     /* The view over LOTS: what the search keeps, and how many cards have
        walked in so far. The grid paints a window, and scrolling to the

@@ -216,9 +216,15 @@
             }
             kept?.addEventListener('click', (e) => { if (e.target.closest('[data-kept-dismiss]')) hideKept(); });
 
-            const NEW_TILE = '<button type="button" class="dr-new" data-new>'
-                + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>'
-                + '<span>New drawing</span></button>';
+            // A view-level Draw grant reads the shelf; the pad and the bin
+            // belong to 'edit'. The server refuses their writes regardless —
+            // this keeps the shelf from offering doors that only refuse.
+            const DRAW_MAY_WRITE = @json(\App\Support\WorkerContext::canWriteModule('draw'));
+            const NEW_TILE = DRAW_MAY_WRITE
+                ? '<button type="button" class="dr-new" data-new>'
+                    + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>'
+                    + '<span>New drawing</span></button>'
+                : '';
 
             function card(d, i) {
                 const tags = [];
@@ -251,14 +257,14 @@
                         ${d.note ? `<span class="dr-note">${esc(d.note)}</span>` : ''}
                         <div class="dr-tags">${tags.join('')}</div>
                         <span class="dr-when">${esc(d.when || '')}</span>
-                        <div class="dr-acts">
+                        ${DRAW_MAY_WRITE ? `<div class="dr-acts">
                             <button type="button" class="dr-act" data-edit title="${d.team ? 'Draw over a copy' : 'Open in the pad'}" aria-label="Edit">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/></svg>
                             </button>
                             <button type="button" class="dr-act is-danger" data-del title="Delete" aria-label="Delete">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>
                             </button>
-                        </div>
+                        </div>` : ''}
                     </div>
                 </div>`;
             }

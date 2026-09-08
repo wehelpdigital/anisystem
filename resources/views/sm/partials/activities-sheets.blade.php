@@ -483,8 +483,12 @@
 
             {{-- Materials & Items — same dashed quick-add pattern as lots and
                  workers. Items are free-form: name + price + quantity + unit,
-                 with names/prices remembered per schedule (datalists). --}}
-            <div id="activityItemsSection">
+                 with names/prices remembered per schedule (datalists).
+
+                 Hidden, not absent, for a worker without the Inventory pen:
+                 the JS keeps its handles either way, and the server ignores
+                 item payloads from a hand this section was closed to. --}}
+            <div id="activityItemsSection" @unless(\App\Support\WorkerContext::canWriteModule('inventory')) hidden @endunless>
                 <span class="form-label"><span id="itemsSectionLabel">Materials &amp; Items</span> <span class="text-gray-400 font-normal">(optional)</span></span>
                 <div class="flex flex-wrap items-center gap-1.5">
                     <div id="itemsContainer" class="contents"></div>
@@ -1301,8 +1305,12 @@
              for everything else: the bag opened without a task against it,
              and the delivery that arrived on a Tuesday. Logging them from the
              day means the date is already right, which is the part people get
-             wrong when they come back to it on Friday. --}}
-        @if (! $isWorker)
+             wrong when they come back to it on Friday.
+
+             These doors follow the INVENTORY grant, not the worker flag: a
+             worker handed the shed's pen may log a delivery from the day it
+             arrived on, and one holding only the board's pen may not. --}}
+        @if (\App\Support\WorkerContext::canWriteModule('inventory'))
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetLock }}" data-action="iv-out" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>
             {{-- Spending is a box LEAVING: an arrow out of the shed. --}}
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 4H6a2 2 0 00-2 2v12a2 2 0 002 2h5"/><path stroke-linecap="round" stroke-linejoin="round" d="M16 8l4 4-4 4M20 12H10"/></svg>

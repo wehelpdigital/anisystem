@@ -1635,6 +1635,13 @@ class ActivityController extends BaseScheduleController
                     $activity = AsScheduleActivity::create($payload);
                 }
 
+                /* The item lines are the shed's territory. A worker holding
+                 * the board's pen but not the Inventory's saves the activity
+                 * AROUND them: the form never showed the section, and
+                 * whatever lines the activity already carries stay exactly
+                 * as they are — no replace, no purchase sync. */
+                if (\App\Support\WorkerContext::canWriteModule('inventory')) {
+
                 // Replace-all item semantics: soft-delete everything, then
                 // recreate from the submitted payload.
                 AsScheduleActivityItem::where('activityId', $activity->id)->update(['deleteStatus' => 0]);
@@ -1711,6 +1718,8 @@ class ActivityController extends BaseScheduleController
                     $activity->targetDate?->format('Y-m-d'),
                     (string) ($activity->activityTitle ?? '')
                 );
+
+                }
 
                 // Replace pivot rows with the submitted lot + worker sets.
                 $activity->lots()->sync($submittedLotIds);

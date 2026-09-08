@@ -310,11 +310,12 @@ const __init = () => {
     @php
         // Same classification as the server-rendered list above, so a note
         // re-rendered after an edit keeps its "View map" tile.
-        // Withheld from a worker, like the list's own chips: the Maps module
-        // is not theirs to open, and a link to "no access" helps nobody.
-        $mapModuleUrl = \App\Support\WorkerContext::inWorkerContext()
-            ? null
-            : route('sm.maps', ['id' => $schedule->id]);
+        // The door follows the MAPS grant, not the worker flag: a worker
+        // given at least a look at Maps may open a note's map, one given
+        // none gets no link — a link to "no access" helps nobody.
+        $mapModuleUrl = \App\Support\WorkerContext::canUseModule('maps')
+            ? route('sm.maps', ['id' => $schedule->id])
+            : null;
         $mediaUrls = function ($items) use ($mapModuleUrl) {
             return collect(is_array($items) ? $items : [])->map(function ($m) use ($mapModuleUrl) {
                 if (empty($m['path'])) {
@@ -415,14 +416,15 @@ const __init = () => {
     }
 
     // Where a saved map opens. Read by noteMediaThumb for tiles it builds
-    // after an edit, which have no per-item link of their own.
-    window.NOTE_MAP_URL = @json(\App\Support\WorkerContext::inWorkerContext()
-        ? null
-        : route('sm.maps', ['id' => $schedule->id]));
+    // after an edit, which have no per-item link of their own. The doors
+    // follow the grants: 'none' locks the attachment, a look opens it.
+    window.NOTE_MAP_URL = @json(\App\Support\WorkerContext::canUseModule('maps')
+        ? route('sm.maps', ['id' => $schedule->id])
+        : null);
     // Where a drawing goes when its chip is tapped; the index is appended.
-    const DRAW_URL = @json(\App\Support\WorkerContext::inWorkerContext()
-        ? null
-        : route('sm.draw', ['id' => $schedule->id]));
+    const DRAW_URL = @json(\App\Support\WorkerContext::canUseModule('draw')
+        ? route('sm.draw', ['id' => $schedule->id])
+        : null);
     window.NOTE_DRAW_URL = DRAW_URL;
 
     document.querySelectorAll('[data-note-add]').forEach((b) => b.addEventListener('click', () => openNoteSheet(null)));

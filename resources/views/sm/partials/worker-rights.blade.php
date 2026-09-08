@@ -26,10 +26,10 @@
         ['NotesAccess', '📝', 'Notes', 'Day notes, and the photos and videos filed with them.'],
         ['ReportsAccess', '📊', 'Reports', 'Labour and money reports for this farm.'],
         ['InventoryAccess', '📦', 'Inventory', 'Items on hand, stock moves and what they cost.'],
+        ['MapsAccess', '🗺️', 'Maps', 'Field maps, lot maps and saved maps — view them, or draw and save too.'],
+        ['DrawAccess', '✏️', 'Draw', 'The drawing module and its saved pictures — view them, or draw new ones.'],
     ];
     $wrSwitches = [
-        ['MapsAccess', '🗺️', 'Maps', 'Field maps, traces and saved maps.'],
-        ['DrawAccess', '✏️', 'Draw', 'The drawing module and its saved pictures.'],
         // Anee's row wears her face, not a robot: a mark with a '/' in it
         // is an image path, and the loop below knows the difference.
         ['AiAccess', 'images/anee/avatar-160.jpg', 'Chat Anee', 'Asking Anee questions. Answers are paid from your credits.'],
@@ -49,8 +49,11 @@
             </span>
             {{-- The hidden input is the answer; the segment is how it is
                  given. Both directions go through it, so a sheet that sets
-                 .value still repaints these buttons. --}}
-            <input type="hidden" id="{{ $p }}{{ $key }}" class="wr-level" value="view">
+                 .value still repaints these buttons. The shed, the maps and
+                 the drawing pad start shut; the older levels start readable —
+                 the same defaults workerRights.paint uses. --}}
+            <input type="hidden" id="{{ $p }}{{ $key }}" class="wr-level"
+                   value="{{ in_array($key, ['InventoryAccess', 'MapsAccess', 'DrawAccess'], true) ? 'none' : 'view' }}">
             <span class="wr-seg" role="group" aria-label="{{ $label }} access" data-wr-seg="{{ $p }}{{ $key }}">
                 {{-- Activities has no "None": a worker with no eyes on the
                      plan is not a worker on this farm — the least they get
