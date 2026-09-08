@@ -365,6 +365,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
 
     Route::post('/app/sm-workers-access-grant', [App\Http\Controllers\Manager\WorkerAccessController::class, 'grant'])->name('sm.workers.access.grant');
     Route::post('/app/sm-workers-access-password', [App\Http\Controllers\Manager\WorkerAccessController::class, 'setPassword'])->name('sm.workers.access.password');
+    Route::post('/app/sm-workers-access-rights', [App\Http\Controllers\Manager\WorkerAccessController::class, 'updateRights'])->name('sm.workers.access.rights');
     Route::delete('/app/sm-workers-access-revoke', [App\Http\Controllers\Manager\WorkerAccessController::class, 'revoke'])->name('sm.workers.access.revoke');
 
     // --- Schedule team group chat ---

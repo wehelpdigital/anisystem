@@ -48,7 +48,7 @@ class WorkerAccessController extends Controller
         $validator = Validator::make($request->all(), [
             'scheduleWorkerId' => 'nullable|integer',
             'email'            => 'required|email|max:191',
-            'scheduleAccess'   => 'required|in:none,view,edit',
+            'scheduleAccess'   => 'required|in:view,edit',
             'communityAccess'  => 'nullable|boolean',
             'notesAccess'      => 'nullable|in:none,view,edit',
             'reportsAccess'    => 'nullable|in:none,view,edit',
@@ -159,7 +159,7 @@ class WorkerAccessController extends Controller
             'name'             => 'nullable|string|max:191',
             'email'            => 'required|email|max:191',
             'password'         => 'required|string|min:8|max:191',
-            'scheduleAccess'   => 'required|in:none,view,edit',
+            'scheduleAccess'   => 'required|in:view,edit',
             'communityAccess'  => 'nullable|boolean',
             'notesAccess'      => 'nullable|in:none,view,edit',
             'reportsAccess'    => 'nullable|in:none,view,edit',
@@ -264,6 +264,67 @@ class WorkerAccessController extends Controller
         return \App\Support\WorkerGrantState::of($grant) + [
             'scheduleWorkerId' => $grant->scheduleWorkerId ? (int) $grant->scheduleWorkerId : null,
         ];
+    }
+
+    /**
+     * Update ONLY the rights of an existing grant — what the panel's
+     * switches call the moment they change. No emails, no invites: this is
+     * the quiet path, and it is why flipping a right finally sticks.
+     */
+    public function updateRights(Request $request)
+    {
+        $boss = $request->user();
+        if (\App\Support\WorkerContext::inWorkerContext()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Only the farm owner can manage worker logins.',
+            ], 403);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'id'               => 'required|integer',
+            'scheduleAccess'   => 'required|in:view,edit',
+            'communityAccess'  => 'nullable|boolean',
+            'notesAccess'      => 'nullable|in:none,view,edit',
+            'reportsAccess'    => 'nullable|in:none,view,edit',
+            'inventoryAccess'  => 'nullable|in:none,view,edit',
+            'mapsAccess'       => 'nullable|boolean',
+            'drawAccess'       => 'nullable|boolean',
+            'aiAccess'         => 'nullable|boolean',
+            'cameraAccess'     => 'nullable|boolean',
+            'videoAccess'      => 'nullable|boolean',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
+        }
+
+        $grant = WorkerGrant::active()
+            ->where('bossUserId', $boss->id)
+            ->where('id', (int) $request->input('id'))
+            ->first();
+        if (! $grant) {
+            return response()->json(['success' => false, 'message' => 'Grant not found.'], 404);
+        }
+
+        $grant->fill([
+            'scheduleAccess'   => $request->input('scheduleAccess'),
+            'communityAccess'  => $request->boolean('communityAccess'),
+            'notesAccess'      => $request->input('notesAccess', 'view'),
+            'reportsAccess'    => $request->input('reportsAccess', 'view'),
+            'inventoryAccess'  => $request->input('inventoryAccess', 'none'),
+            'mapsAccess'       => $request->boolean('mapsAccess'),
+            'drawAccess'       => $request->boolean('drawAccess'),
+            'aiAccess'         => $request->boolean('aiAccess'),
+            'cameraAccess'     => $request->boolean('cameraAccess'),
+            'videoAccess'      => $request->boolean('videoAccess'),
+            'canAddNotes'      => $request->input('notesAccess', 'view') === 'edit',
+        ])->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Access updated.',
+            'data' => ['grant' => $this->grantData($grant)],
+        ]);
     }
 
     /** Revoke a worker's access. */

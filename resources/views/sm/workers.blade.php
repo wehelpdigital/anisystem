@@ -147,6 +147,14 @@
                         <p class="font-bold text-gray-900 text-sm">Login access</p>
                         <p class="text-xs text-gray-500" id="wlStatus">No login yet.</p>
                     </div>
+                    {{-- Revoke lives in the card's corner as one quiet icon —
+                         the confirm sheet still stands between the tap and
+                         the act. --}}
+                    <button type="button" id="wlRevoke"
+                            class="hidden shrink-0 w-9 h-9 rounded-full text-red-500 hover:bg-red-50"
+                            title="Revoke access" aria-label="Revoke this worker's login access">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H9m4 8H7a2 2 0 01-2-2V6a2 2 0 012-2h6"/></svg>
+                    </button>
                 </div>
 
                 {{-- Writing down what happened is not the same act as changing
@@ -170,19 +178,34 @@
 
 {{-- Community access is a row in the rights panel above. --}}
 
-                <div class="flex flex-wrap items-center gap-2">
-                    <button type="button" id="wlSendLink" class="btn btn-white btn-sm">✉️ Send registration link</button>
-                    <button type="button" id="wlSetPwToggle" class="btn btn-white btn-sm">🔒 Set a password</button>
-                    <button type="button" id="wlRevoke" class="btn btn-ghost btn-sm text-red-500 hover:bg-red-50! hidden ml-auto">Revoke access</button>
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                    <button type="button" id="wlSendLink" class="btn btn-white btn-sm w-full sm:w-auto justify-center">✉️ Send registration link</button>
+                    <button type="button" id="wlSetPwToggle" class="btn btn-white btn-sm w-full sm:w-auto justify-center">🔒 Set a password</button>
                 </div>
 
-                <div id="wlPwRow" class="hidden pt-1">
-                    <label class="form-label" for="wlPassword">Password for this worker</label>
-                    <div class="flex flex-col sm:flex-row gap-2">
-                        <input type="text" id="wlPassword" class="form-input grow" placeholder="At least 8 characters" autocomplete="new-password">
-                        <button type="button" id="wlCreateLogin" class="btn btn-primary btn-sm shrink-0 whitespace-nowrap w-full sm:w-auto">Create login</button>
+                {{-- The password, in its own card. It unfolds on the house
+                     easing rather than popping in, and folds away the same
+                     road backwards. --}}
+                <div id="wlPwFold" class="wl-fold" aria-hidden="true">
+                    <div class="wl-fold-in">
+                        <div class="rounded-2xl border border-brand-100 bg-white p-4 space-y-3">
+                            <p class="font-bold text-gray-900 text-sm flex items-center gap-2">🔒 Password for this worker</p>
+                            <div>
+                                <label class="form-label" for="wlPassword">New password</label>
+                                <input type="password" id="wlPassword" class="form-input" placeholder="At least 8 characters" autocomplete="new-password">
+                                {{-- The strength bar: how much of a password this is. --}}
+                                <div class="wl-strength mt-2" aria-hidden="true"><i id="wlPwBar"></i></div>
+                                <p class="text-xs mt-1 font-semibold text-gray-400" id="wlPwSay">At least 8 characters.</p>
+                            </div>
+                            <div>
+                                <label class="form-label" for="wlPassword2">Repeat the password</label>
+                                <input type="password" id="wlPassword2" class="form-input" placeholder="The same password again" autocomplete="new-password">
+                                <p class="form-error hidden" id="wlPwMatchSay">The two passwords don't match yet.</p>
+                            </div>
+                            <button type="button" id="wlCreateLogin" class="btn btn-primary w-full">Create login</button>
+                            <p class="form-hint">Share the email above + this password so they can sign in.</p>
+                        </div>
                     </div>
-                    <p class="form-hint">Share the email above + this password so they can sign in.</p>
                 </div>
 
                 <p class="form-hint mt-0!">Uses the worker's <strong>email</strong> above. Add one if it's blank.</p>
@@ -191,8 +214,8 @@
         @endif
     </div>
     <div class="sheet-footer">
-        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
-        <button type="button" id="saveWorkerBtn" class="btn btn-primary">Save Worker</button>
+        {{-- No Cancel: the ✕ in the header already is one. --}}
+        <button type="button" id="saveWorkerBtn" class="btn btn-primary w-full">Save Worker</button>
     </div>
 </div>
 
@@ -235,6 +258,28 @@
 
 @push('head')
 <style>
+    /* The revoke icon in the login card's corner. Its own display rule so
+       the `hidden` utility always wins the argument. */
+    #wlRevoke { display: flex; align-items: center; justify-content: center; }
+    #wlRevoke.hidden { display: none; }
+
+    /* The password card's fold: a grid row growing from nothing, so the
+       card is exactly as tall as itself and the animation has a real end. */
+    .wl-fold { display: grid; grid-template-rows: 0fr;
+        transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+    .wl-fold.is-open { grid-template-rows: 1fr; }
+    .wl-fold-in { overflow: hidden; min-height: 0; }
+    .wl-fold .wl-fold-in > div { margin-top: .25rem; }
+
+    /* The strength bar: how much of a password this is, in one glance. */
+    .wl-strength { height: .45rem; border-radius: 999px; background: var(--color-gray-100); overflow: hidden; }
+    .wl-strength i { display: block; height: 100%; width: 0; border-radius: inherit; background: #ef4444;
+        transition: width .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .wl-fold, .wl-strength i { transition: none; }
+    }
+
     /* The rights block: a row per module, the same shape whether the answer
        is a choice of three or a yes/no. */
     .wr-block { border:1px solid var(--color-gray-200); border-radius:1rem; background:var(--color-white); overflow:hidden; }
@@ -511,7 +556,10 @@ const __init = () => {
         else if (login && login.status === 'pending') statusEl.textContent = 'Invite sent. Waiting for them to set a password.';
         else statusEl.textContent = 'No login yet.';
         const wlAccess = document.getElementById('wlAccess');
-        wlAccess.value = (login && login.scheduleAccess) || 'view';
+        // Activities has no "None" any more: a legacy grant that still says
+        // it is read as view, and the next save writes the honest word.
+        const schedAccess = (login && login.scheduleAccess) || 'view';
+        wlAccess.value = schedAccess === 'none' ? 'view' : schedAccess;
         wlAccess.dispatchEvent(new Event('change', { bubbles: true }));
         document.getElementById('wlCommunity').checked = login ? !!login.communityAccess : true;
         window.workerRights.paint('wl', login);
@@ -520,9 +568,95 @@ const __init = () => {
         document.getElementById('wlRightsWrap')?.classList.toggle('hidden', !login);
         document.getElementById('wlNoLoginSay')?.classList.toggle('hidden', !!login);
         document.getElementById('wlRevoke').classList.toggle('hidden', !login);
-        document.getElementById('wlPwRow').classList.add('hidden');
+        document.getElementById('wlPwFold').classList.remove('is-open');
         document.getElementById('wlPassword').value = '';
+        document.getElementById('wlPassword2').value = '';
+        paintPwStrength('');
+        document.getElementById('wlPwMatchSay').classList.add('hidden');
     }
+
+    /* ---- how much of a password this is ---- */
+    function pwScore(pw) {
+        if (pw.length < 8) return 0;
+        let s = 1;
+        if (pw.length >= 12) s++;
+        if (/[a-z]/.test(pw) && /[A-Z]/.test(pw)) s++;
+        if (/\d/.test(pw)) s++;
+        if (/[^A-Za-z0-9]/.test(pw)) s++;
+        return Math.min(4, s);
+    }
+    function paintPwStrength(pw) {
+        const bar = document.getElementById('wlPwBar');
+        const say = document.getElementById('wlPwSay');
+        if (!bar || !say) return;
+        if (!pw) {
+            bar.style.width = '0';
+            say.textContent = 'At least 8 characters.';
+            say.style.color = '';
+            return;
+        }
+        const s = pwScore(pw);
+        const looks = [
+            ['12%', '#ef4444', 'Too short — 8 characters minimum.'],
+            ['30%', '#ef4444', 'Weak. Longer is stronger.'],
+            ['55%', '#f59e0b', 'Okay. Mix in capitals or numbers.'],
+            ['80%', '#84cc16', 'Strong.'],
+            ['100%', '#16a34a', 'Very strong.'],
+        ][s];
+        bar.style.width = looks[0];
+        bar.style.background = looks[1];
+        say.textContent = looks[2];
+        say.style.color = looks[1];
+    }
+    document.getElementById('wlPassword')?.addEventListener('input', (e) => {
+        paintPwStrength(e.target.value);
+        checkPwMatch();
+    });
+    document.getElementById('wlPassword2')?.addEventListener('input', checkPwMatch);
+    function checkPwMatch() {
+        const a = document.getElementById('wlPassword').value;
+        const b = document.getElementById('wlPassword2').value;
+        // Only complain once they have started the second field.
+        document.getElementById('wlPwMatchSay').classList.toggle('hidden', !b || a === b);
+    }
+
+    /* ---- rights save themselves the moment they change ----
+       The old shape only sent the switches with "Send link" / "Create
+       login", so flipping a right on an existing login changed nothing.
+       Now any real tap on the panel saves after a short breath. */
+    let rightsTimer = null;
+    function queueRightsSave() {
+        if (!editingWorker || !editingWorker.login || !editingWorker.login.id) return;
+        clearTimeout(rightsTimer);
+        rightsTimer = setTimeout(saveRightsNow, 450);
+    }
+    async function saveRightsNow() {
+        const login = editingWorker && editingWorker.login;
+        if (!login || !login.id) return;
+        try {
+            const res = await api(@json(route('sm.workers.access.rights')), { method: 'POST', body: {
+                id: login.id,
+                scheduleAccess: document.getElementById('wlAccess').value,
+                communityAccess: document.getElementById('wlCommunity').checked ? 1 : 0,
+                ...window.workerRights.read('wl'),
+            } });
+            editingWorker.login = (res.data && res.data.grant) || editingWorker.login;
+            renderList();
+            toast(res.message || 'Access updated.');
+        } catch (err) {
+            toast(err.message, 'error');
+            paintLogin(editingWorker);   // repaint the truth the server kept
+        }
+    }
+    // 'input' on a level fires only from a real segment tap (paint uses
+    // 'change'); checkboxes are guarded by isTrusted so programmatic
+    // repaints never save.
+    document.getElementById('wlRightsWrap')?.addEventListener('input', (e) => {
+        if (e.target.classList?.contains('wr-level')) queueRightsSave();
+    });
+    document.getElementById('wlRightsWrap')?.addEventListener('change', (e) => {
+        if (e.isTrusted && e.target.classList?.contains('wr-check')) queueRightsSave();
+    });
 
     function applyGrant(grant) {
         if (!editingWorker) return;
@@ -550,9 +684,11 @@ const __init = () => {
     });
 
     document.getElementById('wlSetPwToggle')?.addEventListener('click', () => {
-        const row = document.getElementById('wlPwRow');
-        row.classList.toggle('hidden');
-        if (!row.classList.contains('hidden')) document.getElementById('wlPassword').focus();
+        const fold = document.getElementById('wlPwFold');
+        const opening = !fold.classList.contains('is-open');
+        fold.classList.toggle('is-open', opening);
+        fold.setAttribute('aria-hidden', opening ? 'false' : 'true');
+        if (opening) setTimeout(() => document.getElementById('wlPassword').focus(), 300);
     });
 
     document.getElementById('wlCreateLogin')?.addEventListener('click', async (e) => {
@@ -560,6 +696,11 @@ const __init = () => {
         if (!email) { toast('Add the worker\'s email above first.', 'error'); document.getElementById('workerEmail').focus(); return; }
         const pw = document.getElementById('wlPassword').value;
         if (pw.length < 8) { toast('Password must be at least 8 characters.', 'error'); return; }
+        if (pw !== document.getElementById('wlPassword2').value) {
+            toast('The two passwords don\'t match — repeat the same one below.', 'error');
+            document.getElementById('wlPassword2').focus();
+            return;
+        }
         const btn = e.currentTarget; btn.disabled = true;
         try {
             const res = await api(@json(route('sm.workers.access.password')), { method: 'POST', body: {

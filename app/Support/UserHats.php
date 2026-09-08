@@ -46,21 +46,22 @@ class UserHats
             ->with('boss')
             ->get();
 
-        // Someone with no land and no grants is still an owner-in-waiting —
-        // the app has to open somewhere, and that somewhere is their own farm.
-        if ($ownSchedules > 0 || $grants->isEmpty()) {
-            $hats[] = [
-                'key' => 'own',
-                'kind' => 'own',
-                'title' => 'My own farm',
-                'detail' => $ownSchedules > 0
-                    ? $ownSchedules . ' ' . str('schedule')->plural($ownSchedules) . ' of your own'
-                    : 'Start your first cropping schedule',
-                'count' => $ownSchedules,
-                'bossId' => null,
-                'url' => null,
-            ];
-        }
+        // EVERYONE owns their own farm hat now. Since the Libre floor,
+        // every account is a free account in its own right — a worker on
+        // somebody's land still has their own ground here, even if it is
+        // only ground-in-waiting. This is what puts the chooser in front
+        // of every worker login: their boss's farm, and their own.
+        $hats[] = [
+            'key' => 'own',
+            'kind' => 'own',
+            'title' => 'My own farm',
+            'detail' => $ownSchedules > 0
+                ? $ownSchedules . ' ' . str('schedule')->plural($ownSchedules) . ' of your own'
+                : 'Your own free account — start your first cropping schedule',
+            'count' => $ownSchedules,
+            'bossId' => null,
+            'url' => null,
+        ];
 
         foreach ($grants as $g) {
             $boss = $g->boss;

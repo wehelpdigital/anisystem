@@ -50,7 +50,12 @@
                  .value still repaints these buttons. --}}
             <input type="hidden" id="{{ $p }}{{ $key }}" class="wr-level" value="view">
             <span class="wr-seg" role="group" aria-label="{{ $label }} access" data-wr-seg="{{ $p }}{{ $key }}">
-                <button type="button" data-wr-val="none" title="No access">None</button>
+                {{-- Activities has no "None": a worker with no eyes on the
+                     plan is not a worker on this farm — the least they get
+                     is a look. The other modules keep their closed door. --}}
+                @if ($key !== 'Access')
+                    <button type="button" data-wr-val="none" title="No access">None</button>
+                @endif
                 <button type="button" data-wr-val="view" title="View only">View</button>
                 <button type="button" data-wr-val="edit" title="Can edit &amp; create">Edit</button>
             </span>
@@ -79,7 +84,7 @@
         <span class="wr-toggle" aria-hidden="true"></span>
     </label>
 
-    <p class="wr-foot">A worker with <strong>no Activities access</strong> has none of the modules above. Those belong to the farm they cannot see.</p>
+    <p class="wr-foot">Every worker can at least <strong>view Activities</strong> — the plan is the farm's common ground. The other doors are yours to open. Changes here save on their own.</p>
 </div>
 
 @once
