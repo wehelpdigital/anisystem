@@ -1343,10 +1343,8 @@
             Resume-here marker
         </button>
         @endif
-        <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50" data-action="share-day-btn">
-            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg>
-            Share this day
-        </button>
+        {{-- "Share this day" lived here too; sharing kept its own button on
+             the day's header row, so the menu row was a second door. --}}
         @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetLock }}" data-action="change-group-date-btn" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
