@@ -169,11 +169,12 @@
          not lost for lack of another product — they are lost in management.
          The loss wall right below is the evidence; Anee is the answer. --}}
     <section class="py-16 sm:py-24 bg-gray-50 bg-drift">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
             <p class="text-sm font-bold uppercase tracking-wider text-brand-600 reveal">Before you buy another sack</p>
-            <h2 class="mt-3 font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-ink leading-[1.06] text-balance reveal">
+            {{-- Sized so the green line never breaks: each thought is ONE line. --}}
+            <h2 class="mt-3 font-heading text-[1.55rem] sm:text-4xl lg:text-5xl font-bold text-ink leading-[1.12] reveal">
                 The Problem Is Not a Product.
-                <span class="block mt-2 text-brand-600">It's How You Manage Your Farm.</span>
+                <span class="block mt-2 text-brand-600 whitespace-nowrap">It's How You Manage Your Farm.</span>
             </h2>
             <p class="mt-7 text-gray-600 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto reveal">
                 Every season, money chases a shortcut — a new fertilizer brand, a stronger spray, a seed
@@ -226,7 +227,7 @@
                             <p class="loss-n"><span data-countup="{{ $loss['n'] }}">0</span><small>%</small></p>
                             <p class="loss-l">{{ $loss['l'] }}</p>
                             <p class="loss-p">{{ $loss['p'] }}</p>
-                            <p class="loss-peso">≈ {{ $loss['peso'] }} lost per hectare</p>
+                            <p class="loss-peso">{{ $loss['peso'] }} lost per hectare</p>
                             <div class="loss-bar" aria-hidden="true"><i></i></div>
                         </div>
                     </div>
