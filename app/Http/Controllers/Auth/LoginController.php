@@ -80,7 +80,10 @@ class LoginController extends Controller
             return redirect()->route('account.choose');
         }
 
-        return redirect()->intended(route('app.dashboard'));
+        // Always the dashboard — never the deep link that bounced them here.
+        // A login is an arrival, and the owner wants every arrival to start
+        // at the same front door.
+        return redirect()->route('app.dashboard');
     }
 
     public function logout(Request $request)

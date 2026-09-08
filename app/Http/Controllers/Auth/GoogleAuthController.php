@@ -120,6 +120,7 @@ class GoogleAuthController extends Controller
             return redirect()->route('account.choose');
         }
 
-        return redirect()->intended(route('app.dashboard'));
+        // Same rule as the password door: every login lands on the dashboard.
+        return redirect()->route('app.dashboard');
     }
 }
