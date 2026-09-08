@@ -292,6 +292,8 @@
     .wr-mark { flex:none; width:2rem; height:2rem; border-radius:.6rem; display:flex;
         align-items:center; justify-content:center; font-size:1rem; background:var(--color-brand-50); }
     .wr-mark img { width:1.25rem; height:1.25rem; object-fit:contain; }
+    /* A face fills its chip edge to edge; icons float inside theirs. */
+    .wr-mark img.wr-face { width:2rem; height:2rem; border-radius:.6rem; object-fit:cover; }
     .wr-what { min-width:0; flex:1 1 auto; }
     .wr-what b { display:block; font-size:.82rem; font-weight:700; color:var(--color-gray-900); line-height:1.25; }
     .wr-what i { display:block; font-style:normal; font-size:.7rem; line-height:1.35; color:var(--color-gray-500); }

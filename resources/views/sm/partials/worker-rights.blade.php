@@ -30,7 +30,9 @@
     $wrSwitches = [
         ['MapsAccess', '🗺️', 'Maps', 'Field maps, traces and saved maps.'],
         ['DrawAccess', '✏️', 'Draw', 'The drawing module and its saved pictures.'],
-        ['AiAccess', '🤖', 'Chat Anee', 'Asking Anee questions. Answers are paid from your credits.'],
+        // Anee's row wears her face, not a robot: a mark with a '/' in it
+        // is an image path, and the loop below knows the difference.
+        ['AiAccess', 'images/anee/avatar-160.jpg', 'Chat Anee', 'Asking Anee questions. Answers are paid from your credits.'],
         ['CameraAccess', '📷', 'Camera', 'Taking photos and filing them on this farm.'],
         ['VideoAccess', '🎥', 'Video record', 'Recording clips and attaching them.'],
     ];
@@ -64,7 +66,13 @@
 
     @foreach ($wrSwitches as [$key, $mark, $label, $hint])
         <label class="wr-row wr-switch" for="{{ $p }}{{ $key }}">
-            <span class="wr-mark">{{ $mark }}</span>
+            <span class="wr-mark">
+                @if (str_contains($mark, '/'))
+                    <img src="{{ asset($mark) }}" class="wr-face" alt="">
+                @else
+                    {{ $mark }}
+                @endif
+            </span>
             <span class="wr-what">
                 <b>{{ $label }}</b>
                 <i>{{ $hint }}</i>
