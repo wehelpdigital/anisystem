@@ -213,7 +213,7 @@
                             ['n' => 40, 'l' => 'Yield lost to pests and diseases', 'p' => 'When the intervention comes late — or never comes at all.'],
                             ['n' => 30, 'l' => 'Wasted on the wrong solution', 'p' => 'A misread problem means the wrong product, at full price, while the real problem keeps eating.'],
                             ['n' => 25, 'l' => 'Yield lost to mistimed fertilizer', 'p' => 'The right sack on the wrong week feeds the field a fraction of what it paid for.'],
-                            ['n' => 16, 'l' => 'Of the harvest lost after cutting', 'p' => 'Poor timing and handling between field and buyer quietly shave the sacks.'],
+                            ['n' => 20, 'l' => 'Yield lost to delayed decisions', 'p' => 'Waiting days for someone else\'s answer — the technician\'s next visit, a reply that never comes — while the problem keeps growing.'],
                         ];
                     @endphp
                     @foreach ($losses as $i => $loss)
@@ -244,7 +244,7 @@
                     ['k' => 'Late intervention → caught early', 'p' => 'Per-lot weather, growth-stage watch-lists and Anee on call 24/7 — you see the change coming and act on the right day, not the remembered one.'],
                     ['k' => 'Wrong solution → right diagnosis first', 'p' => 'Snap a photo of the leaf and Anee reads it against your crop and its exact stage before a peso is spent — the treatment fits the problem, at the right dose.'],
                     ['k' => 'Mistimed fertilizer → anchored to Day-0', 'p' => 'Every application lands on the right day, counted from each lot\'s own sowing date. Move the plan and every date follows — the timing never lives in memory.'],
-                    ['k' => 'Post-harvest losses → the season runs to the buyer', 'p' => 'Harvest and post-harvest tasks are scheduled like everything else, and the season report reads what happened so the next season loses less.'],
+                    ['k' => 'Waiting for answers → Anee answers now', 'p' => 'No more holding the sprayer while waiting for a callback. Ask Anee anytime, in English or Tagalog — she reads your lots, stages and weather and answers in minutes, so the decision happens today.'],
                 ] as $i => $fix)
                     <div class="fix-row reveal" style="--reveal-delay: {{ $i * 0.08 }}s">
                         <span class="fix-badge"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
