@@ -66,12 +66,10 @@
 <div class="tg-wrap">
     @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'tags'])
 
-    {{-- The explanation moved behind the question mark, where every other
-         module keeps its guide — one the mother app can edit. --}}
+    {{-- No ? here any more — the top bar's help button already opens this
+         module's guide, and two doors to one page is one too many. --}}
     <div class="tg-title">
         <p class="text-sm font-bold text-gray-900">The season's tags</p>
-        <a class="tg-help" href="{{ url('/app/help/tags') }}?from={{ urlencode(route('sm.tags', ['id' => $schedule->id], false)) }}"
-           title="How to use tags" aria-label="How to use tags">?</a>
     </div>
 
     <div class="tg-cloud" id="tgCloud"></div>
@@ -145,11 +143,14 @@ const __init = () => {
         if (!OPEN) return;
         const t = TAGS.find((x) => x.id === OPEN);
         const delId = OPEN;
-        const ok = window.confirmAction ? await window.confirmAction({
+        // The question is not optional: with the sheet unavailable the
+        // answer is no, never a silent yes.
+        if (!window.confirmAction) { toast('Could not open the confirmation — try again.', 'error'); return; }
+        const ok = await window.confirmAction({
             title: `Delete the tag "${t ? t.name : ''}"?`,
-            message: 'The tag and its ties go; the things themselves stay exactly where they are.',
+            message: `Every item wearing "${t ? t.name : 'this tag'}" loses the tag — the items themselves stay exactly where they are.`,
             confirmText: 'Delete tag',
-        }) : true;
+        });
         if (!ok) return;
         try {
             await api(U.del(delId), { method: 'DELETE' });

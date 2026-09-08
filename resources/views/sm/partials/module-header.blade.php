@@ -26,11 +26,11 @@
     }
 @endphp
 
-{{-- The same tightening the shell's toolbar got. This is the row every
-     module wears when it is opened on its own rather than inside the
-     Activities shell, so the two should leave the same amount of air under
-     them — a module should not feel differently spaced depending on how you
-     arrived at it. --}}
+{{-- Just the door and the address: the Modules chip (to the hub, where
+     every module lives) and the name of the one you are standing in. The
+     row used to spill EVERY module as its own chip past the screen's edge —
+     a wall of tag-buttons nobody asked for, met whenever a help page's
+     back-link landed on a module's standalone URL. One door, one name. --}}
 <div class="mb-3 md:mb-4 module-chip-nav">
     <div class="scroll-chips">
         <a href="{{ route('sm.hub', ['id' => $schedule->id]) }}"
@@ -41,11 +41,8 @@
                  and it is one door. --}}
             Modules
         </a>
-        @foreach ($modules as $key => $m)
-            <a href="{{ route($m['route'], ['id' => $schedule->id]) }}"
-                class="chip shrink-0 {{ $module === $key ? 'is-selected' : '' }}" data-chip-manual>
-                {{ $m['label'] }}
-            </a>
-        @endforeach
+        @if (isset($modules[$module]))
+            <span class="chip shrink-0 is-selected">{{ $modules[$module]['label'] }}</span>
+        @endif
     </div>
 </div>
