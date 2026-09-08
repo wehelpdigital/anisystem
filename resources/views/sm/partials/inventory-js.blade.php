@@ -309,7 +309,7 @@
 
 
         function openItemSheet(item = null) {
-            $id('ivItemTitle').textContent = item ? 'Edit item' : 'Add an item';
+            $id('ivItemTitle').textContent = item ? 'Edit item' : 'Add an Inventory Item';
             $id('ivItemId').value = item ? item.id : '';
             if (item) window.smTags?.load($id('ivItemTagsMount'), 'item', item.id);
             else window.smTags?.clear($id('ivItemTagsMount'));

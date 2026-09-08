@@ -142,7 +142,7 @@
         @if ($ivMayWrite)
         <button type="button" class="btn btn-primary w-full sm:w-auto shrink-0" data-add-item>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
-            Add an item
+            Add an Inventory Item
         </button>
         @endif
     </div>
@@ -205,7 +205,7 @@
 <div class="sheet hidden" id="ivItemSheet" data-static="true" style="--sheet-width:32rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title" id="ivItemTitle">Add an item</h3>
+        <h3 class="sheet-title" id="ivItemTitle">Add an Inventory Item</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-3.5">

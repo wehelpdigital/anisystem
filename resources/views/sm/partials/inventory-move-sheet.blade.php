@@ -228,11 +228,11 @@
             </button>
             <button type="button" class="dt-row" data-iv-menu-act="in">
                 <span class="dt-row-e">📥</span>
-                <span class="dt-row-body"><b>Add inventory of this</b><i>A delivery, a purchase, a carry-over — the count goes up.</i></span>
+                <span class="dt-row-body"><b>Add inventory of this</b><i>A delivery, a purchase, a carry-over, anything that will make the count up for this item.</i></span>
             </button>
             <button type="button" class="dt-row" data-iv-menu-act="out">
                 <span class="dt-row-e">📤</span>
-                <span class="dt-row-body"><b>Subtract inventory of this</b><i>Used or lost outside an activity — the count goes down.</i></span>
+                <span class="dt-row-body"><b>Subtract inventory of this</b><i>Used or lost outside an activity, the count goes down for this item.</i></span>
             </button>
             <button type="button" class="dt-row" data-iv-menu-act="delete">
                 <span class="dt-row-e">🗑️</span>
