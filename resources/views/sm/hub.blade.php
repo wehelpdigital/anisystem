@@ -174,7 +174,7 @@
                 <button type="button" id="archiveToggleBtn"
                         data-archived="{{ $schedule->status === \App\Models\AsCroppingSchedule::STATUS_ARCHIVED ? 1 : 0 }}"
                         class="btn btn-sm btn-white">
-                    {{ $schedule->status === \App\Models\AsCroppingSchedule::STATUS_ARCHIVED ? 'Back to the shelf' : 'Archive this plan' }}
+                    {{ $schedule->status === \App\Models\AsCroppingSchedule::STATUS_ARCHIVED ? 'Back to the shelf' : 'Archive this Schedule' }}
                 </button>
                 <button type="button" id="statusToggleBtn" data-locked="{{ $schedule->isLocked() ? 1 : 0 }}"
                         class="btn btn-sm {{ $schedule->isLocked() ? 'btn-white' : 'btn-accent sweep-fill sweep-green' }}"
@@ -649,7 +649,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const ok = await confirmAction({
                 title: 'Move this season to the Archives?',
                 message: 'It leaves the seasons list and the home screen, but nothing is deleted — open it from Archives any time, and its reports keep working.',
-                confirmText: 'Archive this plan',
+                confirmText: 'Archive this Schedule',
                 confirmClass: 'btn-primary',
             });
             if (!ok) return;
