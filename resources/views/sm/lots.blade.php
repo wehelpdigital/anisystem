@@ -29,7 +29,19 @@
 
         {{-- Full-width responsive grid — one card per lot. The empty state below
              is a sibling so renderList()'s innerHTML reset can't wipe it. --}}
+        {{-- What the list is narrowed by, and the way off it. --}}
+        <div id="lotFilterRow" class="mb-2" hidden>
+            <span class="inline-flex items-center gap-2 text-xs font-extrabold text-brand-700 bg-brand-50 border border-brand-100 rounded-full py-1.5 pl-3 pr-1.5">
+                <span id="lotFilterSay"></span>
+                <button type="button" id="lotFilterClear" class="w-5 h-5 rounded-full inline-flex items-center justify-center hover:bg-brand-100" aria-label="Clear the search">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+                </button>
+            </span>
+        </div>
+
         <div id="lotsList" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3" data-animate-list></div>
+        {{-- The next page of lots walks in when this shows. --}}
+        <div id="lotsMore" class="py-4" hidden aria-hidden="true"></div>
 
         <div id="lotsEmpty" class="card hidden">
             <div class="card-body text-center py-12">
@@ -51,6 +63,23 @@
 @endsection
 
 @push('sheets')
+{{-- The lots search, behind its own small sheet. Typing filters the grid
+     live underneath; closing keeps the filter (the pill shows the way off). --}}
+<div class="sheet hidden" id="lotSearchSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Search lots</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="relative">
+            <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            <input type="search" id="lotSearchInput" class="form-input pl-10" placeholder="Name, crop, variety, barangay…" autocomplete="off">
+        </div>
+        <p class="form-hint">The list behind updates as you type.</p>
+    </div>
+</div>
+
 <div class="sheet hidden" id="lotSheet" style="--sheet-width:36rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -726,21 +755,91 @@ const __init = () => {
        business being offered a Delete beside every one of them. */
     const MAY_EDIT_LOTS = @json(! \App\Support\WorkerContext::inWorkerContext());
 
+    /* The view over LOTS: what the search keeps, and how many cards have
+       walked in so far. The grid paints a window, and scrolling to the
+       sentinel widens it — a hundred-lot farm no longer paints a hundred
+       cards to show the first three. */
+    const VIEW = { q: '', shown: 12 };
+    const PAGE = 12;
+    const lotMatches = (lot) => {
+        if (!VIEW.q) return true;
+        return [lot.lotName, lot.crop, lot.variety, lot.locBarangay, lot.locZone, lot.locTown, lot.locProvince, lot.notes]
+            .filter(Boolean).join(' ').toLowerCase().includes(VIEW.q);
+    };
+
     function renderList() {
+        const rows = LOTS.filter(lotMatches);
         list.innerHTML = '';
-        LOTS.forEach((lot) => {
+        rows.slice(0, VIEW.shown).forEach((lot) => {
             const card = document.createElement('div');
             card.className = 'card h-full';   // h-full → equal-height cards across a grid row
             card.dataset.lotCard = lot.id;
             card.innerHTML = lotCardHtml(lot);
             list.appendChild(card);
         });
-        empty.classList.toggle('hidden', LOTS.length > 0);
+        // Empty means an EMPTY FARM; a fruitless search keeps its pill and
+        // just shows nothing to scroll.
+        empty.classList.toggle('hidden', LOTS.length > 0 || VIEW.q !== '');
+        document.getElementById('lotsMore').hidden = rows.length <= VIEW.shown;
+        const pillRow = document.getElementById('lotFilterRow');
+        if (pillRow) {
+            pillRow.hidden = VIEW.q === '';
+            if (VIEW.q !== '') {
+                document.getElementById('lotFilterSay').textContent =
+                    'Searching: "' + VIEW.q + '" — ' + rows.length + ' ' + (rows.length === 1 ? 'lot' : 'lots');
+            }
+        }
         const countEl = document.getElementById('lotCount');
         if (countEl) countEl.textContent = LOTS.length;
         const labelEl = document.getElementById('lotCountLabel');
         if (labelEl) labelEl.textContent = LOTS.length === 1 ? 'lot' : 'lots';
     }
+
+    // The sentinel widens the window; the observer never needs disconnecting
+    // because a hidden sentinel does not intersect.
+    new IntersectionObserver((entries) => {
+        if (!entries[0].isIntersecting) return;
+        VIEW.shown += PAGE;
+        renderList();
+    }).observe(document.getElementById('lotsMore'));
+
+    /* The search door, seated in the top bar beside the bell. Injected by
+       hand because this pane also arrives inside the Activities shell,
+       where blade sections cannot reach the header. */
+    (function mountLotSearch() {
+        if (document.getElementById('lotSearchTopBtn')) return;
+        const bell = document.querySelector('.bell-wrap');
+        if (!bell) return;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.id = 'lotSearchTopBtn';
+        btn.className = 'help-btn';
+        btn.title = 'Search lots';
+        btn.setAttribute('aria-label', 'Search lots');
+        btn.innerHTML = '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>';
+        bell.parentElement.insertBefore(btn, bell);
+        btn.addEventListener('click', () => {
+            window.openSheet('lotSearchSheet');
+            setTimeout(() => document.getElementById('lotSearchInput')?.focus(), 250);
+        });
+    })();
+
+    let lotSearchDeb;
+    document.getElementById('lotSearchInput')?.addEventListener('input', (e) => {
+        clearTimeout(lotSearchDeb);
+        lotSearchDeb = setTimeout(() => {
+            VIEW.q = e.target.value.trim().toLowerCase();
+            VIEW.shown = PAGE;
+            renderList();
+        }, 200);
+    });
+    document.getElementById('lotFilterClear')?.addEventListener('click', () => {
+        VIEW.q = '';
+        VIEW.shown = PAGE;
+        const inp = document.getElementById('lotSearchInput');
+        if (inp) inp.value = '';
+        renderList();
+    });
 
     /* ---------------- Sheet open / fill ---------------- */
 
