@@ -159,9 +159,51 @@
         transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
     .pr-billing button.is-on { background: #4a7c2a; color: #fff; }
 
+    /* ---- the cost of guessing: red loss counters, green answers ---- */
+    .loss-card { position: relative; border-radius: 1.25rem; background: #fff; border: 1px solid #fecaca;
+        padding: 1.15rem 1.2rem; box-shadow: 0 16px 36px -26px rgb(153 27 27 / .4); overflow: hidden; }
+    .loss-card::before { content: ''; position: absolute; inset: 0 auto 0 0; width: .3rem;
+        background: linear-gradient(180deg, #f87171, #b91c1c); }
+    .loss-upto { font-size: .66rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #dc2626; }
+    .loss-n { font-family: var(--font-heading); font-weight: 800; line-height: 1; color: #b91c1c;
+        font-size: clamp(2.1rem, 4.5vw, 2.9rem); display: flex; align-items: baseline; gap: .1rem; margin-top: .15rem; }
+    .loss-n small { font-size: 1.1rem; font-weight: 800; color: #ef4444; }
+    .loss-l { margin-top: .45rem; font-weight: 800; color: #14210c; font-size: .93rem; line-height: 1.3; }
+    .loss-p { margin-top: .3rem; font-size: .8rem; color: #6b7280; line-height: 1.5; }
+    .loss-bar { margin-top: .85rem; height: .45rem; border-radius: 999px; background: #fee2e2; overflow: hidden; }
+    .loss-bar i { display: block; height: 100%; width: 0; border-radius: inherit;
+        background: linear-gradient(90deg, #f87171, #b91c1c);
+        transition: width 1.4s cubic-bezier(.22,1,.36,1) .15s; }
+    .loss-card.is-lit .loss-bar i { width: var(--loss, 40%); }
+
+    .loss-photo { position: relative; border-radius: 1.5rem; overflow: hidden; min-height: 16rem;
+        box-shadow: 0 26px 55px -30px rgb(16 22 12 / .55); }
+    .loss-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .loss-photo figcaption { position: absolute; inset: auto 0 0 0; padding: 1.1rem 1.2rem;
+        background: linear-gradient(transparent, rgb(0 0 0 / .72)); color: #fff;
+        font-weight: 700; font-size: .95rem; line-height: 1.45; }
+
+    .loss-pivot { display: flex; align-items: center; gap: 1rem; margin: 2.75rem 0 1.5rem; }
+    .loss-pivot::before, .loss-pivot::after { content: ''; height: 1px; flex: 1 1 auto;
+        background: linear-gradient(90deg, transparent, #cfdcc2); }
+    .loss-pivot::after { background: linear-gradient(90deg, #cfdcc2, transparent); }
+    .loss-pivot span { flex: none; display: inline-flex; align-items: center; gap: .5rem;
+        border-radius: 999px; background: #2f5219; color: #fff; font-weight: 800;
+        font-size: .85rem; padding: .55rem 1.1rem; box-shadow: 0 12px 26px -14px rgb(47 82 25 / .6); }
+    .loss-pivot svg { width: 1rem; height: 1rem; color: #f2c94c; }
+
+    .fix-row { display: flex; gap: .9rem; align-items: flex-start; border-radius: 1.1rem;
+        background: #f3f8ec; border: 1px solid #dcead0; padding: 1rem 1.1rem; }
+    .fix-badge { flex: none; width: 2.1rem; height: 2.1rem; border-radius: 999px; background: #4a7c2a;
+        color: #fff; display: flex; align-items: center; justify-content: center; margin-top: .1rem; }
+    .fix-badge svg { width: 1.1rem; height: 1.1rem; }
+    .fix-k { font-weight: 800; color: #2f5219; font-size: .95rem; line-height: 1.35; }
+    .fix-p { margin-top: .25rem; font-size: .85rem; color: #4b5563; line-height: 1.55; }
+
     @media (prefers-reduced-motion: reduce) {
         .bg-drift::before, .bg-drift::after, .spark-field::after, .anee-halo::before { animation: none; }
         .vid-play > span, .vid-play { transition: none; }
+        .loss-bar i { transition: none; }
     }
 </style>
 @endpush

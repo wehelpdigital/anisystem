@@ -186,6 +186,83 @@
         </div>
     </section>
 
+    {{-- ================= THE COST OF GUESSING ================= --}}
+    {{-- The stakes in numbers: what a season bleeds when nobody intervenes,
+         and the exact anee.io door that closes each leak. The counters
+         count up and the red bars fill when the row scrolls into view. --}}
+    <section class="py-16 sm:py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="max-w-2xl mx-auto text-center reveal">
+                <p class="text-sm font-bold uppercase tracking-wider text-red-600">The price of guessing</p>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">What a Season Loses Without Intervention</h2>
+                <p class="mt-4 text-gray-600">
+                    Crop research keeps putting numbers on the harvest that guesswork gives away.
+                    Every point below is pesos that never reach your pocket.
+                </p>
+            </div>
+
+            <div class="mt-12 grid gap-8 lg:grid-cols-[1fr_1.25fr] items-center">
+                <figure class="loss-photo reveal">
+                    <img src="{{ asset('images/site/photos/sacks-shed.jpg') }}" alt="A farmer beside his stored harvest, counting sacks" loading="lazy">
+                    <figcaption>The difference between these sacks and the ones that never made it is usually a decision that came days late.</figcaption>
+                </figure>
+
+                <div class="grid gap-4 sm:grid-cols-2">
+                    @php
+                        $losses = [
+                            ['n' => 40, 'l' => 'Yield lost to pests and diseases', 'p' => 'When the intervention comes late — or never comes at all.'],
+                            ['n' => 30, 'l' => 'Wasted on the wrong solution', 'p' => 'A misread problem means the wrong product, at full price, while the real problem keeps eating.'],
+                            ['n' => 25, 'l' => 'Yield lost to mistimed fertilizer', 'p' => 'The right sack on the wrong week feeds the field a fraction of what it paid for.'],
+                            ['n' => 16, 'l' => 'Of the harvest lost after cutting', 'p' => 'Poor timing and handling between field and buyer quietly shave the sacks.'],
+                        ];
+                    @endphp
+                    @foreach ($losses as $i => $loss)
+                        <div class="loss-card reveal" style="--loss: {{ $loss['n'] }}%; --reveal-delay: {{ $i * 0.08 }}s">
+                            <p class="loss-upto">Up to</p>
+                            <p class="loss-n"><span data-countup="{{ $loss['n'] }}">0</span><small>%</small></p>
+                            <p class="loss-l">{{ $loss['l'] }}</p>
+                            <p class="loss-p">{{ $loss['p'] }}</p>
+                            <div class="loss-bar" aria-hidden="true"><i></i></div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <p class="mt-4 text-center text-xs text-gray-400 reveal">
+                Ranges drawn from FAO crop-loss and Philippine rice research estimates — your farm's exact numbers vary, which is the point.
+            </p>
+
+            <div class="loss-pivot reveal" aria-hidden="true">
+                <span>
+                    <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
+                    anee.io was built to close every one of these gaps
+                </span>
+            </div>
+
+            <div class="grid gap-4 md:grid-cols-2">
+                @foreach ([
+                    ['k' => 'Late intervention → caught early', 'p' => 'Per-lot weather, growth-stage watch-lists and Anee on call 24/7 — you see the change coming and act on the right day, not the remembered one.'],
+                    ['k' => 'Wrong solution → right diagnosis first', 'p' => 'Snap a photo of the leaf and Anee reads it against your crop and its exact stage before a peso is spent — the treatment fits the problem, at the right dose.'],
+                    ['k' => 'Mistimed fertilizer → anchored to Day-0', 'p' => 'Every application lands on the right day, counted from each lot\'s own sowing date. Move the plan and every date follows — the timing never lives in memory.'],
+                    ['k' => 'Post-harvest losses → the season runs to the buyer', 'p' => 'Harvest and post-harvest tasks are scheduled like everything else, and the season report reads what happened so the next season loses less.'],
+                ] as $i => $fix)
+                    <div class="fix-row reveal" style="--reveal-delay: {{ $i * 0.08 }}s">
+                        <span class="fix-badge"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>
+                        <div>
+                            <p class="fix-k">{{ $fix['k'] }}</p>
+                            <p class="fix-p">{{ $fix['p'] }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="sec-cta reveal">
+                <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start for Free — stop the leaks</a>
+                <span class="sec-cta-note">The free plan already carries the timeline, the stages and Anee's first answers.</span>
+            </div>
+        </div>
+    </section>
+
     {{-- ================= YOUR FARM IS A BUSINESS ================= --}}
     {{-- The second half of the argument: every other business already took
          the technology upgrade and pulled ahead. Agriculture is a business
@@ -802,3 +879,39 @@
     </section>
 
 @endsection
+
+@push('scripts')
+<script>
+    /* The loss counters count up from zero and their red bars fill when the
+       cards scroll into view — numbers that move read as measurements, not
+       decoration. Reduced motion gets the final figures immediately. */
+    (() => {
+        const els = document.querySelectorAll('[data-countup]');
+        if (!els.length) return;
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const run = (el) => {
+            const end = parseInt(el.dataset.countup, 10) || 0;
+            el.closest('.loss-card')?.classList.add('is-lit');
+            if (reduce || !('requestAnimationFrame' in window)) { el.textContent = end; return; }
+            const t0 = performance.now();
+            const dur = 1400;
+            const tick = (t) => {
+                const p = Math.min(1, (t - t0) / dur);
+                const eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.round(end * eased);
+                if (p < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        };
+        if (!('IntersectionObserver' in window)) { els.forEach(run); return; }
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                io.unobserve(entry.target);
+                run(entry.target);
+            });
+        }, { threshold: 0.4 });
+        els.forEach((el) => io.observe(el));
+    })();
+</script>
+@endpush
