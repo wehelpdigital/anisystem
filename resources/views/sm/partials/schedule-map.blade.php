@@ -335,7 +335,7 @@
         <button type="button" class="cmap-tool is-active" id="cmapLayer" title="Toggle map / satellite" aria-label="Toggle map or satellite view" aria-pressed="true">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>
         </button>
-        @if ($mapChrome !== 'lot' && \App\Support\WorkerContext::canEdit())
+        @if (\App\Support\WorkerContext::canEdit())
         <button type="button" class="cmap-tool cmap-danger" id="cmapClear" title="Clear the whole map for the team" aria-label="Clear the map for the team">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>
         </button>
@@ -806,6 +806,7 @@
     // the same either way; what changes is who it thinks it is talking to.
     const CHROME = @json($mapChrome);
     const LOT_PIN_URL = @json(route('sm.lots.pin'));
+    const LOT_LINK_URL = @json(route('sm.lots.map.link'));
 
     let map = null, proj = null, satOn = true;
     let tool = 'pan', color = '#f5c518', width = 3;
@@ -3641,15 +3642,25 @@
                  * drawing the pin was placed in — the boundary, the notes,
                  * the measurements — rather than to a blank canvas with one
                  * lonely teardrop on it. */
-                if (ATTACH && ATTACH.pinned) {
+                if (ATTACH) {
                     ATTACH.mapSaveId = r.data.saveId;
-                    api(LOT_PIN_URL + '?scheduleId=' + SID, {
-                        method: 'POST',
-                        body: {
-                            lotId: ATTACH.id, lat: ATTACH.lat, lng: ATTACH.lng,
-                            label: ATTACH.label, mapSaveId: r.data.saveId,
-                        },
-                    }).catch(() => { /* the map is saved; the link is a nicety */ });
+                    if (ATTACH.pinned) {
+                        api(LOT_PIN_URL + '?scheduleId=' + SID, {
+                            method: 'POST',
+                            body: {
+                                lotId: ATTACH.id, lat: ATTACH.lat, lng: ATTACH.lng,
+                                label: ATTACH.label, mapSaveId: r.data.saveId,
+                            },
+                        }).catch(() => { /* the map is saved; the link is a nicety */ });
+                    } else {
+                        // No pin yet — the pin endpoint would read missing
+                        // coordinates as "remove the pin". The link travels
+                        // its own quiet road instead.
+                        api(LOT_LINK_URL + '?scheduleId=' + SID, {
+                            method: 'POST',
+                            body: { lotId: ATTACH.id, mapSaveId: r.data.saveId },
+                        }).catch(() => { /* the map is saved; the link is a nicety */ });
+                    }
                 }
             }
             // The file is current as of now, so the autosave's clock starts
@@ -4032,7 +4043,12 @@
         // the Maps grid asked for while the map was still booting, so a tapped
         // card lands on a map that exists. (?save= deep links land there too:
         // the grid reads them server-side and asks through the same door.)
-        loadObjects(true).catch(() => {}).then(() => drainGridAsk());
+        loadObjects(true).catch(() => {}).then(() => {
+            drainGridAsk();
+            // Whoever wrapped this engine (the lot page) can now ask
+            // its one question knowing what the canvas holds.
+            window.dispatchEvent(new CustomEvent('cmap:ready', { detail: { shapes: objIndex.size } }));
+        });
 
         // On by default: seeing each other on the land is why the map exists.
         // The browser still asks permission; declining just leaves it off.

@@ -710,9 +710,10 @@ const __init = () => {
                 </a>` : ''}
 
                 ${MAY_EDIT_LOTS ? `
-                <div class="flex items-center gap-1.5 pt-3 border-t border-gray-100">
+                <div class="flex items-center flex-wrap gap-1.5 pt-3 border-t border-gray-100">
                     <button type="button" class="btn btn-white btn-sm" data-edit-lot="${lot.id}">Edit</button>
-                    <a class="btn btn-white btn-sm" href="${MAP_URL}&lot=${lot.id}">${lot.pinned ? 'Open the map' : 'Attach a map'}</a>
+                    <a class="btn btn-white btn-sm" href="${MAP_URL}&lot=${lot.id}">${lot.mapSaveId ? 'Open the map' : 'Attach a map'}</a>
+                    ${lot.mapSaveId ? `<button type="button" class="btn btn-white btn-sm text-red-600" data-detach-map="${lot.id}">Detach map</button>` : ''}
                     <button type="button" class="btn btn-ghost btn-sm px-2.5! text-red-500 hover:bg-red-50! ml-auto" data-delete-lot="${lot.id}" aria-label="Delete lot">
                         <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
                     </button>
@@ -831,6 +832,29 @@ const __init = () => {
         if (editBtn) {
             const lot = LOTS.find((l) => String(l.id) === editBtn.getAttribute('data-edit-lot'));
             if (lot) openLotSheet(lot);
+            return;
+        }
+
+        const detachBtn = e.target.closest('[data-detach-map]');
+        if (detachBtn) {
+            const lot = LOTS.find((l) => String(l.id) === detachBtn.getAttribute('data-detach-map'));
+            if (!lot) return;
+            const ok = await confirmAction({
+                title: 'Detach the map from ' + (lot.lotName || 'this lot') + '?',
+                message: 'The saved map for this lot is deleted — the drawing is gone for good, and the lot goes back to having no map. The lot itself is untouched.',
+                confirmText: 'Detach and delete',
+            });
+            if (!ok) return;
+            try {
+                const res = await api(`{{ route('sm.lots.map.detach') }}?scheduleId=${SCHEDULE_ID}`, {
+                    method: 'POST', body: { lotId: lot.id },
+                });
+                toast(res.message || 'Map detached.');
+                const fresh = res.data && (res.data.data || res.data);
+                const i = LOTS.findIndex((l) => l.id === lot.id);
+                if (i >= 0 && fresh && fresh.id) LOTS[i] = fresh; else if (i >= 0) LOTS[i].mapSaveId = null;
+                renderList();
+            } catch (err) { toast(err.message, 'error'); }
             return;
         }
 

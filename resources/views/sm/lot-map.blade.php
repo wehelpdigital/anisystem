@@ -82,7 +82,32 @@
      * the lot. So the sheet is filled in and sent from here, and the farmer
      * sees one button in the tools row and one question before it writes.
      */
-    const LOT = @json(['id' => $lot->id, 'name' => $lot->lotName]);
+    const LOT = @json(['id' => $lot->id, 'name' => $lot->lotName, 'mapSaveId' => $lot->mapSaveId]);
+
+    /* EACH LOT HAS ITS OWN MAP.
+     *
+     * The engine boots onto the schedule's one live canvas, which is how
+     * Apartado 1's page came to show what was drawn for Apartado 2. So the
+     * moment the canvas reports in:
+     *  - a lot that already saved a map is taken straight to THAT save;
+     *  - a lot attaching for the first time, arriving on a canvas still
+     *    holding the last errand's drawing, is asked whether to clear it —
+     *    saved maps stay safe on the shelf either way. */
+    window.addEventListener('cmap:ready', (e) => {
+        if (LOT.mapSaveId) {
+            window.cmapOpenSaveById(LOT.mapSaveId);
+            return;
+        }
+        if ((e.detail && e.detail.shapes) > 0) {
+            const ask = () => Promise.resolve(window.confirmAction ? window.confirmAction({
+                title: 'Start ' + LOT.name + '\'s own map?',
+                message: 'The canvas still shows the last activity\'s drawing. Clear it so this lot starts clean? Saved maps stay safe on the shelf.',
+                confirmText: 'Clear and start',
+                confirmClass: 'btn-primary',
+            }) : window.confirm('Clear the canvas so ' + LOT.name + ' starts its own map?'));
+            ask().then((ok) => { if (ok) window.cmapStartBlank(); });
+        }
+    }, { once: true });
 
     /* How tall the map is: whatever is left under the header.
      *

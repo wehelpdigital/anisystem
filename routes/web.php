@@ -344,6 +344,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-lots-delete', [App\Http\Controllers\Manager\LotController::class, 'destroy'])->name('sm.lots.destroy');
     // Where a lot is. Posted by the map the moment a pin goes down.
     Route::post('/app/sm-lots-pin', [App\Http\Controllers\Manager\LotController::class, 'pin'])->name('sm.lots.pin');
+    Route::post('/app/sm-lots-map-link', [App\Http\Controllers\Manager\LotController::class, 'linkMap'])->name('sm.lots.map.link');
+    Route::post('/app/sm-lots-map-detach', [App\Http\Controllers\Manager\LotController::class, 'detachMap'])->name('sm.lots.map.detach');
     // One lot's own map — its own page, not the Maps module wearing a label.
     Route::get('/app/sm-lot-map', [App\Http\Controllers\Manager\LotController::class, 'map'])->name('sm.lots.map');
 

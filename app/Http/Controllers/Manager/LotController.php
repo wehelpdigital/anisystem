@@ -143,6 +143,59 @@ class LotController extends BaseScheduleController
      * Sending no coordinates unpins the lot, which is how somebody undoes a
      * pin dropped on the wrong side of the road.
      */
+    /**
+     * Tie a saved map to a lot WITHOUT touching its pin. The save flow
+     * calls this for a lot that has no coordinates yet — the pin endpoint
+     * reads "no lat/lng" as "remove the pin", which also wiped the link.
+     */
+    public function linkMap(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        $data = Validator::make($request->all(), [
+            'lotId' => 'required|integer',
+            'mapSaveId' => 'required|integer',
+        ])->validate();
+
+        $lot = AsScheduleLot::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)->find($data['lotId']);
+        if (! $lot) {
+            return $this->jsonFail('That lot is not on this schedule.', 404);
+        }
+        $save = \App\Models\ScheduleMapSave::active()
+            ->where('scheduleId', $schedule->id)->find((int) $data['mapSaveId']);
+        if (! $save) {
+            return $this->jsonFail('That saved map is not on this schedule.', 404);
+        }
+
+        $lot->update(['mapSaveId' => $save->id]);
+
+        return $this->jsonOk('Map tied to ' . $lot->lotName . '.', ['data' => $this->lotPayload($lot->fresh())]);
+    }
+
+    /**
+     * Detach a lot's map: the saved map is deleted and the lot forgets it.
+     * The pin (the lot's place on the ground) stays — a lot does not lose
+     * its coordinates because its drawing was thrown away.
+     */
+    public function detachMap(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        $lot = AsScheduleLot::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)->find((int) $request->input('lotId'));
+        if (! $lot) {
+            return $this->jsonFail('That lot is not on this schedule.', 404);
+        }
+        if ($lot->mapSaveId) {
+            \App\Models\ScheduleMapSave::active()
+                ->where('scheduleId', $schedule->id)
+                ->where('id', (int) $lot->mapSaveId)
+                ->update(['deleteStatus' => 0]);
+        }
+        $lot->update(['mapSaveId' => null]);
+
+        return $this->jsonOk('Map detached from ' . $lot->lotName . '.', ['data' => $this->lotPayload($lot->fresh())]);
+    }
+
     public function pin(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request);
