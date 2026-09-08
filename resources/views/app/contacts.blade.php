@@ -4,6 +4,9 @@
 @section('page-title', 'Contact List')
 @section('page-subtitle', 'Your farm\'s phonebook')
 @section('back', route('sm.index'))
+@section('help-key', 'contacts')
+
+@include('partials.tag-sheet-css')
 
 @push('head')
 <style>
@@ -43,25 +46,40 @@
     .ct-chip.is-on { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
     .ct-chip small { font-weight: 700; opacity: .75; }
 
-    /* Tag editor inside the sheet: chips + a plain input that grows them. */
-    .ctf-tags { display: flex; flex-wrap: wrap; gap: .35rem; padding: .45rem;
-        border: 1px solid var(--color-gray-300); border-radius: .8rem; }
-    .ctf-tag { display: inline-flex; align-items: center; gap: .3rem; font-size: .75rem; font-weight: 800;
-        color: var(--color-brand-700); background: var(--color-brand-50);
-        border: 1px solid var(--color-brand-100); border-radius: 999px; padding: .2rem .35rem .2rem .6rem; }
-    .ctf-tag button { width: 1.05rem; height: 1.05rem; border-radius: 999px; display: flex;
-        align-items: center; justify-content: center; color: var(--color-brand-700); }
-    .ctf-tag button:hover { background: var(--color-brand-100); }
-    .ctf-tags input { flex: 1 1 7rem; min-width: 7rem; border: 0; outline: none; background: transparent;
-        font-size: .85rem; padding: .2rem .3rem; color: var(--color-gray-900); }
-    .ctf-sug { font-size: .72rem; font-weight: 800; border-radius: 999px; padding: .28rem .7rem;
-        border: 1px dashed var(--color-gray-300); color: var(--color-gray-500); cursor: pointer;
+    /* The search door: an icon beside the full-width Add. */
+    .ct-searchbtn { flex: none; width: 3rem; height: 3rem; border-radius: .9rem; display: flex;
+        align-items: center; justify-content: center; color: var(--color-gray-600);
+        background: var(--color-white); border: 1px solid var(--color-gray-300);
         transition: color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
-    .ctf-sug:hover, .ctf-sug.is-on { color: var(--color-brand-700); border-color: var(--color-brand-400); border-style: solid; }
+    .ct-searchbtn:hover { color: var(--color-brand-700); border-color: var(--color-brand-400); }
+    .ct-searchbtn svg { width: 1.2rem; height: 1.2rem; }
+    .ct-filterpill { display: inline-flex; align-items: center; gap: .45rem; font-size: .78rem;
+        font-weight: 800; color: var(--color-brand-700); background: var(--color-brand-50);
+        border: 1px solid var(--color-brand-100); border-radius: 999px; padding: .35rem .5rem .35rem .8rem; }
+    .ct-filterpill button { width: 1.2rem; height: 1.2rem; border-radius: 999px; display: flex;
+        align-items: center; justify-content: center; }
+    .ct-filterpill button:hover { background: var(--color-brand-100); }
+
+    /* The tag mount inside the form — the main tags picker's clothes. */
+    .ctf-mount { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+    .ctf-tag { display: inline-flex; align-items: center; gap: .3rem; max-width: 100%;
+        padding: .28rem .6rem; border-radius: 999px; font-size: .74rem; font-weight: 700;
+        background: var(--color-brand-50); color: var(--color-brand-800);
+        border: 1px solid var(--color-brand-200); }
+    .ctf-tag button { display: inline-flex; padding: .1rem; border-radius: 999px; color: inherit; opacity: .6; }
+    .ctf-tag button:hover { opacity: 1; }
+    .ctf-tag svg { width: .7rem; height: .7rem; }
+    .ctf-add { display: inline-flex; align-items: center; gap: .3rem; padding: .28rem .65rem;
+        border-radius: 999px; font-size: .74rem; font-weight: 700; cursor: pointer;
+        color: var(--color-gray-500); background: var(--color-white);
+        border: 1px dashed var(--color-gray-300);
+        transition: color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .ctf-add:hover { color: var(--color-brand-700); border-color: var(--color-brand-400); }
+    .ctf-add svg { width: .8rem; height: .8rem; }
 
     @media (prefers-reduced-motion: reduce) {
         .ct-row { transition: none; opacity: 1; transform: none; }
-        .ct-act, .ct-chip, .ctf-sug { transition: none; }
+        .ct-act, .ct-chip, .ct-searchbtn, .ctf-add { transition: none; }
     }
 </style>
 @endpush
@@ -69,18 +87,25 @@
 @section('content')
 <div class="max-w-3xl mx-auto">
 
-    {{-- Toolbar: search on the left, the new-contact door on the right. --}}
-    <div class="card mb-3">
-        <div class="card-body flex items-center gap-3">
-            <div class="relative grow">
-                <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-                <input type="search" id="ctSearch" class="form-input pl-10" placeholder="Search name, number, company, tag…" autocomplete="off">
-            </div>
-            <button type="button" id="ctAddBtn" class="btn btn-primary shrink-0">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14m-7-7h14"/></svg>
-                <span class="hidden sm:inline">Add contact</span><span class="sm:hidden">Add</span>
+    {{-- Toolbar: the search behind one icon, and one wide door for adding. --}}
+    <div class="flex items-center gap-2.5 mb-3">
+        <button type="button" id="ctSearchBtn" class="ct-searchbtn" title="Search contacts" aria-label="Search contacts">
+            <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+        </button>
+        <button type="button" id="ctAddBtn" class="btn btn-primary grow justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14m-7-7h14"/></svg>
+            Add a New Contact
+        </button>
+    </div>
+
+    {{-- What the list is currently narrowed by, with its way off. --}}
+    <div id="ctFilterRow" class="mb-2" hidden>
+        <span class="ct-filterpill">
+            <span id="ctFilterSay"></span>
+            <button type="button" id="ctFilterClear" aria-label="Clear the search">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
             </button>
-        </div>
+        </span>
     </div>
 
     {{-- The chips: every tag this member uses, counted. Painted by JS. --}}
@@ -103,6 +128,23 @@
     </div>
     <div id="ctMore" class="py-6" hidden aria-hidden="true"></div>
 
+</div>
+
+{{-- The search, behind its own small sheet. Typing filters the list live
+     underneath; closing keeps the filter (the pill above shows the way off). --}}
+<div class="sheet hidden" id="ctSearchSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Search contacts</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="relative">
+            <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            <input type="search" id="ctSearch" class="form-input pl-10" placeholder="Name, number, company, tag…" autocomplete="off">
+        </div>
+        <p class="form-hint">The list behind updates as you type.</p>
+    </div>
 </div>
 
 {{-- The add/edit sheet — one form, two moods; the title says which. --}}
@@ -139,21 +181,38 @@
         </div>
         <div>
             <label class="form-label">Tags</label>
-            <div class="ctf-tags" id="ctfTags">
-                <input type="text" id="ctfTagInput" placeholder="Type a tag, press Enter" maxlength="30" autocomplete="off">
-            </div>
-            {{-- The usual suspects, one tap each. --}}
-            <div class="flex flex-wrap gap-1.5 mt-2" id="ctfSugs"></div>
+            {{-- The same tag experience the whole app uses: chips on the
+                 form, a sheet to pick or coin them. --}}
+            <div class="ctf-mount" id="ctfTagsMount"></div>
         </div>
         <div>
             <label class="form-label" for="ctfNotes">Notes <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="ctfNotes" class="form-input" rows="2" placeholder="Rates, landmarks, who referred them…" maxlength="2000"></textarea>
+            <textarea id="ctfNotes" class="form-input" rows="4" style="padding-top:.7rem;padding-bottom:.7rem"
+                      placeholder="Rates, landmarks, who referred them…" maxlength="2000"></textarea>
         </div>
         <button type="button" id="ctfDelete" class="btn w-full text-red-600 bg-red-50 hover:bg-red-100 border border-red-100" hidden>Remove this contact</button>
     </div>
     <div class="sheet-footer">
-        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
-        <button type="button" class="btn btn-primary" id="ctfSave">Save Contact</button>
+        {{-- No Cancel: the ✕ in the header already is one. --}}
+        <button type="button" class="btn btn-primary w-full" id="ctfSave">Save Contact</button>
+    </div>
+</div>
+
+{{-- The tag sheet — the main tags module's shape, on the phonebook's own
+     (personal) tag vocabulary. --}}
+<div class="sheet hidden" id="ctTagSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Tags</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="flex gap-2 mb-3">
+            <input type="text" class="form-input grow" id="ctTagNew" maxlength="30"
+                   placeholder="Tag name — e.g. pest problem" autocomplete="off" enterkeyhint="done">
+            <button type="button" class="btn btn-primary shrink-0" id="ctTagAdd">Add</button>
+        </div>
+        <div class="dt-rows" id="ctTagList"></div>
     </div>
 </div>
 @endsection
@@ -172,7 +231,7 @@
     const $ = (id) => document.getElementById(id);
     const list = $('ctList'), chips = $('ctChips'), empty = $('ctEmpty'), loading = $('ctLoading'), more = $('ctMore');
 
-    const state = { q: '', tag: '', page: 1, hasMore: false, busy: false, editing: null, tags: [] };
+    const state = { q: '', tag: '', page: 1, hasMore: false, busy: false, editing: null, tags: [], tagCounts: {} };
 
     /* A face from a name: the same name always wears the same colour. */
     const hueOf = (name) => {
@@ -207,7 +266,8 @@
     }
 
     function paintChips(tagCounts) {
-        state.tags = Object.keys(tagCounts);
+        state.tagCounts = tagCounts || {};
+        state.tags = Object.keys(state.tagCounts);
         if (!state.tags.length) { chips.hidden = true; return; }
         chips.hidden = false;
         chips.innerHTML = '';
@@ -217,7 +277,7 @@
         all.textContent = 'All';
         all.addEventListener('click', () => { state.tag = ''; reload(); });
         chips.appendChild(all);
-        for (const [tag, n] of Object.entries(tagCounts)) {
+        for (const [tag, n] of Object.entries(state.tagCounts)) {
             const b = document.createElement('button');
             b.type = 'button';
             b.className = 'ct-chip' + (state.tag === tag ? ' is-on' : '');
@@ -225,6 +285,12 @@
             b.addEventListener('click', () => { state.tag = state.tag === tag ? '' : tag; reload(); });
             chips.appendChild(b);
         }
+    }
+
+    function paintFilterPill() {
+        const row = $('ctFilterRow');
+        row.hidden = state.q === '';
+        if (state.q !== '') $('ctFilterSay').textContent = 'Searching: "' + state.q + '"';
     }
 
     async function fetchPage(page) {
@@ -248,6 +314,7 @@
         list.innerHTML = '';
         empty.hidden = true;
         loading.hidden = false;
+        paintFilterPill();
         try {
             const data = await fetchPage(1);
             loading.hidden = true;
@@ -278,47 +345,73 @@
         } finally { state.busy = false; }
     }).observe(more);
 
-    /* ------------------------------ the sheet ------------------------------ */
+    /* ------------------------- the tag mount + sheet ------------------------ */
     let formTags = [];
 
-    function paintFormTags() {
-        const box = $('ctfTags'), input = $('ctfTagInput');
-        box.querySelectorAll('.ctf-tag').forEach((el) => el.remove());
-        for (const t of formTags) {
-            const chip = document.createElement('span');
-            chip.className = 'ctf-tag';
-            chip.innerHTML = `${esc(t)}<button type="button" aria-label="Remove ${esc(t)}"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="width:.7rem;height:.7rem"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button>`;
-            chip.querySelector('button').addEventListener('click', () => { formTags = formTags.filter((x) => x !== t); paintFormTags(); });
-            box.insertBefore(chip, input);
-        }
-        const sugs = $('ctfSugs');
-        sugs.innerHTML = '';
-        // The user's own vocabulary first, the starter list after — no repeats.
-        const pool = [...new Set([...state.tags, ...SUGGESTIONS])];
-        for (const s of pool) {
-            const b = document.createElement('button');
-            b.type = 'button';
-            b.className = 'ctf-sug' + (formTags.some((t) => t.toLowerCase() === s.toLowerCase()) ? ' is-on' : '');
-            b.textContent = s;
+    function paintTagMount() {
+        const mount = $('ctfTagsMount');
+        mount.innerHTML = formTags.map((t) => `
+            <span class="ctf-tag" data-ct-tag="${esc(t)}"><span>${esc(t)}</span>
+                <button type="button" aria-label="Remove tag ${esc(t)}"><svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button>
+            </span>`).join('')
+            + `<button type="button" class="ctf-add" id="ctfTagOpen">
+                <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14m-7-7h14"/></svg>
+                ${formTags.length ? 'Tags' : 'Add tags'} <i style="font-style:normal;opacity:.7">(optional)</i></button>`;
+        mount.querySelectorAll('.ctf-tag button').forEach((b) => {
             b.addEventListener('click', () => {
-                const i = formTags.findIndex((t) => t.toLowerCase() === s.toLowerCase());
-                if (i >= 0) formTags.splice(i, 1); else if (formTags.length < 10) formTags.push(s);
-                paintFormTags();
+                const t = b.closest('.ctf-tag').dataset.ctTag;
+                formTags = formTags.filter((x) => x !== t);
+                paintTagMount();
             });
-            sugs.appendChild(b);
-        }
+        });
+        mount.querySelector('#ctfTagOpen').addEventListener('click', () => {
+            paintTagSheet();
+            window.openSheet('ctTagSheet');
+        });
     }
+
+    function tagPool() {
+        // The member's own vocabulary first, the starter list after — no repeats.
+        return [...new Set([...state.tags, ...SUGGESTIONS, ...formTags])];
+    }
+
+    function paintTagSheet() {
+        const box = $('ctTagList');
+        box.innerHTML = tagPool().map((t) => `
+            <button type="button" class="dt-row${formTags.some((x) => x.toLowerCase() === t.toLowerCase()) ? ' is-on' : ''}" data-ct-pick="${esc(t)}">
+                <span class="dt-row-e">🏷️</span>
+                <span class="dt-row-body"><b>${esc(t)}</b>${state.tagCounts[t] ? `<i>on ${state.tagCounts[t]} ${state.tagCounts[t] === 1 ? 'contact' : 'contacts'}</i>` : ''}</span>
+                <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>`).join('');
+    }
+
+    $('ctTagList').addEventListener('click', (e) => {
+        const row = e.target.closest('[data-ct-pick]');
+        if (!row) return;
+        const t = row.dataset.ctPick;
+        const i = formTags.findIndex((x) => x.toLowerCase() === t.toLowerCase());
+        if (i >= 0) formTags.splice(i, 1);
+        else if (formTags.length < 10) formTags.push(t);
+        row.classList.toggle('is-on', i < 0 && formTags.length <= 10);
+        paintTagMount();
+    });
 
     function addTagFromInput() {
-        const input = $('ctfTagInput');
-        const t = input.value.trim().replace(/,+$/, '');
+        const inp = $('ctTagNew');
+        const t = inp.value.trim().replace(/,+$/, '');
         if (t && formTags.length < 10 && !formTags.some((x) => x.toLowerCase() === t.toLowerCase())) {
             formTags.push(t);
-            paintFormTags();
+            paintTagMount();
+            paintTagSheet();
         }
-        input.value = '';
+        inp.value = '';
     }
+    $('ctTagAdd').addEventListener('click', addTagFromInput);
+    $('ctTagNew').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addTagFromInput(); }
+    });
 
+    /* ------------------------------ the sheet ------------------------------ */
     function openSheetFor(contact) {
         state.editing = contact || null;
         $('ctSheetTitle').textContent = contact ? 'Edit contact' : 'New contact';
@@ -330,20 +423,14 @@
         $('ctfNotes').value = contact?.notes || '';
         $('ctfDelete').hidden = !contact;
         formTags = [...(contact?.tags || [])];
-        paintFormTags();
+        paintTagMount();
         window.openSheet('ctSheet');
         if (!contact) setTimeout(() => $('ctfName').focus(), 250);
     }
 
-    $('ctfTagInput').addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addTagFromInput(); }
-    });
-    $('ctfTagInput').addEventListener('blur', addTagFromInput);
-
     $('ctfSave').addEventListener('click', async () => {
         const name = $('ctfName').value.trim();
         if (!name) { window.toast?.('A contact needs at least a name.', 'error'); $('ctfName').focus(); return; }
-        addTagFromInput();
         const body = {
             name,
             phone: $('ctfPhone').value.trim() || null,
@@ -389,13 +476,27 @@
         if (e.target.closest?.('[data-ct-add]')) openSheetFor(null);
     });
 
+    /* ------------------------------ the search ----------------------------- */
+    $('ctSearchBtn').addEventListener('click', () => {
+        window.openSheet('ctSearchSheet');
+        setTimeout(() => $('ctSearch').focus(), 250);
+    });
     let deb;
     $('ctSearch').addEventListener('input', () => {
         clearTimeout(deb);
         deb = setTimeout(() => { state.q = $('ctSearch').value.trim(); reload(); }, 250);
     });
+    $('ctFilterClear').addEventListener('click', () => {
+        state.q = '';
+        $('ctSearch').value = '';
+        reload();
+    });
 
-    reload();
+    // window.api lives in the deferred module bundle, which evaluates after
+    // inline scripts — booting on `load` is what makes the first paint
+    // reliable instead of a race the page sometimes lost.
+    if (document.readyState === 'complete') reload();
+    else window.addEventListener('load', () => reload(), { once: true });
 })();
 </script>
 @endpush

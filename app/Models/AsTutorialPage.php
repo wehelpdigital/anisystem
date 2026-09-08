@@ -35,6 +35,7 @@ class AsTutorialPage extends BaseModel
         'hub' => 'Schedule Hub',
         'schedules' => 'Schedules',
         'tags' => 'Tags',
+        'contacts' => 'Contact List',
 
         /* Outside the cropping schedule.
          *
