@@ -26,14 +26,14 @@
                     </span>
 
                     <h1 class="mt-6 font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.08] text-balance">
-                        Plan Every Cropping Season
+                        Manage Your Crops
                         <span class="bg-gradient-to-r from-accent-300 to-accent-500 bg-clip-text text-transparent">Like a Pro</span>
                     </h1>
 
                     <p class="mt-5 text-base sm:text-lg text-gray-200 leading-relaxed max-w-xl">
-                        anee.io is the cropping schedule manager our technicians run on, now in your hands. Map your lots,
-                        schedule every activity from land prep to harvest, track workers and costs, and ask the built-in AI Technician —
-                        all from your phone, wherever your farm is.
+                        <span class="font-semibold text-white">Everything you need is in anee.io — the modern tool to increase your yield.</span>
+                        Map your lots, schedule every activity from land prep to harvest, track workers and costs,
+                        and ask the built-in AI Technician — all from your phone, wherever your farm is.
                     </p>
 
                     <div class="mt-8 flex flex-col items-start gap-2">
@@ -186,6 +186,33 @@
         </div>
     </section>
 
+    {{-- ================= THE BIG TRUTH ================= --}}
+    {{-- The page's thesis, said once, as large as it deserves: harvests are
+         not lost for lack of another product — they are lost in management.
+         The loss wall right below is the evidence; Anee is the answer. --}}
+    <section class="py-16 sm:py-24 bg-gray-50 bg-drift">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+            <p class="text-sm font-bold uppercase tracking-wider text-brand-600 reveal">Before you buy another sack</p>
+            <h2 class="mt-3 font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-ink leading-[1.06] text-balance reveal">
+                The Problem Is Not a Product.
+                <span class="block mt-2 text-brand-600">It's How You Manage Your Farm.</span>
+            </h2>
+            <p class="mt-7 text-gray-600 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto reveal">
+                Every season, money chases a shortcut — a new fertilizer brand, a stronger spray, a seed
+                somebody swears by. But look at where harvests are actually lost: a spray that came three
+                days late, a dose that was guessed, water that missed its stage, costs nobody wrote down.
+                <span class="font-semibold text-ink">None of those are product problems. They are management
+                problems — and no sack fixes a late decision.</span>
+            </p>
+            <p class="mt-4 text-gray-600 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto reveal">
+                Management is the multiplier on every peso you already spend. The same inputs, managed on
+                time and on record, out-yield a bigger budget managed by memory. That is why anee.io exists —
+                not another product to buy, but <span class="font-semibold text-ink">the system that makes
+                every product you already buy finally pay</span>.
+            </p>
+        </div>
+    </section>
+
     {{-- ================= THE COST OF GUESSING ================= --}}
     {{-- The stakes in numbers: what a season bleeds when nobody intervenes,
          and the exact anee.io door that closes each leak. The counters
@@ -201,37 +228,42 @@
                 </p>
             </div>
 
-            {{-- Eight leaks, one level grid: 4×2 on desk, 2-up on tablet,
-                 a single column on the phone. Ordered by how much they take. --}}
-            <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {{-- Eight leaks, two to a row, each wearing its photo and the
+                 pesos it takes from one hectare. Ordered by how much. --}}
+            <div class="mt-12 grid gap-5 md:grid-cols-2">
                 @foreach ([
-                    ['n' => 40, 'l' => 'Yield lost to pests and diseases', 'p' => 'When the intervention comes late — or never comes at all.'],
-                    ['n' => 35, 'l' => 'Yield lost to weeds left too long', 'p' => 'Miss the critical weeding window and the weeds eat first — every day past it costs.'],
-                    ['n' => 30, 'l' => 'Wasted on the wrong solution', 'p' => 'A misread problem means the wrong product, at full price, while the real problem keeps eating.'],
-                    ['n' => 30, 'l' => 'Yield lost to the wrong crop or variety', 'p' => 'Seed that never fit this ground, this season, this water — decided before it was checked.'],
-                    ['n' => 25, 'l' => 'Yield lost to mistimed fertilizer', 'p' => 'The right sack on the wrong week feeds the field a fraction of what it paid for.'],
-                    ['n' => 25, 'l' => 'Yield lost to water at the wrong time', 'p' => 'Dry at flowering, flooded at ripening — the stage the water missed never comes back.'],
-                    ['n' => 20, 'l' => 'Yield lost to delayed decisions', 'p' => 'Waiting days for someone else\'s answer — the technician\'s next visit, a reply that never comes — while the problem keeps growing.'],
-                    ['n' => 20, 'l' => 'Yield lost to planting outside the window', 'p' => 'A season started on habit instead of the climate\'s actual calendar pays for it at harvest.'],
+                    ['n' => 40, 'img' => 'inspect.jpg', 'l' => 'Yield lost to pests and diseases', 'p' => 'When the intervention comes late — or never comes at all.', 'peso' => '₱25,000–₱40,000'],
+                    ['n' => 30, 'img' => 'sacks.jpg', 'l' => 'Wasted on the wrong solution', 'p' => 'A misread problem means the wrong product, at full price, while the real problem keeps eating.', 'peso' => '₱18,000–₱30,000'],
+                    ['n' => 30, 'img' => 'palay-phone.jpg', 'l' => 'Yield lost to the wrong crop or variety', 'p' => 'Seed that never fit this ground, this season, this water — decided before it was checked.', 'peso' => '₱18,000–₱30,000'],
+                    ['n' => 30, 'img' => 'sacks-shed.jpg', 'l' => 'Profit lost to untracked spending', 'p' => 'Costs remembered instead of recorded leak all season — and only show themselves at settling time.', 'peso' => '₱18,000–₱30,000'],
+                    ['n' => 25, 'img' => 'transplant.jpg', 'l' => 'Yield lost to mistimed fertilizer', 'p' => 'The right sack on the wrong week feeds the field a fraction of what it paid for.', 'peso' => '₱15,000–₱25,000'],
+                    ['n' => 25, 'img' => 'storm-paddies.jpg', 'l' => 'Yield lost to water at the wrong time', 'p' => 'Dry at flowering, flooded at ripening — the stage the water missed never comes back.', 'peso' => '₱15,000–₱25,000'],
+                    ['n' => 20, 'img' => 'farmer-hijab.jpg', 'l' => 'Yield lost to delayed decisions', 'p' => 'Waiting days for someone else\'s answer — the technician\'s next visit, a reply that never comes — while the problem keeps growing.', 'peso' => '₱12,000–₱20,000'],
+                    ['n' => 20, 'img' => 'hero-planting.jpg', 'l' => 'Yield lost to planting outside the window', 'p' => 'A season started on habit instead of the climate\'s actual calendar pays for it at harvest.', 'peso' => '₱12,000–₱20,000'],
                 ] as $i => $loss)
-                    <div class="loss-card reveal" style="--loss: {{ $loss['n'] }}%; --reveal-delay: {{ ($i % 4) * 0.08 }}s">
-                        <p class="loss-upto">Up to</p>
-                        <p class="loss-n"><span data-countup="{{ $loss['n'] }}">0</span><small>%</small></p>
-                        <p class="loss-l">{{ $loss['l'] }}</p>
-                        <p class="loss-p">{{ $loss['p'] }}</p>
-                        <div class="loss-bar" aria-hidden="true"><i></i></div>
+                    <div class="loss-card loss-card2 reveal" style="--loss: {{ $loss['n'] }}%; --reveal-delay: {{ ($i % 2) * 0.08 }}s">
+                        <div class="loss-img"><img src="{{ asset('images/site/photos/' . $loss['img']) }}" alt="" loading="lazy"></div>
+                        <div class="loss-body">
+                            <p class="loss-upto">Up to</p>
+                            <p class="loss-n"><span data-countup="{{ $loss['n'] }}">0</span><small>%</small></p>
+                            <p class="loss-l">{{ $loss['l'] }}</p>
+                            <p class="loss-p">{{ $loss['p'] }}</p>
+                            <p class="loss-peso">≈ {{ $loss['peso'] }} lost per hectare</p>
+                            <div class="loss-bar" aria-hidden="true"><i></i></div>
+                        </div>
                     </div>
                 @endforeach
             </div>
 
             <p class="mt-4 text-center text-xs text-gray-400 reveal">
-                Ranges drawn from FAO crop-loss and Philippine rice research estimates — your farm's exact numbers vary, which is the point.
+                Percentage ranges drawn from FAO crop-loss and Philippine rice research estimates; peso ranges assume a
+                typical palay hectare grossing ₱85,000–₱100,000. Your farm's exact numbers vary — which is the point.
             </p>
 
-            <div class="loss-pivot reveal" aria-hidden="true">
+            <div class="loss-pivot reveal">
                 <span>
-                    <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>
-                    anee.io was built to close every one of these gaps
+                    <img src="{{ asset('images/site/anee-feature.jpg') }}" alt="Anee">
+                    The solution is Anee — and the system built around her
                 </span>
             </div>
 
@@ -241,7 +273,7 @@
                     ['k' => 'Wrong solution → right diagnosis first', 'p' => 'Snap a photo of the leaf and Anee reads it against your crop and its exact stage before a peso is spent — the treatment fits the problem, at the right dose.'],
                     ['k' => 'Mistimed fertilizer → anchored to Day-0', 'p' => 'Every application lands on the right day, counted from each lot\'s own sowing date. Move the plan and every date follows — the timing never lives in memory.'],
                     ['k' => 'Waiting for answers → Anee answers now', 'p' => 'No more holding the sprayer while waiting for a callback. Ask Anee anytime, in English or Tagalog — she reads your lots, stages and weather and answers in minutes, so the decision happens today.'],
-                    ['k' => 'Weeds → the critical window is on the board', 'p' => 'Weeding lands on the timeline inside its critical window, counted from each lot\'s Day-0 — the weeds never get their head start.'],
+                    ['k' => 'Untracked spending → every peso on the record', 'p' => 'Labor, materials and services are totalled live in ₱ as the season runs, and the expense and profit reports settle to the peso — the margin is watched all season, not discovered at the end.'],
                     ['k' => 'Wrong crop → checked before the seed is bought', 'p' => 'The What-to-Plant analysis weighs your ground, water, season forecast and the ENSO outlook, and ranks what actually fits — before a single peso goes to seed.'],
                     ['k' => 'Water timing → scheduled by stage, read against the sky', 'p' => 'Irrigation sits on the same board as everything else, stage by stage, with each lot\'s forecast beside it — so the water arrives when the crop asks, and the rain that\'s coming isn\'t paid for twice.'],
                     ['k' => 'Planting on habit → the window named first', 'p' => 'The When-to-Plant analysis reads your town\'s climate record and the ENSO outlook and names the safest window to start — before Day-0 is chosen, not after.'],

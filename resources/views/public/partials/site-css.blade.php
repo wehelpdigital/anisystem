@@ -176,14 +176,22 @@
         transition: width 1.4s cubic-bezier(.22,1,.36,1) .15s; }
     .loss-card.is-lit .loss-bar i { width: var(--loss, 40%); }
 
-    .loss-photo { position: relative; border-radius: 1.5rem; overflow: hidden; min-height: 16rem;
-        box-shadow: 0 26px 55px -30px rgb(16 22 12 / .55); }
-    .loss-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-    .loss-photo figcaption { position: absolute; inset: auto 0 0 0; padding: 1.1rem 1.2rem;
-        background: linear-gradient(transparent, rgb(0 0 0 / .72)); color: #fff;
-        font-weight: 700; font-size: .95rem; line-height: 1.45; }
+    /* Two-column leak cards, each wearing its photo on the left. Worn ON TOP
+       of .loss-card, so the counters, bars and red stripe keep working. */
+    .loss-card2 { display: flex; padding: 0; align-items: stretch; }
+    .loss-img { flex: none; width: 7.5rem; position: relative; }
+    @media (min-width: 640px) { .loss-img { width: 10rem; } }
+    .loss-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .loss-img::after { content: ''; position: absolute; inset: 0;
+        background: linear-gradient(90deg, rgb(185 28 28 / .18), transparent 55%); }
+    .loss-body { flex: 1 1 auto; min-width: 0; padding: 1.05rem 1.15rem 1.1rem; }
+    .loss-peso { margin-top: .55rem; display: inline-flex; align-items: center; gap: .3rem;
+        font-weight: 800; font-size: .78rem; color: #b91c1c; background: #fef2f2;
+        border: 1px solid #fecaca; border-radius: 999px; padding: .28rem .7rem; }
 
     .loss-pivot { display: flex; align-items: center; gap: 1rem; margin: 2.75rem 0 1.5rem; }
+    .loss-pivot img { width: 1.8rem; height: 1.8rem; border-radius: 999px; object-fit: cover;
+        object-position: 50% 8%; flex: none; box-shadow: 0 0 0 2px rgb(255 255 255 / .4); }
     .loss-pivot::before, .loss-pivot::after { content: ''; height: 1px; flex: 1 1 auto;
         background: linear-gradient(90deg, transparent, #cfdcc2); }
     .loss-pivot::after { background: linear-gradient(90deg, #cfdcc2, transparent); }
