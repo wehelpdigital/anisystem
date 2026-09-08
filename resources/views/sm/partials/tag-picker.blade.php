@@ -36,8 +36,6 @@
     html.dark .tp-add { background: #151b12; border-color: #3a414c; color: #93a684; }
     html.dark .tp-add:hover { color: #cfe6b8; border-color: #4a7c2a; }
 
-    .tp-new { display: flex; gap: .5rem; margin-bottom: .8rem; }
-    .tp-new input { flex: 1 1 auto; min-width: 0; }
     #tagPickEmpty { font-size: .8rem; color: var(--color-gray-400); text-align: center; padding: 1.2rem 0; }
 </style>
 @push('sheets')
@@ -48,13 +46,27 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
-        <div class="tp-new">
-            <input type="text" class="form-input" id="tagPickNew" maxlength="60"
-                   placeholder="Tag name — e.g. pest problem" autocomplete="off" enterkeyhint="done">
-            <button type="button" class="btn btn-primary" id="tagPickAdd">Add</button>
-        </div>
+        {{-- Just a door: the name is asked for in its own sheet, so this
+             one stays a clean list to pick from. --}}
+        <button type="button" class="btn btn-primary w-full mb-3" id="tagPickNewBtn">Add a New Tag</button>
         <div class="dt-rows" id="tagPickList"></div>
         <p id="tagPickEmpty" hidden>No tags yet — the first one starts the list.</p>
+    </div>
+</div>
+
+{{-- The second sheet: one field, one save. Opens over the picker and
+     drops back onto it with the new tag already ticked. --}}
+<div class="sheet hidden" id="tagNewSheet" style="--sheet-width:22rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Add a New Tag</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <label class="form-label" for="tagPickNew">Tag name</label>
+        <input type="text" class="form-input" id="tagPickNew" maxlength="60"
+               placeholder="Tag name — e.g. pest problem" autocomplete="off" enterkeyhint="done">
+        <button type="button" class="btn btn-primary w-full mt-3" id="tagPickAdd">Save tag</button>
     </div>
 </div>
 @endpush
@@ -70,11 +82,14 @@
        away and leaves, and the sweep re-runs at every use in case a pane
        injected markup without running its script. */
     const claimSheet = () => {
-        const s = document.getElementById('tagPickSheet');
-        if (s && !s.dataset.tpAlive) s.dataset.tpAlive = '1';
+        ['tagPickSheet', 'tagNewSheet'].forEach((id) => {
+            const s = document.getElementById(id);
+            if (s && !s.dataset.tpAlive) s.dataset.tpAlive = '1';
+        });
     };
     const sweepDupes = () => {
-        document.querySelectorAll('[id=tagPickSheet]:not([data-tp-alive])').forEach((el) => el.remove());
+        document.querySelectorAll('[id=tagPickSheet]:not([data-tp-alive]), [id=tagNewSheet]:not([data-tp-alive])')
+            .forEach((el) => el.remove());
     };
     if (window.__smTagsAlive) {
         // Only the owner claims; a later copy just clears its own markup.
@@ -200,10 +215,19 @@
         paintRow(HOST);
     });
 
+    // The door to the name sheet: it opens over the picker and drops back
+    // onto it, the new tag already ticked.
+    document.getElementById('tagPickNewBtn')?.addEventListener('click', () => {
+        const inp = document.getElementById('tagPickNew');
+        if (inp) inp.value = '';
+        openSheet('tagNewSheet');
+        window.smFocus?.(inp, { delay: 250 });
+    });
+
     async function createTag() {
         const inp = document.getElementById('tagPickNew');
         const name = (inp.value || '').trim();
-        if (!name) return;
+        if (!name) { toast('Give the tag a name first.', 'error'); return; }
         const btn = document.getElementById('tagPickAdd');
         btn.disabled = true;
         try {
@@ -218,6 +242,7 @@
             }
             inp.value = '';
             paintSheet();
+            closeSheet('tagNewSheet');
         } catch (err) { toast(err.message, 'error'); }
         finally { btn.disabled = false; }
     }
