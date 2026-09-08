@@ -50,7 +50,7 @@
     <div class="sheet-body">
         <div class="tp-new">
             <input type="text" class="form-input" id="tagPickNew" maxlength="60"
-                   placeholder="New tag — e.g. typhoon damage" autocomplete="off" enterkeyhint="done">
+                   placeholder="Tag name — e.g. pest problem" autocomplete="off" enterkeyhint="done">
             <button type="button" class="btn btn-primary" id="tagPickAdd">Add</button>
         </div>
         <div class="dt-rows" id="tagPickList"></div>
