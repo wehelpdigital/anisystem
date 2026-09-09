@@ -284,7 +284,11 @@
        title, the page turner and the way out stay, because reading a
        drawing of four pages means turning them. */
     #drawModal.is-readonly .draw-toolbar,
-    #drawModal.is-readonly .draw-save { display:none !important; }
+    #drawModal.is-readonly .draw-save,
+    /* The page bar stays — a drawing of four sheets has to be turned — but
+       adding and removing sheets is editing it, and those two live here. */
+    #drawModal.is-readonly #drawPageAdd,
+    #drawModal.is-readonly #drawPageDel { display:none !important; }
     #drawModal.is-readonly #drawCanvas { cursor:default; touch-action:auto; }
     .draw-readonly-note { display:none; }
     #drawModal.is-readonly .draw-readonly-note { display:inline-flex; align-items:center; gap:.3rem;
@@ -819,8 +823,10 @@
     });
     pagePrev?.addEventListener('click', () => goPage(pageIndex - 1));
     pageNext?.addEventListener('click', () => goPage(pageIndex + 1));
-    pageAdd?.addEventListener('click', addPage);
-    pageDel?.addEventListener('click', removePage);
+    // Hidden for a reader, and deaf as well: a hidden button still answers a
+    // scripted click, which is the same lesson the map's Save proxy taught.
+    pageAdd?.addEventListener('click', () => { if (!readOnly) addPage(); });
+    pageDel?.addEventListener('click', () => { if (!readOnly) removePage(); });
 
     /**
      * Strokes on the wire, in the shape the reader can cope with.
