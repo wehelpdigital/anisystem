@@ -399,16 +399,25 @@
                         </div>
                     </div>
 
-                    {{-- Farm switcher (workers under one or more bosses) --}}
+                    {{-- Farm switcher (workers under one or more bosses).
+                         A sheet, not a dropdown: the choice deserves the
+                         whole thumb, and each row says plainly which hat it
+                         is — owner of your own ground, or worker on
+                         somebody else's. --}}
                     @php $__farmGrants = \App\Support\WorkerContext::grants(); @endphp
                     @if ($__farmGrants->isNotEmpty())
                         @php $__activeGrant = \App\Support\WorkerContext::activeGrant(); @endphp
-                        <div class="relative" x-data="{ open: false }" @click.outside="open = false" title="Switch farm">
-                            <button type="button" @click="open = !open"
-                                class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-brand-50 text-brand-700 hover:bg-brand-100 transition text-lg"
-                                aria-label="Switch farm">🏡</button>
-                            <div x-show="open" x-cloak x-transition class="absolute right-0 mt-2 w-64 card p-2 z-50">
-                                <p class="px-3 py-1 text-xs font-bold text-gray-400 uppercase tracking-wide">Switch farm</p>
+                        <button type="button" data-sheet-open="farmSwitchSheet" title="Switch farm"
+                            class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-brand-50 text-brand-700 hover:bg-brand-100 transition text-lg"
+                            aria-label="Switch farm">🏡</button>
+                        @include('partials.tag-sheet-css')
+                        <div class="sheet hidden" id="farmSwitchSheet" style="--sheet-width:24rem">
+                            <div class="sheet-handle"></div>
+                            <div class="sheet-header">
+                                <h3 class="sheet-title">Switch farm</h3>
+                                <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+                            </div>
+                            <div class="sheet-body dt-rows" style="padding-bottom:1.1rem">
                                 {{-- Your own land first, ALWAYS: every worker
                                      login is a full free account of its own
                                      (the Kathleen/Gero pattern), so "My own
@@ -420,18 +429,26 @@
                                 <form method="POST" action="{{ route('worker.switch') }}">
                                     @csrf
                                     <input type="hidden" name="bossId" value="0">
-                                    <button type="submit" class="w-full text-left rounded-lg px-3 py-2.5 text-sm {{ $__activeGrant === null ? 'bg-brand-50 text-brand-700 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
-                                        🏡 My own farm
-                                        <span class="text-xs text-gray-400">· {{ \App\Support\WorkerContext::ownsSchedules() ? 'Owner' : 'Your own free account' }}</span>
+                                    <button type="submit" class="dt-row{{ $__activeGrant === null ? ' is-on' : '' }}">
+                                        <span class="dt-row-e">🏡</span>
+                                        <span class="dt-row-body">
+                                            <b>My own farm</b>
+                                            <i>You are the <strong>owner</strong> here — {{ \App\Support\WorkerContext::ownsSchedules() ? 'your own schedules and land' : 'your own free account, ready for its first schedule' }}.</i>
+                                        </span>
+                                        <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                                     </button>
                                 </form>
                                 @foreach ($__farmGrants as $__g)
                                     <form method="POST" action="{{ route('worker.switch') }}">
                                         @csrf
                                         <input type="hidden" name="bossId" value="{{ $__g->bossUserId }}">
-                                        <button type="submit" class="w-full text-left rounded-lg px-3 py-2.5 text-sm {{ optional($__activeGrant)->bossUserId === $__g->bossUserId ? 'bg-brand-50 text-brand-700 font-bold' : 'text-gray-700 hover:bg-gray-50' }}">
-                                            🌾 {{ optional($__g->boss)->full_name ?: 'Farm' }}
-                                            <span class="text-xs text-gray-400">· {{ ucfirst($__g->scheduleAccess) }}</span>
+                                        <button type="submit" class="dt-row{{ optional($__activeGrant)->bossUserId === $__g->bossUserId ? ' is-on' : '' }}">
+                                            <span class="dt-row-e">🌾</span>
+                                            <span class="dt-row-body">
+                                                <b>{{ optional($__g->boss)->full_name ?: 'Farm' }}</b>
+                                                <i>You are a <strong>worker</strong> on this farm — {{ $__g->scheduleAccess === 'edit' ? 'you can edit the plan' : 'view only' }}.</i>
+                                            </span>
+                                            <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                                         </button>
                                     </form>
                                 @endforeach
