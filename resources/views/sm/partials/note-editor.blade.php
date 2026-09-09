@@ -26,6 +26,7 @@
                well as on the day. Owners always hold every pen. */
             $neMayShoot = \App\Support\WorkerContext::canWriteModule('camera');
             $neMayFilm = \App\Support\WorkerContext::canWriteModule('video');
+            $neMaySpeak = \App\Support\WorkerContext::canWriteModule('voice');
         @endphp
         <div class="ne-tools" role="group" aria-label="Attach to this note">
             @if ($neMayShoot)
@@ -63,6 +64,17 @@
                 </button>
                 <span class="js-video-chip"></span>
             </span>
+            @if ($neMaySpeak)
+            {{-- The spoken attachment. The button IS the recorder — tap to
+                 start, tap to stop — because somebody mid-note has no free
+                 hand for a sheet. It was missing here entirely, so a farm
+                 that switched Voice on for a worker saw nothing change on
+                 the one editor the board and the notes hub both use. --}}
+            <button type="button" class="ne-tool" id="noteEditorVoice" title="Record a voice note" aria-label="Record a voice note">
+                <img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:1.1rem;height:1.1rem;object-fit:contain">
+                <span id="noteEditorVoiceLabel">Voice</span>
+            </button>
+            @endif
             <button type="button" class="ne-tool" id="noteEditorEmoji" title="Add an emoji" aria-label="Add an emoji">
                 <span class="ne-tool-emoji" aria-hidden="true">😊</span>
                 <span>Emoji</span>
@@ -339,6 +351,58 @@
     $('noteEditorPhotoInput').addEventListener('change', onPicked);
     $('noteEditorCameraInput').addEventListener('change', onPicked);
 
+    /* ---- A spoken attachment: tap Voice to record, tap again to stop ----
+     * The same recorder the Notes module carries, said once more here
+     * because this editor is the one the board and the notes hub open. The
+     * clip uploads like a photo and joins the media strip, where the thumb
+     * helper already knows how to play an 'audio'. */
+    let vzRec = null, vzChunks = [], vzStream = null, vzTimer = null, vzT0 = 0;
+    const voiceBtn = $('noteEditorVoice');
+    const voiceLabel = $('noteEditorVoiceLabel');
+    voiceBtn?.addEventListener('click', async () => {
+        if (vzRec) {
+            const r = vzRec;
+            vzRec = null;
+            clearInterval(vzTimer);
+            r.onstop = async () => {
+                vzStream?.getTracks().forEach((t) => t.stop());
+                vzStream = null;
+                const type = r.mimeType || 'audio/webm';
+                const blob = new Blob(vzChunks, { type });
+                vzChunks = [];
+                voiceLabel.textContent = 'Voice';
+                voiceBtn.classList.remove('text-red-600');
+                const file = new File([blob], 'voice-note.' + (type.includes('mp4') ? 'm4a' : 'webm'), { type });
+                try {
+                    const d = await upload(cfg.audioUploadUrl, 'audio', file);
+                    media.push({ type: 'audio', path: d.path, url: d.url, title: d.title || null });
+                    renderThumbs();
+                } catch (err) { window.toast?.(err.message, 'error'); }
+            };
+            try { r.stop(); } catch (_) { /* already stopped */ }
+
+            return;
+        }
+        if (!cfg.audioUploadUrl) { window.toast?.('Voice notes are not available here.', 'error'); return; }
+        if (!navigator.mediaDevices || !window.MediaRecorder) { window.toast?.('This browser cannot record audio.', 'error'); return; }
+        try { vzStream = await navigator.mediaDevices.getUserMedia({ audio: true }); }
+        catch (_) { window.toast?.('Microphone blocked. Allow it for this site.', 'error'); return; }
+        vzChunks = [];
+        const mime = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4'].find((t) => MediaRecorder.isTypeSupported(t)) || '';
+        try { vzRec = new MediaRecorder(vzStream, mime ? { mimeType: mime } : undefined); }
+        catch (_) { vzRec = new MediaRecorder(vzStream); }
+        vzRec.ondataavailable = (e) => { if (e.data && e.data.size) vzChunks.push(e.data); };
+        vzRec.start(250);
+        vzT0 = Date.now();
+        voiceBtn.classList.add('text-red-600');
+        const tick = () => {
+            const s = Math.floor((Date.now() - vzT0) / 1000);
+            voiceLabel.textContent = 'Stop ' + Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+        };
+        tick();
+        vzTimer = setInterval(tick, 500);
+    });
+
     // ---- Video (shared partial writes the file into .js-video-file)
     const vInput = document.querySelector('#noteEditorSheet .js-video-file');
 
@@ -477,6 +541,10 @@
 
     window.openNoteEditor = function (opts) {
         cfg = opts || {};
+        // The recorder needs somewhere to send the clip. The Global Notes
+        // hub has no audio door, so the button steps aside there rather than
+        // offering a tap that ends in an apology.
+        voiceBtn?.classList.toggle('hidden', ! cfg.audioUploadUrl);
         ensureQuill();
         $('noteEditorTitle').textContent = opts.title || 'Note';
         // Load through Quill rather than assigning root.innerHTML. Quill decides

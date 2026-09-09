@@ -200,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inlineNoteDelete: (id) => `{{ route('sm.activities.inline-note.delete') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
         noteImageUpload:  ()  => `{{ route('sm.notes.image-upload') }}?scheduleId=${SCHEDULE_ID}`,
         noteVideoUpload:  ()  => `{{ route('sm.notes.video-upload') }}?scheduleId=${SCHEDULE_ID}`,
+        noteAudioUpload:  ()  => `{{ route('sm.notes.audio-upload') }}?scheduleId=${SCHEDULE_ID}`,
         weather:          ()  => `{{ route('sm.weather') }}?scheduleId=${SCHEDULE_ID}`,
         attendance:       (d) => `{{ route('sm.attendance') }}?scheduleId=${SCHEDULE_ID}&date=${encodeURIComponent(d)}`,
         attendanceMark:   ()  => `{{ route('sm.attendance.mark') }}?scheduleId=${SCHEDULE_ID}`,
@@ -7457,6 +7458,7 @@ document.addEventListener('DOMContentLoaded', () => {
             media: existingMedia,
             imageUploadUrl: U.noteImageUpload(),
             videoUploadUrl: U.noteVideoUpload(),
+            audioUploadUrl: U.noteAudioUpload(),
             drawUploadUrl: NOTES_DRAW_URL,
             deleteLabel: 'Delete note',
             // Show a Delete button only when there's an existing note; it asks
@@ -9326,6 +9328,7 @@ document.addEventListener('DOMContentLoaded', () => {
             media: el ? inlineNoteMedia(el) : [],
             imageUploadUrl: U.noteImageUpload(),
             videoUploadUrl: U.noteVideoUpload(),
+            audioUploadUrl: U.noteAudioUpload(),
             drawUploadUrl: NOTES_DRAW_URL,
             onDelete: el ? () => deleteInlineNote(el, false) : null,
             tags: Object.assign(noteTagChoices(date || (el && el.getAttribute('data-date')) || ''), noteTagsOf(el)),
@@ -9368,6 +9371,7 @@ document.addEventListener('DOMContentLoaded', () => {
             media: mediaArr || [],
             imageUploadUrl: U.noteImageUpload(),
             videoUploadUrl: U.noteVideoUpload(),
+            audioUploadUrl: U.noteAudioUpload(),
             drawUploadUrl: NOTES_DRAW_URL,
             tags: noteTagChoices(dateKey),
             onSave: ({ body, media, noteTitle, lotId, activityId }) => {

@@ -613,21 +613,33 @@
                  questions: "this is the pest" and "this is how you do it".
                  One button each, because the three ways of getting there
                  belong inside the sheet that follows, not on this form. --}}
+            {{-- Each attachment kind asks the tool that makes it, the same
+                 question the day menu and the note editor ask. --}}
+            @php
+                $actMayShoot = \App\Support\WorkerContext::canWriteModule('camera');
+                $actMayFilm = \App\Support\WorkerContext::canWriteModule('video');
+                $actMaySpeak = \App\Support\WorkerContext::canWriteModule('voice');
+            @endphp
             <div id="activityImagesSection">
+                @if ($actMayShoot)
                 <span class="form-label">Reference images <span class="text-gray-400 font-normal">(optional, max 8 MB each)</span></span>
                 <div id="activityImagesGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-2"></div>
                 <button type="button" id="activityImageUploadBtn" class="btn btn-white w-full">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                     <span id="activityImageUploadLabel">Add photos</span>
                 </button>
+                @endif
 
+                @if ($actMayFilm)
                 <span class="form-label mt-4">Reference videos <span class="text-gray-400 font-normal">(optional, max 100 MB each)</span></span>
                 <div id="activityVideosGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-2"></div>
                 <button type="button" id="activityVideoUploadBtn" class="btn btn-white w-full">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                     <span id="activityVideoUploadLabel">Add videos</span>
                 </button>
+                @endif
 
+                @if ($actMaySpeak)
                 {{-- Spoken instructions ride with the task the same way a
                      photo does: tap, talk, tap to stop, and the clip joins
                      the activity's attachments. --}}
@@ -637,6 +649,7 @@
                     <img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:1.1rem;height:1.1rem;object-fit:contain">
                     <span id="activityVoiceLabel">Record a voice note</span>
                 </button>
+                @endif
             </div>
 
             {{-- Tags: a word or two tied to this activity, findable later in
