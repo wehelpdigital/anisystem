@@ -56,7 +56,18 @@ class WorkerModuleAccess
         // A day's note, an inline note, a note appended to an activity: all
         // the same permission wearing three route names.
         ['sm.activities.date-note.*',        'notes:edit'],
-        ['sm.activities.inline-note.*',      'notes:edit'],
+        /* WRITING a note on the board is one act reached three ways: with
+         * words, with a drawing, or with a map. Whoever holds the pen for
+         * what the note CARRIES may file it, so this one rule takes any of
+         * the three — a worker given the Drawing pen and no notebook can
+         * still put a drawing on a day, which is the whole of what that
+         * permission was given to them for.
+         *
+         * Only the save. Everything else an inline note can have done to it
+         * is the notebook's, so the routes are named rather than swept up by
+         * a wildcard — a new one belongs on this list, deliberately. */
+        ['sm.activities.inline-note.save',   'notes:edit|draw:edit|maps:edit'],
+        ['sm.activities.inline-note.delete', 'notes:edit'],
         ['sm.activities.append-note',        'notes:edit'],
         ['sm.activity-versions.global-note', 'notes:edit'],
         // The whiteboard lives by the Collab Room's own rule, except where it
@@ -188,25 +199,60 @@ class WorkerModuleAccess
             if (! Str::is($pattern, $name)) {
                 continue;
             }
-            [$module, $level] = array_pad(explode(':', $need, 2), 2, null);
-            $level = $level ?: $wanted;
+
+            /* A rule can name ALTERNATIVES, separated by "|": any one of them
+             * opens the door. One act reached by several permissions is real
+             * — a note carrying a drawing is the Drawing module's act as much
+             * as the notebook's — and saying so here keeps it in the one table
+             * every gate is read from. The refusal names the first, which is
+             * the permission the endpoint is chiefly about. */
+            $alternatives = explode('|', $need);
+            $satisfied = false;
+            $firstModule = null;
+            $firstLevel = null;
+
+            foreach ($alternatives as $one) {
+                [$module, $level] = array_pad(explode(':', $one, 2), 2, null);
+                $level = $level ?: $wanted;
+                $firstModule ??= $module;
+                $firstLevel ??= $level;
+
+                if ($module === 'owner') {
+                    continue;   // never satisfied by a grant; refused below
+                }
+
+                if ($module === 'community') {
+                    if (WorkerContext::canUseCommunity()) {
+                        $satisfied = true;
+                        break;
+                    }
+
+                    continue;
+                }
+
+                $has = WorkerContext::moduleAccess($module);
+                if ($has === 'edit' || ($has === 'view' && $level === 'view')) {
+                    $satisfied = true;
+                    break;
+                }
+            }
+
+            if ($satisfied) {
+                continue;
+            }
+
+            $module = $firstModule;
+            $level = $firstLevel;
 
             if ($module === 'owner') {
                 return $this->refuse($request, 'owner');
             }
 
             if ($module === 'community') {
-                if (WorkerContext::canUseCommunity()) {
-                    continue;
-                }
-
                 return $this->refuse($request, 'community');
             }
 
             $has = WorkerContext::moduleAccess($module);
-            if ($has === 'edit' || ($has === 'view' && $level === 'view')) {
-                continue;
-            }
 
             return $this->refuse($request, $module, $has !== 'none' && $level === 'edit');
         }

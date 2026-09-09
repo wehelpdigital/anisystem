@@ -92,6 +92,42 @@ abstract class BaseScheduleController extends Controller
     }
 
     /**
+     * Same again, for a note that is the way a DRAWING or a MAP gets onto a
+     * day.
+     *
+     * The notebook's pen writes these, and so does the pen for what the note
+     * carries: an owner who gives a worker the Drawing module has given them
+     * leave to put drawings on the farm, and the day note is where a drawing
+     * is filed rather than a second permission to go and ask for. Without
+     * this the Add-a-drawing door opened on the worker's own right and shut
+     * on somebody else's.
+     *
+     * The route gate says the same thing (see the inline-note.save rule in
+     * WorkerModuleAccess); this is the desk behind the door.
+     */
+    protected function scheduleForNoteMedia(Request $request, string $key = 'scheduleId'): AsCroppingSchedule
+    {
+        $schedule = $this->schedule($request->query($key));
+
+        if (! $request->isMethodSafe()) {
+            $ctx = \App\Support\WorkerContext::class;
+            $allowed = $ctx::canAddNotes()
+                || $ctx::canWriteModule('draw')
+                || $ctx::canWriteModule('maps');
+            if (! $allowed) {
+                abort(response()->json([
+                    'success' => false,
+                    'message' => 'You are not allowed to write notes on this schedule.',
+                ], 403));
+            }
+
+            $this->assertUnlocked($schedule);
+        }
+
+        return $schedule;
+    }
+
+    /**
      * Same again, for the shed. Inventory is its own grant level: a worker
      * can hold the shed's pen without holding the plan's, so its writes ask
      * about the Inventory right rather than about editing the board. A

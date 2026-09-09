@@ -1882,7 +1882,9 @@ class ActivityController extends BaseScheduleController
      */
     public function inlineNoteSave(Request $request)
     {
-        $schedule = $this->scheduleForNote($request);
+        // A note on a day is how a drawing or a map is filed onto one, so the
+        // pen for either writes it as well as the notebook's own.
+        $schedule = $this->scheduleForNoteMedia($request);
 
         $validator = Validator::make($request->all(), [
             'id'       => 'nullable|integer',

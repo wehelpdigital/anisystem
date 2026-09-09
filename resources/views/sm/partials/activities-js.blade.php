@@ -2234,6 +2234,15 @@ document.addEventListener('DOMContentLoaded', () => {
         toast('The farm owner has not given you a pen for the Drawing module.', 'error');
         return false;
     }
+    /* And the same for a map pinned to a day. Both of these used to ask the
+       notebook's question, which greyed the button out for the very worker
+       whose permission had opened it. */
+    const MAY_MAP = @json(\App\Support\WorkerContext::canWriteModule('maps'));
+    function mayMap() {
+        if (MAY_MAP) return true;
+        toast('The farm owner has not given you a pen for the Maps module.', 'error');
+        return false;
+    }
 
     /* The same door for the plan itself. A drag is the one write with no button
        to grey out, so it has to be turned away where it lands. */
@@ -5823,7 +5832,10 @@ document.addEventListener('DOMContentLoaded', () => {
     async function addDayDrawing(dateKey) {
         // Ask before the pad opens: the drawing is uploaded the moment it is
         // saved, and only the note it lands in was ever gated.
-        if (!mayWriteNotes() || !mayDraw()) return;
+        // The Drawing pen alone opens this: the day note it lands in is where
+        // the drawing is filed, not a second permission to hold. The save
+        // agrees — see the inline-note.save rule in WorkerModuleAccess.
+        if (!mayDraw()) return;
         if (typeof window.openDrawCanvas !== 'function') { toast('Drawing pad unavailable.', 'error'); return; }
         window.openDrawCanvas(async (dataUrl, objects) => {
             try {
@@ -5845,7 +5857,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let mapPickDate = null;
     async function openDayMapPick(dateKey) {
-        if (!mayWriteNotes()) return;   // picking a map writes it into the day's note
+        if (!mayMap()) return;   // the Maps pen; the day note is where it is filed
         mapPickDate = dateKey;
         const list = $id('dayMapList');
         const link = $id('dayMapNew');
@@ -9188,7 +9200,12 @@ document.addEventListener('DOMContentLoaded', () => {
        nobody's doing, and callers that move something on the board first need a
        yes/no so they can put it back. */
     async function saveInlineNote(el, date, key) {
-        if (!MAY_NOTE) return false;
+        /* The notebook's pen writes these, and so does the pen for what the
+           note CARRIES: a day note is how a drawing or a map is filed onto a
+           day, and a worker given either of those was allowed through the door
+           and stopped at the desk. The server says the same — see the
+           inline-note.save rule in WorkerModuleAccess. */
+        if (!MAY_NOTE && !MAY_DRAW && !MAY_MAP) return false;
         const id = el.getAttribute('data-inline-note');
         const content = el.querySelector('.inline-note-body')?.innerHTML || '';
         // Strokes travel too: dragging a note was re-saving its media without
