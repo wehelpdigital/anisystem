@@ -218,11 +218,17 @@ class LotController extends BaseScheduleController
         // Both or neither. Half a coordinate is a lot that claims to be
         // findable and is not, which is worse than one that never claimed it.
         $has = isset($data['lat'], $data['lng']) && $data['lat'] !== null && $data['lng'] !== null;
+        /* A pin and a map are two different things a lot can have.
+         *
+         * Removing the pin used to take the map with it, which made "this
+         * lot is no longer at that spot" also mean "and lose the drawing of
+         * it". A lot's map is its own file with its own link (linkMap /
+         * detachMap); the pin says where the lot is and nothing else. */
         $lot->update([
             'pinLat' => $has ? $data['lat'] : null,
             'pinLng' => $has ? $data['lng'] : null,
             'pinLabel' => $has ? ($data['label'] ?? null) : null,
-            'mapSaveId' => $has ? ($data['mapSaveId'] ?? $lot->mapSaveId) : null,
+            'mapSaveId' => $data['mapSaveId'] ?? $lot->mapSaveId,
         ]);
 
         return $this->jsonOk($has ? 'Lot pinned on the map.' : 'Pin removed.',

@@ -73,40 +73,34 @@
 @push('scripts')
 <script>
 (() => {
-    /* Saving, asked once.
-     *
-     * The engine already knows how to write a map — a picture into the
-     * Gallery, a note in the notebook, a reopenable snapshot on the shelf —
-     * behind a sheet that asks for a name and a description. On a lot's map
-     * there is nothing to name: it is this lot's map and it is called after
-     * the lot. So the sheet is filled in and sent from here, and the farmer
-     * sees one button in the tools row and one question before it writes.
-     */
+    /* Which lot this map belongs to. The saving is the engine's own: on a
+       lot's map there is nothing to name — it is this lot's map and it is
+       called after the lot — so the first mark writes the file and every
+       change after it writes back, with no button in between. */
     const LOT = @json(['id' => $lot->id, 'name' => $lot->lotName, 'mapSaveId' => $lot->mapSaveId]);
 
-    /* EACH LOT HAS ITS OWN MAP.
+    /* EACH LOT HAS ITS OWN MAP, AND STARTS ON A CLEAN ONE.
      *
      * The engine boots onto the schedule's one live canvas, which is how
      * Apartado 1's page came to show what was drawn for Apartado 2. So the
      * moment the canvas reports in:
-     *  - a lot that already saved a map is taken straight to THAT save;
-     *  - a lot attaching for the first time, arriving on a canvas still
-     *    holding the last errand's drawing, is asked whether to clear it —
-     *    saved maps stay safe on the shelf either way. */
-    window.addEventListener('cmap:ready', (e) => {
+     *  - a lot that already has a map is taken straight to THAT file;
+     *  - a lot with none starts blank, always and without being asked. The
+     *    question was one more thing between a farmer and their field, and
+     *    "no" left them drawing on somebody else's map. Nothing is lost by
+     *    clearing: whatever was on the canvas belongs to a file of its own
+     *    on the shelf, or to a lot that is keeping it.
+     *
+     * From there the map keeps itself: the first mark writes this lot's own
+     * file, names it after the lot, ties it to the lot, and every change
+     * after it writes back. There is no Save to remember. */
+    window.addEventListener('cmap:ready', () => {
         if (LOT.mapSaveId) {
             window.cmapOpenSaveById(LOT.mapSaveId);
+
             return;
         }
-        if ((e.detail && e.detail.shapes) > 0) {
-            const ask = () => Promise.resolve(window.confirmAction ? window.confirmAction({
-                title: 'Start ' + LOT.name + '\'s own map?',
-                message: 'The canvas still shows the last activity\'s drawing. Clear it so this lot starts clean? Saved maps stay safe on the shelf.',
-                confirmText: 'Clear and start',
-                confirmClass: 'btn-primary',
-            }) : window.confirm('Clear the canvas so ' + LOT.name + ' starts its own map?'));
-            ask().then((ok) => { if (ok) window.cmapStartBlank(); });
-        }
+        window.cmapStartBlank();
     }, { once: true });
 
     /* How tall the map is: whatever is left under the header.
@@ -145,31 +139,6 @@
     };
     if (!boot()) document.addEventListener('DOMContentLoaded', boot);
 
-    const save = () => {
-        const name = document.getElementById('cmapSaveName');
-        const desc = document.getElementById('cmapSaveDesc');
-        const go = document.getElementById('cmapSaveGo') || document.getElementById('cmapSaveBtn');
-        if (!go) { window.toast?.('The map is still loading — try again in a moment.', 'error'); return; }
-        if (name && !name.value.trim()) name.value = LOT.name;
-        if (desc && !desc.value.trim()) desc.value = 'The map for ' + LOT.name + '.';
-        go.click();
-    };
-
-    document.getElementById('cmapLotSave')?.addEventListener('click', () => {
-        // Asked, because saving files a picture into the Gallery and a note
-        // into the notebook, and neither is a thing to do by accident.
-        if (window.confirmAction) {
-            Promise.resolve(window.confirmAction({
-                title: 'Save this location?',
-                message: 'The map for ' + LOT.name + ' is filed in the notebook, with its picture in the Gallery.',
-                confirmText: 'Save',
-                confirmClass: 'btn-primary',
-            })).then((ok) => { if (ok) save(); });
-
-            return;
-        }
-        if (window.confirm('Save the map for ' + LOT.name + '?')) save();
-    });
 })();
 </script>
 @endpush

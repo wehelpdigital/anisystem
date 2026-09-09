@@ -65,7 +65,7 @@
            sheets to <body>, out from under any scoping class — and this
            block only renders for a view-only visitor anyway. */
         #cmapToolsBtn, #cmapColorBtn, #cmapSizeBtn, #cmapUndo, #cmapRedo,
-        #cmapFinish, #cmapClear, #cmapLotSave, #cmapSaveMenuBtn,
+        #cmapFinish, #cmapClear, #cmapSaveMenuBtn,
         #cmapPinDel, #cmapTextGo,
         #cmapPinSheet [data-pin-when="new"] { display: none !important; }
     </style>
@@ -362,17 +362,12 @@
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>
         </button>
         @endif
-        {{-- Opening and saving, together, out of the tools list. On a lot's
-             map there is nothing to open — it has one map, and the page's own
-             Save writes it. --}}
-        @if ($mapChrome === 'lot' && \App\Support\WorkerContext::canAddNotes())
-        {{-- A lot has one map, so there is nothing to open and nothing to
-             name — one button in the same row as the tools, and a question
-             before it writes. --}}
-        <button type="button" class="cmap-tool cmap-savebtn" id="cmapLotSave" title="Save this location" aria-label="Save this location">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
-        </button>
-        @endif
+        {{-- Opening and saving, together, out of the tools list. A lot's map
+             has neither button: there is nothing to open, because it has one
+             map, and nothing to press, because the first mark writes that map
+             and every mark after it writes back (see ensureLotFile). A Save
+             here would only be a second door onto the same act, and the one
+             that mints a duplicate file. --}}
         @if ($mapChrome !== 'lot' && \App\Support\WorkerContext::canAddNotes())
         <button type="button" class="cmap-tool cmap-savebtn" id="cmapSaveMenuBtn" title="Open or save a map" aria-label="Open or save a map">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
@@ -2137,6 +2132,23 @@
         }
     }
 
+    /** Take the lot off the map. Sending no coordinates is how the Lots
+     *  controller reads "no longer pinned"; the lot's map link is untouched
+     *  on both sides, because the drawing outlives the teardrop. */
+    async function unpinTheLot() {
+        if (!ATTACH) return;
+        try {
+            await api(LOT_PIN_URL + '?scheduleId=' + SID, {
+                method: 'POST', body: { lotId: ATTACH.id, mapSaveId: ATTACH.mapSaveId || null },
+            });
+            ATTACH.pinned = false;
+            ATTACH.lat = null;
+            ATTACH.lng = null;
+            ATTACH.label = null;
+            ATTACH.objId = null;
+        } catch (_) { /* the pin is off the map; the record catches up on the next one */ }
+    }
+
     /* ---------- a pin's sheet ---------- */
     let pinOpen = null;
 
@@ -2200,6 +2212,16 @@
             await api(URLS.remove + '?scheduleId=' + SID, { method: 'DELETE', body: { id: o.id } });
         } catch (_) { /* the map is already without it; the server catches up */ }
         dropObject(o.id, true);
+        // On a lot's map the last pin standing IS the lot's place. Taking it
+        // off the map used to leave the coordinates on the record, so the
+        // Lots module went on offering "Open in Google Maps" for a pin that
+        // was no longer anywhere. The map keeps its link either way — the
+        // pin and the map are two different things a lot can have.
+        if (CHROME === 'lot' && ATTACH && ATTACH.pinned) {
+            let pinsLeft = 0;
+            for (const obj of objIndex.values()) if (obj.kind === 'pin') pinsLeft++;
+            if (!pinsLeft) unpinTheLot();
+        }
         markMapDirty();
     });
 
@@ -3456,8 +3478,71 @@
         // a banner sitting on the ground you are trying to read.
         if (state !== 'saving') autoSayTimer = setTimeout(() => el.classList.remove('is-on'), state === 'failed' ? 4500 : 1800);
     }
+    /* A LOT'S MAP IS ITS OWN FILE FROM THE FIRST MARK.
+     *
+     * Everywhere else a canvas is scratch until somebody names a file for
+     * it. A lot's map has nothing to name — it is this lot's map and it is
+     * called after the lot — so the first thing drawn mints the file, ties
+     * it to the lot, and hands it to the autosave below. No Save button to
+     * remember, and nothing lost by not remembering it.
+     *
+     * Once only: the promise is held so a flurry of marks arriving while
+     * the first one is still composing its picture cannot mint a second
+     * file for the same lot. */
+    let lotFileMinting = null;
+    function ensureLotFile() {
+        if (CHROME !== 'lot' || !ATTACH || LOADED_SAVE) return Promise.resolve(LOADED_SAVE);
+        if (lotFileMinting) return lotFileMinting;
+        sayAutosave('saving');
+        lotFileMinting = (async () => {
+            let image = null;
+            try { image = await composeMapPng(); } catch (_) { image = null; }
+            // The canvas can be cleared while the picture composes; a file
+            // minted from nothing is a file nobody wants.
+            if (!objIndex.size || LOADED_SAVE) return LOADED_SAVE;
+            const c = map.getCenter();
+            // No `quiet` here: that flag means "write into the file named by
+            // saveId", and the server rightly refuses it when there is no
+            // such file. This call is the one that MAKES the file, so it is
+            // an ordinary save wearing the lot's name.
+            const r = await api(`${URLS.save}?scheduleId=${SID}`, { method: 'POST', body: {
+                mode: 'map', source: 'solo',
+                title: ATTACH.name,
+                description: 'The map for ' + ATTACH.name + '.',
+                image,
+                lat: c ? c.lat() : null, lng: c ? c.lng() : null,
+                zoom: Math.round(map.getZoom() || 15), maptype: satOn ? 'hybrid' : 'roadmap',
+            } });
+            if (!r || !r.data || !r.data.saveId) return null;
+            setLoadedSave({ id: r.data.saveId, title: r.data.title || ATTACH.name });
+            ATTACH.mapSaveId = r.data.saveId;
+            autoLast = Date.now();
+            // The lot keeps which map is its own. Quiet on failure: the map
+            // is written either way, and the link can be made again by the
+            // next mark.
+            await api(LOT_LINK_URL + '?scheduleId=' + SID, {
+                method: 'POST', body: { lotId: ATTACH.id, mapSaveId: r.data.saveId },
+            }).catch(() => {});
+            return LOADED_SAVE;
+        })();
+        lotFileMinting.then(
+            (sv) => sayAutosave(sv ? 'saved' : 'failed'),
+            () => sayAutosave('failed')
+        ).catch(() => {});
+        lotFileMinting.catch(() => {}).then(() => { lotFileMinting = null; });
+
+        return lotFileMinting;
+    }
     function markMapDirty() {
-        if (!LOADED_SAVE) return;         // a scratch canvas has no file to write into
+        if (!LOADED_SAVE) {
+            // A lot's map mints itself on the first mark; every other
+            // scratch canvas has no file to write into and waits for Save.
+            if (CHROME === 'lot' && ATTACH && objIndex.size) {
+                ensureLotFile().then((sv) => { if (sv) markMapDirty(); }).catch(() => {});
+            }
+
+            return;
+        }
         autoDirty = true;
         clearTimeout(autoTimer);
         autoTimer = setTimeout(runAutosave, Math.max(AUTO_QUIET, AUTO_EVERY - (Date.now() - autoLast)));
