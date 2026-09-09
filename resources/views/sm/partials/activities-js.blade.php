@@ -2225,6 +2225,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
     }
 
+    /* Drawing on a day is the Drawing module's act wearing the board's clothes,
+       so it asks the Drawing module's question. Without this a worker given
+       Notes but not Drawing got the whole pad, drew, and met the 403 on save. */
+    const MAY_DRAW = @json(\App\Support\WorkerContext::canWriteModule('draw'));
+    function mayDraw() {
+        if (MAY_DRAW) return true;
+        toast('The farm owner has not given you a pen for the Drawing module.', 'error');
+        return false;
+    }
+
     /* The same door for the plan itself. A drag is the one write with no button
        to grey out, so it has to be turned away where it lands. */
     function mayEditBoard() {
@@ -5813,7 +5823,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function addDayDrawing(dateKey) {
         // Ask before the pad opens: the drawing is uploaded the moment it is
         // saved, and only the note it lands in was ever gated.
-        if (!mayWriteNotes()) return;
+        if (!mayWriteNotes() || !mayDraw()) return;
         if (typeof window.openDrawCanvas !== 'function') { toast('Drawing pad unavailable.', 'error'); return; }
         window.openDrawCanvas(async (dataUrl, objects) => {
             try {

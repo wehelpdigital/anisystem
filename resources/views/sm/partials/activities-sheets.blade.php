@@ -1288,13 +1288,16 @@
         @endif
         {{-- A drawing and a map are things a day has, like a note — not things
              buried inside the note editor, which is where they used to hide. --}}
-        @if (! $isWorker)
+        {{-- These follow the module each one belongs to, not the worker flag:
+             drawing on a day is the Drawing module's act, picking a map is the
+             Maps module's. A worker given the pen for either may do it here. --}}
+        @if (\App\Support\WorkerContext::canWriteModule('draw'))
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetNoteLock }}" data-action="add-drawing" @disabled(! $mayNote) @if(! $mayNote) title="{{ $whyNoNote }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4"/></svg>
             Add a drawing
         </button>
         @endif
-        @if (! $isWorker)
+        @if (\App\Support\WorkerContext::canUseModule('maps'))
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetNoteLock }}" data-action="add-map" @disabled(! $mayNote) @if(! $mayNote) title="{{ $whyNoNote }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
             Add a map

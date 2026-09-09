@@ -18,6 +18,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <span class="draw-title" id="drawTitleText">Drawing</span>
+            <span class="draw-readonly-note">View only</span>
             <span class="grow"></span>
             <button type="button" class="btn btn-ghost btn-sm draw-cancel" id="drawCancel">Cancel</button>
             {{-- One button, because on a phone two full-width labels in the
@@ -278,6 +279,17 @@
     .draw-toolbar { display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; padding:.55rem .7rem;
         border-bottom:1px solid var(--color-gray-100); flex-shrink:0; }
     .draw-tools { display:flex; gap:.15rem; }
+
+    /* Looking, not working. The toolbar and the Save go; the header, the
+       title, the page turner and the way out stay, because reading a
+       drawing of four pages means turning them. */
+    #drawModal.is-readonly .draw-toolbar,
+    #drawModal.is-readonly .draw-save { display:none !important; }
+    #drawModal.is-readonly #drawCanvas { cursor:default; touch-action:auto; }
+    .draw-readonly-note { display:none; }
+    #drawModal.is-readonly .draw-readonly-note { display:inline-flex; align-items:center; gap:.3rem;
+        font-size:.7rem; font-weight:800; padding:.15rem .5rem; border-radius:999px;
+        background:var(--color-gray-100); color:var(--color-gray-500); white-space:nowrap; }
     .draw-div { width:1px; align-self:stretch; background:var(--color-gray-200); margin:.15rem .15rem; }
     .draw-colors { display:flex; gap:.25rem; }
     .draw-colors button { width:1.5rem; height:1.5rem; border-radius:999px; border:2px solid transparent; cursor:pointer; }
@@ -388,6 +400,13 @@
     let onSave = null;
     let overwriteLabel = '';   // set per open: the drawing being replaced
     let scheduleId = null;     // set per open: whose gallery "From the gallery" lists
+    /* Opened to be looked at, not worked on — a worker whose farm gave them
+     * view access to Drawing. The pad is the only way to see a drawing whole
+     * (its pages, its strokes at full size), so they still open it; what they
+     * do not get is a pen. Hidden AND inert: hiding the tools alone leaves the
+     * canvas taking strokes from a finger, and the pad would let them spend an
+     * afternoon on a drawing the server will refuse to save. */
+    let readOnly = false;
     let backdropFailed = false;   // the picture we were asked to edit never loaded
     let uid = 1;
     let gridOn = false;               // show a grid guide (not saved into the PNG)
@@ -885,6 +904,7 @@
         return { x: (e.clientX - r.left) * sx, y: (e.clientY - r.top) * sy };
     }
     canvas.addEventListener('pointerdown', (e) => {
+        if (readOnly) return;
         e.preventDefault(); canvas.setPointerCapture?.(e.pointerId);
         const p = pos(e);
 
@@ -1227,10 +1247,13 @@
             if (e.key === 'Escape' && textAskOpen()) { e.preventDefault(); showTextAsk(false); }
             return;
         }
-        if ((e.key === 'Delete' || e.key === 'Backspace') && selected.size) { e.preventDefault(); deleteSelected(); }
-        // Both spellings of redo: Ctrl+Shift+Z everywhere, Ctrl+Y on Windows.
-        if ((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z')) { e.preventDefault(); e.shiftKey ? redo() : undo(); }
-        if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || e.key === 'Y')) { e.preventDefault(); redo(); }
+        // A reader keeps the way out and nothing that changes the drawing.
+        if (!readOnly) {
+            if ((e.key === 'Delete' || e.key === 'Backspace') && selected.size) { e.preventDefault(); deleteSelected(); }
+            // Both spellings of redo: Ctrl+Shift+Z everywhere, Ctrl+Y on Windows.
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z')) { e.preventDefault(); e.shiftKey ? redo() : undo(); }
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || e.key === 'Y')) { e.preventDefault(); redo(); }
+        }
         if (e.key === 'Escape') { if (askOpen()) showAsk(false); else close(); }
     });
 
@@ -1465,6 +1488,8 @@
         opts = opts || {};
         onSave = cb || null;
         editableAllowed = !!opts.editable;
+        readOnly = !!opts.readOnly;
+        modal.classList.toggle('is-readonly', readOnly);
         // Which drawing's kept history this pad session belongs to, if the
         // caller opened one that already has a name.
         undoKey = opts.undoKey || null;

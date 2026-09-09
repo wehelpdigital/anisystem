@@ -360,6 +360,11 @@
                     window.smFocus('drTitle', { delay: 120 });
                 }, seed.url || null, {
                     editable: true,
+                    // A view-level grant opens a drawing to look at it: the
+                    // pad shows it whole, page by page, with no pen and no
+                    // Save. The server refuses their writes regardless — this
+                    // is so they never spend an afternoon earning a refusal.
+                    readOnly: !DRAW_MAY_WRITE,
                     objects: seed.objects || null,
                     title: seed.title || 'Drawing',
                     overwrite: !!seed.noteId,
