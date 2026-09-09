@@ -149,7 +149,10 @@ class NoteController extends BaseScheduleController
 
     public function uploadImage(Request $request)
     {
-        $schedule = $this->scheduleForNote($request);
+        // Putting a photograph in the store is the camera's act; where it
+        // lands is the note's. A worker given the camera and no notebook
+        // may still take the picture.
+        $schedule = $this->scheduleForNoteMedia($request, ['camera']);
 
         $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:8192',
@@ -190,7 +193,7 @@ class NoteController extends BaseScheduleController
     /** Attach or record a video — compressed to ≤720p H.264 with a poster. */
     public function uploadVideo(Request $request)
     {
-        $schedule = $this->scheduleForNote($request);
+        $schedule = $this->scheduleForNoteMedia($request, ['video']);
         if (! \App\Support\Tier::scheduleCan($schedule, 'videoRecording')) {
             \App\Support\Tier::deny('Video recording is not included in this plan. Upgrade to attach clips.');
         }
@@ -293,7 +296,8 @@ class NoteController extends BaseScheduleController
      */
     public function uploadAudio(Request $request)
     {
-        $schedule = $this->scheduleForNote($request);
+        // A spoken note travels through the recorder's door, like a clip.
+        $schedule = $this->scheduleForNoteMedia($request, ['video']);
 
         $validator = Validator::make($request->all(), [
             'audio' => 'required|file|max:51200|mimetypes:audio/webm,audio/ogg,audio/mp4,audio/mpeg,audio/aac,audio/wav,audio/x-wav,audio/x-m4a,video/webm',

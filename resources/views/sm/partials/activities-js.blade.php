@@ -2243,6 +2243,20 @@ document.addEventListener('DOMContentLoaded', () => {
         toast('The farm owner has not given you a pen for the Maps module.', 'error');
         return false;
     }
+    /* The camera and the recorder, same rule: a picture or a clip on a day is
+       the tool's act, and the note it becomes is where it is filed. */
+    const MAY_SHOOT = @json(\App\Support\WorkerContext::canWriteModule('camera'));
+    function mayShoot() {
+        if (MAY_SHOOT) return true;
+        toast('The farm owner has not given you the camera on this farm.', 'error');
+        return false;
+    }
+    const MAY_FILM = @json(\App\Support\WorkerContext::canWriteModule('video'));
+    function mayFilm() {
+        if (MAY_FILM) return true;
+        toast('The farm owner has not given you video recording on this farm.', 'error');
+        return false;
+    }
 
     /* The same door for the plan itself. A drag is the one write with no button
        to grey out, so it has to be turned away where it lands. */
@@ -5725,10 +5739,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function captureDayPhoto(dateKey) {
-        // The day-menu row that opens this is greyed, but the Tools menu's
-        // "Capture a photo" forwards to a hidden button that is not — and the
-        // upload fires long before the note editor's own gate would.
-        if (!mayWriteNotes()) return;
+        // The day-menu row is drawn only for a camera, but the Tools menu's
+        // "Capture a photo" forwards to a hidden button — and the upload fires
+        // long before the note editor's own gate would.
+        if (!mayShoot()) return;
         dateKey = (dateKey || '').trim() || isoFromDate(new Date());
         const host = ensureCaptureHost();
         const input = host.querySelector('.js-photo-file');
@@ -5745,7 +5759,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function recordDayVideo(dateKey) {
-        if (!mayWriteNotes()) return;   // twin of captureDayPhoto above
+        if (!mayFilm()) return;   // twin of captureDayPhoto above
         dateKey = (dateKey || '').trim() || isoFromDate(new Date());
         const host = ensureCaptureHost();
         const input = host.querySelector('.js-video-file');
@@ -5769,7 +5783,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * exactly the way a captured photo becomes a note. */
     let dayVoice = null;
     async function recordDayVoice(dateKey) {
-        if (!mayWriteNotes()) return;
+        if (!mayFilm()) return;   // it travels through the recorder's door
         if (dayVoice) return;   // one recording at a time
         dateKey = (dateKey || '').trim() || isoFromDate(new Date());
         if (!navigator.mediaDevices || !window.MediaRecorder) { toast('This browser cannot record audio.', 'error'); return; }
@@ -9205,7 +9219,7 @@ document.addEventListener('DOMContentLoaded', () => {
            day, and a worker given either of those was allowed through the door
            and stopped at the desk. The server says the same — see the
            inline-note.save rule in WorkerModuleAccess. */
-        if (!MAY_NOTE && !MAY_DRAW && !MAY_MAP) return false;
+        if (!MAY_NOTE && !MAY_DRAW && !MAY_MAP && !MAY_SHOOT && !MAY_FILM) return false;
         const id = el.getAttribute('data-inline-note');
         const content = el.querySelector('.inline-note-body')?.innerHTML || '';
         // Strokes travel too: dragging a note was re-saving its media without

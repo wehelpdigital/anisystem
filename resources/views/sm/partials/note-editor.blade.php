@@ -19,7 +19,16 @@
              two and three lines because each carried a word of its own width,
              and "Photo" was the only way in — a picker, with no way to just
              take the picture in front of you. --}}
+        @php
+            /* Both photo doors go through the same upload, which is the
+               camera's to open: a worker without it is not shown a button
+               that could only refuse, and one who has it finds it here as
+               well as on the day. Owners always hold every pen. */
+            $neMayShoot = \App\Support\WorkerContext::canWriteModule('camera');
+            $neMayFilm = \App\Support\WorkerContext::canWriteModule('video');
+        @endphp
         <div class="ne-tools" role="group" aria-label="Attach to this note">
+            @if ($neMayShoot)
             <button type="button" class="ne-tool" id="noteEditorCamera" title="Take a photo now" aria-label="Take a photo">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                 <span>Camera</span>
@@ -28,6 +37,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="8.5" r="1.3"/></svg>
                 <span>Upload</span>
             </button>
+            @endif
             @php
                 /* The tier's wall on video: judged by the schedule owner's
                    plan inside a schedule, by the acting owner's own plan on
@@ -41,7 +51,7 @@
                     ? 'data-tier-lock=solo data-lock-say="Video on notes comes with the Solo Farmer plan. Photos, drawings and voice stay yours on Libre."'
                     : '';
             @endphp
-            <span class="ne-vid" data-video-host>
+            <span class="ne-vid @if (! $neMayFilm) hidden @endif" data-video-host>
                 <input type="file" class="js-video-file hidden" accept="video/*">
                 <button type="button" class="ne-tool js-video-attach {{ $neVidLocked ? 'tl-dim' : '' }}" {!! $neVidLockAttrs !!} title="Attach a video" aria-label="Attach a video">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>
@@ -315,8 +325,10 @@
     }
 
     // ---- Photos: taken here, or already on the device. Same road after that.
-    $('noteEditorPhoto').addEventListener('click', () => $('noteEditorPhotoInput').click());
-    $('noteEditorCamera').addEventListener('click', () => $('noteEditorCameraInput').click());
+    // Optional: without the camera pen the two buttons are not drawn at all,
+    // and binding a click to nothing would take the whole editor down with it.
+    $('noteEditorPhoto')?.addEventListener('click', () => $('noteEditorPhotoInput').click());
+    $('noteEditorCamera')?.addEventListener('click', () => $('noteEditorCameraInput').click());
     const onPicked = async (e) => {
         const files = Array.from(e.target.files || []); e.target.value = '';
         for (const file of files) {

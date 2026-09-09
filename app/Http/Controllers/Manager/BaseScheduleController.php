@@ -92,28 +92,37 @@ abstract class BaseScheduleController extends Controller
     }
 
     /**
-     * Same again, for a note that is the way a DRAWING or a MAP gets onto a
-     * day.
+     * Same again, for a note that is the way a PICTURE, a CLIP, a DRAWING or
+     * a MAP gets onto a day.
      *
      * The notebook's pen writes these, and so does the pen for what the note
-     * carries: an owner who gives a worker the Drawing module has given them
-     * leave to put drawings on the farm, and the day note is where a drawing
-     * is filed rather than a second permission to go and ask for. Without
-     * this the Add-a-drawing door opened on the worker's own right and shut
-     * on somebody else's.
+     * carries: an owner who gives a worker the camera has given them leave to
+     * put photographs on the farm, and the note is where a photograph is
+     * filed rather than a second permission to go and ask for. Without this
+     * the Capture-a-photo door opened on the worker's own right and shut on
+     * somebody else's.
      *
-     * The route gate says the same thing (see the inline-note.save rule in
+     * @param  string[]  $pens  Which module pens also open it, besides Notes.
+     *
+     * The route gate says the same thing (see the media rules in
      * WorkerModuleAccess); this is the desk behind the door.
      */
-    protected function scheduleForNoteMedia(Request $request, string $key = 'scheduleId'): AsCroppingSchedule
-    {
+    protected function scheduleForNoteMedia(
+        Request $request,
+        array $pens = ['draw', 'maps', 'camera', 'video'],
+        string $key = 'scheduleId'
+    ): AsCroppingSchedule {
         $schedule = $this->schedule($request->query($key));
 
         if (! $request->isMethodSafe()) {
             $ctx = \App\Support\WorkerContext::class;
-            $allowed = $ctx::canAddNotes()
-                || $ctx::canWriteModule('draw')
-                || $ctx::canWriteModule('maps');
+            $allowed = $ctx::canAddNotes();
+            foreach ($pens as $pen) {
+                if ($allowed) {
+                    break;
+                }
+                $allowed = $ctx::canWriteModule($pen);
+            }
             if (! $allowed) {
                 abort(response()->json([
                     'success' => false,

@@ -39,8 +39,16 @@ class WorkerModuleAccess
      */
     private const RULES = [
         // ---- the plan's own modules -------------------------------------
-        ['sm.notes',        'notes'],
-        ['sm.notes.*',      'notes'],
+        /* The notebook's own routes, named one by one rather than swept up by
+         * `sm.notes.*`, because three of the seven are not the notebook's at
+         * all: putting a photo or a clip into the store is the act of the
+         * CAMERA and the RECORDER, and they are listed with the other media
+         * doors below. A new sm.notes route belongs on this list — a name
+         * left off it is a door with no lock. */
+        ['sm.notes',          'notes'],
+        ['sm.notes.store',    'notes'],
+        ['sm.notes.update',   'notes'],
+        ['sm.notes.destroy',  'notes'],
         /* Global Notes is not the farm's notebook.
          *
          * The page holds the writer's own free-standing notes, and the store
@@ -66,7 +74,7 @@ class WorkerModuleAccess
          * Only the save. Everything else an inline note can have done to it
          * is the notebook's, so the routes are named rather than swept up by
          * a wildcard — a new one belongs on this list, deliberately. */
-        ['sm.activities.inline-note.save',   'notes:edit|draw:edit|maps:edit'],
+        ['sm.activities.inline-note.save',   'notes:edit|draw:edit|maps:edit|camera:edit|video:edit'],
         ['sm.activities.inline-note.delete', 'notes:edit'],
         ['sm.activities.append-note',        'notes:edit'],
         ['sm.activity-versions.global-note', 'notes:edit'],
