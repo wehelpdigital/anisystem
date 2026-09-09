@@ -401,7 +401,10 @@
                 // be cancelled at its confirm, and the canvas stays as it was.
                 hint.textContent = '';
                 requestAnimationFrame(boot);
-                if (ask === 'blank') window.cmapStartBlank?.();
+                // "New map" means a new map: the canvas clears rather than
+                // handing the last one's shapes to somebody who asked for a
+                // blank sheet. Saved maps are files and stay on the shelf.
+                if (ask === 'blank') window.cmapStartBlank?.({ silent: true });
                 else if (typeof ask === 'number' && ask > 0) window.cmapOpenSaveById?.(ask);
                 window.scrollTo({ top: 0, behavior: 'auto' });
             }

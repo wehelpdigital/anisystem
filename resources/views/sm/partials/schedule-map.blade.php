@@ -382,6 +382,16 @@
                 </button>
             </div>
             <div class="sheet-body cmap-menu-body">
+                {{-- The room's clean sheet. It shares the season's one live
+                     canvas with the Maps module and every lot, so whatever
+                     was drawn last is what the room opens on — fine for
+                     carrying on, wrong for starting something. This is the
+                     door that starts something, and it clears without asking
+                     for the same reason the shelf's New map does. --}}
+                <button type="button" class="cmap-mrow" data-maction="new">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>
+                    <span>Start a new map<small>Clears the canvas — saved maps stay on the shelf</small></span>
+                </button>
                 <button type="button" class="cmap-mrow" data-maction="open">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
                     <span>Open a saved map</span>
@@ -3899,7 +3909,18 @@
         setLoadedSave(null);
         if (snapshot.length) pushHist({ type: 'clear', objects: snapshot });
     }
-    async function startBlankCanvas() {
+    /**
+     * @param {boolean} silent  Asked for BY the act of starting something new
+     *   — the Maps shelf's New map, the room's New map, a lot attaching its
+     *   first map. The intent is already stated, so the canvas simply clears:
+     *   a "new map" that opens on the last map's shapes is not a new map, and
+     *   a question in the way of it gets answered "no" by somebody who then
+     *   draws on top of somebody else's work. Nothing is at risk that was not
+     *   already: saved maps are files on the shelf, and the live canvas is
+     *   scratch. Left false for the trash button, which is a clear and only
+     *   a clear, and deserves its question.
+     */
+    async function startBlankCanvas(silent) {
         // Nothing on screen, so nothing to confirm — but a write can still be
         // armed: deleting the last shape marks the map dirty, and the timer
         // that fires two seconds later bails on the empty canvas without
@@ -3908,11 +3929,13 @@
         // teammate's save inherits it — which is how a "your last edits were
         // not saved" warning reaches somebody who edited nothing.
         if (objIndex.size === 0) { cancelAutosave(); setLoadedSave(null); return; }
-        const n = objIndex.size;
-        const ok = window.confirmAction
-            ? await confirmAction({ title: 'Start a blank map?', message: 'Removes the ' + n + ' shape' + (n === 1 ? '' : 's') + ' on the canvas for the whole team. Save the current map first if it is worth keeping.', confirmText: 'Start blank' })
-            : confirm('Start a blank map? This clears the current shapes for everyone.');
-        if (!ok) return;
+        if (!silent) {
+            const n = objIndex.size;
+            const ok = window.confirmAction
+                ? await confirmAction({ title: 'Start a blank map?', message: 'Removes the ' + n + ' shape' + (n === 1 ? '' : 's') + ' on the canvas for the whole team. Save the current map first if it is worth keeping.', confirmText: 'Start blank' })
+                : confirm('Start a blank map? This clears the current shapes for everyone.');
+            if (!ok) return;
+        }
         try {
             await wipeCanvas();   // which is also what lets go of the open map
         } catch (err) { if (window.toast) toast(err.message, 'error'); }
@@ -3927,7 +3950,7 @@
             while (pendingGridAsk) {
                 const ask = pendingGridAsk;
                 pendingGridAsk = null;
-                if (ask.kind === 'blank') { await startBlankCanvas(); continue; }
+                if (ask.kind === 'blank') { await startBlankCanvas(ask.silent); continue; }
                 if (LOADED_SAVE && LOADED_SAVE.id === ask.id) continue;   // already on screen
                 try {
                     const r = await api(`${URLS.saves}?scheduleId=${SID}`);
@@ -3942,8 +3965,8 @@
         pendingGridAsk = { kind: 'save', id: parseInt(id, 10) || 0 };
         if (booted && map) drainGridAsk();
     };
-    window.cmapStartBlank = () => {
-        pendingGridAsk = { kind: 'blank' };
+    window.cmapStartBlank = (opts) => {
+        pendingGridAsk = { kind: 'blank', silent: !!(opts && opts.silent) };
         if (booted && map) drainGridAsk();
     };
     // What the grid needs to know when the user walks back out of the stage.
@@ -4035,7 +4058,8 @@
         document.getElementById('cmapSaveMenuBtn')?.addEventListener('click', () => window.openSheet?.('cmapSaveMenuSheet'));
         document.querySelectorAll('[data-maction]').forEach((b) => b.addEventListener('click', () => {
             window.closeSheet?.('cmapSaveMenuSheet');
-            if (b.dataset.maction === 'open') openSaves();
+            if (b.dataset.maction === 'new') window.cmapStartBlank({ silent: true });
+            else if (b.dataset.maction === 'open') openSaves();
             else openSaveSheet(b.dataset.maction === 'savemap' ? 'map' : 'image');
         }));
 

@@ -100,7 +100,7 @@
 
             return;
         }
-        window.cmapStartBlank();
+        window.cmapStartBlank({ silent: true });
     }, { once: true });
 
     /* How tall the map is: whatever is left under the header.
