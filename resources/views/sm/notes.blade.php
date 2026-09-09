@@ -242,6 +242,18 @@
                      "I took this earlier", the other is "look at this now". The
                      camera one asks the phone for its rear camera directly. --}}
                 <input type="file" id="noteCamera" accept="image/*" capture="environment" class="hidden">
+                @php
+                    /* The attachment row offers only the doors this pair of
+                       hands may open. Both photo buttons go through the one
+                       upload, which is the camera's; the clip and the spoken
+                       note go through the recorder's. A worker whose farm
+                       withheld either is not shown a button that could only
+                       refuse — the same judgement the shared note editor and
+                       the day menu make. */
+                    $nMayShoot = \App\Support\WorkerContext::canWriteModule('camera');
+                    $nMayFilm = \App\Support\WorkerContext::canWriteModule('video');
+                @endphp
+                @if ($nMayShoot)
                 <button type="button" id="noteTakePhoto" class="btn btn-white btn-sm">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     Take a photo
@@ -250,7 +262,9 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     Upload photo
                 </button>
+                @endif
                 <input type="file" class="js-video-file hidden" accept="video/*">
+                @if ($nMayFilm)
                 <button type="button" class="btn btn-white btn-sm js-video-attach">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg>
                     Add video
@@ -263,6 +277,7 @@
                     <img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:1rem;height:1rem;object-fit:contain">
                     <span id="noteVoiceLabel">Voice</span>
                 </button>
+                @endif
                 <span class="js-video-chip"></span>
             </div>
             <div class="tp-mount mt-3" id="noteTagsMount" data-tags data-tags-kind="note"></div>
@@ -455,7 +470,9 @@ const __init = () => {
         document.addEventListener('click', (e) => { if (!e.target.closest('.nb-emoji-pop') && e.target !== eb) pop.style.display = 'none'; });
     })();
 
-    fld('noteAddPhoto').addEventListener('click', () => fld('notePhoto').click());
+    // Optional: without the camera pen neither button is drawn, and binding
+    // a click to nothing would take the rest of this file down with it.
+    fld('noteAddPhoto')?.addEventListener('click', () => fld('notePhoto').click());
     fld('noteTakePhoto')?.addEventListener('click', () => fld('noteCamera').click());
     // Remove a media item from the working gallery.
     fld('noteMthumbs').addEventListener('click', (e) => {
