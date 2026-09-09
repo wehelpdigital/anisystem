@@ -12,7 +12,14 @@
     $teamAiPresent = $teamAiSettings && $teamAiSettings->isUsable();
 @endphp
 @if ($teamHasTeam && $teamCanAccess)
-<div id="teamChat" class="team-float{{ $teamAiPresent ? ' has-ai' : '' }}{{ request('module') === 'ai' ? ' team-float-off' : '' }}{{ request('module') === 'workers' || request()->routeIs('sm.workers') ? ' team-fab-off' : '' }}">
+{{-- THE BUBBLE IS OFF, EVERYWHERE IN A SCHEDULE.
+     The owner's call: no module of a cropping schedule carries a floating
+     team-chat button. What stays is this panel, because the Workers page
+     opens it from the chat mark on a worker's card (scheduleTeamPm), and
+     the Collab Room docks it into its own Chat tab. The Collab Room is the
+     way into the team's chat; a bubble following you across every module
+     was one more thing sitting on top of the work. --}}
+<div id="teamChat" class="team-float team-fab-off{{ $teamAiPresent ? ' has-ai' : '' }}{{ request('module') === 'ai' ? ' team-float-off' : '' }}">
     <button type="button" id="teamChatFab" class="team-fab" aria-label="Open team chat" title="Team chat">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-3-3.87M9 20H4v-1a4 4 0 013-3.87m0 0a4 4 0 115.5-5.8M7 15.13A4 4 0 0012 8m5 7.13A4 4 0 0012 8m0 0a3 3 0 100-2"/></svg>
         <span id="teamChatDot" class="team-dot hidden"></span>

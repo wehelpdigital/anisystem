@@ -4545,11 +4545,10 @@
         backBtn?.classList.toggle('hidden', key === 'activities' || backBtn.dataset.homeward === '1');
         // The AI module IS the technician chat — hide the floating one there.
         document.getElementById('aiFloat')?.classList.toggle('ai-float-off', key === 'ai');
-        // Workers has its own door to the team chat on every worker card, so
-        // the floating button only crowds that module's cards. Lots is off
-        // too by the owner's call — the float is the Workers pane's own
-        // markup and only ever reached Lots by outliving the pane switch.
-        document.getElementById('teamChat')?.classList.toggle('team-fab-off', key === 'workers' || key === 'lots');
+        // The team-chat bubble is off in every module now (see
+        // schedule-chat-float), so there is nothing for the shell to toggle:
+        // Workers opens the chat from a worker's card, the Collab Room docks
+        // it into its Chat tab, and no module carries a floating button.
         // ...and it takes the toolbar's row, so the arrow has to lead home.
         aiBackArrow(key === 'ai');
         // On phones the fab hides only while the ACTIVITIES module is showing
