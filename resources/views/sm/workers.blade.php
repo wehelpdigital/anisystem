@@ -385,7 +385,7 @@
  * The keys are the grant's own column names. */
 window.workerRights = (() => {
     const LEVELS = ['notesAccess', 'reportsAccess', 'inventoryAccess', 'mapsAccess', 'drawAccess'];
-    const SWITCHES = ['aiAccess', 'cameraAccess', 'videoAccess'];
+    const SWITCHES = ['aiAccess', 'cameraAccess', 'videoAccess', 'voiceAccess'];
     const id = (p, key) => p + key.charAt(0).toUpperCase() + key.slice(1);
     return {
         read(p) {

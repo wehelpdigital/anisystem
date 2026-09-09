@@ -60,6 +60,7 @@ class WorkerAccessController extends Controller
             'aiAccess'         => 'nullable|boolean',
             'cameraAccess'     => 'nullable|boolean',
             'videoAccess'      => 'nullable|boolean',
+            'voiceAccess'      => 'nullable|boolean',
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
@@ -95,6 +96,7 @@ class WorkerAccessController extends Controller
             'aiAccess'         => $request->boolean('aiAccess'),
             'cameraAccess'     => $request->boolean('cameraAccess'),
             'videoAccess'      => $request->boolean('videoAccess'),
+            'voiceAccess'      => $request->boolean('voiceAccess'),
             'canAddNotes'      => $request->input('notesAccess', 'view') === 'edit',
             'deleteStatus'     => 1,
         ]);
@@ -171,6 +173,7 @@ class WorkerAccessController extends Controller
             'aiAccess'         => 'nullable|boolean',
             'cameraAccess'     => 'nullable|boolean',
             'videoAccess'      => 'nullable|boolean',
+            'voiceAccess'      => 'nullable|boolean',
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
@@ -201,6 +204,7 @@ class WorkerAccessController extends Controller
             'aiAccess'         => $request->boolean('aiAccess'),
             'cameraAccess'     => $request->boolean('cameraAccess'),
             'videoAccess'      => $request->boolean('videoAccess'),
+            'voiceAccess'      => $request->boolean('voiceAccess'),
             'canAddNotes'      => $request->input('notesAccess', 'view') === 'edit',
             'deleteStatus'     => 1,
         ]);
@@ -295,6 +299,7 @@ class WorkerAccessController extends Controller
             'aiAccess'         => 'nullable|boolean',
             'cameraAccess'     => 'nullable|boolean',
             'videoAccess'      => 'nullable|boolean',
+            'voiceAccess'      => 'nullable|boolean',
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
@@ -319,6 +324,7 @@ class WorkerAccessController extends Controller
             'aiAccess'         => $request->boolean('aiAccess'),
             'cameraAccess'     => $request->boolean('cameraAccess'),
             'videoAccess'      => $request->boolean('videoAccess'),
+            'voiceAccess'      => $request->boolean('voiceAccess'),
             'canAddNotes'      => $request->input('notesAccess', 'view') === 'edit',
         ])->save();
 

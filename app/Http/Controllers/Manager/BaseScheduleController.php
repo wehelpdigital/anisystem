@@ -109,7 +109,7 @@ abstract class BaseScheduleController extends Controller
      */
     protected function scheduleForNoteMedia(
         Request $request,
-        array $pens = ['draw', 'maps', 'camera', 'video'],
+        array $pens = ['draw', 'maps', 'camera', 'video', 'voice'],
         string $key = 'scheduleId'
     ): AsCroppingSchedule {
         $schedule = $this->schedule($request->query($key));

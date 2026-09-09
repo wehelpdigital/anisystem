@@ -27,13 +27,16 @@ class WorkerGrant extends BaseModel
         'ai'        => ['column' => 'aiAccess',        'shape' => 'open'],
         'camera'    => ['column' => 'cameraAccess',    'shape' => 'open'],
         'video'     => ['column' => 'videoAccess',     'shape' => 'open'],
+        // Speaking a note is its own errand: a farmer with their hands full
+        // says a sentence, and that is not the same as being handed a camera.
+        'voice'     => ['column' => 'voiceAccess',     'shape' => 'open'],
     ];
 
     protected $fillable = [
         'bossUserId', 'workerUserId', 'scheduleWorkerId', 'invitedEmail',
         'inviteToken', 'scheduleAccess', 'canAddNotes', 'communityAccess', 'status',
         'notesAccess', 'reportsAccess', 'inventoryAccess', 'mapsAccess', 'drawAccess', 'aiAccess',
-        'cameraAccess', 'videoAccess',
+        'cameraAccess', 'videoAccess', 'voiceAccess',
         'acceptedAt', 'deleteStatus',
     ];
 
@@ -43,6 +46,7 @@ class WorkerGrant extends BaseModel
         'aiAccess' => 'boolean',
         'cameraAccess' => 'boolean',
         'videoAccess' => 'boolean',
+        'voiceAccess' => 'boolean',
         'acceptedAt' => 'datetime',
         'deleteStatus' => 'integer',
     ];

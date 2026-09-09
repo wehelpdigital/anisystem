@@ -35,6 +35,9 @@
         ['AiAccess', 'images/anee/avatar-160.jpg', 'Chat Anee', 'Asking Anee questions. Answers are paid from your credits.'],
         ['CameraAccess', '📷', 'Camera', 'Taking photos and filing them on this farm.'],
         ['VideoAccess', '🎥', 'Video record', 'Recording clips and attaching them.'],
+        // Its own switch: speaking a note is what a farmer does with their
+        // hands full, and an owner may want that without lending a camera.
+        ['VoiceAccess', '🎙️', 'Voice record', 'Speaking a note instead of typing it.'],
     ];
 @endphp
 <div class="wr-block" data-wr-block>

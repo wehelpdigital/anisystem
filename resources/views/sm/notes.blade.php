@@ -252,6 +252,7 @@
                        the day menu make. */
                     $nMayShoot = \App\Support\WorkerContext::canWriteModule('camera');
                     $nMayFilm = \App\Support\WorkerContext::canWriteModule('video');
+                    $nMaySpeak = \App\Support\WorkerContext::canWriteModule('voice');
                 @endphp
                 @if ($nMayShoot)
                 <button type="button" id="noteTakePhoto" class="btn btn-white btn-sm">
@@ -273,6 +274,8 @@
                     <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/></svg>
                     Record
                 </button>
+                @endif
+                @if ($nMaySpeak)
                 <button type="button" class="btn btn-white btn-sm" id="noteVoiceBtn">
                     <img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:1rem;height:1rem;object-fit:contain">
                     <span id="noteVoiceLabel">Voice</span>

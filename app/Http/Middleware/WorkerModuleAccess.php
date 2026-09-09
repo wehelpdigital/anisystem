@@ -165,7 +165,8 @@ class WorkerModuleAccess
         // quick-voice.clip is deliberately absent: a quick voice note is the
         // speaker's own GLOBAL note now, not a season's record, so it needs
         // no farm grant — same rule as writing a global note.
-        ['sm.notes.audio-upload',   'video'],
+        // The microphone answers to its own switch, not the camcorder's.
+        ['sm.notes.audio-upload',   'voice'],
 
         // ---- the toggle that never did anything --------------------------
         // communityAccess has been on the grant since worker logins existed

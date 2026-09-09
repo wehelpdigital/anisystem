@@ -2257,6 +2257,12 @@ document.addEventListener('DOMContentLoaded', () => {
         toast('The farm owner has not given you video recording on this farm.', 'error');
         return false;
     }
+    const MAY_SPEAK = @json(\App\Support\WorkerContext::canWriteModule('voice'));
+    function maySpeak() {
+        if (MAY_SPEAK) return true;
+        toast('The farm owner has not given you the voice recorder on this farm.', 'error');
+        return false;
+    }
 
     /* The same door for the plan itself. A drag is the one write with no button
        to grey out, so it has to be turned away where it lands. */
@@ -5783,7 +5789,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * exactly the way a captured photo becomes a note. */
     let dayVoice = null;
     async function recordDayVoice(dateKey) {
-        if (!mayFilm()) return;   // it travels through the recorder's door
+        if (!maySpeak()) return;   // the microphone has its own switch
         if (dayVoice) return;   // one recording at a time
         dateKey = (dateKey || '').trim() || isoFromDate(new Date());
         if (!navigator.mediaDevices || !window.MediaRecorder) { toast('This browser cannot record audio.', 'error'); return; }
@@ -9219,7 +9225,7 @@ document.addEventListener('DOMContentLoaded', () => {
            day, and a worker given either of those was allowed through the door
            and stopped at the desk. The server says the same — see the
            inline-note.save rule in WorkerModuleAccess. */
-        if (!MAY_NOTE && !MAY_DRAW && !MAY_MAP && !MAY_SHOOT && !MAY_FILM) return false;
+        if (!MAY_NOTE && !MAY_DRAW && !MAY_MAP && !MAY_SHOOT && !MAY_FILM && !MAY_SPEAK) return false;
         const id = el.getAttribute('data-inline-note');
         const content = el.querySelector('.inline-note-body')?.innerHTML || '';
         // Strokes travel too: dragging a note was re-saving its media without

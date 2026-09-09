@@ -296,8 +296,9 @@ class NoteController extends BaseScheduleController
      */
     public function uploadAudio(Request $request)
     {
-        // A spoken note travels through the recorder's door, like a clip.
-        $schedule = $this->scheduleForNoteMedia($request, ['video']);
+        // The microphone has its own switch: speaking a note is not filming
+        // one, and a farm may want the one without the other.
+        $schedule = $this->scheduleForNoteMedia($request, ['voice']);
 
         $validator = Validator::make($request->all(), [
             'audio' => 'required|file|max:51200|mimetypes:audio/webm,audio/ogg,audio/mp4,audio/mpeg,audio/aac,audio/wav,audio/x-wav,audio/x-m4a,video/webm',

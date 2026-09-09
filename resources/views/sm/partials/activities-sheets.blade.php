@@ -1274,6 +1274,7 @@
         @php
             $mayShoot = \App\Support\WorkerContext::canWriteModule('camera');
             $mayFilm = \App\Support\WorkerContext::canWriteModule('video');
+            $maySpeak = \App\Support\WorkerContext::canWriteModule('voice');
         @endphp
         @if ($mayShoot)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50" data-action="capture-photo">
@@ -1288,9 +1289,9 @@
         </button>
         @endif
         {{-- The spoken note: tap, talk, tap to stop — it lands on the day
-             exactly the way a captured photo does, and travels through the
-             recorder's door, so it asks the recorder's permission. --}}
-        @if ($mayFilm)
+             exactly the way a captured photo does. Its own switch: speaking
+             is not filming, and a farm may want the one without the other. --}}
+        @if ($maySpeak)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50" data-action="record-voice">
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 003-3V6a3 3 0 10-6 0v6a3 3 0 003 3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-14 0M12 18v3m-3 0h6"/></svg>
             Record a voice
