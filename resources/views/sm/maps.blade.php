@@ -196,12 +196,19 @@
         // A note's "View map" tag names the save it means; arriving with one
         // skips the shelf and opens the stage on that map.
         $openSaveQ = (int) request()->query('save');
+
+        /* Whether this visitor may CHANGE the shelf. A worker with view-level
+         * Maps reads every saved map and opens it on the stage; naming one,
+         * rewording it or starting a new one is edit work. The server refuses
+         * those writes anyway (sm.map.* wants edit for anything but a GET) —
+         * this stops the shelf offering doors that only lead to a refusal. */
+        $mpMayWrite = \App\Support\WorkerContext::canWriteModule('maps');
     @endphp
     {{-- No info card up here: How to use maps already covers it, and the
          paragraph was one more thing between a farmer and their maps. --}}
     <div id="smapHome" @if ($openSaveQ) class="hidden" @endif>
         <div class="mp-grid" id="mpGrid"></div>
-        <p class="mp-empty hidden" id="mpEmpty">No maps yet. Start one above — draw over the real ground, measure it, and save the plan with a name.</p>
+        <p class="mp-empty hidden" id="mpEmpty">@if ($mpMayWrite)No maps yet. Start one above — draw over the real ground, measure it, and save the plan with a name.@else No maps yet. The farm's saved maps will show here once someone draws one.@endif</p>
     </div>
 
     <div id="smapStageWrap" @unless ($openSaveQ) class="hidden" @endunless>
@@ -227,7 +234,10 @@
             {{-- Save stands beside the way out, where a thumb expects it;
                  undo, redo and centre-on-me went home to the map's own bar,
                  after the trashcan — see the order rules above. --}}
-            @if (\App\Support\WorkerContext::canAddNotes())
+            {{-- Maps edit as well as the notebook's pen: this button is a
+                 proxy for the map bar's own Save, and a hidden button still
+                 answers a scripted click. --}}
+            @if ($mpMayWrite && \App\Support\WorkerContext::canAddNotes())
             <button type="button" class="mp-act is-save" data-proxy="cmapSaveMenuBtn" title="Open or save a map" aria-label="Open or save a map">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
                 <span class="mp-actword">Save</span>
@@ -263,9 +273,13 @@
             const hint = document.getElementById('mpStageHint');
 
             const MAP_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>';
-            const NEW_TILE = '<button type="button" class="mp-new" data-new>'
-                + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>'
-                + '<span>New map</span></button>';
+            // What the shelf may offer this pair of hands (see $mpMayWrite).
+            const MAY_WRITE = @json($mpMayWrite);
+            const NEW_TILE = MAY_WRITE
+                ? '<button type="button" class="mp-new" data-new>'
+                    + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>'
+                    + '<span>New map</span></button>'
+                : '';
 
             /* The live canvas is not a file, but it is where unsaved work
                lives — so when it holds shapes it gets a card of its own. */
@@ -292,9 +306,9 @@
                     <div class="mp-thumb">${thumb}</div>
                     <div class="mp-meta">
                         <span class="mp-name">${esc(sv.title || 'Map')}
-                            <button type="button" class="mp-pen" data-edit-save="${sv.id}" title="Edit name, description and tags" aria-label="Edit ${esc(sv.title || 'Map')}">
+                            ${MAY_WRITE ? `<button type="button" class="mp-pen" data-edit-save="${sv.id}" title="Edit name, description and tags" aria-label="Edit ${esc(sv.title || 'Map')}">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                            </button>
+                            </button>` : ''}
                         </span>
                         <div class="mp-tags">
                             <span class="badge ${sv.source === 'team' ? 'badge-blue' : 'badge-green'}">${sv.source === 'team' ? 'Team map' : 'My map'}</span>
