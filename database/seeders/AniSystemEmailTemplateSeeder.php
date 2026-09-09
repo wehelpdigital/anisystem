@@ -76,6 +76,30 @@ class AniSystemEmailTemplateSeeder extends Seeder
                 ),
             ],
 
+            /* The one a boss sends to a worker who ALREADY has a login.
+             * A registration link is no use to them — they registered — and
+             * what an owner actually reaches for at that point is "let them
+             * set a new password", usually because the worker has forgotten
+             * theirs and is standing in a field. The link is the ordinary
+             * reset link, so the page it opens is the one this app already
+             * has and the token expires the way every other one does. */
+            'worker_password_change' => [
+                'name' => 'Worker — link to change their password',
+                'subject' => 'Change your {{siteName}} password',
+                'tags' => '{{workerName}}, {{bossName}}, {{resetUrl}}, {{siteName}}, {{loginUrl}}',
+                'body' => EmailSkin::wrap(
+                    '<p>Hi {{workerName}},</p>'
+                    . '<p><strong>{{bossName}}</strong> has sent you a link to change your {{siteName}} password. '
+                    . 'Use it if you have forgotten the one you had, or if you would rather pick a new one.</p>'
+                    . '<p>The link is yours alone; please do not pass it on. It stops working after a while, '
+                    . 'and asking for another is no trouble.</p>'
+                    . EmailSkin::button('Change my password', '{{resetUrl}}')
+                    . '<p style="margin-top:22px;color:#6b7280;font-size:13px;">'
+                    . 'If you did not expect this, you can ignore this email — your password stays as it is.</p>',
+                    'Change your password'
+                ),
+            ],
+
             'worker_access_ready' => [
                 'name' => 'Worker — existing account given farm access',
                 'subject' => '{{bossName}} has given you access on {{siteName}}',

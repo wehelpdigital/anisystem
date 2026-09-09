@@ -179,7 +179,11 @@
 {{-- Community access is a row in the rights panel above. --}}
 
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                    {{-- One of these two, never both: a worker who has not
+                         registered needs the way in, and one who has needs the
+                         way to a new password. paintLogin picks. --}}
                     <button type="button" id="wlSendLink" class="btn btn-white btn-sm w-full sm:w-auto justify-center">✉️ Send registration link</button>
+                    <button type="button" id="wlSendPwLink" class="btn btn-white btn-sm w-full sm:w-auto justify-center hidden">✉️ Send password change link</button>
                     <button type="button" id="wlSetPwToggle" class="btn btn-white btn-sm w-full sm:w-auto justify-center">🔒 Set a password</button>
                 </div>
 
@@ -572,6 +576,13 @@ const __init = () => {
         document.getElementById('wlRightsWrap')?.classList.toggle('hidden', !login);
         document.getElementById('wlNoLoginSay')?.classList.toggle('hidden', !!login);
         document.getElementById('wlRevoke').classList.toggle('hidden', !login);
+        /* A registration link is only a link for somebody who has not
+           registered. Once the grant names a real account, the button becomes
+           the one an owner actually reaches for — a link to change the
+           password, usually because the worker has forgotten it. */
+        const hasLogin = !!(login && login.workerUserId);
+        document.getElementById('wlSendLink')?.classList.toggle('hidden', hasLogin);
+        document.getElementById('wlSendPwLink')?.classList.toggle('hidden', !hasLogin);
         document.getElementById('wlPwFold').classList.remove('is-open');
         document.getElementById('wlPassword').value = '';
         document.getElementById('wlPassword2').value = '';
@@ -684,6 +695,29 @@ const __init = () => {
             } });
             toast(res.message);
             applyGrant(res.data && res.data.grant);
+        } catch (err) { toast(err.message, 'error'); } finally { btn.disabled = false; }
+    });
+
+    /* The link for a worker who already has a login. Asked first, because it
+       lands in somebody's inbox: an owner tapping the row to read it should
+       not send mail by brushing past. */
+    document.getElementById('wlSendPwLink')?.addEventListener('click', async (e) => {
+        const grantId = editingWorker && editingWorker.login && editingWorker.login.id;
+        if (!grantId) { toast('This worker has no login yet.', 'error'); return; }
+        const name = (editingWorker && editingWorker.workerName) || 'this worker';
+        const ok = window.confirmAction ? await window.confirmAction({
+            title: 'Send a password change link?',
+            message: name + ' gets an email with a link to pick a new password. Their current one keeps working until they do.',
+            confirmText: 'Send the link',
+            confirmClass: 'btn-primary',
+        }) : true;
+        if (!ok) return;
+        const btn = e.currentTarget; btn.disabled = true;
+        try {
+            const res = await api(@json(route('sm.workers.access.password-link')), {
+                method: 'POST', body: { id: grantId },
+            });
+            toast(res.message);
         } catch (err) { toast(err.message, 'error'); } finally { btn.disabled = false; }
     });
 

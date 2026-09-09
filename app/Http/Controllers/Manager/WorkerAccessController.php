@@ -9,6 +9,8 @@ use App\Models\WorkerGrant;
 use App\Services\MailService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -356,6 +358,70 @@ class WorkerAccessController extends Controller
         $grant->update(['status' => WorkerGrant::STATUS_REVOKED, 'deleteStatus' => 0]);
 
         return response()->json(['success' => true, 'message' => 'Access revoked.']);
+    }
+
+    /**
+     * Send a worker who ALREADY has a login a link to change their password.
+     *
+     * A registration link is no use to somebody who registered — the owner's
+     * real errand at that point is "they have forgotten it, let them pick a
+     * new one". The link is the app's ordinary reset link, minted by the same
+     * broker the Forgot-password page uses, so the page it opens, the token's
+     * life and the rules it enforces are the ones already in the app rather
+     * than a second set that would have to be kept in step.
+     */
+    public function sendPasswordLink(Request $request)
+    {
+        $boss = $request->user();
+        // Handing out logins is the farm owner's act, not a worker's — the
+        // same guard the three writes above carry, for the same reason.
+        if (\App\Support\WorkerContext::inWorkerContext()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Only the farm owner can manage worker logins.',
+            ], 403);
+        }
+
+        $grant = WorkerGrant::active()
+            ->where('bossUserId', $boss->id)
+            ->where('id', (int) $request->input('id'))
+            ->first();
+        if (! $grant) {
+            return response()->json(['success' => false, 'message' => 'Grant not found.'], 404);
+        }
+
+        $worker = $grant->workerUserId ? User::active()->find($grant->workerUserId) : null;
+        if (! $worker) {
+            return response()->json([
+                'success' => false,
+                'message' => 'This worker has no login yet — send them a registration link instead.',
+            ], 422);
+        }
+
+        try {
+            $token = Password::broker()->createToken($worker);
+        } catch (\Throwable $e) {
+            Log::warning('Worker password link failed: '.$e->getMessage());
+
+            return response()->json(['success' => false, 'message' => 'The link could not be made. Try again in a moment.'], 500);
+        }
+
+        $name = optional(\App\Models\AsScheduleWorker::find($grant->scheduleWorkerId))->workerName
+            ?: ($worker->full_name ?: \Illuminate\Support\Str::before((string) $worker->email, '@'));
+
+        $this->mail->sendTemplate('worker_password_change', $worker->email, $name, [
+            'workerName' => $name,
+            'bossName' => $boss->full_name ?: 'Your farm manager',
+            'resetUrl' => route('password.reset', ['token' => $token, 'email' => $worker->email]),
+        ], [
+            'relatedType' => 'worker_grant',
+            'relatedId' => $grant->id,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Password change link sent to '.$worker->email.'.',
+        ]);
     }
 
     private function sendInviteEmail(WorkerGrant $grant, User $boss): void
