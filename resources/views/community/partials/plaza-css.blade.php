@@ -1106,10 +1106,45 @@
            each one a face and an abbreviation; two and nothing else made a
            strip that gave no sign it went on. The sliver is the sign. */
         grid-auto-columns: 41%; gap: .5rem; }
-    /* No arrows. The rail shows two cards and the edge of a third, which is
-       the whole of what an arrow was there to say, and a thumb does the rest
-       — buttons floating over two faces were two more things on a card that
-       already carries two. */
+    /* Arrows, on a desk only.
+     *
+     * A thumb needs none: the sliver of a third card says the rail goes on,
+     * and the finger is already on it. A mouse has neither — grab-and-slide
+     * is a gesture nobody is told about — so on a wide screen with a real
+     * pointer the rail says it out loud with two floating buttons, and gives
+     * up its drag in exchange. They are absent, not disabled, when there is
+     * nothing that way, and they fade and lift in on the house curve. */
+    .pymk-arrow { display: none; position: absolute; top: 50%; z-index: 3;
+        width: 2.1rem; height: 2.1rem; border-radius: 999px;
+        align-items: center; justify-content: center;
+        border: 1px solid var(--color-gray-200); background: var(--color-white);
+        color: var(--color-gray-700); cursor: pointer;
+        box-shadow: 0 6px 18px -8px rgba(16, 32, 8, .45), 0 1px 2px rgba(16, 32, 8, .06);
+        opacity: 0; visibility: hidden; pointer-events: none;
+        transition: opacity .28s cubic-bezier(.22,1,.36,1),
+                    transform .28s cubic-bezier(.22,1,.36,1),
+                    background-color .28s cubic-bezier(.22,1,.36,1),
+                    visibility 0s linear .28s; }
+    .pymk-arrow svg { width: 1.05rem; height: 1.05rem; }
+    .pymk-arrow.is-prev { left: -.4rem; transform: translate(.5rem, -50%) scale(.82); }
+    .pymk-arrow.is-next { right: -.4rem; transform: translate(-.5rem, -50%) scale(.82); }
+    .pymk-arrow.is-on { opacity: 1; visibility: visible; pointer-events: auto;
+        transform: translate(0, -50%) scale(1); transition-delay: 0s; }
+    .pymk-arrow:hover { background: var(--color-gray-50); }
+    .pymk-arrow:active.is-on { transform: translate(0, -50%) scale(.92); }
+    html.dark .pymk-arrow { background: #1b2415; border-color: #2f3f1e; color: #cfe0bb; }
+    html.dark .pymk-arrow:hover { background: #23301a; }
+    /* Width alone decides, not (hover)/(pointer): those two answer "none" in
+       more places than they should — a headless browser, a laptop with a
+       touchscreen, a desktop driven by a stylus — and a desk with no arrows
+       and no drag left is a rail that cannot be moved at all. */
+    @media (min-width: 768px) {
+        .pymk-arrow { display: flex; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .pymk-arrow { transition: opacity .01s, visibility 0s; }
+        .pymk-arrow.is-prev, .pymk-arrow.is-next, .pymk-arrow.is-on { transform: translate(0, -50%); }
+    }
     /* The heading is the handle now, so it is a button the whole width of
        the band — a chevron on its own would be a target the size of a
        fingernail. */

@@ -16,12 +16,23 @@
         <svg class="pymk-chev" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
     </button>
     <div class="pymk-body" id="pymkBody">
+        {{-- On a desk the rail is driven by two buttons, not by a grabbed
+             mouse: grab-and-slide is a gesture nobody is told about, and on a
+             wide screen there is room to say it out loud. `drag-scroll` is
+             gone with it — that behaviour only ever bound a mouse, so a
+             finger still pans the rail exactly as before. --}}
         <div class="pymk-wrap">
-            <div class="pymk-rail drag-scroll" id="pymkRail">
+            <button type="button" class="pymk-arrow is-prev" id="pymkPrev" aria-label="Show earlier suggestions" tabindex="-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 6l-6 6 6 6"/></svg>
+            </button>
+            <div class="pymk-rail" id="pymkRail">
                 @for ($i = 0; $i < 3; $i++)
                     <div class="pymk-skel" aria-hidden="true"></div>
                 @endfor
             </div>
+            <button type="button" class="pymk-arrow is-next" id="pymkNext" aria-label="Show more suggestions" tabindex="-1">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+            </button>
         </div>
         <p class="pymk-empty hidden" id="pymkEmpty">No suggestions yet — connect with a few co-farmers and this fills up.</p>
     </div>
@@ -53,6 +64,49 @@
         try { localStorage.setItem(KEY, folded ? '1' : '0'); } catch (_) {}
     });
 
+    /* The two arrows, on a desk only.
+     *
+     * They are not decoration: each one is only there while there is
+     * something in that direction, so they arrive and leave as the rail
+     * moves — faded and eased in on the house curve rather than blinking
+     * into place. CSS keeps them off a phone entirely; this keeps them
+     * honest about where the rail actually is.
+     *
+     * The rail fills from a fetch long after this runs, so its width is
+     * watched rather than measured once. */
+    const rail = document.getElementById('pymkRail');
+    const prev = document.getElementById('pymkPrev');
+    const next = document.getElementById('pymkNext');
+    if (!rail || !prev || !next) return;
+
+    const desk = window.matchMedia('(min-width: 768px)');
+    const paintArrows = () => {
+        if (!desk.matches || folded) {
+            prev.classList.remove('is-on');
+            next.classList.remove('is-on');
+
+            return;
+        }
+        const room = rail.scrollWidth - rail.clientWidth;
+        // A rail that does not scroll gets no arrows at all.
+        prev.classList.toggle('is-on', room > 4 && rail.scrollLeft > 4);
+        next.classList.toggle('is-on', room > 4 && rail.scrollLeft < room - 4);
+    };
+
+    // One nudge is most of a screen, so a click lands on whole new faces
+    // rather than shuffling the row along by a sliver.
+    const step = (dir) => rail.scrollBy({ left: dir * Math.max(160, rail.clientWidth * 0.82), behavior: 'smooth' });
+    prev.addEventListener('click', () => step(-1));
+    next.addEventListener('click', () => step(1));
+    rail.addEventListener('scroll', paintArrows, { passive: true });
+    window.addEventListener('resize', paintArrows);
+    desk.addEventListener?.('change', paintArrows);
+    btn.addEventListener('click', () => setTimeout(paintArrows, 340));
+    if (window.ResizeObserver) new ResizeObserver(paintArrows).observe(rail);
+    // The fetch replaces the skeletons without resizing the rail itself, so
+    // the observer can stay quiet — watch the children too.
+    if (window.MutationObserver) new MutationObserver(paintArrows).observe(rail, { childList: true });
+    paintArrows();
 })();
 </script>
 @endpush
