@@ -152,6 +152,11 @@ Route::middleware('auth')->group(function () {
     // The Contact List — the member's own farm phonebook (every tier, no gates).
     Route::get('/app/contacts', [App\Http\Controllers\ContactListController::class, 'page'])->name('contacts.page');
     Route::get('/app/contacts-data', [App\Http\Controllers\ContactListController::class, 'list'])->name('contacts.list');
+    // Provinces, or the towns of one — the contact form's two place pickers.
+    Route::get('/app/contacts-places', [App\Http\Controllers\ContactListController::class, 'places'])->name('contacts.places');
+    // "Do I already know this email?" — the workers module asks before offering
+    // to file a new worker in the phonebook.
+    Route::get('/app/contacts-lookup', [App\Http\Controllers\ContactListController::class, 'lookup'])->name('contacts.lookup');
     Route::post('/app/contacts', [App\Http\Controllers\ContactListController::class, 'store'])->name('contacts.store');
     Route::post('/app/contacts/{id}', [App\Http\Controllers\ContactListController::class, 'update'])->name('contacts.update');
     Route::post('/app/contacts/{id}/delete', [App\Http\Controllers\ContactListController::class, 'destroy'])->name('contacts.destroy');

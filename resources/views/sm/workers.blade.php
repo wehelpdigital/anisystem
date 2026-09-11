@@ -108,6 +108,21 @@
         </div>
         <p class="form-hint -mt-2">Email is used to send this worker today's or tomorrow's plan from Quick Share.</p>
 
+        {{-- A new face the phonebook has not met.
+             Offered, never assumed: the row unrolls only once the typed
+             email is a real one AND no contact of yours already carries it,
+             and it rolls away again the moment either stops being true. --}}
+        <label class="wl-tocontact" id="wlToContact" hidden>
+            <input type="checkbox" id="wlToContactBox" checked>
+            <span class="wl-tocontact-box" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </span>
+            <span class="wl-tocontact-say">
+                <b>Add to my Contact List too</b>
+                <i>This email is not in your phonebook yet. Saved with a <em>Worker</em> tag, so next season you can find them.</i>
+            </span>
+        </label>
+
         <div>
             <label for="workerCost" class="form-label">Cost / Half Day</label>
             <div class="relative">
@@ -356,6 +371,46 @@
     .wr-credits-ico { flex:none; font-size:.95rem; line-height:1.35; }
     html.dark .wr-credits { background:rgb(180 83 9 / .14); border-color:rgb(180 83 9 / .35); color:#eec155; }
     html.dark .wr-credits b { color:#fcd34d; }
+    /* "ADD TO MY CONTACT LIST TOO" — the row that unrolls.
+       It is an offer, not a field, so it arrives the way an offer should:
+       the strip grows to its own height and fades up rather than appearing
+       between two things that were already there. max-height carries the
+       growth (a fixed ceiling well over what the copy needs), because that
+       is the one way a fold closes on every phone this app has met. */
+    .wl-tocontact { display:flex; align-items:flex-start; gap:.6rem; cursor:pointer;
+        margin-top:-.35rem; padding:.7rem .8rem; border-radius:.85rem;
+        border:1px solid var(--color-brand-200); background:var(--color-brand-50);
+        overflow:hidden; max-height:9rem; opacity:1;
+        transition:max-height .32s cubic-bezier(.22,1,.36,1),
+            opacity .28s cubic-bezier(.22,1,.36,1),
+            padding .28s cubic-bezier(.22,1,.36,1),
+            margin .28s cubic-bezier(.22,1,.36,1),
+            border-color .28s cubic-bezier(.22,1,.36,1); }
+    /* Rolled away: everything that takes vertical room goes to nothing, so
+       the fields above and below close the gap instead of jumping. */
+    .wl-tocontact.is-away { max-height:0; opacity:0; padding-top:0; padding-bottom:0;
+        margin-top:-.35rem; margin-bottom:-1rem; border-color:transparent; }
+    .wl-tocontact input { position:absolute; opacity:0; width:0; height:0; }
+    .wl-tocontact-box { flex:none; width:1.25rem; height:1.25rem; border-radius:.4rem; margin-top:.1rem;
+        display:flex; align-items:center; justify-content:center;
+        border:2px solid var(--color-brand-300); background:var(--color-white); color:#fff;
+        transition:background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .wl-tocontact-box svg { width:.8rem; height:.8rem; opacity:0; transform:scale(.5);
+        transition:opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .wl-tocontact input:checked + .wl-tocontact-box { background:var(--color-brand-600); border-color:var(--color-brand-600); }
+    .wl-tocontact input:checked + .wl-tocontact-box svg { opacity:1; transform:none; }
+    .wl-tocontact input:focus-visible + .wl-tocontact-box { outline:2px solid var(--color-brand-400); outline-offset:2px; }
+    .wl-tocontact-say { min-width:0; }
+    .wl-tocontact-say b { display:block; font-size:.82rem; font-weight:800; color:var(--color-brand-800); }
+    .wl-tocontact-say i { display:block; font-style:normal; font-size:.72rem; line-height:1.45;
+        color:var(--color-brand-700); opacity:.85; margin-top:.1rem; }
+    .wl-tocontact-say em { font-style:normal; font-weight:800; }
+    html.dark .wl-tocontact { background:rgb(107 159 61 / .12); border-color:#2f4d24; }
+    html.dark .wl-tocontact-say b { color:#cfe6b8; }
+    html.dark .wl-tocontact-say i { color:#a5c97e; }
+    @media (prefers-reduced-motion:reduce) {
+        .wl-tocontact, .wl-tocontact-box, .wl-tocontact-box svg { transition:none; }
+    }
     @media (max-width:480px) {
         /* The three-way answers drop their select onto its own line; a yes/no
            does not -- letting those wrap put the box on a line of its own,
@@ -555,8 +610,70 @@ const __init = () => {
         // Login controls only make sense for a saved worker (needs an id to link).
         editingWorker = w;
         paintLogin(w);
+        toContactReset();
         openSheet('workerSheet');
     }
+
+    /* ------------- "Add to my Contact List too" -------------
+     *
+     * Only ever offered for a NEW worker, and only once the typed email is
+     * both valid and unknown to the phonebook. Asking the server on every
+     * keystroke would be a request per letter, so it waits for the typing to
+     * stop; and every answer is stamped with the email it was about, because
+     * a slow reply about "juan@" must not decide the row for "juana@".
+     */
+    const TO_CONTACT_URL = @json(route('contacts.lookup'));
+    let toContactSeq = 0;
+    let toContactDebounce;
+
+    function toContactRow() { return document.getElementById('wlToContact'); }
+
+    function toContactShow(on) {
+        const row = toContactRow();
+        if (!row) return;
+        if (on) {
+            // hidden must come off before the class, or there is nothing
+            // laid out for the height to animate from.
+            row.hidden = false;
+            row.classList.add('is-away');
+            requestAnimationFrame(() => requestAnimationFrame(() => row.classList.remove('is-away')));
+        } else if (!row.hidden) {
+            row.classList.add('is-away');
+            setTimeout(() => { if (row.classList.contains('is-away')) row.hidden = true; }, 340);
+        }
+    }
+
+    function toContactReset() {
+        const row = toContactRow();
+        if (!row) return;
+        clearTimeout(toContactDebounce);
+        toContactSeq++;
+        row.hidden = true;
+        row.classList.add('is-away');
+        document.getElementById('wlToContactBox').checked = true;
+    }
+
+    async function toContactAsk() {
+        const row = toContactRow();
+        if (!row) return;
+        // Editing an existing worker is not the moment to file anybody.
+        if (document.getElementById('workerId').value) { toContactShow(false); return; }
+        const email = document.getElementById('workerEmail').value.trim();
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { toContactShow(false); return; }
+        const mine = ++toContactSeq;
+        try {
+            const res = await api(TO_CONTACT_URL + '?email=' + encodeURIComponent(email));
+            if (mine !== toContactSeq) return;
+            toContactShow(!res.data.exists);
+        } catch (_) {
+            if (mine === toContactSeq) toContactShow(false);
+        }
+    }
+
+    document.getElementById('workerEmail').addEventListener('input', () => {
+        clearTimeout(toContactDebounce);
+        toContactDebounce = setTimeout(toContactAsk, 450);
+    });
 
     /* ---------------- Worker login controls ---------------- */
 
@@ -827,12 +944,38 @@ const __init = () => {
             }
             renderList();
             closeSheet('workerSheet');
+            // Filed in the phonebook too, if the offer above was left ticked.
+            // Deliberately after the worker is saved and NOT awaited into the
+            // same try: a phonebook that refuses must not make it look as
+            // though the worker failed to save.
+            if (!id) fileAsContact(body);
         } catch (err) {
             toast(err.message, 'error');
         } finally {
             btn.disabled = false;
         }
     });
+
+    async function fileAsContact(body) {
+        const row = toContactRow();
+        if (!row || row.hidden || !document.getElementById('wlToContactBox').checked) return;
+        try {
+            await api(@json(route('contacts.store')), {
+                method: 'POST',
+                body: {
+                    name: body.workerName,
+                    emails: body.email ? [body.email] : [],
+                    phones: body.phone ? [body.phone] : [],
+                    tags: ['Worker'],
+                },
+            });
+            toast(body.workerName + ' is in your Contact List too.');
+        } catch (_) {
+            // The worker is saved either way; a phonebook that would not take
+            // them is worth a word, not an alarm.
+            toast('Saved the worker, but could not add them to your contacts.', 'error');
+        }
+    }
 
     /* ---------------- Rules sheet ---------------- */
 

@@ -77,9 +77,45 @@
     .ctf-add:hover { color: var(--color-brand-700); border-color: var(--color-brand-400); }
     .ctf-add svg { width: .8rem; height: .8rem; }
 
+    /* A repeatable field: the input, and the way to take it back out. Rows
+       arrive and leave animated, so adding a second number reads as the form
+       growing rather than as the page jumping. */
+    .ct-lines { display: flex; flex-direction: column; gap: .5rem; }
+    .ct-line { display: flex; align-items: center; gap: .5rem;
+        opacity: 0; transform: translateY(-6px);
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .ct-line.is-in { opacity: 1; transform: none; }
+    .ct-line.is-out { opacity: 0; transform: translateY(-6px); }
+    .ct-line .form-input { flex: 1 1 auto; min-width: 0; }
+    .ct-line-drop { flex: none; width: 2.4rem; height: 2.4rem; border-radius: 999px;
+        display: flex; align-items: center; justify-content: center;
+        color: var(--color-gray-400); background: var(--color-gray-50);
+        border: 1px solid var(--color-gray-200);
+        transition: color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+    .ct-line-drop:hover { color: #dc2626; background: #fef2f2; border-color: #fecaca; }
+    .ct-line-drop svg { width: .9rem; height: .9rem; }
+
+    /* The place buttons wear the tag chips' clothes: the same pill the tags
+       row above them uses, so "pick one of these" looks like one gesture
+       wherever the form asks it. Filled, they go brand-coloured. */
+    .ctf-place { display: inline-flex; align-items: center; gap: .4rem; padding: .42rem .8rem;
+        border-radius: 999px; font-size: .78rem; font-weight: 700; cursor: pointer;
+        color: var(--color-gray-500); background: var(--color-white);
+        border: 1px dashed var(--color-gray-300); max-width: 100%;
+        transition: color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1),
+            background .28s cubic-bezier(.22,1,.36,1); }
+    .ctf-place svg { width: .9rem; height: .9rem; flex: none; }
+    .ctf-place span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ctf-place:hover:not(:disabled) { color: var(--color-brand-700); border-color: var(--color-brand-400); }
+    .ctf-place.is-set { color: var(--color-brand-800); background: var(--color-brand-50);
+        border-style: solid; border-color: var(--color-brand-200); }
+    .ctf-place:disabled { opacity: .5; cursor: not-allowed; }
+    .ct-placelist { max-height: 22rem; overflow-y: auto; }
+
     @media (prefers-reduced-motion: reduce) {
         .ct-row { transition: none; opacity: 1; transform: none; }
-        .ct-act, .ct-chip, .ct-searchbtn, .ctf-add { transition: none; }
+        .ct-act, .ct-chip, .ct-searchbtn, .ctf-add, .ctf-place { transition: none; }
+        .ct-line { transition: none; opacity: 1; transform: none; }
     }
 </style>
 @endpush
@@ -163,24 +199,57 @@
             <label class="form-label" for="ctfName">Name <span class="text-red-500">*</span></label>
             <input type="text" id="ctfName" class="form-input" placeholder="Mang Tonyo" maxlength="150">
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-                <label class="form-label" for="ctfPhone">Mobile number</label>
-                <input type="tel" id="ctfPhone" class="form-input" placeholder="09XXXXXXXXX" maxlength="40">
-            </div>
-            <div>
-                <label class="form-label" for="ctfEmail">Email <span class="text-gray-400 font-normal">(optional)</span></label>
-                <input type="email" id="ctfEmail" class="form-input" placeholder="name@example.com" maxlength="150">
-            </div>
+        {{-- A person rarely has one number. Rows are added and taken away
+             here; the first of each list is the one a contact card's Call
+             and Email buttons use. --}}
+        <div>
+            <label class="form-label">Mobile numbers</label>
+            <div class="ct-lines" id="ctfPhones"></div>
+            <button type="button" class="ctf-add mt-2" data-ct-more="phone">
+                <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14m-7-7h14"/></svg>
+                Add another number
+            </button>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-                <label class="form-label" for="ctfCompany">Business / role</label>
-                <input type="text" id="ctfCompany" class="form-input" placeholder="Tractor rental, harvester crew…" maxlength="150">
-            </div>
-            <div>
-                <label class="form-label" for="ctfAddress">Address / area</label>
-                <input type="text" id="ctfAddress" class="form-input" placeholder="Brgy., town" maxlength="255">
+        <div>
+            <label class="form-label">Emails <span class="text-gray-400 font-normal">(optional)</span></label>
+            <div class="ct-lines" id="ctfEmails"></div>
+            <button type="button" class="ctf-add mt-2" data-ct-more="email">
+                <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14m-7-7h14"/></svg>
+                Add another email
+            </button>
+        </div>
+        <div>
+            <label class="form-label" for="ctfCompany">Business / role</label>
+            <textarea id="ctfCompany" class="form-input" rows="2" style="padding-top:.7rem;padding-bottom:.7rem"
+                      placeholder="Tractor rental, harvester crew — what they do for the farm" maxlength="500"></textarea>
+        </div>
+        {{-- Where they are, in the order a farmer actually knows it: the
+             street and the sitio in their own words, then the province and
+             the town picked from the list, because nobody should have to
+             spell "Zamboanga Sibugay" to find themselves in a phonebook. --}}
+        <div>
+            <label class="form-label" for="ctfAddress">Address line 1</label>
+            <textarea id="ctfAddress" class="form-input" rows="2" style="padding-top:.7rem;padding-bottom:.7rem"
+                      placeholder="House no., street, purok or sitio" maxlength="255"></textarea>
+        </div>
+        <div>
+            <label class="form-label" for="ctfAddress2">Address line 2 <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea id="ctfAddress2" class="form-input" rows="2" style="padding-top:.7rem;padding-bottom:.7rem"
+                      placeholder="Barangay, landmark, anything that helps you find it again" maxlength="255"></textarea>
+        </div>
+        <div>
+            <label class="form-label">Province and town</label>
+            <div class="ctf-mount">
+                <button type="button" class="ctf-place" id="ctfProvinceBtn">
+                    <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="2.5"/></svg>
+                    <span id="ctfProvinceSay">Pick a province</span>
+                </button>
+                {{-- The town button waits for a province: an unnarrowed list
+                     of 1,647 municipalities is not a choice, it is a search. --}}
+                <button type="button" class="ctf-place" id="ctfTownBtn" disabled>
+                    <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-5h6v5"/></svg>
+                    <span id="ctfTownSay">Pick a town</span>
+                </button>
             </div>
         </div>
         <div>
@@ -219,6 +288,22 @@
         <div class="dt-rows" id="ctTagList"></div>
     </div>
 </div>
+
+{{-- One sheet, two errands: the 87 provinces, or the towns of whichever
+     province was picked. A filter box on top because 1,647 municipalities
+     is a long thumb-scroll even once narrowed to one province. --}}
+<div class="sheet hidden" id="ctPlaceSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="ctPlaceTitle">Province</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <input type="search" class="form-input mb-3" id="ctPlaceFilter" placeholder="Type to narrow the list…" autocomplete="off">
+        <div class="dt-rows ct-placelist" id="ctPlaceList"></div>
+        <p class="form-hint" id="ctPlaceNone" hidden>Nothing by that name.</p>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
@@ -227,6 +312,7 @@
     const URLS = {
         list: @json(route('contacts.list')),
         store: @json(route('contacts.store')),
+        places: @json(route('contacts.places')),
         one: (id) => @json(url('/app/contacts')) + '/' + id,
     };
     const SUGGESTIONS = ['Worker', 'Tractor Rental', 'Harvester', 'Seed Supplier', 'Fertilizer Dealer', 'Buyer', 'Technician', 'Driver', 'Irrigation', 'Landlord'];
@@ -250,13 +336,17 @@
         const el = document.createElement('div');
         el.className = 'ct-row';
         el.dataset.id = c.id;
-        const subBits = [c.company, c.address].filter(Boolean).join(' · ');
+        // What they do, then where they are — the town and province first,
+        // because that is what a farmer scanning the book is matching on.
+        const where = [c.town, c.province].filter(Boolean).join(', ') || c.address || '';
+        const subBits = [c.company, where].filter(Boolean).join(' · ');
+        const moreNums = Math.max(0, (c.phones || []).length - 1);
         el.innerHTML = `
             <span class="ct-face" style="background:hsl(${hueOf(c.name)} 45% 42%)">${esc(initials(c.name))}</span>
             <div class="ct-main" role="button" tabindex="0" aria-label="Edit ${esc(c.name)}">
                 <p class="ct-name">${esc(c.name)}</p>
                 ${subBits ? `<p class="ct-sub">${esc(subBits)}</p>` : ''}
-                ${c.phone ? `<p class="ct-sub">${esc(c.phone)}</p>` : ''}
+                ${c.phone ? `<p class="ct-sub">${esc(c.phone)}${moreNums ? ` <span style="opacity:.7">+${moreNums} more</span>` : ''}</p>` : ''}
                 ${(c.tags || []).length ? `<div class="ct-tags">${c.tags.map((t) => `<span class="ct-tag">${esc(t)}</span>`).join('')}</div>` : ''}
             </div>
             <div class="ct-acts">
@@ -415,21 +505,147 @@
         if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); addTagFromInput(); }
     });
 
+    /* --------------------- the repeatable phone/email rows ------------------ */
+    const LINE_KINDS = {
+        phone: { mount: 'ctfPhones', type: 'tel', max: 40, hint: '09XXXXXXXXX', drop: 'Remove this number' },
+        email: { mount: 'ctfEmails', type: 'email', max: 150, hint: 'name@example.com', drop: 'Remove this email' },
+    };
+
+    function addLine(kind, value = '', animate = true) {
+        const cfg = LINE_KINDS[kind];
+        const mount = $(cfg.mount);
+        if (mount.children.length >= 10) return;
+        const row = document.createElement('div');
+        row.className = 'ct-line';
+        row.innerHTML = `
+            <input type="${cfg.type}" class="form-input" placeholder="${cfg.hint}" maxlength="${cfg.max}" autocomplete="off">
+            <button type="button" class="ct-line-drop" aria-label="${cfg.drop}" title="${cfg.drop}">
+                <svg fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>`;
+        row.querySelector('input').value = value;
+        // The last row keeps its ✕ hidden: a field with no way back is
+        // clearer than one whose only row can be deleted into nothing.
+        row.querySelector('.ct-line-drop').addEventListener('click', () => dropLine(kind, row));
+        mount.appendChild(row);
+        if (reduceMotion || !animate) row.classList.add('is-in');
+        else requestAnimationFrame(() => requestAnimationFrame(() => row.classList.add('is-in')));
+        paintLineDrops(kind);
+    }
+
+    function dropLine(kind, row) {
+        const mount = $(LINE_KINDS[kind].mount);
+        if (mount.children.length <= 1) { row.querySelector('input').value = ''; return; }
+        if (reduceMotion) { row.remove(); paintLineDrops(kind); return; }
+        row.classList.remove('is-in');
+        row.classList.add('is-out');
+        setTimeout(() => { row.remove(); paintLineDrops(kind); }, 260);
+    }
+
+    function paintLineDrops(kind) {
+        const mount = $(LINE_KINDS[kind].mount);
+        const only = mount.querySelectorAll('.ct-line').length <= 1;
+        mount.querySelectorAll('.ct-line-drop').forEach((b) => { b.style.visibility = only ? 'hidden' : 'visible'; });
+    }
+
+    function readLines(kind) {
+        return [...$(LINE_KINDS[kind].mount).querySelectorAll('input')]
+            .map((i) => i.value.trim())
+            .filter(Boolean);
+    }
+
+    function setLines(kind, values) {
+        $(LINE_KINDS[kind].mount).innerHTML = '';
+        const list = (values || []).filter(Boolean);
+        if (!list.length) addLine(kind, '', false);
+        else list.forEach((v) => addLine(kind, v, false));
+    }
+
+    document.addEventListener('click', (e) => {
+        const b = e.target.closest?.('[data-ct-more]');
+        if (b) addLine(b.dataset.ctMore);
+    });
+
+    /* ----------------------------- the place pickers ----------------------- */
+    const place = { province: '', town: '', mode: 'province', items: [] };
+
+    function paintPlaceButtons() {
+        const pb = $('ctfProvinceBtn'), tb = $('ctfTownBtn');
+        $('ctfProvinceSay').textContent = place.province || 'Pick a province';
+        pb.classList.toggle('is-set', !!place.province);
+        $('ctfTownSay').textContent = place.town || (place.province ? 'Pick a town' : 'Province first');
+        tb.classList.toggle('is-set', !!place.town);
+        tb.disabled = !place.province;
+    }
+
+    async function openPlaces(mode) {
+        place.mode = mode;
+        $('ctPlaceTitle').textContent = mode === 'province' ? 'Province' : 'Town or city';
+        $('ctPlaceFilter').value = '';
+        $('ctPlaceList').innerHTML = '<p class="text-sm text-gray-400 py-3">Loading…</p>';
+        window.openSheet('ctPlaceSheet');
+        try {
+            const qs = mode === 'town' ? '?province=' + encodeURIComponent(place.province) : '';
+            const res = await window.api(URLS.places + qs);
+            place.items = res.data.items || [];
+            paintPlaceList();
+        } catch (err) {
+            $('ctPlaceList').innerHTML = '';
+            window.toast?.(err.message || 'Could not load places.', 'error');
+        }
+    }
+
+    function paintPlaceList() {
+        const needle = $('ctPlaceFilter').value.trim().toLowerCase();
+        const shown = needle ? place.items.filter((n) => n.toLowerCase().includes(needle)) : place.items;
+        const chosen = place.mode === 'province' ? place.province : place.town;
+        $('ctPlaceNone').hidden = shown.length > 0;
+        $('ctPlaceList').innerHTML = shown.map((n) => `
+            <button type="button" class="dt-row${n === chosen ? ' is-on' : ''}" data-ct-place="${esc(n)}">
+                <span class="dt-row-body"><b>${esc(n)}</b></span>
+                <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>`).join('');
+    }
+
+    $('ctPlaceFilter').addEventListener('input', paintPlaceList);
+    $('ctPlaceList').addEventListener('click', (e) => {
+        const row = e.target.closest('[data-ct-place]');
+        if (!row) return;
+        const picked = row.dataset.ctPlace;
+        if (place.mode === 'province') {
+            // A new province cannot keep the old province's town.
+            if (picked !== place.province) place.town = '';
+            place.province = picked;
+        } else {
+            place.town = picked;
+        }
+        paintPlaceButtons();
+        $('ctPlaceSheet').querySelector('[data-sheet-close]').click();
+    });
+    $('ctfProvinceBtn').addEventListener('click', () => openPlaces('province'));
+    $('ctfTownBtn').addEventListener('click', () => { if (place.province) openPlaces('town'); });
+
     /* ------------------------------ the sheet ------------------------------ */
     function openSheetFor(contact) {
         state.editing = contact || null;
         $('ctSheetTitle').textContent = contact ? 'Edit contact' : 'New contact';
         $('ctfName').value = contact?.name || '';
-        $('ctfPhone').value = contact?.phone || '';
-        $('ctfEmail').value = contact?.email || '';
+        setLines('phone', contact?.phones?.length ? contact.phones : (contact?.phone ? [contact.phone] : []));
+        setLines('email', contact?.emails?.length ? contact.emails : (contact?.email ? [contact.email] : []));
         $('ctfCompany').value = contact?.company || '';
         $('ctfAddress').value = contact?.address || '';
+        $('ctfAddress2').value = contact?.address2 || '';
+        place.province = contact?.province || '';
+        place.town = contact?.town || '';
+        paintPlaceButtons();
         $('ctfNotes').value = contact?.notes || '';
         $('ctfDelete').hidden = !contact;
         formTags = [...(contact?.tags || [])];
         paintTagMount();
         window.openSheet('ctSheet');
-        if (!contact) setTimeout(() => $('ctfName').focus(), 250);
+        /* NO FOCUS. Focusing the name threw the phone's keypad up over half
+           the form before the farmer had seen any of it — and the first
+           thing they do is often pick a tag, not type. The field is one tap
+           away for anyone who did come here to type. */
     }
 
     $('ctfSave').addEventListener('click', async () => {
@@ -437,10 +653,13 @@
         if (!name) { window.toast?.('A contact needs at least a name.', 'error'); $('ctfName').focus(); return; }
         const body = {
             name,
-            phone: $('ctfPhone').value.trim() || null,
-            email: $('ctfEmail').value.trim() || null,
+            phones: readLines('phone'),
+            emails: readLines('email'),
             company: $('ctfCompany').value.trim() || null,
             address: $('ctfAddress').value.trim() || null,
+            address2: $('ctfAddress2').value.trim() || null,
+            province: place.province || null,
+            town: place.town || null,
             notes: $('ctfNotes').value.trim() || null,
             tags: formTags,
         };
