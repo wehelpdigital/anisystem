@@ -421,9 +421,26 @@
                         <button type="button" data-sheet-open="farmSwitchSheet" title="Switch farm"
                             class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-brand-50 hover:bg-brand-100 transition"
                             aria-label="Switch farm">
-                            <img src="{{ asset('images/user-refresh.png') }}" alt="" style="width:1.25rem;height:1.25rem;object-fit:contain">
+                            <img src="{{ asset('images/account.png') }}" alt="" style="width:1.25rem;height:1.25rem;object-fit:contain">
                         </button>
                         @include('partials.tag-sheet-css')
+                        {{-- The faces on the rows. The community's own avatar
+                             partial is not used here: its CSS lives in
+                             plaza-css, which only the community pages load,
+                             and this sheet rides every page in the app. So the
+                             face is drawn in place, with the same bargain —
+                             the photo when there is one, the initials when
+                             there is not. --}}
+                        <style>
+                            .dt-row-face { flex: none; width: 2.1rem; height: 2.1rem; border-radius: 999px;
+                                display: flex; align-items: center; justify-content: center; overflow: hidden;
+                                background: var(--color-brand-100); color: var(--color-brand-800);
+                                font-size: .7rem; font-weight: 800; letter-spacing: .02em;
+                                box-shadow: inset 0 0 0 1px rgba(16, 32, 8, .08); }
+                            .dt-row-face img { width: 100%; height: 100%; object-fit: cover; display: block; }
+                            html.dark .dt-row-face { background: #2a3a1d; color: #cfe0bb;
+                                box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07); }
+                        </style>
                         <div class="sheet hidden" id="farmSwitchSheet" style="--sheet-width:24rem">
                             <div class="sheet-handle"></div>
                             <div class="sheet-header">
@@ -443,7 +460,19 @@
                                     @csrf
                                     <input type="hidden" name="bossId" value="0">
                                     <button type="submit" class="dt-row{{ $__activeGrant === null ? ' is-on' : '' }}">
-                                        <span class="dt-row-e">🏡</span>
+                                        {{-- The face of the account, not a
+                                             picture of a house: every row here
+                                             is a person, and a farmer knows
+                                             their bosses by face long before
+                                             they read the name. --}}
+                                        @php $__me = auth()->user(); @endphp
+                                        <span class="dt-row-face">
+                                            @if (filled(optional($__me)->avatarPath))
+                                                <img src="{{ \App\Support\MediaStore::url($__me->avatarPath) }}" alt="" data-avatar-fallback data-initials="{{ optional($__me)->initials ?: '?' }}">
+                                            @else
+                                                {{ optional($__me)->initials ?: '?' }}
+                                            @endif
+                                        </span>
                                         <span class="dt-row-body">
                                             <b>My own farm</b>
                                             <i>You are the <strong>owner</strong> here — {{ \App\Support\WorkerContext::ownsSchedules() ? 'your own schedules and land' : 'your own free account, ready for its first schedule' }}.</i>
@@ -456,7 +485,14 @@
                                         @csrf
                                         <input type="hidden" name="bossId" value="{{ $__g->bossUserId }}">
                                         <button type="submit" class="dt-row{{ optional($__activeGrant)->bossUserId === $__g->bossUserId ? ' is-on' : '' }}">
-                                            <span class="dt-row-e">🌾</span>
+                                            @php $__bossUser = $__g->boss; @endphp
+                                            <span class="dt-row-face">
+                                                @if (filled(optional($__bossUser)->avatarPath))
+                                                    <img src="{{ \App\Support\MediaStore::url($__bossUser->avatarPath) }}" alt="" data-avatar-fallback data-initials="{{ optional($__bossUser)->initials ?: '?' }}">
+                                                @else
+                                                    {{ optional($__bossUser)->initials ?: '?' }}
+                                                @endif
+                                            </span>
                                             <span class="dt-row-body">
                                                 <b>{{ optional($__g->boss)->full_name ?: 'Farm' }}</b>
                                                 <i>You are a <strong>worker</strong> on this farm — {{ $__g->scheduleAccess === 'edit' ? 'you can edit the plan' : 'view only' }}.</i>
@@ -484,7 +520,7 @@
                 <span class="wbar-dot" aria-hidden="true"></span>
                 <span class="wbar-txt">Working at <b>{{ optional($__activeGrant->boss)->full_name ?: 'a farm' }}</b></span>
                 <button type="button" class="wbar-switch" data-sheet-open="farmSwitchSheet">
-                    <img src="{{ asset('images/user-refresh.png') }}" alt="" aria-hidden="true">
+                    <img src="{{ asset('images/account.png') }}" alt="" aria-hidden="true">
                     <span>Switch</span>
                 </button>
             </div>
