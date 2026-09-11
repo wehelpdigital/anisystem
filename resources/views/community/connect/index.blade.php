@@ -22,7 +22,11 @@
      activity modules strike with their own help text, and the reason it is
      remembered per browser: a farmer who has read it once has read it. --}}
 <div class="card p-3 mem-info" id="memInfo">
-    <div class="flex items-start gap-2.5">
+    {{-- On a phone the sentence runs to three lines and belongs at the top,
+         beside the (i). On a desk it is one line between a 2rem close button
+         and a small round icon, and top-aligning it left the words sitting
+         high in their own panel — so from md up the row centres. --}}
+    <div class="flex items-start md:items-center gap-2.5">
         <span class="mem-info-ico" aria-hidden="true">i</span>
         <p class="text-sm text-gray-600 leading-relaxed grow">
             These are members <strong>not yet in your contacts</strong>. Search by name, place, crop or what
