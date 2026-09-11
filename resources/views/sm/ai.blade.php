@@ -409,7 +409,10 @@
 @php
     // Super admins ride free — the wallet row hides for them (view-side check,
     // same pattern the floating assistant already uses).
-    $aiUnlimited = app(\App\Services\AiCreditService::class)->unlimited((int) auth()->id());
+    // The payer, not the reader: a worker in a boss's farm spends the farm's.
+    $aiUnlimited = $aiUnlimited
+        ?? app(\App\Services\AiCreditService::class)->unlimited((int) \App\Support\WorkerContext::effectiveOwnerId());
+    $aiPayerIsMe = $aiPayerIsMe ?? true;
     // The menu's "attach to a task" picker, rendered with the page.
     // The real per-photo price, so the hint stays honest when several photos
     // ride on one question.
@@ -627,7 +630,7 @@
             </button>
             {{-- What the wallet holds, at the end of the row that decides
                  what the next answer costs. --}}
-            <span class="ai-bal ai-bal-chip" data-ai-bal title="Current credits — what is left in the wallet this chat spends from" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b>@endif</span>
+            <span class="ai-bal ai-bal-chip" data-ai-bal title="{{ $aiPayerIsMe ? 'Current credits — what is left in the wallet this chat spends from' : 'Credits belonging to the farm you are working on — the owner pays for answers here' }}" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b>@endif</span>
         </div>
         <div class="aichat-box">
             <button type="button" class="ai-cam shrink-0" id="aiAttachBtn" title="Add photos" aria-label="Add photos" aria-haspopup="dialog">

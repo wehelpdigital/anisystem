@@ -32,7 +32,7 @@
     $wrSwitches = [
         // Anee's row wears her face, not a robot: a mark with a '/' in it
         // is an image path, and the loop below knows the difference.
-        ['AiAccess', 'images/anee/avatar-160.jpg', 'Chat Anee', 'Asking Anee questions. Answers are paid from your credits.'],
+        ['AiAccess', 'images/anee/avatar-160.jpg', 'Chat Anee', 'Asking Anee questions — every answer is paid for from YOUR credits, not theirs.'],
         ['CameraAccess', '📷', 'Camera', 'Taking photos and filing them on this farm.'],
         ['VideoAccess', '🎥', 'Video record', 'Recording clips and attaching them.'],
         // Its own switch: speaking a note is what a farmer does with their
@@ -97,6 +97,19 @@
         <input type="checkbox" id="{{ $p }}Community" class="wr-check" checked>
         <span class="wr-toggle" aria-hidden="true"></span>
     </label>
+
+    {{-- WHOSE CREDITS. The one thing about this panel that costs money, said
+         where the switches are rather than discovered on a statement. --}}
+    <p class="wr-credits">
+        <span class="wr-credits-ico" aria-hidden="true">💳</span>
+        <span><b>These doors spend your credits, not theirs.</b>
+        Anything Anee answers — the chat, the season reads, the planting
+        analyses — is charged to <strong>your</strong> account while they are
+        working on your farm, however many workers ask. Close
+        <strong>Chat Anee</strong>, or set <strong>Reports</strong> to
+        None or View, and they cannot spend any. On their own farm they
+        pay from their own.</span>
+    </p>
 
     <p class="wr-foot">Every worker can at least <strong>view Activities</strong> — the plan is the farm's common ground. The other doors are yours to open. Changes here save on their own.</p>
 </div>

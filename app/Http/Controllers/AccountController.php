@@ -58,7 +58,15 @@ class AccountController extends Controller
         if ($hat['kind'] === 'worker') {
             $request->session()->put('activeBossId', $hat['bossId']);
         } else {
-            $request->session()->forget('activeBossId');
+            /* "My own farm" is a CHOICE, and has to be stored as one.
+             *
+             * Forgetting the key only said "nothing chosen yet", and the
+             * fallback for somebody who owns no land of their own is the
+             * first farm they work on — so a worker with no seasons of their
+             * own could pick their own farm, land on it, and be standing back
+             * in the boss's farm by the next page. Their own id is the
+             * convention activeGrant() already reads for this. */
+            $request->session()->put('activeBossId', (int) $request->user()->id);
         }
 
         // Asked and answered — the chooser does not appear again this session
@@ -75,7 +83,8 @@ class AccountController extends Controller
     {
         $bossId = (int) $request->input('bossId');
         if ($bossId === 0) {
-            $request->session()->forget('activeBossId');
+            // Stored, not forgotten — see the chooser above for why.
+            $request->session()->put('activeBossId', (int) $request->user()->id);
         } else {
             $ok = \App\Models\WorkerGrant::active()
                 ->where('workerUserId', $request->user()->id)

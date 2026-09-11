@@ -309,10 +309,17 @@ class ScheduleAiController extends BaseScheduleController
         $imagePath = $imagePaths[0] ?? null;
         $image = $images ?: null;
 
-        // Refuse before spending the owner's pool on something it can't cover.
+        /* Refuse before spending the owner's pool on something it can't cover.
+         *
+         * Every part of this question is asked ABOUT THE OWNER, because the
+         * owner is who pays: the balance, the ceiling, and the charge below.
+         * The unlimited check used to ask whoever was typing — so a farm on
+         * an unlimited plan had its own workers refused, and a worker who
+         * was unlimited on their own account could push the owner's pool
+         * into the red from a farm that was not theirs. */
         $balance = $this->credits->balance($ownerId);
         $estimate = $this->credits->estimate($settings, $prompt, count($images));
-        if ($balance < $estimate && ! $this->credits->unlimited((int) \Illuminate\Support\Facades\Auth::id())) {
+        if ($balance < $estimate && ! $this->credits->unlimited($ownerId)) {
             return response()->json([
                 'success' => false,
                 'message' => $balance <= 0

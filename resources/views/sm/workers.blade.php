@@ -348,6 +348,14 @@
     .wr-foot { padding:.6rem .85rem; font-size:.7rem; line-height:1.4; color:var(--color-gray-400);
         border-top:1px solid var(--color-gray-100); background:var(--color-gray-50); }
     html.dark .wr-foot { background:rgb(255 255 255 / .03); }
+    /* Whose credits. Amber rather than grey: it is the one line in this
+       panel about money leaving an account, and it is read once. */
+    .wr-credits { display:flex; gap:.5rem; padding:.65rem .85rem; font-size:.72rem;
+        line-height:1.45; color:#92400e; border-top:1px solid #fde68a; background:#fffbeb; }
+    .wr-credits b { color:#78350f; }
+    .wr-credits-ico { flex:none; font-size:.95rem; line-height:1.35; }
+    html.dark .wr-credits { background:rgb(180 83 9 / .14); border-color:rgb(180 83 9 / .35); color:#eec155; }
+    html.dark .wr-credits b { color:#fcd34d; }
     @media (max-width:480px) {
         /* The three-way answers drop their select onto its own line; a yes/no
            does not -- letting those wrap put the box on a line of its own,

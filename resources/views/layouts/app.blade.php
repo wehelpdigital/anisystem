@@ -408,8 +408,10 @@
                     @if ($__farmGrants->isNotEmpty())
                         @php $__activeGrant = \App\Support\WorkerContext::activeGrant(); @endphp
                         <button type="button" data-sheet-open="farmSwitchSheet" title="Switch farm"
-                            class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-brand-50 text-brand-700 hover:bg-brand-100 transition text-lg"
-                            aria-label="Switch farm">🏡</button>
+                            class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-brand-50 hover:bg-brand-100 transition"
+                            aria-label="Switch farm">
+                            <img src="{{ asset('images/user-refresh.png') }}" alt="" style="width:1.25rem;height:1.25rem;object-fit:contain">
+                        </button>
                         @include('partials.tag-sheet-css')
                         <div class="sheet hidden" id="farmSwitchSheet" style="--sheet-width:24rem">
                             <div class="sheet-handle"></div>

@@ -123,6 +123,11 @@ class AiController extends Controller
         }
 
         $userId = Auth::id();
+        // Whose wallet this page is about. A worker standing in a boss's farm
+        // spends the BOSS's credits (see aiPayer), so showing them their own
+        // balance told them they had nothing and the chat was shut — when in
+        // fact the farm they were standing in could pay perfectly well.
+        $payerId = (int) $this->aiPayer()->id;
         $settings = AiSetting::current();
 
         // A fresh chat unless one was named. Opening this page used to resume
@@ -133,7 +138,11 @@ class AiController extends Controller
 
         return view('ai.index', [
             'settings' => $settings,
-            'balance' => $this->credits->balance($userId),
+            'balance' => $this->credits->balance($payerId),
+            'aiUnlimited' => $this->credits->unlimited($payerId),
+            // True when the credits belong to somebody else's farm, so the
+            // page can say whose they are rather than implying they are ours.
+            'aiPayerIsMe' => $payerId === (int) $userId,
             'conversation' => $conversation,
             'messages' => $conversation
                 // Newest sixty, oldest first. The relation is every turn the
@@ -1026,6 +1035,8 @@ class AiController extends Controller
     public function schedulePage(Request $request)
     {
         $userId = Auth::id();
+        // The farm pays, not whoever is typing — see aiPayer().
+        $payerId = (int) $this->aiPayer()->id;
         // Resolved against the farm being worked, not the account doing the
         // working: under a worker's own id a boss's schedule is invisible, and
         // the page answered "no such schedule" when the truth is "not yours".
@@ -1065,7 +1076,9 @@ class AiController extends Controller
                 : collect()),
             'schedule' => $schedule,
             'settings' => $settings,
-            'balance' => $this->credits->balance($userId),
+            'balance' => $this->credits->balance($payerId),
+            'aiUnlimited' => $this->credits->unlimited($payerId),
+            'aiPayerIsMe' => $payerId === (int) $userId,
             // What the "This season's plan" switch would add to a question.
             'planTokens' => $this->planTokenCost($schedule->id, $userId),
             'conversation' => $conversation,
