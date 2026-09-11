@@ -452,9 +452,15 @@
                 <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             @endif
         </button>
+        @endif
 
         {{-- Quick Voice — for the walk when both hands are busy and the
-             observation is a sentence, not a picture. --}}
+             observation is a sentence, not a picture. It asks the VOICE
+             switch, not the camcorder's: it sat inside the video tile's
+             block, so a farm that lent somebody the microphone and not the
+             camera saw nothing, and one that lent the camera got a recorder
+             it had never granted. --}}
+        @if ($may('voice'))
         <button type="button" id="quickVoiceBtn"
             class="cta-tile qr-cta rounded-2xl p-5 flex items-center gap-4 text-left">
             <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
@@ -578,6 +584,8 @@
          one you meant. Quick Record borrows the shared recorder. --}}
     @if ($may('video'))
     @include('sm.partials.quick-record', ['fixedScheduleId' => $schedule->id, 'allSchedules' => collect()])
+    @endif
+    @if ($may('voice'))
     @include('sm.partials.quick-voice', ['fixedScheduleId' => $schedule->id, 'allSchedules' => collect()])
     @endif
     @include('community.partials.video-js')

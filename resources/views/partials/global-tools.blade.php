@@ -209,6 +209,11 @@
                         <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                     @endif
                 </button>
+            @endif
+            {{-- The microphone has its own switch. This tile used to live
+                 inside the video block above, so it came and went with a
+                 permission that was never about speaking. --}}
+            @if ($allSchedules->isNotEmpty() && \App\Support\WorkerContext::canUseModule('voice'))
                 <button type="button" id="quickVoiceBtn" class="qa-tile qa-rec">
                     <span class="qa-ico"><img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                     <span class="qa-txt">
@@ -228,6 +233,8 @@
     @endif
     @if (\App\Support\WorkerContext::canUseModule('video'))
         @include('sm.partials.quick-record', ['allSchedules' => $allSchedules])
+    @endif
+    @if (\App\Support\WorkerContext::canUseModule('voice'))
         @include('sm.partials.quick-voice', ['allSchedules' => $allSchedules])
     @endif
     {{-- Quick Record borrows the shared recorder, so the panel needs it. --}}
