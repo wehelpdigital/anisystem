@@ -618,6 +618,22 @@
     .wb-act { display: inline-flex; align-items: center; gap: .35rem; flex-shrink: 0; }
     .wb-hint { margin-left: auto; font-size: .72rem; font-weight: 600; color: var(--color-gray-400); }
     @media (max-width: 599px) { .wb-hint { display: none; } }
+
+    /* THE INVITATION THAT STANDS IN FOR AN EMPTY LIST.
+       A card headed "Latest Discussions" with "join a group" as its only row
+       is a list reporting that it is empty — and to a farmer who has never
+       opened one, the word "discussions" does not say what is behind it. So
+       when there is nothing to list, a different card takes the slot: the
+       same icon, what the rooms are for, and one way in. */
+    .dash-invite { text-align: center; }
+    .dash-invite-ico { display: inline-flex; align-items: center; justify-content: center;
+        width: 3rem; height: 3rem; border-radius: 999px; margin-bottom: .6rem;
+        background: var(--color-brand-50); }
+    .dash-invite-ico img { width: 1.6rem; height: 1.6rem; object-fit: contain; }
+    .dash-invite h2 { font-family: var(--font-heading); font-size: .95rem; font-weight: 800;
+        color: var(--color-gray-900); }
+    .dash-invite p { font-size: .78rem; line-height: 1.55; color: var(--color-gray-500);
+        margin: .3rem 0 .85rem; }
 </style>
 @endpush
 
@@ -808,7 +824,13 @@
     </div>
 
     {{-- What the account holds, as labelled tiles rather than three cards
-         each shouting a different size of number. --}}
+         each shouting a different size of number.
+
+         Not for a worker. Two of the three tiles are about a subscription
+         they neither hold nor pay for, and both were reading "—" over
+         "Active plan" and "Days left" — a row of blanks about somebody
+         else's business, on the first screen of their day. --}}
+    @unless (\App\Support\WorkerContext::inWorkerContext())
     <div class="dash-stats">
         <a href="{{ route('sm.index') }}" class="dash-stat is-lead">
             <b>{{ number_format($scheduleCount) }}</b>
@@ -823,6 +845,7 @@
             <i>Days left</i>
         </div>
     </div>
+    @endunless
 
     {{-- The AI technician's one thing worth knowing today. It sat at the
          bottom of the schedules page, where a page of seasons is what people
@@ -1251,6 +1274,23 @@
                 </section>
             @endif
 
+            @if ($latestDiscussions->isEmpty())
+                {{-- Nothing has been said yet. A list headed "Latest
+                     Discussions" with one grey row saying so is a card that
+                     reports its own emptiness; this one uses the space to
+                     explain what the rooms are, to somebody who has never
+                     opened one, and points at the door. --}}
+                <section class="card dash-invite">
+                    <div class="card-body !p-4">
+                        <span class="dash-invite-ico" aria-hidden="true">
+                            <img src="{{ asset('images/speech-bubbles.png') }}" alt="">
+                        </span>
+                        <h2>Discussion Groups</h2>
+                        <p>Rooms where farmers ask each other things — a pest nobody can name, what a buyer is paying this week, whether to plant now or wait. Join one and your question reaches people who have already grown it.</p>
+                        <a href="{{ route('community.groups.index') }}" class="btn btn-primary btn-sm">Browse the groups</a>
+                    </div>
+                </section>
+            @else
             <section class="card">
                 <div class="card-body !p-4">
                     <div class="flex items-center justify-between gap-2 mb-2">
@@ -1261,7 +1301,7 @@
                         <a href="{{ route('community.groups.index') }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">See more →</a>
                     </div>
                     <div class="divide-y divide-gray-100">
-                        @forelse ($latestDiscussions as $d)
+                        @foreach ($latestDiscussions as $d)
                             <a href="{{ route('community.groups.show', ['id' => $d->groupId]) }}" class="block px-1 py-2.5 hover:bg-gray-50 transition">
                                 <p class="text-xs text-gray-400 leading-tight truncate">
                                     <span class="font-semibold text-brand-700">{{ optional($d->group)->name }}</span>
@@ -1277,12 +1317,11 @@
                                     · {{ $d->created_at?->diffForHumans() }}
                                 </p>
                             </a>
-                        @empty
-                            <a href="{{ route('community.groups.index') }}" class="block px-1 py-4 text-center text-sm text-gray-400 hover:text-brand-700">Join a discussion group →</a>
-                        @endforelse
+                        @endforeach
                     </div>
                 </div>
             </section>
+            @endif
 
         </aside>
 
