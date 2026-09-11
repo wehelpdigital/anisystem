@@ -323,6 +323,31 @@
                         </div>
                     </div>
 
+                    {{-- Farm switcher (workers under one or more bosses).
+                         A sheet, not a dropdown: the choice deserves the
+                         whole thumb, and each row says plainly which hat it
+                         is — owner of your own ground, or worker on
+                         somebody else's.
+
+                         It sits BEFORE the avatar, not after: the face is the
+                         end of the bar on every screen in the app, and a
+                         second round button pushed outside it made the two
+                         read as one pair with the wrong one on the end. The
+                         sheet this opens is further down — it is display:none
+                         until tapped, and openSheet re-parents it to <body>
+                         anyway, so only the button belongs in this row. --}}
+                    @php
+                        $__farmGrants = \App\Support\WorkerContext::grants();
+                        $__activeGrant = \App\Support\WorkerContext::activeGrant();
+                    @endphp
+                    @if ($__farmGrants->isNotEmpty())
+                        <button type="button" data-sheet-open="farmSwitchSheet" title="Switch farm"
+                            class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-brand-50 hover:bg-brand-100 transition"
+                            aria-label="Switch farm">
+                            <img src="{{ asset('images/account.png') }}" alt="" class="ico-mono" style="width:1.25rem;height:1.25rem;object-fit:contain">
+                        </button>
+                    @endif
+
                     {{-- Account dropdown --}}
                     <div class="relative" x-data="{ open: false }" @click.outside="open = false">
                         <button type="button" @click="open = !open"
@@ -410,19 +435,12 @@
                         </div>
                     </div>
 
-                    {{-- Farm switcher (workers under one or more bosses).
-                         A sheet, not a dropdown: the choice deserves the
-                         whole thumb, and each row says plainly which hat it
-                         is — owner of your own ground, or worker on
-                         somebody else's. --}}
-                    @php $__farmGrants = \App\Support\WorkerContext::grants(); @endphp
+                    {{-- The sheet the switch button above opens, parked at the
+                         end of the bar's markup rather than beside its button:
+                         it is display:none until tapped and openSheet lifts it
+                         onto <body> the moment it is, so where it sits here
+                         only decides what order the row is read in. --}}
                     @if ($__farmGrants->isNotEmpty())
-                        @php $__activeGrant = \App\Support\WorkerContext::activeGrant(); @endphp
-                        <button type="button" data-sheet-open="farmSwitchSheet" title="Switch farm"
-                            class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-brand-50 hover:bg-brand-100 transition"
-                            aria-label="Switch farm">
-                            <img src="{{ asset('images/account.png') }}" alt="" class="ico-mono" style="width:1.25rem;height:1.25rem;object-fit:contain">
-                        </button>
                         @include('partials.tag-sheet-css')
                         {{-- The faces on the rows. The community's own avatar
                              partial is not used here: its CSS lives in
