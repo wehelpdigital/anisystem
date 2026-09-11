@@ -421,7 +421,7 @@
                         <button type="button" data-sheet-open="farmSwitchSheet" title="Switch farm"
                             class="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-brand-50 hover:bg-brand-100 transition"
                             aria-label="Switch farm">
-                            <img src="{{ asset('images/account.png') }}" alt="" style="width:1.25rem;height:1.25rem;object-fit:contain">
+                            <img src="{{ asset('images/account.png') }}" alt="" class="ico-mono" style="width:1.25rem;height:1.25rem;object-fit:contain">
                         </button>
                         @include('partials.tag-sheet-css')
                         {{-- The faces on the rows. The community's own avatar
@@ -520,7 +520,7 @@
                 <span class="wbar-dot" aria-hidden="true"></span>
                 <span class="wbar-txt">Working at <b>{{ optional($__activeGrant->boss)->full_name ?: 'a farm' }}</b></span>
                 <button type="button" class="wbar-switch" data-sheet-open="farmSwitchSheet">
-                    <img src="{{ asset('images/account.png') }}" alt="" aria-hidden="true">
+                    <img src="{{ asset('images/account.png') }}" alt="" class="ico-mono" aria-hidden="true">
                     <span>Switch</span>
                 </button>
             </div>

@@ -115,6 +115,23 @@ html.dark .wbar-switch { background: #151b12; border-color: #2b3a1c; color: #a5c
 html.dark .wbar-switch:hover { background: #22301a; }
 @media (prefers-reduced-motion: reduce) { .wbar-switch { transition: none; } }
 
+/* A PNG that takes the theme's ink.
+ *
+ * The switch-account icon ships as a purple gradient, which belongs to
+ * neither theme: it sat loud on a pale chip by day and dim on a dark one by
+ * night. brightness(0) flattens every non-transparent pixel to black and
+ * leaves the alpha alone, so the artwork keeps its shape and gives up its
+ * colour; invert(1) then carries it to white for the dark surfaces.
+ *
+ * Both states name the same two functions in the same order on purpose —
+ * a filter list only interpolates against a matching list, so written this
+ * way the icon fades between black and white when the theme is toggled
+ * instead of snapping. */
+.ico-mono { filter: brightness(0) invert(0);
+    transition: filter .28s cubic-bezier(.22,1,.36,1); }
+html.dark .ico-mono { filter: brightness(0) invert(1); }
+@media (prefers-reduced-motion: reduce) { .ico-mono { transition: none; } }
+
 /* The upgrade sheet a tier wall opens (window.aneeUpgrade). It sells the
    exact next rung: header names the tier, a mini plan card carries price
    and highlights, and the yellow button does the upgrading. */
@@ -976,7 +993,11 @@ html.dark .btn-primary:active { background-color: #35591e; }
 
 /* A few places paint with literal colours rather than palette utilities. */
 html.dark body { background-color: var(--color-gray-50); }
-html.dark img[src$=".png"], html.dark img[src$=".svg"] { filter: none; }
+/* Artwork keeps its own colours at night — except the few icons that have
+   asked, by wearing .ico-mono, to be painted in the theme's ink instead.
+   Without the exception this rule beats theirs on specificity and they come
+   out purple on a dark chip. */
+html.dark img[src$=".png"]:not(.ico-mono), html.dark img[src$=".svg"]:not(.ico-mono) { filter: none; }
 html.dark .sheet-backdrop { background-color: rgb(0 0 0 / 0.6); }
 html.dark ::placeholder { color: var(--color-gray-400); }
 html.dark input[type="date"], html.dark input[type="time"], html.dark input[type="number"] {
