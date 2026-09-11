@@ -715,6 +715,15 @@
          * comment, and the page dies with "Undefined constant".
          */
         window.ivOpenMove = async function ivOpenMove(o = {}) {
+            /* The one door into a stock move that other modules use — the
+               board's day menu calls it. Its callers are drawn only for the
+               shed's pen, but this is the desk they all arrive at, and a
+               window.* function is reachable from anywhere. */
+            if (IV_RO) {
+                window.toast?.('You have view-only access to the Inventory on this farm.', 'error');
+
+                return;
+            }
             const dir = o.direction === 'in' ? 'in' : 'out';
             // The board opens this without the module ever having loaded, so
             // the shelf is fetched on demand the first time.
