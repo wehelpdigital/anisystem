@@ -255,17 +255,58 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // hit the browser's own "no connection" page.
     Route::get('/app/offline-manifest', function () {
         $owner = \App\Support\WorkerContext::effectiveOwnerId();
-        $urls = [
-            route('app.dashboard', absolute: false),
-            route('notes.hub', absolute: false),
+
+        /* EVERY DOOR IN THE APP EXCEPT THE ONES THAT NEED A MODEL.
+         *
+         * This used to name four pages — the dashboard, the notes hub, and
+         * each season's hub and board — so walking to Lots or the Shed or
+         * the Reports out in the field hit the "you are offline" card even
+         * with the mode on and the shelf supposedly full. The shelf was
+         * full; it just had nothing on it for those rooms.
+         *
+         * Anee and the two planting analyses stay off the list on purpose:
+         * they are a question to a model over the wire, and a cached copy
+         * of the asking screen would only promise an answer that cannot
+         * come. Everything else a farm day opens is here. */
+        $names = [
+            'app.dashboard', 'sm.index', 'notes.hub', 'gallery.hub',
+            'contacts.page', 'support.index', 'tutorials.index',
+            'account.index', 'account.settings', 'account.subscription',
+            'community.index', 'community.connect.members',
+            'community.cofarmers', 'community.connect.requests',
+            'community.groups.index', 'community.saved',
+            'community.ranking', 'community.blog',
+            'community.my', 'community.messages.threads',
         ];
-        foreach (\App\Models\AsCroppingSchedule::active()->forClient($owner)
-            ->orderByDesc('updated_at')->limit(5)->pluck('id') as $sid) {
-            $urls[] = route('sm.hub', ['id' => $sid], false);
-            $urls[] = route('sm.activities', ['id' => $sid], false);
+        $urls = [];
+        foreach ($names as $n) {
+            if (\Illuminate\Support\Facades\Route::has($n)) {
+                $urls[] = route($n, [], false);
+            }
         }
 
-        return response()->json(['success' => true, 'data' => ['urls' => $urls]]);
+        /* And every room of a season. Three seasons deep rather than five:
+         * this is ~25 pages each, and a warm that takes a minute is one the
+         * phone wanders away from before it finishes. The three most
+         * recently touched are the ones a farmer is actually working. */
+        $perSchedule = [
+            'sm.hub', 'sm.activities', 'sm.lots', 'sm.workers', 'sm.inventory',
+            'sm.maps', 'sm.draw', 'sm.notes', 'sm.reports', 'sm.tags',
+            'sm.documentation', 'sm.gallery', 'sm.settings', 'sm.weather.page',
+            'sm.attendance', 'sm.growth', 'sm.post-harvest', 'sm.board',
+            'sm.media', 'sm.expenses.report', 'sm.labor.report',
+            'sm.profit.report', 'sm.protocol.report', 'sm.worker-presentation',
+        ];
+        foreach (\App\Models\AsCroppingSchedule::active()->forClient($owner)
+            ->orderByDesc('updated_at')->limit(3)->pluck('id') as $sid) {
+            foreach ($perSchedule as $n) {
+                if (\Illuminate\Support\Facades\Route::has($n)) {
+                    $urls[] = route($n, ['id' => $sid], false);
+                }
+            }
+        }
+
+        return response()->json(['success' => true, 'data' => ['urls' => array_values(array_unique($urls))]]);
     })->name('offline.manifest');
     // The storefront's promise, ahead of the storefront.
     Route::view('/app/shop', 'shop.index')->name('shop.index');

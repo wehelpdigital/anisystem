@@ -1687,9 +1687,37 @@ document.addEventListener('pointerdown', (e) => {
     }
 
     /* ---- the yellow bar above the top bar ---- */
+    /* The worker's word, which beats the browser's guess.
+     *
+     * navigator.onLine answers true for a phone attached to a router with
+     * nothing behind it, and a document created while the signal was already
+     * gone does not reliably inherit false. When the service worker has just
+     * served a page off the shelf it says so, and that is certain knowledge:
+     * its fetch is the one that failed. Cleared the moment anything reaches
+     * the server again. */
+    let servedFromShelf = false;
+    try {
+        navigator.serviceWorker?.addEventListener?.('message', (e) => {
+            if (e.data?.type !== 'anee-served-offline') return;
+            servedFromShelf = true;
+            paintBar();
+        });
+    } catch (_) { /* no service worker here */ }
+    /* And the note it left, which is how this page — created after the
+       worker answered — finds out that the answer came off the shelf. */
+    (async () => {
+        try {
+            const c = await caches.open('anee-flags');
+            if (await c.match('/__served-offline')) {
+                servedFromShelf = true;
+                paintBar();
+            }
+        } catch (_) { /* no cache storage here */ }
+    })();
+
     async function paintBar() {
         let bar = document.getElementById('aneeOfflineBar');
-        const want = on() && !navigator.onLine;
+        const want = on() && (!navigator.onLine || servedFromShelf);
         if (!want) {
             bar?.remove();
             document.body.classList.remove('has-offline-bar');
@@ -1715,16 +1743,25 @@ document.addEventListener('pointerdown', (e) => {
         document.body.style.setProperty('--offbar-h', Math.ceil(bar.getBoundingClientRect().height) + 'px');
     }
 
-    window.addEventListener('online', () => { paintBar(); drain(); });
+    window.addEventListener('online', () => { servedFromShelf = false; paintBar(); drain(); });
     /* ---- warming the shelf ----
        The runtime cache only holds pages the reader has VISITED with the
        mode on, so walking to a not-yet-visited module offline hit the
        browser's own "no connection" page. While the mode is on and the
-       line is up, the app asks the server which pages matter — the
-       dashboard, each season's hub and shell, the notes hub — and fetches
-       them through the service worker so their copies are on the shelf
-       before the signal goes. At most once per half hour, and one page
-       failing is not a reason to stop the rest. */
+       line is up, the app asks the server which pages matter and fetches
+       every one of them through the service worker, so their copies are on
+       the shelf before the signal goes.
+
+       The server's list is now every room in the app except the ones that
+       need a model over the wire (see /app/offline-manifest) — around a
+       hundred pages rather than the four it used to name, which is why
+       this no longer takes the first sixteen and stops.
+
+       Three at a time: one at a time took the better part of a minute on a
+       phone and the browser wandered off before it finished; all at once
+       is a hundred renders landing on the server in one breath. One page
+       failing is never a reason to stop the rest. */
+    const WARM_LANES = 3;
     async function warm(force) {
         if (!on() || !navigator.onLine || !('serviceWorker' in navigator)) return;
         try {
@@ -1737,10 +1774,52 @@ document.addEventListener('pointerdown', (e) => {
         try {
             const res = await fetch('/app/offline-manifest', { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
             const urls = (((await res.json()) || {}).data || {}).urls || [];
-            for (const u of urls.slice(0, 16)) {
-                try { await fetch(u, { credentials: 'same-origin' }); } catch (_) { /* next */ }
+            /* THE BUNDLE FIRST, BEFORE ANY PAGE.
+             *
+             * A page kept without its stylesheet and its script is a page
+             * that opens in the field as unstyled text with every button
+             * dead. That is not a hypothetical: switching the mode ON
+             * happens AFTER the current page has already fetched its
+             * assets, so the worker never saw them — every warmed page
+             * pointed at a bundle that was not on the shelf.
+             *
+             * These are the same handful of files every page in the app
+             * shares, and asking for them again is a cache hit in the
+             * browser's own store, so it costs a round trip to nothing. */
+            const assets = [
+                ...document.querySelectorAll('link[rel="stylesheet"][href], script[src]'),
+            ]
+                .map((el) => el.href || el.src)
+                .filter((u) => u && u.startsWith(location.origin));
+            for (const a of [...new Set(assets)]) {
+                try { await fetch(a, { credentials: 'same-origin' }); } catch (_) { /* next */ }
             }
+            let at = 0;
+            const lane = async () => {
+                while (at < urls.length) {
+                    const u = urls[at++];
+                    // Asked for as a page would ask, so what lands on the
+                    // shelf is the same document a navigation will look for.
+                    try {
+                        await fetch(u, { credentials: 'same-origin', headers: { Accept: 'text/html' } });
+                    } catch (_) { /* next */ }
+                    // The line can drop mid-warm; there is no point shouting
+                    // at a server that is no longer there.
+                    if (!navigator.onLine) return;
+                }
+            };
+            await Promise.all(Array.from({ length: WARM_LANES }, lane));
+            document.dispatchEvent(new CustomEvent('anee:offline-warmed', { detail: { count: urls.length } }));
         } catch (_) { /* the next load tries again */ }
+    }
+    /* What the shelf actually holds, for the Settings page's count and for
+       anyone wondering whether the phone is really ready. */
+    async function shelf() {
+        try {
+            const c = await caches.open('anee-offline-runtime-v1');
+
+            return (await c.keys()).length;
+        } catch (_) { return 0; }
     }
 
     window.addEventListener('offline', paintBar);
@@ -1777,6 +1856,7 @@ document.addEventListener('pointerdown', (e) => {
         enqueueForm,
         drain,
         warm,
+        shelf,
         pending: () => outboxAll().then((r) => r.length),
     };
 

@@ -67,6 +67,34 @@ const offlineOn = () => caches.open(FLAGS)
     .then((r) => !!r)
     .catch(() => false);
 
+/* "That page came off the shelf."
+ *
+ * navigator.onLine is the only thing the page had to go on, and it is a poor
+ * witness: it answers true for a phone attached to a router with no internet
+ * behind it, and a freshly created document does not always inherit what the
+ * one before it knew. The worker has the only certain answer, because it is
+ * the thing whose fetch just failed — so it says so, and the yellow bar stops
+ * depending on a guess. */
+const SHELF_MARK = '/__served-offline';
+
+/* A note left in the flags cache rather than a message posted to the page.
+ *
+ * postMessage cannot carry this across a navigation: at the moment the
+ * worker answers with a cached page, the document that will display it does
+ * not exist yet, so the message lands on the one being torn down. The note
+ * survives the gap, and the new page reads it as it boots.
+ *
+ * Cleared by the first navigation that actually reaches the server. */
+const sayServedFromShelf = () => Promise.all([
+    caches.open(FLAGS).then((c) => c.put(SHELF_MARK, new Response(String(Date.now())))),
+    self.clients.matchAll({ type: 'window' })
+        .then((list) => list.forEach((c) => c.postMessage({ type: 'anee-served-offline' }))),
+]).catch(() => {});
+
+const sayReachedTheServer = () => caches.open(FLAGS)
+    .then((c) => c.delete(SHELF_MARK))
+    .catch(() => {});
+
 /* Network first, always — being online never shows yesterday's board.
    A navigation that cannot reach the server falls back to the kept copy
    (Offline Mode) or to the page that says so. */
@@ -84,11 +112,43 @@ self.addEventListener('fetch', (event) => {
                     const c = await caches.open(RUNTIME);
                     c.put(req, res.clone());
                 }
+                // The line is up: whatever the last page was served from, it
+                // is not what this one came from.
+                sayReachedTheServer();
                 return res;
             } catch (_) {
                 if (keep) {
-                    const hit = await caches.match(req, { cacheName: RUNTIME });
-                    if (hit) return hit;
+                    /* ignoreVary, because the copy on the shelf was put
+                       there by a warm fetch and this is a navigation: the
+                       two ask with different Accept headers, and the day a
+                       response carries Vary the exact match would miss a
+                       page that is sitting right there. */
+                    /* Awaited, not fired and forgotten: once respondWith has
+                       its answer the browser is free to kill this worker,
+                       and a note still being written dies with it. */
+                    const hit = await caches.match(req, { cacheName: RUNTIME, ignoreVary: true });
+                    if (hit) { await sayServedFromShelf(); return hit; }
+                    /* A module reached with a query the shelf has not seen
+                       exactly — a ?fresh= buster, ?tab=saved, a filter — is
+                       still that module, and the offline card helps nobody.
+                       So the same path is accepted as a near miss.
+
+                       But ONLY when it is about the same thing: `id` names
+                       which season a page belongs to, and handing back
+                       season 46's Lots to somebody who asked for season 99
+                       would be a wrong answer dressed as a right one, which
+                       is worse than saying there is no signal. Same path,
+                       same id, or nothing. */
+                    const url = new URL(req.url);
+                    const want = url.searchParams.get('id');
+                    const cache = await caches.open(RUNTIME);
+                    for (const k of await cache.keys()) {
+                        const got = new URL(k.url);
+                        if (got.pathname !== url.pathname) continue;
+                        if ((got.searchParams.get('id') || '') !== (want || '')) continue;
+                        const near = await cache.match(k, { ignoreVary: true });
+                        if (near) { await sayServedFromShelf(); return near; }
+                    }
                 }
                 return caches.match(OFFLINE_URL);
             }
