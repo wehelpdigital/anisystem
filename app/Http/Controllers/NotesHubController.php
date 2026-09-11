@@ -209,8 +209,10 @@ class NotesHubController extends Controller
     /** Video for a global note — compressed to ≤720p H.264 with a poster. */
     public function videoUpload(Request $request)
     {
-        if (! \App\Support\Tier::can('videoRecording')) {
-            \App\Support\Tier::deny('Video recording is not included in your plan. Upgrade to attach clips.');
+        // The farm's plan, not the worker's: a clip filmed on this farm rides
+        // the plan the farm bought.
+        if (! \App\Support\Tier::farmCan('videoRecording')) {
+            \App\Support\Tier::deny('Video recording is not included in this farm\'s plan.');
         }
         $validator = Validator::make($request->all(), [
             'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-msvideo|max:2097152',

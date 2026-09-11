@@ -146,7 +146,10 @@ class AppController extends Controller
         // Every on-shelf season, for the Global & Quick Tools schedule picker.
         $allSchedules = $schedulesQ()->orderByDesc('id')->get(['id', 'title']);
 
-        $aiBalance = app(\App\Services\AiCreditService::class)->balance($user->id);
+        // Credits belong to whoever owns the farm on screen — a worker spends
+        // the boss's purse, so the number they read must be the boss's too.
+        $aiPayerId = \App\Support\WorkerContext::effectiveOwnerId();
+        $aiBalance = app(\App\Services\AiCreditService::class)->balance($aiPayerId);
 
         $latestBlog = \App\Models\AsCommunityBlogPost::active()
             ->published()
@@ -270,7 +273,7 @@ class AppController extends Controller
             'aiBalance' => $aiBalance,
             // Super admins spend from a bottomless pocket — the sidebar
             // shows them an infinity, not a zero that looks like broke.
-            'aiUnlimited' => app(\App\Services\AiCreditService::class)->unlimited((int) $user->id),
+            'aiUnlimited' => app(\App\Services\AiCreditService::class)->unlimited($aiPayerId),
             'latestBlog' => $latestBlog,
             'scheduleNext' => $scheduleNext,
             'latestDiscussions' => $latestDiscussions,
@@ -280,7 +283,7 @@ class AppController extends Controller
             'friendIds' => $friendIds,
             'recentChats' => $recentChats,
             'openTickets' => $openTickets,
-            'canUseAi' => $user->canUseAi(),
+            'canUseAi' => (bool) (\App\Support\Tier::farmLimit('ai') ?? true),
             // Her name and her face, for the section that introduces her. The
             // name is an admin's to change, so nothing hard-codes "Anee".
             'aiSettings' => \App\Models\AiSetting::current(),

@@ -58,7 +58,7 @@ class WhenToPlantController extends Controller
     /** The tier wall: analyses ride the Solo Farmer plan and up. */
     private function guardTier(): void
     {
-        if (! \App\Support\Tier::can('reportsAll')) {
+        if (! \App\Support\Tier::farmCan('reportsAll')) {
             \App\Support\Tier::deny('The When to Plant analysis comes with the Solo Farmer plan.');
         }
     }

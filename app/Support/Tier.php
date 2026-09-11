@@ -23,15 +23,12 @@ use Illuminate\Support\Facades\DB;
  */
 final class Tier
 {
-    /** The acting user's tier key: libre | solo | owner | admin. */
+    /** The acting user's own tier key: libre | solo | owner | admin. */
     public static function of(?User $user = null): string
     {
         $user = $user ?: Auth::user();
-        if (! $user) {
-            return 'libre';
-        }
 
-        return $user->planTier();
+        return $user ? $user->planTier() : 'libre';
     }
 
     /** The tier that governs a schedule — its owner's. */
@@ -40,6 +37,54 @@ final class Tier
         $owner = $schedule ? User::find($schedule->anisystemUserId) : null;
 
         return self::of($owner);
+    }
+
+    /* -------------------------------------------------- the farm's tier */
+
+    /**
+     * THE TIER OF THE FARM THIS REQUEST IS STANDING IN.
+     *
+     * A plan is bought by a farm, and everything a worker does while standing
+     * in one is that farm's work — so farm-scoped doors ask this, not of().
+     * Reading the worker's own plan was wrong in both directions: a farm on
+     * the top rung had its workers refused a feature it had paid for, and a
+     * worker who happened to hold a plan of their own carried it into a farm
+     * that had bought nothing.
+     *
+     * This is deliberately NOT the same as of(). Personal limits — community
+     * media, discussions, storage, the weather on your own dashboard — remain
+     * the acting user's, because a job on somebody's farm is not a plan.
+     *
+     * The grant is cached per request and arrives with its boss already
+     * loaded, so this costs no query.
+     */
+    public static function ofFarm(): string
+    {
+        $grant = WorkerContext::activeGrant();
+        if (! $grant) {
+            return self::of();
+        }
+        $boss = $grant->boss ?: User::find($grant->bossUserId);
+
+        return $boss ? $boss->planTier() : 'libre';
+    }
+
+    /** True when a boolean feature is on for the farm being worked. */
+    public static function farmCan(string $key): bool
+    {
+        return (bool) (self::limits(self::ofFarm())[$key] ?? false);
+    }
+
+    /** One limit judged by the farm being worked. */
+    public static function farmLimit(string $key)
+    {
+        return self::limits(self::ofFarm())[$key] ?? null;
+    }
+
+    /** True while the refusal should say "ask the owner" rather than "buy". */
+    public static function buyerIsHere(): bool
+    {
+        return ! WorkerContext::inWorkerContext();
     }
 
     /** The whole limit row for a tier key. */
@@ -89,6 +134,13 @@ final class Tier
                 'message' => $message,
                 'tier' => $unlocksAt,
             ], 403));
+        }
+
+        // A worker sent to their own subscription page would be reading about
+        // a plan that has nothing to do with the door that just shut.
+        if (WorkerContext::inWorkerContext()) {
+            abort(redirect()->route('app.dashboard')->with('error', $message
+                . ' Only the farm owner can change that.'));
         }
 
         abort(redirect()->route('account.subscription')->with('error', $message));

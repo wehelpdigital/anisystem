@@ -1848,6 +1848,29 @@ window.aneeUpgrade = function aneeUpgrade(message, tier = 'solo') {
         });
     }
     const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    /* A WORKER IS NOT THE ONE WHO BUYS.
+     *
+     * Standing in somebody else's farm, the plan that shut this door is the
+     * farm's, and no amount of upgrading their own account opens it. Selling
+     * them a rung would be selling the wrong person something that would not
+     * work — so they are told whose decision it is, and the price card and
+     * the buy button stay out of it. */
+    if (window.AU_IS_WORKER) {
+        box.innerHTML = '<div class="au-card" role="dialog" aria-modal="true" aria-label="Not on this farm\'s plan">'
+            + '<div class="au-head">'
+            + '<span class="au-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>'
+            + '<div class="au-head-say"><span class="au-kicker">Not on this farm\'s plan</span>'
+            + '<h3>' + esc(window.AU_FARM_NAME || 'This farm') + ' does not have this</h3></div>'
+            + '</div>'
+            + '<p class="au-msg">' + esc(message || 'This feature is not part of the plan this farm is on.')
+            + ' Only the farm owner can change that — mention it to them if you need it for the work.</p>'
+            + '<div class="au-acts">'
+            + '<button type="button" class="btn btn-white" data-au-close>Close</button>'
+            + '</div></div>';
+        box.classList.add('is-open');
+
+        return;
+    }
     box.innerHTML = '<div class="au-card" role="dialog" aria-modal="true" aria-label="Upgrade">'
         + '<div class="au-head">'
         + '<span class="au-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>'

@@ -78,6 +78,17 @@
             root.classList.toggle('sm-underline', get('sm-a11y-underline') === '1');
         })();
     </script>
+    {{-- WHO IS STANDING HERE, FOR THE TIER WALL TO ADDRESS.
+         A locked door tells an owner what to buy; it tells a worker whose
+         decision it is. The sheet lives in app.js and reads these two,
+         which must be set before any lock can be tapped. --}}
+    @auth
+        @php $__auGrant = \App\Support\WorkerContext::activeGrant(); @endphp
+        <script>
+            window.AU_IS_WORKER = {{ $__auGrant ? 'true' : 'false' }};
+            window.AU_FARM_NAME = @json($__auGrant ? (optional($__auGrant->boss)->full_name ?: 'This farm') : '');
+        </script>
+    @endauth
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
     {{-- Five pages pushed their whole stylesheet to a stack nobody rendered,

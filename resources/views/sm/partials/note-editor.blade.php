@@ -46,8 +46,7 @@
                    business). Locked, the buttons stay — the tap sells. */
                 $neVidLocked = isset($schedule)
                     ? ! \App\Support\Tier::scheduleCan($schedule, 'videoRecording')
-                    : (\App\Support\WorkerContext::effectiveOwnerId() === (int) auth()->id()
-                        && ! \App\Support\Tier::can('videoRecording'));
+                    : ! \App\Support\Tier::farmCan('videoRecording');
                 $neVidLockAttrs = $neVidLocked
                     ? 'data-tier-lock=solo data-lock-say="Video on notes comes with the Solo Farmer plan. Photos, drawings and voice stay yours on Libre."'
                     : '';

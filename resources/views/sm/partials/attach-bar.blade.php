@@ -63,8 +63,7 @@
                    see note-editor for the same judgement. */
                 $abVidLocked = isset($schedule)
                     ? ! \App\Support\Tier::scheduleCan($schedule, 'videoRecording')
-                    : (\App\Support\WorkerContext::effectiveOwnerId() === (int) auth()->id()
-                        && ! \App\Support\Tier::can('videoRecording'));
+                    : ! \App\Support\Tier::farmCan('videoRecording');
             @endphp
             <button type="button" class="ab-btn js-video-record {{ $abVidLocked ? 'tl-dim' : '' }}" title="Record a video"
                     @if ($abVidLocked) data-tier-lock="solo" data-lock-say="Video recording comes with the Solo Farmer plan. Photos and voice stay yours on Libre." @endif>

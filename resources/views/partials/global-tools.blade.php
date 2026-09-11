@@ -124,7 +124,7 @@
                  season, so it does not ask which one first. --}}
             {{-- On Libre these two stay in the row, wearing a lock where the
                  chevron sat — the tap opens the upgrade sheet, not the page. --}}
-            @php $qWtpLocked = ! \App\Support\Tier::can('reportsAll'); @endphp
+            @php $qWtpLocked = ! \App\Support\Tier::farmCan('reportsAll'); @endphp
             <a href="{{ route('wtp.page') }}" class="qa-tile qa-wtp"
                @if ($qWtpLocked) data-tier-lock="solo" data-lock-say="The When to Plant analysis comes with the Solo Farmer plan — Anee reads your town's climate and ENSO outlook to name your safest planting window." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
@@ -189,11 +189,10 @@
                 </button>
             @endif
             @php
-                /* The tier's own wall on video, judged for an OWNER acting as
-                   themselves — a worker rides the schedule owner's plan, so
-                   their doors are the grant's business, not this lock's. */
-                $qVidLocked = \App\Support\WorkerContext::effectiveOwnerId() === (int) auth()->id()
-                    && ! \App\Support\Tier::can('videoRecording');
+                /* The tier's own wall on video, judged by the FARM being
+                   worked: a worker rides the owner's plan both ways — they
+                   get what the farm bought, and nothing it did not. */
+                $qVidLocked = ! \App\Support\Tier::farmCan('videoRecording');
             @endphp
             @if ($allSchedules->isNotEmpty() && $qMayVideo)
                 <button type="button" id="quickRecordBtn" class="qa-tile qa-rec"

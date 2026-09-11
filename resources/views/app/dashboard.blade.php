@@ -770,7 +770,7 @@
                  is set, it stays as it was. --}}
             <h2 class="dash-hero-h"><span id="dashGreetWord">{{ $__greet }}</span>, {{ \Illuminate\Support\Str::title($user->firstName ?: 'kaibigan') }}</h2>
             <p class="dash-hero-p">Today, {{ now('Asia/Manila')->format('F jS, Y') }} — {{ $scheduleCount === 0 ? 'no active cropping schedules yet.' : 'you have ' . $scheduleCount . ' active cropping ' . \Illuminate\Support\Str::plural('schedule', $scheduleCount) . '.' }}</p>
-            @if ($expiringSoon)
+            @if ($expiringSoon && ! \App\Support\WorkerContext::inWorkerContext())
                 <a href="{{ route('purchase.plans') }}" class="dash-hero-warn">
                     Renew before your subscription expires
                     <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -797,6 +797,10 @@
                 </span>
             @elseif ($status === 'pending')
                 <span class="dash-chip is-warn">Verification pending</span>
+            @elseif (\App\Support\WorkerContext::activeGrant())
+                {{-- A worker is not the one who buys. The plan that governs
+                     what they can reach is the farm's, and the button would
+                     sell them a rung that changes nothing here. --}}
             @else
                 <a href="{{ route('purchase.plans') }}" class="btn btn-primary btn-sm">Upgrade your access</a>
             @endif
@@ -1130,8 +1134,12 @@
                      buttons in this app already ride. An icon either side of
                      three words was two decorations on the one thing the card
                      is asking for. --}}
-                <a href="{{ $canUseAi ? route('ai.home') : route('purchase.plans') }}"
-                   class="dash-anee-go sweep-fill sweep-green" style="--sw-t: 13s; --sw-d: -4s">
+                {{-- A worker is never sent to the shop: if this farm's plan
+                     does not carry her, the button says so and stays put. --}}
+                @php $__aneeShop = ! $canUseAi && \App\Support\WorkerContext::inWorkerContext(); @endphp
+                <a href="{{ $canUseAi ? route('ai.home') : ($__aneeShop ? '#' : route('purchase.plans')) }}"
+                   class="dash-anee-go sweep-fill sweep-green" style="--sw-t: 13s; --sw-d: -4s"
+                   @if ($__aneeShop) data-tier-lock="solo" data-lock-say="{{ $aneeName }} is not part of this farm's plan." @endif>
                     {{ $canUseAi ? 'Chat with ' . $aneeName : 'Unlock ' . $aneeName }}
                 </a>
 
