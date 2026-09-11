@@ -20,7 +20,47 @@
     $sheetNoteLock = $mayNote ? '' : ' is-locked';
     $whyNoEdit = 'Only someone who can edit the plan may do this';
     $whyNoNote = 'You are not allowed to write notes on this schedule';
+
+    /* THREE DOTS WITH NOTHING BEHIND THEM.
+     *
+     * Every row in the day sheet below answers to one of these. A worker
+     * holding none of them opens the menu onto an empty white box, which
+     * reads as a broken screen rather than a closed door — so the board
+     * stops drawing the dots at all (see syncDayKebabs in activities-js).
+     *
+     * The saved-weather row is NOT counted here: it is a read, and it is
+     * offered per day rather than per farm, so the JS finishes the sentence
+     * by asking whether THIS day has a reading stored.
+     *
+     * Owners are never in a worker context, so this is always true for them. */
+    $dayMenuStaticRows = ! $isWorker
+        || $mayEdit
+        || $mayNote
+        || \App\Support\WorkerContext::canWriteModule('camera')
+        || \App\Support\WorkerContext::canWriteModule('video')
+        || \App\Support\WorkerContext::canWriteModule('voice')
+        || \App\Support\WorkerContext::canWriteModule('draw')
+        || \App\Support\WorkerContext::canWriteModule('maps')
+        || \App\Support\WorkerContext::canWriteModule('inventory');
+
+    /* The card sheet's twin question, counted rather than asserted so that
+     * the day somebody gates the last surviving row, the dots go with it.
+     * "Advanced info" — what went on this ground before — is a read and is
+     * offered to everyone, so as the sheet stands today this is never zero
+     * and an activity keeps its dots at every access level. */
+    $cardMenuRows = 1;
+    if (! $isWorker || $mayEdit) {
+        $cardMenuRows += 7;   // edit, move, duplicate, email, tag, draft, delete
+    }
 @endphp
+
+{{-- Told to the board here rather than worked out over there, because the
+     answer is a count of the rows written below and this is where they are.
+     Read by syncDayKebabs in activities-js, which is included after this. --}}
+<script>
+    window.DAY_MENU_STATIC_ROWS = @json($dayMenuStaticRows);
+    window.CARD_MENU_ROWS = @json($cardMenuRows);
+</script>
 
 {{-- How a control this viewer may not use looks. It lives here, beside the
      first thing that needs it, because the board is drawn by three partials

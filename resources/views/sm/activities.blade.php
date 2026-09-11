@@ -445,6 +445,15 @@
         .mir-body .date-header { cursor: default; }
         .mir-body [draggable] { -webkit-user-drag: none; }
         .mir-body input, .mir-body button, .mir-body a, .mir-body label { pointer-events: none; }
+        /* …except the three dots, which are the one way OUT of reading and
+           into doing without going back to the board first. They keep their
+           own sheets' gating, so a worker meets the same menu here as there
+           — or, holding no pen at all, no dots in either place. */
+        .mir-body .day-menu-btn, .mir-body .card-menu-btn { pointer-events: auto !important; }
+        /* The mirror sits at 340 and a sheet at 50, so a menu opened from in
+           here would otherwise unroll behind the screen that asked for it. */
+        html.mir-open .sheet { z-index: 400; }
+        html.mir-open .sheet-backdrop { z-index: 390; }
         /* A lot name gets its whole name here.
          *
          * On the board the lot strip is capped and scrolls sideways, so a
@@ -4618,6 +4627,10 @@
      *   2. the CSS refuses pointer events to what is left,
      *   3. a capture-phase listener stops any click that still happens from
      *      ever reaching the board's delegated handlers underneath.
+     * All three make one exception, by name, for the three-dot menus: a menu
+     * is the way to an action rather than the action itself, it gates its own
+     * rows the same way here as on the board, and being sent back to the
+     * board to reach one is the errand this screen exists to save.
      * The panel also lives OUTSIDE #activitiesList, which is what every one
      * of those handlers scopes its queries to — so the copies are invisible
      * to them by construction. */
@@ -4667,10 +4680,23 @@
         // The chevron stays: folding a day shut is reading, not editing, and
         // on a season of seventy days it is how you get past what you have
         // already checked. The mirror runs it itself (see the click handler).
+        /* The three dots stay.
+         *
+         * Everything else in here is stripped because the mirror is for
+         * reading — but a menu is not an action, it is the way to one, and
+         * being told "you'd have to go back to the board for that" is the
+         * errand this screen exists to save. The sheets they open gate their
+         * own rows exactly as they do on the board (a worker sees the same
+         * menu in both places, or no dots at all), and their handlers are
+         * delegated on `document`, so the copies reach them unchanged.
+         *
+         * Both kebabs wear a class that is otherwise stripped wholesale —
+         * `.date-header-btn` and `.icon-btn` — so each is excepted by name
+         * rather than the family being spared. */
         const STRIP = [
-            '.date-header-btn', '.day-menu-btn', '.date-header-stage',
+            '.date-header-btn:not(.day-menu-btn)', '.date-header-stage',
             '.date-header-weather', '.wx-mini-btn', '.rest-day-add-btn',
-            '.icon-btn', '.card-menu-btn', '.note-kebab',
+            '.icon-btn:not(.card-menu-btn)', '.note-kebab',
             '.note-fold-btn', '.act-fab-add', '.group-add-activity-btn',
             // The money strips carry their own kebab, drag grip and buttons
             // (dx-* — see the expense/income blocks in activities-js). The
@@ -4858,7 +4884,20 @@
             diffPicks.length = 0;
             paintDiff();
             apply();
+            // The copies inherit whatever the board decided about empty
+            // menus, but a day can gain a saved reading between the two, so
+            // the sweep is run over the fresh copies as well.
+            window.syncDayKebabs?.(body);
         }
+
+        /* An action taken from in here changes the board underneath, and the
+         * copies were made before it did. Rebuilt rather than patched: a copy
+         * is cheap and a half-right mirror is worse than a slow one. */
+        window.mirrorRefresh = () => {
+            if (panel.hidden) return;
+            body.innerHTML = '';
+            build();
+        };
 
         /* ---- Date Diff -------------------------------------------------
          * Two at a time, because a distance has two ends. Picking a third
@@ -5045,6 +5084,9 @@
             none.classList.add('hidden');
             panel.hidden = false;
             panel.setAttribute('aria-hidden', 'false');
+            // Sheets opened from in here have to clear the mirror; see the
+            // html.mir-open rules beside .mir-body.
+            document.documentElement.classList.add('mir-open');
             document.body.style.overflow = 'hidden';
             requestAnimationFrame(() => {
                 panel.classList.add('is-open');
@@ -5059,6 +5101,7 @@
             if (panel.hidden) return;
             if (!pick.hidden) closePick();
             panel.classList.remove('is-open');
+            document.documentElement.classList.remove('mir-open');
             document.body.style.removeProperty('overflow');
             // Let the fade finish before the screen is taken away.
             setTimeout(() => {
@@ -5216,6 +5259,14 @@
          * inside the same guard, so it can never be mistaken for the board's
          * own fold. */
         body.addEventListener('click', (e) => {
+            /* The three dots are the exception, and they have to be taken
+             * before anything else here: this listener captures, so the
+             * stopPropagation below would end the click before it ever
+             * reached the button it was aimed at. Opening a menu is not
+             * acting — the sheet it raises gates its own rows exactly as it
+             * does on the board — so the click is let go on untouched to the
+             * delegated handler in activities-js. */
+            if (e.target.closest('.day-menu-btn, .card-menu-btn')) return;
             e.stopPropagation();
             // Before the fold, because the diff tag sits inside the header it
             // would otherwise fold: a tap meant to measure must not shut the

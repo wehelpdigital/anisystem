@@ -2265,6 +2265,41 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
     }
 
+    /* THREE DOTS WITH NOTHING BEHIND THEM.
+     *
+     * Every row in the day sheet answers to one of the pens above. A worker
+     * holding none of them was still shown the dots, and tapping them opened
+     * a white box with a title and no rows — which reads as a broken screen,
+     * not as a closed door. The flags are counted next to the rows themselves
+     * (see the @php block at the top of activities-sheets).
+     *
+     * The day's answer is finished here rather than there because one row —
+     * saved weather — is offered per DAY, not per farm: it is a read, so a
+     * worker who may do nothing else still gets the dots on the days that
+     * have a reading stored, and only on those.
+     *
+     * A sweep rather than a condition at each render site: the day header is
+     * built in two places (Blade for the first paint, JS for every rebuild)
+     * and cloned into the mirror by a third, and one function passed over the
+     * result keeps all three honest. */
+    function dayMenuHasSomething(dateKey) {
+        if (window.DAY_MENU_STATIC_ROWS !== false) return true;
+
+        return !!(window.SAVED_WX_DATES && window.SAVED_WX_DATES.has(dateKey));
+    }
+    function syncDayKebabs(root) {
+        const scope = root || document;
+        $qsa('.day-menu-btn', scope).forEach((b) => {
+            b.hidden = !dayMenuHasSomething(b.getAttribute('data-date') || '');
+        });
+        // The card sheet keeps "Advanced info" for everyone, so this is only
+        // ever reached if that row is gated one day too.
+        if (window.CARD_MENU_ROWS === 0) {
+            $qsa('.card-menu-btn', scope).forEach((b) => { b.hidden = true; });
+        }
+    }
+    window.syncDayKebabs = syncDayKebabs;
+
     /* The same door for the plan itself. A drag is the one write with no button
        to grey out, so it has to be turned away where it lands. */
     function mayEditBoard() {
@@ -2466,6 +2501,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!host) return;
             ivnByDate[k].forEach((n) => { host.hidden = false; host.appendChild(n.el); });
         });
+        // Fresh day headers: take the dots off any day whose menu is empty.
+        syncDayKebabs(list);
+        // If the mirror is open, its copies were made before this rebuild.
+        window.mirrorRefresh?.();
     }
 
     function snapshotMarkers(list) {
@@ -6118,6 +6157,10 @@ document.addEventListener('DOMContentLoaded', () => {
      * this is the record a report or the AI technician looks back at, so it
      * shows when it was captured rather than pretending to be live. */
     window.SAVED_WX_DATES = new Set(@json($savedWeatherDates ?? []));
+    // For a worker who may do nothing else, a stored reading is the one thing
+    // the day menu still holds — so the set has to exist before the first
+    // sweep decides which days keep their dots.
+    syncDayKebabs();
 
     /* The drawn sky for a saved hour, and the emoji for one saved before the
      * code was being kept. Falling back rather than guessing: a row with no
@@ -8627,6 +8670,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Every load writes the forecast to the store; take the dates
                 // it wrote so the day menu offers them without a reload.
                 (WX && WX.savedDates || []).forEach((d) => window.SAVED_WX_DATES?.add(d));
+                // A day that just gained a reading may have gained its dots
+                // with it, for a worker who holds no other pen.
+                window.syncDayKebabs?.();
             } catch (_) { if (!withHours) WX = null; }
             buildByDate();
             // Answered, one way or the other — the board can be shown now.
