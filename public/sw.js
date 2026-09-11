@@ -20,9 +20,22 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
+    /* Sweep out OLD SHELLS — and only those.
+     *
+     * This used to delete every cache whose key was not the current shell,
+     * which took Offline Mode's two with it: the marker saying the farmer
+     * asked for it, and every page it had kept. So each deploy that touched
+     * this file quietly emptied the shelf, and a phone that had been made
+     * ready for the field opened to nothing the next time it was out of
+     * signal — with the switch still showing On, because the page's own
+     * memory of the setting was never the thing that got wiped.
+     *
+     * The runtime copies and the flag are the farmer's, not the release's. */
     event.waitUntil(
         caches.keys()
-            .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+            .then((keys) => Promise.all(keys
+                .filter((k) => k.startsWith('anee-shell-') && k !== CACHE)
+                .map((k) => caches.delete(k))))
             .then(() => self.clients.claim())
     );
 });

@@ -1747,6 +1747,18 @@ document.addEventListener('pointerdown', (e) => {
     window.addEventListener('online', () => setTimeout(() => warm(), 2000));
     paintBar();
     tellSw(on());
+    /* A worker that takes over mid-visit starts with no memory of this
+       setting — it has its own storage and has just been installed. The
+       page is the one that knows, so it says so again the moment the
+       handover happens, and fills the shelf back up. Without this a
+       deploy left the phone in front of somebody quietly keeping nothing
+       until they next loaded the app. */
+    try {
+        navigator.serviceWorker?.addEventListener?.('controllerchange', () => {
+            tellSw(on());
+            if (on()) setTimeout(() => warm(true), 1200);
+        });
+    } catch (_) { /* no service worker here */ }
     drain();
     // After the service worker has been told the marker is on — a warm
     // fetch that beats the message would pass the SW uncopied.
