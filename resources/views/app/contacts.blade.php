@@ -141,7 +141,11 @@
     <div class="sheet-body">
         <div class="relative">
             <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-            <input type="search" id="ctSearch" class="form-input pl-10" placeholder="Name, number, company, tag…" autocomplete="off">
+            {{-- pl-10!, not pl-10: .form-input sets its padding through
+                 @apply px-4, which lands later in the sheet than the plain
+                 utility and wins the tie — the field kept its 1rem inset and
+                 the magnifier sat on top of the placeholder's first letter. --}}
+            <input type="search" id="ctSearch" class="form-input pl-10!" placeholder="Name, number, company, tag…" autocomplete="off">
         </div>
         <p class="form-hint">The list behind updates as you type.</p>
     </div>
