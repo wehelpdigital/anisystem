@@ -619,6 +619,63 @@
     .wb-hint { margin-left: auto; font-size: .72rem; font-weight: 600; color: var(--color-gray-400); }
     @media (max-width: 599px) { .wb-hint { display: none; } }
 
+    /* THE SONG CARD.
+       A poster with the night coming down over it, the words on top, and one
+       round button. Deliberately unlike every other card on this page: it is
+       the one thing here that is not a number about somebody's farm. */
+    .dash-song { position: relative; border-radius: 1.1rem; overflow: hidden;
+        margin-top: .9rem; isolation: isolate; background: #14210c;
+        box-shadow: 0 18px 40px -26px rgb(9 20 4 / .8); }
+    .dash-song-art { position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover; object-position: 50% 34%; }
+    /* Dark at the foot, clear at the head: the words sit on the plough, and
+       her face at the top of the picture stays lit. */
+    .dash-song-ink { position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgb(12 22 6 / .12) 0%, rgb(12 22 6 / .5) 46%, rgb(10 18 5 / .92) 100%); }
+    .dash-song-body { position: relative; padding: 5.6rem .95rem .95rem; }
+    .dash-song-kicker { display: inline-flex; align-items: center; gap: .35rem;
+        font-size: .66rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+        color: #cfe6b8; padding: .2rem .55rem .2rem .45rem; border-radius: 999px;
+        background: rgb(255 255 255 / .14); backdrop-filter: blur(3px); }
+    .dash-song-kicker svg { width: .82rem; height: .82rem; }
+    .dash-song-h { font-family: var(--font-heading); color: #fff; margin-top: .45rem;
+        font-size: 1.28rem; line-height: 1.15; font-weight: 800;
+        text-shadow: 0 2px 12px rgb(0 0 0 / .45); }
+    .dash-song-row { display: flex; align-items: center; gap: .7rem; margin-top: .85rem; }
+    .dash-song-play { flex: none; width: 2.9rem; height: 2.9rem; border-radius: 999px;
+        display: flex; align-items: center; justify-content: center; cursor: pointer;
+        color: #14210c; background: #fff; border: 0;
+        box-shadow: 0 8px 22px -10px rgb(0 0 0 / .7);
+        transition: transform .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+    .dash-song-play:hover { transform: scale(1.06); background: #eaf4dc; }
+    .dash-song-play:active { transform: scale(.95); }
+    .dash-song-play svg { width: 1.15rem; height: 1.15rem; }
+    .dash-song-ico-play { margin-left: .14rem; }
+    .dash-song-ico-pause { display: none; }
+    .dash-song.is-playing .dash-song-ico-play { display: none; }
+    .dash-song.is-playing .dash-song-ico-pause { display: block; }
+    /* The bar: a real range input, stripped bare and laid over a painted
+       fill, so it can be dragged as well as read. */
+    .dash-song-track { position: relative; flex: 1 1 auto; height: 1.1rem; display: flex; align-items: center; }
+    .dash-song-track::before { content: ''; position: absolute; left: 0; right: 0; height: .28rem;
+        border-radius: 999px; background: rgb(255 255 255 / .28); }
+    .dash-song-fill { position: absolute; left: 0; height: .28rem; width: 0;
+        border-radius: 999px; background: #a5d382; pointer-events: none; }
+    .dash-song-track input { position: relative; width: 100%; margin: 0; background: transparent;
+        -webkit-appearance: none; appearance: none; height: 1.1rem; cursor: pointer; }
+    .dash-song-track input::-webkit-slider-thumb { -webkit-appearance: none; appearance: none;
+        width: .8rem; height: .8rem; border-radius: 999px; background: #fff; border: 0;
+        box-shadow: 0 2px 6px rgb(0 0 0 / .5); }
+    .dash-song-track input::-moz-range-thumb { width: .8rem; height: .8rem; border-radius: 999px;
+        background: #fff; border: 0; box-shadow: 0 2px 6px rgb(0 0 0 / .5); }
+    .dash-song-time { flex: none; font-size: .72rem; font-weight: 700; color: #e6f0d9;
+        font-variant-numeric: tabular-nums; min-width: 2.4rem; text-align: right; }
+    @media (min-width: 640px) {
+        .dash-song-body { padding-top: 7.5rem; padding-left: 1.15rem; padding-right: 1.15rem; }
+        .dash-song-h { font-size: 1.5rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { .dash-song-play { transition: none; } }
+
     /* THE INVITATION THAT STANDS IN FOR AN EMPTY LIST.
        A card headed "Latest Discussions" with "join a group" as its only row
        is a list reporting that it is empty — and to a farmer who has never
@@ -1168,6 +1225,41 @@
 
             </section>
 
+            {{-- THE SONG.
+                 Not a feature, and that is the point: a farm app that has a
+                 tune is an app somebody made rather than shipped. It sits
+                 under her because it is hers. The file itself waits for a
+                 press — nobody on mobile data pays five megabytes for a card
+                 they scrolled past. --}}
+            <section class="dash-song" id="dashSong">
+                <img class="dash-song-art" src="{{ asset('images/anee-song-poster.jpg') }}" alt="" width="1200" height="655">
+                <div class="dash-song-ink"></div>
+                <div class="dash-song-body">
+                    <span class="dash-song-kicker">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                        The anee.io song
+                    </span>
+                    <h2 class="dash-song-h">Kay Anee, ang ani ay high!</h2>
+                    <div class="dash-song-row">
+                        <button type="button" class="dash-song-play" id="dashSongPlay" aria-label="Play the song">
+                            <svg class="dash-song-ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
+                            <svg class="dash-song-ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg>
+                        </button>
+                        {{-- The bar is a real slider, so it can be dragged to a
+                             verse rather than only watched. --}}
+                        <div class="dash-song-track">
+                            <input type="range" id="dashSongSeek" min="0" max="1000" value="0" step="1" aria-label="Seek">
+                            <span class="dash-song-fill" id="dashSongFill"></span>
+                        </div>
+                        <span class="dash-song-time" id="dashSongTime">0:00</span>
+                    </div>
+                </div>
+                {{-- metadata, not auto and not none: the header alone is a
+                     few kilobytes and it is what puts a real 3:44 on the card
+                     instead of a dead 0:00, while the five megabytes still
+                     wait for a press. --}}
+                <audio id="dashSongAudio" preload="metadata" src="{{ asset('audio/anee-kay-anee-ang-ani-ay-high.mp3') }}"></audio>
+            </section>
 
             @if (\App\Support\WorkerContext::canUseCommunity())
             <div>
@@ -2058,6 +2150,73 @@
         showDot();
         vid.load();
     });
+})();
+
+/* THE SONG.
+ *
+ * preload="none", so the five megabytes are fetched on the press and never
+ * before. The bar is a real range input over a painted fill: it reads the
+ * position while the song runs and sets it when dragged, and it stops
+ * following the audio for as long as a finger is on it — otherwise the thumb
+ * fights the hand every quarter second. */
+(() => {
+    const card = document.getElementById('dashSong');
+    const audio = document.getElementById('dashSongAudio');
+    if (!card || !audio) return;
+    const btn = document.getElementById('dashSongPlay');
+    const seek = document.getElementById('dashSongSeek');
+    const fill = document.getElementById('dashSongFill');
+    const time = document.getElementById('dashSongTime');
+    let scrubbing = false;
+
+    const clock = (s) => {
+        if (!isFinite(s) || s < 0) s = 0;
+        const m = Math.floor(s / 60);
+
+        return m + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+    };
+    const paint = () => {
+        const d = audio.duration;
+        const frac = (isFinite(d) && d > 0) ? (audio.currentTime / d) : 0;
+        if (!scrubbing) seek.value = String(Math.round(frac * 1000));
+        fill.style.width = (frac * 100) + '%';
+        // The number counts UP while playing and shows the whole length
+        // before the first press — "how long is this?" then "how far in?".
+        time.textContent = (audio.currentTime > 0 || !isFinite(d)) ? clock(audio.currentTime) : clock(d);
+    };
+
+    btn.addEventListener('click', () => {
+        if (audio.paused) {
+            // The one press that matters; a refused play must not leave the
+            // button showing a pause it never started.
+            audio.play?.().catch(() => card.classList.remove('is-playing'));
+        } else {
+            audio.pause();
+        }
+    });
+    audio.addEventListener('play', () => {
+        card.classList.add('is-playing');
+        // Two things singing at once is nobody's idea of a dashboard.
+        document.getElementById('dashAneeVid')?.pause?.();
+    });
+    audio.addEventListener('pause', () => card.classList.remove('is-playing'));
+    audio.addEventListener('ended', () => { card.classList.remove('is-playing'); audio.currentTime = 0; paint(); });
+    audio.addEventListener('timeupdate', paint);
+    audio.addEventListener('loadedmetadata', paint);
+
+    ['pointerdown', 'touchstart'].forEach((t) => seek.addEventListener(t, () => { scrubbing = true; }));
+    ['pointerup', 'touchend', 'pointercancel'].forEach((t) => seek.addEventListener(t, () => { scrubbing = false; }));
+    seek.addEventListener('input', () => {
+        const d = audio.duration;
+        fill.style.width = (seek.value / 10) + '%';
+        if (isFinite(d) && d > 0) {
+            audio.currentTime = (seek.value / 1000) * d;
+            time.textContent = clock(audio.currentTime);
+        }
+    });
+    seek.addEventListener('change', () => { scrubbing = false; });
+
+    paint();
 })();
 </script>
 @endpush
