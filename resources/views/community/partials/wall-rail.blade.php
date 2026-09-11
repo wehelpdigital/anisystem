@@ -11,7 +11,10 @@
      desktop only, because on a phone the same requests already announce
      themselves above the composer. When true, $friendRequests and
      $friendRequestCount come with it. --}}
-@if ($withRequests ?? false)
+{{-- Nobody is waiting: the card goes, rather than standing there to say so.
+     A heading with "walang bagong request" under it is a box that reports its
+     own emptiness every day the reader has no requests, which is most days. --}}
+@if (($withRequests ?? false) && (int) ($friendRequestCount ?? 0) > 0)
     @include('community.partials.side-requests', ['requests' => $friendRequests, 'requestCount' => $friendRequestCount])
 @endif
 @if (($sponsors ?? collect())->isNotEmpty())
