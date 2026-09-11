@@ -460,6 +460,24 @@
                 </div>
             </div>
         </div>
+
+        {{-- WHOSE FARM THIS IS, on every page.
+             A worker standing in somebody else's farm is looking at screens
+             that are identical to their own, and the only thing that makes
+             the difference legible is being told. It rides under the top bar
+             as a strip of it rather than a card on one page, because the
+             answer is true everywhere and is needed most on the screens that
+             are not the schedules list. --}}
+        @if ($__activeGrant ?? null)
+            <div class="wbar">
+                <span class="wbar-dot" aria-hidden="true"></span>
+                <span class="wbar-txt">Working at <b>{{ optional($__activeGrant->boss)->full_name ?: 'a farm' }}</b></span>
+                <button type="button" class="wbar-switch" data-sheet-open="farmSwitchSheet">
+                    <img src="{{ asset('images/user-refresh.png') }}" alt="" aria-hidden="true">
+                    <span>Switch</span>
+                </button>
+            </div>
+        @endif
     </header>
 
     <script>

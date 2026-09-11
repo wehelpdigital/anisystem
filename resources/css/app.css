@@ -91,6 +91,30 @@ h1, h2, h3, h4, h5, h6 {
 body.has-offline-bar { padding-top: calc(var(--offbar-h, 2.2rem) + .5rem); }
 body.has-offline-bar header.sticky { top: calc(var(--offbar-h, 2.2rem) + .5rem); }
 
+/* WHOSE FARM — the strip under the top bar, for a worker standing in
+   somebody else's. Part of the header rather than a card on one page: the
+   answer is true on every screen, and the screens where it matters most are
+   the ones that look exactly like the worker's own. Low, quiet, and the way
+   out of it is the same switcher the top bar carries. */
+.wbar { display: flex; align-items: center; gap: .5rem; padding: .3rem 1rem;
+    border-top: 1px solid var(--color-brand-100); background: var(--color-brand-50);
+    font-size: .74rem; line-height: 1.3; color: var(--color-brand-800); }
+.wbar-dot { flex: none; width: .4rem; height: .4rem; border-radius: 999px;
+    background: var(--color-brand-600); }
+.wbar-txt { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wbar-txt b { font-weight: 800; }
+.wbar-switch { flex: none; margin-left: auto; display: inline-flex; align-items: center; gap: .3rem;
+    padding: .15rem .55rem; border-radius: 999px; font-size: .68rem; font-weight: 800;
+    color: var(--color-brand-700); background: var(--color-white);
+    border: 1px solid var(--color-brand-200); cursor: pointer;
+    transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+.wbar-switch:hover { background: var(--color-brand-100); border-color: var(--color-brand-300); }
+.wbar-switch img { width: .8rem; height: .8rem; object-fit: contain; }
+html.dark .wbar { background: #1c2416; border-color: #2b3a1c; color: #cfe6b8; }
+html.dark .wbar-switch { background: #151b12; border-color: #2b3a1c; color: #a5c97e; }
+html.dark .wbar-switch:hover { background: #22301a; }
+@media (prefers-reduced-motion: reduce) { .wbar-switch { transition: none; } }
+
 /* The upgrade sheet a tier wall opens (window.aneeUpgrade). It sells the
    exact next rung: header names the tier, a mini plan card carries price
    and highlights, and the yellow button does the upgrading. */
