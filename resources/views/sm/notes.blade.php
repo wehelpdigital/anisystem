@@ -311,6 +311,25 @@
 const __init = () => {
     const SCHEDULE_ID = @json($schedule->id);
     const URLS = {
+
+    /* Same road as the board: a server that answers is a real answer, a
+       server that cannot be reached is the field and the note waits in the
+       outbox. See apiQ in partials/activities-js. */
+    async function apiQ(url, opts = {}, says = 'A note', key = null) {
+        try {
+            return await api(url, opts);
+        } catch (err) {
+            if (!err.offline || !window.aneeOffline?.on()) throw err;
+            await window.aneeOffline.enqueue({
+                url, method: opts.method || 'POST',
+                json: (opts.body && !(opts.body instanceof FormData)) ? opts.body : null,
+                says, key,
+            });
+            window.aneeOffline.markDown?.();
+
+            return { success: true, queued: true, message: 'Saved on this phone - it will sync when you are back.' };
+        }
+    }
         store: @json(route('sm.notes.store')) + '?scheduleId=' + SCHEDULE_ID,
         update: (id) => @json(route('sm.notes.update')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + id,
         destroy: (id) => @json(route('sm.notes.destroy')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + id,
@@ -872,7 +891,7 @@ const __init = () => {
 
         const btn = fld('noteSaveBtn'); btn.disabled = true;
         try {
-            const res = await api(id ? URLS.update(id) : URLS.store, { method: id ? 'PUT' : 'POST', body: payload });
+            const res = await apiQ(id ? URLS.update(id) : URLS.store, { method: id ? 'PUT' : 'POST', body: payload }, id ? 'Edited a note' : 'Wrote a note', id ? 'note:' + id : null);
             const n = { id: res.data.id, title: res.data.title, body: res.data.body, imagePath: res.data.imagePath, imageUrl: res.data.imageUrl, media: res.data.media || [] };
             NOTES[n.id] = n;
             const fresh = renderCard(n);
@@ -930,7 +949,7 @@ const __init = () => {
             const ok = await confirmAction({ title: 'Delete note?', message: '"' + name + '" will be removed.', confirmText: 'Delete' });
             if (!ok) return;
             try {
-                const res = await api(URLS.destroy(id), { method: 'DELETE' });
+                const res = await apiQ(URLS.destroy(id), { method: 'DELETE' }, 'Deleted a note', 'noteDel:' + id);
                 delete NOTES[id];
                 const finish = () => { card.remove(); refreshEmpty(); runSearch(); };
                 if (window.animateOut) window.animateOut(card, finish); else finish();

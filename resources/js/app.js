@@ -211,7 +211,26 @@ window.api = async function api(url, { method = 'GET', body = null, headers = {}
         opts.body = JSON.stringify(body);
     }
 
-    const res = await fetch(url, opts);
+    /* A DEAD LINE AND A REFUSED REQUEST ARE NOT THE SAME FAILURE.
+     *
+     * fetch throws a bare TypeError when nothing could be reached, and that
+     * used to arrive at a call site indistinguishable from a 422. Offline
+     * Mode decided whether to queue a change by asking navigator.onLine,
+     * which answers TRUE for a phone attached to a router with nothing
+     * behind it — so the change was thrown away with a red toast and never
+     * reached the outbox. That is the whole of "sometimes it does not sync".
+     *
+     * The truth is right here: the fetch that failed. Tagged, so any caller
+     * can say "queue this" without guessing at the browser's mood. */
+    let res;
+    try {
+        res = await fetch(url, opts);
+    } catch (netErr) {
+        window.aneeOffline?.markDown?.();
+        const err = new Error('No connection.');
+        err.offline = true;
+        throw err;
+    }
 
     let json = null;
     try {
@@ -1606,6 +1625,21 @@ document.addEventListener('pointerdown', (e) => {
         });
     }
     async function enqueue(action) {
+        /* One row per thing changed, not per tap.
+         *
+         * Ticking the same activity four times while offline used to queue
+         * four requests that would replay in order and land on the same
+         * answer anyway. With a key, the later tap replaces the earlier one:
+         * the box holds what the farmer decided, not how many times they
+         * changed their mind. */
+        if (action.key) {
+            const rows = await outboxAll();
+            for (const r of rows) {
+                if (r.key === action.key) {
+                    try { await outboxDrop(r.id); } catch (_) { /* already gone */ }
+                }
+            }
+        }
         const db = await dbp();
         await new Promise((res, rej) => {
             const tx = db.transaction('outbox', 'readwrite');
@@ -1629,6 +1663,49 @@ document.addEventListener('pointerdown', (e) => {
         await enqueue({ url, method: 'POST', fields, files });
     }
 
+    /* ---- the sync screen ----
+     *
+     * Coming back into signal with work in the box is the one moment in this
+     * app where the farmer must not touch anything: the replay is in order,
+     * and a tap that starts a second edit mid-flight is how two versions of
+     * a day get written. So it takes the screen, says what it is doing, and
+     * gives it back when the box is empty. */
+    function syncVeil(say, n, total) {
+        let el = document.getElementById('aneeSyncVeil');
+        if (!el) {
+            el = document.createElement('div');
+            el.id = 'aneeSyncVeil';
+            el.setAttribute('role', 'status');
+            el.innerHTML = '<div class="asv-card">'
+                + '<span class="asv-spin" aria-hidden="true"></span>'
+                + '<p class="asv-h">Syncing your offline work</p>'
+                + '<p class="asv-p"></p>'
+                + '<span class="asv-track"><span class="asv-fill"></span></span>'
+                + '</div>';
+            document.body.appendChild(el);
+            requestAnimationFrame(() => el.classList.add('is-in'));
+        }
+        el.querySelector('.asv-p').textContent = say;
+        const pct = total ? Math.round((n / total) * 100) : 0;
+        el.querySelector('.asv-fill').style.width = pct + '%';
+
+        return el;
+    }
+    function syncVeilDone(say) {
+        const el = document.getElementById('aneeSyncVeil');
+        if (!el) return;
+        el.classList.add('is-done');
+        el.querySelector('.asv-h').textContent = 'All synced';
+        el.querySelector('.asv-p').textContent = say;
+        el.querySelector('.asv-fill').style.width = '100%';
+        // Not taken down when a reload is coming: see the drain.
+        if (el.dataset.holding === '1') return;
+        setTimeout(() => {
+            el.classList.remove('is-in');
+            setTimeout(() => el.remove(), 360);
+        }, 1200);
+    }
+
     /* ---- the drain: in order, stopping if the line drops again ---- */
     let draining = false;
     let retryTimer = null;
@@ -1641,24 +1718,36 @@ document.addEventListener('pointerdown', (e) => {
             if (!rows.length) return;
             let ok = 0;
             let done = 0;
+            let failed = 0;
+            const total = rows.length;
+            syncVeil(total + ' change' + (total > 1 ? 's' : '') + ' to send', 0, total);
             for (const row of rows.sort((a, b) => a.id - b.id)) {
+                syncVeil((row.says || 'A change') + ' — ' + (done + 1) + ' of ' + total, done, total);
                 try {
                     // A queued capture carries its form taken apart; put it
                     // back together, blobs and all. A bare action posts as-is.
                     let body;
+                    const head = {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        Accept: 'application/json',
+                    };
                     if ((row.fields && row.fields.length) || (row.files && row.files.length)) {
                         body = new FormData();
                         (row.fields || []).forEach(([k, v]) => body.append(k, v));
                         (row.files || []).forEach((f) => body.append(f.field, new File([f.blob], f.name, { type: f.type })));
+                    } else if (row.json) {
+                        // A queued edit carries its payload as plain data;
+                        // it has to go back out the way api() would have sent
+                        // it or the server sees an empty request.
+                        body = JSON.stringify(row.json);
+                        head['Content-Type'] = 'application/json';
                     }
                     const r = await fetch(row.url, {
                         method: row.method || 'POST',
                         credentials: 'same-origin',
                         body,
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]')?.content || '',
-                            Accept: 'application/json',
-                        },
+                        headers: head,
                     });
                     if (r.status >= 500) throw new Error('server busy');
                     // 2xx landed; 4xx means the thing is gone or refused —
@@ -1666,12 +1755,30 @@ document.addEventListener('pointerdown', (e) => {
                     await outboxDrop(row.id);
                     done++;
                     if (r.ok) ok++;
+                    else failed++;
                 } catch (_) { break; }
             }
             leftover = rows.length - done;
-            if (ok) {
-                window.toast?.(ok + ' offline change' + (ok > 1 ? 's' : '') + ' synced. If the farm moved while you were away, your change won — refresh to see everything.', 'success', 5000);
-                document.dispatchEvent(new CustomEvent('anee:offline-synced', { detail: { count: ok } }));
+            if (done) {
+                /* Said plainly, including the part nobody likes: a change the
+                   server refused is dropped rather than replayed forever, and
+                   the farmer is told how many so they can look. */
+                const veil = document.getElementById('aneeSyncVeil');
+                if (veil && ok) veil.dataset.holding = '1';
+                syncVeilDone(failed
+                    ? ok + ' sent, ' + failed + ' the farm had already moved past'
+                    : ok + ' change' + (ok > 1 ? 's' : '') + ' sent');
+                document.dispatchEvent(new CustomEvent('anee:offline-synced', { detail: { count: ok, failed } }));
+                markUp();
+                // The board on screen was painted from the shelf; what the
+                // server holds now is the merged truth.
+                /* The board on screen was painted from the shelf; what the
+                   server holds now is the merged truth. The veil is left up
+                   deliberately - the reload takes it away, so there is no
+                   flash of the stale page between the two. */
+                if (ok) setTimeout(() => { if (navigator.onLine) location.reload(); }, 1900);
+            } else if (leftover) {
+                syncVeilDone('Could not reach the server — will try again');
             }
         } finally {
             draining = false;
@@ -1898,6 +2005,18 @@ document.addEventListener('pointerdown', (e) => {
     // fetch that beats the message would pass the SW uncopied.
     setTimeout(() => warm(), 1500);
 
+    /* KEPT FRESH, NOT KEPT ONCE.
+     *
+     * A shelf filled this morning is this morning's farm. The half-hour gate
+     * inside warm() already stops a page load from re-fetching everything,
+     * so this only has to knock on the door: every ten minutes, and again
+     * whenever the tab is brought back to the front after being away. Quiet
+     * — no progress bar for a refresh nobody asked for. */
+    setInterval(() => { if (navigator.onLine) warm(); }, 600000);
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && navigator.onLine) warm();
+    });
+
     /* ---- what cannot come with you ----------------------------------------
      *
      * Nearly everything in this app is a record the phone can hold. These
@@ -1922,7 +2041,108 @@ document.addEventListener('pointerdown', (e) => {
     /* Truly unreachable, not merely "the browser thinks so": the worker's
        note is what makes this honest on a phone attached to a router with
        nothing behind it. */
+    /* WHAT THE APP MAY STILL DO WITH NO SIGNAL.
+     *
+     * A short list on purpose. These are the things a farmer does standing
+     * in the field with the phone in one hand: record what happened, and
+     * move the plan for it. Everything else either asks a model, asks
+     * another person, or computes over data the phone does not hold — and a
+     * screen that pretends otherwise is worse than a locked door.
+     *
+     * Keys are the module keys the schedule shell uses, plus the app-level
+     * page paths. Read by isAllowedOffline() below and by the lock screen. */
+    const OFFLINE_OK_MODULES = new Set(['activities', 'notes', 'growth']);
+    const OFFLINE_OK_PATHS = [
+        /^\/app\/sm-activities(\?|$)/,
+        /^\/app\/sm-notes(\?|$)/,
+        /^\/app\/notes(\?|$)/,
+        /^\/app\/sm-growth(\?|$)/,
+        /^\/app\/?$/,
+    ];
+    function isAllowedOffline(href) {
+        let url;
+        try { url = new URL(href || location.href, location.origin); } catch (_) { return true; }
+        const mod = url.searchParams.get('module');
+        if (url.pathname.startsWith('/app/sm-activities')) {
+            // The shell: allowed only while it is showing a room on the list.
+            return !mod || OFFLINE_OK_MODULES.has(mod);
+        }
+
+        return OFFLINE_OK_PATHS.some((re) => re.test(url.pathname + (url.search ? '?' : '')))
+            || OFFLINE_OK_PATHS.some((re) => re.test(url.pathname));
+    }
+
+    /* The line is down, and we KNOW it because something just failed to
+       reach the server — not because the browser said so. */
+    function markDown() {
+        if (servedFromShelf) return;
+        servedFromShelf = true;
+        paintBar();
+    }
+    function markUp() {
+        if (!servedFromShelf) return;
+        servedFromShelf = false;
+        paintBar();
+    }
+
+    /* ---- one road for every write that may happen with no signal ----
+     *
+     * Try it. If the SERVER answered — even to refuse — that is a real
+     * answer and the caller deals with it. If nothing could be reached, the
+     * change goes in the outbox and the caller is told it was kept, so the
+     * screen can stay optimistic instead of rolling back a tick the farmer
+     * just made.
+     *
+     * `says` is what the sync report calls it; `key` collapses repeats, so
+     * ticking the same activity four times offline syncs once, with the
+     * answer they landed on. */
+    async function write(url, opts = {}) {
+        const { says = 'A change', key = null, ...rest } = opts;
+        try {
+            const data = await window.api(url, rest);
+
+            return { ok: true, queued: false, data };
+        } catch (err) {
+            if (!err.offline) throw err;
+            if (!on()) throw err;       // mode off: nothing to keep it in
+            await enqueue({
+                url,
+                method: rest.method || 'POST',
+                json: rest.body && !(rest.body instanceof FormData) ? rest.body : null,
+                says,
+                key,
+            });
+
+            return { ok: true, queued: true, data: null };
+        }
+    }
+
     const isDown = () => on() && (!navigator.onLine || servedFromShelf);
+    /* What to call a door when the link that opened it had no words - a
+       tile, an icon, a button built by script. A farmer told "that page is
+       locked" learns nothing; told "Lots is locked" knows what to do. */
+    const PATH_NAMES = [
+        [/^\/app\/sm-lots/, 'Lots'], [/^\/app\/sm-workers/, 'Workers'],
+        [/^\/app\/sm-inventory/, 'Inventory'], [/^\/app\/sm-maps/, 'Maps'],
+        [/^\/app\/sm-draw/, 'Draw'], [/^\/app\/sm-reports/, 'Reports'],
+        [/^\/app\/sm-gallery/, 'The Gallery'], [/^\/app\/sm-settings/, 'Settings'],
+        [/^\/app\/sm-tags/, 'Tags'], [/^\/app\/sm-documentation/, 'Documentation'],
+        [/^\/app\/sm-weather/, 'Weather'], [/^\/app\/sm-post-harvest/, 'Observations'],
+        [/^\/app\/sm-expenses-report/, 'The expenses report'],
+        [/^\/app\/sm-labor-report/, 'The labor report'],
+        [/^\/app\/sm-profit-report/, 'The profit report'],
+        [/^\/app\/sm($|\?|\/)/, 'The schedules list'],
+        [/^\/app\/gallery/, 'The Gallery'], [/^\/app\/contacts/, 'The Contact List'],
+        [/^\/app\/community/, 'The community'], [/^\/app\/support/, 'Support'],
+        [/^\/app\/tutorials/, 'The tutorials'], [/^\/account/, 'Your account'],
+    ];
+    function nameForPath(path) {
+        for (const [re, name] of PATH_NAMES) {
+            if (re.test(path)) return name;
+        }
+
+        return null;
+    }
     function lockedWhileDown(href) {
         if (!href) return null;
         let path;
@@ -1933,18 +2153,73 @@ document.addEventListener('pointerdown', (e) => {
 
         return null;
     }
-    function sayLocked(name) {
-        window.toast?.((name || 'That') + ' needs a connection — it asks something on the other end, so it stays locked until you are back.', 'error');
+    /* THE LOCKED DOOR, SAID PROPERLY.
+     *
+     * A toast was not enough: it slides away while the farmer is still
+     * looking for the thing they tapped, and on a small screen it lands
+     * under a thumb. This takes the screen, names the room, says why, and
+     * has one way out. */
+    function sayLocked(name, why) {
+        let el = document.getElementById('aneeLockVeil');
+        if (!el) {
+            el = document.createElement('div');
+            el.id = 'aneeLockVeil';
+            el.setAttribute('role', 'dialog');
+            el.setAttribute('aria-modal', 'true');
+            el.innerHTML = '<div class="alv-card">'
+                /* Inline, like the offline bar's own mark: the one picture
+                   that MUST render with no signal cannot depend on any cache
+                   having been warmed first. Served from /images it came up as
+                   a broken-image glyph on the very screen whose job is to
+                   look deliberate. 128px of the same artwork, 4KB. */
+                + '<img class="alv-ico" alt="" src="data:image/png;base64,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">'
+                + '<p class="alv-h"></p>'
+                + '<p class="alv-p"></p>'
+                + '<button type="button" class="btn btn-primary alv-go">Back</button>'
+                + '</div>';
+            document.body.appendChild(el);
+            const shut = () => {
+                el.classList.remove('is-in');
+                setTimeout(() => el.remove(), 320);
+            };
+            el.addEventListener('click', (e) => {
+                if (e.target === el || e.target.closest('.alv-go')) shut();
+            });
+            document.addEventListener('keydown', function esc(e) {
+                if (e.key !== 'Escape') return;
+                document.removeEventListener('keydown', esc);
+                shut();
+            });
+        }
+        el.querySelector('.alv-h').textContent = (name || 'This') + ' is locked while you are offline';
+        el.querySelector('.alv-p').textContent = why
+            || 'It needs a connection — it asks something on the other end of the line. Everything you can do from the field is still open: the board, your notes, the camera and the recorder.';
+        requestAnimationFrame(() => el.classList.add('is-in'));
     }
+    /* EVERY DOOR THAT IS NOT ON THE SHORT LIST.
+     *
+     * The allow-list is what a farm day needs from the field; everything
+     * else is refused at the door rather than opened onto a screen that
+     * cannot do its job. Capture phase, so the link's own handlers never
+     * run, and only while the line is actually down. */
     document.addEventListener('click', (e) => {
         if (!isDown()) return;
         const a = e.target.closest?.('a[href], [data-offline-href]');
         if (!a) return;
-        const name = lockedWhileDown(a.getAttribute('href') || a.getAttribute('data-offline-href'));
-        if (!name) return;
+        const href = a.getAttribute('href') || a.getAttribute('data-offline-href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+        let url;
+        try { url = new URL(href, location.origin); } catch (_) { return; }
+        if (url.origin !== location.origin) return;
+        // Not an app page at all (a file, an asset): leave it alone.
+        if (!url.pathname.startsWith('/app')) return;
+        if (isAllowedOffline(url.href)) return;
         e.preventDefault();
         e.stopPropagation();
-        sayLocked(name);
+        sayLocked(lockedWhileDown(url.href)
+            || nameForPath(url.pathname)
+            || a.textContent?.trim().slice(0, 40)
+            || 'That page');
     }, true);
 
 
@@ -1966,6 +2241,10 @@ document.addEventListener('pointerdown', (e) => {
         isDown,
         locked: lockedWhileDown,
         sayLocked,
+        markDown,
+        markUp,
+        write,
+        allowed: isAllowedOffline,
         pending: () => outboxAll().then((r) => r.length),
     };
 

@@ -38,6 +38,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // card, and a phone set to another timezone must not move which day that
     // is (see .date-group.is-today).
     const TODAY_KEY = @json(now('Asia/Manila')->toDateString());
+
+    /* THE ONE ROAD FOR A WRITE MADE IN THE FIELD.
+     *
+     * A drop-in for api(): same arguments, same returned shape, so a call
+     * site changes by its name alone. The difference is the failure it
+     * treats as recoverable. A server that ANSWERS - even to refuse - is a
+     * real answer and is thrown on. A server that could not be reached at
+     * all is the field, and the change goes in the outbox instead of into a
+     * red toast.
+     *
+     * This is the fix for "sometimes it does not sync": the old test was
+     * navigator.onLine, which answers true for a phone attached to a router
+     * with nothing behind it, so the change was discarded before the outbox
+     * ever saw it.
+     *
+     * `says` is what the sync screen calls it on the way back; `key`
+     * collapses repeats, so five drags of one card sync as one move. */
+    async function apiQ(url, opts = {}, says = 'A change', key = null) {
+        try {
+            return await api(url, opts);
+        } catch (err) {
+            if (!err.offline || !window.aneeOffline?.on()) throw err;
+            await window.aneeOffline.enqueue({
+                url,
+                method: opts.method || 'POST',
+                json: (opts.body && !(opts.body instanceof FormData)) ? opts.body : null,
+                says,
+                key,
+            });
+            window.aneeOffline.markDown?.();
+
+            return { success: true, queued: true, message: 'Saved on this phone - it will sync when you are back.' };
+        }
+    }
     const STORAGE_BASE = @json(asset('storage'));
 
     const ACTIVITY_TYPE_LABELS = @json($activityTypes);
@@ -778,7 +812,7 @@ document.addEventListener('DOMContentLoaded', () => {
             _renderCardOrReplace(r.data);
         },
         destroy: async (id) => {
-            const r = await api(U.destroy(id), { method: 'DELETE' });
+            const r = await apiQ(U.destroy(id), { method: 'DELETE' }, 'Deleted an activity', 'del:' + id);
             if (!r || !r.success) throw new Error((r && r.message) || 'delete failed');
             _removeCardById(id);
         },
@@ -3046,7 +3080,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function restoreBoardSnapshot(snapshot) {
-        const r = await api(U.reorder(), { method: 'POST', body: { items: snapshot } });
+        const r = await apiQ(U.reorder(), { method: 'POST', body: { items: snapshot } }, 'Moved the plan', 'reorder');
         if (!r || !r.success) throw new Error((r && r.message) || 'reorder failed');
         snapshot.forEach((it) => {
             const el = $qs(`#activitiesList .activity-card[data-id="${it.id}"]`);
@@ -5296,7 +5330,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const _saveLabel = btn.innerHTML;
         btn.innerHTML = '<svg class="w-4 h-4 animate-spin inline-block align-[-3px] mr-1.5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>Saving…';
         try {
-            const res = await api(id ? U.update(id) : U.store(), { method: id ? 'PUT' : 'POST', body: payload });
+            const res = await apiQ(id ? U.update(id) : U.store(), { method: id ? 'PUT' : 'POST', body: payload }, id ? 'Edited an activity' : 'Added an activity', id ? 'edit:' + id : null);
             toast(res.message);
             closeSheet('activitySheet');
             const savedTitle = res.data.activityTitle || payload.activityTitle || 'activity';
@@ -5397,7 +5431,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         if (!ok) return;
         try {
-            const res = await api(U.destroy(id), { method: 'DELETE' });
+            const res = await apiQ(U.destroy(id), { method: 'DELETE' }, 'Deleted an activity', 'del:' + id);
             toast(res.message);
             _removeCardById(id);
             pushUndo(`Delete '${name}'`, async () => {
@@ -5405,7 +5439,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');
                 _renderCardOrReplace(r.data);
             }, async () => {
-                const r = await api(U.destroy(id), { method: 'DELETE' });
+                const r = await apiQ(U.destroy(id), { method: 'DELETE' }, 'Deleted an activity', 'del:' + id);
                 if (!r || !r.success) throw new Error((r && r.message) || 'delete failed');
                 _removeCardById(id);
             }, { label: `Delete '${name}'`, undo: { call: 'restore', id }, redo: { call: 'destroy', id } });
@@ -5636,7 +5670,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const items = [{ id: parseInt(id, 10), targetDate: newDate, targetEndDate: newEnd || null, sequenceOrder: 0 }];
         reorderAndRenumberActivities();
 
-        api(U.reorder(), { method: 'POST', body: { items } })
+        apiQ(U.reorder(), { method: 'POST', body: { items } }, 'Moved the plan', 'reorder')
             .then(() => {
                 toast('Moved to ' + prettyDateWords(newDate));
                 recomputeLotDayZero();
@@ -6555,26 +6589,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const wantDone = card.getAttribute('data-is-done') !== '1';
         animateDoneSwap(card, wantDone);   // optimistic; revert on failure
         try {
-            const res = await api(U.toggleDone(id), { method: 'POST' });
-            toast(res.message);
-            /* The tick may have spent something. Only re-read the shed when
-               the server says it moved — most activities carry no inventory
-               line, and a request per tick for nothing is a request for
-               nothing. */
+            /* Queued rather than lost when the line is down.
+             *
+             * This used to decide by navigator.onLine, which answers true for
+             * a phone attached to a router with nothing behind it - so the
+             * tick was thrown away with a red toast and never reached the
+             * outbox. offlineWrite tries first and queues only when nothing
+             * could be reached, which is the only honest test.
+             *
+             * The queued form is a SET (?to=), not a toggle, so replaying it
+             * cannot flip the answer the farmer actually chose; and the key
+             * collapses repeat taps on one card down to the last one. */
+            const r = await apiQ(
+                U.toggleDone(id) + '&to=' + (wantDone ? 1 : 0),
+                { method: 'POST' },
+                'Tick: ' + (wantDone ? 'done' : 'not done'),
+                'done:' + id,
+            );
+            toast(r.message || 'Saved.');
         } catch (err) {
-            /* Offline Mode's first synced action: with the mode on and the
-               line down, the tick keeps its optimistic state and queues as a
-               SET (?to=) in the outbox — replayed in order on reconnect,
-               last write wins. */
-            if (window.aneeOffline?.on() && !navigator.onLine) {
-                window.aneeOffline.enqueue({
-                    url: U.toggleDone(id) + '&to=' + (wantDone ? 1 : 0),
-                    method: 'POST',
-                    says: 'Tick: ' + (wantDone ? 'done' : 'not done'),
-                });
-                toast('Offline — the tick is saved on this phone and will sync when you\'re back.');
-                return;
-            }
             toast(err.message, 'error');
             const cardNow = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
             if (cardNow) animateDoneSwap(cardNow, !wantDone);
@@ -7251,7 +7284,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         try {
-            await api(U.reorder(), { method: 'POST', body: { items } });
+            await apiQ(U.reorder(), { method: 'POST', body: { items } }, 'Moved the plan', 'reorder');
             items.forEach((it) => {
                 const el = $qs(`#activitiesList .activity-card[data-id="${it.id}"]`);
                 if (!el) return;
@@ -9281,7 +9314,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const mediaSend = inlineNoteMedia(el).map((m) => ({ type: m.type, path: m.path, poster: m.poster || null, strokes: m.strokes || null }));
         _setMoving(el, true);
         try {
-            const res = await api(U.inlineNoteSave(), { method: 'POST', body: {
+            const res = await apiQ(U.inlineNoteSave(), { method: 'POST', body: {
                 id: id ? parseInt(id, 10) : null, noteDate: date, sortKey: key,
                 title: el.getAttribute('data-title') || '', content, media: mediaSend,
                 lotId: parseInt(el.getAttribute('data-lot-id') || '', 10) || null,
@@ -9295,6 +9328,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 _land(el);
                 return true;
             }
+            /* Queued in the field: there is no server id to write back, so
+               the note keeps the one it has and lands as written. The outbox
+               replays it on the way back in. */
+            if (res && res.queued) { _land(el); return true; }
             if (res && res.removed) el.remove();
             return false;
         } catch (err) { _setMoving(el, false); toast(err.message || 'Could not save the note.', 'error'); return false; }
@@ -10460,7 +10497,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const snapshot = dragBoardSnapshot;
         dragBoardSnapshot = null;
-        api(U.reorder(), { method: 'POST', body: { items } })
+        apiQ(U.reorder(), { method: 'POST', body: { items } }, 'Moved the plan', 'reorder')
             .then(() => {
                 toast(oldDate && oldDate !== newDate ? 'Moved to ' + prettyDateWords(newDate) : 'Order saved');
                 recomputeLotDayZero();
@@ -10522,7 +10559,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const snapshot = dragBoardSnapshot;
         dragBoardSnapshot = null;
-        api(U.reorder(), { method: 'POST', body: { items } })
+        apiQ(U.reorder(), { method: 'POST', body: { items } }, 'Moved the plan', 'reorder')
             .then(() => {
                 toast('Moved to ' + prettyDateWords(newDate));
                 recomputeLotDayZero();
@@ -11131,7 +11168,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             if (!ok) return;
             try {
-                await api(U.destroy(id), { method: 'DELETE' });
+                await apiQ(U.destroy(id), { method: 'DELETE' }, 'Deleted an activity', 'del:' + id);
                 toast(`Draft "${name}" deleted`);
                 dropDraftRow(id);
                 bumpDraftsBadge(-1);
@@ -11153,7 +11190,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         paintDrafts();
                     }
                 }, async () => {
-                    const r = await api(U.destroy(id), { method: 'DELETE' });
+                    const r = await apiQ(U.destroy(id), { method: 'DELETE' }, 'Deleted an activity', 'del:' + id);
                     if (!r || !r.success) throw new Error((r && r.message) || 'delete failed');
                     bumpDraftsBadge(-1);
                     dropDraftRow(id);

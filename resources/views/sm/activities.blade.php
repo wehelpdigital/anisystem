@@ -4258,6 +4258,11 @@
     // with ?module=key for non-Activities modules) so a refresh reloads the
     // single-page shell, never the standalone module page. The partial fetch
     // still uses each module's own URL (see showModule).
+    /* What still works with no signal. The captures and the voice recorder
+       are not here because they are not rooms - they are the buttons on this
+       board, and they keep their own work in the outbox. */
+    const OFFLINE_ROOMS = new Set(['activities', 'notes', 'growth']);
+
     const ACTIVITIES_URL = MODULES.activities.url;
     const shellUrl = (key) => key === 'activities'
         ? ACTIVITIES_URL
@@ -4393,9 +4398,15 @@
            threw, and the catch below lands you back on the board with no
            explanation, which is what "I tap Lots and it goes to Activities"
            felt like for every module that was not on the shelf. */
-        if (window.aneeOffline?.isDown?.()) {
-            const why = window.aneeOffline.locked(MODULES[key].url);
-            if (why) { closeModulesSheetForNav(); window.aneeOffline.sayLocked(MODULES[key].label); return; }
+        /* Out of signal, only the rooms a farm day needs from the field
+           open: the board, the notebook and the growth stages. Everything
+           else is refused at the door with the offline card rather than
+           opened onto a screen that cannot do its job. */
+        if (window.aneeOffline?.isDown?.() && !OFFLINE_ROOMS.has(key)) {
+            closeModulesSheetForNav();
+            window.aneeOffline.sayLocked(MODULES[key].label);
+
+            return;
         }
         // Only a deep link sets this, and only from somewhere else.
         cameFrom = extra && current && current !== key ? current : (extra ? cameFrom : null);

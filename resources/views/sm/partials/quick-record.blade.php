@@ -295,13 +295,6 @@
     function wire(url, fd) {
         // No signal but Offline Mode on: the clip waits in the outbox and
         // uploads itself when the line returns.
-        if (window.aneeOffline?.on() && !navigator.onLine) {
-            return window.aneeOffline.enqueueForm(url, fd).then(() => ({
-                success: true,
-                offline: true,
-                message: 'Saved on this phone — the clip will upload when the signal returns.',
-            }));
-        }
         return new Promise((resolve, reject) => {
             const x = new XMLHttpRequest();
             x.open('POST', url);
@@ -313,9 +306,25 @@
                 let data = {};
                 try { data = JSON.parse(x.responseText); } catch (_) { }
                 if (x.status >= 200 && x.status < 300 && data.success) resolve(data);
+                else if (!x.status) keepIt();
                 else reject(new Error(data.message || 'Could not save the clip.'));
             };
-            x.onerror = () => reject(new Error('The connection dropped mid-upload. Nothing may have arrived — try again.'));
+            /* THE LINE, NOT THE BROWSER'S OPINION OF IT. See quick-capture:
+             * navigator.onLine answers true for a phone on a router with
+             * nothing behind it, so the clip was rejected and lost. An XHR
+             * that errors reached nobody - that is the test. */
+            const keepIt = () => {
+                if (!window.aneeOffline?.on()) {
+                    reject(new Error('The connection dropped mid-upload. Nothing may have arrived - try again.'));
+
+                    return;
+                }
+                window.aneeOffline.markDown?.();
+                window.aneeOffline.enqueueForm(url, fd)
+                    .then(() => resolve({ success: true, offline: true, message: 'Saved on this phone - the clip will upload when the signal returns.' }))
+                    .catch(() => reject(new Error('Could not keep the clip on this phone.')));
+            };
+            x.onerror = keepIt;
             x.send(fd);
         });
     }

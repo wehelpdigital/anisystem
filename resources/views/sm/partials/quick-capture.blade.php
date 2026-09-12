@@ -816,13 +816,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function wire(url, fd) {
         // No signal but Offline Mode on: the capture waits in the outbox,
         // shrunk photos and all, and uploads itself when the line returns.
-        if (window.aneeOffline?.on() && !navigator.onLine) {
-            return window.aneeOffline.enqueueForm(url, fd).then(() => ({
-                success: true,
-                offline: true,
-                message: 'Saved on this phone — it will upload when the signal returns.',
-            }));
-        }
         return new Promise((resolve, reject) => {
             const x = new XMLHttpRequest();
             x.open('POST', url);
@@ -833,9 +826,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 let data = {};
                 try { data = JSON.parse(x.responseText); } catch (_) { }
                 if (x.status >= 200 && x.status < 300 && data.success) resolve(data);
+                else if (!x.status) keepIt();
                 else reject(new Error(data.message || 'Could not save.'));
             };
-            x.onerror = () => reject(new Error('The connection dropped mid-save. Nothing may have arrived - try again.'));
+            /* THE LINE, NOT THE BROWSER'S OPINION OF IT.
+             *
+             * This used to queue only when navigator.onLine said false, and
+             * that answers TRUE for a phone attached to a router with nothing
+             * behind it - so the capture was rejected and lost. An XHR that
+             * errors reached nobody, which is the only test worth trusting:
+             * the file goes to the outbox and uploads itself on the way back
+             * in. Status 0 is the same failure arriving through onload. */
+            const keepIt = () => {
+                if (!window.aneeOffline?.on()) {
+                    reject(new Error('The connection dropped mid-save. Nothing may have arrived - try again.'));
+
+                    return;
+                }
+                window.aneeOffline.markDown?.();
+                window.aneeOffline.enqueueForm(url, fd)
+                    .then(() => resolve({ success: true, offline: true, message: 'Saved on this phone - it will upload when the signal returns.' }))
+                    .catch(() => reject(new Error('Could not keep it on this phone.')));
+            };
+            x.onerror = keepIt;
             x.send(fd);
         });
     }
