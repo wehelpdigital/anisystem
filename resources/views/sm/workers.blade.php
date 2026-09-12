@@ -694,7 +694,8 @@ const __init = () => {
         const schedAccess = (login && login.scheduleAccess) || 'view';
         wlAccess.value = schedAccess === 'none' ? 'view' : schedAccess;
         wlAccess.dispatchEvent(new Event('change', { bubbles: true }));
-        document.getElementById('wlCommunity').checked = login ? !!login.communityAccess : true;
+        // No community switch any more: a worker reaches the community through
+        // their own account, never through the farm they are working in.
         window.workerRights.paint('wl', login);
         // The rights panel belongs to a login, not to a worker: no login, no
         // question to answer, and a line saying how to get one instead.
@@ -777,7 +778,7 @@ const __init = () => {
             const res = await api(@json(route('sm.workers.access.rights')), { method: 'POST', body: {
                 id: login.id,
                 scheduleAccess: document.getElementById('wlAccess').value,
-                communityAccess: document.getElementById('wlCommunity').checked ? 1 : 0,
+                communityAccess: 1,   // vestigial: the grant column is no longer asked
                 ...window.workerRights.read('wl'),
             } });
             editingWorker.login = (res.data && res.data.grant) || editingWorker.login;
@@ -815,7 +816,7 @@ const __init = () => {
                 scheduleWorkerId: editingWorker && editingWorker.id,
                 email,
                 scheduleAccess: document.getElementById('wlAccess').value,
-                communityAccess: document.getElementById('wlCommunity').checked ? 1 : 0,
+                communityAccess: 1,   // vestigial: the grant column is no longer asked
                 ...window.workerRights.read('wl'),
             } });
             toast(res.message);
@@ -871,7 +872,7 @@ const __init = () => {
                 name: editingWorker && editingWorker.workerName,
                 email, password: pw,
                 scheduleAccess: document.getElementById('wlAccess').value,
-                communityAccess: document.getElementById('wlCommunity').checked ? 1 : 0,
+                communityAccess: 1,   // vestigial: the grant column is no longer asked
                 ...window.workerRights.read('wl'),
             } });
             toast(res.message);

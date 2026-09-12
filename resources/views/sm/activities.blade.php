@@ -4687,8 +4687,11 @@
         const foldLabel = document.getElementById('mirrorFoldLabel');
         const todayBtn = document.getElementById('mirrorTodayBtn');
         let mode = 'all';
-        // Read off the board before its markers are stripped from the copies.
+        // Read off the board before its markers are stripped from the copies;
+        // only a nicety now that MIR_TODAY is the real answer.
         let todayKey = '';
+        // The same Asia/Manila date the board counts its days from.
+        const MIR_TODAY = @json(now('Asia/Manila')->toDateString());
 
         // Anything that acts, in a place meant only for reading.
         // The chevron stays: folding a day shut is reading, not editing, and
@@ -4907,11 +4910,49 @@
         /* An action taken from in here changes the board underneath, and the
          * copies were made before it did. Rebuilt rather than patched: a copy
          * is cheap and a half-right mirror is worse than a slow one. */
+        let rebuildTimer = null;
         window.mirrorRefresh = () => {
             if (panel.hidden) return;
-            body.innerHTML = '';
-            build();
+            // Debounced: one edit can touch the board half a dozen times as
+            // the card is replaced, renumbered and re-sorted, and rebuilding
+            // on each would be six copies of a season to throw five away.
+            clearTimeout(rebuildTimer);
+            rebuildTimer = setTimeout(() => {
+                if (panel.hidden) return;
+                const keepScroll = body.scrollTop;
+                const openDays = new Set([...body.querySelectorAll('.date-group:not(.is-folded)[data-date]')]
+                    .map((g) => g.getAttribute('data-date')));
+                body.innerHTML = '';
+                build();
+                // Whatever was open stays open, and the eye keeps its place:
+                // a refresh that folds the season shut and jumps to the top
+                // is a worse answer than a stale card.
+                openDays.forEach((d) => {
+                    body.querySelector('.date-group[data-date="' + (window.CSS?.escape ? CSS.escape(d) : d) + '"]')
+                        ?.classList.remove('is-folded');
+                });
+                syncFoldBtn();
+                body.scrollTop = keepScroll;
+            }, 220);
         };
+
+        /* EVERY CHANGE, NOT THE ONES SOMEBODY REMEMBERED TO ANNOUNCE.
+         *
+         * Duplicating a card, editing one and saving, deleting, moving a day
+         * — each takes a different road through the board, and only the ones
+         * that end in a re-sort were calling mirrorRefresh. So an edit made
+         * from the mirror's own three dots saved perfectly and the mirror
+         * went on showing the old title.
+         *
+         * The board's list is watched instead. Whatever did the changing,
+         * the copies are remade. Only while the mirror is open — the
+         * observer is attached once and costs nothing when it returns
+         * early. */
+        const boardList = document.getElementById('activitiesList');
+        if (boardList && window.MutationObserver) {
+            new MutationObserver(() => { if (!panel.hidden) window.mirrorRefresh(); })
+                .observe(boardList, { childList: true, subtree: true, characterData: true });
+        }
 
         /* ---- Date Diff -------------------------------------------------
          * Two at a time, because a distance has two ends. Picking a third
@@ -5220,14 +5261,27 @@
         todayBtn?.addEventListener('click', () => {
             const live = [...body.querySelectorAll('.date-group:not(.mir-away)[data-date]')];
             if (!live.length) return;
-            let target = todayKey ? live.find((g) => g.getAttribute('data-date') === todayKey) : null;
+            /* TODAY IS A DATE THE SERVER KNOWS, NOT ONE THE DOM MIGHT SHOW.
+             *
+             * This used to read the board's own `.is-today` marker, which is
+             * only there when today HAS activities — and to fall back on
+             * `new Date().toISOString()`, which is UTC and so reads yesterday
+             * for most of a Manila morning. Aiming at the wrong day and then
+             * hunting for the nearest one is how "go to today" landed several
+             * days out. MIR_TODAY is the same Asia/Manila date the board
+             * numbers its days from. */
+            const aim = MIR_TODAY || todayKey;
+            let target = live.find((g) => g.getAttribute('data-date') === aim);
+            /* No group for today — an empty day, or one filtered away. The
+             * next day that HAS something is what "today" means then: you are
+             * asking what is coming, not what is behind you. Only if the
+             * whole season is already past does it fall back to the last day
+             * of it. */
             if (!target) {
-                const aim = todayKey || new Date().toISOString().slice(0, 10);
-                target = live.reduce((best, g) => {
-                    const d = g.getAttribute('data-date') || '';
-                    const gap = Math.abs(new Date(d + 'T00:00:00') - new Date(aim + 'T00:00:00'));
-                    return (!best || gap < best.gap) ? { g, gap } : best;
-                }, null)?.g;
+                const after = live
+                    .filter((g) => (g.getAttribute('data-date') || '') >= aim)
+                    .sort((a, b) => (a.getAttribute('data-date') || '').localeCompare(b.getAttribute('data-date') || ''));
+                target = after[0] || live[live.length - 1];
             }
             if (!target) return;
             target.classList.remove('is-folded');

@@ -237,16 +237,22 @@ class WorkerContext
     }
 
     /**
-     * Whether the current worker context may use the community at all.
+     * Whether the current context may use the community at all.
      *
-     * The column has existed since worker logins did and was never once
-     * asked, so an owner could turn community access off and watch nothing
-     * happen. Owners are not workers and are never refused.
+     * NO, while standing in somebody else's farm — and it is not an owner's
+     * switch to flip. Every worker login is a full free account of its own,
+     * with its own feed, its own co-farmers and its own name on a post. The
+     * community belongs to that account, reached by switching back to "my
+     * own farm"; it was never the boss's to grant or withhold, and a wall
+     * posted from inside a farm hat only confused whose voice it was.
+     *
+     * `communityAccess` stays on the row and is still written by the access
+     * forms, because old grants carry it and nothing is gained by a
+     * migration that drops a column somebody may yet want. It is simply no
+     * longer asked.
      */
     public static function canUseCommunity(): bool
     {
-        $grant = self::activeGrant();
-
-        return $grant ? (bool) $grant->communityAccess : true;
+        return self::activeGrant() === null;
     }
 }

@@ -6,9 +6,13 @@
      view only / can edit) — a level cannot honestly be a switch, and a
      dropdown for it hid the answer behind a tap.
 
-     The schedule itself leads, because everything under it depends on it,
-     and community access closes the list, because it is the one thing here
-     that is not about the farm at all.
+     The schedule itself leads, because everything under it depends on it.
+
+     There is no community row. A worker standing in somebody else's farm
+     reaches the community through their OWN account — every worker login is
+     a full free account with its own feed, its own co-farmers and its own
+     name on a post — so a switch here would have been an owner deciding
+     whether somebody else may have friends.
 
      Drawn twice on this page — once in "Give access", once in a worker's own
      login sheet — so it is a partial, and the ids are prefixed rather than
@@ -87,16 +91,6 @@
             <span class="wr-toggle" aria-hidden="true"></span>
         </label>
     @endforeach
-
-    <label class="wr-row wr-switch" for="{{ $p }}Community">
-        <span class="wr-mark"><img src="{{ asset('images/social-media.png') }}" alt=""></span>
-        <span class="wr-what">
-            <b>Community</b>
-            <i>Their own profile, and posting in the community.</i>
-        </span>
-        <input type="checkbox" id="{{ $p }}Community" class="wr-check" checked>
-        <span class="wr-toggle" aria-hidden="true"></span>
-    </label>
 
     {{-- WHOSE CREDITS. The one thing about this panel that costs money, said
          where the switches are rather than discovered on a statement. --}}
