@@ -1911,12 +1911,12 @@ document.addEventListener('pointerdown', (e) => {
      * these doors are opened from the dashboard, three menus, a tile grid
      * and a module shell, and one list beats six. */
     const DOWN_LOCKED = [
-        [/^\/app\/ai(|-|$)/, 'Chat with Anee'],
-        [/^\/app\/sm-ai/, 'Chat with Anee'],
-        [/^\/app\/sm-anee-/, 'Anee’s reports'],
+        [/^\/app\/ai($|[-\/])/, 'Chat with Anee'],
+        [/^\/app\/sm-ai($|[-?\/])/, 'Chat with Anee'],
+        [/^\/app\/sm-anee-/, 'Anee reports'],
         [/^\/app\/(when|what)-to-plant/, 'The planting analysis'],
-        [/^\/app\/sm-chat/, 'The team chat'],
-        [/^\/app\/sm-collab/, 'The collab room'],
+        [/^\/app\/sm-chat($|[-?\/])/, 'The team chat'],
+        [/^\/app\/sm-collab($|[-?\/])/, 'The collab room'],
         [/^\/app\/community\/(messages|reels)/, 'Messages'],
     ];
     /* Truly unreachable, not merely "the browser thinks so": the worker's
