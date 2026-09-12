@@ -46,6 +46,7 @@
                                 <span class="pr-per">forever</span>
                             </span>
                             <span class="pr-year">No card. No trial clock. Yours to keep.</span>
+                            <span class="pr-day">₱0.00 a day, for as long as you like</span>
                         @else
                             <span class="pr-price" x-show="!yearly">
                                 <span class="pr-amount">₱{{ number_format($tier['price']) }}</span>
@@ -57,6 +58,12 @@
                             </span>
                             <span class="pr-year" x-show="!yearly">or ₱{{ number_format($tier['priceYear']) }}/year — about ₱{{ number_format((int) round($tier['priceYear'] / 12)) }}/mo</span>
                             <span class="pr-year" x-show="yearly" x-cloak>That's about ₱{{ number_format((int) round($tier['priceYear'] / 12)) }}/mo, paid once via GCash</span>
+                            {{-- What it actually costs to run, said the way a farmer
+                                 counts: by the day. A month is an abstraction; a peso a
+                                 day is a number you can hold against anything else you
+                                 buy on a Tuesday. --}}
+                            <span class="pr-day" x-show="!yearly">That is about ₱{{ number_format($tier['price'] / 30, 2) }} a day</span>
+                            <span class="pr-day" x-show="yearly" x-cloak>That is about ₱{{ number_format($tier['priceYear'] / 365, 2) }} a day</span>
                         @endif
 
                         <ul class="pr-list">

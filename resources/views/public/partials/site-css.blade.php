@@ -73,6 +73,54 @@
     .pr-amount { font-family: var(--font-heading); font-size: 2.2rem; font-weight: 800; color: #2f5219; }
     .pr-per { font-size: .82rem; color: #6b7280; }
     .pr-year { margin-top: .15rem; font-size: .78rem; font-weight: 700; color: #4a7c2a; min-height: 1.1rem; }
+    /* The same price, counted the way a day is spent. Quiet and grey — it is
+       a reassurance under the number, not a second number competing with it. */
+    /* ---- CONTACT: one address, written large ----
+       The page used to be a form with the email tucked in a sidebar. It is
+       the other way round now, so the address gets the weight. */
+    .ct-mail { text-align: center; border-radius: 1.5rem; padding: 2.5rem 1.25rem;
+        background: #fff; border: 1px solid #e4ecdb;
+        box-shadow: 0 26px 60px -40px rgb(20 33 12 / .55); }
+    .ct-mail-ico { display: inline-flex; align-items: center; justify-content: center;
+        width: 3.4rem; height: 3.4rem; border-radius: 999px; margin-bottom: 1rem;
+        background: #eef5e5; color: #4a7c2a; }
+    .ct-mail-ico svg { width: 1.7rem; height: 1.7rem; }
+    .ct-mail-lead { font-size: .78rem; font-weight: 800; letter-spacing: .09em;
+        text-transform: uppercase; color: #8a9481; }
+    /* The address wraps rather than overflowing: it is the longest
+       unbreakable-looking string on the page and phones are narrow. */
+    .ct-mail-addr { display: block; margin-top: .35rem; font-family: var(--font-heading, inherit);
+        font-weight: 800; color: #2f5219; text-decoration: none; line-height: 1.15;
+        font-size: clamp(1.45rem, 7vw, 2.6rem); overflow-wrap: anywhere; }
+    .ct-mail-addr:hover { color: #4a7c2a; text-decoration: underline; }
+    .ct-mail-sub { margin: 1rem auto 0; max-width: 34rem; font-size: .92rem;
+        line-height: 1.65; color: #5b6b50; }
+    .ct-mail-acts { margin-top: 1.5rem; display: flex; flex-wrap: wrap;
+        gap: .6rem; justify-content: center; }
+    .ct-mail-tip { margin-top: 1.1rem; font-size: .76rem; color: #8a9481; }
+
+    .ct-side { border-radius: 1.1rem; padding: 1.1rem 1.2rem; background: #fbfcf9;
+        border: 1px solid #e4ecdb; }
+    .ct-side-ico { display: inline-flex; align-items: center; justify-content: center;
+        width: 2.2rem; height: 2.2rem; border-radius: .7rem; margin-bottom: .6rem;
+        background: #eef5e5; color: #4a7c2a; }
+    .ct-side-ico svg { width: 1.15rem; height: 1.15rem; }
+    .ct-side-k { font-weight: 800; font-size: .92rem; color: #16210d; }
+    .ct-side-p { margin-top: .2rem; font-size: .84rem; line-height: 1.55; color: #5b6b50; }
+
+    .ct-tut { margin-top: 1rem; display: flex; flex-wrap: wrap; align-items: center;
+        gap: 1rem; border-radius: 1.1rem; padding: 1.25rem 1.3rem;
+        background: linear-gradient(160deg, #2f5219, #4a7c2a); }
+    .ct-tut-k { font-family: var(--font-heading, inherit); font-weight: 800;
+        font-size: 1rem; color: #fff; }
+    .ct-tut-p { margin-top: .25rem; font-size: .84rem; line-height: 1.55; color: #dceccb; }
+    @media (min-width: 640px) {
+        .ct-mail { padding: 3.25rem 2.5rem; }
+        .ct-tut { flex-wrap: nowrap; }
+    }
+
+    .pr-day { margin-top: .3rem; font-size: .7rem; font-weight: 600; color: #8a9481;
+        letter-spacing: .01em; min-height: 1rem; }
     .pr-list { margin-top: 1.1rem; display: grid; gap: .5rem; flex: 1 1 auto; }
     .pr-list li { display: flex; gap: .55rem; align-items: flex-start; font-size: .88rem; color: #374151; line-height: 1.5; }
     .pr-list li.is-off { color: #9ca3af; }
@@ -189,16 +237,66 @@
         font-weight: 800; font-size: .78rem; color: #b91c1c; background: #fef2f2;
         border: 1px solid #fecaca; border-radius: 999px; padding: .28rem .7rem; }
 
+    /* ---- THE SQUEEZE ----
+       Five pressures a farmer cannot argue with, and the one they can. The
+       cards are plain and close-set on purpose: this is the part of the page
+       where the reader should be nodding, not admiring anything. */
+    .sq-grid { display: grid; gap: .85rem; grid-template-columns: 1fr; }
+    @media (min-width: 640px) { .sq-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
+    @media (min-width: 1024px) { .sq-grid { grid-template-columns: repeat(3, 1fr); } }
+    .sq-card { border-radius: 1.1rem; padding: 1.15rem 1.2rem;
+        background: #fbfcf9; border: 1px solid #e4ecdb;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .sq-card:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -26px rgb(20 33 12 / .55); }
+    .sq-ico { display: inline-flex; align-items: center; justify-content: center;
+        width: 2.5rem; height: 2.5rem; border-radius: .85rem; margin-bottom: .75rem;
+        background: #eef5e5; color: #4a7c2a; }
+    .sq-ico svg { width: 1.3rem; height: 1.3rem; }
+    .sq-t { font-family: var(--font-heading, inherit); font-weight: 800; font-size: 1rem;
+        color: #16210d; line-height: 1.3; }
+    .sq-p { margin-top: .4rem; font-size: .85rem; line-height: 1.6; color: #5b6b50; }
+    /* The answer card wears the brand, so the eye lands on it last and knows
+       it is the turn in the argument rather than a sixth complaint. */
+    .sq-card.is-lead { background: linear-gradient(160deg, #2f5219, #4a7c2a); border-color: #2f5219;
+        box-shadow: 0 20px 44px -26px rgb(47 82 25 / .8); }
+    .sq-card.is-lead .sq-ico { background: rgb(255 255 255 / .16); color: #f2c94c; }
+    .sq-card.is-lead .sq-t { color: #fff; }
+    .sq-card.is-lead .sq-p { color: #dceccb; }
+
+    .sq-punch { margin-top: 2.5rem; text-align: center; border-radius: 1.4rem;
+        padding: 2rem 1.25rem; background: #f3f8ec; border: 1px solid #dcead0; }
+    .sq-punch-h { font-family: var(--font-heading, inherit); font-weight: 800;
+        font-size: 1.15rem; line-height: 1.35; color: #16210d; max-width: 44rem; margin: 0 auto; }
+    .sq-punch-p { margin: .75rem auto 0; max-width: 44rem; font-size: .92rem;
+        line-height: 1.65; color: #5b6b50; }
+    @media (min-width: 640px) {
+        .sq-punch { padding: 2.5rem 2rem; }
+        .sq-punch-h { font-size: 1.45rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { .sq-card { transition: none; } }
+
     .loss-pivot { display: flex; align-items: center; gap: 1rem; margin: 2.75rem 0 1.5rem; }
     .loss-pivot img { width: 1.8rem; height: 1.8rem; border-radius: 999px; object-fit: cover;
         object-position: 50% 8%; flex: none; box-shadow: 0 0 0 2px rgb(255 255 255 / .4); }
     .loss-pivot::before, .loss-pivot::after { content: ''; height: 1px; flex: 1 1 auto;
         background: linear-gradient(90deg, transparent, #cfdcc2); }
     .loss-pivot::after { background: linear-gradient(90deg, #cfdcc2, transparent); }
-    .loss-pivot span { flex: none; display: inline-flex; align-items: center; gap: .5rem;
-        border-radius: 999px; background: #2f5219; color: #fff; font-weight: 800;
-        font-size: .85rem; padding: .55rem 1.1rem; box-shadow: 0 12px 26px -14px rgb(47 82 25 / .6); }
+    /* `flex: none` on a pill holding a whole sentence is a pill that cannot
+       shrink: on a phone it ran 72px past the screen and gave the entire
+       landing page a horizontal scrollbar. It shrinks and wraps now, and
+       below the small breakpoint the two hairlines either side stand down
+       so the sentence gets the full width instead of a third of it. */
+    .loss-pivot span { flex: 0 1 auto; min-width: 0; display: inline-flex; align-items: center;
+        gap: .5rem; border-radius: 1.4rem; background: #2f5219; color: #fff; font-weight: 800;
+        font-size: .85rem; line-height: 1.35; padding: .55rem 1.1rem;
+        box-shadow: 0 12px 26px -14px rgb(47 82 25 / .6); }
     .loss-pivot svg { width: 1rem; height: 1rem; color: #f2c94c; }
+    @media (min-width: 768px) { .loss-pivot span { border-radius: 999px; } }
+    @media (max-width: 767px) {
+        .loss-pivot { gap: 0; margin-top: 2.25rem; }
+        .loss-pivot::before, .loss-pivot::after { display: none; }
+        .loss-pivot span { flex: 1 1 auto; justify-content: center; text-align: center; }
+    }
 
     .fix-row { display: flex; gap: .9rem; align-items: flex-start; border-radius: 1.1rem;
         background: #f3f8ec; border: 1px solid #dcead0; padding: 1rem 1.1rem; }

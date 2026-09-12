@@ -164,6 +164,64 @@
         </div>
     </section>
 
+    {{-- ================= THE SQUEEZE ================= --}}
+    {{-- Everything pressing on a farm from the outside, named honestly, and
+         the one lever that is still the farmer's own. This sets up The Big
+         Truth below it: the costs are not going back down, so the only place
+         left to win is the yield those costs already bought. --}}
+    <section class="py-16 sm:py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto">
+                <p class="text-sm font-bold uppercase tracking-wider text-brand-600 reveal">What every farm is up against</p>
+                <h2 class="mt-3 font-heading text-[1.6rem] sm:text-4xl font-bold text-ink leading-[1.15] text-balance reveal">
+                    The costs are not coming back down.
+                    <span class="block mt-2 text-brand-600">So the yield has to come up.</span>
+                </h2>
+                <p class="mt-6 text-gray-600 text-base sm:text-lg leading-relaxed reveal">
+                    Fertilizer costs more every year. The weather no longer keeps to the calendar. The soil is
+                    thinner and more polluted than the one your father farmed. Fuel is at a record, and an
+                    import decision made in a boardroom can move your selling price before harvest.
+                    <span class="font-semibold text-ink">Not one of those is yours to control.</span>
+                </p>
+                <p class="mt-4 text-gray-600 text-base sm:text-lg leading-relaxed reveal">
+                    What is yours is the return you get on every peso you have already spent — and the only
+                    honest way to raise it is to raise the yield those pesos buy, through farm management
+                    accurate enough to stop losing what the field already grew.
+                    <span class="font-semibold text-ink">That is where we come in.</span>
+                </p>
+            </div>
+
+            <div class="sq-grid mt-12">
+                @foreach ([
+                    ['t' => 'Fertilizer keeps climbing', 'p' => 'The sack costs more each season and the field does not care what you paid for it. The only way that money comes back is if every gram lands on the right lot, at the right stage, on the right day — measured, not guessed.', 'ico' => '<path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M6 21V9l6-5 6 5v12M10 21v-5h4v5"/><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 12.5h5"/>'],
+                    ['t' => 'The weather stopped keeping the calendar', 'p' => 'The rains that used to arrive in the second week now arrive whenever. A plan anchored to habit gets caught; a plan anchored to the day count of each lot, with the forecast for that lot beside it, moves before the sky does.', 'ico' => '<path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/><path stroke-linecap="round" d="M8 21l-1 2M12 21l-1 2M16 21l-1 2"/>'],
+                    ['t' => 'The soil is tired and dirtier', 'p' => 'Decades of the same crop, the same salts and whatever the canal carried in. Ground in that condition punishes a wrong dose twice — once in the wasted input, and again in the harvest it could not carry.', 'ico' => '<path stroke-linecap="round" stroke-linejoin="round" d="M2.5 15.5c3-1.6 6-1.6 9 0s6 1.6 9 0"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.5 19.5c3-1.6 6-1.6 9 0s6 1.6 9 0"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 11.5V4m0 0L9 6.5M12 4l3 2.5"/>'],
+                    ['t' => 'Fuel at a record', 'p' => 'Every pass of the tractor, every trip to town and every hour of the pump is priced at the pump. Fewer wasted passes is not a saving on paper — it is diesel that stays in the tank.', 'ico' => '<path stroke-linecap="round" stroke-linejoin="round" d="M4 21V5a2 2 0 012-2h5a2 2 0 012 2v16M3 21h12"/><path stroke-linecap="round" stroke-linejoin="round" d="M13 10h3a2 2 0 012 2v5a1.5 1.5 0 003 0v-7l-2.5-2.5"/><path stroke-linecap="round" d="M6.5 7.5h4"/>'],
+                    ['t' => 'A price set somewhere you have never been', 'p' => 'An importation decision, a freight rate, a peso that moved — and the price you will be offered changes months before you harvest. You cannot argue with it. You can arrive with more sacks.', 'ico' => '<path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"/><circle cx="12" cy="12" r="9"/>'],
+                    ['t' => 'The one lever still yours', 'p' => 'Management. The same inputs, spent on time and kept on record, out-yield a bigger budget spent from memory — and that difference is the whole of your margin in a year like this one.', 'ico' => '<path stroke-linecap="round" stroke-linejoin="round" d="M4 19l6-6 4 4 6-8"/><path stroke-linecap="round" stroke-linejoin="round" d="M20 9V5h-4"/>', 'lead' => true],
+                ] as $i => $sq)
+                    <div class="sq-card reveal{{ ($sq['lead'] ?? false) ? ' is-lead' : '' }}" style="--reveal-delay: {{ ($i % 3) * 0.07 }}s">
+                        <span class="sq-ico" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">{!! $sq['ico'] !!}</svg>
+                        </span>
+                        <p class="sq-t">{{ $sq['t'] }}</p>
+                        <p class="sq-p">{{ $sq['p'] }}</p>
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="sq-punch reveal">
+                <p class="sq-punch-h">More yield from the same hectare is the only raise a farmer can give themselves.</p>
+                <p class="sq-punch-p">
+                    anee.io is the farm management that gets it: every lot on a timeline counted from its own
+                    Day&nbsp;0, every peso on the record as it is spent, the weather read per lot, and Anee on
+                    call to answer before the wrong decision is made.
+                </p>
+                <a href="{{ route('signup') }}" class="btn btn-accent btn-lg mt-6">Start for Free — raise the return</a>
+            </div>
+        </div>
+    </section>
+
     {{-- ================= THE BIG TRUTH ================= --}}
     {{-- The page's thesis, said once, as large as it deserves: harvests are
          not lost for lack of another product — they are lost in management.
