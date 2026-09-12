@@ -1762,7 +1762,43 @@ document.addEventListener('pointerdown', (e) => {
        is a hundred renders landing on the server in one breath. One page
        failing is never a reason to stop the rest. */
     const WARM_LANES = 3;
-    async function warm(force) {
+
+    /* THE LOADER, BECAUSE FILLING A SHELF IS WORK A PERSON SHOULD SEE.
+     *
+     * Offline Mode used to fill itself in silence, which left two bad
+     * moments: a farmer switching it on had no idea whether the phone was
+     * ready to leave the signal, and one who left early took a half-filled
+     * shelf into the field without being told. This says what is happening
+     * and how far along it is, and gets out of the way when it is done. */
+    function warmBar() {
+        let el = document.getElementById('aneeWarmBar');
+        if (el) return el;
+        el = document.createElement('div');
+        el.id = 'aneeWarmBar';
+        el.setAttribute('role', 'status');
+        el.innerHTML = '<span class="aw-spin" aria-hidden="true"></span>'
+            + '<span class="aw-say"></span>'
+            + '<span class="aw-track"><span class="aw-fill"></span></span>';
+        document.body.appendChild(el);
+        requestAnimationFrame(() => el.classList.add('is-in'));
+
+        return el;
+    }
+    function warmSay(done, total, word) {
+        const el = warmBar();
+        el.querySelector('.aw-say').textContent = word || ('Getting ready for offline — ' + done + ' of ' + total);
+        el.querySelector('.aw-fill').style.width = (total ? Math.round((done / total) * 100) : 0) + '%';
+    }
+    function warmDone(word) {
+        const el = document.getElementById('aneeWarmBar');
+        if (!el) return;
+        if (word) el.querySelector('.aw-say').textContent = word;
+        el.querySelector('.aw-fill').style.width = '100%';
+        el.classList.add('is-done');
+        setTimeout(() => { el.classList.remove('is-in'); setTimeout(() => el.remove(), 360); }, 1400);
+    }
+
+    async function warm(force, loud) {
         if (!on() || !navigator.onLine || !('serviceWorker' in navigator)) return;
         try {
             if (!force) {
@@ -1773,7 +1809,8 @@ document.addEventListener('pointerdown', (e) => {
         } catch (_) { /* private mode: warm anyway */ }
         try {
             const res = await fetch('/app/offline-manifest', { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
-            const urls = (((await res.json()) || {}).data || {}).urls || [];
+            const data = ((await res.json()) || {}).data || {};
+            const urls = data.urls || [];
             /* THE BUNDLE FIRST, BEFORE ANY PAGE.
              *
              * A page kept without its stylesheet and its script is a page
@@ -1783,34 +1820,52 @@ document.addEventListener('pointerdown', (e) => {
              * assets, so the worker never saw them — every warmed page
              * pointed at a bundle that was not on the shelf.
              *
-             * These are the same handful of files every page in the app
-             * shares, and asking for them again is a cache hit in the
-             * browser's own store, so it costs a round trip to nothing. */
-            const assets = [
-                ...document.querySelectorAll('link[rel="stylesheet"][href], script[src]'),
+             * The artwork rides with them for the same reason: a logo that
+             * never loaded is a broken-image glyph, and a farmer reads that
+             * as a broken app. */
+            const local = [
+                ...document.querySelectorAll('link[rel="stylesheet"][href], script[src], img[src]'),
             ]
                 .map((el) => el.href || el.src)
                 .filter((u) => u && u.startsWith(location.origin));
-            for (const a of [...new Set(assets)]) {
+            const assets = [...new Set([...local, ...(data.assets || []).map((a) => location.origin + a)])];
+
+            const total = assets.length + urls.length;
+            let done = 0;
+            if (loud) warmSay(0, total);
+
+            for (const a of assets) {
                 try { await fetch(a, { credentials: 'same-origin' }); } catch (_) { /* next */ }
+                done++;
+                if (loud && done % 4 === 0) warmSay(done, total);
             }
+
             let at = 0;
             const lane = async () => {
                 while (at < urls.length) {
                     const u = urls[at++];
-                    // Asked for as a page would ask, so what lands on the
-                    // shelf is the same document a navigation will look for.
+                    /* A module fragment has to be asked for the way the shell
+                       asks for it, or the server answers with the whole page
+                       and the shelf keeps something that will not slot in. */
+                    const head = u.includes('partial=1')
+                        ? { Accept: 'text/html', 'X-Requested-With': 'XMLHttpRequest' }
+                        : { Accept: 'text/html' };
                     try {
-                        await fetch(u, { credentials: 'same-origin', headers: { Accept: 'text/html' } });
+                        await fetch(u, { credentials: 'same-origin', headers: head });
                     } catch (_) { /* next */ }
+                    done++;
+                    if (loud && done % 3 === 0) warmSay(done, total);
                     // The line can drop mid-warm; there is no point shouting
                     // at a server that is no longer there.
                     if (!navigator.onLine) return;
                 }
             };
             await Promise.all(Array.from({ length: WARM_LANES }, lane));
-            document.dispatchEvent(new CustomEvent('anee:offline-warmed', { detail: { count: urls.length } }));
-        } catch (_) { /* the next load tries again */ }
+            if (loud) warmDone(navigator.onLine ? 'Ready for offline — ' + done + ' pages and files kept' : 'Signal dropped — kept ' + done);
+            document.dispatchEvent(new CustomEvent('anee:offline-warmed', { detail: { count: total } }));
+        } catch (_) {
+            if (loud) warmDone('Could not finish getting ready');
+        }
     }
     /* What the shelf actually holds, for the Settings page's count and for
        anyone wondering whether the phone is really ready. */
@@ -1823,7 +1878,7 @@ document.addEventListener('pointerdown', (e) => {
     }
 
     window.addEventListener('offline', paintBar);
-    window.addEventListener('online', () => setTimeout(() => warm(), 2000));
+    window.addEventListener('online', () => setTimeout(() => warm(false, true), 2000));
     paintBar();
     tellSw(on());
     /* A worker that takes over mid-visit starts with no memory of this
@@ -1843,13 +1898,64 @@ document.addEventListener('pointerdown', (e) => {
     // fetch that beats the message would pass the SW uncopied.
     setTimeout(() => warm(), 1500);
 
+    /* ---- what cannot come with you ----------------------------------------
+     *
+     * Nearly everything in this app is a record the phone can hold. These
+     * are the exceptions, and they are exceptions for one reason: each is a
+     * question asked of something on the other end of the wire — a model, or
+     * another person — so a kept copy of the screen would be a promise the
+     * field cannot keep. Better to say so at the door than to open a chat
+     * that will never send.
+     *
+     * Matched on the address rather than by tagging every button, because
+     * these doors are opened from the dashboard, three menus, a tile grid
+     * and a module shell, and one list beats six. */
+    const DOWN_LOCKED = [
+        [/^\/app\/ai(|-|$)/, 'Chat with Anee'],
+        [/^\/app\/sm-ai/, 'Chat with Anee'],
+        [/^\/app\/sm-anee-/, 'Anee’s reports'],
+        [/^\/app\/(when|what)-to-plant/, 'The planting analysis'],
+        [/^\/app\/sm-chat/, 'The team chat'],
+        [/^\/app\/sm-collab/, 'The collab room'],
+        [/^\/app\/community\/(messages|reels)/, 'Messages'],
+    ];
+    /* Truly unreachable, not merely "the browser thinks so": the worker's
+       note is what makes this honest on a phone attached to a router with
+       nothing behind it. */
+    const isDown = () => on() && (!navigator.onLine || servedFromShelf);
+    function lockedWhileDown(href) {
+        if (!href) return null;
+        let path;
+        try { path = new URL(href, location.origin).pathname; } catch (_) { return null; }
+        for (const [re, name] of DOWN_LOCKED) {
+            if (re.test(path)) return name;
+        }
+
+        return null;
+    }
+    function sayLocked(name) {
+        window.toast?.((name || 'That') + ' needs a connection — it asks something on the other end, so it stays locked until you are back.', 'error');
+    }
+    document.addEventListener('click', (e) => {
+        if (!isDown()) return;
+        const a = e.target.closest?.('a[href], [data-offline-href]');
+        if (!a) return;
+        const name = lockedWhileDown(a.getAttribute('href') || a.getAttribute('data-offline-href'));
+        if (!name) return;
+        e.preventDefault();
+        e.stopPropagation();
+        sayLocked(name);
+    }, true);
+
+
     window.aneeOffline = {
         on,
         set(v) {
             try { localStorage.setItem(KEY, v ? '1' : '0'); } catch (_) { /* private mode */ }
             tellSw(v);
             paintBar();
-            if (v) { drain(); setTimeout(() => warm(true), 800); }
+            // Loud: this is the one warm somebody is standing there waiting for.
+            if (v) { drain(); setTimeout(() => warm(true, true), 800); }
             document.dispatchEvent(new CustomEvent('anee:offline-mode', { detail: { on: !!v } }));
         },
         enqueue,
@@ -1857,6 +1963,9 @@ document.addEventListener('pointerdown', (e) => {
         drain,
         warm,
         shelf,
+        isDown,
+        locked: lockedWhileDown,
+        sayLocked,
         pending: () => outboxAll().then((r) => r.length),
     };
 

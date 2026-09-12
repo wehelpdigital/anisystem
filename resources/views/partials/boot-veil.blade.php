@@ -26,9 +26,35 @@
             veil.classList.add('is-off');
             setTimeout(() => veil.remove(), 400);
         };
+        /* AND THE PICTURES, NOT ONLY THE MARKUP.
+         *
+         * Lifting a frame after the document is parsed shows a page that is
+         * dressed but not yet illustrated: the logo and the tile icons are
+         * still in flight, so the first thing a farmer sees is a broken-image
+         * glyph where the mark should be. The veil now waits for the pictures
+         * that are already on the page and NOT lazy — the chrome, in other
+         * words, not the forty photos down the feed.
+         *
+         * Capped hard at 2.5 seconds of extra waiting. A spinner held by one
+         * slow file is worse than one icon arriving late, and the 6-second
+         * backstop below still has the last word either way. */
+        const dressed = () => {
+            const shots = [...document.images].filter((i) => i.loading !== 'lazy' && !i.complete && i.src);
+            if (!shots.length) return Promise.resolve();
+
+            return Promise.race([
+                Promise.all(shots.map((i) => new Promise((done) => {
+                    i.addEventListener('load', done, { once: true });
+                    i.addEventListener('error', done, { once: true });
+                }))),
+                new Promise((done) => setTimeout(done, 2500)),
+            ]);
+        };
         // A frame after the document is parsed: the last body stylesheet gets
-        // to paint before anyone sees the page under here.
-        const soon = () => requestAnimationFrame(() => requestAnimationFrame(lift));
+        // to paint before anyone sees the page under here. Then the artwork.
+        const soon = () => requestAnimationFrame(() => requestAnimationFrame(
+            () => { dressed().then(lift, lift); }
+        ));
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', soon);
         else soon();
         // Nothing may sit behind a spinner forever, and nothing may stay

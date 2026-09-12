@@ -4388,6 +4388,15 @@
 
     async function showModule(key, push = true, extra = '') {
         if (!MODULES[key]) { closeModulesSheetForNav(); return; }
+        /* Out of signal, the rooms that ask something of the far end stay
+           shut — and are SAID to be shut. Letting the fetch run instead
+           threw, and the catch below lands you back on the board with no
+           explanation, which is what "I tap Lots and it goes to Activities"
+           felt like for every module that was not on the shelf. */
+        if (window.aneeOffline?.isDown?.()) {
+            const why = window.aneeOffline.locked(MODULES[key].url);
+            if (why) { closeModulesSheetForNav(); window.aneeOffline.sayLocked(MODULES[key].label); return; }
+        }
         // Only a deep link sets this, and only from somewhere else.
         cameFrom = extra && current && current !== key ? current : (extra ? cameFrom : null);
         // Every move inside the shell is remembered, deep link or not — this
@@ -4485,7 +4494,12 @@
                 runScripts(wrap);
                 host.classList.remove('hidden');
             } catch (err) {
-                toast(err.message || 'Could not load that module.', 'error');
+                /* Offline, this is not a failure worth a stack of jargon: it
+                   is a room that was never put on the shelf. Say which, so
+                   the next warm can be trusted to have fixed it. */
+                toast(window.aneeOffline?.isDown?.()
+                    ? (MODULES[key].label || 'That module') + ' is not on this phone yet — open it once with a signal and it will be here next time.'
+                    : (err.message || 'Could not load that module.'), 'error');
                 activitiesRoot.classList.remove('module-hidden');
                 key = 'activities';
             } finally {

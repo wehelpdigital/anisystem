@@ -84,12 +84,52 @@ h1, h2, h3, h4, h5, h6 {
 }
 #aneeOfflineBar svg { width: 1rem; height: 1rem; flex: none; }
 #aneeOfflineBar b { font-weight: 800; }
-/* A breath of air between the yellow bar and the top bar under it — flush,
-   the two read as one muddled header. The bar's real height is measured by
-   paintBar (it wraps to two lines on a narrow phone), and half a rem of
-   daylight rides on top of it. */
-body.has-offline-bar { padding-top: calc(var(--offbar-h, 2.2rem) + .5rem); }
-body.has-offline-bar header.sticky { top: calc(var(--offbar-h, 2.2rem) + .5rem); }
+/* Flush. There used to be half a rem of daylight under the yellow bar on
+   the theory that the two would otherwise read as one muddled header; on a
+   real phone it read as the top bar having come loose, with a stripe of
+   page showing through the gap. The bar's own colour is separation enough.
+   The height is measured by paintBar rather than assumed — the sentence
+   wraps to two lines on a narrow screen. */
+body.has-offline-bar { padding-top: var(--offbar-h, 2.2rem); }
+body.has-offline-bar header.sticky { top: var(--offbar-h, 2.2rem); }
+
+/* ---- getting ready for offline -----------------------------------------
+   The shelf filling up, said out loud. It sits at the foot of the screen
+   rather than the head so it never argues with the offline bar, and it
+   leaves on its own once the last file is kept. */
+#aneeWarmBar {
+    position: fixed; left: 50%; bottom: 1rem; z-index: 240;
+    transform: translate(-50%, 1.2rem); opacity: 0;
+    display: flex; align-items: center; gap: .55rem;
+    max-width: min(92vw, 26rem); padding: .5rem .8rem;
+    border-radius: 999px; background: #14210c; color: #e8efe1;
+    font-size: .76rem; font-weight: 700; line-height: 1.3;
+    box-shadow: 0 18px 40px -20px rgb(9 20 4 / .9);
+    transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1);
+}
+#aneeWarmBar.is-in { opacity: 1; transform: translate(-50%, 0); }
+#aneeWarmBar .aw-say { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#aneeWarmBar .aw-spin {
+    flex: none; width: .9rem; height: .9rem; border-radius: 999px;
+    border: 2px solid rgb(255 255 255 / .25); border-top-color: #a5d382;
+    animation: aneeWarmSpin .7s linear infinite;
+}
+#aneeWarmBar.is-done .aw-spin { animation: none; border-color: #a5d382; }
+@keyframes aneeWarmSpin { to { transform: rotate(360deg); } }
+#aneeWarmBar .aw-track {
+    flex: none; width: 4.5rem; height: .26rem; border-radius: 999px;
+    background: rgb(255 255 255 / .18); overflow: hidden;
+}
+#aneeWarmBar .aw-fill {
+    display: block; height: 100%; width: 0; border-radius: 999px; background: #a5d382;
+    transition: width .28s cubic-bezier(.22,1,.36,1);
+}
+@media (max-width: 420px) { #aneeWarmBar .aw-track { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+    #aneeWarmBar { transition: none; }
+    #aneeWarmBar .aw-spin { animation: none; }
+    #aneeWarmBar .aw-fill { transition: none; }
+}
 
 /* WHOSE FARM — the strip under the top bar, for a worker standing in
    somebody else's. Part of the header rather than a card on one page: the
@@ -127,6 +167,16 @@ html.dark .wbar-switch:hover { background: #22301a; }
  * a filter list only interpolates against a matching list, so written this
  * way the icon fades between black and white when the theme is toggled
  * instead of snapping. */
+/* The switch button, centred between the bell and the face.
+   The row's gap is even, but the bell sits in a wrapper wider than the bell
+   itself, so the daylight measured 30px on the left of the switch and 20px
+   on its right. Five pixels are taken off one side and handed back on the
+   other: the switch moves, the face does not. Desktop only — on a phone the
+   row is tight and the gap is already even. */
+@media (min-width: 768px) {
+    [data-sheet-open="farmSwitchSheet"] { margin-left: -5px; margin-right: 5px; }
+}
+
 .ico-mono { filter: brightness(0) invert(0);
     transition: filter .28s cubic-bezier(.22,1,.36,1); }
 html.dark .ico-mono { filter: brightness(0) invert(1); }

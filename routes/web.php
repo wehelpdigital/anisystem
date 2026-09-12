@@ -297,16 +297,74 @@ Route::middleware(['auth', 'subscription'])->group(function () {
             'sm.media', 'sm.expenses.report', 'sm.labor.report',
             'sm.profit.report', 'sm.protocol.report', 'sm.worker-presentation',
         ];
+
+        /* THE ONE A SEASON IS ACTUALLY OPENED BY.
+         *
+         * A schedule is not a set of pages, it is ONE page — the Activities
+         * shell — that fetches each module as a fragment and swaps it in
+         * (see showModule in activities.blade). That fetch asks for
+         * `…&partial=1`, which is a different address from the module's own
+         * page, so warming the page kept something the shell never asks for:
+         * tapping Lots with no signal threw, and the catch there drops you
+         * back on Activities. That is the whole of "I still cannot open Lots
+         * and it just goes back to the board".
+         *
+         * So each room is kept three ways: the fragment the shell fetches,
+         * the shell address the browser shows for it (what a refresh out in
+         * the field reloads), and the standalone page. `partial` rides on
+         * the end because that is the order the shell builds it in, and a
+         * cache key is the whole string. */
+        $shellKey = [
+            'sm.activities' => 'activities', 'sm.lots' => 'lots',
+            'sm.workers' => 'workers', 'sm.inventory' => 'inventory',
+            'sm.maps' => 'maps', 'sm.draw' => 'draw', 'sm.notes' => 'notes',
+            'sm.tags' => 'tags', 'sm.documentation' => 'documentation',
+            'sm.gallery' => 'gallery', 'sm.settings' => 'settings',
+            'sm.weather.page' => 'weather', 'sm.growth' => 'growth',
+            'sm.post-harvest' => 'post-harvest', 'sm.media' => 'media',
+        ];
         foreach (\App\Models\AsCroppingSchedule::active()->forClient($owner)
             ->orderByDesc('updated_at')->limit(3)->pluck('id') as $sid) {
+            $shell = route('sm.activities', ['id' => $sid], false);
             foreach ($perSchedule as $n) {
-                if (\Illuminate\Support\Facades\Route::has($n)) {
-                    $urls[] = route($n, ['id' => $sid], false);
+                if (! \Illuminate\Support\Facades\Route::has($n)) {
+                    continue;
+                }
+                $page = route($n, ['id' => $sid], false);
+                $urls[] = $page;
+                $urls[] = $page . (str_contains($page, '?') ? '&' : '?') . 'partial=1';
+                if (isset($shellKey[$n]) && $shellKey[$n] !== 'activities') {
+                    $urls[] = $shell . (str_contains($shell, '?') ? '&' : '?') . 'module=' . $shellKey[$n];
                 }
             }
         }
 
-        return response()->json(['success' => true, 'data' => ['urls' => array_values(array_unique($urls))]]);
+        /* THE PICTURES, TOO.
+         *
+         * A page kept without its artwork opens in the field with the logo
+         * as a broken-image glyph and every tile blank — which reads as a
+         * broken app rather than a farm working off its own shelf. These are
+         * the app's own files, not anybody's uploads: a few megabytes once,
+         * and then never again unless they change. Read off disk so a new
+         * icon joins the shelf the day it is added, with no list to update.
+         */
+        $assets = ['/data/ph-locations.json'];
+        foreach (['images', 'images/anee', 'images/icons', 'images/pwa'] as $dir) {
+            $abs = public_path($dir);
+            if (! is_dir($abs)) {
+                continue;
+            }
+            foreach (scandir($abs) ?: [] as $f) {
+                if (preg_match('/\.(png|jpe?g|svg|webp|gif|ico)$/i', $f)) {
+                    $assets[] = '/' . $dir . '/' . $f;
+                }
+            }
+        }
+
+        return response()->json(['success' => true, 'data' => [
+            'urls' => array_values(array_unique($urls)),
+            'assets' => array_values(array_unique($assets)),
+        ]]);
     })->name('offline.manifest');
     // The storefront's promise, ahead of the storefront.
     Route::view('/app/shop', 'shop.index')->name('shop.index');
