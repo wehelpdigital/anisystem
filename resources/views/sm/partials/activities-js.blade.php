@@ -6803,11 +6803,21 @@ document.addEventListener('DOMContentLoaded', () => {
         FOLD_QUIET = setTimeout(() => list.classList.remove('is-folding'), ms);
     }
 
-    function toggleCardExpand(card) {
+    /* `persist` is how the two screens differ.
+     *
+     * CARD_OPEN is the phone's memory of which cards it left open, kept per
+     * schedule and reapplied on every render. A mouse folding a card must not
+     * write into it: the desktop board opens expanded and its folding is a
+     * thing you do while reading, not a setting — and a fold made on a big
+     * screen quietly deciding what the phone shows in the field is exactly
+     * the cross-talk the old "no fold for a mouse" rule was avoiding. */
+    function toggleCardExpand(card, persist = true) {
         const id = card.getAttribute('data-id');
         const opening = card.classList.contains('act-collapsed');
-        if (opening) CARD_OPEN.add(id); else CARD_OPEN.delete(id);
-        saveCardOpen();
+        if (persist) {
+            if (opening) CARD_OPEN.add(id); else CARD_OPEN.delete(id);
+            saveCardOpen();
+        }
 
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             card.classList.toggle('act-collapsed', !opening);
@@ -6979,6 +6989,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.closest('[data-lightbox] video')) return;
         const card = e.target.closest('#activitiesList .activity-card[data-id]');
         if (!card) return;
+        /* THE CHEVRON IS THE FOLD, WHERE THERE IS A MOUSE.
+         *
+         * It can only ever be the target on that screen: a phone gives the
+         * whole card body to the fold and leaves this chip transparent to
+         * pointers, so `closest` finds nothing there and the body handling
+         * below runs untouched. Not persisted — see toggleCardExpand. */
+        if (e.target.closest('.act-fold-chip')) {
+            toggleCardExpand(card, false);
+
+            return;
+        }
         // A drag that just ended never reaches here: the touch-drag system
         // swallows its trailing click at capture phase (see swallowNextClick).
         // On a phone a tap folds the card open or shut — the accordion IS the
