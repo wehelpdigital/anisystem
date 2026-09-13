@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
      *
      * `says` is what the sync screen calls it on the way back; `key`
      * collapses repeats, so five drags of one card sync as one move. */
-    async function apiQ(url, opts = {}, says = 'A change', key = null) {
+    async function apiQ(url, opts = {}, says = 'A change', key = null, optimistic = null) {
         try {
             return await api(url, opts);
         } catch (err) {
@@ -69,7 +69,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             window.aneeOffline.markDown?.();
 
-            return { success: true, queued: true, message: 'Saved on this phone - it will sync when you are back.' };
+            /* `optimistic` is what the caller knows the row will look like once
+             * this reaches the server. Without it every caller that repaints
+             * from res.data threw on undefined - so the change WAS kept, and
+             * the board and the mirror went on showing the old title and the
+             * old lot until a sync. Saved but showing something else is the
+             * worst of both. */
+            return {
+                success: true,
+                queued: true,
+                data: optimistic,
+                message: 'Saved on this phone - it will sync when you are back.',
+            };
         }
     }
     const STORAGE_BASE = @json(asset('storage'));
@@ -5200,6 +5211,22 @@ document.addEventListener('DOMContentLoaded', () => {
         // The shed, fetched while the title is still being typed.
         ensureShelf();
         } catch (err) {
+            /* THE EDITOR IS READ BEFORE IT IS WRITTEN.
+             *
+             * Opening it asks the server for the whole row - the description,
+             * the items, the roster, the reminders. With no signal that ask
+             * fails, and the form must NOT open half-loaded: saving it would
+             * write back empty every field it never read. A refusal the
+             * farmer understands beats quietly erasing a worker roster.
+             *
+             * It does work out here for any activity already opened once with
+             * a signal, because the worker kept that answer on the shelf. */
+            if (err.offline && window.aneeOffline?.isDown?.()) {
+                window.aneeOffline.sayLocked('Editing this activity',
+                    'Opening the editor needs the whole activity from the server, and a half-loaded form would save over the parts it could not read. Activities you have opened before are still editable out here. Ticking done, moving a day and writing notes all still work.');
+
+                return;
+            }
             toast(err.message, 'error');
         }
     }
@@ -5331,10 +5358,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const _saveLabel = btn.innerHTML;
         btn.innerHTML = '<svg class="w-4 h-4 animate-spin inline-block align-[-3px] mr-1.5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>Saving…';
         try {
-            const res = await apiQ(id ? U.update(id) : U.store(), { method: id ? 'PUT' : 'POST', body: payload }, id ? 'Edited an activity' : 'Added an activity', id ? 'edit:' + id : null);
+            /* EDITING WITH NO SIGNAL STILL SHOWS WHAT YOU TYPED.
+             *
+             * Queued, the server sends nothing back - so the card is repainted
+             * from the payload just submitted, laid over what the row was
+             * before. That is the truth until the sync, and it is what the
+             * board and the mirror must show; without it the change was kept
+             * but both went on displaying the old title and the old lot. */
+            const optimistic = id
+                ? Object.assign({}, BEFORE_SNAPSHOT || {}, payload, { id: Number(id) })
+                : null;
+            const res = await apiQ(
+                id ? U.update(id) : U.store(),
+                { method: id ? 'PUT' : 'POST', body: payload },
+                id ? 'Edited an activity' : 'Added an activity',
+                id ? 'edit:' + id : null,
+                optimistic,
+            );
             toast(res.message);
             closeSheet('activitySheet');
-            const savedTitle = res.data.activityTitle || payload.activityTitle || 'activity';
+            /* A NEW activity queued offline has no id to draw a card against -
+             * inventing one would let a later edit post to a row that does not
+             * exist. It is kept and appears on the sync. */
+            if (res.queued && !id) {
+                toast('The new activity is kept on this phone and appears once you are back in signal.');
+                resetActivitySheet();
+
+                return;
+            }
+            const savedTitle = res.data?.activityTitle || payload.activityTitle || 'activity';
             const html = renderActivityCard(res.data);
 
             if (id) {
@@ -5342,7 +5394,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (existing) existing.outerHTML = html;
                 const before = BEFORE_SNAPSHOT;
                 const after = res.data;
-                if (before) {
+                // No undo for a change the server has not seen yet: both legs
+                // of it are requests, and replaying them against a queued edit
+                // is how two versions of a row get written.
+                if (before && !res.queued) {
                     pushUndo(`Edit '${savedTitle}'`, async () => {
                         const r = await api(U.update(before.id), { method: 'PUT', body: activityToPayload(before) });
                         if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');
@@ -5399,6 +5454,15 @@ document.addEventListener('DOMContentLoaded', () => {
      * ================================================================ */
 
     async function duplicateActivity(id, name) {
+        /* A copy needs an id only the server can mint, and everything that
+           follows - opening it for editing, undoing it - is built on that id.
+           Refused plainly rather than left to fail on a fetch. */
+        if (window.aneeOffline?.isDown?.()) {
+            window.aneeOffline.sayLocked('Duplicating an activity',
+                'A copy needs a new number from the server, and there is no way to reach it. Everything else on this menu still works - come back to this one when you have a signal.');
+
+            return;
+        }
         try {
             const res = await api(U.duplicate(id), { method: 'POST' });
             toast(`Duplicated "${name}". Edit and save when ready.`);
