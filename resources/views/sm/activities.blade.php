@@ -2322,88 +2322,82 @@
            display:contents leaves the desktop card exactly as it was. */
         .activity-card .act-head-chips { display: contents; }
 
-        /* ---- THE DESKTOP CARD: ONE LINE, AND A WAY TO FOLD IT ------------
+        /* ---- THE DESKTOP CARD: A HEAD ROW, THEN THE WORK ----------------
          *
          * A mouse got the tall version of this card: the lot on one line, the
-         * title on a second, the priority on a third, the variety on a fourth,
-         * each of them a short run of text starting a third of the way across
-         * a screen with room for all four side by side. The right half of
+         * title on a second, the priority on a third, the variety on a
+         * fourth, each a short run of text starting a third of the way across
+         * a screen with room for all of them side by side. The right half of
          * every card was empty and a day of work was a column of near-blank
-         * boxes you had to scroll past.
+         * boxes to scroll past.
          *
-         * The content column stops being a column. The lot, the title, the
-         * priority and the variety become items of ONE wrapped row, left
-         * aligned and centred against each other and against the chips, so
-         * the lot's pin and its day count sit on the title's optical line
-         * rather than floating above it.
+         * It reads as two rows now. The tick, the kind of work, the star, the
+         * kebab, the fold and what the job costs keep the top row to
+         * themselves, with the actions at the far end of it. Everything you
+         * actually read — the name, the lot and its day count, the priority,
+         * the kind, the variety — drops to the row beneath and starts at the
+         * card's own left edge, under the tick rather than indented past the
+         * chips, all of it on one line and centred against each other.
          *
-         * `.act-title-line` carries flex: 0 0 100% globally — that full-row
-         * claim is what put the title on a line of its own — so it is undone
-         * here rather than anywhere the phone can see it.
-         *
-         * And the fold comes back. It was withheld from a mouse on the
-         * grounds that the desktop card already showed what the accordion
-         * would reveal; now that the head row IS the summary, folding says
-         * something, so the chevron is drawn and is the control. The card
-         * body keeps opening the editor, which is the desktop gesture people
-         * already have.
+         * The mechanism is the phone's, turned down a notch: the left group
+         * wraps instead of being flattened away, the chips claim a whole line
+         * of it, and the content claims the next.
          */
         @media (hover: hover) and (pointer: fine) {
-            .activity-card > .flex.items-start.justify-between,
+            /* The actions belong beside the chips, at the top, not centred
+               against a block that is now two rows deep. */
+            .activity-card > .flex.items-start.justify-between { align-items: flex-start; }
+
             .activity-card > .flex.items-start.justify-between > .flex.items-start {
-                align-items: center;
+                flex-wrap: wrap; align-items: center; row-gap: .4rem;
             }
+            /* The chips stop being display:contents and become a run of their
+               own, holding the whole first line. Doubled class because the
+               rule that makes them nothing at all is written earlier and this
+               has to outrank it at every width a mouse can be at. */
+            .activity-card .act-head-chips.act-head-chips {
+                display: flex; align-items: center; flex-wrap: nowrap;
+                gap: .625rem; flex: 0 0 100%;
+            }
+            /* And the work takes the line under it, from the left edge. */
             .activity-card > .flex.items-start.justify-between > .flex.items-start > .min-w-0.grow {
-                display: flex; flex-wrap: wrap; align-items: center;
-                gap: .3rem .55rem; min-width: 0;
+                flex: 0 0 100%; min-width: 0;
+                display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .55rem;
             }
-            /* The name leads. The lot follows it on the same line, centred
-               against it, rather than sitting on a line above it where it
-               pushed the one thing you read first into the middle of the
-               card. */
-            .activity-card .activity-card-lothead  { order: 1; flex: 0 0 auto; margin: 0; }
-            /* The title's line TAKES the rest of row one. That is what keeps
-               the lot beside it rather than above it: given only its own
-               words the line left room behind it, the priority followed it
-               up, and the lot was pushed off the top. Taking the remainder
-               sends the priority to a line of its own, where the variety
-               joins it, and the lot has nowhere to go but the title's row.
-
-               A basis of ZERO, not auto. Flex decides where to wrap from an
-               item's hypothetical size, and with basis auto that is the
-               title's full width — wide enough that the lot and the title
-               could not share a row, so it wrapped before it ever considered
-               shrinking. At zero the line never forces a break and simply
-               grows into whatever the lot leaves behind.
-
-               The floor under it is what keeps the name readable. With no
-               floor the priority and the variety fitted on the row too and
-               the title was squeezed to about a hundred and sixty pixels -
-               everything on one line, and the one thing worth reading
-               crushed. Eighteen rems is more than the rest of the row can
-               spare, so they wrap below and the title keeps the width. */
-            .activity-card .act-title-line         { order: 0; flex: 1 1 0; min-width: 14rem; max-width: none; }
-            .activity-card .activity-card-badges   { order: 2; flex: 0 1 auto; margin: 0; }
-            .activity-card .activity-card-lotmeta  { order: 3; flex: 0 1 auto; margin: 0; }
-            /* The cost was told to hang from the top of the chip row, which
-               is right where that row is a run of equal chips and wrong here,
-               where the row centres on a two-line block. */
+            /* The name leads; the lot and its day count sit beside it,
+               centred against it, and the priority and the rest follow. Every
+               one of them gives up the full-row claim it carries elsewhere —
+               .act-title-line's flex: 0 0 100% is what put the title on a
+               line of its own in the first place. */
+            .activity-card .act-title-line        { order: 0; flex: 0 1 auto; min-width: 0; max-width: none; }
+            .activity-card .activity-card-lothead { order: 1; flex: 0 0 auto; margin: 0; }
+            .activity-card .activity-card-badges  { order: 2; flex: 0 1 auto; margin: 0; }
+            .activity-card .activity-card-lotmeta { order: 3; flex: 0 1 auto; width: auto; margin: 0; }
+            /* The cost was told to hang from the top of the chip row, which is
+               right where that row is a run of equal chips and wrong now that
+               the run centres on itself. */
             .activity-card .act-cost-tag { align-self: center; margin-top: 0; }
 
-            /* Doubled class: the rule that hides the chevron is written later
-               in this file, and at equal weight the later one wins wherever
-               it sits — the trap this file keeps springing. pointer-events
-               come back too: on a phone the whole card body is the target and
-               the chip is deliberately transparent to it, but here the chip
-               is the only thing that folds. */
+            /* THE FOLD COMES BACK.
+               It was withheld from a mouse on the grounds that the desktop
+               card already showed what the accordion would reveal; now that
+               the two head rows ARE the summary, folding says something. The
+               chevron is the control and the card body still opens the
+               editor, which is the gesture people already have here.
+               Doubled class again: the rule that hides the chevron is written
+               later in this file and at equal weight the later one wins
+               wherever it sits. pointer-events come back too — on a phone the
+               whole card body is the target and the chip is deliberately
+               transparent to it, but here the chip is the only thing that
+               folds. */
             .activity-card .act-fold-chip.act-fold-chip {
                 display: inline-flex; pointer-events: auto; cursor: pointer; }
             .activity-card .act-fold-chip:hover { background: #bae6fd; color: #0369a1; }
             html.dark .activity-card .act-fold-chip:hover { background: rgb(2 132 199 / .4); }
 
-            /* Folded, the head row is the whole card. Badges and the variety
-               live INSIDE that row on this screen, so — unlike the phone,
-               which names them separately to hide them — they stay. */
+            /* Folded, the head is the whole card. The title, the lot and the
+               priority live INSIDE it here, so — unlike the phone, which
+               names them separately to hide them — they stay. */
             .activity-card.act-collapsed > :not(:first-child) { display: none; }
         }
         html.dark .activity-card .act-cost-tag {
