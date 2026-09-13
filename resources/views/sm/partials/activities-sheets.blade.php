@@ -1565,6 +1565,56 @@
 </div>
 
 {{-- ==================== WHY THE DAY COSTS WHAT IT COSTS ==================== --}}
+{{-- Tapping a day's money asks what you meant by it. One day's cash and a
+     stretch of days are two different questions, and the pill was only ever
+     able to answer the first — the other lived behind a menu nobody found. --}}
+<div class="sheet hidden" id="dayCashChooseSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title truncate" id="dayCashChooseTitle">Cash for this day</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body" style="padding-bottom:1rem">
+        <button type="button" class="cash-pick" data-cash-choice="day">
+            <span class="cash-pick-ico cash-pick-ico-day">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m4 10V4m4 13v-6M4 21h16"/></svg>
+            </span>
+            <span class="cash-pick-txt">
+                <span class="cash-pick-name">Day details</span>
+                <span class="cash-pick-sub" id="cashPickDaySub">What this one day costs, in longhand</span>
+            </span>
+            <svg class="cash-pick-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <button type="button" class="cash-pick" data-cash-choice="range">
+            <span class="cash-pick-ico cash-pick-ico-range">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg>
+            </span>
+            <span class="cash-pick-txt">
+                <span class="cash-pick-name">Range total</span>
+                <span class="cash-pick-sub">This day and another, and everything between</span>
+            </span>
+            <svg class="cash-pick-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+    </div>
+</div>
+
+{{-- What the stretch came to, once both ends are picked: the figure, the
+     span it covers, and every day inside it that cost anything. --}}
+<div class="sheet hidden" id="cashRangeSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title truncate" id="cashRangeTitle">Cash to prepare</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body" style="padding-bottom:1rem">
+        <div id="cashRangeBody"></div>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-white btn-sm" id="cashRangeAgain">Pick another stretch</button>
+        <button type="button" class="btn btn-primary btn-sm" id="cashRangeDone">Done</button>
+    </div>
+</div>
+
 <div class="sheet hidden" id="dayCashSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">

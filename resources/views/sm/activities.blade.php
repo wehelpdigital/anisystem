@@ -744,6 +744,77 @@
         .dc-amt { font-size: .85rem; font-weight: 800; color: var(--color-gray-900); white-space: nowrap; }
         .dc-foot { margin-top: .5rem; font-size: .72rem; line-height: 1.5; color: var(--color-gray-400); }
 
+        /* The two things a day's money can be asked. Full-width rows rather
+           than buttons in a line: on a phone a row you can hit with a thumb
+           anywhere along it beats two targets competing for the same inch,
+           and on a desktop it still reads as a menu rather than a dialog. */
+        .cash-pick { display: flex; align-items: center; gap: .8rem; width: 100%; text-align: left;
+            padding: .85rem .9rem; border-radius: .95rem; border: 1.5px solid var(--color-gray-200);
+            background: var(--tl-surface, #fff); cursor: pointer;
+            transition: border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1),
+                        box-shadow .28s cubic-bezier(.22,1,.36,1); }
+        .cash-pick + .cash-pick { margin-top: .55rem; }
+        .cash-pick:hover, .cash-pick:focus-visible { border-color: #fcd34d; transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgb(17 24 39 / .08); outline: none; }
+        .cash-pick:active { transform: translateY(0) scale(.99); }
+        .cash-pick-ico { flex: none; width: 2.6rem; height: 2.6rem; border-radius: .8rem;
+            display: flex; align-items: center; justify-content: center; }
+        .cash-pick-ico svg { width: 1.3rem; height: 1.3rem; }
+        .cash-pick-ico-day { background: #fef3c7; color: #b45309; }
+        .cash-pick-ico-range { background: #dbeafe; color: #1d4ed8; }
+        .cash-pick-txt { min-width: 0; flex: 1 1 auto; }
+        .cash-pick-name { display: block; font-size: .93rem; font-weight: 800; color: var(--tl-text, #111827); }
+        .cash-pick-sub { display: block; font-size: .76rem; color: var(--tl-text-soft, #6b7280); margin-top: .1rem; }
+        .cash-pick-go { flex: none; width: 1.15rem; height: 1.15rem; color: var(--color-gray-300); }
+        .cash-pick:hover .cash-pick-go { color: #b45309; }
+        html.dark .cash-pick { border-color: #2b3a1c; }
+        html.dark .cash-pick:hover, html.dark .cash-pick:focus-visible {
+            border-color: #8a6d1f; box-shadow: 0 10px 24px rgb(0 0 0 / .45); }
+        html.dark .cash-pick-ico-day { background: rgb(120 53 15 / .4); color: #fcd34d; }
+        html.dark .cash-pick-ico-range { background: rgb(30 64 175 / .35); color: #93c5fd; }
+
+        /* One row per day inside the stretch. The date leads, the figure ends
+           the line, and the day being one of the two you picked is said with
+           a dot rather than a word. */
+        .cr-day { display: flex; align-items: baseline; gap: .6rem; padding: .5rem 0; }
+        .cr-day + .cr-day { border-top: 1px solid var(--color-gray-100); }
+        html.dark .cr-day + .cr-day { border-top-color: var(--tl-border, #2b3a1c); }
+        .cr-day-dot { width: .45rem; height: .45rem; border-radius: 999px; flex: none;
+            transform: translateY(-.1rem); background: var(--color-gray-300); }
+        .cr-day.is-end .cr-day-dot { background: #f59e0b; box-shadow: 0 0 0 3px rgb(245 158 11 / .2); }
+        .cr-day-name { min-width: 0; flex: 1 1 auto; font-size: .85rem; font-weight: 700; color: var(--color-gray-800); }
+        .cr-day.is-end .cr-day-name { color: #92400e; }
+        html.dark .cr-day-name { color: var(--tl-text, #e8efe1); }
+        /* The picked ends wear the amber that marks them, and by day that is
+           a dark brown on white. At night the same brown sits on a dark panel
+           and the two days you actually chose read as the faintest in the
+           list, which is backwards. */
+        html.dark .cr-day.is-end .cr-day-name { color: #fcd34d; }
+        .cr-day-amt { font-size: .85rem; font-weight: 800; white-space: nowrap; color: var(--color-gray-900); }
+        html.dark .cr-day-amt { color: var(--tl-text, #e8efe1); }
+        .cr-none { font-size: .8rem; color: var(--color-gray-400); padding: .6rem 0; }
+        /* The strip the board wears while it waits for the second end. */
+        /* Centred with auto margins, NOT with a translate: app-pop-in animates
+           transform, and an animation's transform beats the rule that was
+           holding the strip in the middle - so it popped in and stayed
+           wherever the animation left it, hanging off the right edge. Margins
+           are not something a keyframe can take away.
+           The right inset keeps it clear of the jump buttons in that corner. */
+        .cr-hint { position: fixed; left: 0; right: 0; bottom: 1.1rem; z-index: 60;
+            margin: 0 auto; width: fit-content;
+            display: flex; align-items: center; gap: .55rem; max-width: calc(100vw - 5.5rem);
+            padding: .6rem .9rem; border-radius: 999px; font-size: .82rem; font-weight: 700; color: #fff;
+            background: #92400e; box-shadow: 0 12px 30px rgb(0 0 0 / .3);
+            animation: app-pop-in .24s cubic-bezier(.22,1,.36,1) both; }
+        .cr-hint > span { min-width: 0; white-space: nowrap; }
+        .cr-hint svg { width: 1.05rem; height: 1.05rem; flex: none; }
+        .cr-hint button { flex: none; margin-left: .2rem; color: #fde68a; font-weight: 800; text-decoration: underline; cursor: pointer; }
+        @media (prefers-reduced-motion: reduce) {
+            .cash-pick { transition: none; }
+            .cash-pick:hover { transform: none; }
+            .cr-hint { animation: none; }
+        }
+
         html.dark .dc-hero { background: linear-gradient(135deg, #292014 0%, #3b2c14 100%); border-color: #6b4b12; }
         html.dark .dc-hero-label { color: #fbbf24; }
         html.dark .dc-hero-amt { color: #fde68a; }

@@ -1943,7 +1943,64 @@ document.addEventListener('DOMContentLoaded', () => {
             if (CASH_RANGE.picks.length > 2) CASH_RANGE.picks.shift();
         }
         paintCashRange();
+
+        /* Both ends chosen, so the question is answered — and the answer is a
+         * sheet rather than a number on a chip, because what a week costs is
+         * only worth having if you can see which days made it up. */
+        if (CASH_RANGE.picks.length === 2) {
+            cashHintGone();
+            openCashRangeSheet();
+        } else {
+            cashHint(CASH_RANGE.picks.length === 1 ? 'Now tap the other end' : 'Tap a day to start');
+        }
     }
+
+    /* What the stretch came to, and every day inside it that cost anything. */
+    function openCashRangeSheet() {
+        const picks = CASH_RANGE.picks.slice().sort();
+        const [from, to] = picks;
+        if (!from || !to) return;
+        const rows = cashRangeRows(from, to);
+        const total = rows.reduce((t, r) => t + r.total, 0);
+        const span = Math.round((new Date(to + 'T00:00:00') - new Date(from + 'T00:00:00')) / 86400000) + 1;
+
+        $id('cashRangeTitle').textContent = 'Cash to prepare';
+        $id('cashRangeBody').innerHTML = `
+            <div class="dc-hero">
+                <span class="dc-hero-label">Cash to prepare</span>
+                <span class="dc-hero-amt">${esc(money(total))}</span>
+                <span class="dc-hero-sub">${esc(prettyDateWords(from))} → ${esc(prettyDateWords(to))} &middot; ${span} ${span === 1 ? 'day' : 'days'}${rows.length ? ' &middot; ' + rows.length + ' with money on ' + (rows.length === 1 ? 'it' : 'them') : ''}</span>
+            </div>
+            <div class="dc-sec dc-sec-extra">
+                <div class="dc-sec-head">
+                    <span class="dc-sec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>
+                    <span class="dc-sec-title">Day by day</span>
+                    <span class="dc-sec-sum">${esc(money(total))}</span>
+                </div>
+                <div class="dc-sec-body">${rows.length
+                    ? rows.map((r) => `<div class="cr-day${picks.includes(r.date) ? ' is-end' : ''}">
+                        <span class="cr-day-dot"></span>
+                        <span class="cr-day-name">${esc(prettyDateWords(r.date))}</span>
+                        <span class="cr-day-amt">${esc(money(r.total))}</span>
+                    </div>`).join('')
+                    : '<p class="cr-none">Nothing is costed in these days yet.</p>'}</div>
+            </div>
+            <p class="dc-foot">Wages for everyone on each day, plus any extra expense logged against it. Tap a day's own figure for its longhand.</p>`;
+        openSheet('cashRangeSheet');
+    }
+
+    $id('cashRangeDone')?.addEventListener('click', () => {
+        closeSheet('cashRangeSheet');
+        cashRangeSetMode(false);
+    });
+    $id('cashRangeAgain')?.addEventListener('click', () => {
+        closeSheet('cashRangeSheet');
+        // The mode stays on with both ends let go, so the next tap starts a
+        // fresh stretch rather than editing the one just answered.
+        CASH_RANGE.picks.length = 0;
+        paintCashRange();
+        cashHint('Tap a day to start');
+    });
 
     function cashRangeSetMode(on) {
         CASH_RANGE.on = !!on;
@@ -1977,7 +2034,12 @@ document.addEventListener('DOMContentLoaded', () => {
          * so a farmer who turned this on from inside the mirror would tap a
          * free day and find nothing there to tap. Asked directly instead. */
         window.mirrorRefresh?.();
-        if (CASH_RANGE.on) toast('Tap the day to count from, then the day to count to.');
+        /* The strip says it instead of a toast: this is a state the board is
+         * in until somebody finishes or cancels it, and a message that fades
+         * after three seconds leaves a board full of dashed pills with
+         * nothing saying why. */
+        if (CASH_RANGE.on) cashHint('Tap a day to start');
+        else cashHintGone();
     }
 
     window.cashRange = {
@@ -1998,15 +2060,79 @@ document.addEventListener('DOMContentLoaded', () => {
         e.stopPropagation();          // not a fold of the day
         const group = pill.closest('.date-group');
         if (!group) return;
-        /* In totalling mode the pill picks an end of the stretch instead of
-         * opening its own day. The breakdown is one tap away again the moment
-         * the mode is switched off, so nothing is taken away for good. */
+        /* Already picking ends: the pill is an end, not a door. */
         if (CASH_RANGE.on) {
             cashRangePick((group.getAttribute('data-date') || '').trim());
 
             return;
         }
-        openDayCash(group);
+        /* Otherwise it asks what you meant by it.
+         *
+         * One day's cash and a stretch of days are two different questions and
+         * the pill could only ever answer the first; the other lived behind a
+         * menu row nobody went looking for. Both are offered here, where the
+         * money is, and the day's own longhand is still one tap from the pill
+         * exactly as it was. */
+        openDayCashChooser(group);
+    });
+
+    /* ---- which of the two ---------------------------------------------- */
+    let CASH_CHOICE_GROUP = null;
+    function openDayCashChooser(group) {
+        CASH_CHOICE_GROUP = group;
+        const dateKey = (group.getAttribute('data-date') || '').trim();
+        const total = dayCashTotal(group);
+        $id('dayCashChooseTitle').textContent = prettyDateFull(dateKey);
+        const sub = $id('cashPickDaySub');
+        if (sub) {
+            sub.textContent = total > 0
+                ? money(total) + ' on this day, in longhand'
+                : 'Nothing costed on this day yet';
+        }
+        openSheet('dayCashChooseSheet');
+    }
+
+    document.addEventListener('click', (e) => {
+        const row = e.target.closest('[data-cash-choice]');
+        if (!row) return;
+        const group = CASH_CHOICE_GROUP;
+        closeSheet('dayCashChooseSheet');
+        if (!group) return;
+        if (row.getAttribute('data-cash-choice') === 'day') {
+            openDayCash(group);
+
+            return;
+        }
+        /* The stretch starts here: the mode comes on with this day already
+         * chosen, so the farmer's next tap is the second end and not a
+         * repeat of the one they just made. */
+        cashRangeSetMode(true);
+        cashRangePick((group.getAttribute('data-date') || '').trim());
+    });
+
+    /* ---- the line that waits with you ---------------------------------
+     * A toast says its piece and goes; this has to stay up for as long as
+     * the board is waiting for a second tap, and it has to be able to call
+     * the whole thing off. */
+    function cashHint(say) {
+        cashHintGone();
+        if (!say) return;
+        const el = document.createElement('div');
+        el.className = 'cr-hint';
+        el.id = 'cashRangeHint';
+        el.setAttribute('role', 'status');
+        el.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">'
+            + '<path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg>'
+            + '<span>' + esc(say) + '</span>'
+            + '<button type="button" data-cash-hint-stop>Cancel</button>';
+        document.body.appendChild(el);
+    }
+    function cashHintGone() {
+        document.getElementById('cashRangeHint')?.remove();
+    }
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('[data-cash-hint-stop]')) return;
+        cashRangeSetMode(false);
     });
 
     /* True when a mutation record only moved our own decorations around — the
