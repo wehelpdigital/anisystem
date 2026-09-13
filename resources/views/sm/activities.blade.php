@@ -2260,12 +2260,20 @@
         #activitySheet .space-y-4.on-workers .js-time-required { display: none; }
         #activitySheet .space-y-4.on-workers > #activityModeTabs { display: flex; }
 
-        /* The wage bill for an activity: the total leads, the breakdown follows
-           quietly, and on a narrow screen the breakdown wraps under it. */
-        .activity-labour { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem; margin-top: .4rem;
-            font-size: .7rem; color: var(--color-gray-500); }
-        .activity-labour .al-total { font-size: .78rem; font-weight: 800; color: var(--color-gray-800); }
-        .activity-labour .al-parts { min-width: 0; }
+        /* The wage bill for an activity, beside the fold chevron rather than
+           in a line at the foot of the card: it is a fact about the job, and
+           it belongs where the other facts about the job are - readable with
+           the card shut. Amber, the colour money already wears on this board.
+           The breakdown per worker rides the tooltip. */
+        .activity-card .act-cost-tag {
+            align-self: center; margin-top: .05rem; flex-shrink: 0;
+            display: inline-flex; align-items: center; white-space: nowrap;
+            font-size: .69rem; font-weight: 800; font-variant-numeric: tabular-nums;
+            color: var(--color-amber-800, #92400e); background: var(--color-amber-50, #fffbeb);
+            border: 1px solid var(--color-amber-200, #fde68a);
+            border-radius: 999px; padding: .16rem .5rem; cursor: help; }
+        html.dark .activity-card .act-cost-tag {
+            color: #fcd34d; background: rgb(120 53 15 / .35); border-color: rgb(180 83 9 / .5); }
 
         /* Things this activity points at. Read as links, not as more badges —
            a badge describes the activity, a tag goes somewhere. */

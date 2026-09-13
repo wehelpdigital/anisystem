@@ -1145,6 +1145,7 @@ document.addEventListener('DOMContentLoaded', () => {
      data-is-done="${isDoneFlag}"
      data-tags="${esc(JSON.stringify(Array.isArray(a.tags) ? a.tags : []))}"
      data-labour="${Number(a.labourTotal || 0)}"
+     data-labour-parts="${esc(hasChecklist(a) ? '' : labourParts(a.workerPay))}"
      data-target-date="${esc(targetDateStr)}"
      data-target-end-date="${esc(targetEndDateStr)}"
      data-lot-signature="${esc(lotSig)}"
@@ -1167,6 +1168,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <button type="button" class="icon-btn star-btn${LOCK_EDIT_CLS}" data-star-btn data-id="${a.id}" data-star="${starOf(a)}"${LOCK_EDIT} title="${esc(editTitle(starOf(a) ? `Marker: ${starName(starOf(a))}` : 'Marker — tap to pick a colour'))}" aria-label="Marker: ${esc(starName(starOf(a)))}">${SVG.star}</button>
             <button type="button" class="icon-btn card-menu-btn" data-id="${a.id}" data-name="${nameAttr}" title="Actions"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
             <span class="act-fold-chip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
+            ${hasChecklist(a) ? '' : costTag(a.labourTotal, a.workerPay)}
             <div class="min-w-0 grow">
             <div class="activity-card-lots activity-card-lothead">${isReminderCard
                 ? '<span class="badge reminder-head-badge">Reminder Checklist</span>'
@@ -1207,7 +1209,6 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     ${payrollChecklist(a)}
     ${reminderChecklist(a)}
-    ${hasChecklist(a) ? '' : labourLine(a.labourTotal, a.workerPay)}
     <div class="activity-tags">${activityTagChips(a.tags)}</div>
 </div>`;
     }
@@ -1395,17 +1396,33 @@ document.addEventListener('DOMContentLoaded', () => {
         add('To collect', Number(data?.incomeTotal) || 0, 'income');
     }
 
-    /* What the day's labour on this activity costs, spelled out per worker so
-       the number can be checked rather than just trusted. */
-    function labourLine(total, pay) {
-        if (!total || Number(total) <= 0) return '';
-        const parts = Object.values(pay || {})
+    /* WHAT THIS ACTIVITY COSTS, and who it is spent on.
+     *
+     * Both used to be printed in a line at the bottom of the card. The figure
+     * has moved up beside the fold chevron, where it can be read without
+     * opening the card; the breakdown has no room up there, so it rides the
+     * tag's tooltip and an attribute on the card.
+     *
+     * That attribute is what the day's cash sheet reads. It used to scrape
+     * the text out of the line at the bottom, so taking the line away would
+     * have emptied the "who" column of every wage row in that sheet. A fact
+     * the page needs belongs in an attribute, not in a sentence somebody else
+     * is parsing.
+     *
+     * Twin of $labourParts / $showCost in partials/activity-card.blade.php. */
+    function labourParts(pay) {
+        return Object.values(pay || {})
             .map((p) => {
                 const len = p.effectivePart === 'half' ? '½d' : (p.effectivePart === 'whole' ? '1d' : '—');
-                return `${esc(p.name || 'Worker')} ${len} ${money(p.total)}`;
+
+                return `${p.name || 'Worker'} ${len} ${money(p.total)}`;
             })
             .join(' · ');
-        return `<div class="activity-labour"><span class="al-total">${money(total)}</span>${parts ? `<span class="al-parts">${parts}</span>` : ''}</div>`;
+    }
+    function costTag(total, pay) {
+        if (!total || Number(total) <= 0) return '';
+
+        return `<span class="act-cost-tag" title="${esc(labourParts(pay))}">${esc(money(total))}</span>`;
     }
 
     function activityTagChips(tags) {
@@ -1736,7 +1753,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (amount <= 0) return;
             wages.push({
                 name: (card.querySelector('.activity-card-title')?.textContent || 'Activity').trim(),
-                detail: (card.querySelector('.activity-labour .al-parts')?.textContent || '').trim(),
+                // From the card's own attribute: the line this used to be
+                // scraped out of has moved up into a tag beside the chevron.
+                detail: (card.getAttribute('data-labour-parts') || '').trim(),
                 amount,
             });
         });

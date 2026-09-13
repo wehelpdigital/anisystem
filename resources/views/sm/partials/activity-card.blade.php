@@ -87,6 +87,30 @@
         }
     }
 
+    /* WHAT THIS ACTIVITY COSTS, and who it is spent on.
+     *
+     * Both used to be worked out at the bottom of the card and printed there.
+     * The figure has moved up beside the fold chevron, where it is a tag you
+     * can read without opening the card; the breakdown has no room up there,
+     * so it rides the tag's tooltip and an attribute.
+     *
+     * The attribute is what the day's cash sheet reads. It used to scrape the
+     * text out of the line at the bottom of the card, so taking that line away
+     * would have emptied the "who" column of every wage row in the sheet. A
+     * fact the page needs belongs in an attribute, not in a sentence somebody
+     * else is parsing.
+     *
+     * A payroll card names every worker and figure in its own checklist, so
+     * it carries neither: the same information twice is not twice as useful. */
+    $labour = $a->labourTotal();
+    $labourParts = $a->workers->map(function ($w) use ($a) {
+        $part = $a->dayPartFor($w);
+        $len = $part === 'half' ? '½d' : ($part === 'whole' ? '1d' : '—');
+
+        return $w->workerName . ' ' . $len . ' ' . '₱' . number_format($a->workerPay($w), 2);
+    })->join(' · ');
+    $showCost = $labour > 0 && $a->activityType !== 'worker_payroll';
+
     $mayEdit = \App\Support\WorkerContext::canEdit();
     $lockCls = $mayEdit ? '' : ' is-locked';
     $editTitle = fn ($plain) => $mayEdit ? $plain : 'Only someone who can edit the plan may do this';
@@ -99,7 +123,8 @@
      data-id="{{ $a->id }}"
      data-is-done="{{ $a->isDone ? 1 : 0 }}"
      data-tags="{{ json_encode(is_array($a->tags) ? $a->tags : []) }}"
-     data-labour="{{ $a->labourTotal() }}"
+     data-labour="{{ $labour }}"
+     data-labour-parts="{{ $showCost ? $labourParts : '' }}"
      data-target-date="{{ $startC ? $startC->format('Y-m-d') : '' }}"
      data-target-end-date="{{ $endC ? $endC->format('Y-m-d') : '' }}"
      data-lot-signature="{{ $lotSig }}"
@@ -160,6 +185,9 @@
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
             <span class="act-fold-chip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
+            @if ($showCost)
+                <span class="act-cost-tag" title="{{ $labourParts }}">₱{{ number_format($labour, 2) }}</span>
+            @endif
             <div class="min-w-0 grow">
             {{-- Lot(s) first, as a prominent label — so it's clear which lot the
                  activity is for before you read the title. --}}
@@ -393,21 +421,6 @@
         </div>
     @endif
 
-    {{-- What the labour on this activity costs, per worker and in total.
-         Mirrors labourLine() in the JS renderer. --}}
-    @php $labour = $a->labourTotal(); @endphp
-    {{-- A payroll card already lists every name and figure in its checklist;
-         repeating them underneath is the same information twice. --}}
-    @if ($labour > 0 && $a->activityType !== 'worker_payroll')
-        <div class="activity-labour">
-            <span class="al-total">₱{{ number_format($labour, 2) }}</span>
-            <span class="al-parts">{{ $a->workers->map(function ($w) use ($a) {
-                $part = $a->dayPartFor($w);
-                $len = $part === 'half' ? '½d' : ($part === 'whole' ? '1d' : '—');
-                return $w->workerName . ' ' . $len . ' ₱' . number_format($a->workerPay($w), 2);
-            })->join(' · ') }}</span>
-        </div>
-    @endif
     {{-- Things this activity points at. The row is always here so the JS can
          fill it after a tag is added; :empty keeps it out of the way. --}}
     <div class="activity-tags">
