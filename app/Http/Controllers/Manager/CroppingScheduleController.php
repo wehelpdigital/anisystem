@@ -597,8 +597,22 @@ class CroppingScheduleController extends Controller
     /** Toggle a schedule between 'setup' (editable) and 'completed' (locked). */
     public function setStatus(Request $request)
     {
-        if (! \App\Support\WorkerContext::canEdit()) {
-            return response()->json(['success' => false, 'message' => 'You have view-only access to this schedule.'], 403);
+        /* CLOSING A SEASON AND SHELVING IT ARE THE OWNER'S ACTS.
+         *
+         * The gate here was canEdit(), which a worker given edit rights
+         * passes — so somebody hired to move activities around could lock
+         * the whole season read-only, or take it off the farm's lists
+         * altogether, and the owner would find it gone with no idea why.
+         * Being allowed to change the work is not being allowed to end it.
+         *
+         * Asked the same way sm.destroy asks it: whose farm is this request
+         * in, not is this user a worker anywhere. An owner who also helps on
+         * a neighbour's land is still the owner on her own. */
+        if (\App\Support\WorkerContext::inWorkerContext()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Only the farm owner can close or archive a season.',
+            ], 403);
         }
         $schedule = $this->findOwnedOrFail($request->input('id'), true);
         // Three acts: close (locks, stays on the shelf), archive (out of the

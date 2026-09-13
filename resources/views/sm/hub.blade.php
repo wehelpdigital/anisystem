@@ -158,6 +158,12 @@
              and discussions now — so the toggle and the "View in Community"
              link it turned on have both gone. The row keeps its shape by
              pushing the one remaining control to the right. --}}
+        {{-- Closing a season and shelving it belong to whoever owns it —
+             sm.status refuses a worker now, the way sm.destroy always has, so
+             a worker was being shown two buttons that could only answer no.
+             The row itself goes with them: an empty bar under the facts is a
+             gap where something used to be. --}}
+        @if (! $isWorker)
         <div class="sched-foot sched-foot-end">
             <div class="flex items-center gap-3 shrink-0">
                 {{-- "Mark completed" sounded like ticking a task off. What the
@@ -183,6 +189,7 @@
                 </button>
             </div>
         </div>
+        @endif
     </div>
 
     {{-- Rename / describe. Small on purpose: two fields and a save. --}}
