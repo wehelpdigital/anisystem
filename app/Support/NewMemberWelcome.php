@@ -38,5 +38,26 @@ class NewMemberWelcome
         } catch (\Throwable $e) {
             Log::warning('Welcome email failed for user '.$user->id.': '.$e->getMessage());
         }
+
+        /* THE MAILING LIST LEARNS ABOUT THEM HERE, AND NOT A STEP EARLIER.
+         *
+         * This runs at the moment an address is PROVED — the click on the
+         * emailed link, or Google vouching for it — which is why the welcome
+         * credits and the welcome email are granted from here too. Pushing at
+         * the point the form is submitted would fill the list with addresses
+         * nobody has confirmed, including every robot that ever finds the
+         * signup page, and a marketing list full of unproven addresses is a
+         * sender reputation spent on nothing.
+         *
+         * Everyone arrives free: paying is a later, separate act, and the
+         * upgrade is what should move them out of that segment.
+         *
+         * Wrapped like its neighbours. A third party being down is not a
+         * reason to refuse somebody the account they just confirmed. */
+        try {
+            app(\App\Services\AcumbamailService::class)->addMember($user, 'free');
+        } catch (\Throwable $e) {
+            Log::warning('Acumbamail signup push failed for user '.$user->id.': '.$e->getMessage());
+        }
     }
 }
