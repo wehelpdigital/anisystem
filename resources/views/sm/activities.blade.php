@@ -2421,6 +2421,27 @@
             .activity-card.act-collapsed > :not(:first-child) { display: none; }
             .activity-card.act-collapsed .activity-card-badges,
             .activity-card.act-collapsed .activity-card-lotmeta { display: none; }
+
+            /* AN OPEN CARD IS THE READ VIEW, SO THE SCANNING CLAMPS COME OFF.
+             *
+             * The description is clamped to two lines and the title to two,
+             * so a row of cards scans — and the phone takes both clamps off
+             * again the moment a card is opened. That un-clamping was written
+             * inside the phone's own block, so a mouse never got it: the
+             * description kept its two lines and its ellipsis however far the
+             * card was opened, which until now was always. Now that opening
+             * one means something here, the promise it makes has to be kept.
+             *
+             * The rules it overrides are single-class and written later in
+             * this file; these are three classes deep, so they win on weight
+             * rather than on where they happen to sit. */
+            .activity-card:not(.act-collapsed) .activity-card-title {
+                display: block; -webkit-line-clamp: unset;
+                white-space: normal; overflow: visible; text-overflow: clip;
+            }
+            .activity-card:not(.act-collapsed) .activity-description-content {
+                display: block; -webkit-line-clamp: unset; overflow: visible;
+            }
         }
         html.dark .activity-card .act-cost-tag {
             color: #fcd34d; background: rgb(120 53 15 / .35); border-color: rgb(180 83 9 / .5); }
