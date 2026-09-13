@@ -1296,6 +1296,26 @@ class ActivityController extends BaseScheduleController
             $new = DB::transaction(function () use ($source, $activeVersionId) {
                 $copy = $source->replicate(['sequenceOrder']);
                 $copy->activityTitle = mb_substr($source->activityTitle, 0, 240) . ' (copy)';
+
+                /* A COPY IS WORK STILL TO DO, whatever the original was.
+                 *
+                 * replicate() carried isDone across, so duplicating a finished
+                 * job handed back a job already finished - which is never what
+                 * the farmer meant: you copy a done activity precisely because
+                 * you want to do it again. It also arrived locked, since a
+                 * done activity refuses to be edited, so the editor the copy
+                 * opens in turned it straight down.
+                 *
+                 * The errands on a reminder checklist are ticked the same way
+                 * and start fresh for the same reason. */
+                $copy->isDone = false;
+                if (is_array($source->reminders)) {
+                    $copy->reminders = array_map(static function ($row) {
+                        if (is_array($row)) { $row['done'] = false; }
+
+                        return $row;
+                    }, $source->reminders);
+                }
                 // Duplicate always lands in the currently-active version.
                 if ($activeVersionId) {
                     $copy->versionId = $activeVersionId;
