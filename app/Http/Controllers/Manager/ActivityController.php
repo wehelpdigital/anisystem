@@ -1880,6 +1880,81 @@ class ActivityController extends BaseScheduleController
      * Create/update/move a positioned inline note (the ones that sit between
      * a day's activity cards). Upsert by id; empty content removes it.
      */
+    /**
+     * A capture and the note it becomes, in ONE call.
+     *
+     * The board's three-dot camera used to upload the file, wait for the
+     * path the server gave back, and only then start a note carrying it.
+     * With no signal there is no path, so the whole thing died on "Failed to
+     * fetch" and the photo was gone — which is no good for the one feature a
+     * farmer most wants standing in a field.
+     *
+     * Asking for the file and the day together means the offline outbox can
+     * hold the entire errand as one entry: the blob rides along, and on the
+     * way back in this writes the file and the note in a single go. Nothing
+     * has to remember a server id that did not exist yet.
+     *
+     * The pens are the ones each tool answers to, the same as the separate
+     * upload doors: a camera writes a photo, the recorder a clip, the
+     * microphone a voice note.
+     */
+    public function noteCapture(Request $request)
+    {
+        $kind = (string) $request->input('kind');
+        $pen = ['image' => 'camera', 'video' => 'video', 'audio' => 'voice'][$kind] ?? null;
+        if (! $pen) {
+            return $this->jsonFail('Unknown capture kind.', 422);
+        }
+        $schedule = $this->scheduleForNoteMedia($request, [$pen]);
+
+        $rules = [
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp,gif|max:8192',
+            'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-msvideo|max:102400',
+            'audio' => 'required|file|mimetypes:audio/webm,audio/ogg,audio/mpeg,audio/mp4,audio/x-m4a,audio/wav|max:51200',
+        ][$kind];
+
+        $validator = Validator::make($request->all(), [
+            'noteDate' => 'required|date',
+            'title' => 'nullable|string|max:180',
+            'file' => $rules,
+        ]);
+        if ($validator->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+
+        $versionId = $this->activeVersionIdFor($schedule->id);
+        if (! $versionId) {
+            return $this->jsonFail('No active version found for this schedule.', 422);
+        }
+
+        $stored = \App\Support\MediaStore::putFile($request->file('file'), 'schedule-notes', $schedule->id);
+        if ($stored === null) {
+            return $this->jsonFail('Could not store that file.', 500);
+        }
+
+        $note = \App\Models\AsInlineNote::create([
+            'croppingScheduleId' => $schedule->id,
+            'versionId' => $versionId,
+            'noteDate' => $request->input('noteDate'),
+            'sortKey' => 0,
+            'title' => trim((string) $request->input('title')) ?: null,
+            'content' => null,
+            'media' => [['type' => $kind === 'audio' ? 'audio' : $kind, 'path' => $stored]],
+            'deleteStatus' => 1,
+        ]);
+
+        $this->broadcastBoard($schedule, 'reload', ['noteDate' => $note->noteDate->format('Y-m-d')], $versionId);
+
+        return $this->jsonOk('Saved to that day.', [
+            'data' => [
+                'id' => $note->id,
+                'noteDate' => $note->noteDate->format('Y-m-d'),
+                'path' => $stored,
+                'url' => \App\Support\MediaStore::url($stored),
+            ],
+        ]);
+    }
+
     public function inlineNoteSave(Request $request)
     {
         // A note on a day is how a drawing or a map is filed onto one, so the

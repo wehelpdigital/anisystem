@@ -75,6 +75,10 @@ class WorkerModuleAccess
          * is the notebook's, so the routes are named rather than swept up by
          * a wildcard — a new one belongs on this list, deliberately. */
         ['sm.activities.inline-note.save',   'notes:edit|draw:edit|maps:edit|camera:edit|video:edit'],
+        // A capture that files itself on a day: any one of the three tools
+        // opens the door, and the controller then checks the one that was
+        // actually used. Same shape as the line above it.
+        ['sm.activities.note-capture',       'camera:edit|video:edit|voice:edit'],
         ['sm.activities.inline-note.delete', 'notes:edit'],
         ['sm.activities.append-note',        'notes:edit'],
         ['sm.activity-versions.global-note', 'notes:edit'],

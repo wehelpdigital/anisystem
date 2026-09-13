@@ -231,6 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dateNoteSave:     ()  => `{{ route('sm.activities.date-note.save') }}?scheduleId=${SCHEDULE_ID}`,
         dateNoteDelete:   ()  => `{{ route('sm.activities.date-note.delete') }}?scheduleId=${SCHEDULE_ID}`,
         inlineNoteSave:   ()  => `{{ route('sm.activities.inline-note.save') }}?scheduleId=${SCHEDULE_ID}`,
+        noteCapture:      ()  => `{{ route('sm.activities.note-capture') }}?scheduleId=${SCHEDULE_ID}`,
         inlineNoteDelete: (id) => `{{ route('sm.activities.inline-note.delete') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
         noteImageUpload:  ()  => `{{ route('sm.notes.image-upload') }}?scheduleId=${SCHEDULE_ID}`,
         noteVideoUpload:  ()  => `{{ route('sm.notes.video-upload') }}?scheduleId=${SCHEDULE_ID}`,
@@ -5794,17 +5795,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /** Upload one file with a visible wait, then start a note carrying it. */
+    /* A CAPTURE THAT SURVIVES HAVING NO SIGNAL.
+     *
+     * Online this is unchanged: upload the file, take the path the server
+     * gives back, and open the note editor carrying it so the farmer can
+     * title it. That round trip is the whole problem out in the field — with
+     * no signal there IS no path, and this used to die on "Failed to fetch"
+     * with the photo gone.
+     *
+     * So when nothing can be reached, the file and the day go to the outbox
+     * as ONE errand against a door that does both (see noteCapture). Nothing
+     * has to remember a server id that does not exist yet, and on the way
+     * back in the note simply appears on its day. */
+    async function keepCaptureForLater(dateKey, file, kind, suggested) {
+        if (!window.aneeOffline?.on()) return false;
+        const form = new FormData();
+        form.append('kind', kind === 'image' ? 'image' : kind);
+        form.append('noteDate', dateKey);
+        form.append('title', suggested || '');
+        form.append('file', file, file.name || (kind + '-capture'));
+        await window.aneeOffline.enqueueForm(U.noteCapture(), form);
+        window.aneeOffline.markDown?.();
+
+        return true;
+    }
+
     async function noteFromCapture(dateKey, file, url, field, kind, suggested) {
         const done = window.smBusy(kind === 'video' ? 'Uploading the video…' : 'Uploading the photo…');
         try {
             const form = new FormData();
             form.append(field, file);
-            const res = await fetch(url, {
-                method: 'POST',
-                headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, Accept: 'application/json' },
-                body: form,
-                credentials: 'same-origin',
-            });
+            let res;
+            try {
+                res = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content, Accept: 'application/json' },
+                    body: form,
+                    credentials: 'same-origin',
+                });
+            } catch (_) {
+                // Nothing answered. Keep the whole errand instead of losing it.
+                if (await keepCaptureForLater(dateKey, file, kind, suggested)) {
+                    done.close();
+                    toast('Saved on this phone - it will land on ' + prettyDateFull(dateKey) + ' when you are back.');
+
+                    return;
+                }
+                throw new Error('The connection dropped mid-upload - try again.');
+            }
             const json = await res.json().catch(() => ({}));
             if (!json.success || !json.data?.path) throw new Error(json.message || 'Upload failed.');
             done.close();
@@ -5909,6 +5947,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     done.close();
                     newInlineNoteWith(dateKey, [{ type: 'audio', path: res.data.path, url: res.data.url }], 'Voice note');
                 } catch (err) {
+                    // Nothing answered: the recording and the day it belongs
+                    // to go to the outbox as one errand, the same road the
+                    // camera takes. See keepCaptureForLater.
+                    if (err.offline && await keepCaptureForLater(dateKey, file, 'audio', 'Voice note')) {
+                        done.close();
+                        toast('Saved on this phone - it will land on ' + prettyDateFull(dateKey) + ' when you are back.');
+
+                        return;
+                    }
                     done.close();
                     toast(err.message || 'Could not save the voice note.', 'error');
                 }

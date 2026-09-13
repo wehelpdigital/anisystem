@@ -792,6 +792,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-tags-of', [App\Http\Controllers\Manager\TagController::class, 'of'])->name('sm.tags.of');
     Route::post('/app/sm-activities-date-note-save', [App\Http\Controllers\Manager\ActivityController::class, 'saveDateNote'])->name('sm.activities.date-note.save');
     Route::delete('/app/sm-activities-date-note-delete', [App\Http\Controllers\Manager\ActivityController::class, 'deleteDateNote'])->name('sm.activities.date-note.delete');
+    // A capture and the note it becomes, in one call - so the offline outbox
+    // can hold the whole errand as a single entry, blob and all.
+    Route::post('/app/sm-activities-note-capture', [App\Http\Controllers\Manager\ActivityController::class, 'noteCapture'])->name('sm.activities.note-capture');
     Route::post('/app/sm-activities-inline-note-save', [App\Http\Controllers\Manager\ActivityController::class, 'inlineNoteSave'])->name('sm.activities.inline-note.save');
     Route::delete('/app/sm-activities-inline-note-delete', [App\Http\Controllers\Manager\ActivityController::class, 'inlineNoteDelete'])->name('sm.activities.inline-note.delete');
     // Money a day brought in - the mirror of the extra expenses below.
