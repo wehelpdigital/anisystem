@@ -2452,8 +2452,27 @@
            py-4/md:py-8 the same way -mx mirrors its px, so at rest the bar
            sits where sticking pins it anyway. In this style block, not
            utilities — the CSS bundle is prebuilt and never heard of -mt-4. */
-        .sticky.top-14 { top: calc(3.5rem + 1px); margin-top: -1rem; padding-top: .5rem; padding-bottom: .5rem; }
-        @media (min-width: 768px) { .sticky.top-14 { top: calc(4rem + 1px); margin-top: -2rem; } }
+        /* TUCKED UNDER THE APP BAR, NOT BUTTED AGAINST IT.
+         *
+         * This used to sit at the app bar's height PLUS its border, which is
+         * exactly flush - and exactly flush is a seam that shows as a thin
+         * stripe of page on any screen whose device pixels do not land on
+         * whole CSS pixels. A rem on the nose instead, so the bar's own
+         * border paints over the toolbar's top edge and there is nothing
+         * between them to see. The 8px of padding above the buttons means
+         * the count badges are still clear of it. */
+        .sticky.top-14 { top: 3.5rem; margin-top: -1rem; padding-top: .5rem; padding-bottom: .5rem; }
+        @media (min-width: 768px) { .sticky.top-14 { top: 4rem; margin-top: -2rem; } }
+        /* AND IT HAS TO KNOW ABOUT THE YELLOW BAR.
+         *
+         * Offline Mode pushes the app bar down by the height of its own bar,
+         * but this toolbar went on sticking at 3.5rem - which is behind the
+         * app bar once it has moved. Scrolling in the field made the whole
+         * Modules and Tools row disappear under the header. */
+        body.has-offline-bar .sticky.top-14 { top: calc(var(--offbar-h, 2.2rem) + 3.5rem); }
+        @media (min-width: 768px) {
+            body.has-offline-bar .sticky.top-14 { top: calc(var(--offbar-h, 2.2rem) + 4rem); }
+        }
         #toggleHiddenBtn.hidden { display: none !important; }
         /* !important so the disabled dimming survives the sheet's fade-in
            animation (which otherwise forces opacity back to 1). */

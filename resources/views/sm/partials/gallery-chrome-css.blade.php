@@ -165,6 +165,15 @@
        after it. */
     body:has(#activitiesRoot) .ga-shelfbar { top: 6.65rem; }
     @media (min-width: 768px) { body:has(#activitiesRoot) .ga-shelfbar { top: 7.45rem; } }
+    /* The shelf bar rides under the shell's toolbar, so when Offline Mode
+       pushes everything down by the height of the yellow bar, this comes
+       with them or it sticks behind the toolbar it is meant to sit beneath. */
+    body.has-offline-bar .ga-shelfbar { top: calc(var(--offbar-h, 2.2rem) + 3.5rem); }
+    body.has-offline-bar:has(#activitiesRoot) .ga-shelfbar { top: calc(var(--offbar-h, 2.2rem) + 6.65rem); }
+    @media (min-width: 768px) {
+        body.has-offline-bar .ga-shelfbar { top: calc(var(--offbar-h, 2.2rem) + 4rem); }
+        body.has-offline-bar:has(#activitiesRoot) .ga-shelfbar { top: calc(var(--offbar-h, 2.2rem) + 7.45rem); }
+    }
     /* In the Collab Room the app bar is hidden entirely. */
     html.collab-embed .ga-shelfbar { top: 0; }
     html.dark .ga-shelfbar { background: #10160e; }
