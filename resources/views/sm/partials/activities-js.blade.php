@@ -60,13 +60,23 @@ document.addEventListener('DOMContentLoaded', () => {
             return await api(url, opts);
         } catch (err) {
             if (!err.offline || !window.aneeOffline?.on()) throw err;
-            await window.aneeOffline.enqueue({
-                url,
-                method: opts.method || 'POST',
-                json: (opts.body && !(opts.body instanceof FormData)) ? opts.body : null,
-                says,
-                key,
-            });
+            /* A form goes to the outbox taken apart, blobs and all. Handing
+             * it to enqueue() as `json` stored nothing at all and then
+             * replayed an empty POST on the way back in - the farmer told
+             * "saved on this phone" and the change quietly dropped by the
+             * server as malformed. Nothing calls apiQ with a form today; the
+             * day something does, it must not lose it. */
+            if (opts.body instanceof FormData) {
+                await window.aneeOffline.enqueueForm(url, opts.body, { says, key, method: opts.method || 'POST' });
+            } else {
+                await window.aneeOffline.enqueue({
+                    url,
+                    method: opts.method || 'POST',
+                    json: opts.body || null,
+                    says,
+                    key,
+                });
+            }
             window.aneeOffline.markDown?.();
 
             /* `optimistic` is what the caller knows the row will look like once
@@ -83,6 +93,23 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         }
     }
+    /* A MOVE IS KEYED BY WHICH CARDS MOVED, NEVER BY THE ACT OF MOVING.
+     *
+     * Every reorder used to queue under the one key 'reorder', and the outbox
+     * collapses by key - so dragging one card and then dragging a second one
+     * threw the first drag away before it ever reached the server. The board
+     * showed both moves right up until the sync, and then the first snapped
+     * back to where it started. That is the worst shape a bug can have: it
+     * looks saved until the moment it is lost.
+     *
+     * Keyed by the ids instead, the same card dragged five times still
+     * collapses to where it was finally left, and two different cards keep
+     * two rows that replay in the order they were moved. The endpoint only
+     * touches the ids it is sent, so replaying them one after another lands
+     * exactly where the board is standing. */
+    const moveKey = (items) => 'reorder:'
+        + (items || []).map((it) => Number(it.id) || 0).sort((a, b) => a - b).join(',');
+
     const STORAGE_BASE = @json(asset('storage'));
 
     const ACTIVITY_TYPE_LABELS = @json($activityTypes);
@@ -3092,7 +3119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function restoreBoardSnapshot(snapshot) {
-        const r = await apiQ(U.reorder(), { method: 'POST', body: { items: snapshot } }, 'Moved the plan', 'reorder');
+        const r = await apiQ(U.reorder(), { method: 'POST', body: { items: snapshot } }, 'Moved the plan', moveKey(snapshot));
         if (!r || !r.success) throw new Error((r && r.message) || 'reorder failed');
         snapshot.forEach((it) => {
             const el = $qs(`#activitiesList .activity-card[data-id="${it.id}"]`);
@@ -5497,8 +5524,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ok) return;
         try {
             const res = await apiQ(U.destroy(id), { method: 'DELETE' }, 'Deleted an activity', 'del:' + id);
-            toast(res.message);
             _removeCardById(id);
+            /* NO WAY BACK IS OFFERED FOR A DELETE STILL IN THE OUTBOX.
+             *
+             * The step back from a delete is a restore, and a restore is a
+             * plain call to the server - so out in the field Ctrl+Z answered
+             * with a red toast and the delete synced anyway. Worse, the
+             * journal would have kept that dead step and offered it again on
+             * the next visit. A move can be taken back offline because taking
+             * it back is another move; a delete cannot, so it says so. */
+            if (res.queued) {
+                toast('Deleted on this phone - it syncs when you are back. No undo until then.');
+                return;
+            }
+            toast(res.message);
             pushUndo(`Delete '${name}'`, async () => {
                 const r = await api(U.restore(id), { method: 'POST' });
                 if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');
@@ -5735,7 +5774,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const items = [{ id: parseInt(id, 10), targetDate: newDate, targetEndDate: newEnd || null, sequenceOrder: 0 }];
         reorderAndRenumberActivities();
 
-        apiQ(U.reorder(), { method: 'POST', body: { items } }, 'Moved the plan', 'reorder')
+        apiQ(U.reorder(), { method: 'POST', body: { items } }, 'Moved the plan', moveKey(items))
             .then(() => {
                 toast('Moved to ' + prettyDateWords(newDate));
                 recomputeLotDayZero();
@@ -7422,7 +7461,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         try {
-            await apiQ(U.reorder(), { method: 'POST', body: { items } }, 'Moved the plan', 'reorder');
+            await apiQ(U.reorder(), { method: 'POST', body: { items } }, 'Moved the plan', moveKey(items));
             items.forEach((it) => {
                 const el = $qs(`#activitiesList .activity-card[data-id="${it.id}"]`);
                 if (!el) return;
@@ -10635,7 +10674,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const snapshot = dragBoardSnapshot;
         dragBoardSnapshot = null;
-        apiQ(U.reorder(), { method: 'POST', body: { items } }, 'Moved the plan', 'reorder')
+        apiQ(U.reorder(), { method: 'POST', body: { items } }, 'Moved the plan', moveKey(items))
             .then(() => {
                 toast(oldDate && oldDate !== newDate ? 'Moved to ' + prettyDateWords(newDate) : 'Order saved');
                 recomputeLotDayZero();
@@ -10697,7 +10736,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const snapshot = dragBoardSnapshot;
         dragBoardSnapshot = null;
-        apiQ(U.reorder(), { method: 'POST', body: { items } }, 'Moved the plan', 'reorder')
+        apiQ(U.reorder(), { method: 'POST', body: { items } }, 'Moved the plan', moveKey(items))
             .then(() => {
                 toast('Moved to ' + prettyDateWords(newDate));
                 recomputeLotDayZero();
@@ -11306,10 +11345,16 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             if (!ok) return;
             try {
-                await apiQ(U.destroy(id), { method: 'DELETE' }, 'Deleted an activity', 'del:' + id);
-                toast(`Draft "${name}" deleted`);
+                const res = await apiQ(U.destroy(id), { method: 'DELETE' }, 'Deleted an activity', 'del:' + id);
                 dropDraftRow(id);
                 bumpDraftsBadge(-1);
+                // Same rule as deleting a live activity above: the step back
+                // is a restore, and a restore needs the server.
+                if (res && res.queued) {
+                    toast('Deleted on this phone - it syncs when you are back. No undo until then.');
+                    return;
+                }
+                toast(`Draft "${name}" deleted`);
                 pushUndo(`Delete draft '${name}'`, async () => {
                     const r = await api(U.restore(id), { method: 'POST' });
                     if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');

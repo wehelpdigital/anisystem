@@ -754,6 +754,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
         }
+        /* THE ONE DESTINATION THAT CANNOT WAIT IN THE OUTBOX.
+         *
+         * A photo bound for the notebook or the gallery is kept on the phone
+         * and uploads itself on the way back in. A question put to the
+         * Technician needs an answer, and there is nobody out here to give
+         * one - queuing it would promise a reply that never comes. So it
+         * shows the same card every other locked module shows, instead of
+         * letting fetch fail with "Failed to fetch". */
+        if (target === 'ai' && aiNeedsTheLine(true)) return;
         const btn = $('qcConfirm');
         btn.disabled = true; const orig = btn.textContent; btn.textContent = 'Working…';
         busyShow();
@@ -1048,6 +1057,24 @@ document.addEventListener('DOMContentLoaded', () => {
         toast(data.message);
     }
 
+    /* Says the Technician needs the signal, and answers whether it said so.
+     *
+     * `ask` is the pre-flight check: only refuse when the line has already
+     * been proven down. Called with no argument it is the failure itself -
+     * a fetch that reached nobody - so it always speaks. */
+    function aiNeedsTheLine(ask) {
+        if (ask && !window.aneeOffline?.isDown?.()) return false;
+        window.aneeOffline?.markDown?.();
+        if (window.aneeOffline?.sayLocked) {
+            window.aneeOffline.sayLocked('Asking the AI Technician',
+                'The Technician has to read your photo and write back, and that needs a connection. Keep the photo in the notebook or the gallery for now - it uploads itself - and ask once you are back in signal.');
+        } else {
+            toast('The AI Technician needs a connection. Keep the photo in the notebook for now.', 'error');
+        }
+
+        return true;
+    }
+
     async function askAi(scheduleId) {
         // Upload the first photo, then ask the AI about it.
         const photos = items.filter((it) => it.kind === 'image');
@@ -1055,21 +1082,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const fd = new FormData();
         fd.append('image', photos[0].file);
         fd.append('scheduleId', scheduleId);
-        const up = await fetch(AI_PHOTO_URL, {
-            method: 'POST',
-            headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' },
-            body: fd,
-        });
+        let up;
+        try {
+            up = await fetch(AI_PHOTO_URL, {
+                method: 'POST',
+                headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' },
+                body: fd,
+            });
+        } catch (_) { aiNeedsTheLine(); return; }
         const upData = await up.json().catch(() => ({}));
         if (!up.ok || !upData.success) throw new Error(upData.message || 'Photo upload failed.');
         const imagePath = upData.data?.path || upData.data?.imagePath || upData.path;
 
         const message = noteText() || 'Please take a look at this photo of my crop and tell me what you notice and what I should do.';
-        const ask = await fetch(AI_ASK_URL, {
-            method: 'POST',
-            headers: { 'X-CSRF-TOKEN': CSRF, 'Content-Type': 'application/json', Accept: 'application/json' },
-            body: JSON.stringify({ message, imagePath, scheduleId }),
-        });
+        let ask;
+        try {
+            ask = await fetch(AI_ASK_URL, {
+                method: 'POST',
+                headers: { 'X-CSRF-TOKEN': CSRF, 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({ message, imagePath, scheduleId }),
+            });
+        } catch (_) { aiNeedsTheLine(); return; }
         const askData = await ask.json().catch(() => ({}));
         if (!ask.ok || !askData.success) throw new Error(askData.message || 'The AI Technician could not answer right now.');
 

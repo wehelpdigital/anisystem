@@ -1653,14 +1653,25 @@ document.addEventListener('pointerdown', (e) => {
        the outbox as their FormData taken apart — IndexedDB keeps Blobs
        whole — and the drain below puts the form back together and posts
        it exactly as the online path would have. */
-    async function enqueueForm(url, fd) {
+    async function enqueueForm(url, fd, meta = {}) {
         const fields = [];
         const files = [];
         for (const [k, v] of fd.entries()) {
             if (v instanceof Blob) files.push({ field: k, name: v.name || 'file', type: v.type || '', blob: v });
             else fields.push([k, String(v)]);
         }
-        await enqueue({ url, method: 'POST', fields, files });
+        /* `meta` is what the sync screen calls it and, where one is given, the
+           key that collapses repeats. A photo has no key - two pictures of the
+           same leaf are two pictures - but a form that REPLACES something does,
+           and it has to be able to say so. */
+        await enqueue({
+            url,
+            method: meta.method || 'POST',
+            fields,
+            files,
+            says: meta.says || 'A capture',
+            key: meta.key || null,
+        });
     }
 
     /* ---- the sync screen ----
