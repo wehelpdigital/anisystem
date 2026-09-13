@@ -1847,7 +1847,11 @@ document.addEventListener('pointerdown', (e) => {
         // The bar wraps to two lines on a narrow phone, so the offsets that
         // clear it are measured, not guessed — a fixed rem left the top bar
         // glued to (or under) a taller bar.
-        document.body.style.setProperty('--offbar-h', Math.ceil(bar.getBoundingClientRect().height) + 'px');
+        /* The EXACT height, not a rounded one. Math.ceil pushed the top bar
+           a fraction of a pixel further down than the yellow bar actually
+           reaches, and that fraction showed as a hairline of page between
+           the two - which reads as the header having come loose. */
+        document.body.style.setProperty('--offbar-h', bar.getBoundingClientRect().height + 'px');
     }
 
     window.addEventListener('online', () => { servedFromShelf = false; paintBar(); drain(); });
@@ -2052,24 +2056,44 @@ document.addEventListener('pointerdown', (e) => {
      * Keys are the module keys the schedule shell uses, plus the app-level
      * page paths. Read by isAllowedOffline() below and by the lock screen. */
     const OFFLINE_OK_MODULES = new Set(['activities', 'notes', 'growth']);
+
+    /* GETTING AROUND IS NOT A FEATURE THAT CAN BE LOCKED.
+     *
+     * The first cut of this list held only the rooms that still work, and
+     * that locked the way BACK to them: the dashboard could be reached but
+     * the schedules list could not, so a farmer who walked into the field
+     * from a season could not pick a different one, or return to the hub
+     * and choose the notebook. A locked door is for a room that cannot do
+     * its job out here; a corridor is not a room.
+     *
+     * So the shells and lists open — dashboard, the seasons list, a season's
+     * hub — along with the three rooms that work and the Settings page,
+     * which is where the Offline Mode switch itself lives. Everything else
+     * under /app is refused. */
     const OFFLINE_OK_PATHS = [
-        /^\/app\/sm-activities(\?|$)/,
-        /^\/app\/sm-notes(\?|$)/,
-        /^\/app\/notes(\?|$)/,
-        /^\/app\/sm-growth(\?|$)/,
-        /^\/app\/?$/,
+        /^\/app\/?$/,                    // the dashboard
+        /^\/app\/sm\/?$/,                // every season, to pick one
+        /^\/app\/sm-hub\/?$/,            // one season, to pick a room
+        /^\/app\/sm-create\/?$/,         // starting one needs no wire until it saves
+        /^\/app\/sm-notes\/?$/,
+        /^\/app\/notes\/?$/,
+        /^\/app\/sm-growth\/?$/,
+        /^\/account\/settings\/?$/,      // where Offline Mode is switched off again
+        /^\/account\/?$/,
     ];
     function isAllowedOffline(href) {
         let url;
         try { url = new URL(href || location.href, location.origin); } catch (_) { return true; }
-        const mod = url.searchParams.get('module');
         if (url.pathname.startsWith('/app/sm-activities')) {
-            // The shell: allowed only while it is showing a room on the list.
+            // The season shell. Allowed on the board itself and on the rooms
+            // that work; the shell's own guard says the same thing again for
+            // a module opened without a navigation.
+            const mod = url.searchParams.get('module');
+
             return !mod || OFFLINE_OK_MODULES.has(mod);
         }
 
-        return OFFLINE_OK_PATHS.some((re) => re.test(url.pathname + (url.search ? '?' : '')))
-            || OFFLINE_OK_PATHS.some((re) => re.test(url.pathname));
+        return OFFLINE_OK_PATHS.some((re) => re.test(url.pathname));
     }
 
     /* The line is down, and we KNOW it because something just failed to

@@ -91,7 +91,11 @@ h1, h2, h3, h4, h5, h6 {
    The height is measured by paintBar rather than assumed — the sentence
    wraps to two lines on a narrow screen. */
 body.has-offline-bar { padding-top: var(--offbar-h, 2.2rem); }
-body.has-offline-bar header.sticky { top: var(--offbar-h, 2.2rem); }
+/* A pixel UNDER the bar, not against it. Even with the exact measured
+   height, a fractional layout can leave a hairline of page showing between
+   the two - and a hairline reads as the header having come loose. One pixel
+   of overlap cannot be seen and cannot fail. */
+body.has-offline-bar header.sticky { top: calc(var(--offbar-h, 2.2rem) - 1px); }
 
 /* ---- the sync screen, and the locked door ------------------------------
    Two full-screen moments Offline Mode owns. The sync veil takes the screen

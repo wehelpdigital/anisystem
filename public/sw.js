@@ -166,7 +166,26 @@ self.addEventListener('fetch', (event) => {
             if (res.ok) cache.put(req, res.clone());
             return res;
         } catch (_) {
-            return (await cache.match(req)) || Response.error();
+            /* MATCHED BY ADDRESS, NOT BY REQUEST OBJECT.
+             *
+             * `cache.match(req)` came back empty for the app's own bundle
+             * while `caches.match(url)` from the page found it every time —
+             * so with no signal the page opened off the shelf and then ran
+             * with NO JAVASCRIPT AT ALL: window.api undefined, every inline
+             * script throwing, the whole app inert behind a page that looked
+             * fine. A module script is requested in cors mode with its own
+             * headers, and matching on the Request drags all of that into
+             * the comparison; the address is the thing that identifies a
+             * file. ignoreVary for the same reason.
+             *
+             * Falls back to the Request form too, so nothing that used to
+             * match stops matching. */
+            const byUrl = await caches.match(req.url, { cacheName: RUNTIME, ignoreVary: true });
+            if (byUrl) { await sayServedFromShelf(); return byUrl; }
+            const byReq = await cache.match(req, { ignoreVary: true });
+            if (byReq) { await sayServedFromShelf(); return byReq; }
+
+            return Response.error();
         }
     })());
 });
