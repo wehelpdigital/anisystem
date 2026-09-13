@@ -110,6 +110,34 @@
         return $w->workerName . ' ' . $len . ' ' . '₱' . number_format($a->workerPay($w), 2);
     })->join(' · ');
     $showCost = $labour > 0 && $a->activityType !== 'worker_payroll';
+    /* THE SAME FIGURE, SHORT, FOR WHEN THE ROW CANNOT HOLD IT.
+     *
+     * The tag stands in a row of five chips, and on a 360px phone the exact
+     * peso pushed it off that row onto a line of its own. Both are rendered
+     * and CSS picks: the full figure where there is room, ₱x.xk where there
+     * is not. Decided by the stylesheet rather than by measuring, so it costs
+     * nothing per card on a board with two hundred of them.
+     *
+     * Transcribed from moneyShort() in activities-js. The thresholds sit just
+     * under the round number because the rounding happens after: ₱999,999 is
+     * a million to one decimal place, and testing against a million would
+     * have called it ₱1000k. */
+    $shortMoney = function ($n) {
+        $v = (int) round((float) $n);
+        $trim = fn ($x) => rtrim(rtrim(number_format($x, 1, '.', ''), '0'), '.');
+        if ($v >= 999500) {
+            $m = $v / 1000000;
+
+            return '₱' . ($m >= 10 ? (string) round($m) : $trim($m)) . 'M';
+        }
+        if ($v >= 1000) {
+            $k = $v / 1000;
+
+            return '₱' . ($k >= 10 ? (string) round($k) : $trim($k)) . 'k';
+        }
+
+        return '₱' . $v;
+    };
 
     $mayEdit = \App\Support\WorkerContext::canEdit();
     $lockCls = $mayEdit ? '' : ' is-locked';
@@ -186,7 +214,7 @@
             </button>
             <span class="act-fold-chip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
             @if ($showCost)
-                <span class="act-cost-tag" title="{{ $labourParts }}">₱{{ number_format($labour, 2) }}</span>
+                <span class="act-cost-tag" title="{{ $labourParts }}"><span class="acx-full">₱{{ number_format($labour, 2) }}</span><span class="acx-short">{{ $shortMoney($labour) }}</span></span>
             @endif
             <div class="min-w-0 grow">
             {{-- Lot(s) first, as a prominent label — so it's clear which lot the

@@ -1193,7 +1193,7 @@
                         <button type="button" class="mir-tool" id="mirrorCashRangeBtn" aria-pressed="false"
                                 title="Total what two days and everything between them cost">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-                            <span id="mirrorCashRangeLabel">Total two days</span>
+                            <span id="mirrorCashRangeLabel">Range Cost</span>
                         </button>
                     </div>
                 </div>

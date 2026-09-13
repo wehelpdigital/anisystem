@@ -1422,7 +1422,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function costTag(total, pay) {
         if (!total || Number(total) <= 0) return '';
 
-        return `<span class="act-cost-tag" title="${esc(labourParts(pay))}">${esc(money(total))}</span>`;
+        /* Both figures, and CSS picks. The tag stands in a row of five chips
+         * and on a 360px phone the exact peso pushed it off that row onto a
+         * line of its own; the short form fits where the long one cannot.
+         * Decided by the stylesheet rather than by measuring, so it costs
+         * nothing per card on a board with two hundred of them. */
+        return `<span class="act-cost-tag" title="${esc(labourParts(pay))}">`
+            + `<span class="acx-full">${esc(money(total))}</span>`
+            + `<span class="acx-short">${esc(moneyShort(total))}</span></span>`;
     }
 
     function activityTagChips(tags) {
@@ -1951,8 +1958,14 @@ document.addEventListener('DOMContentLoaded', () => {
             b.setAttribute('aria-pressed', CASH_RANGE.on ? 'true' : 'false');
             b.classList.toggle('is-on', CASH_RANGE.on);
         });
-        $qsa('#cashRangeLabel, #mirrorCashRangeLabel, #actCashRangeLabel').forEach((l) => {
+        /* The mirror calls it Range Cost; the board's Tools menu says what it
+         * does, because a menu row has no neighbours to take its meaning
+         * from. Both flip to the same off-switch. */
+        $qsa('#cashRangeLabel, #actCashRangeLabel').forEach((l) => {
             l.textContent = CASH_RANGE.on ? 'Stop totalling' : 'Total two days';
+        });
+        $qsa('#mirrorCashRangeLabel').forEach((l) => {
+            l.textContent = CASH_RANGE.on ? 'Stop Range Cost' : 'Range Cost';
         });
         /* The mirror keeps copies of the board's days, and entering the mode
          * puts a pill on the free ones. It would catch up on its own - it

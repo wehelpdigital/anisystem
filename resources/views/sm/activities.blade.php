@@ -1671,6 +1671,23 @@
                Doubled class outranks the later global display:none. */
             .activity-card .act-fold-chip.act-fold-chip { display: inline-flex; }
 
+            /* WHAT IT COSTS STAYS ON THE CHEVRON'S ROW.
+               Five chips and a figure do not fit across a 360px card at the
+               spacing a mouse gets, so the figure was dropping to a line of
+               its own - which is the one thing this tag was moved up here to
+               stop doing. Three small savings and it holds: the row's columns
+               close up a little, the tag's own padding with them, and the
+               figure goes short. Measured on the real thing, it stays on the
+               row at 430, 390, 375 and 360. At 320 the row is full whatever
+               is done to it, and the tag wraps rather than being cut off. */
+            .activity-card > .flex.items-start.justify-between { column-gap: .28rem; }
+            .activity-card .act-cost-tag { padding: 0 .34rem; font-size: .63rem; }
+            /* Doubled class, like the chevron above: the rule that hides the
+               short figure by default is written LATER in this file, and at
+               equal weight the later one wins wherever it sits. */
+            .activity-card .act-cost-tag .acx-full.acx-full { display: none; }
+            .activity-card .act-cost-tag .acx-short.acx-short { display: inline; }
+
             /* A grip says the card can be dragged — the same six dots the
                inline notes use, drawn in CSS like the chevron so the twin
                renderers stay byte-identical, and pointer-events:none so the
@@ -2280,6 +2297,8 @@
             color: var(--color-amber-800, #92400e); background: var(--color-amber-50, #fffbeb);
             border: 1px solid var(--color-amber-200, #fde68a);
             border-radius: .6rem; padding: 0 .55rem; cursor: help; }
+        /* One of the two figures inside it, never both. */
+        .activity-card .act-cost-tag .acx-short { display: none; }
         html.dark .activity-card .act-cost-tag {
             color: #fcd34d; background: rgb(120 53 15 / .35); border-color: rgb(180 83 9 / .5); }
 
