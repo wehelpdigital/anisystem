@@ -5,6 +5,7 @@ namespace App\Support;
 use App\Models\AsCroppingSchedule;
 use App\Models\User;
 use App\Models\WorkerGrant;
+use App\Support\MediaStore;
 
 /**
  * The hats one person can wear here.
@@ -24,6 +25,8 @@ use App\Models\WorkerGrant;
  *   detail  a line of plain explanation
  *   bossId  the farm this hat looks at, when it looks at someone else's
  *   url     where choosing it should land (admin only — it leaves the app)
+ *   avatar  the face of whoever's farm it is — yours, or the boss's — or null
+ *   initials what to show where there is no face
  */
 class UserHats
 {
@@ -51,6 +54,13 @@ class UserHats
         // somebody's land still has their own ground here, even if it is
         // only ground-in-waiting. This is what puts the chooser in front
         // of every worker login: their boss's farm, and their own.
+        /* THE FACE ON EACH HAT.
+         *
+         * People know their bosses by face long before they read the name,
+         * and a house glyph and a person glyph told the two hats apart only
+         * by convention. Your own farm wears your own face; a farm you work
+         * on wears its owner's. The initials stand in where a face was never
+         * uploaded, the same as everywhere else this app draws a person. */
         $hats[] = [
             'key' => 'own',
             'kind' => 'own',
@@ -61,6 +71,8 @@ class UserHats
             'count' => $ownSchedules,
             'bossId' => null,
             'url' => null,
+            'avatar' => filled($user->avatarPath) ? MediaStore::url($user->avatarPath) : null,
+            'initials' => $user->initials ?: '?',
         ];
 
         foreach ($grants as $g) {
@@ -80,6 +92,8 @@ class UserHats
                 'count' => $theirs,
                 'bossId' => (int) $g->bossUserId,
                 'url' => null,
+                'avatar' => ($boss && filled($boss->avatarPath)) ? MediaStore::url($boss->avatarPath) : null,
+                'initials' => $boss ? ($boss->initials ?: '?') : '?',
             ];
         }
 
