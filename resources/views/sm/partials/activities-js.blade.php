@@ -3292,6 +3292,67 @@ document.addEventListener('DOMContentLoaded', () => {
         applyActivityFilter();
     });
 
+    /* THE BOARD DOES NOT MOVE UNDER YOU WHEN YOU CHANGE WHAT IT SHOWS.
+     *
+     * Showing hidden activities, or bringing back the days where everything
+     * is already done, inserts rows ABOVE where you are reading as well as
+     * below. A scroll position is a pixel count, so the page keeps the count
+     * and the work you were looking at slides down the screen - a couple of
+     * hundred pixels in an ordinary season, which reads as the board jumping
+     * back towards the first task.
+     *
+     * Chrome anchors scroll for this by itself some of the time, and not
+     * while a sheet is open over the top - which is exactly when these get
+     * toggled, because the eye sheet is where they live on a phone.
+     *
+     * So something on screen is named as the thing that must not move, and
+     * the page is scrolled by however far it drifted. The correction is held
+     * for the length of the fold rather than applied once at the end, or the
+     * slide happens and is then visibly undone.
+     */
+    function boardAnchorNow() {
+        /* Something that will still be there afterwards. A card that is
+         * hidden, or one sitting in a day that is all done, is the very
+         * thing these two toggles take away - anchoring to it would be
+         * measuring against a ruler that is being removed. The sticky
+         * toolbar is about 56px deep, so anything above that is behind it. */
+        const groups = $qsa('#activitiesList .date-group').filter((g) => {
+            const cards = $qsa('.activity-card', g);
+
+            return cards.length && !cards.every((c) => c.getAttribute('data-is-done') === '1');
+        });
+        for (const g of groups) {
+            const card = $qsa('.activity-card', g).find((c) => !c.classList.contains('is-hidden'));
+            const el = card || g;
+            const r = el.getBoundingClientRect();
+            if (r.height > 4 && r.top > 56) return el;
+        }
+
+        return null;
+    }
+
+    function holdTheBoardStill(change) {
+        const el = boardAnchorNow();
+        if (!el) { change(); return; }
+        const was = el.getBoundingClientRect().top;
+        change();
+        const settle = () => {
+            const r = el.getBoundingClientRect();
+            if (r.height < 4) return;           // the ruler went away; leave it alone
+            const drift = r.top - was;
+            if (Math.abs(drift) > 0.5) window.scrollBy(0, drift);
+        };
+        settle();
+        // Long enough to cover the day fold, which runs for 300ms and then
+        // clears its inline styles at 320.
+        const until = performance.now() + 420;
+        const tick = () => {
+            settle();
+            if (performance.now() < until) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+    }
+
     // ---- Show-hidden toggle (persisted per schedule) ----
     const HIDDEN_TOGGLE_KEY = 'showHiddenActivities:' + SCHEDULE_ID;
 
@@ -3310,10 +3371,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     $id('toggleHiddenBtn')?.addEventListener('click', () => {
-        const next = !document.body.classList.contains('show-hidden-activities');
-        document.body.classList.toggle('show-hidden-activities', next);
-        localStorage.setItem(HIDDEN_TOGGLE_KEY, next ? '1' : '0');
-        refreshHiddenActivityCount();
+        holdTheBoardStill(() => {
+            const next = !document.body.classList.contains('show-hidden-activities');
+            document.body.classList.toggle('show-hidden-activities', next);
+            localStorage.setItem(HIDDEN_TOGGLE_KEY, next ? '1' : '0');
+            refreshHiddenActivityCount();
+        });
     });
 
     if (localStorage.getItem(HIDDEN_TOGGLE_KEY) === '1') {
@@ -11949,9 +12012,11 @@ document.addEventListener('DOMContentLoaded', () => {
             paint();
         }
         btn.addEventListener('click', () => {
-            on = !on;
-            try { localStorage.setItem(KEY, on ? '1' : '0'); } catch (e) { /* fine */ }
-            apply(true);
+            holdTheBoardStill(() => {
+                on = !on;
+                try { localStorage.setItem(KEY, on ? '1' : '0'); } catch (e) { /* fine */ }
+                apply(true);
+            });
         });
         // Checking a day's last open activity folds it away on the spot;
         // unchecking one brings the day back.
