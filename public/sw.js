@@ -112,9 +112,13 @@ self.addEventListener('fetch', (event) => {
                     const c = await caches.open(RUNTIME);
                     c.put(req, res.clone());
                 }
-                // The line is up: whatever the last page was served from, it
-                // is not what this one came from.
-                sayReachedTheServer();
+                /* The line is up: whatever the last page was served from, it
+                   is not what this one came from. AWAITED - once respondWith
+                   has its answer the browser may kill this worker, and a
+                   note still being torn up survives, so the next page boots
+                   believing it is offline and shows the yellow bar over a
+                   working connection. */
+                await sayReachedTheServer();
                 return res;
             } catch (_) {
                 if (keep) {

@@ -1715,7 +1715,15 @@ document.addEventListener('pointerdown', (e) => {
         let leftover = 0;
         try {
             const rows = await outboxAll();
-            if (!rows.length) return;
+            if (!rows.length) {
+                /* Nothing to send is not nothing to learn. The line is back,
+                   and this used to return before anything said so — so a
+                   farmer who went offline, changed nothing and came back in
+                   kept the yellow bar over a working connection. */
+                markUp();
+
+                return;
+            }
             let ok = 0;
             let done = 0;
             let failed = 0;
@@ -1802,6 +1810,19 @@ document.addEventListener('pointerdown', (e) => {
      * served a page off the shelf it says so, and that is certain knowledge:
      * its fetch is the one that failed. Cleared the moment anything reaches
      * the server again. */
+    /* PROOF OUTRANKS OPINION, IN BOTH DIRECTIONS.
+     *
+     * navigator.onLine is wrong twice over: it says true on a router with no
+     * internet behind it, and a document created while the signal was gone
+     * can go on saying FALSE for the rest of its life even after the line is
+     * back. That second half is why the yellow bar sat there over a working
+     * connection until the next navigation.
+     *
+     * So when something has actually reached the server - a drain that ran,
+     * a heartbeat that answered, the online event - that is proof, and it
+     * wins until something fails again. */
+    let provenUp = false;
+    const isDown = () => on() && !provenUp && (!navigator.onLine || servedFromShelf);
     let servedFromShelf = false;
     try {
         navigator.serviceWorker?.addEventListener?.('message', (e) => {
@@ -1818,19 +1839,48 @@ document.addEventListener('pointerdown', (e) => {
             if (await c.match('/__served-offline')) {
                 servedFromShelf = true;
                 paintBar();
+                // This page opened off the shelf; watch for the line coming
+                // back rather than waiting for an event that may not come.
+                watchForTheLine();
             }
         } catch (_) { /* no cache storage here */ }
     })();
 
+    /* ALL of them, not the first one.
+     *
+     * paintBar is async and two calls overlap constantly; both could find no
+     * bar and both create one, and getElementById only ever removes the
+     * first. A second, invisible-to-the-remover copy is why the yellow bar
+     * seemed welded to the screen after the line came back. */
+    function takeTheBarDown() {
+        document.querySelectorAll('#aneeOfflineBar').forEach((el) => el.remove());
+        document.body.classList.remove('has-offline-bar');
+    }
+
     async function paintBar() {
         let bar = document.getElementById('aneeOfflineBar');
-        const want = on() && (!navigator.onLine || servedFromShelf);
+        const want = isDown();
         if (!want) {
-            bar?.remove();
-            document.body.classList.remove('has-offline-bar');
+            takeTheBarDown();
             return;
         }
         const pending = (await outboxAll()).length;
+        /* The world may have changed while that await was out.
+         *
+         * paintBar is async, and two calls overlap constantly - one when the
+         * line drops, another the moment it returns. The "down" one was
+         * finishing LAST and putting the bar back up over a working
+         * connection, which is why it seemed stuck until the next
+         * navigation. Whoever we are now is who we answer to. */
+        if (!isDown()) {
+            takeTheBarDown();
+
+            return;
+        }
+        // Any copy a racing call left behind goes before this one is made.
+        const all = document.querySelectorAll('#aneeOfflineBar');
+        for (let i = 1; i < all.length; i++) all[i].remove();
+        bar = all[0] || null;
         if (!bar) {
             bar = document.createElement('div');
             bar.id = 'aneeOfflineBar';
@@ -1854,7 +1904,7 @@ document.addEventListener('pointerdown', (e) => {
         document.body.style.setProperty('--offbar-h', bar.getBoundingClientRect().height + 'px');
     }
 
-    window.addEventListener('online', () => { servedFromShelf = false; paintBar(); drain(); });
+    window.addEventListener('online', () => { markUp(); drain(); });
     /* ---- warming the shelf ----
        The runtime cache only holds pages the reader has VISITED with the
        mode on, so walking to a not-yet-visited module offline hit the
@@ -2099,14 +2149,62 @@ document.addEventListener('pointerdown', (e) => {
     /* The line is down, and we KNOW it because something just failed to
        reach the server — not because the browser said so. */
     function markDown() {
+        provenUp = false;
         if (servedFromShelf) return;
         servedFromShelf = true;
         paintBar();
+        watchForTheLine();
     }
     function markUp() {
-        if (!servedFromShelf) return;
+        /* Tear up the worker's note as well as forgetting it here.
+         *
+         * The note in the flags cache is what a NEW page reads as it boots,
+         * so clearing only the variable left the bar gone until the next
+         * navigation and then straight back again. Not conditional on
+         * servedFromShelf either: the note can outlive the page that caused
+         * it, and the point is to leave nothing behind. */
+        /* Guarded: CacheStorage does not exist on a plain-http page, in some
+           private windows, or in older browsers - and an unguarded reach for
+           it threw right here, taking the whole "we are back" path with it. */
+        try {
+            if (typeof caches !== 'undefined') {
+                caches.open('anee-flags')
+                    .then((c) => c.delete('/__served-offline'))
+                    .catch(() => {});
+            }
+        } catch (_) { /* no cache storage here */ }
+        provenUp = true;
         servedFromShelf = false;
+        /* Taken down HERE, not only by paintBar. This is the "we are back"
+           path and it must not depend on an async repaint completing - the
+           bar is the thing the farmer is looking at. */
+        takeTheBarDown();
         paintBar();
+    }
+
+    /* ---- is the line back? ----
+     *
+     * The `online` event is the browser's opinion and it does not always
+     * have one: a phone that never told the OS it had lost the signal never
+     * tells it that it is back, so the yellow bar sat there over a working
+     * connection. While we believe we are down, this asks the server itself
+     * every fifteen seconds — the cheapest thing it serves — and the first
+     * answer puts the bar away and empties the outbox.
+     *
+     * Only while down: an app with a signal makes no extra requests. */
+    let heartbeat = null;
+    function watchForTheLine() {
+        if (heartbeat) return;
+        heartbeat = setInterval(async () => {
+            if (!isDown()) { clearInterval(heartbeat); heartbeat = null; return; }
+            try {
+                await fetch('/favicon.ico?ping=' + Date.now(), { cache: 'no-store', credentials: 'omit' });
+            } catch (_) { return; }   // still nothing out there
+            clearInterval(heartbeat);
+            heartbeat = null;
+            markUp();
+            drain();
+        }, 8000);
     }
 
     /* ---- one road for every write that may happen with no signal ----
@@ -2141,7 +2239,7 @@ document.addEventListener('pointerdown', (e) => {
         }
     }
 
-    const isDown = () => on() && (!navigator.onLine || servedFromShelf);
+
     /* What to call a door when the link that opened it had no words - a
        tile, an icon, a button built by script. A farmer told "that page is
        locked" learns nothing; told "Lots is locked" knows what to do. */
