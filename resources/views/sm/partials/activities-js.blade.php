@@ -1159,6 +1159,9 @@ document.addEventListener('DOMContentLoaded', () => {
      data-tag-ids="${(a.tagList || []).map((t) => t.id).join(',')}"${lotAccentStyle}>
     <div class="flex items-start justify-between gap-2">
         <div class="flex items-start gap-2.5 min-w-0 grow">
+            <!-- The chips and the cost are one run that cannot be broken up;
+                 see the twin of this span in partials/activity-card.blade. -->
+            <span class="act-head-chips">
             <button type="button" class="done-check${isDoneFlag ? ' is-checked' : ''}${LOCK_EDIT_CLS}" data-id="${a.id}"${LOCK_EDIT}
                 title="${esc(editTitle(isDoneFlag ? 'Mark as not done (unlocks editing)' : 'Mark this activity as done'))}"
                 aria-pressed="${isDoneFlag ? 'true' : 'false'}" aria-label="Mark activity as done">
@@ -1169,6 +1172,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <button type="button" class="icon-btn card-menu-btn" data-id="${a.id}" data-name="${nameAttr}" title="Actions"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
             <span class="act-fold-chip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
             ${hasChecklist(a) ? '' : costTag(a.labourTotal, a.workerPay)}
+            </span>
             <div class="min-w-0 grow">
             <div class="activity-card-lots activity-card-lothead">${isReminderCard
                 ? '<span class="badge reminder-head-badge">Reminder Checklist</span>'

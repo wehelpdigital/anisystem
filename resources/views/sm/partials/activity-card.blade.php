@@ -170,6 +170,17 @@
      @if($cardLots->count()) style="--lot-accent: hsl({{ ($cardLots->first()->id * 137) % 360 }}, 55%, 40%)" @endif>
     <div class="flex items-start justify-between gap-2">
         <div class="flex items-start gap-2.5 min-w-0 grow">
+            {{-- THE CHIPS AND THE COST ARE ONE THING THAT CANNOT BE BROKEN UP.
+                 The head row wraps on a phone - that is how the lot gets a
+                 line of its own - and what wraps is decided by what fits, so
+                 the cost kept being the item that did not and went down a
+                 line by itself. Held in a run of their own, they are a single
+                 item of that row: the figure is beside the chevron because
+                 there is no arrangement in which it is not.
+                 display:contents where a mouse is, so nothing about the
+                 desktop card changes. Twin of the same span in the JS
+                 renderer. --}}
+            <span class="act-head-chips">
             <button type="button" class="done-check{{ $a->isDone ? ' is-checked' : '' }}{{ $lockCls }}" data-id="{{ $a->id }}" @disabled(! $mayEdit)
                 title="{{ $editTitle($a->isDone ? 'Mark as not done (unlocks editing)' : 'Mark this activity as done') }}"
                 aria-pressed="{{ $a->isDone ? 'true' : 'false' }}" aria-label="Mark activity as done">
@@ -216,6 +227,7 @@
             @if ($showCost)
                 <span class="act-cost-tag" title="{{ $labourParts }}"><span class="acx-full">₱{{ number_format($labour, 2) }}</span><span class="acx-short">{{ $shortMoney($labour) }}</span></span>
             @endif
+            </span>
             <div class="min-w-0 grow">
             {{-- Lot(s) first, as a prominent label — so it's clear which lot the
                  activity is for before you read the title. --}}

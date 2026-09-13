@@ -630,6 +630,25 @@
         .mir-tool.is-on, #cashRangeBtn.is-on {
             background: var(--color-amber-500, #f59e0b); border-color: var(--color-amber-600, #d97706);
             color: #fff; }
+        /* THE RUN THAT CANNOT BE BROKEN UP.
+           One flex item instead of six, so the wrap that gives the lot its own
+           line can never take the cost figure with it. Measured rather than
+           guessed: the run measures 239px with the short figure, and at 320px
+           - the narrowest phone anyone still carries - it lands four pixels
+           inside the card with no sideways scroll. Below 320 the card is
+           narrower than the run, so the run is let go again there: a figure
+           on the line beneath is a poor answer, but a row running off the
+           side of the card is a worse one. */
+        @media (min-width: 320px) and (pointer: coarse),
+               (min-width: 320px) and (hover: none) {
+            /* Doubled class. The rule that makes this run nothing at all is
+               written LATER in this file, and at equal weight the later one
+               wins wherever it sits - the same trap the chevron and the short
+               figure both had to be pulled out of. */
+            .activity-card .act-head-chips.act-head-chips {
+                display: flex; align-items: flex-start; flex-wrap: nowrap;
+                gap: .35rem; flex: 0 0 auto; }
+        }
         /* Payroll wears amber, the colour the money already uses on this board,
            so a wage day is not mistaken for a field task at a glance. */
         .payroll-badge { display: inline-flex; align-items: center; gap: .25rem;
@@ -1680,7 +1699,6 @@
                figure goes short. Measured on the real thing, it stays on the
                row at 430, 390, 375 and 360. At 320 the row is full whatever
                is done to it, and the tag wraps rather than being cut off. */
-            .activity-card > .flex.items-start.justify-between { column-gap: .28rem; }
             .activity-card .act-cost-tag { padding: 0 .34rem; font-size: .63rem; }
             /* Doubled class, like the chevron above: the rule that hides the
                short figure by default is written LATER in this file, and at
@@ -2299,6 +2317,10 @@
             border-radius: .6rem; padding: 0 .55rem; cursor: help; }
         /* One of the two figures inside it, never both. */
         .activity-card .act-cost-tag .acx-short { display: none; }
+        /* The chips run is nothing at all where a mouse is: the head row does
+           not wrap there, so there is nothing to hold together, and
+           display:contents leaves the desktop card exactly as it was. */
+        .activity-card .act-head-chips { display: contents; }
         html.dark .activity-card .act-cost-tag {
             color: #fcd34d; background: rgb(120 53 15 / .35); border-color: rgb(180 83 9 / .5); }
 
