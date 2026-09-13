@@ -27,13 +27,20 @@
        it cannot leak a seam at the corners the way four panels do. */
     .tour-spot {
         position: fixed; z-index: 300; border-radius: .8rem; pointer-events: none;
-        box-shadow: 0 0 0 9999px rgb(12 17 8 / .72), 0 0 0 3px var(--color-accent-400, #f2c94c);
+        /* RING FIRST, DIM SECOND. Box-shadows paint in the order they are
+           written, first on top — so with the dim listed first its nine
+           thousand pixels covered the three-pixel ring completely and the
+           highlighted thing had no highlight on it. */
+        box-shadow: 0 0 0 3px var(--color-accent-400, #f2c94c), 0 0 0 9999px rgb(12 17 8 / .72);
         transition: top .28s cubic-bezier(.22,1,.36,1), left .28s cubic-bezier(.22,1,.36,1),
                     width .28s cubic-bezier(.22,1,.36,1), height .28s cubic-bezier(.22,1,.36,1);
     }
-    /* A step with nothing to point at — "here is the module, in general" —
-       dims the whole screen and lets the card carry it alone. */
-    .tour-spot.is-nowhere { box-shadow: 0 0 0 9999px rgb(12 17 8 / .72); opacity: 0; }
+    /* A step with nothing to point at — "this is the season, in general" —
+       still dims. The hole shrinks to nothing and loses its ring, but the
+       shadow that does the dimming stays: opacity:0 took the dim with it, so
+       the opening card sat on an undimmed page and read as a stray box rather
+       than the start of something. */
+    .tour-spot.is-nowhere { box-shadow: 0 0 0 9999px rgb(12 17 8 / .72); }
 
     .tour-card {
         position: fixed; z-index: 301; width: min(22rem, calc(100vw - 1.6rem));
@@ -118,6 +125,30 @@
 
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
+    /* THE FIRST MATCH YOU CAN SEE, not simply the first match.
+     *
+     * querySelector answers with whatever comes first in the document, and a
+     * selector written to be forgiving — `[data-lot-card], .card` — finds a
+     * hidden template or a collapsed wrapper before it finds the thing on
+     * screen. The hole was drawn twelve pixels wide over nothing at all.
+     * A target has to have a box before it counts as one. */
+    function find(sel) {
+        if (!sel) return null;
+        /* EACH ALTERNATIVE IN THE ORDER IT WAS WRITTEN. querySelectorAll with a
+           comma list answers in DOCUMENT order, not selector order, so
+           `#grCards .card, #grCards` handed back the wrapper — it comes first
+           in the document — and the hole was drawn around the whole module
+           instead of the one card the step was about. Split and try in turn. */
+        for (const one of sel.split(',')) {
+            for (const el of document.querySelectorAll(one.trim())) {
+                const b = el.getBoundingClientRect();
+                if (b.width > 8 && b.height > 8) return el;
+            }
+        }
+
+        return null;
+    }
+
     function teardown() {
         veil?.remove(); spot?.remove(); card?.remove();
         veil = spot = card = null;
@@ -136,7 +167,7 @@
 
     /** Put the hole over the target and the card beside it. */
     function place(step, i, steps) {
-        const el = step.target ? document.querySelector(step.target) : null;
+        const el = find(step.target);
         const pad = 6;
 
         if (el) {
@@ -173,15 +204,32 @@
         }
         const b = el.getBoundingClientRect();
         const gap = 14;
-        // Under the target if it fits, over it if not, and never off an edge.
-        let top = b.bottom + gap;
-        if (top + cb.height > window.innerHeight - 12) {
-            top = Math.max(12, b.top - gap - cb.height);
-        }
-        let left = b.left + (b.width / 2) - (cb.width / 2);
-        left = Math.min(Math.max(12, left), window.innerWidth - cb.width - 12);
-        card.style.top = top + 'px';
-        card.style.left = left + 'px';
+        const vw = window.innerWidth, vh = window.innerHeight;
+        const fits = (t, l) => t >= 12 && l >= 12 && t + cb.height <= vh - 12 && l + cb.width <= vw - 12;
+        const mid = (lo, hi, size, max) => Math.min(Math.max(12, lo + (hi - lo) / 2 - size / 2), max - size - 12);
+
+        /* FOUR PLACES, IN ORDER, AND IT NEVER SITS ON THE THING.
+         *
+         * Under, over, right, left. Trying only under-then-over meant a tall
+         * target on a short window had nowhere to go, so the card was clamped
+         * to the top of the screen and landed squarely on top of the very
+         * card it was explaining — the reader saw a hole with the answer
+         * covering it. Beside is the answer when neither end has room. */
+        const tries = [
+            [b.bottom + gap, mid(b.left, b.right, cb.width, vw)],                 // under
+            [b.top - gap - cb.height, mid(b.left, b.right, cb.width, vw)],        // over
+            [mid(b.top, b.bottom, cb.height, vh), b.right + gap],                 // right
+            [mid(b.top, b.bottom, cb.height, vh), b.left - gap - cb.width],       // left
+        ];
+        let [top, left] = tries.find(([t, l]) => fits(t, l))
+            // Nothing fits anywhere: put it where it overlaps least, which is
+            // the side of the target with the most room beside it.
+            || (b.left > vw - b.right
+                ? [mid(b.top, b.bottom, cb.height, vh), 12]
+                : [mid(b.top, b.bottom, cb.height, vh), vw - cb.width - 12]);
+
+        card.style.top = Math.min(Math.max(12, top), vh - cb.height - 12) + 'px';
+        card.style.left = Math.min(Math.max(12, left), vw - cb.width - 12) + 'px';
     }
 
     async function show() {
@@ -198,7 +246,7 @@
         // has to sit over.
         try { if (step.before) await step.before(); } catch (_) { /* keep walking */ }
 
-        const el = step.target ? document.querySelector(step.target) : null;
+        const el = find(step.target);
         if (step.target && !el) {
             // The thing this step is about is not on this screen. Skipping it
             // beats pointing at nothing and beats stopping the walk dead.
