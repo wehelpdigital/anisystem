@@ -745,6 +745,27 @@
             overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .adv-none { font-size: .72rem; color: var(--color-gray-400); font-style: italic; }
         .adv-row.is-none { background: var(--color-gray-50); }
+        /* ON A PHONE THE ROW BREAKS RATHER THAN CROPS.
+         *
+         * Four things shared one line: the kind of work, the day count, the
+         * gap in words, and the date and title under it. On a narrow screen
+         * the last of those was squeezed to an ellipsis and the name of the
+         * task - the thing that makes the row mean anything - was the part
+         * that went. The label takes the first line to itself and wraps, the
+         * number and the when sit under it, and nothing is cut. */
+        @media (max-width: 560px) {
+            .adv-row { flex-wrap: wrap; row-gap: .25rem; align-items: baseline; }
+            .adv-lbl { flex: 1 1 100%; }
+            .adv-n { order: 2; }
+            /* `1 1 0`, not `1 1 auto`: sized from its content the box was
+               wider than the room left beside the number and dropped to a
+               line of its own, so the count and the words it repeats sat one
+               above the other. */
+            .adv-when { order: 3; flex: 1 1 0; min-width: 0; text-align: left; }
+            .adv-when small { white-space: normal; overflow: visible; text-overflow: clip;
+                line-height: 1.45; }
+            .adv-none { flex: 1 1 100%; }
+        }
         .adv-foot { margin-top: .7rem; font-size: .72rem; line-height: 1.5; color: var(--color-gray-400); }
         .adv-empty { font-size: .8rem; line-height: 1.5; color: var(--color-gray-500); text-align: center; padding: .3rem .2rem; }
 
