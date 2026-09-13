@@ -3,6 +3,26 @@
 @section('title', 'Clients')
 @section('subtitle', 'Every account, and what can be done for it')
 
+@push('head')
+<style>
+    /* The card that ends an account wears the warning, so it is never mistaken
+       for the ones above it at a glance down the sheet. */
+    .ad-danger { border: 1.5px solid #fecaca; background: #fef2f2; }
+    html.dark .ad-danger { border-color: rgb(153 27 27 / .55); background: rgb(69 10 10 / .35); }
+    /* The picture itself. Line-height zero so a rotated glyph cannot push the
+       row about, and no user-select: there is nothing in there to copy anyway,
+       but a drag that highlights half a captcha looks like a bug. */
+    .ad-cap { display: inline-flex; align-items: center; justify-content: center;
+        flex: 0 0 auto; line-height: 0; border-radius: .6rem; overflow: hidden;
+        user-select: none; -webkit-user-select: none; }
+    .ad-cap svg { display: block; }
+    /* Typed back in the shape it was read: spaced capitals in the same serif,
+       so a lowercase keyboard and a serif picture do not read as a mismatch. */
+    .ad-cap-in { text-transform: uppercase; letter-spacing: .35em; font-weight: 700;
+        font-family: Georgia, serif; text-align: center; }
+</style>
+@endpush
+
 @section('content')
     <div class="sticky top-[6.4rem] z-30 -mx-1 px-1 pb-2 bg-gray-50 dark:bg-[#0c1108]">
         <input type="search" id="clSearch" class="form-input" placeholder="Search by name or email…" autocomplete="off">
@@ -51,6 +71,8 @@
         loginAs: (id) => '{{ url('/admin/client') }}/' + id + '/impersonate',
         admin: (id) => '{{ url('/admin/client') }}/' + id + '/admin',
         tier: (id) => '{{ url('/admin/client') }}/' + id + '/tier',
+        delCaptcha: (id) => '{{ url('/admin/client') }}/' + id + '/delete-captcha',
+        destroy: (id) => '{{ url('/admin/client') }}/' + id,
     };
 
     /* ---------------- the list ---------------- */
@@ -211,6 +233,29 @@
                 : `
                     <p class="text-xs text-gray-400 -mt-1">Grants the whole panel: clients, credits, support, impersonation. Not a small key.</p>
                     <button type="button" class="btn btn-white btn-sm w-full" id="ceAdminOn">🛡 Make ${esc(c.firstName || c.name)} an admin</button>`}
+            </div>
+
+            <div class="card p-3.5 space-y-2.5 ad-danger">
+                <p class="font-bold text-sm text-red-700 dark:text-red-400">Delete this client</p>
+                ${c.isAdmin ? `
+                    <p class="text-xs text-gray-400 -mt-1.5">This account is an admin. Take its admin access away first — deleting one is a decision of its own, and it should not ride along with the other.</p>`
+                : `
+                    <p class="text-xs text-gray-400 -mt-1.5">Takes ${esc(c.firstName || c.name)} out of the app: their farms, their work and their login all stop answering, and this panel has no button that puts them back.</p>
+                    <button type="button" class="btn btn-danger btn-sm w-full" id="ceDelStart">Delete ${esc(c.firstName || c.name)}</button>
+                    <div id="ceDelBox" class="hidden space-y-2">
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Read the characters and type them. They last two minutes, and each picture is good for one try.</p>
+                        <div class="flex items-center gap-2">
+                            <span id="ceDelCap" class="ad-cap"></span>
+                            <button type="button" class="btn btn-white btn-sm shrink-0" id="ceDelNew" title="Show me another">&#8635;</button>
+                        </div>
+                        <input type="text" id="ceDelAns" class="form-input ad-cap-in" maxlength="8"
+                               autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false"
+                               placeholder="Type them here">
+                        <div class="flex gap-2">
+                            <button type="button" class="btn btn-white btn-sm grow" id="ceDelCancel">Cancel</button>
+                            <button type="button" class="btn btn-danger btn-sm grow" id="ceDelGo">Delete for good</button>
+                        </div>
+                    </div>`}
             </div>`;
         wire();
     }
@@ -222,6 +267,53 @@
             try { await fn(); } catch (err) { toast(err.message, 'error'); }
             finally { btn.disabled = false; }
         };
+
+        /* ---- deleting a client ----------------------------------------
+         * The button does not delete. It fetches a picture, and the picture
+         * is what deleting needs — five characters that only exist as shapes,
+         * so this cannot be reached by a mis-tap, a stale tab or somebody
+         * clicking through a dialog they have seen a hundred times.
+         *
+         * A wrong answer comes back with a fresh picture attached to the
+         * refusal, because the server spends a challenge whether it was right
+         * or not: one look, one try. */
+        if ($id('ceDelStart')) {
+            const box = $id('ceDelBox');
+            const start = $id('ceDelStart');
+            const showPicture = (svg) => { $id('ceDelCap').innerHTML = svg; $id('ceDelAns').value = ''; };
+            const freshPicture = async () => {
+                const res = await api(U.delCaptcha(c.id));
+                showPicture(res.data.svg);
+            };
+
+            start.onclick = busyable(start, async () => {
+                await freshPicture();
+                box.classList.remove('hidden');
+                start.classList.add('hidden');
+                $id('ceDelAns').focus();
+            });
+            $id('ceDelNew').onclick = busyable($id('ceDelNew'), freshPicture);
+            $id('ceDelCancel').onclick = () => {
+                box.classList.add('hidden');
+                start.classList.remove('hidden');
+                $id('ceDelAns').value = '';
+            };
+            $id('ceDelGo').onclick = busyable($id('ceDelGo'), async () => {
+                const typed = ($id('ceDelAns').value || '').trim();
+                if (!typed) { toast('Type the characters first.', 'error'); return; }
+                try {
+                    const res = await api(U.destroy(c.id), { method: 'DELETE', body: { captcha: typed } });
+                    toast(res.message);
+                    closeSheet('clSheet');
+                    feed.reset();
+                } catch (err) {
+                    // The refusal carries the next picture with it.
+                    if (err.data && err.data.svg) showPicture(err.data.svg);
+                    $id('ceDelAns')?.focus();
+                    throw err;
+                }
+            });
+        }
 
         $id('ceSave').onclick = busyable($id('ceSave'), async () => {
             const res = await api(U.info(c.id), { method: 'PUT', body: {

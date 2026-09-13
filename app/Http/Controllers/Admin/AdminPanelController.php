@@ -449,6 +449,82 @@ class AdminPanelController extends Controller
      * offers the way back and the single-session guard stands down so the
      * real client is not signed out of their phone by a look-around.
      */
+    /**
+     * The picture an admin has to read before a client can be deleted.
+     *
+     * Minted per client, so a challenge answered for one account cannot be
+     * replayed against another, and held on the session rather than sent to
+     * the browser — the answer never leaves the server.
+     */
+    public function deleteCaptcha(Request $request, int $id)
+    {
+        $u = User::active()->findOrFail($id);
+
+        return response()->json([
+            'success' => true,
+            'data' => ['svg' => \App\Support\AdminCaptcha::issue($u->id)],
+        ]);
+    }
+
+    /**
+     * Delete a client.
+     *
+     * Soft, the way everything in this app is deleted: deleteStatus goes to 0
+     * and every scope in here stops returning them. Their rows stay on disk,
+     * which is what makes this survivable — but nothing in this panel puts
+     * them back, so as far as an admin is concerned it is final, and it is
+     * gated like it.
+     *
+     * Three refusals before the captcha is even looked at:
+     *
+     *  - Yourself. Signing out of your own admin account by deleting it leaves
+     *    nobody able to undo it.
+     *  - Another admin. Everything this panel can do, they can do; taking that
+     *    away should be a deliberate two-step, so admin access comes off first
+     *    and the deletion is a second decision.
+     *  - A stale or unread challenge. Spent on a wrong answer as well as a
+     *    right one, so there is one look and one try.
+     */
+    public function destroyClient(Request $request, int $id)
+    {
+        $u = User::active()->findOrFail($id);
+
+        if ($u->id === Auth::id()) {
+            return response()->json(['success' => false, 'message' => 'You cannot delete your own account from here.'], 422);
+        }
+        if ($u->adminUserId) {
+            return response()->json([
+                'success' => false,
+                'message' => 'That account is an admin. Remove its admin access first, then delete it.',
+            ], 422);
+        }
+
+        $data = $request->validate(['captcha' => 'required|string|max:16']);
+
+        if (! \App\Support\AdminCaptcha::check($u->id, $data['captcha'])) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Those characters did not match, or the picture went stale. Here is a fresh one.',
+                'data' => ['svg' => \App\Support\AdminCaptcha::issue($u->id)],
+            ], 422);
+        }
+
+        $name = trim(($u->firstName ?? '') . ' ' . ($u->lastName ?? '')) ?: $u->email;
+        $u->forceFill([
+            'deleteStatus' => 0,
+            // The session they are holding right now stops being theirs.
+            'currentSessionId' => null,
+        ])->save();
+
+        Log::warning('Admin ' . Auth::id() . ' deleted client ' . $u->id . ' (' . $u->email . ')');
+
+        return response()->json([
+            'success' => true,
+            'message' => $name . ' has been deleted.',
+            'data' => ['id' => $u->id],
+        ]);
+    }
+
     public function impersonate(Request $request, int $id)
     {
         $u = User::active()->findOrFail($id);

@@ -220,6 +220,9 @@ Route::middleware(['auth', 'admin.panel'])->prefix('admin')->group(function () {
     Route::put('/client/{id}/community-suspend', [App\Http\Controllers\Admin\AdminPanelController::class, 'communitySuspend'])->whereNumber('id')->name('admin.client.suspend');
     Route::post('/client/{id}/credits', [App\Http\Controllers\Admin\AdminPanelController::class, 'adjustCredits'])->whereNumber('id')->name('admin.client.credits');
     Route::post('/client/{id}/impersonate', [App\Http\Controllers\Admin\AdminPanelController::class, 'impersonate'])->whereNumber('id')->name('admin.client.impersonate');
+    // Deleting a client: the picture to read, then the deletion that checks it.
+    Route::get('/client/{id}/delete-captcha', [App\Http\Controllers\Admin\AdminPanelController::class, 'deleteCaptcha'])->whereNumber('id')->name('admin.client.delete-captcha');
+    Route::delete('/client/{id}', [App\Http\Controllers\Admin\AdminPanelController::class, 'destroyClient'])->whereNumber('id')->name('admin.client.destroy');
 
     Route::get('/data/tickets', [App\Http\Controllers\Admin\AdminSupportController::class, 'tickets'])->name('admin.data.tickets');
     Route::get('/data/ticket/{id}', [App\Http\Controllers\Admin\AdminSupportController::class, 'one'])->whereNumber('id')->name('admin.data.ticket');
