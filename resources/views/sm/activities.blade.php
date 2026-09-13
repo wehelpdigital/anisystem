@@ -2265,13 +2265,21 @@
            it belongs where the other facts about the job are - readable with
            the card shut. Amber, the colour money already wears on this board.
            The breakdown per worker rides the tooltip. */
+        /* THE SAME BOX AS THE CHIPS IT STANDS IN, not a smaller pill floating
+           beside them. The row is five equal chips - the tick, the kind of
+           work, the star, the kebab and the chevron - and a sixth that is
+           two thirds their height reads as having slipped, wherever the
+           browser happens to put it. Given their height, their top margin and
+           their corner, it is one of them: centred against that row by being
+           the same size as it, rather than by an align-self that measures
+           itself against whatever else is tall on the line. */
         .activity-card .act-cost-tag {
-            align-self: center; margin-top: .05rem; flex-shrink: 0;
+            height: 2.1rem; margin-top: .05rem; align-self: flex-start; flex-shrink: 0;
             display: inline-flex; align-items: center; white-space: nowrap;
             font-size: .69rem; font-weight: 800; font-variant-numeric: tabular-nums;
             color: var(--color-amber-800, #92400e); background: var(--color-amber-50, #fffbeb);
             border: 1px solid var(--color-amber-200, #fde68a);
-            border-radius: 999px; padding: .16rem .5rem; cursor: help; }
+            border-radius: .6rem; padding: 0 .55rem; cursor: help; }
         html.dark .activity-card .act-cost-tag {
             color: #fcd34d; background: rgb(120 53 15 / .35); border-color: rgb(180 83 9 / .5); }
 
