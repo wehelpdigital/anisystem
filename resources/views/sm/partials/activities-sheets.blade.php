@@ -68,6 +68,24 @@
      set their own cursor and hover in an unlayered block, so Tailwind's
      utilities lose to them — this has to say it in the same voice. --}}
 <style>
+    /* OUT OF SIGNAL, NOT OUT OF PERMISSION.
+     *
+     * A different grey from .is-locked because it is a different sentence:
+     * that one says the farm owner has not given you this, and this one says
+     * come back when you have a bar. The row keeps its place in the menu -
+     * hiding it would make somebody hunt for a thing they know is there -
+     * and the tap still explains itself. */
+    .btn.needs-line, .day-menu-action.needs-line { opacity: .45; }
+    .btn.needs-line:hover, .day-menu-action.needs-line:hover { background: transparent; }
+    .btn.needs-line::after, .day-menu-action.needs-line::after {
+        content: 'offline'; margin-left: auto; font-size: .62rem; font-weight: 800;
+        letter-spacing: .06em; text-transform: uppercase; color: #a08a3c;
+        background: #fdf3d6; border-radius: 999px; padding: .1rem .4rem;
+    }
+    html.dark .btn.needs-line::after, html.dark .day-menu-action.needs-line::after {
+        color: #eec155; background: rgb(180 83 9 / .2);
+    }
+
     .icon-btn.is-locked, .done-check.is-locked, .date-header-btn.is-locked,
     .btn.is-locked, .day-menu-action.is-locked,
     .note-kebab.is-locked,
@@ -1506,12 +1524,12 @@
             <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="duplicate" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Duplicate</button>
             @endif
             @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
-            <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="email" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Email this activity</button>
+            <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="email" data-needs-line="Emailing this activity" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Email this activity</button>
             @endif
             {{-- Reading what went on this ground before is a read. It stays. --}}
-            <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="advanced">Advanced info</button>
+            <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="advanced" data-needs-line="What went on this ground before">Advanced info</button>
             @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
-            <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="tag" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Tag a drawing, map or note</button>
+            <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="tag" data-needs-line="Tagging a drawing, map or note" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Tag a drawing, map or note</button>
             @endif
             @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
             <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="draft" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Move to drafts</button>

@@ -6661,6 +6661,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    /* A row that cannot work out here says so before it is tapped.
+     *
+     * Dimmed and marked rather than removed: a menu that changes shape when
+     * the signal drops makes the farmer hunt for something they know was
+     * there, and the tap still explains itself. Painted each time the sheet
+     * opens, because the line can come and go between two taps. */
+    function paintMenuForTheLine(sheet) {
+        if (!sheet) return;
+        const down = !!window.aneeOffline?.isDown?.();
+        sheet.querySelectorAll('[data-needs-line]').forEach((b) => {
+            b.classList.toggle('needs-line', down);
+            if (down) b.setAttribute('title', 'Needs a connection');
+            else if (b.getAttribute('title') === 'Needs a connection') b.removeAttribute('title');
+        });
+    }
+
     // Card + timeline click delegation.
     document.addEventListener('click', (e) => {
         const doneCheck = e.target.closest('.done-check');
@@ -6708,6 +6724,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (menuBtn) {
             CARD_MENU = { id: menuBtn.getAttribute('data-id'), name: menuBtn.getAttribute('data-name') || 'Activity' };
             $id('cardMenuTitle').textContent = CARD_MENU.name;
+            paintMenuForTheLine($id('cardMenuSheet'));
             openSheet('cardMenuSheet');
             return;
         }
@@ -6727,6 +6744,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const cardIsDone = $qs(`#activitiesList .activity-card[data-id="${id}"]`)?.getAttribute('data-is-done') === '1';
             if (cardIsDone && (action === 'edit' || action === 'move')) {
                 toast('This activity is marked done and locked — untick it first.');
+                return;
+            }
+            /* Three of these rows are a QUESTION for the server rather than a
+               change to keep: what has been on this ground, who to email, and
+               which drawings and maps exist to tag. Out of signal they used
+               to run anyway and land on a raw "Failed to fetch". */
+            const needs = menuAction.getAttribute('data-needs-line');
+            if (needs && window.aneeOffline?.isDown?.()) {
+                window.aneeOffline.sayLocked(needs);
+
                 return;
             }
             if (action === 'edit') { const done = spinBtn(kebab); openEditActivitySheet(id).finally(() => done && done()); }
