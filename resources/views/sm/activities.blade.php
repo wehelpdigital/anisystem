@@ -2331,13 +2331,16 @@
          * every card was empty and a day of work was a column of near-blank
          * boxes to scroll past.
          *
-         * It reads as two rows now. The tick, the kind of work, the star, the
-         * kebab, the fold and what the job costs keep the top row to
-         * themselves, with the actions at the far end of it. Everything you
-         * actually read — the name, the lot and its day count, the priority,
-         * the kind, the variety — drops to the row beneath and starts at the
-         * card's own left edge, under the tick rather than indented past the
-         * chips, all of it on one line and centred against each other.
+         * It reads the way the phone's does now. The tick, the kind of work,
+         * the star, the kebab, the fold and what the job costs keep the top
+         * row to themselves, with the actions at the far end of it. The name
+         * drops to the row beneath and starts at the card's own left edge,
+         * under the tick rather than indented past the chips, with the lot
+         * and its day count beside it and centred against it.
+         *
+         * Those three lines are the card when it is shut. The priority, the
+         * variety, the length of the day, who is on it and the description
+         * all sit below the name, and opening is what shows them.
          *
          * The mechanism is the phone's, turned down a notch: the left group
          * wraps instead of being flattened away, the chips claim a whole line
@@ -2371,8 +2374,12 @@
                line of its own in the first place. */
             .activity-card .act-title-line        { order: 0; flex: 0 1 auto; min-width: 0; max-width: none; }
             .activity-card .activity-card-lothead { order: 1; flex: 0 0 auto; margin: 0; }
-            .activity-card .activity-card-badges  { order: 2; flex: 0 1 auto; margin: 0; }
-            .activity-card .activity-card-lotmeta { order: 3; flex: 0 1 auto; width: auto; margin: 0; }
+            /* A row each, the way the phone stacks them. Left to take only
+               their own width they climbed back up beside the name the moment
+               it was short enough to leave room, which put the priority in
+               among the three things a shut card still shows. */
+            .activity-card .activity-card-badges  { order: 2; flex: 0 0 100%; margin: .1rem 0 0; }
+            .activity-card .activity-card-lotmeta { order: 3; flex: 0 0 100%; width: 100%; margin: 0; }
             /* The cost was told to hang from the top of the chip row, which is
                right where that row is a run of equal chips and wrong now that
                the run centres on itself. */
@@ -2395,10 +2402,25 @@
             .activity-card .act-fold-chip:hover { background: #bae6fd; color: #0369a1; }
             html.dark .activity-card .act-fold-chip:hover { background: rgb(2 132 199 / .4); }
 
-            /* Folded, the head is the whole card. The title, the lot and the
-               priority live INSIDE it here, so — unlike the phone, which
-               names them separately to hide them — they stay. */
+            /* THE DAY AND ITS PEOPLE GO BACK UNDER THE NAME.
+               They were lifted onto the title's line at the 768px breakpoint,
+               which a desktop also passes — but that put the length of the
+               day and who is on it in among the things a shut card should
+               still show, and they are not that. They belong with the
+               priority and the description, below the title, in the part
+               opening reveals. The strip that holds them is only hidden up
+               there when it has nothing else in it; here it always has. */
+            .am-phone { display: contents; }
+            .act-inline-meta { display: none; }
+            .activity-card .activity-meta:not(:has(.material-tag)) { display: flex; }
+
+            /* CONTRACTED, THE CARD IS ITS HEAD ROW — the chips, the lot and
+               the name. The priority and the variety live INSIDE that row, so
+               like the phone they have to be named separately to go away;
+               everything else is already gone with the rule above it. */
             .activity-card.act-collapsed > :not(:first-child) { display: none; }
+            .activity-card.act-collapsed .activity-card-badges,
+            .activity-card.act-collapsed .activity-card-lotmeta { display: none; }
         }
         html.dark .activity-card .act-cost-tag {
             color: #fcd34d; background: rgb(120 53 15 / .35); border-color: rgb(180 83 9 / .5); }
