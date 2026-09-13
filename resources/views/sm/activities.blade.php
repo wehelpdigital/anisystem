@@ -612,7 +612,11 @@
            not from the pill's children: the board watches its own list for
            changes and repaints these when it sees any, so writing into one
            here would set that off, which repaints it, which sets it off. */
-        body.cash-range-on .date-header-cash { border-style: dashed; cursor: copy; }
+        /* A pointer, not `copy`. The plus-and-arrow cursor means "this will
+           be duplicated somewhere", and picking the far end of a stretch
+           copies nothing — it is a tap on a thing, which is what a pointer
+           has always meant. */
+        body.cash-range-on .date-header-cash { border-style: dashed; cursor: pointer; }
         /* A day with nothing on it is here to be picked, not to be read. */
         .date-header-cash.is-free { opacity: .6; }
         .date-header-cash.is-free.is-cash-pick, .date-header-cash.is-free.in-cash-range { opacity: 1; }
