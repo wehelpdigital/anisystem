@@ -135,7 +135,8 @@
             <button type="button" class="btn btn-primary btn-sm shrink-0" id="demoTourBtn">Take the tour</button>
         </div>
     @endif
- It used to be a plain white box with the
+
+    {{-- The season's own card. It used to be a plain white box with the
          title, some badges and a button that said "Mark completed" — which
          reads like a checkbox rather than the end of a season. It now looks
          like the top of something, says what state the season is in on its
