@@ -5031,7 +5031,6 @@
         const find = document.getElementById('mirrorFind');
         const findSay = document.getElementById('mirrorFindSay');
         const findN = document.getElementById('mirrorFindN');
-        document.getElementById('mirrorCashRangeBtn')?.addEventListener('click', () => window.cashRange?.toggle());
         const foldBtn = document.getElementById('mirrorFoldBtn');
         const foldLabel = document.getElementById('mirrorFoldLabel');
         const todayBtn = document.getElementById('mirrorTodayBtn');
@@ -5701,16 +5700,23 @@
             // day it is measuring from.
             const diff = e.target.closest('.mir-diff');
             if (diff) { e.preventDefault(); toggleDiff(diff); return; }
-            /* The day's money, when a stretch is being totalled. Taken before
-             * the fold for the same reason the diff tag is: a tap meant to
-             * pick an end must not shut the day it is picking. With the mode
-             * off the pill is a figure to read like any other and the tap
-             * goes on to fold the day, exactly as it did before. */
+            /* THE DAY'S MONEY ASKS THE SAME QUESTION IT ASKS ON THE BOARD.
+             *
+             * Taken before the fold, for the reason the diff tag is: a tap
+             * meant for the money must not shut the day it is about. While a
+             * stretch is being totalled the pill is an end to pick; otherwise
+             * it opens the chooser — this day's longhand, or a range starting
+             * here — which is what the board does, and the mirror had a
+             * button in its tools doing half of it instead. */
             const cash = e.target.closest('.date-header-cash');
-            if (cash && window.cashRange?.on()) {
+            if (cash) {
                 e.preventDefault();
                 const g = cash.closest('.date-group');
-                window.cashRange.pick((g?.getAttribute('data-date') || '').trim());
+                if (window.cashRange?.on()) {
+                    window.cashRange.pick((g?.getAttribute('data-date') || '').trim());
+                } else if (g) {
+                    window.cashRange?.choose(g);
+                }
 
                 return;
             }

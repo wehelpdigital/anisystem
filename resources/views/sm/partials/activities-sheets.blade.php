@@ -1187,14 +1187,13 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 11l7-7 7 7M5 19l7-7 7 7"/></svg>
                             <span id="mirrorFoldLabel">Collapse all</span>
                         </button>
-                        {{-- Date Diff measures the gap between two days; this
-                             measures what they cost. Same gesture, same place
-                             to reach for it. --}}
-                        <button type="button" class="mir-tool" id="mirrorCashRangeBtn" aria-pressed="false"
-                                title="Total what two days and everything between them cost">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
-                            <span id="mirrorCashRangeLabel">Range Cost</span>
-                        </button>
+                        {{-- What a stretch of days costs used to be a button
+                             here. It is asked at the day's own money now, the
+                             way it is on the board: tap the figure and the
+                             chooser offers that day's longhand or a range
+                             starting there. A tool that duplicates a thing
+                             already sitting in the content is a tool people
+                             have to be told about. --}}
                     </div>
                 </div>
             </div></div>

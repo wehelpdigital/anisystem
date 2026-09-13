@@ -2015,18 +2015,15 @@ document.addEventListener('DOMContentLoaded', () => {
          * exactly as their own painter wrote them, because their own painter
          * is what writes them. */
         paintAllDayCash();
-        $qsa('#cashRangeBtn, #mirrorCashRangeBtn').forEach((b) => {
+        $qsa('#cashRangeBtn').forEach((b) => {
             b.setAttribute('aria-pressed', CASH_RANGE.on ? 'true' : 'false');
             b.classList.toggle('is-on', CASH_RANGE.on);
         });
-        /* The mirror calls it Range Cost; the board's Tools menu says what it
-         * does, because a menu row has no neighbours to take its meaning
-         * from. Both flip to the same off-switch. */
+        /* Only the Tools menu carries a label for this now — the mirror asks
+         * the question at the pill, the way the board does, so it has no
+         * button left to keep in step. */
         $qsa('#cashRangeLabel, #actCashRangeLabel').forEach((l) => {
             l.textContent = CASH_RANGE.on ? 'Stop totalling' : 'Total two days';
-        });
-        $qsa('#mirrorCashRangeLabel').forEach((l) => {
-            l.textContent = CASH_RANGE.on ? 'Stop Range Cost' : 'Range Cost';
         });
         /* The mirror keeps copies of the board's days, and entering the mode
          * puts a pill on the free ones. It would catch up on its own - it
@@ -2049,6 +2046,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // The mirror holds copies of these days and cannot reach in here, so
         // it hands the date over and the one set of picks answers for both.
         pick: cashRangePick,
+        // And the same two questions, asked of a copy. The chooser reads the
+        // group it is given — its date, its cards, its expenses — so a mirror
+        // copy answers exactly as the board's own day does.
+        choose: openDayCashChooser,
         paint: paintCashRange,
     };
     $id('cashRangeBtn')?.addEventListener('click', () => cashRangeSetMode(!CASH_RANGE.on));
