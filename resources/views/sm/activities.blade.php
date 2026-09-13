@@ -2089,7 +2089,18 @@
         }
         .activity-card-lothead .activity-na-tag { font-weight: 700; }
         html.dark .activity-card-lothead .lot-tag { background: #5b67d6; color: #fff; }
-        /* Variety + DAS, below the title, as regular neutral tags. */
+        /* The lot's day number, riding its own chip.
+           Divided by a hairline rather than a middle dot: the name and the
+           count are two different questions about the same ground, and a rule
+           says so at a glance where another dot would just be more text. Held
+           on one line - a count broken across two reads as damage. */
+        .lot-tag .lot-tag-das {
+            margin-left: .38rem; padding-left: .38rem;
+            border-left: 1px solid rgb(255 255 255 / .38);
+            font-weight: 700; font-variant-numeric: tabular-nums;
+            opacity: .92; white-space: nowrap;
+        }
+        /* The variety, below the title, as a regular neutral tag. */
         .activity-card-lotmeta { margin-top: .4rem; }
         .activity-card-lotmeta:empty { display: none; margin-top: 0; }
         .activity-card-lotmeta .lot-meta-tag { background: #f3f4f6; color: #4b5563; font-weight: 600; }
@@ -4784,7 +4795,11 @@
             document.querySelectorAll('#activitiesList .activity-card').forEach((c) => {
                 c.querySelectorAll('.lot-tag[data-lot-id]').forEach((t) => {
                     const id = t.getAttribute('data-lot-id');
-                    const name = (t.textContent || '').trim();
+                    /* data-lot-name, not textContent: the chip carries the
+                       lot's day count as well now, so reading what it says
+                       would have offered "Apratado 1DAT+24" as a lot to
+                       filter by - a name that matches nothing. */
+                    const name = (t.getAttribute('data-lot-name') || '').trim();
                     if (id && name && !lotNameById.has(id)) lotNameById.set(id, name);
                 });
                 // A card can carry several kinds at once (data-activity-types
@@ -5072,7 +5087,10 @@
                  * side, which is what somebody who only remembers the number
                  * means. */
                 const want = q.replace(/[\s·]/g, '');
-                const meta = [...card.querySelectorAll('.lot-meta-tag')].map((t) => {
+                /* Read from the CHIP, which is where the count lives now.
+                 * .lot-meta-tag is still asked because a variety is a word
+                 * somebody may search the same way. */
+                const meta = [...card.querySelectorAll('.lot-tag-das, .lot-meta-tag')].map((t) => {
                     const raw = (t.textContent || '').toLowerCase().replace(/[\s·]/g, '');
                     return raw + ' ' + raw.replace(/[+-]/g, '');
                 }).join(' ');

@@ -34,6 +34,59 @@
     // Twin of LOCK_EDIT / editTitle in activities-js.blade.php.
     // Note: appending a note to an activity goes through the write gate too,
     // so it follows canEdit; "notes only" buys the DAY's note, not this one.
+    /* THE PER-LOT DAY COUNTER, worked out once for the whole card.
+     *
+     * It used to be computed inside the meta row below the title. It belongs
+     * on the lot's own chip now - the day number is the first thing a grower
+     * checks against the work in front of them, and it was sitting a line
+     * away from the lot it counts for - so it is hoisted here, where both
+     * places that draw a lot chip can read it.
+     *
+     * Twin of computeDasLabel() in activities-js.blade.php, and it has to be
+     * read against that function rather than reinvented here: only a lot whose
+     * dayType is DAT - sown and then transplanted - flips to a fresh DAT count
+     * on and after its transplant date, naming the count it converts from at
+     * the pivot. DAS is direct seeded and never flips; DAP is planted and is
+     * one count throughout. The earlier version of this block had that rule
+     * backwards, so the server drew DAT on a direct-seeded lot and the JS
+     * refresh corrected it a moment later - invisible while the number sat in
+     * a grey row, a visible flicker now it rides the lot's own chip.
+     *
+     * A lot with no anchor date has no number at all. */
+    $lotDaySuffix = [];
+    if ($startC) {
+        $lotTpEff = $lotTransplantEff ?? [];
+        foreach ($cardLots as $lot) {
+            $mode = strtoupper($lot->dayType ?: 'DAT');
+            if (! in_array($mode, ['DAP', 'DAS', 'TREE'], true)) { $mode = 'DAT'; }
+            $z = $lotDayZeroEff[$lot->id] ?? null;
+            $suffix = null;
+
+            // Only a sown-then-transplanted lot flips to a fresh DAT count.
+            if ($mode === 'DAT') {
+                $tp = $lotTpEff[$lot->id] ?? null;
+                if ($tp && $startC->gte($tp)) {
+                    $datDelta = (int) $tp->diffInDays($startC, false);
+                    if ($datDelta === 0 && $z) {
+                        // At the pivot, name the count it converts from.
+                        $dd = (int) $z->diffInDays($startC, false);
+                        $suffix = 'DAS' . ($dd > 0 ? '+' : '') . $dd . ' → DAT0';
+                    } else {
+                        $suffix = 'DAT' . ($datDelta > 0 ? '+' : '') . $datDelta;
+                    }
+                }
+            }
+
+            // Base phase: DAS before any transplant, DAP throughout.
+            if ($suffix === null && $z) {
+                $delta = (int) $z->diffInDays($startC, false);
+                $suffix = ($mode === 'DAP' ? 'DAP' : 'DAS') . ($delta > 0 ? '+' : '') . $delta;
+            }
+
+            if ($suffix !== null) { $lotDaySuffix[$lot->id] = $suffix; }
+        }
+    }
+
     $mayEdit = \App\Support\WorkerContext::canEdit();
     $lockCls = $mayEdit ? '' : ' is-locked';
     $editTitle = fn ($plain) => $mayEdit ? $plain : 'Only someone who can edit the plan may do this';
@@ -124,7 +177,7 @@
                               data-lot-id="{{ $lot->id }}"
                               data-lot-name="{{ $lot->lotName }}"
                               data-lot-variety="{{ $lot->variety ?? '' }}"
-                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}</span>
+                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}@isset($lotDaySuffix[$lot->id])<span class="lot-tag-das">{{ $lotDaySuffix[$lot->id] }}</span>@endisset</span>
                     @endforeach
                 @elseif ($a->activityType !== 'worker_payroll')
                     {{-- A payroll day is about who turned up, not which field,
@@ -144,7 +197,7 @@
                               data-lot-id="{{ $lot->id }}"
                               data-lot-name="{{ $lot->lotName }}"
                               data-lot-variety="{{ $lot->variety ?? '' }}"
-                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}</span>
+                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}@isset($lotDaySuffix[$lot->id])<span class="lot-tag-das">{{ $lotDaySuffix[$lot->id] }}</span>@endisset</span>
                     @endforeach
                 @endif
                 @if($a->activityType === 'irrigation')
@@ -188,45 +241,17 @@
                 @endif
                 <span class="badge badge-gray hide-activity-tag" @if(!$a->isHidden) style="display:none;" @endif>Hidden</span>
             </div>
-            {{-- Variety + DAS live here, below the title, as regular tags. The box
-                 always renders when there are lots so the JS DAS refresh can
-                 repopulate it after a move; :empty hides it when blank. --}}
+            {{-- The variety lives here, below the title, as a regular tag. The
+                 day count that used to sit beside it has moved up on to the
+                 lot's own chip, where the question is asked. The box always
+                 renders when there are lots so the JS refresh can repopulate
+                 it after a move; :empty hides it when blank. --}}
             @if ($cardLots->count())
-                @php $lotMultiMeta = $cardLots->count() > 1; $lotTp = $lotTransplantEff ?? []; @endphp
+                @php $lotMultiMeta = $cardLots->count() > 1; @endphp
                 <div class="activity-card-lots activity-card-lotmeta">
                     @foreach ($cardLots as $lot)
-                        @php
-                            $parts = [];
-                            if (! empty($lot->variety)) { $parts[] = $lot->variety; }
-                            // Per-lot day counter: DAP lots are a single count; DAS
-                            // lots flip to DAT on/after the transplant date.
-                            if ($startC) {
-                                $suffix = null;
-                                $mode = ($lot->dayType === 'DAP') ? 'DAP' : 'DAS';
-                                $z = $lotDayZeroEff[$lot->id] ?? null;
-                                if ($mode === 'DAS') {
-                                    $tp = $lotTp[$lot->id] ?? null;
-                                    if ($tp && $startC->gte($tp)) {
-                                        $datDelta = (int) $tp->diffInDays($startC, false);
-                                        if ($datDelta === 0 && $z) {
-                                            $dd = (int) $z->diffInDays($startC, false);
-                                            $suffix = 'DAS' . ($dd > 0 ? '+' : '') . $dd . ' → DAT0';
-                                        } else {
-                                            $suffix = 'DAT' . ($datDelta > 0 ? '+' : '') . $datDelta;
-                                        }
-                                    } elseif ($z) {
-                                        $delta = (int) $z->diffInDays($startC, false);
-                                        $suffix = 'DAS' . ($delta > 0 ? '+' : '') . $delta;
-                                    }
-                                } elseif ($z) {
-                                    $delta = (int) $z->diffInDays($startC, false);
-                                    $suffix = 'DAP' . ($delta > 0 ? '+' : '') . $delta;
-                                }
-                                if ($suffix !== null) { $parts[] = $suffix; }
-                            }
-                        @endphp
-                        @if (count($parts))
-                            <span class="item-tag lot-meta-tag">{{ $lotMultiMeta ? $lot->lotName . ' · ' : '' }}{{ implode(' · ', $parts) }}</span>
+                        @if (! empty($lot->variety))
+                            <span class="item-tag lot-meta-tag">{{ $lotMultiMeta ? $lot->lotName . ' · ' : '' }}{{ $lot->variety }}</span>
                         @endif
                     @endforeach
                 </div>

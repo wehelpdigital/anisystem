@@ -753,24 +753,29 @@ document.addEventListener('DOMContentLoaded', () => {
     function refreshActivityCardDasLabels() {
         $qsa('#activitiesList .activity-card[data-id]').forEach((card) => {
             const targetDate = (card.getAttribute('data-target-date') || '').trim();
-            // Header chips stay the lot NAME only.
+            /* The head chip carries the day count, so it is the thing that has
+             * to be rebuilt when a card lands on a different day - the number
+             * is a distance from the lot's day zero, and moving the card moves
+             * the far end of it. innerHTML rather than textContent: the count
+             * is its own element inside the chip. */
             const headTags = $qsa('.activity-card-lothead .lot-tag[data-lot-id]', card);
-            headTags.forEach((tag) => { tag.textContent = tag.getAttribute('data-lot-name') || ''; });
-            // Variety + DAS live in the meta row below the title — rebuild it with
-            // the DAS recomputed for this card's current date.
+            headTags.forEach((tag) => {
+                const lotId = parseInt(tag.getAttribute('data-lot-id'), 10);
+                const name = tag.getAttribute('data-lot-name') || '';
+                const das = computeDasLabel(lotId, targetDate).replace(/^\s*·\s*/, '');
+                tag.innerHTML = esc(name) + (das ? `<span class="lot-tag-das">${esc(das)}</span>` : '');
+            });
+            // The meta row below the title is the variety alone now, and a
+            // variety does not change when a card moves - but it is still
+            // rebuilt here so a card that arrived without one catches up.
             const metaBox = card.querySelector('.activity-card-lotmeta');
             if (!metaBox) return;
             const multi = headTags.length > 1;
             let html = '';
             headTags.forEach((tag) => {
-                const lotId = parseInt(tag.getAttribute('data-lot-id'), 10);
                 const name = tag.getAttribute('data-lot-name') || '';
                 const variety = tag.getAttribute('data-lot-variety') || '';
-                const das = computeDasLabel(lotId, targetDate).replace(/^\s*·\s*/, '');
-                const parts = [];
-                if (variety) parts.push(variety);
-                if (das) parts.push(das);
-                if (parts.length) html += `<span class="item-tag lot-meta-tag">${esc((multi ? name + ' · ' : '') + parts.join(' · '))}</span>`;
+                if (variety) html += `<span class="item-tag lot-meta-tag">${esc((multi ? name + ' · ' : '') + variety)}</span>`;
             });
             metaBox.innerHTML = html;
         });
@@ -1020,25 +1025,35 @@ document.addEventListener('DOMContentLoaded', () => {
             lotsRow = lotIds.map((id) => {
                 const name = LOT_NAMES[id] || ('Lot #' + id);
                 const variety = LOT_VARIETIES[id] || '';
-                const text = name;   // show only the lot name (variety/DAS kept in data + editor)
+                /* THE CHIP THAT NAMES THE GROUND NOW SAYS HOW OLD IT IS.
+                 *
+                 * The day number is the first thing a grower checks against
+                 * the work in front of them - DAT 24 is when rice wants its
+                 * second nitrogen - and it used to sit in the grey row under
+                 * the title, a line away from the lot it belongs to. On a
+                 * card covering two lots that meant reading the name at the
+                 * top and matching it to a number at the bottom. It rides
+                 * the lot's own chip now, where the question is asked.
+                 *
+                 * Kept as its own element rather than concatenated, so the
+                 * count can be dimmed against the name without dimming the
+                 * name, and so the day search can still find it. */
+                const das = computeDasLabel(id, targetDateStr).replace(/^\s*·\s*/, '');
                 const hue = (id * 137) % 360;   // golden-angle → distinct, stable per lot
-                return `<span class="item-tag lot-tag" data-lot-id="${id}" data-lot-name="${esc(name)}" data-lot-variety="${esc(variety)}" style="background:hsl(${hue}, 55%, 40%)">${esc(text)}</span>`;
+                return `<span class="item-tag lot-tag" data-lot-id="${id}" data-lot-name="${esc(name)}" data-lot-variety="${esc(variety)}" style="background:hsl(${hue}, 55%, 40%)">${esc(name)}${das ? `<span class="lot-tag-das">${esc(das)}</span>` : ''}</span>`;
             }).join('');
         } else if (a.activityType !== 'worker_payroll') {
             // A payroll day has no lot by nature, so saying so is noise.
             lotsRow = '<span class="item-tag activity-na-tag" title="Applies generally — not tied to any specific lot">N/A — Not lot-specific</span>';
         }
-        // Variety + DAS below the title, as regular neutral tags.
+        // The variety below the title, as a regular neutral tag. The day
+        // count that used to sit beside it has gone up to the lot's own chip.
         let lotMetaRow = '';
         if (lotIds.length) {
             const metas = lotIds.map((id) => {
                 const name = LOT_NAMES[id] || ('Lot #' + id);
                 const variety = LOT_VARIETIES[id] || '';
-                const das = computeDasLabel(id, targetDateStr).replace(/^\s*·\s*/, '');
-                const parts = [];
-                if (variety) parts.push(variety);
-                if (das) parts.push(das);
-                return parts.length ? { name, text: parts.join(' · ') } : null;
+                return variety ? { name, text: variety } : null;
             }).filter(Boolean);
             const multi = metas.length > 1;
             const inner = metas.map((m) => `<span class="item-tag lot-meta-tag">${esc((multi ? m.name + ' · ' : '') + m.text)}</span>`).join('');
