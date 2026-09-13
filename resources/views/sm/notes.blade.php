@@ -311,25 +311,6 @@
 const __init = () => {
     const SCHEDULE_ID = @json($schedule->id);
     const URLS = {
-
-    /* Same road as the board: a server that answers is a real answer, a
-       server that cannot be reached is the field and the note waits in the
-       outbox. See apiQ in partials/activities-js. */
-    async function apiQ(url, opts = {}, says = 'A note', key = null) {
-        try {
-            return await api(url, opts);
-        } catch (err) {
-            if (!err.offline || !window.aneeOffline?.on()) throw err;
-            await window.aneeOffline.enqueue({
-                url, method: opts.method || 'POST',
-                json: (opts.body && !(opts.body instanceof FormData)) ? opts.body : null,
-                says, key,
-            });
-            window.aneeOffline.markDown?.();
-
-            return { success: true, queued: true, message: 'Saved on this phone - it will sync when you are back.' };
-        }
-    }
         store: @json(route('sm.notes.store')) + '?scheduleId=' + SCHEDULE_ID,
         update: (id) => @json(route('sm.notes.update')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + id,
         destroy: (id) => @json(route('sm.notes.destroy')) + '?scheduleId=' + SCHEDULE_ID + '&id=' + id,
@@ -340,6 +321,41 @@ const __init = () => {
         // "file it in an album too" select.
         albums: @json(route('quick-capture.albums')),
     };
+
+    /* Same road as the board: a server that answers is a real answer, a
+       server that cannot be reached is the field and the note waits in the
+       outbox. See apiQ in partials/activities-js.
+       `optimistic` is what the caller knows the note will look like once
+       this lands, and it comes back as `data` so the card can be repainted
+       from what was typed rather than from an answer nobody gave. */
+    async function apiQ(url, opts = {}, says = 'A note', key = null, optimistic = null) {
+        try {
+            return await api(url, opts);
+        } catch (err) {
+            if (!err.offline || !window.aneeOffline?.on()) throw err;
+            /* A form goes to the outbox taken apart, blobs and all. Handing
+               it to enqueue() as `json` would have stored nothing and then
+               replayed an empty POST on the way back in - told "saved" and
+               silently losing it, which is worse than refusing. */
+            if (opts.body instanceof FormData) {
+                await window.aneeOffline.enqueueForm(url, opts.body, { says, key, method: opts.method || 'POST' });
+            } else {
+                await window.aneeOffline.enqueue({
+                    url, method: opts.method || 'POST',
+                    json: opts.body || null,
+                    says, key,
+                });
+            }
+            window.aneeOffline.markDown?.();
+
+            return {
+                success: true,
+                queued: true,
+                data: optimistic,
+                message: 'Saved on this phone - it will sync when you are back.',
+            };
+        }
+    }
     const CSRF = document.querySelector('meta[name=csrf-token]').content;
     // A row built after a save must obey the same rule as one the server
     // rendered; two answers to one question is how a closed door reopens.
@@ -891,7 +907,44 @@ const __init = () => {
 
         const btn = fld('noteSaveBtn'); btn.disabled = true;
         try {
-            const res = await apiQ(id ? URLS.update(id) : URLS.store, { method: id ? 'PUT' : 'POST', body: payload }, id ? 'Edited a note' : 'Wrote a note', id ? 'note:' + id : null);
+            /* WHAT THE NOTE WILL LOOK LIKE ONCE THIS REACHES THE SERVER.
+             *
+             * Queued, the server sends nothing back, and the line below read
+             * res.data.id the moment it returned - so writing a note with no
+             * signal threw, showed a red toast, and left the card wearing its
+             * old title while the note sat safely in the outbox the whole
+             * time. Saved but showing something else is the worst of both.
+             *
+             * The media list is taken from the sheet rather than from the
+             * payload: the payload carries only what the server needs to
+             * store, and the thumbnails need the urls it leaves out.
+             *
+             * imagePath and imageUrl are deliberately empty. The sheet folds
+             * a note's legacy single photo into the media list when it opens,
+             * and the payload sends imagePath null, so this is what the row
+             * will actually look like - keeping the old pair would draw a
+             * photo the farmer may have just taken off. */
+            const was = id
+                ? (NOTES[id] || noteOf(list.querySelector('.note-card[data-id="' + id + '"]')) || {})
+                : {};
+            const optimistic = id ? Object.assign({}, was, {
+                id: Number(id),
+                title,
+                body: payload.body,
+                imagePath: null,
+                imageUrl: null,
+                media: media.map((m) => ({ ...m })),
+            }) : null;
+            const res = await apiQ(id ? URLS.update(id) : URLS.store, { method: id ? 'PUT' : 'POST', body: payload }, id ? 'Edited a note' : 'Wrote a note', id ? 'note:' + id : null, optimistic);
+            /* A NEW note queued offline has no id to draw a card against, and
+             * inventing one would let the next edit post to a row that does
+             * not exist. It is kept, and the page it lands on is the one the
+             * sync reloads. */
+            if (res.queued && !id) {
+                closeSheet('noteSheet');
+                toast('The new note is kept on this phone - it appears once you are back.');
+                return;
+            }
             const n = { id: res.data.id, title: res.data.title, body: res.data.body, imagePath: res.data.imagePath, imageUrl: res.data.imageUrl, media: res.data.media || [] };
             NOTES[n.id] = n;
             const fresh = renderCard(n);
