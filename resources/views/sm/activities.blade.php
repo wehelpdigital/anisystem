@@ -606,6 +606,30 @@
         .date-header-cash svg { width: .85rem; height: .85rem; }
         .date-header-cash { cursor: pointer; }
         .date-header-cash:hover { filter: brightness(.97); }
+        /* TOTALLING A STRETCH OF DAYS.
+           Every pill is an end to pick, and the two that are picked carry the
+           answer for the whole run between them. The text comes from CSS and
+           not from the pill's children: the board watches its own list for
+           changes and repaints these when it sees any, so writing into one
+           here would set that off, which repaints it, which sets it off. */
+        body.cash-range-on .date-header-cash { border-style: dashed; cursor: copy; }
+        /* A day with nothing on it is here to be picked, not to be read. */
+        .date-header-cash.is-free { opacity: .6; }
+        .date-header-cash.is-free.is-cash-pick, .date-header-cash.is-free.in-cash-range { opacity: 1; }
+        .date-header-cash.in-cash-range {
+            background: var(--color-amber-100, #fef3c7); border-style: solid; }
+        .date-header-cash.is-cash-pick {
+            background: var(--color-amber-500, #f59e0b); border-color: var(--color-amber-600, #d97706);
+            color: #fff; border-style: solid; }
+        .date-header-cash[data-range-say] > * { display: none; }
+        .date-header-cash[data-range-say]::after {
+            content: attr(data-range-say); white-space: nowrap; font-weight: 800; }
+        html.dark .date-header-cash.is-cash-pick {
+            background: #b45309; border-color: #d97706; color: #fff; }
+        html.dark .date-header-cash.in-cash-range { background: rgb(180 83 9 / .4); }
+        .mir-tool.is-on, #cashRangeBtn.is-on {
+            background: var(--color-amber-500, #f59e0b); border-color: var(--color-amber-600, #d97706);
+            color: #fff; }
         /* Payroll wears amber, the colour the money already uses on this board,
            so a wage day is not mistaken for a field task at a glance. */
         .payroll-badge { display: inline-flex; align-items: center; gap: .25rem;
@@ -3472,6 +3496,14 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M20 9A8 8 0 006.34 6.34M4 15a8 8 0 0013.66 2.66"/></svg>
             <span class="hidden sm:inline">Refresh</span>
         </button>
+        {{-- Totalling a stretch of days lives in the Tools menu rather than
+             the toolbar: it is asked now and then, not daily, and the bar is
+             already full of what is. The button stays in the DOM because the
+             menu's rows forward their clicks to real buttons. --}}
+        <button type="button" id="cashRangeBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only
+                aria-pressed="false" title="Total what two days and everything between them cost">
+            <span id="cashRangeLabel">Total two days</span>
+        </button>
         <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative toolbar-in-menu" data-activities-only disabled title="Nothing to undo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
             <span class="hidden sm:inline">Undo</span>
@@ -4745,6 +4777,7 @@
         const find = document.getElementById('mirrorFind');
         const findSay = document.getElementById('mirrorFindSay');
         const findN = document.getElementById('mirrorFindN');
+        document.getElementById('mirrorCashRangeBtn')?.addEventListener('click', () => window.cashRange?.toggle());
         const foldBtn = document.getElementById('mirrorFoldBtn');
         const foldLabel = document.getElementById('mirrorFoldLabel');
         const todayBtn = document.getElementById('mirrorTodayBtn');
@@ -4966,6 +4999,10 @@
             });
             diffPicks.length = 0;
             paintDiff();
+            /* The copies were taken from the board and carry whatever it was
+             * wearing, but a rebuild can land between a pick and its paint -
+             * so the stretch is put back on the fresh ones. */
+            window.cashRange?.paint();
             apply();
             // The copies inherit whatever the board decided about empty
             // menus, but a day can gain a saved reading between the two, so
@@ -5410,6 +5447,19 @@
             // day it is measuring from.
             const diff = e.target.closest('.mir-diff');
             if (diff) { e.preventDefault(); toggleDiff(diff); return; }
+            /* The day's money, when a stretch is being totalled. Taken before
+             * the fold for the same reason the diff tag is: a tap meant to
+             * pick an end must not shut the day it is picking. With the mode
+             * off the pill is a figure to read like any other and the tap
+             * goes on to fold the day, exactly as it did before. */
+            const cash = e.target.closest('.date-header-cash');
+            if (cash && window.cashRange?.on()) {
+                e.preventDefault();
+                const g = cash.closest('.date-group');
+                window.cashRange.pick((g?.getAttribute('data-date') || '').trim());
+
+                return;
+            }
             const head = e.target.closest('.date-header');
             if (head) {
                 const g = head.closest('.date-group');

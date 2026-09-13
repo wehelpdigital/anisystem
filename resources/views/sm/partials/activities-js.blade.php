@@ -1653,20 +1653,59 @@ document.addEventListener('DOMContentLoaded', () => {
         const pill = group.querySelector('.date-header-cash');
         if (!pill) return;
         const total = dayCashTotal(group);
+        /* WHILE A STRETCH IS BEING TOTALLED, EVERY DATED DAY OFFERS AN END.
+         *
+         * The pill normally stays out of the way on a day that costs nothing.
+         * But "what did this week cost" is a question about a week, not about
+         * whichever days happened to have money at its edges - and with the
+         * free days unpickable, a Monday-to-Sunday answer was only available
+         * if Monday and Sunday both had wages on them. They go away again
+         * with the mode. */
+        const dateKey = (group.getAttribute('data-date') || '').trim();
+        const picking = document.body.classList.contains('cash-range-on')
+            && !!dateKey && dateKey !== '__no-date__';
 
-        pill.hidden = total <= 0;
-        if (total > 0) {
+        pill.hidden = total <= 0 && !picking;
+        pill.classList.toggle('is-free', total <= 0 && picking);
+        if (total > 0 || picking) {
             // The exact figure is kept on the element, because when the line
             // will not hold it the pill is rewritten short and the number it
             // was rounded from would otherwise be gone.
             pill.dataset.total = String(total);
-            delete pill.dataset.short;
-            pill.innerHTML = `${SVG.wallet}<span>${esc(money(total))}</span>`;
-            pill.title = 'Cash to prepare for this day — wages for everyone on it, plus any extra expense logged against it';
+            /* REWRITTEN ONLY WHEN IT SAYS SOMETHING DIFFERENT.
+             *
+             * The board watches its own list for changes and repaints these
+             * pills whenever it sees one - so a pill rewritten with the very
+             * same figure was a change, which caused a repaint, which caused
+             * a change. Measured at about eight rounds a second once anything
+             * set it off, and the mirror, whose rebuild waits for the board to
+             * go quiet for 220ms, never once got its turn: it sat showing the
+             * days as they were before.
+             *
+             * Compared by a signature rather than by the HTML, because the
+             * browser re-serialises what it parsed and the string that went in
+             * is not always the string that comes back out.
+             *
+             * A day that costs nothing says so with a dash rather than a
+             * ledger-perfect zero: it is only on the board at all so it can be
+             * picked as an end of a stretch, and eight of them reading "0.00"
+             * turns a row of facts into a row of noise. */
+            const sig = total > 0 ? 'm' + total : 'free';
+            if (pill.dataset.cashSig !== sig) {
+                pill.dataset.cashSig = sig;
+                delete pill.dataset.short;
+                pill.innerHTML = total > 0
+                    ? `${SVG.wallet}<span>${esc(money(total))}</span>`
+                    : `${SVG.wallet}<span>&mdash;</span>`;
+            }
+            pill.title = total > 0
+                ? 'Cash to prepare for this day — wages for everyone on it, plus any extra expense logged against it'
+                : 'Nothing costed on this day';
         } else {
-            pill.textContent = '';
+            if (pill.firstChild) pill.textContent = '';
             delete pill.dataset.total;
             delete pill.dataset.short;
+            delete pill.dataset.cashSig;
         }
 
         // The forecast, the cost and the growth stage share a second line.
@@ -1749,13 +1788,189 @@ document.addEventListener('DOMContentLoaded', () => {
                 : 'No wages here yet — nobody is assigned to this day.'}</p>`;
         openSheet('dayCashSheet');
     }
+    /* ---- What a stretch of days costs ---------------------------------
+     *
+     * The day pill answers "what do I bring on Tuesday". The question under
+     * it is "what does this week cost", and the only way to ask it was to
+     * open eight days one at a time and add them up on paper.
+     *
+     * Built the way Date Diff in the mirror is built, because it is the same
+     * gesture: turn it on, tap two ends, and the answer appears on BOTH of
+     * them so it is there whichever end you are looking at. Tapping a third
+     * lets the older of the two go rather than refusing the tap - what people
+     * mean by a third tap is "now compare THIS one to that one".
+     *
+     * Picks are DATE KEYS, not elements. The mirror holds copies of the
+     * board's days, so a day picked in one has to be the same day picked in
+     * the other; keyed by element they would have been two different picks of
+     * the same Tuesday.
+     *
+     * Painted through classes and data attributes, with the text supplied by
+     * CSS rather than written into the pill. The board watches its own list
+     * for changes and repaints the day figures whenever it sees any, and that
+     * observer is looking at child nodes: rewriting a pill here would set it
+     * off, which repaints the pill, which sets it off. Attributes are not
+     * watched. It also leaves fitDayFacts - which measures these pills and
+     * shortens them when the line will not hold them - with exactly the
+     * content its own painter put there.
+     *
+     * Nothing here asks the server. The wages are already on the cards as
+     * data-labour and the extra expenses are already in DAY_EXPENSES, both
+     * put there when the page was built, so this answers out in the field off
+     * the shelf with no signal at all.
+     */
+    const CASH_RANGE = { on: false, picks: [], painted: false };
+
+    /** Every day in the stretch that has money on it, and what it has. */
+    function cashRangeRows(from, to) {
+        const rows = [];
+        const seen = new Set();
+        $qsa('#activitiesList .date-group').forEach((g) => {
+            const d = (g.getAttribute('data-date') || '').trim();
+            // ISO dates compare correctly as strings, which is the whole
+            // reason this board speaks in them.
+            if (!d || d === '__no-date__' || d < from || d > to) return;
+            seen.add(d);
+            const t = dayCashTotal(g);
+            if (t > 0) rows.push({ date: d, total: t });
+        });
+        /* A day can carry an expense without carrying a card - somebody logs
+         * the fuel for a trip on a day nothing was planned - and that day has
+         * no group on the board to read it off. It is still money spent
+         * inside the stretch, so it is counted. */
+        Object.keys(DAY_EXPENSES || {}).forEach((d) => {
+            if (seen.has(d) || d < from || d > to) return;
+            const t = _expenseRowsFor(d).reduce((sum, r) => sum + (Number(r.amount) || 0), 0);
+            if (t > 0) rows.push({ date: d, total: t });
+        });
+        rows.sort((a, b) => (a.date < b.date ? -1 : 1));
+
+        return rows;
+    }
+
+    function paintCashRange() {
+        /* Nothing has ever been picked and the mode is off: there is nothing
+         * to paint and nothing to undo, so the board is not walked for it.
+         * This also keeps the very first run off DAY_EXPENSES, which is a
+         * const declared thousands of lines below here. */
+        if (!CASH_RANGE.on && !CASH_RANGE.painted) return;
+
+        const picks = CASH_RANGE.picks.slice().sort();
+        const [from, to] = picks;
+        let say = null;
+        let title = '';
+        if (picks.length === 2) {
+            const rows = cashRangeRows(from, to);
+            const total = rows.reduce((t, r) => t + r.total, 0);
+            const span = Math.round((new Date(to + 'T00:00:00') - new Date(from + 'T00:00:00')) / 86400000) + 1;
+            say = moneyShort(total);
+            /* THE ARITHMETIC TRAVELS WITH THE ANSWER.
+             * A number nobody can check is a number nobody trusts - the same
+             * reason the day pill opens its own longhand. There is no room on
+             * a pill for eight lines, so they ride the tooltip. */
+            title = money(total) + ' over ' + span + (span === 1 ? ' day' : ' days')
+                + ' (' + prettyDateWords(from) + ' → ' + prettyDateWords(to) + ')'
+                + (rows.length
+                    ? '\n' + rows.map((r) => prettyDateWords(r.date) + '  ' + money(r.total)).join('\n')
+                    : '\nNothing costed in these days yet.');
+        }
+
+        const days = $qsa('#activitiesList .date-group').concat($qsa('#mirrorBody .date-group'));
+        days.forEach((g) => {
+            const pill = g.querySelector('.date-header-cash');
+            if (!pill) return;
+            if (!CASH_RANGE.on) {
+                pill.classList.remove('is-cash-pick', 'in-cash-range');
+                pill.removeAttribute('data-range-say');
+
+                return;
+            }
+            const d = (g.getAttribute('data-date') || '').trim();
+            const picked = picks.includes(d);
+            pill.classList.toggle('is-cash-pick', picked);
+            pill.classList.toggle('in-cash-range', !picked && picks.length === 2 && d > from && d < to);
+            if (picked && say !== null) {
+                pill.setAttribute('data-range-say', say);
+                pill.title = title;
+            } else if (picked) {
+                pill.setAttribute('data-range-say', 'Pick the other end');
+                pill.title = 'Now tap the other end of the stretch you want totalled';
+            } else {
+                pill.removeAttribute('data-range-say');
+                pill.title = 'Tap to total this day together with another';
+            }
+        });
+        CASH_RANGE.painted = true;
+    }
+    window.__paintCashRange = paintCashRange;
+
+    function cashRangePick(dateKey) {
+        if (!dateKey || dateKey === '__no-date__') return;
+        const at = CASH_RANGE.picks.indexOf(dateKey);
+        if (at > -1) CASH_RANGE.picks.splice(at, 1);
+        else {
+            CASH_RANGE.picks.push(dateKey);
+            if (CASH_RANGE.picks.length > 2) CASH_RANGE.picks.shift();
+        }
+        paintCashRange();
+    }
+
+    function cashRangeSetMode(on) {
+        CASH_RANGE.on = !!on;
+        CASH_RANGE.picks.length = 0;
+        document.body.classList.toggle('cash-range-on', CASH_RANGE.on);
+        /* Cleared while it still remembers it painted something, or the early
+         * return would leave the last answer sitting on two pills. */
+        paintCashRange();
+        if (!CASH_RANGE.on) CASH_RANGE.painted = false;
+        /* Both ways round: entering puts a pill on the free days so they can
+         * be picked, leaving takes them off again. The day figures come back
+         * exactly as their own painter wrote them, because their own painter
+         * is what writes them. */
+        paintAllDayCash();
+        $qsa('#cashRangeBtn, #mirrorCashRangeBtn').forEach((b) => {
+            b.setAttribute('aria-pressed', CASH_RANGE.on ? 'true' : 'false');
+            b.classList.toggle('is-on', CASH_RANGE.on);
+        });
+        $qsa('#cashRangeLabel, #mirrorCashRangeLabel, #actCashRangeLabel').forEach((l) => {
+            l.textContent = CASH_RANGE.on ? 'Stop totalling' : 'Total two days';
+        });
+        /* The mirror keeps copies of the board's days, and entering the mode
+         * puts a pill on the free ones. It would catch up on its own - it
+         * watches the board and rebuilds - but only after its own debounce,
+         * so a farmer who turned this on from inside the mirror would tap a
+         * free day and find nothing there to tap. Asked directly instead. */
+        window.mirrorRefresh?.();
+        if (CASH_RANGE.on) toast('Tap the day to count from, then the day to count to.');
+    }
+
+    window.cashRange = {
+        toggle: () => cashRangeSetMode(!CASH_RANGE.on),
+        stop: () => { if (CASH_RANGE.on) cashRangeSetMode(false); },
+        on: () => CASH_RANGE.on,
+        // The mirror holds copies of these days and cannot reach in here, so
+        // it hands the date over and the one set of picks answers for both.
+        pick: cashRangePick,
+        paint: paintCashRange,
+    };
+    $id('cashRangeBtn')?.addEventListener('click', () => cashRangeSetMode(!CASH_RANGE.on));
+
     document.addEventListener('click', (e) => {
         const pill = e.target.closest('.date-header-cash');
         if (!pill) return;
         e.preventDefault();
         e.stopPropagation();          // not a fold of the day
         const group = pill.closest('.date-group');
-        if (group) openDayCash(group);
+        if (!group) return;
+        /* In totalling mode the pill picks an end of the stretch instead of
+         * opening its own day. The breakdown is one tap away again the moment
+         * the mode is switched off, so nothing is taken away for good. */
+        if (CASH_RANGE.on) {
+            cashRangePick((group.getAttribute('data-date') || '').trim());
+
+            return;
+        }
+        openDayCash(group);
     });
 
     /* True when a mutation record only moved our own decorations around — the
@@ -2002,6 +2217,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // ends up on that second row.
         window.__wxRepaint?.();
         $qsa('#activitiesList .date-group').forEach((g) => { paintDayCash(g); paintDayStage(g); });
+        // The day figures have just been rewritten; if a stretch is being
+        // totalled, its answer goes back over the top of them.
+        window.__paintCashRange?.();
     }
     // The weather arrives on its own schedule; when it lands, the second line
     // has to be recomputed so the break exists for it too.
