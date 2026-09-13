@@ -1720,18 +1720,36 @@ document.addEventListener('pointerdown', (e) => {
     /* ---- the drain: in order, stopping if the line drops again ---- */
     let draining = false;
     let retryTimer = null;
-    async function drain() {
-        if (draining || !navigator.onLine || !on()) return;
+    /* `proven` says the caller has just reached the server itself - the
+       heartbeat, or an `online` event that was checked - so the browser's
+       opinion is not consulted. Without it a document that came into being
+       with no signal can report offline for the rest of its life, and the
+       outbox would sit full behind a gate that never opened. */
+    async function drain(proven) {
+        if (draining || (!proven && !navigator.onLine) || !on()) return;
         draining = true;
         let leftover = 0;
         try {
             const rows = await outboxAll();
             if (!rows.length) {
-                /* Nothing to send is not nothing to learn. The line is back,
-                   and this used to return before anything said so — so a
-                   farmer who went offline, changed nothing and came back in
-                   kept the yellow bar over a working connection. */
-                markUp();
+                /* Nothing to send is not nothing to learn - but it is not
+                   proof of anything either.
+
+                   This used to declare the line back on an empty box. That
+                   is how the installed app, opened off the shelf in a dead
+                   zone, took its own yellow bar down a second later: the
+                   phone had bars, so navigator.onLine said yes; the box was
+                   empty; provenUp was set over a connection that had just
+                   failed to reach anything. From then on nothing knew it was
+                   offline - no bar, no locks, every refusal skipped - which
+                   is the whole of "offline mode is not working in the app".
+
+                   So the server is asked, and only when the bar is up: a page
+                   that already believes itself online has nothing to take
+                   down. The case this branch was written for still works -
+                   somebody who went out, changed nothing and came back has
+                   the bar up, the ping answers, and it comes down. */
+                if (isDown() && await proveTheLine()) markUp();
 
                 return;
             }
@@ -1775,7 +1793,13 @@ document.addEventListener('pointerdown', (e) => {
                     done++;
                     if (r.ok) ok++;
                     else failed++;
-                } catch (_) { break; }
+                } catch (_) {
+                    /* Nothing was reached. Said so, which puts the bar up and
+                       starts the heartbeat - and the heartbeat is what tries
+                       again, with proof, rather than a blind timer. */
+                    markDown();
+                    break;
+                }
             }
             leftover = rows.length - done;
             if (done) {
@@ -1805,7 +1829,10 @@ document.addEventListener('pointerdown', (e) => {
             // The first try after "online" can land on a stack still waking
             // up — anything left behind gets another go shortly, and again
             // after that, until the box is empty.
-            if (leftover > 0 && navigator.onLine) {
+            /* Only for a server that answered and was busy. A line that is
+               down has the heartbeat, which retries with proof; a timer that
+               fires into nothing every four seconds proves nothing. */
+            if (leftover > 0 && !isDown()) {
                 clearTimeout(retryTimer);
                 retryTimer = setTimeout(drain, 4000);
             }
@@ -1838,8 +1865,12 @@ document.addEventListener('pointerdown', (e) => {
     try {
         navigator.serviceWorker?.addEventListener?.('message', (e) => {
             if (e.data?.type !== 'anee-served-offline') return;
-            servedFromShelf = true;
-            paintBar();
+            /* The worker only serves from the shelf after its own fetch has
+               failed, so this is a failure to reach the server, witnessed -
+               and it must be allowed to overturn provenUp. Setting the flag
+               and repainting left the bar down whenever provenUp had been set
+               wrongly before it, because isDown() asks both. */
+            markDown();
         });
     } catch (_) { /* no service worker here */ }
     /* And the note it left, which is how this page — created after the
@@ -1848,11 +1879,11 @@ document.addEventListener('pointerdown', (e) => {
         try {
             const c = await caches.open('anee-flags');
             if (await c.match('/__served-offline')) {
-                servedFromShelf = true;
-                paintBar();
-                // This page opened off the shelf; watch for the line coming
-                // back rather than waiting for an event that may not come.
-                watchForTheLine();
+                // This page opened off the shelf: a failure to reach the
+                // server, witnessed by the worker. markDown puts the bar up
+                // and starts watching for the line, and it resets provenUp -
+                // which drain() at boot may have set a moment ago.
+                markDown();
             }
         } catch (_) { /* no cache storage here */ }
     })();
@@ -1915,7 +1946,12 @@ document.addEventListener('pointerdown', (e) => {
         document.body.style.setProperty('--offbar-h', bar.getBoundingClientRect().height + 'px');
     }
 
-    window.addEventListener('online', () => { markUp(); drain(); });
+    /* The browser's opinion, checked against the server before anything is
+       torn down. A WiFi with nothing behind it fires this too, and marking up
+       on the word alone is the same mistake the empty outbox made. */
+    window.addEventListener('online', async () => {
+        if (await proveTheLine()) { markUp(); drain(true); }
+    });
     /* ---- warming the shelf ----
        The runtime cache only holds pages the reader has VISITED with the
        mode on, so walking to a not-yet-visited module offline hit the
@@ -2203,18 +2239,36 @@ document.addEventListener('pointerdown', (e) => {
      * answer puts the bar away and empties the outbox.
      *
      * Only while down: an app with a signal makes no extra requests. */
+    /* PROOF, NOT OPINION.
+     *
+     * The one test of the line this file trusts: the cheapest thing the
+     * server serves, asked for fresh. navigator.onLine answers true for a
+     * phone with bars and no data, which is most of a farm, and the `online`
+     * event fires for a router with nothing behind it. A ?ping nobody has
+     * asked before is on no shelf, so the worker cannot answer it from a
+     * copy: only the server can. */
+    async function proveTheLine() {
+        try {
+            await fetch('/favicon.ico?ping=' + Date.now(), { cache: 'no-store', credentials: 'omit' });
+
+            return true;
+        } catch (_) {
+            return false;
+        }
+    }
+
     let heartbeat = null;
     function watchForTheLine() {
         if (heartbeat) return;
         heartbeat = setInterval(async () => {
             if (!isDown()) { clearInterval(heartbeat); heartbeat = null; return; }
-            try {
-                await fetch('/favicon.ico?ping=' + Date.now(), { cache: 'no-store', credentials: 'omit' });
-            } catch (_) { return; }   // still nothing out there
+            if (!(await proveTheLine())) return;   // still nothing out there
             clearInterval(heartbeat);
             heartbeat = null;
             markUp();
-            drain();
+            // Proven: the browser's opinion of the line is not asked again
+            // on the way into the outbox.
+            drain(true);
         }, 8000);
     }
 
