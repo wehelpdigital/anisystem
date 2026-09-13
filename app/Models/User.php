@@ -242,6 +242,11 @@ class User extends Authenticatable
      * Whether this member may create another cropping schedule right now.
      * Only ACTIVE seasons count against the cap — a completed or archived
      * season is history, not a slot in use.
+     *
+     * AND NOT THE DEMO. A free account may keep one active season, and the
+     * worked example the app hands over on the way in is not it: counting it
+     * would make a new member's first act deleting something the app gave
+     * them, to make room for the thing they came here to do.
      */
     public function canCreateSchedule(): bool
     {
@@ -252,6 +257,7 @@ class User extends Authenticatable
 
         return $this->schedules()
             ->whereNotIn('status', [AsCroppingSchedule::STATUS_COMPLETED, AsCroppingSchedule::STATUS_ARCHIVED])
+            ->where(fn ($q) => $q->where('isDemo', false)->orWhereNull('isDemo'))
             ->count() < $limit;
     }
 

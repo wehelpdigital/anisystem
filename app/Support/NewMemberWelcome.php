@@ -59,5 +59,29 @@ class NewMemberWelcome
         } catch (\Throwable $e) {
             Log::warning('Acumbamail signup push failed for user '.$user->id.': '.$e->getMessage());
         }
+
+        /* A SEASON TO PRACTISE ON.
+         *
+         * The app has nineteen modules and a brand-new account has nothing in
+         * any of them, so every door opens onto an empty room. This hands over
+         * a small season already in progress — two lots, a hired hand, three
+         * weeks of work with some of it ticked off — and the guided walk that
+         * points at the parts of it.
+         *
+         * Here rather than at the signup form, for the reason everything else
+         * in this method is here: an account is born 'pending', and writing a
+         * season and a dozen activities for every robot that finds the signup
+         * page is a lot of rows for nothing. It builds itself once, never
+         * twice, and it does not spend the one active season a free account
+         * may keep.
+         *
+         * Wrapped like its neighbours — DemoSchedule swallows its own failures
+         * too, but a season nobody could write is not a reason to refuse
+         * somebody the account they just confirmed. */
+        try {
+            \App\Support\DemoSchedule::createFor($user);
+        } catch (\Throwable $e) {
+            Log::warning('Demo schedule failed for user '.$user->id.': '.$e->getMessage());
+        }
     }
 }

@@ -34,7 +34,8 @@ class AsCroppingSchedule extends BaseModel
         'notifyOwnerDaily',
         'notifyHour',
         'notifyLastSentDate',
-];
+        'isDemo',
+    ];
 
     protected $casts = [
         'defaultStaggerDays' => 'integer',
@@ -46,7 +47,8 @@ class AsCroppingSchedule extends BaseModel
         'notifyOwnerDaily' => 'boolean',
         'notifyHour' => 'integer',
         'notifyLastSentDate' => 'date:Y-m-d',
-];
+        'isDemo' => 'boolean',
+    ];
 
     /**
      * Lifecycle status. 'setup' = still being built, 'completed' = closed and

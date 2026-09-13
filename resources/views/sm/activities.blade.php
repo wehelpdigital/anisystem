@@ -4517,6 +4517,10 @@
 @include('community.partials.video-js')
 @endpush
 
+{{-- The practice season's walk finishes on this board, so this page has
+     to know its steps too. --}}
+@include('sm.partials.demo-tour')
+
 @push('scripts')
 <script>
 /* ======================================================================
