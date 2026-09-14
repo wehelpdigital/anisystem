@@ -257,7 +257,6 @@ class User extends Authenticatable
 
         return $this->schedules()
             ->whereNotIn('status', [AsCroppingSchedule::STATUS_COMPLETED, AsCroppingSchedule::STATUS_ARCHIVED])
-            ->where(fn ($q) => $q->where('isDemo', false)->orWhereNull('isDemo'))
             ->count() < $limit;
     }
 

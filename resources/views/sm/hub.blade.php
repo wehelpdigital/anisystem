@@ -119,23 +119,6 @@
 
 @section('content')
 
-    {{-- THE PRACTICE SEASON SAYS WHAT IT IS, AND OFFERS THE WALK.
-         This block is the only thing in the app that asks whether a season is
-         the demo. Everything else opens it, edits it and reports on it exactly
-         as it would any other — which is the point of practising on it. --}}
-    @if ($schedule->isDemo)
-        <div class="demo-band mb-4">
-            <span class="demo-band-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0v7m0-7L5.5 10.5M12 14l6.5-3.5"/></svg>
-            </span>
-            <span class="demo-band-txt">
-                <b>This is your practice season.</b>
-                <i>Two lots, a hired hand and three weeks of work, already running. Change anything in it — nothing here touches a real farm.</i>
-            </span>
-            <button type="button" class="btn btn-primary btn-sm shrink-0" id="demoTourBtn">Take the tour</button>
-        </div>
-    @endif
-
     {{-- The season's own card. It used to be a plain white box with the
          title, some badges and a button that said "Mark completed" — which
          reads like a checkbox rather than the end of a season. It now looks
@@ -419,7 +402,7 @@
     @endphp
     <div class="grid grid-cols-1 {{ $quickDoors ? 'sm:grid-cols-2 xl:grid-cols-4' : '' }} gap-3 mb-4">
         {{-- Activities (2/4) --}}
-        <a href="{{ route('sm.activities', ['id' => $schedule->id]) }}" data-nav-loader data-tour="activities"
+        <a href="{{ route('sm.activities', ['id' => $schedule->id]) }}" data-nav-loader
             class="cta-tile act-cta {{ $actSpan }} rounded-2xl p-5 flex items-center gap-4">
             <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
                 <img src="{{ asset('images/thunder.png') }}" alt="" style="width:1.75rem;height:1.75rem;object-fit:contain">
@@ -508,9 +491,7 @@
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 stagger-children hub-grid">
         @foreach ($moduleCards as [$label, $moduleKey, $count, $iconPath])
             @continue(array_key_exists($moduleKey, $doorOpen) && ! $doorOpen[$moduleKey])
-            {{-- data-tour is what the guided walk points at: the walk names a
-                 module and this is where that module is on screen. --}}
-            <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => $moduleKey]) }}" data-nav-loader data-tour="{{ $moduleKey }}" class="card card-hover block">
+            <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => $moduleKey]) }}" data-nav-loader class="card card-hover block">
                 <div class="p-4 flex flex-col gap-3">
                     <div class="flex items-start justify-between">
                         <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
@@ -563,7 +544,7 @@
 
         {{-- Reports --}}
         @if ($may('reports'))
-        <a href="{{ route('sm.reports', ['id' => $schedule->id]) }}" data-nav-loader data-tour="reports" class="card card-hover block">
+        <a href="{{ route('sm.reports', ['id' => $schedule->id]) }}" data-nav-loader class="card card-hover block">
             <div class="p-4 flex flex-col gap-3">
                 <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
                     <img src="{{ asset('images/pie-chart.png') }}" alt="" class="w-6 h-6 object-contain">
@@ -623,34 +604,6 @@
     @endif
     {{-- Team chat + whiteboard now live in the Collab Room. --}}
 @endsection
-
-@push('head')
-<style>
-    /* The practice season announces itself. Green rather than a warning
-       colour: this is a gift, not a problem with the account. */
-    .demo-band { display: flex; align-items: center; gap: .85rem; padding: .85rem 1rem;
-        border-radius: 1rem; border: 1.5px dashed var(--color-brand-300, #a8cc7e);
-        background: var(--color-brand-50, #f3f8ec); }
-    .demo-band-ico { flex: none; width: 2.6rem; height: 2.6rem; border-radius: .8rem;
-        display: flex; align-items: center; justify-content: center;
-        background: var(--color-brand-100, #e4efd4); color: var(--color-brand-800, #2d5016); }
-    .demo-band-ico svg { width: 1.35rem; height: 1.35rem; }
-    .demo-band-txt { min-width: 0; flex: 1 1 auto; }
-    .demo-band-txt b { display: block; font-size: .92rem; font-weight: 800; color: var(--color-brand-900, #14532d); }
-    .demo-band-txt i { display: block; font-style: normal; font-size: .78rem; line-height: 1.5;
-        color: var(--color-brand-800, #2d5016); opacity: .85; margin-top: .1rem; }
-    html.dark .demo-band { background: rgb(45 80 22 / .22); border-color: #4a7c2a; }
-    html.dark .demo-band-txt b { color: #d8ecc4; }
-    html.dark .demo-band-txt i { color: #a8cc7e; }
-    /* On a phone the button drops under the words rather than squeezing them. */
-    @media (max-width: 560px) {
-        .demo-band { flex-wrap: wrap; }
-        .demo-band .btn { flex: 1 1 100%; }
-    }
-</style>
-@endpush
-
-@include('sm.partials.demo-tour')
 
 @push('scripts')
 

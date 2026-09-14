@@ -34,7 +34,6 @@ class AsCroppingSchedule extends BaseModel
         'notifyOwnerDaily',
         'notifyHour',
         'notifyLastSentDate',
-        'isDemo',
     ];
 
     protected $casts = [
@@ -47,7 +46,6 @@ class AsCroppingSchedule extends BaseModel
         'notifyOwnerDaily' => 'boolean',
         'notifyHour' => 'integer',
         'notifyLastSentDate' => 'date:Y-m-d',
-        'isDemo' => 'boolean',
     ];
 
     /**

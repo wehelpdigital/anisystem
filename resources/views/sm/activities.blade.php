@@ -4517,13 +4517,6 @@
 @include('community.partials.video-js')
 @endpush
 
-{{-- The practice season's walk finishes on this board, so this page has
-     to know its steps too. --}}
-@include('sm.partials.demo-tour')
-{{-- And every room the shell swaps in gets a walk of its own. The shell is
-     the page a module fragment lands in, so this is where they live. --}}
-@include('sm.partials.demo-module-tours')
-
 @push('scripts')
 <script>
 /* ======================================================================

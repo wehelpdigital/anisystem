@@ -90,15 +90,6 @@
         </script>
     @endauth
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    {{-- The guided walk. Draws nothing until a tour is started, and is loaded
-         everywhere so a walk can carry from one page to the next.
-
-         ABOVE @stack('head'), not down by the scripts: an include inside a
-         layout runs at its own position, and a style pushed after the head
-         stack has already been written is a style that never reaches the
-         page. The overlay rendered with no position, no z-index and no dim —
-         present in the DOM, invisible on the screen. --}}
-    @include('partials.tour')
     @stack('head')
     {{-- Five pages pushed their whole stylesheet to a stack nobody rendered,
          and shipped unstyled because of it: the wall, saved posts, co-farmers,
