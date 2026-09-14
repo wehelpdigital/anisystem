@@ -177,16 +177,14 @@
                     The costs are not coming back down.
                     <span class="block mt-2 text-brand-600">So the yield has to come up.</span>
                 </h2>
+                {{-- One paragraph under the title, like every section on this page. --}}
                 <p class="mt-6 text-gray-600 text-base sm:text-lg leading-relaxed reveal">
-                    Fertilizer costs more every year. The weather no longer keeps to the calendar. The soil is
-                    thinner and more polluted than the one your father farmed. Fuel is at a record, and an
-                    import decision made in a boardroom can move your selling price before harvest.
-                    <span class="font-semibold text-ink">Not one of those is yours to control.</span>
-                </p>
-                <p class="mt-4 text-gray-600 text-base sm:text-lg leading-relaxed reveal">
-                    What is yours is the return you get on every peso you have already spent — and the only
-                    honest way to raise it is to raise the yield those pesos buy, through farm management
-                    accurate enough to stop losing what the field already grew.
+                    Fertilizer costs more every year, the weather no longer keeps to the calendar, the soil is
+                    thinner than the one your father farmed, fuel is at a record, and a boardroom's import
+                    decision can move your selling price before harvest — none of it yours to control. What
+                    is yours is the return on every peso you have already spent, and the only honest way to
+                    raise it is to raise the yield those pesos buy, through farm management accurate enough
+                    to stop losing what the field already grew.
                     <span class="font-semibold text-ink">That is where we come in.</span>
                 </p>
             </div>
@@ -234,18 +232,16 @@
                 The Problem Is Not a Product.
                 <span class="block mt-2 text-brand-600 whitespace-nowrap">It's How You Manage Your Farm.</span>
             </h2>
+            {{-- One paragraph under the title, like every section on this page. --}}
             <p class="mt-7 text-gray-600 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto reveal">
                 Every season, money chases a shortcut — a new fertilizer brand, a stronger spray, a seed
-                somebody swears by. But look at where harvests are actually lost: a spray that came three
-                days late, a dose that was guessed, water that missed its stage, costs nobody wrote down.
-                <span class="font-semibold text-ink">None of those are product problems. They are management
-                problems — and no sack fixes a late decision.</span>
-            </p>
-            <p class="mt-4 text-gray-600 text-base sm:text-lg leading-relaxed max-w-3xl mx-auto reveal">
-                Management is the multiplier on every peso you already spend. The same inputs, managed on
-                time and on record, out-yield a bigger budget managed by memory. That is why anee.io exists —
-                not another product to buy, but <span class="font-semibold text-ink">the system that makes
-                every product you already buy finally pay</span>.
+                somebody swears by — yet harvests are actually lost to a spray three days late, a dose that
+                was guessed, water that missed its stage, costs nobody wrote down.
+                <span class="font-semibold text-ink">Those are management problems, and no sack fixes a
+                late decision.</span> The same inputs, managed on time and on record, out-yield a bigger
+                budget managed by memory — which is why anee.io exists: not another product to buy, but
+                <span class="font-semibold text-ink">the system that makes every product you already buy
+                finally pay</span>.
             </p>
         </div>
     </section>
@@ -344,15 +340,14 @@
                     <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">
                         Every Business Already Upgraded. <span class="text-brand-600">It's the Farm's Turn.</span>
                     </h2>
+                    {{-- One paragraph under the title, like every section on this page. --}}
                     <p class="mt-4 text-gray-600 leading-relaxed">
-                        The sari-sari store takes e-wallet payments. The tricycle line runs on an app.
-                        The trader who buys your palay works from a spreadsheet. Every business that took
-                        the technology step got faster, leaner and more profitable — while most farms
-                        still run from memory and a worn notebook.
-                    </p>
-                    <p class="mt-3 text-gray-600 leading-relaxed">
-                        Agriculture is a business too: inputs, labor, timing, margins. It deserves the
-                        same upgrade — sized for the field, priced for the farmer, in your own pocket.
+                        The sari-sari store takes e-wallet payments, the tricycle line runs on an app, and
+                        the trader who buys your palay works from a spreadsheet — every business that took
+                        the technology step got faster, leaner and more profitable, while most farms still
+                        run from memory and a worn notebook. Agriculture is a business too — inputs, labor,
+                        timing, margins — and it deserves the same upgrade: sized for the field, priced for
+                        the farmer, in your own pocket.
                     </p>
                     <div class="mt-8 flex flex-col items-start gap-2">
                         <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start for Free — take the upgrade</a>
