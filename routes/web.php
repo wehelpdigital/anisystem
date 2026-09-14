@@ -55,6 +55,15 @@ Route::get('/deploy-check', function () {
             'versionsButton' => str_contains($source, 'id="versionsSheetBtn"'),
         ],
         'viewCacheCompiled' => count(glob(storage_path('framework/views/*.php')) ?: []),
+        // Whether the deployed environment can reach the mailing list at all
+        // -- booleans only, never the token. A signup that verified on the live
+        // site and never reached Acumbamail is either this or a refusal in
+        // the logs, and this answers the first without a dashboard visit.
+        'acumbamail' => [
+            'configured' => app(\App\Services\AcumbamailService::class)->configured(),
+            'listId' => (int) config('acumbamail.list_id'),
+            'planField' => (string) config('acumbamail.plan_field'),
+        ],
     ]);
 })->name('deploy.check');
 
