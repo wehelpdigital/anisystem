@@ -943,6 +943,10 @@
          have a view, and never again once they answer. --}}
     @include('partials.review-prompt', ['askForReview' => \App\Http\Controllers\ReviewController::shouldAsk()])
 
+    {{-- The tutorial card: one for the app, painted with whichever screen's
+         words a page hands it. Draws nothing until a page asks. --}}
+    @include('partials.tutorial-modal')
+
     @stack('scripts')
     <script>
         {{-- window.toast lives in the Vite module bundle, which runs after

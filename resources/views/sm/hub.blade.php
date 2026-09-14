@@ -700,3 +700,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 @endpush
+
+{{-- A short video about this screen, until the person says they have seen it. --}}
+@push('scripts')
+@include('partials.tutorial-offer', ['keys' => ['hub'], 'auto' => 'hub'])
+@endpush

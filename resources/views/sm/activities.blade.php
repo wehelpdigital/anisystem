@@ -6188,3 +6188,28 @@
     })();
 </script>
 @endpush
+
+{{-- EVERY ROOM'S TUTORIAL, OFFERED AS THE ROOM OPENS.
+
+     A module is a fragment this shell swaps in, and a script pushed from a
+     fragment never runs -- so the shell holds the tutorials for all of its
+     rooms and offers each as the shell announces it. The board itself is
+     the one room that opens without an announcement when there is no
+     ?module= on the address, so it is offered by hand. --}}
+@push('scripts')
+@include('partials.tutorial-offer', [
+    'keys' => collect(array_keys(config('tutorials.pages', [])))->filter(fn ($k) => str_starts_with($k, 'module.'))->values()->all(),
+])
+<script>
+(() => {
+    // The shell's 'media' is the Gallery's old name; the tutorial has one key.
+    const room = (key) => 'module.' + (key === 'media' ? 'gallery' : key);
+    document.addEventListener('sm:module-shown', (e) => {
+        if (e.detail?.key) (window.aneeTutorialQueue ||= []).push(room(e.detail.key));
+    });
+    if (!new URLSearchParams(location.search).get('module')) {
+        (window.aneeTutorialQueue ||= []).push(room('activities'));
+    }
+})();
+</script>
+@endpush

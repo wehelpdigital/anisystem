@@ -168,6 +168,8 @@ Route::middleware('auth')->group(function () {
     // "How are we doing?" — answered once, or waved away twice.
     Route::post('/app/review', [App\Http\Controllers\ReviewController::class, 'store'])->name('review.store');
     Route::post('/app/review-dismiss', [App\Http\Controllers\ReviewController::class, 'dismiss'])->name('review.dismiss');
+    // A screen's tutorial video, told "don't show this again" — kept per account.
+    Route::post('/app/tutorial-dismiss', [App\Http\Controllers\TutorialController::class, 'dismiss'])->name('tutorial.dismiss');
     Route::get('/app/support', [App\Http\Controllers\SupportController::class, 'index'])->name('support.index');
     Route::post('/app/support', [App\Http\Controllers\SupportController::class, 'store'])->name('support.store');
     Route::get('/app/support/{id}', [App\Http\Controllers\SupportController::class, 'show'])->whereNumber('id')->name('support.show');
