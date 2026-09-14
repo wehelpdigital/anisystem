@@ -68,10 +68,17 @@ return [
     | So a member joins "free-users" by carrying the value the segment's rule
     | looks for. This names the field to stamp and the value to stamp on it;
     | the segment on their side must be defined as "that field equals that
-    | value". With the field name blank nothing extra is sent.
+    | value".
+    |
+    | Defaults to a field called Plan. Proven on 2026-09-14: a merge field the
+    | list does not have is silently ignored (201, subscriber lands, nothing
+    | else changes), so stamping it before the field exists costs nothing --
+    | and the day a "Plan" field is added to the list and the free-users
+    | segment is defined as Plan = free-users, every signup since deploy
+    | matches with no change here. Set the env blank to send nothing.
     |
     */
-    'plan_field' => (string) env('ACUMBAMAIL_FIELD_PLAN', ''),
+    'plan_field' => (string) env('ACUMBAMAIL_FIELD_PLAN', 'Plan'),
     'free_plan_value' => (string) env('ACUMBAMAIL_FREE_PLAN_VALUE', 'free-users'),
 
 ];
