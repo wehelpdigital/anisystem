@@ -1,9 +1,9 @@
 {{-- THE TUTORIAL CARD.
 
      A short video about the screen you just opened, in a card over that
-     screen, with two ways out: Close, which quiets it for the rest of this
-     sitting, and "don't show this again", which is remembered against the
-     account and followed onto every device.
+     screen, with two ways out: Close, which is for now -- it is back the
+     next time the page is opened -- and "don't show this again", which is
+     remembered against the account and followed onto every device.
 
      One card for the whole app, painted with whichever screen's words and
      clip a page hands it. Pages do not build modals; they include
@@ -197,7 +197,14 @@
     const DELAY = 650;
     const LOAD_CAP = 3000;   // but a slow image somewhere is not a reason to wait forever
     const NEVER = (k) => 'anee-tutv-never:' + k;
-    const CLOSED = (k) => 'anee-tutv-closed:' + k;
+    /* CLOSE MEANS FOR NOW. Not sessionStorage: a tab on a phone lives for
+       days, so "closed for the sitting" turned into "closed for good" on
+       every screen the card had been closed on once, and nobody had asked
+       for that. A set that lives as long as this page load does the one
+       job wanted of it -- inside the Activities shell, walking back to a
+       room you already closed the card in does not raise it again -- and
+       the next time the page is opened, the card is back. */
+    const closedNow = new Set();
 
     let current = null;      // the key on screen, or null
     let lastFocus = null;
@@ -206,8 +213,6 @@
     const data = () => (window.ANEE_TUTORIALS ||= { items: {}, seen: [] });
     const ls = { get: (k) => { try { return localStorage.getItem(k); } catch (_) { return null; } },
                  set: (k, v) => { try { localStorage.setItem(k, v); } catch (_) { /* private mode */ } } };
-    const ss = { get: (k) => { try { return sessionStorage.getItem(k); } catch (_) { return null; } },
-                 set: (k, v) => { try { sessionStorage.setItem(k, v); } catch (_) { /* fine */ } } };
 
     /* Told to stay closed -- by the server for this account, or by this
        browser when the server could not be reached at the time. */
@@ -235,7 +240,7 @@
     /** A page says which screen is on; this decides whether its card is due. */
     function offer(key) {
         const item = data().items[key];
-        if (!item || neverAgain(key) || ss.get(CLOSED(key)) === '1') return;
+        if (!item || neverAgain(key) || closedNow.has(key)) return;
         const mine = ++offerSeq;
         Promise.all([
             pageSettled().then(() => new Promise((r) => setTimeout(r, DELAY))),
@@ -308,7 +313,7 @@
         screen.querySelector('iframe')?.remove();
         window.unregisterOverlay?.('tutorial');
         document.documentElement.classList.remove('modal-open');
-        ss.set(CLOSED(key), '1');
+        closedNow.add(key);
 
         /* Two things end this close -- the card's transition, or a timer in
            case that never comes -- and whichever is second must do nothing.

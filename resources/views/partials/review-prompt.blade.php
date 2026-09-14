@@ -113,8 +113,9 @@
     } catch (_) { /* private mode: ask anyway */ }
 
     setTimeout(() => {
-        // Never over an open sheet, a lightbox or the drawing pad.
-        if (document.querySelector('.sheet.is-open, .note-lb.is-open, .draw-modal.show')) return;
+        // Never over an open sheet, a lightbox, the drawing pad -- or the
+        // tutorial card, which asks its question first on the same screens.
+        if (document.querySelector('.sheet.is-open, .note-lb.is-open, .draw-modal.show, #tutvModal:not([hidden])')) return;
         wrap.hidden = false;
         wrap.setAttribute('aria-hidden', 'false');
         try { localStorage.setItem(SEEN_KEY, String(Date.now())); } catch (_) { /* fine */ }
