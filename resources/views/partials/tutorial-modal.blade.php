@@ -52,31 +52,57 @@
 </div>
 
 <style>
-    /* Under the review prompt (245) and above every sheet (200). */
+    /* Under the review prompt (245) and above every sheet (200).
+
+       THE MOTION IS TRANSITIONS DRIVEN BY ONE CLASS, NOT KEYFRAMES.
+       The first version ran a keyframe on arrival and the same keyframe
+       reversed on the way out -- and changing the direction of an animation
+       whose name has not changed does not restart it: an animation already
+       at its end simply jumped to the reversed end state. Every close was a
+       cut. With `.is-open` toggling the same properties both ways, the card
+       leaves along the path it arrived on, and nothing has to restart. */
     .tutv-wrap { position: fixed; inset: 0; z-index: 240; display: flex; align-items: flex-end; justify-content: center; }
     .tutv-wrap[hidden] { display: none; }
     .tutv-backdrop { position: absolute; inset: 0; background: rgb(6 12 4 / .62); touch-action: none;
         backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
-        animation: tutvFade .28s cubic-bezier(.22,1,.36,1) both; }
-    @keyframes tutvFade { from { opacity: 0; } }
+        opacity: 0; transition: opacity .34s cubic-bezier(.22,1,.36,1); }
+    .tutv-wrap.is-open .tutv-backdrop { opacity: 1; }
 
-    /* A sheet from the bottom on a phone, a card in the middle with room. */
+    /* A sheet from the bottom on a phone, a card in the middle with room.
+       It arrives from below with a little overshoot and settles; on the way
+       out it goes faster and eases in, the way a thing you dismiss should. */
     .tutv-card { position: relative; width: min(34rem, 100%); max-height: calc(100dvh - 1rem); overflow: auto;
         border-radius: 1.35rem 1.35rem 0 0; background: var(--color-white, #fff); color: var(--color-gray-900, #111827);
         box-shadow: 0 -24px 70px -20px rgb(0 0 0 / .6); outline: none;
         padding-bottom: env(safe-area-inset-bottom, 0px);
-        animation: tutvUp .46s cubic-bezier(.22,1,.36,1) both; }
-    @keyframes tutvUp { from { transform: translateY(100%); } }
+        opacity: 0; transform: translateY(100%);
+        transition: transform .52s cubic-bezier(.22,1,.36,1), opacity .3s ease; }
+    .tutv-wrap.is-open .tutv-card { opacity: 1; transform: none; }
+    .tutv-wrap.is-closing .tutv-card { transition: transform .3s cubic-bezier(.4,0,1,1), opacity .22s ease .06s; }
+    .tutv-wrap.is-closing .tutv-backdrop { transition-duration: .26s; }
     @media (min-width: 640px) {
         .tutv-wrap { align-items: center; padding: 1rem; }
         .tutv-card { border-radius: 1.35rem; max-height: calc(100dvh - 2rem); padding-bottom: 0;
-            box-shadow: 0 30px 80px -24px rgb(0 0 0 / .65); animation-name: tutvPop; }
+            box-shadow: 0 30px 80px -24px rgb(0 0 0 / .65);
+            transform: translateY(26px) scale(.95);
+            transition: transform .46s cubic-bezier(.22,1,.36,1), opacity .3s ease; }
+        .tutv-wrap.is-closing .tutv-card { transform: translateY(14px) scale(.97);
+            transition: transform .26s cubic-bezier(.4,0,1,1), opacity .2s ease .04s; }
     }
-    @keyframes tutvPop { from { transform: translateY(14px) scale(.96); opacity: 0; } }
-    /* Leaving runs the arrival backwards, so the card is seen to go rather than vanish. */
-    .tutv-wrap.is-closing .tutv-backdrop { animation: tutvFade .22s ease-in reverse both; }
-    .tutv-wrap.is-closing .tutv-card { animation: tutvUp .28s cubic-bezier(.4,0,1,1) reverse both; }
-    @media (min-width: 640px) { .tutv-wrap.is-closing .tutv-card { animation-name: tutvPop; } }
+
+    /* The words arrive a beat after the card, one line after another, so the
+       card is seen to open rather than to appear already full. */
+    .tutv-body > * { opacity: 0; transform: translateY(10px);
+        transition: opacity .36s ease, transform .44s cubic-bezier(.22,1,.36,1); }
+    .tutv-wrap.is-open .tutv-body > * { opacity: 1; transform: none; }
+    .tutv-wrap.is-open .tutv-body > :nth-child(1) { transition-delay: .16s; }
+    .tutv-wrap.is-open .tutv-body > :nth-child(2) { transition-delay: .22s; }
+    .tutv-wrap.is-open .tutv-body > :nth-child(3) { transition-delay: .28s; }
+    .tutv-wrap.is-open .tutv-body > :nth-child(4) { transition-delay: .36s; }
+    .tutv-wrap.is-closing .tutv-body > * { transition: opacity .16s ease; }
+    /* And the picture fades up under them once its poster is actually there. */
+    .tutv-screen video, .tutv-screen iframe { opacity: 0; transition: opacity .4s ease .1s; }
+    .tutv-wrap.is-open .tutv-screen video, .tutv-wrap.is-open .tutv-screen iframe { opacity: 1; }
 
     /* Above the body, which is positioned too and comes later in the DOM. */
     .tutv-x { position: absolute; top: .65rem; right: .65rem; z-index: 3; width: 2.1rem; height: 2.1rem; border-radius: 999px;
@@ -95,12 +121,19 @@
     .tutv-play[hidden] { display: none; }
     .tutv-play svg { position: relative; width: 4.4rem; height: 4.4rem; padding: 1.2rem 1.05rem 1.2rem 1.35rem; border-radius: 999px;
         background: var(--color-accent-500, #f5c518); box-shadow: 0 14px 34px -8px rgb(0 0 0 / .55), 0 0 0 6px rgb(255 255 255 / .18);
-        transition: transform .28s cubic-bezier(.22,1,.36,1); }
-    .tutv-play:hover svg { transform: scale(1.07); }
+        transform: scale(.6); opacity: 0;
+        transition: transform .5s cubic-bezier(.22,1,.36,1) .28s, opacity .3s ease .28s; }
+    .tutv-wrap.is-open .tutv-play svg { transform: scale(1); opacity: 1; }
+    .tutv-wrap.is-open .tutv-play:hover svg { transform: scale(1.07); transition-delay: 0s; }
     /* One ring breathing out from the button: "this is the thing to press". */
-    .tutv-play-ring { position: absolute; width: 4.4rem; height: 4.4rem; border-radius: 999px;
-        border: 2px solid rgb(245 197 24 / .75); animation: tutvRing 2.2s cubic-bezier(.22,1,.36,1) infinite; }
+    .tutv-play-ring { position: absolute; width: 4.4rem; height: 4.4rem; border-radius: 999px; opacity: 0;
+        border: 2px solid rgb(245 197 24 / .75); }
+    .tutv-wrap.is-open .tutv-play-ring { animation: tutvRing 2.2s cubic-bezier(.22,1,.36,1) .7s infinite; }
     @keyframes tutvRing { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(1.9); opacity: 0; } }
+    /* The X is the last thing in, so nothing invites a dismissal before the
+       card has even said what it is. */
+    .tutv-x { opacity: 0; transition: opacity .3s ease .4s, background .2s ease, transform .28s cubic-bezier(.22,1,.36,1); }
+    .tutv-wrap.is-open .tutv-x { opacity: 1; }
 
     .tutv-body { position: relative; padding: 1.1rem 1.25rem 1.2rem; }
     .tutv-kicker { display: inline-flex; align-items: center; gap: .4rem; font-size: .68rem; font-weight: 800;
@@ -140,9 +173,9 @@
     html.dark .tutv-never:hover { background: #1c2416; color: #d8ecc4; }
 
     @media (prefers-reduced-motion: reduce) {
-        .tutv-backdrop, .tutv-card, .tutv-play-ring, .tutv-close,
-        .tutv-wrap.is-closing .tutv-backdrop, .tutv-wrap.is-closing .tutv-card { animation: none; }
-        .tutv-x, .tutv-play, .tutv-play svg, .tutv-close, .tutv-never { transition: none; }
+        .tutv-play-ring, .tutv-close { animation: none; }
+        .tutv-wrap *, .tutv-wrap .tutv-body > *, .tutv-wrap .tutv-play svg { transition: none !important; }
+        .tutv-card { transform: none; }
     }
 </style>
 
@@ -157,13 +190,16 @@
     const CSRF = document.querySelector('meta[name=csrf-token]')?.content || '';
     const DISMISS_URL = @json(route('tutorial.dismiss'));
     /* Long enough for the screen to have painted under it, short enough
-       that it is still plainly about the screen you just opened. */
+       that it is still plainly about the screen you just opened. Counted
+       from the page being fully loaded, not from the script running: a card
+       sliding up over images still streaming in reads as one more thing
+       loading, not as an arrival. */
     const DELAY = 650;
+    const LOAD_CAP = 3000;   // but a slow image somewhere is not a reason to wait forever
     const NEVER = (k) => 'anee-tutv-never:' + k;
     const CLOSED = (k) => 'anee-tutv-closed:' + k;
 
     let current = null;      // the key on screen, or null
-    let pending = null;      // a timer waiting to show one
     let lastFocus = null;
     let closing = 0;         // which close is in flight; a new show() voids it
 
@@ -180,16 +216,36 @@
     const blocked = () => current !== null
         || !!document.querySelector('.sheet.is-open, .note-lb.is-open, .draw-modal.show, #reviewPrompt:not([hidden])');
 
+    /* Everything the card needs before it moves: the page settled, and the
+       poster in the browser's cache, so the screen fades up with the picture
+       on it rather than going black and then flashing to the picture. */
+    const pageSettled = () => new Promise((res) => {
+        if (document.readyState === 'complete') { res(); return; }
+        const t = setTimeout(res, LOAD_CAP);
+        window.addEventListener('load', () => { clearTimeout(t); res(); }, { once: true });
+    });
+    const posterReady = (url) => new Promise((res) => {
+        if (!url) { res(); return; }
+        const img = new Image();
+        const t = setTimeout(res, 1500);
+        img.onload = img.onerror = () => { clearTimeout(t); res(); };
+        img.src = url;
+    });
+
     /** A page says which screen is on; this decides whether its card is due. */
     function offer(key) {
         const item = data().items[key];
         if (!item || neverAgain(key) || ss.get(CLOSED(key)) === '1') return;
-        clearTimeout(pending);
-        pending = setTimeout(() => {
-            pending = null;
+        const mine = ++offerSeq;
+        Promise.all([
+            pageSettled().then(() => new Promise((r) => setTimeout(r, DELAY))),
+            posterReady(item.youtube ? '' : item.poster),
+        ]).then(() => {
+            if (mine !== offerSeq) return;   // a later room was asked for meanwhile
             if (!blocked()) show(key);
-        }, DELAY);
+        });
     }
+    let offerSeq = 0;
 
     function show(key) {
         const item = data().items[key];
@@ -221,13 +277,22 @@
             play.hidden = false;
         }
 
-        wrap.classList.remove('is-closing');
+        wrap.classList.remove('is-closing', 'is-open');
         wrap.hidden = false;
         wrap.setAttribute('aria-hidden', 'false');
         document.documentElement.classList.add('modal-open');
         window.registerOverlay?.('tutorial', () => close());
         card.scrollTop = 0;
-        card.focus({ preventScroll: true });
+        /* Painted once in its starting place before it is told to move:
+           display:none to block and the class in the same frame would let
+           the browser skip straight to the end state, and the card would
+           simply be there. The read below forces that first layout. */
+        void wrap.offsetWidth;
+        requestAnimationFrame(() => {
+            if (current !== key) return;
+            wrap.classList.add('is-open');
+            card.focus({ preventScroll: true });
+        });
     }
 
     /* Out the way it came in. The video is stopped and unhooked so it does
@@ -245,29 +310,31 @@
         document.documentElement.classList.remove('modal-open');
         ss.set(CLOSED(key), '1');
 
-        /* Two things end this close -- the card's animation, or a timer in
+        /* Two things end this close -- the card's transition, or a timer in
            case that never comes -- and whichever is second must do nothing.
-           The first version left a once-listener armed when the timer won,
-           and the NEXT card's arrival animation fired it: Lots was written
-           into the card and hidden in the same breath. Hence the token, and
-           hence checking the event came from the card and not a child whose
-           own animation happened to end. */
+           An earlier version left a once-listener armed when the timer won,
+           and the NEXT card's arrival fired it: Lots was written into the
+           card and hidden in the same breath. Hence the token, and hence
+           checking the event came from the card itself and not a child
+           whose own transition happened to end. */
         const token = ++closing;
         const done = () => {
             if (token !== closing) return;
             closing = 0;
-            card.removeEventListener('animationend', onEnd);
+            card.removeEventListener('transitionend', onEnd);
             wrap.hidden = true;
             wrap.setAttribute('aria-hidden', 'true');
             wrap.classList.remove('is-closing');
             lastFocus?.focus?.({ preventScroll: true });
         };
-        const onEnd = (e) => { if (e.target === card) done(); };
+        // The card's own transform arriving is the end of the exit.
+        const onEnd = (e) => { if (e.target === card && e.propertyName === 'transform') done(); };
+        wrap.classList.add('is-closing');
+        wrap.classList.remove('is-open');
         const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (still) { done(); return; }
-        wrap.classList.add('is-closing');
-        card.addEventListener('animationend', onEnd);
-        setTimeout(done, 400);
+        card.addEventListener('transitionend', onEnd);
+        setTimeout(done, 450);
     }
 
     /* "Don't show this again": remembered here first, so the card behaves
