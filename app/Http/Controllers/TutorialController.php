@@ -45,7 +45,7 @@ class TutorialController extends Controller
      * nothing at all anywhere else.
      *
      * @param  string[]  $keys
-     * @return array{items: array<string, array{title:string, blurb:string, youtube:string, video:string, poster:string}>, seen: string[]}
+     * @return array{items: array<string, array{title:string, blurb:string, youtube:string, video:string, poster:string, youtubePortrait:string, portrait:string, portraitPoster:string}>, seen: string[]}
      */
     public static function dataFor(array $keys): array
     {
@@ -58,13 +58,21 @@ class TutorialController extends Controller
                 continue;
             }
             $p = $pages[$key];
+            /* The placeholder stands in only where the screen has NO recording
+               of either shape. A screen with one real clip shows that clip
+               on every device -- a real landscape tutorial beats a portrait
+               card that says "coming soon". */
+            $real = ! empty($p['video']) || ! empty($p['youtube']) || ! empty($p['portrait']) || ! empty($p['youtube_portrait']);
+            $path = fn (?string $own, string $fb) => $own ? asset($own) : ($real ? '' : asset($fallback[$fb] ?? ''));
             $items[$key] = [
-                'title'   => (string) ($p['title'] ?? ''),
-                'blurb'   => (string) ($p['blurb'] ?? ''),
-                // A YouTube id wins over a file; either falls back to the placeholder.
-                'youtube' => (string) ($p['youtube'] ?? ''),
-                'video'   => asset(($p['video'] ?? null) ?: ($fallback['video'] ?? '')),
-                'poster'  => asset(($p['poster'] ?? null) ?: ($fallback['poster'] ?? '')),
+                'title'           => (string) ($p['title'] ?? ''),
+                'blurb'           => (string) ($p['blurb'] ?? ''),
+                'youtube'         => (string) ($p['youtube'] ?? ''),
+                'video'           => $path($p['video'] ?? null, 'video'),
+                'poster'          => $path($p['poster'] ?? null, 'poster'),
+                'youtubePortrait' => (string) ($p['youtube_portrait'] ?? ''),
+                'portrait'        => $path($p['portrait'] ?? null, 'portrait'),
+                'portraitPoster'  => $path($p['portrait_poster'] ?? null, 'portrait_poster'),
             ];
         }
 

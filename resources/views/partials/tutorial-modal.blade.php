@@ -111,11 +111,23 @@
     .tutv-x:hover { background: rgb(0 0 0 / .55); transform: scale(1.06); }
     .tutv-x svg { width: 1rem; height: 1rem; }
 
-    /* The clip: 16:9, edge to edge, black behind it so letterboxing is quiet. */
+    /* THE SCREEN TAKES THE SHAPE OF THE CLIP.
+       A landscape clip fills a 16:9 band edge to edge. A portrait clip --
+       every tutorial recorded on a phone -- gets a phone-shaped screen
+       instead: height-capped so the title and the buttons stay on screen
+       under it without scrolling, the clip centred, and a blurred, dimmed
+       copy of its own poster filling the sides rather than two black bars. */
     .tutv-screen { position: relative; aspect-ratio: 16 / 9; background: #0b1208; overflow: hidden; }
-    .tutv-screen video, .tutv-screen iframe { display: block; width: 100%; height: 100%; border: 0; object-fit: cover; }
+    .tutv-screen::before { content: ''; position: absolute; inset: -16px;
+        background: var(--tutv-poster, none) center / cover no-repeat;
+        filter: blur(16px) brightness(.5) saturate(1.1); transform: scale(1.08); }
+    .tutv-screen video, .tutv-screen iframe { position: relative; display: block; width: 100%; height: 100%; border: 0; object-fit: cover; }
     .tutv-screen video[hidden] { display: none; }
-    .tutv-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; cursor: pointer;
+    .tutv-screen[data-shape="portrait"] { aspect-ratio: auto; height: min(54dvh, 34rem); }
+    .tutv-screen[data-shape="portrait"] video { object-fit: contain; }
+    /* A portrait player from YouTube is a Short: 9:16 in the middle of the screen. */
+    .tutv-screen[data-shape="portrait"] iframe { width: auto; aspect-ratio: 9 / 16; margin: 0 auto; }
+    .tutv-play { position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; justify-content: center; cursor: pointer;
         background: linear-gradient(to top, rgb(0 0 0 / .35), rgb(0 0 0 / .05)); color: #1a1a1a;
         transition: opacity .28s cubic-bezier(.22,1,.36,1); }
     .tutv-play[hidden] { display: none; }
@@ -214,6 +226,20 @@
     const ls = { get: (k) => { try { return localStorage.getItem(k); } catch (_) { return null; } },
                  set: (k, v) => { try { localStorage.setItem(k, v); } catch (_) { /* private mode */ } } };
 
+    /* WHICH CLIP: the phone's, on a phone. The card is a bottom sheet under
+       640px, and that is the width at which a tutorial recorded on a phone
+       is the one being watched on one. Either shape stands in for a missing
+       other, so a screen with one recording shows it everywhere. */
+    const phoneWide = () => matchMedia('(max-width: 639px)').matches;
+    function pick(item) {
+        const hasP = !!(item.portrait || item.youtubePortrait);
+        const hasL = !!(item.video || item.youtube);
+        const portrait = hasP && (phoneWide() || !hasL);
+        return portrait
+            ? { shape: 'portrait', src: item.portrait, poster: item.portraitPoster, youtube: item.youtubePortrait }
+            : { shape: 'landscape', src: item.video, poster: item.poster, youtube: item.youtube };
+    }
+
     /* Told to stay closed -- by the server for this account, or by this
        browser when the server could not be reached at the time. */
     const neverAgain = (key) => data().seen.includes(key) || ls.get(NEVER(key)) === '1';
@@ -244,7 +270,7 @@
         const mine = ++offerSeq;
         Promise.all([
             pageSettled().then(() => new Promise((r) => setTimeout(r, DELAY))),
-            posterReady(item.youtube ? '' : item.poster),
+            posterReady((() => { const c = pick(item); return c.youtube ? '' : c.poster; })()),
         ]).then(() => {
             if (mine !== offerSeq) return;   // a later room was asked for meanwhile
             if (!blocked()) show(key);
@@ -264,11 +290,14 @@
         /* A YouTube id gets YouTube's own player in the same frame; a file
            gets ours. The library at /app/tutorials is YouTube-based, so the
            finished recordings are likely to arrive that way. */
+        const clip = pick(item);
+        screen.dataset.shape = clip.shape;
+        screen.style.setProperty('--tutv-poster', clip.poster ? `url("${clip.poster}")` : 'none');
         screen.querySelector('iframe')?.remove();
-        if (item.youtube) {
+        if (clip.youtube) {
             video.hidden = true; play.hidden = true;
             const f = document.createElement('iframe');
-            f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(item.youtube) + '?rel=0&modestbranding=1&playsinline=1';
+            f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(clip.youtube) + '?rel=0&modestbranding=1&playsinline=1';
             f.title = item.title;
             f.allow = 'accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen';
             f.setAttribute('allowfullscreen', '');
@@ -276,8 +305,8 @@
             screen.appendChild(f);
         } else {
             video.hidden = false;
-            video.poster = item.poster || '';
-            video.src = item.video;
+            video.poster = clip.poster || '';
+            video.src = clip.src;
             video.load();
             play.hidden = false;
         }
