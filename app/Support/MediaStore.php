@@ -144,9 +144,15 @@ class MediaStore
             return null;
         }
 
-        return Str::startsWith($path, self::REMOTE_PREFIX)
-            ? rtrim((string) config('mother.url'), '/') . '/storage/' . ltrim(self::strip($path), '/')
-            : Storage::disk('public')->url($path);
+        if (Str::startsWith($path, self::REMOTE_PREFIX)) {
+            // The bucket directly when its address is known; the mother's
+            // /storage door otherwise (see config/mother.php, media_url).
+            $base = (string) (config('mother.media_url') ?: rtrim((string) config('mother.url'), '/') . '/storage');
+
+            return $base . '/' . ltrim(self::strip($path), '/');
+        }
+
+        return Storage::disk('public')->url($path);
     }
 
     /** True for a path the mother app holds. */
@@ -168,9 +174,16 @@ class MediaStore
             return null;
         }
 
-        $mother = (string) config('mother.url');
-        if (filled($mother)) {
-            $remoteBase = rtrim($mother, '/') . '/storage/';
+        // Both addresses url() can hand out for a mother file: the bucket's
+        // own, and the mother's /storage door. Either way back is the same path.
+        $bases = [];
+        if (filled(config('mother.media_url'))) {
+            $bases[] = rtrim((string) config('mother.media_url'), '/') . '/';
+        }
+        if (filled(config('mother.url'))) {
+            $bases[] = rtrim((string) config('mother.url'), '/') . '/storage/';
+        }
+        foreach ($bases as $remoteBase) {
             if (Str::startsWith($url, $remoteBase)) {
                 return self::REMOTE_PREFIX . Str::after($url, $remoteBase);
             }
