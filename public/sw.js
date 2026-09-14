@@ -167,7 +167,12 @@ self.addEventListener('fetch', (event) => {
         const cache = await caches.open(RUNTIME);
         try {
             const res = await fetch(req);
-            if (res.ok) cache.put(req, res.clone());
+            /* Not a slice of a video. A <video> asks for its file in ranges
+               and gets 206s back, and cache.put refuses a 206 outright -- an
+               unhandled rejection for every chunk of every clip, and a shelf
+               that would fill with half-files if it did not. Whole answers
+               only. */
+            if (res.ok && res.status !== 206 && !req.headers.has('range')) cache.put(req, res.clone());
             return res;
         } catch (_) {
             /* MATCHED BY ADDRESS, NOT BY REQUEST OBJECT.
