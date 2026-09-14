@@ -269,7 +269,7 @@
                  pesos it takes from one hectare. Ordered by how much. --}}
             <div class="mt-12 grid gap-5 md:grid-cols-2">
                 @foreach ([
-                    ['n' => 40, 'img' => 'inspect.jpg', 'l' => 'Yield lost to pests and diseases', 'p' => 'When the intervention comes late — or never comes at all.', 'peso' => '₱25,000–₱40,000'],
+                    ['n' => 40, 'img' => 'palay-heads.jpg', 'l' => 'Yield lost to pests and diseases', 'p' => 'When the intervention comes late — or never comes at all.', 'peso' => '₱25,000–₱40,000'],
                     ['n' => 30, 'img' => 'sacks.jpg', 'l' => 'Wasted on the wrong solution', 'p' => 'A misread problem means the wrong product, at full price, while the real problem keeps eating.', 'peso' => '₱18,000–₱30,000'],
                     ['n' => 30, 'img' => 'palay-phone.jpg', 'l' => 'Yield lost to trying myths that are not true', 'p' => 'Hearsay remedies and lucky-timing beliefs, passed around as fact — and tested on a whole field before anyone checked.', 'peso' => '₱18,000–₱30,000'],
                     ['n' => 30, 'img' => 'sacks-shed.jpg', 'l' => 'Profit lost to untracked spending', 'p' => 'Costs remembered instead of recorded leak all season — and only show themselves at settling time.', 'peso' => '₱18,000–₱30,000'],
@@ -675,6 +675,61 @@
                     <div class="absolute -inset-3 rounded-[1.75rem] bg-gradient-to-br from-brand-100 to-accent-500/20 -rotate-1"></div>
                     <img src="{{ asset('images/site/photos/powered-by.jpg') }}" alt="Three Filipino farmers in their rice field with a Powered by anee.io sign"
                          class="relative rounded-2xl shadow-card-lg w-full object-cover ring-1 ring-black/5" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- ================= MADE BY FARMERS, FOR FARMERS ================= --}}
+    {{-- The credibility claim, said plainly: this was not designed in an
+         office by people who have never planted a season. We farm, and this
+         is the system our own operations run on. One paragraph under the
+         title, like every section on this page. --}}
+    <section class="py-16 sm:py-24 bg-brand-mesh bg-drift overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 grid gap-10 lg:gap-14 lg:grid-cols-2 items-center">
+            <div class="reveal">
+                <div class="relative">
+                    <div class="absolute -inset-3 rounded-[1.75rem] bg-gradient-to-br from-accent-500/25 to-brand-100 rotate-1"></div>
+                    <img src="{{ asset('images/site/photos/inspect.jpg') }}" alt="A Filipino farmer standing in her rice field, checking the season on anee.io"
+                         class="relative rounded-2xl shadow-card-lg w-full object-cover ring-1 ring-black/5" loading="lazy">
+                    {{-- Corner label, the way the hero's video wears one. --}}
+                    <span class="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur px-3 py-1.5 text-xs font-bold text-ink shadow">
+                        <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse" aria-hidden="true"></span>
+                        In our own fields, every day
+                    </span>
+                </div>
+            </div>
+            <div class="reveal">
+                <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Made by farmers, for farmers</p>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">
+                    Built by Farmers. <span class="text-brand-600">Run on Our Own Farms.</span>
+                </h2>
+                <p class="mt-4 text-gray-600 leading-relaxed">
+                    anee.io was not designed in an office by people who have never planted a season. We are
+                    farmers, and this is the system our own operations run on every day — to improve our
+                    yield, lower our costs, read each season from accurate numbers instead of memory, and
+                    keep learning from every harvest. <span class="font-semibold text-ink">Everything in it
+                    is here because we needed it in our own fields first.</span>
+                </p>
+                <div class="mt-7 grid grid-cols-2 gap-3">
+                    @foreach ([
+                        ['t' => 'Higher yield', 'p' => 'Every job on its right day.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>'],
+                        ['t' => 'Lower cost', 'p' => 'Every peso written down.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
+                        ['t' => 'Accurate analysis', 'p' => 'Numbers, not memory.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>'],
+                        ['t' => 'Growing knowledge', 'p' => 'Each season teaches the next.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>'],
+                    ] as $i => $b)
+                        <div class="card card-hover reveal" style="--reveal-delay: {{ $i * 0.08 }}s">
+                            <div class="p-4 flex items-start gap-3">
+                                <span class="w-9 h-9 shrink-0 rounded-xl bg-gradient-to-br from-brand-50 to-brand-100 text-brand-600 ring-1 ring-brand-100 flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">{!! $b['icon'] !!}</svg>
+                                </span>
+                                <div class="min-w-0">
+                                    <h3 class="font-heading text-[15px] font-bold text-ink leading-tight">{{ $b['t'] }}</h3>
+                                    <p class="mt-0.5 text-xs text-gray-600 leading-snug">{{ $b['p'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
