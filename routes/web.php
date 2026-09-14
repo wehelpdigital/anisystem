@@ -42,9 +42,22 @@ Route::get('/storage/{path}', App\Http\Controllers\StorageFallbackController::cl
  * the commit Railway built. Feature names and a short SHA only — nothing that
  * is not already visible in the UI or the repo.
  */
-Route::get('/deploy-check', function () {
+Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
     $activities = resource_path('views/sm/activities.blade.php');
     $source = is_file($activities) ? (string) file_get_contents($activities) : '';
+
+    /* ?probe=home renders the homepage here and says what went wrong if it
+       did not -- class and message only, never a trace. A 500 on a host
+       whose logs are a dashboard away is otherwise a guess, and on the day
+       the app moved hosts it took four guesses. */
+    $probe = null;
+    if ($request->query('probe') === 'home') {
+        try {
+            $probe = ['ok' => true, 'bytes' => strlen(app(\App\Http\Controllers\PublicController::class)->home()->render())];
+        } catch (\Throwable $e) {
+            $probe = ['ok' => false, 'error' => get_class($e), 'message' => mb_substr($e->getMessage(), 0, 240), 'at' => basename($e->getFile()).':'.$e->getLine()];
+        }
+    }
 
     return response()->json([
         'commit' => substr((string) env('RAILWAY_GIT_COMMIT_SHA', 'unknown'), 0, 7),
@@ -64,6 +77,9 @@ Route::get('/deploy-check', function () {
             'listId' => (int) config('acumbamail.list_id'),
             'planField' => (string) config('acumbamail.plan_field'),
         ],
+        'stores' => ['cache' => (string) config('cache.default'), 'session' => (string) config('session.driver'), 'queue' => (string) config('queue.default'), 'filesystem' => (string) config('filesystems.default')],
+        'mother' => ['url' => (bool) config('mother.url'), 'mediaToken' => (bool) config('mother.media_token')],
+        'probe' => $probe,
     ]);
 })->name('deploy.check');
 
