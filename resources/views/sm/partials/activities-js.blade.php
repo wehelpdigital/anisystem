@@ -5564,7 +5564,9 @@ document.addEventListener('DOMContentLoaded', () => {
         appendItemTag(name, price, qty, unit, stockId, toShed, newBuy);
         rememberItem(name, price, unit);
         refreshNameDatalist();
-        // Clear the fields for the next item, keep the panel open.
+        // Clear the fields for the next item, and fold the form away: the
+        // line has joined the list, and "+ Item" is the door to another
+        // (the owner's ask, 2026-09-15).
         $id('itemNameInput').value = '';
         $id('itemPriceInput').value = '';
         $id('itemQtyInput').value = '1';
@@ -5572,7 +5574,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if ($id('itemStockPick')) { $id('itemStockPick').value = ''; sayStockPick(); }
         if ($id('itemToShed')) $id('itemToShed').checked = false;
         syncToShedVisibility();
-        $id('itemNameInput').focus();
+        const unitNow = $id('itemUnitNow');
+        if (unitNow) { unitNow.textContent = 'Pick a unit'; unitNow.classList.add('is-none'); }
+        $id('itemPanelFold')?.classList.add('is-shut');
+        $id('itemsToggleBtn')?.setAttribute('aria-expanded', 'false');
+        if ($id('itemsToggleLabel')) $id('itemsToggleLabel').textContent = '+ Item';
     });
 
     // Escape a value for use inside an attribute selector.

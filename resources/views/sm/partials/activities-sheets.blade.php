@@ -638,24 +638,12 @@
                             <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                         </button>
                     </div>
-                    {{-- THE OTHER HALF OF THE SHED.
-                         Above, a line can SPEND something the inventory
-                         already holds. Here it can put something new ON it —
-                         WITH its quantity (the owner's call, 2026-09-03):
-                         ticking this means the material was bought for this
-                         work, so the item joins the inventory, the quantity
-                         arrives as a logged stock-in at the line's price, and
-                         marking the activity done uses it back to zero —
-                         unless more stock arrives some other way first.
-                         Hidden while a stock item is chosen: that line is
-                         already about something on the shelf. --}}
-                    <label class="item-shed" id="itemToShedWrap">
-                        <input type="checkbox" id="itemToShed" class="form-checkbox">
-                        <span>
-                            <b>Also add it to the inventory</b>
-                            <i>Puts it in the inventory with this quantity, logged as a stock-in at this price. When the activity is marked done, the quantity is used up — back to zero unless more stock arrives on another activity or through the Inventory module.</i>
-                        </span>
-                    </label>
+                    {{-- The "also add it to the inventory" tick is gone (the
+                         owner's call, 2026-09-15): a material bought for
+                         this work is bought here, and the shed is stocked
+                         from the day menu or the Inventory module. The JS
+                         still reads the box null-safely, so an old form
+                         without it simply never marks a line to-shed. --}}
                     <button type="button" id="addItemBtn" class="btn btn-primary btn-sm w-full">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
                         Add to list
