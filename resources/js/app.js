@@ -699,6 +699,27 @@ window.smLinkPrompt = function smLinkPrompt(current) {
     });
 };
 
+/* --------------------------------------------------------------------
+ * How wide the vertical scrollbar is, as a CSS variable.
+ *
+ * `100vw` is the viewport INCLUDING the scrollbar, so anything stretched
+ * to it on a desk is a scrollbar's width too wide -- and the page grows a
+ * thin horizontal scrollbar under it. The board's loading veil did exactly
+ * that. Anything full-bleed subtracts this instead; on a phone, where the
+ * scrollbar takes no room, it is simply 0.
+ * ------------------------------------------------------------------ */
+(() => {
+    const root = document.documentElement;
+    const measure = () => {
+        const w = Math.max(0, window.innerWidth - root.clientWidth);
+        root.style.setProperty('--scrollbar-w', w + 'px');
+    };
+    measure();
+    window.addEventListener('resize', measure, { passive: true });
+    // Content arriving later can add or remove the scrollbar; a cheap re-check.
+    window.addEventListener('load', measure, { once: true });
+})();
+
 /* ======================================================================
  * The rich-text engine, swapped under the old name.
  *

@@ -2848,8 +2848,13 @@
            in two strips either side — a wait that plainly wasn't covering
            what it was waiting for. Anchored at the column's centre and
            stretched a viewport wide. */
-        #boardVeil { position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw;
-            margin-left: -50vw; z-index: 30; display: flex; align-items: flex-start;
+        /* Minus the scrollbar (see --scrollbar-w in app.js): 100vw counts it,
+           so on a desk the veil poked out a scrollbar's width past the page
+           and the page grew a thin horizontal scrollbar for as long as the
+           veil was up. On a phone the variable is 0 and nothing changes. */
+        #boardVeil { position: absolute; top: 0; bottom: 0; left: 50%;
+            width: calc(100vw - var(--scrollbar-w, 0px));
+            margin-left: calc(-50vw + var(--scrollbar-w, 0px) / 2); z-index: 30; display: flex; align-items: flex-start;
             justify-content: center; padding-top: 4rem; background: var(--color-gray-50, #f9fafb);
             transition: opacity .28s cubic-bezier(.22,1,.36,1); }
         #boardVeil.is-done { opacity: 0; pointer-events: none; }
