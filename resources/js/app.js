@@ -718,6 +718,15 @@ window.smLinkPrompt = function smLinkPrompt(current) {
     window.addEventListener('resize', measure, { passive: true });
     // Content arriving later can add or remove the scrollbar; a cheap re-check.
     window.addEventListener('load', measure, { once: true });
+    /* And content arriving later than that. A board is drawn under its
+       veil AFTER load: the page was short and had no scrollbar when this
+       was measured (0), then grew one while the veil -- a viewport wide,
+       minus this -- was still up, so for as long as it stayed up the page
+       had a thin horizontal scrollbar under it. The body's height is what
+       changes when a scrollbar comes or goes, so it is watched. */
+    if ('ResizeObserver' in window) {
+        new ResizeObserver(measure).observe(document.body);
+    }
 })();
 
 /* ======================================================================
