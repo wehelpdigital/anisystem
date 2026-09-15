@@ -46,13 +46,15 @@
     .ct-chip.is-on { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
     .ct-chip small { font-weight: 700; opacity: .75; }
 
-    /* The search door: an icon beside the full-width Add. */
-    .ct-searchbtn { flex: none; width: 3rem; height: 3rem; border-radius: .9rem; display: flex;
-        align-items: center; justify-content: center; color: var(--color-gray-600);
-        background: var(--color-white); border: 1px solid var(--color-gray-300);
-        transition: color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
-    .ct-searchbtn:hover { color: var(--color-brand-700); border-color: var(--color-brand-400); }
-    .ct-searchbtn svg { width: 1.2rem; height: 1.2rem; }
+    /* The search field, on top of everything: the magnifier inside it on
+       the left, a clear on the right once something is typed. */
+    .ct-search { position: relative; }
+    .ct-search-ico { position: absolute; left: .85rem; top: 50%; transform: translateY(-50%); width: 1.05rem; height: 1.05rem;
+        color: var(--color-gray-400); pointer-events: none; }
+    .ct-search-x { position: absolute; right: .5rem; top: 50%; transform: translateY(-50%); width: 1.7rem; height: 1.7rem;
+        border-radius: 999px; color: var(--color-gray-400); display: inline-flex; align-items: center; justify-content: center; font-size: .8rem; }
+    .ct-search-x:hover { background: var(--color-gray-100); color: var(--color-gray-700); }
+    .ct-search input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
     .ct-filterpill { display: inline-flex; align-items: center; gap: .45rem; font-size: .78rem;
         font-weight: 800; color: var(--color-brand-700); background: var(--color-brand-50);
         border: 1px solid var(--color-brand-100); border-radius: 999px; padding: .35rem .5rem .35rem .8rem; }
@@ -114,7 +116,7 @@
 
     @media (prefers-reduced-motion: reduce) {
         .ct-row { transition: none; opacity: 1; transform: none; }
-        .ct-act, .ct-chip, .ct-searchbtn, .ctf-add, .ctf-place { transition: none; }
+        .ct-act, .ct-chip, .ctf-add, .ctf-place { transition: none; }
         .ct-line { transition: none; opacity: 1; transform: none; }
     }
 </style>
@@ -123,15 +125,19 @@
 @section('content')
 <div class="max-w-3xl mx-auto">
 
-    {{-- Toolbar: the search behind one icon, and one wide door for adding. --}}
-    <div class="flex items-center gap-2.5 mb-3">
-        <button type="button" id="ctSearchBtn" class="ct-searchbtn" title="Search contacts" aria-label="Search contacts">
-            <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-        </button>
-        <button type="button" id="ctAddBtn" class="btn btn-primary grow justify-center">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14m-7-7h14"/></svg>
-            Add a New Contact
-        </button>
+    {{-- Toolbar: the search as a field on top (typing filters the list as
+         it goes), and one wide door for adding under it (the owner's call,
+         2026-09-16). --}}
+    <div class="ct-search mb-2.5">
+        <svg class="ct-search-ico" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+        {{-- pl-10!, not pl-10: .form-input sets its padding through
+             @apply px-4, which lands later than the plain utility and wins
+             the tie — the magnifier would sit on the placeholder's first letter. --}}
+        <input type="search" id="ctSearch" class="form-input pl-10! pr-10!" placeholder="Search — name, number, company, tag…" autocomplete="off" aria-label="Search contacts">
+        <button type="button" id="ctSearchX" class="ct-search-x hidden" aria-label="Clear the search">✕</button>
+    </div>
+    <div class="mb-3">
+        <button type="button" id="ctAddBtn" class="btn btn-primary w-full justify-center">Add a New Contact</button>
     </div>
 
     {{-- What the list is currently narrowed by, with its way off. --}}
@@ -164,27 +170,6 @@
     </div>
     <div id="ctMore" class="py-6" hidden aria-hidden="true"></div>
 
-</div>
-
-{{-- The search, behind its own small sheet. Typing filters the list live
-     underneath; closing keeps the filter (the pill above shows the way off). --}}
-<div class="sheet hidden" id="ctSearchSheet" style="--sheet-width:26rem">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header">
-        <h3 class="sheet-title">Search contacts</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
-    </div>
-    <div class="sheet-body">
-        <div class="relative">
-            <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-            {{-- pl-10!, not pl-10: .form-input sets its padding through
-                 @apply px-4, which lands later in the sheet than the plain
-                 utility and wins the tie — the field kept its 1rem inset and
-                 the magnifier sat on top of the placeholder's first letter. --}}
-            <input type="search" id="ctSearch" class="form-input pl-10!" placeholder="Name, number, company, tag…" autocomplete="off">
-        </div>
-        <p class="form-hint">The list behind updates as you type.</p>
-    </div>
 </div>
 
 {{-- The add/edit sheet — one form, two moods; the title says which. --}}
@@ -700,20 +685,21 @@
     });
 
     /* ------------------------------ the search ----------------------------- */
-    $('ctSearchBtn').addEventListener('click', () => {
-        window.openSheet('ctSearchSheet');
-        setTimeout(() => $('ctSearch').focus(), 250);
-    });
+    /* A field, not a sheet: the list narrows as the letters land. */
     let deb;
     $('ctSearch').addEventListener('input', () => {
+        $('ctSearchX').classList.toggle('hidden', !$('ctSearch').value);
         clearTimeout(deb);
         deb = setTimeout(() => { state.q = $('ctSearch').value.trim(); reload(); }, 250);
     });
-    $('ctFilterClear').addEventListener('click', () => {
+    const clearSearch = () => {
         state.q = '';
         $('ctSearch').value = '';
+        $('ctSearchX').classList.add('hidden');
         reload();
-    });
+    };
+    $('ctSearchX').addEventListener('click', () => { clearSearch(); $('ctSearch').focus(); });
+    $('ctFilterClear').addEventListener('click', clearSearch);
 
     // window.api lives in the deferred module bundle, which evaluates after
     // inline scripts — booting on `load` is what makes the first paint
