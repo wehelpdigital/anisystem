@@ -310,11 +310,35 @@
     /* Everything the card needs before it moves: the page settled, and the
        poster in the browser's cache, so the screen fades up with the picture
        on it rather than going black and then flashing to the picture. */
-    const pageSettled = () => new Promise((res) => {
+    const loadDone = () => new Promise((res) => {
         if (document.readyState === 'complete') { res(); return; }
         const t = setTimeout(res, LOAD_CAP);
         window.addEventListener('load', () => { clearTimeout(t); res(); }, { once: true });
     });
+    /* AND THE LOADER GONE, AND THE PAGE ACTUALLY LISTENING.
+     *
+     * `load` fires while a heavy board is still building itself: the card
+     * came up over the activities module with the main thread busy for
+     * seconds more, so a thumb on Close did nothing until the board was done
+     * (the owner's report, 2026-09-15). So the card also waits for the boot
+     * veil and the module loader to be lifted, and then for a real idle slot
+     * on the main thread -- the moment a tap would be answered at once. */
+    const loaderGone = () => new Promise((res) => {
+        const root = document.documentElement;
+        const gone = () => !root.classList.contains('booting') && !root.classList.contains('mod-held') && !document.getElementById('bootVeil');
+        if (gone()) { res(); return; }
+        const t = setInterval(() => { if (gone()) { clearInterval(t); clearTimeout(cap); res(); } }, 120);
+        const cap = setTimeout(() => { clearInterval(t); res(); }, 8000);
+    });
+    const mainThreadIdle = () => new Promise((res) => {
+        if (!('requestIdleCallback' in window)) { setTimeout(res, 400); return; }
+        let tries = 0;
+        const tick = () => requestIdleCallback((d) => {
+            if (d.timeRemaining() >= 25 || ++tries >= 15) res(); else tick();
+        }, { timeout: 800 });
+        tick();
+    });
+    const pageSettled = () => loadDone().then(loaderGone).then(mainThreadIdle);
     const posterReady = (url) => new Promise((res) => {
         if (!url) { res(); return; }
         const img = new Image();
