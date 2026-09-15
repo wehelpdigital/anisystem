@@ -32,7 +32,13 @@ return [
      */
     'resend' => [
         'key' => env('RESEND_KEY', env('RESEND_API_KEY')),
-        'from' => env('RESEND_FROM', 'anee.io <onboarding@resend.dev>'),
+        /* The app's own address by default. The sandbox sender it used to
+           fall back to (onboarding@resend.dev) delivers only to the Resend
+           account's owner, so a host that forgot RESEND_FROM silently sent
+           nothing to anybody -- the day of the move, every confirmation
+           and reset mail came back "You can only send testing emails to your
+           own email address". anee.io is a verified domain now. */
+        'from' => env('RESEND_FROM', 'anee.io <anee@anee.io>'),
     ],
 
     'ses' => [
