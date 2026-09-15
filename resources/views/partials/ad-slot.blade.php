@@ -23,12 +23,24 @@
                 border: 1px dashed var(--color-gray-200, #e5e7eb); background: var(--color-white, #fff);
                 animation: adSlotIn .38s cubic-bezier(.22,1,.36,1) both; }
             @keyframes adSlotIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+            /* The head wears a colour band like the other cards on the
+               free screens (the owner's ask, 2026-09-16) -- a warm amber
+               sweep so it reads as a sponsor's, not the farm's green.
+               White on amber-800/700 clears 4.5:1 in either mode; the
+               band is its own ground, so day and night look the same. */
             .ad-slot-head { display: flex; align-items: center; justify-content: space-between; gap: .75rem;
-                padding: .35rem .75rem; font-size: .625rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
-                color: var(--color-gray-400, #9ca3af); border-bottom: 1px dashed var(--color-gray-100, #f3f4f6); }
+                padding: .5rem .8rem; font-size: .625rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+                color: #fff; text-shadow: 0 1px 1px rgb(0 0 0 / .18);
+                --ad-1: #7c2d12; --ad-2: #9a3412; --ad-3: #b45309;
+                background-image: linear-gradient(120deg, var(--ad-1), var(--ad-2) 28%, var(--ad-3) 52%, var(--ad-2) 76%, var(--ad-1));
+                background-size: 220% 100%; animation: adSweep 11s ease-in-out infinite alternate; }
+            @keyframes adSweep { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+            .ad-slot-head > span::before { content: '★'; margin-right: .35rem; opacity: .85; }
             .ad-slot-upsell { text-transform: none; letter-spacing: 0; font-size: .7rem; font-weight: 700;
-                color: var(--color-brand-700, #3d6823); white-space: nowrap; }
-            .ad-slot-upsell:hover { color: var(--color-brand-800, #2f5219); text-decoration: underline; }
+                color: #fff; white-space: nowrap; padding: .15rem .55rem; border-radius: 999px;
+                background: rgb(255 255 255 / .16); border: 1px solid rgb(255 255 255 / .28);
+                transition: background .28s cubic-bezier(.22,1,.36,1); }
+            .ad-slot-upsell:hover { background: rgb(255 255 255 / .28); color: #fff; }
             .ad-slot-body { display: flex; align-items: center; justify-content: center; min-height: 5rem; padding: .5rem; }
             .ad-slot-body .adsbygoogle { width: 100%; }
             .ad-slot-image { display: block; max-width: 100%; }
@@ -36,9 +48,8 @@
             .ad-slot.is-compact { margin: .75rem 0; }
             .ad-slot.is-compact .ad-slot-body { min-height: 3.5rem; padding: .35rem; }
             html.dark .ad-slot { background: #151b12; border-color: #2b3a1c; }
-            html.dark .ad-slot-head { border-color: #1f2917; color: #8a9a80; }
-            html.dark .ad-slot-upsell { color: #a8cc7e; }
-            @media (prefers-reduced-motion: reduce) { .ad-slot { animation: none; } }
+            html.dark .ad-slot-head { --ad-1: #6c2710; --ad-2: #8a2e0f; --ad-3: #a1490a; }
+            @media (prefers-reduced-motion: reduce) { .ad-slot, .ad-slot-head { animation: none; } }
         </style>
     @endonce
     <aside class="ad-slot ad-slot-{{ $adUnit->kind }} {{ ($compact ?? false) ? 'is-compact' : '' }} {{ $class ?? '' }}"
