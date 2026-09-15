@@ -96,10 +96,11 @@
 
     .iv-empty { text-align: center; padding: 2.2rem 1rem; }
 
-    /* PRICING — one card per item, everything stacked in rows (no columns:
-       the owner's call, 2026-09-16). The item's own numbers first, plainly
-       labelled and one to a line; then its batches, each a row with the
-       price on the right as a tappable pill. */
+    /* PRICING — one card per item, and inside it one small card per batch
+       (the owner's call, 2026-09-16: just the batches, no usual price and
+       no average beside them). A batch card: what came in and when on the
+       top line with its price as a pill on the right, the note under, and
+       what the batch cost in all along the foot. */
     #ivPricing { grid-template-columns: minmax(0, 1fr); }
     .ivp-card { border-radius: 1rem; border: 1px solid var(--color-gray-200); background: var(--color-white); padding: .95rem 1rem 1rem; min-width: 0; }
     .ivp-head { display: flex; align-items: center; gap: .65rem; }
@@ -108,57 +109,46 @@
     .ivp-name { flex: 1 1 auto; min-width: 0; }
     .ivp-name b { display: block; font-size: .95rem; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .ivp-name i { display: block; font-style: normal; font-size: .74rem; color: var(--color-gray-500); }
+    .ivp-spent { flex: none; text-align: right; }
+    .ivp-spent b { display: block; font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
+    .ivp-spent i { display: block; font-style: normal; font-size: .62rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--color-gray-400); }
 
-    /* The item's numbers: label on the left, figure on the right, one per line. */
-    .ivp-rows { display: flex; flex-direction: column; margin-top: .8rem; border-radius: .8rem;
-        background: var(--color-gray-50); border: 1px solid var(--color-gray-100); overflow: hidden; }
-    .ivp-row { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .6rem .75rem;
-        border-bottom: 1px solid var(--color-gray-100); min-width: 0; }
-    .ivp-row:last-child { border-bottom: 0; }
-    .ivp-row-l { min-width: 0; }
-    .ivp-row-l b { display: block; font-size: .8rem; font-weight: 700; color: var(--color-gray-700); }
-    .ivp-row-l b .font-normal { font-size: .7rem; color: var(--color-gray-400); }
-    .ivp-row-l i { display: block; font-style: normal; font-size: .68rem; color: var(--color-gray-400); line-height: 1.35; }
-    .ivp-row-v { flex: none; text-align: right; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
-    .ivp-row-v small { display: block; font-size: .66rem; font-weight: 600; color: var(--color-gray-400); }
-    .ivp-row-v.is-none { color: var(--color-gray-400); font-weight: 600; }
-    /* The usual price is a pill you can tap; the pencil says so. */
+    .ivp-batches { display: grid; gap: .55rem; margin-top: .85rem; }
+    @media (min-width: 720px) { .ivp-batches { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .ivp-bc { border-radius: .85rem; border: 1px solid var(--color-gray-200); background: var(--color-gray-50); padding: .65rem .75rem .6rem; min-width: 0;
+        display: flex; flex-direction: column; gap: .35rem; }
+    .ivp-bc-top { display: flex; align-items: flex-start; justify-content: space-between; gap: .6rem; min-width: 0; }
+    .ivp-bc-qty { min-width: 0; }
+    .ivp-bc-qty b { display: block; font-size: .9rem; color: var(--color-gray-900); line-height: 1.25; }
+    .ivp-bc-qty i { display: block; font-style: normal; font-size: .7rem; color: var(--color-gray-500); margin-top: .1rem; line-height: 1.35; }
+    .ivp-bc-note { font-size: .74rem; color: var(--color-gray-600); line-height: 1.4; }
+    .ivp-bc-why { font-size: .7rem; color: var(--color-gray-400); line-height: 1.4; }
+    .ivp-bc-foot { font-size: .74rem; color: var(--color-gray-500); padding-top: .4rem; border-top: 1px dashed var(--color-gray-200); }
+    .ivp-bc-foot b { color: var(--color-gray-900); font-weight: 800; }
+    .ivp-bc-none { color: #b45309; }
+    .ivp-none { font-size: .8rem; color: var(--color-gray-400); padding: .4rem 0; }
+
+    /* The price, as a pill: tap it to fix. */
     .ivp-pill { display: inline-flex; align-items: center; gap: .35rem; border: 1px solid var(--color-brand-200); background: var(--color-white);
-        color: var(--color-brand-800); border-radius: 999px; padding: .3rem .7rem; font-size: .84rem; font-weight: 800; cursor: pointer;
+        color: var(--color-brand-800); border-radius: 999px; padding: .32rem .7rem; font-size: .86rem; font-weight: 800; cursor: pointer; flex: none;
         transition: background .22s cubic-bezier(.22,1,.36,1), border-color .22s cubic-bezier(.22,1,.36,1); white-space: nowrap; }
     .ivp-pill:hover { background: var(--color-brand-50); border-color: var(--color-brand-400); }
     .ivp-pill.is-none { color: #b45309; border-color: #fde68a; background: #fffbeb; }
-    .ivp-pill.is-locked { cursor: default; color: var(--color-gray-500); border-color: var(--color-gray-200); background: var(--color-gray-50); }
-    .ivp-pill.is-locked:hover { background: var(--color-gray-50); border-color: var(--color-gray-200); }
+    .ivp-pill.is-locked { cursor: default; color: var(--color-gray-500); border-color: var(--color-gray-200); background: var(--color-white); }
+    .ivp-pill.is-locked:hover { background: var(--color-white); border-color: var(--color-gray-200); }
     .ivp-pill svg { width: .8rem; height: .8rem; flex: none; opacity: .7; }
     .ivp-pill.is-locked svg { opacity: .5; }
 
-    .ivp-sub { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; margin: .95rem 0 .35rem; }
-    .ivp-sub b { font-size: .82rem; font-weight: 800; color: var(--color-gray-800); }
-    .ivp-sub i { font-style: normal; font-size: .7rem; color: var(--color-gray-400); }
-
-    /* One batch, one row: when and what on the left, the price pill on the right. */
-    .ivp-batch { display: flex; align-items: center; gap: .6rem; padding: .6rem .1rem; border-bottom: 1px dashed var(--color-gray-200); min-width: 0; }
-    .ivp-batch:last-child { border-bottom: 0; }
-    .ivp-b-l { flex: 1 1 auto; min-width: 0; }
-    .ivp-b-l b { display: block; font-size: .84rem; color: var(--color-gray-900); }
-    .ivp-b-l i { display: block; font-style: normal; font-size: .7rem; color: var(--color-gray-500); line-height: 1.4; }
-    .ivp-b-l i em { font-style: normal; color: var(--color-gray-400); }
-    .ivp-b-r { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: .2rem; }
-    .ivp-b-r small { font-size: .66rem; color: var(--color-gray-400); text-align: right; max-width: 11rem; line-height: 1.3; }
-    .ivp-none { font-size: .8rem; color: var(--color-gray-400); padding: .4rem 0; }
-
     html.dark .ivp-card { background: #151b12; border-color: #2b3a1c; }
     html.dark .ivp-face { background: #25311b; }
-    html.dark .ivp-name b, html.dark .ivp-row-v, html.dark .ivp-b-l b, html.dark .ivp-sub b { color: #e8efe1; }
-    html.dark .ivp-rows { background: #1c2417; border-color: #2b3423; }
-    html.dark .ivp-row { border-color: #2b3423; }
-    html.dark .ivp-row-l b { color: #b9c6ad; }
+    html.dark .ivp-name b, html.dark .ivp-spent b, html.dark .ivp-bc-qty b, html.dark .ivp-bc-foot b { color: #e8efe1; }
+    html.dark .ivp-bc { background: #1c2417; border-color: #2b3423; }
+    html.dark .ivp-bc-foot { border-color: #2b3423; }
+    html.dark .ivp-bc-note { color: #b9c6ad; }
     html.dark .ivp-pill { background: #22301a; border-color: #3d5226; color: #cfe6b8; }
     html.dark .ivp-pill:hover { background: #2a3c20; }
     html.dark .ivp-pill.is-none { background: #2a2413; border-color: #4a3d16; color: #e0c26a; }
     html.dark .ivp-pill.is-locked { background: #1c2417; border-color: #2b3423; color: #8a9a80; }
-    html.dark .ivp-batch { border-color: #2b3423; }
     @media (prefers-reduced-motion: reduce) { .ivp-pill { transition: none; } }
 
     /* MOTION. New log lines slide in; a number that changed pops once. The
@@ -269,7 +259,7 @@
          2026-09-16). Per item: the standing price, the average actually
          paid, what is on hand is worth, and the batches beneath. --}}
     <div class="iv-pane" id="ivPanePricing">
-        <p class="form-hint mb-3">Every delivery or opening count is a <b>batch</b>, and each batch remembers what you paid for it — the same fertiliser can cost more one month and less the next. <b>Tap any price to fix it.</b> A batch with no price of its own is read at the item's usual price.</p>
+        <p class="form-hint mb-3">Every delivery or opening count is a <b>batch</b>, and each batch remembers what you paid for it — the same fertiliser can cost more one month and less the next. <b>Tap any price to fix it.</b> The day's cash and the expense report count each batch at its own price.</p>
         <div id="ivPricing" class="grid gap-3"></div>
         <p id="ivPricingEmpty" class="text-sm text-gray-400 text-center py-6 hidden">Nothing on the shelf yet.</p>
     </div>
