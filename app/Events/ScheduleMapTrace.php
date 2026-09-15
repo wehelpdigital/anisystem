@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Events\Concerns\HeardOnlyInTheRoom;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
@@ -15,6 +16,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 class ScheduleMapTrace implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets;
+    use HeardOnlyInTheRoom;
 
     public function __construct(public int $scheduleId, public array $payload)
     {

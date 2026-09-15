@@ -68,12 +68,33 @@ class NotificationController extends Controller
         return response()->json(['success' => true, 'data' => ['unread' => 0]]);
     }
 
-    /** Lightweight unread badge count (polled). */
+    /**
+     * The unread badge count, polled — and the newest unread row with it.
+     *
+     * Outside a Collab Room no socket is open (see bootstrap.js), so this
+     * poll is how the bell learns that something new has landed. The count
+     * alone cannot say WHAT: one row read and another arrived is the same
+     * number. The newest unread row's id lets the bell tell a new arrival
+     * from a shuffle, and its words let the device say so when the app is
+     * not on screen.
+     */
     public function count()
     {
+        $userId = Auth::id();
+        $latest = AnisystemNotification::active()->forUser($userId)->unread()->orderByDesc('id')->first();
+
         return response()->json([
             'success' => true,
-            'data' => ['unread' => $this->unreadCount(Auth::id())],
+            'data' => [
+                'unread' => $this->unreadCount($userId),
+                'latest' => $latest ? [
+                    'id' => (int) $latest->id,
+                    'type' => (string) $latest->type,
+                    'title' => \App\Support\CommunityText::plain($latest->title, 120),
+                    'body' => \App\Support\CommunityText::plain($latest->body, 160),
+                    'url' => \App\Services\NotificationService::localUrl($latest->url),
+                ] : null,
+            ],
         ]);
     }
 

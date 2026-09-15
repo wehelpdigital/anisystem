@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Events\Concerns\HeardOnlyInTheRoom;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
@@ -16,6 +17,7 @@ use Illuminate\Queue\SerializesModels;
 class ScheduleAiMessagePushed implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    use HeardOnlyInTheRoom;
 
     public function __construct(public int $scheduleId, public string $name, public array $payload)
     {

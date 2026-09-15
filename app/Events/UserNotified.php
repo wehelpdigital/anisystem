@@ -15,6 +15,12 @@ use Illuminate\Queue\SerializesModels;
  * time to not know that the team is on a call waiting for you. This rides
  * the person's own channel, so the bell can ring the moment the thing
  * happens — and, when the app is not on screen, the device can too.
+ *
+ * Sent only while the person is in a Collab Room: that is the one place
+ * a socket is open (see resources/js/bootstrap.js), so anywhere else the
+ * message would be paid for and heard by no one. Everywhere else the
+ * bell's poll rings it — thirty seconds, not sixty, and it carries the
+ * newest row so the ring and the device notice still happen.
  */
 class UserNotified implements ShouldBroadcastNow
 {
@@ -40,5 +46,10 @@ class UserNotified implements ShouldBroadcastNow
     public function broadcastWith(): array
     {
         return $this->payload;
+    }
+
+    public function broadcastWhen(): bool
+    {
+        return \App\Support\CollabPresence::anywhere($this->userId);
     }
 }

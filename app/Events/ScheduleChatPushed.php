@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Events\Concerns\HeardOnlyInTheRoom;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
@@ -21,6 +22,7 @@ class ScheduleChatPushed implements ShouldBroadcastNow
     use Dispatchable;
     use InteractsWithSockets;
     use SerializesModels;
+    use HeardOnlyInTheRoom;
 
     public function __construct(
         public int $scheduleId,

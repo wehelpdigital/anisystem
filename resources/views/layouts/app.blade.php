@@ -18,15 +18,25 @@
         document.addEventListener('gesturechange', function (e) { e.preventDefault(); });
     </script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    {{-- Realtime endpoints resolved at request time rather than baked into the
-         bundle, so a key change needs no rebuild and an unexpanded
-         "${PUSHER_APP_KEY}" from a hosting dashboard can never reach Echo. --}}
-    @if (\App\Support\RealtimeConfig::pusherKey())
-        <meta name="pusher-key" content="{{ \App\Support\RealtimeConfig::pusherKey() }}">
-        <meta name="pusher-cluster" content="{{ \App\Support\RealtimeConfig::pusherCluster() }}">
-    @endif
-    @if (\App\Support\RealtimeConfig::livekitUrl())
-        <meta name="livekit-url" content="{{ \App\Support\RealtimeConfig::livekitUrl() }}">
+    {{-- Realtime endpoints, for the Collab Room and nothing else.
+
+         A page that is the room says @section('realtime', 'room') — the room
+         itself, and the Activities module while it is framed inside it — and
+         only then are the endpoints printed and a socket opened. Every other
+         page polls: sockets and messages are the whole budget on Pusher's
+         plan, and a socket held open by every tab of every farmer was most of
+         it. Resolved at request time rather than baked into the bundle, so a
+         key change needs no rebuild and an unexpanded "${PUSHER_APP_KEY}"
+         from a hosting dashboard can never reach Echo. --}}
+    @hasSection('realtime')
+        <meta name="realtime-scope" content="{{ trim($__env->yieldContent('realtime')) }}">
+        @if (\App\Support\RealtimeConfig::pusherKey())
+            <meta name="pusher-key" content="{{ \App\Support\RealtimeConfig::pusherKey() }}">
+            <meta name="pusher-cluster" content="{{ \App\Support\RealtimeConfig::pusherCluster() }}">
+        @endif
+        @if (\App\Support\RealtimeConfig::livekitUrl())
+            <meta name="livekit-url" content="{{ \App\Support\RealtimeConfig::livekitUrl() }}">
+        @endif
     @endif
     {{-- Ahead of everything: the page is shown whole or not at all. --}}
     @include('partials.boot-veil-css')
@@ -563,28 +573,27 @@
             };
             return {
                 open: false, loading: false, items: [], unread: 0,
+                /* The newest row this bell has already rung for — null until
+                   the first poll answers, so what was waiting on arrival is
+                   counted but not rung. */
+                rungId: null,
                 init() {
                     this.refreshCount();
-                    // The poll stays as the floor — a dropped broadcast costs
-                    // a minute, not the message.
-                    setInterval(() => { if (!this.open) this.refreshCount(); }, 60000);
+                    // The poll is how the bell hears anything outside a
+                    // Collab Room, where no socket is open (bootstrap.js): a
+                    // count every thirty seconds, carrying the newest row.
+                    setInterval(() => { if (!this.open) this.refreshCount(); }, 30000);
 
-                    /* The bell's own line. Anything addressed to this person
-                       arrives the moment it happens: the count moves, the
-                       bell shakes, and if the app is not what they are
-                       looking at, the device says so too. */
+                    /* The bell's own line, inside a Collab Room. Anything
+                       addressed to this person arrives the moment it happens:
+                       the count moves, the bell shakes, and if the app is not
+                       what they are looking at, the device says so too. */
                     const ME = {{ (int) auth()->id() }};
                     try {
                         window.Echo?.private('user.' + ME).listen('.notify', (p) => {
                             this.unread = (this.unread || 0) + 1;
                             if (this.open) this.load();
-                            this.buzz();
-                            window.smNotify?.({
-                                title: p.title || 'anee.io',
-                                body: p.body || '',
-                                url: p.url || '/app',
-                                tag: 'n' + (p.type || 'x'),
-                            });
+                            this.ring(p);
                         });
                     } catch (_) { /* no realtime here — the poll covers it */ }
 
@@ -638,7 +647,24 @@
                     try {
                         const r = await fetch(urls.count, { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
                         const d = await r.json(); this.unread = d.data.unread;
+                        const fresh = d.data.latest;
+                        if (this.rungId === null) { this.rungId = fresh ? fresh.id : 0; return; }
+                        if (fresh && fresh.id > this.rungId) this.ring(fresh);
                     } catch (_) {}
+                },
+                /* One row, once: the socket and the poll can both bring the
+                   same one, and the second to arrive must not shake the bell
+                   again. */
+                ring(p) {
+                    if (p.id && p.id <= (this.rungId || 0)) return;
+                    if (p.id) this.rungId = p.id;
+                    this.buzz();
+                    window.smNotify?.({
+                        title: p.title || 'anee.io',
+                        body: p.body || '',
+                        url: p.url || '/app',
+                        tag: 'n' + (p.type || 'x'),
+                    });
                 },
                 async read(n) {
                     n.isRead = true; this.unread = Math.max(0, this.unread - 1);

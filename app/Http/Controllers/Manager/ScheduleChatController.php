@@ -25,26 +25,23 @@ class ScheduleChatController extends BaseScheduleController
      * survives one missed request without keeping a ghost in the room for
      * long after the tab is closed.
      */
-    public const IN_ROOM_SECONDS = 90;
+    public const IN_ROOM_SECONDS = \App\Support\CollabPresence::TTL_SECONDS;
 
     /**
-     * Being "in the Collab Room" lives in cache, not in a table.
-     *
-     * NOT ScheduleBoardPresence: that row answers "is a teammate mid-sketch
-     * on the whiteboard" and BoardSession clears the canvas by it — counting
-     * someone reading the chat as board presence would quietly change when a
-     * drawing is judged safe to archive. A cache key with a TTL also expires
-     * by itself, so nobody has to sweep up after a closed browser.
+     * Being "in the Collab Room" lives in cache, not in a table — see
+     * CollabPresence, which owns the keys now that every room broadcast
+     * asks the same question before it goes out. These two stay as the
+     * names the chat, the room door and the call ring already use.
      */
     public static function markInRoom(int $scheduleId, int $userId): void
     {
-        Cache::put('collab-here.' . $scheduleId . '.' . $userId, time(), self::IN_ROOM_SECONDS);
+        \App\Support\CollabPresence::mark($scheduleId, $userId);
     }
 
     /** Whether this member's Collab Room heartbeat is still fresh. */
     public static function isInRoom(int $scheduleId, int $userId): bool
     {
-        return Cache::has('collab-here.' . $scheduleId . '.' . $userId);
+        return \App\Support\CollabPresence::here($scheduleId, $userId);
     }
 
     /**

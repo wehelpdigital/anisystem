@@ -10,6 +10,8 @@
      bar covers the drawing surface and chat composer, so drop it here and give
      the panels that strip back. Navigation is still one tap away via Back. --}}
 @section('body-class', 'hide-tabbar no-footer')
+{{-- The one page that holds a socket: see the layout's realtime metas. --}}
+@section('realtime', 'room')
 
 @section('content')
 <div class="collab-wrap" id="collabRoom" data-schedule="{{ $schedule->id }}" data-owner="{{ (int) $schedule->anisystemUserId }}">

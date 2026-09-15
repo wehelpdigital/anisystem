@@ -1877,6 +1877,10 @@
     }
     let traceLast = 0, traceOn = false;
     function sendTrace(done) {
+        // A trace exists to show teammates the shape being drawn, and only
+        // a Collab Room has any: outside one there is no socket to carry it
+        // and nobody on the other end, so the request is not made.
+        if (!window.Echo) return;
         if (done && !traceOn) return;
         traceOn = !done;
         api(`${URLS.trace}?scheduleId=${SID}`, { method: 'POST', body: done
@@ -3261,7 +3265,10 @@
                 dropVeil();
             }
             if (!centeredOnMe && !layers.size) { centeredOnMe = true; map.setCenter({ lat, lng }); map.setZoom(17); dropVeil(); }
-            if (Date.now() - lastSent > 5000) {
+            // The beacon's one job is to put this dot on teammates' maps,
+            // and only a Collab Room has teammates watching: on the Maps
+            // module by itself the dot is drawn here and sent nowhere.
+            if (window.Echo && Date.now() - lastSent > 5000) {
                 lastSent = Date.now();
                 api(`${URLS.loc}?scheduleId=${SID}`, { method: 'POST', body: { lat, lng, acc } }).catch(() => {});
             }

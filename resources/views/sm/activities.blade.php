@@ -11,6 +11,11 @@
 @section('body-class', 'hide-tabbar no-zoom is-activities' . (request('module', 'activities') === 'activities' ? ' act-module-open' : ' module-booting'))
 
 @if (request()->boolean('embed'))
+{{-- Framed inside the Collab Room, this page is part of the room: it holds
+     the socket that lets a teammate's change land on the board as it
+     happens. On its own (no embed) it holds none — its own changes paint
+     locally, and nothing else is listening. --}}
+@section('realtime', 'room')
 @push('head')
 <script>document.documentElement.classList.add('collab-embed');</script>
 <style>
