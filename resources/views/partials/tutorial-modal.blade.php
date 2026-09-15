@@ -71,7 +71,7 @@
     /* A light dim and no blur: the page stays plainly readable behind the
        card, so it is obvious this is a card over the screen you opened and
        not a screen of its own. The card's own shadow does the separating. */
-    .tutv-backdrop { position: absolute; inset: 0; background: rgb(6 12 4 / .34); touch-action: none;
+    .tutv-backdrop { position: absolute; inset: 0; background: rgb(6 12 4 / .16); touch-action: none;
         opacity: 0; transition: opacity .34s cubic-bezier(.22,1,.36,1); }
     .tutv-wrap.is-open .tutv-backdrop { opacity: 1; }
 
@@ -148,7 +148,7 @@
         /* Not quite the whole screen: a strip of the page stays visible
            above the sheet, under the light dim, so a phone user too can see
            the page is still there behind it. */
-        .tutv-wrap.is-portrait .tutv-card { height: calc(100dvh - 3.25rem); max-height: calc(100dvh - 3.25rem);
+        .tutv-wrap.is-portrait .tutv-card { height: calc(100dvh - 5.5rem); max-height: calc(100dvh - 5.5rem);
             border-radius: 1.35rem 1.35rem 0 0; display: flex; flex-direction: column; overflow: hidden; }
         .tutv-wrap.is-portrait .tutv-screen[data-shape="portrait"] { flex: 1 1 auto; min-height: 0; height: auto; }
         .tutv-wrap.is-portrait .tutv-body { flex: none; padding: .85rem 1.1rem calc(.9rem + env(safe-area-inset-bottom, 0px)); }
