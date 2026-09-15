@@ -93,8 +93,14 @@
             <a href="{{ route('signup') }}" class="font-bold text-brand-700 hover:underline">Create one for free</a>
         </p>
 
-        @if (app()->environment('local'))
-            {{-- Quick-fill test logins — only rendered in the local environment. --}}
+        @php
+            /* The quick-fill test logins show on the preview doors (the
+               Laravel Cloud address, a local build) and never on anee.io:
+               the same build answers both, so the host decides. */
+            $showTestLogins = ! str_ends_with(strtolower(request()->getHost()), 'anee.io');
+        @endphp
+        @if ($showTestLogins)
+            {{-- Quick-fill test logins — the preview address only. --}}
             <div class="mt-6 rounded-2xl border border-dashed border-brand-300 bg-brand-50/70 p-4"
                  x-data="{ fill(email, password) {
                      document.getElementById('email').value = email;
@@ -103,7 +109,7 @@
                  } }">
                 <div class="flex items-center gap-2 mb-3">
                     <span class="badge badge-yellow">Test logins</span>
-                    <span class="text-xs text-gray-500">Local preview only</span>
+                    <span class="text-xs text-gray-500">Preview address only</span>
                 </div>
                 <div class="space-y-2">
                     <div class="flex items-center justify-between gap-3">
