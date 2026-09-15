@@ -13,7 +13,16 @@ return [
     |
     */
 
-    'url' => rtrim((string) env('MOTHER_APP_URL', ''), '/'),
+    /* A bare host is taken as https. Typed into a dashboard without its
+       scheme, `dragonscale-axis-production-3mf0e4.laravel.cloud` became a
+       RELATIVE address, and every mother picture on the site was requested
+       as /app/dragonscale-axis-.../storage/... -- ten 404s on the first
+       community page. The scheme is the one thing that can be assumed. */
+    'url' => (function () {
+        $u = rtrim(trim((string) env('MOTHER_APP_URL', '')), '/');
+
+        return $u === '' || preg_match('#^https?://#i', $u) ? $u : 'https://' . $u;
+    })(),
 
     /*
      * Where the mother's files are READ from, when that is not the mother.
@@ -25,7 +34,11 @@ return [
      * round trips. Naming the bucket's public address here saves the first.
      * Blank means "ask the mother", which is always right, only slower.
      */
-    'media_url' => rtrim((string) env('MOTHER_MEDIA_URL', ''), '/'),
+    'media_url' => (function () {
+        $u = rtrim(trim((string) env('MOTHER_MEDIA_URL', '')), '/');
+
+        return $u === '' || preg_match('#^https?://#i', $u) ? $u : 'https://' . $u;
+    })(),
 
     /*
      * The shared secret the media API expects. Both apps must carry the same
