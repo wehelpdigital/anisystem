@@ -68,12 +68,15 @@
        leaves along the path it arrived on, and nothing has to restart. */
     .tutv-wrap { position: fixed; inset: 0; z-index: 240; display: flex; align-items: flex-end; justify-content: center; }
     .tutv-wrap[hidden] { display: none; }
-    /* A light dim and no blur: the page stays plainly readable behind the
-       card, so it is obvious this is a card over the screen you opened and
-       not a screen of its own. The card's own shadow does the separating. */
-    .tutv-backdrop { position: absolute; inset: 0; background: rgb(6 12 4 / .16); touch-action: none;
-        opacity: 0; transition: opacity .34s cubic-bezier(.22,1,.36,1); }
-    .tutv-wrap.is-open .tutv-backdrop { opacity: 1; }
+    /* A deep dim with a blur: the page is still there behind the card --
+       its shapes show through -- but it is plainly the thing underneath,
+       and the card is plainly the thing to deal with. The blur fades in
+       with the dim rather than switching on, so the page does not snap
+       out of focus. */
+    .tutv-backdrop { position: absolute; inset: 0; background: rgb(6 12 4 / .7); touch-action: none;
+        opacity: 0; -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0);
+        transition: opacity .34s cubic-bezier(.22,1,.36,1), -webkit-backdrop-filter .34s cubic-bezier(.22,1,.36,1), backdrop-filter .34s cubic-bezier(.22,1,.36,1); }
+    .tutv-wrap.is-open .tutv-backdrop { opacity: 1; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
 
     /* A sheet from the bottom on a phone, a card in the middle with room.
        It arrives from below with a little overshoot and settles; on the way
