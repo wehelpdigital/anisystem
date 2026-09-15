@@ -1105,7 +1105,7 @@ const __init = () => {
         try {
             const res = await api(@json(url('/app/when-to-plant/preview')) + '/' + encodeURIComponent(id), { method: 'GET' });
             const d = res.data || {};
-            attachedAnalysis = { id: d.id, title: d.title || 'When-to-plant analysis', tokens: d.tokens || 0 };
+            attachedAnalysis = { id: d.id, title: d.title || 'Saved analysis', tokens: d.tokens || 0 };
             drawWtpChip();
             toast('Analysis attached — ask Anee about it.');
         } catch (err) { toast(err.message || 'That analysis could not be attached.', 'error'); }

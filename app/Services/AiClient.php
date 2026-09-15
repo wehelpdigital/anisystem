@@ -19,7 +19,20 @@ use Illuminate\Support\Facades\Http;
  */
 class AiClient
 {
+    /**
+     * How long one call may take. A chat answer is back well inside the
+     * default; a document -- thousands of tokens of JSON after a thinking
+     * budget -- is not, and a document written after a web search is
+     * slower still (measured: a grounded Pro call cut off at ninety
+     * seconds with nothing received). Callers say what they are asking
+     * for through the 'timeout' option; askForJson picks these itself.
+     */
     private const TIMEOUT = 90;
+    public const TIMEOUT_DOCUMENT = 180;
+    public const TIMEOUT_SEARCHED = 270;
+
+    /** The per-call timeout, the caller's or the default. */
+    private int $timeout = self::TIMEOUT;
 
     /**
      * The most one ask may carry in, in tokens (~4 characters each): a
@@ -62,6 +75,7 @@ class AiClient
         }
 
         $search = (bool) ($opts['search'] ?? false);
+        $this->timeout = max(30, min(600, (int) ($opts['timeout'] ?? self::TIMEOUT)));
 
         /* The settings row's cap is sized for a chat answer. A caller whose
          * answer is a document — the when-to-plant JSON — says so here, or
@@ -104,6 +118,8 @@ class AiClient
             }
         };
 
+        // A document's own clock, longer when the web is read first.
+        $opts += ['timeout' => ! empty($opts['search']) ? self::TIMEOUT_SEARCHED : self::TIMEOUT_DOCUMENT];
         $result = $this->ask($settings, [], $prompt, null, $maxOut, $opts);
         $fold($result);
         if (! ($result['ok'] ?? false)) {
@@ -124,7 +140,7 @@ class AiClient
             $retry = $this->ask($settings, [
                 ['role' => 'user', 'text' => $prompt],
                 ['role' => 'assistant', 'text' => (string) $result['text']],
-            ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.', null, $maxOut);
+            ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.', null, $maxOut, ['timeout' => $opts['timeout']]);
             $fold($retry);
             if ($retry['ok'] ?? false) {
                 $data = $parse((string) $retry['text']);
@@ -133,6 +149,65 @@ class AiClient
 
         return $sum + ['ok' => $data !== null, 'data' => $data, 'text' => (string) $result['text'],
             'error' => $data === null ? 'The answer came back unreadable. Nothing was charged — please try again.' : null];
+    }
+
+    /**
+     * Research first, then the document.
+     *
+     * Asked to search the web AND answer in nothing but a JSON object, the
+     * model searches nowhere (measured: two grounded runs, no query made).
+     * Asked to research and write notes, it searches every time. So the
+     * two are separate asks: the research brief, with the web open, comes
+     * back as prose with the pages it read; the document brief is then
+     * asked with those notes appended and no search. Everything the two
+     * spent is summed; the sources are the research's.
+     *
+     * Should the research fail twice, the document is asked on its own
+     * with the web open -- a reading from memory beats no reading, and the
+     * answer says which it got ('searched').
+     */
+    public function researchThenJson(AiSetting $settings, string $researchPrompt, string $jsonPrompt, int $maxOut, callable $parse): array
+    {
+        /* Whether the model searches is its own call, made per request; the
+         * same brief is searched one time and answered from memory the next.
+         * So an unsearched research is asked again, told plainly, and only
+         * a second miss goes through as a reading from memory. */
+        $research = ['ok' => false, 'text' => '', 'searched' => false];
+        $spent = ['tokensIn' => 0, 'tokensOut' => 0];
+        for ($try = 0; $try < 3; $try++) {
+            $brief = $try === 0 ? $researchPrompt
+                : "IMPORTANT: the previous attempt answered from memory without using the search tool. You MUST use the google_search / web search tool now — run the searches, read the pages, and write the notes from what they say.
+
+" . $researchPrompt;
+            $got = $this->ask($settings, [], $brief, null, 3000, ['search' => true, 'timeout' => self::TIMEOUT_SEARCHED]);
+            $spent['tokensIn'] += (int) ($got['tokensIn'] ?? 0);
+            $spent['tokensOut'] += (int) ($got['tokensOut'] ?? 0);
+            if (($got['ok'] ?? false) && trim((string) $got['text']) !== '') {
+                $research = $got;
+                if ($got['searched'] ?? false) {
+                    break;
+                }
+            } elseif (! ($got['ok'] ?? false)) {
+                sleep(3);
+            }
+        }
+        if (! ($research['searched'] ?? false)) {
+            logger()->warning('AI research step: no web search was made', ['tries' => $try + 1, 'ok' => (bool) ($research['ok'] ?? false)]);
+        }
+        if (! ($research['ok'] ?? false) || trim((string) $research['text']) === '') {
+            return $this->askForJson($settings, $jsonPrompt, $maxOut, $parse, ['search' => true]);
+        }
+
+        $notes = "\n\nRESEARCH NOTES — found on the web just now by a search step. Rely on these FIRST, over memory; where they and memory disagree, the notes win; where the notes are silent, say so in dataGaps:\n"
+            . trim((string) $research['text']);
+        $doc = $this->askForJson($settings, $jsonPrompt . $notes, $maxOut, $parse);
+        $doc['tokensIn'] += $spent['tokensIn'];
+        $doc['tokensOut'] += $spent['tokensOut'];
+        $doc['searched'] = (bool) ($research['searched'] ?? false);
+        $doc['sources'] = (array) ($research['sources'] ?? []);
+        $doc['researchText'] = (string) $research['text'];
+
+        return $doc;
     }
 
     // ------------------------------------------------------------------
@@ -188,7 +263,7 @@ class AiClient
         if ($search) {
             $body['tools'] = [['type' => 'web_search_20250305', 'name' => 'web_search', 'max_uses' => self::SEARCH_MAX_USES]];
         }
-        $res = Http::timeout(self::TIMEOUT)
+        $res = Http::timeout($this->timeout)
             ->withHeaders(['x-api-key' => $key, 'anthropic-version' => '2023-06-01'])
             ->post('https://api.anthropic.com/v1/messages', $body);
 
@@ -248,7 +323,7 @@ class AiClient
             'temperature' => (float) $s->temperature,
             'messages' => $messages,
         ];
-        $post = fn (array $b) => Http::timeout(self::TIMEOUT)->withToken($key)->post('https://api.openai.com/v1/chat/completions', $b);
+        $post = fn (array $b) => Http::timeout($this->timeout)->withToken($key)->post('https://api.openai.com/v1/chat/completions', $b);
         $searched = false;
         if ($search) {
             // Only the search models take this; any other answers 400, and
@@ -318,7 +393,7 @@ class AiClient
             // Google Search grounding: the model searches, reads, and cites.
             $body['tools'] = [['google_search' => new \stdClass]];
         }
-        $res = Http::timeout(self::TIMEOUT)
+        $res = Http::timeout($this->timeout)
             ->withHeaders(['x-goog-api-key' => $key])
             ->post($url, $body + [
                 'generationConfig' => [

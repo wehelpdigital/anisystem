@@ -433,6 +433,16 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/what-to-plant/meta', [App\Http\Controllers\WhatToPlantController::class, 'meta'])->name('whatp.meta');
     Route::get('/app/what-to-plant/job/{id}', [App\Http\Controllers\WhatToPlantController::class, 'jobState'])->whereNumber('id')->name('whatp.job');
     Route::delete('/app/what-to-plant/{id}', [App\Http\Controllers\WhatToPlantController::class, 'destroy'])->whereNumber('id')->name('whatp.delete');
+    // Variety research — the third: which VARIETY, searched on the web and
+    // ranked by the farmer's own priorities.
+    Route::get('/app/variety-research', [App\Http\Controllers\VarietyAnalysisController::class, 'page'])->name('vary.page');
+    Route::get('/app/variety-research/options', [App\Http\Controllers\VarietyAnalysisController::class, 'options'])->name('vary.options');
+    Route::post('/app/variety-research/generate', [App\Http\Controllers\VarietyAnalysisController::class, 'generate'])->name('vary.generate');
+    Route::get('/app/variety-research/list', [App\Http\Controllers\VarietyAnalysisController::class, 'list'])->name('vary.list');
+    Route::get('/app/variety-research/one/{id}', [App\Http\Controllers\VarietyAnalysisController::class, 'one'])->whereNumber('id')->name('vary.one');
+    Route::post('/app/variety-research/meta', [App\Http\Controllers\VarietyAnalysisController::class, 'meta'])->name('vary.meta');
+    Route::get('/app/variety-research/job/{id}', [App\Http\Controllers\VarietyAnalysisController::class, 'jobState'])->whereNumber('id')->name('vary.job');
+    Route::delete('/app/variety-research/{id}', [App\Http\Controllers\VarietyAnalysisController::class, 'destroy'])->whereNumber('id')->name('vary.delete');
     Route::get('/app/when-to-plant/job/{id}', [App\Http\Controllers\WhenToPlantController::class, 'jobState'])->whereNumber('id')->name('wtp.job');
     Route::get('/app/weather', [App\Http\Controllers\WeatherController::class, 'forecast'])->name('app.weather');
     Route::get('/app/sm-weather', [App\Http\Controllers\WeatherController::class, 'scheduleForecast'])->name('sm.weather');
