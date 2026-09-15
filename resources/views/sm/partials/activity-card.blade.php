@@ -153,6 +153,7 @@
      data-tags="{{ json_encode(is_array($a->tags) ? $a->tags : []) }}"
      data-labour="{{ $labour }}"
      data-labour-parts="{{ $showCost ? $labourParts : '' }}"
+     data-materials="{{ $a->materialsTotal() }}"
      data-target-date="{{ $startC ? $startC->format('Y-m-d') : '' }}"
      data-target-end-date="{{ $endC ? $endC->format('Y-m-d') : '' }}"
      data-lot-signature="{{ $lotSig }}"

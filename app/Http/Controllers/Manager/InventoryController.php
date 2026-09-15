@@ -222,6 +222,8 @@ class InventoryController extends BaseScheduleController
             'enteredQty' => $m->enteredQty !== null ? (float) $m->enteredQty : null,
             'enteredUnit' => $m->enteredUnit,
             'boardSort' => $m->boardSort,
+            // What the line cost the farm, for the day's cash on the board.
+            'amount' => $m->cost($m->item),
         ])->values()->all();
     }
 
@@ -276,7 +278,7 @@ class InventoryController extends BaseScheduleController
              * done activities used from this day forward — a book started
              * mid-season owes the season its past. openingNote is about this
              * arrival and lands on the Start line; `note` stayed on the item. */
-            $this->stock->startCount(
+            $open = $this->stock->startCount(
                 $item,
                 $opening,
                 // The move sheet says `on`; the item sheet's Start chooser
@@ -284,6 +286,12 @@ class InventoryController extends BaseScheduleController
                 $request->input('on') ?: $request->input('countFrom'),
                 trim((string) $request->input('openingNote')) ?: null,
             );
+            /* The Start carries the price it was bought at, so the day it
+             * was counted on knows what that stock cost (the owner's ask,
+             * 2026-09-15: an inventory with a price counts in the day). */
+            if ($open && $item->unitPrice !== null) {
+                $open->update(['unitPrice' => (float) $item->unitPrice]);
+            }
         }
 
         return $this->jsonOk(
@@ -426,6 +434,8 @@ class InventoryController extends BaseScheduleController
             : null;
 
         $buyPrice = $in && $request->filled('unitPrice') ? (float) $request->input('unitPrice') : null;
+        // Typed per typed unit, kept per book unit (the move's delta is in the book's).
+        $buyPrice = \App\Services\InventoryService::pricePerBookUnit($buyPrice, abs((float) $request->input('qty')), $qty);
         /* The price rides in the note too, so every log renderer says it
          * without learning a new field. */
         $note = (string) ($request->input('note') ?? '');

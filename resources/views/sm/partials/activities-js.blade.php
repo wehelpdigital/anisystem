@@ -1174,6 +1174,7 @@ document.addEventListener('DOMContentLoaded', () => {
      data-tags="${esc(JSON.stringify(Array.isArray(a.tags) ? a.tags : []))}"
      data-labour="${Number(a.labourTotal || 0)}"
      data-labour-parts="${esc(hasChecklist(a) ? '' : labourParts(a.workerPay))}"
+     data-materials="${Number(a.materialsTotal || 0)}"
      data-target-date="${esc(targetDateStr)}"
      data-target-end-date="${esc(targetEndDateStr)}"
      data-lot-signature="${esc(lotSig)}"
@@ -1698,12 +1699,25 @@ document.addEventListener('DOMContentLoaded', () => {
      * against it. Read off the board rather than recomputed: each card already
      * carries the total the server worked out for it, so the pill can never
      * disagree with the lines under the cards. */
+    /* STOCK BOUGHT BY HAND ON A DAY: the shed's own lines for the day
+       (a delivery or an opening count with a price), never a purchase an
+       activity declared -- that one is on the activity's own materials. */
+    function _stockBuysFor(dateKey) {
+        const rows = (dateKey && Array.isArray(DAY_IV_NOTES[dateKey])) ? DAY_IV_NOTES[dateKey] : [];
+        return rows.filter((r) => !r.activityId && Number(r.amount) > 0);
+    }
     function dayCashTotal(group) {
         const dateKey = (group.getAttribute('data-date') || '').trim();
         const labour = $qsa('.activity-card[data-labour]', group)
             .reduce((t, c) => t + (Number(c.getAttribute('data-labour')) || 0), 0);
+        // Materials and services priced on the day's activities, and stock
+        // bought by hand that day (the owner's ask, 2026-09-15: the shed's
+        // money is the day's money too).
+        const materials = $qsa('.activity-card[data-materials]', group)
+            .reduce((t, c) => t + (Number(c.getAttribute('data-materials')) || 0), 0);
+        const stock = _stockBuysFor(dateKey).reduce((t, r) => t + (Number(r.amount) || 0), 0);
         const extra = _expenseRowsFor(dateKey).reduce((t, r) => t + (Number(r.amount) || 0), 0);
-        return labour + extra;
+        return labour + materials + stock + extra;
     }
     function paintDayCash(group) {
         const pill = group.querySelector('.date-header-cash');
@@ -1755,7 +1769,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     : `${SVG.wallet}<span>&mdash;</span>`;
             }
             pill.title = total > 0
-                ? 'Cash to prepare for this day — wages for everyone on it, plus any extra expense logged against it'
+                ? 'Cash to prepare for this day — wages for everyone on it, materials and stock bought, plus any extra expense logged against it'
                 : 'Nothing costed on this day';
         } else {
             if (pill.firstChild) pill.textContent = '';
@@ -1801,10 +1815,30 @@ document.addEventListener('DOMContentLoaded', () => {
         const extras = _expenseRowsFor(dateKey).map((r) => ({
             name: r.note || 'Extra expense', detail: '', amount: Number(r.amount) || 0,
         }));
+        // Materials and services on the day's activities, then stock bought
+        // by hand that day from the shed.
+        const goods = [];
+        $qsa('.activity-card[data-materials]', group).forEach((card) => {
+            const amount = Number(card.getAttribute('data-materials')) || 0;
+            if (amount <= 0) return;
+            goods.push({
+                name: (card.querySelector('.activity-card-title')?.textContent || 'Activity').trim(),
+                detail: 'materials & services on this activity',
+                amount,
+            });
+        });
+        _stockBuysFor(dateKey).forEach((r) => {
+            goods.push({
+                name: (r.reason === 'open' ? 'Opening stock — ' : 'Stock bought — ') + (r.name || 'item'),
+                detail: (r.says || '') + (r.note ? ' · ' + r.note : ''),
+                amount: Number(r.amount) || 0,
+            });
+        });
 
         const wageSum = wages.reduce((t, r) => t + r.amount, 0);
+        const goodsSum = goods.reduce((t, r) => t + r.amount, 0);
         const extraSum = extras.reduce((t, r) => t + r.amount, 0);
-        const grand = wageSum + extraSum;
+        const grand = wageSum + goodsSum + extraSum;
         const share = grand > 0 ? Math.round((wageSum / grand) * 100) : 0;
 
         const line = (r, tone) => `<div class="dc-row">
@@ -1826,8 +1860,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const ICON_WAGES = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>';
         const ICON_EXTRA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v10M14.4 9.4a2.3 2.3 0 00-2.4-1.3c-1.3.1-2.3.8-2.3 1.9s1 1.7 2.5 1.9 2.6.8 2.6 2-1.1 1.9-2.5 1.9a2.4 2.4 0 01-2.4-1.3"/></svg>';
 
+        const ICON_GOODS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>';
         const counts = [
             wages.length ? wages.length + (wages.length === 1 ? ' activity' : ' activities') : '',
+            goods.length ? goods.length + (goods.length === 1 ? ' purchase' : ' purchases') : '',
             extras.length ? extras.length + (extras.length === 1 ? ' expense' : ' expenses') : '',
         ].filter(Boolean).join(' · ');
 
@@ -1840,6 +1876,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${wageSum > 0 && extraSum > 0 ? `<span class="dc-split" title="Wages ${share}% · expenses ${100 - share}%"><span class="dc-split-wages" style="width:${share}%"></span></span>` : ''}
             </div>
             ${section('Wages', 'wages', ICON_WAGES, wages, wageSum)}
+            ${section('Materials & stock', 'goods', ICON_GOODS, goods, goodsSum)}
             ${section('Extra expenses', 'extra', ICON_EXTRA, extras, extraSum)}
             <p class="dc-foot">${wages.length
                 ? 'Wages come from each activity: a worker with no half or whole day of their own is paid for as long as the task itself takes.'
@@ -1898,7 +1935,16 @@ document.addEventListener('DOMContentLoaded', () => {
          * inside the stretch, so it is counted. */
         Object.keys(DAY_EXPENSES || {}).forEach((d) => {
             if (seen.has(d) || d < from || d > to) return;
-            const t = _expenseRowsFor(d).reduce((sum, r) => sum + (Number(r.amount) || 0), 0);
+            seen.add(d);
+            const t = _expenseRowsFor(d).reduce((sum, r) => sum + (Number(r.amount) || 0), 0)
+                + _stockBuysFor(d).reduce((sum, r) => sum + (Number(r.amount) || 0), 0);
+            if (t > 0) rows.push({ date: d, total: t });
+        });
+        // And stock bought on a quiet day: a delivery lands on a rest-day
+        // marker, which is not a group on the board either.
+        Object.keys(DAY_IV_NOTES || {}).forEach((d) => {
+            if (seen.has(d) || d < from || d > to) return;
+            const t = _stockBuysFor(d).reduce((sum, r) => sum + (Number(r.amount) || 0), 0);
             if (t > 0) rows.push({ date: d, total: t });
         });
         rows.sort((a, b) => (a.date < b.date ? -1 : 1));
@@ -8656,12 +8702,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     reason: m.reason, itemId: m.itemId, qty: Math.abs(Number(m.delta) || 0),
                     enteredQty: m.enteredQty ?? null, enteredUnit: m.enteredUnit || null,
                     boardSort: m.boardSort ?? null,
+                    activityId: m.activityId ?? null, amount: Number(m.amount) || 0,
                 });
             });
             Object.keys(byDay).forEach((d) => byDay[d].reverse());
             Object.keys(DAY_IV_NOTES).forEach((k) => delete DAY_IV_NOTES[k]);
             Object.assign(DAY_IV_NOTES, byDay);
             hydrateIvNotes();
+            // The shed's money is the day's money: the pills add up again.
+            paintAllDayCash();
         } catch (_) { /* the next full load will have it */ }
     };
 

@@ -221,6 +221,9 @@ class InventoryService
             $price = isset($line['price']) && $line['price'] !== null && $line['price'] !== '' ? (float) $line['price'] : null;
             $note = 'Bought for ' . ($label !== '' ? '“' . mb_substr($label, 0, 80) . '”' : 'an activity')
                 . ($price !== null ? ' at ₱' . number_format($price, 2) . ' each' : '');
+            // The price was per typed unit; the move is in the book's. Said
+            // per book unit, so delta × price is what was actually paid.
+            $price = self::pricePerBookUnit($price, $typed, $qty);
             if ($this->move($item, $qty, AsInventoryMove::IN, $on, $note, $activityId, $entered, $price)) {
                 $written++;
                 $touched[] = $item->id;
@@ -445,6 +448,16 @@ class InventoryService
      * and a book whose lines disagree with their own totals is worse than one
      * that was corrected. Nothing outside restart/startCount calls this.
      */
+    /** A price typed per one typed unit, said per one book unit. */
+    public static function pricePerBookUnit(?float $price, float $typedQty, float $bookQty): ?float
+    {
+        if ($price === null || $bookQty <= 0 || $typedQty <= 0 || abs($typedQty - $bookQty) < 0.0005) {
+            return $price;
+        }
+
+        return round($price * $typedQty / $bookQty, 4);
+    }
+
     /**
      * Count the book in another unit.
      *

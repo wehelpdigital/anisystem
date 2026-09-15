@@ -13,6 +13,24 @@ namespace App\Models;
  */
 class AsInventoryMove extends BaseModel
 {
+    /**
+     * What this line cost the farm, in pesos: stock that came IN (a
+     * delivery or an opening count) times what one unit cost on this line,
+     * or, when the line carries no price of its own, what one unit of the
+     * item costs. Nothing for stock going out -- that was paid for when it
+     * came in. The day's cash on the board and the expense report both read
+     * this, so they agree to the peso.
+     */
+    public function cost(?AsInventoryItem $item = null): float
+    {
+        if (! in_array($this->reason, [self::IN, self::OPEN], true) || (float) $this->delta <= 0) {
+            return 0.0;
+        }
+        $price = $this->unitPrice !== null ? (float) $this->unitPrice : (float) (($item ?? $this->item)?->unitPrice ?? 0);
+
+        return $price > 0 ? round((float) $this->delta * $price, 2) : 0.0;
+    }
+
     protected $table = 'as_inventory_moves';
 
     /** The opening count — what was already there when the book was started. */

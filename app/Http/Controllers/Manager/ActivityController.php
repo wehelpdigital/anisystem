@@ -113,6 +113,10 @@ class ActivityController extends BaseScheduleController
                     // What a drag or an edit needs to route the act.
                     'reason' => $m->reason,
                     'itemId' => $m->itemId,
+                    // A purchase declared on an activity is costed by that
+                    // activity's own line; the day's cash must not count it twice.
+                    'activityId' => $m->activityId,
+                    'amount' => $m->cost($item),
                     'qty' => abs((float) $m->delta),
                     'enteredQty' => $m->enteredQty !== null ? (float) $m->enteredQty : null,
                     'enteredUnit' => $m->enteredUnit,
@@ -2698,6 +2702,7 @@ class ActivityController extends BaseScheduleController
                 'name' => $w->workerName,
             ]])->all(),
             'labourTotal' => $activity->labourTotal(),
+            'materialsTotal' => $activity->materialsTotal(),
         ];
     }
 

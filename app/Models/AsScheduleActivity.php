@@ -233,6 +233,17 @@ class AsScheduleActivity extends BaseModel
         return (float) $this->workers->sum(fn ($w) => $this->workerPay($w));
     }
 
+    /**
+     * What this activity's materials and services cost: every line with a
+     * price, quantity times price. A line taken from the shed with no price
+     * of its own costs nothing here -- that stock was paid for when it came
+     * in, and the day it came in carries that (see the day's cash).
+     */
+    public function materialsTotal(): float
+    {
+        return round((float) $this->items->sum(fn ($it) => (float) ($it->unitPrice ?? 0) * (float) ($it->quantity ?? 0)), 2);
+    }
+
     public function version()
     {
         return $this->belongsTo(AsScheduleActivityVersion::class, 'versionId');

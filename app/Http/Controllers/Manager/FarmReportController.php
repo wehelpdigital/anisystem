@@ -209,21 +209,26 @@ class FarmReportController extends BaseScheduleController
             }
         }
 
-        // Hand purchases: stock-ins with a price and NO activity — a linked
-        // purchase's material line is already in the list above.
+        // Hand purchases: stock-ins and opening counts with a price and NO
+        // activity — a linked purchase's material line is already in the
+        // list above. The same reading the board's day cash makes
+        // (AsInventoryMove::cost), so the two agree to the peso.
         $buys = AsInventoryMove::where('croppingScheduleId', $schedule->id)
-            ->where('deleteStatus', 1)->where('reason', AsInventoryMove::IN)
-            ->whereNull('activityId')->whereNotNull('unitPrice')->get();
+            ->where('deleteStatus', 1)->whereIn('reason', [AsInventoryMove::IN, AsInventoryMove::OPEN])
+            ->whereNull('activityId')->get();
         foreach ($buys as $m) {
             $item = $invItems->get((int) $m->itemId);
+            $amount = $m->cost($item);
+            if ($amount <= 0) continue;
             if ($invKind !== '' && (! $item || $item->kind !== $invKind)) continue;
+            $price = $m->unitPrice !== null ? (float) $m->unitPrice : (float) ($item?->unitPrice ?? 0);
             $push([
                 'on' => $m->happenedOn ? substr((string) $m->happenedOn, 0, 10) : null,
                 'done' => null, 'lotIds' => [], 'cat' => 'purchase',
-                'label' => 'Stock bought — ' . ($item?->name ?? 'item #' . $m->itemId),
+                'label' => ($m->reason === AsInventoryMove::OPEN ? 'Opening stock — ' : 'Stock bought — ') . ($item?->name ?? 'item #' . $m->itemId),
                 'meta' => ($item ? $item->say((float) $m->delta) : rtrim(rtrim(number_format((float) $m->delta, 3), '0'), '.'))
-                    . ' at ₱' . number_format((float) $m->unitPrice, 2) . ' each',
-                'amount' => round((float) $m->delta * (float) $m->unitPrice, 2),
+                    . ' at ₱' . number_format($price, 2) . ' each',
+                'amount' => $amount,
                 'invKind' => $item?->kind,
             ]);
         }
@@ -377,10 +382,11 @@ class FarmReportController extends BaseScheduleController
             $spread((float) $e->amount, []);
         }
         $buys = AsInventoryMove::where('croppingScheduleId', $schedule->id)
-            ->where('deleteStatus', 1)->where('reason', AsInventoryMove::IN)
-            ->whereNull('activityId')->whereNotNull('unitPrice')->get();
+            ->where('deleteStatus', 1)->whereIn('reason', [AsInventoryMove::IN, AsInventoryMove::OPEN])
+            ->whereNull('activityId')->get();
+        $buyItems = \App\Models\AsInventoryItem::whereIn('id', $buys->pluck('itemId')->unique()->all() ?: [0])->get()->keyBy('id');
         foreach ($buys as $m) {
-            $amt = round((float) $m->delta * (float) $m->unitPrice, 2);
+            $amt = $m->cost($buyItems->get((int) $m->itemId));
             if ($amt <= 0) continue;
             $costCats['purchase'] += $amt;
             $spread($amt, []);
