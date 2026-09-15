@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Crop Protocol')
-@section('page-title', 'Crop Protocol')
+@section('title', 'Crop Protocol Analysis')
+@section('page-title', 'Crop Protocol Analysis')
 @section('page-subtitle', 'Your season, stage by stage')
 
 @section('back', route('app.dashboard'))
@@ -484,9 +484,9 @@
         <div class="wtp-report mt-4" id="cpReport" hidden></div>
     </div>
 
-    <div class="va-view" id="cpView" hidden role="dialog" aria-modal="true" aria-label="Crop protocol">
+    <div class="va-view" id="cpView" hidden role="dialog" aria-modal="true" aria-label="Crop protocol analysis">
         <div class="va-view-bar">
-            <b id="cpViewTitle">Crop protocol</b>
+            <b id="cpViewTitle">Crop protocol analysis</b>
             <button type="button" class="va-view-x" id="cpViewX" aria-label="Close">✕</button>
         </div>
         <div class="va-view-body"><div class="wtp-report" id="cpViewReport"></div></div>
@@ -750,7 +750,7 @@
     function openView(item, mode) {
         const view = $id('cpView');
         const crop = (OPT ? OPT.crops.find((c) => c.key === (item.params || {}).crop) : null) || {};
-        $id('cpViewTitle').textContent = (crop.label ? crop.label + ' — ' : '') + 'crop protocol';
+        $id('cpViewTitle').textContent = (crop.label ? crop.label + ' — ' : '') + 'crop protocol analysis';
         const host = $id('cpViewReport');
         host.classList.remove('is-drawn');
         drawReport(host, item, mode, true);

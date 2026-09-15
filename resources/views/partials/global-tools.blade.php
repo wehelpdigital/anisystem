@@ -188,10 +188,10 @@
             {{-- The fourth: the whole season written out by growth stage --
                  bags, sprays, water, watch-list -- for one field. --}}
             <a href="{{ route('proto.page') }}" class="qa-tile qa-wtp"
-               @if ($qWtpLocked) data-tier-lock="solo" data-lock-say="The Crop Protocol comes with the Solo Farmer plan — Anee writes your season by growth stage: the bags of fertilizer and when, the sprays to have ready, the water, the pests and weeds to watch." @endif>
+               @if ($qWtpLocked) data-tier-lock="solo" data-lock-say="The Crop Protocol Analysis comes with the Solo Farmer plan — Anee writes your season by growth stage: the bags of fertilizer and when, the sprays to have ready, the water, the pests and weeds to watch." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/checklist.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
-                    <b>Crop Protocol</b>
+                    <b>Crop Protocol Analysis</b>
                     <i>Your season by growth stage — how many bags and when, the sprays and foliars to prepare, irrigation, pests and weeds to watch — from your variety, field, the outlook and ENSO. Uses AI credits.</i>
                 </span>
                 @if ($qWtpLocked)

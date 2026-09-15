@@ -35,7 +35,7 @@ final class AiPrices
         'wtp' => 'When to Plant analysis',
         'what' => 'What to Plant analysis',
         'variety' => 'Variety research & comparison (searches the web)',
-        'protocol' => 'Crop Protocol (season plan by growth stage, searches the web)',
+        'protocol' => 'Crop Protocol Analysis (season plan by growth stage, searches the web)',
         'season' => 'Anee Season Report',
         'sofar' => 'Analyze So Far report',
         'compare' => 'Comparison analysis',

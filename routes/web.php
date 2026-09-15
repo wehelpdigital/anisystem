@@ -448,7 +448,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/variety-research/meta', [App\Http\Controllers\VarietyAnalysisController::class, 'meta'])->name('vary.meta');
     Route::get('/app/variety-research/job/{id}', [App\Http\Controllers\VarietyAnalysisController::class, 'jobState'])->whereNumber('id')->name('vary.job');
     Route::delete('/app/variety-research/{id}', [App\Http\Controllers\VarietyAnalysisController::class, 'destroy'])->whereNumber('id')->name('vary.delete');
-    // Crop Protocol — the fourth: the season by growth stage, for one field.
+    // Crop Protocol Analysis — the fourth: the season by growth stage, for one field.
     Route::get('/app/crop-protocol', [App\Http\Controllers\CropProtocolController::class, 'page'])->name('proto.page');
     Route::get('/app/crop-protocol/options', [App\Http\Controllers\CropProtocolController::class, 'options'])->name('proto.options');
     Route::post('/app/crop-protocol/generate', [App\Http\Controllers\CropProtocolController::class, 'generate'])->name('proto.generate');

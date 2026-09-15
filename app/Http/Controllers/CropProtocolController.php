@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 /**
- * Crop Protocol -- the fourth of the Quick Tools.
+ * Crop Protocol Analysis -- the fourth of the Quick Tools.
  *
  * When to Plant names the window, What to Plant the crop, Variety
  * Research the variety; this one writes the SEASON: a semi-complete
@@ -75,7 +75,7 @@ class CropProtocolController extends Controller
     private function guardTier(): void
     {
         if (! \App\Support\Tier::farmCan('reportsAll')) {
-            \App\Support\Tier::deny('The Crop Protocol comes with the Solo Farmer plan.');
+            \App\Support\Tier::deny('The Crop Protocol Analysis comes with the Solo Farmer plan.');
         }
     }
 
@@ -250,7 +250,7 @@ class CropProtocolController extends Controller
             $crop = CropCatalog::CROPS[$p['crop']] ?? ['label' => 'Crop'];
             $note = AiUsage::record('protocol', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged,
-                mb_substr('Crop Protocol — ' . $crop['label'] . ', ' . $p['location'] . $note, 0, 250));
+                mb_substr('Crop Protocol Analysis — ' . $crop['label'] . ', ' . $p['location'] . $note, 0, 250));
 
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report),
@@ -408,7 +408,7 @@ class CropProtocolController extends Controller
         $params = json_decode($r->params, true) ?: [];
         $fert = collect($report['fertilizer']['program'] ?? [])->map(fn ($s) => ($s['stage'] ?? '') . ': '
             . collect($s['products'] ?? [])->map(fn ($x) => ($x['totalBags'] ?? '') . ' bags ' . ($x['name'] ?? ''))->implode(', '))->implode(' | ');
-        $text = "\n\n--- ATTACHED: Crop Protocol (the farmer generated this earlier; treat it as shared context) ---\n"
+        $text = "\n\n--- ATTACHED: Crop Protocol Analysis (the farmer generated this earlier; treat it as shared context) ---\n"
             . 'Case: ' . $r->title . "\n"
             . 'Field: ' . ($params['area'] ?? '') . ' ha; method ' . (self::METHODS[$params['method'] ?? '']['label'] ?? '') . '; priority ' . (self::PRIORITIES[$params['priority'] ?? '']['label'] ?? '')
             . '; target ' . (($params['targetYield'] ?? null) ? $params['targetYield'] . ' ' . (self::YIELD_UNITS[$params['yieldUnit'] ?? 'cavans'] ?? '') : 'not set') . "\n"
