@@ -33,6 +33,8 @@
     </script>
     <title>@yield('title', 'anee.io') — anee.io</title>
     <meta name="description" content="@yield('meta_description', 'anee.io — the cropping schedule manager for Filipino farmers. Plan lots, workers, materials, activities and irrigation in one mobile-friendly web app.')">
+    {{-- Indexable only once the mother app's switch says so (App\Support\Seo). --}}
+    <meta name="robots" content="{{ \App\Support\Seo::robots() }}">
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}?v=anee">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

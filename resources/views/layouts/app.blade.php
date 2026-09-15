@@ -6,6 +6,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    {{-- Nothing behind the login is anybody's to index. --}}
+    <meta name="robots" content="noindex, nofollow">
     {{-- Page pinch-zoom is off app-wide, on the owner's ask: the two places
          zoom belongs (the Google map, the image lightbox) implement their own
          and keep working — element handlers still receive their events. The

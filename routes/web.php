@@ -101,6 +101,11 @@ Route::get('/pw/{token}', [App\Http\Controllers\CommunityPublicController::class
 Route::get('/worker-invite/{token}', [App\Http\Controllers\WorkerInviteController::class, 'show'])->name('worker.invite.show');
 Route::post('/worker-invite/{token}', [App\Http\Controllers\WorkerInviteController::class, 'accept'])->name('worker.invite.accept');
 
+// What search engines may crawl: nothing until the mother app's switch
+// (AniSystem > Search indexing) opens the public site; the app behind the
+// login is closed to them either way. See App\Support\Seo.
+Route::get('/robots.txt', fn () => response(App\Support\Seo::robotsTxt(), 200, ['Content-Type' => 'text/plain; charset=UTF-8']))->name('robots');
+
 Route::get('/', [App\Http\Controllers\PublicController::class, 'home'])->name('home');
 Route::get('/about', [App\Http\Controllers\PublicController::class, 'about'])->name('about');
 Route::get('/features', [App\Http\Controllers\PublicController::class, 'features'])->name('features');

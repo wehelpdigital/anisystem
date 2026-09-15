@@ -34,6 +34,11 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         // Runs after StartSession — drops a session whose public IP changed,
         // then refreshes the member's last-seen (online) timestamp.
+        // Search engines: noindex on everything behind the login, and on the
+        // public site until the mother app's switch opens it. Global, and so
+        // outside the router: the guest redirect the auth middleware throws
+        // (which runs ahead of anything in the web group) passes through it.
+        $middleware->append(\App\Http\Middleware\RobotsHeaders::class);
         $middleware->web(append: [
             \App\Http\Middleware\BindSessionToIp::class,
             \App\Http\Middleware\EnforceSingleSession::class,
