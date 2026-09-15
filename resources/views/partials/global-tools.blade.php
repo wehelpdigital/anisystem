@@ -130,14 +130,6 @@
             <div class="qa-panel-fold" id="globalToolsBody">
               <div>
         <div class="qa-stack">
-            <a href="{{ route('notes.hub') }}" class="qa-tile qa-notes">
-                <span class="qa-ico"><img src="{{ asset('images/sticky-note.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
-                <span class="qa-txt">
-                    <b>Global Notes</b>
-                    <i>Every note from every schedule, gathered in one place.</i>
-                </span>
-                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </a>
             {{-- Its twin: the notes hub gathers the words, this gathers the
                  pictures. Looking for a photo is remembering a picture, not a
                  season, so it does not ask which one first. --}}
@@ -199,6 +191,16 @@
                 @else
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 @endif
+            </a>
+            {{-- The four analyses first (the owner's order, 2026-09-16); the
+                 notes and the pictures gathered across every season follow. --}}
+            <a href="{{ route('notes.hub') }}" class="qa-tile qa-notes">
+                <span class="qa-ico"><img src="{{ asset('images/sticky-note.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
+                <span class="qa-txt">
+                    <b>Global Notes</b>
+                    <i>Every note from every schedule, gathered in one place.</i>
+                </span>
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
             <a href="{{ route('gallery.hub') }}" class="qa-tile qa-gallery">
                 <span class="qa-ico"><img src="{{ asset('images/gallery.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
