@@ -168,7 +168,7 @@ class WhenToPlantController extends Controller
 
         $p = $this->params($request);
         $crop = CropCatalog::CROPS[$p['crop']];
-        $title = $crop['label'] . ' · ' . (self::SEASONS[$p['season']] ?? '') . ' ' . $p['year'] . ' · ' . $p['location'];
+        $title = $crop['label'] . ' · ' . self::seasonTitle($p['season'], (int) $p['year']) . ' · ' . $p['location'];
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(),
             'title' => mb_substr($title, 0, 190),
@@ -316,7 +316,7 @@ class WhenToPlantController extends Controller
 
         $p = (array) $request->input('params');
         $crop = CropCatalog::CROPS[$p['crop'] ?? ''] ?? null;
-        $title = ($crop['label'] ?? 'Crop') . ' · ' . (self::SEASONS[$p['season'] ?? ''] ?? '') . ' ' . ($p['year'] ?? '')
+        $title = ($crop['label'] ?? 'Crop') . ' · ' . self::seasonTitle((string) ($p['season'] ?? ''), (int) ($p['year'] ?? now('Asia/Manila')->year))
             . ' · ' . ($p['location'] ?? '');
 
         $id = DB::table('as_plant_analyses')->insertGetId([
@@ -489,10 +489,10 @@ class WhenToPlantController extends Controller
             : 'general ENSO behaviour — state plainly that you cannot know the live ENSO state for ' . $p['year'] . ' and mark it as uncertainty rather than inventing a forecast';
 
         return <<<PROMPT
-You are an agronomic decision-support analyst for Philippine farming. Recommend when to PLANT within the year {$p['year']}, aiming at the farmer's chosen cropping season, for the case below.
+You are an agronomic decision-support analyst for Philippine farming. Recommend when to PLANT for the farmer's chosen cropping season, for the case below. The season's own span is given with its years — plant within THAT span, which for the dry season runs from the end of {$p['year']} into the first months of the following year.
 
 FACTS GIVEN
-- Target season: {$this->seasonWords($p['season'])}
+- Target season: {$this->seasonWords($p['season'], (int) $p['year'])}
 - Crop: {$crop['label']} — typical days to maturity in Philippine practice: {$maturity}
 - Growth stages for calendar arithmetic: {$stages}
 - Stated variety: "{$p['variety']}" — use published characteristics of this variety ONLY if you genuinely know them; otherwise say variety-specific data is unavailable in dataGaps and reason from the crop's typical range. Never invent varietal traits.
@@ -506,22 +506,45 @@ GROUND RULES
 - Write the summary and the "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
 
 Return ONLY a valid JSON object — no code fences, no commentary — in exactly this shape:
-{"bestWindow":{"fromMonth":1,"fromDay":1,"toMonth":1,"toDay":1,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"toMonth":1,"toDay":1,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"score":0,"note":""}],"threats":[{"whenNot":"","threat":"","severity":"low"}],"confidence":"moderate","dataGaps":[""],"summary":""}
+{"bestWindow":{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"year":2026,"score":0,"note":""}],"threats":[{"whenNot":"","threat":"","severity":"low"}],"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
-- bestWindow must be a SPECIFIC, actionable range of roughly 2–6 weeks with explicit dates, and its label must spell the dates out (e.g. "May 10 – June 5") — NEVER a season name or a whole season.
-- avoidWindows: one to three ranges to KEEP AWAY FROM, each specific to the month and week (e.g. "Late July – mid October") and grounded in the named region's historical typhoon/climate pattern; why says what historically happens there then; severity "moderate" or "high".
-- monthScores carries ALL twelve months (score 0–100 = how suitable STARTING to plant that month is; note ≤ 10 words). Differentiate months even inside the target season — a flat run of equal scores is an unfinished answer.
+- bestWindow must be a SPECIFIC, actionable range of roughly 2–6 weeks with explicit dates, and its label must spell the dates out WITH THE YEAR (e.g. "Dec 10, 2026 – Jan 5, 2027") — NEVER a season name or a whole season. fromYear/toYear carry the calendar year of each end; for the dry season the window may begin in {$p['year']} and end in the year after, or sit wholly in the year after.
+- avoidWindows: one to three ranges to KEEP AWAY FROM, each specific to the month and week and year (e.g. "Late July – mid October 2026") and grounded in the named region's historical typhoon/climate pattern; why says what historically happens there then; severity "moderate" or "high".
+- monthScores carries ALL twelve months of the season's own run, each with its year (for the dry season: December {$p['year']} then January–November of the year after; for the others: January–December {$p['year']}); score 0–100 = how suitable STARTING to plant that month is; note ≤ 10 words. Differentiate months even inside the target season — a flat run of equal scores is an unfinished answer.
 - threats: at most three, what the farmer risks by planting OUTSIDE bestWindow, each naming when; severity "low"/"moderate"/"high"; confidence "low"/"moderate"/"high"; dataGaps at most three; summary ≤ 90 words. Keep the whole answer tight.
 PROMPT;
     }
 
-    private function seasonWords(string $key): string
+    /**
+     * The season's span, with its years spelt out.
+     *
+     * The dry season chosen for a year is the one that BEGINS at the end of
+     * it: early December of that year through May of the next. A farmer who
+     * picks "Dry season 2026" may well plant in January 2027, and the
+     * analysis has to say so rather than fold everything into one calendar
+     * year (the owner's rule, 2026-09-15). The wet season sits inside its
+     * own year; the third crop is the gap after it.
+     */
+    private function seasonWords(string $key, int $year): string
     {
+        $next = $year + 1;
+
         return match ($key) {
-            'dry' => 'Dry season (roughly November–April in most lowland PH regions)',
-            'wet' => 'Wet season (roughly May–October in most lowland PH regions)',
-            default => 'Third crop — the in-between window after the main two',
+            'dry' => "Dry season {$year}–{$next}: early December {$year} through May {$next} in most lowland PH regions. The window CROSSES INTO {$next} and that is part of the season — a planting date in January–May {$next} is a normal answer, not a different season.",
+            'wet' => "Wet season {$year}: roughly May–October {$year} in most lowland PH regions.",
+            default => "Third crop {$year}: the in-between window after the main two, roughly late October–early December {$year}.",
         };
+    }
+
+    /** The season named with its years, for titles: "Dry season 2026–27". */
+    public static function seasonTitle(string $key, int $year): string
+    {
+        $label = self::SEASONS[$key] ?? '';
+        if ($key === 'dry') {
+            return $label . ' ' . $year . '–' . substr((string) ($year + 1), -2);
+        }
+
+        return $label . ' ' . $year;
     }
 
     /** The model's JSON, taken carefully. Null when it cannot be trusted. */

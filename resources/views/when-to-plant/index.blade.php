@@ -145,6 +145,7 @@
     .wtp-mbar.is-good { background: var(--color-brand-300); }
     .wtp-mbar.is-poor { background: #f0c274; }
     .wtp-mbar.is-bad { background: #fca5a5; }
+    .wtp-mlbl i { display: block; font-style: normal; font-size: .55rem; opacity: .7; line-height: 1; }
     .wtp-mlbl { font-size: .58rem; font-weight: 700; color: var(--color-gray-500); }
     .wtp-mnote { font-size: .68rem; color: var(--color-gray-500); margin-top: .5rem; line-height: 1.5; }
 
@@ -419,6 +420,12 @@
 
     let OPT = null;
     const state = { year: null, season: null, crop: '', variety: '', location: '', problems: [] };
+    // "Dry season 2026–27": the season named with the years it actually spans.
+    const seasonSaid = (season, year) => {
+        const y = Number(year) || 0;
+        const label = (OPT && OPT.seasons[season]) || '';
+        return season === 'dry' && y ? `${label} ${y}–${String(y + 1).slice(-2)}` : `${label} ${y || ''}`.trim();
+    };
     let step = 0;
     const STEPS = 7;
     let LAST = null;   // {report, params, charged} — what Save keeps
@@ -436,13 +443,21 @@
         $id('wtpYears').innerHTML = OPT.years.map((y) => `
             <button type="button" class="wtp-choice" data-year="${y}"><span class="c-e">🗓️</span><span>${y}${y === OPT.years[0] ? '<small>This year</small>' : ''}</span></button>`).join('');
         const seasonIcons = { dry: '☀️', wet: '🌧️', third: '🌗' };
-        const seasonSubs = {
-            dry: 'Roughly November to April in most lowland regions',
-            wet: 'Roughly May to October in most lowland regions',
-            third: 'The in-between window after the main two',
+        /* The dry season of a year begins at its end and runs into the next:
+           the words say so, with the years, so January is not a surprise. */
+        const seasonSubs = (y) => ({
+            dry: `Early December ${y} to May ${y + 1} in most lowland regions — planting into ${y + 1} is part of it`,
+            wet: `Roughly May to October ${y} in most lowland regions`,
+            third: `The in-between window after the main two, late in ${y}`,
+        });
+        const paintSeasons = () => {
+            const y = Number(state.year || OPT.years[0]);
+            const subs = seasonSubs(y);
+            $id('wtpSeasons').innerHTML = Object.entries(OPT.seasons).map(([k, label]) => `
+                <button type="button" class="wtp-choice${state.season === k ? ' is-on' : ''}" data-season="${k}"><span class="c-e">${seasonIcons[k] || '🌱'}</span><span>${esc(label)}${k === 'dry' ? ' ' + y + '–' + String(y + 1).slice(-2) : ''}<small>${esc(subs[k] || '')}</small></span></button>`).join('');
         };
-        $id('wtpSeasons').innerHTML = Object.entries(OPT.seasons).map(([k, label]) => `
-            <button type="button" class="wtp-choice" data-season="${k}"><span class="c-e">${seasonIcons[k] || '🌱'}</span><span>${esc(label)}<small>${esc(seasonSubs[k] || '')}</small></span></button>`).join('');
+        paintSeasons();
+        window.__wtpPaintSeasons = paintSeasons;
         const groups = {};
         OPT.crops.forEach((c) => { (groups[c.group] = groups[c.group] || []).push(c); });
         $id('wtpCropList').innerHTML = Object.entries(groups).map(([g, list]) => `
@@ -528,7 +543,7 @@
     function review() {
         const crop = (OPT.crops.find((c) => c.key === state.crop) || {});
         $id('wtpReview').innerHTML = `${esc(crop.icon || '')} <b>${esc(crop.label || '')}</b>`
-            + `${state.variety ? ' · ' + esc(state.variety) : ''} · ${esc(OPT.seasons[state.season] || '')} ${state.year}`
+            + `${state.variety ? ' · ' + esc(state.variety) : ''} · ${esc(seasonSaid(state.season, state.year))}`
             + ` · ${esc(state.location)}`
             + (state.problems.length ? `<br><span class="text-xs">${state.problems.length} field problem${state.problems.length === 1 ? '' : 's'} considered</span>` : '');
         $id('wtpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
@@ -545,6 +560,8 @@
         if (!b) return;
         state.year = Number(b.getAttribute('data-year'));
         document.querySelectorAll('#wtpYears .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
+        // The season cards say their years, and the dry one runs into the next.
+        window.__wtpPaintSeasons?.();
         setTimeout(() => show(1), 180);
     });
     $id('wtpSeasons').addEventListener('click', (e) => {
@@ -690,7 +707,11 @@
         const bestMonths = new Set();
         for (let m = bw.fromMonth; m; m = (m === bw.toMonth ? 0 : (m % 12) + 1)) { bestMonths.add(m); if (bestMonths.size > 12) break; }
 
-        const scores = (r.monthScores || []).slice(0, 12);
+        /* The season's own run of months. A dry season's answer comes back
+           December first and January–November of the next year after it;
+           sorted by year then month it reads as the season runs, and the
+           year sits under the month so January is plainly next year's. */
+        const scores = (r.monthScores || []).slice(0, 12).sort((a, b) => ((a.year || 0) - (b.year || 0)) || ((a.month || 0) - (b.month || 0)));
 
         const windowsCard = `
             <div class="wtp-card">
@@ -704,8 +725,8 @@
 
         host.innerHTML = `
             <div class="wtp-hero">
-                <h2>${esc(crop.icon || '🌱')} ${esc(crop.label || 'Your crop')} — ${esc(OPT ? OPT.seasons[p.season] || '' : '')} ${esc(String(p.year || ''))}</h2>
-                <p class="h-win">${esc(bw.label || (m1 + ' ' + (bw.fromDay || '') + ' – ' + m2 + ' ' + (bw.toDay || '')))}</p>
+                <h2>${esc(crop.icon || '🌱')} ${esc(crop.label || 'Your crop')} — ${esc(seasonSaid(p.season, p.year))}</h2>
+                <p class="h-win">${esc(bw.label || (m1 + ' ' + (bw.fromDay || '') + (bw.fromYear ? ', ' + bw.fromYear : '') + ' – ' + m2 + ' ' + (bw.toDay || '') + (bw.toYear ? ', ' + bw.toYear : '')))}</p>
                 <p class="h-why">${esc(sweep(bw.why))}</p>
                 <div class="wtp-chips">
                     <span class="wtp-chip">📍 ${esc(p.location || '')}</span>
@@ -724,7 +745,7 @@
                         const cls = bestMonths.has(s.month) ? 'is-best' : (s.score >= 65 ? 'is-good' : (s.score >= 35 ? 'is-poor' : 'is-bad'));
                         return `<div class="wtp-mcol">
                             <div class="wtp-mbar ${cls}" style="height:${Math.max(4, s.score)}%" title="${esc(s.note || '')}"></div>
-                            <span class="wtp-mlbl">${MONTHS[(s.month || 1) - 1]}</span>
+                            <span class="wtp-mlbl">${MONTHS[(s.month || 1) - 1]}${s.year && p.season === 'dry' ? `<i>${esc(String(s.year).slice(-2))}</i>` : ''}</span>
                         </div>`;
                     }).join('')}
                 </div>
