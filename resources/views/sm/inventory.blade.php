@@ -214,13 +214,22 @@
             <label for="ivName" class="form-label">What is it? <span class="text-red-500">*</span></label>
             <input type="text" id="ivName" maxlength="150" class="form-input" placeholder="e.g. Urea 46-0-0">
         </div>
+        {{-- The kind and the unit wear the lot form's crop-tag: a tap opens a
+             sheet of the choices, not a dropdown (the owner's ask,
+             2026-09-15). The selects stay as hidden value stores so the
+             save payload and every listener keep their shape. --}}
         <div>
-            <label for="ivKind" class="form-label">Kind</label>
-            <select id="ivKind" class="form-select">
+            <label class="form-label">Kind</label>
+            <select id="ivKind" class="hidden" aria-hidden="true" tabindex="-1">
                 @foreach (\App\Models\AsInventoryItem::KINDS as $key => $k)
                     <option value="{{ $key }}">{{ $k['icon'] }} {{ $k['label'] }}</option>
                 @endforeach
             </select>
+            <button type="button" class="crop-tag" id="ivKindBtn" data-iv-kind-btn="item">
+                <span class="crop-tag-e" id="ivKindIcon">🧂</span>
+                <span class="crop-tag-t" id="ivKindNow">Granular fertiliser</span>
+                <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
             <p class="form-hint" id="ivKindHint"></p>
         </div>
         {{-- COUNTED IN WHAT.
@@ -234,11 +243,16 @@
         {{-- Creation-only from here down to the note: what a thing is counted
              in belongs to its ledger, and its price and warning were set when
              it joined. Editing is name, kind and note. --}}
-        <div class="iv-unitrow" id="ivUnitRow">
-            <div>
-                <label for="ivUnit" class="form-label">Counted in</label>
-                <select id="ivUnit" class="form-select"></select>
-            </div>
+        <div id="ivUnitRow">
+            <label class="form-label">Counted in</label>
+            <select id="ivUnit" class="hidden" aria-hidden="true" tabindex="-1"></select>
+            <button type="button" class="crop-tag" id="ivUnitBtn" data-iv-unit-btn="item">
+                <span class="crop-tag-e">⚖️</span>
+                <span class="crop-tag-t" id="ivUnitNow">bags (50 kg)</span>
+                <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
+            {{-- On an edit: what changing the unit does to the book. --}}
+            <p class="form-hint hidden" id="ivUnitEditHint"></p>
         </div>
 
         {{-- The count, on a row of its own and not optional: a thing joins

@@ -432,6 +432,63 @@ class InventoryService
      * and a book whose lines disagree with their own totals is worse than one
      * that was corrected. Nothing outside restart/startCount calls this.
      */
+    /**
+     * Count the book in another unit.
+     *
+     * An item's unit is the unit its whole ledger is written in, so changing
+     * it (the owner's ask, 2026-09-15: the unit is editable, and everything
+     * adjusts) means re-saying every line. When the two units are kin --
+     * bags of 50 into kilos, litres into millilitres -- every delta, every
+     * before-and-after figure and every price-per-unit is converted, so the
+     * shelf says 600 kg where it said 12 bags and the expense report comes
+     * to the same pesos. Across dimensions (bags into litres) there is no
+     * arithmetic: the figures keep their numbers and only the word changes,
+     * which the caller says out loud. The chain is rebuilt afterwards so
+     * rounding cannot leave a before that is not the previous after.
+     *
+     * What was TYPED on a line (enteredQty/enteredUnit) is left alone: it is
+     * a record of what somebody said, and it still converts on its own.
+     *
+     * @return array{changed:bool, converted:bool, factor:?float, moves:int}
+     */
+    public function changeUnit(AsInventoryItem $item, string $to): array
+    {
+        if (! isset(AsInventoryItem::UNITS[$to])) {
+            return ['changed' => false, 'converted' => false, 'factor' => null, 'moves' => 0];
+        }
+
+        return DB::transaction(function () use ($item, $to) {
+            $item = AsInventoryItem::lockForUpdate()->find($item->id);
+            $from = (string) $item->unit;
+            if ($from === $to) {
+                return ['changed' => false, 'converted' => true, 'factor' => 1.0, 'moves' => 0];
+            }
+            $factor = AsInventoryItem::convert(1.0, $from, $to);
+            $moves = AsInventoryMove::where('itemId', $item->id)->where('deleteStatus', 1)->get();
+            if ($factor !== null) {
+                foreach ($moves as $m) {
+                    $m->update([
+                        'delta' => round((float) $m->delta * $factor, 3),
+                        'qtyBefore' => round((float) $m->qtyBefore * $factor, 3),
+                        'qtyAfter' => round((float) $m->qtyAfter * $factor, 3),
+                        'unitPrice' => $m->unitPrice !== null ? round((float) $m->unitPrice / $factor, 2) : null,
+                    ]);
+                }
+                if ($item->unitPrice !== null) {
+                    $item->unitPrice = round((float) $item->unitPrice / $factor, 2);
+                }
+                if ($item->lowAt !== null) {
+                    $item->lowAt = round((float) $item->lowAt * $factor, 3);
+                }
+            }
+            $item->unit = $to;
+            $item->save();
+            $this->rebuildChain($item->id);
+
+            return ['changed' => true, 'converted' => $factor !== null, 'factor' => $factor, 'moves' => $moves->count()];
+        });
+    }
+
     private function rebuildChain(int $itemId): void
     {
         $running = 0.0;

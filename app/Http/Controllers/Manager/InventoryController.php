@@ -306,13 +306,39 @@ class InventoryController extends BaseScheduleController
             return $this->jsonFail('Validation failed.', 422, ['errors' => $v->errors()]);
         }
 
-        $item->update($this->fields($request));
+        /* The unit may change on an edit (the owner's ask, 2026-09-15), and
+         * when it does the whole book is re-said in it -- see
+         * InventoryService::changeUnit. The price and the low mark are
+         * converted there too, so the form's copies of them (unchanged on an
+         * edit) must not write the old figures back over the new. */
+        $fields = $this->fields($request);
+        $was = (string) $item->unit;
+        $before = $this->stock->onHand($item->id);
+        $change = ['changed' => false, 'converted' => true, 'factor' => 1.0];
+        if ($fields['unit'] !== $was) {
+            $change = $this->stock->changeUnit($item, $fields['unit']);
+            unset($fields['unitPrice'], $fields['lowAt']);
+        }
+        unset($fields['unit']);
+        $item->update($fields);
 
         if ($request->has('tags')) {
             \App\Support\ScheduleTags::sync($schedule, 'item', (int) $item->id, $request->input('tags', []));
         }
 
-        return $this->jsonOk('Saved.', ['data' => $this->oneItem($item->fresh())]);
+        $item = $item->fresh();
+        $message = 'Saved.';
+        if ($change['changed']) {
+            $message = $change['converted']
+                ? 'Saved. The book now counts ' . AsInventoryItem::unitSays($item->unit, false) . ': '
+                    . AsInventoryItem::trim($before) . ' ' . AsInventoryItem::unitSays($was, abs($before - 1) < 0.0005)
+                    . ' became ' . $item->say($this->stock->onHand($item->id)) . ', every line and price with it.'
+                : 'Saved. Counted in ' . AsInventoryItem::unitSays($item->unit, false) . ' now — '
+                    . AsInventoryItem::unitSays($was, false) . ' and ' . AsInventoryItem::unitSays($item->unit, false)
+                    . ' cannot be converted, so the figures kept their numbers.';
+        }
+
+        return $this->jsonOk($message, ['data' => $this->oneItem($item), 'unitChanged' => $change['changed'], 'converted' => $change['converted']]);
     }
 
     /**

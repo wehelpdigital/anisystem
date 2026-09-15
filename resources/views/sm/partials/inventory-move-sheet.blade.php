@@ -47,17 +47,29 @@
             </div>
             {{-- One question per row — squeezed side by side, the two
                  selects truncated their own answers on a phone. --}}
+            {{-- Tags that open a sheet of choices, not dropdowns; the selects
+                 are hidden value stores. --}}
             <div>
-                <label for="ivMoveNewKind" class="form-label text-xs! mb-1!">Kind</label>
-                <select id="ivMoveNewKind" class="form-select bg-white!">
+                <label class="form-label text-xs! mb-1!">Kind</label>
+                <select id="ivMoveNewKind" class="hidden" aria-hidden="true" tabindex="-1">
                     @foreach (\App\Models\AsInventoryItem::KINDS as $key => $k)
                         <option value="{{ $key }}">{{ $k['icon'] }} {{ $k['label'] }}</option>
                     @endforeach
                 </select>
+                <button type="button" class="crop-tag bg-white!" id="ivMoveNewKindBtn" data-iv-kind-btn="moveNew">
+                    <span class="crop-tag-e" id="ivMoveNewKindIcon">🧂</span>
+                    <span class="crop-tag-t" id="ivMoveNewKindNow">Granular fertiliser</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
             </div>
             <div>
-                <label for="ivMoveNewUnit" class="form-label text-xs! mb-1!">Counted in</label>
-                <select id="ivMoveNewUnit" class="form-select bg-white!"></select>
+                <label class="form-label text-xs! mb-1!">Counted in</label>
+                <select id="ivMoveNewUnit" class="hidden" aria-hidden="true" tabindex="-1"></select>
+                <button type="button" class="crop-tag bg-white!" id="ivMoveNewUnitBtn" data-iv-unit-btn="moveNew">
+                    <span class="crop-tag-e">⚖️</span>
+                    <span class="crop-tag-t" id="ivMoveNewUnitNow">bags (50 kg)</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
             </div>
             <div>
                 <label for="ivMoveNewPrice" class="form-label text-xs! mb-1!">Price <span class="text-gray-400 font-normal">(optional)</span></label>
@@ -334,6 +346,29 @@
 </div>
 
 {{-- The unit an amount is typed in — only units the item's book converts. --}}
+{{-- WHAT KIND OF THING, and WHAT IT IS COUNTED IN: one sheet each, shared
+     by the item form and the move sheet's new-item form (the tag that
+     opened it says which, in data-iv-kind-btn / data-iv-unit-btn). --}}
+<div class="sheet hidden" id="ivKindSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">What kind of thing?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="ivKindList"></div>
+</div>
+<div class="sheet hidden" id="ivUnitSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Counted in what?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <p class="text-xs text-gray-500 mb-2 hidden" id="ivUnitSheetSay"></p>
+        <div class="dt-rows" id="ivUnitList"></div>
+    </div>
+</div>
+
 <div class="sheet hidden" id="ivMoveUnitSheet" style="--sheet-width:24rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">

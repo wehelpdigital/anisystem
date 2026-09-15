@@ -35,7 +35,7 @@
          * FIRST copy in document order — the one getElementById will answer
          * with — and remove the rest. All behaviour is delegated, so any
          * single copy is a working copy. */
-        ['ivMoveSheet', 'ivItemSheet', 'ivStartSheet', 'ivStartEditSheet', 'ivMenuSheet', 'ivConvSheet', 'ivMoveEditSheet', 'ivMoveItemSheet', 'ivMoveUnitSheet'].forEach((sid) => {
+        ['ivMoveSheet', 'ivItemSheet', 'ivStartSheet', 'ivStartEditSheet', 'ivMenuSheet', 'ivConvSheet', 'ivMoveEditSheet', 'ivMoveItemSheet', 'ivMoveUnitSheet', 'ivKindSheet', 'ivUnitSheet'].forEach((sid) => {
             const copies = [...document.querySelectorAll('#' + sid)];
             copies.slice(1).forEach((el) => el.remove());
         });
@@ -105,7 +105,84 @@
             if (want && !keys.includes(want) && UNITS[want]) keys.unshift(want);
             sel.innerHTML = keys.map((k) => `<option value="${k}">${esc(unitSays(k, false) + (UNITS[k] && UNITS[k].long ? ' (' + UNITS[k].long + ')' : ''))}</option>`).join('');
             sel.value = want && keys.includes(want) ? want : keys[0];
+            dressTags();
         };
+        /* THE TAGS WEAR THE HIDDEN SELECTS' ANSWERS.
+           Kind and Counted-in are crop-tags now (a tap opens a sheet of the
+           choices), and the selects behind them are the value stores every
+           listener and payload already read. One painter for all four, run
+           after anything that sets a value. */
+        const unitWords = (k) => unitSays(k, false) + (UNITS[k] && UNITS[k].long ? ' (' + UNITS[k].long + ')' : '');
+        const dressTags = () => {
+            [['ivKind', 'ivKindIcon', 'ivKindNow'], ['ivMoveNewKind', 'ivMoveNewKindIcon', 'ivMoveNewKindNow']].forEach(([sid, iid, nid]) => {
+                const k = $id(sid)?.value; const kd = KINDS[k];
+                if ($id(iid)) $id(iid).textContent = kd?.icon || '📦';
+                if ($id(nid)) $id(nid).textContent = kd?.label || 'Pick a kind';
+            });
+            [['ivUnit', 'ivUnitNow'], ['ivMoveNewUnit', 'ivMoveNewUnitNow']].forEach(([sid, nid]) => {
+                const u = $id(sid)?.value;
+                if ($id(nid)) $id(nid).textContent = u && UNITS[u] ? unitWords(u) : 'Pick a unit';
+            });
+        };
+        /* Which form asked: 'item' (the item sheet) or 'moveNew' (the move
+           sheet's new-item form). The two sheets are shared. */
+        let pickFor = 'item';
+        const kindSelOf = (t) => $id(t === 'moveNew' ? 'ivMoveNewKind' : 'ivKind');
+        const unitSelOf = (t) => $id(t === 'moveNew' ? 'ivMoveNewUnit' : 'ivUnit');
+        function openKindSheet(target) {
+            pickFor = target || 'item';
+            const now = kindSelOf(pickFor)?.value;
+            $id('ivKindList').innerHTML = Object.entries(KINDS).map(([k, kd]) => `<button type="button" class="dt-row${k === now ? ' is-on' : ''}" data-iv-kind="${esc(k)}">
+                <span class="dt-row-e">${esc(kd.icon || '📦')}</span>
+                <span class="dt-row-body"><b>${esc(kd.label)}</b>${(kd.units || [])[0] ? `<i>Usually counted in ${esc(unitWords(kd.units[0]))}</i>` : ''}</span>
+            </button>`).join('');
+            openSheet('ivKindSheet');
+        }
+        function pickKind(k) {
+            const sel = kindSelOf(pickFor);
+            if (sel && KINDS[k]) { sel.value = k; sel.dispatchEvent(new Event('change', { bubbles: true })); }
+            closeSheet('ivKindSheet');
+        }
+        function openUnitSheet(target) {
+            pickFor = target || 'item';
+            const kind = kindSelOf(pickFor)?.value;
+            const sel = unitSelOf(pickFor);
+            const now = sel?.value;
+            const keys = [...(KINDS[kind]?.units || Object.keys(UNITS))];
+            if (now && !keys.includes(now) && UNITS[now]) keys.unshift(now);
+            /* Editing an item: each choice says what it does to the book --
+               kin units convert the whole ledger, the others only relabel. */
+            const editing = pickFor === 'item' && !!$id('ivItemId')?.value;
+            const item = editing ? itemById($id('ivItemId').value) : null;
+            const say = $id('ivUnitSheetSay');
+            if (say) {
+                say.textContent = item ? `Counted in ${unitWords(item.unit)} today, ${item.says} on hand. Kin units convert the whole book; the others keep the figures and change only the word.` : '';
+                say.classList.toggle('hidden', !item);
+            }
+            $id('ivUnitList').innerHTML = keys.map((k) => {
+                let note = UNITS[k] && UNITS[k].long ? UNITS[k].long : '';
+                if (item && k !== item.unit) {
+                    const conv = convert(Number(item.onHand) || 0, item.unit, k);
+                    note = conv !== null ? `→ ${trim(conv)} ${unitSays(k, Math.abs(conv) === 1)} — converts the whole book` : 'Cannot convert from ' + unitSays(item.unit, false) + ' — figures keep their numbers';
+                } else if (item) {
+                    note = 'As it is now';
+                }
+                return `<button type="button" class="dt-row${k === now ? ' is-on' : ''}" data-iv-unit="${esc(k)}">
+                    <span class="dt-row-e">⚖️</span>
+                    <span class="dt-row-body"><b>${esc(unitSays(k, false))}</b>${note ? `<i>${esc(note)}</i>` : ''}</span>
+                </button>`;
+            }).join('');
+            openSheet('ivUnitSheet');
+        }
+        function pickUnit(k) {
+            const sel = unitSelOf(pickFor);
+            if (sel && UNITS[k]) {
+                if (![...sel.options].some((o) => o.value === k)) sel.add(new Option(unitWords(k), k));
+                sel.value = k;
+                sel.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            closeSheet('ivUnitSheet');
+        }
         const itemById = (id) => ITEMS.find((i) => String(i.id) === String(id)) || null;
 
         /* ---------------- fetching ---------------- */
@@ -305,6 +382,23 @@
             // The price is per ONE of whatever this is counted in.
             const p = $id('ivPriceUnit');
             if (p) p.textContent = '\u20b1 per ' + unitSays($id('ivUnit')?.value, true);
+            dressTags();
+            /* Editing: say what the new unit will do to the book before Save. */
+            const hint = $id('ivUnitEditHint');
+            const id = $id('ivItemId')?.value;
+            const item = id ? itemById(id) : null;
+            if (hint) {
+                const k = $id('ivUnit')?.value;
+                if (!item || !k || k === item.unit) {
+                    hint.textContent = item ? 'Change this and the whole book is re-counted in the new unit — every line, the price, and what the activities take off the shelf.' : '';
+                } else {
+                    const conv = convert(Number(item.onHand) || 0, item.unit, k);
+                    hint.textContent = conv !== null
+                        ? `On Save the book converts: ${item.says} becomes ${trim(conv)} ${unitSays(k, Math.abs(conv) === 1)}, every line and price with it, and activities that use it are read in ${unitSays(k, false)} from now on.`
+                        : `${unitSays(item.unit, false)} and ${unitSays(k, false)} cannot be converted — the figures keep their numbers and only the word changes.`;
+                }
+                hint.classList.toggle('hidden', !item);
+            }
         }
 
 
@@ -326,7 +420,10 @@
                already written in it; the price and the warning were set at
                birth. All three stay filled (and hidden), so saving sends them
                back unchanged. */
-            $id('ivUnitRow')?.classList.toggle('hidden', !!item);
+            // The unit is editable now (the owner's ask, 2026-09-15): the
+            // book is re-counted in it on Save. The count and the price still
+            // belong to creation.
+            $id('ivUnitRow')?.classList.remove('hidden');
             $id('ivOpenQtyWrap')?.classList.toggle('hidden', !!item);
             $id('ivPriceWrap')?.classList.toggle('hidden', !!item);
             /* The question belongs to creation, and only to a season with a
@@ -999,7 +1096,7 @@
         }
 
         window.__ivApi = {
-            openItemSheet, saveItem, load, itemById, sayKind, sayUnit, delItem,
+            openItemSheet, saveItem, load, itemById, sayKind, sayUnit, delItem, openKindSheet, pickKind, openUnitSheet, pickUnit, dressTags,
             openItemMenu, itemMenuAct, sayMoveDate, raisePicker, openConv,
             sayMoveItem, sayMoveQty, moveGo, delMove, showTab, fillUnits,
             openMoveItemSheet, pickMoveItem, openMoveUnitSheet, pickMoveUnit,
@@ -1042,6 +1139,14 @@
                 const mvi = e.target.closest('[data-mv-item]');
                 if (mvi) { A.pickMoveItem(mvi.getAttribute('data-mv-item')); return; }
                 if (e.target.closest('#ivMoveUnitBtn')) { A.openMoveUnitSheet(); return; }
+                const kb = e.target.closest('[data-iv-kind-btn]');
+                if (kb) { A.openKindSheet(kb.getAttribute('data-iv-kind-btn')); return; }
+                const kr = e.target.closest('[data-iv-kind]');
+                if (kr) { A.pickKind(kr.getAttribute('data-iv-kind')); return; }
+                const ub = e.target.closest('[data-iv-unit-btn]');
+                if (ub) { A.openUnitSheet(ub.getAttribute('data-iv-unit-btn')); return; }
+                const ur = e.target.closest('[data-iv-unit]');
+                if (ur) { A.pickUnit(ur.getAttribute('data-iv-unit')); return; }
                 const mvu = e.target.closest('[data-mv-unit]');
                 if (mvu) { A.pickMoveUnit(mvu.getAttribute('data-mv-unit')); return; }
                 const srow = e.target.closest('#ivStartRows .dt-row');
@@ -1069,9 +1174,10 @@
                 if (e.target.id === 'ivMoveNewKind') {
                     A.fillUnits(document.getElementById('ivMoveNewUnit'), e.target.value);
                     A.sayMoveItem();
+                    A.dressTags();
                     return;
                 }
-                if (e.target.id === 'ivMoveNewUnit') { A.sayMoveItem(); return; }
+                if (e.target.id === 'ivMoveNewUnit') { A.sayMoveItem(); A.dressTags(); return; }
                 if (e.target.id === 'ivMoveUnitSel') { A.sayMoveQty(); return; }
                 if (e.target.id === 'ivStartDateInput') { A.pickedStartDate(e.target.value); return; }
                 if (e.target.id === 'ivMoveDate') { A.sayMoveDate(); return; }
