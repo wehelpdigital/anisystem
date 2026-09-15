@@ -12,39 +12,15 @@
     @include('sm.partials.tag-picker')
 
     <div>
-        {{-- Worker logins (Boss/Lifetime only) --}}
-        @if (auth()->user()->canWorkerAccounts())
-            <div class="card p-4 mb-4">
-                <div class="flex items-center gap-2">
-                    <div class="w-10 h-10 rounded-xl bg-brand-50 flex items-center justify-center shrink-0 text-lg">🔑</div>
-                    <div class="min-w-0 grow">
-                        <p class="font-bold text-gray-900">Worker logins</p>
-                        <p class="text-xs text-gray-500">Give a worker their own login with view or edit access. They set their password from an emailed link.</p>
-                    </div>
-                    <button type="button" id="grantAccessBtn" class="btn btn-white btn-sm shrink-0">Give access</button>
-                </div>
-                <div id="grantForm" class="hidden mt-3 pt-3 border-t border-gray-100 space-y-2">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <div>
-                            <label class="form-label" for="grantEmail">Worker email</label>
-                            <input type="email" id="grantEmail" class="form-input" placeholder="worker@email.com">
-                        </div>
-                    </div>
-                    {{-- Schedule access and community both live in the rights
-                         panel now: they are the same kind of answer as the
-                         eight below them and were asked in two other shapes. --}}
-                    @include('sm.partials.worker-rights', ['p' => 'grant'])
-                    <div class="flex justify-end gap-2">
-                        <button type="button" id="grantCancel" class="btn btn-ghost btn-sm">Cancel</button>
-                        <button type="button" id="grantSubmit" class="btn btn-primary btn-sm">Send invite</button>
-                    </div>
-                </div>
-            </div>
-        @else
+        {{-- No "Give access" card up here any more: a login is given from
+             the worker's own card (its login panel, or the Add Worker
+             sheet's account tab), so the roster is the one place it is
+             asked. What stays is the word for a plan that cannot. --}}
+        @unless (auth()->user()->canWorkerAccounts())
             <div class="card p-4 mb-4 border-amber-200">
                 <p class="text-sm text-gray-700"><strong>🔒 Worker logins</strong> are a <strong>Boss/Lifetime</strong> feature. <a href="{{ route('account.subscription') }}" class="text-brand-600 font-semibold">Upgrade</a> to give workers their own login and email notifications.</p>
             </div>
-        @endif
+        @endunless
 
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
             <p class="text-sm text-gray-500">
@@ -516,9 +492,11 @@
 <script>
 /* Read and paint the module switches, by prefix.
  *
- * Both forms on this page set the same rights, and a right that is read by
- * one name and written by another is how a permission ends up not applying.
- * The keys are the grant's own column names. */
+ * The prefix outlives the second form that once shared these rights (the
+ * "Give access" card at the top of the page, gone now that a login is given
+ * from the worker's own card): a right that is read by one name and written
+ * by another is how a permission ends up not applying, so the keys are the
+ * grant's own column names either way. */
 window.workerRights = (() => {
     const LEVELS = ['notesAccess', 'reportsAccess', 'inventoryAccess', 'mapsAccess', 'drawAccess'];
     const SWITCHES = ['aiAccess', 'cameraAccess', 'videoAccess', 'voiceAccess'];
@@ -1380,35 +1358,4 @@ const __init = () => {
 })();
 </script>
 
-<script>
-// Worker login grants (Boss/Lifetime)
-(function workerGrants() {
-    const $ = (id) => document.getElementById(id);
-    const form = $('grantForm');
-    if (!form) return;
-    $('grantAccessBtn')?.addEventListener('click', () => { form.classList.toggle('hidden'); $('grantEmail').focus(); });
-    $('grantCancel')?.addEventListener('click', () => form.classList.add('hidden'));
-    $('grantSubmit')?.addEventListener('click', async (e) => {
-        const btn = e.currentTarget;
-        const email = $('grantEmail').value.trim();
-        if (!email) { window.toast && toast('Enter the worker\'s email.', 'error'); return; }
-        btn.disabled = true;
-        try {
-            const res = await window.api(@json(route('sm.workers.access.grant')), {
-                method: 'POST',
-                body: {
-                    email,
-                    scheduleAccess: $('grantAccess').value,
-                    communityAccess: $('grantCommunity').checked ? 1 : 0,
-                    ...window.workerRights.read('grant'),
-                },
-            });
-            window.toast && toast(res.message || 'Invite sent.');
-            $('grantEmail').value = '';
-            form.classList.add('hidden');
-        } catch (err) { window.toast && toast(err.message, 'error'); }
-        finally { btn.disabled = false; }
-    });
-})();
-</script>
 @endpush

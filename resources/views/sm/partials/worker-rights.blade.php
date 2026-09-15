@@ -14,9 +14,10 @@
      name on a post — so a switch here would have been an owner deciding
      whether somebody else may have friends.
 
-     Drawn twice on this page — once in "Give access", once in a worker's own
-     login sheet — so it is a partial, and the ids are prefixed rather than
-     written out. Expects: $p, the prefix ('wl' or 'grant').
+     A partial with prefixed ids: it was once drawn twice on the page (a
+     "Give access" card at the top, since removed — a login is given from
+     the worker's own card now) and the prefix costs nothing to keep.
+     Expects: $p, the prefix ('wl').
 
      Every level keeps a hidden input under the segment carrying the same id
      the sheet's JS has always read, so nothing outside this file had to learn
