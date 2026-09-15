@@ -245,7 +245,7 @@
              the shed by being counted. (The low-stock warning that used to
              sit here is gone — a farm's shed is not a store's shelf.) --}}
         <div id="ivOpenQtyWrap">
-            <label for="ivOpenQty" class="form-label">How much have you now? <span class="text-red-500">*</span></label>
+            <label for="ivOpenQty" class="form-label">How many do you have now? <span class="text-red-500">*</span></label>
             <div class="relative">
                 <input type="number" id="ivOpenQty" min="0" step="any" class="form-input" placeholder="0" inputmode="decimal">
                 <span class="iv-qty-u" id="ivOpenQtyUnit"></span>
@@ -277,7 +277,7 @@
 
         {{-- No opening count.
              Adding a thing to the shed and receiving a delivery are two acts,
-             and this form is only the first. "How much have you now?" reads as
+             and this form is only the first. "How many do you have now?" reads as
              a running total somebody has to keep correct; the answer is just
              + In, as often as you like, and each one writes its own line in
              the log — which one opening figure never would. --}}

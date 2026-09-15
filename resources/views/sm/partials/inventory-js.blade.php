@@ -343,7 +343,7 @@
             const name = $id('ivName').value.trim();
             if (!name) { toast('Give the item a name.', 'error'); $id('ivName').focus(); return; }
             if (!id && !(Number($id('ivOpenQty').value) > 0)) {
-                toast('How much have you now? A thing joins the shed by being counted.', 'error');
+                toast('How many do you have now? A thing joins the shed by being counted.', 'error');
                 $id('ivOpenQty').focus();
                 return;
             }
