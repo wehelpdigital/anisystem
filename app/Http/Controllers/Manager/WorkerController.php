@@ -75,6 +75,65 @@ class WorkerController extends BaseScheduleController
         return view('sm.workers', compact('schedule', 'grantByWorker'));
     }
 
+    /**
+     * Is there an anee.io account behind this email — and is it already one
+     * of this farm's workers?
+     *
+     * The Add Worker sheet's second tab: a farmer who already has a login
+     * is picked out by email and added as a worker of this farm with the
+     * name that account carries. Exact email only, and never a search —
+     * an address is something the owner already has, not something the
+     * app helps them guess; the one fact given away is that an account
+     * exists, which the grant flow has always said in its own reply.
+     */
+    public function account(Request $request)
+    {
+        if ($refusal = $this->refuseWorker()) {
+            return $refusal;
+        }
+        $schedule = $this->scheduleFromRequest($request);
+
+        $email = mb_strtolower(trim((string) $request->query('email')));
+        if ($email === '' || ! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return $this->jsonFail('Enter a full email address.', 422);
+        }
+        if ($email === mb_strtolower((string) $request->user()->email)) {
+            return $this->jsonFail('That is your own account.', 422);
+        }
+
+        $user = \App\Models\User::active()->whereRaw('LOWER(email) = ?', [$email])->first();
+        if (! $user) {
+            return $this->jsonOk('No account with that email.', ['data' => ['found' => false]]);
+        }
+
+        // Already on the roster, by the card that names the account or by the email.
+        $onRoster = AsScheduleWorker::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->whereRaw('LOWER(email) = ?', [$email])
+            ->first();
+        $grant = \App\Models\WorkerGrant::active()
+            ->where('bossUserId', $schedule->anisystemUserId)
+            ->where(fn ($q) => $q->where('workerUserId', $user->id)->orWhereRaw('LOWER(invitedEmail) = ?', [$email]))
+            ->first();
+
+        return $this->jsonOk('Account found.', ['data' => [
+            'found' => true,
+            'account' => [
+                'id' => (int) $user->id,
+                'name' => $user->full_name ?: $user->email,
+                'email' => (string) $user->email,
+                'initials' => $user->initials ?: '·',
+                'avatar' => $user->avatarPath ? \App\Support\MediaStore::url($user->avatarPath) : null,
+                'since' => $user->created_at?->format('M Y'),
+            ],
+            'onRoster' => $onRoster ? (int) $onRoster->id : null,
+            'login' => $grant ? (string) $grant->status : null,
+            // The whole grant, when there is one: the new card wears it as
+            // it is, with the rights the owner already chose.
+            'grant' => $grant ? \App\Support\WorkerGrantState::of($grant) + ['scheduleWorkerId' => $grant->scheduleWorkerId ? (int) $grant->scheduleWorkerId : null] : null,
+        ]]);
+    }
+
     public function store(Request $request)
     {
         if ($refusal = $this->refuseWorker()) {
@@ -82,6 +141,29 @@ class WorkerController extends BaseScheduleController
         }
 
         $schedule = $this->scheduleFromRequest($request);
+
+        /* A worker picked from their anee.io account (the sheet's second
+         * tab): the card takes the account's own name, email and phone, so
+         * the two never disagree about who this is. The account has to be
+         * real, somebody else's, and not on this roster already. */
+        if ($request->filled('accountUserId')) {
+            $account = \App\Models\User::active()->find((int) $request->input('accountUserId'));
+            if (! $account || (int) $account->id === (int) $request->user()->id) {
+                return $this->jsonFail('That account could not be used.', 422);
+            }
+            $already = AsScheduleWorker::active()
+                ->where('croppingScheduleId', $schedule->id)
+                ->whereRaw('LOWER(email) = ?', [mb_strtolower((string) $account->email)])
+                ->exists();
+            if ($already) {
+                return $this->jsonFail(($account->full_name ?: 'This person') . ' is already a worker on this schedule.', 422);
+            }
+            $request->merge([
+                'workerName' => $account->full_name ?: $account->email,
+                'email' => $account->email,
+                'phone' => $request->filled('phone') ? $request->input('phone') : ($account->phone ?: null),
+            ]);
+        }
 
         // The tier's worker cap, judged by the schedule owner's plan.
         $wCap = \App\Support\Tier::scheduleLimit($schedule, 'workersPerSchedule');

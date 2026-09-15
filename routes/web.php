@@ -508,6 +508,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-inventory-move-delete', [App\Http\Controllers\Manager\InventoryController::class, 'deleteMove'])->name('sm.inventory.move.delete');
     Route::post('/app/sm-inventory-move-update', [App\Http\Controllers\Manager\InventoryController::class, 'updateMove'])->name('sm.inventory.move.update');
 
+    // The Add Worker sheet's "has an account" tab: is there an anee.io login behind this email?
+    Route::get('/app/sm-workers-account', [App\Http\Controllers\Manager\WorkerController::class, 'account'])->name('sm.workers.account');
     Route::post('/app/sm-workers-access-grant', [App\Http\Controllers\Manager\WorkerAccessController::class, 'grant'])->name('sm.workers.access.grant');
     Route::post('/app/sm-workers-access-password', [App\Http\Controllers\Manager\WorkerAccessController::class, 'setPassword'])->name('sm.workers.access.password');
     Route::post('/app/sm-workers-access-rights', [App\Http\Controllers\Manager\WorkerAccessController::class, 'updateRights'])->name('sm.workers.access.rights');

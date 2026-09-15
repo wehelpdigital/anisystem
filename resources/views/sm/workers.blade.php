@@ -91,6 +91,30 @@
     <div class="sheet-body space-y-4">
         <input type="hidden" id="workerId" value="">
 
+        {{-- Two ways in. A worker who already has an anee.io login is picked
+             out by their email and arrives with the name their account
+             carries; anyone else is written down here by hand. The strip
+             only shows for a new worker — an existing card is one card. --}}
+        <div class="wa-tabs" id="workerTabs" role="tablist" aria-label="How to add this worker">
+            <button type="button" class="wa-tab is-on" data-wtab="new" role="tab" aria-selected="true">New worker</button>
+            <button type="button" class="wa-tab" data-wtab="account" role="tab" aria-selected="false">Has an anee.io account</button>
+        </div>
+
+        <div id="workerAccountPane" class="wa-pane space-y-4" hidden>
+            <p class="text-sm text-gray-500">Somebody who already logs in to anee.io joins as one of your workers with the name and email their account carries.</p>
+            <div>
+                <label for="waEmail" class="form-label">Their account email <span class="text-red-500">*</span></label>
+                <div class="flex gap-2">
+                    <input type="email" id="waEmail" maxlength="191" class="form-input" placeholder="e.g. juan@email.com" autocomplete="off" inputmode="email">
+                    <button type="button" id="waFind" class="btn btn-white shrink-0">Find</button>
+                </div>
+                <p class="form-hint">The exact email they sign in with.</p>
+            </div>
+            {{-- What the search found: a face and a name, or a plain no. --}}
+            <div id="waResult" hidden></div>
+        </div>
+
+        <div id="workerNewPane" class="wa-pane space-y-4">
         <div>
             <label for="workerName" class="form-label">Worker Name <span class="text-red-500">*</span></label>
             <input type="text" id="workerName" maxlength="255" class="form-input" placeholder="e.g. Juan Dela Cruz">
@@ -231,10 +255,14 @@
             </div>
         </div>
         @endif
+        </div>
     </div>
     <div class="sheet-footer">
-        {{-- No Cancel: the ✕ in the header already is one. --}}
+        {{-- No Cancel: the ✕ in the header already is one. One button per
+             door: the second stays shut until the search has found somebody
+             who is not on the roster yet. --}}
         <button type="button" id="saveWorkerBtn" class="btn btn-primary w-full">Save Worker</button>
+        <button type="button" id="addAccountBtn" class="btn btn-primary w-full" hidden disabled>Add as worker</button>
     </div>
 </div>
 
@@ -408,6 +436,51 @@
     html.dark .wl-tocontact { background:rgb(107 159 61 / .12); border-color:#2f4d24; }
     html.dark .wl-tocontact-say b { color:#cfe6b8; }
     html.dark .wl-tocontact-say i { color:#a5c97e; }
+
+    /* THE TWO DOORS INTO ADD WORKER. The same segmented shape the rights
+       panel uses, stretched to the sheet's width so the two read as one
+       control with two halves rather than two buttons. */
+    .wa-tabs { display:grid; grid-template-columns:1fr 1fr; padding:3px; gap:3px; border-radius:.8rem;
+        background:var(--color-gray-100); border:1px solid var(--color-gray-200); }
+    .wa-tab { padding:.5rem .6rem; border:0; border-radius:.6rem; font-size:.8rem; font-weight:700;
+        color:var(--color-gray-500); background:transparent; cursor:pointer;
+        transition:background .28s var(--ease-house), color .28s var(--ease-house), box-shadow .28s var(--ease-house); }
+    .wa-tab:hover { color:var(--color-gray-700); }
+    .wa-tab.is-on { background:var(--color-white); color:var(--color-brand-700); box-shadow:0 1px 3px rgb(0 0 0 / .12); }
+    html.dark .wa-tabs { background:#151b12; border-color:#2b3a1c; }
+    html.dark .wa-tab { color:#93a48a; }
+    html.dark .wa-tab:hover { color:#cfe3bd; }
+    html.dark .wa-tab.is-on { background:#3f5626; color:#e8efe1; box-shadow:0 1px 3px rgb(0 0 0 / .4); }
+    /* A pane arrives rather than appears: a short rise on the house curve. */
+    .wa-pane.is-arriving { animation:wa-arrive .34s var(--ease-house) both; }
+    @keyframes wa-arrive { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+
+    /* WHO THE EMAIL BELONGS TO. A face, a name, and the one line that says
+       what adding them will mean. */
+    .wa-card { display:flex; align-items:center; gap:.75rem; padding:.8rem .9rem; border-radius:1rem;
+        border:1px solid var(--color-brand-200); background:var(--color-brand-50); }
+    .wa-face { flex:none; width:2.75rem; height:2.75rem; border-radius:999px; overflow:hidden;
+        display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.95rem;
+        background:var(--color-brand-100); color:var(--color-brand-700); }
+    .wa-face img { width:100%; height:100%; object-fit:cover; }
+    .wa-who { min-width:0; flex:1; }
+    .wa-who b { display:block; color:var(--color-gray-900); font-size:.95rem; line-height:1.2; }
+    .wa-who span { display:block; color:var(--color-gray-500); font-size:.78rem; overflow-wrap:anywhere; }
+    .wa-say { margin-top:.6rem; font-size:.8rem; line-height:1.45; color:var(--color-gray-600); }
+    .wa-say.is-stop { color:#b45309; font-weight:600; }
+    .wa-none { padding:.8rem .9rem; border-radius:1rem; border:1px dashed var(--color-gray-300);
+        font-size:.85rem; color:var(--color-gray-600); }
+    .wa-none button { margin-top:.5rem; }
+    html.dark .wa-card { background:rgb(107 159 61 / .12); border-color:#2f4d24; }
+    html.dark .wa-face { background:#2f4d24; color:#cfe6b8; }
+    html.dark .wa-who b { color:#e8efe1; }
+    html.dark .wa-who span, html.dark .wa-say, html.dark .wa-none { color:#a5b89a; }
+    html.dark .wa-say.is-stop { color:#f5c26b; }
+    html.dark .wa-none { border-color:#2b3a1c; }
+    @media (prefers-reduced-motion:reduce) {
+        .wa-tab { transition:none; }
+        .wa-pane.is-arriving { animation:none; }
+    }
     @media (prefers-reduced-motion:reduce) {
         .wl-tocontact, .wl-tocontact-box, .wl-tocontact-box svg { transition:none; }
     }
@@ -611,8 +684,173 @@ const __init = () => {
         editingWorker = w;
         paintLogin(w);
         toContactReset();
+        // Two doors for a new worker; an existing card is one card.
+        document.getElementById('workerTabs').hidden = !!w;
+        waReset();
+        showWorkerTab('new', false);
         openSheet('workerSheet');
     }
+
+    /* ---------------- The second door: an anee.io account ----------------
+     *
+     * The owner types the email the person signs in with, the server says
+     * whether an account is behind it, and the card shows who. Adding them
+     * writes a worker card from the account's own name and email, and —
+     * where the plan allows logins — links the account to this farm at once
+     * with the same starting rights a new login always gets (read the plan,
+     * the owner's tools shut), changeable from their card afterwards. */
+    const ACCOUNT_URL = @json(route('sm.workers.account'));
+    const GRANT_URL = @json(route('sm.workers.access.grant'));
+    let waFound = null;        // what the last search answered, or null
+    let waSeq = 0;             // a slow answer about an older email is ignored
+
+    function showWorkerTab(which, animate = true) {
+        document.querySelectorAll('#workerTabs .wa-tab').forEach((t) => {
+            const on = t.dataset.wtab === which;
+            t.classList.toggle('is-on', on);
+            t.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        const panes = { new: document.getElementById('workerNewPane'), account: document.getElementById('workerAccountPane') };
+        Object.entries(panes).forEach(([key, pane]) => {
+            const on = key === which;
+            pane.classList.remove('is-arriving');
+            if (on && pane.hidden && animate) {
+                pane.hidden = false;
+                void pane.offsetWidth;
+                pane.classList.add('is-arriving');
+                pane.addEventListener('animationend', () => pane.classList.remove('is-arriving'), { once: true });
+            } else {
+                pane.hidden = !on;
+            }
+        });
+        const onAccount = which === 'account';
+        document.getElementById('saveWorkerBtn').hidden = onAccount;
+        const addBtn = document.getElementById('addAccountBtn');
+        addBtn.hidden = !onAccount;
+        addBtn.disabled = !(waFound && waFound.found && !waFound.onRoster);
+        if (onAccount) window.smFocus?.('waEmail');
+    }
+
+    document.getElementById('workerTabs').addEventListener('click', (e) => {
+        const t = e.target.closest('.wa-tab');
+        if (t) showWorkerTab(t.dataset.wtab);
+    });
+
+    function waReset() {
+        waSeq++;
+        waFound = null;
+        document.getElementById('waEmail').value = '';
+        const out = document.getElementById('waResult');
+        out.hidden = true;
+        out.innerHTML = '';
+        document.getElementById('addAccountBtn').disabled = true;
+    }
+
+    function waPaint(d) {
+        const out = document.getElementById('waResult');
+        if (!d.found) {
+            out.innerHTML = `<div class="wa-none">No anee.io account signs in with that email.
+                <button type="button" class="btn btn-white btn-sm" id="waAsNew">Add them as a new worker instead</button></div>`;
+            out.hidden = false;
+            document.getElementById('waAsNew').addEventListener('click', () => {
+                // Their email carries over, so it is not typed twice.
+                document.getElementById('workerEmail').value = document.getElementById('waEmail').value.trim();
+                document.getElementById('workerEmail').dispatchEvent(new Event('input', { bubbles: true }));
+                showWorkerTab('new');
+                window.smFocus?.('workerName');
+            });
+            return;
+        }
+        const a = d.account;
+        const face = a.avatar ? `<img src="${escapeHtml(a.avatar)}" alt="">` : escapeHtml(a.initials || '·');
+        let say, stop = false;
+        if (d.onRoster) { say = `${escapeHtml(a.name)} is already a worker on this schedule.`; stop = true; }
+        else if (d.login === 'active') say = 'Already has access to your farm — they are added as a worker with the rights you gave them.';
+        else if (CAN_LOGINS) say = 'Added as a worker, and their account can open this farm with view access. Change what they may open from their card afterwards.';
+        else say = 'Added as a worker with this name and email. Worker logins come with the Boss plan.';
+        out.innerHTML = `<div class="wa-card">
+                <span class="wa-face">${face}</span>
+                <span class="wa-who"><b>${escapeHtml(a.name)}</b><span>${escapeHtml(a.email)}</span>${a.since ? `<span>On anee.io since ${escapeHtml(a.since)}</span>` : ''}</span>
+            </div>
+            <p class="wa-say${stop ? ' is-stop' : ''}">${say}</p>`;
+        out.hidden = false;
+    }
+
+    async function waFind() {
+        const email = document.getElementById('waEmail').value.trim();
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { toast('Enter their full email address.', 'error'); document.getElementById('waEmail').focus(); return; }
+        const btn = document.getElementById('waFind');
+        const mine = ++waSeq;
+        btn.disabled = true;
+        try {
+            const res = await api(`${ACCOUNT_URL}?scheduleId=${SCHEDULE_ID}&email=${encodeURIComponent(email)}`);
+            if (mine !== waSeq) return;
+            waFound = res.data;
+            waPaint(res.data);
+            document.getElementById('addAccountBtn').disabled = !(waFound.found && !waFound.onRoster);
+        } catch (err) {
+            if (mine !== waSeq) return;
+            waFound = null;
+            document.getElementById('addAccountBtn').disabled = true;
+            toast(err.message, 'error');
+        } finally { btn.disabled = false; }
+    }
+    document.getElementById('waFind').addEventListener('click', waFind);
+    document.getElementById('waEmail').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); waFind(); } });
+    // A changed email is a new question; the old answer must not add the wrong person.
+    document.getElementById('waEmail').addEventListener('input', () => {
+        waSeq++;
+        waFound = null;
+        document.getElementById('addAccountBtn').disabled = true;
+        const out = document.getElementById('waResult');
+        out.hidden = true; out.innerHTML = '';
+    });
+
+    document.getElementById('addAccountBtn').addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        if (!waFound || !waFound.found || waFound.onRoster) return;
+        const a = waFound.account;
+        btn.disabled = true;
+        try {
+            const res = await api(`{{ route('sm.workers.store') }}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { accountUserId: a.id } });
+            /* The login. An account the farm already granted keeps the
+               rights the owner chose — the card simply shows them. A new one
+               is linked now, with a new login's starting rights, and the
+               grant's own reply is what the toast says. Best-effort past the
+               card: a login that could not be linked is a line, not a
+               failure of the worker, who is on the roster either way. */
+            let login = waFound.grant || null;
+            let said = res.message;
+            if (CAN_LOGINS && !login) {
+                try {
+                    const g = await api(GRANT_URL, { method: 'POST', body: { scheduleWorkerId: res.data.id, email: a.email, scheduleAccess: 'view' } });
+                    login = g.data && g.data.grant;
+                    said = g.message || said;
+                } catch (err) {
+                    toast('Added as a worker, but their login could not be linked: ' + err.message, 'error');
+                }
+            }
+            WORKERS.push({
+                id: res.data.id,
+                workerName: res.data.workerName,
+                email: res.data.email,
+                phone: res.data.phone,
+                costPerHalfDay: res.data.costPerHalfDay,
+                priority: Number(res.data.priority) || 1,
+                skills: res.data.skills || [],
+                notes: res.data.notes,
+                offDays: [], offDates: [],
+                login,
+            });
+            renderList();
+            closeSheet('workerSheet');
+            toast(said);
+            window.smSpot?.('[data-worker-card="' + res.data.id + '"]');
+        } catch (err) {
+            toast(err.message, 'error');
+            btn.disabled = false;
+        }
+    });
 
     /* ------------- "Add to my Contact List too" -------------
      *
