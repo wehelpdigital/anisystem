@@ -828,6 +828,10 @@ const __init = () => {
        lands in somebody's inbox: an owner tapping the row to read it should
        not send mail by brushing past. */
     document.getElementById('wlSendPwLink')?.addEventListener('click', async (e) => {
+        // Taken BEFORE the confirm: currentTarget is only set while the event
+        // is being dispatched, and after the await it is null. Reading it
+        // there threw, and the link was never asked for -- "nothing happens".
+        const btn = e.currentTarget;
         const grantId = editingWorker && editingWorker.login && editingWorker.login.id;
         if (!grantId) { toast('This worker has no login yet.', 'error'); return; }
         const name = (editingWorker && editingWorker.workerName) || 'this worker';
@@ -838,7 +842,7 @@ const __init = () => {
             confirmClass: 'btn-primary',
         }) : true;
         if (!ok) return;
-        const btn = e.currentTarget; btn.disabled = true;
+        btn.disabled = true;
         try {
             const res = await api(@json(route('sm.workers.access.password-link')), {
                 method: 'POST', body: { id: grantId },
