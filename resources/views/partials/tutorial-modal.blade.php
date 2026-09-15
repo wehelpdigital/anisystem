@@ -217,10 +217,17 @@
     .tutv-close:hover, .tutv-close:focus-visible { transform: translateY(-2px); box-shadow: 0 14px 32px rgb(74 124 42 / .36); outline: none; }
     .tutv-close:active { transform: translateY(0) scale(.985); }
     @keyframes tutvSweep { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    /* The way to never see this again wears a faint red from the start:
+       it is the one thing on the card that cannot be taken back, and a
+       button that looks like nothing until the pointer finds it is a
+       button most people never find. It deepens under the pointer. */
     .tutv-never { width: 100%; min-height: 2.6rem; padding: .55rem 1rem; border-radius: .85rem; cursor: pointer;
-        font: inherit; font-size: .84rem; font-weight: 700; color: var(--color-gray-500, #6b7280); background: transparent;
-        transition: background .2s ease, color .2s ease; }
-    .tutv-never:hover { background: var(--color-gray-100, #f3f4f6); color: var(--color-gray-700, #374151); }
+        font: inherit; font-size: .84rem; font-weight: 700; color: #b42318;
+        background: #fdf0ee; border: 1px solid #f7d4cf;
+        transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1),
+            border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .tutv-never:hover, .tutv-never:focus-visible { background: #fbe0dc; border-color: #f0b8b0; color: #9a1d13; transform: translateY(-1px); outline: none; }
+    .tutv-never:active { transform: translateY(0) scale(.985); }
     @media (min-width: 640px) {
         .tutv-acts { flex-direction: row; align-items: center; justify-content: flex-end; }
         .tutv-close, .tutv-never { width: auto; }
@@ -230,8 +237,8 @@
     html.dark .tutv-card { background: #151b12; color: #e8efe1; }
     html.dark .tutv-blurb { color: #a8b8a0; }
     html.dark .tutv-kicker { color: #a8cc7e; }
-    html.dark .tutv-never { color: #93a58b; }
-    html.dark .tutv-never:hover { background: #1c2416; color: #d8ecc4; }
+    html.dark .tutv-never { color: #f3a59c; background: rgb(180 35 24 / .14); border-color: rgb(243 165 156 / .28); }
+    html.dark .tutv-never:hover, html.dark .tutv-never:focus-visible { background: rgb(180 35 24 / .24); border-color: rgb(243 165 156 / .45); color: #ffd3cc; }
 
     @media (prefers-reduced-motion: reduce) {
         .tutv-play-ring, .tutv-close { animation: none; }
