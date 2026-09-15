@@ -526,6 +526,9 @@
      and inside one they read as a second set of tabs belonging to the room
      itself — which is what was confusing. The back arrow in the app bar is
      the way out of here; the bar is waiting on the page it goes back to. --}}
+{{-- Two columns on a wide screen: the room, and the rail (the wall, your chats, the blog). --}}
+<div class="plaza-shell">
+<div class="plaza-center">
 <div data-group-member="{{ $isMember ? 1 : 0 }}" id="groupRoot" data-group-id="{{ $group->id }}"
      data-view="group:{{ $group->id }}">
 
@@ -1024,6 +1027,11 @@
         </div>
     </div>
 
+</div>{{-- /plaza-center --}}
+<aside class="plaza-side plaza-side-right">
+    @include('community.partials.plaza-rail', ['rail' => ['posts', 'chats', 'blog']])
+</aside>
+</div>{{-- /plaza-shell --}}
 @endsection
 
 {{-- The room's views, in the same sheet every module's switcher opens: a row

@@ -10,6 +10,10 @@
 @include('community.partials.plaza-css')
 @include('community.partials.nav', ['active' => 'members'])
 
+{{-- Two columns on a wide screen: the page, and its rail (requests, your chats, the rooms, the blog). --}}
+<div class="plaza-shell">
+<div class="plaza-center">
+
 {{-- Who to meet first: friends of friends, farmers nearby, and the people
      whose threads you have already been talking in. --}}
 {{-- The wall's band, so the same feature looks like the same feature. --}}
@@ -88,6 +92,11 @@
 @endif
 
 @include('community.partials.post-actions')
+</div>{{-- /plaza-center --}}
+<aside class="plaza-side plaza-side-right">
+    @include('community.partials.plaza-rail', ['rail' => ['requests', 'chats', 'discussions', 'blog']])
+</aside>
+</div>{{-- /plaza-shell --}}
 @endsection
 
 @push('styles')

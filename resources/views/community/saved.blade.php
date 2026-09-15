@@ -19,6 +19,10 @@
 @include('community.partials.plaza-css')
 @include('community.partials.nav', ['active' => 'wall'])
 
+{{-- Two columns on a wide screen: the page, and its rail (your chats, the rooms, the blog). --}}
+<div class="plaza-shell">
+<div class="plaza-center">
+
 <div class="sv-wrap">
     <div class="sv-head">
         <h2 class="sv-title">Saved posts</h2>
@@ -94,11 +98,19 @@
 @include('community.partials.post-actions')
 @include('community.partials.wall-comments-modal')
 @include('community.partials.report-js')
+</div>{{-- /plaza-center --}}
+<aside class="plaza-side plaza-side-right">
+    @include('community.partials.plaza-rail', ['rail' => ['chats', 'discussions', 'blog']])
+</aside>
+</div>{{-- /plaza-shell --}}
 @endsection
 
 @push('styles')
 <style>
     .sv-wrap { max-width: 40rem; margin: 0 auto; }
+    /* Beside the rail the shelf has a column of its own and fills it,
+       from the left, rather than standing in the middle of a wide page. */
+    @media (min-width: 1024px) { .sv-wrap { max-width: none; } }
     .sv-head { margin-bottom: 1rem; }
     .sv-title { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: var(--color-gray-900); }
     .sv-sub { font-size: .85rem; color: var(--color-gray-500); margin-top: .2rem; line-height: 1.55; }

@@ -370,6 +370,35 @@ class CommunityController extends Controller
      * first) in feed(); this continues chronologically beneath it, and the
      * client dedupes any post the ranked page already surfaced.
      */
+    /**
+     * The desktop rail's cards, as HTML.
+     *
+     * Every community page keeps a column beside its content on a wide
+     * screen and fills it from here, after the page has painted and only
+     * where the column is on screen (community/partials/plaza-rail). The
+     * page names its cards; anything it names that is not a card is
+     * dropped rather than refused, so a stale page never breaks its rail.
+     */
+    public function rail(Request $request)
+    {
+        $known = ['requests', 'chats', 'discussions', 'posts', 'blog', 'sponsors'];
+        $cards = collect(explode(',', (string) $request->query('cards', '')))
+            ->map(fn ($c) => trim($c))
+            ->filter(fn ($c) => in_array($c, $known, true))
+            ->unique()
+            ->values()
+            ->all();
+        if (! $cards) {
+            $cards = ['chats', 'discussions', 'blog'];
+        }
+
+        return response(view('community.partials.plaza-rail-cards', [
+            'rail' => $cards,
+            // No sponsor inventory yet — the card hides while this is empty.
+            'sponsors' => collect(),
+        ])->render())->header('Cache-Control', 'private, no-store');
+    }
+
     public function feedMore(Request $request)
     {
         $me = Auth::user();

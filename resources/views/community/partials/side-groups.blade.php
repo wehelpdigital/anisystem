@@ -4,9 +4,11 @@
      there because they have joined none yet. --}}
 @php use App\Support\CommunityAvatar; @endphp
 @php $mine = $mine ?? true; @endphp
-<div class="card p-3 mb-3">
+{{-- $title, when given, names the card: the desktop rail draws the rooms
+     where people are talking now, which are not necessarily yours. --}}
+<div class="card p-3 mb-3" data-rail-groups>
     <div class="flex items-center justify-between mb-1">
-        <h3 class="text-sm font-bold text-gray-900" style="font-family:var(--font-heading)">💬 {{ $mine ? 'Your Discussions' : 'Discussions to Join' }}</h3>
+        <h3 class="text-sm font-bold text-gray-900" style="font-family:var(--font-heading)">💬 {{ $title ?? ($mine ? 'Your Discussions' : 'Discussions to Join') }}</h3>
         <a href="{{ route('community.groups.index') }}" class="text-xs font-semibold text-brand-700 hover:text-brand-800">See all</a>
     </div>
     @forelse ($groups as $g)

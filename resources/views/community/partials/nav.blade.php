@@ -98,9 +98,9 @@
            bars, which is what a bar is supposed to prevent. The negative top
            margin is exactly that padding, so the two meet — and when the bar
            finally sticks, nothing moves, because it is already where it
-           sticks to. Under it, a hair of air rather than a gap: the block
-           below brings its own. */
-        margin:-1rem calc(var(--plaza-gutter, 1rem) * -1) .35rem;
+           sticks to. Under it, nothing: the block below brings its own
+           air (the owner's call, 2026-09-15). */
+        margin:-1rem calc(var(--plaza-gutter, 1rem) * -1) 0;
         padding:.5rem var(--plaza-gutter, 1rem);
         background:var(--color-gray-50);
         display:flex; align-items:center; gap:.5rem; flex-wrap:nowrap; }

@@ -1140,6 +1140,11 @@
        and no drag left is a rail that cannot be moved at all. */
     @media (min-width: 768px) {
         .pymk-arrow { display: flex; }
+        /* Inside the band, not hanging off its edge: from 640px the band
+           is a card that clips at its own corners (overflow hidden, above),
+           and an arrow standing half outside it was a half-moon. */
+        .pymk-arrow.is-prev { left: .35rem; }
+        .pymk-arrow.is-next { right: .35rem; }
     }
     @media (prefers-reduced-motion: reduce) {
         .pymk-arrow { transition: opacity .01s, visibility 0s; }
@@ -1688,6 +1693,64 @@
     .rail-meta { display: block; font-size: .688rem; color: var(--color-gray-400); margin-top: .15rem; }
     html.dark .rail-row:hover { background: #1c2416; }
     @media (prefers-reduced-motion: reduce) { .rail-row { transition: none; } }
+    /* Rows with a person on them: a chat you were in, a post somebody
+       wrote. The face leads, the name is one line, the words under it are
+       one line too — a rail is a glance. A chat row is a button (it opens
+       the dock), so it takes the link rows' whole look back explicitly. */
+    .rail-row.rail-chat { width: 100%; border: 0; border-top: 1px solid var(--color-gray-100); background: transparent; text-align: left; cursor: pointer; font: inherit; color: inherit; }
+    .rail-row.rail-chat:first-of-type { border-top: 0; }
+    .rail-row.rail-chat:hover { background: var(--color-gray-50); }
+    html.dark .rail-row.rail-chat:hover { background: #1c2416; }
+    .rail-face { flex: 0 0 auto; }
+    .rail-name { display: block; font-size: .8rem; font-weight: 700; color: var(--color-gray-900); line-height: 1.25;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rail-line { display: block; font-size: .72rem; color: var(--color-gray-500); margin-top: .1rem; line-height: 1.3;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rail-line.is-unread { color: var(--color-gray-900); font-weight: 600; }
+    .rail-when { flex: 0 0 auto; display: flex; flex-direction: column; align-items: flex-end; gap: .25rem;
+        font-size: .625rem; color: var(--color-gray-400); padding-top: .15rem; }
+    .rail-dot { display: inline-flex; align-items: center; justify-content: center; min-width: 1.05rem; height: 1.05rem;
+        padding: 0 .3rem; border-radius: 999px; background: var(--color-brand-600); color: #fff;
+        font-size: .6rem; font-weight: 800; font-style: normal; }
+    .rail-post .rail-title { -webkit-line-clamp: 2; font-weight: 500; color: var(--color-gray-700); margin-top: .1rem; }
+    .rail-thumb.rail-thumb-sm { width: 2.6rem; height: 2.6rem; border-radius: .5rem; }
+    html.dark .rail-name { color: #e8efe1; }
+    html.dark .rail-line { color: #a5b89a; }
+    html.dark .rail-line.is-unread { color: #e8efe1; }
+    html.dark .rail-post .rail-title { color: #cfd9c6; }
+
+    /* THE PAGE AND ITS COLUMN.
+       On a wide screen every community page is two columns: what you came
+       for, and a rail of company beside it (community/partials/plaza-rail).
+       Below 1024px there is no room for a column, so the rail is not drawn
+       at all — a phone reads the page on its own. The rail stays put while
+       the page scrolls, and scrolls on its own if it is taller than the
+       screen. */
+    .plaza-side { display: none; }
+    @media (min-width: 1024px) {
+        .plaza-shell { display: grid; grid-template-columns: minmax(0, 1fr) 17.5rem; gap: 1.25rem; align-items: start; }
+        .plaza-center { min-width: 0; }
+        .plaza-side { display: block; position: sticky; top: 5rem; max-height: calc(100vh - 6rem);
+            overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+        /* A rail taller than the screen scrolls on its own, and says so
+           only under the pointer: a scrollbar standing beside the page all
+           day is a second page to keep track of. */
+        .plaza-side:hover { scrollbar-width: thin; }
+        .plaza-side::-webkit-scrollbar { width: 0; }
+        .plaza-side:hover::-webkit-scrollbar { width: 6px; }
+        .plaza-side::-webkit-scrollbar-thumb { background: rgb(0 0 0 / .12); border-radius: 3px; }
+        /* The last card's margin would otherwise scroll a needless strip. */
+        .plaza-rail-slot > .card:last-child { margin-bottom: 0; }
+        /* The cards arrive by fetch and rise into place rather than pop. */
+        .plaza-rail-slot { opacity: 0; transform: translateY(10px);
+            transition: opacity .38s cubic-bezier(.22,1,.36,1), transform .38s cubic-bezier(.22,1,.36,1); }
+        .plaza-rail-slot.is-in { opacity: 1; transform: none; }
+    }
+    @media (prefers-reduced-motion: reduce) { .plaza-rail-slot { transition: none; } }
+    /* Wide desktops have room to let the rail's article titles breathe. */
+    @media (min-width: 1280px) {
+        .plaza-shell { grid-template-columns: minmax(0, 1fr) 19rem; }
+    }
 
     /* --- Reduced motion: kill every plaza animation --- */
     @media (prefers-reduced-motion: reduce) {

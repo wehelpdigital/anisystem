@@ -28,6 +28,10 @@
 @section('content')
 @include('community.partials.nav', ['active' => 'cofarmers'])
 
+{{-- Two columns on a wide screen: the page, and its rail (requests, your chats, the rooms, the blog). --}}
+<div class="plaza-shell">
+<div class="plaza-center">
+
 {{-- The same bar every list in the community carries: what the page is, and
      the one thing you can do about it. --}}
 {{-- The same band the members page opens with — nothing above the people.
@@ -87,6 +91,11 @@
 
 @include('community.partials.post-actions')
 @include('community.partials.wall-comments-modal')
+</div>{{-- /plaza-center --}}
+<aside class="plaza-side plaza-side-right">
+    @include('community.partials.plaza-rail', ['rail' => ['requests', 'chats', 'discussions', 'blog']])
+</aside>
+</div>{{-- /plaza-shell --}}
 @endsection
 
 @push('scripts')

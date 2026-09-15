@@ -42,6 +42,15 @@
     .bl-hue-5 { --bl-a:#be185d; --bl-b:#f090b8; }
     /* A band that lifts on hover lifts the page with it; it deepens instead. */
     .blog-card:hover { box-shadow:0 10px 30px -12px rgb(0 0 0 / .25); }
+    /* DESKTOP DRESS: where the rail arrives the bands become cards, the way
+       the discussion rooms do -- corners in desktop mode only. */
+    @media (min-width:1024px) {
+        .blog-card { margin-left:0; margin-right:0; border-radius:1rem;
+            border:1px solid var(--color-gray-200); }
+        html.dark .blog-card { border-color:#2b3a1c; }
+        .blog-card::before { border-radius:1rem 1rem 0 0; }
+        .blog-card::after { border-radius:0 0 1rem 1rem; }
+    }
     .blog-cover { position:relative; height:9.5rem; background:linear-gradient(120deg,var(--color-brand-100),var(--color-brand-50)); overflow:hidden; }
     @media (min-width:640px) {
         .blog-card { flex-direction:row; align-items:stretch; }

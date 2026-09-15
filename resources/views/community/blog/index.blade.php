@@ -34,6 +34,11 @@
     .blog-hero { border-radius:0; border-left:0; border-right:0;
         margin-left:calc(var(--plaza-gutter, 1rem) * -1);
         margin-right:calc(var(--plaza-gutter, 1rem) * -1); }
+    /* And a card on a desk, like the articles under it. */
+    @media (min-width:1024px) {
+        .blog-hero { margin-left:0; margin-right:0; border-radius:1rem; border:1px solid var(--color-gray-200); overflow:hidden; }
+        html.dark .blog-hero { border-color:#2b3a1c; }
+    }
     .blog-bar { display:flex; align-items:center; gap:.5rem; margin-bottom:.85rem; }
     .bb-act { display:inline-flex; align-items:center; gap:.35rem; flex-shrink:0; }
     .bb-hint { margin-left:auto; font-size:.72rem; font-weight:600; color:var(--color-gray-400); }
@@ -178,6 +183,10 @@
 @section('content')
 @include('community.partials.nav', ['active' => 'blog'])
 
+{{-- Two columns on a wide screen: the page, and its rail (the wall, your chats, the rooms). --}}
+<div class="plaza-shell">
+<div class="plaza-center">
+
 <div class="blog-hero plaza-accent">
     <div class="blog-hero-in">
         <div class="blog-hero-mark">📰</div>
@@ -247,4 +256,9 @@
 
     <div class="mt-6" id="blogPager">{{ $posts->links('community.partials.blog-pagination') }}</div>
 @endif
+</div>{{-- /plaza-center --}}
+<aside class="plaza-side plaza-side-right">
+    @include('community.partials.plaza-rail', ['rail' => ['posts', 'chats', 'discussions']])
+</aside>
+</div>{{-- /plaza-shell --}}
 @endsection

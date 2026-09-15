@@ -25,6 +25,10 @@
 <div>
     @include('community.partials.nav', ['active' => (int) $member->id === (int) auth()->id() ? 'profile' : 'members'])
 
+{{-- Two columns on a wide screen: the member, and the rail (your chats, the rooms, the blog). --}}
+<div class="plaza-shell">
+<div class="plaza-center">
+
     {{-- The profile header.
 
          A cover with the face sitting on its edge, then the name, then the
@@ -333,6 +337,11 @@
             </p>
         </div>
     </div>
+</div>{{-- /plaza-center --}}
+<aside class="plaza-side plaza-side-right">
+    @include('community.partials.plaza-rail', ['rail' => ['chats', 'discussions', 'blog']])
+</aside>
+</div>{{-- /plaza-shell --}}
 </div>
 
 @include('community.partials.post-actions')

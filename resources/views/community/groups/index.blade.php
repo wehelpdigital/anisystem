@@ -81,6 +81,20 @@
     .dc-hue-5 { --dc-a: #be185d; --dc-b: #f090b8; }
     /* A hover that lifts a full-width band lifts the whole page with it. */
     .disc-card.card-hover:hover { transform: none; }
+    /* DESKTOP DRESS. Where the rail arrives (1024px) the page is a column
+       on a wide ground, and a square, edgeless band beside a column of
+       rounded cards reads as unfinished: the rooms take their side margins
+       back, curve their corners, and keep their colours tucked inside the
+       curve. Only there -- on a phone and a tablet a band runs to the
+       screen's edges and is part of the page. */
+    @media (min-width: 1024px) {
+        .disc-card { margin-left: 0; margin-right: 0; border-radius: 1rem;
+            border: 1px solid var(--color-gray-200); overflow: hidden; }
+        html.dark .disc-card { border-color: #2b3a1c; }
+        .disc-card::before { border-radius: 1rem 1rem 0 0; }
+        .disc-card::after { border-radius: 0 0 1rem 1rem; }
+        .dc-cover { height: 7.5rem; }
+    }
     .dc-top { position: relative; }
     .dc-cover { height: 6.5rem; overflow: hidden; border-radius: 0; }
     .dc-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -261,6 +275,10 @@
 
 @section('content')
 @include('community.partials.nav', ['active' => 'groups'])
+
+{{-- Two columns on a wide screen: the page, and its rail (the wall, your chats, the blog). --}}
+<div class="plaza-shell">
+<div class="plaza-center">
 
 <div class="disc-head">
     <h2 class="disc-head-title">Sali ka sa usapan</h2>
@@ -478,6 +496,11 @@
 @include('community.partials.avatar-zoom')
 {{-- What a shut discussion asks for, if the card's button leads to one. --}}
 @include('community.partials.door-pass')
+</div>{{-- /plaza-center --}}
+<aside class="plaza-side plaza-side-right">
+    @include('community.partials.plaza-rail', ['rail' => ['posts', 'chats', 'blog']])
+</aside>
+</div>{{-- /plaza-shell --}}
 @endsection
 
 @push('scripts')

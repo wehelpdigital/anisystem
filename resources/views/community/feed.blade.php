@@ -136,33 +136,11 @@
 </style>
 @endpush
 <style>
-    /* Feed + a single right rail on wide screens (co-farmer requests, your
-       discussions, what's new in the blog, sponsors). Below 1024px there is no
-       column to sit in, so the rail's cards ride inside the feed instead —
-       see the mobile block in the wall itself. */
-    .plaza-side { display: none; }
-    @media (min-width: 1024px) {
-        .plaza-shell {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) 17.5rem;
-            gap: 1.25rem;
-            align-items: start;
-        }
-        .plaza-side {
-            display: block;
-            position: sticky;
-            top: 5rem;
-            max-height: calc(100vh - 6rem);
-            overflow-y: auto;
-            overscroll-behavior: contain;
-        }
-        .plaza-side::-webkit-scrollbar { width: 6px; }
-        .plaza-side::-webkit-scrollbar-thumb { background: rgb(0 0 0 / .12); border-radius: 3px; }
-    }
-    /* Wide desktops have room to let the rail's article titles breathe. */
-    @media (min-width: 1280px) {
-        .plaza-shell { grid-template-columns: minmax(0, 1fr) 19rem; }
-    }
+    /* The feed + rail shell (.plaza-shell / .plaza-side) lives in plaza-css
+       now: every community page keeps the same column on a wide screen.
+       Below 1024px there is no column to sit in, so the requests and
+       sponsors ride inside the feed instead — see the mobile block in the
+       wall itself. */
 
     /* The tail of the wall: one place that is either a button, a loader, or
        the end of the road — never two of them at once. */
@@ -492,9 +470,10 @@
 @endif
 </div>{{-- /plaza-center --}}
 
-{{-- RIGHT rail — co-farmer requests, your discussions, the blog, sponsors --}}
+{{-- RIGHT rail — co-farmer requests, recent chats, the rooms talking now,
+     the blog, sponsors. Drawn on a wide screen only. --}}
 <aside class="plaza-side plaza-side-right">
-    @include('community.partials.wall-rail', ['withRequests' => true])
+    @include('community.partials.plaza-rail', ['rail' => ['requests', 'chats', 'discussions', 'blog', 'sponsors']])
 </aside>
 </div>{{-- /plaza-shell --}}
 

@@ -15,6 +15,10 @@
 @section('content')
 @include('community.partials.nav', ['active' => 'members'])
 
+{{-- Two columns on a wide screen: the page, and its rail (your chats, the rooms, the blog). --}}
+<div class="plaza-shell">
+<div class="plaza-center">
+
 @if ($rows->total() === 0)
     <div class="card p-8 text-center text-sm text-gray-500">No pending requests.</div>
 @else
@@ -24,6 +28,11 @@
     @include('partials.list-pager', ['noun' => 'request', 'paginator' => $rows,
         'rowsUrl' => route('community.connect.requests') . '?rows=1'])
 @endif
+</div>{{-- /plaza-center --}}
+<aside class="plaza-side plaza-side-right">
+    @include('community.partials.plaza-rail', ['rail' => ['chats', 'discussions', 'blog']])
+</aside>
+</div>{{-- /plaza-shell --}}
 @endsection
 
 @push('styles')

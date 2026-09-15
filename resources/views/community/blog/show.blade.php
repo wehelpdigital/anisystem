@@ -10,6 +10,8 @@
 @include('community.partials.plaza-css')
 <style>
     .article { max-width:44rem; margin:0 auto; }
+    /* Beside the rail the article has a column of its own and fills it. */
+    @media (min-width:1024px) { .article { max-width:none; } }
     .bc { display:flex; align-items:center; flex-wrap:wrap; gap:.15rem; font-size:.8rem; margin-bottom:.9rem; }
     .bc a { display:inline-flex; align-items:center; padding:.3rem .55rem; border-radius:.5rem; font-weight:600; color:var(--color-brand-700); text-decoration:none; }
     .bc a:hover { background:var(--color-brand-50); }
@@ -93,6 +95,9 @@
 @endpush
 
 @section('content')
+{{-- Two columns on a wide screen: the article, and the rail (the wall, your chats, the rooms). --}}
+<div class="plaza-shell">
+<div class="plaza-center">
 <div class="article">
 
     {{-- Easy-click breadcrumbs --}}
@@ -176,6 +181,11 @@
         </div>
     </div>
 </div>
+</div>{{-- /plaza-center --}}
+<aside class="plaza-side plaza-side-right">
+    @include('community.partials.plaza-rail', ['rail' => ['posts', 'chats', 'discussions']])
+</aside>
+</div>{{-- /plaza-shell --}}
 @endsection
 
 @push('scripts')

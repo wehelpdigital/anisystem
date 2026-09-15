@@ -31,6 +31,10 @@
 @include('community.partials.plaza-css')
 @include('community.partials.nav', ['active' => 'ranking'])
 
+{{-- Two columns on a wide screen: the page, and its rail (your chats, the rooms, the wall). --}}
+<div class="plaza-shell">
+<div class="plaza-center">
+
 <div class="rk-wrap">
 
     {{-- ================= You, on the ladder ================= --}}
@@ -257,6 +261,11 @@
     </div>
 </div>
 
+</div>{{-- /plaza-center --}}
+<aside class="plaza-side plaza-side-right">
+    @include('community.partials.plaza-rail', ['rail' => ['chats', 'discussions', 'posts']])
+</aside>
+</div>{{-- /plaza-shell --}}
 @endsection
 
 @push('styles')
@@ -518,6 +527,31 @@
         .rk-me { background-position: 50% 50%; }
         .rk-bar span { transition: none;
             background: linear-gradient(90deg, #6b9f3d, #4a7c2a); }
+    }
+    /* On a desk the ladder has a column of its own beside the rail, and it
+       fills it: a 40rem strip down the middle of a wide page read as a
+       phone screen stood on a desk. */
+    @media (min-width: 1024px) {
+        .rk-wrap { max-width: none; }
+        /* The plate turns sideways: the face on the left, everything it
+           earned beside it, read left to right the way a desk reads. The
+           markup is the phone's, in the phone's order; the grid seats it. */
+        .rk-me { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 1.6rem;
+            grid-template-areas: "face badge" "face name" "face en" "face pts" "face bar" "face next" "face title" "face gate";
+            align-items: center; align-content: center; text-align: left; padding: 1.5rem 1.9rem; }
+        .rk-me-face { grid-area: face; margin-bottom: 0; }
+        .rk-me-face .avatar { width: 5.75rem; height: 5.75rem; font-size: 1.7rem; }
+        .rk-me-badge { grid-area: badge; justify-self: start; }
+        .rk-me-name { grid-area: name; font-size: 1.4rem; margin-top: .3rem; }
+        .rk-me-en { grid-area: en; margin-top: .15rem; }
+        .rk-me-pts { grid-area: pts; }
+        .rk-bar { grid-area: bar; margin-left: 0; max-width: 26rem; }
+        .rk-me-next { grid-area: next; }
+        .rk-me-title { grid-area: title; }
+        .rk-me-gate { grid-area: gate; margin-left: 0; }
+        /* Room for the three steps to stand apart from each other. */
+        .rk-podium { gap: 1.25rem; }
+        .rk-step { max-width: 13rem; }
     }
 </style>
 @endpush

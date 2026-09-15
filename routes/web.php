@@ -686,6 +686,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/community/co-farmers', [App\Http\Controllers\CommunityConnectController::class, 'cofarmers'])->name('community.cofarmers');
     Route::get('/app/community/co-farmers-list', [App\Http\Controllers\CommunityConnectController::class, 'cofarmersList'])->name('community.cofarmers.list');
     Route::get('/app/community/feed-more', [App\Http\Controllers\CommunityController::class, 'feedMore'])->name('community.feed-more');
+    // The desktop rail's cards, fetched by the slot beside every community page.
+    Route::get('/app/community/rail', [App\Http\Controllers\CommunityController::class, 'rail'])->name('community.rail');
     Route::get('/app/community/hashtag/{tag}', [App\Http\Controllers\CommunityController::class, 'hashtag'])->name('community.hashtag');
     Route::get('/app/community/location/{slug}', [App\Http\Controllers\CommunityController::class, 'location'])->name('community.location');
     Route::get('/app/community/blog', [App\Http\Controllers\CommunityBlogController::class, 'index'])->name('community.blog');

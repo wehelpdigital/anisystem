@@ -12,6 +12,10 @@
 @section('content')
 @include('community.partials.nav', ['active' => 'wall'])
 
+{{-- Two columns on a wide screen: the page, and its rail (your chats, the rooms, the blog). --}}
+<div class="plaza-shell">
+<div class="plaza-center">
+
 <div class="card p-4 mb-4 flex items-center gap-3 plaza-accent">
     <div class="avatar avatar-lg" style="font-size:1.4rem;background:#fef3c7;">📍</div>
     <div class="min-w-0">
@@ -82,6 +86,11 @@
         </div>
     </article>
 @endforeach
+</div>{{-- /plaza-center --}}
+<aside class="plaza-side plaza-side-right">
+    @include('community.partials.plaza-rail', ['rail' => ['chats', 'discussions', 'blog']])
+</aside>
+</div>{{-- /plaza-shell --}}
 @endsection
 
 @push('scripts')
