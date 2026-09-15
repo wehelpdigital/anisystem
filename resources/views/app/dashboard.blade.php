@@ -357,6 +357,13 @@
        The rail scrolls; nothing above it should. */
     .dn-block { border-radius: .9rem; padding: .6rem .65rem .65rem; background: var(--color-gray-50); min-width: 0; }
     .dn-block.is-today { background: #f0f7e8; }
+    /* Tomorrow's strip sits under today's in a warmer, quieter wash: the same
+       shape, plainly not the same day. */
+    .dn-block.is-tomorrow { background: #fbf6e9; }
+    .dn-block + .dn-block { margin-top: .5rem; }
+    .dn-block.is-tomorrow .dn-when { background: #f3d77a; border-color: #e6c765; }
+    .dn-block.is-tomorrow .dn-when b { color: #5a4408; }
+    .dn-block.is-tomorrow .dn-when i { color: #7a5a12; }
     .dn-head { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; }
     .dn-when { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center;
         min-width: 3rem; padding: .25rem .4rem; border-radius: .55rem;
@@ -434,6 +441,10 @@
     .dn-quiet { font-size: .78rem; color: var(--color-gray-400); }
     html.dark .dn-block { background: rgb(255 255 255 / .04); }
     html.dark .dn-block.is-today { background: rgb(61 104 35 / .22); }
+    html.dark .dn-block.is-tomorrow { background: rgb(214 176 66 / .12); }
+    html.dark .dn-block.is-tomorrow .dn-when { background: #6b5514; border-color: #7a6320; }
+    html.dark .dn-block.is-tomorrow .dn-when b { color: #fbe7a1; }
+    html.dark .dn-block.is-tomorrow .dn-when i { color: #e0c26a; }
     html.dark .dn-when { background: #151b12; border-color: #2b3a1c; }
     html.dark .dn-when b { color: #e8efe1; }
     html.dark .dn-headtxt b { color: #e8efe1; }
@@ -996,16 +1007,19 @@
                                  heading; the tasks themselves slide, so four
                                  jobs do not become four inches of card. --}}
                             @if ($next)
-                                <div class="dn-block {{ $next['isToday'] ? 'is-today' : '' }}">
+                                {{-- One strip per day with work on it: today, and tomorrow. --}}
+                                @foreach ($next['days'] ?? [$next] as $day)
+                                <div class="dn-block {{ $day['isToday'] ? 'is-today' : 'is-tomorrow' }}">
                                     <div class="dn-head">
                                         <span class="dn-when">
-                                            <b>{{ $next['isToday'] ? 'Today' : $next['date']->format('D') }}</b>
-                                            <i>{{ $next['date']->format('M j') }}</i>
+                                            <b>{{ $day['label'] ?? ($day['isToday'] ? 'Today' : $day['date']->format('D')) }}</b>
+                                            <i>{{ $day['date']->format('M j') }}</i>
                                         </span>
                                         <span class="dn-headtxt">
-                                            <b>{{ $next['activities']->count() }} {{ \Illuminate\Support\Str::plural('task', $next['activities']->count()) }}</b>
-                                            <i>@if ($next['isToday']) due today @else in {{ $next['daysAway'] }} {{ \Illuminate\Support\Str::plural('day', $next['daysAway']) }} @endif</i>
+                                            <b>{{ $day['activities']->count() }} {{ \Illuminate\Support\Str::plural('task', $day['activities']->count()) }}</b>
+                                            <i>@if ($day['isToday']) due today @else due tomorrow @endif</i>
                                         </span>
+                                        @if ($loop->first)
                                         {{-- When it was last touched, where the
                                              second way in used to be. The
                                              shelf is ordered by this, so the
@@ -1030,6 +1044,7 @@
                                                 Created {{ $schedule->created_at?->format('M j, Y') }}
                                             @endif
                                         </span>
+                                        @endif
                                     </div>
 
                                     {{-- One task is not a slider. More than one
@@ -1037,7 +1052,7 @@
                                          next is never half-shown — a card cut
                                          off at the edge reads as a rendering
                                          fault, not as an invitation. --}}
-                                    <div class="dn-slider{{ $next['activities']->count() > 1 ? '' : ' is-single' }}" data-dn-slider>
+                                    <div class="dn-slider{{ $day['activities']->count() > 1 ? '' : ' is-single' }}" data-dn-slider>
                                         <button type="button" class="dn-arrow dn-prev" data-dn-prev aria-label="Previous task">
                                             <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
                                         </button>
@@ -1045,7 +1060,7 @@
                                             <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                                         </button>
                                     <div class="dn-rail" data-dn-rail>
-                                        @foreach ($next['activities'] as $act)
+                                        @foreach ($day['activities'] as $act)
                                             @php
                                                 $prio = $act->priority ?: 'medium';
                                                 $typeLabel = \App\Models\AsScheduleActivity::ACTIVITY_TYPES[$act->activityType] ?? null;
@@ -1092,6 +1107,7 @@
                                     </div>
                                     </div>
                                 </div>
+                                @endforeach
                             @else
                                 <p class="dn-quiet">Nothing planned on this season yet.</p>
                             @endif

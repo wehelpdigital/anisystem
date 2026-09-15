@@ -81,30 +81,40 @@ class AppController extends Controller
             ->withCount('workers')
             ->get(['id', 'croppingScheduleId', 'activityTitle', 'targetDate', 'targetEndDate',
                 'timeRequired', 'activityType', 'priority']);
-        // Per-schedule quick view: for each schedule, the activities due today,
-        // or — if none today — the ones on its nearest upcoming day. Keyed by
-        // schedule id so each card can show its own "what's next" strip.
+        // Per-schedule quick view: for each schedule, the activities due
+        // TODAY and TOMORROW, each day its own strip (the owner's rule,
+        // 2026-09-15: the shelf is about the next two days, nothing further).
+        // Keyed by schedule id so each card can show its own strips.
+        $tomorrow = $today->copy()->addDay();
         $scheduleNext = [];
         foreach ($upcoming->groupBy('croppingScheduleId') as $sid => $acts) {
-            $nearest = $acts->first()->targetDate; // already ordered by date, sequence
-            if (! $nearest) {
+            $days = [];
+            foreach ([[$today, 'Today', true], [$tomorrow, 'Tomorrow', false]] as [$on, $label, $isToday]) {
+                $same = $acts->filter(fn ($a) => $a->targetDate && $a->targetDate->isSameDay($on))->values();
+                if ($same->isNotEmpty()) {
+                    $days[] = [
+                        'date' => $on,
+                        'label' => $label,
+                        'isToday' => $isToday,
+                        'daysAway' => $isToday ? 0 : 1,
+                        'activities' => $same,
+                        'moreCount' => max(0, $same->count() - 3),
+                    ];
+                }
+            }
+            if (! $days) {
                 continue;
             }
-            $sameDay = $acts->filter(fn ($a) => $a->targetDate && $a->targetDate->isSameDay($nearest))->values();
-            $scheduleNext[(int) $sid] = [
-                'date' => $nearest,
-                'isToday' => $nearest->isSameDay($today),
-                'daysAway' => (int) $today->diffInDays($nearest),
-                'activities' => $sameDay,
-                'moreCount' => max(0, $sameDay->count() - 3),
-            ];
+            // The first day doubles as the card's headline facts.
+            $scheduleNext[(int) $sid] = $days[0] + ['days' => $days];
         }
 
         /* The dashboard shelf shows ONLY the seasons with work on the board
-         * TODAY — a quiet day means no shelf at all (the schedules page
-         * still lists everything). scheduleNext above already read every
-         * active season's nearest day, so today is a filter, not a query. */
-        $todayIds = array_keys(array_filter($scheduleNext, fn ($n) => $n['isToday']));
+         * today or tomorrow — a quiet two days means no shelf at all (the
+         * schedules page still lists everything). scheduleNext above already
+         * read every active season's coming days, so this is a filter, not a
+         * query. */
+        $todayIds = array_keys($scheduleNext);
 
         // Most recently worked on, first.
         //
