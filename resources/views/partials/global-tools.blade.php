@@ -19,30 +19,38 @@
            to reach. */
         .qa-panel { border: 1px solid var(--color-gray-200); border-radius: 1rem;
             background: var(--color-white); overflow: hidden; }
-        /* The head wears the logo's yellow, on its darker side -- the same
-           drifting band the house's green and amber buttons wear (.sweep-fill,
-           layouts/app) -- so the panel stands out from the white tiles and
-           cards around it; it sat there in white on white and was easy to
-           scroll past. Ink on gold, not white: the darker gold still wants a
-           dark word to read. The icon keeps a pale bubble to sit in. */
+        /* The head wears the house green -- the same deep, slowly drifting
+           band the app's green buttons and the tip card wear -- so the panel
+           stands out from the white tiles and cards around it; it sat there
+           in white on white and was easy to scroll past. White words on it,
+           the icon in a pale bubble, and a hair of lime along the foot so the
+           band reads as a lid on the list rather than a block dropped on it.
+           By night the band goes a shade deeper and the words stay light. */
         .qa-panel-head { display: flex; align-items: center; gap: .7rem; width: 100%;
-            text-align: left; padding: .7rem .8rem; cursor: pointer; border: 0; color: #1f1a05;
-            --sw-1: #8a6d00; --sw-2: #c79e00; --sw-3: #e6b800;
+            text-align: left; padding: .75rem .85rem; cursor: pointer; border: 0; color: #fff;
+            --sw-1: #2f5219; --sw-2: #4a7c2a; --sw-3: #6b9f3d;
             background-image: linear-gradient(120deg, var(--sw-1), var(--sw-2) 28%, var(--sw-3) 52%, var(--sw-2) 76%, var(--sw-1));
-            background-size: 220% 100%; animation: gradSweep 10s ease-in-out infinite alternate;
+            background-size: 220% 100%; animation: gradSweep 11s ease-in-out infinite alternate;
+            box-shadow: inset 0 -2px 0 rgb(169 211 131 / .7);
             transition: filter .28s cubic-bezier(.22,1,.36,1); }
         .qa-panel-head:hover { filter: brightness(1.06); }
         .qa-panel-ico { width: 2.4rem; height: 2.4rem; border-radius: .7rem; flex: none;
             display: inline-flex; align-items: center; justify-content: center;
-            background: rgb(255 255 255 / .9); color: #8a6d00; box-shadow: 0 4px 12px -6px rgb(0 0 0 / .35); }
+            background: rgb(255 255 255 / .92); color: var(--color-brand-700); box-shadow: 0 4px 12px -6px rgb(0 0 0 / .4); }
         .qa-panel-ico svg { width: 1.25rem; height: 1.25rem; }
         .qa-panel-txt { min-width: 0; flex: 1 1 auto; }
-        .qa-panel-txt b { display: block; font-size: .875rem; font-weight: 800; color: #1f1a05; }
-        .qa-panel-txt i { display: block; font-style: normal; font-size: .75rem; color: rgb(31 26 5 / .78);
+        .qa-panel-txt b { display: block; font-size: .875rem; font-weight: 800; color: #fff; }
+        .qa-panel-txt i { display: block; font-style: normal; font-size: .75rem; color: rgb(255 255 255 / .82);
             overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .qa-panel-chev { width: 1.1rem; height: 1.1rem; flex: none; color: rgb(31 26 5 / .8);
+        .qa-panel-chev { width: 1.1rem; height: 1.1rem; flex: none; color: rgb(255 255 255 / .9);
             transition: transform .28s cubic-bezier(.22,1,.36,1); }
-        html.dark .qa-panel-head { --sw-1: #6f5700; --sw-2: #a98600; --sw-3: #c79e00; }
+        .qa-panel { border-color: var(--color-brand-200); }
+        html.dark .qa-panel { border-color: #2b3a1c; }
+        html.dark .qa-panel-head { --sw-1: #1f3512; --sw-2: #2f5219; --sw-3: #4a7c2a; color: #e8efe1;
+            box-shadow: inset 0 -2px 0 rgb(169 211 131 / .45); }
+        html.dark .qa-panel-txt b { color: #f1f6ea; }
+        html.dark .qa-panel-txt i { color: rgb(232 239 225 / .78); }
+        html.dark .qa-panel-ico { background: rgb(232 239 225 / .92); }
         .qa-panel.is-folded .qa-panel-chev { transform: rotate(-90deg); }
         .qa-panel-fold { overflow: hidden;
             transition: max-height .28s cubic-bezier(.22,1,.36,1); }
