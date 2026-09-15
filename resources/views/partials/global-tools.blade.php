@@ -23,15 +23,15 @@
            band the app's green buttons and the tip card wear -- so the panel
            stands out from the white tiles and cards around it; it sat there
            in white on white and was easy to scroll past. White words on it,
-           the icon in a pale bubble, and a hair of lime along the foot so the
-           band reads as a lid on the list rather than a block dropped on it.
-           By night the band goes a shade deeper and the words stay light. */
+           the icon in a pale bubble, no line along the foot (the list below
+           keeps its own breathing room instead, so Global Notes does not
+           sit on the band). By night the band goes a shade deeper and the
+           words stay light. */
         .qa-panel-head { display: flex; align-items: center; gap: .7rem; width: 100%;
             text-align: left; padding: .75rem .85rem; cursor: pointer; border: 0; color: #fff;
             --sw-1: #2f5219; --sw-2: #4a7c2a; --sw-3: #6b9f3d;
             background-image: linear-gradient(120deg, var(--sw-1), var(--sw-2) 28%, var(--sw-3) 52%, var(--sw-2) 76%, var(--sw-1));
             background-size: 220% 100%; animation: gradSweep 11s ease-in-out infinite alternate;
-            box-shadow: inset 0 -2px 0 rgb(169 211 131 / .7);
             transition: filter .28s cubic-bezier(.22,1,.36,1); }
         .qa-panel-head:hover { filter: brightness(1.06); }
         .qa-panel-ico { width: 2.4rem; height: 2.4rem; border-radius: .7rem; flex: none;
@@ -46,8 +46,7 @@
             transition: transform .28s cubic-bezier(.22,1,.36,1); }
         .qa-panel { border-color: var(--color-brand-200); }
         html.dark .qa-panel { border-color: #2b3a1c; }
-        html.dark .qa-panel-head { --sw-1: #1f3512; --sw-2: #2f5219; --sw-3: #4a7c2a; color: #e8efe1;
-            box-shadow: inset 0 -2px 0 rgb(169 211 131 / .45); }
+        html.dark .qa-panel-head { --sw-1: #1f3512; --sw-2: #2f5219; --sw-3: #4a7c2a; color: #e8efe1; }
         html.dark .qa-panel-txt b { color: #f1f6ea; }
         html.dark .qa-panel-txt i { color: rgb(232 239 225 / .78); }
         html.dark .qa-panel-ico { background: rgb(232 239 225 / .92); }
@@ -56,7 +55,7 @@
             transition: max-height .28s cubic-bezier(.22,1,.36,1); }
         .qa-panel.is-folded .qa-panel-fold { max-height: 0; }
         .qa-panel-fold > div { min-height: 0; }
-        .qa-panel .qa-stack { padding: 0 .55rem .55rem; }
+        .qa-panel .qa-stack { padding: .55rem; }
         /* Inside the panel the tiles are rows of a list, not cards on a page. */
         .qa-panel .qa-tile { border-color: var(--color-gray-100); }
         @media (prefers-reduced-motion: reduce) {
