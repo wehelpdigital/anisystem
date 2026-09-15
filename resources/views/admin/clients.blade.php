@@ -24,7 +24,7 @@
 @endpush
 
 @section('content')
-    <div class="sticky top-[6.4rem] z-30 -mx-1 px-1 pb-2 bg-gray-50 dark:bg-[#0c1108]">
+    <div class="ad-sticky">
         <input type="search" id="clSearch" class="form-input" placeholder="Search by name or email…" autocomplete="off">
     </div>
 

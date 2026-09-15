@@ -4,7 +4,7 @@
 @section('subtitle', 'What the community flagged')
 
 @section('content')
-    <div class="sticky top-[6.4rem] z-30 -mx-1 px-1 pb-2 bg-gray-50 dark:bg-[#0c1108]">
+    <div class="ad-sticky">
         <div class="flex gap-1.5 overflow-x-auto" id="rpChips">
             <button type="button" class="chip is-selected" data-status="open">Open <span id="rpOpen"></span></button>
             <button type="button" class="chip" data-status="handled">Handled</button>

@@ -12,7 +12,7 @@
     </div>
 
     <div id="tabTickets">
-        <div class="sticky top-[6.4rem] z-30 -mx-1 px-1 pb-2 bg-gray-50 dark:bg-[#0c1108] space-y-2">
+        <div class="ad-sticky space-y-2">
             <input type="search" id="tkSearch" class="form-input" placeholder="Search subject, ticket # or client…" autocomplete="off">
             <div class="flex gap-1.5 overflow-x-auto items-center" id="tkChips">
                 <button type="button" class="chip is-selected" data-status="">All</button>

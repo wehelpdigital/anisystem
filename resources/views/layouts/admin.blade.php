@@ -72,6 +72,21 @@
 
         .ad-main { max-width: 64rem; margin: 0 auto; padding: 1rem .9rem 4rem; }
 
+        /* A BAR THAT STICKS UNDER THE TOP BAR AND LOOKS LIKE PART OF IT.
+           The search on Clients and Support and the filter chips on Reports
+           used to stick on a narrower, darker strip of their own, a shade
+           off the top bar and a shade off the page -- so once you scrolled,
+           the search hovered over the list in a little box with rows
+           showing either side of it. Now it wears the top bar's ground,
+           bleeds to the page's edges, shares its bottom edge, and sits flush
+           with it from the start, so nothing changes shape when it sticks.
+           Its offset is the top bar's measured height (see the script at
+           the foot of this file), not a guess in rems. */
+        .ad-sticky { position: sticky; top: var(--ad-top-h, 6.4rem); z-index: 30;
+            margin: -1rem -.9rem .75rem; padding: .6rem .9rem .65rem;
+            background: var(--color-white); border-bottom: 1px solid var(--color-gray-100); }
+        html.dark .ad-sticky { background: #10160c; border-color: #1f2917; }
+
         /* A NUMBER WITH A NAME — the dashboard's stat cards. */
         .ad-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: .6rem; }
         @media (min-width: 768px) { .ad-stats { grid-template-columns: repeat(4, 1fr); } }
@@ -327,5 +342,19 @@
         });
     </script>
     @stack('scripts')
+    <script>
+        /* The top bar's height, for the bars that stick beneath it. Measured
+           rather than assumed: it grows with a bigger font scale or a second
+           line of subtitle, and a sticky offset a few pixels short lets the
+           list scroll through a gap. */
+        (() => {
+            const top = document.querySelector('.ad-top');
+            if (!top) return;
+            const set = () => document.documentElement.style.setProperty('--ad-top-h', top.getBoundingClientRect().height + 'px');
+            set();
+            if ('ResizeObserver' in window) new ResizeObserver(set).observe(top);
+            window.addEventListener('resize', set, { passive: true });
+        })();
+    </script>
 </body>
 </html>
