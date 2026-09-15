@@ -66,7 +66,18 @@
        at its end simply jumped to the reversed end state. Every close was a
        cut. With `.is-open` toggling the same properties both ways, the card
        leaves along the path it arrived on, and nothing has to restart. */
-    .tutv-wrap { position: fixed; inset: 0; z-index: 240; display: flex; align-items: flex-end; justify-content: center; }
+    .tutv-wrap { position: fixed; inset: 0; z-index: 240; display: flex; align-items: flex-end; justify-content: center;
+        overscroll-behavior: contain; }
+    /* THE PAGE HOLDS STILL UNDER THE CARD.
+       With nothing to stop it, a drag on the card that had nowhere to
+       scroll went through to the page behind, which slid along and put
+       its scrollbar up the edge of the screen -- on a phone the one thing
+       that says "this is not a modal". The page is locked while the card
+       is up; on a desk the width its scrollbar took is kept as a gutter
+       (measured the moment the card opens), so nothing shifts sideways
+       when the bar goes. */
+    html.tutv-lock, html.tutv-lock body { overflow: hidden !important; }
+    html.tutv-lock { padding-right: var(--tutv-gutter, 0px); }
     .tutv-wrap[hidden] { display: none; }
     /* A deep dim with a blur: the page is still there behind the card --
        its shapes show through -- but it is plainly the thing underneath,
@@ -81,7 +92,7 @@
     /* A sheet from the bottom on a phone, a card in the middle with room.
        It arrives from below with a little overshoot and settles; on the way
        out it goes faster and eases in, the way a thing you dismiss should. */
-    .tutv-card { position: relative; width: min(34rem, 100%); max-height: calc(100dvh - 1rem); overflow: auto;
+    .tutv-card { position: relative; width: min(34rem, 100%); max-height: calc(100dvh - 1rem); overflow: auto; overscroll-behavior: contain;
         border-radius: 1.35rem 1.35rem 0 0; background: var(--color-white, #fff); color: var(--color-gray-900, #111827);
         box-shadow: 0 -24px 70px -20px rgb(0 0 0 / .6); outline: none;
         padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -358,6 +369,12 @@
         wrap.hidden = false;
         wrap.setAttribute('aria-hidden', 'false');
         document.documentElement.classList.add('modal-open');
+        // The page stops scrolling under the card. The scrollbar's width is
+        // read before the lock takes it away, and kept as a gutter.
+        if (!document.documentElement.classList.contains('tutv-lock')) {
+            document.documentElement.style.setProperty('--tutv-gutter', Math.max(0, window.innerWidth - document.documentElement.clientWidth) + 'px');
+            document.documentElement.classList.add('tutv-lock');
+        }
         window.registerOverlay?.('tutorial', () => close());
         card.scrollTop = 0;
         /* Painted once in its starting place before it is told to move:
@@ -402,6 +419,12 @@
             wrap.hidden = true;
             wrap.setAttribute('aria-hidden', 'true');
             wrap.classList.remove('is-closing');
+            // The page moves again only once the card is gone: unlocking
+            // while it is still sliding out would shift the page under it.
+            if (current === null) {
+                document.documentElement.classList.remove('tutv-lock');
+                document.documentElement.style.removeProperty('--tutv-gutter');
+            }
             lastFocus?.focus?.({ preventScroll: true });
         };
         // The card's own transform arriving is the end of the exit.
