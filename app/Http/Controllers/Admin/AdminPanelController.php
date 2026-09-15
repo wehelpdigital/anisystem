@@ -321,11 +321,22 @@ class AdminPanelController extends Controller
     {
         $u = User::active()->findOrFail($id);
         try {
-            Password::broker()->sendResetLink(['email' => $u->email]);
+            $status = Password::broker()->sendResetLink(['email' => $u->email]);
         } catch (\Throwable $e) {
             Log::warning('Admin reset link failed: ' . $e->getMessage());
 
             return response()->json(['success' => false, 'message' => 'The email could not be sent — check the mail settings.'], 500);
+        }
+
+        /* The broker answers with a status, not an exception: one link per
+           address per minute, and a second ask inside that minute sends
+           nothing. Reporting that as "sent" left an admin believing a mail
+           had gone when it had not. */
+        if ($status === Password::RESET_THROTTLED) {
+            return response()->json(['success' => false, 'message' => 'A reset link went to ' . $u->email . ' less than a minute ago — give it a moment before sending another.'], 429);
+        }
+        if ($status !== Password::RESET_LINK_SENT) {
+            return response()->json(['success' => false, 'message' => 'The link could not be sent: ' . __($status)], 422);
         }
 
         return response()->json(['success' => true, 'message' => 'Reset link sent to ' . $u->email . '.']);
