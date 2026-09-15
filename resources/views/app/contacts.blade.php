@@ -133,7 +133,7 @@
         {{-- pl-10!, not pl-10: .form-input sets its padding through
              @apply px-4, which lands later than the plain utility and wins
              the tie — the magnifier would sit on the placeholder's first letter. --}}
-        <input type="search" id="ctSearch" class="form-input pl-10! pr-10!" placeholder="Search — name, number, company, tag…" autocomplete="off" aria-label="Search contacts">
+        <input type="search" id="ctSearch" class="form-input pl-10! pr-10!" placeholder="Search for contacts" autocomplete="off" aria-label="Search contacts">
         <button type="button" id="ctSearchX" class="ct-search-x hidden" aria-label="Clear the search">✕</button>
     </div>
     <div class="mb-3">
