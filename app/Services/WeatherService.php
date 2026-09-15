@@ -41,7 +41,92 @@ class WeatherService
             'lat' => $geo['lat'],
             'lon' => $geo['lon'],
             'days' => $days,
+            // When these days were last asked of Open-Meteo. A page load
+            // asks again once an hour has passed (the cache below), so the
+            // panels can say how fresh what they show is.
+            'fetchedAt' => $this->forecastFetchedAt($geo['lat'], $geo['lon'], $dayCount)?->toIso8601String(),
         ];
+    }
+
+    /**
+     * The sky as it is right now at coordinates -- not the day's summary.
+     *
+     * A day whose forecast says "rain" is dry for most of its hours, and a
+     * greeting that calls a sunny noon maulang because it will pour at
+     * five has not looked out of the window. This is the window: the
+     * current conditions, cached twenty minutes so a page opened and
+     * reopened is not twenty calls, and re-asked on the next load after
+     * that. Null when the service cannot answer; never cached as a failure.
+     *
+     * @return array{code:int,text:string,emoji:string,temp:?int,feels:?int,isDay:bool,wind:?int,rain:?float,humidity:?int,at:?string,fetchedAt:string}|null
+     */
+    public function current(float $lat, float $lon): ?array
+    {
+        $key = sprintf('weather:now:%.2f,%.2f', $lat, $lon);
+        $cached = Cache::get($key);
+        if (is_array($cached)) {
+            return $cached;
+        }
+
+        try {
+            $res = Http::timeout(8)->retry(1, 200)->get(self::FORECAST_URL, [
+                'latitude' => $lat,
+                'longitude' => $lon,
+                'current' => 'temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,weather_code,wind_speed_10m',
+                'timezone' => 'auto',
+                'forecast_days' => 1,
+            ]);
+        } catch (\Throwable $e) {
+            return null;
+        }
+        if (! $res->ok()) {
+            return null;
+        }
+        $cur = $res->json('current');
+        if (! is_array($cur) || ! isset($cur['weather_code'])) {
+            return null;
+        }
+
+        $code = (int) $cur['weather_code'];
+        $meta = $this->codeMeta($code);
+        $out = [
+            'code' => $code,
+            'text' => $meta['text'],
+            'emoji' => $meta['emoji'],
+            'temp' => isset($cur['temperature_2m']) ? (int) round($cur['temperature_2m']) : null,
+            'feels' => isset($cur['apparent_temperature']) ? (int) round($cur['apparent_temperature']) : null,
+            'isDay' => (int) ($cur['is_day'] ?? 1) === 1,
+            'wind' => isset($cur['wind_speed_10m']) ? (int) round($cur['wind_speed_10m']) : null,
+            'rain' => isset($cur['rain']) ? (float) $cur['rain'] : null,
+            'humidity' => isset($cur['relative_humidity_2m']) ? (int) $cur['relative_humidity_2m'] : null,
+            'at' => isset($cur['time']) ? (string) $cur['time'] : null,
+            'fetchedAt' => now()->toIso8601String(),
+        ];
+
+        Cache::put($key, $out, now()->addMinutes(20));
+
+        return $out;
+    }
+
+    /** The sky right now for a free-text place, or null if it can't resolve. */
+    public function currentForPlace(?string $place): ?array
+    {
+        $place = trim((string) $place);
+        if ($place === '') {
+            return null;
+        }
+        $geo = $this->geocode($place);
+
+        return $geo ? $this->current($geo['lat'], $geo['lon']) : null;
+    }
+
+    /** When the cached daily forecast for these coordinates was fetched, if it is cached. */
+    public function forecastFetchedAt(float $lat, float $lon, int $dayCount = 5): ?Carbon
+    {
+        $dayCount = max(1, min(16, $dayCount));
+        $at = Cache::get(sprintf('weather:fc:%.2f,%.2f:%d:at', $lat, $lon, $dayCount));
+
+        return $at ? Carbon::parse($at) : null;
     }
 
     /**
@@ -159,7 +244,10 @@ class WeatherService
             ];
         }
 
+        // An hour, not longer: every page that shows the sky asks again on
+        // load, and this is what decides whether that ask goes out.
         Cache::put($key, $days, now()->addHour());
+        Cache::put($key . ':at', now()->toIso8601String(), now()->addHour());
 
         return $days;
     }

@@ -33,6 +33,7 @@ return [
         'videoRecording'    => false,
         'voiceFarm'         => true,    // farm-side voice notes: centavos, habit-building
         'weatherDays'       => 2,       // today + tomorrow
+        'weatherNow'        => false,   // the greeting reads the day's forecast, not the sky right now
         'docUploads'        => false,
         'collab'            => false,
         'reportsAll'        => false,   // labor report only
@@ -81,6 +82,7 @@ return [
         'videoRecording'    => true,
         'voiceFarm'         => true,
         'weatherDays'       => null,
+        'weatherNow'        => true,    // the greeting reads the sky as it is right now
         'docUploads'        => true,
         'collab'            => false,   // the room is the Owner tier's story
         'reportsAll'        => true,
@@ -128,6 +130,7 @@ return [
         'videoRecording'    => true,
         'voiceFarm'         => true,
         'weatherDays'       => null,
+        'weatherNow'        => true,    // the greeting reads the sky as it is right now
         'docUploads'        => true,
         'collab'            => true,
         'reportsAll'        => true,
@@ -171,6 +174,7 @@ return [
         'videoRecording'    => true,
         'voiceFarm'         => true,
         'weatherDays'       => null,
+        'weatherNow'        => true,    // the greeting reads the sky as it is right now
         'docUploads'        => true,
         'collab'            => true,
         'reportsAll'        => true,

@@ -35,6 +35,8 @@
     .dash-wx-place { font-size: .688rem; font-weight: 700; color: var(--color-gray-600);
         margin-bottom: .4rem; }
     .dash-wx-place b { font-weight: 800; color: var(--color-gray-800); }
+    .dash-wx-asof { font-weight: 600; color: var(--color-gray-400); }
+    html.dark .dash-wx-asof { color: #8a9a80; }
     .dash-wx-art { display: flex; align-items: center; justify-content: center;
         height: 2.7rem; margin: .2rem 0; }
     .dash-wx-advice { font-size: .656rem; line-height: 1.5; color: var(--color-gray-600);
@@ -1862,9 +1864,11 @@
     setTimeout(showHero, 3500);
 
     const slots = Array.from(document.querySelectorAll('[data-weather-for]'));
-    // Nothing on this page asks for a forecast, so nothing is going to change
-    // the greeting — say it now.
-    if (!slots.length) { showHero(); return; }
+    /* The greeting looks out of the window whether or not a season's card
+       is on the page to show the days. It used to ask only when there was
+       a card to fill, so a farmer with a located lot and nothing planned
+       today was greeted by the clock; the ask is cheap, and answers at
+       once for an account with no located lot at all. */
     const esc = window.escapeHtml || ((s) => String(s == null ? '' : s));
 
     // The forecast always starts on today, so day index 0 is today — mark it by
@@ -1916,8 +1920,16 @@
         const hue = window.wxHue ? window.wxHue(todayKey) : '';
         const advice = window.wxAdvice ? window.wxAdvice(todayKey) : '';
         const name = window.wxName ? window.wxName(todayKey, true) : '';
+        /* The sky right now, where the plan reads it (paid tiers): the
+           temperature and the word for it, ahead of the day's summary. And
+           how fresh the days are -- a forecast is re-asked on load once an
+           hour has passed, and the stamp is how you can tell it did. */
+        const nowBit = loc.now && loc.now.temp != null
+            ? ` · <b>${esc(String(loc.now.temp))}°</b> ${esc(String(loc.now.text || '').toLowerCase())} now`
+            : (name ? ` · <b>${esc(name)}</b>` : '');
+        const asOf = loc.fetchedAt ? window.wxAsOf?.(loc.fetchedAt) : '';
         return `<div class="dash-wx-panel ${hue} mt-2">
-            <p class="dash-wx-place truncate">${esc(loc.place)}${name ? ` · <b>${esc(name)}</b>` : ''}</p>
+            <p class="dash-wx-place truncate">${esc(loc.place)}${nowBit}${asOf ? ` <span class="dash-wx-asof">${esc(asOf)}</span>` : ''}</p>
             <div class="flex gap-1">${loc.days.map((d, i) => dayCell(d, i === 0)).join('')}</div>
             ${advice ? `<p class="dash-wx-advice">${esc(advice)}</p>` : ''}
         </div>`;
@@ -1952,10 +1964,18 @@
             const first = Object.values(locations).find((l) => l && l.ok !== false && (l.days || []).length);
             if (!first) return;
             const today = first.days[0];
-            const night = mark.getAttribute('data-night') === '1';
-            const key = window.wxKeyFor(today.code, night, today.max);
+            /* The sky as it is right now, where the plan reads it (paid
+               tiers, at most twenty minutes old): what is actually out of
+               the window beats the day's summary, and a wet reading needs
+               no probability behind it -- it is raining. Without it, the
+               day's forecast speaks as before. */
+            const now = first.now && first.now.code != null ? first.now : null;
+            const night = now ? !now.isDay : mark.getAttribute('data-night') === '1';
+            const key = now
+                ? window.wxKeyFor(now.code, night, now.feels != null ? now.feels : now.temp)
+                : window.wxKeyFor(today.code, night, today.max);
             const wet = ['rain', 'heavy_rain', 'showers', 'drizzle', 'storm'].includes(key);
-            if (wet && (today.pop == null || today.pop < 60)) return;
+            if (!now && wet && (today.pop == null || today.pop < 60)) return;
             const meta = (window.WX_SKIES || {})[key];
             if (!meta || !meta.greeting) return;
 

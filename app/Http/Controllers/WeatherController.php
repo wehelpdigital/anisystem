@@ -49,13 +49,18 @@ class WeatherController extends Controller
         // the cap still arrive, but as locked husks — date and name only —
         // so the panel can show what an upgrade would open.
         $dayCap = \App\Support\Tier::limit('weatherDays');
+        // The sky right now, for the greeting: a paid plan's. Libre's
+        // greeting reads the day's forecast instead, as it always has.
+        $wantNow = \App\Support\Tier::can('weatherNow');
         $resolved = [];
         foreach (array_slice($locations, 0, self::MAX_LOCATIONS, true) as $key => $info) {
             $forecast = $this->weather->forecastForPlace($info['query']);
             $resolved[$key] = $forecast
                 ? ['ok' => true, 'place' => $forecast['place'],
                     'days' => self::lockBeyond($forecast['days'], $dayCap),
-                    'capped' => $dayCap]
+                    'capped' => $dayCap,
+                    'fetchedAt' => $forecast['fetchedAt'] ?? null,
+                    'now' => $wantNow ? $this->weather->current($forecast['lat'], $forecast['lon']) : null]
                 : ['ok' => false, 'place' => $info['label']];
         }
 
@@ -132,8 +137,9 @@ class WeatherController extends Controller
         // The tier's horizon, judged by the schedule owner's plan. Days past
         // the cap arrive as locked husks so the module can show the missing
         // days instead of pretending the week is two days long.
-        $dayCap = \App\Support\Tier::scheduleLimit(
-            \App\Models\AsCroppingSchedule::find($scheduleId), 'weatherDays');
+        $schedule = \App\Models\AsCroppingSchedule::find($scheduleId);
+        $dayCap = \App\Support\Tier::scheduleLimit($schedule, 'weatherDays');
+        $wantNow = \App\Support\Tier::scheduleCan($schedule, 'weatherNow');
         $resolved = [];
         foreach (array_slice($locations, 0, self::MAX_LOCATIONS, true) as $key => $info) {
             $fc = $this->weather->forecastForPlace($info['query'], 6);
@@ -141,7 +147,9 @@ class WeatherController extends Controller
                 $fc['days'] = self::lockBeyond($fc['days'], $dayCap);
             }
             $resolved[$key] = $fc
-                ? ['ok' => true, 'place' => $fc['place'], 'days' => $fc['days'], 'capped' => $dayCap]
+                ? ['ok' => true, 'place' => $fc['place'], 'days' => $fc['days'], 'capped' => $dayCap,
+                    'fetchedAt' => $fc['fetchedAt'] ?? null,
+                    'now' => $wantNow ? $this->weather->current($fc['lat'], $fc['lon']) : null]
                 : ['ok' => false, 'place' => $info['label']];
             if ($wantHourly && $fc) {
                 // Hours belong to the day you tapped, so they arrive grouped

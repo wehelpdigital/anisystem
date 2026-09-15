@@ -1392,8 +1392,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const today = first && first.days[0];
             if (!today) return;
             const hour = new Date().getHours();
-            const night = hour < 6 || hour >= 18;
-            const key = window.wxKeyFor(today.code, night, today.max);
+            /* The sky as it is right now, where the plan reads it (paid
+               tiers, at most twenty minutes old), ahead of the day's
+               summary: the card is meant to read like a window. */
+            const now = first.now && first.now.code != null ? first.now : null;
+            const night = now ? !now.isDay : (hour < 6 || hour >= 18);
+            const key = now
+                ? window.wxKeyFor(now.code, night, now.feels != null ? now.feels : now.temp)
+                : window.wxKeyFor(today.code, night, today.max);
             const hue = window.wxHue ? window.wxHue(key) : '';
             if (!hue) return;
             hero.className = hero.className.replace(/\bfs-hue-\S+/g, '').trim() + ' ' + hue;

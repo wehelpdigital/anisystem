@@ -75,6 +75,13 @@
     .wx-hero-sky { display: block; flex: none; }
     .wx-skyname { font-size: .72rem; font-weight: 800; color: var(--color-brand-800, #2f5219); margin-top: .05rem; }
     html.dark .wx-skyname { color: #a5c97e; }
+    /* The sky right now (paid tiers), and how fresh the days are. */
+    .wx-now { font-size: .72rem; font-weight: 600; color: var(--color-gray-700); margin-top: .1rem; }
+    .wx-now b { font-weight: 800; color: var(--color-gray-900); }
+    .wx-asof { font-size: .656rem; font-weight: 600; color: var(--color-gray-400); margin-top: .1rem; }
+    html.dark .wx-now { color: #cfd9c6; }
+    html.dark .wx-now b { color: #e8efe1; }
+    html.dark .wx-asof { color: #8a9a80; }
     /* What the sky means, which is the half a forecast usually leaves out. */
     .wx-advice { margin-top: .8rem; padding: .6rem .7rem; border-radius: .7rem;
         font-size: .76rem; line-height: 1.55; color: var(--color-gray-700, #374151);
@@ -221,6 +228,8 @@
                 <div class="min-w-0">
                     <p class="font-bold text-gray-900 text-sm">${esc(loc.place || 'Location')}</p>
                     ${skyName ? `<p class="wx-skyname">${esc(skyName)}</p>` : ''}
+                    ${loc.now && loc.now.temp != null ? `<p class="wx-now">Right now: <b>${esc(String(loc.now.temp))}&deg;</b> ${esc(String(loc.now.text || '').toLowerCase())}${loc.now.feels != null && loc.now.feels !== loc.now.temp ? `, feels ${esc(String(loc.now.feels))}&deg;` : ''}</p>` : ''}
+                    ${loc.fetchedAt && window.wxAsOf ? `<p class="wx-asof">${esc(window.wxAsOf(loc.fetchedAt))}</p>` : ''}
                     <div class="wx-lotpills">${lotPills(lots)}</div>
                 </div>
                 <span class="wx-hero-sky">${today ? skyArt(today, 64) : ''}</span>

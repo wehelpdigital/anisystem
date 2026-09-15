@@ -269,6 +269,16 @@
         return (meta && meta.advice) || '';
     };
 
+    /** How fresh a forecast is, as words: "as of 3:40 PM", or the minutes if it is that new. */
+    window.wxAsOf = function (iso) {
+        const at = iso ? new Date(iso) : null;
+        if (!at || isNaN(at)) return '';
+        const mins = Math.max(0, Math.round((Date.now() - at.getTime()) / 60000));
+        if (mins < 1) return 'updated just now';
+        if (mins < 60) return `updated ${mins} min ago`;
+        return 'as of ' + at.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+    };
+
     /** What to call it — Tagalog first where there is one. */
     window.wxName = function (key, tagalog) {
         const meta = (window.WX_SKIES || {})[key];
