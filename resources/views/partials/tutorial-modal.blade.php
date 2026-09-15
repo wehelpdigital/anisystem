@@ -22,7 +22,12 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
 
-        <div class="tutv-screen">
+        {{-- data-cv-skip: the chat clip enhancer (chat-media-js) dresses every
+             video it can see with its own full-screen button and a wrapper
+             that sets the height -- which put a second control under our X
+             and cropped the bottom of a portrait clip. This one is not a
+             clip in a bubble. --}}
+        <div class="tutv-screen" data-cv-skip>
             {{-- No browser controls until it is playing: a poster with our one
                  play button on it reads as one thing to press, and a second
                  play button in a bar under it read as two. disablepictureinpicture
@@ -123,8 +128,33 @@
         filter: blur(16px) brightness(.5) saturate(1.1); transform: scale(1.08); }
     .tutv-screen video, .tutv-screen iframe { position: relative; display: block; width: 100%; height: 100%; border: 0; object-fit: cover; }
     .tutv-screen video[hidden] { display: none; }
-    .tutv-screen[data-shape="portrait"] { aspect-ratio: auto; height: min(54dvh, 34rem); }
+    /* Until the clip is playing, the browser paints nothing of its own on
+       it: Chrome on a phone draws a fullscreen toggle in the top corner of
+       a video that has no controls yet, right under our X. Once controls
+       are switched on (first play) the browser's bar is welcome. */
+    .tutv-screen video:not([controls])::-webkit-media-controls,
+    .tutv-screen video:not([controls])::-webkit-media-controls-enclosure,
+    .tutv-screen video:not([controls])::-webkit-media-controls-overlay-enclosure { display: none !important; }
+    .tutv-screen[data-shape="portrait"] { aspect-ratio: auto; height: min(62dvh, 40rem); }
     .tutv-screen[data-shape="portrait"] video { object-fit: contain; }
+    /* ON A PHONE THE SHEET IS THE WHOLE SCREEN and the clip gets every pixel
+       of height the words and the buttons do not need. A height-capped box
+       inside a bottom sheet came out wider than it was tall -- 390 by 456 --
+       with the clip a narrow strip down the middle, which is not what a
+       portrait tutorial looks like on the phone it was recorded on. */
+    @media (max-width: 639px) {
+        .tutv-wrap.is-portrait .tutv-card { height: 100dvh; max-height: 100dvh; border-radius: 0;
+            display: flex; flex-direction: column; overflow: hidden; }
+        .tutv-wrap.is-portrait .tutv-screen[data-shape="portrait"] { flex: 1 1 auto; min-height: 0; height: auto; }
+        .tutv-wrap.is-portrait .tutv-body { flex: none; padding: .85rem 1.1rem calc(.9rem + env(safe-area-inset-bottom, 0px)); }
+        .tutv-wrap.is-portrait .tutv-title { font-size: 1.15rem; }
+        .tutv-wrap.is-portrait .tutv-blurb { font-size: .86rem; line-height: 1.45; margin-top: .35rem; }
+        .tutv-wrap.is-portrait .tutv-acts { margin-top: .8rem; gap: .4rem; }
+        .tutv-wrap.is-portrait .tutv-close { min-height: 2.8rem; padding: .65rem 1.25rem; }
+        .tutv-wrap.is-portrait .tutv-never { min-height: 2.3rem; padding: .4rem 1rem; }
+        /* The X sits over the clip's top corner, clear of the phone's notch. */
+        .tutv-wrap.is-portrait .tutv-x { top: calc(.65rem + env(safe-area-inset-top, 0px)); }
+    }
     /* A portrait player from YouTube is a Short: 9:16 in the middle of the screen. */
     .tutv-screen[data-shape="portrait"] iframe { width: auto; aspect-ratio: 9 / 16; margin: 0 auto; }
     .tutv-play { position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; justify-content: center; cursor: pointer;
@@ -230,7 +260,11 @@
        640px, and that is the width at which a tutorial recorded on a phone
        is the one being watched on one. Either shape stands in for a missing
        other, so a screen with one recording shows it everywhere. */
-    const phoneWide = () => matchMedia('(max-width: 639px)').matches;
+    /* A phone is a narrow screen -- or any touch screen held upright, which
+       covers a big phone, a phone with the text zoomed out, and a tablet. */
+    const touch = () => matchMedia('(pointer: coarse)').matches || matchMedia('(any-pointer: coarse)').matches || (navigator.maxTouchPoints || 0) > 0;
+    const phoneWide = () => matchMedia('(max-width: 639px)').matches
+        || (touch() && matchMedia('(orientation: portrait)').matches);
     function pick(item) {
         const hasP = !!(item.portrait || item.youtubePortrait);
         const hasL = !!(item.video || item.youtube);
@@ -292,6 +326,7 @@
            finished recordings are likely to arrive that way. */
         const clip = pick(item);
         screen.dataset.shape = clip.shape;
+        wrap.classList.toggle('is-portrait', clip.shape === 'portrait');
         screen.style.setProperty('--tutv-poster', clip.poster ? `url("${clip.poster}")` : 'none');
         screen.querySelector('iframe')?.remove();
         if (clip.youtube) {
