@@ -50,13 +50,75 @@ class CropProtocolController extends Controller
     public const PROBLEMS = VarietyAnalysisController::PROBLEMS;
 
     /** How the crop is put in the ground. Rice has three of its own. */
+    /**
+     * Every way a crop goes into the ground. Which of these a crop can
+     * choose from is the crop's own business (METHODS_BY_CROP below): corn
+     * is never raised in a nursery, cassava is never sown from seed, and a
+     * mango comes from a grafted seedling or not at all.
+     */
     public const METHODS = [
-        'transplanted' => ['label' => 'Transplanted', 'sub' => 'Seedlings raised in a seedbed, then set out', 'icon' => '🌱', 'rice' => true],
-        'direct_wet' => ['label' => 'Direct-seeded, wet', 'sub' => 'Pre-germinated seed broadcast on puddled soil', 'icon' => '💧', 'rice' => true],
-        'direct_dry' => ['label' => 'Direct-seeded, dry', 'sub' => 'Dry seed sown into dry or moist soil', 'icon' => '🌤️', 'rice' => true],
-        'direct' => ['label' => 'Direct-seeded', 'sub' => 'Seed sown straight into the field', 'icon' => '🌱', 'rice' => false],
-        'nursery' => ['label' => 'From a nursery', 'sub' => 'Seedlings or cuttings raised first, then planted out', 'icon' => '🪴', 'rice' => false],
+        'transplanted' => ['label' => 'Transplanted', 'sub' => 'Seedlings raised in a seedbed, then set out in puddled paddies', 'icon' => '🌱'],
+        'direct_wet' => ['label' => 'Direct-seeded, wet', 'sub' => 'Pre-germinated seed broadcast on puddled soil', 'icon' => '💧'],
+        'direct_dry' => ['label' => 'Direct-seeded, dry', 'sub' => 'Dry seed sown into dry or moist soil', 'icon' => '🌤️'],
+        'direct' => ['label' => 'Direct-seeded', 'sub' => 'Seed sown straight into the field', 'icon' => '🌱'],
+        'nursery' => ['label' => 'From seedlings', 'sub' => 'Raised in a seedbed or seedling tray, then transplanted', 'icon' => '🪴'],
+        'sets' => ['label' => 'From sets, bulbs or cloves', 'sub' => 'Small bulbs or cloves planted straight in', 'icon' => '🧅'],
+        'cuttings' => ['label' => 'From cuttings', 'sub' => 'Stem cuttings, vine cuttings or setts planted straight in', 'icon' => '🌿'],
+        'tubers' => ['label' => 'From tubers or rhizomes', 'sub' => 'Seed tubers, corms, setts or rhizome pieces planted in', 'icon' => '🥔'],
+        'suckers' => ['label' => 'From suckers or slips', 'sub' => 'Suckers, slips, crowns or clump divisions from a mother plant', 'icon' => '🌴'],
+        'sprouted' => ['label' => 'From a sprouted fruit', 'sub' => 'The whole fruit planted once it has shot', 'icon' => '🍈'],
+        'tree_seedlings' => ['label' => 'From nursery seedlings', 'sub' => 'Grafted, budded, tissue-cultured or seed-grown planting material', 'icon' => '🌳'],
     ];
+
+    /**
+     * Which methods each crop can choose from, the usual way first. A
+     * catalogue key this table does not name falls to its group in
+     * METHODS_BY_GROUP.
+     */
+    public const METHODS_BY_CROP = [
+        'rice' => ['transplanted', 'direct_wet', 'direct_dry'],
+        'rice_upland' => ['direct_dry'],
+        'corn_yellow' => ['direct'], 'corn_sweet' => ['direct'], 'corn_glutinous' => ['direct'], 'sorghum' => ['direct'],
+        'mungbean' => ['direct'], 'peanut' => ['direct'], 'soybean' => ['direct'], 'stringbean' => ['direct'],
+        'cowpea' => ['direct'], 'wingedbean' => ['direct'], 'limabean' => ['direct'], 'pigeonpea' => ['direct'],
+        'sweetpotato' => ['cuttings'], 'cassava' => ['cuttings'], 'taro' => ['tubers', 'suckers'], 'ubi' => ['tubers'],
+        'potato' => ['tubers'], 'carrot' => ['direct'], 'radish' => ['direct'], 'ginger' => ['tubers'], 'turmeric' => ['tubers'],
+        'pechay' => ['direct', 'nursery'], 'cabbage' => ['nursery'], 'lettuce' => ['nursery', 'direct'], 'kangkong' => ['direct', 'cuttings'],
+        'mustard' => ['direct', 'nursery'], 'broccoli' => ['nursery'], 'cauliflower' => ['nursery'], 'alugbati' => ['cuttings', 'direct'],
+        'saluyot' => ['direct'], 'celery' => ['nursery'],
+        'tomato' => ['nursery', 'direct'], 'eggplant' => ['nursery'], 'ampalaya' => ['direct', 'nursery'], 'squash' => ['direct'],
+        'cucumber' => ['direct', 'nursery'], 'okra' => ['direct'], 'chili' => ['nursery'], 'bellpepper' => ['nursery'],
+        'patola' => ['direct'], 'upo' => ['direct'], 'sayote' => ['sprouted'], 'watermelon' => ['direct', 'nursery'], 'melon' => ['direct', 'nursery'],
+        'onion' => ['nursery', 'direct', 'sets'], 'onion_spring' => ['direct', 'sets'], 'garlic' => ['sets'], 'shallot' => ['sets'],
+        'sugarcane' => ['cuttings'], 'pineapple' => ['suckers'], 'tobacco' => ['nursery'], 'cotton' => ['direct'],
+        'abaca' => ['suckers', 'tree_seedlings'], 'rubber' => ['tree_seedlings'], 'oilpalm' => ['tree_seedlings'], 'bamboo' => ['cuttings', 'suckers'],
+        'banana' => ['suckers', 'tree_seedlings'], 'papaya' => ['nursery', 'direct'],
+        'coconut' => ['tree_seedlings'], 'dragonfruit' => ['cuttings'], 'coffee' => ['tree_seedlings'], 'cacao' => ['tree_seedlings'],
+        'malunggay' => ['cuttings', 'tree_seedlings'], 'strawberry' => ['suckers', 'nursery'], 'vegetables' => ['nursery', 'direct'],
+    ];
+
+    public const METHODS_BY_GROUP = [
+        'Cereals & grains' => ['direct'],
+        'Legumes' => ['direct'],
+        'Root crops' => ['tubers', 'cuttings'],
+        'Leafy vegetables' => ['direct', 'nursery'],
+        'Fruit vegetables' => ['nursery', 'direct'],
+        'Onions & garlic' => ['nursery', 'direct', 'sets'],
+        'Industrial crops' => ['nursery', 'cuttings'],
+        'Fruit trees' => ['tree_seedlings'],
+        'Other' => ['nursery', 'direct'],
+    ];
+
+    /** @return list<string> the method keys this crop may pick from, the usual one first */
+    public static function methodsFor(string $cropKey): array
+    {
+        if (isset(self::METHODS_BY_CROP[$cropKey])) {
+            return self::METHODS_BY_CROP[$cropKey];
+        }
+        $group = CropCatalog::CROPS[$cropKey]['group'] ?? '';
+
+        return self::METHODS_BY_GROUP[$group] ?? ['nursery', 'direct'];
+    }
 
     /** What the farmer is chasing this season. */
     public const PRIORITIES = [
@@ -109,7 +171,7 @@ class CropProtocolController extends Controller
                 'group' => $c['group'],
                 'maturity' => $c['maturity'] ?? null,
                 'perennial' => CropCatalog::isPerennial($key),
-                'isRice' => str_starts_with($key, 'rice'),
+                'methods' => self::methodsFor($key),
             ])->values(),
             'months' => $months,
             'methods' => self::METHODS,
@@ -159,6 +221,11 @@ class CropProtocolController extends Controller
         ]);
         if ($v->fails()) {
             return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
+        }
+        /* The method must be one this crop actually uses -- the page only
+           offers those, but the door checks too. */
+        if (! in_array($request->input('method'), self::methodsFor($request->input('crop')), true)) {
+            return $this->json(false, 'That is not a way this crop is planted.', ['errors' => ['method' => ['Pick a method that suits the crop.']]], 422);
         }
 
         $price = AiPrices::of('protocol');

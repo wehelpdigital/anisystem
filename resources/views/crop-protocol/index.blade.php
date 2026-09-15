@@ -421,7 +421,7 @@
             {{-- 4: the method --}}
             <section class="wtp-step" data-step="4">
                 <p class="wtp-q">How will you plant it?</p>
-                <p class="wtp-sub">The method changes the stages, the water and the first fertilizer.</p>
+                <p class="wtp-sub" id="cpMethodSub">The method changes the stages, the water and the first fertilizer.</p>
                 <div class="wtp-choices" id="cpMethods"></div>
             </section>
             {{-- 5: the aim and the target --}}
@@ -560,12 +560,19 @@
         paintMethods();
         paintQuote();
     }
-    /* Rice has its own three ways in; every other crop the two general ones. */
+    /* The ways in follow the crop: rice has its three, corn goes straight
+       from seed, cassava from cuttings, a mango from a grafted seedling.
+       One way only is chosen for the farmer and said so. */
     function paintMethods() {
         const c = OPT.crops.find((x) => x.key === state.crop);
-        const rice = !!(c && c.isRice);
-        $id('cpMethods').innerHTML = Object.entries(OPT.methods).filter(([, m]) => rice ? m.rice : !m.rice).map(([k, m]) => choice('method', k, m.icon, m.label, m.sub)).join('');
-        if (state.method && !OPT.methods[state.method] || (state.method && OPT.methods[state.method].rice !== rice)) state.method = null;
+        const keys = (c && c.methods && c.methods.length) ? c.methods : Object.keys(OPT.methods);
+        if (state.method && !keys.includes(state.method)) state.method = null;
+        if (keys.length === 1) state.method = keys[0];
+        $id('cpMethods').innerHTML = keys.map((k) => { const m = OPT.methods[k]; return m ? choice('method', k, m.icon, m.label, m.sub) : ''; }).join('');
+        document.querySelectorAll('#cpMethods .wtp-choice').forEach((b) => b.classList.toggle('is-on', b.getAttribute('data-method') === state.method));
+        $id('cpMethodSub').textContent = keys.length === 1
+            ? `${c ? c.label : 'This crop'} goes in one way — tap it or just press Next.`
+            : `The options follow the crop — ${c ? c.label : 'this one'} is planted in ${keys.length} ways.`;
     }
 
     const QUOTE_MIN_KEY = 'anee-proto-quote-min';
