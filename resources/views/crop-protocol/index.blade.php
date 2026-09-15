@@ -733,10 +733,29 @@
             } });
             let data = res.data;
             if (data.pending) {
+                /* The job beats its heart in the row; the poll reads it back
+                   as a live line. A poll that cannot reach the server (a
+                   phone losing signal for a moment, a gateway hiccup) is not
+                   the job failing -- only the job's own word is. */
+                const PHASE = { start: 'Getting started', research: 'Reading the web for your variety, region and outlook', document: 'Writing the protocol, stage by stage', 'document-json': 'Tidying the document' };
+                const jobId = data.id || res.data.id;
+                const t0 = Date.now();
+                let misses = 0;
                 for (let i = 0; i < 200 && (!data || data.status !== 'ready'); i++) {
                     await new Promise((r) => setTimeout(r, 3000));
-                    const st = await api(U.job(data.id || res.data.id), { method: 'GET' });
+                    let st;
+                    try { st = await api(U.job(jobId), { method: 'GET' }); }
+                    catch (err) {
+                        const transient = err.offline || /^Request failed \(5\d\d\)$/.test(err.message || '');
+                        if (transient && ++misses <= 8) continue;
+                        throw err;
+                    }
+                    misses = 0;
                     if (st.data && st.data.status === 'ready') { data = st.data; break; }
+                    const secs = Math.round((Date.now() - t0) / 1000);
+                    const clock = Math.floor(secs / 60) + ':' + String(secs % 60).padStart(2, '0');
+                    const what = PHASE[st.data?.phase] || PHASE.start;
+                    window.aneeWait.say(`${what}${st.data?.try > 1 ? ' (again)' : ''} · ${clock}`);
                 }
                 if (!data || data.status !== 'ready') throw new Error('Still working — give it a minute, then look on the Saved tab.');
             }

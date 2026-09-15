@@ -175,6 +175,7 @@ class CropProtocolController extends Controller
             ])->values(),
             'months' => $months,
             'methods' => self::METHODS,
+            'runner' => PHP_SAPI . (function_exists('fastcgi_finish_request') ? '+finish' : ''),
             'priorities' => self::PRIORITIES,
             'yieldUnits' => self::YIELD_UNITS,
             'soils' => self::SOILS,
@@ -236,13 +237,15 @@ class CropProtocolController extends Controller
                 ['outOfCredits' => true], 402);
         }
 
-        // One in flight at a time — a double press must not buy two.
+        // One in flight at a time — a double press must not buy two. A row
+        // whose heart has stopped is not in flight; it is failed here so it
+        // cannot block the next run.
         $standing = DB::table('as_plant_analyses')->where('userId', Auth::id())
             ->where('kind', 'protocol')
             ->where('status', 'pending')->where('deleteStatus', 1)
-            ->where('created_at', '>', now()->subMinutes(10))
+            ->where('created_at', '>', now()->subMinutes(15))
             ->orderByDesc('id')->first();
-        if ($standing) {
+        if ($standing && ! $this->dead($standing)) {
             return $this->json(true, 'Already working on it.', ['pending' => true, 'id' => $standing->id]);
         }
 
@@ -299,8 +302,20 @@ class CropProtocolController extends Controller
     /** The research, the document, and the charge, off the request's clock. */
     private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, array $p): void
     {
+        /* The heartbeat: before every call to the model the row says which
+         * phase it is in and touches updated_at. No single call may run
+         * longer than the document timeout, so a row that has not beaten
+         * for longer than that was killed under it (a deploy, a restart,
+         * the process manager) and jobState can say so instead of leaving
+         * the farmer waiting. */
+        $beat = function (string $phase, int $try = 1) use ($id): void {
+            DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
+                'report' => json_encode(['phase' => $phase, 'try' => $try]),
+                'updated_at' => now(),
+            ]);
+        };
         try {
-            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 7000, fn (string $t) => $this->parseReport($t));
+            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 7000, fn (string $t) => $this->parseReport($t), $beat);
             $report = $result['data'];
             if ($report === null) {
                 \Illuminate\Support\Facades\Log::warning('crop-protocol: unparsable answer', [
@@ -391,6 +406,21 @@ class CropProtocolController extends Controller
         return $report;
     }
 
+    /**
+     * A pending row is dead when its heart has not beaten for longer than
+     * any one call to the model may take (the document timeout plus a
+     * generous minute), or when it is simply too old. Killed processes
+     * write nothing, so this is the only way to tell.
+     */
+    private function dead(object $r): bool
+    {
+        $beatAt = \Illuminate\Support\Carbon::parse($r->updated_at ?: $r->created_at);
+        $quiet = AiClient::TIMEOUT_DOCUMENT + 60;
+
+        return $beatAt->lt(now()->subSeconds($quiet))
+            || \Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(15));
+    }
+
     /** Where a job stands — polled by the page until ready or failed. */
     public function jobState(int $id)
     {
@@ -400,17 +430,26 @@ class CropProtocolController extends Controller
             return $this->json(false, 'That protocol is gone.', [], 404);
         }
         if ($r->status === 'pending') {
-            if (\Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(15))) {
-                DB::table('as_plant_analyses')->where('id', $id)->update([
+            if ($this->dead($r)) {
+                $why = \Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(15))
+                    ? 'The protocol took too long and was stopped. Nothing was charged — please try again.'
+                    : 'The protocol was interrupted mid-way (the server restarted under it). Nothing was charged — please run it again.';
+                DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
                     'status' => 'failed', 'deleteStatus' => 0,
-                    'error' => 'The protocol took too long and was stopped. Nothing was charged — please try again.',
+                    'error' => $why,
                     'updated_at' => now(),
                 ]);
 
-                return $this->json(false, 'The protocol took too long and was stopped. Nothing was charged — please try again.', ['status' => 'failed'], 502);
+                return $this->json(false, $why, ['status' => 'failed'], 502);
             }
+            $beat = json_decode((string) $r->report, true) ?: [];
 
-            return $this->json(true, 'Working…', ['pending' => true, 'id' => (int) $r->id, 'status' => 'pending']);
+            return $this->json(true, 'Working…', [
+                'pending' => true, 'id' => (int) $r->id, 'status' => 'pending',
+                'phase' => (string) ($beat['phase'] ?? 'start'),
+                'try' => (int) ($beat['try'] ?? 1),
+                'since' => (int) max(0, now()->diffInSeconds(\Illuminate\Support\Carbon::parse($r->created_at), true)),
+            ]);
         }
         if ($r->status === 'failed') {
             DB::table('as_plant_analyses')->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);

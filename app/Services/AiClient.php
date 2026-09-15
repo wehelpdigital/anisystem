@@ -105,10 +105,17 @@ class AiClient
      * because the house pays for all of them. `$parse` turns the text into
      * the array wanted, or null when it cannot.
      *
+     * `$opts['onPhase']` is called before each call the model is made --
+     * ('document'), ('document', 2) for the transport retry, ('document-json')
+     * for the shape retry -- so a job can beat its heart in the database
+     * and a watcher can tell "still working" from "died".
+     *
      * Returns ['ok', 'data', 'text', 'tokensIn', 'tokensOut', 'searched', 'sources', 'error'].
      */
     public function askForJson(AiSetting $settings, string $prompt, int $maxOut, callable $parse, array $opts = []): array
     {
+        $onPhase = is_callable($opts['onPhase'] ?? null) ? $opts['onPhase'] : null;
+        unset($opts['onPhase']);
         $sum = ['tokensIn' => 0, 'tokensOut' => 0, 'searched' => false, 'sources' => []];
         $fold = function (array $r) use (&$sum): void {
             $sum['tokensIn'] += (int) ($r['tokensIn'] ?? 0);
@@ -123,11 +130,17 @@ class AiClient
 
         // A document's own clock, longer when the web is read first.
         $opts += ['timeout' => ! empty($opts['search']) ? self::TIMEOUT_SEARCHED : self::TIMEOUT_DOCUMENT];
+        if ($onPhase) {
+            $onPhase('document', 1);
+        }
         $result = $this->ask($settings, [], $prompt, null, $maxOut, $opts);
         $fold($result);
         if (! ($result['ok'] ?? false)) {
             // A transport blip (the provider timing out once) gets a second try.
             sleep(3);
+            if ($onPhase) {
+                $onPhase('document', 2);
+            }
             $result = $this->ask($settings, [], $prompt, null, $maxOut, $opts);
             $fold($result);
         }
@@ -140,6 +153,9 @@ class AiClient
         if ($data === null) {
             // History turns carry 'text', never 'content'. No search on the
             // retry: the reading is done, only the shape is wanted.
+            if ($onPhase) {
+                $onPhase('document-json', 1);
+            }
             $retry = $this->ask($settings, [
                 ['role' => 'user', 'text' => $prompt],
                 ['role' => 'assistant', 'text' => (string) $result['text']],
@@ -169,19 +185,26 @@ class AiClient
      * with the web open -- a reading from memory beats no reading, and the
      * answer says which it got ('searched').
      */
-    public function researchThenJson(AiSetting $settings, string $researchPrompt, string $jsonPrompt, int $maxOut, callable $parse): array
+    public function researchThenJson(AiSetting $settings, string $researchPrompt, string $jsonPrompt, int $maxOut, callable $parse, ?callable $onPhase = null): array
     {
         /* Whether the model searches is its own call, made per request; the
          * same brief is searched one time and answered from memory the next.
          * So an unsearched research is asked again, told plainly, and only
-         * a second miss goes through as a reading from memory. */
+         * a second miss goes through as a reading from memory. A research
+         * call that never answers (the provider stalling until the clock
+         * runs out) is tried once more, not twice: three stalls would be
+         * seven and a half minutes of nothing. */
         $research = ['ok' => false, 'text' => '', 'searched' => false];
         $spent = ['tokensIn' => 0, 'tokensOut' => 0];
+        $stalls = 0;
         for ($try = 0; $try < 3; $try++) {
             $brief = $try === 0 ? $researchPrompt
                 : "IMPORTANT: the previous attempt answered from memory without using the search tool. You MUST use the google_search / web search tool now — run the searches, read the pages, and write the notes from what they say.
 
 " . $researchPrompt;
+            if ($onPhase) {
+                $onPhase('research', $try + 1);
+            }
             $got = $this->ask($settings, [], $brief, null, 3000, ['search' => true, 'timeout' => self::TIMEOUT_SEARCHED]);
             $spent['tokensIn'] += (int) ($got['tokensIn'] ?? 0);
             $spent['tokensOut'] += (int) ($got['tokensOut'] ?? 0);
@@ -191,6 +214,9 @@ class AiClient
                     break;
                 }
             } elseif (! ($got['ok'] ?? false)) {
+                if (++$stalls >= 2) {
+                    break;
+                }
                 sleep(3);
             }
         }
@@ -198,12 +224,12 @@ class AiClient
             logger()->warning('AI research step: no web search was made', ['tries' => $try + 1, 'ok' => (bool) ($research['ok'] ?? false)]);
         }
         if (! ($research['ok'] ?? false) || trim((string) $research['text']) === '') {
-            return $this->askForJson($settings, $jsonPrompt, $maxOut, $parse, ['search' => true]);
+            return $this->askForJson($settings, $jsonPrompt, $maxOut, $parse, ['search' => true, 'onPhase' => $onPhase]);
         }
 
         $notes = "\n\nRESEARCH NOTES — found on the web just now by a search step. Rely on these FIRST, over memory; where they and memory disagree, the notes win; where the notes are silent, say so in dataGaps:\n"
             . trim((string) $research['text']);
-        $doc = $this->askForJson($settings, $jsonPrompt . $notes, $maxOut, $parse);
+        $doc = $this->askForJson($settings, $jsonPrompt . $notes, $maxOut, $parse, ['onPhase' => $onPhase]);
         $doc['tokensIn'] += $spent['tokensIn'];
         $doc['tokensOut'] += $spent['tokensOut'];
         $doc['searched'] = (bool) ($research['searched'] ?? false);

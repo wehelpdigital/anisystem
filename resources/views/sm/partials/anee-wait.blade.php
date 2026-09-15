@@ -118,6 +118,9 @@
     };
 
     window.aneeWait = {
+        /* A live word from the job itself ("Reading the web · 0:42") on the
+           small line, leaving the rotating lines to their turn. */
+        say(text) { if (pending) sub.textContent = text || ''; },
         show(opts = {}) {
             pending = true;
             title.textContent = opts.title || 'Anee is thinking…';
