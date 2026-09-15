@@ -82,7 +82,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
         // apps must share one, and on the day they moved hosts this is how
         // "did the variable take?" was answered without a dashboard.
         'database' => ['host' => (string) config('database.connections.mysql.host'), 'name' => (string) config('database.connections.mysql.database')],
-        'mother' => ['url' => (bool) config('mother.url'), 'mediaToken' => (bool) config('mother.media_token')],
+        // The mother's address as this deployment will use it (public anyway), and whether the token is present.
+        'mother' => ['url' => (string) config('mother.url'), 'mediaUrl' => (string) config('mother.media_url'), 'mediaToken' => (bool) config('mother.media_token')],
         'probe' => $probe,
     ]);
 })->name('deploy.check');
