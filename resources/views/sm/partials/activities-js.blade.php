@@ -6032,10 +6032,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             toast(res.message);
+            // The shed moved with the delete: the shelf this board reads is stale.
+            if (res.data && res.data.stockMoved) { window.IV_ITEMS = null; window.ivDayChanged?.(); }
             pushUndo(`Delete '${name}'`, async () => {
                 const r = await api(U.restore(id), { method: 'POST' });
                 if (!r || !r.success) throw new Error((r && r.message) || 'restore failed');
                 _renderCardOrReplace(r.data);
+                window.IV_ITEMS = null; window.ivDayChanged?.();
             }, async () => {
                 const r = await apiQ(U.destroy(id), { method: 'DELETE' }, 'Deleted an activity', 'del:' + id);
                 if (!r || !r.success) throw new Error((r && r.message) || 'delete failed');

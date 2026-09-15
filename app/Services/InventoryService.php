@@ -263,10 +263,23 @@ class InventoryService
      */
     public function unspendForActivity(int $activityId): int
     {
-        return AsInventoryMove::where('activityId', $activityId)
+        $touched = AsInventoryMove::where('activityId', $activityId)
+            ->where('reason', AsInventoryMove::ACTIVITY)
+            ->where('deleteStatus', 1)
+            ->pluck('itemId')->all();
+        if ($touched === []) {
+            return 0;
+        }
+        $n = AsInventoryMove::where('activityId', $activityId)
             ->where('reason', AsInventoryMove::ACTIVITY)
             ->where('deleteStatus', 1)
             ->update(['deleteStatus' => 0]);
+        // A voided mid-chain line leaves every later before/after lying.
+        foreach (array_unique($touched) as $itemId) {
+            $this->rebuildChain((int) $itemId);
+        }
+
+        return $n;
     }
 
     /**

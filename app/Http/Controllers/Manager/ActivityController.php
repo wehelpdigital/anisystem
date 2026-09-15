@@ -379,18 +379,24 @@ class ActivityController extends BaseScheduleController
         // Soft-delete is reversible, so we keep the image file on disk
         // even after deletion — restoration brings it back wired up.
         $activity->update(['deleteStatus' => 0]);
-        /* Its declared purchases leave with it — stock it said it bought is
-         * stock nobody bought once the activity is gone. Outside the delete
-         * itself on purpose: a failed stock write must not undo a delete. */
+        /* The shed follows the delete. What a done activity took off the
+         * shelf goes back on it (the owner's report, 2026-09-15: deleting
+         * an activity left its use in the book), and what it declared
+         * bought leaves with it -- stock it said it bought is stock nobody
+         * bought once the activity is gone. Outside the delete itself on
+         * purpose: a failed stock write must not undo a delete. */
+        $returned = 0;
         try {
-            app(\App\Services\InventoryService::class)->dropActivityPurchases($activity->id);
+            $stock = app(\App\Services\InventoryService::class);
+            $returned = $stock->unspendForActivity($activity->id);
+            $stock->dropActivityPurchases($activity->id);
         } catch (\Throwable $e) {
-            \Illuminate\Support\Facades\Log::warning('Purchases did not follow a delete', [
+            \Illuminate\Support\Facades\Log::warning('Inventory did not follow a delete', [
                 'activity' => $activity->id, 'error' => $e->getMessage(),
             ]);
         }
         $this->broadcastBoard($schedule, 'deleted', ['id' => $activity->id], $activity->versionId);
-        return $this->jsonOk('Activity deleted.');
+        return $this->jsonOk($returned > 0 ? 'Activity deleted — what it used is back in the inventory.' : 'Activity deleted.', ['stockMoved' => $returned > 0]);
     }
 
     /**
@@ -1112,8 +1118,12 @@ class ActivityController extends BaseScheduleController
                     (string) ($activity->activityTitle ?? '')
                 );
             }
+            /* And a done activity takes its use back off the shelf. */
+            if ((int) $activity->isDone === 1) {
+                $this->stockFor($activity, $schedule->id);
+            }
         } catch (\Throwable $e) {
-            \Illuminate\Support\Facades\Log::warning('Purchases did not follow a restore', [
+            \Illuminate\Support\Facades\Log::warning('Inventory did not follow a restore', [
                 'activity' => $activity->id, 'error' => $e->getMessage(),
             ]);
         }
