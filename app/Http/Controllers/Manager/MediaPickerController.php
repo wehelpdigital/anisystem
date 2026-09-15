@@ -27,7 +27,7 @@ class MediaPickerController extends BaseScheduleController
      * racing each other the moment the sheet opened — the "stuck" the owner
      * reported was the browser paying for pictures nobody had scrolled to.
      */
-    private const PAGE = 40;
+    private const PAGE = 24;
 
     public function index(Request $request)
     {
@@ -72,6 +72,15 @@ class MediaPickerController extends BaseScheduleController
             // attachment that silently points nowhere is worse than one that
             // was never offered.
             ->filter(fn ($m) => $m['path'] !== null)
+            /* And something whose FILE is gone is not offered either. The
+             * gallery still carries rows from the Railway days whose files
+             * lived on that box's own disk and went with it -- every one of
+             * them was a tile with no picture in this sheet (the owner's
+             * "some images do not show a thumbnail", 2026-09-15). A file on
+             * the mother app is taken on trust (asking the bucket per row
+             * would make opening the sheet a wait); a local path is asked
+             * of the disk. */
+            ->filter(fn ($m) => $this->fileIsThere($m['path']))
             ->take(self::LIMIT)
             ->values();
 
@@ -224,6 +233,19 @@ class MediaPickerController extends BaseScheduleController
             'poster'    => $poster,
             'posterUrl' => $poster ? \App\Support\MediaStore::url($poster) : null,
         ]]);
+    }
+
+    /** Whether the file behind a stored path can actually be shown. */
+    private function fileIsThere(string $path): bool
+    {
+        if (MediaStore::isRemote($path)) {
+            return true;
+        }
+        try {
+            return \Illuminate\Support\Facades\Storage::disk('public')->exists($path);
+        } catch (\Throwable $e) {
+            return false;
+        }
     }
 
     private function pathFor(?string $url): ?string

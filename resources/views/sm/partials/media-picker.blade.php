@@ -59,6 +59,12 @@
        another. Two across on a phone, three or four on a wider screen. */
     .smp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: .6rem; }
     .smp-grid:empty { display: none; }
+    /* A picture that could not be fetched says so on its tile, in place of
+       a blank square with a badge on it. */
+    .smp-tile.is-missing .smp-blank { flex-direction: column; }
+    .smp-tile.is-missing .smp-blank::after { content: 'Picture missing'; display: block; font-size: .6rem; font-weight: 700;
+        color: #b45309; margin-top: .2rem; }
+    .smp-tile.is-missing { opacity: .7; }
     .smp-tile { position: relative; display: block; width: 100%; text-align: left; padding: 0;
         border: 1px solid var(--tl-border, #e5e7eb); border-radius: .7rem; overflow: hidden;
         background: var(--tl-surface, #fff); cursor: pointer;
@@ -240,7 +246,7 @@
          * fetched instead (see fillFrames), drawn off-screen when it has to
          * be, and arrives here as a picture. Until then: the clapperboard. */
         const inner = (clip ? m.posterUrl : (m.posterUrl || m.url))
-            ? `<img src="${esc(clip ? m.posterUrl : (m.posterUrl || m.url))}" alt="" loading="lazy" decoding="async" onerror="this.remove()">`
+            ? `<img src="${esc(clip ? m.posterUrl : (m.posterUrl || m.url))}" alt="" loading="lazy" decoding="async" onerror="this.closest('.smp-tile')?.classList.add('is-missing');this.remove()">`
             : '';
         // A clip with no frame of its own asks for one after it is on screen.
         const wants = (clip && !m.posterUrl && m.path) ? ` data-needs-frame="${esc(m.path)}"` : '';
@@ -446,6 +452,11 @@
             grid.insertAdjacentHTML('beforeend', fresh.map((m, i) => tileHtml(m, base + i)).join(''));
             items.push(...fresh);
             grid.__shown = items;
+            /* The flag comes down BEFORE the state is said: said while it
+               was still up, an empty season read "Loading…" for ever --
+               nothing ever spoke again (the owner's "the gallery hangs when
+               it is empty", 2026-09-15). */
+            loading = false;
             sayState();
             // The clips that arrived without a frame ask for one now.
             fillFrames();
