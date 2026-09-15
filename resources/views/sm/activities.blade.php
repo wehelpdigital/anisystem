@@ -3760,14 +3760,9 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M20 9A8 8 0 006.34 6.34M4 15a8 8 0 0013.66 2.66"/></svg>
             <span class="hidden sm:inline">Refresh</span>
         </button>
-        {{-- Totalling a stretch of days lives in the Tools menu rather than
-             the toolbar: it is asked now and then, not daily, and the bar is
-             already full of what is. The button stays in the DOM because the
-             menu's rows forward their clicks to real buttons. --}}
-        <button type="button" id="cashRangeBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only
-                aria-pressed="false" title="Total what two days and everything between them cost">
-            <span id="cashRangeLabel">Total two days</span>
-        </button>
+        {{-- No "Total two days" button any more, here or in the Tools menu:
+             the stretch is asked of a day's own cost pill (tap it, choose
+             the stretch), which is where the question comes up. --}}
         <button type="button" id="activityUndoBtn" class="btn btn-white btn-sm relative toolbar-in-menu" data-activities-only disabled title="Nothing to undo">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg>
             <span class="hidden sm:inline">Undo</span>

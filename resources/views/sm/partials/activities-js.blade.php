@@ -2019,9 +2019,10 @@ document.addEventListener('DOMContentLoaded', () => {
             b.setAttribute('aria-pressed', CASH_RANGE.on ? 'true' : 'false');
             b.classList.toggle('is-on', CASH_RANGE.on);
         });
-        /* Only the Tools menu carries a label for this now — the mirror asks
-         * the question at the pill, the way the board does, so it has no
-         * button left to keep in step. */
+        /* No button carries a label for this any more: the board and the
+         * mirror both ask the question at a day's cost pill, and the strip
+         * below says how to stop. The selectors stay for any label that is
+         * ever put back. */
         $qsa('#cashRangeLabel, #actCashRangeLabel').forEach((l) => {
             l.textContent = CASH_RANGE.on ? 'Stop totalling' : 'Total two days';
         });
