@@ -10,9 +10,11 @@
 @push('head')
 @include('community.partials.plaza-css')
 <style>
-    /* Feed + sidebar shell (mirrors the wall page): the co-farmer feed is the
-       main column, AI + discussions ride a sticky rail on wide screens and fold
-       below the feed on tablet/mobile. */
+    /* The page + rail shell (mirrors the wall page): everything under the
+       greeting is the main column -- the tiles, the tip, today's seasons,
+       the tools, Anee, the co-farmer feed -- and AI + discussions ride a
+       sticky rail beside it on wide screens, folding under it on
+       tablet/mobile. */
     .dash-shell { display: grid; grid-template-columns: 1fr; gap: 1.25rem; align-items: start; }
     @media (min-width: 1024px) {
         .dash-shell { grid-template-columns: minmax(0, 1fr) 20rem; }
@@ -880,6 +882,17 @@
         </div>
     </div>
 
+    {{-- ===================== Two columns from here =====================
+         The rail starts level with the three tiles, not under the tip and
+         the schedules: on a desk the greeting alone runs the full width,
+         and everything under it is the page beside its rail (the owner's
+         call, 2026-09-15). Below 1024px the shell is one column and the
+         rail folds under the page as before. --}}
+    <div class="dash-shell">
+        {{-- MAIN COLUMN: the tiles, the tip, today's seasons, support (if
+             any), the tools, Anee, the wall --}}
+        <div class="min-w-0 space-y-5 md:space-y-6">
+
     {{-- What the account holds, as labelled tiles rather than three cards
          each shouting a different size of number.
 
@@ -1129,12 +1142,6 @@
                  errand nobody opens the dashboard to do. --}}
     </div>
     @endif
-
-    {{-- ===================== Feed + sidebar shell ===================== --}}
-    <div class="dash-shell">
-
-        {{-- MAIN COLUMN: support (if any) + your co-farmers' wall feed --}}
-        <div class="min-w-0 space-y-5 md:space-y-6">
 
             @if ($openTickets->isNotEmpty())
                 <section class="card">
