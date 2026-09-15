@@ -289,7 +289,8 @@
                 {{-- Realign by Anee: filled by the shared renderer below, so
                      the block here is the one the board's sheet draws. --}}
                 @unless ($r['isTree'])
-                    <div data-grx-mount data-lot-id="{{ $r['lot']->id }}" data-lot-name="{{ $r['lot']->lotName }}" data-realign='@json($r['realign'])'></div>
+                    <div data-grx-mount data-lot-id="{{ $r['lot']->id }}" data-lot-name="{{ $r['lot']->lotName }}" data-realign='@json($r['realign'])'
+                         data-calendar="{{ $r['blocked'] ? '' : trim(($r['age']['counter'] ?? '') . ' ' . ($r['age']['day'] ?? '') . ' — ' . ($r['stage']['label'] ?? '')) }}"></div>
                 @endunless
             @endif
         </div>
@@ -369,7 +370,13 @@
         });
     })();
 </script>
-@include('sm.partials.growth-realign', ['schedule' => $schedule])
+{{-- Loaded inside the activities shell (?partial=1) the board already
+     carries the sheets and the script; a second copy gave the page two
+     #grRealignSheet -- the visible one nobody's handler could close or run
+     (the owner's "hangs on Reading the calendar", 2026-09-15). --}}
+@unless (request()->boolean('partial'))
+    @include('sm.partials.growth-realign', ['schedule' => $schedule])
+@endunless
 <script>
     /* Every lot's block, drawn by the shared renderer; and once she has
        spoken, the page is redrawn from the server so the stage, the bar,
@@ -382,7 +389,7 @@
             const lotId = Number(m.dataset.lotId);
             window.growthRealign.known[lotId] = realign;
             window.growthRealign.names[lotId] = m.dataset.lotName || '';
-            m.innerHTML = window.growthRealign.block({ lotId, lotName: m.dataset.lotName || '', realign });
+            m.innerHTML = window.growthRealign.block({ lotId, lotName: m.dataset.lotName || '', realign, calendar: m.dataset.calendar || '' });
         });
         mount();
         let redraw = false;

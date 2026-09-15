@@ -41,7 +41,7 @@
         <div class="grx-prev" id="grxPrev" hidden></div>
         <div class="grx-price">
             <span class="grx-coins" aria-hidden="true">🪙</span>
-            <span class="grow"><b>About {{ $grxPrice }} credits</b> for this lot<span id="grxBalance"></span></span>
+            <span class="grow"><b>{{ $grxPrice }} credits, flat</b> — one price however long the season, said before anything is spent<span id="grxBalance"></span></span>
         </div>
         <p class="grx-blocked" id="grxBlocked" hidden></p>
     </div>
@@ -165,10 +165,13 @@
     const when = (iso) => { try { const d = new Date(iso); return isNaN(d) ? '' : d.toLocaleDateString([], { month: 'short', day: 'numeric' }); } catch (_) { return ''; } };
 
     /* The block a lot's card carries: the button, and her note once she has spoken. */
-    function block({ lotId, lotName, realign }) {
+    /* `calendar` is the calendar's own reading as the caller already has it
+       ("DAT 45 — Tillering"): the sheet shows it at once instead of asking
+       the server to walk the season again. */
+    function block({ lotId, lotName, realign, calendar }) {
         const btn = LOCKED
             ? `<button type="button" class="grx-btn is-locked" data-tier-lock="solo" data-lock-say="Realign by Anee comes with a paid plan. Upgrade and she reads your lot's whole history to say where the crop really is."><img src="${esc(FACE)}" alt="">Realign by Anee <small>· 🔒 paid plans</small></button>`
-            : `<button type="button" class="grx-btn" data-grx-open="${Number(lotId)}" data-grx-name="${esc(lotName)}"><img src="${esc(FACE)}" alt="">${realign ? 'Realign again' : 'Realign by Anee'} <small>· about ${PRICE} credits</small></button>`;
+            : `<button type="button" class="grx-btn" data-grx-open="${Number(lotId)}" data-grx-name="${esc(lotName)}" data-grx-cal="${esc(calendar || '')}"><img src="${esc(FACE)}" alt="">${realign ? 'Realign again' : 'Realign by Anee'} <small>· ${PRICE} credits</small></button>`;
         const note = realign ? `<div class="grx-note">
                 <div class="grx-note-head"><b>Realigned by Anee</b>${shiftChip(realign.shiftDays)}<span class="grx-note-when">${esc(when(realign.at || realign.asOf))}</span></div>
                 <div>${esc(realign.summary || '')}</div>
@@ -205,10 +208,11 @@
         requestAnimationFrame(() => setTimeout(() => { $id('grxResultBody').querySelectorAll('.grx-conf-bar span').forEach((el) => { el.style.width = el.dataset.w + '%'; }); }, 60));
     }
 
-    async function open(lotId, lotName) {
+    async function open(lotId, lotName, calendar) {
         current = { lotId: Number(lotId), lotName: lotName || '' };
         $id('grxLotName').textContent = current.lotName || 'Lot';
-        $id('grxCalendar').textContent = 'Reading the calendar…';
+        // What the page already knows, shown at once; the quote is only the price and the balance.
+        $id('grxCalendar').textContent = calendar ? `The calendar says ${calendar}` : 'Anee reads the whole season when she runs.';
         $id('grxBalance').textContent = '';
         $id('grxPrev').hidden = true;
         $id('grxBlocked').hidden = true;
@@ -218,10 +222,8 @@
             const res = await api(`${U.quote}?scheduleId=${SCHEDULE_ID}&lotId=${current.lotId}`);
             const d = res.data;
             current.quote = d;
-            if (d.calendar) {
-                $id('grxCalendar').textContent = `${d.lot.crop || 'Crop'} · the calendar says ${d.calendar.counter} ${d.calendar.day} — ${d.calendar.stage || '?'}`;
-            } else {
-                $id('grxCalendar').textContent = d.lot.crop || 'No crop set';
+            if (!calendar) {
+                $id('grxCalendar').textContent = d.lot.crop ? `${d.lot.crop} · Anee reads the whole season when she runs.` : 'No crop set';
             }
             if (d.realign) {
                 const p = $id('grxPrev');
@@ -279,7 +281,7 @@
 
     document.addEventListener('click', (e) => {
         const o = e.target.closest('[data-grx-open]');
-        if (o) { open(o.dataset.grxOpen, o.dataset.grxName); return; }
+        if (o) { open(o.dataset.grxOpen, o.dataset.grxName, o.dataset.grxCal); return; }
         const s = e.target.closest('[data-grx-show]');
         if (s) {
             const lotId = Number(s.dataset.grxShow);

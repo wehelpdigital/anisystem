@@ -671,7 +671,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (!window.growthRealign || r.isTree) return '';
                         window.growthRealign.known[r.lotId] = r.realign;
                         window.growthRealign.names[r.lotId] = r.lotName;
-                        return window.growthRealign.block({ lotId: r.lotId, lotName: r.lotName, realign: r.realign });
+                        return window.growthRealign.block({ lotId: r.lotId, lotName: r.lotName, realign: r.realign,
+                            calendar: `${r.counter} ${r.day} — ${(r.stage && r.stage.label) || '?'}` });
                     })()}
                 </div>
                 </div></div>

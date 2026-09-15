@@ -42,14 +42,23 @@ class GrowthRealignController extends BaseScheduleController
 {
     public const PRICE = AiPrices::DEFAULTS['realign'];
 
-    /** What the run will cost and whether this lot can be read at all. */
+    /**
+     * What the run will cost, and whether this lot can be asked about.
+     *
+     * The price and the balance only. The calendar is NOT read here: that
+     * read walks every activity of the season to find the lot's anchors,
+     * and on a long season it held the sheet on "Reading the calendar…"
+     * for so long it looked hung (the owner's report, 2026-09-15). The
+     * page already knows the calendar's reading -- the board and the
+     * Growth Stages module both drew it -- and hands it to the sheet; the
+     * run itself does the full read, and says so if the lot cannot be.
+     */
     public function quote(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request);
         $lot = $this->lotOf($schedule, (int) $request->query('lotId'));
         $payer = $this->payer();
         $credits = app(AiCreditService::class);
-        $reading = $this->reading($schedule, $lot, now('Asia/Manila'));
 
         return $this->jsonOk('ok', ['data' => [
             'price' => AiPrices::of('realign'),
@@ -58,11 +67,8 @@ class GrowthRealignController extends BaseScheduleController
             'locked' => Tier::forSchedule($schedule) === 'libre',
             'aiUsable' => $payer->canUseAi() && AiSetting::current()->isUsable(),
             'lot' => ['id' => (int) $lot->id, 'name' => $lot->lotName, 'crop' => CropStages::label($lot->crop)],
-            'calendar' => $reading ? [
-                'day' => $reading['age']['day'], 'counter' => $reading['age']['counter'],
-                'stage' => $reading['stage']['label'] ?? null, 'index' => $reading['stage']['index'] ?? null,
-            ] : null,
-            'blocked' => $reading ? null : $this->whyNot($lot),
+            // Only what is known without a read: a lot with no crop cannot be asked about.
+            'blocked' => CropStages::normalize($lot->crop) ? null : $this->whyNot($lot),
             'realign' => $this->applied($lot),
         ]]);
     }
