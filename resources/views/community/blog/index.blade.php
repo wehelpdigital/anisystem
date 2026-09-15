@@ -186,6 +186,7 @@
 {{-- Two columns on a wide screen: the page, and its rail (the wall, your chats, the rooms). --}}
 <div class="plaza-shell">
 <div class="plaza-center">
+@include('partials.ad-slot', ['placement' => 'community'])
 
 <div class="blog-hero plaza-accent">
     <div class="blog-hero-in">

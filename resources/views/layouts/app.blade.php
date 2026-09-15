@@ -100,6 +100,11 @@
         </script>
     @endauth
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- Google AdSense, only where the free plan carries ads and only for the
+         person who sees them (App\Support\Ads): a paid account never loads it. --}}
+    @if (\App\Support\Ads::wantsAdsenseScript())
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ \App\Support\Ads::adsenseClient() }}" crossorigin="anonymous"></script>
+    @endif
     @stack('head')
     {{-- Five pages pushed their whole stylesheet to a stack nobody rendered,
          and shipped unstyled because of it: the wall, saved posts, co-farmers,

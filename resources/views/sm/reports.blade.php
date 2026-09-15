@@ -7,6 +7,8 @@
 @section('back', route('sm.hub', ['id' => $schedule->id]))
 
 @section('content')
+    {{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
+    @include('partials.ad-slot', ['placement' => 'modules'])
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
     @php
         /* The tier wall, worn openly: on Libre every report card stays on

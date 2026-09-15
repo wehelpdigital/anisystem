@@ -118,6 +118,8 @@
 @endphp
 
 @section('content')
+    {{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
+    @include('partials.ad-slot', ['placement' => 'modules'])
 
     {{-- The season's own card. It used to be a plain white box with the
          title, some badges and a button that said "Mark completed" — which

@@ -58,6 +58,7 @@ return [
             'Community access (photos)',
             '20 starter AI credits',
             '1 GB storage',
+            'Supported by a few ads',
         ],
         'excludes' => [
             'Video recording, worker logins, collab room',
@@ -106,6 +107,7 @@ return [
             'Full community access',
             '30 AI credits per renewal + buy packs',
             '6 GB storage (expandable)',
+            'Ad-free',
         ],
         'excludes' => [
             'Worker logins and the collab room (Farm Owner)',
@@ -152,6 +154,7 @@ return [
             'Create community discussions',
             '100 AI credits per renewal + buy packs',
             '15 GB storage (expandable)',
+            'Ad-free',
         ],
         'excludes' => [],
     ],

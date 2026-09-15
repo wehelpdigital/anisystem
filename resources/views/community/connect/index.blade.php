@@ -13,6 +13,7 @@
 {{-- Two columns on a wide screen: the page, and its rail (requests, your chats, the rooms, the blog). --}}
 <div class="plaza-shell">
 <div class="plaza-center">
+@include('partials.ad-slot', ['placement' => 'community'])
 
 {{-- Who to meet first: friends of friends, farmers nearby, and the people
      whose threads you have already been talking in. --}}

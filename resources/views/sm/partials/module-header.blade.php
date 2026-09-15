@@ -46,3 +46,6 @@
         @endif
     </div>
 </div>
+{{-- The free plan carries an advertisement under the module's head; a paid
+     plan sees nothing. Every module page that draws this header carries it. --}}
+@include('partials.ad-slot', ['placement' => 'modules'])

@@ -34,6 +34,7 @@
 {{-- Two columns on a wide screen: the page, and its rail (your chats, the rooms, the wall). --}}
 <div class="plaza-shell">
 <div class="plaza-center">
+@include('partials.ad-slot', ['placement' => 'community'])
 
 <div class="rk-wrap">
 

@@ -20,6 +20,8 @@
     $railData = new \App\Support\CommunityRail();
     $rail = $rail ?? ['chats', 'discussions', 'blog'];
 @endphp
+{{-- On the free plan the column opens with an advertisement. --}}
+@include('partials.ad-slot', ['placement' => 'community', 'compact' => true])
 @foreach ($rail as $card)
     @if ($card === 'requests')
         @php [$railRequests, $railRequestCount] = $railData->requests(); @endphp

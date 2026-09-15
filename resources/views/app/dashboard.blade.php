@@ -929,6 +929,9 @@
             : null,
     ])
 
+    {{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
+    @include('partials.ad-slot', ['placement' => 'dashboard'])
+
     {{-- My Cropping Schedules — ONLY the seasons with work on the board
          today. A quiet day shows no shelf at all; the schedules page
          still lists every season. --}}
@@ -1328,6 +1331,7 @@
 
         {{-- SIDEBAR: AI Technician + Latest Discussions --}}
         <aside class="dash-side space-y-4">
+            @include('partials.ad-slot', ['placement' => 'dashboard', 'compact' => true])
 
             @if ($canUseAi)
                 <section class="card">

@@ -48,6 +48,8 @@
 @endpush
 
 @section('content')
+    {{-- The free plan carries an advertisement here too: the page that ends them. --}}
+    @include('partials.ad-slot', ['placement' => 'upgrade'])
 @php
     $status = $subscription?->effective_status;
     $daysRemaining = $subscription?->daysRemaining();

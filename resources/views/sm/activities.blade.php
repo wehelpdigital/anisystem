@@ -4022,6 +4022,8 @@
         </button>
     @endif
 </div>
+{{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
+@include('partials.ad-slot', ['placement' => 'activities'])
 
 
 {{-- ============================ FILTERS (bottom sheet) ============================ --}}

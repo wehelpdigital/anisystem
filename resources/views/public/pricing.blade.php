@@ -85,6 +85,11 @@
                 Every plan includes the activities board, lots, notes with photos and voice, growth stages,
                 the gallery and the farmer community. Upgrading happens inside the app, verified by our team.
             </p>
+            {{-- What "supported by ads" looks like: one, right here, for anybody
+                 not already on a paid plan. --}}
+            <div class="max-w-3xl mx-auto mt-6">
+                @include('partials.ad-slot', ['placement' => 'pricing'])
+            </div>
         </div>
     </section>
 

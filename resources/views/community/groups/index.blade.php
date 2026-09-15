@@ -279,6 +279,7 @@
 {{-- Two columns on a wide screen: the page, and its rail (the wall, your chats, the blog). --}}
 <div class="plaza-shell">
 <div class="plaza-center">
+@include('partials.ad-slot', ['placement' => 'community'])
 
 <div class="disc-head">
     <h2 class="disc-head-title">Sali ka sa usapan</h2>

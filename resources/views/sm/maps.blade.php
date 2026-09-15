@@ -192,6 +192,8 @@
 @endpush
 
 @section('content')
+    {{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
+    @include('partials.ad-slot', ['placement' => 'modules'])
     @php
         // A note's "View map" tag names the save it means; arriving with one
         // skips the shelf and opens the stage on that map.

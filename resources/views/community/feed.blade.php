@@ -406,6 +406,8 @@
     </div>
 </div>
 @include('community.partials.pymk')
+{{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
+@include('partials.ad-slot', ['placement' => 'community'])
 
 {{-- The feed: friends and kapit-bahay provinces first --}}
 <div id="feedWrap">
@@ -434,6 +436,11 @@
             <div class="lg:hidden" id="feedRailMobile">
                 @include('community.partials.wall-rail', ['withRequests' => false])
             </div>
+        @endif
+        {{-- And one every few posts down the wall, on the free plan (the
+             mother app sets how many; the rail's slot took the first). --}}
+        @if ($loop->iteration % max(3, (int) \App\Support\Ads::settings()->feedEvery) === 0)
+            @include('partials.ad-slot', ['placement' => 'community'])
         @endif
     @empty
         <div class="card p-8 text-center">

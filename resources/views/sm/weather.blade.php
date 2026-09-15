@@ -28,6 +28,8 @@
 @endpush
 
 @section('content')
+    {{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
+    @include('partials.ad-slot', ['placement' => 'modules'])
     {{-- The panels (and their tabs) are shared with the activities weather
          sheet — see the partial. This page only has to fetch and hand over. --}}
     @include('sm.partials.weather-panels')

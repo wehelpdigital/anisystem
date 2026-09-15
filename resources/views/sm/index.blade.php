@@ -635,6 +635,9 @@
         </div>
     </div>
 
+    {{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
+    @include('partials.ad-slot', ['placement' => 'schedules'])
+
     {{-- Top bar: search on its own row, the desktop CTAs on a second row below. --}}
     <div class="flex flex-col gap-3 mb-4 md:mb-6">
     @endif

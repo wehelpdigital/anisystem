@@ -105,6 +105,8 @@ Route::get('/', [App\Http\Controllers\PublicController::class, 'home'])->name('h
 Route::get('/about', [App\Http\Controllers\PublicController::class, 'about'])->name('about');
 Route::get('/features', [App\Http\Controllers\PublicController::class, 'features'])->name('features');
 Route::get('/pricing', [App\Http\Controllers\PublicController::class, 'pricing'])->name('pricing');
+// An advertisement's picture: count the click, then on to wherever it points.
+Route::get('/ads/go/{id}', [App\Http\Controllers\AdsController::class, 'go'])->whereNumber('id')->name('ads.go');
 
 // Editable legal / info pages (Privacy, Terms, Cookies, About) — public.
 Route::get('/legal/{slug}', [App\Http\Controllers\LegalController::class, 'show'])->where('slug', '[a-z0-9\-]+')->name('legal.show');

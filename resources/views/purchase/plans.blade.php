@@ -6,6 +6,8 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto">
+    {{-- The free plan carries an advertisement here too: the page that ends them. --}}
+    @include('partials.ad-slot', ['placement' => 'upgrade'])
 
     <div class="text-center mb-6 md:mb-8">
         <h2 class="text-xl md:text-2xl font-bold text-gray-900">Simple plans, full access</h2>
