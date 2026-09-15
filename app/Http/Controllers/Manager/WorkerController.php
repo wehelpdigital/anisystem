@@ -76,15 +76,28 @@ class WorkerController extends BaseScheduleController
     }
 
     /**
-     * Is there an anee.io account behind this email — and is it already one
-     * of this farm's workers?
+     * What this farm already knows about an email.
      *
-     * The Add Worker sheet's second tab: a farmer who already has a login
-     * is picked out by email and added as a worker of this farm with the
-     * name that account carries. Exact email only, and never a search —
-     * an address is something the owner already has, not something the
-     * app helps them guess; the one fact given away is that an account
-     * exists, which the grant flow has always said in its own reply.
+     * One person can work for several owners and on several of one owner's
+     * seasons, so the same address can be a worker card here, a card on
+     * another season, an anee.io account, or all three -- and a card typed
+     * fresh each time is how one person ends up as three slightly different
+     * people. Both doors of the Add Worker sheet ask here as the email is
+     * typed, and the answer says everything at once:
+     *
+     *   self       the owner's own address
+     *   onRoster   a card on THIS season already carries it (the card)
+     *   elsewhere  a card on another of this owner's seasons carries it,
+     *              with the facts on it, so they can be reused rather than
+     *              retyped
+     *   found      an anee.io account signs in with it (the account), plus
+     *              any login grant this owner already gave it
+     *
+     * Exact email only, and never a search -- an address is something the
+     * owner already has, not something the app helps them guess; the one
+     * fact given away is that an account exists, which the grant flow has
+     * always said in its own reply. `exclude` is the card being edited, so
+     * a worker's own email is not reported as a duplicate of itself.
      */
     public function account(Request $request)
     {
@@ -97,41 +110,94 @@ class WorkerController extends BaseScheduleController
         if ($email === '' || ! filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return $this->jsonFail('Enter a full email address.', 422);
         }
-        if ($email === mb_strtolower((string) $request->user()->email)) {
-            return $this->jsonFail('That is your own account.', 422);
-        }
+        $exclude = (int) $request->query('exclude', 0);
+        $facts = $this->emailFacts($schedule, $email, $exclude, $request->user());
 
-        $user = \App\Models\User::active()->whereRaw('LOWER(email) = ?', [$email])->first();
-        if (! $user) {
-            return $this->jsonOk('No account with that email.', ['data' => ['found' => false]]);
-        }
+        return $this->jsonOk($facts['found'] ? 'Account found.' : 'No account with that email.', ['data' => $facts]);
+    }
 
-        // Already on the roster, by the card that names the account or by the email.
+    /** The answer account() gives, as an array; store() and update() ask it too. */
+    private function emailFacts(\App\Models\AsCroppingSchedule $schedule, string $email, int $exclude, \App\Models\User $me): array
+    {
+        $ownerId = (int) $schedule->anisystemUserId;
+        $self = $email === mb_strtolower((string) $me->email);
+
+        // A card on this season already carrying the address.
         $onRoster = AsScheduleWorker::active()
             ->where('croppingScheduleId', $schedule->id)
             ->whereRaw('LOWER(email) = ?', [$email])
-            ->first();
-        $grant = \App\Models\WorkerGrant::active()
-            ->where('bossUserId', $schedule->anisystemUserId)
-            ->where(fn ($q) => $q->where('workerUserId', $user->id)->orWhereRaw('LOWER(invitedEmail) = ?', [$email]))
+            ->when($exclude > 0, fn ($q) => $q->where('id', '!=', $exclude))
             ->first();
 
-        return $this->jsonOk('Account found.', ['data' => [
-            'found' => true,
-            'account' => [
+        // The same person on another of this owner's seasons: the freshest
+        // card, with what was written on it.
+        $elsewhere = AsScheduleWorker::active()
+            ->join('as_cropping_schedules as s', 's.id', '=', 'as_schedule_workers.croppingScheduleId')
+            ->where('s.anisystemUserId', $ownerId)
+            ->where('s.deleteStatus', 1)
+            ->where('s.id', '!=', $schedule->id)
+            ->whereRaw('LOWER(as_schedule_workers.email) = ?', [$email])
+            ->orderByDesc('as_schedule_workers.updated_at')
+            ->select('as_schedule_workers.*', 's.title as scheduleTitle')
+            ->first();
+
+        $user = $self ? null : \App\Models\User::active()->whereRaw('LOWER(email) = ?', [$email])->first();
+        $grant = $user ? \App\Models\WorkerGrant::active()
+            ->where('bossUserId', $ownerId)
+            ->where(fn ($q) => $q->where('workerUserId', $user->id)->orWhereRaw('LOWER(invitedEmail) = ?', [$email]))
+            ->first() : null;
+
+        return [
+            'self' => $self,
+            'found' => (bool) $user,
+            'account' => $user ? [
                 'id' => (int) $user->id,
                 'name' => $user->full_name ?: $user->email,
                 'email' => (string) $user->email,
+                'phone' => $user->phone ? (string) $user->phone : null,
                 'initials' => $user->initials ?: '·',
                 'avatar' => $user->avatarPath ? \App\Support\MediaStore::url($user->avatarPath) : null,
                 'since' => $user->created_at?->format('M Y'),
-            ],
+            ] : null,
             'onRoster' => $onRoster ? (int) $onRoster->id : null,
+            'onRosterName' => $onRoster?->workerName,
+            'elsewhere' => $elsewhere ? [
+                'workerId' => (int) $elsewhere->id,
+                'scheduleId' => (int) $elsewhere->croppingScheduleId,
+                'scheduleTitle' => (string) ($elsewhere->scheduleTitle ?: 'another season'),
+                'name' => (string) $elsewhere->workerName,
+                'phone' => $elsewhere->phone,
+                'costPerHalfDay' => (float) $elsewhere->costPerHalfDay,
+                'skills' => array_values((array) ($elsewhere->skills ?? [])),
+            ] : null,
             'login' => $grant ? (string) $grant->status : null,
             // The whole grant, when there is one: the new card wears it as
             // it is, with the rights the owner already chose.
             'grant' => $grant ? \App\Support\WorkerGrantState::of($grant) + ['scheduleWorkerId' => $grant->scheduleWorkerId ? (int) $grant->scheduleWorkerId : null] : null,
-        ]]);
+        ];
+    }
+
+    /**
+     * One card per address per season. Two cards with one email are one
+     * person counted twice -- on the day's labour, on the roster, and in
+     * the login the page matches to a card by that email.
+     */
+    private function refuseDuplicateEmail(\App\Models\AsCroppingSchedule $schedule, ?string $email, int $exclude = 0): ?\Illuminate\Http\JsonResponse
+    {
+        $email = mb_strtolower(trim((string) $email));
+        if ($email === '') {
+            return null;
+        }
+        $twin = AsScheduleWorker::active()
+            ->where('croppingScheduleId', $schedule->id)
+            ->whereRaw('LOWER(email) = ?', [$email])
+            ->when($exclude > 0, fn ($q) => $q->where('id', '!=', $exclude))
+            ->first();
+        if (! $twin) {
+            return null;
+        }
+
+        return $this->jsonFail(($twin->workerName ?: 'Somebody') . ' is already on this schedule with that email — open their card instead.', 422, ['data' => ['twinId' => (int) $twin->id]]);
     }
 
     public function store(Request $request)
@@ -151,12 +217,8 @@ class WorkerController extends BaseScheduleController
             if (! $account || (int) $account->id === (int) $request->user()->id) {
                 return $this->jsonFail('That account could not be used.', 422);
             }
-            $already = AsScheduleWorker::active()
-                ->where('croppingScheduleId', $schedule->id)
-                ->whereRaw('LOWER(email) = ?', [mb_strtolower((string) $account->email)])
-                ->exists();
-            if ($already) {
-                return $this->jsonFail(($account->full_name ?: 'This person') . ' is already a worker on this schedule.', 422);
+            if ($twin = $this->refuseDuplicateEmail($schedule, $account->email)) {
+                return $twin;
             }
             $request->merge([
                 'workerName' => $account->full_name ?: $account->email,
@@ -184,6 +246,9 @@ class WorkerController extends BaseScheduleController
 
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+        if ($twin = $this->refuseDuplicateEmail($schedule, $request->input('email'))) {
+            return $twin;
         }
 
         // Priority is no longer edited; append new workers to the end so the
@@ -235,6 +300,9 @@ class WorkerController extends BaseScheduleController
 
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+        }
+        if ($twin = $this->refuseDuplicateEmail($schedule, $request->input('email'), (int) $worker->id)) {
+            return $twin;
         }
 
         $worker->update([

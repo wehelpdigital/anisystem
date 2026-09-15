@@ -80,11 +80,14 @@
             <p class="text-sm text-gray-500">Somebody who already logs in to anee.io joins as one of your workers with the name and email their account carries.</p>
             <div>
                 <label for="waEmail" class="form-label">Their account email <span class="text-red-500">*</span></label>
-                <div class="flex gap-2">
+                {{-- No Find button: the answer arrives as the address is
+                     typed, once it is a whole one. The spinner in the corner
+                     says the question is out. --}}
+                <div class="wa-field">
                     <input type="email" id="waEmail" maxlength="191" class="form-input" placeholder="e.g. juan@email.com" autocomplete="off" inputmode="email">
-                    <button type="button" id="waFind" class="btn btn-white shrink-0">Find</button>
+                    <span class="wa-spin" id="waSpin" hidden aria-hidden="true"></span>
                 </div>
-                <p class="form-hint">The exact email they sign in with.</p>
+                <p class="form-hint">The exact email they sign in with — it is looked up as you type.</p>
             </div>
             {{-- What the search found: a face and a name, or a plain no. --}}
             <div id="waResult" hidden></div>
@@ -106,6 +109,12 @@
                 <input type="tel" id="workerPhone" maxlength="32" class="form-input" placeholder="e.g. 0917 123 4567">
             </div>
         </div>
+        {{-- What the farm already knows about the address, said as it is
+             typed (see wlEmailAsk): a card on this season already carrying
+             it (a duplicate, and the save is refused), the same person on
+             another of your seasons (their facts, one tap to reuse), or an
+             anee.io account (the other door links their login). --}}
+        <div id="wlEmailSay" class="wl-email-say" hidden></div>
         <p class="form-hint -mt-2">Email is used to send this worker today's or tomorrow's plan from Quick Share.</p>
 
         {{-- A new face the phonebook has not met.
@@ -447,6 +456,32 @@
     .wa-none { padding:.8rem .9rem; border-radius:1rem; border:1px dashed var(--color-gray-300);
         font-size:.85rem; color:var(--color-gray-600); }
     .wa-none button { margin-top:.5rem; }
+    .wa-field { position:relative; }
+    .wa-field .form-input { padding-right:2.4rem; }
+    .wa-spin { position:absolute; right:.85rem; top:50%; width:1rem; height:1rem; margin-top:-.5rem;
+        border-radius:999px; border:2px solid var(--color-brand-200); border-top-color:var(--color-brand-600);
+        animation:waSpin .8s linear infinite; }
+    @keyframes waSpin { to { transform:rotate(360deg); } }
+    /* THE ADDRESS, KNOWN. A line under the email field: the colour says
+       whether it is a stop (already on this season), a hand (the same
+       person elsewhere, or an account), and the button beside it does the
+       one thing worth doing about it. Unrolls the way the phonebook offer
+       does. */
+    .wl-email-say { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem .75rem;
+        margin-top:-.35rem; padding:.6rem .8rem; border-radius:.85rem; font-size:.78rem; line-height:1.45;
+        border:1px solid var(--color-brand-200); background:var(--color-brand-50); color:var(--color-gray-700);
+        animation:wa-arrive .3s var(--ease-house) both; }
+    .wl-email-say b { color:var(--color-gray-900); }
+    .wl-email-say .btn { margin-left:auto; }
+    .wl-email-say.is-stop { border-color:#f7d4cf; background:#fdf0ee; color:#9a1d13; }
+    .wl-email-say.is-stop b { color:#7a1a12; }
+    .wl-email-say.is-note { border-color:var(--color-gray-200); background:var(--color-gray-50); }
+    html.dark .wl-email-say { background:rgb(107 159 61 / .12); border-color:#2f4d24; color:#cfe6b8; }
+    html.dark .wl-email-say b { color:#e8efe1; }
+    html.dark .wl-email-say.is-stop { background:rgb(180 35 24 / .14); border-color:rgb(243 165 156 / .28); color:#f3a59c; }
+    html.dark .wl-email-say.is-stop b { color:#ffd3cc; }
+    html.dark .wl-email-say.is-note { background:#151b12; border-color:#2b3a1c; color:#a5b89a; }
+    @media (prefers-reduced-motion:reduce) { .wa-spin { animation:none; } .wl-email-say { animation:none; } }
     html.dark .wa-card { background:rgb(107 159 61 / .12); border-color:#2f4d24; }
     html.dark .wa-face { background:#2f4d24; color:#cfe6b8; }
     html.dark .wa-who b { color:#e8efe1; }
@@ -662,6 +697,7 @@ const __init = () => {
         editingWorker = w;
         paintLogin(w);
         toContactReset();
+        wlEmailReset();
         // Two doors for a new worker; an existing card is one card.
         document.getElementById('workerTabs').hidden = !!w;
         waReset();
@@ -726,6 +762,11 @@ const __init = () => {
 
     function waPaint(d) {
         const out = document.getElementById('waResult');
+        if (d.self) {
+            out.innerHTML = `<p class="wa-say is-stop">That is your own account — you are the owner here, not a worker.</p>`;
+            out.hidden = false;
+            return;
+        }
         if (!d.found) {
             out.innerHTML = `<div class="wa-none">No anee.io account signs in with that email.
                 <button type="button" class="btn btn-white btn-sm" id="waAsNew">Add them as a new worker instead</button></div>`;
@@ -754,34 +795,143 @@ const __init = () => {
         out.hidden = false;
     }
 
+    const EMAIL_RX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    let waDebounce;
     async function waFind() {
         const email = document.getElementById('waEmail').value.trim();
-        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { toast('Enter their full email address.', 'error'); document.getElementById('waEmail').focus(); return; }
-        const btn = document.getElementById('waFind');
+        if (!EMAIL_RX.test(email)) return;
+        const spin = document.getElementById('waSpin');
         const mine = ++waSeq;
-        btn.disabled = true;
+        spin.hidden = false;
         try {
             const res = await api(`${ACCOUNT_URL}?scheduleId=${SCHEDULE_ID}&email=${encodeURIComponent(email)}`);
             if (mine !== waSeq) return;
             waFound = res.data;
             waPaint(res.data);
-            document.getElementById('addAccountBtn').disabled = !(waFound.found && !waFound.onRoster);
+            document.getElementById('addAccountBtn').disabled = !(waFound.found && !waFound.self && !waFound.onRoster);
         } catch (err) {
             if (mine !== waSeq) return;
             waFound = null;
             document.getElementById('addAccountBtn').disabled = true;
             toast(err.message, 'error');
-        } finally { btn.disabled = false; }
+        } finally { if (mine === waSeq) spin.hidden = true; }
     }
-    document.getElementById('waFind').addEventListener('click', waFind);
-    document.getElementById('waEmail').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); waFind(); } });
-    // A changed email is a new question; the old answer must not add the wrong person.
+    document.getElementById('waEmail').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); clearTimeout(waDebounce); waFind(); } });
+    /* Asked as the address is typed, once it is a whole one, after the
+       typing pauses. A changed email is a new question, so the old answer
+       goes at once -- it must not add the wrong person. */
     document.getElementById('waEmail').addEventListener('input', () => {
         waSeq++;
         waFound = null;
         document.getElementById('addAccountBtn').disabled = true;
         const out = document.getElementById('waResult');
         out.hidden = true; out.innerHTML = '';
+        document.getElementById('waSpin').hidden = true;
+        clearTimeout(waDebounce);
+        if (EMAIL_RX.test(document.getElementById('waEmail').value.trim())) waDebounce = setTimeout(waFind, 450);
+    });
+
+    /* ---------------- The address, known: the new-worker form ------------
+     *
+     * One person works for several owners and on several seasons, and a
+     * card typed fresh each time is how they end up as three slightly
+     * different people. So as the email is typed here the same question
+     * the account tab asks is asked, and the answer sits under the field:
+     * a card on THIS season already carrying it is a duplicate (said in
+     * red, and the save is refused until it changes); the same person on
+     * another of your seasons is one tap from being reused as they are;
+     * an anee.io account is one tap from the other door, which links
+     * their login. Editing a card excludes the card itself. */
+    let wlEmailSeq = 0;
+    let wlEmailDebounce;
+    let wlEmailBlocked = false;
+    const wlEmailBox = () => document.getElementById('wlEmailSay');
+
+    function wlEmailReset() {
+        clearTimeout(wlEmailDebounce);
+        wlEmailSeq++;
+        wlEmailBlocked = false;
+        const box = wlEmailBox();
+        if (box) { box.hidden = true; box.innerHTML = ''; box.className = 'wl-email-say'; }
+        document.getElementById('saveWorkerBtn').disabled = false;
+    }
+
+    function wlEmailPaint(d, editing) {
+        const box = wlEmailBox();
+        if (!box) return;
+        wlEmailBlocked = false;
+        let html = '';
+        let tone = '';
+        if (d.onRoster) {
+            tone = 'is-stop';
+            wlEmailBlocked = true;
+            html = `<span><b>${escapeHtml(d.onRosterName || 'Somebody')}</b> is already on this schedule with that email.</span>
+                <button type="button" class="btn btn-white btn-sm" data-wl-open="${d.onRoster}">Open their card</button>`;
+        } else if (d.self) {
+            tone = 'is-note';
+            html = `<span>That is your own email. A card for yourself needs no email — the plan is already yours.</span>`;
+        } else if (d.found && !editing) {
+            html = `<span><b>${escapeHtml(d.account.name)}</b> signs in to anee.io with that email. Add them from the account tab and their login links to this farm.</span>
+                <button type="button" class="btn btn-primary btn-sm" data-wl-account>Use their account</button>`;
+        } else if (d.found && editing) {
+            tone = 'is-note';
+            html = `<span>That email signs in to <b>${escapeHtml(d.account.name)}</b>'s anee.io account${d.login === 'active' ? ', which already has access to your farm' : ''}.</span>`;
+        } else if (d.elsewhere) {
+            html = `<span>You already have <b>${escapeHtml(d.elsewhere.name)}</b> on <b>${escapeHtml(d.elsewhere.scheduleTitle)}</b>.</span>
+                <button type="button" class="btn btn-white btn-sm" data-wl-reuse>Use the same details</button>`;
+        }
+        document.getElementById('saveWorkerBtn').disabled = wlEmailBlocked;
+        if (!html) { box.hidden = true; box.innerHTML = ''; return; }
+        box.className = 'wl-email-say' + (tone ? ' ' + tone : '');
+        box.innerHTML = html;
+        box.hidden = false;
+        box.querySelector('[data-wl-open]')?.addEventListener('click', () => {
+            const twin = WORKERS.find((w) => String(w.id) === String(d.onRoster));
+            closeSheet('workerSheet');
+            if (twin) setTimeout(() => openWorkerSheet(twin), 350);
+        });
+        box.querySelector('[data-wl-account]')?.addEventListener('click', () => {
+            // The address carries over, and the other door asks its question at once.
+            const wa = document.getElementById('waEmail');
+            wa.value = document.getElementById('workerEmail').value.trim();
+            showWorkerTab('account');
+            wa.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+        box.querySelector('[data-wl-reuse]')?.addEventListener('click', () => {
+            const e = d.elsewhere;
+            document.getElementById('workerName').value = e.name || document.getElementById('workerName').value;
+            if (e.phone && !document.getElementById('workerPhone').value.trim()) document.getElementById('workerPhone').value = e.phone;
+            if (e.costPerHalfDay && !document.getElementById('workerCost').value) document.getElementById('workerCost').value = e.costPerHalfDay;
+            const skills = (e.skills || []).map(String);
+            if (skills.length) document.querySelectorAll('#workerSkills .chip').forEach((c) => c.classList.toggle('is-selected', skills.includes(c.getAttribute('data-value'))));
+            toast(`${e.name}'s details from ${e.scheduleTitle} are filled in.`);
+            box.hidden = true;
+        });
+    }
+
+    async function wlEmailAsk() {
+        const box = wlEmailBox();
+        if (!box) return;
+        const email = document.getElementById('workerEmail').value.trim();
+        const editingId = document.getElementById('workerId').value;
+        if (!EMAIL_RX.test(email)) { wlEmailReset(); return; }
+        const mine = ++wlEmailSeq;
+        try {
+            const res = await api(`${ACCOUNT_URL}?scheduleId=${SCHEDULE_ID}&email=${encodeURIComponent(email)}${editingId ? '&exclude=' + encodeURIComponent(editingId) : ''}`);
+            if (mine !== wlEmailSeq) return;
+            wlEmailPaint(res.data, !!editingId);
+        } catch (_) {
+            if (mine === wlEmailSeq) { wlEmailBlocked = false; document.getElementById('saveWorkerBtn').disabled = false; }
+        }
+    }
+    document.getElementById('workerEmail').addEventListener('input', () => {
+        clearTimeout(wlEmailDebounce);
+        wlEmailSeq++;
+        // The old answer is about an old address: it goes at once, and the
+        // save is free again until the new answer says otherwise.
+        wlEmailBlocked = false;
+        document.getElementById('saveWorkerBtn').disabled = false;
+        wlEmailDebounce = setTimeout(wlEmailAsk, 450);
     });
 
     document.getElementById('addAccountBtn').addEventListener('click', async (e) => {
@@ -1133,6 +1283,11 @@ const __init = () => {
         if (!body.workerName) {
             toast('Worker name is required.', 'error');
             document.getElementById('workerName').focus();
+            return;
+        }
+        if (wlEmailBlocked) {
+            toast('Somebody on this schedule already has that email — open their card instead.', 'error');
+            document.getElementById('workerEmail').focus();
             return;
         }
 
