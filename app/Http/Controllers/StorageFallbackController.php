@@ -2,38 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+
 /**
- * Serves runtime uploads where public/storage cannot.
+ * GET /storage/{path}: a file on the public disk, from wherever that disk
+ * lives now.
  *
- * On the Railway deployment public/storage is a real directory committed to
- * git (Windows checkouts cannot commit the symlink, and storage:link refuses
- * to replace a directory), so it only ever contains the files that were
- * present at deploy time. Anything uploaded while the app runs — AI photos,
- * avatars, note images — lands in storage/app/public and simply 404s.
- *
- * The web server still serves everything that exists under public/storage
- * without touching PHP; only the misses fall through to this route, which
- * streams the file from the disk the uploads actually live on. Locally the
- * symlink handles everything and this route never fires.
+ * On a host with a volume the disk is a directory and the file is streamed
+ * from it (the framework's own /storage serving is switched off in
+ * config/filesystems.php; see the note there). On a bucket (MEDIA_DISK=s3)
+ * the browser is sent on to the object -- a 301 to its public address, or a
+ * signed two-hour link while the bucket has no public address -- so any
+ * /storage/<path> ever handed out keeps working.
  */
 class StorageFallbackController extends Controller
 {
     public function __invoke(string $path)
     {
-        // Wherever the public disk actually is — storage/app/public in
-        // development, the mounted volume in production. Reading it from the
-        // disk config rather than assuming keeps this working after a volume
-        // is attached, which is exactly when it matters most.
+        if (config('filesystems.disks.public.driver') === 's3') {
+            $path = ltrim(str_replace(chr(92), '/', $path), '/');
+            if ($path === '' || str_contains($path, '..')) {
+                abort(404);
+            }
+            $disk = Storage::disk('public');
+            if (config('filesystems.disks.public.url')) {
+                return redirect()->away($disk->url($path), 301, ['Cache-Control' => 'public, max-age=31536000, immutable']);
+            }
+            if (! $disk->exists($path)) {
+                abort(404);
+            }
+
+            return redirect()->away($disk->temporaryUrl($path, now()->addHours(2)), 302, ['Cache-Control' => 'private, max-age=3600']);
+        }
+
         $base = realpath(config('filesystems.disks.public.root', storage_path('app/public')));
 
         // realpath resolves any ../ tricks; anything that escapes the public
-        // disk — or points at nothing — is a plain 404, same as a bad URL.
+        // disk -- or points at nothing -- is a plain 404, same as a bad URL.
         $full = $base ? realpath($base . DIRECTORY_SEPARATOR . $path) : false;
         if ($full === false || ! str_starts_with($full, $base . DIRECTORY_SEPARATOR) || ! is_file($full)) {
             abort(404);
         }
 
-        // Uploads get random names, so a URL's content never changes — cache hard.
+        // Uploads get random names, so a URL's content never changes: cache hard.
         return response()->file($full, ['Cache-Control' => 'public, max-age=31536000, immutable']);
     }
 }

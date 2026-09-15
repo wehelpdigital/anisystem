@@ -308,9 +308,7 @@ class AsScheduleActivity extends BaseModel
      */
     public function imageAbsolutePath(): ?string
     {
-        if (empty($this->imagePath)) return null;
-        $full = storage_path('app/public/' . ltrim($this->imagePath, '/'));
-        return file_exists($full) ? $full : null;
+        return \App\Support\MediaStore::localCopy($this->imagePath);
     }
 
     /**

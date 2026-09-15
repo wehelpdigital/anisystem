@@ -43,18 +43,21 @@ class MediaOptimizer
 
         $stem = Str::uuid()->toString();
         $rel = trim($dir, '/') . '/' . $stem . '.webp';
-        $abs = Storage::disk('public')->path($rel);
-        $absDir = dirname($abs);
-        if (! is_dir($absDir)) {
-            @mkdir($absDir, 0775, true);
-        }
-
+        /* Encoded to a temp file and handed to the disk, rather than written
+           into the disk's directory by hand -- the disk is a bucket on a host
+           with nothing to keep files on, and a bucket has no directory. */
+        $tmp = tempnam(sys_get_temp_dir(), 'webp');
         imagepalettetotruecolor($img);
         imagealphablending($img, false);
         imagesavealpha($img, true);
-        imagewebp($img, $abs, $quality);
+        imagewebp($img, $tmp, $quality);
         imagedestroy($img);
-
+        $stream = fopen($tmp, 'r');
+        Storage::disk('public')->writeStream($rel, $stream);
+        if (is_resource($stream)) {
+            fclose($stream);
+        }
+        @unlink($tmp);
         return $rel;
     }
 

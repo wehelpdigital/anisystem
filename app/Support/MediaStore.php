@@ -196,6 +196,40 @@ class MediaStore
         return Str::startsWith($url, $localBase) ? Str::after($url, $localBase) : null;
     }
 
+    /**
+     * A real file on this machine for a stored path, however it is kept --
+     * the disk's own file where the disk is a directory, else a fresh
+     * download into a temp file. For the PDF renderers, which embed the
+     * bytes; null when the file cannot be had. The caller owns the temp file.
+     */
+    public static function localCopy(?string $path): ?string
+    {
+        if (blank($path)) {
+            return null;
+        }
+        if (! self::isRemote($path) && config('filesystems.disks.public.driver') === 'local') {
+            $abs = Storage::disk('public')->path($path);
+
+            return is_file($abs) ? $abs : null;
+        }
+        $url = self::url($path);
+        if (blank($url)) {
+            return null;
+        }
+        try {
+            $res = Http::timeout(30)->get($url);
+            if (! $res->successful()) {
+                return null;
+            }
+            $tmp = tempnam(sys_get_temp_dir(), 'med');
+            file_put_contents($tmp, $res->body());
+
+            return $tmp;
+        } catch (\Throwable $e) {
+            return null;
+        }
+    }
+
     /** The path without its marker, as the mother app knows it. */
     public static function strip(string $path): string
     {

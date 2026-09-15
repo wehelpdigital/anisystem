@@ -60,7 +60,29 @@ return [
             'report' => false,
         ],
 
-        'public' => [
+        /*
+         * On a host with no disk to keep (Laravel Cloud), MEDIA_DISK=s3 puts
+         * this disk on the mother app's bucket, under its own prefix -- so
+         * every writer that stores here directly (the photo optimiser, the
+         * video and reel encoders, voice notes, protocols, group covers)
+         * lands somewhere that outlives the deploy, and url() hands back the
+         * bucket's public address. Nothing else changes: uploads that go
+         * through the mother's media API keep doing so (mm: paths), and with
+         * MEDIA_DISK unset this is the local disk it always was.
+         */
+        'public' => env('MEDIA_DISK') === 's3' ? [
+            'driver' => 's3',
+            'key' => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_DEFAULT_REGION', 'auto'),
+            'bucket' => env('AWS_BUCKET'),
+            'root' => trim((string) env('MEDIA_ROOT', 'anisystem/client'), '/'),
+            'url' => env('MEDIA_SIGNED_LINKS') ? null : (env('AWS_URL') ?: null),
+            'endpoint' => env('AWS_ENDPOINT'),
+            'use_path_style_endpoint' => (bool) env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'throw' => false,
+            'report' => true,
+        ] : [
             'driver' => 'local',
             'root' => $publicRoot,
             'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',

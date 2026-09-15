@@ -47,9 +47,7 @@ class AsScheduleAttachment extends BaseModel
      */
     public function getAbsolutePath(): ?string
     {
-        if (!$this->storagePath) return null;
-        $abs = Storage::disk('public')->path($this->storagePath);
-        return file_exists($abs) ? $abs : null;
+        return \App\Support\MediaStore::localCopy($this->storagePath);
     }
 
     public function isImage(): bool

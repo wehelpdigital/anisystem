@@ -324,7 +324,8 @@ class VideoPoster
     /** A path ffmpeg can open: a real file when there is one, else a URL. */
     private static function readableInput(string $video): ?string
     {
-        if (! MediaStore::isRemote($video) && Storage::disk('public')->exists($video)) {
+        // A real file only where the disk is one; on a bucket ffmpeg reads the URL.
+        if (! MediaStore::isRemote($video) && config('filesystems.disks.public.driver') === 'local' && Storage::disk('public')->exists($video)) {
             return Storage::disk('public')->path($video);
         }
 
