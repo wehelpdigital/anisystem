@@ -1,8 +1,9 @@
 {{-- ANEE, AT WORK — the wait every AI run wears.
 
-     A full-screen veil with her face in a ring: the thinking clip while the
-     model works, and when the answer lands a crossfade to her pointing at a
-     lightbulb or blowing a kiss (drawn at random), which plays out before
+     A full-screen veil with her face in a ring: her thinking, or searching
+     with a magnifier (drawn at random), while the model works, and when the
+     answer lands a crossfade to her pointing at a lightbulb or blowing a
+     kiss (drawn at random again), which plays out before
      the veil lifts and the result is shown. The clips are square crops of
      the emoji videos, silent, with no controls and nothing to tap: they are
      a face, not a player. Under the ring, what she is doing right now (the
@@ -85,6 +86,13 @@
     const line = document.getElementById('aneeWaitLine');
     const sub = document.getElementById('aneeWaitSub');
     const CLIPS = [@json(asset('videos/anee/lightbulb.mp4')), @json(asset('videos/anee/kiss.mp4'))];
+    /* The wait itself is drawn at random too (the owner's ask, 2026-09-15):
+       her thinking, or her searching with the magnifier -- each with its
+       own poster so the ring never opens on the wrong face. */
+    const THINKS = [
+        { src: @json(asset('videos/anee/thinking.mp4')), poster: @json(asset('videos/anee/thinking.jpg')) },
+        { src: @json(asset('videos/anee/searching.mp4')), poster: @json(asset('videos/anee/searching.jpg')) },
+    ];
     const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let lineTimer = null;
     let pending = false;
@@ -120,8 +128,18 @@
             document.documentElement.classList.add('aw-lock');
             void veil.offsetWidth;
             veil.classList.add('is-on');
-            think.currentTime = 0;
-            play(think);
+            const pick = THINKS[Math.floor(Math.random() * THINKS.length)];
+            if (think.getAttribute('src') !== pick.src) {
+                // A new clip: play once it can, not into the load that
+                // replaces it (that play() is aborted and she stands still).
+                think.setAttribute('poster', pick.poster);
+                think.setAttribute('src', pick.src);
+                think.addEventListener('canplay', () => { if (pending) play(think); }, { once: true });
+                think.load();
+            } else {
+                think.currentTime = 0;
+                play(think);
+            }
         },
         /* The answer is in: her face lights up, the clip plays out, and
            only then does the veil lift -- the result is drawn underneath
@@ -137,7 +155,7 @@
                 const lift = () => {
                     veil.classList.remove('is-on');
                     document.documentElement.classList.remove('aw-lock');
-                    setTimeout(() => { veil.hidden = true; try { think.pause(); done.pause(); } catch (_) {} resolve(); }, reduce() ? 0 : 360);
+                    setTimeout(() => { if (!pending) { veil.hidden = true; try { think.pause(); done.pause(); } catch (_) {} } resolve(); }, reduce() ? 0 : 360);
                 };
                 if (reduce()) { lift(); return; }
                 const src = CLIPS[Math.floor(Math.random() * CLIPS.length)];
@@ -160,7 +178,8 @@
             clearInterval(lineTimer);
             veil.classList.remove('is-on');
             document.documentElement.classList.remove('aw-lock');
-            setTimeout(() => { veil.hidden = true; try { think.pause(); } catch (_) {} }, 360);
+            // Not if she was asked again in the meantime.
+            setTimeout(() => { if (pending) return; veil.hidden = true; try { think.pause(); } catch (_) {} }, 360);
         },
         line(text) { clearInterval(lineTimer); line.textContent = text || ''; },
     };
