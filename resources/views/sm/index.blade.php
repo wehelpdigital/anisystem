@@ -45,19 +45,6 @@
            rainy sky is a second thing shouting over the first. */
         .sch-hero-left { display: flex; align-items: center; gap: .85rem; min-width: 0; }
 
-        /* Whose farm this is. A quiet strip above the greeting — it is a
-           fact about the page, not an alarm, so it reads as a label until you
-           are somewhere that is not your own, where it takes the brand tint. */
-            margin-bottom: .6rem; padding: .45rem .7rem; border-radius: .7rem;
-            background: var(--color-gray-100); border: 1px solid var(--color-gray-200); }
-            color: var(--color-gray-500); }
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-            padding: .1rem .45rem; border-radius: 999px; background: var(--color-white); }
-            padding: .15rem .5rem; border-radius: 999px; border: 1px solid var(--color-brand-200);
-            background: var(--color-white); cursor: pointer;
-            transition: background .28s cubic-bezier(.22,1,.36,1); }
-            padding: .6rem .7rem; border-radius: .7rem; cursor: pointer;
-            transition: background .28s cubic-bezier(.22,1,.36,1); }
         /* A drawn mark, not an emoji: platform emoji arrive as square little
            pictures and sat in the round badge like a photo in a porthole.
            The stroke icons match every other icon in the app. */
