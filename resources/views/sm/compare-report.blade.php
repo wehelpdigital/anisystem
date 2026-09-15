@@ -149,12 +149,8 @@
         <div id="cpSavedReport" class="mt-4" hidden></div>
     </div>
 
-    <div class="cp-wait" id="cpWait" aria-live="polite">
-        <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" style="width:3rem;height:3rem;border-radius:999px;object-fit:cover;">
-        <span class="spin" aria-hidden="true"></span>
-        <p style="font-weight:700;color:var(--color-gray-800)">Reading both reports…</p>
-        <p class="stay">Please stay on this screen — leaving loses this run.</p>
-    </div>
+    {{-- The wait: Anee's face at work, shared by every AI run. --}}
+    @include('sm.partials.anee-wait')
 </div>
 @endsection
 
@@ -287,7 +283,8 @@ const __init = () => {
         const withAi = !!$id('cpWithAi')?.checked && !$id('cpAiWrap').hidden;
         const btn = e.currentTarget;
         btn.disabled = true;
-        if (withAi) $id('cpWait').classList.add('is-on');
+        if (withAi) window.aneeWait.show({ title: 'Anee is reading both reports…', lines: ['Lining the two up…', 'Weighing what changed between them…', 'Writing the comparison…'], sub: 'Half a minute, usually.' });
+        let landed = false;
         try {
             const res = await api(U.gen, { method: 'POST', body: {
                 scheduleId: @json($schedule->id), aId: SEL.a.id, bId: SEL.b.id, withAi: withAi ? 1 : 0,
@@ -304,11 +301,13 @@ const __init = () => {
             drawCompare($id('cpReport'), data.report, data, 'fresh');
             $id('cpReport').hidden = false;
             $id('cpWizard').hidden = true;
+            landed = true;
+            if (withAi) await window.aneeWait.done({ title: 'Done!', line: `${OPTS.price} credits used — saved to the shelf.` });
             toast(withAi ? `Done — ${OPTS.price} credits used. Saved to the shelf.` : 'Comparison saved to the shelf.');
         } catch (err) { toast(err.message, 'error'); }
         finally {
             btn.disabled = !(SEL.a && SEL.b);
-            $id('cpWait').classList.remove('is-on');
+            if (withAi && !landed) window.aneeWait.fail();
         }
     });
 

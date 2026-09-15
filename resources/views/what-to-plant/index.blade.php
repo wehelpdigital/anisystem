@@ -282,11 +282,8 @@
                 <p class="text-xs text-gray-400 mt-2 text-center" id="wpRunFine"></p>
             </section>
 
-            <div class="wtp-wait" id="wpWait">
-                <span class="w-spin"></span>
-                <p><b>Reading your ground…</b><br>Soil, water, the region's climate, and every crop family a Philippine farm weighs. Half a minute, usually.</p>
-                <p class="w-stay">Please stay on this screen — leaving it loses this run.</p>
-            </div>
+            {{-- The wait: Anee's face at work, shared by every AI run. --}}
+            @include('sm.partials.anee-wait')
 
             <div class="wtp-dots" id="wpDots"></div>
             <div class="wtp-nav" id="wpNav">
@@ -449,7 +446,7 @@
         if (!stepReady()) return;
         const wiz = $id('wpWiz');
         wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = 'none');
-        $id('wpWait').classList.add('is-on');
+        window.aneeWait.show({ title: 'Anee is reading your ground…', lines: ['Soil, water and the region\'s climate…', 'Weighing every crop family a Philippine farm grows…', 'Ranking what fits, and what to avoid…'], sub: 'Half a minute, usually.' });
         $id('wpReport').hidden = true;
         let landed = false;
         try {
@@ -472,11 +469,12 @@
             OPT.balance = data.balance;
             landed = true;
             drawReport($id('wpReport'), { report: data.report, params: data.params, charged: data.charged, savedId: data.savedId }, 'fresh');
+            await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used — saved to the shelf.` });
             toast(`Done — ${data.charged} credits used. Saved to the shelf.`);
         } catch (err) {
             toast(err.message, 'error');
         } finally {
-            $id('wpWait').classList.remove('is-on');
+            if (!landed) window.aneeWait.fail();
             wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = '');
             show(step);
             if (landed) { wiz.hidden = true; $id('wpQuote').hidden = true; }

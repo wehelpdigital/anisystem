@@ -59,26 +59,8 @@
     .ar-run:disabled { opacity: .55; animation: none; }
     @keyframes arTide { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
 
-    /* The veil, while she works — near opaque, whole page, stay put. */
-    .ar-wait { position: fixed; inset: 0; z-index: 110; display: flex; flex-direction: column;
-        align-items: center; justify-content: center; gap: .6rem; padding: 2rem 1.2rem; text-align: center;
-        background: rgb(250 250 248 / .98); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-        opacity: 0; visibility: hidden; pointer-events: none;
-        transition: opacity .28s cubic-bezier(.22,1,.36,1), visibility 0s linear .28s; }
-    .ar-wait.is-on { opacity: 1; visibility: visible; pointer-events: auto; transition-delay: 0s; }
-    .ar-wait .face { width: 3.2rem; height: 3.2rem; border-radius: 999px; object-fit: cover;
-        animation: arBreathe 2.2s ease-in-out infinite; }
-    @keyframes arBreathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
-    .ar-wait .spin { width: 2.2rem; height: 2.2rem; border-radius: 999px; border: 3px solid var(--color-brand-200);
-        border-top-color: var(--color-brand-600); animation: arSpin .8s linear infinite; }
-    @keyframes arSpin { to { transform: rotate(360deg); } }
-    .ar-wait p { font-size: .85rem; color: var(--color-gray-500); max-width: 24rem; }
-    .ar-wait .line { font-weight: 700; color: var(--color-gray-800); min-height: 1.4em; transition: opacity .28s ease; }
-    .ar-wait .stay { font-size: .8rem; font-weight: 700; color: #b45309; }
-    html.dark .ar-wait { background: rgb(13 17 9 / .98); }
-    html.dark .ar-wait .line { color: #e8efe1; }
-    html.dark .ar-wait .stay { color: #fbbf24; }
-    @media (prefers-reduced-motion: reduce) { .ar-wait, .ar-run, .ar-wait .face { transition: none; animation: none; } }
+    /* The wait while she works is the shared one -- sm/partials/anee-wait. */
+    @media (prefers-reduced-motion: reduce) { .ar-run { transition: none; animation: none; } }
 
     /* The report, drawn */
     .ar-report { display: grid; gap: .9rem; }
@@ -213,14 +195,8 @@
         <div class="ar-report mt-4" id="arSavedReport" hidden></div>
     </div>
 
-    {{-- The veil --}}
-    <div class="ar-wait" id="arWait" aria-live="polite">
-        <img class="face" src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="">
-        <span class="spin" aria-hidden="true"></span>
-        <p class="line" id="arWaitLine">Reading the whole season…</p>
-        <p>This is a deep read — a few minutes is normal.</p>
-        <p class="stay">Please stay on this screen and don't close the page — leaving loses this run.</p>
-    </div>
+    {{-- The wait: Anee's face at work, shared by every AI run. --}}
+    @include('sm.partials.anee-wait')
 </div>
 @endsection
 
@@ -327,26 +303,15 @@ const __init = () => {
     const LINES = KIND === 'sofar'
         ? ['Reading the season as it stands…', 'Weighing the work against the crop\'s clock…', 'Checking the sky\'s recent records…', 'Sizing up the risks…', 'Writing the what\'s-next list…']
         : ['Reading the whole season…', 'Adding up the money…', 'Checking the sky\'s records and ENSO…', 'Reading your notes and photos…', 'Comparing with your past seasons…', 'Writing it up, the honest way…'];
-    let lineTimer = null;
-    function veil(on) {
-        $id('arWait').classList.toggle('is-on', on);
-        clearInterval(lineTimer);
-        if (on) {
-            let i = 0;
-            $id('arWaitLine').textContent = LINES[0];
-            lineTimer = setInterval(() => {
-                i = (i + 1) % LINES.length;
-                const el = $id('arWaitLine');
-                el.style.opacity = 0;
-                setTimeout(() => { el.textContent = LINES[i]; el.style.opacity = 1; }, 280);
-            }, 5200);
-        }
-    }
-
     /* ---------------- generate + poll ---------------- */
     $id('arRunBtn').addEventListener('click', async () => {
         if (!STATUS || !STATUS.ready) return;
-        veil(true);
+        window.aneeWait.show({
+            title: KIND === 'sofar' ? 'Anee is reading the season so far…' : 'Anee is reading the whole season…',
+            lines: LINES,
+            sub: 'This is a deep read — a few minutes is normal.',
+        });
+        let landed = false;
         try {
             const res = await api(U.generate, { method: 'POST', body: { scheduleId: SCHEDULE_ID, kind: KIND, lotId: LOT_ID || null } });
             let data = res.data;
@@ -364,11 +329,14 @@ const __init = () => {
             $id('arReport').hidden = false;
             $id('arReadyCard').hidden = true;
             $id('arQuote').hidden = true;
+            landed = true;
+            // Her face lights up over the finished report; the veil lifts after.
+            await window.aneeWait.done({ title: 'Done!', line: `${data.credits} credits used — saved to the shelf.` });
             toast(`Done — ${data.credits} credits used. Saved to the shelf.`);
         } catch (err) {
             toast(err.message, 'error');
         } finally {
-            veil(false);
+            if (!landed) window.aneeWait.fail();
         }
     });
 

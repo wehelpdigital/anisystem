@@ -355,11 +355,8 @@
                 <p class="text-xs text-gray-400 mt-2 text-center" id="wtpRunFine"></p>
             </section>
 
-            <div class="wtp-wait" id="wtpWait">
-                <span class="w-spin"></span>
-                <p><b>Reading the climate for your field…</b><br>Typhoon seasonality, the wet and dry rhythm, and your crop's own calendar. Half a minute, usually.</p>
-                <p class="w-stay">Please stay on this screen — leaving it loses this run.</p>
-            </div>
+            {{-- The wait: Anee's face at work, shared by every AI run. --}}
+            @include('sm.partials.anee-wait')
 
             <div class="wtp-dots" id="wtpDots"></div>
             <div class="wtp-nav" id="wtpNav">
@@ -629,7 +626,7 @@
         if (!stepReady()) return;
         const wiz = $id('wtpWiz');
         wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = 'none');
-        $id('wtpWait').classList.add('is-on');
+        window.aneeWait.show({ title: 'Anee is reading the climate for your field…', lines: ['Typhoon seasonality and the wet-dry rhythm…', 'Your crop\'s own calendar against it…', 'Finding the window, and the weeks to avoid…'], sub: 'Half a minute, usually.' });
         $id('wtpReport').hidden = true;
         let landed = false;
         try {
@@ -655,12 +652,13 @@
             OPT.balance = data.balance;
             landed = true;
             drawReport($id('wtpReport'), LAST, 'fresh');
+            await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used.` });
             toast(`Done — ${data.charged} credits used.`);
             loadSavedQuietly();
         } catch (err) {
             toast(err.message, 'error');
         } finally {
-            $id('wtpWait').classList.remove('is-on');
+            if (!landed) window.aneeWait.fail();
             wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = '');
             show(step);
             // The report has the floor: the form and its price bow out until
