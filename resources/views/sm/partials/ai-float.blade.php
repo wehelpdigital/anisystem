@@ -491,7 +491,14 @@
        fringes) makes it a place you are IN rather than a widget in the way.
        position:fixed escapes the .ai-float container, which stays where it
        is; its z-index still scopes the whole thing above the page. */
-    html.ai-float-open, html.ai-float-open body { overflow: hidden; height: 100%; }
+    /* The hold is the phone's, where the chat IS the screen. On a desk the
+       chat is a window in the corner and the page is still the page: held
+       there too (it was, at every width), the board could not scroll and
+       height:100% cut it off at the fold behind a window that covered a
+       corner of it. */
+    @media (max-width: 767px) {
+        html.ai-float-open, html.ai-float-open body { overflow: hidden; height: 100%; }
+    }
     .ai-float-thread { overscroll-behavior: contain; }
     /* A saved chat leaves the stage; the welcome takes it. Class-driven so
        reduced motion can decline both. */
