@@ -716,6 +716,9 @@
     $daysRemaining = $subscription?->daysRemaining();
     $isActive = $status === \App\Models\Subscription::STATUS_ACTIVE;
     $expiringSoon = $isActive && $daysRemaining !== null && $daysRemaining <= 7;
+    /* The free plan is a plan too: the tiles say "Libre" and "∞", not a
+       pair of blanks (the owner's call, 2026-09-16). */
+    $isLibre = ! $isSuperAdmin && ! $isActive && \App\Support\Tier::of($user) === 'libre';
 
     $scheduleBadge = fn (?string $s) => match ($s) {
         'draft' => ['badge-gray', 'Draft'],
@@ -925,11 +928,11 @@
             <i>{{ \Illuminate\Support\Str::plural('Schedule', $scheduleCount) }}</i>
         </a>
         <div class="dash-stat">
-            <b class="dash-stat-word">{{ $isSuperAdmin ? 'Admin' : ($isActive ? $subscription->planName : '—') }}</b>
+            <b class="dash-stat-word">{{ $isSuperAdmin ? 'Admin' : ($isActive ? $subscription->planName : ($isLibre ? config('tiers.libre.name', 'Libre') : '—')) }}</b>
             <i>Active plan</i>
         </div>
         <div class="dash-stat {{ $expiringSoon ? 'is-warn' : '' }}">
-            <b>{{ $isSuperAdmin ? '∞' : ($isActive && $daysRemaining !== null ? number_format($daysRemaining) : '—') }}</b>
+            <b>{{ $isSuperAdmin || $isLibre ? '∞' : ($isActive && $daysRemaining !== null ? number_format($daysRemaining) : '—') }}</b>
             <i>Days left</i>
         </div>
     </div>
