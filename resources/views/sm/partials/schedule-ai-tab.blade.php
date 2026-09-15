@@ -575,7 +575,7 @@
                 : ((!me && m.role === 'user') ? `<span class="sai-who">${esc(m.name || 'Member')}</span>` : '');
             const body = m.role === 'assistant' ? render(m.content) : ('<p>' + said.html.replace(/\r?\n/g, '<br>') + '</p>');
             const img = m.image ? `<img src="${esc(m.image)}" alt="">` : '';
-            const cost = (m.role === 'assistant' && m.creditsCharged) ? `<p class="sai-cost">${esc(String(Math.round(m.creditsCharged * 100) / 100))} credits</p>` : '';
+            const cost = (m.role === 'assistant' && m.creditsCharged) ? `<p class="sai-cost">${esc(String(Math.ceil(Number(m.creditsCharged) || 0)))} credits</p>` : '';
             const when = m.at ? `<time class="sai-when">${esc(m.at)}</time>` : '';
             el.innerHTML = `${faceHtml(m)}<div class="sai-col">${who}<div class="sai-b ${m.role === 'assistant' ? 'bot' : ''}">${body}${img}${cost}${when}</div></div>`;
             thread.appendChild(el); scrollDown();
@@ -593,7 +593,7 @@
             // The coin under the composer is the one place the figure lives.
             document.querySelectorAll('[data-ai-bal] b').forEach((el) => {
                 if (el.textContent.trim() === '∞') return;
-                el.textContent = String(Math.round(v * 100) / 100);
+                el.textContent = String(Math.floor(Number(v) || 0));
             });
         }
 

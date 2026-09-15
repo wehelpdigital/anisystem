@@ -50,7 +50,7 @@
                 @unless ($aiFloatUnlimited)
                 <a href="{{ route('ai.credits') }}" class="ai-float-credits">
                     <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>
-                    <span id="aiFloatBalance">{{ rtrim(rtrim(number_format($aiFloatBalance, 2), '0'), '.') }}</span>&nbsp;credits
+                    <span id="aiFloatBalance">{{ number_format((int) floor((float) $aiFloatBalance)) }}</span>&nbsp;credits
                 </a>
                 @endunless
             </div>
@@ -174,7 +174,7 @@
                      decides what the next answer costs. An account that
                      rides free shows the sign for it rather than a number
                      that never moves. --}}
-                <span class="ai-bal ai-bal-chip" data-ai-bal title="Current credits — what is left in the wallet this chat spends from" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiFloatUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format(($aiFloatBalance ?? 0), 2), '0'), '.') }}</b>@endif</span>
+                <span class="ai-bal ai-bal-chip" data-ai-bal title="Current credits — what is left in the wallet this chat spends from" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiFloatUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) ($aiFloatBalance ?? 0))) }}</b>@endif</span>
             </div>
         </div>
     </div>
@@ -664,9 +664,9 @@
             // open a menu to see them move.
             document.querySelectorAll('[data-ai-bal] b').forEach((el) => {
                 if (el.textContent.trim() === '\u221E') return;
-                el.textContent = (Math.round(Number(v) * 100) / 100).toString();
+                el.textContent = String(Math.floor(Number(v) || 0));
             });
-            const el = $('aiFloatBalance'); if (el) el.textContent = String(Math.round(v * 100) / 100);
+            const el = $('aiFloatBalance'); if (el) el.textContent = String(Math.floor(Number(v) || 0));
             // A failed send already answers with a purchase card in the thread,
             // right where the user is looking — the banner on top of it said
             // the same thing twice. It still covers opening the chat when the
@@ -1009,7 +1009,7 @@
                 conversationId = res.data.conversationId;
                 // Chips leave the moment the send is known good.
                 clearPhotos();
-                const costLine = UNLIMITED ? '' : `<p class="cost">${escapeHtml(String(Math.round(res.data.answer.creditsCharged * 100) / 100))} credits</p>`;
+                const costLine = UNLIMITED ? '' : `<p class="cost">${escapeHtml(String(Math.ceil(Number(res.data.answer.creditsCharged) || 0)))} credits</p>`;
                 thinking.querySelector('.b').innerHTML = render(res.data.answer.content) + costLine + `<time class="when">${escapeHtml(nowStamp())}</time>`;
                 setBalance(res.data.balance); scrollDown();
             } catch (err) {

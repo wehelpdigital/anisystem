@@ -151,7 +151,7 @@ class WhenToPlantController extends Controller
         $estimate = $this->quote($settings);
         if ($balance < $estimate && ! $this->credits->unlimited($payer->id)) {
             return $this->json(false, 'You need ' . ceil($estimate) . ' credits for this analysis and have '
-                . rtrim(rtrim(number_format($balance, 2), '0'), '.') . '.',
+                . number_format((int) floor($balance)) . '.',
                 ['outOfCredits' => true], 402);
         }
 

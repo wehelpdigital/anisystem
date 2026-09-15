@@ -553,7 +553,7 @@
                         </div>
                     @endif
                     @if ($m->role === 'assistant' && (float) $m->creditsCharged > 0 && ! $aiUnlimited)
-                        <p class="aibubble-cost">{{ rtrim(rtrim(number_format((float) $m->creditsCharged, 2), '0'), '.') }} credits</p>
+                        <p class="aibubble-cost">{{ number_format((int) ceil((float) $m->creditsCharged)) }} credits</p>
                     @endif
                     @if ($m->created_at)
                         <time class="ai-when" datetime="{{ $m->created_at->toIso8601String() }}">{{ $m->created_at->format('g:i A') }}</time>
@@ -630,7 +630,7 @@
             </button>
             {{-- What the wallet holds, at the end of the row that decides
                  what the next answer costs. --}}
-            <span class="ai-bal ai-bal-chip" data-ai-bal title="{{ $aiPayerIsMe ? 'Current credits — what is left in the wallet this chat spends from' : 'Credits belonging to the farm you are working on — the owner pays for answers here' }}" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</b>@endif</span>
+            <span class="ai-bal ai-bal-chip" data-ai-bal title="{{ $aiPayerIsMe ? 'Current credits — what is left in the wallet this chat spends from' : 'Credits belonging to the farm you are working on — the owner pays for answers here' }}" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) $balance)) }}</b>@endif</span>
         </div>
         <div class="aichat-box">
             <button type="button" class="ai-cam shrink-0" id="aiAttachBtn" title="Add photos" aria-label="Add photos" aria-haspopup="dialog">
@@ -803,7 +803,7 @@
         @unless ($aiUnlimited)
             <a href="{{ route('ai.credits') }}" class="ai-attach-opt">
                 <span class="ic"><svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg></span>
-                <span>AI credits<span class="sub"><span id="aiBalance">{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }}</span> left — top up here</span></span>
+                <span>AI credits<span class="sub"><span id="aiBalance">{{ number_format((int) floor((float) $balance)) }}</span> left — top up here</span></span>
             </a>
         @endunless
     </div>
@@ -965,10 +965,10 @@ const __init = () => {
     function setBalance(v) {
         document.querySelectorAll('[data-ai-bal] b').forEach((el) => {
             if (el.textContent.trim() === '\u221E') return;
-            el.textContent = (Math.round(Number(v) * 100) / 100).toString();
+            el.textContent = String(Math.floor(Number(v) || 0));
         });
         const balEl = byId('aiBalance');
-        if (balEl) balEl.textContent = String(Math.round(v * 100) / 100);
+        if (balEl) balEl.textContent = String(Math.floor(Number(v) || 0));
         // Accounts that ride free never see the empty-wallet note.
         byId('aiNoCredits')?.classList.toggle('hidden', UNLIMITED || v > 0);
     }
@@ -1173,7 +1173,7 @@ const __init = () => {
             // Chips leave the moment the send is known good - before any
             // templating that could throw and strand them in the composer.
             clearPhotos();
-            const costLine = UNLIMITED ? '' : `<p class="aibubble-cost">${escapeHtml(String(Math.round(res.data.answer.creditsCharged * 100) / 100))} credits</p>`;
+            const costLine = UNLIMITED ? '' : `<p class="aibubble-cost">${escapeHtml(String(Math.ceil(Number(res.data.answer.creditsCharged) || 0)))} credits</p>`;
             thinking.querySelector('.aibubble').innerHTML = render(res.data.answer.content) + costLine + `<time class="ai-when">${escapeHtml(nowStamp())}</time>`;
             setBalance(res.data.balance); scrollDown();
         } catch (err) {

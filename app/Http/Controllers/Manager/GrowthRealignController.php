@@ -89,7 +89,7 @@ class GrowthRealignController extends BaseScheduleController
         $balance = $credits->balance($payer->id);
         if ($balance < self::PRICE && ! $credits->unlimited((int) $payer->id)) {
             return $this->jsonFail('You need ' . self::PRICE . ' credits for this and have '
-                . rtrim(rtrim(number_format($balance, 2), '0'), '.') . '.', 402, ['outOfCredits' => true]);
+                . number_format((int) floor($balance)) . '.', 402, ['outOfCredits' => true]);
         }
 
         /* One in flight per lot -- a double press must not buy two. */

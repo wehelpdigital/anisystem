@@ -287,7 +287,7 @@ class AiController extends Controller
             $whose = $payerId === (int) Auth::id() ? 'You have' : 'This farm has';
             return $this->json(false, $balance <= 0
                 ? $whose . ' no AI Credits left. Top up to keep asking questions.'
-                : 'You need about ' . ceil($estimate) . ' credits for this question and have ' . rtrim(rtrim(number_format($balance, 2), '0'), '.') . '.',
+                : 'You need about ' . ceil($estimate) . ' credits for this question and have ' . number_format((int) floor($balance)) . '.',
                 ['balance' => $balance, 'needed' => $estimate, 'outOfCredits' => true], 402);
         }
 

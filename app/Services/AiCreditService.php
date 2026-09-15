@@ -16,9 +16,14 @@ use Illuminate\Support\Facades\DB;
  */
 class AiCreditService
 {
+    /**
+     * What is left, in whole credits. The ledger keeps the exact sum; the
+     * balance anybody sees or spends against is that sum rounded DOWN, since
+     * nothing costs less than one credit and a fraction of one buys nothing.
+     */
     public function balance(int $userId): float
     {
-        return (float) AiCreditLedger::active()->where('userId', $userId)->sum('delta');
+        return (float) floor((float) AiCreditLedger::active()->where('userId', $userId)->sum('delta'));
     }
 
     /** Add credits (purchase, signup allowance, admin adjustment, refund). */
@@ -92,7 +97,11 @@ class AiCreditService
 
     /**
      * What an exchange costs, given the tokens it used.
-     * Rounded up to 2dp so a tiny question is never free.
+     *
+     * Whole credits, rounded UP: 6.2 credits is 7 -- the owner's rule
+     * (2026-09-15), so no screen ever shows a decimal and a tiny question
+     * is never free. It is also where the metered chat's margin lives; see
+     * AiSetting for the per-thousand rates.
      */
     public function priceFor(AiSetting $settings, int $tokensIn, int $tokensOut, int $images = 0): float
     {
@@ -100,7 +109,7 @@ class AiCreditService
             + ($tokensOut / 1000) * (float) $settings->creditsPerOutputK
             + $images * (float) $settings->creditsPerImage;
 
-        return max(0.01, round($cost, 2));
+        return (float) max(1, (int) ceil($cost - 0.000001));
     }
 
     /**

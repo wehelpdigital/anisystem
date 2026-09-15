@@ -558,7 +558,7 @@ class FarmReportController extends BaseScheduleController
         $balance = $credits->balance($payer->id);
         if ($balance < $price && ! $credits->unlimited((int) $payer->id)) {
             return $this->jsonFail('You need ' . $price . ' credits for this report and have '
-                . rtrim(rtrim(number_format($balance, 2), '0'), '.') . '.', 402, ['outOfCredits' => true]);
+                . number_format((int) floor($balance)) . '.', 402, ['outOfCredits' => true]);
         }
 
         /* One in flight at a time — a double press must not buy two. */
@@ -997,7 +997,7 @@ class FarmReportController extends BaseScheduleController
         $balance = $credits->balance($payer->id);
         if ($balance < self::PRICE_COMPARE && ! $credits->unlimited((int) $payer->id)) {
             return $this->jsonFail('You need ' . self::PRICE_COMPARE . ' credits for the AI analysis and have '
-                . rtrim(rtrim(number_format($balance, 2), '0'), '.') . '. You can still compare by hand.', 402, ['outOfCredits' => true]);
+                . number_format((int) floor($balance)) . '. You can still compare by hand.', 402, ['outOfCredits' => true]);
         }
 
         $row = AsFarmReport::create([

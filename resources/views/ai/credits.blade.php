@@ -11,7 +11,7 @@
 <div class="card overflow-hidden mb-4">
     <div class="card-body bg-gradient-to-br from-brand-600 to-brand-800 !rounded-2xl text-white">
         <p class="text-sm text-brand-100">Your balance</p>
-        <p class="text-3xl font-bold mt-0.5">{{ rtrim(rtrim(number_format($balance, 2), '0'), '.') }} <span class="text-lg font-semibold">credits</span></p>
+        <p class="text-3xl font-bold mt-0.5">{{ number_format((int) floor((float) $balance)) }} <span class="text-lg font-semibold">credits</span></p>
         <p class="text-sm text-brand-100 mt-2">
             A text question costs about {{ (int) ceil($settings->creditsPerInputK + $settings->creditsPerOutputK * 0.6) }} credits;
             adding a photo costs about {{ (int) ceil($settings->creditsPerImage) }} more.
@@ -68,9 +68,9 @@
                 </div>
                 <div class="shrink-0 text-right">
                     <p class="text-sm font-bold {{ (float) $row->delta >= 0 ? 'text-brand-700' : 'text-gray-700' }}">
-                        {{ (float) $row->delta >= 0 ? '+' : '' }}{{ rtrim(rtrim(number_format((float) $row->delta, 2), '0'), '.') }}
+                        {{ (float) $row->delta >= 0 ? '+' : '-' }}{{ number_format((int) ceil(abs((float) $row->delta))) }}
                     </p>
-                    <p class="text-xs text-gray-400">{{ rtrim(rtrim(number_format((float) $row->balanceAfter, 2), '0'), '.') }} left</p>
+                    <p class="text-xs text-gray-400">{{ number_format((int) floor((float) $row->balanceAfter)) }} left</p>
                 </div>
             </div>
         @endforeach

@@ -145,7 +145,7 @@ class WhatToPlantController extends Controller
         $balance = $this->credits->balance($payer->id);
         if ($balance < self::PRICE && ! $this->credits->unlimited($payer->id)) {
             return $this->json(false, 'You need ' . self::PRICE . ' credits for this analysis and have '
-                . rtrim(rtrim(number_format($balance, 2), '0'), '.') . '.',
+                . number_format((int) floor($balance)) . '.',
                 ['outOfCredits' => true], 402);
         }
 
