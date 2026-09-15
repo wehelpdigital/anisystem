@@ -411,9 +411,14 @@
         const state = $('smMediaPickerState');
         if (loading) { state.hidden = items.length > 0; state.textContent = 'Loading…'; return; }
         state.hidden = items.length > 0;
+        // In the noun of what was asked for: a picker showing clips must not
+        // offer to take a photo.
+        const clips = cfg && cfg.kinds === 'video';
         state.textContent = ($('smMediaPickerSearch').value || '').trim()
             ? 'Nothing matches that.'
-            : 'Nothing kept for this season yet — take a photo or upload one instead.';
+            : (clips
+                ? 'No videos kept for this season yet — record one or upload one instead.'
+                : 'No photos kept for this season yet — take one or upload one instead.');
     }
 
     async function loadPage() {
