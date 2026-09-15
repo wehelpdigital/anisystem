@@ -201,7 +201,7 @@
 
 @push('sheets')
 {{-- data-static: typing happens here, and a stray tap on the dimmed page
-     must not eat a half-written item. ✕ and Cancel are the doors. --}}
+     must not eat a half-written item. The ✕ is the door. --}}
 <div class="sheet hidden" id="ivItemSheet" data-static="true" style="--sheet-width:32rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -302,9 +302,9 @@
         </div>
         <div class="tp-mount" id="ivItemTagsMount" data-tags data-tags-kind="item"></div>
     </div>
+    {{-- One way out: the ✕ in the header. --}}
     <div class="sheet-footer">
-        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
-        <button type="button" id="ivSaveItem" class="btn btn-primary">Save item</button>
+        <button type="button" id="ivSaveItem" class="btn btn-primary w-full">Save item</button>
     </div>
 </div>
 

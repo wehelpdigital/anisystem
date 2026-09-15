@@ -330,8 +330,7 @@
         <p class="form-hint">The season is recalculated from the new answer: activities ticked done from that day take from the count, earlier ones do not. Deliveries and uses you typed by hand stay as they are.</p>
     </div>
     <div class="sheet-footer">
-        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
-        <button type="button" id="ivStartEditGo" class="btn btn-primary">Recalculate</button>
+        <button type="button" id="ivStartEditGo" class="btn btn-primary w-full">Recalculate</button>
     </div>
 </div>
 
