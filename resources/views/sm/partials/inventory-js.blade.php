@@ -753,7 +753,12 @@
                 : { mode: 'today', date: null };
             fillMovePicker(o.itemId);
             openSheet('ivMoveSheet');
-            setTimeout(() => $id('ivMoveQty')?.focus(), 280);
+            // The amount is focused on a desk, where a cursor is a courtesy;
+            // on a phone a focused number field throws the keypad over the
+            // sheet before the person has read it (the owner's ask).
+            if (window.matchMedia('(min-width: 640px)').matches) {
+                setTimeout(() => $id('ivMoveQty')?.focus(), 280);
+            }
         };
 
         async function moveGo(btn) {

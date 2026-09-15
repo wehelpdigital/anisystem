@@ -140,9 +140,10 @@
 
         <p class="iv-move-warn hidden" id="ivMoveWarn"></p>
     </div>
+    {{-- One way out: the ✕ in the header. A Cancel beside Save was the
+         same door twice. --}}
     <div class="sheet-footer">
-        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
-        <button type="button" id="ivMoveGo" class="btn btn-primary">Save</button>
+        <button type="button" id="ivMoveGo" class="btn btn-primary w-full">Save</button>
     </div>
 </div>
 
@@ -186,8 +187,7 @@
         <div class="tp-mount" id="ivMEdTagsMount" data-tags data-tags-kind="move"></div>
     </div>
     <div class="sheet-footer">
-        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
-        <button type="button" id="ivMEdGo" class="btn btn-primary">Save</button>
+        <button type="button" id="ivMEdGo" class="btn btn-primary w-full">Save</button>
     </div>
 </div>
 
