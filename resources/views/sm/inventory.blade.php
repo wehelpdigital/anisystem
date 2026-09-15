@@ -96,6 +96,58 @@
 
     .iv-empty { text-align: center; padding: 2.2rem 1rem; }
 
+    /* PRICING — one card per item: the standing price, the average paid,
+       what is on hand is worth, and the batches under a dashed rule. */
+    /* minmax(0, 1fr): a grid track's floor is its content's width, and a
+       card with a nowrap price in it pushed the whole tab past the phone. */
+    #ivPricing { grid-template-columns: minmax(0, 1fr); }
+    .ivp-card { border-radius: 1rem; border: 1px solid var(--color-gray-200); background: var(--color-white); padding: .9rem 1rem; min-width: 0; }
+    .ivp-head { display: flex; align-items: center; gap: .6rem; }
+    .ivp-face { width: 2.2rem; height: 2.2rem; border-radius: .7rem; display: inline-flex; align-items: center;
+        justify-content: center; font-size: 1.15rem; background: var(--color-brand-50); flex: none; }
+    .ivp-name { flex: 1 1 auto; min-width: 0; }
+    .ivp-name b { display: block; font-size: .92rem; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ivp-name i { display: block; font-style: normal; font-size: .72rem; color: var(--color-gray-500); }
+    .ivp-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem; margin-top: .7rem; }
+    .ivp-fact { border-radius: .7rem; padding: .5rem .55rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); min-width: 0; }
+    .ivp-fact small { display: block; font-size: .6rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--color-gray-400); }
+    .ivp-fact b { display: block; font-size: .86rem; font-weight: 800; color: var(--color-gray-900); margin-top: .1rem; overflow-wrap: anywhere; line-height: 1.25; }
+    .ivp-fact b .font-normal { font-size: .7rem; color: var(--color-gray-500); }
+    .ivp-fact.is-tap { cursor: pointer; border-color: var(--color-brand-200); background: var(--color-brand-50); }
+    .ivp-fact.is-tap b { color: var(--color-brand-800); }
+    .ivp-fact.is-tap:hover { border-color: var(--color-brand-400); }
+    .ivp-fact.is-tap b::after { content: ' ✎'; font-size: .7rem; opacity: .6; }
+    .ivp-fact.is-none b { color: var(--color-gray-400); font-weight: 600; }
+    .ivp-sub { font-size: .68rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--color-gray-400);
+        margin: .85rem 0 .3rem; padding-top: .6rem; border-top: 1px dashed var(--color-gray-200); }
+    .ivp-batch { display: flex; align-items: center; gap: .55rem; padding: .45rem 0; border-bottom: 1px dashed var(--color-gray-100); }
+    .ivp-batch:last-child { border-bottom: 0; }
+    .ivp-b-when { flex: none; width: 3.6rem; font-size: .68rem; font-weight: 700; color: var(--color-gray-500); line-height: 1.2; }
+    .ivp-b-what { flex: 1 1 auto; min-width: 0; }
+    .ivp-b-what b { display: block; font-size: .82rem; color: var(--color-gray-800); }
+    .ivp-b-what i { display: block; font-style: normal; font-size: .68rem; color: var(--color-gray-400); line-height: 1.35; }
+    .ivp-b-price { flex: none; text-align: right; border: 0; background: transparent; cursor: pointer; padding: .2rem .35rem; border-radius: .5rem; }
+    .ivp-b-price:hover { background: var(--color-brand-50); }
+    .ivp-b-price b { display: block; font-size: .82rem; font-weight: 800; color: var(--color-brand-800); white-space: nowrap; }
+    .ivp-b-price b .font-normal { font-size: .66rem; color: var(--color-gray-500); }
+    .ivp-b-price i { display: block; font-style: normal; font-size: .66rem; color: var(--color-gray-400); white-space: nowrap; }
+    .ivp-b-price.is-none b { color: #b45309; }
+    .ivp-b-price.is-standing b { color: var(--color-gray-600); }
+    .ivp-b-price.is-locked { cursor: default; }
+    .ivp-b-price.is-locked:hover { background: transparent; }
+    .ivp-b-price:not(.is-locked) b::after { content: ' ✎'; font-size: .7rem; opacity: .55; }
+    .ivp-none { font-size: .78rem; color: var(--color-gray-400); padding: .3rem 0; }
+    html.dark .ivp-card { background: #151b12; border-color: #2b3a1c; }
+    html.dark .ivp-face { background: #25311b; }
+    html.dark .ivp-name b, html.dark .ivp-fact b, html.dark .ivp-b-what b { color: #e8efe1; }
+    html.dark .ivp-fact { background: #1c2417; border-color: #2b3423; }
+    html.dark .ivp-fact.is-tap { background: #22301a; border-color: #3d5226; }
+    html.dark .ivp-fact.is-tap b { color: #cfe6b8; }
+    html.dark .ivp-sub, html.dark .ivp-batch { border-color: #2b3423; }
+    html.dark .ivp-b-price b { color: #a5c97e; }
+    html.dark .ivp-b-price:hover { background: #22301a; }
+    @media (max-width: 480px) { .ivp-facts { grid-template-columns: 1fr 1fr; } }
+
     /* MOTION. New log lines slide in; a number that changed pops once. The
        cards themselves ride the app's own list-item-enter/-leave. */
     @keyframes ivLineIn { from { opacity: 0; transform: translateX(-.6rem); } to { opacity: 1; transform: none; } }
@@ -150,7 +202,8 @@
     <div class="iv-tabs" role="tablist">
         <button type="button" class="iv-tab is-active" data-pane="ivPaneManage" role="tab">Management</button>
         <button type="button" class="iv-tab" data-pane="ivPaneLogs" role="tab">Logs</button>
-        <button type="button" class="iv-tab" data-pane="ivPaneTotals" role="tab">Current totals</button>
+        <button type="button" class="iv-tab" data-pane="ivPaneTotals" role="tab">Current</button>
+        <button type="button" class="iv-tab" data-pane="ivPanePricing" role="tab">Pricing</button>
     </div>
 
     {{-- WHAT YOU KEEP. Each item with what is left of it and the two things
@@ -196,6 +249,16 @@
             <div id="ivTotals"></div>
             <p id="ivTotalsEmpty" class="text-sm text-gray-400 text-center py-6 hidden">Nothing on the shelf yet.</p>
         </div></div>
+    </div>
+
+    {{-- WHAT IT COST. Every stock-in is a batch with a price of its own, and
+         here each one can be fixed after the fact (the owner's ask,
+         2026-09-16). Per item: the standing price, the average actually
+         paid, what is on hand is worth, and the batches beneath. --}}
+    <div class="iv-pane" id="ivPanePricing">
+        <p class="form-hint mb-2">Every delivery or opening count is a <b>batch</b> with its own price — the same fertiliser can be bought dear one month and cheap the next. Tap a price to fix it. A batch with no price of its own reads at the item's <b>standing price</b>.</p>
+        <div id="ivPricing" class="grid gap-3"></div>
+        <p id="ivPricingEmpty" class="text-sm text-gray-400 text-center py-6 hidden">Nothing on the shelf yet.</p>
     </div>
 @endsection
 

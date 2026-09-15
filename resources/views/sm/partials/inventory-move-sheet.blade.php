@@ -345,6 +345,39 @@
 </div>
 
 {{-- The unit an amount is typed in — only units the item's book converts. --}}
+{{-- A PRICE, FIXED AFTER THE FACT: one batch's, or the item's standing one. --}}
+<div class="sheet hidden" id="ivPriceSheet" data-static="true" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="ivPriceTitle">Price for this batch</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-3">
+        <input type="hidden" id="ivPriceMode" value="batch">
+        <input type="hidden" id="ivPriceRef" value="">
+        <div class="flex items-center gap-3">
+            <span class="ivp-face" id="ivPriceFace" style="width:2.2rem;height:2.2rem;border-radius:.7rem;display:inline-flex;align-items:center;justify-content:center;font-size:1.15rem;background:var(--color-brand-50);flex:none">📦</span>
+            <div class="min-w-0">
+                <p class="font-bold text-gray-900" id="ivPriceItem">Item</p>
+                <p class="text-xs text-gray-500" id="ivPriceLine"></p>
+            </div>
+        </div>
+        <div>
+            <label for="ivPriceInput" class="form-label">What one costs</label>
+            <div class="relative">
+                <input type="number" id="ivPriceInput" min="0" step="any" class="form-input" placeholder="0.00" inputmode="decimal">
+                <span class="iv-qty-u" id="ivPriceUnit"></span>
+            </div>
+            <p class="form-hint" id="ivPriceHint"></p>
+        </div>
+        <p class="text-xs text-gray-500" id="ivPriceTotal"></p>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" id="ivPriceClear" class="btn btn-white">Clear price</button>
+        <button type="button" id="ivPriceGo" class="btn btn-primary flex-1">Save price</button>
+    </div>
+</div>
+
 {{-- WHAT KIND OF THING, and WHAT IT IS COUNTED IN: one sheet each, shared
      by the item form and the move sheet's new-item form (the tag that
      opened it says which, in data-iv-kind-btn / data-iv-unit-btn). --}}

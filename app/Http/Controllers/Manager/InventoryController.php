@@ -73,9 +73,139 @@ class InventoryController extends BaseScheduleController
         return $this->jsonOk('ok', ['data' => [
             'items' => $this->itemsPayload($schedule->id, $this->promisedFor($schedule)),
             'moves' => $this->movesPayload($schedule->id),
+            'pricing' => $this->pricingPayload($schedule->id),
             'doneActivities' => $done,
             'firstActivityDate' => $first ? substr((string) $first, 0, 10) : null,
         ]]);
+    }
+
+    /**
+     * THE BATCHES, PER ITEM: what came in, when, and at what price.
+     *
+     * Every stock-in (a delivery, an opening count, a purchase declared on
+     * an activity) is a batch, and a batch keeps its own price -- a bag
+     * bought dear in June sits beside one bought cheap in May. This is
+     * what the Pricing tab draws: each item's batches with their prices,
+     * the average paid across the priced ones, and what is on hand is
+     * worth at that average (the owner's ask, 2026-09-16: a way to fix the
+     * price of each batch, laid out to be understood).
+     *
+     * @return array<int, array<string, mixed>>  keyed by item id
+     */
+    private function pricingPayload(int $scheduleId): array
+    {
+        $items = AsInventoryItem::where('croppingScheduleId', $scheduleId)
+            ->where('deleteStatus', 1)->get()->keyBy('id');
+        $onHand = $this->stock->onHandFor($scheduleId);
+        $ins = AsInventoryMove::where('croppingScheduleId', $scheduleId)
+            ->where('deleteStatus', 1)
+            ->whereIn('reason', [AsInventoryMove::IN, AsInventoryMove::OPEN])
+            ->where('delta', '>', 0)
+            ->orderBy('happenedOn')->orderBy('id')
+            ->get()->groupBy('itemId');
+
+        $out = [];
+        foreach ($items as $item) {
+            $batches = [];
+            $pricedQty = 0.0;
+            $pricedSum = 0.0;
+            foreach ($ins->get($item->id, collect()) as $m) {
+                $own = $m->unitPrice !== null ? (float) $m->unitPrice : null;
+                $price = $own ?? ($item->unitPrice !== null ? (float) $item->unitPrice : null);
+                $qty = (float) $m->delta;
+                if ($price !== null && $price > 0) {
+                    $pricedQty += $qty;
+                    $pricedSum += $qty * $price;
+                }
+                $batches[] = [
+                    'id' => $m->id,
+                    'reason' => $m->reason,
+                    'reasonLabel' => $m->reasonLabel(),
+                    'on' => $m->happenedOn?->format('Y-m-d'),
+                    'onSays' => $m->happenedOn?->format('M j, Y'),
+                    'qty' => $qty,
+                    'says' => $item->say($qty),
+                    // The batch's own price, and the price it is read at
+                    // (its own, or the item's standing price when it has none).
+                    'ownPrice' => $own,
+                    'price' => $price,
+                    'usesStanding' => $own === null && $price !== null,
+                    'amount' => $price !== null ? round($qty * $price, 2) : null,
+                    'note' => $m->note,
+                    // A purchase declared on an activity is priced on the
+                    // activity's line; the book only mirrors it.
+                    'activityId' => $m->activityId,
+                    'typedSays' => ($m->enteredQty !== null && $m->enteredUnit)
+                        ? AsInventoryItem::trim((float) $m->enteredQty) . ' ' . AsInventoryItem::unitSays($m->enteredUnit, abs((float) $m->enteredQty) == 1.0)
+                        : null,
+                ];
+            }
+            $have = (float) ($onHand[$item->id] ?? 0.0);
+            $avg = $pricedQty > 0 ? round($pricedSum / $pricedQty, 2) : null;
+            // Worth from the exact average, not the one rounded for display.
+            $worth = $pricedQty > 0 && $have > 0 ? round($have * ($pricedSum / $pricedQty), 2) : null;
+            $out[$item->id] = [
+                'itemId' => $item->id,
+                'standing' => $item->unitPrice !== null ? (float) $item->unitPrice : null,
+                'batches' => array_reverse($batches),   // newest first, the way a shelf is read
+                'batchCount' => count($batches),
+                'unpriced' => count(array_filter($batches, fn ($b) => $b['price'] === null)),
+                'average' => $avg,
+                'spent' => round($pricedSum, 2),
+                'onHand' => $have,
+                'worth' => $worth,
+            ];
+        }
+
+        return $out;
+    }
+
+    /**
+     * Price one batch -- a stock-in or an opening count -- after the fact.
+     * Per book unit, the way every price on a move is kept. A purchase an
+     * activity declared is refused: its price lives on the activity's line
+     * and is edited there, or the two would disagree.
+     */
+    public function priceBatch(Request $request)
+    {
+        $schedule = $this->scheduleForShed($request);
+        $v = Validator::make($request->all(), [
+            'id' => 'required|integer',
+            'unitPrice' => 'nullable|numeric|min:0|max:99999999',
+        ]);
+        if ($v->fails()) {
+            return $this->jsonFail('Validation failed.', 422, ['errors' => $v->errors()]);
+        }
+        $move = AsInventoryMove::where('croppingScheduleId', $schedule->id)
+            ->where('id', (int) $request->input('id'))
+            ->where('deleteStatus', 1)->first();
+        if (! $move) {
+            return $this->jsonFail('That batch is gone already.', 404);
+        }
+        if (! in_array($move->reason, [AsInventoryMove::IN, AsInventoryMove::OPEN], true)) {
+            return $this->jsonFail('Only stock that came in has a price.', 422);
+        }
+        if ($move->activityId) {
+            return $this->jsonFail('This batch was bought on an activity — change the price on that activity\'s material line.', 422);
+        }
+        $price = $request->filled('unitPrice') ? round((float) $request->input('unitPrice'), 2) : null;
+        /* The note said the price too ("Bought at ₱1,350.00 each") so every
+         * log renderer could say it; it follows the fix or is dropped. */
+        $note = (string) ($move->note ?? '');
+        $note = trim(preg_replace('/\s*·?\s*Bought at ₱[\d,\.]+ each/u', '', $note), " ·");
+        if ($price !== null) {
+            $said = 'Bought at ₱' . number_format($price, 2) . ' each';
+            $note = $note === '' ? $said : $note . ' · ' . $said;
+        }
+        $move->update(['unitPrice' => $price, 'note' => $note !== '' ? mb_substr($note, 0, 500) : null]);
+        $item = AsInventoryItem::find($move->itemId);
+
+        return $this->jsonOk(
+            $price !== null
+                ? 'Priced: ' . ($item ? $item->say((float) $move->delta) : 'this batch') . ' at ₱' . number_format($price, 2) . ' per ' . ($item ? AsInventoryItem::unitSays($item->unit, true) : 'unit') . '.'
+                : 'Price cleared — this batch reads at the item\'s standing price now.',
+            ['data' => ['pricing' => $this->pricingPayload($schedule->id)]]
+        );
     }
 
     /**

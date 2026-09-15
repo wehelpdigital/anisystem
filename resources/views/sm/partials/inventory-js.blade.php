@@ -35,7 +35,7 @@
          * FIRST copy in document order — the one getElementById will answer
          * with — and remove the rest. All behaviour is delegated, so any
          * single copy is a working copy. */
-        ['ivMoveSheet', 'ivItemSheet', 'ivStartSheet', 'ivStartEditSheet', 'ivMenuSheet', 'ivConvSheet', 'ivMoveEditSheet', 'ivMoveItemSheet', 'ivMoveUnitSheet', 'ivKindSheet', 'ivUnitSheet'].forEach((sid) => {
+        ['ivMoveSheet', 'ivItemSheet', 'ivStartSheet', 'ivStartEditSheet', 'ivMenuSheet', 'ivConvSheet', 'ivMoveEditSheet', 'ivMoveItemSheet', 'ivMoveUnitSheet', 'ivKindSheet', 'ivUnitSheet', 'ivPriceSheet'].forEach((sid) => {
             const copies = [...document.querySelectorAll('#' + sid)];
             copies.slice(1).forEach((el) => el.remove());
         });
@@ -50,11 +50,13 @@
             restart: `{{ route('sm.inventory.restart') }}?scheduleId=${SCHEDULE_ID}`,
             moveDelete: (id) => `{{ route('sm.inventory.move.delete') }}?scheduleId=${SCHEDULE_ID}&id=${id}`,
             moveUpdate: `{{ route('sm.inventory.move.update') }}?scheduleId=${SCHEDULE_ID}`,
+            batchPrice: `{{ route('sm.inventory.batch.price') }}?scheduleId=${SCHEDULE_ID}`,
         };
         const KINDS = @json(\App\Models\AsInventoryItem::KINDS);
         const UNITS = @json(\App\Models\AsInventoryItem::UNITS);
 
         let ITEMS = [];
+        let PRICING = {};
         let MOVES = [];
         const $id = (x) => document.getElementById(x);
         const esc = window.escapeHtml || ((s) => String(s ?? '').replace(/[&<>"']/g, (c) => (
@@ -195,6 +197,7 @@
             const res = await api(U.list, { method: 'GET' });
             ITEMS = res.data?.items || [];
             MOVES = res.data?.moves || [];
+            PRICING = res.data?.pricing || {};
             CTX = {
                 done: Number(res.data?.doneActivities || 0),
                 first: res.data?.firstActivityDate || null,
@@ -207,7 +210,119 @@
             paintShelf();
             paintLog();
             paintTotals();
+            paintPricing();
             fillMovePicker();
+        }
+
+        /* ---------------- the pricing tab ---------------- */
+        const peso = (n) => '₱' + Number(n || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const pesoShort = (n) => '₱' + Number(n || 0).toLocaleString('en-PH', { maximumFractionDigits: 2 });
+        function paintPricing() {
+            const box = $id('ivPricing');
+            if (!box) return;
+            const ro = !!window.IV_READONLY;
+            box.innerHTML = ITEMS.map((i) => {
+                const p = (PRICING && PRICING[i.id]) || { batches: [], batchCount: 0, unpriced: 0 };
+                const one = unitSays(i.unit, true);
+                const standing = i.unitPrice != null
+                    ? `<b>${esc(pesoShort(i.unitPrice))} <span class="font-normal">per ${esc(one)}</span></b>`
+                    : `<b>Not set</b>`;
+                const batches = (p.batches || []).map((b) => {
+                    const locked = ro || !!b.activityId;
+                    const cls = b.price == null ? 'is-none' : (b.usesStanding ? 'is-standing' : '');
+                    const priceSays = b.price == null
+                        ? '<b>No price</b><i>tap to set one</i>'
+                        : `<b>${esc(pesoShort(b.price))} <span class="font-normal">/ ${esc(one)}</span></b><i>${b.usesStanding ? 'standing price' : esc(peso(b.amount))}${b.usesStanding ? ' · ' + esc(peso(b.amount)) : ''}</i>`;
+                    return `<div class="ivp-batch">
+                        <span class="ivp-b-when">${esc(b.onSays || '')}</span>
+                        <span class="ivp-b-what"><b>${esc(b.reasonLabel)} · ${esc(b.says)}${b.typedSays ? ' <span class="font-normal text-gray-400">(typed ' + esc(b.typedSays) + ')</span>' : ''}</b>${b.activityId ? '<i>Bought on an activity — its price is set on that activity</i>' : (b.note ? `<i>${esc(b.note)}</i>` : '')}</span>
+                        <button type="button" class="ivp-b-price ${cls}${locked ? ' is-locked' : ''}" ${locked ? 'disabled' : `data-iv-price-batch="${b.id}"`} title="${locked ? '' : 'Fix the price of this batch'}">${priceSays}</button>
+                    </div>`;
+                }).join('');
+                return `<div class="ivp-card" data-ivp-item="${i.id}">
+                    <div class="ivp-head">
+                        <span class="ivp-face">${i.icon}</span>
+                        <span class="ivp-name"><b>${esc(i.name)}</b><i>${esc(i.says)} on hand · ${p.batchCount} ${p.batchCount === 1 ? 'batch' : 'batches'}${p.unpriced ? ' · ' + p.unpriced + ' without a price' : ''}</i></span>
+                    </div>
+                    <div class="ivp-facts">
+                        <div class="ivp-fact ${ro ? '' : 'is-tap'} ${i.unitPrice == null ? 'is-none' : ''}" ${ro ? '' : `data-iv-price-item="${i.id}"`} title="${ro ? '' : 'The price a batch without one reads at — tap to change'}"><small>Standing price</small>${standing}</div>
+                        <div class="ivp-fact ${p.average == null ? 'is-none' : ''}"><small>Average paid</small><b>${p.average != null ? esc(pesoShort(p.average)) + ' <span class="font-normal">per ' + esc(one) + '</span>' : '—'}</b></div>
+                        <div class="ivp-fact ${p.worth == null ? 'is-none' : ''}"><small>On hand is worth</small><b>${p.worth != null ? esc(pesoShort(p.worth)) : '—'}</b></div>
+                    </div>
+                    <p class="ivp-sub">Batches — what came in, and at what price${p.spent ? ' · ' + esc(peso(p.spent)) + ' spent in all' : ''}</p>
+                    ${batches || '<p class="ivp-none">Nothing has come in yet.</p>'}
+                </div>`;
+            }).join('');
+            $id('ivPricingEmpty')?.classList.toggle('hidden', ITEMS.length > 0);
+        }
+
+        /* The price sheet: one batch's price, or the item's standing one. */
+        function openPrice(mode, ref) {
+            let item = null, batch = null;
+            if (mode === 'batch') {
+                for (const k of Object.keys(PRICING || {})) {
+                    const b = (PRICING[k].batches || []).find((x) => String(x.id) === String(ref));
+                    if (b) { batch = b; item = itemById(k); break; }
+                }
+                if (!batch || !item) return;
+            } else {
+                item = itemById(ref);
+                if (!item) return;
+            }
+            $id('ivPriceMode').value = mode;
+            $id('ivPriceRef').value = String(ref);
+            $id('ivPriceTitle').textContent = mode === 'batch' ? 'Price for this batch' : 'Standing price';
+            $id('ivPriceFace').textContent = item.icon;
+            $id('ivPriceItem').textContent = item.name;
+            $id('ivPriceLine').textContent = mode === 'batch'
+                ? `${batch.reasonLabel} · ${batch.says} · ${batch.onSays || ''}`
+                : `${item.says} on hand · what one costs when a batch has no price of its own`;
+            $id('ivPriceUnit').textContent = '₱ per ' + unitSays(item.unit, true);
+            $id('ivPriceInput').value = mode === 'batch'
+                ? (batch.ownPrice != null ? batch.ownPrice : '')
+                : (item.unitPrice != null ? item.unitPrice : '');
+            $id('ivPriceHint').textContent = mode === 'batch'
+                ? (item.unitPrice != null ? `Leave it empty and this batch reads at the standing price, ${pesoShort(item.unitPrice)} per ${unitSays(item.unit, true)}.` : 'This batch has no price of its own and the item has no standing price yet.')
+                : 'Batches with a price of their own keep it; the rest read at this. The expense report and the day’s cash both count what a batch cost.';
+            $id('ivPriceClear').hidden = mode === 'batch' ? batch.ownPrice == null : item.unitPrice == null;
+            sayPriceTotal();
+            openSheet('ivPriceSheet');
+            if (window.matchMedia('(min-width: 640px)').matches) setTimeout(() => $id('ivPriceInput')?.focus(), 280);
+        }
+        function sayPriceTotal() {
+            const mode = $id('ivPriceMode')?.value;
+            const ref = $id('ivPriceRef')?.value;
+            const v = Number($id('ivPriceInput')?.value);
+            const out = $id('ivPriceTotal');
+            if (!out) return;
+            if (mode !== 'batch' || !(v > 0)) { out.textContent = ''; return; }
+            let batch = null, item = null;
+            for (const k of Object.keys(PRICING || {})) { const b = (PRICING[k].batches || []).find((x) => String(x.id) === String(ref)); if (b) { batch = b; item = itemById(k); break; } }
+            if (!batch) { out.textContent = ''; return; }
+            out.textContent = `${batch.says} at ${pesoShort(v)} = ${peso(batch.qty * v)} for this batch.`;
+        }
+        async function priceGo(btn, clear) {
+            const mode = $id('ivPriceMode').value;
+            const ref = $id('ivPriceRef').value;
+            const raw = $id('ivPriceInput').value;
+            const price = clear ? null : (raw === '' ? null : Number(raw));
+            if (!clear && raw !== '' && !(price >= 0)) { toast('That is not a price.', 'error'); return; }
+            btn.disabled = true;
+            try {
+                let res;
+                if (mode === 'batch') {
+                    res = await api(U.batchPrice, { method: 'POST', body: { id: Number(ref), unitPrice: price } });
+                } else {
+                    const item = itemById(ref);
+                    res = await api(U.update(ref), { method: 'PUT', body: { name: item.name, kind: item.kind, unit: item.unit, unitPrice: price, note: item.note || null } });
+                }
+                toast(res.message);
+                closeSheet('ivPriceSheet');
+                await load();
+                // The day's cash on the board reads these prices.
+                window.ivDayChanged?.();
+            } catch (err) { toast(err.message, 'error'); }
+            finally { btn.disabled = false; }
         }
 
         /* View-level shed: the rows are readable, the pens are not drawn.
@@ -1096,7 +1211,7 @@
         }
 
         window.__ivApi = {
-            openItemSheet, saveItem, load, itemById, sayKind, sayUnit, delItem, openKindSheet, pickKind, openUnitSheet, pickUnit, dressTags,
+            openItemSheet, saveItem, load, itemById, sayKind, sayUnit, delItem, openKindSheet, pickKind, openUnitSheet, pickUnit, dressTags, openPrice, priceGo, sayPriceTotal,
             openItemMenu, itemMenuAct, sayMoveDate, raisePicker, openConv,
             sayMoveItem, sayMoveQty, moveGo, delMove, showTab, fillUnits,
             openMoveItemSheet, pickMoveItem, openMoveUnitSheet, pickMoveUnit,
@@ -1139,6 +1254,14 @@
                 const mvi = e.target.closest('[data-mv-item]');
                 if (mvi) { A.pickMoveItem(mvi.getAttribute('data-mv-item')); return; }
                 if (e.target.closest('#ivMoveUnitBtn')) { A.openMoveUnitSheet(); return; }
+                const pb = e.target.closest('[data-iv-price-batch]');
+                if (pb) { A.openPrice('batch', pb.getAttribute('data-iv-price-batch')); return; }
+                const pi = e.target.closest('[data-iv-price-item]');
+                if (pi) { A.openPrice('item', pi.getAttribute('data-iv-price-item')); return; }
+                const pgo = e.target.closest('#ivPriceGo');
+                if (pgo) { A.priceGo(pgo, false); return; }
+                const pclr = e.target.closest('#ivPriceClear');
+                if (pclr) { A.priceGo(pclr, true); return; }
                 const kb = e.target.closest('[data-iv-kind-btn]');
                 if (kb) { A.openKindSheet(kb.getAttribute('data-iv-kind-btn')); return; }
                 const kr = e.target.closest('[data-iv-kind]');
@@ -1188,6 +1311,7 @@
                 const A = window.__ivApi;
                 if (!A) return;
                 if (e.target.id === 'ivMoveQty') A.sayMoveQty();
+                if (e.target.id === 'ivPriceInput') A.sayPriceTotal();
             });
         }
 

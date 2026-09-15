@@ -529,6 +529,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-inventory-restart', [App\Http\Controllers\Manager\InventoryController::class, 'restart'])->name('sm.inventory.restart');
     Route::delete('/app/sm-inventory-move-delete', [App\Http\Controllers\Manager\InventoryController::class, 'deleteMove'])->name('sm.inventory.move.delete');
     Route::post('/app/sm-inventory-move-update', [App\Http\Controllers\Manager\InventoryController::class, 'updateMove'])->name('sm.inventory.move.update');
+    // The Pricing tab: price one batch after the fact.
+    Route::post('/app/sm-inventory-batch-price', [App\Http\Controllers\Manager\InventoryController::class, 'priceBatch'])->name('sm.inventory.batch.price');
 
     // The Add Worker sheet's "has an account" tab: is there an anee.io login behind this email?
     Route::get('/app/sm-workers-account', [App\Http\Controllers\Manager\WorkerController::class, 'account'])->name('sm.workers.account');
