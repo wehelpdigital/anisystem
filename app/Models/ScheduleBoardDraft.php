@@ -50,6 +50,6 @@ class ScheduleBoardDraft extends BaseModel
 
     public function thumbUrl(): ?string
     {
-        return $this->thumbPath ? asset('storage/' . ltrim($this->thumbPath, '/')) : null;
+        return $this->thumbPath ? \App\Support\MediaStore::url($this->thumbPath) : null;
     }
 }

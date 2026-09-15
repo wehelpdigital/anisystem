@@ -289,13 +289,16 @@ class AsScheduleActivity extends BaseModel
 
     /**
      * Public URL for the activity's reference image (or null if none).
-     * Path is stored relative to the `public` disk so asset('storage/...')
-     * gives the publicly-accessible URL after `storage:link` has run.
+     *
+     * Through MediaStore, which is the one place that knows where a path
+     * lives: the upload has gone to the mother app (an mm: path) since the
+     * media store arrived, and asset('storage/mm:...') was a broken picture
+     * on every activity that had one.
      */
     public function imageUrl(): ?string
     {
         if (empty($this->imagePath)) return null;
-        return asset('storage/' . ltrim($this->imagePath, '/'));
+        return \App\Support\MediaStore::url($this->imagePath);
     }
 
     /**
