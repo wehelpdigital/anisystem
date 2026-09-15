@@ -604,6 +604,10 @@
     /* ---------------- the walk ---------------- */
     function show(n, backwards) {
         step = Math.max(0, Math.min(STEPS - 1, n));
+        /* Leave whatever field was being typed in: on a phone the keypad
+           otherwise rides along into the next step (a button tap does not
+           take focus on iOS, so the hidden field would keep it). */
+        try { if (document.activeElement && document.activeElement !== document.body) document.activeElement.blur(); } catch (_) { }
         document.querySelectorAll('#cpWiz .wtp-step').forEach((s) => {
             const on = Number(s.getAttribute('data-step')) === step;
             s.classList.toggle('is-on', on);
@@ -626,7 +630,7 @@
             case 5: state.targetYield = $id('cpTarget').value.trim();
                 return !!state.priority || (toast('Say what you are after this season.', 'error'), false);
             case 6: state.area = $id('cpArea').value.trim();
-                if (!(Number(state.area) > 0)) { toast('How big is the field, in hectares?', 'error'); $id('cpArea').focus(); return false; }
+                if (!(Number(state.area) > 0)) { toast('How big is the field, in hectares?', 'error'); if (!phone()) $id('cpArea').focus(); return false; }
                 if (!state.soil) { toast('Pick the soil that sounds most like yours.', 'error'); return false; }
                 if (!state.water) { toast('Say what water the field gets.', 'error'); return false; }
                 return true;
