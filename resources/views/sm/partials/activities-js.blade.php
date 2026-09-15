@@ -244,6 +244,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // How old the trees on a lot are, in months, for the crops that are read
     // by age rather than by a day count.
     const LOT_TREE_AGE = @json((object) $schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->treeAgeMonths()])->all());
+    /* Realign by Anee: a signed shift in days a lot's STAGE is read at,
+       and what she found. The count a day shows is still the calendar's. */
+    const LOT_STAGE_SHIFT = @json((object) $schedule->lots->mapWithKeys(fn ($l) => [$l->id => (int) ($l->growthShiftDays ?? 0)])->all());
+    const LOT_REALIGN = @json((object) $schedule->lots->filter(fn ($l) => $l->growthRealignedAt && is_array($l->growthRealign))->mapWithKeys(fn ($l) => [$l->id => $l->growthRealign + ['shiftDays' => (int) $l->growthShiftDays]])->all());
     const LOT_MANUAL_DAY_ZERO = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->dayZeroDate ? $l->dayZeroDate->format('Y-m-d') : null]));
     const LOT_MANUAL_TRANSPLANT = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->transplantDate ? $l->transplantDate->format('Y-m-d') : null]));
 
@@ -600,16 +604,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 ? (LOT_TREE_AGE[id] != null ? { day: Number(LOT_TREE_AGE[id]), counter: 'AGE' } : null)
                 : lotDayNumberOn(id, dateKey);
             if (!age) return null;
-            const stage = stageOf(key, age.day, age.counter);
+            // Read at the realigned day, shown at the calendar's.
+            const shift = Number(LOT_STAGE_SHIFT[id] || 0);
+            const stage = stageOf(key, Math.max(0, age.day + shift), age.counter);
             if (!stage) return null;
             return {
                 lotId: id, lotName: LOT_NAMES[id] || ('Lot #' + id),
                 day: age.day, counter: age.counter, crop, stage, isTree: !!tree,
+                shift, realign: LOT_REALIGN[id] || null,
             };
         }).filter(Boolean);
     }
 
+    let GS_LAST = null;   // what the sheet last showed, so a realignment can redraw it
     function openDayStage(dateKey, group) {
+        GS_LAST = { dateKey, group };
         const rows = dayStageRows(dateKey, group);
         const box = $id('growthStageList');
         if (!box) return;
@@ -657,6 +666,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         ? `Day ${st.dayInStage + 1} of this stage · ${esc(st.next.label)} in about ${st.next.inDays} day${st.next.inDays === 1 ? '' : 's'}`
                         : 'The last stage — harvest window.'}</div>
                     <div class="gs-steps">${steps}</div>
+                    ${(() => {
+                        // Realign by Anee: her button, and her note once she has spoken.
+                        if (!window.growthRealign || r.isTree) return '';
+                        window.growthRealign.known[r.lotId] = r.realign;
+                        window.growthRealign.names[r.lotId] = r.lotName;
+                        return window.growthRealign.block({ lotId: r.lotId, lotName: r.lotName, realign: r.realign });
+                    })()}
                 </div>
                 </div></div>
             </div>`;
@@ -669,6 +685,17 @@ document.addEventListener('DOMContentLoaded', () => {
         gsApplyFolds();
         $id('gsFoldAll')?.classList.toggle('hidden', !rows.length);
         openSheet('growthStageSheet');
+    }
+
+    /* Her answer lands: the lot reads at its new day everywhere on the
+       board -- every day header's pill, and the sheet if it is open. */
+    if (window.growthRealign) {
+        window.growthRealign.onApplied = (lotId, realign) => {
+            LOT_STAGE_SHIFT[lotId] = Number(realign?.shiftDays || 0);
+            LOT_REALIGN[lotId] = realign || null;
+            $qsa('#activitiesList .date-group').forEach((g) => paintDayStage(g));
+            if (GS_LAST && !$id('growthStageSheet')?.classList.contains('hidden')) openDayStage(GS_LAST.dateKey, GS_LAST.group);
+        };
     }
 
     /* The lots fold here exactly as they do in the Growth Stages module —

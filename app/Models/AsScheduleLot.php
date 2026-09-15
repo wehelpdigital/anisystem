@@ -29,6 +29,11 @@ class AsScheduleLot extends BaseModel
         'dayZeroDate',
         'transplantDate',
         'dayType',
+        // Realign by Anee: a signed shift in days applied to every stage
+        // reading of this lot, when it was set, and what she found.
+        'growthShiftDays',
+        'growthRealignedAt',
+        'growthRealign',
         'notes',
         'deleteStatus',
     ];
@@ -40,6 +45,9 @@ class AsScheduleLot extends BaseModel
         'mapSaveId' => 'integer',
         'dayZeroDate' => 'date:Y-m-d',
         'transplantDate' => 'date:Y-m-d',
+        'growthShiftDays' => 'integer',
+        'growthRealignedAt' => 'datetime',
+        'growthRealign' => 'array',
         'treePlantedAt' => 'date:Y-m-d',
         'daysToMaturity' => 'integer',
         'deleteStatus' => 'integer',
@@ -76,6 +84,21 @@ class AsScheduleLot extends BaseModel
         return 'https://www.google.com/maps/search/?api=1&query='
             . number_format((float) $this->pinLat, 6, '.', '') . '%2C'
             . number_format((float) $this->pinLng, 6, '.', '');
+    }
+
+    /**
+     * The day (or month) the crop's STAGE is read at: the calendar's count
+     * plus Realign by Anee's shift, when she has set one. The count itself
+     * is still the calendar's -- "DAT 45" stays DAT 45 on every screen --
+     * only the stage read off it moves.
+     */
+    public function stageDay(?array $age): ?int
+    {
+        if (! $age || ! isset($age['day'])) {
+            return null;
+        }
+
+        return max(0, (int) $age['day'] + (int) ($this->growthShiftDays ?? 0));
     }
 
     public function maturityDays(): ?int

@@ -286,6 +286,11 @@
                         @endforeach
                     </div>
                 @endif
+                {{-- Realign by Anee: filled by the shared renderer below, so
+                     the block here is the one the board's sheet draws. --}}
+                @unless ($r['isTree'])
+                    <div data-grx-mount data-lot-id="{{ $r['lot']->id }}" data-lot-name="{{ $r['lot']->lotName }}" data-realign='@json($r['realign'])'></div>
+                @endunless
             @endif
         </div>
         </div></div>
@@ -361,6 +366,29 @@
             });
             save();
             sayBtn();
+        });
+    })();
+</script>
+@include('sm.partials.growth-realign', ['schedule' => $schedule])
+<script>
+    /* Every lot's block, drawn by the shared renderer; and once she has
+       spoken, the page is redrawn from the server so the stage, the bar,
+       the tips and the timeline all read at the new day -- after the
+       reading has been read and its sheet closed. */
+    (() => {
+        const mount = () => document.querySelectorAll('[data-grx-mount]').forEach((m) => {
+            let realign = null;
+            try { realign = JSON.parse(m.dataset.realign || 'null'); } catch (_) {}
+            const lotId = Number(m.dataset.lotId);
+            window.growthRealign.known[lotId] = realign;
+            window.growthRealign.names[lotId] = m.dataset.lotName || '';
+            m.innerHTML = window.growthRealign.block({ lotId, lotName: m.dataset.lotName || '', realign });
+        });
+        mount();
+        let redraw = false;
+        window.growthRealign.onApplied = () => { redraw = true; };
+        document.addEventListener('sm:sheet-closed', (e) => {
+            if (redraw && e.detail && e.detail.id === 'grRealignResultSheet') { redraw = false; location.reload(); }
         });
     })();
 </script>

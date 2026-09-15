@@ -63,7 +63,10 @@ class GrowthStageController extends BaseScheduleController
             // the same day, and reading both against one figure is how a
             // farmer gets told they have three weeks left when they have one.
             $maturity = $lot->maturityDays();
-            $stage = $crop && $age ? CropStages::stageFor($crop, $age['day'], $age['counter'], $maturity) : null;
+            // The stage is read at the realigned day (Realign by Anee), the
+            // count shown is still the calendar's.
+            $stageDay = $lot->stageDay($age);
+            $stage = $crop && $age ? CropStages::stageFor($crop, $stageDay, $age['counter'], $maturity) : null;
 
             $rows[] = [
                 'lot' => $lot,
@@ -75,7 +78,11 @@ class GrowthStageController extends BaseScheduleController
                 'isTree' => CropStages::isPerennial($crop),
                 'maturity' => $maturity,
                 'tips' => $stage ? CropStageTips::for($crop, $stage['index'], $age['counter'] ?? null) : ['do' => [], 'watch' => []],
-                'timeline' => $crop ? CropStages::timeline($crop, $age['day'] ?? null, $age['counter'] ?? null, $maturity) : [],
+                'timeline' => $crop ? CropStages::timeline($crop, $stageDay, $age['counter'] ?? null, $maturity) : [],
+                // What Anee found, when she was asked; null until she has been.
+                'realign' => ($lot->growthRealignedAt && is_array($lot->growthRealign))
+                    ? $lot->growthRealign + ['shiftDays' => (int) $lot->growthShiftDays]
+                    : null,
                 // Why a lot cannot be read, said plainly, because "no stage"
                 // on its own is not a useful answer.
                 'blocked' => $this->whyBlocked($lot, $crop, $age, isset($dayZeroEff[$lot->id])),

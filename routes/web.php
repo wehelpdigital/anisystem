@@ -575,6 +575,10 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-gallery-images', [App\Http\Controllers\Manager\GalleryController::class, 'imageDestroy'])->name('sm.gallery.image.destroy');
     // Growth Stages: what each lot's crop is doing, read off its own day count.
     Route::get('/app/sm-growth', [App\Http\Controllers\Manager\GrowthStageController::class, 'page'])->name('sm.growth');
+    // Realign by Anee: where the crop in a lot actually is, read from its history (paid plans).
+    Route::get('/app/sm-growth-realign-quote', [App\Http\Controllers\Manager\GrowthRealignController::class, 'quote'])->name('sm.growth.realign.quote');
+    Route::post('/app/sm-growth-realign', [App\Http\Controllers\Manager\GrowthRealignController::class, 'generate'])->name('sm.growth.realign');
+    Route::get('/app/sm-growth-realign-job/{id}', [App\Http\Controllers\Manager\GrowthRealignController::class, 'job'])->whereNumber('id')->name('sm.growth.realign.job');
     // Media Box: every picture and video this schedule has, in one place.
     Route::get('/app/sm-media', [App\Http\Controllers\Manager\MediaBoxController::class, 'page'])->name('sm.media');
     Route::get('/app/sm-draw', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'page'])->name('sm.draw');

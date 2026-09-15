@@ -136,7 +136,7 @@ class FarmTips
             }
 
             $counter = $transplanted ? 'DAT' : ($lot->dayType ?: 'DAS');
-            $stage = CropStages::stageFor($crop, (int) $day, $counter);
+            $stage = CropStages::stageFor($crop, max(0, (int) $day + (int) ($lot->growthShiftDays ?? 0)), $counter);
             if (! $stage) {
                 continue;
             }

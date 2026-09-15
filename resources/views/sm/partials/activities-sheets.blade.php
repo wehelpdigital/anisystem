@@ -971,6 +971,8 @@
     </div>
     <div class="sheet-body" id="growthStageList" style="padding-bottom:1rem"></div>
 </div>
+{{-- Realign by Anee: the sheets and the block the lots above carry. --}}
+@include('sm.partials.growth-realign', ['schedule' => $schedule])
 
 <div class="sheet hidden" id="viewFilterSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>

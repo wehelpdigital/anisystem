@@ -133,7 +133,7 @@ class CroppingScheduleController extends Controller
                 if (! $age || ! $crop) {
                     continue;
                 }
-                $stage = \App\Support\CropStages::stageFor($crop, $age['day'], $age['counter']);
+                $stage = \App\Support\CropStages::stageFor($crop, $lot->stageDay($age), $age['counter']);
                 // How far this lot is through its crop's whole calendar —
                 // the stages it has finished, plus its way through this one.
                 $through = null;

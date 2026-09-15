@@ -287,7 +287,7 @@ class SeasonContext
             }
             $age = LotCalendar::ageOf($l, $today, $zero[$l->id] ?? null, $transplant[$l->id] ?? null);
             $crop = CropStages::normalize($l->crop);
-            $stage = $age && $crop ? CropStages::stageFor($crop, $age['day'], $age['counter']) : null;
+            $stage = $age && $crop ? CropStages::stageFor($crop, $l->stageDay($age), $age['counter']) : null;
             $size = trim(rtrim(rtrim((string) $l->lotSize, '0'), '.') . ' ' . $l->lotSizeUnit);
 
             $rows[] = array_filter([

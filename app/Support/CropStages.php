@@ -235,6 +235,12 @@ class CropStages
                 return $key;
             }
         }
+        // "Rice (Palay)", "Corn (Mais)": a label with the local name in
+        // brackets is still the crop before the bracket.
+        $bare = trim(preg_replace('/\s*\(.*\)\s*$/', '', $crop));
+        if ($bare !== '' && $bare !== $crop) {
+            return self::normalize($bare);
+        }
 
         return null;
     }
