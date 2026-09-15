@@ -29,7 +29,10 @@ class AiClient
      */
     private const TIMEOUT = 90;
     public const TIMEOUT_DOCUMENT = 180;
-    public const TIMEOUT_SEARCHED = 270;
+    /* Measured: a grounded Pro call that has sent nothing after 150 s never
+     * does; one that answers, answers in 60–90 s. So the searched clock is
+     * short enough to ask again inside a job's own patience. */
+    public const TIMEOUT_SEARCHED = 150;
 
     /** The per-call timeout, the caller's or the default. */
     private int $timeout = self::TIMEOUT;

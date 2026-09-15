@@ -61,7 +61,8 @@ class VarietyAnalysisController extends Controller
         'floods' => 'Floods / standing water after rain',
         'water_source' => 'Limited irrigation water source',
         'salinity' => 'Salty or brackish (near the sea, saline soil)',
-        'acidic' => 'Acidic soil (yellowing, poor growth, low pH)',
+        'acidic' => 'Acidic soil (low pH — yellowing, poor growth)',
+        'alkaline' => 'Alkaline soil (high pH — white crust, pale leaves)',
         'wind' => 'Strong winds pass through (typhoon corridor)',
         'pests' => 'Pests have been heavy in past seasons',
         'disease' => 'Disease has hit past crops (blast, tungro, wilt, rot…)',
@@ -185,6 +186,21 @@ class VarietyAnalysisController extends Controller
 
         $prompt = $this->prompt($p);
 
+        /* Should PHP itself be cut off mid-run (a wall-clock limit, a fatal),
+         * the row must not stay "pending" -- that blocks every next run for
+         * ten minutes and the page polls a job that will never answer. */
+        register_shutdown_function(function () use ($id) {
+            try {
+                DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
+                    'status' => 'failed',
+                    'error' => 'The research took too long and was stopped. Nothing was charged — please try again.',
+                    'updated_at' => now(),
+                ]);
+            } catch (\Throwable $e) {
+                // Nothing more to do at shutdown.
+            }
+        });
+
         if (function_exists('fastcgi_finish_request')) {
             ignore_user_abort(true);
             @set_time_limit(0);
@@ -196,7 +212,8 @@ class VarietyAnalysisController extends Controller
             exit;
         }
 
-        @set_time_limit(300);
+        // Inline (no FPM): the research step alone may take a few minutes.
+        @set_time_limit(900);
         $this->runJob($id, (int) $payer->id, $settings, $prompt, $p);
 
         return $this->jobState($id);
@@ -263,14 +280,25 @@ class VarietyAnalysisController extends Controller
                 $overall += max(0, min(100, (float) ($scores[$k] ?? 0))) * ($weights[$k] ?? 0);
             }
             $r['overall'] = (int) round($overall);
+            // Hybrid or inbred: the two are bought, priced and grown
+            // differently, so they are ranked apart (the owner's ask,
+            // 2026-09-16). Anything not plainly a hybrid is an inbred/OPV.
+            $r['type'] = mb_strtolower(trim((string) ($r['type'] ?? ''))) === 'hybrid' ? 'hybrid' : 'inbred';
             $rows[] = $r;
         }
         usort($rows, fn ($a, $b) => $b['overall'] <=> $a['overall']);
+        // Ranked within each type, so the best hybrid is #1 among hybrids
+        // and the best inbred #1 among inbreds; the list itself stays in
+        // one overall order.
+        $seen = ['hybrid' => 0, 'inbred' => 0];
         foreach ($rows as $i => &$r) {
-            $r['rank'] = $i + 1;
+            $r['rank'] = ++$seen[$r['type']];
+            $r['overallRank'] = $i + 1;
         }
         unset($r);
         $report['ranking'] = $rows;
+        $report['bestHybrid'] = collect($rows)->firstWhere('type', 'hybrid')['variety'] ?? null;
+        $report['bestInbred'] = collect($rows)->firstWhere('type', 'inbred')['variety'] ?? null;
         if ($rows) {
             // The model's own "why" is kept when it picked the same one the
             // weighing did; otherwise the winner's fit notes speak for it.
@@ -297,6 +325,18 @@ class VarietyAnalysisController extends Controller
             return $this->json(false, 'That analysis is gone.', [], 404);
         }
         if ($r->status === 'pending') {
+            // A job nobody has heard from in a quarter of an hour is not
+            // coming: say so, rather than polling it for ever.
+            if (\Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(15))) {
+                DB::table('as_plant_analyses')->where('id', $id)->update([
+                    'status' => 'failed', 'deleteStatus' => 0,
+                    'error' => 'The research took too long and was stopped. Nothing was charged — please try again.',
+                    'updated_at' => now(),
+                ]);
+
+                return $this->json(false, 'The research took too long and was stopped. Nothing was charged — please try again.', ['status' => 'failed'], 502);
+            }
+
             return $this->json(true, 'Working…', ['pending' => true, 'id' => (int) $r->id, 'status' => 'pending']);
         }
         if ($r->status === 'failed') {
@@ -480,7 +520,8 @@ THE CASE
 
 FIND, IN THIS ORDER
 1. The newest Philippine-registered or released {$crop['label']} varieties (NSIC / BPI registration, PhilRice, IPB-UPLB, DA-BAR, private seed companies) in {$year}, {$year}-1 and {$year}-2: name, breeder or company, year, what it was bred for.
-2. For each of the farmer's named varieties AND for 4–6 top-yielding released varieties suited to this soil and these troubles: documented yield (trial or published figure, with unit and source), days to maturity, pest and disease resistance ratings, stress tolerance (drought, submergence, salinity, heat, acidity, lodging), grain or fruit quality notes, and any regional trial results in or near the farmer's region.
+2. For each of the farmer's named varieties AND for 4–6 top-yielding released INBRED or open-pollinated varieties suited to this soil and these troubles: documented yield (trial or published figure, with unit and source), days to maturity, pest and disease resistance ratings, stress tolerance (drought, submergence, salinity, heat, acidity, alkalinity, lodging), grain or fruit quality notes, and any regional trial results in or near the farmer's region.
+2b. The same for 3–5 HYBRID varieties of {$crop['label']} sold in the Philippines by the top seed companies (for rice: SL Agritech / SL-8H and its line, Bayer Arize, Syngenta, Corteva-Pioneer, Bioseed, Longping High-Tech; for corn: Pioneer, Bayer-Dekalb, Syngenta NK, Bioseed; for vegetables: East-West Seed, Allied Botanical, Known-You, Condor, Ramgo — whichever apply to this crop), and the NSIC-registered public hybrids (e.g. Mestiso / Mestizo lines for rice): yield, maturity, resistance, seed cost and availability per hectare where published, and whether the seed must be bought fresh each season.
 3. PAGASA's seasonal climate outlook for the farmer's region for the coming months (rainfall, ENSO state, typhoon expectation).
 4. Anything published about which of these varieties do well or poorly on this soil type and with these troubles.
 
@@ -501,8 +542,8 @@ PROMPT;
         }
         $orderText = implode('; ', $order);
         $given = $p['varieties']
-            ? 'The farmer is weighing these: ' . implode(', ', $p['varieties']) . '. Assess EVERY one of them (in givenVarieties), and put those that fit in the ranking; add the top-yielding released varieties for these conditions that the farmer did not name, so the ranking has 5–8 in all.'
-            : 'The farmer has not named any. Choose the 5–8 top-yielding released varieties for these conditions yourself.';
+            ? 'The farmer is weighing these: ' . implode(', ', $p['varieties']) . '. Assess EVERY one of them (in givenVarieties), and put those that fit in the ranking; add the top-yielding released varieties for these conditions that the farmer did not name — inbred/open-pollinated AND hybrid — so the ranking has 6–9 in all.'
+            : 'The farmer has not named any. Choose them yourself: 4–5 top-yielding released INBRED / open-pollinated varieties AND 3–4 HYBRID varieties from the top seed companies selling in the Philippines, for these conditions — 7–9 in all, every one with its type filled in.';
         $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
         $forecast = $this->forecastLines($p['location']);
@@ -531,10 +572,10 @@ GROUND RULES
 - Write every "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
 
 Return ONLY a valid JSON object — no code fences, no commentary — in exactly this shape:
-{"headline":"","topPick":{"variety":"","by":"","why":""},"ranking":[{"rank":1,"variety":"","by":"","released":"","maturityDays":"","yieldPotential":"","scores":{"yield":0,"protection":0,"survival":0,"quickness":0},"strengths":[""],"weaknesses":[""],"fitNotes":"","sources":[""]}],"givenVarieties":[{"variety":"","verdict":""}],"newest":[{"variety":"","by":"","year":"","note":""}],"conditions":{"soil":"","weather":"","risks":[""]},"management":[""],"confidence":"moderate","dataGaps":[""],"summary":""}
+{"headline":"","topPick":{"variety":"","by":"","why":""},"ranking":[{"rank":1,"variety":"","type":"inbred","by":"","released":"","maturityDays":"","yieldPotential":"","scores":{"yield":0,"protection":0,"survival":0,"quickness":0},"strengths":[""],"weaknesses":[""],"fitNotes":"","sources":[""]}],"givenVarieties":[{"variety":"","verdict":""}],"newest":[{"variety":"","by":"","year":"","note":""}],"conditions":{"soil":"","weather":"","risks":[""]},"management":[""],"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
 - headline: one line, ≤ 14 words, the answer in a breath.
-- ranking: FIVE to EIGHT varieties, each with: by (breeder / seed company / institution), released (year or "n/a"), maturityDays (e.g. "110–115 DAS" or "n/a"), yieldPotential (a published figure with unit, e.g. "6.5–8.0 t/ha (PhilRice trials)", or "not published"), scores (all four, 0–100), strengths (2–3 short items), weaknesses (1–3 short items), fitNotes (≤ 40 words on THIS ground and climate), sources (1–3 short source names, e.g. "PhilRice Rc 222 factsheet 2023").
+- ranking: SIX to NINE varieties, each with: type ("hybrid" for F1 hybrids whose seed is bought fresh each season, "inbred" for inbred, open-pollinated and public registered varieties — never leave it empty), by (breeder / seed company / institution), released (year or "n/a"), maturityDays (e.g. "110–115 DAS" or "n/a"), yieldPotential (a published figure with unit, e.g. "6.5–8.0 t/ha (PhilRice trials)", or "not published"), scores (all four, 0–100), strengths (2–3 short items), weaknesses (1–3 short items), fitNotes (≤ 40 words on THIS ground and climate), sources (1–3 short source names, e.g. "PhilRice Rc 222 factsheet 2023").
 - givenVarieties: one entry for EACH variety the farmer named (empty list if none), verdict ≤ 35 words — including when it is unsuitable, unavailable, or could not be found (say so plainly).
 - newest: two to five of the most recent relevant Philippine releases found online (year required), each with a ≤ 20-word note on why it matters here.
 - conditions: soil (≤ 45 words on what this soil and its troubles demand of a variety), weather (≤ 45 words on the outlook and what it favours), risks (2–4 short items).

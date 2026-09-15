@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Variety Research')
 @section('page-title', 'Variety Research')
-@section('page-subtitle', 'The right variety, searched and compared')
+@section('page-subtitle', 'The right variety, analyzed and compared')
 
 @section('back', route('app.dashboard'))
 @push('scripts')
@@ -133,7 +133,8 @@
     /* The varieties the farmer is weighing: typed one at a time, worn as chips. */
     .va-add { display: flex; gap: .5rem; }
     .va-add .form-input { flex: 1 1 auto; min-width: 0; }
-    .va-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .7rem; min-height: 1.5rem; }
+    .va-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .7rem; }
+    .va-chips:empty { display: none; }
     .va-chip { display: inline-flex; align-items: center; gap: .35rem; padding: .35rem .5rem .35rem .7rem;
         border-radius: 999px; font-size: .8rem; font-weight: 700; color: var(--color-brand-800);
         background: var(--color-brand-50); border: 1px solid var(--color-brand-200);
@@ -143,7 +144,7 @@
         justify-content: center; color: var(--color-brand-700); font-size: .8rem; line-height: 1; }
     .va-chip button:hover { background: rgb(74 124 42 / .15); }
     .va-none { font-size: .78rem; color: var(--color-gray-400); font-style: italic; }
-    .va-anee { display: flex; align-items: center; gap: .6rem; margin-top: .8rem; padding: .6rem .75rem; border-radius: .8rem;
+    .va-anee { display: flex; align-items: center; gap: .6rem; margin-top: .6rem; padding: .6rem .75rem; border-radius: .8rem;
         background: #fdf7e6; border: 1px solid #f3dfa4; font-size: .78rem; color: #7a5a12; line-height: 1.45; }
     .va-anee img { width: 1.6rem; height: 1.6rem; border-radius: 999px; object-fit: cover; flex: none; }
     html.dark .va-chip { background: #22301a; border-color: #3d5226; color: #cfe6b8; }
@@ -187,6 +188,33 @@
     .wtp-hero h2 { font-size: 1.15rem; font-weight: 800; margin-bottom: .15rem; }
     .wtp-hero .h-win { font-size: 1.5rem; font-weight: 800; letter-spacing: .01em; }
     .wtp-hero .h-by { font-size: .78rem; opacity: .85; margin-top: .1rem; }
+    .wtp-hero .h-best { display: flex; flex-wrap: wrap; gap: .3rem .9rem; margin-top: .55rem; font-size: .78rem; opacity: .95; }
+    .wtp-hero .h-best b { font-weight: 800; }
+    .va-type { display: inline-block; vertical-align: middle; font-size: .58rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
+        padding: .1rem .4rem; border-radius: 999px; background: #fef3c7; color: #92400e; margin-left: .3rem; }
+    html.dark .va-type { background: #3b2f0e; color: #fcd34d; }
+    .va-group-sub { font-size: .76rem; color: var(--color-gray-500); margin: -.3rem 0 .5rem; line-height: 1.45; }
+
+    /* THE REPORT, FULL SCREEN when it lands: nothing else on the page —
+       not the tabs, not the wizard — until the ✕. The same report is then
+       left on the page underneath. */
+    .va-view { position: fixed; inset: 0; z-index: 90; background: var(--color-gray-50); overflow-y: auto; -webkit-overflow-scrolling: touch;
+        opacity: 0; transform: translateY(12px); transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .va-view.is-on { opacity: 1; transform: none; }
+    .va-view-bar { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: .6rem; padding: .7rem .9rem;
+        padding-top: max(.7rem, env(safe-area-inset-top)); background: rgb(250 250 248 / .92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--color-gray-200); }
+    .va-view-bar b { flex: 1 1 auto; min-width: 0; font-size: .95rem; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .va-view-x { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center;
+        background: var(--color-white); border: 1px solid var(--color-gray-200); color: var(--color-gray-700); font-size: 1rem; cursor: pointer; }
+    .va-view-x:hover { background: var(--color-gray-100); }
+    .va-view-body { max-width: 42rem; margin: 0 auto; padding: 1rem 1rem calc(2rem + env(safe-area-inset-bottom)); }
+    html.va-view-lock { overflow: hidden; }
+    html.dark .va-view { background: #0d110a; }
+    html.dark .va-view-bar { background: rgb(13 17 10 / .92); border-color: #2b3a1c; }
+    html.dark .va-view-bar b { color: #e8efe1; }
+    html.dark .va-view-x { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
+    @media (prefers-reduced-motion: reduce) { .va-view { transition: none; transform: none; } }
     .wtp-hero .h-why { font-size: .84rem; opacity: .92; line-height: 1.55; margin-top: .45rem; }
     .wtp-chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
     .wtp-chip { font-size: .68rem; font-weight: 700; padding: .18rem .55rem; border-radius: 999px;
@@ -347,7 +375,7 @@
             <div class="q-body">
                 <div class="q-body-in">
                     <div class="q-card" id="vaQuoteCost"></div>
-                    <div class="q-card">Anee <b>searches the web</b> for this one — the newest Philippine releases and registrations, trial yields, resistance ratings and days to maturity — then reads every variety against your soil, its troubles and the coming weather, and ranks them by what YOU said matters most.</div>
+                    <div class="q-card">Anee <b>analyzes deeply</b> for this one — the newest Philippine releases and registrations, hybrids from the top seed companies, trial yields, resistance ratings and days to maturity — then reads every variety against your soil, its troubles and the coming weather, and ranks them by what YOU said matters most.</div>
                 </div>
             </div>
         </div>
@@ -424,6 +452,15 @@
         <div class="wtp-report mt-4" id="vaReport" hidden></div>
     </div>
 
+    {{-- The report, full screen, when one lands or a saved one is opened. --}}
+    <div class="va-view" id="vaView" hidden role="dialog" aria-modal="true" aria-label="Variety research">
+        <div class="va-view-bar">
+            <b id="vaViewTitle">Variety research</b>
+            <button type="button" class="va-view-x" id="vaViewX" aria-label="Close">✕</button>
+        </div>
+        <div class="va-view-body"><div class="wtp-report" id="vaViewReport"></div></div>
+    </div>
+
     <div id="vaSavedPane" class="hidden">
         <div class="card !p-0 overflow-hidden">
             <div id="vaSavedList"></div>
@@ -488,7 +525,7 @@
     function paintOptions() {
         const soilIcons = { clay: '🧱', loam: '🟤', sandy: '🏖️', silty: '🌊', rocky: '⛰️', unsure: '🤷' };
         $id('vaSoils').innerHTML = Object.entries(OPT.soils).map(([k, label]) => `
-            <button type="button" class="wtp-choice" data-soil="${k}"><span class="c-e">${soilIcons[k] || '🟫'}</span><span>${esc(label)}</span></button>`).join('');
+            <button type="button" class="wtp-choice" data-soil="${k}"><span class="c-e">${soilIcons[k] || '🟫'}</span><span>${esc(String(label).split(' — ')[0])}${String(label).includes(' — ') ? `<small>${esc(String(label).split(' — ').slice(1).join(' — '))}</small>` : ''}</span></button>`).join('');
         const groups = {};
         OPT.crops.forEach((c) => { (groups[c.group] = groups[c.group] || []).push(c); });
         $id('vaCropList').innerHTML = Object.entries(groups).map(([g, list]) => `
@@ -529,7 +566,7 @@
         if (!OPT.quote) { q.hidden = true; return; }
         q.classList.toggle('is-min', quoteMin);
         $id('vaQuoteHead').setAttribute('aria-expanded', quoteMin ? 'false' : 'true');
-        $id('vaQuoteCost').innerHTML = `This research spends <b>${OPT.quote} credits</b> (it searches the web, which is why it costs more than its sisters), and you have <b>${OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString()}</b>. Nothing is charged until you press Run.`;
+        $id('vaQuoteCost').innerHTML = `This research spends <b>${OPT.quote} credits</b> (a deep analysis, which is why it costs more than its sisters), and you have <b>${OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString()}</b>. Nothing is charged until you press Run.`;
         $id('vaQuoteHint').textContent = `${OPT.quote} credits`;
         q.hidden = false;
     }
@@ -550,7 +587,9 @@
         document.querySelectorAll('#vaDots .wtp-dot').forEach((d, i) => d.classList.toggle('is-on', i <= step));
         $id('vaBack').disabled = step === 0;
         $id('vaNext').style.display = step === STEPS - 1 ? 'none' : '';
-        if (step === 3) setTimeout(() => $id('vaVarietyIn')?.focus({ preventScroll: true }), 300);
+        // The field is focused on a desk, where a cursor is a courtesy; on a
+        // phone the keypad would land on the step before it is read.
+        if (step === 3 && window.matchMedia('(min-width: 640px)').matches) setTimeout(() => $id('vaVarietyIn')?.focus({ preventScroll: true }), 300);
         if (step === STEPS - 1) review();
     }
 
@@ -577,7 +616,7 @@
             + `<br><span class="text-xs">${esc(order)}</span>`;
         $id('vaRunSays').textContent = OPT.canUse && OPT.quote ? `Run the research (${OPT.quote} credits)` : 'Run the research';
         $id('vaRunFine').textContent = OPT.canUse
-            ? 'Anee searches the web for this one. Charged to the same AI credits your questions use — it shows in your subscription’s credit log.'
+            ? 'Anee analyzes this one deeply. Charged to the same AI credits your questions use — it shows in your subscription’s credit log.'
             : (OPT.whyNot || '');
         $id('vaRun').disabled = !OPT.canUse;
     }
@@ -591,9 +630,17 @@
         document.querySelectorAll('#vaSoils .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
         setTimeout(() => show(2), 180);
     });
+    /* Some troubles cannot share a field: a soil is acidic or alkaline,
+       not both. Ticking one quietly unticks its opposite. */
+    const PROB_FOES = { acidic: ['alkaline'], alkaline: ['acidic'], drought: ['floods'], floods: ['drought'] };
     $id('vaProbs').addEventListener('change', (e) => {
         const l = e.target.closest('.wtp-prob');
         if (l) l.classList.toggle('is-on', e.target.checked);
+        if (!e.target.checked) return;
+        (PROB_FOES[e.target.value] || []).forEach((k) => {
+            const foe = document.querySelector(`#vaProbs input[value="${k}"]`);
+            if (foe && foe.checked) { foe.checked = false; foe.closest('.wtp-prob')?.classList.remove('is-on'); }
+        });
     });
 
     /* ---- the crop: the tag opens the sheet, the sheet fills the tag ---- */
@@ -712,7 +759,7 @@
         if (!stepReady()) return;
         const wiz = $id('vaWiz');
         wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = 'none');
-        window.aneeWait.show({ title: 'Anee is researching…', lines: ['Searching the newest Philippine releases and trials…', 'Reading resistance, tolerance and days to maturity…', 'Weighing each variety against your soil and the coming weather…', 'Ranking by what you said matters most…'], sub: 'A minute or two — she is reading the web.' });
+        window.aneeWait.show({ title: 'Anee is researching…', lines: ['Reading the newest Philippine releases and trials…', 'Checking the hybrids from the top seed companies…', 'Reading resistance, tolerance and days to maturity…', 'Weighing each variety against your soil and the coming weather…', 'Ranking by what you said matters most…'], sub: 'A minute or two — this is a deep analysis.' });
         $id('vaReport').hidden = true;
         let landed = false;
         try {
@@ -723,8 +770,9 @@
             } });
             let data = res.data;
             if (data.pending) {
-                for (let i = 0; i < 120 && (!data || data.status !== 'ready'); i++) {
+                for (let i = 0; i < 200 && (!data || data.status !== 'ready'); i++) {
                     await new Promise((r) => setTimeout(r, 3000));
+                    // api() throws on a failed job (success:false), which ends the wait with its words.
                     const st = await api(U.job(data.id || res.data.id), { method: 'GET' });
                     if (st.data && st.data.status === 'ready') { data = st.data; break; }
                 }
@@ -734,7 +782,9 @@
             }
             OPT.balance = data.balance;
             landed = true;
-            drawReport($id('vaReport'), { report: data.report, params: data.params, charged: data.charged, savedId: data.savedId }, 'fresh');
+            const item = { report: data.report, params: data.params, charged: data.charged, savedId: data.savedId };
+            drawReport($id('vaReport'), item, 'fresh', true);
+            openView(item, 'fresh');
             await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used — saved to the shelf.` });
             toast(`Done — ${data.charged} credits used. Saved to the shelf.`);
         } catch (err) {
@@ -746,6 +796,30 @@
             if (landed) { wiz.hidden = true; $id('vaQuote').hidden = true; }
         }
     });
+
+    /* The report full screen: the tabs and the wizard are out of sight
+       until the ✕; the page's own copy of the report stays underneath. */
+    function openView(item, mode) {
+        const view = $id('vaView');
+        const crop = (OPT ? OPT.crops.find((c) => c.key === (item.params || {}).crop) : null) || {};
+        $id('vaViewTitle').textContent = (crop.label ? crop.label + ' — ' : '') + 'variety research';
+        const host = $id('vaViewReport');
+        host.classList.remove('is-drawn');
+        drawReport(host, item, mode, true);
+        view.hidden = false;
+        document.documentElement.classList.add('va-view-lock');
+        view.scrollTop = 0;
+        requestAnimationFrame(() => requestAnimationFrame(() => { view.classList.add('is-on'); host.classList.add('is-drawn'); }));
+    }
+    function closeView() {
+        const view = $id('vaView');
+        if (view.hidden) return;
+        view.classList.remove('is-on');
+        document.documentElement.classList.remove('va-view-lock');
+        setTimeout(() => { view.hidden = true; $id('vaViewReport').innerHTML = ''; }, 300);
+    }
+    $id('vaViewX').addEventListener('click', closeView);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeView(); });
 
     function wizardBack() {
         $id('vaWiz').hidden = false;
@@ -760,7 +834,7 @@
     // Google hands its grounding pages back through a redirect door; the
     // title is then the site itself, and the door is not worth reading out.
     const host = (u) => { try { const h = new URL(u).hostname.replace(/^www\./, ''); return /vertexaisearch\.cloud\.google\.com$/.test(h) ? 'via Google Search' : h; } catch (_) { return ''; } };
-    function drawReport(hostEl, item, mode) {
+    function drawReport(hostEl, item, mode, quiet) {
         const r = item.report || {};
         const p = item.params || {};
         const sweep = (t) => String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/\s{2,}/g, ' ').trim();
@@ -778,11 +852,12 @@
                 <p class="h-win">${esc(top.variety || '')}</p>
                 ${top.by ? `<p class="h-by">${esc(top.by)}</p>` : ''}
                 <p class="h-why">${esc(sweep(top.why))}</p>
+                ${(r.bestHybrid && r.bestInbred) ? `<p class="h-best"><span>Best hybrid: <b>${esc(r.bestHybrid)}</b></span><span>Best inbred: <b>${esc(r.bestInbred)}</b></span></p>` : ''}
                 <div class="wtp-chips">
                     <span class="wtp-chip">📍 ${esc(p.location || '')}</span>
                     <span class="wtp-chip">${esc(crop.label || '')}</span>
                     <span class="wtp-chip">Confidence: ${esc(r.confidence || 'moderate')}</span>
-                    ${r.searched ? '<span class="wtp-chip">🌐 Searched the web</span>' : ''}
+                    ${r.searched ? '<span class="wtp-chip">🔎 Deep analysis</span>' : ''}
                     ${item.charged ? `<span class="wtp-chip">${item.charged} credits</span>` : ''}
                 </div>
             </div>
@@ -792,33 +867,49 @@
                 <div class="va-order">${order.map((k, i) => `<span>${i + 1}. ${esc(PR[k]?.label || k)}<i>${weightOf(k)}%</i></span>`).join('')}</div>
             </div>
 
-            <div class="wtp-card">
-                <h3>The comparison, best first</h3>
-                ${(r.ranking || []).map((x, i) => {
-                    const sc = x.scores || {};
-                    return `
-                    <div class="va-rec" style="transition-delay:${i * 70}ms">
-                        <div class="va-rec-top">
-                            <span class="wp-rank">${esc(String(x.rank || i + 1))}</span>
-                            <span class="v-name"><b>${esc(x.variety || '')}</b>${x.by ? `<small>${esc(x.by)}${x.released && x.released !== 'n/a' ? ' · released ' + esc(x.released) : ''}</small>` : ''}</span>
-                            <span class="va-overall"><b>${esc(String(x.overall ?? ''))}</b><small>overall</small></span>
-                        </div>
-                        <div class="va-facts">
-                            ${x.maturityDays && x.maturityDays !== 'n/a' ? `<span class="va-fact">⏱️ ${esc(x.maturityDays)}</span>` : ''}
-                            ${x.yieldPotential && !/not published/i.test(x.yieldPotential) ? `<span class="va-fact">🌾 ${esc(x.yieldPotential)}</span>` : ''}
-                        </div>
-                        <div class="va-bars">
-                            ${order.map((k) => `<div class="va-bar"><small>${esc(PR[k]?.label || k)}<i>${esc(String(Math.round(Number(sc[k]) || 0)))}</i></small><div class="wp-track"><span class="wp-fill${k === topKey ? ' is-top' : ''}" style="width:${Math.max(3, Math.min(100, Number(sc[k]) || 0))}%;transition-delay:${120 + i * 70}ms"></span></div></div>`).join('')}
-                        </div>
-                        ${(list(x.strengths).length || list(x.weaknesses).length) ? `<div class="va-pm">
-                            ${list(x.strengths).length ? `<ul class="is-plus">${list(x.strengths).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>` : ''}
-                            ${list(x.weaknesses).length ? `<ul class="is-minus">${list(x.weaknesses).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>` : ''}
-                        </div>` : ''}
-                        ${x.fitNotes ? `<p class="wp-why">${esc(sweep(x.fitNotes))}</p>` : ''}
-                        ${list(x.sources).length ? `<p class="va-src">Sources: ${esc(list(x.sources).join(' · '))}</p>` : ''}
-                    </div>`;
-                }).join('')}
-            </div>
+            ${(() => {
+                /* Hybrids and inbreds ranked apart: the two are bought,
+                   priced and grown differently, and a farmer chooses
+                   between them before choosing within them. One card when
+                   only one kind came back. */
+                const all = r.ranking || [];
+                const hybrids = all.filter((x) => x.type === 'hybrid');
+                const inbreds = all.filter((x) => x.type !== 'hybrid');
+                const groups = (hybrids.length && inbreds.length)
+                    ? [['Hybrids', 'Seed bought fresh each season — usually the higher yield, at a higher seed cost', hybrids], ['Inbred & open-pollinated', 'Seed you can keep and replant — the public NSIC-registered varieties', inbreds]]
+                    : [['The comparison, best first', '', all]];
+                let delay = 0;
+                return groups.map(([title, sub, rows]) => `
+                <div class="wtp-card">
+                    <h3>${esc(title)}</h3>
+                    ${sub ? `<p class="va-group-sub">${esc(sub)}</p>` : ''}
+                    ${rows.map((x, i) => {
+                        const sc = x.scores || {};
+                        const d = delay++;
+                        return `
+                        <div class="va-rec" style="transition-delay:${d * 70}ms">
+                            <div class="va-rec-top">
+                                <span class="wp-rank">${esc(String(x.rank || i + 1))}</span>
+                                <span class="v-name"><b>${esc(x.variety || '')}${x.type === 'hybrid' ? ' <span class="va-type">hybrid</span>' : ''}</b>${x.by ? `<small>${esc(x.by)}${x.released && x.released !== 'n/a' ? ' · released ' + esc(x.released) : ''}</small>` : ''}</span>
+                                <span class="va-overall"><b>${esc(String(x.overall ?? ''))}</b><small>overall</small></span>
+                            </div>
+                            <div class="va-facts">
+                                ${x.maturityDays && x.maturityDays !== 'n/a' ? `<span class="va-fact">⏱️ ${esc(x.maturityDays)}</span>` : ''}
+                                ${x.yieldPotential && !/not published/i.test(x.yieldPotential) ? `<span class="va-fact">🌾 ${esc(x.yieldPotential)}</span>` : ''}
+                            </div>
+                            <div class="va-bars">
+                                ${order.map((k) => `<div class="va-bar"><small>${esc(PR[k]?.label || k)}<i>${esc(String(Math.round(Number(sc[k]) || 0)))}</i></small><div class="wp-track"><span class="wp-fill${k === topKey ? ' is-top' : ''}" style="width:${Math.max(3, Math.min(100, Number(sc[k]) || 0))}%;transition-delay:${120 + d * 70}ms"></span></div></div>`).join('')}
+                            </div>
+                            ${(list(x.strengths).length || list(x.weaknesses).length) ? `<div class="va-pm">
+                                ${list(x.strengths).length ? `<ul class="is-plus">${list(x.strengths).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>` : ''}
+                                ${list(x.weaknesses).length ? `<ul class="is-minus">${list(x.weaknesses).map((s) => `<li>${esc(s)}</li>`).join('')}</ul>` : ''}
+                            </div>` : ''}
+                            ${x.fitNotes ? `<p class="wp-why">${esc(sweep(x.fitNotes))}</p>` : ''}
+                            ${list(x.sources).length ? `<p class="va-src">Sources: ${esc(list(x.sources).join(' · '))}</p>` : ''}
+                        </div>`;
+                    }).join('')}
+                </div>`).join('');
+            })()}
 
             ${(r.givenVarieties || []).length ? `
             <div class="wtp-card">
@@ -872,22 +963,26 @@
             </div>
 
             <div class="wtp-acts">
-                <button type="button" class="btn btn-primary w-full" id="${mode === 'fresh' ? 'vaAttach' : 'vaAttachSaved'}">
+                <button type="button" class="btn btn-primary w-full" data-va-attach>
                     ${OPT && OPT.aneeFace ? `<img class="wtp-anee-face" src="${esc(OPT.aneeFace)}" alt="">` : '🤖'} Attach to Anee
                 </button>
-                ${mode === 'fresh' ? `<button type="button" class="btn btn-white w-full" id="vaAgain">🔬 Run another research</button>` : ''}
-                <button type="button" class="btn btn-white w-full" id="vaDelete">🗑 Delete</button>
+                ${mode === 'fresh' ? `<button type="button" class="btn btn-white w-full" data-va-again>🔬 Run another research</button>` : ''}
+                <button type="button" class="btn btn-white w-full" data-va-delete>🗑 Delete</button>
             </div>`;
 
         hostEl.hidden = false;
-        requestAnimationFrame(() => requestAnimationFrame(() => hostEl.classList.add('is-drawn')));
-        hostEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (!quiet) {
+            requestAnimationFrame(() => requestAnimationFrame(() => hostEl.classList.add('is-drawn')));
+            hostEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (hostEl.id === 'vaReport') {
+            hostEl.classList.add('is-drawn');
+        }
 
-        hostEl.querySelector(mode === 'fresh' ? '#vaAttach' : '#vaAttachSaved').addEventListener('click', () => {
+        hostEl.querySelector('[data-va-attach]').addEventListener('click', () => {
             if (item.savedId) window.location.href = U.anee + '?analysis=' + item.savedId;
         });
-        if (mode === 'fresh') hostEl.querySelector('#vaAgain').addEventListener('click', wizardBack);
-        hostEl.querySelector('#vaDelete').addEventListener('click', async () => {
+        hostEl.querySelector('[data-va-again]')?.addEventListener('click', () => { closeView(); wizardBack(); });
+        hostEl.querySelector('[data-va-delete]').addEventListener('click', async () => {
             const delId = item.savedId;
             const ok = window.confirmAction
                 ? await confirmAction({ title: 'Delete this research?', message: 'The credits it cost are already spent; only the report goes.', confirmText: 'Delete', danger: true })
@@ -897,6 +992,8 @@
                 const res = await api(U.del(delId), { method: 'DELETE' });
                 toast(res.message);
                 hostEl.hidden = true;
+                closeView();
+                $id('vaReport').hidden = true; $id('vaSavedReport').hidden = true;
                 loadSaved().catch(() => {});
                 if (mode === 'fresh') wizardBack();
             } catch (err) { toast(err.message, 'error'); }
@@ -953,12 +1050,8 @@
         if (!b) return;
         try {
             const res = await api(U.one(b.getAttribute('data-saved')), { method: 'GET' });
-            const hostEl = $id('vaSavedReport');
-            hostEl.classList.remove('is-drawn');
-            drawReport(hostEl, {
-                report: res.data.report, params: res.data.params,
-                charged: res.data.credits, savedId: res.data.id,
-            }, 'saved');
+            const item = { report: res.data.report, params: res.data.params, charged: res.data.credits, savedId: res.data.id };
+            openView(item, 'saved');
         } catch (err) { toast(err.message, 'error'); }
     });
 
