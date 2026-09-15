@@ -52,6 +52,8 @@
         text-align: left; cursor: pointer; margin-top: .6rem;
         transition: border-color .28s cubic-bezier(.22,1,.36,1); }
     .st-switch:hover { border-color: #a8cc7e; }
+    .st-locked-say { display: block; margin-top: .4rem; font-size: .74rem; font-weight: 700; color: #92610e; }
+    .st-switch .tl-lock { flex: none; color: var(--color-gray-400); }
     .st-switch-txt { flex: 1 1 auto; min-width: 0; }
     .st-switch-txt b { display: block; font-size: .88rem; font-weight: 800; color: var(--color-gray-900); }
     .st-switch-txt span { display: block; font-size: .76rem; color: var(--color-gray-500); line-height: 1.45; margin-top: .1rem; }
@@ -95,13 +97,22 @@
             <h3>Offline Mode</h3>
             <p class="st-why">For the field, where the signal isn't. Off by default; kept on this device.</p>
 
-            <button type="button" class="st-switch" id="stOffline" role="switch" aria-checked="false">
-                <span class="st-switch-txt">
+            @php $offlineLocked = ! \App\Support\Tier::farmCan('offline'); @endphp
+            <button type="button" class="st-switch" id="stOffline" role="switch" aria-checked="false"
+                    @if ($offlineLocked) data-tier-lock="solo" data-lock-say="Offline mode comes with the Solo Farmer plan — the farm stays on your phone when the signal drops, and what you do out there syncs itself when it returns." @endif>
+                <span class="st-switch-txt {{ $offlineLocked ? 'tl-dim' : '' }}">
                     <b>Keep working without a signal</b>
                     <span>When on, anee keeps a copy on this phone of every page you visit, so they still
                     open when the internet drops — and a yellow bar tells you you're in offline mode.</span>
+                    @if ($offlineLocked)
+                        <span class="st-locked-say">🔒 Comes with the Solo Farmer plan{{ \App\Support\WorkerContext::inWorkerContext() ? ' — on this farm' : '' }}. Tap to see the plans.</span>
+                    @endif
                 </span>
-                <span class="st-knob" aria-hidden="true"></span>
+                @if ($offlineLocked)
+                    <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:1.1rem;height:1.1rem"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+                @else
+                    <span class="st-knob" aria-hidden="true"></span>
+                @endif
             </button>
 
             <div class="st-offline-say">

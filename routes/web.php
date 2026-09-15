@@ -300,6 +300,11 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // the signal goes — walking to a not-yet-visited module offline used to
     // hit the browser's own "no connection" page.
     Route::get('/app/offline-manifest', function () {
+        // A paid convenience, judged by the farm being worked (a worker in a
+        // paid farm has it; the same person on their own Libre account does not).
+        if (! \App\Support\Tier::farmCan('offline')) {
+            \App\Support\Tier::deny('Offline mode comes with the Solo Farmer plan.');
+        }
         $owner = \App\Support\WorkerContext::effectiveOwnerId();
 
         /* EVERY DOOR IN THE APP EXCEPT THE ONES THAT NEED A MODEL.

@@ -37,6 +37,7 @@ return [
         'docUploads'        => false,
         'collab'            => false,
         'reportsAll'        => false,   // labor report only
+        'offline'           => false,   // the field without a signal is a paid convenience
         'auditLogs'         => false,   // the Logs diary is the Owner tier's story
         'discussionCreate'  => false,
         'discussionJoin'    => 1,
@@ -62,7 +63,7 @@ return [
         ],
         'excludes' => [
             'Video recording, worker logins, collab room',
-            'Full weather, all reports, document uploads',
+            'Full weather, all reports, document uploads, offline mode',
         ],
     ],
 
@@ -87,6 +88,7 @@ return [
         'docUploads'        => true,
         'collab'            => false,   // the room is the Owner tier's story
         'reportsAll'        => true,
+        'offline'           => true,
         'auditLogs'         => false,
         'discussionCreate'  => false,
         'discussionJoin'    => null,
@@ -103,6 +105,7 @@ return [
             'Up to 5 lots per schedule',
             'Full weather, maps, video & voice recording',
             'All reports',
+            'Offline mode for the field',
             'Add workers (no logins)',
             'Full community access',
             '30 AI credits per renewal + buy packs',
@@ -136,6 +139,7 @@ return [
         'docUploads'        => true,
         'collab'            => true,
         'reportsAll'        => true,
+        'offline'           => true,
         'auditLogs'         => true,
         'discussionCreate'  => true,
         'discussionJoin'    => null,
@@ -181,6 +185,7 @@ return [
         'docUploads'        => true,
         'collab'            => true,
         'reportsAll'        => true,
+        'offline'           => true,
         'auditLogs'         => true,
         'discussionCreate'  => true,
         'discussionJoin'    => null,

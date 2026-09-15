@@ -1621,7 +1621,17 @@ document.addEventListener('pointerdown', (e) => {
  * ==================================================================== */
 (() => {
     const KEY = 'anee-offline-mode';
-    const on = () => { try { return localStorage.getItem(KEY) === '1'; } catch (_) { return false; } };
+    /* A PAID CONVENIENCE, JUDGED BY THE FARM.
+     *
+     * The layout says whether this request may keep a shelf (Tier::farmCan
+     * 'offline': a worker standing in a paid farm may, the same person on
+     * their own Libre account may not). The flag on the device stays what
+     * it was -- switching farms does not throw away a setting -- but it
+     * counts for nothing where it is not allowed: no shelf, no bar, no
+     * warm, and the service worker is told off. */
+    const allowedMeta = () => document.querySelector('meta[name="anee-offline"]')?.getAttribute('content') || 'allowed';
+    const ALLOWED = allowedMeta() === 'allowed';
+    const on = () => { try { return ALLOWED && localStorage.getItem(KEY) === '1'; } catch (_) { return false; } };
     const tellSw = (v) => {
         try {
             navigator.serviceWorker?.ready?.then((reg) => reg.active?.postMessage({ type: 'anee-offline', on: !!v }));
@@ -2442,7 +2452,12 @@ document.addEventListener('pointerdown', (e) => {
 
     window.aneeOffline = {
         on,
+        tierAllowed: () => ALLOWED,
         set(v) {
+            if (v && !ALLOWED) {
+                window.aneeUpgrade?.('Offline mode comes with the Solo Farmer plan — the farm stays on your phone when the signal drops, and what you do out there syncs itself when it returns.', allowedMeta());
+                return;
+            }
             try { localStorage.setItem(KEY, v ? '1' : '0'); } catch (_) { /* private mode */ }
             tellSw(v);
             paintBar();
