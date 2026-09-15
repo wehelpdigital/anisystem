@@ -84,6 +84,10 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
         'database' => ['host' => (string) config('database.connections.mysql.host'), 'name' => (string) config('database.connections.mysql.database')],
         // The mother's address as this deployment will use it (public anyway), and whether the token is present.
         'mother' => ['url' => (string) config('mother.url'), 'mediaUrl' => (string) config('mother.media_url'), 'mediaToken' => (bool) config('mother.media_token')],
+        // Who the mail goes out as (a public address anyway) and whether the
+        // key is present: a failed send with a sandbox sender is the first
+        // thing to rule out when "the email never came".
+        'mail' => ['from' => (string) config('services.resend.from'), 'resendKey' => (bool) config('services.resend.key')],
         'probe' => $probe,
     ]);
 })->name('deploy.check');
