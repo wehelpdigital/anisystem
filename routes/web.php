@@ -448,6 +448,15 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/variety-research/meta', [App\Http\Controllers\VarietyAnalysisController::class, 'meta'])->name('vary.meta');
     Route::get('/app/variety-research/job/{id}', [App\Http\Controllers\VarietyAnalysisController::class, 'jobState'])->whereNumber('id')->name('vary.job');
     Route::delete('/app/variety-research/{id}', [App\Http\Controllers\VarietyAnalysisController::class, 'destroy'])->whereNumber('id')->name('vary.delete');
+    // Crop Protocol — the fourth: the season by growth stage, for one field.
+    Route::get('/app/crop-protocol', [App\Http\Controllers\CropProtocolController::class, 'page'])->name('proto.page');
+    Route::get('/app/crop-protocol/options', [App\Http\Controllers\CropProtocolController::class, 'options'])->name('proto.options');
+    Route::post('/app/crop-protocol/generate', [App\Http\Controllers\CropProtocolController::class, 'generate'])->name('proto.generate');
+    Route::get('/app/crop-protocol/list', [App\Http\Controllers\CropProtocolController::class, 'list'])->name('proto.list');
+    Route::get('/app/crop-protocol/one/{id}', [App\Http\Controllers\CropProtocolController::class, 'one'])->whereNumber('id')->name('proto.one');
+    Route::post('/app/crop-protocol/meta', [App\Http\Controllers\CropProtocolController::class, 'meta'])->name('proto.meta');
+    Route::get('/app/crop-protocol/job/{id}', [App\Http\Controllers\CropProtocolController::class, 'jobState'])->whereNumber('id')->name('proto.job');
+    Route::delete('/app/crop-protocol/{id}', [App\Http\Controllers\CropProtocolController::class, 'destroy'])->whereNumber('id')->name('proto.delete');
     Route::get('/app/when-to-plant/job/{id}', [App\Http\Controllers\WhenToPlantController::class, 'jobState'])->whereNumber('id')->name('wtp.job');
     Route::get('/app/weather', [App\Http\Controllers\WeatherController::class, 'forecast'])->name('app.weather');
     Route::get('/app/sm-weather', [App\Http\Controllers\WeatherController::class, 'scheduleForecast'])->name('sm.weather');

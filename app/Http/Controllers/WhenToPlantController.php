@@ -386,7 +386,8 @@ class WhenToPlantController extends Controller
     {
         $ctx = self::contextFor($id, (int) Auth::id())
             ?? \App\Http\Controllers\WhatToPlantController::contextFor($id, (int) Auth::id())
-            ?? \App\Http\Controllers\VarietyAnalysisController::contextFor($id, (int) Auth::id());
+            ?? \App\Http\Controllers\VarietyAnalysisController::contextFor($id, (int) Auth::id())
+            ?? \App\Http\Controllers\CropProtocolController::contextFor($id, (int) Auth::id());
         if (! $ctx) {
             return $this->json(false, 'That analysis is gone.', [], 404);
         }

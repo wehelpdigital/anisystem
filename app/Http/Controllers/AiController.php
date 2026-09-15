@@ -267,7 +267,8 @@ class AiController extends Controller
         if ($request->filled('attachAnalysisId')) {
             $found = \App\Http\Controllers\WhenToPlantController::contextFor((int) $request->input('attachAnalysisId'), (int) $userId)
                 ?? \App\Http\Controllers\WhatToPlantController::contextFor((int) $request->input('attachAnalysisId'), (int) $userId)
-                ?? \App\Http\Controllers\VarietyAnalysisController::contextFor((int) $request->input('attachAnalysisId'), (int) $userId);
+                ?? \App\Http\Controllers\VarietyAnalysisController::contextFor((int) $request->input('attachAnalysisId'), (int) $userId)
+                ?? \App\Http\Controllers\CropProtocolController::contextFor((int) $request->input('attachAnalysisId'), (int) $userId);
             if (! $found) {
                 return $this->json(false, 'That analysis could not be attached. Remove it and try again.', [], 422);
             }
