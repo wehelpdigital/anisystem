@@ -19,30 +19,30 @@
            to reach. */
         .qa-panel { border: 1px solid var(--color-gray-200); border-radius: 1rem;
             background: var(--color-white); overflow: hidden; }
-        /* The head wears an orange, slowly on the move (the house's drifting
-           gradient), so the panel stands out from the white tiles and cards
-           around it -- it sat there in white on white and was easy to scroll
-           past. The words and the chevron go white on it; the icon keeps a
-           pale bubble to sit in. Same in the dark, where orange is at home. */
+        /* The head wears the logo's yellow, on its darker side -- the same
+           drifting band the house's green and amber buttons wear (.sweep-fill,
+           layouts/app) -- so the panel stands out from the white tiles and
+           cards around it; it sat there in white on white and was easy to
+           scroll past. Ink on gold, not white: the darker gold still wants a
+           dark word to read. The icon keeps a pale bubble to sit in. */
         .qa-panel-head { display: flex; align-items: center; gap: .7rem; width: 100%;
-            text-align: left; padding: .7rem .8rem; cursor: pointer; border: 0; color: #fff;
-            background: linear-gradient(115deg, #f59e0b, #ea580c 38%, #f97316 62%, #fbbf24 88%, #f59e0b);
-            background-size: 240% 100%; animation: qaHeadTide 9s ease-in-out infinite alternate;
+            text-align: left; padding: .7rem .8rem; cursor: pointer; border: 0; color: #1f1a05;
+            --sw-1: #8a6d00; --sw-2: #c79e00; --sw-3: #e6b800;
+            background-image: linear-gradient(120deg, var(--sw-1), var(--sw-2) 28%, var(--sw-3) 52%, var(--sw-2) 76%, var(--sw-1));
+            background-size: 220% 100%; animation: gradSweep 10s ease-in-out infinite alternate;
             transition: filter .28s cubic-bezier(.22,1,.36,1); }
         .qa-panel-head:hover { filter: brightness(1.06); }
-        @keyframes qaHeadTide { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
         .qa-panel-ico { width: 2.4rem; height: 2.4rem; border-radius: .7rem; flex: none;
             display: inline-flex; align-items: center; justify-content: center;
-            background: rgb(255 255 255 / .92); color: #c2410c; box-shadow: 0 4px 12px -6px rgb(0 0 0 / .35); }
+            background: rgb(255 255 255 / .9); color: #8a6d00; box-shadow: 0 4px 12px -6px rgb(0 0 0 / .35); }
         .qa-panel-ico svg { width: 1.25rem; height: 1.25rem; }
         .qa-panel-txt { min-width: 0; flex: 1 1 auto; }
-        .qa-panel-txt b { display: block; font-size: .875rem; font-weight: 800; color: #fff;
-            text-shadow: 0 1px 2px rgb(0 0 0 / .18); }
-        .qa-panel-txt i { display: block; font-style: normal; font-size: .75rem; color: rgb(255 255 255 / .88);
+        .qa-panel-txt b { display: block; font-size: .875rem; font-weight: 800; color: #1f1a05; }
+        .qa-panel-txt i { display: block; font-style: normal; font-size: .75rem; color: rgb(31 26 5 / .78);
             overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .qa-panel-chev { width: 1.1rem; height: 1.1rem; flex: none; color: rgb(255 255 255 / .92);
+        .qa-panel-chev { width: 1.1rem; height: 1.1rem; flex: none; color: rgb(31 26 5 / .8);
             transition: transform .28s cubic-bezier(.22,1,.36,1); }
-        html.dark .qa-panel-head { background-image: linear-gradient(115deg, #d97706, #c2410c 38%, #ea580c 62%, #f59e0b 88%, #d97706); }
+        html.dark .qa-panel-head { --sw-1: #6f5700; --sw-2: #a98600; --sw-3: #c79e00; }
         .qa-panel.is-folded .qa-panel-chev { transform: rotate(-90deg); }
         .qa-panel-fold { overflow: hidden;
             transition: max-height .28s cubic-bezier(.22,1,.36,1); }

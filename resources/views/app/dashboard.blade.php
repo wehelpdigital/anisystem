@@ -932,6 +932,14 @@
     {{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
     @include('partials.ad-slot', ['placement' => 'dashboard'])
 
+    {{-- ============== Global and Quick Tools ==============
+         The cross-season doors and the quick add tools, above today's
+         seasons (the owner's call, 2026-09-15): the things you reach for
+         on any visit come before the shelf of what is due today. --}}
+    <div>
+        @include('partials.global-tools')
+    </div>
+
     {{-- My Cropping Schedules — ONLY the seasons with work on the board
          today. A quiet day shows no shelf at all; the schedules page
          still lists every season. --}}
@@ -1173,13 +1181,6 @@
                     </div>
                 </section>
             @endif
-
-            {{-- ============== Global and Quick Tools ==============
-                 Moved here from the schedules page: the cross-season
-                 doors and the quick add tools, one fold above Anee. --}}
-            <div style="margin-bottom:.85rem">
-                @include('partials.global-tools')
-            </div>
 
             {{-- ===================== Meet the technician =====================
                  Above the wall on purpose: a farmer who has arrived with a
