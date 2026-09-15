@@ -859,11 +859,16 @@
                  it: the same pill, the same type, one of the facts about
                  this account rather than a decoration on the name. It links
                  to the ladder so climbing is one tap from the greeting. --}}
-            @include('community.partials.rank-badge', ['rankUser' => $user, 'rankChipLike' => true])
-            {{-- And your seat, on the days you hold one. It is the fact most
-                 worth seeing on your own greeting, because it is the one that
-                 can be gone tomorrow. --}}
-            @include('community.partials.top-badge', ['topUser' => $user])
+            {{-- Neither for a worker standing in somebody else's farm: the
+                 community is not part of a worker's account, so its level
+                 and its seat have nothing to say on this greeting. --}}
+            @if (\App\Support\WorkerContext::canUseCommunity())
+                @include('community.partials.rank-badge', ['rankUser' => $user, 'rankChipLike' => true])
+                {{-- And your seat, on the days you hold one. It is the fact most
+                     worth seeing on your own greeting, because it is the one that
+                     can be gone tomorrow. --}}
+                @include('community.partials.top-badge', ['topUser' => $user])
+            @endif
             {{-- No chip for a super admin: admin power lives in the mother
                  site, and in here an admin is just another member. The
                  subscription facts still speak for everyone else. --}}
@@ -1380,7 +1385,9 @@
                 </section>
             @endif
 
-            @if ($latestDiscussions->isEmpty())
+            @if (! \App\Support\WorkerContext::canUseCommunity())
+                {{-- No discussions for a worker: the community is not part of a worker's account. --}}
+            @elseif ($latestDiscussions->isEmpty())
                 {{-- Nothing has been said yet. A list headed "Latest
                      Discussions" with one grey row saying so is a card that
                      reports its own emptiness; this one uses the space to
