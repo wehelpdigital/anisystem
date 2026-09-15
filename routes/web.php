@@ -78,6 +78,10 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'planField' => (string) config('acumbamail.plan_field'),
         ],
         'stores' => ['cache' => (string) config('cache.default'), 'session' => (string) config('session.driver'), 'queue' => (string) config('queue.default'), 'filesystem' => (string) config('filesystems.default')],
+        // Which database this deployment reads -- host and name only. The two
+        // apps must share one, and on the day they moved hosts this is how
+        // "did the variable take?" was answered without a dashboard.
+        'database' => ['host' => (string) config('database.connections.mysql.host'), 'name' => (string) config('database.connections.mysql.database')],
         'mother' => ['url' => (bool) config('mother.url'), 'mediaToken' => (bool) config('mother.media_token')],
         'probe' => $probe,
     ]);
