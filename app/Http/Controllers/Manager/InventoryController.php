@@ -203,7 +203,7 @@ class InventoryController extends BaseScheduleController
         return $this->jsonOk(
             $price !== null
                 ? 'Priced: ' . ($item ? $item->say((float) $move->delta) : 'this batch') . ' at ₱' . number_format($price, 2) . ' per ' . ($item ? AsInventoryItem::unitSays($item->unit, true) : 'unit') . '.'
-                : 'Price cleared — this batch reads at the item\'s standing price now.',
+                : 'Price cleared — this batch reads at the item\'s usual price now.',
             ['data' => ['pricing' => $this->pricingPayload($schedule->id)]]
         );
     }

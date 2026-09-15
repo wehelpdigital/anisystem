@@ -221,22 +221,41 @@
             const box = $id('ivPricing');
             if (!box) return;
             const ro = !!window.IV_READONLY;
+            const PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>';
+            const LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>';
             box.innerHTML = ITEMS.map((i) => {
                 const p = (PRICING && PRICING[i.id]) || { batches: [], batchCount: 0, unpriced: 0 };
                 const one = unitSays(i.unit, true);
-                const standing = i.unitPrice != null
-                    ? `<b>${esc(pesoShort(i.unitPrice))} <span class="font-normal">per ${esc(one)}</span></b>`
-                    : `<b>Not set</b>`;
+                const per = ` <small>per ${esc(one)}</small>`;
+                /* The item's own numbers, one to a line. */
+                const usual = ro
+                    ? `<span class="ivp-row-v ${i.unitPrice == null ? 'is-none' : ''}">${i.unitPrice != null ? esc(pesoShort(i.unitPrice)) + per : 'Not set'}</span>`
+                    : `<button type="button" class="ivp-pill ${i.unitPrice == null ? 'is-none' : ''}" data-iv-price-item="${i.id}" title="Tap to change">${i.unitPrice != null ? esc(pesoShort(i.unitPrice)) : 'Set a price'}${PEN}</button>`;
+                const rows = `<div class="ivp-rows">
+                    <div class="ivp-row"><span class="ivp-row-l"><b>Usual price <span class="font-normal">per ${esc(one)}</span></b><i>What one costs when a batch has no price of its own</i></span>${usual}</div>
+                    <div class="ivp-row"><span class="ivp-row-l"><b>Average paid</b><i>Across the batches that have a price</i></span><span class="ivp-row-v ${p.average == null ? 'is-none' : ''}">${p.average != null ? esc(pesoShort(p.average)) + per : '—'}</span></div>
+                    <div class="ivp-row"><span class="ivp-row-l"><b>On hand is worth</b><i>${esc(i.says)} at the average paid</i></span><span class="ivp-row-v ${p.worth == null ? 'is-none' : ''}">${p.worth != null ? esc(pesoShort(p.worth)) : '—'}</span></div>
+                    <div class="ivp-row"><span class="ivp-row-l"><b>Spent in all</b><i>Every batch that came in, added up</i></span><span class="ivp-row-v ${p.spent ? '' : 'is-none'}">${p.spent ? esc(pesoShort(p.spent)) : '—'}</span></div>
+                </div>`;
+                /* The batches, newest first, the price as a pill on the right. */
                 const batches = (p.batches || []).map((b) => {
                     const locked = ro || !!b.activityId;
-                    const cls = b.price == null ? 'is-none' : (b.usesStanding ? 'is-standing' : '');
-                    const priceSays = b.price == null
-                        ? '<b>No price</b><i>tap to set one</i>'
-                        : `<b>${esc(pesoShort(b.price))} <span class="font-normal">/ ${esc(one)}</span></b><i>${b.usesStanding ? 'standing price' : esc(peso(b.amount))}${b.usesStanding ? ' · ' + esc(peso(b.amount)) : ''}</i>`;
+                    const pillCls = locked ? 'is-locked' : (b.price == null ? 'is-none' : '');
+                    const pill = b.price == null
+                        ? `Set a price${locked ? LOCK : PEN}`
+                        : `${esc(pesoShort(b.price))}${locked ? LOCK : PEN}`;
+                    const under = b.price == null
+                        ? 'no price yet'
+                        : `per ${esc(one)}${b.usesStanding ? ' (the usual price)' : ''} · ${esc(pesoShort(b.amount))} in all`;
+                    const why = b.activityId
+                        ? '<em>Bought on an activity — fix the price on that activity</em>'
+                        : (b.note ? esc(b.note) : '');
                     return `<div class="ivp-batch">
-                        <span class="ivp-b-when">${esc(b.onSays || '')}</span>
-                        <span class="ivp-b-what"><b>${esc(b.reasonLabel)} · ${esc(b.says)}${b.typedSays ? ' <span class="font-normal text-gray-400">(typed ' + esc(b.typedSays) + ')</span>' : ''}</b>${b.activityId ? '<i>Bought on an activity — its price is set on that activity</i>' : (b.note ? `<i>${esc(b.note)}</i>` : '')}</span>
-                        <button type="button" class="ivp-b-price ${cls}${locked ? ' is-locked' : ''}" ${locked ? 'disabled' : `data-iv-price-batch="${b.id}"`} title="${locked ? '' : 'Fix the price of this batch'}">${priceSays}</button>
+                        <span class="ivp-b-l"><b>${esc(b.says)}</b><i>${esc(b.reasonLabel)} · ${esc(b.onSays || '')}${b.typedSays ? ' · typed as ' + esc(b.typedSays) : ''}${why ? '<br>' + why : ''}</i></span>
+                        <span class="ivp-b-r">
+                            <button type="button" class="ivp-pill ${pillCls}" ${locked ? 'disabled' : `data-iv-price-batch="${b.id}"`} title="${locked ? '' : 'Tap to fix this batch\'s price'}">${pill}</button>
+                            <small>${under}</small>
+                        </span>
                     </div>`;
                 }).join('');
                 return `<div class="ivp-card" data-ivp-item="${i.id}">
@@ -244,12 +263,8 @@
                         <span class="ivp-face">${i.icon}</span>
                         <span class="ivp-name"><b>${esc(i.name)}</b><i>${esc(i.says)} on hand · ${p.batchCount} ${p.batchCount === 1 ? 'batch' : 'batches'}${p.unpriced ? ' · ' + p.unpriced + ' without a price' : ''}</i></span>
                     </div>
-                    <div class="ivp-facts">
-                        <div class="ivp-fact ${ro ? '' : 'is-tap'} ${i.unitPrice == null ? 'is-none' : ''}" ${ro ? '' : `data-iv-price-item="${i.id}"`} title="${ro ? '' : 'The price a batch without one reads at — tap to change'}"><small>Standing price</small>${standing}</div>
-                        <div class="ivp-fact ${p.average == null ? 'is-none' : ''}"><small>Average paid</small><b>${p.average != null ? esc(pesoShort(p.average)) + ' <span class="font-normal">per ' + esc(one) + '</span>' : '—'}</b></div>
-                        <div class="ivp-fact ${p.worth == null ? 'is-none' : ''}"><small>On hand is worth</small><b>${p.worth != null ? esc(pesoShort(p.worth)) : '—'}</b></div>
-                    </div>
-                    <p class="ivp-sub">Batches — what came in, and at what price${p.spent ? ' · ' + esc(peso(p.spent)) + ' spent in all' : ''}</p>
+                    ${rows}
+                    <div class="ivp-sub"><b>Batches</b><i>what came in, newest first</i></div>
                     ${batches || '<p class="ivp-none">Nothing has come in yet.</p>'}
                 </div>`;
             }).join('');
@@ -271,7 +286,7 @@
             }
             $id('ivPriceMode').value = mode;
             $id('ivPriceRef').value = String(ref);
-            $id('ivPriceTitle').textContent = mode === 'batch' ? 'Price for this batch' : 'Standing price';
+            $id('ivPriceTitle').textContent = mode === 'batch' ? 'Price for this batch' : 'Usual price';
             $id('ivPriceFace').textContent = item.icon;
             $id('ivPriceItem').textContent = item.name;
             $id('ivPriceLine').textContent = mode === 'batch'
@@ -282,8 +297,8 @@
                 ? (batch.ownPrice != null ? batch.ownPrice : '')
                 : (item.unitPrice != null ? item.unitPrice : '');
             $id('ivPriceHint').textContent = mode === 'batch'
-                ? (item.unitPrice != null ? `Leave it empty and this batch reads at the standing price, ${pesoShort(item.unitPrice)} per ${unitSays(item.unit, true)}.` : 'This batch has no price of its own and the item has no standing price yet.')
-                : 'Batches with a price of their own keep it; the rest read at this. The expense report and the day’s cash both count what a batch cost.';
+                ? (item.unitPrice != null ? `Leave it empty and this batch reads at the usual price, ${pesoShort(item.unitPrice)} per ${unitSays(item.unit, true)}.` : 'This batch has no price of its own, and the item has no usual price yet.')
+                : 'Batches with a price of their own keep it; the rest are read at this. The expense report and the day’s cash both count what a batch cost.';
             $id('ivPriceClear').hidden = mode === 'batch' ? batch.ownPrice == null : item.unitPrice == null;
             sayPriceTotal();
             openSheet('ivPriceSheet');
