@@ -8,6 +8,8 @@ use App\Models\AsInventoryItem;
 use App\Models\AsInventoryMove;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
+use App\Support\AiPrices;
+use App\Support\AiUsage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -453,8 +455,8 @@ class FarmReportController extends BaseScheduleController
     /* ========================= ANEE'S OWN REPORTS ======================= */
 
     /** The flat prices, said before anything is spent — the owner set them. */
-    public const PRICE_SEASON = 300;
-    public const PRICE_SOFAR = 200;
+    public const PRICE_SEASON = AiPrices::DEFAULTS['season'];
+    public const PRICE_SOFAR = AiPrices::DEFAULTS['sofar'];
 
     public function seasonPage(Request $request)
     {
@@ -491,7 +493,7 @@ class FarmReportController extends BaseScheduleController
 
         return $this->jsonOk('ok', ['data' => [
             'kind' => $kind,
-            'price' => $kind === 'sofar' ? self::PRICE_SOFAR : self::PRICE_SEASON,
+            'price' => AiPrices::of($kind === 'sofar' ? 'sofar' : 'season'),
             'balance' => round($credits->balance($payer->id), 2),
             'unlimited' => $credits->unlimited((int) $payer->id),
             'blockers' => $blockers,
@@ -554,7 +556,7 @@ class FarmReportController extends BaseScheduleController
             return $this->jsonFail('Not ready: ' . implode(' ', $blockers), 422);
         }
 
-        $price = $kind === 'sofar' ? self::PRICE_SOFAR : self::PRICE_SEASON;
+        $price = AiPrices::of($kind === 'sofar' ? 'sofar' : 'season');
         $balance = $credits->balance($payer->id);
         if ($balance < $price && ! $credits->unlimited((int) $payer->id)) {
             return $this->jsonFail('You need ' . $price . ' credits for this report and have '
@@ -609,34 +611,17 @@ class FarmReportController extends BaseScheduleController
         $ai = app(AiClient::class);
         $credits = app(AiCreditService::class);
         try {
-            $result = $ai->ask($settings, [], $prompt, null, 5000);
-            if (! ($result['ok'] ?? false)) {
-                sleep(3);
-                $result = $ai->ask($settings, [], $prompt, null, 5000);
-            }
-            if (! ($result['ok'] ?? false)) {
-                throw new \RuntimeException($result['error'] ?? 'The AI could not be reached. Nothing was charged.');
-            }
-
-            $report = $this->parseAneeReport((string) $result['text']);
-            if ($report === null) {
-                // History turns carry 'text', never 'content'.
-                $retry = $ai->ask($settings, [
-                    ['role' => 'user', 'text' => $prompt],
-                    ['role' => 'assistant', 'text' => (string) $result['text']],
-                ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.', null, 5000);
-                if ($retry['ok'] ?? false) {
-                    $report = $this->parseAneeReport((string) $retry['text']);
-                }
-            }
+            $result = $ai->askForJson($settings, $prompt, 5000, fn (string $t) => $this->parseAneeReport($t));
+            $report = $result['data'];
             if ($report === null) {
                 Log::warning('anee-report: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
-                throw new \RuntimeException('The report came back unreadable. Nothing was charged — please try again.');
+                throw new \RuntimeException($result['error'] ?? 'The report came back unreadable. Nothing was charged — please try again.');
             }
 
             $row = AsFarmReport::find($id);
+            $note = AiUsage::record($row->kind === 'sofar' ? 'sofar' : 'season', (int) $row->userId, $payerId, $id, $settings, $result, (int) $price);
             $credits->chargeAllowingNegative($payerId, (float) $price,
-                ($row->kind === 'sofar' ? 'Analyze So Far report' : 'Anee Season Report') . ' — ' . mb_substr((string) $row->title, 0, 120));
+                mb_substr(($row->kind === 'sofar' ? 'Analyze So Far report' : 'Anee Season Report') . ' — ' . mb_substr((string) $row->title, 0, 120) . $note, 0, 250));
 
             $row->update([
                 'report' => $report,
@@ -913,7 +898,7 @@ class FarmReportController extends BaseScheduleController
 
     /* ============================ COMPARISON ============================ */
 
-    public const PRICE_COMPARE = 30;
+    public const PRICE_COMPARE = AiPrices::DEFAULTS['compare'];
 
     public function comparePage(Request $request)
     {
@@ -940,7 +925,7 @@ class FarmReportController extends BaseScheduleController
                 'id' => $r->id, 'kind' => $r->kind, 'title' => $r->title,
                 'when' => $r->created_at?->format('M j, Y'),
             ])->values(),
-            'price' => self::PRICE_COMPARE,
+            'price' => AiPrices::of('compare'),
             'balance' => round($credits->balance($payer->id), 2),
             'unlimited' => $credits->unlimited((int) $payer->id),
             'canUseAi' => $payer->canUseAi() && AiSetting::current()->isUsable(),
@@ -995,8 +980,8 @@ class FarmReportController extends BaseScheduleController
             return $this->jsonFail('The AI analysis needs the AI Technician (Boss or Lifetime plan). You can still compare by hand.', 403);
         }
         $balance = $credits->balance($payer->id);
-        if ($balance < self::PRICE_COMPARE && ! $credits->unlimited((int) $payer->id)) {
-            return $this->jsonFail('You need ' . self::PRICE_COMPARE . ' credits for the AI analysis and have '
+        if ($balance < AiPrices::of('compare') && ! $credits->unlimited((int) $payer->id)) {
+            return $this->jsonFail('You need ' . AiPrices::of('compare') . ' credits for the AI analysis and have '
                 . number_format((int) floor($balance)) . '. You can still compare by hand.', 402, ['outOfCredits' => true]);
         }
 
@@ -1039,32 +1024,18 @@ class FarmReportController extends BaseScheduleController
         $ai = app(AiClient::class);
         $credits = app(AiCreditService::class);
         try {
-            $result = $ai->ask($settings, [], $prompt, null, 2500);
-            if (! ($result['ok'] ?? false)) {
-                sleep(3);
-                $result = $ai->ask($settings, [], $prompt, null, 2500);
-            }
-            if (! ($result['ok'] ?? false)) {
-                throw new \RuntimeException($result['error'] ?? 'The AI could not be reached. Nothing was charged.');
-            }
-            $analysis = $this->parseAneeReport((string) $result['text']);
-            if ($analysis === null) {
-                $retry = $ai->ask($settings, [
-                    ['role' => 'user', 'text' => $prompt],
-                    ['role' => 'assistant', 'text' => (string) $result['text']],
-                ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.', null, 2500);
-                if ($retry['ok'] ?? false) {
-                    $analysis = $this->parseAneeReport((string) $retry['text']);
-                }
-            }
+            $result = $ai->askForJson($settings, $prompt, 2500, fn (string $t) => $this->parseAneeReport($t));
+            $analysis = $result['data'];
             if ($analysis === null) {
                 Log::warning('compare-report: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
-                throw new \RuntimeException('The analysis came back unreadable. Nothing was charged — please try again.');
+                throw new \RuntimeException($result['error'] ?? 'The analysis came back unreadable. Nothing was charged — please try again.');
             }
 
             $row = AsFarmReport::find($id);
-            $credits->chargeAllowingNegative($payerId, (float) self::PRICE_COMPARE,
-                'Comparison analysis — ' . mb_substr((string) $row->title, 0, 140));
+            $price = AiPrices::of('compare');
+            $note = AiUsage::record('compare', (int) $row->userId, $payerId, $id, $settings, $result, $price);
+            $credits->chargeAllowingNegative($payerId, (float) $price,
+                mb_substr('Comparison analysis — ' . mb_substr((string) $row->title, 0, 140) . $note, 0, 250));
 
             $rep = $row->report;
             $rep['analysis'] = $analysis;
@@ -1076,7 +1047,7 @@ class FarmReportController extends BaseScheduleController
             $row->update([
                 'report' => $rep,
                 'body' => mb_substr($plainBody . $aiText, 0, 60000),
-                'credits' => self::PRICE_COMPARE,
+                'credits' => $price,
                 'status' => 'ready',
                 'error' => null,
             ]);

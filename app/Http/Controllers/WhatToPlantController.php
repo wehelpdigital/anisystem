@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\AiSetting;
+use App\Support\AiPrices;
+use App\Support\AiUsage;
 use App\Models\User;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
@@ -27,7 +29,7 @@ use Illuminate\Support\Facades\Validator;
 class WhatToPlantController extends Controller
 {
     /** The house's flat price for one analysis, in credits. */
-    public const PRICE = 100;
+    public const PRICE = AiPrices::DEFAULTS['what'];
 
     public const SOILS = [
         'clay' => 'Heavy clay — sticky wet, cracks dry',
@@ -104,7 +106,7 @@ class WhatToPlantController extends Controller
             'aims' => self::AIMS,
             'problems' => self::PROBLEMS,
             'months' => $months,
-            'quote' => $canUse ? (float) self::PRICE : null,
+            'quote' => $canUse ? (float) AiPrices::of('what') : null,
             'aneeFace' => $settings->faceUrl(),
             'balance' => round($this->credits->balance($payer->id), 2),
             'unlimited' => $this->credits->unlimited((int) $payer->id),
@@ -143,8 +145,8 @@ class WhatToPlantController extends Controller
         }
 
         $balance = $this->credits->balance($payer->id);
-        if ($balance < self::PRICE && ! $this->credits->unlimited($payer->id)) {
-            return $this->json(false, 'You need ' . self::PRICE . ' credits for this analysis and have '
+        if ($balance < AiPrices::of('what') && ! $this->credits->unlimited($payer->id)) {
+            return $this->json(false, 'You need ' . AiPrices::of('what') . ' credits for this analysis and have '
                 . number_format((int) floor($balance)) . '.',
                 ['outOfCredits' => true], 402);
         }
@@ -198,37 +200,21 @@ class WhatToPlantController extends Controller
     private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt): void
     {
         try {
-            $result = $this->ai->ask($settings, [], $prompt, null, 4000);
-            if (! ($result['ok'] ?? false)) {
-                sleep(3);
-                $result = $this->ai->ask($settings, [], $prompt, null, 4000);
-            }
-            if (! ($result['ok'] ?? false)) {
-                throw new \RuntimeException($result['error'] ?? 'The AI could not be reached. Nothing was charged.');
-            }
-
-            $report = $this->parseReport((string) $result['text']);
-            if ($report === null) {
-                $retry = $this->ai->ask($settings, [
-                    ['role' => 'user', 'text' => $prompt],
-                    ['role' => 'assistant', 'text' => (string) $result['text']],
-                ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.', null, 4000);
-                if ($retry['ok'] ?? false) {
-                    $report = $this->parseReport((string) $retry['text']);
-                }
-            }
+            $result = $this->ai->askForJson($settings, $prompt, 4000, fn (string $t) => $this->parseReport($t));
+            $report = $result['data'];
             if ($report === null) {
                 \Illuminate\Support\Facades\Log::warning('what-to-plant: unparsable answer', [
                     'head' => mb_substr((string) $result['text'], 0, 400),
                 ]);
-                throw new \RuntimeException('The analysis came back unreadable. Nothing was charged — please try again.');
+                throw new \RuntimeException($result['error'] ?? 'The analysis came back unreadable. Nothing was charged — please try again.');
             }
 
-            $charged = (float) self::PRICE;
+            $charged = (float) AiPrices::of('what');
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $p = json_decode((string) ($row->params ?? '[]'), true) ?: [];
+            $note = AiUsage::record('what', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged,
-                'What-to-plant analysis — ' . ($p['location'] ?? ''));
+                mb_substr('What-to-plant analysis — ' . ($p['location'] ?? '') . $note, 0, 250));
 
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report),

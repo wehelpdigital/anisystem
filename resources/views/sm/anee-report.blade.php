@@ -2,8 +2,7 @@
 
 @php
     $isSofar = ($kind ?? 'season') === 'sofar';
-    $price = $isSofar ? \App\Http\Controllers\Manager\FarmReportController::PRICE_SOFAR
-        : \App\Http\Controllers\Manager\FarmReportController::PRICE_SEASON;
+    $price = \App\Support\AiPrices::of($isSofar ? 'sofar' : 'season');
     $aneeName = \App\Models\AiSetting::current()->assistantName;
     $pageName = $isSofar ? 'Analyze So Far' : 'Anee Season Report';
 @endphp

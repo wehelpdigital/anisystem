@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\AiSetting;
 use App\Models\User;
+use App\Support\AiPrices;
+use App\Support\AiUsage;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
 use App\Support\CropCatalog;
@@ -103,9 +105,10 @@ class WhenToPlantController extends Controller
         ]]);
     }
 
-    /** The house's flat price for one analysis, in credits — the owner set
-     *  it; the metered cost (~19 on real runs) sits under it. */
-    public const PRICE = 50;
+    /** The house's flat price for one analysis, in credits: the owner's,
+     *  on Anee's price list (App\Support\AiPrices, default 50); the
+     *  metered cost (~19 on real runs) sits under it. */
+    public const PRICE = AiPrices::DEFAULTS['wtp'];
 
     /**
      * The standing price, quoted before anything is spent — one number,
@@ -114,7 +117,7 @@ class WhenToPlantController extends Controller
      */
     private function quote(AiSetting $settings): float
     {
-        return (float) self::PRICE;
+        return (float) AiPrices::of('wtp');
     }
 
     /** Run the analysis. Nothing is saved unless the farmer asks to keep it. */
@@ -214,36 +217,17 @@ class WhenToPlantController extends Controller
              * second try before the job is called failed. */
             // A document-sized answer lane: the chat cap (1200) cut the
             // JSON mid-object on longer runs, which read as "unreadable".
-            $result = $this->ai->ask($settings, [], $prompt, null, 4000);
-            if (! ($result['ok'] ?? false)) {
-                sleep(3);
-                $result = $this->ai->ask($settings, [], $prompt, null, 4000);
-            }
-            if (! ($result['ok'] ?? false)) {
-                throw new \RuntimeException($result['error'] ?? 'The AI could not be reached. Nothing was charged.');
-            }
-
-            $report = $this->parseReport((string) $result['text']);
-            if ($report === null) {
-                // One polite retry. History turns carry 'text', not
-                // 'content' — every provider branch reads $turn['text'].
-                $retry = $this->ai->ask($settings, [
-                    ['role' => 'user', 'text' => $prompt],
-                    ['role' => 'assistant', 'text' => (string) $result['text']],
-                ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.', null, 4000);
-                if ($retry['ok'] ?? false) {
-                    $report = $this->parseReport((string) $retry['text']);
-                    $result['tokensIn'] += (int) ($retry['tokensIn'] ?? 0);
-                    $result['tokensOut'] += (int) ($retry['tokensOut'] ?? 0);
-                }
-            }
+            // The transport retry, the JSON retry and the token sum all live
+            // in askForJson, the same for every document Anee writes.
+            $result = $this->ai->askForJson($settings, $prompt, 4000, fn (string $t) => $this->parseReport($t));
+            $report = $result['data'];
             if ($report === null) {
                 // The head of what came back, kept where a debugger can read
                 // it — the farmer just needs to know nothing was charged.
                 \Illuminate\Support\Facades\Log::warning('when-to-plant: unparsable answer', [
                     'head' => mb_substr((string) $result['text'], 0, 400),
                 ]);
-                throw new \RuntimeException('The analysis came back unreadable. Nothing was charged — please try again.');
+                throw new \RuntimeException($result['error'] ?? 'The analysis came back unreadable. Nothing was charged — please try again.');
             }
 
             // The charge lands through the same ledger every question uses,
@@ -253,9 +237,10 @@ class WhenToPlantController extends Controller
             $crop = CropCatalog::CROPS[$p['crop'] ?? ''] ?? ['label' => 'Crop'];
             // The flat price, exactly as quoted — never the meter's smaller
             // figure, and never a surprise above the number the farmer read.
-            $charged = (float) self::PRICE;
+            $charged = (float) AiPrices::of('wtp');
+            $note = AiUsage::record('wtp', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged,
-                'When-to-plant analysis — ' . $crop['label'] . ', ' . ($p['year'] ?? ''));
+                mb_substr('When-to-plant analysis — ' . $crop['label'] . ', ' . ($p['year'] ?? '') . $note, 0, 250));
 
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report),

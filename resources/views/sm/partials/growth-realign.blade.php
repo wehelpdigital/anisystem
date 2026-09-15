@@ -16,7 +16,7 @@
      The wait is the shared one (sm/partials/anee-wait). --}}
 @php
     $grxLocked = \App\Support\Tier::forSchedule($schedule) === 'libre';
-    $grxPrice = \App\Http\Controllers\Manager\GrowthRealignController::PRICE;
+    $grxPrice = \App\Support\AiPrices::of('realign');
 @endphp
 @once
 @include('sm.partials.anee-wait')

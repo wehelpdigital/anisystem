@@ -7,6 +7,8 @@ use App\Models\AsGrowthRealign;
 use App\Models\AsScheduleLot;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
+use App\Support\AiPrices;
+use App\Support\AiUsage;
 use App\Support\CropStages;
 use App\Support\LotCalendar;
 use App\Support\Tier;
@@ -38,7 +40,7 @@ use Illuminate\Support\Str;
  */
 class GrowthRealignController extends BaseScheduleController
 {
-    public const PRICE = 60;
+    public const PRICE = AiPrices::DEFAULTS['realign'];
 
     /** What the run will cost and whether this lot can be read at all. */
     public function quote(Request $request)
@@ -50,7 +52,7 @@ class GrowthRealignController extends BaseScheduleController
         $reading = $this->reading($schedule, $lot, now('Asia/Manila'));
 
         return $this->jsonOk('ok', ['data' => [
-            'price' => self::PRICE,
+            'price' => AiPrices::of('realign'),
             'balance' => (float) $credits->balance($payer->id),
             'unlimited' => $credits->unlimited((int) $payer->id),
             'locked' => Tier::forSchedule($schedule) === 'libre',
@@ -87,8 +89,8 @@ class GrowthRealignController extends BaseScheduleController
             return $this->jsonFail($this->whyNot($lot) ?: 'This lot cannot be read yet.', 422);
         }
         $balance = $credits->balance($payer->id);
-        if ($balance < self::PRICE && ! $credits->unlimited((int) $payer->id)) {
-            return $this->jsonFail('You need ' . self::PRICE . ' credits for this and have '
+        if ($balance < AiPrices::of('realign') && ! $credits->unlimited((int) $payer->id)) {
+            return $this->jsonFail('You need ' . AiPrices::of('realign') . ' credits for this and have '
                 . number_format((int) floor($balance)) . '.', 402, ['outOfCredits' => true]);
         }
 
@@ -159,37 +161,23 @@ class GrowthRealignController extends BaseScheduleController
         $ai = app(AiClient::class);
         $credits = app(AiCreditService::class);
         try {
-            $result = $ai->ask($settings, [], $prompt, null, 2500);
-            if (! ($result['ok'] ?? false)) {
-                sleep(3);
-                $result = $ai->ask($settings, [], $prompt, null, 2500);
-            }
-            if (! ($result['ok'] ?? false)) {
-                throw new \RuntimeException($result['error'] ?? 'The AI could not be reached. Nothing was charged.');
-            }
-            $found = $this->parse((string) $result['text']);
-            if ($found === null) {
-                $retry = $ai->ask($settings, [
-                    ['role' => 'user', 'text' => $prompt],
-                    ['role' => 'assistant', 'text' => (string) $result['text']],
-                ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.', null, 2500);
-                if ($retry['ok'] ?? false) {
-                    $found = $this->parse((string) $retry['text']);
-                }
-            }
+            $result = $ai->askForJson($settings, $prompt, 2500, fn (string $t) => $this->parse($t));
+            $found = $result['data'];
             if ($found === null) {
                 Log::warning('growth-realign: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
-                throw new \RuntimeException('The answer came back unreadable. Nothing was charged — please try again.');
+                throw new \RuntimeException($result['error'] ?? 'The answer came back unreadable. Nothing was charged — please try again.');
             }
 
             $row = AsGrowthRealign::findOrFail($id);
             $lot = AsScheduleLot::findOrFail($row->lotId);
             $applied = $this->apply($lot, $reading, $found, $row);
 
-            $credits->chargeAllowingNegative($payerId, (float) self::PRICE,
-                'Realign by Anee — ' . mb_substr((string) $lot->lotName, 0, 80) . ' · ' . $row->asOf?->format('M j, Y'));
+            $price = AiPrices::of('realign');
+            $note = AiUsage::record('realign', (int) $row->userId, $payerId, $id, $settings, $result, $price);
+            $credits->chargeAllowingNegative($payerId, (float) $price,
+                mb_substr('Realign by Anee — ' . mb_substr((string) $lot->lotName, 0, 80) . ' · ' . $row->asOf?->format('M j, Y') . $note, 0, 250));
 
-            $row->update(['result' => $applied, 'credits' => self::PRICE, 'status' => 'ready', 'error' => null]);
+            $row->update(['result' => $applied, 'credits' => $price, 'status' => 'ready', 'error' => null]);
         } catch (\Throwable $e) {
             report($e);
             AsGrowthRealign::where('id', $id)->update([

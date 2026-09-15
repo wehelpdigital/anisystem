@@ -8,14 +8,31 @@ use Illuminate\Support\Facades\Http;
 /**
  * One call shape over three providers. Each `ask()` returns:
  *
- *   ['ok' => bool, 'text' => string, 'tokensIn' => int, 'tokensOut' => int, 'error' => ?string]
+ *   ['ok' => bool, 'text' => string, 'tokensIn' => int, 'tokensOut' => int, 'error' => ?string,
+ *    'searched' => bool, 'sources' => [['title' => string, 'url' => string], …]]
  *
  * History is passed as a plain list of ['role' => 'user'|'assistant', 'text' => string].
  * An image is passed as ['mime' => 'image/jpeg', 'data' => base64].
+ * Options: ['search' => true] lets the model search the web for the answer
+ * (Google Search grounding on Gemini, Anthropic's web search on Claude,
+ * OpenAI's web search on its search models) and hands back what it read.
  */
 class AiClient
 {
     private const TIMEOUT = 90;
+
+    /**
+     * The most one ask may carry in, in tokens (~4 characters each): a
+     * ceiling on what the house pays for a single question, and on what any
+     * provider accepts. A season report of a large farm runs to twenty
+     * thousand; a chat with history to a few thousand. Anything near this
+     * is a runaway -- a prompt built from a table nobody bounded -- and is
+     * refused before a peso is spent rather than paid for and then cut.
+     */
+    public const MAX_PROMPT_TOKENS = 120000;
+
+    /** A web search costs the house a flat fee per grounded request on top of the tokens. */
+    private const SEARCH_MAX_USES = 5;
 
     /**
      * How much silent reasoning a Gemini thinking model may spend per ask.
@@ -29,27 +46,93 @@ class AiClient
      *   One picture or several. A single one is still accepted as it always
      *   was, because every existing caller passes exactly that.
      */
-    public function ask(AiSetting $settings, array $history, string $prompt, array|null $image = null, ?int $maxOut = null): array
+    public function ask(AiSetting $settings, array $history, string $prompt, array|null $image = null, ?int $maxOut = null, array $opts = []): array
     {
         $key = $settings->plainApiKey();
         if (! $key) {
             return $this->fail('The AI is not configured yet. Please contact support.');
         }
 
+        // Refused before the provider is paid: see MAX_PROMPT_TOKENS.
+        $carried = (int) ceil((mb_strlen($prompt) + array_sum(array_map(fn ($t) => mb_strlen((string) ($t['text'] ?? '')), $history))) / 4);
+        if ($carried > self::MAX_PROMPT_TOKENS) {
+            logger()->warning('AI ask refused: prompt over the ceiling', ['tokens' => $carried]);
+
+            return $this->fail('That is more than Anee can read in one go. Try a shorter span or fewer things at once.');
+        }
+
+        $search = (bool) ($opts['search'] ?? false);
+
         /* The settings row's cap is sized for a chat answer. A caller whose
          * answer is a document — the when-to-plant JSON — says so here, or
          * the reply is cut mid-object and reads as "unreadable". */
         try {
-            return match ($settings->provider) {
-                'openai' => $this->askOpenAi($settings, $key, $history, $prompt, self::pictures($image), $maxOut),
-                'gemini' => $this->askGemini($settings, $key, $history, $prompt, self::pictures($image), $maxOut),
-                default => $this->askClaude($settings, $key, $history, $prompt, self::pictures($image), $maxOut),
+            $r = match ($settings->provider) {
+                'openai' => $this->askOpenAi($settings, $key, $history, $prompt, self::pictures($image), $maxOut, $search),
+                'gemini' => $this->askGemini($settings, $key, $history, $prompt, self::pictures($image), $maxOut, $search),
+                default => $this->askClaude($settings, $key, $history, $prompt, self::pictures($image), $maxOut, $search),
             };
         } catch (\Throwable $e) {
             report($e);
 
             return $this->fail('The AI could not be reached. Please try again in a moment.');
         }
+
+        return $r + ['searched' => false, 'sources' => []];
+    }
+
+    /**
+     * Ask for a document -- a JSON object -- with the patience a job can
+     * afford: one more try if the transport fails, one polite retry if the
+     * answer is not the JSON asked for, and every token of every try summed,
+     * because the house pays for all of them. `$parse` turns the text into
+     * the array wanted, or null when it cannot.
+     *
+     * Returns ['ok', 'data', 'text', 'tokensIn', 'tokensOut', 'searched', 'sources', 'error'].
+     */
+    public function askForJson(AiSetting $settings, string $prompt, int $maxOut, callable $parse, array $opts = []): array
+    {
+        $sum = ['tokensIn' => 0, 'tokensOut' => 0, 'searched' => false, 'sources' => []];
+        $fold = function (array $r) use (&$sum): void {
+            $sum['tokensIn'] += (int) ($r['tokensIn'] ?? 0);
+            $sum['tokensOut'] += (int) ($r['tokensOut'] ?? 0);
+            $sum['searched'] = $sum['searched'] || (bool) ($r['searched'] ?? false);
+            foreach ((array) ($r['sources'] ?? []) as $src) {
+                if (! in_array($src, $sum['sources'], true)) {
+                    $sum['sources'][] = $src;
+                }
+            }
+        };
+
+        $result = $this->ask($settings, [], $prompt, null, $maxOut, $opts);
+        $fold($result);
+        if (! ($result['ok'] ?? false)) {
+            // A transport blip (the provider timing out once) gets a second try.
+            sleep(3);
+            $result = $this->ask($settings, [], $prompt, null, $maxOut, $opts);
+            $fold($result);
+        }
+        if (! ($result['ok'] ?? false)) {
+            return $sum + ['ok' => false, 'data' => null, 'text' => '',
+                'error' => $result['error'] ?? 'The AI could not be reached. Nothing was charged.'];
+        }
+
+        $data = $parse((string) $result['text']);
+        if ($data === null) {
+            // History turns carry 'text', never 'content'. No search on the
+            // retry: the reading is done, only the shape is wanted.
+            $retry = $this->ask($settings, [
+                ['role' => 'user', 'text' => $prompt],
+                ['role' => 'assistant', 'text' => (string) $result['text']],
+            ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.', null, $maxOut);
+            $fold($retry);
+            if ($retry['ok'] ?? false) {
+                $data = $parse((string) $retry['text']);
+            }
+        }
+
+        return $sum + ['ok' => $data !== null, 'data' => $data, 'text' => (string) $result['text'],
+            'error' => $data === null ? 'The answer came back unreadable. Nothing was charged — please try again.' : null];
     }
 
     // ------------------------------------------------------------------
@@ -78,7 +161,7 @@ class AiClient
         ));
     }
 
-    private function askClaude(AiSetting $s, string $key, array $history, string $prompt, array $images, ?int $maxOut = null): array
+    private function askClaude(AiSetting $s, string $key, array $history, string $prompt, array $images, ?int $maxOut = null, bool $search = false): array
     {
         $messages = [];
         foreach ($history as $turn) {
@@ -95,15 +178,19 @@ class AiClient
         $content[] = ['type' => 'text', 'text' => $prompt];
         $messages[] = ['role' => 'user', 'content' => $content];
 
+        $body = [
+            'model' => $s->effectiveModel(),
+            'max_tokens' => (int) ($maxOut ?? $s->maxOutputTokens),
+            'temperature' => (float) $s->temperature,
+            'system' => $s->instructions(),
+            'messages' => $messages,
+        ];
+        if ($search) {
+            $body['tools'] = [['type' => 'web_search_20250305', 'name' => 'web_search', 'max_uses' => self::SEARCH_MAX_USES]];
+        }
         $res = Http::timeout(self::TIMEOUT)
             ->withHeaders(['x-api-key' => $key, 'anthropic-version' => '2023-06-01'])
-            ->post('https://api.anthropic.com/v1/messages', [
-                'model' => $s->effectiveModel(),
-                'max_tokens' => (int) ($maxOut ?? $s->maxOutputTokens),
-                'temperature' => (float) $s->temperature,
-                'system' => $s->instructions(),
-                'messages' => $messages,
-            ]);
+            ->post('https://api.anthropic.com/v1/messages', $body);
 
         if (! $res->successful()) {
             return $this->fail($this->providerError($res->json('error.message'), $res->status()));
@@ -114,18 +201,32 @@ class AiClient
             ->where('type', 'text')
             ->pluck('text')
             ->implode("\n");
+        // What it read: every page the search tool handed back.
+        $sources = [];
+        foreach ((array) ($json['content'] ?? []) as $block) {
+            if (($block['type'] ?? '') !== 'web_search_tool_result') {
+                continue;
+            }
+            foreach ((array) ($block['content'] ?? []) as $hit) {
+                if (! empty($hit['url'])) {
+                    $sources[] = ['title' => (string) ($hit['title'] ?? ''), 'url' => (string) $hit['url']];
+                }
+            }
+        }
 
         return [
             'ok' => true,
             'text' => trim($text),
             'tokensIn' => (int) ($json['usage']['input_tokens'] ?? 0),
             'tokensOut' => (int) ($json['usage']['output_tokens'] ?? 0),
+            'searched' => (int) ($json['usage']['server_tool_use']['web_search_requests'] ?? 0) > 0,
+            'sources' => self::uniqueSources($sources),
             'error' => null,
         ];
     }
 
     /** @param  array<int, array{mime:string,data:string}>  $images */
-    private function askOpenAi(AiSetting $s, string $key, array $history, string $prompt, array $images, ?int $maxOut = null): array
+    private function askOpenAi(AiSetting $s, string $key, array $history, string $prompt, array $images, ?int $maxOut = null, bool $search = false): array
     {
         $messages = [['role' => 'system', 'content' => $s->instructions()]];
         foreach ($history as $turn) {
@@ -141,32 +242,54 @@ class AiClient
         }
         $messages[] = ['role' => 'user', 'content' => $content];
 
-        $res = Http::timeout(self::TIMEOUT)
-            ->withToken($key)
-            ->post('https://api.openai.com/v1/chat/completions', [
-                'model' => $s->effectiveModel(),
-                'max_tokens' => (int) ($maxOut ?? $s->maxOutputTokens),
-                'temperature' => (float) $s->temperature,
-                'messages' => $messages,
-            ]);
+        $body = [
+            'model' => $s->effectiveModel(),
+            'max_tokens' => (int) ($maxOut ?? $s->maxOutputTokens),
+            'temperature' => (float) $s->temperature,
+            'messages' => $messages,
+        ];
+        $post = fn (array $b) => Http::timeout(self::TIMEOUT)->withToken($key)->post('https://api.openai.com/v1/chat/completions', $b);
+        $searched = false;
+        if ($search) {
+            // Only the search models take this; any other answers 400, and
+            // the question is then asked plainly rather than not at all.
+            $withSearch = $body + ['web_search_options' => new \stdClass];
+            unset($withSearch['temperature']);
+            $res = $post($withSearch);
+            $searched = $res->successful();
+            if (! $searched && $res->status() !== 400) {
+                return $this->fail($this->providerError($res->json('error.message'), $res->status()));
+            }
+        }
+        if (! $searched) {
+            $res = $post($body);
+        }
 
         if (! $res->successful()) {
             return $this->fail($this->providerError($res->json('error.message'), $res->status()));
         }
 
         $json = $res->json();
+        $sources = [];
+        foreach ((array) ($json['choices'][0]['message']['annotations'] ?? []) as $a) {
+            if (! empty($a['url_citation']['url'])) {
+                $sources[] = ['title' => (string) ($a['url_citation']['title'] ?? ''), 'url' => (string) $a['url_citation']['url']];
+            }
+        }
 
         return [
             'ok' => true,
             'text' => trim((string) ($json['choices'][0]['message']['content'] ?? '')),
             'tokensIn' => (int) ($json['usage']['prompt_tokens'] ?? 0),
             'tokensOut' => (int) ($json['usage']['completion_tokens'] ?? 0),
+            'searched' => $searched,
+            'sources' => self::uniqueSources($sources),
             'error' => null,
         ];
     }
 
     /** @param  array<int, array{mime:string,data:string}>  $images */
-    private function askGemini(AiSetting $s, string $key, array $history, string $prompt, array $images, ?int $maxOut = null): array
+    private function askGemini(AiSetting $s, string $key, array $history, string $prompt, array $images, ?int $maxOut = null, bool $search = false): array
     {
         $contents = [];
         foreach ($history as $turn) {
@@ -187,11 +310,17 @@ class AiClient
         $url = 'https://generativelanguage.googleapis.com/v1beta/models/'
             . rawurlencode($s->effectiveModel()) . ':generateContent';
 
+        $body = [
+            'systemInstruction' => ['parts' => [['text' => $s->instructions()]]],
+            'contents' => $contents,
+        ];
+        if ($search) {
+            // Google Search grounding: the model searches, reads, and cites.
+            $body['tools'] = [['google_search' => new \stdClass]];
+        }
         $res = Http::timeout(self::TIMEOUT)
             ->withHeaders(['x-goog-api-key' => $key])
-            ->post($url, [
-                'systemInstruction' => ['parts' => [['text' => $s->instructions()]]],
-                'contents' => $contents,
+            ->post($url, $body + [
                 'generationConfig' => [
                     /* Thinking models charge their reasoning against this cap,
                      * and a photo makes them reason hard: measured, a grass
@@ -215,6 +344,14 @@ class AiClient
         $text = collect($json['candidates'][0]['content']['parts'] ?? [])
             ->reject(fn ($p) => ! empty($p['thought']))
             ->pluck('text')->filter()->implode("\n");
+        // What it read, when it searched: the grounding chunks' pages.
+        $grounding = $json['candidates'][0]['groundingMetadata'] ?? [];
+        $sources = [];
+        foreach ((array) ($grounding['groundingChunks'] ?? []) as $chunk) {
+            if (! empty($chunk['web']['uri'])) {
+                $sources[] = ['title' => (string) ($chunk['web']['title'] ?? ''), 'url' => (string) $chunk['web']['uri']];
+            }
+        }
 
         return [
             'ok' => true,
@@ -224,8 +361,30 @@ class AiClient
             // candidate text — the ledger counts what the house actually pays.
             'tokensOut' => (int) ($json['usageMetadata']['candidatesTokenCount'] ?? 0)
                 + (int) ($json['usageMetadata']['thoughtsTokenCount'] ?? 0),
+            'searched' => $search && ! empty($grounding['webSearchQueries']),
+            'sources' => self::uniqueSources($sources),
             'error' => null,
         ];
+    }
+
+    /** Each page once, in the order first met, a dozen at most. */
+    private static function uniqueSources(array $sources): array
+    {
+        $seen = [];
+        $out = [];
+        foreach ($sources as $src) {
+            $u = (string) ($src['url'] ?? '');
+            if ($u === '' || isset($seen[$u])) {
+                continue;
+            }
+            $seen[$u] = true;
+            $out[] = ['title' => mb_substr((string) ($src['title'] ?? ''), 0, 160), 'url' => mb_substr($u, 0, 500)];
+            if (count($out) >= 12) {
+                break;
+            }
+        }
+
+        return $out;
     }
 
     // ------------------------------------------------------------------
@@ -247,6 +406,6 @@ class AiClient
 
     private function fail(string $error): array
     {
-        return ['ok' => false, 'text' => '', 'tokensIn' => 0, 'tokensOut' => 0, 'error' => $error];
+        return ['ok' => false, 'text' => '', 'tokensIn' => 0, 'tokensOut' => 0, 'searched' => false, 'sources' => [], 'error' => $error];
     }
 }
