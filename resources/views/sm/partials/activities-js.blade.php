@@ -310,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const $id = (i) => document.getElementById(i);
     const $qs = (sel, root) => (root || document).querySelector(sel);
     const $qsa = (sel, root) => Array.from((root || document).querySelectorAll(sel));
-    const money = (n) => '₱' + Number(n || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const money = (n) => ((window.ANEE_REGION || {}).symbol || '₱') + Number(n || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     const esc = window.escapeHtml;
     /* A reading, said the way a farmer says it — the twin of
        LotCalendar::says() in PHP. A tree counts in months underneath, but
@@ -1097,7 +1097,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const color = WATER_TASK_COLORS[wt] || '#2f8fd8';
             typeBadge = `<span class="badge water-task-badge" style="--wt:${color}">${SVG.water || '💧'} ${esc(WATER_TASK_LABELS[wt])}</span>`;
         } else if (a.activityType === 'service') {
-            const priceTxt = (a.servicePrice != null && a.servicePrice !== '') ? ` <span class="item-tag-price">₱${esc(fmtMoney(a.servicePrice))}</span>` : '';
+            const priceTxt = (a.servicePrice != null && a.servicePrice !== '') ? ` <span class="item-tag-price">${((window.ANEE_REGION || {}).symbol || '₱')}${esc(fmtMoney(a.servicePrice))}</span>` : '';
             typeBadge = `<span class="badge service-badge">${SVG.service || '🛠'} Service${priceTxt}</span>`;
         } else if (a.activityType === 'worker_payroll') {
             typeBadge = '';        // it lives beside the kebab now
@@ -1143,7 +1143,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const name = it.itemName || it.material?.materialName || it.service?.serviceName || 'Item';
             const unit = it.unitOfMeasure || it.material?.unitOfMeasure || '';
             const qty = (it.quantity != null && it.quantity !== '') ? ' &times;' + esc(trimQty(it.quantity)) + (unit ? ' ' + esc(unit) : '') : '';
-            const price = (it.unitPrice != null && it.unitPrice !== '') ? ` <span class="item-tag-price">@ ₱${esc(fmtMoney(it.unitPrice))}</span>` : '';
+            const price = (it.unitPrice != null && it.unitPrice !== '') ? ` <span class="item-tag-price">@ ${((window.ANEE_REGION || {}).symbol || '₱')}${esc(fmtMoney(it.unitPrice))}</span>` : '';
             itemTags += `<span class="item-tag material-tag">${esc(name)}${qty}${price}</span>`;
         });
 
@@ -2257,13 +2257,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // place, and testing against 1,000,000 would have called it ₱1000k.
         if (v >= 999500) {
             const m = v / 1000000;
-            return '₱' + (m >= 10 ? Math.round(m) : m.toFixed(1).replace(/\.0$/, '')) + 'M';
+            return ((window.ANEE_REGION || {}).symbol || '₱') + (m >= 10 ? Math.round(m) : m.toFixed(1).replace(/\.0$/, '')) + 'M';
         }
         if (v >= 1000) {
             const k = v / 1000;
-            return '₱' + (k >= 10 ? Math.round(k) : k.toFixed(1).replace(/\.0$/, '')) + 'k';
+            return ((window.ANEE_REGION || {}).symbol || '₱') + (k >= 10 ? Math.round(k) : k.toFixed(1).replace(/\.0$/, '')) + 'k';
         }
-        return '₱' + v;
+        return ((window.ANEE_REGION || {}).symbol || '₱') + v;
     }
 
     function fitDayFacts(header, lots) {
@@ -5072,7 +5072,7 @@ document.addEventListener('DOMContentLoaded', () => {
             data-name="${esc(name)}" data-price="${priceNum != null ? esc(String(priceNum)) : ''}" data-qty="${esc(trimQty(qty || 1))}" data-unit="${esc(unitSafe)}" data-stock="${stockId ? esc(String(stockId)) : ''}" data-toshed="${(!stockId && toShed) ? '1' : ''}" data-newbuy="${buying ? '1' : ''}">
             <span class="mline-t">
                 <b>${esc(name)}</b>
-                <small>×${esc(trimQty(qty || 1))}${unitSafe ? ' ' + esc(unitSafe) : ''}${priceNum != null ? ' · ₱' + esc(fmtMoney(priceNum)) + ' each' : ''}</small>
+                <small>×${esc(trimQty(qty || 1))}${unitSafe ? ' ' + esc(unitSafe) : ''}${priceNum != null ? ' · ' + ((window.ANEE_REGION || {}).symbol || '₱') + esc(fmtMoney(priceNum)) + ' each' : ''}</small>
                 ${whence ? `<small class="mline-w">${whence}</small>` : ''}
             </span>
             <button type="button" class="remove-item-tag" aria-label="Remove">✕</button>
@@ -5143,7 +5143,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 tT.classList.add('is-none');
             }
             const pl0 = $id('itemPriceLabel');
-            if (pl0) pl0.textContent = 'Price (₱)';
+            if (pl0) pl0.textContent = 'Price ({{ \App\Support\Region::symbol() }})';
             $id('itemBuyHint')?.classList.add('hidden');
             $id('itemMoneyRow')?.classList.remove('is-stock');
             swapUnitControl(null);
@@ -5174,7 +5174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const pi = $id('itemPriceInput');
         if (item && pi) pi.value = '';
         const pl = $id('itemPriceLabel');
-        if (pl) pl.textContent = item ? 'Price (₱) — new purchase only' : 'Price (₱)';
+        if (pl) pl.textContent = item ? 'Price ({{ \App\Support\Region::symbol() }}) — new purchase only' : 'Price ({{ \App\Support\Region::symbol() }})';
         $id('itemBuyHint')?.classList.toggle('hidden', !item);
         // A shed line stacks the money row: quantity first, price below
         // behind its rule — the layout is the sentence.
@@ -5346,7 +5346,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $id('itemStockPick')?.addEventListener('change', () => { sayStockPick(); syncToShedVisibility(); });
 
     function fmtMoney(n) {
-        return Number(n || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        return Number(n || 0).toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'), { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     $id('itemsContainer')?.addEventListener('click', (e) => {
@@ -5670,7 +5670,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const unitNow = $id('itemUnitNow');
         if (unitNow) { unitNow.textContent = 'Pick a unit'; unitNow.classList.add('is-none'); }
         const pl = $id('itemPriceLabel');
-        if (pl) pl.textContent = 'Price (₱)';
+        if (pl) pl.textContent = 'Price ({{ \App\Support\Region::symbol() }})';
         $id('itemBuyHint')?.classList.add('hidden');
         const warn = $id('itemShortWarn');
         if (warn) warn.classList.add('hidden');
@@ -6691,7 +6691,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * listed inside the sheet, so a second one does not overwrite the first
      * and an existing one can be corrected. */
     let incomeDate = null, incomeRows = [];
-    const peso = (n) => '₱' + Number(n || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const peso = (n) => ((window.ANEE_REGION || {}).symbol || '₱') + Number(n || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     function paintIncomeList() {
         const box = $id('dayIncomeList');
@@ -8532,7 +8532,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // between. A locked board hands out no handles.
         const grab = MAY_DRAG ? ' draggable="true"' : '';
         const items = rows.map((r) => `<div class="dx-row" data-expense-id="${r.id}" data-date="${esc(dateKey)}"${grab} title="${esc(MAY_DRAG ? 'Drag to another day' : '')}">
-            <span class="dx-amt">₱${esc(fmtMoney(r.amount))}</span>
+            <span class="dx-amt">${((window.ANEE_REGION || {}).symbol || '₱')}${esc(fmtMoney(r.amount))}</span>
             <span class="dx-note">${r.note ? esc(r.note) : '<span style="opacity:.55">No note</span>'}</span>
             <span class="dx-actions">
                 <button type="button" class="dx-btn dx-kebab${LOCK_EDIT_CLS}" data-dx-menu="expense" data-dx-id="${r.id}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Expense options'))}" aria-label="Expense options">
@@ -8541,7 +8541,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </span>
         </div>`).join('');
         block.innerHTML = `<div class="dx-card">
-            <div class="dx-head"${DX_HEAD_DRAG}><span>💸 Extra expenses</span><span class="dx-total">₱${esc(fmtMoney(total))}</span>${DX_HEAD_GRIP}</div>
+            <div class="dx-head"${DX_HEAD_DRAG}><span>💸 Extra expenses</span><span class="dx-total">${((window.ANEE_REGION || {}).symbol || '₱')}${esc(fmtMoney(total))}</span>${DX_HEAD_GRIP}</div>
             <div class="dx-list">${items}</div>
         </div>`;
     }

@@ -107,7 +107,7 @@
         $part = $a->dayPartFor($w);
         $len = $part === 'half' ? '½d' : ($part === 'whole' ? '1d' : '—');
 
-        return $w->workerName . ' ' . $len . ' ' . '₱' . number_format($a->workerPay($w), 2);
+        return $w->workerName . ' ' . $len . ' ' . \App\Support\Region::symbol() . number_format($a->workerPay($w), 2);
     })->join(' · ');
     $showCost = $labour > 0 && $a->activityType !== 'worker_payroll';
     /* THE SAME FIGURE, SHORT, FOR WHEN THE ROW CANNOT HOLD IT.
@@ -128,15 +128,15 @@
         if ($v >= 999500) {
             $m = $v / 1000000;
 
-            return '₱' . ($m >= 10 ? (string) round($m) : $trim($m)) . 'M';
+            return \App\Support\Region::symbol() . ($m >= 10 ? (string) round($m) : $trim($m)) . 'M';
         }
         if ($v >= 1000) {
             $k = $v / 1000;
 
-            return '₱' . ($k >= 10 ? (string) round($k) : $trim($k)) . 'k';
+            return \App\Support\Region::symbol() . ($k >= 10 ? (string) round($k) : $trim($k)) . 'k';
         }
 
-        return '₱' . $v;
+        return \App\Support\Region::symbol() . $v;
     };
 
     $mayEdit = \App\Support\WorkerContext::canEdit();
@@ -226,7 +226,7 @@
             </button>
             <span class="act-fold-chip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
             @if ($showCost)
-                <span class="act-cost-tag" title="{{ $labourParts }}"><span class="acx-full">₱{{ number_format($labour, 2) }}</span><span class="acx-short">{{ $shortMoney($labour) }}</span></span>
+                <span class="act-cost-tag" title="{{ $labourParts }}"><span class="acx-full">{{ \App\Support\Region::money($labour) }}</span><span class="acx-short">{{ $shortMoney($labour) }}</span></span>
             @endif
             </span>
             <div class="min-w-0 grow">
@@ -276,7 +276,7 @@
                         {{ $wtm['label'] }}
                     </span>
                 @elseif($a->activityType === 'service')
-                    @php $svcPriceText = $a->servicePrice !== null ? '₱' . number_format((float) $a->servicePrice, 2) : ''; @endphp
+                    @php $svcPriceText = $a->servicePrice !== null ? \App\Support\Region::symbol() . number_format((float) $a->servicePrice, 2) : ''; @endphp
                     <span class="badge service-badge">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5a4 4 0 105.03 5.03l4.35 4.35a2 2 0 11-2.83 2.83l-4.35-4.35A4 4 0 0111 5zM5 19l4-4"/></svg>
                         Service <span class="item-tag-price">{{ $svcPriceText }}</span>
@@ -385,7 +385,7 @@
                 $itUnit = $it->displayUnit();
                 $itQty = $it->quantity !== null ? rtrim(rtrim(number_format((float) $it->quantity, 4, '.', ''), '0'), '.') : null;
                 $itQtyText = $itQty !== null ? ' ×' . $itQty . ($itUnit ? ' ' . $itUnit : '') : '';
-                $itPriceText = $it->unitPrice !== null ? '@ ₱' . number_format((float) $it->unitPrice, 2) : '';
+                $itPriceText = $it->unitPrice !== null ? '@ ' . \App\Support\Region::symbol() . number_format((float) $it->unitPrice, 2) : '';
             @endphp
             <span class="item-tag material-tag">{{ $it->displayName() }}{{ $itQtyText }} <span class="item-tag-price">{{ $itPriceText }}</span></span>
         @endforeach
@@ -414,7 +414,7 @@
                 <label class="act-check-row{{ $here ? '' : ' is-out' }}{{ $mine ? ' is-me' : '' }}{{ $mayTick ? '' : ' is-locked' }}" data-att-worker="{{ $w->id }}">
                     <input type="checkbox" @checked($here) @disabled(! $mayTick)>
                     <span class="act-check-name">{{ $w->workerName }}@if ($a->targetDate && ! $w->isAvailableOn($a->targetDate))<span class="w-forced" title="Marked off this day">forced</span>@endif</span>
-                    <span class="act-check-pay">₱{{ number_format($a->workerPay($w), 2) }}</span>
+                    <span class="act-check-pay">{{ \App\Support\Region::money($a->workerPay($w)) }}</span>
                 </label>
             @endforeach
             @php
@@ -423,7 +423,7 @@
             @endphp
             <div class="act-check-total">
                 <span>To pay</span>
-                <span data-att-total>₱{{ number_format($due, 2) }}</span>
+                <span data-att-total>{{ \App\Support\Region::money($due) }}</span>
             </div>
         </div>
     @endif
@@ -449,15 +449,15 @@
                     <input type="checkbox" @checked($r['done']) @disabled(! $mayEdit)>
                     <span class="act-rem-name">{{ $r['text'] }}</span>
                     @if ($r['kind'] !== 'none' && $r['amount'] > 0)
-                        <span class="act-rem-amt is-{{ $r['kind'] }}">{{ $r['kind'] === 'income' ? '+' : '−' }}₱{{ number_format($r['amount'], 2) }}</span>
+                        <span class="act-rem-amt is-{{ $r['kind'] }}">{{ $r['kind'] === 'income' ? '+' : '−' }}{{ \App\Support\Region::money($r['amount']) }}</span>
                     @endif
                 </label>
             @endforeach
             @if ($remSpend > 0)
-                <div class="act-rem-total"><span>To spend</span><span class="act-rem-amt is-expense">₱{{ number_format($remSpend, 2) }}</span></div>
+                <div class="act-rem-total"><span>To spend</span><span class="act-rem-amt is-expense">{{ \App\Support\Region::money($remSpend) }}</span></div>
             @endif
             @if ($remEarn > 0)
-                <div class="act-rem-total"><span>To collect</span><span class="act-rem-amt is-income">₱{{ number_format($remEarn, 2) }}</span></div>
+                <div class="act-rem-total"><span>To collect</span><span class="act-rem-amt is-income">{{ \App\Support\Region::money($remEarn) }}</span></div>
             @endif
         </div>
     @endif

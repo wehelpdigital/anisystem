@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('title', 'About')
-@section('meta_description', 'anee.io — from ani, the harvest. The cropping schedule manager for Filipino farmers: plan lots, workers, materials, activities and irrigation, and follow the plan day by day.')
+@section('meta_description', 'anee.io — from ani, the harvest. The cropping schedule manager for ' . \App\Support\Region::t('farmersOf') . ': plan lots, workers, materials, activities and irrigation, and follow the plan day by day.')
 
 @section('content')
 
@@ -15,7 +15,7 @@
                 About anee.io
             </span>
             <h1 class="mt-5 font-heading text-3xl sm:text-5xl font-bold text-white max-w-3xl mx-auto leading-tight text-balance">
-                Helping Filipino Farmers Reach <span class="bg-gradient-to-r from-accent-300 to-accent-500 bg-clip-text text-transparent">Maximum Yield</span> and Income
+                Helping {{ \App\Support\Region::t('farmersOfTitle') }} Reach <span class="bg-gradient-to-r from-accent-300 to-accent-500 bg-clip-text text-transparent">Maximum Yield</span> and Income
             </h1>
             <p class="mt-5 max-w-2xl mx-auto text-brand-100 text-base sm:text-lg">
                 anee.io is the cropping schedule manager — the same planning system our
@@ -30,7 +30,7 @@
             <div class="reveal">
                 <div class="relative">
                     <div class="absolute -inset-3 rounded-[1.75rem] bg-gradient-to-br from-accent-500/25 to-brand-100 rotate-1"></div>
-                    <img src="{{ asset('images/palay-08.jpg') }}" alt="Palay field ready for harvest"
+                    <img src="{{ asset('images/palay-08.jpg') }}" alt="{{ \App\Support\Region::ph() ? 'Palay' : 'Rice' }} field ready for harvest"
                          class="relative rounded-2xl shadow-card-lg w-full object-cover ring-1 ring-black/5" loading="lazy">
                 </div>
             </div>
@@ -44,7 +44,7 @@
                     anything about your crop and she will answer.
                 </p>
                 <p class="mt-4 text-gray-600 leading-relaxed">
-                    For years our team has helped farmers maximize their harvests of palay, mais and more
+                    For years our team has helped farmers maximize their harvests of {{ \App\Support\Region::t('rice') }}, {{ \App\Support\Region::t('corn') }} and more
                     through technical research, technician support, fertilization and management
                     technologies — with locally and internationally recognized results.
                 </p>
@@ -76,7 +76,7 @@
                         [
                             'img' => 'images/icons/soil-restoration.png',
                             'title' => 'Costs You Can Actually See',
-                            'text' => 'Workers, materials and services are priced in ₱ as you plan, so you know your season budget before you spend a single peso.',
+                            'text' => 'Workers, materials and services are priced in ' . \App\Support\Region::symbol() . ' as you plan, so you know your season budget before you spend a single ' . (\App\Support\Region::ph() ? 'peso' : 'dollar') . '.',
                         ],
                         [
                             'img' => 'images/icons/technician-support.png',
@@ -112,7 +112,7 @@
                     $values = [
                         [
                             'title' => 'Farmer First',
-                            'text' => 'Everything we build starts with the realities of Filipino farms — budgets, weather, labor and all.',
+                            'text' => 'Everything we build starts with the realities of ' . (\App\Support\Region::ph() ? 'Filipino farms' : 'working farms') . ' — budgets, weather, labor and all.',
                             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>',
                         ],
                         [

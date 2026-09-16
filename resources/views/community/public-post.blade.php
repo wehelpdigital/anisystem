@@ -82,7 +82,7 @@
 
     <div class="pp-join">
         <p class="pp-join-t">This is a post from anee.io</p>
-        <p class="pp-join-s">A place where Filipino farmers plan their seasons and compare what actually worked. Sign in to comment, react and follow.</p>
+        <p class="pp-join-s">A place where {{ \App\Support\Region::t('farmersOf') }} plan their seasons and compare what actually worked. Sign in to comment, react and follow.</p>
         <div class="pp-join-b">
             <a href="{{ route('signup') }}" class="btn btn-primary">Create a free account</a>
             <a href="{{ route('login') }}" class="btn btn-white">I already have one</a>

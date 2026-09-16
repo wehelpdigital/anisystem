@@ -288,7 +288,7 @@
                     </div>
 
                     <div class="grid grid-cols-2 gap-2">
-                        <input type="text" id="qalBarangay" class="form-input bg-white!" placeholder="Barangay" maxlength="120">
+                        <input type="text" id="qalBarangay" class="form-input bg-white!" placeholder="{{ \App\Support\Region::lot()['barangay']['label'] ?? 'Area' }}" maxlength="120">
                         <input type="text" id="qalZone" class="form-input bg-white!" placeholder="Zone" maxlength="60">
                     </div>
 
@@ -401,7 +401,7 @@
                 </select>
             </div>
             <div id="activityServicePriceWrap" class="hidden">
-                <label class="form-label" for="activityServicePrice">Service price (₱)</label>
+                <label class="form-label" for="activityServicePrice">Service price ({{ \App\Support\Region::symbol() }})</label>
                 <input type="number" id="activityServicePrice" class="form-input" min="0" step="any" placeholder="0.00" inputmode="decimal">
                 <p class="form-hint">The cost of this hired service for the lot(s) it applies to.</p>
             </div>
@@ -496,7 +496,7 @@
                 <div id="workerPayPanel" class="hidden mt-2 rounded-xl border border-gray-200 overflow-hidden">
                     <div class="flex items-center justify-between px-3 py-2 bg-gray-50">
                         <span class="text-xs font-bold text-gray-500 uppercase">Who will work in this schedule</span>
-                        <span class="text-sm font-bold text-gray-800" id="workerPayTotal">₱0.00</span>
+                        <span class="text-sm font-bold text-gray-800" id="workerPayTotal">{{ \App\Support\Region::symbol() }}0.00</span>
                     </div>
                     <div id="workerPayRows" class="p-2 space-y-1.5"></div>
                 </div>
@@ -617,7 +617,7 @@
                             <input type="number" id="itemQtyInput" class="form-input bg-white!" value="1" min="0" step="any" placeholder="1" inputmode="decimal">
                         </div>
                         <div id="itemPriceCell">
-                            <label class="form-label text-xs! mb-1!" for="itemPriceInput" id="itemPriceLabel">Price (₱)</label>
+                            <label class="form-label text-xs! mb-1!" for="itemPriceInput" id="itemPriceLabel">Price ({{ \App\Support\Region::symbol() }})</label>
                             <input type="number" id="itemPriceInput" class="form-input bg-white!" list="itemPriceList" min="0" step="any" placeholder="0.00" inputmode="decimal">
                             <datalist id="itemPriceList"></datalist>
                             <p class="form-hint hidden" id="itemBuyHint">Leave the price empty to use what the inventory already holds. Put a price in and this counts as a <b>new purchase</b>: it is logged into the inventory at that price, so the old stock and the new keep their own costs for the reports.</p>
@@ -746,7 +746,7 @@
                     </div>
 
                     <div>
-                        <label class="form-label text-xs! mb-1!" for="qawRate">Rate per half-day (₱)</label>
+                        <label class="form-label text-xs! mb-1!" for="qawRate">Rate per half-day ({{ \App\Support\Region::symbol() }})</label>
                         <input type="number" id="qawRate" class="form-input bg-white!" placeholder="0.00" min="0" step="0.01" inputmode="decimal">
                     </div>
 
@@ -1949,7 +1949,7 @@
         <input type="hidden" id="dayExpenseId">
         <p class="text-sm text-gray-600" id="dayExpenseForDate"></p>
         <div>
-            <label class="form-label" for="dayExpenseAmount">Amount (₱)</label>
+            <label class="form-label" for="dayExpenseAmount">Amount ({{ \App\Support\Region::symbol() }})</label>
             <input type="number" id="dayExpenseAmount" class="form-input" inputmode="decimal" step="0.01" min="0" placeholder="0.00">
         </div>
         <div>

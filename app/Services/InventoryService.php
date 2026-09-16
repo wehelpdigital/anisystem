@@ -220,7 +220,7 @@ class InventoryService
             }
             $price = isset($line['price']) && $line['price'] !== null && $line['price'] !== '' ? (float) $line['price'] : null;
             $note = 'Bought for ' . ($label !== '' ? '“' . mb_substr($label, 0, 80) . '”' : 'an activity')
-                . ($price !== null ? ' at ₱' . number_format($price, 2) . ' each' : '');
+                . ($price !== null ? ' at ' . \App\Support\Region::symbol() . number_format($price, 2) . ' each' : '');
             // The price was per typed unit; the move is in the book's. Said
             // per book unit, so delta × price is what was actually paid.
             $price = self::pricePerBookUnit($price, $typed, $qty);

@@ -139,7 +139,7 @@
              the log line says so. Only when ADDING to something that already
              exists; a NEW item's form has its own price box. --}}
         <div id="ivMoveBuyWrap" class="hidden">
-            <label for="ivMoveBuyPrice" class="form-label">Bought at (₱ each) <span class="text-gray-400 font-normal">(optional)</span></label>
+            <label for="ivMoveBuyPrice" class="form-label">Bought at ({{ \App\Support\Region::symbol() }} each) <span class="text-gray-400 font-normal">(optional)</span></label>
             <input type="number" id="ivMoveBuyPrice" min="0" step="any" class="form-input" placeholder="0.00" inputmode="decimal">
         </div>
 

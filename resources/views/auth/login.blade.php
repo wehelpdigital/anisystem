@@ -150,14 +150,14 @@
                     </div>
                     <div class="flex items-center justify-between gap-3">
                         <div class="min-w-0">
-                            <p class="text-sm font-semibold text-gray-800">Solo Farmer <span class="font-normal text-gray-400">· ₱200 tier</span></p>
+                            <p class="text-sm font-semibold text-gray-800">Solo Farmer <span class="font-normal text-gray-400">· {{ \App\Support\Region::priceTag(\App\Support\Region::tierPrice('solo')) }} tier</span></p>
                             <p class="text-xs text-gray-500 truncate">solo.tier@anisystem.test · tier1234</p>
                         </div>
                         <button type="button" @click="fill('solo.tier@anisystem.test', 'tier1234')" class="btn btn-outline btn-sm shrink-0">Fill</button>
                     </div>
                     <div class="flex items-center justify-between gap-3">
                         <div class="min-w-0">
-                            <p class="text-sm font-semibold text-gray-800">Farm Owner <span class="font-normal text-gray-400">· ₱600 tier</span></p>
+                            <p class="text-sm font-semibold text-gray-800">Farm Owner <span class="font-normal text-gray-400">· {{ \App\Support\Region::priceTag(\App\Support\Region::tierPrice('owner')) }} tier</span></p>
                             <p class="text-xs text-gray-500 truncate">owner.tier@anisystem.test · tier1234</p>
                         </div>
                         <button type="button" @click="fill('owner.tier@anisystem.test', 'tier1234')" class="btn btn-outline btn-sm shrink-0">Fill</button>

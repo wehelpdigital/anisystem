@@ -16,7 +16,7 @@
                  write was cut off before it finished being an example, which
                  is the one job a placeholder has. --}}
             <textarea id="statusInput" class="form-textarea w-full" rows="2" maxlength="60"
-                      placeholder="e.g. Aani na! 🌾 · Waiting for rain · Nagtatanim ng palay"></textarea>
+                      placeholder="{{ \App\Support\Region::ph() ? 'e.g. Aani na! 🌾 · Waiting for rain · Nagtatanim ng palay' : 'e.g. Harvest week! 🌾 · Waiting for rain · Planting corn' }}"></textarea>
             <div class="st-row">
                 {{-- The same yellow smiley the wall composer uses. A button
                      whose whole job is emoji should not have to say so. --}}

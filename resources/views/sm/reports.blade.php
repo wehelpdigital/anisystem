@@ -27,7 +27,7 @@
             ],
             [
                 'label' => 'Expenses Report',
-                'desc' => 'Every peso spent this season.',
+                'desc' => 'Every ' . (\App\Support\Region::ph() ? 'peso' : 'dollar') . ' spent this season.',
                 'url' => route('sm.expenses.report', ['id' => $schedule->id]),
                 'img' => asset('images/icons/money-bag.png'),
                 'badge' => null,

@@ -893,7 +893,7 @@
             <div class="card p-8 text-center" id="postsEmpty">
                 <div class="empty-tile">🌱</div>
                 <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Tahimik pa rito</p>
-                <p class="text-sm text-gray-500 mt-1">Ikaw ang mauna — share what's happening sa bukid mo.</p>
+                <p class="text-sm text-gray-500 mt-1">{{ \App\Support\Region::ph() ? "Ikaw ang mauna — share what's happening sa bukid mo." : "Be the first — share what's happening on your farm." }}</p>
             </div>
         @else
             @include('community.groups.partials.posts', ['posts' => $posts, 'group' => $group])
@@ -1264,7 +1264,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const res = await fetch(`/app/community/groups/${groupId}/${join ? 'join' : 'leave'}`, { method: 'POST', headers: jsonHeaders });
         const data = await res.json();
         if (!data.success) { toast(data.message, 'error'); return false; }
-        toast(join ? 'Salamat sa pagsali! 🌾' : data.message);
+        toast(join ? ((window.ANEE_REGION || {}).ph === false ? 'Thanks for joining! 🌾' : 'Salamat sa pagsali! 🌾') : data.message);
         root.setAttribute('data-group-member', join ? '1' : '0');
         const count = document.getElementById('memberCount');
         const n = parseInt(count.textContent || '0', 10) + (join ? 1 : -1);

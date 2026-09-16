@@ -86,9 +86,9 @@
                 <div>
                     <p class="fx-kicker">Agronomy</p>
                     <h2 class="fx-h">Growth stages and weather that read your fields</h2>
-                    <p class="fx-p">anee knows 85 Philippine crops. Pick any date and it says where every lot stands — the stage, what it needs, what to watch for — with the week's forecast beside it.</p>
+                    <p class="fx-p">anee knows {{ \App\Support\Region::ph() ? '85 Philippine crops' : 'nearly a hundred crops' }}. Pick any date and it says where every lot stands — the stage, what it needs, what to watch for — with the week's forecast beside it.</p>
                     <ul class="fx-list">
-                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Palay, mais, gulay, fruit trees — annuals and perennials both</li>
+                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ \App\Support\Region::ph() ? 'Palay, mais, gulay, fruit trees' : 'Rice, corn, vegetables, fruit trees' }} — annuals and perennials both</li>
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Do-lists and watch-lists written for each stage</li>
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Maps: draw and measure your lots, drop pins, save team maps</li>
                     </ul>
@@ -102,7 +102,7 @@
                 </div>
                 <div>
                     <p class="fx-kicker">Money</p>
-                    <h2 class="fx-h">Inventory, expenses and reports that agree to the peso</h2>
+                    <h2 class="fx-h">Inventory, expenses and reports that agree to the {{ \App\Support\Region::ph() ? 'peso' : 'cent' }}</h2>
                     <p class="fx-p">The shed keeps stock with every move logged and named. Labor, expenses and profit reports are computed straight from the plan — and Anee can write the season's full story on top.</p>
                     <ul class="fx-list">
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Inventory items and moves, with an audit trail of who did what</li>
@@ -138,7 +138,7 @@
             <p class="text-sm font-bold uppercase tracking-wider text-accent-400 reveal">And through all of it</p>
             <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-white text-balance reveal">Anee — the AI technician who knows your farm</h2>
             <p class="mt-4 text-[#cdd8c0] leading-relaxed max-w-2xl mx-auto reveal">
-                She reads your schedules, stages and weather before answering. Ask in Tagalog or English,
+                She reads your schedules, stages and weather before answering. Ask in {{ \App\Support\Region::ph() ? 'Tagalog or English' : 'plain English' }},
                 send a photo of the problem, run when-to-plant and what-to-plant analyses for your town,
                 or have her write the whole season's report. Anee runs on credits — you pay only for what you ask.
             </p>

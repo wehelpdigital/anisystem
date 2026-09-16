@@ -215,12 +215,12 @@
         <div>
             <label class="form-label" for="ctfAddress">Address line 1</label>
             <textarea id="ctfAddress" class="form-input" rows="2" style="padding-top:.7rem;padding-bottom:.7rem"
-                      placeholder="House no., street, purok or sitio" maxlength="255"></textarea>
+                      placeholder="{{ \App\Support\Region::ph() ? 'House no., street, purok or sitio' : 'House no., street, area' }}" maxlength="255"></textarea>
         </div>
         <div>
             <label class="form-label" for="ctfAddress2">Address line 2 <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="ctfAddress2" class="form-input" rows="2" style="padding-top:.7rem;padding-bottom:.7rem"
-                      placeholder="Barangay, landmark, anything that helps you find it again" maxlength="255"></textarea>
+                      placeholder="{{ \App\Support\Region::ph() ? 'Barangay, landmark, anything that helps you find it again' : 'Neighbourhood, landmark, anything that helps you find it again' }}" maxlength="255"></textarea>
         </div>
         <div>
             <label class="form-label">Province and town</label>
@@ -492,7 +492,7 @@
 
     /* --------------------- the repeatable phone/email rows ------------------ */
     const LINE_KINDS = {
-        phone: { mount: 'ctfPhones', type: 'tel', max: 40, hint: '09XXXXXXXXX', drop: 'Remove this number' },
+        phone: { mount: 'ctfPhones', type: 'tel', max: 40, hint: ((window.ANEE_REGION || {}).phone || {}).placeholder || '09XXXXXXXXX', drop: 'Remove this number' },
         email: { mount: 'ctfEmails', type: 'email', max: 150, hint: 'name@example.com', drop: 'Remove this email' },
     };
 

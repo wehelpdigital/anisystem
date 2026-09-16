@@ -94,11 +94,11 @@
     <div id="prContent" class="hidden">
         <div class="pr-hero" id="prHero">
             <div class="pr-hero-label">Net profit</div>
-            <div class="pr-hero-value" id="prProfit">₱0</div>
+            <div class="pr-hero-value" id="prProfit">{{ \App\Support\Region::symbol() }}0</div>
             <div class="pr-hero-sub" id="prVerdict"></div>
             <div class="pr-vs">
-                <div><div class="k">Money in</div><div class="v" id="prRevenue">₱0</div></div>
-                <div><div class="k">Money out</div><div class="v" id="prCost">₱0</div></div>
+                <div><div class="k">Money in</div><div class="v" id="prRevenue">{{ \App\Support\Region::symbol() }}0</div></div>
+                <div><div class="k">Money out</div><div class="v" id="prCost">{{ \App\Support\Region::symbol() }}0</div></div>
             </div>
         </div>
 
@@ -131,8 +131,8 @@ const __init = () => {
     const $id = (i) => document.getElementById(i);
     const esc = window.escapeHtml || ((s) => String(s));
     const DATA_URL = @json(route('sm.profit.report.data') . '?id=' . $schedule->id);
-    const fmtPeso = (n) => '₱' + Number(n || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const fmtPeso0 = (n) => '₱' + Math.round(Number(n || 0)).toLocaleString('en-PH');
+    const fmtPeso = (n) => ((window.ANEE_REGION || {}).symbol || '₱') + Number(n || 0).toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'), { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const fmtPeso0 = (n) => ((window.ANEE_REGION || {}).symbol || '₱') + Math.round(Number(n || 0)).toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'));
     const CATS = [
         ['materials', 'Materials', '#15803d'],
         ['labor', 'Labor', '#d97706'],
@@ -216,7 +216,7 @@ const __init = () => {
         const lines = [];
         lines.push(`PROFIT REPORT — ${d.scheduleTitle || ''}`);
         lines.push('='.repeat(50));
-        lines.push(`Generated: ${new Date().toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short' })}`);
+        lines.push(`Generated: ${new Date().toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'), { dateStyle: 'medium', timeStyle: 'short' })}`);
         lines.push('');
         lines.push(`NET PROFIT: ${fmtPeso(d.profit)}${d.margin !== null ? ` (${d.margin}% margin)` : ''}`);
         lines.push(`Money in: ${fmtPeso(d.revenue)} (day-book income ${fmtPeso(d.dayIncome)})`);

@@ -199,7 +199,7 @@
                 </button>
             </div>
             <div class="sheet-body" style="padding-bottom:1rem">
-                <input type="search" id="cmapSearch" class="form-input" placeholder="Town, barangay, landmark…" autocomplete="off">
+                <input type="search" id="cmapSearch" class="form-input" placeholder="{{ \App\Support\Region::ph() ? 'Town, barangay, landmark…' : 'Town, road, landmark…' }}" autocomplete="off">
             </div>
         </div>
         <button type="button" class="cmap-tool" id="cmapColorBtn" title="Drawing colour" aria-label="Choose drawing colour">

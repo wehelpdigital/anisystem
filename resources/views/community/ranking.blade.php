@@ -24,7 +24,7 @@
 @section('body-class', 'plaza-ground hide-tabbar')
 @section('page-title', 'Community Rankings')
 @section('help-key', 'community-ranking')
-@section('page-subtitle', 'Ang hagdan ng bukid')
+@section('page-subtitle', \App\Support\Region::ph() ? 'Ang hagdan ng bukid' : 'The farm ladder')
 @section('back', route('community.index'))
 
 @section('content')

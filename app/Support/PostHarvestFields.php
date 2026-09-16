@@ -28,7 +28,7 @@ class PostHarvestFields
     public const FIELDS = [
         'yield' => [
             ['yieldAmount', 'How much was harvested', 'number', ['placeholder' => 'e.g. 4600']],
-            ['yieldUnit', 'Measured in', 'unit', ['placeholder' => 'kg, sacks, cavans']],
+            ['yieldUnit', 'Measured in', 'unit', ['placeholder' => 'kg, sacks, tons']],
             ['moisturePercent', 'Moisture at harvest', 'percent', ['placeholder' => 'e.g. 21']],
             ['wetOrDry', 'Wet or dry weight', 'select', ['options' => ['wet' => 'Wet (fresh off the field)', 'dry' => 'Dry (after drying)']]],
             ['areaHarvested', 'Area harvested', 'text', ['placeholder' => 'e.g. 1.5 ha']],
@@ -66,7 +66,7 @@ class PostHarvestFields
         ],
         'market' => [
             ['yieldAmount', 'How much was sold', 'number', ['placeholder' => 'e.g. 4200']],
-            ['yieldUnit', 'Measured in', 'unit', ['placeholder' => 'kg, sacks, cavans']],
+            ['yieldUnit', 'Measured in', 'unit', ['placeholder' => 'kg, sacks, tons']],
             ['pricePerUnit', 'Price per unit', 'money', ['placeholder' => 'e.g. 23.50']],
             ['buyer', 'Sold to', 'text', ['placeholder' => 'e.g. NFA, local trader']],
             ['paymentTerms', 'How it was paid', 'select', ['options' => [

@@ -19,7 +19,7 @@
         </div>
         <div>
             <label class="form-label" for="publishRegion">Where was it grown?</label>
-            <input type="text" id="publishRegion" class="form-input" maxlength="120" placeholder="e.g. Nueva Ecija">
+            <input type="text" id="publishRegion" class="form-input" maxlength="120" placeholder="{{ \App\Support\Region::address()['region']['placeholder'] ?? 'e.g. Illinois' }}">
             <p class="form-hint">Optional — helps people find plans for similar conditions.</p>
         </div>
     </div>

@@ -556,7 +556,7 @@
                         <tr>
                             <td>#{{ $w->priority }}</td>
                             <td><strong>{{ $w->workerName }}</strong></td>
-                            <td>₱ {{ number_format($w->costPerHalfDay, 2) }}</td>
+                            <td>{{ \App\Support\Region::money($w->costPerHalfDay) }}</td>
                             <td>
                                 @if(count($wSkills) === 0)
                                     <span style="color:#9aa0a6;">—</span>
@@ -680,7 +680,7 @@
                                         $unit = $it->displayUnit();
                                         $chip = $it->displayName();
                                         if ($qtyTrim !== null) $chip .= ' ×' . $qtyTrim . ($unit ? ' ' . $unit : '');
-                                        if ($it->unitPrice !== null) $chip .= ' @ ₱' . number_format((float) $it->unitPrice, 2);
+                                        if ($it->unitPrice !== null) $chip .= ' @ ' . \App\Support\Region::symbol() . number_format((float) $it->unitPrice, 2);
                                     @endphp
                                     <span class="chip chip-material">{{ $chip }}</span>
                                 @endforeach

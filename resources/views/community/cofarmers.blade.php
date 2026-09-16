@@ -70,8 +70,8 @@
 @if ($friends->isEmpty())
     <div class="card p-8 text-center">
         <div class="empty-tile">🤝</div>
-        <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Wala ka pang co-farmers</p>
-        <p class="text-sm text-gray-500 mt-1 mb-4">Connect with members para makita mo dito ang mga balita nila.</p>
+        <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">{{ \App\Support\Region::ph() ? 'Wala ka pang co-farmers' : 'No co-farmers yet' }}</p>
+        <p class="text-sm text-gray-500 mt-1 mb-4">{{ \App\Support\Region::ph() ? 'Connect with members para makita mo dito ang mga balita nila.' : 'Connect with members to see their news here.' }}</p>
         <a href="{{ route('community.connect.members') }}" class="btn btn-primary">Find members</a>
     </div>
 @else
@@ -83,7 +83,7 @@
 
     <div class="card p-8 text-center" id="cfNone" hidden>
         <div class="empty-tile">🔎</div>
-        <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Walang tugma</p>
+        <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">{{ \App\Support\Region::ph() ? 'Walang tugma' : 'No match' }}</p>
         <p class="text-sm text-gray-500 mt-1">Nobody here answers to that — by name, by place, or by what they do.</p>
     </div>
     @include('partials.list-pager', ['noun' => 'co-farmer', 'paginator' => $friends,
@@ -129,7 +129,7 @@
                 note.hidden = false;
                 note.innerHTML = count
                     ? count + ' ' + (count === 1 ? 'co-farmer' : 'co-farmers') + ' matching <b></b>.'
-                    : 'Walang tugma sa <b></b>.';
+                    : ((window.ANEE_REGION || {}).ph === false ? 'No match for <b></b>.' : 'Walang tugma sa <b></b>.');
                 note.querySelector('b').textContent = '\u201c' + query + '\u201d';
             }
         }

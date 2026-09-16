@@ -215,8 +215,8 @@
         }
 
         /* ---------------- the pricing tab ---------------- */
-        const peso = (n) => '₱' + Number(n || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        const pesoShort = (n) => '₱' + Number(n || 0).toLocaleString('en-PH', { maximumFractionDigits: 2 });
+        const peso = (n) => ((window.ANEE_REGION || {}).symbol || '₱') + Number(n || 0).toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'), { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const pesoShort = (n) => ((window.ANEE_REGION || {}).symbol || '₱') + Number(n || 0).toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'), { maximumFractionDigits: 2 });
         function paintPricing() {
             const box = $id('ivPricing');
             if (!box) return;
@@ -238,7 +238,7 @@
                         ? `Set a price${locked ? LOCK : PEN}`
                         : `${esc(pesoShort(b.price))}${locked ? LOCK : PEN}`;
                     const foot = b.price == null
-                        ? '<span class="ivp-bc-none">No price yet — the day\'s cash and the expense report count this batch as ₱0 until it has one.</span>'
+                        ? '<span class="ivp-bc-none">No price yet — the day\'s cash and the expense report count this batch as ' + ((window.ANEE_REGION || {}).symbol || '₱') + '0 until it has one.</span>'
                         : `<b>${esc(pesoShort(b.amount))}</b> in all · ${esc(pesoShort(b.price))} per ${esc(one)}`;
                     const why = b.activityId
                         ? `<span class="ivp-bc-why">Bought on an activity — fix the price on that activity</span>`
@@ -285,7 +285,7 @@
             $id('ivPriceLine').textContent = mode === 'batch'
                 ? `${batch.reasonLabel} · ${batch.says} · ${batch.onSays || ''}`
                 : `${item.says} on hand · what one costs when a batch has no price of its own`;
-            $id('ivPriceUnit').textContent = '₱ per ' + unitSays(item.unit, true);
+            $id('ivPriceUnit').textContent = ((window.ANEE_REGION || {}).symbol || '₱') + ' per ' + unitSays(item.unit, true);
             $id('ivPriceInput').value = mode === 'batch'
                 ? (batch.ownPrice != null ? batch.ownPrice : '')
                 : (item.unitPrice != null ? item.unitPrice : '');

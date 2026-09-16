@@ -1245,7 +1245,7 @@
                                                     $unit = $it->displayUnit();
                                                     $bit = $it->displayName();
                                                     if ($qtyTrim !== null) $bit .= ' ×' . $qtyTrim . ($unit ? ' ' . $unit : '');
-                                                    if ($it->unitPrice !== null) $bit .= ' @ ₱' . number_format((float) $it->unitPrice, 2);
+                                                    if ($it->unitPrice !== null) $bit .= ' @ ' . \App\Support\Region::symbol() . number_format((float) $it->unitPrice, 2);
                                                     $materialBits[] = $bit;
                                                 }
                                             @endphp

@@ -192,9 +192,9 @@ class InventoryController extends BaseScheduleController
         /* The note said the price too ("Bought at ₱1,350.00 each") so every
          * log renderer could say it; it follows the fix or is dropped. */
         $note = (string) ($move->note ?? '');
-        $note = trim(preg_replace('/\s*·?\s*Bought at ₱[\d,\.]+ each/u', '', $note), " ·");
+        $note = trim(preg_replace('/\s*·?\s*Bought at [^\d\s]{0,3}[\d,\.]+ each/u', '', $note), " ·");
         if ($price !== null) {
-            $said = 'Bought at ₱' . number_format($price, 2) . ' each';
+            $said = 'Bought at ' . \App\Support\Region::symbol() . number_format($price, 2) . ' each';
             $note = $note === '' ? $said : $note . ' · ' . $said;
         }
         $move->update(['unitPrice' => $price, 'note' => $note !== '' ? mb_substr($note, 0, 500) : null]);
@@ -202,7 +202,7 @@ class InventoryController extends BaseScheduleController
 
         return $this->jsonOk(
             $price !== null
-                ? 'Priced: ' . ($item ? $item->say((float) $move->delta) : 'this batch') . ' at ₱' . number_format($price, 2) . ' per ' . ($item ? AsInventoryItem::unitSays($item->unit, true) : 'unit') . '.'
+                ? 'Priced: ' . ($item ? $item->say((float) $move->delta) : 'this batch') . ' at ' . \App\Support\Region::symbol() . number_format($price, 2) . ' per ' . ($item ? AsInventoryItem::unitSays($item->unit, true) : 'unit') . '.'
                 : 'Price cleared — this batch reads at the item\'s usual price now.',
             ['data' => ['pricing' => $this->pricingPayload($schedule->id)]]
         );
@@ -570,7 +570,7 @@ class InventoryController extends BaseScheduleController
          * without learning a new field. */
         $note = (string) ($request->input('note') ?? '');
         if ($buyPrice !== null) {
-            $said = 'Bought at ₱' . number_format($buyPrice, 2) . ' each';
+            $said = 'Bought at ' . \App\Support\Region::symbol() . number_format($buyPrice, 2) . ' each';
             $note = $note === '' ? $said : $note . ' · ' . $said;
         }
         $move = $reason === AsInventoryMove::OPEN

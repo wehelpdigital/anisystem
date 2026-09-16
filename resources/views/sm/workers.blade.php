@@ -135,7 +135,7 @@
         <div>
             <label for="workerCost" class="form-label">Cost / Half Day</label>
             <div class="relative">
-                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-semibold pointer-events-none">₱</span>
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-semibold pointer-events-none">{{ \App\Support\Region::symbol() }}</span>
                 <input type="number" id="workerCost" min="0" step="0.01" class="form-input pl-9!" placeholder="0.00">
             </div>
         </div>

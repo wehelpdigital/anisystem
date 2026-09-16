@@ -218,7 +218,7 @@
             {{-- Hero --}}
             <div class="lr-hero mb-1">
                 <div class="lr-hero-label">Total labor expense</div>
-                <div class="lr-hero-value" id="lrTotal">₱0</div>
+                <div class="lr-hero-value" id="lrTotal">{{ \App\Support\Region::symbol() }}0</div>
                 <div class="text-xs text-gray-500 mt-1" id="lrMeta"></div>
                 <div class="lr-tiles" id="lrTiles"></div>
             </div>
@@ -289,7 +289,7 @@
             @foreach ($schedule->workers as $w)
                 <button type="button" class="dt-row" data-lr-worker="{{ $w->id }}">
                     <span class="dt-row-e">👤</span>
-                    <span class="dt-row-body"><b>{{ $w->workerName }}</b><i>₱{{ number_format((float) $w->costPerHalfDay, 2) }} per half day</i></span>
+                    <span class="dt-row-body"><b>{{ $w->workerName }}</b><i>{{ \App\Support\Region::money((float) $w->costPerHalfDay) }} per half day</i></span>
                     <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                 </button>
             @endforeach
@@ -372,8 +372,8 @@ const __init = () => {
     };
     const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const PHASE = { pre: '#d97706', crop: '#15803d', una: '#2563eb' };
-    const fmtPeso = (n) => '₱' + Number(n || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const fmtPeso0 = (n) => '₱' + Math.round(Number(n || 0)).toLocaleString('en-PH');
+    const fmtPeso = (n) => ((window.ANEE_REGION || {}).symbol || '₱') + Number(n || 0).toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'), { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const fmtPeso0 = (n) => ((window.ANEE_REGION || {}).symbol || '₱') + Math.round(Number(n || 0)).toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'));
     const parseD = (iso) => { const [y, m, d] = String(iso).slice(0, 10).split('-').map(Number); return (y && m && d) ? new Date(y, m - 1, d, 12) : null; };
 
     let DATA = null;
@@ -593,7 +593,7 @@ const __init = () => {
             : 'Nothing scheduled in this slice.';
 
         const ticks = [0, .25, .5, .75, 1].map((f) => f * top);
-        const fmtTick = (v) => METRIC === 'cost' ? '₱' + (v >= 1000 ? (v / 1000).toLocaleString() + 'k' : v.toLocaleString()) : String(v);
+        const fmtTick = (v) => METRIC === 'cost' ? ((window.ANEE_REGION || {}).symbol || '₱') + (v >= 1000 ? (v / 1000).toLocaleString() + 'k' : v.toLocaleString()) : String(v);
         host.innerHTML = `<div class="lr-plot">
             <div class="lr-grid">${ticks.slice(1).map((v) => `<i style="bottom:${(v / top) * 100}%"></i>`).join('')}</div>
             <div class="lr-yticks">${ticks.map((v) => `<span style="bottom:${(v / top) * 100}%">${fmtTick(v)}</span>`).join('')}</div>
@@ -771,7 +771,7 @@ const __init = () => {
         const lines = [];
         lines.push(`LABOR REPORT — ${d.scheduleTitle || ''}`);
         lines.push('='.repeat(50));
-        lines.push(`Generated: ${new Date().toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short' })}`);
+        lines.push(`Generated: ${new Date().toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'), { dateStyle: 'medium', timeStyle: 'short' })}`);
         lines.push('');
         lines.push(`TOTAL: ${fmtPeso(d.grandTotal)}`);
         lines.push(`  Land Preparation (${DAY_TYPE} < 0):    ${fmtPeso(pre.cost)}  (${pre.count})`);

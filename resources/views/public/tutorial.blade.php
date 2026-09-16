@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('title', 'Tutorial — How anee.io Works')
-@section('meta_description', 'Step-by-step guide to anee.io: create an account, pay via GCash, set up lots, workers, materials and services, build your activities timeline, plan irrigation and export your season.')
+@section('meta_description', 'Step-by-step guide to anee.io: create an account, pay via ' . \App\Support\Region::payMethod() . ', set up lots, workers, materials and services, build your activities timeline, plan irrigation and export your season.')
 
 @section('content')
 
@@ -34,18 +34,18 @@
                         'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>',
                     ],
                     [
-                        'title' => 'Choose a plan & pay via GCash',
-                        'text' => 'Pick the plan that fits your season, send the exact amount through GCash, then upload a screenshot of your receipt (or type the reference number) on the payment page.',
+                        'title' => 'Choose a plan & pay via ' . \App\Support\Region::payMethod(),
+                        'text' => 'Pick the plan that fits your season, send the exact amount through ' . \App\Support\Region::payMethod() . ', then upload a screenshot of your receipt (or type the reference number) on the payment page.',
                         'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M5 6h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2zm2 8h4"/>',
                     ],
                     [
                         'title' => 'Wait for your verification email',
-                        'text' => 'Our team checks your GCash payment manually — usually within a few hours during business days. The moment it\'s verified, you get an email and your subscription becomes active.',
+                        'text' => 'Our team checks your ' . \App\Support\Region::payMethod() . ' payment manually — usually within a few hours during business days. The moment it\'s verified, you get an email and your subscription becomes active.',
                         'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.9 5.3a2 2 0 002.2 0L21 8M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/>',
                     ],
                     [
                         'title' => 'Create your first cropping schedule',
-                        'text' => 'One schedule = one season on one farm. Give it a title (for example "Wet Season 2026 — San Isidro") and choose how days are counted: DAS (days after sowing), DAP or DAT.',
+                        'text' => 'One schedule = one season on one farm. Give it a title (for example "' . (\App\Support\Region::ph() ? 'Wet Season 2026 — San Isidro' : 'Spring 2026 — North Field') . '") and choose how days are counted: DAS (days after sowing), DAP or DAT.',
                         'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/>',
                     ],
                     [
@@ -123,12 +123,12 @@
                         'a' => 'Payments are verified manually by our team, usually within a few hours on business days and no longer than 24 hours. You\'ll receive an email the moment your subscription is activated — no need to keep checking.',
                     ],
                     [
-                        'q' => 'Is GCash the only payment method?',
-                        'a' => 'Yes, for now we accept GCash only, since it\'s the most accessible option for farmers across the Philippines. Simply send the exact plan amount and upload your receipt screenshot or reference number.',
+                        'q' => 'Is ' . \App\Support\Region::payMethod() . ' the only payment method?',
+                        'a' => 'Yes, for now we accept ' . \App\Support\Region::payMethod() . ' only' . (\App\Support\Region::ph() ? ', since it\'s the most accessible option for farmers across the Philippines.' : '.') . ' Simply send the exact plan amount and upload your receipt screenshot or reference number.',
                     ],
                     [
                         'q' => 'How do I renew my subscription?',
-                        'a' => 'Go to your Account page, choose a plan and pay via GCash again — same simple process. Renewal days are added on top of your remaining time, so renewing early never wastes days.',
+                        'a' => 'Go to your Account page, choose a plan and pay via ' . \App\Support\Region::payMethod() . ' again — same simple process. Renewal days are added on top of your remaining time, so renewing early never wastes days.',
                     ],
                     [
                         'q' => 'What happens when my subscription expires?',

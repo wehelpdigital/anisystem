@@ -172,7 +172,7 @@ class TagController extends BaseScheduleController
                 foreach (\App\Models\AsScheduleDayExpense::whereIn('id', $refIds)
                     ->where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->get() as $e) {
                     $out[] = ['kind' => 'expense', 'refId' => (int) $e->id, 'icon' => '💸',
-                        'title' => (trim((string) $e->note) ?: 'Expense') . ' — ₱' . number_format((float) $e->amount, 2),
+                        'title' => (trim((string) $e->note) ?: 'Expense') . ' — ' . \App\Support\Region::symbol() . number_format((float) $e->amount, 2),
                         'sub' => 'expense · ' . $day($e->expenseDate),
                         'when' => (string) $e->expenseDate,
                         'url' => route('sm.activities', ['id' => $schedule->id, 'day' => substr((string) $e->expenseDate, 0, 10)])];
@@ -182,7 +182,7 @@ class TagController extends BaseScheduleController
                 foreach (\App\Models\AsScheduleDayIncome::whereIn('id', $refIds)
                     ->where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->get() as $i) {
                     $out[] = ['kind' => 'income', 'refId' => (int) $i->id, 'icon' => '💰',
-                        'title' => (trim((string) ($i->title ?: $i->note)) ?: 'Income') . ' — ₱' . number_format((float) $i->amount, 2),
+                        'title' => (trim((string) ($i->title ?: $i->note)) ?: 'Income') . ' — ' . \App\Support\Region::symbol() . number_format((float) $i->amount, 2),
                         'sub' => 'income · ' . $day($i->incomeDate),
                         'when' => (string) $i->incomeDate,
                         'url' => route('sm.activities', ['id' => $schedule->id, 'day' => substr((string) $i->incomeDate, 0, 10)])];

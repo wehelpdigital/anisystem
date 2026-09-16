@@ -3,7 +3,7 @@
 @include('public.partials.site-css')
 
 @section('title', 'Contact Us')
-@section('meta_description', 'Get in touch with the anee.io team. Questions about plans, GCash payments, or using the cropping schedule manager? Email support@anee.io — a real person replies, usually within a business day.')
+@section('meta_description', 'Get in touch with the anee.io team. Questions about plans, ' . \App\Support\Region::payMethod() . ' payments, or using the cropping schedule manager? Email support@anee.io — a real person replies, usually within a business day.')
 
 @section('content')
 
@@ -37,7 +37,7 @@
                 <p class="ct-mail-lead">Write to us at</p>
                 <a class="ct-mail-addr" href="mailto:support@anee.io">support@anee.io</a>
                 <p class="ct-mail-sub">
-                    Plans, GCash payments, getting a season set up, or something that is not working —
+                    Plans, {{ \App\Support\Region::payMethod() }} payments, getting a season set up, or something that is not working —
                     send it here. A real person reads every one, usually within a business day.
                 </p>
                 <div class="ct-mail-acts">
@@ -55,7 +55,7 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     </span>
                     <p class="ct-side-k">Where we are</p>
-                    <p class="ct-side-p">The Philippines — built here, for farms here.</p>
+                    <p class="ct-side-p">{{ \App\Support\Region::ph() ? 'The Philippines — built here, for farms here.' : 'Built in the Philippines, for farms everywhere.' }}</p>
                 </div>
                 <div class="ct-side reveal" style="--reveal-delay:.12s">
                     <span class="ct-side-ico" aria-hidden="true">

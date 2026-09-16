@@ -80,7 +80,7 @@
         @if ($summary['revenue'] !== null)
             <div class="ph-figure">
                 <dt class="text-gray-400">Gross value</dt>
-                <dd class="text-brand-700">₱ {{ number_format($summary['revenue'], 2) }}</dd>
+                <dd class="text-brand-700">{{ \App\Support\Region::money($summary['revenue']) }}</dd>
             </div>
         @endif
         @if ($summary['avgMoisture'] !== null)
@@ -182,7 +182,7 @@
         <datalist id="phUnitOptions">
             <option value="kg"></option>
             <option value="sacks"></option>
-            <option value="cavans"></option>
+            @if (\App\Support\Region::ph())<option value="cavans"></option>@else<option value="bushels"></option>@endif
             <option value="tons"></option>
             <option value="pieces"></option>
         </datalist>
@@ -337,8 +337,8 @@ const __init = () => {
     const fld = (id) => document.getElementById(id);
     const num = (v) => (v === null || v === undefined || v === '' ? null : Number(v));
 
-    const money = (v) => '₱ ' + Number(v).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const qty = (v) => Number(v).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const money = (v) => (((window.ANEE_REGION || {}).symbol || '₱') + ' ') + Number(v).toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'), { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const qty = (v) => Number(v).toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'), { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     const prettyDay = (iso) => {
         if (!iso) return '';
         const [y, m, d] = iso.split('-').map(Number);
@@ -495,7 +495,7 @@ const __init = () => {
             input = `<input type="text" class="form-input" data-ph-field="${f.key}" maxlength="191" value="${escapeHtml(v)}"${ph}>`;
         }
         const suffix = f.type === 'percent' ? ' <span class="text-gray-400 font-normal">(%)</span>'
-            : (f.type === 'money' ? ' <span class="text-gray-400 font-normal">(₱)</span>' : '');
+            : (f.type === 'money' ? ' <span class="text-gray-400 font-normal">({{ \App\Support\Region::symbol() }})</span>' : '');
         return `<div class="mb-3"><label class="form-label">${escapeHtml(f.label)}${suffix}</label>${input}</div>`;
     }
 

@@ -183,7 +183,7 @@
                             <h2 class="nt-head-h">Daily schedule email</h2>
                             <p class="nt-head-p">One message each morning with what is on today and what is
                                 coming tomorrow, so nobody has to open the app to find out where to be.
-                                It goes out at 6:00 AM Philippine time.</p>
+                                It goes out at 6:00 AM {{ \App\Support\Region::ph() ? 'Philippine time' : 'Manila time (UTC+8)' }}.</p>
                         </div>
                     </div>
 

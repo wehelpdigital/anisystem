@@ -2,14 +2,14 @@
 
 @include('public.partials.site-css')
 
-@section('title', 'Cropping Schedule Manager for Filipino Farmers')
-@section('meta_description', 'anee.io — plan every cropping season like a pro. Manage lots, activities, workers and costs, ask the built-in AI Technician, and learn from a community of Filipino farmers — all in one mobile-friendly web app. Start free.')
+@section('title', 'Cropping Schedule Manager for ' . \App\Support\Region::t('farmersOfTitle'))
+@section('meta_description', 'anee.io — plan every cropping season like a pro. Manage lots, activities, workers and costs, ask the built-in AI Technician, and learn from a community of ' . \App\Support\Region::t('farmersOf') . 's — all in one mobile-friendly web app. Start free.')
 
 @section('content')
 
     {{-- ================= HERO ================= --}}
     <section class="relative isolate overflow-hidden">
-        <img src="{{ asset('images/site/photos/hero-planting.jpg') }}" alt="Filipino farmers planting rice, one checking anee.io on his phone"
+        <img src="{{ asset('images/site/photos/hero-planting.jpg') }}" alt="{{ \App\Support\Region::t('farmersOfTitle') }} planting rice, one checking anee.io on his phone"
              class="absolute inset-0 -z-20 h-full w-full object-cover" loading="eager" fetchpriority="high">
         {{-- Layered overlays: legibility gradient + brand tint --}}
         <div class="absolute inset-0 -z-10 bg-gradient-to-t from-black/85 via-black/60 to-black/35"></div>
@@ -22,7 +22,7 @@
                 <div class="animate-fade-up">
                     <span class="inline-flex items-center gap-2 rounded-full bg-white/10 backdrop-blur px-4 py-1.5 text-xs sm:text-sm font-semibold text-accent-400 ring-1 ring-white/20">
                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2a1 1 0 011 1v1.07A6 6 0 0116 10c0 4-3 6-6 8-3-2-6-4-6-8a6 6 0 015-5.93V3a1 1 0 011-1z"/></svg>
-                        For Palay, Mais, and more
+                        {{ \App\Support\Region::t('cropsLine') }}
                     </span>
 
                     <h1 class="mt-6 font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.08] text-balance">
@@ -135,7 +135,7 @@
                         [
                             't' => 'Costs drift mid-season',
                             'w' => 'An extra spray here, a rework there — and the margin quietly disappears.',
-                            'a' => 'Labor, materials and services total live in ₱ as you adjust, so every intervention is decided knowing what it costs.',
+                            'a' => 'Labor, materials and services total live in ' . \App\Support\Region::symbol() . ' as you adjust, so every intervention is decided knowing what it costs.',
                             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>',
                         ],
                     ];
@@ -182,8 +182,8 @@
                     Fertilizer costs more every year, the weather no longer keeps to the calendar, the soil is
                     thinner than the one your father farmed, fuel is at a record, and a boardroom's import
                     decision can move your selling price before harvest — none of it yours to control. What
-                    is yours is the return on every peso you have already spent, and the only honest way to
-                    raise it is to raise the yield those pesos buy, through farm management accurate enough
+                    is yours is the return on every {{ \App\Support\Region::ph() ? 'peso' : 'dollar' }} you have already spent, and the only honest way to
+                    raise it is to raise the yield that money buys, through farm management accurate enough
                     to stop losing what the field already grew.
                     <span class="font-semibold text-ink">That is where we come in.</span>
                 </p>
@@ -195,7 +195,7 @@
                     ['t' => 'The weather stopped keeping the calendar', 'p' => 'The rains that used to arrive in the second week now arrive whenever. A plan anchored to habit gets caught; a plan anchored to the day count of each lot, with the forecast for that lot beside it, moves before the sky does.', 'ico' => '<path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/><path stroke-linecap="round" d="M8 21l-1 2M12 21l-1 2M16 21l-1 2"/>'],
                     ['t' => 'The soil is tired and dirtier', 'p' => 'Decades of the same crop, the same salts and whatever the canal carried in. Ground in that condition punishes a wrong dose twice — once in the wasted input, and again in the harvest it could not carry.', 'ico' => '<path stroke-linecap="round" stroke-linejoin="round" d="M2.5 15.5c3-1.6 6-1.6 9 0s6 1.6 9 0"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.5 19.5c3-1.6 6-1.6 9 0s6 1.6 9 0"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 11.5V4m0 0L9 6.5M12 4l3 2.5"/>'],
                     ['t' => 'Fuel at a record', 'p' => 'Every pass of the tractor, every trip to town and every hour of the pump is priced at the pump. Fewer wasted passes is not a saving on paper — it is diesel that stays in the tank.', 'ico' => '<path stroke-linecap="round" stroke-linejoin="round" d="M4 21V5a2 2 0 012-2h5a2 2 0 012 2v16M3 21h12"/><path stroke-linecap="round" stroke-linejoin="round" d="M13 10h3a2 2 0 012 2v5a1.5 1.5 0 003 0v-7l-2.5-2.5"/><path stroke-linecap="round" d="M6.5 7.5h4"/>'],
-                    ['t' => 'A price set somewhere you have never been', 'p' => 'An importation decision, a freight rate, a peso that moved — and the price you will be offered changes months before you harvest. You cannot argue with it. You can arrive with more sacks.', 'ico' => '<path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"/><circle cx="12" cy="12" r="9"/>'],
+                    ['t' => 'A price set somewhere you have never been', 'p' => 'An importation decision, a freight rate, a currency that moved — and the price you will be offered changes months before you harvest. You cannot argue with it. You can arrive with more sacks.', 'ico' => '<path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"/><circle cx="12" cy="12" r="9"/>'],
                     ['t' => 'The one lever still yours', 'p' => 'Management. The same inputs, spent on time and kept on record, out-yield a bigger budget spent from memory — and that difference is the whole of your margin in a year like this one.', 'ico' => '<path stroke-linecap="round" stroke-linejoin="round" d="M4 19l6-6 4 4 6-8"/><path stroke-linecap="round" stroke-linejoin="round" d="M20 9V5h-4"/>', 'lead' => true],
                 ] as $i => $sq)
                     <div class="sq-card reveal{{ ($sq['lead'] ?? false) ? ' is-lead' : '' }}" style="--reveal-delay: {{ ($i % 3) * 0.07 }}s">
@@ -212,7 +212,7 @@
                 <p class="sq-punch-h">More yield from the same hectare is the only raise a farmer can give themselves.</p>
                 <p class="sq-punch-p">
                     anee.io is the farm management that gets it: every lot on a timeline counted from its own
-                    Day&nbsp;0, every peso on the record as it is spent, the weather read per lot, and Anee on
+                    Day&nbsp;0, every {{ \App\Support\Region::ph() ? 'peso' : 'dollar' }} on the record as it is spent, the weather read per lot, and Anee on
                     call to answer before the wrong decision is made.
                 </p>
                 <a href="{{ route('signup') }}" class="btn btn-accent btn-lg mt-6">Start for Free — raise the return</a>
@@ -257,7 +257,7 @@
                 <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">What a Season Loses Without Intervention</h2>
                 <p class="mt-4 text-gray-600">
                     Crop research keeps putting numbers on the harvest that guesswork gives away.
-                    Every point below is pesos that never reach your pocket.
+                    Every point below is money that never reaches your pocket.
                 </p>
             </div>
 
@@ -281,7 +281,7 @@
                             <p class="loss-n"><span data-countup="{{ $loss['n'] }}">0</span><small>%</small></p>
                             <p class="loss-l">{{ $loss['l'] }}</p>
                             <p class="loss-p">{{ $loss['p'] }}</p>
-                            <p class="loss-peso">{{ $loss['peso'] }} lost per hectare</p>
+                            <p class="loss-peso">{{ \App\Support\Region::ph() ? $loss['peso'] . ' lost per hectare' : 'up to ' . $loss['n'] . '% of a hectare\'s gross, lost' }}</p>
                             <div class="loss-bar" aria-hidden="true"><i></i></div>
                         </div>
                     </div>
@@ -289,8 +289,7 @@
             </div>
 
             <p class="mt-4 text-center text-xs text-gray-400 reveal">
-                Percentage ranges drawn from FAO crop-loss and Philippine rice research estimates; peso ranges assume a
-                typical palay hectare grossing ₱85,000–₱100,000. Your farm's exact numbers vary — which is the point.
+                Percentage ranges drawn from FAO crop-loss and {{ \App\Support\Region::ph() ? 'Philippine rice' : 'published crop' }} research estimates{{ \App\Support\Region::ph() ? '; peso ranges assume a typical palay hectare grossing ₱85,000–₱100,000' : '' }}. Your farm's exact numbers vary — which is the point.
             </p>
 
             <div class="loss-pivot reveal">
@@ -303,11 +302,11 @@
             <div class="grid gap-4 md:grid-cols-2">
                 @foreach ([
                     ['k' => 'Late intervention → caught early', 'p' => 'Per-lot weather, growth-stage watch-lists and Anee on call 24/7 — you see the change coming and act on the right day, not the remembered one.'],
-                    ['k' => 'Wrong solution → right diagnosis first', 'p' => 'Snap a photo of the leaf and Anee reads it against your crop and its exact stage before a peso is spent — the treatment fits the problem, at the right dose.'],
+                    ['k' => 'Wrong solution → right diagnosis first', 'p' => 'Snap a photo of the leaf and Anee reads it against your crop and its exact stage before a ' . (\App\Support\Region::ph() ? 'peso' : 'dollar') . ' is spent — the treatment fits the problem, at the right dose.'],
                     ['k' => 'Mistimed fertilizer → anchored to Day-0', 'p' => 'Every application lands on the right day, counted from each lot\'s own sowing date. Move the plan and every date follows — the timing never lives in memory.'],
-                    ['k' => 'Waiting for answers → Anee answers now', 'p' => 'No more holding the sprayer while waiting for a callback. Ask Anee anytime, in English or Tagalog — she reads your lots, stages and weather and answers in minutes, so the decision happens today.'],
-                    ['k' => 'Untracked spending → every peso on the record', 'p' => 'Labor, materials and services are totalled live in ₱ as the season runs, and the expense and profit reports settle to the peso — the margin is watched all season, not discovered at the end.'],
-                    ['k' => 'Myths → checked against science before the field pays', 'p' => 'Ask Anee first: every answer is argued from crop science and your farm\'s own records, in English or Tagalog — so a barangay rumor never gets a whole hectare to experiment on.'],
+                    ['k' => 'Waiting for answers → Anee answers now', 'p' => 'No more holding the sprayer while waiting for a callback. Ask Anee anytime' . (\App\Support\Region::ph() ? ', in English or Tagalog' : '') . ' — she reads your lots, stages and weather and answers in minutes, so the decision happens today.'],
+                    ['k' => 'Untracked spending → every peso on the record', 'p' => 'Labor, materials and services are totalled live in ' . \App\Support\Region::symbol() . ' as the season runs, and the expense and profit reports settle to the ' . (\App\Support\Region::ph() ? 'peso' : 'cent') . ' — the margin is watched all season, not discovered at the end.'],
+                    ['k' => 'Myths → checked against science before the field pays', 'p' => 'Ask Anee first: every answer is argued from crop science and your farm\'s own records, ' . (\App\Support\Region::ph() ? 'in English or Tagalog — so a barangay ru' : 'in plain English — so a neighbourhood ru') . 'mor never gets a whole hectare to experiment on.'],
                     ['k' => 'Water timing → scheduled by stage, read against the sky', 'p' => 'Irrigation sits on the same board as everything else, stage by stage, with each lot\'s forecast beside it — so the water arrives when the crop asks, and the rain that\'s coming isn\'t paid for twice.'],
                     ['k' => 'Planting on habit → the window named first', 'p' => 'The When-to-Plant analysis reads your town\'s climate record and the ENSO outlook and names the safest window to start — before Day-0 is chosen, not after.'],
                 ] as $i => $fix)
@@ -343,7 +342,7 @@
                     {{-- One paragraph under the title, like every section on this page. --}}
                     <p class="mt-4 text-gray-600 leading-relaxed">
                         The sari-sari store takes e-wallet payments, the tricycle line runs on an app, and
-                        the trader who buys your palay works from a spreadsheet — every business that took
+                        the trader who buys your {{ \App\Support\Region::t('rice') }} works from a spreadsheet — every business that took
                         the technology step got faster, leaner and more profitable, while most farms still
                         run from memory and a worn notebook. Agriculture is a business too — inputs, labor,
                         timing, margins — and it deserves the same upgrade: sized for the field, priced for
@@ -358,7 +357,7 @@
                     @foreach ([
                         ['t' => 'Efficiency', 'p' => 'No wasted days and no forgotten tasks — every activity lands on the right date, counted from each lot\'s own Day-0.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>'],
                         ['t' => 'Output', 'p' => 'Science-backed timing and stage-by-stage guidance — the same protocol our technicians use to chase maximum yield.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>'],
-                        ['t' => 'Control', 'p' => 'Know your margin before you spend, not after — labor, materials and services totalled live in ₱ across the season.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>'],
+                        ['t' => 'Control', 'p' => 'Know your margin before you spend, not after — labor, materials and services totalled live in ' . \App\Support\Region::symbol() . ' across the season.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>'],
                     ] as $i => $b)
                         <div class="card card-hover reveal" style="--reveal-delay: {{ $i * 0.08 }}s">
                             <div class="card-body flex items-start gap-4">
@@ -394,7 +393,7 @@
                     $features = [
                         [
                             'title' => 'Cropping Schedules',
-                            'text' => 'Create a schedule per season and per farm. Keep wet and dry seasons, varieties and protocols neatly separated.',
+                            'text' => 'Create a schedule per season and per farm. Keep ' . (\App\Support\Region::ph() ? 'wet and dry seasons' : 'the seasons') . ', varieties and protocols neatly separated.',
                             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/>',
                         ],
                         [
@@ -409,7 +408,7 @@
                         ],
                         [
                             'title' => 'Workers & Labor Costs',
-                            'text' => 'Keep a roster of workers with skills and daily rates, assign them to activities and see labor cost summaries in ₱.',
+                            'text' => 'Keep a roster of workers with skills and daily rates, assign them to activities and see labor cost summaries in ' . \App\Support\Region::symbol() . '.',
                             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6-2a3 3 0 10-3-3"/>',
                         ],
                         [
@@ -498,7 +497,7 @@
                         <h3 class="fx-h">The app reads your crop so you don't have to guess</h3>
                         <p class="fx-p">Pick a date and anee tells you where every lot stands — what the stage means, what to do now, and what to watch for, with the forecast beside it.</p>
                         <ul class="fx-list">
-                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>85 Philippine crops, from palay to mango</li>
+                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ \App\Support\Region::ph() ? '85 Philippine crops, from palay to mangga' : 'nearly a hundred crops, from rice to apples' }}o</li>
                             <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Do-lists and watch-lists written per stage</li>
                             <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Weather panels for the week ahead, lot by lot</li>
                         </ul>
@@ -514,9 +513,9 @@
                     <div>
                         <p class="fx-kicker">Reports &amp; money</p>
                         <h3 class="fx-h">Know your true cost — and your true profit</h3>
-                        <p class="fx-p">Labor, expenses and profit reports add themselves up from the records you keep, to the peso. At season's end, Anee reads everything and tells you what to change.</p>
+                        <p class="fx-p">Labor, expenses and profit reports add themselves up from the records you keep, to the {{ \App\Support\Region::ph() ? 'peso' : 'cent' }}. At season's end, Anee reads everything and tells you what to change.</p>
                         <ul class="fx-list">
-                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Every peso spent this season, itemized</li>
+                            <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Every {{ \App\Support\Region::ph() ? 'peso' : 'dollar' }} spent this season, itemized</li>
                             <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Harvest income vs your whole spend</li>
                             <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Anee's season report: what went wrong, what to improve</li>
                         </ul>
@@ -607,7 +606,7 @@
                         $steps = [
                             ['n' => '1', 'title' => 'Sign Up Free', 'text' => 'Create your account with your email or your Google account — under a minute, no card, and the Libre plan is free forever.'],
                             ['n' => '2', 'title' => 'Set Up Your Farm', 'text' => 'Add your first cropping schedule, register your lots with their Day-0 dates, and list your workers and materials.'],
-                            ['n' => '3', 'title' => 'Grow — and Upgrade When Ready', 'text' => 'Run your whole season from any phone. When the farm needs more, upgrade in-app via GCash — Solo at ₱200/mo or Farm Owner at ₱600/mo.'],
+                            ['n' => '3', 'title' => 'Grow — and Upgrade When Ready', 'text' => 'Run your whole season from any phone. When the farm needs more, upgrade in-app via ' . \App\Support\Region::payMethod() . ' — Solo at ' . \App\Support\Region::priceTag(\App\Support\Region::tierPrice('solo')) . '/mo or Farm Owner at ' . \App\Support\Region::priceTag(\App\Support\Region::tierPrice('owner')) . '/mo.'],
                         ];
                     @endphp
                     @foreach ($steps as $i => $s)
@@ -642,14 +641,14 @@
                     Planned Seasons Produce <span class="text-brand-600">Better Harvests</span>
                 </h2>
                 <p class="mt-4 text-gray-600 leading-relaxed">
-                    Our team has a proven track record of helping Filipino farmers achieve maximum crop yields
+                    Our team has a proven track record of helping {{ \App\Support\Region::t('farmersOf') }} achieve maximum crop yields
                     through science-backed fertilization and management technologies. anee.io puts the same
                     disciplined season plan — the exact protocol our technicians follow — into your own hands.
                 </p>
                 <ul class="mt-6 space-y-3">
                     @foreach ([
                         'Never miss a critical activity — every task lands on the right day from Day-0.',
-                        'Know your true cost per season: labor, materials and services, all in ₱.',
+                        'Know your true cost per season: labor, materials and services, all in ' . \App\Support\Region::symbol() . '.',
                         'Keep photos and documentation of every stage for your own records.',
                     ] as $point)
                         <li class="flex items-start gap-3">
@@ -668,7 +667,7 @@
             <div class="order-1 lg:order-2 reveal">
                 <div class="relative">
                     <div class="absolute -inset-3 rounded-[1.75rem] bg-gradient-to-br from-brand-100 to-accent-500/20 -rotate-1"></div>
-                    <img src="{{ asset('images/site/photos/powered-by.jpg') }}" alt="Three Filipino farmers in their rice field with a Powered by anee.io sign"
+                    <img src="{{ asset('images/site/photos/powered-by.jpg') }}" alt="Three farmers in their rice field with a Powered by anee.io sign"
                          class="relative rounded-2xl shadow-card-lg w-full object-cover ring-1 ring-black/5" loading="lazy">
                 </div>
             </div>
@@ -685,7 +684,7 @@
             <div class="reveal">
                 <div class="relative">
                     <div class="absolute -inset-3 rounded-[1.75rem] bg-gradient-to-br from-accent-500/25 to-brand-100 rotate-1"></div>
-                    <img src="{{ asset('images/site/photos/inspect.jpg') }}" alt="A Filipino farmer standing in her rice field, checking the season on anee.io"
+                    <img src="{{ asset('images/site/photos/inspect.jpg') }}" alt="A farmer standing in her rice field, checking the season on anee.io"
                          class="relative rounded-2xl shadow-card-lg w-full object-cover ring-1 ring-black/5" loading="lazy">
                     {{-- Corner label, the way the hero's video wears one. --}}
                     <span class="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur px-3 py-1.5 text-xs font-bold text-ink shadow">
@@ -709,7 +708,7 @@
                 <div class="mt-7 grid grid-cols-2 gap-3">
                     @foreach ([
                         ['t' => 'Higher yield', 'p' => 'Every job on its right day.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>'],
-                        ['t' => 'Lower cost', 'p' => 'Every peso written down.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
+                        ['t' => 'Lower cost', 'p' => 'Every ' . (\App\Support\Region::ph() ? 'peso' : 'dollar') . ' written down.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
                         ['t' => 'Accurate analysis', 'p' => 'Numbers, not memory.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>'],
                         ['t' => 'Growing knowledge', 'p' => 'Each season teaches the next.', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>'],
                     ] as $i => $b)
@@ -746,10 +745,10 @@
                 $compare = [
                     ['dim' => 'Season planning',        'trad' => 'Kept in your head or scattered across paper notebooks.',          'gain' => 'One clear plan per season, per farm — always with you.'],
                     ['dim' => 'Activity timing',        'trad' => 'Guessed from memory — easy to spray or fertilize a few days late.', 'gain' => 'Every task auto-dated from each lot\'s Day-0. Right day, every time.'],
-                    ['dim' => 'Labor cost tracking',    'trad' => 'Totalled by hand at the end — often a nasty surprise.',            'gain' => 'Worker rates add up live in ₱ as you build the plan.'],
+                    ['dim' => 'Labor cost tracking',    'trad' => 'Totalled by hand at the end — often a nasty surprise.',            'gain' => 'Worker rates add up live in ' . \App\Support\Region::symbol() . ' as you build the plan.'],
                     ['dim' => 'Materials & budget',     'trad' => 'Rough estimates; overspending creeps in unnoticed.',              'gain' => 'Fertilizers, seeds and services priced upfront — know the budget first.'],
                     ['dim' => 'Worker scheduling',      'trad' => 'Called in last-minute; clashes and idle days happen.',            'gain' => 'Assign workers to activities ahead of time, by skill.'],
-                    ['dim' => 'Expert advice',          'trad' => 'Wait for a technician visit or ask around the barangay.',         'gain' => 'The AI Technician answers crop questions anytime — even from a leaf photo.'],
+                    ['dim' => 'Expert advice',          'trad' => \App\Support\Region::t('techVisit'),         'gain' => 'The AI Technician answers crop questions anytime — even from a leaf photo.'],
                     ['dim' => 'Records & photos',       'trad' => 'Little proof of what was done, and when.',                        'gain' => 'Keep photos and notes attached to every stage.'],
                     ['dim' => 'Sharing the plan',       'trad' => 'Hard to hand over to family or workers.',                        'gain' => 'Export, print, or walk your team through it on screen.'],
                     ['dim' => 'Missed / late tasks',    'trad' => 'Critical steps slip through the cracks.',                        'gain' => 'Nothing falls off — every critical activity lands on time.'],
@@ -862,7 +861,7 @@
                     @php
                         $benefits = [
                             'Never miss a critical activity — every task lands on the right day.',
-                            'Know your true cost per season in ₱ — labor, materials and services.',
+                            'Know your true cost per season in ' . \App\Support\Region::symbol() . ' — labor, materials and services.',
                             'Plan by Day-0 / DAS accurately for each and every lot.',
                             'Keep every lot on its own schedule, variety and sowing date.',
                             'Track workers and labor by skill and daily rate.',
@@ -871,7 +870,7 @@
                             'Export, print and share the plan with your whole team.',
                             'Run it from any phone, right in the middle of the field.',
                             'Follow the same protocol our technicians use.',
-                            'Start free, upgrade easily via GCash — remaining days stack.',
+                            'Start free, upgrade easily via ' . \App\Support\Region::payMethod() . ' — remaining days stack.',
                             'Your data stays organized and safe, season to season.',
                         ];
                     @endphp
@@ -903,7 +902,7 @@
             <div class="max-w-2xl mx-auto text-center reveal">
                 <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Simple pricing</p>
                 <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">Choose Your Plan</h2>
-                <p class="mt-4 text-gray-600">Start free forever. Upgrade in-app via GCash when the farm asks for more.</p>
+                <p class="mt-4 text-gray-600">Start free forever. Upgrade in-app via {{ \App\Support\Region::payMethod() }} when the farm asks for more.</p>
                 <div class="mt-6 inline-flex rounded-full bg-white ring-1 ring-gray-200 p-1 gap-1">
                     <button type="button" class="rounded-full px-4 py-1.5 text-sm font-bold transition"
                             :class="yearly ? 'text-gray-500' : 'bg-brand-600 text-white'" @click="yearly = false">Monthly</button>
@@ -927,16 +926,17 @@
                             </span>
                             <span class="pr-year">No card. No trial clock. Yours to keep.</span>
                         @else
+                            @php $hpM = \App\Support\Region::tierPrice($key, 'month'); $hpY = \App\Support\Region::tierPrice($key, 'year'); @endphp
                             <span class="pr-price" x-show="!yearly">
-                                <span class="pr-amount">₱{{ number_format($tier['price']) }}</span>
+                                <span class="pr-amount">{{ \App\Support\Region::priceTag($hpM) }}</span>
                                 <span class="pr-per">/ month</span>
                             </span>
                             <span class="pr-price" x-show="yearly" x-cloak>
-                                <span class="pr-amount">₱{{ number_format($tier['priceYear']) }}</span>
+                                <span class="pr-amount">{{ \App\Support\Region::priceTag($hpY) }}</span>
                                 <span class="pr-per">/ year</span>
                             </span>
-                            <span class="pr-year" x-show="!yearly">or ₱{{ number_format($tier['priceYear']) }}/year — about ₱{{ number_format((int) round($tier['priceYear'] / 12)) }}/mo</span>
-                            <span class="pr-year" x-show="yearly" x-cloak>That's about ₱{{ number_format((int) round($tier['priceYear'] / 12)) }}/mo, paid once via GCash</span>
+                            <span class="pr-year" x-show="!yearly">or {{ \App\Support\Region::priceTag($hpY) }}/year — about {{ \App\Support\Region::priceTag(round($hpY / 12, 2)) }}/mo</span>
+                            <span class="pr-year" x-show="yearly" x-cloak>That's about {{ \App\Support\Region::priceTag(round($hpY / 12, 2)) }}/mo, paid once via {{ \App\Support\Region::payMethod() }}</span>
                         @endif
 
                         <ul class="pr-list">
@@ -956,7 +956,7 @@
             </div>
 
             <p class="mt-8 text-center text-sm text-gray-500 reveal">
-                Every account starts on Libre, free — upgrading happens inside the app, paid via GCash and verified by our team.
+                Every account starts on Libre, free — upgrading happens inside the app, paid via {{ \App\Support\Region::payMethod() }} and verified by our team.
                 <a href="{{ route('pricing') }}" class="font-semibold text-brand-700 hover:text-brand-800">See the full pricing page →</a>
             </p>
         </div>
@@ -979,7 +979,7 @@
 
     {{-- ================= FINAL CTA ================= --}}
     <section class="relative isolate overflow-hidden">
-        <img src="{{ asset('images/site/photos/team-thumbs.jpg') }}" alt="Two Filipino farmers giving a thumbs up beside their rice field"
+        <img src="{{ asset('images/site/photos/team-thumbs.jpg') }}" alt="Two farmers giving a thumbs up beside their rice field"
              class="absolute inset-0 -z-20 h-full w-full object-cover" loading="lazy">
         <div class="absolute inset-0 -z-10 bg-gradient-to-br from-brand-900/90 via-brand-900/75 to-brand-800/70"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center reveal">

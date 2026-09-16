@@ -317,7 +317,7 @@
         <div class="card-body text-center py-14">
             <div class="empty-tile">👥</div>
             <h2 class="text-lg font-bold text-gray-900 mb-1" style="font-family:var(--font-heading)">Wala pang discussions</h2>
-            <p class="text-sm text-gray-500 mb-5">Ikaw ang mag-umpisa — invite kapwa magsasaka to talk shop.</p>
+            <p class="text-sm text-gray-500 mb-5">{{ \App\Support\Region::ph() ? 'Ikaw ang mag-umpisa — invite kapwa magsasaka to talk shop.' : 'Be the first — invite fellow farmers to talk shop.' }}</p>
             <button type="button" class="btn btn-primary" onclick="document.getElementById('createGroupBtn').click()">Start the first discussion</button>
         </div>
     </div>
@@ -397,8 +397,8 @@
         </div>
         <div>
             <label class="form-label" for="groupName">Discussion name</label>
-            <input type="text" id="groupName" class="form-input" maxlength="150" placeholder="e.g. Rice Growers of Central Luzon">
-            <p class="form-hint gb-tip">Tip: pangalanan mo per crop o per lugar — "Palay — Nueva Ecija".</p>
+            <input type="text" id="groupName" class="form-input" maxlength="150" placeholder="e.g. {{ \App\Support\Region::ph() ? 'Rice Growers of Central Luzon' : 'Corn Growers of Iowa' }}">
+            <p class="form-hint gb-tip">{{ \App\Support\Region::ph() ? 'Tip: pangalanan mo per crop o per lugar — "Palay — Nueva Ecija".' : 'Tip: name it by crop or by place — "Corn — Story County".' }}</p>
         </div>
         <div>
             <label class="form-label" for="groupDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>

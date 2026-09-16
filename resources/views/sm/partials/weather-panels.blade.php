@@ -222,7 +222,7 @@
         const todayKey = today ? skyOf(today) : 'cloudy';
         const hue = window.wxHue ? window.wxHue(todayKey) : '';
         const advice = window.wxAdvice ? window.wxAdvice(todayKey) : '';
-        const skyName = window.wxName ? window.wxName(todayKey, true) : '';
+        const skyName = window.wxName ? window.wxName(todayKey, (window.ANEE_REGION || {}).ph !== false) : '';
         return `<div class="card mb-3 ${hue}"><div class="card-body">
             <div class="flex items-start justify-between gap-2">
                 <div class="min-w-0">
@@ -244,7 +244,7 @@
 
     const EMPTY = `<div class="card"><div class="card-body text-center py-8">
         <p class="text-sm font-bold text-gray-700">No forecast yet</p>
-        <p class="text-sm text-gray-500 mt-1">Give your lots a town and province in the Lots module, and the weather for each one shows up here.</p>
+        <p class="text-sm text-gray-500 mt-1">Give your lots a {{ \App\Support\Region::ph() ? 'town and province' : strtolower((\App\Support\Region::address()['city']['label'] ?? 'city') . ' and ' . (\App\Support\Region::address()['region']['label'] ?? 'state')) }} in the Lots module, and the weather for each one shows up here.</p>
     </div></div>`;
 
     /**

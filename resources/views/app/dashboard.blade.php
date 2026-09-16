@@ -737,12 +737,16 @@
     {{-- The greeting, in the same language as every other page: a calm card
          with the hour drawn on it, not a slab of green. --}}
     @php
-        $__h = (int) now('Asia/Manila')->format('G');
+        /* The hour where the farmer is, and the greeting in their words
+           (App\Support\Region): "Magandang umaga" at home, "Good morning"
+           everywhere else. */
+        $__tz = \App\Support\Region::tz();
+        $__h = (int) now($__tz)->format('G');
         [$__greet, $__tod, $__timeWord] = $__h < 12
-            ? ['Magandang umaga', 'tod-morning', 'umaga']
+            ? [\App\Support\Region::t('greeting.morning'), 'tod-morning', 'umaga']
             : ($__h < 18
-                ? ['Magandang hapon', 'tod-afternoon', 'hapon']
-                : ['Magandang gabi', 'tod-evening', 'gabi']);
+                ? [\App\Support\Region::t('greeting.afternoon'), 'tod-afternoon', 'hapon']
+                : [\App\Support\Region::t('greeting.evening'), 'tod-evening', 'gabi']);
     @endphp
     <div class="dash-hero is-waiting" id="dashHero">
         {{-- Sits over the greeting while the sky is being checked, and takes
@@ -859,8 +863,8 @@
                  "Mainit na hapon", "Mahanging gabi" — and the scene beside it
                  becomes that weather. Until then, and forever if no location
                  is set, it stays as it was. --}}
-            <h2 class="dash-hero-h"><span id="dashGreetWord">{{ $__greet }}</span>, {{ \Illuminate\Support\Str::title($user->firstName ?: 'kaibigan') }}</h2>
-            <p class="dash-hero-p">Today, {{ now('Asia/Manila')->format('F jS, Y') }} — {{ $scheduleCount === 0 ? 'no active cropping schedules yet.' : 'you have ' . $scheduleCount . ' active cropping ' . \Illuminate\Support\Str::plural('schedule', $scheduleCount) . '.' }}</p>
+            <h2 class="dash-hero-h"><span id="dashGreetWord">{{ $__greet }}</span>, {{ \Illuminate\Support\Str::title($user->firstName ?: \App\Support\Region::t('friend')) }}</h2>
+            <p class="dash-hero-p">Today, {{ now($__tz)->format('F jS, Y') }} — {{ $scheduleCount === 0 ? 'no active cropping schedules yet.' : 'you have ' . $scheduleCount . ' active cropping ' . \Illuminate\Support\Str::plural('schedule', $scheduleCount) . '.' }}</p>
             @if ($expiringSoon && ! \App\Support\WorkerContext::inWorkerContext())
                 <a href="{{ route('purchase.plans') }}" class="dash-hero-warn">
                     Renew before your subscription expires
@@ -1329,7 +1333,7 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
                         <span class="wb-act-lbl">New post</span>
                     </button>
-                    <span class="wb-hint">Ano'ng balita sa bukid?</span>
+                    <span class="wb-hint">{{ \App\Support\Region::ph() ? "Ano'ng balita sa bukid?" : "What's new on the farm?" }}</span>
                 </div>
 
                 <div id="dashWallFeed" data-animate-list>
@@ -1923,7 +1927,7 @@
         }
         const today = isToday || d.isToday;
         const key = skyOf(d);
-        const name = window.wxName ? window.wxName(key, true) : (d.text || '');
+        const name = window.wxName ? window.wxName(key, (window.ANEE_REGION || {}).ph !== false) : (d.text || '');
         // The drawing replaces the emoji: a rain cell now actually rains.
         const art = window.wxSky ? window.wxSky(key, 42) : `<div class="text-xl">${d.emoji}</div>`;
         return `<div class="flex-1 min-w-0 text-center rounded-lg px-1 py-1.5">
@@ -1950,7 +1954,7 @@
         const todayKey = loc.days && loc.days.length ? skyOf(loc.days[0]) : 'cloudy';
         const hue = window.wxHue ? window.wxHue(todayKey) : '';
         const advice = window.wxAdvice ? window.wxAdvice(todayKey) : '';
-        const name = window.wxName ? window.wxName(todayKey, true) : '';
+        const name = window.wxName ? window.wxName(todayKey, (window.ANEE_REGION || {}).ph !== false) : '';
         /* The sky right now, where the plan reads it (paid tiers): the
            temperature and the word for it, ahead of the day's summary. And
            how fresh the days are -- a forecast is re-asked on load once an

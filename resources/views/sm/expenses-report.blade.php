@@ -194,7 +194,7 @@
     <div id="xrContent" class="hidden">
         <div class="xr-hero">
             <div class="xr-hero-label">Total spent</div>
-            <div class="xr-hero-value" id="xrTotal">₱0</div>
+            <div class="xr-hero-value" id="xrTotal">{{ \App\Support\Region::symbol() }}0</div>
             <div class="xr-hero-net" id="xrNet"></div>
             <div class="text-xs text-gray-500 mt-1" id="xrMeta"></div>
             <div class="xr-tiles" id="xrTiles"></div>
@@ -332,8 +332,8 @@ const __init = () => {
     const $id = (i) => document.getElementById(i);
     const esc = window.escapeHtml || ((s) => String(s));
     const DATA_URL = @json(route('sm.expenses.report.data') . '?id=' . $schedule->id);
-    const fmtPeso = (n) => '₱' + Number(n || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const fmtPeso0 = (n) => '₱' + Math.round(Number(n || 0)).toLocaleString('en-PH');
+    const fmtPeso = (n) => ((window.ANEE_REGION || {}).symbol || '₱') + Number(n || 0).toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'), { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const fmtPeso0 = (n) => ((window.ANEE_REGION || {}).symbol || '₱') + Math.round(Number(n || 0)).toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'));
     const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const CATS = {
         materials: { label: 'Materials', e: '🧂', color: '#15803d' },
@@ -557,7 +557,7 @@ const __init = () => {
         const lines = [];
         lines.push(`EXPENSES REPORT — ${d.scheduleTitle || ''}`);
         lines.push('='.repeat(50));
-        lines.push(`Generated: ${new Date().toLocaleString('en-PH', { dateStyle: 'medium', timeStyle: 'short' })}`);
+        lines.push(`Generated: ${new Date().toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'), { dateStyle: 'medium', timeStyle: 'short' })}`);
         lines.push('');
         lines.push(`TOTAL SPENT: ${fmtPeso(d.spend)}`);
         Object.entries(CATS).forEach(([k, c]) => {

@@ -165,7 +165,7 @@
             {{-- The third: which variety, searched on the web and ranked by
                  the farmer's own priorities. --}}
             <a href="{{ route('vary.page') }}" class="qa-tile qa-wtp"
-               @if ($qWtpLocked) data-tier-lock="solo" data-lock-say="Variety research comes with the Solo Farmer plan — Anee analyzes the newest Philippine varieties and hybrids deeply and ranks them for your soil, weather and priorities." @endif>
+               @if ($qWtpLocked) data-tier-lock="solo" data-lock-say="Variety research comes with the Solo Farmer plan — Anee analyzes the newest {{ \App\Support\Region::ph() ? 'Philippine' : 'local' }} varieties and hybrids deeply and ranks them for your soil, weather and priorities." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/biostimulant.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>Variety Research & Comparison</b>

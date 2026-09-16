@@ -7,7 +7,7 @@
 @section('title', 'Community')
 @section('page-title', 'Community')
 @section('help-key', 'community')
-@section('page-subtitle', 'Kamustahan ng mga magsasaka')
+@section('page-subtitle', \App\Support\Region::ph() ? 'Kamustahan ng mga magsasaka' : 'Where farmers catch up')
 
 @push('head')
 @include('community.partials.plaza-css')
@@ -237,7 +237,7 @@
         <b></b>
         <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
-    <span class="wb-hint" id="wallBarHint">Ano'ng balita sa bukid?</span>
+    <span class="wb-hint" id="wallBarHint">{{ \App\Support\Region::ph() ? "Ano'ng balita sa bukid?" : "What's new on the farm?" }}</span>
 </div>
 
 <div class="sheet hidden" id="wallComposerSheet" style="--sheet-width:36rem">
@@ -287,7 +287,7 @@
     {{-- The @ and # hint lives in the placeholder, where it is read at the
          moment it applies. --}}
     <textarea id="feedPostBody" class="form-textarea w-full comp-box" rows="4" maxlength="4000" data-mentionable data-preview="#feedPreview"
-        placeholder="Kamusta ang bukid, {{ auth()->user()->firstName }}? Type @ to mention a co-farmer, # to tag a topic."></textarea>
+        placeholder="{{ \App\Support\Region::ph() ? 'Kamusta ang bukid' : 'How is the farm' }}, {{ auth()->user()->firstName }}? Type @ to mention a co-farmer, # to tag a topic."></textarea>
     <div id="feedPreview" class="cp-preview" style="display:none"><span class="cp-label">Preview</span><div class="cp-body"></div></div>
 
     {{-- What is coming with the post, shown as itself: the pictures, not
@@ -445,8 +445,8 @@
     @empty
         <div class="card p-8 text-center">
             <div class="empty-tile">🏠</div>
-            <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Tahimik pa ang kapitbahayan</p>
-            <p class="text-sm text-gray-500 mt-1">Ikaw ang mauna — share what's happening sa bukid mo.</p>
+            <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">{{ \App\Support\Region::ph() ? 'Tahimik pa ang kapitbahayan' : 'The neighbourhood is quiet so far' }}</p>
+            <p class="text-sm text-gray-500 mt-1">{{ \App\Support\Region::ph() ? "Ikaw ang mauna — share what's happening sa bukid mo." : "Be the first — share what's happening on your farm." }}</p>
         </div>
     @endforelse
     {{-- A wall too short for the plan to reach still gets one of each. --}}
@@ -472,7 +472,7 @@
                      the honest answer for it. --}}
                 data-before="{{ \Illuminate\Support\Carbon::parse($posts->last()->lastActivityAt ?: $posts->last()->created_at)->toIso8601String() }}">Load more posts</button>
         <div class="feed-spin" id="feedSpin" role="status" aria-label="Loading older posts" hidden><i></i><i></i><i></i></div>
-        <p class="wall-end" id="feedEnd" hidden>🌾 Nasa dulo ka na — that's the whole wall for now.</p>
+        <p class="wall-end" id="feedEnd" hidden>🌾 {{ \App\Support\Region::ph() ? 'Nasa dulo ka na' : 'You have reached the end' }} — that's the whole wall for now.</p>
     </div>
 @endif
 </div>{{-- /plaza-center --}}
@@ -797,7 +797,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 findNote.hidden = false;
                 findNote.innerHTML = count
                     ? (hasMore ? 'First ' : '') + count + ' ' + (count === 1 ? 'post' : 'posts') + ' matching <b></b>.'
-                    : 'Walang tugma sa <b></b>.';
+                    : ((window.ANEE_REGION || {}).ph === false ? 'No match for <b></b>.' : 'Walang tugma sa <b></b>.');
                 // Typed words go in as text, never as markup.
                 findNote.querySelector('b').textContent = '\u201c' + query + '\u201d';
             }
@@ -824,7 +824,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!count) {
                 wrap.innerHTML = '<div class="card p-8 text-center" id="wallNone">'
                     + '<div class="empty-tile">\uD83D\uDD0E</div>'
-                    + '<p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Walang tugma</p>'
+                    + '<p class=\"font-bold text-gray-900\" style=\"font-family:var(--font-heading)\">' + ((window.ANEE_REGION || {}).ph === false ? 'No match' : 'Walang tugma') + '</p>'
                     + '<p class="text-sm text-gray-500 mt-1">No post here says that \u2014 in the words or in who wrote them.</p></div>';
             }
             done = !(d.hasMore && d.before);
@@ -895,7 +895,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.plazaClearVideo) window.plazaClearVideo(host);
             clearClips();
             window.closeSheet?.('wallComposerSheet');
-            toast('Shared sa wall mo! 🌾');
+            toast((window.ANEE_REGION || {}).ph === false ? 'Shared on your wall! 🌾' : 'Shared sa wall mo! 🌾');
         } catch (_) { toast('Network error — try again.', 'error'); }
         finally { btn.disabled = false; btn.textContent = prev; }
     });

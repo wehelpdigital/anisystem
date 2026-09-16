@@ -1236,7 +1236,7 @@
                         <tr>
                             <td class="center">#{{ $w->priority }}</td>
                             <td><strong>{{ $w->workerName }}</strong></td>
-                            <td class="num">₱ {{ number_format((float) $w->costPerHalfDay, 2) }}</td>
+                            <td class="num">{{ \App\Support\Region::money((float) $w->costPerHalfDay) }}</td>
                             <td>
                                 @if(count($wSkills) === 0)
                                     <span class="muted">—</span>
@@ -1646,7 +1646,7 @@
                                             $unit = $it->displayUnit();
                                             $chip = $it->displayName();
                                             if ($qtyTrim !== null) $chip .= ' ×' . $qtyTrim . ($unit ? ' ' . $unit : '');
-                                            if ($it->unitPrice !== null) $chip .= ' @ ₱' . number_format((float) $it->unitPrice, 2);
+                                            if ($it->unitPrice !== null) $chip .= ' @ ' . \App\Support\Region::symbol() . number_format((float) $it->unitPrice, 2);
                                         @endphp
                                         <span class="chip chip-material">{{ $chip }}</span>
                                     @endforeach
@@ -1710,7 +1710,7 @@
                     <div class="name">{{ $w->workerName }}</div>
                     <div class="meta">
                         Priority #{{ $w->priority }} ·
-                        ₱{{ number_format((float) $w->costPerHalfDay, 2) }} per half-day
+                        {{ \App\Support\Region::money((float) $w->costPerHalfDay) }} per half-day
                         @if($w->notes)
                             · {{ $w->notes }}
                         @endif
@@ -1746,8 +1746,8 @@
                     </div>
                     <div class="worker-stat earnings">
                         <div class="lbl">Total Earnings</div>
-                        <div class="val">₱ {{ number_format($stats['earnings'], 2) }}</div>
-                        <div class="sub">{{ $stats['units'] }} × ₱{{ number_format((float) $w->costPerHalfDay, 2) }}</div>
+                        <div class="val">{{ \App\Support\Region::money($stats['earnings']) }}</div>
+                        <div class="sub">{{ $stats['units'] }} × {{ \App\Support\Region::money((float) $w->costPerHalfDay) }}</div>
                     </div>
                 </div>
 
