@@ -106,18 +106,50 @@ Route::post('/worker-invite/{token}', [App\Http\Controllers\WorkerInviteControll
 // login is closed to them either way. See App\Support\Seo.
 Route::get('/robots.txt', fn () => response(App\Support\Seo::robotsTxt(), 200, ['Content-Type' => 'text/plain; charset=UTF-8']))->name('robots');
 
-Route::get('/', [App\Http\Controllers\PublicController::class, 'home'])->name('home');
-Route::get('/about', [App\Http\Controllers\PublicController::class, 'about'])->name('about');
-Route::get('/features', [App\Http\Controllers\PublicController::class, 'features'])->name('features');
-Route::get('/pricing', [App\Http\Controllers\PublicController::class, 'pricing'])->name('pricing');
+/*
+| THE PUBLIC SITE HAS TWO FACES (2026-09-16): /ph for the Philippines and
+| /en for everyone else. The face on the address decides the words, the
+| currency and the prices. The route NAMES are unchanged, and the {face}
+| default is set for every request by ResolveRegion, so route('pricing')
+| still works wherever it is called and lands on the visitor's own face.
+*/
+Route::prefix('{face}')->where(['face' => 'ph|en'])->group(function () {
+    Route::get('/', [App\Http\Controllers\PublicController::class, 'home'])->name('home');
+    Route::get('/about', [App\Http\Controllers\PublicController::class, 'about'])->name('about');
+    Route::get('/features', [App\Http\Controllers\PublicController::class, 'features'])->name('features');
+    Route::get('/pricing', [App\Http\Controllers\PublicController::class, 'pricing'])->name('pricing');
+    // Editable legal / info pages (Privacy, Terms, Cookies, About) — public.
+    Route::get('/legal/{slug}', [App\Http\Controllers\LegalController::class, 'show'])->where('slug', '[a-z0-9\-]+')->name('legal.show');
+    Route::get('/tutorial', [App\Http\Controllers\PublicController::class, 'tutorial'])->name('tutorial');
+    Route::get('/contact', [App\Http\Controllers\PublicController::class, 'contact'])->name('contact');
+    Route::post('/contact', [App\Http\Controllers\PublicController::class, 'submitContact'])->name('contact.submit');
+});
+// The old addresses still answer: each sends the visitor to its page on
+// their own face (302 — which face depends on who is asking).
+Route::get('/', fn () => redirect()->route('home'));
+foreach (['about', 'features', 'pricing', 'tutorial', 'contact'] as $publicPage) {
+    Route::get('/' . $publicPage, fn () => redirect()->route($publicPage));
+}
+Route::get('/legal/{slug}', fn (string $slug) => redirect()->route('legal.show', ['slug' => $slug]))->where('slug', '[a-z0-9\-]+');
+// The flag in the header: choose a face, remember it for a year, and go
+// back to the same page wearing it.
+Route::get('/face/{face}', function (Illuminate\Http\Request $request, string $face) {
+    $code = $face === 'ph'
+        ? App\Support\Region::HOME
+        : (collect([App\Support\Region::detect($request), $request->session()->get(App\Support\Region::SESSION_KEY)])
+            ->map(fn ($c) => App\Support\Region::valid($c))
+            ->first(fn ($c) => $c && $c !== App\Support\Region::HOME) ?: 'US');
+    App\Support\Region::choose($request, $code);
+    $to = '/' . ltrim((string) $request->query('to', ''), '/');
+    $to = preg_replace('#^/(ph|en)(?=/|$)#', '/' . $face, $to);
+    if (! preg_match('#^/(ph|en)(?=/|$)#', $to) || str_contains($to, '://')) {
+        $to = '/' . $face;
+    }
+
+    return redirect($to)->withCookie(cookie(App\Support\Region::COOKIE, $code, 60 * 24 * 365));
+})->where('face', 'ph|en')->name('face.switch');
 // An advertisement's picture: count the click, then on to wherever it points.
 Route::get('/ads/go/{id}', [App\Http\Controllers\AdsController::class, 'go'])->whereNumber('id')->name('ads.go');
-
-// Editable legal / info pages (Privacy, Terms, Cookies, About) — public.
-Route::get('/legal/{slug}', [App\Http\Controllers\LegalController::class, 'show'])->where('slug', '[a-z0-9\-]+')->name('legal.show');
-Route::get('/tutorial', [App\Http\Controllers\PublicController::class, 'tutorial'])->name('tutorial');
-Route::get('/contact', [App\Http\Controllers\PublicController::class, 'contact'])->name('contact');
-Route::post('/contact', [App\Http\Controllers\PublicController::class, 'submitContact'])->name('contact.submit');
 
 /*
 |--------------------------------------------------------------------------

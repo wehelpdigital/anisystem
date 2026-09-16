@@ -1306,12 +1306,23 @@ window.escapeHtml = function escapeHtml(value) {
         .replaceAll("'", '&#039;');
 };
 
+/* Money in the farmer's own currency. The name is history (every module
+   calls fmtPeso); the symbol and the grouping come from the country the
+   layout stamped on window.ANEE_REGION — pesos at home, dollars elsewhere. */
+window.ANEE_REGION = window.ANEE_REGION || { code: 'PH', ph: true, symbol: '₱', currency: 'PHP', locale: 'en-PH', words: {} };
 window.fmtPeso = function fmtPeso(value) {
-    return '₱ ' + Number(value || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const r = window.ANEE_REGION || {};
+    return (r.symbol || '₱') + ' ' + Number(value || 0).toLocaleString(r.locale || 'en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+};
+window.fmtMoney = window.fmtPeso;
+/* A word from the country's dictionary (config/regions.php `words`). */
+window.regionWord = function regionWord(key, fallback) {
+    const w = (window.ANEE_REGION || {}).words || {};
+    return typeof w[key] === 'string' ? w[key] : (fallback ?? key);
 };
 
 window.fmtNumber = function fmtNumber(value, decimals = 0) {
-    return Number(value || 0).toLocaleString('en-PH', {
+    return Number(value || 0).toLocaleString((window.ANEE_REGION || {}).locale || 'en-PH', {
         minimumFractionDigits: decimals,
         maximumFractionDigits: decimals,
     });
@@ -2508,10 +2519,16 @@ document.addEventListener('pointerdown', (e) => {
 /* "subscribers". Locked buttons across the app stay visible with a    */
 /* lock chip ([data-tier-lock], wired below); this is what they open.  */
 /* ------------------------------------------------------------------ */
+/* The price lines come from the layout's window.ANEE_REGION.tiers (pesos
+   at home, dollars elsewhere); the peso strings are only the fallback. */
+const auRegionTier = (key, field, fallback) => {
+    const t = ((window.ANEE_REGION || {}).tiers || {})[key];
+    return (t && typeof t[field] === 'string' && t[field] !== '') ? t[field] : fallback;
+};
 const AU_TIERS = {
     solo: {
         name: 'Solo Farmer',
-        price: '₱200', per: '/month', year: 'or ₱1,800/year — about ₱150/mo',
+        price: auRegionTier('solo', 'price', '₱200'), per: '/month', year: auRegionTier('solo', 'year', 'or ₱1,800/year — about ₱150/mo'),
         points: [
             '3 active seasons, 5 lots each',
             'Full weather, all reports, unlimited maps',
@@ -2521,7 +2538,7 @@ const AU_TIERS = {
     },
     owner: {
         name: 'Farm Owner',
-        price: '₱600', per: '/month', year: 'or ₱6,500/year — about ₱542/mo',
+        price: auRegionTier('owner', 'price', '₱600'), per: '/month', year: auRegionTier('owner', 'year', 'or ₱6,500/year — about ₱542/mo'),
         points: [
             'Everything in Solo Farmer, unlimited',
             'Worker logins and access levels',

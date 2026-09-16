@@ -32,7 +32,7 @@
         });
     </script>
     <title>@yield('title', 'anee.io') — anee.io</title>
-    <meta name="description" content="@yield('meta_description', 'anee.io — the cropping schedule manager for Filipino farmers. Plan lots, workers, materials, activities and irrigation in one mobile-friendly web app.')">
+    <meta name="description" content="@yield('meta_description', 'anee.io — the cropping schedule manager for ' . \App\Support\Region::t('farmersOf') . '. Plan lots, workers, materials, activities and irrigation in one mobile-friendly web app.')">
     {{-- Indexable only once the mother app's switch says so (App\Support\Seo). --}}
     <meta name="robots" content="{{ \App\Support\Seo::robots() }}">
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}?v=anee">
@@ -58,6 +58,7 @@
             })();
         </script>
     @endif
+    <script>window.ANEE_REGION = @json(\App\Support\Region::js());</script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     {{-- Google AdSense, only where the free plan carries ads and only for the
          person who sees them (App\Support\Ads): a paid account never loads it. --}}
@@ -89,6 +90,7 @@
                 </nav>
 
                 <div class="hidden md:flex items-center gap-3">
+                    @include('partials.face-switch')
                     @auth
                         <a href="{{ route('app.dashboard') }}" class="btn btn-accent btn-sm">Open My App</a>
                     @else
@@ -110,6 +112,7 @@
                 <a href="{{ route($r) }}" class="block rounded-xl px-4 py-3 text-base font-semibold {{ request()->routeIs($r) ? 'bg-brand-50 text-brand-700' : 'text-gray-700 hover:bg-gray-50' }}">{{ $label }}</a>
             @endforeach
             <div class="pt-3 flex flex-col gap-2">
+                @include('partials.face-switch', ['wide' => true])
                 @auth
                     <a href="{{ route('app.dashboard') }}" class="btn btn-accent w-full">Open My App</a>
                 @else
@@ -130,7 +133,7 @@
             <div>
                 <img src="{{ asset('images/site/logo-white.png') }}?v=anee" alt="anee.io" class="h-8 w-auto mb-4">
                 <p class="text-sm leading-relaxed text-gray-400">
-                    anee.io is the cropping schedule manager empowering Filipino farmers with
+                    anee.io is the cropping schedule manager empowering {{ \App\Support\Region::t('farmersOf') }} with
                     education, technology, and quality products for a sustainable agricultural future.
                 </p>
             </div>
@@ -157,7 +160,7 @@
         <div class="border-t border-gray-800">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 text-xs text-gray-500 flex flex-col sm:flex-row justify-between gap-2">
                 <span>© {{ date('Y') }} anee.io</span>
-                <span>Helping Filipino farmers reach maximum yield and income</span>
+                <span>Helping {{ \App\Support\Region::t('farmersOf') }} reach maximum yield and income</span>
             </div>
         </div>
     </footer>

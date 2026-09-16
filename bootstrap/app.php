@@ -40,6 +40,9 @@ return Application::configure(basePath: dirname(__DIR__))
         // (which runs ahead of anything in the web group) passes through it.
         $middleware->append(\App\Http\Middleware\RobotsHeaders::class);
         $middleware->web(append: [
+            // Which country this request is in, before anything renders or
+            // any route is generated (the public site's {face} default).
+            \App\Http\Middleware\ResolveRegion::class,
             \App\Http\Middleware\BindSessionToIp::class,
             \App\Http\Middleware\EnforceSingleSession::class,
             \App\Http\Middleware\UpdateLastSeen::class,

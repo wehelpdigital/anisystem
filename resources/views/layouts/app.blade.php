@@ -99,6 +99,9 @@
          A locked door tells an owner what to buy; it tells a worker whose
          decision it is. The sheet lives in app.js and reads these two,
          which must be set before any lock can be tapped. --}}
+    {{-- The country this farmer is in, for every script that says money,
+         a label or a greeting (App\Support\Region). Before app.js. --}}
+    <script>window.ANEE_REGION = @json(\App\Support\Region::js());</script>
     @auth
         @php $__auGrant = \App\Support\WorkerContext::activeGrant(); @endphp
         <script>

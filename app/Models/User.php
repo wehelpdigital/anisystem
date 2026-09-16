@@ -45,6 +45,7 @@ class User extends Authenticatable
         'status',
         'city',
         'province',
+        'country',
         'bio',
         'headline',
         'profession',

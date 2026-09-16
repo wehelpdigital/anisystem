@@ -20,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // The public site's routes carry a {face} segment (/ph, /en). Its
+        // per-request value is set by ResolveRegion; this is the floor for
+        // URLs built where there is no request — mail, artisan, queued jobs.
+        \Illuminate\Support\Facades\URL::defaults(['face' => 'ph']);
         // Safety net for the generated URL scheme. Trusting the proxy (see
         // bootstrap/app.php) already makes request-time URLs https behind
         // Railway's edge; this additionally covers URLs built where there is no
