@@ -89,10 +89,24 @@
                     </div>
                 </div>
 
+                @php
+                    $acCountry = old('country', \App\Support\Region::of($user));
+                    $acPhone = \App\Support\Region::phone($acCountry);
+                    $acAddr = \App\Support\Region::address($acCountry);
+                    $acDiv = \App\Support\Region::divisions($acCountry);
+                @endphp
+                <div>
+                    <label class="form-label">Country</label>
+                    @include('partials.country-pick', ['id' => 'acCountry', 'name' => 'country', 'value' => $acCountry])
+                    <p class="form-hint">Sets the language, the currency, the address fields and the local advice Anee gives.</p>
+                    @error('country') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
                 <div>
                     <label for="phone" class="form-label">Mobile number</label>
-                    <input id="phone" name="phone" type="tel" inputmode="numeric"
-                        value="{{ old('phone', $user->phone) }}" class="form-input" placeholder="09XXXXXXXXX" required>
+                    <input id="phone" name="phone" type="tel" inputmode="tel"
+                        value="{{ old('phone', $user->phone) }}" class="form-input" placeholder="{{ $acPhone['placeholder'] ?? '' }}" required>
+                    <p class="form-hint" id="acPhoneHint">{{ $acPhone['hint'] ?? '' }}</p>
                     @error('phone') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
 
@@ -102,17 +116,27 @@
                     <p class="form-hint">Your email cannot be changed. Contact support if you need to update it.</p>
                 </div>
 
+                {{-- The address the country asks for: town and province at
+                     home, city and state in the US, city and region elsewhere.
+                     The labels and the state list follow the country picked
+                     above without a reload. --}}
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label for="city" class="form-label">Town / City <span class="text-gray-400 font-normal">(optional)</span></label>
+                        <label for="city" class="form-label"><span id="acCityLabel">{{ $acAddr['city']['label'] ?? 'City' }}</span> <span class="text-gray-400 font-normal">(optional)</span></label>
                         <input id="city" name="city" type="text" maxlength="100"
-                            value="{{ old('city', $user->city) }}" class="form-input" placeholder="e.g. Nueva Ecija">
+                            value="{{ old('city', $user->city) }}" class="form-input" placeholder="{{ $acAddr['city']['placeholder'] ?? '' }}">
                         @error('city') <p class="form-error">{{ $message }}</p> @enderror
                     </div>
                     <div>
-                        <label for="province" class="form-label">Province <span class="text-gray-400 font-normal">(optional)</span></label>
+                        <label for="province" class="form-label"><span id="acRegionLabel">{{ $acAddr['region']['label'] ?? 'State / Region' }}</span> <span class="text-gray-400 font-normal">(optional)</span></label>
                         <input id="province" name="province" type="text" maxlength="100"
-                            value="{{ old('province', $user->province) }}" class="form-input" placeholder="e.g. Central Luzon">
+                            value="{{ old('province', $user->province) }}" class="form-input" placeholder="{{ $acAddr['region']['placeholder'] ?? '' }}" {{ $acDiv['mode'] === 'list' ? 'hidden' : '' }}>
+                        <select id="provinceList" class="form-select" {{ $acDiv['mode'] === 'list' ? '' : 'hidden' }} aria-label="{{ $acAddr['region']['label'] ?? 'State' }}">
+                            <option value="">— Select —</option>
+                            @foreach ($acDiv['list'] as $acState)
+                                <option value="{{ $acState }}" {{ old('province', $user->province) === $acState ? 'selected' : '' }}>{{ $acState }}</option>
+                            @endforeach
+                        </select>
                         @error('province') <p class="form-error">{{ $message }}</p> @enderror
                     </div>
                 </div>
@@ -123,7 +147,7 @@
                     <div class="flex items-center gap-2">
                         <input id="headline" name="headline" type="text" maxlength="120"
                             value="{{ old('headline', $user->headline) }}" class="form-input grow"
-                            placeholder="e.g. Rice farmer from Nueva Ecija · 12 years in the field">
+                            placeholder="{{ \App\Support\Region::ph() ? 'e.g. Rice farmer from Nueva Ecija · 12 years in the field' : 'e.g. Corn farmer from Iowa · 12 years in the field' }}">
                         <span id="headlineCount" class="text-xs text-gray-400 font-medium shrink-0 tabular-nums">0/120</span>
                     </div>
                     <p class="form-hint">A short line shown under your name on your profile and across the community.</p>
@@ -253,6 +277,38 @@
         </div>
     </a>
 </div>
+<script>
+    /* The address fields follow the country: labels, placeholders, and a
+       state list where the country has one. The typed field and the list
+       share the one name — whichever is showing is what is saved. */
+    (() => {
+        const input = document.getElementById('province'), list = document.getElementById('provinceList');
+        const city = document.getElementById('city');
+        if (!input || !list) return;
+        const sync = () => { if (!list.hidden) input.value = list.value; };
+        list.addEventListener('change', sync);
+        list.form && list.form.addEventListener('submit', sync);
+        document.getElementById('acCountry')?.addEventListener('country:change', (e) => {
+            const r = e.detail && e.detail.rules;
+            if (!r) return;
+            const p = document.getElementById('phone'), h = document.getElementById('acPhoneHint');
+            if (p) p.placeholder = r.phone.placeholder || '';
+            if (h) h.textContent = r.phone.hint || '';
+            document.getElementById('acCityLabel').textContent = (r.address.city || {}).label || 'City';
+            document.getElementById('acRegionLabel').textContent = (r.address.region || {}).label || 'State / Region';
+            if (city) city.placeholder = (r.address.city || {}).placeholder || '';
+            input.placeholder = (r.address.region || {}).placeholder || '';
+            const useList = r.divisions && r.divisions.mode === 'list';
+            if (useList) {
+                const keep = input.value;
+                list.innerHTML = '<option value="">— Select —</option>' + r.divisions.list.map((s) => `<option value="${s.replace(/"/g, '&quot;')}"${s === keep ? ' selected' : ''}>${s}</option>`).join('');
+                if (!r.divisions.list.includes(keep)) input.value = '';
+            }
+            list.hidden = !useList;
+            input.hidden = useList;
+        });
+    })();
+</script>
 @endsection
 
 @push('head')

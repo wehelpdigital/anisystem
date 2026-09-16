@@ -24,22 +24,32 @@
                     <div>
                         <label for="firstName" class="form-label">First name</label>
                         <input id="firstName" name="firstName" type="text" value="{{ old('firstName') }}"
-                            class="form-input" placeholder="Juan" required autofocus autocomplete="given-name">
+                            class="form-input" placeholder="{{ \App\Support\Region::t('firstNameExample') }}" required autofocus autocomplete="given-name">
                         @error('firstName') <p class="form-error">{{ $message }}</p> @enderror
                     </div>
                     <div>
                         <label for="lastName" class="form-label">Last name</label>
                         <input id="lastName" name="lastName" type="text" value="{{ old('lastName') }}"
-                            class="form-input" placeholder="dela Cruz" required autocomplete="family-name">
+                            class="form-input" placeholder="{{ \App\Support\Region::t('lastNameExample') }}" required autocomplete="family-name">
                         @error('lastName') <p class="form-error">{{ $message }}</p> @enderror
                     </div>
                 </div>
 
+                {{-- Where the farm is. Pre-picked from where the visitor is
+                     reading from; the phone rule below follows it. --}}
+                @php $suCountry = old('country') ?: \App\Support\Region::code(); $suPhone = \App\Support\Region::phone($suCountry); @endphp
+                <div>
+                    <label class="form-label">Country</label>
+                    @include('partials.country-pick', ['id' => 'signupCountry', 'name' => 'country', 'value' => $suCountry])
+                    <p class="form-hint">Sets the language, the currency and the local advice Anee gives.</p>
+                    @error('country') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
                 <div>
                     <label for="phone" class="form-label">Mobile number</label>
-                    <input id="phone" name="phone" type="tel" inputmode="numeric" value="{{ old('phone') }}"
-                        class="form-input" placeholder="09XXXXXXXXX" required autocomplete="tel">
-                    <p class="form-hint">PH mobile format: 09XXXXXXXXX (11 digits).</p>
+                    <input id="phone" name="phone" type="tel" inputmode="tel" value="{{ old('phone') }}"
+                        class="form-input" placeholder="{{ $suPhone['placeholder'] ?? '' }}" required autocomplete="tel">
+                    <p class="form-hint" id="phoneHint">{{ $suPhone['hint'] ?? '' }}</p>
                     @error('phone') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
 
@@ -74,4 +84,14 @@
         </p>
     </div>
 </div>
+<script>
+    // The phone rule follows the country the moment it changes.
+    document.getElementById('signupCountry')?.addEventListener('country:change', (e) => {
+        const r = e.detail && e.detail.rules;
+        if (!r) return;
+        const p = document.getElementById('phone'), h = document.getElementById('phoneHint');
+        if (p) p.placeholder = r.phone.placeholder || '';
+        if (h) h.textContent = r.phone.hint || '';
+    });
+</script>
 @endsection

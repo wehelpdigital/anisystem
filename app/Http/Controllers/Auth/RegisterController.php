@@ -32,10 +32,15 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
-        // Normalize phone: strip spaces and dashes before validating.
+        // The country first: the phone rule is the country's. Unknown or
+        // missing, it is where the visitor is reading from.
+        $country = \App\Support\Region::valid($request->input('country')) ?: \App\Support\Region::code();
+        $phoneRule = \App\Support\Region::phone($country);
+        // Normalize phone: strip spaces, dashes and brackets before validating.
         $request->merge([
-            'phone' => preg_replace('/[\s\-]+/', '', (string) $request->input('phone')),
+            'phone' => \App\Support\Region::cleanPhone($request->input('phone'), $country),
             'email' => trim((string) $request->input('email')),
+            'country' => $country,
         ]);
 
         // A pending account holding this address is not a rival — it is this
@@ -57,7 +62,8 @@ class RegisterController extends Controller
         $data = $request->validate([
             'firstName' => ['required', 'string', 'max:100'],
             'lastName' => ['required', 'string', 'max:100'],
-            'phone' => ['required', 'regex:/^09\d{9}$/'],
+            'country' => ['required', 'string', 'size:2'],
+            'phone' => ['required', 'regex:' . $phoneRule['regex']],
             'email' => [
                 'required',
                 'email',
@@ -73,13 +79,14 @@ class RegisterController extends Controller
             ],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], [
-            'phone.regex' => 'Enter a valid PH mobile number in the format 09XXXXXXXXX (11 digits).',
+            'phone.regex' => $phoneRule['error'],
         ]);
 
         $user = User::create([
             'firstName' => $data['firstName'],
             'lastName' => $data['lastName'],
             'phone' => $data['phone'],
+            'country' => $country,
             'email' => $data['email'],
             'password' => $data['password'],
             'status' => 'pending',
@@ -173,10 +180,10 @@ class RegisterController extends Controller
             'hash' => sha1(mb_strtolower($user->email)),
         ]);
 
-        $html = view('emails.verify-email', [
+        $html = \App\Support\Region::as(\App\Support\Region::of($user), fn () => view('emails.verify-email', [
             'firstName' => $user->firstName,
             'link' => $link,
-        ])->render();
+        ])->render());
 
         $this->mail->send($user->email, $user->full_name, 'Confirm your email — anee.io', $html, [
             'templateKey' => 'email_verification',

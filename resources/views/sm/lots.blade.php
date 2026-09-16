@@ -76,7 +76,7 @@
             <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
             {{-- pl-10!, or .form-input's own @apply px-4 wins the tie and the
                  magnifier sits on the placeholder's first letter. --}}
-            <input type="search" id="lotSearchInput" class="form-input pl-10!" placeholder="Name, crop, variety, barangay…" autocomplete="off">
+            <input type="search" id="lotSearchInput" class="form-input pl-10!" placeholder="Name, crop, variety, {{ strtolower(\App\Support\Region::lot()['barangay']['label'] ?? 'area') }}…" autocomplete="off">
         </div>
         <p class="form-hint">The list behind updates as you type.</p>
     </div>
@@ -217,25 +217,38 @@
                 <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                 <span class="form-label mb-0">Location <span class="text-gray-400 font-normal">(optional)</span></span>
             </div>
+            {{-- The four lines wear the country's labels (App\Support\Region):
+                 barangay / zone / province → town at home; road / field /
+                 state → city in the US; free text elsewhere. The two
+                 selects become text fields where there is no list. --}}
+            @php $lotL = \App\Support\Region::lot(); $lotDiv = \App\Support\Region::divisions(); @endphp
             <div class="grid grid-cols-2 gap-3">
                 <div>
-                    <label for="lotBarangay" class="form-label text-xs">Barangay</label>
-                    <input type="text" id="lotBarangay" maxlength="120" class="form-input" placeholder="e.g. San Jose">
+                    <label for="lotBarangay" class="form-label text-xs">{{ $lotL['barangay']['label'] ?? 'Area' }}</label>
+                    <input type="text" id="lotBarangay" maxlength="120" class="form-input" placeholder="{{ $lotL['barangay']['placeholder'] ?? '' }}">
                 </div>
                 <div>
-                    <label for="lotZone" class="form-label text-xs">Zone #</label>
-                    <input type="text" id="lotZone" maxlength="60" class="form-input" placeholder="e.g. 3">
+                    <label for="lotZone" class="form-label text-xs">{{ $lotL['zone']['label'] ?? 'Zone' }}</label>
+                    <input type="text" id="lotZone" maxlength="60" class="form-input" placeholder="{{ $lotL['zone']['placeholder'] ?? '' }}">
                 </div>
                 <div>
-                    <label for="lotProvince" class="form-label text-xs">Province</label>
-                    <select id="lotProvince" class="form-select"><option value="">— Select —</option></select>
+                    <label for="lotProvince" class="form-label text-xs">{{ $lotL['province']['label'] ?? 'State / region' }}</label>
+                    @if ($lotDiv['mode'] === 'free')
+                        <input type="text" id="lotProvince" maxlength="120" class="form-input" placeholder="{{ $lotL['province']['placeholder'] ?? '' }}">
+                    @else
+                        <select id="lotProvince" class="form-select"><option value="">— Select —</option></select>
+                    @endif
                 </div>
                 <div>
-                    <label for="lotTown" class="form-label text-xs">Town / City</label>
-                    <select id="lotTown" class="form-select" disabled><option value="">Select province first</option></select>
+                    <label for="lotTown" class="form-label text-xs">{{ $lotL['town']['label'] ?? 'City / town' }}</label>
+                    @if ($lotDiv['mode'] === 'ph')
+                        <select id="lotTown" class="form-select" disabled><option value="">Select province first</option></select>
+                    @else
+                        <input type="text" id="lotTown" maxlength="120" class="form-input" placeholder="{{ $lotL['town']['placeholder'] ?? '' }}">
+                    @endif
                 </div>
             </div>
-            <p class="form-hint">Add the town &amp; province to see this lot's 5-day weather on your dashboard.</p>
+            <p class="form-hint">Add the {{ strtolower($lotL['town']['label'] ?? 'city') }} &amp; {{ strtolower($lotL['province']['label'] ?? 'state') }} to see this lot's 5-day weather on your dashboard.</p>
         </div>
 
         {{-- Day 0 (DAS) and transplant (DAT) anchors are set on the activities
@@ -312,7 +325,7 @@
         <div class="crop-search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
             <input type="text" id="cropSearch" class="form-input" autocomplete="off"
-                   placeholder="Search — palay, sayote, mangga…">
+                   placeholder="{{ \App\Support\Region::t('cropSearch') }}">
             <button type="button" class="crop-search-x hidden" id="cropSearchX" aria-label="Clear">✕</button>
         </div>
 
@@ -563,10 +576,16 @@ const __init = () => {
 
     const UNIT_LABELS = { hectare: 'ha', sqm: 'sqm', acre: 'ac' };
 
-    /* ---- Philippine province → town/city cascading dropdowns ---- */
+    /* ---- The state/province and the town, the country's way ----
+       'ph': province → town from the PSGC file. 'list': the state from the
+       country's list, the city typed. 'free': both typed. The ids stay the
+       same whichever element wears them, so saving and filling read .value
+       without caring. */
+    const DIVISIONS = (window.ANEE_REGION && window.ANEE_REGION.divisions) || { mode: 'ph', list: [] };
     const PH_URL = @json(asset('data/ph-locations.json'));
     const provinceSel = document.getElementById('lotProvince');
     const townSel = document.getElementById('lotTown');
+    const isSelect = (el) => el && el.tagName === 'SELECT';
     let PH = null, phPromise = null;
 
     /* WHILE THE LIST IS COMING.
@@ -587,17 +606,23 @@ const __init = () => {
             failed: 'Could not load the list',
         };
         [provinceSel, townSel].forEach((sel) => {
-            sel.classList.toggle('is-waiting', state === 'loading');
+            if (isSelect(sel)) sel.classList.toggle('is-waiting', state === 'loading');
         });
         if (state === 'ready') return;
-        provinceSel.disabled = true;
-        townSel.disabled = true;
-        provinceSel.innerHTML = `<option value="">${words[state]}</option>`;
-        townSel.innerHTML = '<option value="">Select province first</option>';
+        if (isSelect(provinceSel)) { provinceSel.disabled = true; provinceSel.innerHTML = `<option value="">${words[state]}</option>`; }
+        if (isSelect(townSel)) { townSel.disabled = true; townSel.innerHTML = '<option value="">Select province first</option>'; }
     };
 
     const ensureLocations = () => {
         if (PH) return Promise.resolve(PH);
+        // No file to fetch outside the Philippines: the list is the
+        // country's own (states), or there is none and the fields are typed.
+        if (DIVISIONS.mode !== 'ph') {
+            PH = {};
+            (DIVISIONS.list || []).forEach((s) => { PH[s] = []; });
+            fillProvinces(provinceSel.value || '');
+            return Promise.resolve(PH);
+        }
         if (!phPromise) {
             sayLoading('loading');
             phPromise = fetch(PH_URL, { headers: { Accept: 'application/json' } })
@@ -627,14 +652,19 @@ const __init = () => {
         return html;
     };
     const fillProvinces = (selected) => {
+        // A typed field just takes the value.
+        if (!isSelect(provinceSel)) { provinceSel.value = selected || ''; return; }
         // Nothing to paint yet: leave whatever sayLoading() has written, or
         // the field flashes an empty "— Select —" that is not the truth.
         if (!PH) return;
         provinceSel.disabled = false;
-        provinceSel.innerHTML = optionList(Object.keys(PH).sort((a, b) => a.localeCompare(b)), selected || '');
+        const keys = DIVISIONS.mode === 'list' ? Object.keys(PH) : Object.keys(PH).sort((a, b) => a.localeCompare(b));
+        provinceSel.innerHTML = optionList(keys, selected || '');
         provinceSel.value = selected || '';
     };
     const fillTowns = (province, selected) => {
+        // A typed town does not wait on the province.
+        if (!isSelect(townSel)) { townSel.value = selected || ''; townSel.disabled = false; return; }
         if (!PH) return;
         townSel.innerHTML = province
             ? optionList(PH[province] || [], selected || '')
@@ -644,7 +674,7 @@ const __init = () => {
         townSel.disabled = !province;
         townSel.value = province ? (selected || '') : '';
     };
-    provinceSel.addEventListener('change', () => fillTowns(provinceSel.value, ''));
+    if (isSelect(provinceSel)) provinceSel.addEventListener('change', () => fillTowns(provinceSel.value, ''));
     // Warmed on arrival, so by the time the sheet opens the list is usually
     // already here and nobody sees the waiting state at all.
     ensureLocations(); // warm the cache
@@ -659,9 +689,10 @@ const __init = () => {
     };
     // Mirrors AsScheduleLot::getFullAddressAttribute so a freshly-saved lot shows
     // its address without a reload.
+    const LOT_WORDS = (window.ANEE_REGION && window.ANEE_REGION.lot) || {};
     const composeAddress = (l) => [
-        l.locBarangay ? 'Brgy. ' + l.locBarangay : null,
-        l.locZone ? 'Zone ' + l.locZone : null,
+        l.locBarangay ? ((LOT_WORDS.barangay || {}).prefix ?? 'Brgy. ') + l.locBarangay : null,
+        l.locZone ? ((LOT_WORDS.zone || {}).prefix ?? 'Zone ') + l.locZone : null,
         l.locTown || null,
         l.locProvince || null,
     ].filter(Boolean).join(', ');

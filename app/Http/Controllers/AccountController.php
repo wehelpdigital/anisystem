@@ -101,14 +101,20 @@ class AccountController extends Controller
 
     public function updateProfile(Request $request)
     {
+        // The country decides the phone rule; a country the list does not
+        // know keeps the one the account has.
+        $country = \App\Support\Region::valid($request->input('country')) ?: \App\Support\Region::of($request->user());
+        $phoneRule = \App\Support\Region::phone($country);
         $request->merge([
-            'phone' => preg_replace('/[\s\-]+/', '', (string) $request->input('phone')),
+            'phone' => \App\Support\Region::cleanPhone($request->input('phone'), $country),
+            'country' => $country,
         ]);
 
         $data = $request->validate([
             'firstName' => ['required', 'string', 'max:100'],
             'lastName' => ['required', 'string', 'max:100'],
-            'phone' => ['required', 'regex:/^09\d{9}$/'],
+            'country' => ['required', 'string', 'size:2'],
+            'phone' => ['required', 'regex:' . $phoneRule['regex']],
             'city' => ['nullable', 'string', 'max:100'],
             'province' => ['nullable', 'string', 'max:100'],
             'headline' => ['nullable', 'string', 'max:120'],
@@ -122,7 +128,7 @@ class AccountController extends Controller
             'cover' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
             'coverPos' => ['nullable', 'integer', 'min:0', 'max:100'],
         ], [
-            'phone.regex' => 'Enter a valid PH mobile number in the format 09XXXXXXXXX (11 digits).',
+            'phone.regex' => $phoneRule['error'],
             'cover.max' => 'The cover photo must be 8 MB or smaller.',
         ]);
 

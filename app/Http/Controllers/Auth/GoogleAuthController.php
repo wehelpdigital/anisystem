@@ -103,6 +103,8 @@ class GoogleAuthController extends Controller
                 'lastName' => trim((string) ($profile['family_name'] ?? '')),
                 'email' => $email,
                 'googleId' => $sub,
+                // Where they are reading from; settable in the account later.
+                'country' => \App\Support\Region::detect($request) ?: \App\Support\Region::code(),
                 // Nobody knows this password, and that is the point — the
                 // account opens with Google (or a password reset later).
                 'password' => Str::random(40),

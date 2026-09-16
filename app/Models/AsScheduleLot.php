@@ -128,9 +128,12 @@ class AsScheduleLot extends BaseModel
     /** Human-readable full address for display, e.g. "Brgy. San Jose, Zone 3, Talavera, Nueva Ecija". */
     public function getFullAddressAttribute(): string
     {
+        // The prefixes are the country's ("Brgy." at home, none in the US).
+        $lot = \App\Support\Region::lot();
+
         return collect([
-            filled($this->locBarangay) ? 'Brgy. ' . trim($this->locBarangay) : null,
-            filled($this->locZone) ? 'Zone ' . trim($this->locZone) : null,
+            filled($this->locBarangay) ? ($lot['barangay']['prefix'] ?? '') . trim($this->locBarangay) : null,
+            filled($this->locZone) ? ($lot['zone']['prefix'] ?? 'Zone ') . trim($this->locZone) : null,
             filled($this->locTown) ? trim($this->locTown) : null,
             filled($this->locProvince) ? trim($this->locProvince) : null,
         ])->filter()->implode(', ');

@@ -9,7 +9,7 @@
         <div style="padding:28px;">
             <h1 style="margin:0 0 12px;font-size:20px;color:#14210c;">Confirm your email, {{ $firstName }}</h1>
             <p style="margin:0 0 18px;font-size:15px;line-height:1.6;color:#374151;">
-                Salamat for signing up! One tap and your free anee.io account is open —
+                {{ \App\Support\Region::t('thanks') }} for signing up! One tap and your free anee.io account is open —
                 your cropping schedules, the activities board, and Anee the AI technician
                 are waiting on the other side.
             </p>
@@ -26,7 +26,7 @@
             </p>
         </div>
         <div style="padding:16px 28px;background:#f9fafb;border-top:1px solid #f3f4f6;">
-            <p style="margin:0;font-size:11px;color:#9ca3af;">© {{ date('Y') }} anee.io — helping Filipino farmers reach maximum yield and income.</p>
+            <p style="margin:0;font-size:11px;color:#9ca3af;">© {{ date('Y') }} anee.io — helping {{ \App\Support\Region::t('farmersOf') }} reach maximum yield and income.</p>
         </div>
     </div>
 </div>
