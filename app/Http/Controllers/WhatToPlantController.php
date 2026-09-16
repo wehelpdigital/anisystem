@@ -521,8 +521,20 @@ class WhatToPlantController extends Controller
             ? 'PAGASA climatological normals for the region named (wet/dry timing, typhoon seasonality)'
             : 'the climatological normals for the region named as published by ' . $met . ' (frost dates and growing-season length where they apply, rainfall and temperature timing, the severe-weather season)';
 
+        // The crops the app itself knows for the FIELD's country: at home the
+        // 85 Philippine crops and none of the temperate staples, abroad the
+        // whole book. She picks from this pool, so a Philippine field is never
+        // told to sow wheat and every pick has a calendar behind it.
+        $pool = implode(', ', array_map(
+            fn (array $c) => (string) $c['label'],
+            \App\Support\Region::as($fc, fn () => \App\Support\CropCatalog::visible())
+        ));
+        $realism = $fieldPH
+            ? 'wheat, barley, oats, rye, apples, pears, cherries, plums, kiwi, blueberries, hops or any other temperate crop must not appear as a recommendation anywhere in the Philippines (the cool-highland exceptions such as Benguet strawberries, lettuce and cabbage only where the field is really up in that highland)'
+            : 'coconut, lowland rice, sugarcane, mango, banana, papaya, cacao, coffee or any other tropical crop must not appear as a recommendation where the region named has frost and no season long enough for it; recommend them only where they are really grown commercially in that region';
+
         return <<<PROMPT
-You are an agronomic decision-support analyst for farming in {$countryName}. The farmer asks WHAT to plant on the ground described below, starting around {$start}. Recommend the best-suited crops, ranked, drawn from across the families a farm in {$countryName} weighs: grains, vegetables, root crops, legumes, and fruit/tree crops — only crops actually grown and sold in {$countryName}.
+You are an agronomic decision-support analyst for farming in {$countryName}. The farmer asks WHAT to plant on the ground described below, starting around {$start}. Recommend the best-suited crops, ranked, drawn from across the families a farm in {$countryName} weighs: grains, vegetables, root crops, legumes, and fruit/tree crops — only crops actually grown and sold in {$countryName}, in the climate of the region named.
 
 FACTS GIVEN
 - {$regionBlock}
@@ -546,6 +558,8 @@ FACTS GIVEN
 - The farmer's own notes: {$notes}
 {$ensoBlock}
 GROUND RULES
+- BE REALISTIC ABOUT THE PLACE. Recommend only crops that are actually grown commercially and sold in {$countryName}, and that really grow in the climate of the region and elevation named — the climate decides, not the wish list. Concretely: {$realism}. A crop that cannot grow in that climate is simply left out; it is not a recommendation and not padding for the avoid list.
+- CANDIDATE POOL. Choose the top pick and every recommendation from these crops, which this app keeps a calendar for in {$countryName}: {$pool}. If a crop that is genuinely important in the region named is missing from the pool, you may add it only when it is really grown commercially there, and you must say so in dataGaps.
 - Reason only from established knowledge: {$climateRule}, the soil-water behaviour implied by the described soil and troubles, each candidate crop's real agronomic needs and calendar, and typical {$countryName} market/home-use patterns for the stated aim. No invented prices, no yield promises.
 - Read the extra signals as an agronomist would, and say in each "why" which ones moved the pick: soil pH sets which crops tolerate the ground (acid-tolerant vs lime-loving); the LOOK of the irrigation water is a clue — muddy/brown carries silt (fine for paddy, clogs drip), cloudy white or milky suggests suspended lime/minerals or fine clay (check salinity and hardness before drip or sensitive vegetables), greenish means algae and nutrient load (watch clogging and disease), salty taste or a white crust means salinity (favor salt-tolerant crops), a bad smell or oily film means contamination (avoid leafy vegetables eaten raw); the lay and elevation set drainage, cold and cloud; sunlight rules out sun-loving crops in shade; the previous crop sets rotation (do not repeat a family that shares its pests and diseases); labor, budget and the market decide whether a labor-heavy, input-heavy or perishable crop is realistic. A skipped signal is "not stated" — do not guess it; name it in dataGaps if it would have changed the ranking.
 - Cover the families honestly: at least one strong root crop and one perennial/tree option must be CONSIDERED — recommended if they fit, or placed in avoid with the reason if they do not.
@@ -558,7 +572,7 @@ Return ONLY a valid JSON object — no code fences, no commentary — in exactly
 Rules for the shape:
 - recommendations: SIX to EIGHT crops, ranked best-first, each with: category (one of "Grain", "Vegetable", "Root crop", "Legume", "Fruit / tree"), score 0-100 (fit for THIS ground and start month), window (when to plant it, specific — e.g. "mid May – early June"), why (≤ 35 words, grounded in the facts), watch (the one thing to watch for on this ground, ≤ 15 words).
 - topPick repeats the rank-1 crop with a fuller why (≤ 60 words) and its window.
-- avoid: two to four crops a farmer in this region might otherwise try, each with the plain reason this ground argues against it.
+- avoid: two to four crops a farmer in this region might otherwise try — crops that DO grow in {$countryName} but that this ground, water, season or market argues against — each with the plain reason. Never fill it with crops from another climate that no farmer there would plant anyway.
 - confidence "low"/"moderate"/"high"; dataGaps at most three; summary ≤ 90 words, plain and warm but factual.
 PROMPT;
     }
