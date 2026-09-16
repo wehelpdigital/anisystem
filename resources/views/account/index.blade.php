@@ -90,16 +90,24 @@
                 </div>
 
                 @php
-                    $acCountry = old('country', \App\Support\Region::of($user));
+                    /* The country is the account's, set when it was made, and
+                       is not changed here (the owner's call, 2026-09-17): the
+                       language, the money, the address lines and Anee's advice
+                       all hang on it. Shown, locked, with a word on how to
+                       have it changed. */
+                    $acCountry = \App\Support\Region::of($user);
                     $acPhone = \App\Support\Region::phone($acCountry);
                     $acAddr = \App\Support\Region::address($acCountry);
                     $acDiv = \App\Support\Region::divisions($acCountry);
                 @endphp
                 <div>
                     <label class="form-label">Country</label>
-                    @include('partials.country-pick', ['id' => 'acCountry', 'name' => 'country', 'value' => $acCountry])
-                    <p class="form-hint">Sets the language, the currency, the address fields and the local advice Anee gives.</p>
-                    @error('country') <p class="form-error">{{ $message }}</p> @enderror
+                    <div class="ac-country" aria-readonly="true">
+                        <span class="ac-country-e" aria-hidden="true">{{ \App\Support\Region::flag($acCountry) }}</span>
+                        <span class="ac-country-t">{{ \App\Support\Region::name($acCountry) }}</span>
+                        <svg class="ac-country-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
+                    </div>
+                    <p class="form-hint">Set when the account was made — it decides the language, the currency and the address fields. Contact support if the farm has moved country.</p>
                 </div>
 
                 <div>
@@ -278,41 +286,29 @@
     </a>
 </div>
 <script>
-    /* The address fields follow the country: labels, placeholders, and a
-       state list where the country has one. The typed field and the list
+    /* Where the country has a state list, the list and the typed field
        share the one name — whichever is showing is what is saved. */
     (() => {
         const input = document.getElementById('province'), list = document.getElementById('provinceList');
-        const city = document.getElementById('city');
         if (!input || !list) return;
         const sync = () => { if (!list.hidden) input.value = list.value; };
         list.addEventListener('change', sync);
         list.form && list.form.addEventListener('submit', sync);
-        document.getElementById('acCountry')?.addEventListener('country:change', (e) => {
-            const r = e.detail && e.detail.rules;
-            if (!r) return;
-            const p = document.getElementById('phone'), h = document.getElementById('acPhoneHint');
-            if (p) p.placeholder = r.phone.placeholder || '';
-            if (h) h.textContent = r.phone.hint || '';
-            document.getElementById('acCityLabel').textContent = (r.address.city || {}).label || 'City';
-            document.getElementById('acRegionLabel').textContent = (r.address.region || {}).label || 'State / Region';
-            if (city) city.placeholder = (r.address.city || {}).placeholder || '';
-            input.placeholder = (r.address.region || {}).placeholder || '';
-            const useList = r.divisions && r.divisions.mode === 'list';
-            if (useList) {
-                const keep = input.value;
-                list.innerHTML = '<option value="">— Select —</option>' + r.divisions.list.map((s) => `<option value="${s.replace(/"/g, '&quot;')}"${s === keep ? ' selected' : ''}>${s}</option>`).join('');
-                if (!r.divisions.list.includes(keep)) input.value = '';
-            }
-            list.hidden = !useList;
-            input.hidden = useList;
-        });
     })();
+    if (/Windows/i.test(navigator.userAgent)) document.documentElement.classList.add('no-flag-emoji');
 </script>
 @endsection
 
 @push('head')
 <style>
+    .ac-country { display: flex; align-items: center; gap: .55rem; padding: .65rem .8rem; border-radius: .8rem;
+        border: 1.5px solid var(--color-gray-200); background: var(--color-gray-50); color: var(--color-gray-700); }
+    .ac-country-e { font-size: 1.2rem; line-height: 1; }
+    .ac-country-t { flex: 1 1 auto; font-size: .9rem; font-weight: 700; color: var(--color-gray-800); }
+    .ac-country-lock { width: 1rem; height: 1rem; color: var(--color-gray-400); flex: none; }
+    html.no-flag-emoji .ac-country-e { display: none; }
+    html.dark .ac-country { background: #10150c; border-color: #2b3a1c; color: #b7c2ad; }
+    html.dark .ac-country-t { color: #e8efe1; }
     /* Your face, big enough to recognise and obviously tappable. */
     .ac-avatar { position: relative; width: 3.5rem; height: 3.5rem; border-radius: 999px; cursor: pointer;
         border: none; padding: 0; background: none; }

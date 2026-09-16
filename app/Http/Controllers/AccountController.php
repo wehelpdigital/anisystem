@@ -101,19 +101,19 @@ class AccountController extends Controller
 
     public function updateProfile(Request $request)
     {
-        // The country decides the phone rule; a country the list does not
-        // know keeps the one the account has.
-        $country = \App\Support\Region::valid($request->input('country')) ?: \App\Support\Region::of($request->user());
+        // The country is the account's and is not changed from this form
+        // (the owner's call, 2026-09-17); whatever a request says, the phone
+        // rule and the saved row keep the account's own.
+        $country = \App\Support\Region::of($request->user());
         $phoneRule = \App\Support\Region::phone($country);
         $request->merge([
             'phone' => \App\Support\Region::cleanPhone($request->input('phone'), $country),
-            'country' => $country,
         ]);
+        $request->request->remove('country');
 
         $data = $request->validate([
             'firstName' => ['required', 'string', 'max:100'],
             'lastName' => ['required', 'string', 'max:100'],
-            'country' => ['required', 'string', 'size:2'],
             'phone' => ['required', 'regex:' . $phoneRule['regex']],
             'city' => ['nullable', 'string', 'max:100'],
             'province' => ['nullable', 'string', 'max:100'],
