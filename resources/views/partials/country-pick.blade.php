@@ -46,7 +46,16 @@
     html.dark .country-row:hover, html.dark .country-row.is-on { background: #22301a; }
     html.dark .country-row-t { color: #e8efe1; }
 </style>
-<script>window.ANEE_REGION_RULES = @json(\App\Support\Region::formRules());</script>
+<style>
+    /* Windows draws no flag emoji — a flag comes out as its two letters, so
+       the picker read "PH Philippines PH". There the emoji stays out and
+       the code beside the name says which country. */
+    html.no-flag-emoji .country-tag-e, html.no-flag-emoji .country-row-e { display: none; }
+</style>
+<script>
+    window.ANEE_REGION_RULES = @json(\App\Support\Region::formRules());
+    if (/Windows/i.test(navigator.userAgent)) document.documentElement.classList.add('no-flag-emoji');
+</script>
 @endonce
 
 <button type="button" class="country-tag" id="{{ $cpId }}Btn" aria-haspopup="dialog" aria-controls="{{ $cpId }}Sheet">
