@@ -2,8 +2,8 @@
 
      A full-screen veil with her face in a ring: her thinking, or searching
      with a magnifier (drawn at random), while the model works, and when the
-     answer lands a crossfade to her pointing at a lightbulb or blowing a
-     kiss (drawn at random again), which plays out before
+     answer lands a crossfade to her pointing at a lightbulb, blowing a
+     kiss or shouting yehey (drawn at random again), which plays out before
      the veil lifts and the result is shown. The clips are square crops of
      the emoji videos, silent, with no controls and nothing to tap: they are
      a face, not a player. Under the ring, what she is doing right now (the
@@ -85,7 +85,7 @@
     const title = document.getElementById('aneeWaitTitle');
     const line = document.getElementById('aneeWaitLine');
     const sub = document.getElementById('aneeWaitSub');
-    const CLIPS = [@json(asset('videos/anee/lightbulb.mp4')), @json(asset('videos/anee/kiss.mp4'))];
+    const CLIPS = [@json(asset('videos/anee/lightbulb.mp4')), @json(asset('videos/anee/kiss.mp4')), @json(asset('videos/anee/yehey.mp4'))];
     /* The wait itself is drawn at random too (the owner's ask, 2026-09-15):
        her thinking, her searching with the magnifier, her typing at the
        laptop, or her writing in her notebook -- each with its own poster so the ring never opens on the
