@@ -87,13 +87,14 @@
     const sub = document.getElementById('aneeWaitSub');
     const CLIPS = [@json(asset('videos/anee/lightbulb.mp4')), @json(asset('videos/anee/kiss.mp4'))];
     /* The wait itself is drawn at random too (the owner's ask, 2026-09-15):
-       her thinking, her searching with the magnifier, or her typing at the
-       laptop -- each with its own poster so the ring never opens on the
+       her thinking, her searching with the magnifier, her typing at the
+       laptop, or her writing in her notebook -- each with its own poster so the ring never opens on the
        wrong face. */
     const THINKS = [
         { src: @json(asset('videos/anee/thinking.mp4')), poster: @json(asset('videos/anee/thinking.jpg')) },
         { src: @json(asset('videos/anee/searching.mp4')), poster: @json(asset('videos/anee/searching.jpg')) },
         { src: @json(asset('videos/anee/typing.mp4')), poster: @json(asset('videos/anee/typing.jpg')) },
+        { src: @json(asset('videos/anee/writing.mp4')), poster: @json(asset('videos/anee/writing.jpg')) },
     ];
     const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let lineTimer = null;
