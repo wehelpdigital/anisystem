@@ -52,6 +52,66 @@ class WhatToPlantController extends Controller
         'both' => 'Both — eat some, sell the rest',
     ];
 
+    /**
+     * The extra signals (2026-09-17): each optional, each a fact a farmer
+     * can read off the field without a laboratory, each one that moves the
+     * ranking. "Not sure" is always the first answer and costs nothing.
+     */
+    public const PH_LEVELS = [
+        'unsure' => 'Not sure / never tested',
+        'acidic' => 'Acidic — below 6 (moss, ferns, poor legumes)',
+        'neutral' => 'Around neutral — 6 to 7.5',
+        'alkaline' => 'Alkaline — above 7.5 (white crust, yellowing young leaves)',
+    ];
+
+    public const WATER_LOOKS = [
+        'unsure' => 'Not sure / no irrigation water',
+        'clear' => 'Clear and clean',
+        'muddy' => 'Muddy or brown — carries silt',
+        'milky' => 'Cloudy white or milky',
+        'green' => 'Greenish — algae in it',
+        'salty' => 'Tastes salty or leaves a white crust',
+        'smelly' => 'Smells bad, oily film or foam',
+    ];
+
+    public const LAYS = [
+        'flat' => 'Flat',
+        'gentle' => 'Gently sloping',
+        'steep' => 'Steep — water runs off fast',
+        'low' => 'Low-lying — water collects',
+    ];
+
+    public const ELEVATIONS = [
+        'lowland' => 'Lowland — near sea level, warm',
+        'upland' => 'Upland / hilly — rolling ground',
+        'highland' => 'Highland — cool, cloudy mornings',
+    ];
+
+    public const SUNS = [
+        'full' => 'Full sun all day',
+        'part' => 'Shaded part of the day (trees, buildings)',
+        'shade' => 'Mostly shaded',
+    ];
+
+    public const LABORS = [
+        'hand' => 'Mostly by hand, family labor',
+        'some' => 'Some hired help or a small machine',
+        'mech' => 'Machinery and a crew when needed',
+    ];
+
+    public const BUDGETS = [
+        'tight' => 'Tight — seeds and little else',
+        'moderate' => 'Moderate — the usual inputs',
+        'invest' => 'Can invest — irrigation, good seed, protection',
+    ];
+
+    public const MARKETS = [
+        'farm' => 'Buyers come to the farm',
+        'town' => 'The nearby town market',
+        'city' => 'A city market or trader, hours away',
+        'contract' => 'A contract or cooperative buyer',
+    ];
+
     /** The ground's troubles — the sister module's list, minus the two the
      *  soil question already answers. */
     public const PROBLEMS = [
@@ -103,6 +163,14 @@ class WhatToPlantController extends Controller
 
         return response()->json(['success' => true, 'message' => 'ok', 'data' => [
             'soils' => self::SOILS,
+            'phLevels' => self::PH_LEVELS,
+            'waterLooks' => self::WATER_LOOKS,
+            'lays' => self::LAYS,
+            'elevations' => self::ELEVATIONS,
+            'suns' => self::SUNS,
+            'labors' => self::LABORS,
+            'budgets' => self::BUDGETS,
+            'markets' => self::MARKETS,
             'waters' => self::WATERS,
             'aims' => self::AIMS,
             'problems' => self::PROBLEMS,
@@ -140,6 +208,17 @@ class WhatToPlantController extends Controller
             'aim' => 'required|in:' . implode(',', array_keys(self::AIMS)),
             'area' => 'nullable|string|max:60',
             'notes' => 'nullable|string|max:400',
+            'ph' => 'nullable|in:' . implode(',', array_keys(self::PH_LEVELS)),
+            'phValue' => 'nullable|numeric|min:3|max:10',
+            'waterLook' => 'nullable|in:' . implode(',', array_keys(self::WATER_LOOKS)),
+            'lay' => 'nullable|in:' . implode(',', array_keys(self::LAYS)),
+            'elevation' => 'nullable|in:' . implode(',', array_keys(self::ELEVATIONS)),
+            'sun' => 'nullable|in:' . implode(',', array_keys(self::SUNS)),
+            'prevCrop' => 'nullable|string|max:120',
+            'grewWell' => 'nullable|string|max:160',
+            'labor' => 'nullable|in:' . implode(',', array_keys(self::LABORS)),
+            'budget' => 'nullable|in:' . implode(',', array_keys(self::BUDGETS)),
+            'market' => 'nullable|in:' . implode(',', array_keys(self::MARKETS)),
             'problems' => 'nullable|array',
             'problems.*' => 'string|in:' . implode(',', array_keys(self::PROBLEMS)),
         ]);
@@ -323,6 +402,7 @@ class WhatToPlantController extends Controller
         $text = "\n\n--- ATTACHED: What-to-plant analysis (the farmer generated this earlier; treat it as shared context) ---\n"
             . 'Case: ' . $r->title . "\n"
             . 'Ground: soil ' . (self::SOILS[$params['soil'] ?? ''] ?? '') . '; water ' . (self::WATERS[$params['water'] ?? ''] ?? '')
+            . (($params['ph'] ?? 'unsure') !== 'unsure' ? '; pH ' . (self::PH_LEVELS[$params['ph']] ?? '') : '') . (($params['waterLook'] ?? 'unsure') !== 'unsure' ? '; water looks ' . (self::WATER_LOOKS[$params['waterLook']] ?? '') : '')
             . '; aim ' . (self::AIMS[$params['aim'] ?? ''] ?? '') . ($params['area'] ?? null ? '; area ' . $params['area'] : '') . "\n"
             . 'Troubles considered: ' . ($problems ?: 'none') . "\n"
             . 'Top pick: ' . ($top['crop'] ?? '') . ' (' . ($top['category'] ?? '') . ') — ' . ($top['why'] ?? '') . "\n"
@@ -390,6 +470,18 @@ class WhatToPlantController extends Controller
             'area' => trim((string) $request->input('area', '')),
             'notes' => trim((string) $request->input('notes', '')),
             'problems' => array_values((array) $request->input('problems', [])),
+            // The extra signals, each optional; an unknown reads as "not sure".
+            'ph' => array_key_exists((string) $request->input('ph'), self::PH_LEVELS) ? (string) $request->input('ph') : 'unsure',
+            'phValue' => $request->filled('phValue') ? round((float) $request->input('phValue'), 1) : null,
+            'waterLook' => array_key_exists((string) $request->input('waterLook'), self::WATER_LOOKS) ? (string) $request->input('waterLook') : 'unsure',
+            'lay' => array_key_exists((string) $request->input('lay'), self::LAYS) ? (string) $request->input('lay') : null,
+            'elevation' => array_key_exists((string) $request->input('elevation'), self::ELEVATIONS) ? (string) $request->input('elevation') : null,
+            'sun' => array_key_exists((string) $request->input('sun'), self::SUNS) ? (string) $request->input('sun') : null,
+            'prevCrop' => trim((string) $request->input('prevCrop', '')),
+            'grewWell' => trim((string) $request->input('grewWell', '')),
+            'labor' => array_key_exists((string) $request->input('labor'), self::LABORS) ? (string) $request->input('labor') : null,
+            'budget' => array_key_exists((string) $request->input('budget'), self::BUDGETS) ? (string) $request->input('budget') : null,
+            'market' => array_key_exists((string) $request->input('market'), self::MARKETS) ? (string) $request->input('market') : null,
         ];
     }
 
@@ -403,6 +495,18 @@ class WhatToPlantController extends Controller
         $problems = collect($p['problems'])->map(fn ($k) => self::PROBLEMS[$k] ?? $k)->implode('; ') ?: 'none reported';
         $area = $p['area'] !== '' ? $p['area'] : 'not stated';
         $notes = $p['notes'] !== '' ? $p['notes'] : 'none';
+        // The extra signals, in words; "not stated" where the farmer skipped one.
+        $said = fn (array $table, ?string $k) => ($k && $k !== 'unsure' && isset($table[$k])) ? $table[$k] : 'not stated';
+        $ph = $said(self::PH_LEVELS, $p['ph'] ?? null) . (($p['phValue'] ?? null) ? ' (tested: pH ' . $p['phValue'] . ')' : '');
+        $waterLook = $said(self::WATER_LOOKS, $p['waterLook'] ?? null);
+        $lay = $said(self::LAYS, $p['lay'] ?? null);
+        $elevation = $said(self::ELEVATIONS, $p['elevation'] ?? null);
+        $sun = $said(self::SUNS, $p['sun'] ?? null);
+        $prevCrop = ($p['prevCrop'] ?? '') !== '' ? $p['prevCrop'] : 'not stated';
+        $grewWell = ($p['grewWell'] ?? '') !== '' ? $p['grewWell'] : 'not stated';
+        $labor = $said(self::LABORS, $p['labor'] ?? null);
+        $budget = $said(self::BUDGETS, $p['budget'] ?? null);
+        $market = $said(self::MARKETS, $p['market'] ?? null);
         $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
 
@@ -428,11 +532,22 @@ FACTS GIVEN
 - Water: {$water}
 - What the harvest is for: {$aim}
 - Land area: {$area}
+- Soil pH, as far as the farmer knows: {$ph}
+- The irrigation water, as it looks: {$waterLook}
+- The lay of the land: {$lay}
+- Elevation: {$elevation}
+- Sunlight: {$sun}
+- What grew there last: {$prevCrop}
+- What has grown well there before: {$grewWell}
+- Labor and machinery: {$labor}
+- Budget for inputs: {$budget}
+- Where the harvest would be sold: {$market}
 - Field troubles the farmer reports: {$problems}
 - The farmer's own notes: {$notes}
 {$ensoBlock}
 GROUND RULES
 - Reason only from established knowledge: {$climateRule}, the soil-water behaviour implied by the described soil and troubles, each candidate crop's real agronomic needs and calendar, and typical {$countryName} market/home-use patterns for the stated aim. No invented prices, no yield promises.
+- Read the extra signals as an agronomist would, and say in each "why" which ones moved the pick: soil pH sets which crops tolerate the ground (acid-tolerant vs lime-loving); the LOOK of the irrigation water is a clue — muddy/brown carries silt (fine for paddy, clogs drip), cloudy white or milky suggests suspended lime/minerals or fine clay (check salinity and hardness before drip or sensitive vegetables), greenish means algae and nutrient load (watch clogging and disease), salty taste or a white crust means salinity (favor salt-tolerant crops), a bad smell or oily film means contamination (avoid leafy vegetables eaten raw); the lay and elevation set drainage, cold and cloud; sunlight rules out sun-loving crops in shade; the previous crop sets rotation (do not repeat a family that shares its pests and diseases); labor, budget and the market decide whether a labor-heavy, input-heavy or perishable crop is realistic. A skipped signal is "not stated" — do not guess it; name it in dataGaps if it would have changed the ranking.
 - Cover the families honestly: at least one strong root crop and one perennial/tree option must be CONSIDERED — recommended if they fit, or placed in avoid with the reason if they do not.
 - Where the given facts cannot answer something (soil test values, exact microclimate, market access), name it in dataGaps instead of guessing.
 - Be scientific and neutral: no seed brands, no product recommendations, no marketing tone.

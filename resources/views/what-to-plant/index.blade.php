@@ -197,6 +197,10 @@
     .wtp-shelf-search .form-input { padding-left: 2.3rem; }
     .wtp-shelf-more { text-align: center; font-size: .74rem; color: var(--color-gray-400); padding: .8rem; }
     html.dark .wtp-shelf-search { border-color: #222b1a; }
+    .wp-qh { font-size: .84rem; font-weight: 800; color: var(--color-gray-800); margin-bottom: .45rem; }
+    .wp-qh small { display: block; font-weight: 500; font-size: .7rem; color: var(--color-gray-400); }
+    .wp-ph-in { margin-top: .5rem; }
+    html.dark .wp-qh { color: #e8efe1; }
     .wp-loc-country { margin-bottom: .8rem; }
     .wp-loc-country .form-label { margin-bottom: .3rem; }
 
@@ -250,7 +254,7 @@
             <div class="q-body">
                 <div class="q-body-in">
                     <div class="q-card" id="wpQuoteCost"></div>
-                    <div class="q-card">Anee weighs your soil, water, timing and the region's climate against the crops a farm in <span id="wpQuoteCountry">{{ \App\Support\Region::ph() ? 'the Philippines' : \App\Support\Region::name() }}</span> actually chooses between — grains, vegetables, root crops, legumes and fruit trees — and ranks what fits YOUR ground.</div>
+                    <div class="q-card">Anee weighs your soil, its pH, how the water looks, the lay and height of the land, the sun, what grew there before, your hands, budget and market, the timing and the region's climate against the crops a farm in <span id="wpQuoteCountry">{{ \App\Support\Region::ph() ? 'the Philippines' : \App\Support\Region::name() }}</span> actually chooses between — grains, vegetables, root crops, legumes and fruit trees — and ranks what fits YOUR ground.</div>
                 </div>
             </div>
         </div>
@@ -288,14 +292,50 @@
                 <p class="wtp-sub">Water decides more than anything else here.</p>
                 <div class="wtp-choices" id="wpWaters"></div>
             </section>
-            {{-- Step 5: the troubles --}}
+            {{-- Step 5: more about the ground -- pH, how the water looks,
+                 the lay of the land, elevation, sun. Every one optional and
+                 answerable by eye; each one moves the ranking. --}}
             <section class="wtp-step" data-step="4">
+                <p class="wtp-q">A little more about the ground</p>
+                <p class="wtp-sub">Answer what you know — skip the rest. Each one sharpens the ranking.</p>
+                <p class="wp-qh">Soil pH <small>a test kit, or the signs</small></p>
+                <div class="wtp-choices" id="wpPhs"></div>
+                <div class="wp-ph-in" id="wpPhIn" hidden>
+                    <label class="form-label text-xs" for="wpPhValue">Tested value <span class="text-gray-400 font-normal">(optional)</span></label>
+                    <input type="number" id="wpPhValue" class="form-input" min="3" max="10" step="0.1" inputmode="decimal" placeholder="e.g. 5.8">
+                </div>
+                <p class="wp-qh mt-4">How does the irrigation water look?</p>
+                <div class="wtp-choices" id="wpWaterLooks"></div>
+                <p class="wp-qh mt-4">The lay of the land</p>
+                <div class="wtp-choices is-two" id="wpLays"></div>
+                <p class="wp-qh mt-4">Elevation</p>
+                <div class="wtp-choices" id="wpElevations"></div>
+                <p class="wp-qh mt-4">Sunlight</p>
+                <div class="wtp-choices" id="wpSuns"></div>
+            </section>
+            {{-- Step 6: more about the farm -- history, hands, money, market. --}}
+            <section class="wtp-step" data-step="5">
+                <p class="wtp-q">A little more about the farm</p>
+                <p class="wtp-sub">Optional too — the history and the means decide what is realistic.</p>
+                <label class="form-label" for="wpPrevCrop">What grew there last? <span class="text-gray-400 font-normal">(optional)</span></label>
+                <input type="text" id="wpPrevCrop" class="form-input" maxlength="120" placeholder="e.g. rice, then fallow">
+                <label class="form-label mt-3" for="wpGrewWell">What has grown well there before? <span class="text-gray-400 font-normal">(optional)</span></label>
+                <input type="text" id="wpGrewWell" class="form-input" maxlength="160" placeholder="e.g. onions did well; tomatoes always got blight">
+                <p class="wp-qh mt-4">Labor and machinery</p>
+                <div class="wtp-choices" id="wpLabors"></div>
+                <p class="wp-qh mt-4">Budget for inputs</p>
+                <div class="wtp-choices" id="wpBudgets"></div>
+                <p class="wp-qh mt-4">Where would the harvest be sold?</p>
+                <div class="wtp-choices" id="wpMarkets"></div>
+            </section>
+            {{-- Step 7: the troubles --}}
+            <section class="wtp-step" data-step="6">
                 <p class="wtp-q">What does this ground struggle with?</p>
                 <p class="wtp-sub">Tick what you have seen — each one moves the ranking.</p>
                 <div class="wtp-probs" id="wpProbs"></div>
             </section>
-            {{-- Step 6: the aim and the area --}}
-            <section class="wtp-step" data-step="5">
+            {{-- Step 8: the aim and the area --}}
+            <section class="wtp-step" data-step="7">
                 <p class="wtp-q">What is the harvest for?</p>
                 <p class="wtp-sub">A market crop and a family table pull toward different answers.</p>
                 <div class="wtp-choices" id="wpAims"></div>
@@ -304,8 +344,8 @@
                 <label class="form-label mt-3" for="wpNotes">Anything else worth knowing? <span class="text-gray-400 font-normal">(optional)</span></label>
                 <textarea id="wpNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. thinking of ube; the neighbour grows onions well"></textarea>
             </section>
-            {{-- Step 7: the decision --}}
-            <section class="wtp-step" data-step="6">
+            {{-- Step 9: the decision --}}
+            <section class="wtp-step" data-step="8">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="wpReview"></p>
                 <button type="button" class="wtp-run" id="wpRun">
@@ -370,12 +410,12 @@
     const CAT_E = { 'Grain': '🌾', 'Vegetable': '🥬', 'Root crop': '🍠', 'Legume': '🫘', 'Fruit / tree': '🌳' };
 
     let OPT = null;
-    const state = { location: '', startMonth: null, soil: null, water: null, aim: null, area: '', notes: '', problems: [], country: '' };
+    const state = { location: '', startMonth: null, soil: null, water: null, aim: null, area: '', notes: '', problems: [], country: '', ph: 'unsure', phValue: '', waterLook: 'unsure', lay: null, elevation: null, sun: null, prevCrop: '', grewWell: '', labor: null, budget: null, market: null };
     const RULES = () => (window.ANEE_REGION_RULES || {});
     const rulesFor = (code) => RULES()[code] || RULES()['*'] || {};
     const countryName = (code) => (code === 'PH' ? 'the Philippines' : (rulesFor(code).name || code || ''));
     let step = 0;
-    const STEPS = 7;
+    const STEPS = 9;
 
     async function boot() {
         try {
@@ -395,6 +435,18 @@
         const waterIcons = { irrigated: '🚰', limited: '🚿', rainfed: '🌧️' };
         $id('wpWaters').innerHTML = Object.entries(OPT.waters).map(([k, label]) => `
             <button type="button" class="wtp-choice" data-water="${k}"><span class="c-e">${waterIcons[k] || '💧'}</span><span>${esc(label)}</span></button>`).join('');
+        const group = (hostId, attr, table, icons, preset) => {
+            $id(hostId).innerHTML = Object.entries(table || {}).map(([k, label]) => { const [n, sub] = String(label).split(' — '); return `
+            <button type="button" class="wtp-choice${preset === k ? ' is-on' : ''}" data-${attr}="${esc(k)}"><span class="c-e">${icons[k] || '•'}</span><span>${esc(n)}${sub ? `<small>${esc(sub)}</small>` : ''}</span></button>`; }).join('');
+        };
+        group('wpPhs', 'ph', OPT.phLevels, { unsure: '🤷', acidic: '🍋', neutral: '⚖️', alkaline: '🧂' }, state.ph);
+        group('wpWaterLooks', 'waterlook', OPT.waterLooks, { unsure: '🤷', clear: '💧', muddy: '🟤', milky: '🥛', green: '🟢', salty: '🧂', smelly: '🛢️' }, state.waterLook);
+        group('wpLays', 'lay', OPT.lays, { flat: '▬', gentle: '⛰️', steep: '🏔️', low: '🕳️' }, state.lay);
+        group('wpElevations', 'elevation', OPT.elevations, { lowland: '🌾', upland: '🌄', highland: '🌫️' }, state.elevation);
+        group('wpSuns', 'sun', OPT.suns, { full: '☀️', part: '⛅', shade: '🌳' }, state.sun);
+        group('wpLabors', 'labor', OPT.labors, { hand: '🧑‍🌾', some: '🛠️', mech: '🚜' }, state.labor);
+        group('wpBudgets', 'budget', OPT.budgets, { tight: '🪙', moderate: '💵', invest: '💰' }, state.budget);
+        group('wpMarkets', 'market', OPT.markets, { farm: '🏠', town: '🏪', city: '🏙️', contract: '🤝' }, state.market);
         const aimIcons = { sell: '🏪', family: '🍚', both: '⚖️' };
         $id('wpAims').innerHTML = Object.entries(OPT.aims).map(([k, label]) => `
             <button type="button" class="wtp-choice" data-aim="${k}"><span class="c-e">${aimIcons[k] || '🌱'}</span><span>${esc(label)}</span></button>`).join('');
@@ -452,8 +504,10 @@
             case 1: return !!state.startMonth || (toast('Pick the month you would start.', 'error'), false);
             case 2: return !!state.soil || (toast('Pick the soil that sounds most like yours.', 'error'), false);
             case 3: return !!state.water || (toast('Say what water the field gets.', 'error'), false);
-            case 4: state.problems = [...document.querySelectorAll('#wpProbs input:checked')].map((i) => i.value); return true;
-            case 5: state.area = $id('wpArea').value.trim(); state.notes = $id('wpNotes').value.trim();
+            case 4: state.phValue = $id('wpPhValue').value.trim(); return true;
+            case 5: state.prevCrop = $id('wpPrevCrop').value.trim(); state.grewWell = $id('wpGrewWell').value.trim(); return true;
+            case 6: state.problems = [...document.querySelectorAll('#wpProbs input:checked')].map((i) => i.value); return true;
+            case 7: state.area = $id('wpArea').value.trim(); state.notes = $id('wpNotes').value.trim();
                 return !!state.aim || (toast('Say what the harvest is for.', 'error'), false);
             default: return true;
         }
@@ -463,7 +517,8 @@
         const month = (OPT.months.find((m) => m.key === state.startMonth) || {}).label || '';
         $id('wpReview').innerHTML = `📍 <b>${esc(state.location)}</b>${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(rulesFor(state.country).name || state.country) : ''} · starting ${esc(month)}`
             + `<br><span class="text-xs">${esc(OPT.soils[state.soil] || '')} · ${esc(OPT.waters[state.water] || '')} · ${esc(OPT.aims[state.aim] || '')}`
-            + (state.problems.length ? ` · ${state.problems.length} trouble${state.problems.length === 1 ? '' : 's'} considered` : '') + '</span>';
+            + (state.problems.length ? ` · ${state.problems.length} trouble${state.problems.length === 1 ? '' : 's'} considered` : '')
+            + (() => { const n = ['ph', 'waterLook'].filter((k) => state[k] && state[k] !== 'unsure').length + ['lay', 'elevation', 'sun', 'labor', 'budget', 'market'].filter((k) => state[k]).length + ['prevCrop', 'grewWell'].filter((k) => state[k]).length; return n ? ` · ${n} extra signal${n === 1 ? '' : 's'}` : ''; })() + '</span>';
         $id('wpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
         $id('wpRunFine').textContent = OPT.canUse
             ? 'Charged to the same AI credits your questions use — it shows in your subscription’s credit log.'
@@ -498,6 +553,16 @@
     pickWire('wpSoils', 'soil', 'soil', 3);
     pickWire('wpWaters', 'water', 'water', 4);
     pickWire('wpAims', 'aim', 'aim', null);
+    pickWire('wpPhs', 'ph', 'ph', null);
+    pickWire('wpWaterLooks', 'waterlook', 'waterLook', null);
+    pickWire('wpLays', 'lay', 'lay', null);
+    pickWire('wpElevations', 'elevation', 'elevation', null);
+    pickWire('wpSuns', 'sun', 'sun', null);
+    pickWire('wpLabors', 'labor', 'labor', null);
+    pickWire('wpBudgets', 'budget', 'budget', null);
+    pickWire('wpMarkets', 'market', 'market', null);
+    // A tested pH can be typed once the farmer says the soil is anything but "not sure".
+    $id('wpPhs').addEventListener('click', () => { $id('wpPhIn').hidden = state.ph === 'unsure'; if (state.ph === 'unsure') $id('wpPhValue').value = ''; });
     $id('wpProbs').addEventListener('change', (e) => {
         const l = e.target.closest('.wtp-prob');
         if (l) l.classList.toggle('is-on', e.target.checked);
@@ -516,6 +581,8 @@
                 location: state.location, startMonth: state.startMonth, soil: state.soil,
                 water: state.water, aim: state.aim, area: state.area, notes: state.notes,
                 problems: state.problems, country: state.country,
+                ph: state.ph, phValue: state.phValue || null, waterLook: state.waterLook, lay: state.lay, elevation: state.elevation, sun: state.sun,
+                prevCrop: state.prevCrop, grewWell: state.grewWell, labor: state.labor, budget: state.budget, market: state.market,
             } });
             let data = res.data;
             if (data.pending) {
@@ -596,6 +663,9 @@
                 <div class="wtp-chips">
                     <span class="wtp-chip">📍 ${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc(rulesFor(p.country).name || p.country) : ''}</span>
                     <span class="wtp-chip">🗓️ ${esc(month)}</span>
+                    ${p.ph && p.ph !== 'unsure' ? `<span class="wtp-chip">pH ${esc(p.phValue || String((OPT && OPT.phLevels && OPT.phLevels[p.ph]) || p.ph).split(' — ')[0].toLowerCase())}</span>` : ''}
+                    ${p.waterLook && p.waterLook !== 'unsure' ? `<span class="wtp-chip">💧 ${esc(String((OPT && OPT.waterLooks && OPT.waterLooks[p.waterLook]) || p.waterLook).split(' — ')[0])}</span>` : ''}
+                    ${p.elevation ? `<span class="wtp-chip">${esc(String((OPT && OPT.elevations && OPT.elevations[p.elevation]) || p.elevation).split(' — ')[0])}</span>` : ''}
                     <span class="wtp-chip">Confidence: ${esc(r.confidence || 'moderate')}</span>
                     ${item.charged ? `<span class="wtp-chip">${item.charged} credits</span>` : ''}
                 </div>
