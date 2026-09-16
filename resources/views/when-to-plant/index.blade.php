@@ -141,13 +141,50 @@
         transform-origin: bottom; transform: scaleY(0); min-height: 3px;
         transition: transform .6s cubic-bezier(.22,1,.36,1); position: relative; }
     .wtp-report.is-drawn .wtp-mbar { transform: scaleY(1); }
-    .wtp-mbar.is-best { background: var(--color-brand-600); }
-    .wtp-mbar.is-good { background: var(--color-brand-300); }
-    .wtp-mbar.is-poor { background: #f0c274; }
-    .wtp-mbar.is-bad { background: #fca5a5; }
+    .wtp-mbar.is-best { background: #4a7c2a; }
+    .wtp-mbar.is-good { background: #8fc96a; }
+    .wtp-mbar.is-poor { background: #f0b04a; }
+    .wtp-mbar.is-bad { background: #ef7676; }
     .wtp-mlbl i { display: block; font-style: normal; font-size: .55rem; opacity: .7; line-height: 1; }
     .wtp-mlbl { font-size: .58rem; font-weight: 700; color: var(--color-gray-500); }
     .wtp-mnote { font-size: .68rem; color: var(--color-gray-500); margin-top: .5rem; line-height: 1.5; }
+    /* Twenty years of risk, month by month: a stacked bar per month, one
+       colour per kind, under the same months as the score chart. */
+    .wtp-rk { display: flex; align-items: flex-end; gap: .3rem; height: 7.5rem; border-bottom: 1px solid var(--color-gray-200); padding-bottom: .15rem; }
+    .wtp-rk-col { flex: 1 1 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
+    .wtp-rk-bar { width: 100%; max-width: 1.6rem; display: flex; flex-direction: column-reverse; border-radius: .3rem .3rem 0 0; overflow: hidden;
+        transform-origin: bottom; transform: scaleY(0); transition: transform .7s cubic-bezier(.22,1,.36,1); }
+    .wtp-report.is-drawn .wtp-rk-bar { transform: scaleY(1); }
+    .wtp-rk-seg { width: 100%; }
+    .wtp-rk-seg.is-storm { background: #2563eb; } .wtp-rk-seg.is-flood { background: #0891b2; }
+    .wtp-rk-seg.is-drought { background: #d97706; } .wtp-rk-seg.is-heat { background: #dc2626; } .wtp-rk-seg.is-frost { background: #7c3aed; }
+    .wtp-rk-lbls { display: flex; gap: .3rem; padding-top: .3rem; }
+    .wtp-rk-lbl { flex: 1 1 0; text-align: center; font-size: .58rem; font-weight: 700; color: var(--color-gray-500); }
+    .wtp-rk-legend { display: flex; flex-wrap: wrap; gap: .3rem .7rem; margin-top: .55rem; }
+    .wtp-rk-legend span { display: inline-flex; align-items: center; gap: .3rem; font-size: .7rem; font-weight: 700; color: var(--color-gray-600); }
+    .wtp-rk-legend i { width: .7rem; height: .7rem; border-radius: .2rem; display: inline-block; }
+    .wtp-rk-ev { display: grid; gap: .35rem; margin-top: .7rem; }
+    .wtp-rk-ev div { display: flex; gap: .55rem; align-items: flex-start; font-size: .78rem; line-height: 1.45; color: var(--color-gray-700); padding: .45rem .6rem; border-radius: .7rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
+    .wtp-rk-ev b { flex: none; font-size: .72rem; color: var(--color-gray-900); min-width: 3.4rem; }
+    .wtp-rk-ev small { display: block; font-size: .66rem; color: var(--color-gray-400); }
+    .wtp-rk-ev .is-high b { color: #b91c1c; }
+    html.dark .wtp-rk { border-color: #2b3a1c; }
+    html.dark .wtp-rk-legend span { color: #b7c2ad; }
+    html.dark .wtp-rk-ev div { background: #10150c; border-color: #222b1a; color: #b7c2ad; }
+    html.dark .wtp-rk-ev b { color: #e8efe1; }
+    html.dark .wtp-rk-ev .is-high b { color: #fca5a5; }
+    .va-links { display: grid; gap: .3rem; }
+    .va-link { display: flex; align-items: center; gap: .5rem; font-size: .78rem; color: var(--color-brand-700); text-decoration: none; padding: .35rem .5rem; border-radius: .6rem; min-width: 0; }
+    .va-link:hover { background: var(--color-brand-50); }
+    .va-link .l-t { min-width: 0; flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .va-link .l-h { flex: none; font-size: .66rem; color: var(--color-gray-400); max-width: 9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    html.dark .va-link { color: #a5c97e; }
+    html.dark .va-link:hover { background: #22301a; }
+    .wtp-shelf-search { position: relative; padding: .7rem .8rem; border-bottom: 1px solid var(--color-gray-100); }
+    .wtp-shelf-search svg { position: absolute; left: 1.55rem; top: 50%; transform: translateY(-50%); width: 1rem; height: 1rem; color: var(--color-gray-400); pointer-events: none; }
+    .wtp-shelf-search .form-input { padding-left: 2.3rem; }
+    .wtp-shelf-more { text-align: center; font-size: .74rem; color: var(--color-gray-400); padding: .8rem; }
+    html.dark .wtp-shelf-search { border-color: #222b1a; }
 
     /* Planting to harvest: stage bands, widths in days. */
     .wtp-line { display: flex; border-radius: .6rem; overflow: hidden; height: 2.3rem; }
@@ -197,6 +234,11 @@
     html.dark .wtp-card { background: #151b12; border-color: #2b3a1c; }
     html.dark .wtp-card h3 { color: #e8efe1; }
     html.dark .wtp-mbar { background: #2b3a1c; }
+    /* The band colours must outrank the dark base, or every bar is one green. */
+    html.dark .wtp-mbar.is-best { background: #6b9f3d; }
+    html.dark .wtp-mbar.is-good { background: #a5c97e; }
+    html.dark .wtp-mbar.is-poor { background: #f0b04a; }
+    html.dark .wtp-mbar.is-bad { background: #f08080; }
     html.dark .wtp-saved { border-color: #222b1a; }
     html.dark .wtp-saved:hover { background: #161e10; }
     html.dark .wtp-saved b { color: #e8efe1; }
@@ -260,6 +302,26 @@
 
     /* The attach button wears Anee's own face. */
     .wtp-anee-face { width: 1.15rem; height: 1.15rem; border-radius: 999px; object-fit: cover; }
+
+    /* Full screen when it lands (the sisters' view): the tabs and the
+       wizard are out of sight until the farmer closes it. */
+    .va-view { position: fixed; inset: 0; z-index: 90; background: var(--color-gray-50); overflow-y: auto; -webkit-overflow-scrolling: touch;
+        opacity: 0; transform: translateY(12px); transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .va-view.is-on { opacity: 1; transform: none; }
+    .va-view-bar { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: .6rem; padding: .7rem .9rem;
+        padding-top: max(.7rem, env(safe-area-inset-top)); background: rgb(250 250 248 / .92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--color-gray-200); }
+    .va-view-bar b { flex: 1 1 auto; min-width: 0; font-size: .95rem; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .va-view-x { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center;
+        background: var(--color-white); border: 1px solid var(--color-gray-200); color: var(--color-gray-700); font-size: 1rem; cursor: pointer; }
+    .va-view-body { max-width: 42rem; margin: 0 auto; padding: 1rem 1rem calc(2rem + env(safe-area-inset-bottom)); }
+    html.va-view-lock { overflow: hidden; }
+    html.dark .va-view { background: #0d110a; }
+    html.dark .va-view-bar { background: rgb(13 17 10 / .92); border-color: #2b3a1c; }
+    html.dark .va-view-bar b { color: #e8efe1; }
+    html.dark .va-view-x { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
+    .wtp-loc-country { margin-bottom: .8rem; }
+    .wtp-loc-country .form-label { margin-bottom: .3rem; }
 
     /* A report that fits a hand: tighter hero, chart labels kept, the
        timeline's in-band words stand down and the legend speaks for them. */
@@ -336,7 +398,15 @@
             {{-- Step 5: the place --}}
             <section class="wtp-step" data-step="4">
                 <p class="wtp-q">Where is the field?</p>
-                <p class="wtp-sub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate patterns differ by region.</p>
+                {{-- The field's country, the farmer's own unless they say
+                     otherwise: it decides the address words, the example
+                     place, the seasons offered and whose climate record and
+                     agencies the analysis reads. --}}
+                <div class="wtp-loc-country">
+                    <label class="form-label">Country of the field</label>
+                    @include('partials.country-pick', ['id' => 'wtpCountry', 'name' => 'country', 'value' => \App\Support\Region::code()])
+                </div>
+                <p class="wtp-sub" id="wtpLocSub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate patterns differ by region.</p>
                 <input type="text" id="wtpLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
             </section>
             {{-- Step 6: the troubles --}}
@@ -371,13 +441,26 @@
 
     <div id="wtpSavedPane" class="hidden">
         <div class="card !p-0 overflow-hidden">
+            <div class="wtp-shelf-search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+                <input type="search" id="wtpSavedSearch" class="form-input" placeholder="Search your analyses" autocomplete="off" aria-label="Search saved analyses">
+            </div>
             <div id="wtpSavedList"></div>
+            <div class="wtp-shelf-more" id="wtpSavedMore" hidden>Loading more…</div>
             <div id="wtpSavedEmpty" class="hidden text-center py-10">
                 <p class="font-bold text-gray-900">Nothing saved yet</p>
                 <p class="text-sm text-gray-400">Run an analysis and keep the ones worth keeping.</p>
             </div>
         </div>
         <div class="wtp-report mt-4" id="wtpSavedReport" hidden></div>
+    </div>
+
+    <div class="va-view" id="wtpView" hidden role="dialog" aria-modal="true" aria-label="When to plant analysis">
+        <div class="va-view-bar">
+            <b id="wtpViewTitle">When to plant</b>
+            <button type="button" class="va-view-x" id="wtpViewX" aria-label="Close">✕</button>
+        </div>
+        <div class="va-view-body"><div class="wtp-report" id="wtpViewReport"></div></div>
     </div>
 </div>
 
@@ -419,12 +502,19 @@
     const SEG_HUES = ['#4a7c2a', '#6b9f3d', '#b45309', '#1d4ed8', '#5b21b6', '#0e7490', '#9f1239'];
 
     let OPT = null;
-    const state = { year: null, season: null, crop: '', variety: '', location: '', problems: [] };
+    const state = { year: null, season: null, crop: '', variety: '', location: '', problems: [], country: '' };
     // "Dry season 2026–27": the season named with the years it actually spans.
-    const seasonSaid = (season, year) => {
+    /* The seasons offered are the FIELD's country's: dry / wet / third crop
+       for a Philippine field, spring / summer / autumn / winter elsewhere
+       (window.ANEE_REGION_RULES comes with the country picker). */
+    const RULES = () => (window.ANEE_REGION_RULES || {});
+    const rulesFor = (code) => RULES()[code] || RULES()['*'] || {};
+    const seasonsFor = (code) => { const r = rulesFor(code); return (r.seasons && Object.keys(r.seasons).length) ? r.seasons : ((OPT && OPT.seasons) || {}); };
+    const seasonSaid = (season, year, country) => {
         const y = Number(year) || 0;
-        const label = (OPT && OPT.seasons[season]) || '';
-        return season === 'dry' && y ? `${label} ${y}–${String(y + 1).slice(-2)}` : `${label} ${y || ''}`.trim();
+        const label = seasonsFor(country || state.country || (OPT && OPT.country))[season] || (OPT && OPT.seasons[season]) || '';
+        const crosses = season === 'dry' || season === 'winter';
+        return crosses && y ? `${label} ${y}–${String(y + 1).slice(-2)}` : `${label} ${y || ''}`.trim();
     };
     let step = 0;
     const STEPS = 7;
@@ -440,21 +530,26 @@
     }
 
     function paintOptions() {
+        state.country = state.country || OPT.country || ((window.ANEE_REGION || {}).code) || 'PH';
         $id('wtpYears').innerHTML = OPT.years.map((y) => `
             <button type="button" class="wtp-choice" data-year="${y}"><span class="c-e">🗓️</span><span>${y}${y === OPT.years[0] ? '<small>This year</small>' : ''}</span></button>`).join('');
-        const seasonIcons = { dry: '☀️', wet: '🌧️', third: '🌗' };
+        const seasonIcons = { dry: '☀️', wet: '🌧️', third: '🌗', spring: '🌱', summer: '☀️', autumn: '🍂', winter: '❄️' };
         /* The dry season of a year begins at its end and runs into the next:
            the words say so, with the years, so January is not a surprise. */
         const seasonSubs = (y) => ({
             dry: `Early December ${y} to May ${y + 1} in most lowland regions — planting into ${y + 1} is part of it`,
             wet: `Roughly June to October ${y} in most lowland regions — planting as the rains set in`,
             third: `After the dry-season harvest, before the rains — roughly March to May ${y}, where water can be assured`,
+            spring: `Roughly March to May ${y} in the northern hemisphere — the analysis places it for your location`,
+            summer: `Roughly June to August ${y} in the northern hemisphere`,
+            autumn: `Roughly September to November ${y} in the northern hemisphere`,
+            winter: `December ${y} to February ${y + 1} in the northern hemisphere — a cool-season or protected planting`,
         });
         const paintSeasons = () => {
             const y = Number(state.year || OPT.years[0]);
             const subs = seasonSubs(y);
-            $id('wtpSeasons').innerHTML = Object.entries(OPT.seasons).map(([k, label]) => `
-                <button type="button" class="wtp-choice${state.season === k ? ' is-on' : ''}" data-season="${k}"><span class="c-e">${seasonIcons[k] || '🌱'}</span><span>${esc(label)}${k === 'dry' ? ' ' + y + '–' + String(y + 1).slice(-2) : ''}<small>${esc(subs[k] || '')}</small></span></button>`).join('');
+            $id('wtpSeasons').innerHTML = Object.entries(seasonsFor(state.country)).map(([k, label]) => `
+                <button type="button" class="wtp-choice${state.season === k ? ' is-on' : ''}" data-season="${k}"><span class="c-e">${seasonIcons[k] || '🌱'}</span><span>${esc(label)}${(k === 'dry' || k === 'winter') ? ' ' + y + '–' + String(y + 1).slice(-2) : ''}<small>${esc(subs[k] || '')}</small></span></button>`).join('');
         };
         paintSeasons();
         window.__wtpPaintSeasons = paintSeasons;
@@ -534,7 +629,10 @@
             case 2: return !!state.crop || (toast('Pick the crop.', 'error'), false);
             case 3: state.variety = $id('wtpVariety').value.trim(); return true;
             case 4: state.location = $id('wtpLocation').value.trim();
-                return !!state.location || (toast('Say where the field is.', 'error'), false);
+                if (!state.location) { toast('Say where the field is.', 'error'); return false; }
+                // The country changed the seasons on offer and the one picked is not among them.
+                if (!seasonsFor(state.country)[state.season]) { toast(`The seasons are different in ${rulesFor(state.country).name || 'that country'} — pick the season again.`, 'error'); state.season = null; window.__wtpPaintSeasons?.(); setTimeout(() => show(1, true), 250); return false; }
+                return true;
             case 5: state.problems = [...document.querySelectorAll('#wtpProbs input:checked')].map((i) => i.value); return true;
             default: return true;
         }
@@ -544,7 +642,7 @@
         const crop = (OPT.crops.find((c) => c.key === state.crop) || {});
         $id('wtpReview').innerHTML = `${esc(crop.icon || '')} <b>${esc(crop.label || '')}</b>`
             + `${state.variety ? ' · ' + esc(state.variety) : ''} · ${esc(seasonSaid(state.season, state.year))}`
-            + ` · ${esc(state.location)}`
+            + ` · ${esc(state.location)}${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(rulesFor(state.country).name || state.country) : ''}`
             + (state.problems.length ? `<br><span class="text-xs">${state.problems.length} field problem${state.problems.length === 1 ? '' : 's'} considered</span>` : '');
         $id('wtpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
         $id('wtpRunFine').textContent = OPT.canUse
@@ -570,6 +668,20 @@
         state.season = b.getAttribute('data-season');
         document.querySelectorAll('#wtpSeasons .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
         setTimeout(() => show(2), 180);
+    });
+    $id('wtpCountry')?.addEventListener('country:change', (e) => {
+        const code = e.detail && e.detail.code;
+        const r = e.detail && e.detail.rules;
+        if (!code || !r) return;
+        state.country = code;
+        const city = (r.address && r.address.city && r.address.city.label) || 'City';
+        const region = (r.address && r.address.region && r.address.region.label) || 'State / Region';
+        $id('wtpLocSub').textContent = `${code === 'PH' ? 'Town and province' : city + ' and ' + region.toLowerCase()} is enough — the climate patterns differ by region.`;
+        $id('wtpLocation').placeholder = r.exampleLocation || '';
+        // The seasons on offer follow the field's country; a season that is
+        // not one of them is dropped and asked for again on the way out.
+        if (!seasonsFor(code)[state.season]) state.season = null;
+        window.__wtpPaintSeasons?.();
     });
     $id('wtpCropBtn').addEventListener('click', () => {
         openSheet('wtpCropSheet');
@@ -643,13 +755,14 @@
         if (!stepReady()) return;
         const wiz = $id('wtpWiz');
         wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = 'none');
-        window.aneeWait.show({ title: 'Anee is reading the climate for your field…', lines: ['Typhoon seasonality and the wet-dry rhythm…', 'Your crop\'s own calendar against it…', 'Finding the window, and the weeks to avoid…'], sub: 'Half a minute, usually.' });
+        window.aneeWait.show({ title: 'Anee is reading the climate for your field…', lines: ['Reading twenty years of storms, droughts and floods for your region…', state.country === 'PH' ? 'Typhoon seasonality and the wet-dry rhythm…' : 'Frost dates, heat and the rain rhythm of the region…', 'Your crop\'s own calendar against it…', 'Finding the window, and the weeks to avoid…'], sub: 'Half a minute, usually.' });
         $id('wtpReport').hidden = true;
         let landed = false;
         try {
             const res = await api(U.generate, { method: 'POST', body: {
                 year: state.year, season: state.season, crop: state.crop,
                 variety: state.variety, location: state.location, problems: state.problems,
+                country: state.country,
             } });
             let data = res.data;
             /* The server answers at once and works after the reply; the page
@@ -668,7 +781,8 @@
             LAST = { report: data.report, params: data.params, charged: data.charged, savedId: data.savedId || null };
             OPT.balance = data.balance;
             landed = true;
-            drawReport($id('wtpReport'), LAST, 'fresh');
+            // Full screen first: the tabs and the wizard wait behind it.
+            openView(LAST, 'fresh');
             await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used.` });
             toast(`Done — ${data.charged} credits used.`);
             loadSavedQuietly();
@@ -678,11 +792,38 @@
             if (!landed) window.aneeWait.fail();
             wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = '');
             show(step);
-            // The report has the floor: the form and its price bow out until
-            // the farmer asks for another run.
+            // The view has the floor; closing it brings the wizard back at
+            // its first step, with the run already on the Saved tab.
             if (landed) { wiz.hidden = true; $id('wtpQuote').hidden = true; }
         }
     });
+
+    /* Full screen when it lands, and for anything opened from the shelf. */
+    function openView(item, mode) {
+        const view = $id('wtpView');
+        VIEW_MODE = mode;
+        const crop = (OPT ? OPT.crops.find((c) => c.key === (item.params || {}).crop) : null) || {};
+        $id('wtpViewTitle').textContent = (crop.label ? crop.label + ' — ' : '') + seasonSaid((item.params || {}).season, (item.params || {}).year, (item.params || {}).country);
+        const host = $id('wtpViewReport');
+        host.classList.remove('is-drawn');
+        drawReport(host, item, mode, true);
+        view.hidden = false;
+        document.documentElement.classList.add('va-view-lock');
+        view.scrollTop = 0;
+        requestAnimationFrame(() => requestAnimationFrame(() => { view.classList.add('is-on'); host.classList.add('is-drawn'); }));
+    }
+    let VIEW_MODE = null;
+    function closeView() {
+        const view = $id('wtpView');
+        if (view.hidden) return;
+        view.classList.remove('is-on');
+        document.documentElement.classList.remove('va-view-lock');
+        const wasFresh = VIEW_MODE === 'fresh';
+        VIEW_MODE = null;
+        setTimeout(() => { view.hidden = true; $id('wtpViewReport').innerHTML = ''; if (wasFresh) wizardBack(); }, 300);
+    }
+    $id('wtpViewX').addEventListener('click', closeView);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeView(); });
 
     function wizardBack() {
         $id('wtpWiz').hidden = false;
@@ -693,8 +834,10 @@
         $id('wtpWiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
+    const hostOf = (u) => { try { const h = new URL(u).hostname.replace(/^www\./, ''); return /vertexaisearch\.cloud\.google\.com$/.test(h) ? 'via Google Search' : h; } catch (_) { return ''; } };
+
     /* ---------------- the report, drawn ---------------- */
-    function drawReport(host, item, mode) {
+    function drawReport(host, item, mode, quiet) {
         const r = item.report;
         const p = item.params;
         // Older saved reports carry the persona's :anee-…: shortcodes, which
@@ -713,6 +856,29 @@
            year sits under the month so January is plainly next year's. */
         const scores = (r.monthScores || []).slice(0, 12).sort((a, b) => ((a.year || 0) - (b.year || 0)) || ((a.month || 0) - (b.month || 0)));
 
+        /* Twenty years of risk, month by month, in the season's own month
+           order so it reads under the score chart. Each month is a stacked
+           bar of the kinds that struck it; the worst years follow. */
+        const RK = [['storm', p.country === 'PH' || !p.country ? 'Typhoons & storms' : 'Storms'], ['flood', 'Floods'], ['drought', 'Drought'], ['heat', 'Heat'], ['frost', 'Frost']];
+        const rh = r.riskHistory || {};
+        const rkMonths = Array.isArray(rh.months) ? rh.months : [];
+        const rkOrder = scores.length ? scores.map((s) => s.month) : Array.from({ length: 12 }, (_, i) => i + 1);
+        const rkOf = (m) => rkMonths.find((x) => Number(x.month) === Number(m)) || {};
+        const rkSum = (x) => RK.reduce((t, [k]) => t + (Number(x[k]) || 0), 0);
+        const rkMax = Math.max(1, ...rkOrder.map((m) => rkSum(rkOf(m))));
+        const rkUsed = RK.filter(([k]) => rkMonths.some((x) => (Number(x[k]) || 0) > 0));
+        const riskCard = rkMonths.length ? `
+            <div class="wtp-card">
+                <h3>Twenty years of risk, month by month <small style="display:block;font-size:.72rem;font-weight:500;color:var(--color-gray-500);margin-top:.1rem">${esc(rh.years || 'the past twenty years')} — how often each kind struck, and how hard</small></h3>
+                <div class="wtp-rk">
+                    ${rkOrder.map((m) => { const x = rkOf(m); const tot = rkSum(x); return `<div class="wtp-rk-col" title="${esc(x.note || '')}"><div class="wtp-rk-bar" style="height:${Math.max(3, Math.round(tot / rkMax * 100))}%">${RK.map(([k]) => (Number(x[k]) || 0) > 0 ? `<span class="wtp-rk-seg is-${k}" style="flex:${Number(x[k])}" title="${esc(k)}: ${Number(x[k])}"></span>` : '').join('')}</div></div>`; }).join('')}
+                </div>
+                <div class="wtp-rk-lbls">${rkOrder.map((m) => `<span class="wtp-rk-lbl">${MONTHS[(m || 1) - 1]}</span>`).join('')}</div>
+                <div class="wtp-rk-legend">${(rkUsed.length ? rkUsed : RK.slice(0, 4)).map(([k, label]) => `<span><i class="wtp-rk-seg is-${k}"></i>${esc(label)}</span>`).join('')}</div>
+                ${(rh.events || []).length ? `<div class="wtp-rk-ev">${(rh.events || []).slice(0, 8).map((e) => `<div class="${e.impact === 'high' ? 'is-high' : ''}"><b>${esc(e.year || '')}${e.month ? ' ' + MONTHS[(e.month || 1) - 1] : ''}</b><span>${esc(e.what || '')}<small>${esc(e.kind || '')}${e.impact ? ' · ' + esc(e.impact) + ' impact' : ''}</small></span></div>`).join('')}</div>` : ''}
+                <p class="wtp-mnote">${esc(sweep(rh.note || 'Taller is worse. A month\'s bar stacks the kinds of trouble that struck it over the years read, each sized by how often and how badly.'))}</p>
+            </div>` : '';
+
         const windowsCard = `
             <div class="wtp-card">
                 <h3>The calendar, plainly</h3>
@@ -725,11 +891,11 @@
 
         host.innerHTML = `
             <div class="wtp-hero">
-                <h2>${esc(crop.icon || '🌱')} ${esc(crop.label || 'Your crop')} — ${esc(seasonSaid(p.season, p.year))}</h2>
+                <h2>${esc(crop.icon || '🌱')} ${esc(crop.label || 'Your crop')} — ${esc(seasonSaid(p.season, p.year, p.country))}</h2>
                 <p class="h-win">${esc(bw.label || (m1 + ' ' + (bw.fromDay || '') + (bw.fromYear ? ', ' + bw.fromYear : '') + ' – ' + m2 + ' ' + (bw.toDay || '') + (bw.toYear ? ', ' + bw.toYear : '')))}</p>
                 <p class="h-why">${esc(sweep(bw.why))}</p>
                 <div class="wtp-chips">
-                    <span class="wtp-chip">📍 ${esc(p.location || '')}</span>
+                    <span class="wtp-chip">📍 ${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc((rulesFor(p.country).name) || p.country) : ''}</span>
                     ${p.variety ? `<span class="wtp-chip">🧬 ${esc(p.variety)}</span>` : ''}
                     <span class="wtp-chip">Confidence: ${esc(r.confidence || 'moderate')}</span>
                     ${item.charged ? `<span class="wtp-chip">${item.charged} credits</span>` : ''}
@@ -742,15 +908,18 @@
                 <h3>How each month scores for planting</h3>
                 <div class="wtp-months">
                     ${scores.map((s) => {
-                        const cls = bestMonths.has(s.month) ? 'is-best' : (s.score >= 65 ? 'is-good' : (s.score >= 35 ? 'is-poor' : 'is-bad'));
+                        // The window is deep green; outside it, 60 and up is still green, 25–59 amber, under 25 red.
+                        const cls = bestMonths.has(s.month) ? 'is-best' : (s.score >= 60 ? 'is-good' : (s.score >= 25 ? 'is-poor' : 'is-bad'));
                         return `<div class="wtp-mcol">
                             <div class="wtp-mbar ${cls}" style="height:${Math.max(4, s.score)}%" title="${esc(s.note || '')}"></div>
-                            <span class="wtp-mlbl">${MONTHS[(s.month || 1) - 1]}${s.year && p.season === 'dry' ? `<i>${esc(String(s.year).slice(-2))}</i>` : ''}</span>
+                            <span class="wtp-mlbl">${MONTHS[(s.month || 1) - 1]}${s.year && (p.season === 'dry' || p.season === 'winter') ? `<i>${esc(String(s.year).slice(-2))}</i>` : ''}</span>
                         </div>`;
                     }).join('')}
                 </div>
                 <p class="wtp-mnote">Green is the recommended window; lighter green still works, amber is risky, red is asking for trouble. Hover a bar for its note.</p>
             </div>
+
+            ${riskCard}
 
             ${(r.threats || []).length ? `
             <div class="wtp-card">
@@ -770,30 +939,38 @@
                     <ul class="wtp-gap">${(r.dataGaps || []).map((g) => `<li>${esc(g)}</li>`).join('')}</ul>` : ''}
             </div>
 
+            ${(r.webSources || []).length ? `
+            <div class="wtp-card">
+                <h3>🌐 What Anee read</h3>
+                <div class="va-links">${(r.webSources || []).map((s) => `<a class="va-link" href="${esc(s.url)}" target="_blank" rel="noopener nofollow"><span class="l-t">${esc(s.title || s.url)}</span><span class="l-h">${esc(hostOf(s.url))}</span></a>`).join('')}</div>
+            </div>` : ''}
+
             <div class="wtp-card">
                 <h3>🧭 A guide, not a promise</h3>
                 <p class="wtp-fine">Weather and climate carry real uncertainty, and no analysis can see a particular storm. What this gives you is a data-grounded starting point — the patterns of past seasons weighed against your crop and your field — which beats deciding with nothing to compare against. Check PAGASA advisories as planting approaches.</p>
             </div>
 
             <div class="wtp-acts">
-                <button type="button" class="btn btn-primary w-full" id="${mode === 'fresh' ? 'wtpAttach' : 'wtpAttachSaved'}">
+                <button type="button" class="btn btn-primary w-full" data-wtp-attach>
                     ${OPT && OPT.aneeFace ? `<img class="wtp-anee-face" src="${esc(OPT.aneeFace)}" alt="">` : '🤖'} Attach to Anee
                 </button>
-                ${mode === 'fresh' ? `<button type="button" class="btn btn-white w-full" id="wtpAgain">⚡ Run another analysis</button>` : ''}
-                <button type="button" class="btn btn-white w-full" id="wtpDelete">🗑 Delete</button>
+                ${mode === 'fresh' ? `<button type="button" class="btn btn-white w-full" data-wtp-again>⚡ Run another analysis</button>` : ''}
+                <button type="button" class="btn btn-white w-full" data-wtp-delete>🗑 Delete</button>
             </div>`;
 
         host.hidden = false;
-        requestAnimationFrame(() => requestAnimationFrame(() => host.classList.add('is-drawn')));
-        host.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (!quiet) {
+            requestAnimationFrame(() => requestAnimationFrame(() => host.classList.add('is-drawn')));
+            host.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
         // A finished run is already on the shelf, so both views carry the
         // same three verbs: attach, run again (fresh only), delete.
-        host.querySelector(mode === 'fresh' ? '#wtpAttach' : '#wtpAttachSaved').addEventListener('click', () => {
+        host.querySelector('[data-wtp-attach]').addEventListener('click', () => {
             if (item.savedId) window.location.href = U.anee + '?analysis=' + item.savedId;
         });
-        if (mode === 'fresh') host.querySelector('#wtpAgain').addEventListener('click', wizardBack);
-        host.querySelector('#wtpDelete').addEventListener('click', async () => {
+        host.querySelector('[data-wtp-again]')?.addEventListener('click', () => { VIEW_MODE = null; closeView(); wizardBack(); });
+        host.querySelector('[data-wtp-delete]').addEventListener('click', async () => {
             const ok = window.confirmAction
                 ? await confirmAction({ title: 'Delete this analysis?', message: 'The credits it cost are already spent; only the report goes.', confirmText: 'Delete', danger: true })
                 : confirm('Delete this analysis?');
@@ -802,6 +979,8 @@
                 const res = await api(U.del(item.savedId), { method: 'DELETE' });
                 toast(res.message);
                 host.hidden = true;
+                VIEW_MODE = null;
+                closeView();
                 loadSaved();
                 if (mode === 'fresh') wizardBack();
             } catch (err) { toast(err.message, 'error'); }
@@ -812,23 +991,46 @@
        already lives there. */
     function loadSavedQuietly() { loadSaved().catch(() => {}); }
 
-    /* ---------------- saved ---------------- */
-    async function loadSaved() {
-        try {
-            // eslint-disable-next-line no-empty
-            const res = await api(U.list + '?_=' + Date.now(), { method: 'GET' });
-            const rows = res.data.rows || [];
-            WTP_ROWS = rows;
-            $id('wtpSavedList').innerHTML = rows.map((r) => `
+    /* ---------------- saved ----------------
+       A page at a time (twenty), more as the farmer scrolls, and a search
+       that asks the server -- a shelf of a hundred reports must not arrive
+       whole, and a name must be findable. */
+    const SHELF = { page: 1, hasMore: false, q: '', busy: false };
+    const rowHtml = (r) => `
                 <button type="button" class="wtp-saved" data-saved="${r.id}">
                     <span class="grow min-w-0"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.at)} · ${r.credits} credits</small></span>
                     <span role="button" tabindex="0" class="wtp-pen" data-meta="${r.id}" title="Edit name and description" aria-label="Edit ${esc(r.title)}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:.85rem;height:.85rem"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </span>
                     <svg class="w-4 h-4 text-gray-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                </button>`).join('');
-            $id('wtpSavedEmpty').classList.toggle('hidden', rows.length > 0);
+                </button>`;
+    async function loadSaved(more) {
+        if (SHELF.busy) return;
+        SHELF.busy = true;
+        try {
+            const page = more ? SHELF.page + 1 : 1;
+            const res = await api(U.list + '?page=' + page + '&q=' + encodeURIComponent(SHELF.q) + '&_=' + Date.now(), { method: 'GET' });
+            const rows = res.data.rows || [];
+            SHELF.page = page;
+            SHELF.hasMore = !!res.data.hasMore;
+            WTP_ROWS = more ? WTP_ROWS.concat(rows) : rows;
+            const html = rows.map(rowHtml).join('');
+            if (more) $id('wtpSavedList').insertAdjacentHTML('beforeend', html); else $id('wtpSavedList').innerHTML = html;
+            $id('wtpSavedEmpty').classList.toggle('hidden', WTP_ROWS.length > 0);
+            $id('wtpSavedEmpty').querySelector('p.font-bold').textContent = SHELF.q ? 'Nothing matches that' : 'Nothing saved yet';
+            $id('wtpSavedMore').hidden = !SHELF.hasMore;
         } catch (err) { toast(err.message, 'error'); }
+        finally { SHELF.busy = false; }
+    }
+    // Typing searches the shelf, a beat after the last key.
+    let shelfTimer = null;
+    $id('wtpSavedSearch').addEventListener('input', () => {
+        clearTimeout(shelfTimer);
+        shelfTimer = setTimeout(() => { SHELF.q = $id('wtpSavedSearch').value.trim(); loadSaved(false); }, 280);
+    });
+    // Scrolling to the foot of the list asks for the next page.
+    if ('IntersectionObserver' in window) {
+        new IntersectionObserver((entries) => { if (entries.some((e) => e.isIntersecting) && SHELF.hasMore && !SHELF.busy) loadSaved(true); }, { rootMargin: '200px' }).observe($id('wtpSavedMore'));
     }
 
     let WTP_ROWS = [];
@@ -865,9 +1067,7 @@
         if (!b) return;
         try {
             const res = await api(U.one(b.getAttribute('data-saved')), { method: 'GET' });
-            const host = $id('wtpSavedReport');
-            host.classList.remove('is-drawn');
-            drawReport(host, {
+            openView({
                 report: res.data.report, params: res.data.params,
                 charged: res.data.credits, savedId: res.data.id,
             }, 'saved');

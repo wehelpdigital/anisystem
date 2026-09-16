@@ -281,14 +281,39 @@ class AiSetting extends BaseModel
      * wins where the two still disagree. The admin's text in the database
      * is never changed; only what the model is handed.
      */
+    /**
+     * The country of the FIELD an analysis is about, when it is not the
+     * farmer's own; set with forField(). Null for the chat and for a field
+     * at home.
+     */
+    public ?string $fieldCountry = null;
+
+    /** A copy of these settings for an analysis of a field in another country. */
+    public function forField(?string $country): static
+    {
+        $c = clone $this;
+        $valid = \App\Support\Region::valid($country);
+        $c->fieldCountry = ($valid && $valid !== \App\Support\Region::code()) ? $valid : null;
+
+        return $c;
+    }
+
     private function adminPromptFor(): string
     {
         $text = trim((string) $this->systemPrompt);
         if ($text === '' || ! \App\Support\Region::englishOnly()) {
             return $text;
         }
-        $country = \App\Support\Region::name();
-        $money = \App\Support\Region::currencyName();
+        // The admin's Philippine lines are re-said for the FIELD's country
+        // when an analysis is about a field abroad, else the farmer's.
+        $place = $this->fieldCountry ?: \App\Support\Region::code();
+        $country = \App\Support\Region::name($place);
+        $money = \App\Support\Region::as($place, fn () => \App\Support\Region::currencyName());
+        if ($place === \App\Support\Region::HOME) {
+            // A farmer abroad, a field at home: the Philippine lines stand;
+            // only the language rule below is the farmer's.
+            return $text . "\n\n--- For this farmer, above everything else ---\n" . \App\Support\Region::languageRule();
+        }
         $swap = [
             'serving Filipino farmers' => 'serving farmers in ' . $country,
             'for Filipino farmers' => 'for farmers in ' . $country,
@@ -309,7 +334,8 @@ class AiSetting extends BaseModel
         $text = (string) preg_replace('/,?\s*no\s+["\x{201C}][^"\x{201D}]*(napag-usapan|kanina mo)[^"\x{201D}]*["\x{201D}]/u', '', $text);
 
         return $text . "\n\n--- For this farmer, above everything else ---\n"
-            . 'Anything above that speaks of Filipino farmers, Tagalog, Bisaya, Ilocano or Taglish, of Philippine conditions, of cavans or pesos, does not apply here: this farmer is in '
+            . 'Anything above that speaks of Filipino farmers, Tagalog, Bisaya, Ilocano or Taglish, of Philippine conditions, of cavans or pesos, does not apply here: '
+            . ($this->fieldCountry ? 'the field this question is about is in ' : 'this farmer is in ')
             . $country . '. ' . \App\Support\Region::languageRule()
             . ' Use ' . $money . ', this country\'s seasons, conditions and inputs, and not one Filipino word -- none of the example phrases either.';
     }
@@ -320,7 +346,10 @@ class AiSetting extends BaseModel
         // The persona in the farmer's own words, then the country: where
         // they are, what language, whose recommendations to reach for.
         $persona = \App\Support\Region::englishOnly() ? self::PERSONA_INTL : self::PERSONA;
-        $country = "\n\n--- Where the farmer is ---\n" . \App\Support\Region::promptBlock() . ' ' . \App\Support\Region::languageRule();
+        // Where the farmer is -- or, for an analysis of a field abroad, where
+        // the FIELD is, said so plainly she will not decline for it.
+        $country = "\n\n--- " . ($this->fieldCountry ? 'Where the field is' : 'Where the farmer is') . " ---\n"
+            . \App\Support\Region::promptBlock($this->fieldCountry, \App\Support\Region::code()) . ' ' . \App\Support\Region::languageRule();
 
         return trim($persona . $country . "\n\n" . $this->adminPromptFor())
             . "\n\n" . self::HOUSE_RULES

@@ -89,6 +89,8 @@ class WhenToPlantController extends Controller
             ])->values(),
             'problems' => self::PROBLEMS,
             'seasons' => \App\Support\Region::seasons(),
+            // The farmer's own country: the field is there unless they say otherwise.
+            'country' => \App\Support\Region::code(),
             'years' => range((int) now('Asia/Manila')->format('Y'), (int) now('Asia/Manila')->format('Y') + 2),
             'quote' => $canUse ? $this->quote($settings) : null,
             'aneeFace' => $settings->faceUrl(),
@@ -130,9 +132,14 @@ class WhenToPlantController extends Controller
             return $this->json(false, 'The analysis needs the AI Technician (Boss or Lifetime plan).', [], 403);
         }
 
+        // The field may be in another country than the farmer: its seasons
+        // are that country's, and so is the advice.
+        $fieldCountry = \App\Support\Region::valid($request->input('country')) ?: \App\Support\Region::code();
+        $fieldSeasons = \App\Support\Region::as($fieldCountry, fn () => array_keys(\App\Support\Region::seasons()));
         $v = Validator::make($request->all(), [
             'year' => 'required|integer|min:' . now('Asia/Manila')->format('Y') . '|max:' . (now('Asia/Manila')->year + 2),
-            'season' => 'required|in:' . implode(',', array_keys(\App\Support\Region::seasons())),
+            'country' => 'nullable|string|size:2',
+            'season' => 'required|in:' . implode(',', $fieldSeasons),
             'crop' => 'required|string',
             'variety' => 'nullable|string|max:80',
             'location' => 'required|string|max:160',
@@ -170,8 +177,11 @@ class WhenToPlantController extends Controller
         }
 
         $p = $this->params($request);
+        // A field in another country than the farmer's: Anee is told so in
+        // her own instructions, or she declines for being "set up" at home.
+        $settings = $settings->forField($p['country']);
         $crop = CropCatalog::CROPS[$p['crop']];
-        $title = CropCatalog::label($p['crop']) . ' · ' . self::seasonTitle($p['season'], (int) $p['year']) . ' · ' . $p['location'];
+        $title = CropCatalog::label($p['crop']) . ' · ' . \App\Support\Region::seasonTitle($p['season'], (int) $p['year'], $p['country']) . ' · ' . $p['location'];
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(),
             'title' => mb_substr($title, 0, 190),
@@ -198,28 +208,29 @@ class WhenToPlantController extends Controller
                 'pending' => true, 'id' => $id,
             ]])->send();
             fastcgi_finish_request();
-            $this->runJob($id, (int) $payer->id, $settings, $prompt);
+            $this->runJob($id, (int) $payer->id, $settings, $prompt, $p);
             exit;
         }
 
-        @set_time_limit(300);
-        $this->runJob($id, (int) $payer->id, $settings, $prompt);
+        @set_time_limit(600);
+        $this->runJob($id, (int) $payer->id, $settings, $prompt, $p);
 
         return $this->jobState($id);
     }
 
     /** The model call and the charge, off the request's clock. */
-    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt): void
+    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, array $p = []): void
     {
         try {
             /* Off the request's clock, the job can afford patience a chat
-             * cannot: a transport blip (the provider timing out once) gets a
-             * second try before the job is called failed. */
-            // A document-sized answer lane: the chat cap (1200) cut the
-            // JSON mid-object on longer runs, which read as "unreadable".
-            // The transport retry, the JSON retry and the token sum all live
-            // in askForJson, the same for every document Anee writes.
-            $result = $this->ai->askForJson($settings, $prompt, 4000, fn (string $t) => $this->parseReport($t));
+             * cannot. Two asks (2026-09-17): first the web is read for the
+             * region's twenty-year record of storms, droughts, floods and
+             * heat (a search-backed research step -- asked for JSON the
+             * model does not search, see AiClient::researchThenJson), then
+             * the document is written with those notes appended. A
+             * document-sized answer lane: the chat cap (1200) cut the JSON
+             * mid-object on longer runs, which read as "unreadable". */
+            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 4500, fn (string $t) => $this->parseReport($t));
             $report = $result['data'];
             if ($report === null) {
                 // The head of what came back, kept where a debugger can read
@@ -229,6 +240,10 @@ class WhenToPlantController extends Controller
                 ]);
                 throw new \RuntimeException($result['error'] ?? 'The analysis came back unreadable. Nothing was charged — please try again.');
             }
+
+            $report['webSources'] = (array) ($result['sources'] ?? []);
+            $report['searched'] = (bool) ($result['searched'] ?? false);
+            $report['researchNotes'] = mb_substr((string) ($result['researchText'] ?? ''), 0, 6000);
 
             // The charge lands through the same ledger every question uses,
             // so the subscription page's credit log shows it.
@@ -301,7 +316,7 @@ class WhenToPlantController extends Controller
 
         $p = (array) $request->input('params');
         $crop = CropCatalog::CROPS[$p['crop'] ?? ''] ?? null;
-        $title = ($crop['label'] ?? 'Crop') . ' · ' . self::seasonTitle((string) ($p['season'] ?? ''), (int) ($p['year'] ?? now('Asia/Manila')->year))
+        $title = ($crop['label'] ?? 'Crop') . ' · ' . \App\Support\Region::seasonTitle((string) ($p['season'] ?? ''), (int) ($p['year'] ?? now('Asia/Manila')->year), $p['country'] ?? null)
             . ' · ' . ($p['location'] ?? '');
 
         $id = DB::table('as_plant_analyses')->insertGetId([
@@ -318,14 +333,23 @@ class WhenToPlantController extends Controller
         return $this->json(true, 'Saved — it is on the Saved tab now.', ['id' => $id]);
     }
 
-    public function list()
+    public function list(Request $request)
     {
+        $q = trim((string) $request->query('q', ''));
+        $page = max(1, (int) $request->query('page', 1));
+        $per = 20;
         $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())
             ->where('kind', 'when')
             ->where('deleteStatus', 1)->where('status', 'ready')->orderByDesc('id')
-            ->get(['id', 'title', 'description', 'credits', 'created_at']);
+            
+            ->when($q !== '', fn ($w) => $w->where(fn ($x) => $x->where('title', 'like', '%' . $q . '%')->orWhere('description', 'like', '%' . $q . '%')))
+            ->skip(($page - 1) * $per)->take($per + 1)
+->get(['id', 'title', 'description', 'credits', 'created_at']);
 
-        return $this->json(true, 'ok', ['rows' => $rows->map(fn ($r) => [
+        $hasMore = $rows->count() > $per;
+        $rows = $rows->take($per);
+
+        return $this->json(true, 'ok', ['page' => $page, 'hasMore' => $hasMore, 'q' => $q, 'rows' => $rows->map(fn ($r) => [
             'id' => $r->id,
             'title' => $r->title,
             'description' => $r->description,
@@ -450,7 +474,47 @@ class WhenToPlantController extends Controller
             'variety' => trim((string) $request->input('variety', '')),
             'location' => trim((string) $request->input('location')),
             'problems' => array_values((array) $request->input('problems', [])),
+            'country' => \App\Support\Region::valid($request->input('country')) ?: \App\Support\Region::code(),
         ];
+    }
+
+    /**
+     * The research brief: the region's twenty-year record of the things
+     * that ruin a planting, read from the web before the document is
+     * written. Prose, not JSON -- asked for JSON the model does not search.
+     */
+    private function researchPrompt(array $p): string
+    {
+        $fc = $p['country'] ?? \App\Support\Region::code();
+        $fieldPH = $fc === \App\Support\Region::HOME;
+        $country = \App\Support\Region::name($fc);
+        $met = \App\Support\Region::as($fc, fn () => \App\Support\Region::agency('met'));
+        $sources = \App\Support\Region::as($fc, fn () => \App\Support\Region::agency('sources'));
+        $storms = $fieldPH
+            ? 'tropical cyclones (typhoons and tropical storms) that made landfall in or passed close enough to damage crops in the province or region'
+            : 'severe storms that damaged crops in the region (hurricanes or tropical storms where they occur, plus severe thunderstorms, hail, tornadoes and damaging wind events)';
+        $frost = $fieldPH ? '' : "\n6. Frost: the average first and last frost dates for the area and the years a late spring or early autumn frost damaged crops.";
+        $to = (int) now('Asia/Manila')->year;
+        $from = $to - 20;
+        $cropLabel = CropCatalog::label($p['crop']);
+
+        return <<<PROMPT
+You are a research assistant for agronomy in {$country} with web search. SEARCH THE WEB NOW and write research notes on the climate RISK RECORD of one place over the past twenty years ({$from}–{$to}). Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it.
+
+THE PLACE
+- {$p['location']}, {$country}. The farmer will plant {$cropLabel} there and needs to know, month by month, what has historically gone wrong.
+
+FIND, IN THIS ORDER
+1. Storms: the {$storms}, {$from}–{$to}: for each, the year, the month, the name where it has one, and the damage to agriculture where reported (hectares, pesos or dollars, or a plain word like severe / moderate).
+2. Drought and dry spells: the El Niño years and other drought years that hurt crops in this region in the same span, with the months affected and the damage reported.
+3. Floods: flooding events (from storms, monsoon rains or river overflow) that damaged crops there, with year, month and damage.
+4. Heat: heat waves or hot dry spells that damaged crops or stressed them at flowering, with year and months.
+5. The region's monthly rainfall and temperature normals, and its usual wet and dry (or growing and dormant) months, from {$met}.{$frost}
+
+THEN TALLY: for each of the twelve months, how many of the twenty years had a damaging event of each kind in that month, and how bad they tended to be. List the five worst years for this place and what happened. Where the record is thin or you could not find it, say so plainly.
+
+Prefer {$sources}, disaster databases (EM-DAT, ReliefWeb, NDRRMC / national disaster agencies), the national statistics office's crop-damage reports, and reputable news archives. Write plain prose notes under the headings, at most 900 words, no JSON, no markdown tables.
+PROMPT;
     }
 
     /**
@@ -475,13 +539,18 @@ class WhenToPlantController extends Controller
             ? 'the observed ENSO state AND the official NOAA CPC forecast given above (weigh its stated probabilities toward the planting window rather than assuming neutral conditions, and say plainly where the forecast still leaves uncertainty)'
             : 'general ENSO behaviour — state plainly that you cannot know the live ENSO state for ' . $p['year'] . ' and mark it as uncertainty rather than inventing a forecast';
 
-        $countryName = \App\Support\Region::name();
-        $regionBlock = \App\Support\Region::promptBlock();
+        // The field's country, which may not be the farmer's: its name, its
+        // weather authority, its seasons; the language stays the farmer's.
+        $fc = $p['country'] ?? \App\Support\Region::code();
+        $fieldPH = $fc === \App\Support\Region::HOME;
+        $countryName = \App\Support\Region::name($fc);
+        $regionBlock = \App\Support\Region::promptBlock($fc, \App\Support\Region::code());
         $cropLabel = CropCatalog::label($p['crop']);
-        $climateRule = \App\Support\Region::ph()
+        $met = \App\Support\Region::as($fc, fn () => \App\Support\Region::agency('met'));
+        $climateRule = $fieldPH
             ? 'PAGASA climatological normals (wet/dry season timing for the region named), historical tropical-cyclone seasonality in the Philippines (including the Aug–Oct peak and regional differences)'
-            : 'the climatological normals for the region named as published by ' . \App\Support\Region::agency('met') . ' (frost dates and the growing season where they apply, rainfall and temperature timing), the historical severe-weather seasonality of that region (storms, heat, drought, floods)';
-        $crossNote = \App\Support\Region::ph()
+            : 'the climatological normals for the region named as published by ' . $met . ' (frost dates and the growing season where they apply, rainfall and temperature timing), the historical severe-weather seasonality of that region (storms, heat, drought, floods)';
+        $crossNote = $fieldPH
             ? 'which for the dry season runs from the end of ' . $p['year'] . ' into the first months of the following year'
             : 'which may cross into the following year for a winter or cool-season planting';
 
@@ -490,7 +559,7 @@ You are an agronomic decision-support analyst for farming in {$countryName}. Rec
 
 FACTS GIVEN
 - {$regionBlock}
-- Target season: {$this->seasonWords($p['season'], (int) $p['year'])}
+- Target season: {$this->seasonWords($p['season'], (int) $p['year'], $fc)}
 - Crop: {$cropLabel} — typical days to maturity: {$maturity}
 - Growth stages for calendar arithmetic: {$stages}
 - Stated variety: "{$p['variety']}" — use published characteristics of this variety ONLY if you genuinely know them; otherwise say variety-specific data is unavailable in dataGaps and reason from the crop's typical range. Never invent varietal traits.
@@ -498,17 +567,19 @@ FACTS GIVEN
 - Field problems the farmer reports: {$problems}
 {$ensoBlock}
 GROUND RULES
+- Research notes gathered from the web just now follow at the end of this brief: the place's twenty-year record of storms, droughts, floods and heat, month by month, with its worst years. Rely on them first for riskHistory and for the avoid windows; where they and memory disagree, the notes win; where they are silent, say so in dataGaps.
 - Reason only from established knowledge: {$climateRule}, {$ensoRule}, soil-water behaviour implied by the reported problems, and the crop calendar arithmetic above.
 - Where the given facts cannot answer something (exact distance to river or sea, microclimate, irrigation reliability), name it in dataGaps instead of guessing.
 - Be scientific and neutral: no product recommendations, no marketing tone, no bias toward any input or brand.
 - Write the summary and the "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
 
 Return ONLY a valid JSON object — no code fences, no commentary — in exactly this shape:
-{"bestWindow":{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"year":2026,"score":0,"note":""}],"threats":[{"whenNot":"","threat":"","severity":"low"}],"confidence":"moderate","dataGaps":[""],"summary":""}
+{"bestWindow":{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"year":2026,"score":0,"note":""}],"riskHistory":{"years":"","months":[{"month":1,"storm":0,"flood":0,"drought":0,"heat":0,"frost":0,"note":""}],"events":[{"year":2013,"month":11,"kind":"storm","what":"","impact":"high"}],"note":""},"threats":[{"whenNot":"","threat":"","severity":"low"}],"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
 - bestWindow must be a SPECIFIC, actionable range of roughly 2–6 weeks with explicit dates, and its label must spell the dates out WITH THE YEAR (e.g. "Dec 10, 2026 – Jan 5, 2027") — NEVER a season name or a whole season. fromYear/toYear carry the calendar year of each end; for the dry season the window may begin in {$p['year']} and end in the year after, or sit wholly in the year after.
 - avoidWindows: one to three ranges to KEEP AWAY FROM, each specific to the month and week and year (e.g. "Late July – mid October 2026") and grounded in the named region's historical typhoon/climate pattern; why says what historically happens there then; severity "moderate" or "high".
 - monthScores carries ALL twelve months of the season's own run, each with its year (for a season that crosses into the next year — the dry season at home, a winter/cool-season planting elsewhere: its first month with its year, then the eleven months after; for the others: January–December {$p['year']}); score 0–100 = how suitable STARTING to plant that month is; note ≤ 10 words. Differentiate months even inside the target season — a flat run of equal scores is an unfinished answer.
+- riskHistory: the place's twenty-year record from the research notes. years = the span read (e.g. "2006–2025"). months = ALL twelve calendar months (month 1–12, calendar order); for each kind — storm (typhoons/hurricanes/severe storms), flood, drought, heat, frost — a 0–100 DAMAGE INDEX for that month: how often a damaging event of that kind struck in that month over the twenty years, weighted by how bad it was (0 = never, 100 = most years and severe); frost is 0 where it does not occur; note ≤ 12 words on the month. events = the four to eight worst events found, each with year, month, kind, what (≤ 14 words, name the storm where it has one) and impact "high"/"moderate". note ≤ 40 words on how the record was read and how thin it is. Never invent an event; a month with no record scores 0 and says so.
 - threats: at most three, what the farmer risks by planting OUTSIDE bestWindow, each naming when; severity "low"/"moderate"/"high"; confidence "low"/"moderate"/"high"; dataGaps at most three; summary ≤ 90 words. Keep the whole answer tight.
 PROMPT;
     }
@@ -523,10 +594,10 @@ PROMPT;
      * year (the owner's rule, 2026-09-15). The wet season sits inside its
      * own year; the third crop is the gap after it.
      */
-    /** The season spelled out with its months — the country's own (App\Support\Region). */
-    private function seasonWords(string $key, int $year): string
+    /** The season spelled out with its months — the field's country's own (App\Support\Region). */
+    private function seasonWords(string $key, int $year, ?string $country = null): string
     {
-        return \App\Support\Region::seasonWords($key, $year);
+        return \App\Support\Region::as($country ?: \App\Support\Region::code(), fn () => \App\Support\Region::seasonWords($key, $year));
     }
 
     /** The season named with its years, for titles: "Dry season 2026–27". */

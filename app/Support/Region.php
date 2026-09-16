@@ -437,8 +437,16 @@ final class Region
                 continue;
             }
             $m = $code === '*' ? $base : array_replace_recursive($base, (array) $block);
+            // Lists are the country's own, never a union with the base's.
+            foreach (['seasons', 'yieldUnits', 'divisions'] as $list) {
+                if ($code !== '*' && array_key_exists($list, (array) $block)) {
+                    $m[$list] = $block[$list];
+                }
+            }
             $mode = (string) data_get($m, 'address.divisions', 'free');
             $out[$code] = [
+                'name' => $code === '*' ? 'International' : self::name($code),
+                'seasons' => (array) ($m['seasons'] ?? []),
                 'phone' => ['placeholder' => (string) data_get($m, 'phone.placeholder', ''), 'hint' => (string) data_get($m, 'phone.hint', '')],
                 'address' => (array) ($m['address'] ?? []),
                 'lot' => (array) ($m['lot'] ?? []),
@@ -496,8 +504,11 @@ final class Region
     }
 
     /** The season's title with its years: "Dry season 2026–27", "Spring planting 2026". */
-    public static function seasonTitle(string $key, int $year): string
+    public static function seasonTitle(string $key, int $year, ?string $country = null): string
     {
+        if ($country && self::valid($country) && self::valid($country) !== self::code()) {
+            return self::as($country, fn () => self::seasonTitle($key, $year));
+        }
         $label = self::seasons()[$key] ?? ucfirst($key);
         if (in_array($key, ['dry', 'winter'], true)) {
             return $label . ' ' . $year . '–' . substr((string) ($year + 1), -2);
@@ -515,18 +526,37 @@ final class Region
         return (string) self::get('agencies.' . $key, '');
     }
 
-    /** One line every analysis prompt carries: where, in what language, on whose word. */
-    public static function promptBlock(): string
+    /**
+     * One line every analysis prompt carries: where, in what language, on
+     * whose word. `$country` is the FIELD's country when it is not the
+     * farmer's own (a Filipino farmer asking about a field in Iowa gets
+     * Iowa's agencies and dollars); the language stays the farmer's.
+     */
+    public static function promptBlock(?string $country = null, ?string $languageOf = null): string
     {
-        $c = self::conf();
-        $lang = self::englishOnly()
+        $farmer = self::code();
+        $field = self::valid($country) ?: $farmer;
+        $c = self::conf($field);
+        $langCode = self::valid($languageOf) ?: $farmer;
+        $lang = (data_get(self::conf($langCode), 'language', 'en') === 'en')
             ? 'Write in plain English only — no Filipino/Tagalog words, expressions or interjections anywhere in the document.'
             : 'Write in English with the odd Tagalog farm word where it is the natural one.';
-
-        return 'COUNTRY: the farmer is in ' . $c['name'] . ' (' . $c['code'] . '). ' . $lang
-            . ' Money is in ' . $c['currency']['name'] . ' (' . $c['currency']['symbol'] . ').'
+        $research = self::as($field, fn () => self::agency('research'));
+        $met = self::as($field, fn () => self::agency('met'));
+        $tail = ' Money is in ' . $c['currency']['name'] . ' (' . $c['currency']['symbol'] . ').'
             . ' Name only varieties, products and practices actually available and registered in ' . $c['name'] . '.'
-            . ' Authorities to prefer: ' . self::agency('research') . '; weather and climate from ' . self::agency('met') . '.';
+            . ' Authorities to prefer: ' . $research . '; weather and climate from ' . $met . '.';
+        if ($field === $farmer) {
+            return 'COUNTRY: the farmer is in ' . $c['name'] . ' (' . $c['code'] . '). ' . $lang . $tail;
+        }
+
+        // A field in another country than the farmer's account: the field
+        // wins on every fact, and she must not decline for being "set up"
+        // for the farmer's home country.
+        return 'COUNTRY: THE FIELD IS IN ' . $c['name'] . ' (' . $c['code'] . '). The farmer\'s account is in ' . self::name($farmer)
+            . ', but this question is about a field in ' . $c['name'] . ' — every climate fact, season, weather record, agency, variety and product must be '
+            . $c['name'] . '\'s. Anything you were told about serving farmers in ' . self::name($farmer) . ' does not limit you here: answer for '
+            . $c['name'] . ' as fully as you would for a farmer there, and never decline or redirect to ' . self::name($farmer) . '. ' . $lang . $tail;
     }
 
     /** The word rule alone, for the chat persona. */
