@@ -83,29 +83,38 @@ final class Region
 
     private static function resolve(): string
     {
-        $user = Auth::user();
-        if ($user && ($c = self::valid($user->country ?? null))) {
-            return $c;
-        }
-
         $req = app()->bound('request') ? request() : null;
+        $user = Auth::user();
+
+        // The public face on the address is explicit and wins, even for a
+        // farmer who is logged in: /ph is the Philippines; /en is the
+        // visitor's own country when that is not the Philippines (their
+        // account's, their choice, or where they are), with the US standing
+        // in when nothing else is known. Inside the app there is no face on
+        // the address, and the account's own country rules.
+        $face = $req instanceof Request ? $req->route('face') : null;
+        if ($face === 'ph') {
+            return self::HOME;
+        }
+        $own = $user ? self::valid($user->country ?? null) : null;
+        if ($face === 'en') {
+            $chosen = $req ? self::chosen($req) : null;
+            foreach ([$own, $chosen, $req ? self::detect($req) : null] as $c) {
+                if ($c && $c !== self::HOME) {
+                    return $c;
+                }
+            }
+
+            return 'US';
+        }
+        if ($own) {
+            return $own;
+        }
         if (! $req instanceof Request) {
             return self::HOME;
         }
 
-        // The public face on the URL decides for a visitor: /ph is the
-        // Philippines; /en is the visitor's own country when that is not the
-        // Philippines, with the US standing in when nothing else is known.
-        $face = $req->route('face');
-        if ($face === 'ph') {
-            return self::HOME;
-        }
-        $chosen = self::chosen($req);
-        if ($face === 'en') {
-            return ($chosen && $chosen !== self::HOME) ? $chosen : (self::detectedAway($req) ?? 'US');
-        }
-
-        return $chosen ?: self::detect($req) ?: self::HOME;
+        return self::chosen($req) ?: self::detect($req) ?: self::HOME;
     }
 
     /** What the visitor chose (the flag, or ?country=XX), kept in the session and a cookie. */
@@ -135,14 +144,6 @@ final class Region
         }
 
         return null;
-    }
-
-    /** The detected country when it is not the home market. */
-    private static function detectedAway(Request $req): ?string
-    {
-        $c = self::detect($req);
-
-        return ($c && $c !== self::HOME) ? $c : null;
     }
 
     /** Remember a chosen country for the visitor (the flag, ?country=). */
