@@ -142,7 +142,7 @@
                 <span class="qa-ico"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>When to Plant Analysis</b>
-                    <i>The best planting window for your crop and place, argued from the climate. Uses AI credits.</i>
+                    <i>Deep analyze when is the best planting window for your crops based on historical, crop, weather, climate, and location data.</i>
                 </span>
                 @if ($qWtpLocked)
                     <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
