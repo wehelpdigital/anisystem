@@ -120,7 +120,7 @@
              is. --}}
         <section class="qa-panel" id="globalTools">
             <button type="button" class="qa-panel-head" id="globalToolsHead" aria-expanded="true" aria-controls="globalToolsBody">
-                <span class="qa-panel-ico"><img src="{{ asset('images/time.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
+                <span class="qa-panel-ico"><img src="{{ asset('images/icons/tool-box.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                 <span class="qa-panel-txt">
                     <b>Global and Quick Tools</b>
                     <i>Notes and pictures across every season, and the two ways to add one now.</i>
@@ -166,7 +166,7 @@
                  the farmer's own priorities. --}}
             <a href="{{ route('vary.page') }}" class="qa-tile qa-wtp"
                @if ($qWtpLocked) data-tier-lock="solo" data-lock-say="Variety research comes with the Solo Farmer plan — Anee analyzes the newest {{ \App\Support\Region::ph() ? 'Philippine' : 'local' }} varieties and hybrids deeply and ranks them for your soil, weather and priorities." @endif>
-                <span class="qa-ico"><img src="{{ asset('images/icons/biostimulant.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
+                <span class="qa-ico"><img src="{{ asset('images/icons/biotechnology.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>Variety Research & Comparison</b>
                     <i>Which variety of your crop — inbred and hybrid, analyzed deeply, scored on yield, protection, survival and quickness, ranked by what matters to you. Uses AI credits.</i>
