@@ -62,6 +62,7 @@ class CheckoutService
         ?string $gcashPhone,
         ?UploadedFile $screenshot,
         ?string $notes = null,
+        ?float $price = null,
     ): Subscription {
         $now = Carbon::now('Asia/Manila');
 
@@ -150,8 +151,7 @@ class CheckoutService
                 'fieldChanged' => 'paymentMethod',
                 'previousValue' => null,
                 'newValue' => 'manual_gcash',
-                'description' => 'Customer submitted payment details via GCash from anee.io. Amount: ₱'
-                    .number_format($amountSent, 2)
+                'description' => 'Customer submitted payment details via ' . \App\Support\Region::payMethod() . ' from anee.io. Amount: ' . \App\Support\Region::symbol() . number_format($amountSent, 2)
                     .($referenceNumber ? '. Ref: '.$referenceNumber : ''),
                 'ipAddress' => request()->ip(),
                 'userAgent' => request()->userAgent(),
@@ -165,7 +165,9 @@ class CheckoutService
                 'planId' => $plan->id,
                 'planKey' => $plan->planKey,
                 'planName' => $plan->planName,
-                'price' => $plan->price,
+                // What was actually charged: the peso price at home, the
+                // dollar price on the international face (the note says which).
+                'price' => $price ?? $plan->price,
                 'durationDays' => $plan->durationDays,
                 'ecomOrderId' => $orderId,
                 'orderNumber' => $orderNumber,
@@ -204,6 +206,7 @@ class CheckoutService
         ?string $gcashPhone,
         ?UploadedFile $screenshot,
         ?string $notes = null,
+        ?float $price = null,
     ): \App\Models\AiCreditPurchase {
         $now = Carbon::now('Asia/Manila');
         $clientId = $this->ensureCrmClient($user, $now);
@@ -284,8 +287,7 @@ class CheckoutService
                 'fieldChanged' => 'paymentMethod',
                 'previousValue' => null,
                 'newValue' => 'manual_gcash',
-                'description' => 'Customer submitted payment details via GCash from anee.io (AI Credits). Amount: ₱'
-                    .number_format($amountSent, 2)
+                'description' => 'Customer submitted payment details via ' . \App\Support\Region::payMethod() . ' from anee.io (AI Credits). Amount: ' . \App\Support\Region::symbol() . number_format($amountSent, 2)
                     .($referenceNumber ? '. Ref: '.$referenceNumber : ''),
                 'ipAddress' => request()->ip(),
                 'userAgent' => request()->userAgent(),
@@ -299,7 +301,7 @@ class CheckoutService
                 'packId' => $pack->id,
                 'packName' => $pack->packName,
                 'credits' => $pack->credits,
-                'price' => $pack->price,
+                'price' => $price ?? $pack->price,
                 'ecomOrderId' => $orderId,
                 'orderNumber' => $orderNumber,
                 'status' => \App\Models\AiCreditPurchase::STATUS_PENDING,

@@ -65,22 +65,26 @@ class AiCreditController extends Controller
             return redirect()->route('account.subscription')->with('error', 'AI credits are available on Boss and Lifetime plans.');
         }
 
+        // The price is the country's (pesos at home, dollars elsewhere),
+        // and the proof field is a GCash number at home, a PayPal email elsewhere.
+        $price = \App\Support\Region::packPrice($pack);
+        $payPH = \App\Support\Region::ph();
         $request->merge([
-            'gcashPhone' => preg_replace('/[\s\-]+/', '', (string) $request->input('gcashPhone')) ?: null,
+            'gcashPhone' => ($payPH ? preg_replace('/[\s\-]+/', '', (string) $request->input('gcashPhone')) : trim((string) $request->input('gcashPhone'))) ?: null,
         ]);
 
         $data = $request->validate([
             'payerName' => ['required', 'string', 'max:255'],
-            'amountSent' => ['required', 'numeric', 'min:' . (float) $pack->price],
-            'gcashPhone' => ['nullable', 'regex:/^09\d{9}$/'],
+            'amountSent' => ['required', 'numeric', 'min:' . $price],
+            'gcashPhone' => $payPH ? ['nullable', 'regex:/^09\d{9}$/'] : ['nullable', 'string', 'max:120'],
             'referenceNumber' => ['nullable', 'required_without:screenshot', 'string', 'max:100'],
             'screenshot' => ['nullable', 'required_without:referenceNumber', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'notes' => ['nullable', 'string', 'max:2000'],
         ], [
-            'amountSent.min' => 'The amount sent must be at least ₱' . number_format((float) $pack->price, 2) . ' — the full pack price.',
+            'amountSent.min' => 'The amount sent must be at least ' . \App\Support\Region::money($price) . ' — the full pack price.',
             'gcashPhone.regex' => 'Enter the GCash number in the format 09XXXXXXXXX (11 digits).',
-            'referenceNumber.required_without' => 'Provide the GCash reference number or upload a screenshot of the payment.',
-            'screenshot.required_without' => 'Upload a screenshot of the payment or provide the GCash reference number.',
+            'referenceNumber.required_without' => 'Provide the ' . ($payPH ? 'GCash reference number' : 'PayPal transaction ID') . ' or upload a screenshot of the payment.',
+            'screenshot.required_without' => 'Upload a screenshot of the payment or provide the ' . ($payPH ? 'GCash reference number' : 'PayPal transaction ID') . '.',
         ]);
 
         // Per-user mutex, so a double submit cannot create two orders.
@@ -103,7 +107,8 @@ class AiCreditController extends Controller
                 $data['referenceNumber'] ?? null,
                 $data['gcashPhone'] ?? null,
                 $request->file('screenshot'),
-                $data['notes'] ?? null,
+                $payPH ? ($data['notes'] ?? null) : trim('[Paid in ' . \App\Support\Region::currency() . '] ' . ($data['notes'] ?? '')),
+                $price,
             );
         } catch (\Throwable $e) {
             Log::error('anee.io AI credit checkout failed for user ' . $user->id . ': ' . $e->getMessage());

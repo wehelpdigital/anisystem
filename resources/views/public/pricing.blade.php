@@ -3,7 +3,7 @@
 @include('public.partials.site-css')
 
 @section('title', 'Pricing — Plans for Every Farm')
-@section('meta_description', 'anee.io pricing: simple plans paid via GCash, plus AI credits so you only pay Anee for what you ask. No hidden fees, cancel anytime.')
+@section('meta_description', 'anee.io pricing: simple plans paid via ' . \App\Support\Region::payMethod() . ', plus AI credits so you only pay Anee for what you ask. No hidden fees, cancel anytime.')
 
 @section('content')
 
@@ -14,8 +14,8 @@
             <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Simple, farmer-sized pricing</p>
             <h1 class="mt-2 font-heading text-4xl sm:text-5xl font-bold text-white text-balance">Start Free. Grow When You're Ready.</h1>
             <p class="mt-5 text-brand-100 text-base sm:text-lg">
-                The Libre plan is free forever — no card, no trial clock. Upgrades are paid in pesos,
-                through GCash. The AI technician runs on credits on top, so you only ever pay Anee
+                The Libre plan is free forever — no card, no trial clock. Upgrades are paid in {{ \App\Support\Region::currencyName() }},
+                through {{ \App\Support\Region::payMethod() }}. The AI technician runs on credits on top, so you only ever pay Anee
                 for what you actually ask.
             </p>
         </div>
@@ -46,24 +46,26 @@
                                 <span class="pr-per">forever</span>
                             </span>
                             <span class="pr-year">No card. No trial clock. Yours to keep.</span>
-                            <span class="pr-day">₱0.00 a day, for as long as you like</span>
+                            <span class="pr-day">{{ \App\Support\Region::money(0) }} a day, for as long as you like</span>
                         @else
+                            {{-- Pesos at home, dollars on the international face (App\Support\Region). --}}
+                            @php $prM = \App\Support\Region::tierPrice($key, 'month'); $prY = \App\Support\Region::tierPrice($key, 'year'); @endphp
                             <span class="pr-price" x-show="!yearly">
-                                <span class="pr-amount">₱{{ number_format($tier['price']) }}</span>
+                                <span class="pr-amount">{{ \App\Support\Region::priceTag($prM) }}</span>
                                 <span class="pr-per">/ month</span>
                             </span>
                             <span class="pr-price" x-show="yearly" x-cloak>
-                                <span class="pr-amount">₱{{ number_format($tier['priceYear']) }}</span>
+                                <span class="pr-amount">{{ \App\Support\Region::priceTag($prY) }}</span>
                                 <span class="pr-per">/ year</span>
                             </span>
-                            <span class="pr-year" x-show="!yearly">or ₱{{ number_format($tier['priceYear']) }}/year — about ₱{{ number_format((int) round($tier['priceYear'] / 12)) }}/mo</span>
-                            <span class="pr-year" x-show="yearly" x-cloak>That's about ₱{{ number_format((int) round($tier['priceYear'] / 12)) }}/mo, paid once via GCash</span>
+                            <span class="pr-year" x-show="!yearly">or {{ \App\Support\Region::priceTag($prY) }}/year — about {{ \App\Support\Region::priceTag(round($prY / 12, 2)) }}/mo</span>
+                            <span class="pr-year" x-show="yearly" x-cloak>That's about {{ \App\Support\Region::priceTag(round($prY / 12, 2)) }}/mo, paid once via {{ \App\Support\Region::payMethod() }}</span>
                             {{-- What it actually costs to run, said the way a farmer
                                  counts: by the day. A month is an abstraction; a peso a
                                  day is a number you can hold against anything else you
                                  buy on a Tuesday. --}}
-                            <span class="pr-day" x-show="!yearly">That is about ₱{{ number_format($tier['price'] / 30, 2) }} a day</span>
-                            <span class="pr-day" x-show="yearly" x-cloak>That is about ₱{{ number_format($tier['priceYear'] / 365, 2) }} a day</span>
+                            <span class="pr-day" x-show="!yearly">That is about {{ \App\Support\Region::money($prM / 30) }} a day</span>
+                            <span class="pr-day" x-show="yearly" x-cloak>That is about {{ \App\Support\Region::money($prY / 365) }} a day</span>
                         @endif
 
                         <ul class="pr-list">
@@ -107,7 +109,7 @@
                         you've recorded. Credits never expire.
                     </p>
                     <ul class="fx-list mt-5">
-                        <li style="color:#e8efe1"><svg fill="none" stroke="#a8cc7e" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Packs start at ₱99 — paid through GCash like everything else</li>
+                        <li style="color:#e8efe1"><svg fill="none" stroke="#a8cc7e" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Packs start at {{ \App\Support\Region::priceTag(\App\Support\Region::packPrice(\App\Models\AiCreditPack::where('deleteStatus', 1)->where('isActive', 1)->orderBy('price')->first() ?: (object) ['price' => 99, 'packKey' => 'starter'])) }} — paid through {{ \App\Support\Region::payMethod() }} like everything else</li>
                         <li style="color:#e8efe1"><svg fill="none" stroke="#a8cc7e" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Bigger packs carry bonus credits</li>
                         <li style="color:#e8efe1"><svg fill="none" stroke="#a8cc7e" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Every feature shows its price in credits before you run it</li>
                     </ul>
@@ -135,12 +137,12 @@
         <div class="max-w-4xl mx-auto px-4 sm:px-6">
             <div class="max-w-2xl mx-auto text-center reveal">
                 <p class="text-sm font-bold uppercase tracking-wider text-brand-600">No card needed</p>
-                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink">Paying is a GCash send away</h2>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink">Paying is a {{ \App\Support\Region::payMethod() }} send away</h2>
             </div>
             <div class="mt-10 grid gap-4 sm:grid-cols-3">
                 @foreach ([
                     ['1', 'Pick your plan', 'Choose inside the app after signing up — plans and credit packs live in the same shop.'],
-                    ['2', 'Send via GCash', 'Send the amount and upload your receipt right in the checkout.'],
+                    ['2', 'Send via ' . \App\Support\Region::payMethod(), 'Send the amount and upload your receipt right in the checkout.'],
                     ['3', 'We activate you', 'Our team verifies and emails you — renewals stack on your remaining days.'],
                 ] as [$n, $t, $p])
                     <div class="card card-hover reveal text-center">

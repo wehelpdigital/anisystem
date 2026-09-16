@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Pay via GCash')
-@section('page-title', 'Pay via GCash')
-@section('page-subtitle', $pack->packName.' · ₱ '.number_format((float) $pack->price, 2))
+@section('title', 'Pay via ' . \App\Support\Region::payMethod())
+@section('page-title', 'Pay via ' . \App\Support\Region::payMethod())
+@section('page-subtitle', $pack->packName.' · '.\App\Support\Region::money(\App\Support\Region::packPrice($pack)))
 @section('back', route('ai.credits'))
 
 @section('content')
 @include('purchase.partials.gcash-checkout', [
     'gcash' => $gcash,
-    'price' => (float) $pack->price,
+    'price' => \App\Support\Region::packPrice($pack),
     'summaryLabel' => $pack->packName.' AI Credits',
     'summaryMeta' => number_format($pack->credits).' credits',
     'submitUrl' => route('ai.credits.submit', $pack->packKey),

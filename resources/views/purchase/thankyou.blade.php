@@ -45,7 +45,7 @@
                 </h2>
                 @if ($status === 'pending')
                     <p class="text-sm text-gray-600 mt-2 max-w-xs mx-auto">
-                        Our team verifies GCash payments manually — you will get an email once approved.
+                        Our team verifies {{ \App\Support\Region::payMethod() }} payments manually — you will get an email once approved.
                     </p>
                 @elseif ($status === 'rejected')
                     <p class="text-sm text-gray-600 mt-2 max-w-xs mx-auto">
@@ -66,7 +66,7 @@
                 </div>
                 <div class="flex items-center justify-between px-4 py-3 text-sm">
                     <span class="text-gray-500">Amount</span>
-                    <span class="font-semibold text-gray-900">₱ {{ number_format((float) $subscription->price, 2) }}</span>
+                    <span class="font-semibold text-gray-900">{{ \App\Support\Region::money((float) $subscription->price) }}</span>
                 </div>
                 <div class="flex items-center justify-between px-4 py-3 text-sm">
                     <span class="text-gray-500">Status</span>

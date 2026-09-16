@@ -3,7 +3,7 @@
         const number = document.getElementById('gcashNumber')?.textContent.trim();
         if (!number) return;
         navigator.clipboard?.writeText(number).then(
-            () => toast('GCash number copied.'),
+            () => toast(((window.ANEE_REGION || {}).ph === false ? 'PayPal email' : 'GCash number') + ' copied.'),
             () => toast('Could not copy — please copy it manually.', 'error')
         );
     }

@@ -10,6 +10,14 @@
       $submitUrl    string  route the form posts to
       $user         current user
 --}}
+@php
+    /* The way this country pays (App\Support\Region): GCash at home,
+       PayPal everywhere else — the same manual-proof flow either way. */
+    $payPH = \App\Support\Region::ph();
+    $payMethod = \App\Support\Region::payMethod();
+    $paypal = $payPH ? [] : \App\Support\Region::paypal();
+    $paySym = \App\Support\Region::symbol();
+@endphp
 <div class="max-w-2xl mx-auto space-y-5">
 
     {{-- Order summary --}}
@@ -19,7 +27,7 @@
                 <p class="text-xs font-semibold uppercase tracking-wide text-gray-400">Your order</p>
                 <p class="font-bold text-gray-900">{{ $summaryLabel }} <span class="font-medium text-gray-500">· {{ $summaryMeta }}</span></p>
             </div>
-            <p class="text-2xl font-extrabold text-brand-700 whitespace-nowrap">₱ {{ number_format((float) $price, 2) }}</p>
+            <p class="text-2xl font-extrabold text-brand-700 whitespace-nowrap">{{ \App\Support\Region::money($price) }}</p>
         </div>
     </div>
 
@@ -27,11 +35,35 @@
     <div class="card">
         <div class="card-body">
             <h2 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-100 text-blue-700 text-sm font-extrabold">G</span>
+                <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-100 text-blue-700 text-sm font-extrabold">{{ $payPH ? 'G' : 'P' }}</span>
                 Send your payment to
             </h2>
 
-            @if ($gcash && ($gcash->gcashNumber ?? null))
+            @if (! $payPH)
+                @if (filled($paypal['email']) || filled($paypal['link']))
+                    <div class="rounded-2xl bg-blue-50 border border-blue-100 p-4 sm:p-5 text-center">
+                        @if (filled($paypal['email']))
+                            <p class="text-xl sm:text-2xl font-extrabold tracking-wide text-blue-900 break-all" id="gcashNumber">{{ $paypal['email'] }}</p>
+                        @endif
+                        @if (filled($paypal['name']))
+                            <p class="text-sm font-semibold text-blue-700 mt-1">{{ $paypal['name'] }}</p>
+                        @endif
+                        @if (filled($paypal['link']))
+                            <a href="{{ $paypal['link'] }}" target="_blank" rel="noopener" class="btn btn-primary btn-sm mt-3">Open PayPal to pay {{ \App\Support\Region::money($price) }}</a>
+                        @elseif (filled($paypal['email']))
+                            <button type="button" class="btn btn-white btn-sm mt-3" onclick="copyGcashNumber()">Copy PayPal email</button>
+                        @endif
+                    </div>
+                    @if (filled($paypal['instructions']))
+                        <div class="rounded-xl bg-gray-50 border border-gray-100 px-4 py-3 mt-3 text-sm text-gray-700 whitespace-pre-line">{{ $paypal['instructions'] }}</div>
+                    @endif
+                @else
+                    <div class="rounded-xl bg-gray-50 border border-gray-200 px-4 py-4 text-sm text-gray-600 text-center">
+                        PayPal payment details will be provided by support. Please contact
+                        <span class="font-semibold">support@anee.io</span> to complete your payment in {{ \App\Support\Region::currencyName() }}.
+                    </div>
+                @endif
+            @elseif ($gcash && ($gcash->gcashNumber ?? null))
                 <div class="rounded-2xl bg-blue-50 border border-blue-100 p-4 sm:p-5 text-center">
                     <p class="text-2xl sm:text-3xl font-extrabold tracking-wider text-blue-900" id="gcashNumber">{{ $gcash->gcashNumber }}</p>
                     @if ($gcash->gcashAccountName ?? null)
@@ -64,8 +96,8 @@
             {{-- Steps --}}
             <ol class="mt-5 space-y-3">
                 @foreach ([
-                    'Send ₱ '.number_format((float) $price, 2).' to the GCash number above.',
-                    'Take a screenshot of the receipt, or copy the reference number.',
+                    'Send '.\App\Support\Region::money($price).' to the '.($payPH ? 'GCash number' : 'PayPal account').' above.',
+                    'Take a screenshot of the receipt, or copy the '.($payPH ? 'reference number' : 'transaction ID').'.',
                     'Submit your proof of payment using the form below.',
                 ] as $i => $step)
                     <li class="flex items-start gap-3">
@@ -81,13 +113,13 @@
     <div class="card">
         <div class="card-body">
             <h2 class="text-lg font-bold text-gray-900 mb-1">Submit proof of payment</h2>
-            <p class="text-sm text-gray-500 mb-4">Provide the GCash reference number, a screenshot, or both.</p>
+            <p class="text-sm text-gray-500 mb-4">Provide the {{ $payPH ? 'GCash reference number' : 'PayPal transaction ID' }}, a screenshot, or both.</p>
 
             <form method="POST" action="{{ $submitUrl }}" enctype="multipart/form-data" class="space-y-4" novalidate>
                 @csrf
 
                 <div>
-                    <label for="payerName" class="form-label">Name of the GCash sender</label>
+                    <label for="payerName" class="form-label">Name of the {{ $payMethod }} sender</label>
                     <input id="payerName" name="payerName" type="text"
                         value="{{ old('payerName', $user->full_name) }}" class="form-input" required>
                     @error('payerName') <p class="form-error">{{ $message }}</p> @enderror
@@ -95,23 +127,23 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label for="amountSent" class="form-label">Amount sent (₱)</label>
+                        <label for="amountSent" class="form-label">Amount sent ({{ $paySym }})</label>
                         <input id="amountSent" name="amountSent" type="number" step="0.01" min="{{ (float) $price }}"
                             inputmode="decimal" value="{{ old('amountSent', number_format((float) $price, 2, '.', '')) }}" class="form-input" required>
                         @error('amountSent') <p class="form-error">{{ $message }}</p> @enderror
                     </div>
                     <div>
-                        <label for="gcashPhone" class="form-label">Your GCash number <span class="font-normal text-gray-400">(optional)</span></label>
-                        <input id="gcashPhone" name="gcashPhone" type="tel" inputmode="numeric"
-                            value="{{ old('gcashPhone') }}" class="form-input" placeholder="09XXXXXXXXX">
+                        <label for="gcashPhone" class="form-label">{{ $payPH ? 'Your GCash number' : 'Your PayPal email' }} <span class="font-normal text-gray-400">(optional)</span></label>
+                        <input id="gcashPhone" name="gcashPhone" type="{{ $payPH ? 'tel' : 'email' }}" inputmode="{{ $payPH ? 'numeric' : 'email' }}"
+                            value="{{ old('gcashPhone') }}" class="form-input" placeholder="{{ $payPH ? '09XXXXXXXXX' : 'you@example.com' }}">
                         @error('gcashPhone') <p class="form-error">{{ $message }}</p> @enderror
                     </div>
                 </div>
 
                 <div>
-                    <label for="referenceNumber" class="form-label">GCash reference number</label>
+                    <label for="referenceNumber" class="form-label">{{ $payPH ? 'GCash reference number' : 'PayPal transaction ID' }}</label>
                     <input id="referenceNumber" name="referenceNumber" type="text"
-                        value="{{ old('referenceNumber') }}" class="form-input" placeholder="e.g. 1234 567 8901">
+                        value="{{ old('referenceNumber') }}" class="form-input" placeholder="{{ $payPH ? 'e.g. 1234 567 8901' : 'e.g. 8AB12345CD678901E' }}">
                     <p class="form-hint">Required if you don't upload a screenshot.</p>
                     @error('referenceNumber') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
@@ -146,7 +178,7 @@
 
                 <button type="submit" class="btn btn-accent btn-lg w-full">Submit Payment Proof</button>
                 <p class="text-center text-xs text-gray-500">
-                    Our team verifies GCash payments manually. You will receive an email once your payment is approved.
+                    Our team verifies {{ $payMethod }} payments manually. You will receive an email once your payment is approved.
                 </p>
             </form>
         </div>

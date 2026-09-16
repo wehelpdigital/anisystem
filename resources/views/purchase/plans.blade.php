@@ -2,7 +2,7 @@
 
 @section('title', 'Choose Your Plan')
 @section('page-title', 'Choose Your Plan')
-@section('page-subtitle', 'Pay via GCash — activated after manual verification')
+@section('page-subtitle', 'Pay via ' . \App\Support\Region::payMethod() . ' — activated after manual verification')
 
 @section('content')
 <div class="max-w-4xl mx-auto">
@@ -12,7 +12,7 @@
     <div class="text-center mb-6 md:mb-8">
         <h2 class="text-xl md:text-2xl font-bold text-gray-900">Simple plans, full access</h2>
         <p class="text-sm text-gray-500 mt-1 max-w-lg mx-auto">
-            Every plan unlocks the complete cropping schedule manager. Pay with GCash and our team
+            Every plan unlocks the complete cropping schedule manager. Pay with {{ \App\Support\Region::payMethod() }} and our team
             will verify your payment — usually within the day.
         </p>
     </div>
@@ -35,7 +35,7 @@
                         @endif
                         <h3 class="text-lg font-bold text-gray-900">{{ $plan->planName }}</h3>
                         <div class="mt-2 mb-1 flex items-baseline gap-1.5">
-                            <span class="text-3xl md:text-4xl font-extrabold text-brand-700">₱{{ number_format((float) $plan->price, (float) $plan->price == (int) $plan->price ? 0 : 2) }}</span>
+                            <span class="text-3xl md:text-4xl font-extrabold text-brand-700">{{ \App\Support\Region::priceTag(\App\Support\Region::planPrice($plan)) }}</span>
                             <span class="text-sm font-semibold text-gray-500">/ {{ $plan->duration_label }}</span>
                         </div>
                         @if ($plan->description)
@@ -65,7 +65,7 @@
 
         <p class="text-center text-xs text-gray-500 mt-6 max-w-md mx-auto">
             Payments are verified manually by the anee.io team. Your subscription starts the moment
-            your GCash payment is approved — you'll get an email confirmation.
+            your {{ \App\Support\Region::payMethod() }} payment is approved — you'll get an email confirmation.
         </p>
     @endif
 </div>

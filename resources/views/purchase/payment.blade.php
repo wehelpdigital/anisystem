@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Pay via GCash')
-@section('page-title', 'Pay via GCash')
-@section('page-subtitle', $plan->planName.' · ₱ '.number_format((float) $plan->price, 2))
+@section('title', 'Pay via ' . \App\Support\Region::payMethod())
+@section('page-title', 'Pay via ' . \App\Support\Region::payMethod())
+@section('page-subtitle', $plan->planName.' · '.\App\Support\Region::money(\App\Support\Region::planPrice($plan)))
 @section('back', route('purchase.plans'))
 
 @section('content')
 @include('purchase.partials.gcash-checkout', [
     'gcash' => $gcash,
-    'price' => (float) $plan->price,
+    'price' => \App\Support\Region::planPrice($plan),
     'summaryLabel' => $plan->planName,
     'summaryMeta' => $plan->duration_label,
     'submitUrl' => route('purchase.submit', $plan->planKey),

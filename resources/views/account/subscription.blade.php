@@ -189,7 +189,7 @@
                         @elseif ($status === 'expired')
                             Your subscription has expired. Renew below to regain access to your cropping schedules — your data is safe and waiting for you.
                         @elseif ($status === 'rejected')
-                            Your last payment could not be verified and was rejected. Please subscribe again with a valid GCash payment, or contact support if you believe this is a mistake.
+                            Your last payment could not be verified and was rejected. Please subscribe again with a valid {{ \App\Support\Region::payMethod() }} payment, or contact support if you believe this is a mistake.
                         @elseif ($status === 'cancelled')
                             Your last order was cancelled. Subscribe again below to activate your account.
                         @else
@@ -214,9 +214,9 @@
                         <span class="font-bold text-gray-900" style="font-family:var(--font-heading)">{{ $tier['name'] }}</span>
                         @if ($currentTier === $key)<span class="badge badge-green">Current</span>@endif
                     </div>
-                    <p class="text-2xl font-extrabold text-gray-900 mt-1">{{ $tier['price'] ? '₱' . number_format($tier['price']) : 'Free' }}@if ($tier['price'])<span class="text-xs font-medium text-gray-400">/{{ $tier['period'] }}</span>@endif</p>
+                    <p class="text-2xl font-extrabold text-gray-900 mt-1">{{ $tier['price'] ? \App\Support\Region::priceTag(\App\Support\Region::tierPrice($key)) : 'Free' }}@if ($tier['price'])<span class="text-xs font-medium text-gray-400">/{{ $tier['period'] }}</span>@endif</p>
                     @if (! empty($tier['priceYear']))
-                        <p class="text-xs text-gray-500">or ₱{{ number_format($tier['priceYear']) }}/year</p>
+                        <p class="text-xs text-gray-500">or {{ \App\Support\Region::priceTag(\App\Support\Region::tierPrice($key, 'year')) }}/year</p>
                     @endif
                     <p class="text-xs text-gray-500 mt-0.5">{{ $tier['tagline'] }}</p>
                     <ul class="mt-3 space-y-1.5">
@@ -260,13 +260,13 @@
                                 <p class="text-xs text-gray-500 mt-0.5">Order {{ $subscription->orderNumber }}</p>
                             @endif
                         </div>
-                        <p class="text-lg font-bold text-brand-700 whitespace-nowrap">₱ {{ number_format((float) $subscription->price, 2) }}</p>
+                        <p class="text-lg font-bold text-brand-700 whitespace-nowrap">{{ \App\Support\Region::money($subscription->price) }}</p>
                     </div>
 
                     @if ($status === 'pending')
                         <div class="rounded-xl bg-accent-500/15 border border-accent-500/40 px-4 py-3 text-sm text-gray-800">
                             <span class="font-semibold">Awaiting payment verification.</span>
-                            Our team verifies GCash payments manually — you will get an email once your subscription is approved.
+                            Our team verifies {{ \App\Support\Region::payMethod() }} payments manually — you will get an email once your subscription is approved.
                         </div>
                     @elseif ($status === 'active')
                         @php
@@ -382,7 +382,7 @@
                             </div>
                             <div class="text-right shrink-0">
                                 <span class="badge {{ $hBadge }}">{{ $row->effective_status === 'pending' ? 'Pending' : $hLabel }}</span>
-                                <p class="text-xs font-semibold text-gray-600 mt-1">₱ {{ number_format((float) $row->price, 2) }}</p>
+                                <p class="text-xs font-semibold text-gray-600 mt-1">{{ \App\Support\Region::money($row->price) }}</p>
                             </div>
                         </div>
                     </div>

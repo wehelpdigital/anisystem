@@ -23,7 +23,7 @@
     <div class="card p-4 mb-4 border-l-4 border-accent-500">
         <p class="font-bold text-gray-900">Order {{ $pending->orderNumber }} is awaiting verification</p>
         <p class="text-sm text-gray-500 mt-1">
-            {{ $pending->credits }} credits ({{ $pending->packName }}) will be added once your GCash payment is confirmed.
+            {{ $pending->credits }} credits ({{ $pending->packName }}) will be added once your {{ \App\Support\Region::payMethod() }} payment is confirmed.
             This is usually within a few hours.
         </p>
     </div>
@@ -39,9 +39,10 @@
                 <span class="badge badge-green self-start mb-2">Best value</span>
             @endif
             <h4 class="font-bold text-gray-900">{{ $pack->packName }}</h4>
-            <p class="text-2xl font-bold text-brand-700 mt-1">₱ {{ number_format((float) $pack->price, 2) }}</p>
+            @php $packPrice = \App\Support\Region::packPrice($pack); @endphp
+            <p class="text-2xl font-bold text-brand-700 mt-1">{{ \App\Support\Region::money($packPrice) }}</p>
             <p class="text-sm font-semibold text-gray-700 mt-0.5">{{ number_format($pack->credits) }} credits</p>
-            <p class="text-xs text-gray-500 mt-0.5">₱ {{ number_format($pack->per_credit, 2) }} per credit</p>
+            <p class="text-xs text-gray-500 mt-0.5">{{ \App\Support\Region::money($pack->credits > 0 ? $packPrice / $pack->credits : 0, 3) }} per credit</p>
             @if ($pack->description)
                 <p class="text-sm text-gray-500 mt-2 grow">{{ $pack->description }}</p>
             @endif
