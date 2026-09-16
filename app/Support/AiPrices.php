@@ -21,7 +21,7 @@ final class AiPrices
 
     /** The analyses, their default prices, and how they read on a screen. */
     public const DEFAULTS = [
-        'wtp' => 50,
+        'wtp' => 100,
         'what' => 100,
         'variety' => 120,
         'protocol' => 150,

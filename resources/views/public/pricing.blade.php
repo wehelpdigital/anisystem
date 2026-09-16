@@ -114,11 +114,11 @@
                         <p class="text-xs font-bold uppercase tracking-wider text-[#a8cc7e]">What credits buy</p>
                         <ul class="mt-4 space-y-3 text-sm text-[#e8efe1]">
                             <li class="flex justify-between gap-4"><span>A chat with Anee</span><span class="font-bold text-white whitespace-nowrap">a few credits</span></li>
-                            <li class="flex justify-between gap-4"><span>When to Plant analysis</span><span class="font-bold text-white whitespace-nowrap">50 cr</span></li>
-                            <li class="flex justify-between gap-4"><span>What to Plant analysis</span><span class="font-bold text-white whitespace-nowrap">100 cr</span></li>
-                            <li class="flex justify-between gap-4"><span>Analyze the season so far</span><span class="font-bold text-white whitespace-nowrap">200 cr</span></li>
-                            <li class="flex justify-between gap-4"><span>Full season report</span><span class="font-bold text-white whitespace-nowrap">300 cr</span></li>
-                            <li class="flex justify-between gap-4"><span>Compare two reports</span><span class="font-bold text-white whitespace-nowrap">30 cr</span></li>
+                            <li class="flex justify-between gap-4"><span>When to Plant analysis</span><span class="font-bold text-white whitespace-nowrap">{{ \App\Support\AiPrices::of('wtp') }} cr</span></li>
+                            <li class="flex justify-between gap-4"><span>What to Plant analysis</span><span class="font-bold text-white whitespace-nowrap">{{ \App\Support\AiPrices::of('what') }} cr</span></li>
+                            <li class="flex justify-between gap-4"><span>Analyze the season so far</span><span class="font-bold text-white whitespace-nowrap">{{ \App\Support\AiPrices::of('sofar') }} cr</span></li>
+                            <li class="flex justify-between gap-4"><span>Full season report</span><span class="font-bold text-white whitespace-nowrap">{{ \App\Support\AiPrices::of('season') }} cr</span></li>
+                            <li class="flex justify-between gap-4"><span>Compare two reports</span><span class="font-bold text-white whitespace-nowrap">{{ \App\Support\AiPrices::of('compare') }} cr</span></li>
                         </ul>
                         <p class="mt-4 text-[11px] text-[#8fa383]">Credit prices are shown in-app before every run.</p>
                     </div>
