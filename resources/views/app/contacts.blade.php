@@ -223,7 +223,17 @@
                       placeholder="{{ \App\Support\Region::ph() ? 'Barangay, landmark, anything that helps you find it again' : 'Neighbourhood, landmark, anything that helps you find it again' }}" maxlength="255"></textarea>
         </div>
         <div>
-            <label class="form-label">Province and town</label>
+            @php $ctAddr = \App\Support\Region::address(); @endphp
+            <label class="form-label">{{ \App\Support\Region::ph() ? 'Province and town' : (($ctAddr['region']['label'] ?? 'State / Region') . ' and ' . strtolower($ctAddr['city']['label'] ?? 'city')) }}</label>
+            @unless (\App\Support\Region::ph())
+            {{-- Outside the Philippines there is no PSGC list to pick from:
+                 the state or region and the city are typed. The same ids
+                 the script saves from, with a different element behind them. --}}
+            <div class="grid grid-cols-2 gap-2">
+                <input type="text" id="ctfProvinceIn" class="form-input" maxlength="120" placeholder="{{ $ctAddr['region']['placeholder'] ?? '' }}" aria-label="{{ $ctAddr['region']['label'] ?? 'State / Region' }}">
+                <input type="text" id="ctfTownIn" class="form-input" maxlength="120" placeholder="{{ $ctAddr['city']['placeholder'] ?? '' }}" aria-label="{{ $ctAddr['city']['label'] ?? 'City' }}">
+            </div>
+            @else
             <div class="ctf-mount">
                 <button type="button" class="ctf-place" id="ctfProvinceBtn">
                     <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="2.5"/></svg>
@@ -236,6 +246,7 @@
                     <span id="ctfTownSay">Pick a town</span>
                 </button>
             </div>
+            @endunless
         </div>
         <div>
             <label class="form-label">Tags</label>
@@ -555,6 +566,8 @@
 
     function paintPlaceButtons() {
         const pb = $('ctfProvinceBtn'), tb = $('ctfTownBtn');
+        // Typed fields (outside the Philippines): the place is whatever they say.
+        if (!pb) { if ($('ctfProvinceIn')) $('ctfProvinceIn').value = place.province || ''; if ($('ctfTownIn')) $('ctfTownIn').value = place.town || ''; return; }
         $('ctfProvinceSay').textContent = place.province || 'Pick a province';
         pb.classList.toggle('is-set', !!place.province);
         $('ctfTownSay').textContent = place.town || (place.province ? 'Pick a town' : 'Province first');
@@ -606,8 +619,8 @@
         paintPlaceButtons();
         $('ctPlaceSheet').querySelector('[data-sheet-close]').click();
     });
-    $('ctfProvinceBtn').addEventListener('click', () => openPlaces('province'));
-    $('ctfTownBtn').addEventListener('click', () => { if (place.province) openPlaces('town'); });
+    $('ctfProvinceBtn')?.addEventListener('click', () => openPlaces('province'));
+    $('ctfTownBtn')?.addEventListener('click', () => { if (place.province) openPlaces('town'); });
 
     /* ------------------------------ the sheet ------------------------------ */
     function openSheetFor(contact) {
@@ -643,8 +656,8 @@
             company: $('ctfCompany').value.trim() || null,
             address: $('ctfAddress').value.trim() || null,
             address2: $('ctfAddress2').value.trim() || null,
-            province: place.province || null,
-            town: place.town || null,
+            province: ($('ctfProvinceIn') ? $('ctfProvinceIn').value.trim() : place.province) || null,
+            town: ($('ctfTownIn') ? $('ctfTownIn').value.trim() : place.town) || null,
             notes: $('ctfNotes').value.trim() || null,
             tags: formTags,
         };

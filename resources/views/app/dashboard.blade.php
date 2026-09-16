@@ -1225,7 +1225,7 @@
                     <img class="dash-anee-face" src="{{ $aiSettings->faceUrl() }}" alt="" width="56" height="56">
                     <div class="min-w-0">
                         <h2 class="dash-anee-h" id="dashAneeH">{{ $aneeName }}</h2>
-                        <p class="dash-anee-p">Your Smart Agricultural Technician. Ask anything about your crops, show a photo, or ask your observations. Anee is available 24/7 vs. paying a technician that you have to wait. You can ask Anee in English or Tagalog.{{ $canUseAi ? '' : ' On Boss and Lifetime plans.' }}</p>
+                        <p class="dash-anee-p">Your Smart Agricultural Technician. Ask anything about your crops, show a photo, or ask your observations. Anee is available 24/7 vs. paying a technician that you have to wait. You can ask Anee in {{ \App\Support\Region::ph() ? 'English or Tagalog' : 'plain English' }}.{{ $canUseAi ? '' : ' On Boss and Lifetime plans.' }}</p>
                     </div>
                 </div>
 
