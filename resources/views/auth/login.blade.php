@@ -162,6 +162,17 @@
                         </div>
                         <button type="button" @click="fill('owner.tier@anisystem.test', 'tier1234')" class="btn btn-outline btn-sm shrink-0">Fill</button>
                     </div>
+                    {{-- The international face from the inside: a US farm
+                         owner. English, dollars, city and state, spring and
+                         autumn plantings, PayPal — everything the country
+                         layer changes, in one account. --}}
+                    <div class="flex items-center justify-between gap-3">
+                        <div class="min-w-0">
+                            <p class="text-sm font-semibold text-gray-800">USA demo <span class="font-normal text-gray-400">· international · Farm Owner</span></p>
+                            <p class="text-xs text-gray-500 truncate">usa.demo@anisystem.test · demo1234</p>
+                        </div>
+                        <button type="button" @click="fill('usa.demo@anisystem.test', 'demo1234')" class="btn btn-outline btn-sm shrink-0">Fill</button>
+                    </div>
                 </div>
             </div>
         @endif
