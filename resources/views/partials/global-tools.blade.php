@@ -36,7 +36,9 @@
         .qa-panel-head:hover { filter: brightness(1.06); }
         .qa-panel-ico { width: 2.4rem; height: 2.4rem; border-radius: .7rem; flex: none;
             display: inline-flex; align-items: center; justify-content: center;
-            background: rgb(255 255 255 / .92); color: var(--color-brand-700); box-shadow: 0 4px 12px -6px rgb(0 0 0 / .4); }
+            /* A dark disc on the green band (the owner's call): the icon
+               sits in a well rather than on a white tile. */
+            background: rgb(20 33 12 / .78); color: #cfe6b8; box-shadow: inset 0 1px 0 rgb(255 255 255 / .08), 0 4px 12px -6px rgb(0 0 0 / .5); }
         .qa-panel-ico svg { width: 1.25rem; height: 1.25rem; }
         .qa-panel-txt { min-width: 0; flex: 1 1 auto; }
         .qa-panel-txt b { display: block; font-size: .875rem; font-weight: 800; color: #fff; }
@@ -49,7 +51,7 @@
         html.dark .qa-panel-head { --sw-1: #1f3512; --sw-2: #2f5219; --sw-3: #4a7c2a; color: #e8efe1; }
         html.dark .qa-panel-txt b { color: #f1f6ea; }
         html.dark .qa-panel-txt i { color: rgb(232 239 225 / .78); }
-        html.dark .qa-panel-ico { background: rgb(232 239 225 / .92); }
+        html.dark .qa-panel-ico { background: rgb(9 14 6 / .82); }
         .qa-panel.is-folded .qa-panel-chev { transform: rotate(-90deg); }
         .qa-panel-fold { overflow: hidden;
             transition: max-height .28s cubic-bezier(.22,1,.36,1); }
