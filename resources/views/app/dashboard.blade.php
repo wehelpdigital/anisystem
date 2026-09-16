@@ -1272,7 +1272,9 @@
                  under her because it is hers. The file itself waits for a
                  press — nobody on mobile data pays five megabytes for a card
                  they scrolled past. --}}
-            <section class="dash-song" id="dashSong">
+            {{-- A Taglish song: sung for the home market, silent elsewhere
+                 (kept in the page so its script finds what it wires). --}}
+            <section class="dash-song" id="dashSong" @if (! \App\Support\Region::ph()) hidden @endif>
                 <img class="dash-song-art" src="{{ asset('images/anee-song-poster.jpg') }}" alt="" width="1200" height="655">
                 <div class="dash-song-ink"></div>
                 <div class="dash-song-body">

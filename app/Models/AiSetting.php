@@ -272,6 +272,48 @@ class AiSetting extends BaseModel
           settle it -- a soil test, an extension officer, the seed label.
         TXT;
 
+    /**
+     * The admin's own prompt was written for Filipino farmers -- it says so,
+     * gives Tagalog reactions as examples, and asks her to answer in the
+     * farmer's Tagalog, Bisaya or Ilocano. For a farmer anywhere else the
+     * plain Philippine lines are re-said for their country, the Tagalog
+     * examples become English ones, and a closing block says which rule
+     * wins where the two still disagree. The admin's text in the database
+     * is never changed; only what the model is handed.
+     */
+    private function adminPromptFor(): string
+    {
+        $text = trim((string) $this->systemPrompt);
+        if ($text === '' || ! \App\Support\Region::englishOnly()) {
+            return $text;
+        }
+        $country = \App\Support\Region::name();
+        $money = \App\Support\Region::currencyName();
+        $swap = [
+            'serving Filipino farmers' => 'serving farmers in ' . $country,
+            'for Filipino farmers' => 'for farmers in ' . $country,
+            'Filipino farmers' => 'farmers in ' . $country,
+            'Filipino farmer' => 'farmer in ' . $country,
+            '(hectares, sacks, cavans, pesos)' => '(hectares or acres as they say it, bags, tons, ' . $money . ')',
+            'Be specific to Philippine conditions where you can: the climate, wet and dry season timing, common local crops and varieties, and inputs a farmer can actually buy locally.'
+                => 'Be specific to conditions in ' . $country . ' where you can: the climate and its seasons, common local crops and varieties, and inputs a farmer can actually buy locally.',
+            'Understand Tagalog, English, Ilocano, Bisaya and Taglish. Reply in the language the farmer used.'
+                => 'Reply in the language the farmer used -- for this farmer that is plain English.',
+            '"Whoa, 120 cavans! Ang galing!"' => '"Whoa, seven tons! That is a serious harvest."',
+            '"Oh no, ang sakit naman niyan."' => '"Oh no, that hurts."',
+            '"Ang galing ng pag-aalaga mo"' => '"That is careful farming"',
+            ', no "gaya ng napag-usapan natin", no "kanina mo sinabi"' => '',
+        ];
+        $text = str_replace(array_keys($swap), array_values($swap), $text);
+        // The admin's quotes may be typographic; the Tagalog "do not say" examples go whichever they are.
+        $text = (string) preg_replace('/,?\s*no\s+["\x{201C}][^"\x{201D}]*(napag-usapan|kanina mo)[^"\x{201D}]*["\x{201D}]/u', '', $text);
+
+        return $text . "\n\n--- For this farmer, above everything else ---\n"
+            . 'Anything above that speaks of Filipino farmers, Tagalog, Bisaya, Ilocano or Taglish, of Philippine conditions, of cavans or pesos, does not apply here: this farmer is in '
+            . $country . '. ' . \App\Support\Region::languageRule()
+            . ' Use ' . $money . ', this country\'s seasons, conditions and inputs, and not one Filipino word -- none of the example phrases either.';
+    }
+
     /** The prompt the provider is actually given. */
     public function instructions(): string
     {
@@ -280,7 +322,7 @@ class AiSetting extends BaseModel
         $persona = \App\Support\Region::englishOnly() ? self::PERSONA_INTL : self::PERSONA;
         $country = "\n\n--- Where the farmer is ---\n" . \App\Support\Region::promptBlock() . ' ' . \App\Support\Region::languageRule();
 
-        return trim($persona . $country . "\n\n" . trim((string) $this->systemPrompt))
+        return trim($persona . $country . "\n\n" . $this->adminPromptFor())
             . "\n\n" . self::HOUSE_RULES
             // Built rather than written out: the list of faces lives with the
             // pictures, so adding one to the sheet cannot leave the prompt

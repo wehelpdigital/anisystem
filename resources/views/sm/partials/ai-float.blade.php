@@ -103,7 +103,7 @@
                         <p class="aif-howto-lbl">For example</p>
                         <p class="aif-howto-eg"><b>Not</b> "my rice is sick"</p>
                         <span class="aif-howto-rule" aria-hidden="true"></span>
-                        <p class="aif-howto-eg"><b>Try</b> "RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"</p>
+                        <p class="aif-howto-eg"><b>Try</b> {{ \App\Support\Region::ph() ? '"RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"' : '"I planted P1197 corn six weeks ago. The lower leaves are yellowing from the edges in, the newest leaves are still green. I side-dressed urea ten days ago and it has rained hard since. What is going on?"' }}</p>
                     </div>
                 </div>
             </div>
