@@ -447,8 +447,8 @@
            the words say so, with the years, so January is not a surprise. */
         const seasonSubs = (y) => ({
             dry: `Early December ${y} to May ${y + 1} in most lowland regions — planting into ${y + 1} is part of it`,
-            wet: `Roughly May to October ${y} in most lowland regions`,
-            third: `The in-between window after the main two, late in ${y}`,
+            wet: `Roughly June to October ${y} in most lowland regions — planting as the rains set in`,
+            third: `After the dry-season harvest, before the rains — roughly March to May ${y}, where water can be assured`,
         });
         const paintSeasons = () => {
             const y = Number(state.year || OPT.years[0]);

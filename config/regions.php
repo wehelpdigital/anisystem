@@ -118,7 +118,7 @@ return [
         'seasons' => [
             'dry' => 'Dry season',
             'wet' => 'Wet season',
-            'third' => 'Third crop (in between)',
+            'third' => 'Third crop (after the dry season)',
         ],
         'pay' => ['method' => 'GCash', 'note' => 'Pay with GCash — your plan is activated after our team verifies the payment.'],
         'agencies' => [

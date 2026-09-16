@@ -480,8 +480,8 @@ final class Region
         if (self::ph()) {
             return match ($key) {
                 'dry' => "Dry season {$year}–{$next}: early December {$year} through May {$next} in most lowland PH regions. The window CROSSES INTO {$next} and that is part of the season — a planting date in January–May {$next} is a normal answer, not a different season.",
-                'wet' => "Wet season {$year}: roughly May–October {$year} in most lowland PH regions.",
-                default => "Third crop {$year}: the in-between window after the main two, roughly late October–early December {$year}.",
+                'wet' => "Wet season {$year}: roughly June–October {$year} in most lowland PH regions — planting as the rains set in around June–July, harvest around October–November.",
+                default => "Third crop {$year}: the summer crop squeezed in after the dry-season harvest and before the rains — planted roughly March to May {$year} in irrigated lowland PH areas and taken as the wet season sets in around June–July. Only where water can be assured through the hot months; heat at flowering and rain at harvest are its risks.",
             };
         }
         $label = self::seasons()[$key] ?? ucfirst($key);

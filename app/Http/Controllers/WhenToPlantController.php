@@ -50,7 +50,7 @@ class WhenToPlantController extends Controller
     public const SEASONS = [
         'dry' => 'Dry season',
         'wet' => 'Wet season',
-        'third' => 'Third crop (in between)',
+        'third' => 'Third crop (after the dry season)',
     ];
 
     public function __construct(private AiCreditService $credits, private AiClient $ai)
