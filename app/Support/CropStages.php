@@ -157,10 +157,15 @@ class CropStages
     public static function options(): array
     {
         $rows = [];
+        // The country's own list: temperate crops only abroad, English names there.
+        $visible = CropCatalog::visible();
         foreach (self::crops() as $key => $c) {
+            if (! isset($visible[$key])) {
+                continue;
+            }
             $rows[] = [
                 'value' => $key,
-                'label' => $c['label'],
+                'label' => $visible[$key]['label'],
                 'icon' => $c['icon'],
                 'group' => $c['group'] ?? 'Other',
                 'perennial' => ($c['kind'] ?? CropCatalog::ANNUAL) === CropCatalog::PERENNIAL,
@@ -249,7 +254,8 @@ class CropStages
     {
         $key = self::normalize($crop);
 
-        return $key ? self::crops()[$key]['label'] : null;
+        // In the farmer's own words: no "(Palay)" on a farm outside the PH.
+        return $key ? CropCatalog::label($key) : null;
     }
 
     public static function icon(?string $crop): string

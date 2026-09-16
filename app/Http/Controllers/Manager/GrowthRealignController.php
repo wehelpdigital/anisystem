@@ -314,7 +314,7 @@ class GrowthRealignController extends BaseScheduleController
         $unit = CropStages::isPerennial($reading['crop']) ? 'month' : 'day';
         $ctx = [];
 
-        $ctx[] = 'THE TASK. You are reading ONE lot of a Philippine farm to say where its crop ACTUALLY is in its growth today, '
+        $ctx[] = 'THE TASK. You are reading ONE lot of a farm in ' . \App\Support\Region::name() . ' to say where its crop ACTUALLY is in its growth today, '
             . 'as against where the calendar says it should be. The calendar counts days from day zero (or transplanting) and reads a stage '
             . 'off the count; the plant does not always agree. A herbicide or a wrong spray sets a crop back; heat stress, drought, flooding, '
             . 'a typhoon, pests, a hungry or late-fertilised field, poor establishment, or a slow variety make it run late; a good stretch, '
@@ -360,7 +360,10 @@ class GrowthRealignController extends BaseScheduleController
             . ' "reasons": [<3-6 short lines, each naming the specific activity, note, observation or weather that moved the reading, with its date>],'
             . ' "recommendations": [<3-6 short lines of what to do now for THIS stage in THIS state, most urgent first, in a farmer\'s words>],'
             . ' "watch": [<2-5 short lines of what to look for in the field over the next week>]}'
-            . ' Write in English with the odd Tagalog farm word where it is the natural one. Keep every line short. No emoji, no shortcodes.';
+            . ' ' . (\App\Support\Region::englishOnly()
+                ? 'Write in plain English only — no Filipino/Tagalog words anywhere.'
+                : 'Write in English with the odd Tagalog farm word where it is the natural one.')
+            . ' Keep every line short. No emoji, no shortcodes.';
 
         return implode("\n\n", $ctx);
     }

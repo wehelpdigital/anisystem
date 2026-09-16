@@ -136,7 +136,10 @@ class WeatherService
      */
     public function geocode(string $place): ?array
     {
-        $key = 'weather:geo:' . md5(Str::lower(trim($place)));
+        // A Springfield in every state: the search is confined to the
+        // farmer's own country, and the cache remembers which.
+        $country = \App\Support\Region::code();
+        $key = 'weather:geo:' . $country . ':' . md5(Str::lower(trim($place)));
         $cached = Cache::get($key);
         if (is_array($cached)) {
             return $cached;
@@ -156,6 +159,7 @@ class WeatherService
                 'count' => 5,
                 'language' => 'en',
                 'format' => 'json',
+                'countryCode' => $country,
             ]);
         } catch (\Throwable $e) {
             return null;

@@ -9,7 +9,7 @@
     {{-- She says her name first. The line about how to ask is not decoration:
          a vague question costs the same as a good one and comes back needing
          three more, so this is the highest-value thing on the screen. --}}
-    <h2>Magandang araw! I'm {{ $settings->assistantName }}</h2>
+    <h2>{{ \App\Support\Region::t('greeting.day') }}! I'm {{ $settings->assistantName }}</h2>
     @include('partials.anee-hello-video')
     {{-- Folded to its headline until tapped — the same card the schedule
          chat wears, so every door into her teaches the same way. --}}

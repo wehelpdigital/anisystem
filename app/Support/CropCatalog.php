@@ -497,7 +497,102 @@ class CropCatalog
             'label' => 'Strawberry (Presa)', 'icon' => '🍓', 'group' => 'Other',
             'kind' => self::ANNUAL, 'counter' => 'DAT', 'maturity' => 75, 'pattern' => 'fruiting',
         ],
+
+        /* ---------------- Temperate crops (international only) ----------------
+           Offered outside the Philippines (`intl` => true hides them at home):
+           the staples of a farm in Iowa or Kent that no Philippine farm grows. */
+        'wheat' => [
+            'label' => 'Wheat', 'icon' => '🌾', 'group' => 'Cereals & grains',
+            'kind' => self::ANNUAL, 'counter' => 'DAS', 'maturity' => 120, 'pattern' => 'cereal', 'intl' => true,
+        ],
+        'barley' => [
+            'label' => 'Barley', 'icon' => '🌾', 'group' => 'Cereals & grains',
+            'kind' => self::ANNUAL, 'counter' => 'DAS', 'maturity' => 100, 'pattern' => 'cereal', 'intl' => true,
+        ],
+        'oats' => [
+            'label' => 'Oats', 'icon' => '🌾', 'group' => 'Cereals & grains',
+            'kind' => self::ANNUAL, 'counter' => 'DAS', 'maturity' => 95, 'pattern' => 'cereal', 'intl' => true,
+        ],
+        'canola' => [
+            'label' => 'Canola / rapeseed', 'icon' => '🌼', 'group' => 'Industrial crops',
+            'kind' => self::ANNUAL, 'counter' => 'DAS', 'maturity' => 100, 'pattern' => 'legume', 'intl' => true,
+        ],
+        'sunflower' => [
+            'label' => 'Sunflower', 'icon' => '🌻', 'group' => 'Industrial crops',
+            'kind' => self::ANNUAL, 'counter' => 'DAS', 'maturity' => 100, 'pattern' => 'legume', 'intl' => true,
+        ],
+        'sugarbeet' => [
+            'label' => 'Sugar beet', 'icon' => '🫚', 'group' => 'Root crops',
+            'kind' => self::ANNUAL, 'counter' => 'DAS', 'maturity' => 170, 'pattern' => 'root', 'intl' => true,
+        ],
+        'alfalfa' => [
+            'label' => 'Alfalfa / hay', 'icon' => '🌿', 'group' => 'Other',
+            'kind' => self::ANNUAL, 'counter' => 'DAS', 'maturity' => 70, 'pattern' => 'leafy', 'intl' => true,
+        ],
+        'apple' => [
+            'label' => 'Apple', 'icon' => '🍎', 'group' => 'Fruit trees',
+            'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 36, 'intl' => true,
+        ],
+        'grape' => [
+            'label' => 'Grape', 'icon' => '🍇', 'group' => 'Fruit trees',
+            'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 30, 'intl' => true,
+        ],
+        'blueberry' => [
+            'label' => 'Blueberry', 'icon' => '🫐', 'group' => 'Fruit trees',
+            'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 30, 'intl' => true,
+        ],
+        'almond' => [
+            'label' => 'Almond', 'icon' => '🌰', 'group' => 'Fruit trees',
+            'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 40, 'intl' => true,
+        ],
+        'peach' => [
+            'label' => 'Peach / nectarine', 'icon' => '🍑', 'group' => 'Fruit trees',
+            'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 30, 'intl' => true,
+        ],
+        'cherry' => [
+            'label' => 'Cherry', 'icon' => '🍒', 'group' => 'Fruit trees',
+            'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 48, 'intl' => true,
+        ],
+        'pear' => [
+            'label' => 'Pear', 'icon' => '🍐', 'group' => 'Fruit trees',
+            'kind' => self::PERENNIAL, 'counter' => 'AGE', 'bearingAt' => 48, 'intl' => true,
+        ],
     ];
+
+    /**
+     * A crop's name in the farmer's own words: "Rice — transplanted (Palay)"
+     * at home, "Rice — transplanted" everywhere else. The Filipino name in
+     * brackets is the last thing on the label, and only there.
+     */
+    public static function label(?string $key): string
+    {
+        $label = (string) (self::CROPS[$key]['label'] ?? $key ?? '');
+        if (\App\Support\Region::englishOnly()) {
+            $label = trim((string) preg_replace('/\s*\([^()]*\)\s*$/u', '', $label));
+        }
+
+        return $label;
+    }
+
+    /**
+     * The crops a picker in this country offers: everything at home except
+     * the temperate ones, everything abroad. Labels already in the
+     * farmer's words.
+     */
+    public static function visible(): array
+    {
+        $home = \App\Support\Region::ph();
+        $out = [];
+        foreach (self::CROPS as $key => $c) {
+            if ($home && ! empty($c['intl'])) {
+                continue;
+            }
+            $c['label'] = self::label($key);
+            $out[$key] = $c;
+        }
+
+        return $out;
+    }
 
     /** The order the picker shows its sections in. */
     public const GROUPS = [

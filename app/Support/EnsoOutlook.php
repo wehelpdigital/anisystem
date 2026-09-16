@@ -28,7 +28,7 @@ final class EnsoOutlook
         }
 
         return implode(' ', $bits)
-            . ' For Philippine farming, El Niño typically tilts toward below-normal rainfall,'
+            . (\App\Support\Region::ph() ? ' For Philippine farming, El Niño typically tilts toward below-normal rainfall,' : ' For farming in ' . \App\Support\Region::name() . ', ENSO\'s local effect depends on the region — say plainly what this state has historically meant for THIS location\'s rainfall and temperature, and where it has little effect say so. In the Philippines El Niño typically tilts toward below-normal rainfall,')
             . ' drought and heat stress; La Niña toward above-normal rain, flooding and'
             . ' typhoon-season wetness — weigh the forecast probabilities accordingly.';
     }

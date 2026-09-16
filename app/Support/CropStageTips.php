@@ -294,7 +294,7 @@ class CropStageTips
             ],
             1 => [
                 'do' => ['Nitrogen for frame and leaf.', 'Stake or trellis before the plants need it, not after.', 'Mulch to keep soil off the leaves.'],
-                'watch' => ['Aphids and whitefly build up fast in the dry season.'],
+                'watch' => ['Aphids and whitefly build up fast in dry weather.'],
             ],
             2 => [
                 'do' => ['Keep moisture even — swings cause flower drop and split fruit.', 'Ease off nitrogen; too much now gives leaves instead of fruit.'],

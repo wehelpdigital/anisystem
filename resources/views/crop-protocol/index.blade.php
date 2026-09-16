@@ -381,11 +381,11 @@
             <div class="sheet-body">
                 <div class="crop-search">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-                    <input type="text" id="cpCropSearch" class="form-input" autocomplete="off" placeholder="Search — palay, mais, sibuyas…">
+                    <input type="text" id="cpCropSearch" class="form-input" autocomplete="off" placeholder="{{ \App\Support\Region::t('cropSearch') }}">
                     <button type="button" class="crop-search-x hidden" id="cpCropSearchX" aria-label="Clear">✕</button>
                 </div>
                 <div id="cpCropList"></div>
-                <p class="crop-none hidden" id="cpCropNone">Nothing matches that. Try the local name.</p>
+                <p class="crop-none hidden" id="cpCropNone">{{ \App\Support\Region::t('cropNone') }}</p>
             </div>
         </div>
 
@@ -393,8 +393,8 @@
             {{-- 0: the place --}}
             <section class="wtp-step is-on" data-step="0">
                 <p class="wtp-q">Where is the field?</p>
-                <p class="wtp-sub">Town and province is enough — the climate, the outlook and the recommendations differ by region.</p>
-                <input type="text" id="cpLocation" class="form-input" maxlength="160" placeholder="e.g. Urdaneta, Pangasinan">
+                <p class="wtp-sub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate, the outlook and the recommendations differ by region.</p>
+                <input type="text" id="cpLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
             </section>
             {{-- 1: the crop --}}
             <section class="wtp-step" data-step="1">
@@ -409,7 +409,7 @@
             {{-- 2: the variety --}}
             <section class="wtp-step" data-step="2">
                 <p class="wtp-q">Which variety?</p>
-                <p class="wtp-sub">Type it as it is sold — e.g. NSIC Rc222, SL-8H. Leave it empty and Anee assumes a widely grown one and says which.</p>
+                <p class="wtp-sub">Type it as it is sold — e.g. {{ \App\Support\Region::ph() ? 'NSIC Rc222, SL-8H' : 'Pioneer P1197, DKC64-34' }}. Leave it empty and Anee assumes a widely grown one and says which.</p>
                 <input type="text" id="cpVariety" class="form-input" maxlength="80" placeholder="Variety name (optional)">
             </section>
             {{-- 3: when --}}
@@ -432,10 +432,7 @@
                 <label class="form-label mt-4" for="cpTarget">Target yield <span class="text-gray-400 font-normal">(optional, per hectare)</span></label>
                 <div class="cp-yield">
                     <input type="number" id="cpTarget" class="form-input" min="0" step="any" inputmode="decimal" placeholder="e.g. 120">
-                    <div class="cp-units" role="radiogroup" aria-label="Unit">
-                        <button type="button" class="cp-unit is-on" data-unit="cavans" role="radio" aria-checked="true">cavans</button>
-                        <button type="button" class="cp-unit" data-unit="tons" role="radio" aria-checked="false">tons</button>
-                    </div>
+                    <div class="cp-units" role="radiogroup" aria-label="Unit" id="cpUnits"></div>
                 </div>
                 <p class="form-hint">Anee will say whether it is realistic for this variety, place and season.</p>
             </section>
@@ -519,7 +516,7 @@
     const META_URL = '{{ route('proto.meta') }}';
 
     let OPT = null;
-    const state = { location: '', crop: '', variety: '', month: null, method: null, priority: null, targetYield: '', yieldUnit: 'cavans', area: '', soil: null, water: null, problems: [], notes: '' };
+    const state = { location: '', crop: '', variety: '', month: null, method: null, priority: null, targetYield: '', yieldUnit: '', area: '', soil: null, water: null, problems: [], notes: '' };
     let step = 0;
     const STEPS = 9;
     const phone = () => !window.matchMedia('(min-width: 640px)').matches;
@@ -557,6 +554,10 @@
         $id('cpProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
             <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
         $id('cpDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
+        // The yield units are the country's (cavans and tons at home, tons and kg elsewhere); the first is the default.
+        const units = Object.keys(OPT.yieldUnits || {});
+        if (!state.yieldUnit || !units.includes(state.yieldUnit)) state.yieldUnit = units[0] || 'tons';
+        $id('cpUnits').innerHTML = units.map((k) => `<button type="button" class="cp-unit${k === state.yieldUnit ? ' is-on' : ''}" data-unit="${esc(k)}" role="radio" aria-checked="${k === state.yieldUnit ? 'true' : 'false'}">${esc(String(OPT.yieldUnits[k]).replace(' per hectare', ''))}</button>`).join('');
         paintMethods();
         paintQuote();
     }
@@ -668,7 +669,7 @@
     pickWire('cpPriorities', 'priority', 'priority', null);
     pickWire('cpSoils', 'soil', 'soil', null);
     pickWire('cpWaters', 'water', 'water', null);
-    document.querySelector('.cp-units').addEventListener('click', (e) => {
+    $id('cpUnits').addEventListener('click', (e) => {
         const b = e.target.closest('[data-unit]');
         if (!b) return;
         state.yieldUnit = b.getAttribute('data-unit');
@@ -958,7 +959,7 @@
 
             <div class="wtp-card">
                 <h3>🧭 A guide, not a promise</h3>
-                <p class="wtp-fine">This is a starting protocol, not a prescription: the rates follow the official recommendations bent to your answers, and the sprays are what to have ready, not what to pour on a date. What makes the season is observation — walk the field, read the plants, count the pests, and use each step when the crop reaches its stage. Ask the nearest DA or PhilRice office to confirm the products registered for your area.</p>
+                <p class="wtp-fine">This is a starting protocol, not a prescription: the rates follow the official recommendations bent to your answers, and the sprays are what to have ready, not what to pour on a date. What makes the season is observation — walk the field, read the plants, count the pests, and use each step when the crop reaches its stage. Ask {{ \App\Support\Region::t('extensionOffice') }} to confirm the products registered for your area.</p>
             </div>
 
             <div class="wtp-acts">

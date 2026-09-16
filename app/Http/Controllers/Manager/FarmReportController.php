@@ -227,7 +227,7 @@ class FarmReportController extends BaseScheduleController
                 'done' => null, 'lotIds' => [], 'cat' => 'purchase',
                 'label' => ($m->reason === AsInventoryMove::OPEN ? 'Opening stock — ' : 'Stock bought — ') . ($item?->name ?? 'item #' . $m->itemId),
                 'meta' => ($item ? $item->say((float) $m->delta) : rtrim(rtrim(number_format((float) $m->delta, 3), '0'), '.'))
-                    . ' at ₱' . number_format($price, 2) . ' each',
+                    . ' at ' . \App\Support\Region::symbol() . number_format($price, 2) . ' each',
                 'amount' => $amount,
                 'invKind' => $item?->kind,
             ]);
@@ -319,7 +319,7 @@ class FarmReportController extends BaseScheduleController
         $unpriced = $yieldRows->filter(fn ($h) => $h->pricePerUnit === null || (float) $h->pricePerUnit <= 0);
         if ($unpriced->count() > 0) {
             $warnings[] = $unpriced->count() . ' yield ' . ($unpriced->count() === 1 ? 'row has' : 'rows have')
-                . ' no selling price — that harvest counts ₱0 revenue until a price is put on it.';
+                . ' no selling price — that harvest counts ' . \App\Support\Region::symbol() . '0 revenue until a price is put on it.';
         }
 
         /* ---- crop-day sanity, per lot: how long the crop actually ran
@@ -830,7 +830,7 @@ class FarmReportController extends BaseScheduleController
             ->whereNotNull('yieldAmount')->get()
             ->map(fn ($h) => rtrim(rtrim(number_format((float) $h->yieldAmount, 2), '0'), '.')
                 . ' ' . ($h->yieldUnit ?: '')
-                . ($h->pricePerUnit ? ' sold at ₱' . number_format((float) $h->pricePerUnit, 2) : ''))
+                . ($h->pricePerUnit ? ' sold at ' . \App\Support\Region::symbol() . number_format((float) $h->pricePerUnit, 2) : ''))
             ->values()->all();
 
         $dates = array_values(array_filter(array_map(fn ($s2) => $s2['day'], $steps), fn ($v) => $v !== null));
@@ -998,7 +998,7 @@ class FarmReportController extends BaseScheduleController
             'report' => $report, 'status' => 'pending', 'deleteStatus' => 1,
         ]);
 
-        $prompt = 'You are an agricultural analyst for a Philippine smallholder farm. Below are two of the farm\'s own '
+        $prompt = 'You are an agricultural analyst for a smallholder farm in ' . \App\Support\Region::name() . '. ' . \App\Support\Region::promptBlock() . ' Below are two of the farm\'s own '
             . 'saved reports of the same kind. Compare them honestly and usefully — same warm, plain voice as a '
             . 'debrief between friends.'
             . "\n\n### REPORT A: " . $a->title . " ###\n" . mb_substr((string) $a->body, 0, 9000)
@@ -1082,19 +1082,19 @@ class FarmReportController extends BaseScheduleController
 
         // The money, from the profit engine's own arithmetic.
         $pf = $this->profitFacts($schedule);
-        $money = 'THE MONEY (computed by the app): revenue ₱' . number_format($pf['revenue'], 2)
-            . ', total cost ₱' . number_format($pf['cost'], 2)
-            . ' (materials ₱' . number_format($pf['costCats']['materials'], 2)
-            . ', labor ₱' . number_format($pf['costCats']['labor'], 2)
-            . ', services ₱' . number_format($pf['costCats']['services'], 2)
-            . ', day expenses ₱' . number_format($pf['costCats']['expense'], 2)
-            . ', stock buys ₱' . number_format($pf['costCats']['purchase'], 2)
-            . '), net ' . ($pf['profit'] >= 0 ? 'profit' : 'LOSS') . ' ₱' . number_format(abs($pf['profit']), 2)
+        $money = 'THE MONEY (computed by the app): revenue ' . \App\Support\Region::symbol() . number_format($pf['revenue'], 2)
+            . ', total cost ' . \App\Support\Region::symbol() . number_format($pf['cost'], 2)
+            . ' (materials ' . \App\Support\Region::symbol() . number_format($pf['costCats']['materials'], 2)
+            . ', labor ' . \App\Support\Region::symbol() . number_format($pf['costCats']['labor'], 2)
+            . ', services ' . \App\Support\Region::symbol() . number_format($pf['costCats']['services'], 2)
+            . ', day expenses ' . \App\Support\Region::symbol() . number_format($pf['costCats']['expense'], 2)
+            . ', stock buys ' . \App\Support\Region::symbol() . number_format($pf['costCats']['purchase'], 2)
+            . '), net ' . ($pf['profit'] >= 0 ? 'profit' : 'LOSS') . ' ' . \App\Support\Region::symbol() . number_format(abs($pf['profit']), 2)
             . ($pf['margin'] !== null ? ' (margin ' . $pf['margin'] . '%)' : '') . '.';
         foreach ($pf['lots'] as $l) {
-            $money .= ' ' . $l['name'] . ': earned ₱' . number_format($l['revenue'], 2)
-                . ', spent ₱' . number_format($l['cost'], 2)
-                . ($l['costPerUnit'] !== null ? ', cost ₱' . number_format($l['costPerUnit'], 2) . ' per ' . $l['unit'] : '')
+            $money .= ' ' . $l['name'] . ': earned ' . \App\Support\Region::symbol() . number_format($l['revenue'], 2)
+                . ', spent ' . \App\Support\Region::symbol() . number_format($l['cost'], 2)
+                . ($l['costPerUnit'] !== null ? ', cost ' . \App\Support\Region::symbol() . number_format($l['costPerUnit'], 2) . ' per ' . $l['unit'] : '')
                 . (($l['yield'] ?? []) ? ', yield ' . implode(', ', $l['yield']) : '') . '.';
         }
         $ctx[] = $money;
@@ -1130,7 +1130,7 @@ class FarmReportController extends BaseScheduleController
             $ctx[] = 'POST-HARVEST NOTES: ' . $ph->map(function ($h) {
                 return '[' . ($h->category ?: 'other') . '] ' . ($h->title ?: '')
                     . ($h->yieldAmount !== null ? ' — ' . rtrim(rtrim(number_format((float) $h->yieldAmount, 2), '0'), '.') . ' ' . ($h->yieldUnit ?: '') : '')
-                    . ($h->pricePerUnit !== null ? ' at ₱' . number_format((float) $h->pricePerUnit, 2) : '')
+                    . ($h->pricePerUnit !== null ? ' at ' . \App\Support\Region::symbol() . number_format((float) $h->pricePerUnit, 2) : '')
                     . ($h->notes ? ' — ' . mb_substr((string) $h->notes, 0, 300) : '');
             })->implode(' | ');
         }
@@ -1170,8 +1170,8 @@ class FarmReportController extends BaseScheduleController
                 ->orderByDesc('id')->limit(3)->get();
             foreach ($past as $ps) {
                 $ppf = $this->profitFacts($ps);
-                $ctx[] = 'A PAST SEASON OF THE SAME CROP — ' . $ps->title . ': revenue ₱' . number_format($ppf['revenue'], 2)
-                    . ', cost ₱' . number_format($ppf['cost'], 2) . ', net ₱' . number_format($ppf['profit'], 2)
+                $ctx[] = 'A PAST SEASON OF THE SAME CROP — ' . $ps->title . ': revenue ' . \App\Support\Region::symbol() . number_format($ppf['revenue'], 2)
+                    . ', cost ' . \App\Support\Region::symbol() . number_format($ppf['cost'], 2) . ', net ' . \App\Support\Region::symbol() . number_format($ppf['profit'], 2)
                     . '. Compare honestly where it teaches something.';
             }
         }
@@ -1184,12 +1184,13 @@ class FarmReportController extends BaseScheduleController
             ? '{"headline": string (one warm sentence naming the season\'s verdict), "verdict": string (3-5 sentences, plain and unbiased — the season as it really went), "scores": {"overall": int 0-100, "planning": int, "execution": int, "costControl": int, "timing": int, "recordKeeping": int}, "strengths": [3-6 strings — what genuinely went well, be specific], "wentWrong": [2-6 strings — honest, specific, never cruel], "improvements": [3-6 strings — concrete next-season moves], "protocolChanges": [2-5 of {"change": string, "current": string (what was done, with its date or day-count), "suggested": string (what to do instead), "timing": string (say it in ' . $schedule->dayType . ' day-counts, e.g. "' . $schedule->dayType . ' 25-30"), "why": string}], "lacking": [1-4 strings — records or practices the season was missing], "weatherStory": string (what the sky actually did to this season — rain, dry runs, wind, ENSO — and where it explains a delay or a loss), "delays": string (where the crop ran late or early against its maturity, and the honest reasons — weather, herbicide setbacks, labor), "comparison": string (against the farmer\'s own past seasons if given, else against typical figures for the crop; one short paragraph), "encouragement": string (2-3 warm sentences — genuine, a little jolly, proud of what deserves pride, and certain the next season can be better), "nextSeason": [3-6 short checklist strings]}'
             : '{"headline": string (one warm sentence on where the season stands), "standing": "on-track" | "watch" | "rescue" (unbiased — say rescue when it is true), "verdict": string (3-5 sentences on the season as it stands today), "risks": [2-5 of {"risk": string, "severity": "low"|"moderate"|"high", "why": string}], "whatsNext": [3-7 of {"action": string, "when": string (a date or a ' . $schedule->dayType . ' day-count), "why": string, "urgency": "now"|"soon"|"routine"}], "lacking": [0-4 strings — what the records are missing that would sharpen this read], "weatherStory": string (what the recent sky and ENSO mean for the next few weeks here), "encouragement": string (2-3 warm sentences — honest about the hard parts, sure the farmer can land this)}';
 
-        return 'You are an agricultural analyst for a Philippine smallholder farm, writing '
+        return 'You are an agricultural analyst for a smallholder farm in ' . \App\Support\Region::name() . ', writing '
             . ($kind === 'season' ? 'a full season debrief now that the season is closed.' : 'a mid-season read of where things stand and what to do next.')
             . ' Everything below is the farm\'s own records, compiled by the app — treat the numbers as facts and the notes as the farmer\'s own words.'
             . ' Be unbiased: name what went wrong plainly. Be warm and a little jolly in tone — this is a debrief between friends, not an audit.'
             . ' Account for delays honestly: ENSO conditions, typhoons, drought spells, herbicide setbacks and labor gaps stretch a crop\'s calendar — use the weather records given before blaming the farmer.'
             . ' Say protocol timings in ' . $schedule->dayType . ' day-counts, not bare dates. Use plain language a farmer reads easily; short sentences. No emoji shortcodes like :name:.'
+            . ' ' . \App\Support\Region::promptBlock()
             . "\n\n=== THE RECORDS ===\n" . implode("\n\n", $ctx)
             . "\n\n=== YOUR ANSWER ===\nReturn ONLY a single JSON object, no fences, no commentary, exactly this shape:\n" . $schema;
     }

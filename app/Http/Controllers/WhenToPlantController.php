@@ -79,7 +79,7 @@ class WhenToPlantController extends Controller
         $canUse = $payer->canUseAi() && $settings->isUsable();
 
         return response()->json(['success' => true, 'message' => 'ok', 'data' => [
-            'crops' => collect(CropCatalog::CROPS)->map(fn ($c, $key) => [
+            'crops' => collect(CropCatalog::visible())->map(fn ($c, $key) => [
                 'key' => $key,
                 'label' => $c['label'],
                 'icon' => $c['icon'],
@@ -88,7 +88,7 @@ class WhenToPlantController extends Controller
                 'perennial' => CropCatalog::isPerennial($key),
             ])->values(),
             'problems' => self::PROBLEMS,
-            'seasons' => self::SEASONS,
+            'seasons' => \App\Support\Region::seasons(),
             'years' => range((int) now('Asia/Manila')->format('Y'), (int) now('Asia/Manila')->format('Y') + 2),
             'quote' => $canUse ? $this->quote($settings) : null,
             'aneeFace' => $settings->faceUrl(),
@@ -132,7 +132,7 @@ class WhenToPlantController extends Controller
 
         $v = Validator::make($request->all(), [
             'year' => 'required|integer|min:' . now('Asia/Manila')->format('Y') . '|max:' . (now('Asia/Manila')->year + 2),
-            'season' => 'required|in:' . implode(',', array_keys(self::SEASONS)),
+            'season' => 'required|in:' . implode(',', array_keys(\App\Support\Region::seasons())),
             'crop' => 'required|string',
             'variety' => 'nullable|string|max:80',
             'location' => 'required|string|max:160',
@@ -171,7 +171,7 @@ class WhenToPlantController extends Controller
 
         $p = $this->params($request);
         $crop = CropCatalog::CROPS[$p['crop']];
-        $title = $crop['label'] . ' · ' . self::seasonTitle($p['season'], (int) $p['year']) . ' · ' . $p['location'];
+        $title = CropCatalog::label($p['crop']) . ' · ' . self::seasonTitle($p['season'], (int) $p['year']) . ' · ' . $p['location'];
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(),
             'title' => mb_substr($title, 0, 190),
@@ -475,19 +475,30 @@ class WhenToPlantController extends Controller
             ? 'the observed ENSO state AND the official NOAA CPC forecast given above (weigh its stated probabilities toward the planting window rather than assuming neutral conditions, and say plainly where the forecast still leaves uncertainty)'
             : 'general ENSO behaviour — state plainly that you cannot know the live ENSO state for ' . $p['year'] . ' and mark it as uncertainty rather than inventing a forecast';
 
+        $countryName = \App\Support\Region::name();
+        $regionBlock = \App\Support\Region::promptBlock();
+        $cropLabel = CropCatalog::label($p['crop']);
+        $climateRule = \App\Support\Region::ph()
+            ? 'PAGASA climatological normals (wet/dry season timing for the region named), historical tropical-cyclone seasonality in the Philippines (including the Aug–Oct peak and regional differences)'
+            : 'the climatological normals for the region named as published by ' . \App\Support\Region::agency('met') . ' (frost dates and the growing season where they apply, rainfall and temperature timing), the historical severe-weather seasonality of that region (storms, heat, drought, floods)';
+        $crossNote = \App\Support\Region::ph()
+            ? 'which for the dry season runs from the end of ' . $p['year'] . ' into the first months of the following year'
+            : 'which may cross into the following year for a winter or cool-season planting';
+
         return <<<PROMPT
-You are an agronomic decision-support analyst for Philippine farming. Recommend when to PLANT for the farmer's chosen cropping season, for the case below. The season's own span is given with its years — plant within THAT span, which for the dry season runs from the end of {$p['year']} into the first months of the following year.
+You are an agronomic decision-support analyst for farming in {$countryName}. Recommend when to PLANT for the farmer's chosen cropping season, for the case below. The season's own span is given with its years — plant within THAT span, {$crossNote}.
 
 FACTS GIVEN
+- {$regionBlock}
 - Target season: {$this->seasonWords($p['season'], (int) $p['year'])}
-- Crop: {$crop['label']} — typical days to maturity in Philippine practice: {$maturity}
+- Crop: {$cropLabel} — typical days to maturity: {$maturity}
 - Growth stages for calendar arithmetic: {$stages}
 - Stated variety: "{$p['variety']}" — use published characteristics of this variety ONLY if you genuinely know them; otherwise say variety-specific data is unavailable in dataGaps and reason from the crop's typical range. Never invent varietal traits.
 - Location as the farmer wrote it: {$p['location']}
 - Field problems the farmer reports: {$problems}
 {$ensoBlock}
 GROUND RULES
-- Reason only from established knowledge: PAGASA climatological normals (wet/dry season timing for the region named), historical tropical-cyclone seasonality in the Philippines (including the Aug–Oct peak and regional differences), {$ensoRule}, soil-water behaviour implied by the reported problems, and the crop calendar arithmetic above.
+- Reason only from established knowledge: {$climateRule}, {$ensoRule}, soil-water behaviour implied by the reported problems, and the crop calendar arithmetic above.
 - Where the given facts cannot answer something (exact distance to river or sea, microclimate, irrigation reliability), name it in dataGaps instead of guessing.
 - Be scientific and neutral: no product recommendations, no marketing tone, no bias toward any input or brand.
 - Write the summary and the "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
@@ -497,7 +508,7 @@ Return ONLY a valid JSON object — no code fences, no commentary — in exactly
 Rules for the shape:
 - bestWindow must be a SPECIFIC, actionable range of roughly 2–6 weeks with explicit dates, and its label must spell the dates out WITH THE YEAR (e.g. "Dec 10, 2026 – Jan 5, 2027") — NEVER a season name or a whole season. fromYear/toYear carry the calendar year of each end; for the dry season the window may begin in {$p['year']} and end in the year after, or sit wholly in the year after.
 - avoidWindows: one to three ranges to KEEP AWAY FROM, each specific to the month and week and year (e.g. "Late July – mid October 2026") and grounded in the named region's historical typhoon/climate pattern; why says what historically happens there then; severity "moderate" or "high".
-- monthScores carries ALL twelve months of the season's own run, each with its year (for the dry season: December {$p['year']} then January–November of the year after; for the others: January–December {$p['year']}); score 0–100 = how suitable STARTING to plant that month is; note ≤ 10 words. Differentiate months even inside the target season — a flat run of equal scores is an unfinished answer.
+- monthScores carries ALL twelve months of the season's own run, each with its year (for a season that crosses into the next year — the dry season at home, a winter/cool-season planting elsewhere: its first month with its year, then the eleven months after; for the others: January–December {$p['year']}); score 0–100 = how suitable STARTING to plant that month is; note ≤ 10 words. Differentiate months even inside the target season — a flat run of equal scores is an unfinished answer.
 - threats: at most three, what the farmer risks by planting OUTSIDE bestWindow, each naming when; severity "low"/"moderate"/"high"; confidence "low"/"moderate"/"high"; dataGaps at most three; summary ≤ 90 words. Keep the whole answer tight.
 PROMPT;
     }
@@ -512,26 +523,16 @@ PROMPT;
      * year (the owner's rule, 2026-09-15). The wet season sits inside its
      * own year; the third crop is the gap after it.
      */
+    /** The season spelled out with its months — the country's own (App\Support\Region). */
     private function seasonWords(string $key, int $year): string
     {
-        $next = $year + 1;
-
-        return match ($key) {
-            'dry' => "Dry season {$year}–{$next}: early December {$year} through May {$next} in most lowland PH regions. The window CROSSES INTO {$next} and that is part of the season — a planting date in January–May {$next} is a normal answer, not a different season.",
-            'wet' => "Wet season {$year}: roughly May–October {$year} in most lowland PH regions.",
-            default => "Third crop {$year}: the in-between window after the main two, roughly late October–early December {$year}.",
-        };
+        return \App\Support\Region::seasonWords($key, $year);
     }
 
     /** The season named with its years, for titles: "Dry season 2026–27". */
     public static function seasonTitle(string $key, int $year): string
     {
-        $label = self::SEASONS[$key] ?? '';
-        if ($key === 'dry') {
-            return $label . ' ' . $year . '–' . substr((string) ($year + 1), -2);
-        }
-
-        return $label . ' ' . $year;
+        return \App\Support\Region::seasonTitle($key, $year);
     }
 
     /** The model's JSON, taken carefully. Null when it cannot be trusted. */

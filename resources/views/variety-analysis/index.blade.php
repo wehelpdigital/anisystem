@@ -375,7 +375,7 @@
             <div class="q-body">
                 <div class="q-body-in">
                     <div class="q-card" id="vaQuoteCost"></div>
-                    <div class="q-card">Anee <b>analyzes deeply</b> for this one — the newest Philippine releases and registrations, hybrids from the top seed companies, trial yields, resistance ratings and days to maturity — then reads every variety against your soil, its troubles and the coming weather, and ranks them by what YOU said matters most.</div>
+                    <div class="q-card">Anee <b>analyzes deeply</b> for this one — the newest {{ \App\Support\Region::ph() ? 'Philippine' : \App\Support\Region::name() }} releases and registrations, hybrids from the top seed companies, trial yields, resistance ratings and days to maturity — then reads every variety against your soil, its troubles and the coming weather, and ranks them by what YOU said matters most.</div>
                 </div>
             </div>
         </div>
@@ -384,8 +384,8 @@
             {{-- Step 1: the place --}}
             <section class="wtp-step is-on" data-step="0">
                 <p class="wtp-q">Where is the field?</p>
-                <p class="wtp-sub">Town and province is enough — the climate and the trial results differ by region.</p>
-                <input type="text" id="vaLocation" class="form-input" maxlength="160" placeholder="e.g. Urdaneta, Pangasinan">
+                <p class="wtp-sub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate and the trial results differ by region.</p>
+                <input type="text" id="vaLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
             </section>
             {{-- Step 2: the soil --}}
             <section class="wtp-step" data-step="1">
@@ -408,7 +408,7 @@
                 <p class="wtp-q">Which varieties are you weighing?</p>
                 <p class="wtp-sub">Type each as it is sold and add it — up to eight. Leave the list empty and Anee picks the top-yielding ones for your ground herself.</p>
                 <div class="va-add">
-                    <input type="text" id="vaVarietyIn" class="form-input" maxlength="60" placeholder="e.g. NSIC Rc222, NK6414" autocomplete="off">
+                    <input type="text" id="vaVarietyIn" class="form-input" maxlength="60" placeholder="e.g. {{ \App\Support\Region::ph() ? 'NSIC Rc222, NK6414' : 'Pioneer P1197, DKC64-34' }}" autocomplete="off">
                     <button type="button" class="btn btn-primary" id="vaVarietyAdd">Add</button>
                 </div>
                 <div class="va-chips" id="vaChips"></div>
@@ -486,7 +486,7 @@
         <div class="crop-search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
             <input type="text" id="vaCropSearch" class="form-input" autocomplete="off"
-                   placeholder="Search — palay, sayote, mangga…">
+                   placeholder="{{ \App\Support\Region::t('cropSearch') }}">
             <button type="button" class="crop-search-x hidden" id="vaCropSearchX" aria-label="Clear">✕</button>
         </div>
         <div id="vaCropList"></div>
@@ -759,7 +759,7 @@
         if (!stepReady()) return;
         const wiz = $id('vaWiz');
         wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = 'none');
-        window.aneeWait.show({ title: 'Anee is researching…', lines: ['Reading the newest Philippine releases and trials…', 'Checking the hybrids from the top seed companies…', 'Reading resistance, tolerance and days to maturity…', 'Weighing each variety against your soil and the coming weather…', 'Ranking by what you said matters most…'], sub: 'A minute or two — this is a deep analysis.' });
+        window.aneeWait.show({ title: 'Anee is researching…', lines: ['Reading the newest ' + ((window.ANEE_REGION || {}).ph === false ? (window.ANEE_REGION.name + ' ') : 'Philippine ') + 'releases and trials…', 'Checking the hybrids from the top seed companies…', 'Reading resistance, tolerance and days to maturity…', 'Weighing each variety against your soil and the coming weather…', 'Ranking by what you said matters most…'], sub: 'A minute or two — this is a deep analysis.' });
         $id('vaReport').hidden = true;
         let landed = false;
         try {
@@ -876,7 +876,7 @@
                 const hybrids = all.filter((x) => x.type === 'hybrid');
                 const inbreds = all.filter((x) => x.type !== 'hybrid');
                 const groups = (hybrids.length && inbreds.length)
-                    ? [['Hybrids', 'Seed bought fresh each season — usually the higher yield, at a higher seed cost', hybrids], ['Inbred & open-pollinated', 'Seed you can keep and replant — the public NSIC-registered varieties', inbreds]]
+                    ? [['Hybrids', 'Seed bought fresh each season — usually the higher yield, at a higher seed cost', hybrids], ['Inbred & open-pollinated', 'Seed you can keep and replant — the public {{ \App\Support\Region::ph() ? 'NSIC-registered' : 'registered' }} varieties', inbreds]]
                     : [['The comparison, best first', '', all]];
                 let delay = 0;
                 return groups.map(([title, sub, rows]) => `
@@ -920,7 +920,7 @@
 
             ${(r.newest || []).length ? `
             <div class="wtp-card">
-                <h3>Newest in the Philippines</h3>
+                <h3>Newest in ${(window.ANEE_REGION || {}).ph === false ? (window.ANEE_REGION.name || 'your country') : 'the Philippines'}</h3>
                 ${(r.newest || []).map((n) => `
                     <div class="wtp-win-row is-new"><b>🆕 ${esc(n.variety || '')}${n.year ? ' (' + esc(n.year) + ')' : ''}${n.by ? ' · ' + esc(n.by) : ''}:</b><span>${esc(sweep(n.note))}</span></div>`).join('')}
             </div>` : ''}

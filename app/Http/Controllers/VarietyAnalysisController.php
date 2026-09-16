@@ -99,7 +99,7 @@ class VarietyAnalysisController extends Controller
         $canUse = $payer->canUseAi() && $settings->isUsable();
 
         return response()->json(['success' => true, 'message' => 'ok', 'data' => [
-            'crops' => collect(CropCatalog::CROPS)->map(fn ($c, $key) => [
+            'crops' => collect(CropCatalog::visible())->map(fn ($c, $key) => [
                 'key' => $key,
                 'label' => $c['label'],
                 'icon' => $c['icon'],
@@ -510,22 +510,32 @@ class VarietyAnalysisController extends Controller
         $soil = self::SOILS[$p['soil']] ?? $p['soil'];
         $problems = collect($p['problems'])->map(fn ($k) => self::PROBLEMS[$k] ?? $k)->implode('; ') ?: 'none reported';
 
+        $countryName = \App\Support\Region::name();
+        $seeds = \App\Support\Region::agency('seeds');
+        $met = \App\Support\Region::agency('met');
+        $sources = \App\Support\Region::agency('sources');
+        $cropLabel = CropCatalog::label($p['crop']);
+        $regionLine = \App\Support\Region::promptBlock();
+        $hybridHouses = \App\Support\Region::ph()
+            ? '(for rice: SL Agritech / SL-8H and its line, Bayer Arize, Syngenta, Corteva-Pioneer, Bioseed, Longping High-Tech; for corn: Pioneer, Bayer-Dekalb, Syngenta NK, Bioseed; for vegetables: East-West Seed, Allied Botanical, Known-You, Condor, Ramgo — whichever apply to this crop), and the NSIC-registered public hybrids (e.g. Mestiso / Mestizo lines for rice)'
+            : '(the top seed companies and public breeding programs actually selling this crop in ' . $countryName . ' — name them from what you find, never from memory)';
+
         return <<<PROMPT
-You are a research assistant for Philippine agronomy with web search. SEARCH THE WEB NOW and write research notes for a variety comparison. Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it.
+You are a research assistant for agronomy in {$countryName} with web search. SEARCH THE WEB NOW and write research notes for a variety comparison. Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it. {$regionLine}
 
 THE CASE
-- Crop: {$crop['label']}
+- Crop: {$cropLabel}
 - Field: {$p['location']}; soil: {$soil}; troubles: {$problems}
 - Varieties the farmer named: {$named}
 
 FIND, IN THIS ORDER
-1. The newest Philippine-registered or released {$crop['label']} varieties (NSIC / BPI registration, PhilRice, IPB-UPLB, DA-BAR, private seed companies) in {$year}, {$year}-1 and {$year}-2: name, breeder or company, year, what it was bred for.
+1. The newest {$cropLabel} varieties registered or released in {$countryName} ({$seeds}) in {$year}, {$year}-1 and {$year}-2: name, breeder or company, year, what it was bred for.
 2. For each of the farmer's named varieties AND for 4–6 top-yielding released INBRED or open-pollinated varieties suited to this soil and these troubles: documented yield (trial or published figure, with unit and source), days to maturity, pest and disease resistance ratings, stress tolerance (drought, submergence, salinity, heat, acidity, alkalinity, lodging), grain or fruit quality notes, and any regional trial results in or near the farmer's region.
-2b. The same for 3–5 HYBRID varieties of {$crop['label']} sold in the Philippines by the top seed companies (for rice: SL Agritech / SL-8H and its line, Bayer Arize, Syngenta, Corteva-Pioneer, Bioseed, Longping High-Tech; for corn: Pioneer, Bayer-Dekalb, Syngenta NK, Bioseed; for vegetables: East-West Seed, Allied Botanical, Known-You, Condor, Ramgo — whichever apply to this crop), and the NSIC-registered public hybrids (e.g. Mestiso / Mestizo lines for rice): yield, maturity, resistance, seed cost and availability per hectare where published, and whether the seed must be bought fresh each season.
-3. PAGASA's seasonal climate outlook for the farmer's region for the coming months (rainfall, ENSO state, typhoon expectation).
+2b. The same for 3–5 HYBRID varieties of {$cropLabel} sold in {$countryName} by the top seed companies {$hybridHouses}: yield, maturity, resistance, seed cost and availability per hectare where published, and whether the seed must be bought fresh each season.
+3. The seasonal climate outlook from {$met} for the farmer's region for the coming months (rainfall, ENSO state, severe-weather expectation).
 4. Anything published about which of these varieties do well or poorly on this soil type and with these troubles.
 
-Prefer PhilRice, DA, BPI, NSIC, IRRI, UPLB, PCAARRD, PAGASA and reputable seed-company pages. Where a variety cannot be found online, say so plainly. Write plain prose notes under the four headings, at most 900 words, no JSON, no markdown tables.
+Prefer {$sources}. Where a variety cannot be found online, say so plainly. Write plain prose notes under the four headings, at most 900 words, no JSON, no markdown tables.
 PROMPT;
     }
 
@@ -543,18 +553,24 @@ PROMPT;
         $orderText = implode('; ', $order);
         $given = $p['varieties']
             ? 'The farmer is weighing these: ' . implode(', ', $p['varieties']) . '. Assess EVERY one of them (in givenVarieties), and put those that fit in the ranking; add the top-yielding released varieties for these conditions that the farmer did not name — inbred/open-pollinated AND hybrid — so the ranking has 6–9 in all.'
-            : 'The farmer has not named any. Choose them yourself: 4–5 top-yielding released INBRED / open-pollinated varieties AND 3–4 HYBRID varieties from the top seed companies selling in the Philippines, for these conditions — 7–9 in all, every one with its type filled in.';
+            : 'The farmer has not named any. Choose them yourself: 4–5 top-yielding released INBRED / open-pollinated varieties AND 3–4 HYBRID varieties from the top seed companies selling in ' . \App\Support\Region::name() . ', for these conditions — 7–9 in all, every one with its type filled in.';
         $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
         $forecast = $this->forecastLines($p['location']);
         $year = now('Asia/Manila')->year;
 
+        $countryName = \App\Support\Region::name();
+        $regionBlock = \App\Support\Region::promptBlock();
+        $cropLabel = CropCatalog::label($p['crop']);
+        $climateHint = \App\Support\Region::ph() ? 'wet/dry timing, typhoon seasonality' : 'frost dates, growing-season length, rainfall and heat timing, the severe-weather season';
+
         return <<<PROMPT
-You are an agronomic decision-support analyst for Philippine farming, with web search available. The farmer asks WHICH VARIETY of {$crop['label']} to plant on the ground described below. Research and compare varieties, score each on four criteria, and rank them by the farmer's own priorities.
+You are an agronomic decision-support analyst for farming in {$countryName}, with web search available. The farmer asks WHICH VARIETY of {$cropLabel} to plant on the ground described below. Research and compare varieties, score each on four criteria, and rank them by the farmer's own priorities.
 
 FACTS GIVEN
+- {$regionBlock}
 - Location as the farmer wrote it: {$p['location']}
-- Crop: {$crop['label']}
+- Crop: {$cropLabel}
 - Soil, as the farmer describes it: {$soil}
 - Field troubles the farmer reports: {$problems}
 - The farmer's priorities, most important first: {$orderText}
@@ -563,10 +579,10 @@ FACTS GIVEN
 - Weather now: {$forecast}
 {$ensoBlock}
 WHAT TO READ FROM
-Research notes gathered from the web just now follow at the end of this brief (the newest Philippine registrations and releases of {$crop['label']} in {$year} and the two years before, trial yields, resistance ratings, days to maturity, the seasonal outlook). Rely on them first, over memory; note the year of each finding. Where a claim is neither in the notes nor established agronomy, say so in dataGaps rather than inventing it.
+Research notes gathered from the web just now follow at the end of this brief (the newest registrations and releases of {$cropLabel} in {$countryName} in {$year} and the two years before, trial yields, resistance ratings, days to maturity, the seasonal outlook). Rely on them first, over memory; note the year of each finding. Where a claim is neither in the notes nor established agronomy, say so in dataGaps rather than inventing it.
 
 GROUND RULES
-- Reason from what you found and from established agronomy: the soil-water behaviour implied by the described soil and troubles, the region's climate (wet/dry timing, typhoon seasonality) and the outlook above, each variety's documented traits. No invented yields; a yield figure must be a trial or published figure with its source.
+- Reason from what you found and from established agronomy: the soil-water behaviour implied by the described soil and troubles, the region's climate ({$climateHint}) and the outlook above, each variety's documented traits. No invented yields; a yield figure must be a trial or published figure with its source.
 - Score each variety 0–100 on each criterion FOR THESE CONDITIONS: yield (documented yield potential here), protection (pest/disease resistance and stress tolerance relevant to the reported troubles), survival (establishment and hardiness through this ground's stresses), quickness (earliness — fewer days to maturity scores higher).
 - Be scientific and neutral: name the breeder or seed company as a fact, never as a recommendation to buy; no marketing tone.
 - Write every "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
@@ -577,7 +593,7 @@ Rules for the shape:
 - headline: one line, ≤ 14 words, the answer in a breath.
 - ranking: SIX to NINE varieties, each with: type ("hybrid" for F1 hybrids whose seed is bought fresh each season, "inbred" for inbred, open-pollinated and public registered varieties — never leave it empty), by (breeder / seed company / institution), released (year or "n/a"), maturityDays (e.g. "110–115 DAS" or "n/a"), yieldPotential (a published figure with unit, e.g. "6.5–8.0 t/ha (PhilRice trials)", or "not published"), scores (all four, 0–100), strengths (2–3 short items), weaknesses (1–3 short items), fitNotes (≤ 40 words on THIS ground and climate), sources (1–3 short source names, e.g. "PhilRice Rc 222 factsheet 2023").
 - givenVarieties: one entry for EACH variety the farmer named (empty list if none), verdict ≤ 35 words — including when it is unsuitable, unavailable, or could not be found (say so plainly).
-- newest: two to five of the most recent relevant Philippine releases found online (year required), each with a ≤ 20-word note on why it matters here.
+- newest: two to five of the most recent relevant releases in {$countryName} found online (year required), each with a ≤ 20-word note on why it matters here.
 - conditions: soil (≤ 45 words on what this soil and its troubles demand of a variety), weather (≤ 45 words on the outlook and what it favours), risks (2–4 short items).
 - management: three to five short, practical lines specific to the top pick on this ground.
 - topPick: the variety you judge best for the farmer's priority order, with why ≤ 60 words.

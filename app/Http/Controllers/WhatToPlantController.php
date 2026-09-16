@@ -392,10 +392,17 @@ class WhatToPlantController extends Controller
         $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
 
+        $countryName = \App\Support\Region::name();
+        $regionBlock = \App\Support\Region::promptBlock();
+        $climateRule = \App\Support\Region::ph()
+            ? 'PAGASA climatological normals for the region named (wet/dry timing, typhoon seasonality)'
+            : 'the climatological normals for the region named as published by ' . \App\Support\Region::agency('met') . ' (frost dates and growing-season length where they apply, rainfall and temperature timing, the severe-weather season)';
+
         return <<<PROMPT
-You are an agronomic decision-support analyst for Philippine farming. The farmer asks WHAT to plant on the ground described below, starting around {$start}. Recommend the best-suited crops, ranked, drawn from across the families a Philippine farm weighs: grains, vegetables, root crops, legumes, and fruit/tree crops.
+You are an agronomic decision-support analyst for farming in {$countryName}. The farmer asks WHAT to plant on the ground described below, starting around {$start}. Recommend the best-suited crops, ranked, drawn from across the families a farm in {$countryName} weighs: grains, vegetables, root crops, legumes, and fruit/tree crops — only crops actually grown and sold in {$countryName}.
 
 FACTS GIVEN
+- {$regionBlock}
 - Location as the farmer wrote it: {$p['location']}
 - Planned start: {$start}
 - Soil, as the farmer describes it: {$soil}
@@ -406,7 +413,7 @@ FACTS GIVEN
 - The farmer's own notes: {$notes}
 {$ensoBlock}
 GROUND RULES
-- Reason only from established knowledge: PAGASA climatological normals for the region named (wet/dry timing, typhoon seasonality), the soil-water behaviour implied by the described soil and troubles, each candidate crop's real agronomic needs and calendar, and typical Philippine market/home-use patterns for the stated aim. No invented prices, no yield promises.
+- Reason only from established knowledge: {$climateRule}, the soil-water behaviour implied by the described soil and troubles, each candidate crop's real agronomic needs and calendar, and typical {$countryName} market/home-use patterns for the stated aim. No invented prices, no yield promises.
 - Cover the families honestly: at least one strong root crop and one perennial/tree option must be CONSIDERED — recommended if they fit, or placed in avoid with the reason if they do not.
 - Where the given facts cannot answer something (soil test values, exact microclimate, market access), name it in dataGaps instead of guessing.
 - Be scientific and neutral: no seed brands, no product recommendations, no marketing tone.

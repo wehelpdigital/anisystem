@@ -330,14 +330,14 @@
             {{-- Step 4: the variety --}}
             <section class="wtp-step" data-step="3">
                 <p class="wtp-q">Which variety?</p>
-                <p class="wtp-sub">Type it as it is sold — e.g. NSIC Rc222. If its data is not published, the analysis will say so rather than guess.</p>
+                <p class="wtp-sub">Type it as it is sold — e.g. {{ \App\Support\Region::ph() ? 'NSIC Rc222' : 'Pioneer P1197' }}. If its data is not published, the analysis will say so rather than guess.</p>
                 <input type="text" id="wtpVariety" class="form-input" maxlength="80" placeholder="Variety name (optional)">
             </section>
             {{-- Step 5: the place --}}
             <section class="wtp-step" data-step="4">
                 <p class="wtp-q">Where is the field?</p>
-                <p class="wtp-sub">Town and province is enough — the climate patterns differ by region.</p>
-                <input type="text" id="wtpLocation" class="form-input" maxlength="160" placeholder="e.g. Urdaneta, Pangasinan">
+                <p class="wtp-sub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate patterns differ by region.</p>
+                <input type="text" id="wtpLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
             </section>
             {{-- Step 6: the troubles --}}
             <section class="wtp-step" data-step="5">
@@ -392,7 +392,7 @@
         <div class="crop-search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
             <input type="text" id="wtpCropSearch" class="form-input" autocomplete="off"
-                   placeholder="Search — palay, sayote, mangga…">
+                   placeholder="{{ \App\Support\Region::t('cropSearch') }}">
             <button type="button" class="crop-search-x hidden" id="wtpCropSearchX" aria-label="Clear">✕</button>
         </div>
         <div id="wtpCropList"></div>

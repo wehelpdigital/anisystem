@@ -225,7 +225,7 @@
             <div class="q-body">
                 <div class="q-body-in">
                     <div class="q-card" id="wpQuoteCost"></div>
-                    <div class="q-card">Anee weighs your soil, water, timing and the region's climate against the crops a Philippine farm actually chooses between — grains, vegetables, root crops, legumes and fruit trees — and ranks what fits YOUR ground.</div>
+                    <div class="q-card">Anee weighs your soil, water, timing and the region's climate against the crops a farm {{ \App\Support\Region::ph() ? 'in the Philippines' : 'in ' . \App\Support\Region::name() }} actually chooses between — grains, vegetables, root crops, legumes and fruit trees — and ranks what fits YOUR ground.</div>
                 </div>
             </div>
         </div>
@@ -234,8 +234,8 @@
             {{-- Step 1: the place --}}
             <section class="wtp-step is-on" data-step="0">
                 <p class="wtp-q">Where is the field?</p>
-                <p class="wtp-sub">Town and province is enough — the climate and the markets differ by region.</p>
-                <input type="text" id="wpLocation" class="form-input" maxlength="160" placeholder="e.g. Urdaneta, Pangasinan">
+                <p class="wtp-sub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate and the markets differ by region.</p>
+                <input type="text" id="wpLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
             </section>
             {{-- Step 2: when they want to begin --}}
             <section class="wtp-step" data-step="1">
@@ -446,7 +446,7 @@
         if (!stepReady()) return;
         const wiz = $id('wpWiz');
         wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = 'none');
-        window.aneeWait.show({ title: 'Anee is reading your ground…', lines: ['Soil, water and the region\'s climate…', 'Weighing every crop family a Philippine farm grows…', 'Ranking what fits, and what to avoid…'], sub: 'Half a minute, usually.' });
+        window.aneeWait.show({ title: 'Anee is reading your ground…', lines: ['Soil, water and the region\'s climate…', 'Weighing every crop family a farm ' + ((window.ANEE_REGION || {}).ph === false ? 'in ' + window.ANEE_REGION.name : 'in the Philippines') + ' grows…', 'Ranking what fits, and what to avoid…'], sub: 'Half a minute, usually.' });
         $id('wpReport').hidden = true;
         let landed = false;
         try {

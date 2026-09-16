@@ -127,7 +127,16 @@ class CropProtocolController extends Controller
         'cost' => ['label' => 'Lower cost', 'sub' => 'The leanest inputs that still make a decent crop', 'icon' => '💰'],
     ];
 
-    public const YIELD_UNITS = ['cavans' => 'cavans per hectare', 'tons' => 'tons per hectare'];
+    /** Cavans and tons at home, tons and kilograms elsewhere — per hectare (App\Support\Region). */
+    public static function yieldUnits(): array
+    {
+        $out = [];
+        foreach ((array) \App\Support\Region::get('yieldUnits', ['tons' => 'tons']) as $k => $word) {
+            $out[$k] = $word . ' per hectare';
+        }
+
+        return $out ?: ['tons' => 'tons per hectare'];
+    }
 
     public function __construct(private AiCreditService $credits, private AiClient $ai)
     {
@@ -164,7 +173,7 @@ class CropProtocolController extends Controller
         }
 
         return response()->json(['success' => true, 'message' => 'ok', 'data' => [
-            'crops' => collect(CropCatalog::CROPS)->map(fn ($c, $key) => [
+            'crops' => collect(CropCatalog::visible())->map(fn ($c, $key) => [
                 'key' => $key,
                 'label' => $c['label'],
                 'icon' => $c['icon'],
@@ -177,7 +186,7 @@ class CropProtocolController extends Controller
             'methods' => self::METHODS,
             'runner' => PHP_SAPI . (function_exists('fastcgi_finish_request') ? '+finish' : ''),
             'priorities' => self::PRIORITIES,
-            'yieldUnits' => self::YIELD_UNITS,
+            'yieldUnits' => self::yieldUnits(),
             'soils' => self::SOILS,
             'waters' => self::WATERS,
             'problems' => self::PROBLEMS,
@@ -212,7 +221,7 @@ class CropProtocolController extends Controller
             'method' => 'required|in:' . implode(',', array_keys(self::METHODS)),
             'priority' => 'required|in:' . implode(',', array_keys(self::PRIORITIES)),
             'targetYield' => 'nullable|numeric|min:0|max:100000',
-            'yieldUnit' => 'nullable|in:' . implode(',', array_keys(self::YIELD_UNITS)),
+            'yieldUnit' => 'nullable|in:' . implode(',', array_keys(self::yieldUnits())),
             'area' => 'required|numeric|min:0.01|max:10000',
             'soil' => 'required|in:' . implode(',', array_keys(self::SOILS)),
             'water' => 'required|in:' . implode(',', array_keys(self::WATERS)),
@@ -392,7 +401,7 @@ class CropProtocolController extends Controller
             $raw = trim((string) ($it['estCost'] ?? ''));
             $num = preg_match('/\d[\d,]*(\.\d+)?/', $raw, $m) ? (float) str_replace(',', '', $m[0]) : null;
             if ($num !== null && $num > 0) {
-                $it['estCost'] = '≈ ₱'.number_format($num);
+                $it['estCost'] = '≈ ' . \App\Support\Region::symbol() . number_format($num);
                 $sum += $num;
                 $known++;
             } else {
@@ -401,7 +410,7 @@ class CropProtocolController extends Controller
             $items[] = $it;
         }
         $report['prepare'] = $items;
-        $report['prepareCost'] = $known ? ['sum' => '≈ ₱'.number_format($sum), 'known' => $known, 'of' => count($items)] : null;
+        $report['prepareCost'] = $known ? ['sum' => '≈ ' . \App\Support\Region::symbol() . number_format($sum), 'known' => $known, 'of' => count($items)] : null;
 
         return $report;
     }
@@ -517,7 +526,7 @@ class CropProtocolController extends Controller
         $text = "\n\n--- ATTACHED: Crop Protocol Analysis (the farmer generated this earlier; treat it as shared context) ---\n"
             . 'Case: ' . $r->title . "\n"
             . 'Field: ' . ($params['area'] ?? '') . ' ha; method ' . (self::METHODS[$params['method'] ?? '']['label'] ?? '') . '; priority ' . (self::PRIORITIES[$params['priority'] ?? '']['label'] ?? '')
-            . '; target ' . (($params['targetYield'] ?? null) ? $params['targetYield'] . ' ' . (self::YIELD_UNITS[$params['yieldUnit'] ?? 'cavans'] ?? '') : 'not set') . "\n"
+            . '; target ' . (($params['targetYield'] ?? null) ? $params['targetYield'] . ' ' . (self::yieldUnits()[$params['yieldUnit'] ?? ''] ?? '') : 'not set') . "\n"
             . 'Headline: ' . ($report['headline'] ?? '') . "\n"
             . 'Fertilizer by stage: ' . $fert . "\n"
             . 'Irrigation: ' . collect($report['irrigation'] ?? [])->map(fn ($x) => ($x['stage'] ?? '') . ' — ' . ($x['need'] ?? ''))->implode(' | ') . "\n"
@@ -584,7 +593,7 @@ class CropProtocolController extends Controller
             'method' => (string) $request->input('method'),
             'priority' => (string) $request->input('priority'),
             'targetYield' => $request->filled('targetYield') ? (float) $request->input('targetYield') : null,
-            'yieldUnit' => in_array($request->input('yieldUnit'), array_keys(self::YIELD_UNITS), true) ? $request->input('yieldUnit') : 'cavans',
+            'yieldUnit' => in_array($request->input('yieldUnit'), array_keys(self::yieldUnits()), true) ? $request->input('yieldUnit') : array_key_first(self::yieldUnits()),
             'area' => (float) $request->input('area'),
             'soil' => (string) $request->input('soil'),
             'water' => (string) $request->input('water'),
@@ -613,6 +622,7 @@ class CropProtocolController extends Controller
 
     private function facts(array $p): array
     {
+        $cropLabel = CropCatalog::label($p['crop']);
         $crop = CropCatalog::CROPS[$p['crop']];
         $when = \Illuminate\Support\Carbon::parse($p['month'] . '-01')->format('F Y');
         $target = $p['targetYield'] !== null
@@ -620,6 +630,7 @@ class CropProtocolController extends Controller
             : 'not set — aim for what the variety realistically gives here';
 
         return [
+            'cropLabel' => $cropLabel,
             'crop' => $crop,
             'when' => $when,
             'target' => $target,
@@ -644,24 +655,30 @@ class CropProtocolController extends Controller
         $f = $this->facts($p);
         $year = now('Asia/Manila')->year;
 
+        $rCountry = \App\Support\Region::name();
+        $rNutrient = \App\Support\Region::agency('nutrient');
+        $rMet = \App\Support\Region::agency('met');
+        $rSources = \App\Support\Region::agency('sources');
+        $rRegion = \App\Support\Region::promptBlock();
+
         return <<<PROMPT
-You are a research assistant for Philippine agronomy with web search. SEARCH THE WEB NOW and write research notes for a season protocol. Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it.
+You are a research assistant for agronomy in {$rCountry} with web search. {$rRegion} SEARCH THE WEB NOW and write research notes for a season protocol. Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it.
 
 THE CASE
-- Crop: {$f['crop']['label']}; variety: {$f['variety']}
+- Crop: {$f['cropLabel']}; variety: {$f['variety']}
 - Planting: {$f['when']}, {$f['method']}, at {$p['location']}
 - Field: {$f['area']} ha; soil {$f['soil']}; water: {$f['water']}; troubles: {$f['problems']}
 - The farmer's aim: {$f['priority']}; target yield: {$f['target']}
 
 FIND, IN THIS ORDER
 1. The variety's published traits: days to maturity, yield potential and typical farm yields, recommended planting method and season, fertilizer response and any published fertilizer recommendation for it, resistance and tolerance ratings, known weaknesses (lodging, shattering, disease).
-2. The official Philippine recommendations for this crop's nutrient management by growth stage in this region and season (DA / PhilRice PalayCheck, LCC and MOET guidance for rice; DA-BAR, UPLB, ATI, the regional DA office for other crops): kg N-P-K per hectare, split timing by stage, common products (urea 46-0-0, 14-14-14, 16-20-0, 0-0-60, muriate of potash, organic/biofertilizers), and the soil-specific adjustments for {$f['soil']} and for these troubles.
+2. The official recommendations in {$rCountry} for this crop's nutrient management by growth stage in this region and season ({$rNutrient}): kg N-P-K per hectare, split timing by stage, common products (urea 46-0-0, 14-14-14, 16-20-0, 0-0-60, muriate of potash, organic/biofertilizers), and the soil-specific adjustments for {$f['soil']} and for these troubles.
 3. Integrated pest management for this crop in the region: the insects, diseases and weeds that matter by growth stage, their economic thresholds, the recommended controls (cultural, biological, chemical with active ingredients), and any current outbreak advisories.
 4. Irrigation and water management by growth stage for this crop and method (e.g. alternate wetting and drying for rice), and what to change under drought or flooding.
-5. PAGASA's seasonal climate outlook for the region for the months from planting to harvest (rainfall, temperature, tropical cyclone expectations) and the current ENSO advisory.
-6. Current published prices of the main inputs in the Philippines where available (a bag of urea, complete, potash; common insecticides/fungicides), for a rough cost picture.
+5. The seasonal climate outlook from {$rMet} for the region for the months from planting to harvest (rainfall, temperature, severe-weather expectations) and the current ENSO advisory.
+6. Current published prices of the main inputs in {$rCountry} where available (a bag of urea, complete, potash; common insecticides/fungicides), for a rough cost picture.
 
-Prefer PhilRice, DA, BPI, NSIC, IRRI, UPLB, ATI, PCAARRD, PAGASA, FPA and reputable seed/agrochemical company pages. Note the year of each finding. Where something cannot be found online, say so plainly. Write plain prose notes under the six headings, at most 1,100 words, no JSON, no markdown tables.
+Prefer {$rSources}. Note the year of each finding. Where something cannot be found online, say so plainly. Write plain prose notes under the six headings, at most 1,100 words, no JSON, no markdown tables.
 PROMPT;
     }
 
@@ -672,14 +689,18 @@ PROMPT;
         $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ENSO: ' . $enso . "\n" : '';
         $forecast = $this->forecastLines($p['location']);
-        $unitWord = self::YIELD_UNITS[$p['yieldUnit']] ?? 'cavans per hectare';
+        $unitWord = self::yieldUnits()[$p['yieldUnit']] ?? array_values(self::yieldUnits())[0];
+        $countryName = \App\Support\Region::name();
+        $regionBlock = \App\Support\Region::promptBlock();
+        $currencyName = \App\Support\Region::currencyName();
 
         return <<<PROMPT
-You are an agronomic decision-support analyst for Philippine farming. Write a SEMI-COMPLETE SEASON PROTOCOL for one field, hung on the crop's GROWTH STAGES — never on day counts. The farmer will act when the crop reaches a stage, as their own eyes tell them; the protocol says what to do at each stage and what to have ready.
+You are an agronomic decision-support analyst for farming in {$countryName}. Write a SEMI-COMPLETE SEASON PROTOCOL for one field, hung on the crop's GROWTH STAGES — never on day counts. The farmer will act when the crop reaches a stage, as their own eyes tell them; the protocol says what to do at each stage and what to have ready.
 
 FACTS GIVEN
+- {$regionBlock}
 - Location as the farmer wrote it: {$p['location']}
-- Crop: {$f['crop']['label']}; variety: {$f['variety']}
+- Crop: {$f['cropLabel']}; variety: {$f['variety']}
 - Planting: {$f['when']}; method: {$f['method']}
 - Field size: {$f['area']} hectare(s)
 - Soil, as the farmer describes it: {$f['soil']}; water: {$f['water']}
@@ -712,7 +733,7 @@ Rules for the shape:
 - irrigation: one entry per stage that needs a decision, with ifDry / ifWet contingencies ≤ 20 words each.
 - weather: outlook ≤ 60 words for the months from planting to harvest; enso ≤ 40 words; risks 2–5 short items.
 - yieldOutlook: target = the farmer's target restated in {$unitWord} (or "not set"); realistic = what this variety realistically gives here, in the same unit; note ≤ 40 words.
-- prepare: the shopping list for the whole field, 6–14 items (seed, every fertilizer product with total bags, the sprays to have on hand, foliars, tools/water if notable), qty as a number, unit, whenNeeded as a stage, estCost = the estimated peso cost of that quantity as a plain number (e.g. 7200) or "" when you truly cannot estimate it.
+- prepare: the shopping list for the whole field, 6–14 items (seed, every fertilizer product with total bags, the sprays to have on hand, foliars, tools/water if notable), qty as a number, unit, whenNeeded as a stage, estCost = the estimated cost of that quantity in {$currencyName} as a plain number (e.g. 7200) or "" when you truly cannot estimate it.
 - watch: 5–8 short lines — the things that go wrong here and the sign to act on.
 - confidence "low"/"moderate"/"high"; dataGaps at most five; summary ≤ 110 words, plain and warm but factual, ending with the reminder that the calendar is only a hint and the crop's stage is the clock.
 PROMPT;
