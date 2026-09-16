@@ -175,6 +175,31 @@
 
     .wtp-anee-face { width: 1.15rem; height: 1.15rem; border-radius: 999px; object-fit: cover; }
 
+    /* Full screen when it lands (the sisters' view): the tabs and the
+       wizard are out of sight until the farmer closes it. */
+    .va-view { position: fixed; inset: 0; z-index: 90; background: var(--color-gray-50); overflow-y: auto; -webkit-overflow-scrolling: touch;
+        opacity: 0; transform: translateY(12px); transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .va-view.is-on { opacity: 1; transform: none; }
+    .va-view-bar { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: .6rem; padding: .7rem .9rem;
+        padding-top: max(.7rem, env(safe-area-inset-top)); background: rgb(250 250 248 / .92); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--color-gray-200); }
+    .va-view-bar b { flex: 1 1 auto; min-width: 0; font-size: .95rem; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .va-view-x { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center;
+        background: var(--color-white); border: 1px solid var(--color-gray-200); color: var(--color-gray-700); font-size: 1rem; cursor: pointer; }
+    .va-view-body { max-width: 42rem; margin: 0 auto; padding: 1rem 1rem calc(2rem + env(safe-area-inset-bottom)); }
+    html.va-view-lock { overflow: hidden; }
+    html.dark .va-view { background: #0d110a; }
+    html.dark .va-view-bar { background: rgb(13 17 10 / .92); border-color: #2b3a1c; }
+    html.dark .va-view-bar b { color: #e8efe1; }
+    html.dark .va-view-x { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
+    .wtp-shelf-search { position: relative; padding: .7rem .8rem; border-bottom: 1px solid var(--color-gray-100); }
+    .wtp-shelf-search svg { position: absolute; left: 1.55rem; top: 50%; transform: translateY(-50%); width: 1rem; height: 1rem; color: var(--color-gray-400); pointer-events: none; }
+    .wtp-shelf-search .form-input { padding-left: 2.3rem; }
+    .wtp-shelf-more { text-align: center; font-size: .74rem; color: var(--color-gray-400); padding: .8rem; }
+    html.dark .wtp-shelf-search { border-color: #222b1a; }
+    .wp-loc-country { margin-bottom: .8rem; }
+    .wp-loc-country .form-label { margin-bottom: .3rem; }
+
     html.dark .wtp-tab { background: #151b12; border-color: #2b3a1c; color: #93a684; }
     html.dark .wtp-tab.is-on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
     html.dark .wtp-quote { background: linear-gradient(115deg, #1c2913, #22301a); border-color: #2b3a1c; }
@@ -225,7 +250,7 @@
             <div class="q-body">
                 <div class="q-body-in">
                     <div class="q-card" id="wpQuoteCost"></div>
-                    <div class="q-card">Anee weighs your soil, water, timing and the region's climate against the crops a farm {{ \App\Support\Region::ph() ? 'in the Philippines' : 'in ' . \App\Support\Region::name() }} actually chooses between — grains, vegetables, root crops, legumes and fruit trees — and ranks what fits YOUR ground.</div>
+                    <div class="q-card">Anee weighs your soil, water, timing and the region's climate against the crops a farm in <span id="wpQuoteCountry">{{ \App\Support\Region::ph() ? 'the Philippines' : \App\Support\Region::name() }}</span> actually chooses between — grains, vegetables, root crops, legumes and fruit trees — and ranks what fits YOUR ground.</div>
                 </div>
             </div>
         </div>
@@ -234,7 +259,15 @@
             {{-- Step 1: the place --}}
             <section class="wtp-step is-on" data-step="0">
                 <p class="wtp-q">Where is the field?</p>
-                <p class="wtp-sub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate and the markets differ by region.</p>
+                {{-- The field's country, the farmer's own unless they say
+                     otherwise: it decides the address words, the example
+                     place, and whose climate, crops and agencies the
+                     analysis reads. --}}
+                <div class="wp-loc-country">
+                    <label class="form-label">Country of the field</label>
+                    @include('partials.country-pick', ['id' => 'wpCountry', 'name' => 'country', 'value' => \App\Support\Region::code()])
+                </div>
+                <p class="wtp-sub" id="wpLocSub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate and the markets differ by region.</p>
                 <input type="text" id="wpLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
             </section>
             {{-- Step 2: when they want to begin --}}
@@ -297,13 +330,26 @@
 
     <div id="wpSavedPane" class="hidden">
         <div class="card !p-0 overflow-hidden">
+            <div class="wtp-shelf-search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+                <input type="search" id="wpSavedSearch" class="form-input" placeholder="Search your analyses" autocomplete="off" aria-label="Search saved analyses">
+            </div>
             <div id="wpSavedList"></div>
+            <div class="wtp-shelf-more" id="wpSavedMore" hidden>Loading more…</div>
             <div id="wpSavedEmpty" class="hidden text-center py-10">
                 <p class="font-bold text-gray-900">Nothing saved yet</p>
                 <p class="text-sm text-gray-400">Every finished analysis lands here by itself.</p>
             </div>
         </div>
         <div class="wtp-report mt-4" id="wpSavedReport" hidden></div>
+    </div>
+
+    <div class="va-view" id="wpView" hidden role="dialog" aria-modal="true" aria-label="What to plant analysis">
+        <div class="va-view-bar">
+            <b id="wpViewTitle">What to plant</b>
+            <button type="button" class="va-view-x" id="wpViewX" aria-label="Close">✕</button>
+        </div>
+        <div class="va-view-body"><div class="wtp-report" id="wpViewReport"></div></div>
     </div>
 </div>
 
@@ -324,7 +370,10 @@
     const CAT_E = { 'Grain': '🌾', 'Vegetable': '🥬', 'Root crop': '🍠', 'Legume': '🫘', 'Fruit / tree': '🌳' };
 
     let OPT = null;
-    const state = { location: '', startMonth: null, soil: null, water: null, aim: null, area: '', notes: '', problems: [] };
+    const state = { location: '', startMonth: null, soil: null, water: null, aim: null, area: '', notes: '', problems: [], country: '' };
+    const RULES = () => (window.ANEE_REGION_RULES || {});
+    const rulesFor = (code) => RULES()[code] || RULES()['*'] || {};
+    const countryName = (code) => (code === 'PH' ? 'the Philippines' : (rulesFor(code).name || code || ''));
     let step = 0;
     const STEPS = 7;
 
@@ -337,6 +386,7 @@
     }
 
     function paintOptions() {
+        state.country = state.country || OPT.country || ((window.ANEE_REGION || {}).code) || 'PH';
         $id('wpMonths').innerHTML = OPT.months.map((m, i) => `
             <button type="button" class="wtp-choice" data-month="${esc(m.key)}"><span class="c-e">🗓️</span><span>${esc(m.label)}${i === 0 ? '<small>This month</small>' : ''}</span></button>`).join('');
         const soilIcons = { clay: '🧱', loam: '🟤', sandy: '🏖️', silty: '🌊', rocky: '⛰️', unsure: '🤷' };
@@ -411,7 +461,7 @@
 
     function review() {
         const month = (OPT.months.find((m) => m.key === state.startMonth) || {}).label || '';
-        $id('wpReview').innerHTML = `📍 <b>${esc(state.location)}</b> · starting ${esc(month)}`
+        $id('wpReview').innerHTML = `📍 <b>${esc(state.location)}</b>${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(rulesFor(state.country).name || state.country) : ''} · starting ${esc(month)}`
             + `<br><span class="text-xs">${esc(OPT.soils[state.soil] || '')} · ${esc(OPT.waters[state.water] || '')} · ${esc(OPT.aims[state.aim] || '')}`
             + (state.problems.length ? ` · ${state.problems.length} trouble${state.problems.length === 1 ? '' : 's'} considered` : '') + '</span>';
         $id('wpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
@@ -421,6 +471,18 @@
         $id('wpRun').disabled = !OPT.canUse;
     }
 
+    $id('wpCountry')?.addEventListener('country:change', (e) => {
+        const code = e.detail && e.detail.code;
+        const r = e.detail && e.detail.rules;
+        if (!code || !r) return;
+        state.country = code;
+        const city = (r.address && r.address.city && r.address.city.label) || 'City';
+        const region = (r.address && r.address.region && r.address.region.label) || 'State / Region';
+        $id('wpLocSub').textContent = `${code === 'PH' ? 'Town and province' : city + ' and ' + region.toLowerCase()} is enough — the climate and the markets differ by region.`;
+        $id('wpLocation').placeholder = r.exampleLocation || '';
+        const qc = $id('wpQuoteCountry');
+        if (qc) qc.textContent = countryName(code);
+    });
     $id('wpNext').addEventListener('click', () => { if (stepReady()) show(step + 1); });
     $id('wpBack').addEventListener('click', () => show(step - 1, true));
     const pickWire = (hostId, attr, key, next) => {
@@ -446,14 +508,14 @@
         if (!stepReady()) return;
         const wiz = $id('wpWiz');
         wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = 'none');
-        window.aneeWait.show({ title: 'Anee is reading your ground…', lines: ['Soil, water and the region\'s climate…', 'Weighing every crop family a farm ' + ((window.ANEE_REGION || {}).ph === false ? 'in ' + window.ANEE_REGION.name : 'in the Philippines') + ' grows…', 'Ranking what fits, and what to avoid…'], sub: 'Half a minute, usually.' });
+        window.aneeWait.show({ title: 'Anee is reading your ground…', lines: ['Soil, water and the region\'s climate…', 'Weighing every crop family a farm in ' + countryName(state.country) + ' grows…', 'Ranking what fits, and what to avoid…'], sub: 'Half a minute, usually.' });
         $id('wpReport').hidden = true;
         let landed = false;
         try {
             const res = await api(U.generate, { method: 'POST', body: {
                 location: state.location, startMonth: state.startMonth, soil: state.soil,
                 water: state.water, aim: state.aim, area: state.area, notes: state.notes,
-                problems: state.problems,
+                problems: state.problems, country: state.country,
             } });
             let data = res.data;
             if (data.pending) {
@@ -468,7 +530,8 @@
             }
             OPT.balance = data.balance;
             landed = true;
-            drawReport($id('wpReport'), { report: data.report, params: data.params, charged: data.charged, savedId: data.savedId }, 'fresh');
+            // Full screen first: the tabs and the wizard wait behind it.
+            openView({ report: data.report, params: data.params, charged: data.charged, savedId: data.savedId }, 'fresh');
             await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used — saved to the shelf.` });
             toast(`Done — ${data.charged} credits used. Saved to the shelf.`);
         } catch (err) {
@@ -481,6 +544,33 @@
         }
     });
 
+    /* Full screen when it lands, and for anything opened from the shelf. */
+    let VIEW_MODE = null;
+    function openView(item, mode) {
+        const view = $id('wpView');
+        VIEW_MODE = mode;
+        const top = ((item.report || {}).topPick || {}).crop;
+        $id('wpViewTitle').textContent = 'What to plant' + (top ? ' — ' + top : '');
+        const host = $id('wpViewReport');
+        host.classList.remove('is-drawn');
+        drawReport(host, item, mode, true);
+        view.hidden = false;
+        document.documentElement.classList.add('va-view-lock');
+        view.scrollTop = 0;
+        requestAnimationFrame(() => requestAnimationFrame(() => { view.classList.add('is-on'); host.classList.add('is-drawn'); }));
+    }
+    function closeView() {
+        const view = $id('wpView');
+        if (view.hidden) return;
+        view.classList.remove('is-on');
+        document.documentElement.classList.remove('va-view-lock');
+        const wasFresh = VIEW_MODE === 'fresh';
+        VIEW_MODE = null;
+        setTimeout(() => { view.hidden = true; $id('wpViewReport').innerHTML = ''; if (wasFresh) wizardBack(); }, 300);
+    }
+    $id('wpViewX').addEventListener('click', closeView);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeView(); });
+
     function wizardBack() {
         $id('wpWiz').hidden = false;
         if (OPT && OPT.canUse && OPT.quote) $id('wpQuote').hidden = false;
@@ -491,7 +581,7 @@
     }
 
     /* ---------------- the report, drawn ---------------- */
-    function drawReport(host, item, mode) {
+    function drawReport(host, item, mode, quiet) {
         const r = item.report || {};
         const p = item.params || {};
         const sweep = (t) => String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/\s{2,}/g, ' ').trim();
@@ -504,7 +594,7 @@
                 <p class="h-win">${esc(top.crop || '')}</p>
                 <p class="h-why">${esc(sweep(top.why))}${top.window ? ' Plant it ' + esc(top.window) + '.' : ''}</p>
                 <div class="wtp-chips">
-                    <span class="wtp-chip">📍 ${esc(p.location || '')}</span>
+                    <span class="wtp-chip">📍 ${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc(rulesFor(p.country).name || p.country) : ''}</span>
                     <span class="wtp-chip">🗓️ ${esc(month)}</span>
                     <span class="wtp-chip">Confidence: ${esc(r.confidence || 'moderate')}</span>
                     ${item.charged ? `<span class="wtp-chip">${item.charged} credits</span>` : ''}
@@ -548,22 +638,24 @@
             </div>
 
             <div class="wtp-acts">
-                <button type="button" class="btn btn-primary w-full" id="${mode === 'fresh' ? 'wpAttach' : 'wpAttachSaved'}">
+                <button type="button" class="btn btn-primary w-full" data-wp-attach>
                     ${OPT && OPT.aneeFace ? `<img class="wtp-anee-face" src="${esc(OPT.aneeFace)}" alt="">` : '🤖'} Attach to Anee
                 </button>
-                ${mode === 'fresh' ? `<button type="button" class="btn btn-white w-full" id="wpAgain">🌱 Run another analysis</button>` : ''}
-                <button type="button" class="btn btn-white w-full" id="wpDelete">🗑 Delete</button>
+                ${mode === 'fresh' ? `<button type="button" class="btn btn-white w-full" data-wp-again>🌱 Run another analysis</button>` : ''}
+                <button type="button" class="btn btn-white w-full" data-wp-delete>🗑 Delete</button>
             </div>`;
 
         host.hidden = false;
-        requestAnimationFrame(() => requestAnimationFrame(() => host.classList.add('is-drawn')));
-        host.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (!quiet) {
+            requestAnimationFrame(() => requestAnimationFrame(() => host.classList.add('is-drawn')));
+            host.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
-        host.querySelector(mode === 'fresh' ? '#wpAttach' : '#wpAttachSaved').addEventListener('click', () => {
+        host.querySelector('[data-wp-attach]').addEventListener('click', () => {
             if (item.savedId) window.location.href = U.anee + '?analysis=' + item.savedId;
         });
-        if (mode === 'fresh') host.querySelector('#wpAgain').addEventListener('click', wizardBack);
-        host.querySelector('#wpDelete').addEventListener('click', async () => {
+        host.querySelector('[data-wp-again]')?.addEventListener('click', () => { VIEW_MODE = null; closeView(); wizardBack(); });
+        host.querySelector('[data-wp-delete]').addEventListener('click', async () => {
             const delId = item.savedId;
             const ok = window.confirmAction
                 ? await confirmAction({ title: 'Delete this analysis?', message: 'The credits it cost are already spent; only the report goes.', confirmText: 'Delete', danger: true })
@@ -573,26 +665,51 @@
                 const res = await api(U.del(delId), { method: 'DELETE' });
                 toast(res.message);
                 host.hidden = true;
+                VIEW_MODE = null;
+                closeView();
                 loadSaved().catch(() => {});
                 if (mode === 'fresh') wizardBack();
             } catch (err) { toast(err.message, 'error'); }
         });
     }
 
-    /* ---------------- saved ---------------- */
-    async function loadSaved() {
-        const res = await api(U.list + '?_=' + Date.now(), { method: 'GET' });
-        const rows = res.data.rows || [];
-        WP_ROWS = rows;
-        $id('wpSavedList').innerHTML = rows.map((r) => `
+    /* ---------------- saved ----------------
+       A page at a time (twenty), more as the farmer scrolls, and a search
+       that asks the server -- a shelf of a hundred reports must not arrive
+       whole, and a name must be findable. */
+    const SHELF = { page: 1, hasMore: false, q: '', busy: false };
+    const rowHtml = (r) => `
             <button type="button" class="wtp-saved" data-saved="${r.id}">
                 <span class="grow min-w-0"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.at)} · ${r.credits} credits</small></span>
                 <span role="button" tabindex="0" class="wtp-pen" data-meta="${r.id}" title="Edit name and description" aria-label="Edit ${esc(r.title)}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:.85rem;height:.85rem"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </span>
                 <svg class="w-4 h-4 text-gray-300 shrink-0" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </button>`).join('');
-        $id('wpSavedEmpty').classList.toggle('hidden', rows.length > 0);
+            </button>`;
+    async function loadSaved(more) {
+        if (SHELF.busy) return;
+        SHELF.busy = true;
+        try {
+            const page = more ? SHELF.page + 1 : 1;
+            const res = await api(U.list + '?page=' + page + '&q=' + encodeURIComponent(SHELF.q) + '&_=' + Date.now(), { method: 'GET' });
+            const rows = res.data.rows || [];
+            SHELF.page = page;
+            SHELF.hasMore = !!res.data.hasMore;
+            WP_ROWS = more ? WP_ROWS.concat(rows) : rows;
+            const html = rows.map(rowHtml).join('');
+            if (more) $id('wpSavedList').insertAdjacentHTML('beforeend', html); else $id('wpSavedList').innerHTML = html;
+            $id('wpSavedEmpty').classList.toggle('hidden', WP_ROWS.length > 0);
+            $id('wpSavedEmpty').querySelector('p.font-bold').textContent = SHELF.q ? 'Nothing matches that' : 'Nothing saved yet';
+            $id('wpSavedMore').hidden = !SHELF.hasMore;
+        } finally { SHELF.busy = false; }
+    }
+    let shelfTimer = null;
+    $id('wpSavedSearch').addEventListener('input', () => {
+        clearTimeout(shelfTimer);
+        shelfTimer = setTimeout(() => { SHELF.q = $id('wpSavedSearch').value.trim(); loadSaved(false).catch((err) => toast(err.message, 'error')); }, 280);
+    });
+    if ('IntersectionObserver' in window) {
+        new IntersectionObserver((entries) => { if (entries.some((e) => e.isIntersecting) && SHELF.hasMore && !SHELF.busy) loadSaved(true).catch(() => {}); }, { rootMargin: '200px' }).observe($id('wpSavedMore'));
     }
 
     let WP_ROWS = [];
@@ -629,9 +746,7 @@
         if (!b) return;
         try {
             const res = await api(U.one(b.getAttribute('data-saved')), { method: 'GET' });
-            const host = $id('wpSavedReport');
-            host.classList.remove('is-drawn');
-            drawReport(host, {
+            openView({
                 report: res.data.report, params: res.data.params,
                 charged: res.data.credits, savedId: res.data.id,
             }, 'saved');

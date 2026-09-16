@@ -88,6 +88,7 @@ class WhatToPlantController extends Controller
     /** Everything the wizard needs, plus the standing price. */
     public function options()
     {
+        $farmerCountry = \App\Support\Region::code();
         $payer = $this->payer();
         $settings = AiSetting::current();
         $canUse = $payer->canUseAi() && $settings->isUsable();
@@ -106,6 +107,7 @@ class WhatToPlantController extends Controller
             'aims' => self::AIMS,
             'problems' => self::PROBLEMS,
             'months' => $months,
+            'country' => $farmerCountry,
             'quote' => $canUse ? (float) AiPrices::of('what') : null,
             'aneeFace' => $settings->faceUrl(),
             'balance' => round($this->credits->balance($payer->id), 2),
@@ -131,6 +133,7 @@ class WhatToPlantController extends Controller
 
         $v = Validator::make($request->all(), [
             'location' => 'required|string|max:160',
+            'country' => 'nullable|string|size:2',
             'startMonth' => 'required|date_format:Y-m',
             'soil' => 'required|in:' . implode(',', array_keys(self::SOILS)),
             'water' => 'required|in:' . implode(',', array_keys(self::WATERS)),
@@ -162,8 +165,11 @@ class WhatToPlantController extends Controller
         }
 
         $p = $this->params($request);
+        // A field in another country than the farmer's: Anee is told so in
+        // her own instructions, or she declines for being "set up" at home.
+        $settings = $settings->forField($p['country']);
         $title = 'What to plant · ' . \Illuminate\Support\Carbon::parse($p['startMonth'] . '-01')->format('M Y')
-            . ' · ' . $p['location'];
+            . ' · ' . $p['location'] . ($p['country'] !== \App\Support\Region::code() ? ', ' . \App\Support\Region::name($p['country']) : '');
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(),
             'kind' => 'what',
@@ -260,14 +266,21 @@ class WhatToPlantController extends Controller
         ]);
     }
 
-    public function list()
+    public function list(Request $request)
     {
+        $q = trim((string) $request->query('q', ''));
+        $page = max(1, (int) $request->query('page', 1));
+        $per = 20;
         $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())
             ->where('kind', 'what')
             ->where('deleteStatus', 1)->where('status', 'ready')->orderByDesc('id')
+            ->when($q !== '', fn ($w) => $w->where(fn ($x) => $x->where('title', 'like', '%' . $q . '%')->orWhere('description', 'like', '%' . $q . '%')))
+            ->skip(($page - 1) * $per)->take($per + 1)
             ->get(['id', 'title', 'description', 'credits', 'created_at']);
+        $hasMore = $rows->count() > $per;
+        $rows = $rows->take($per);
 
-        return $this->json(true, 'ok', ['rows' => $rows->map(fn ($r) => [
+        return $this->json(true, 'ok', ['page' => $page, 'hasMore' => $hasMore, 'q' => $q, 'rows' => $rows->map(fn ($r) => [
             'id' => $r->id,
             'title' => $r->title,
             'description' => $r->description,
@@ -369,6 +382,7 @@ class WhatToPlantController extends Controller
     {
         return [
             'location' => trim((string) $request->input('location')),
+            'country' => \App\Support\Region::valid($request->input('country')) ?: \App\Support\Region::code(),
             'startMonth' => (string) $request->input('startMonth'),
             'soil' => (string) $request->input('soil'),
             'water' => (string) $request->input('water'),
@@ -392,11 +406,16 @@ class WhatToPlantController extends Controller
         $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
 
-        $countryName = \App\Support\Region::name();
-        $regionBlock = \App\Support\Region::promptBlock();
-        $climateRule = \App\Support\Region::ph()
+        // The FIELD's country, which may not be the farmer's: its name, its
+        // weather authority, its crops; the language stays the farmer's.
+        $fc = $p['country'] ?? \App\Support\Region::code();
+        $fieldPH = $fc === \App\Support\Region::HOME;
+        $countryName = \App\Support\Region::name($fc);
+        $regionBlock = \App\Support\Region::promptBlock($fc, \App\Support\Region::code());
+        $met = \App\Support\Region::as($fc, fn () => \App\Support\Region::agency('met'));
+        $climateRule = $fieldPH
             ? 'PAGASA climatological normals for the region named (wet/dry timing, typhoon seasonality)'
-            : 'the climatological normals for the region named as published by ' . \App\Support\Region::agency('met') . ' (frost dates and growing-season length where they apply, rainfall and temperature timing, the severe-weather season)';
+            : 'the climatological normals for the region named as published by ' . $met . ' (frost dates and growing-season length where they apply, rainfall and temperature timing, the severe-weather season)';
 
         return <<<PROMPT
 You are an agronomic decision-support analyst for farming in {$countryName}. The farmer asks WHAT to plant on the ground described below, starting around {$start}. Recommend the best-suited crops, ranked, drawn from across the families a farm in {$countryName} weighs: grains, vegetables, root crops, legumes, and fruit/tree crops — only crops actually grown and sold in {$countryName}.
