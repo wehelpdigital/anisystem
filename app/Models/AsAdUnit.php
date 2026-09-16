@@ -24,7 +24,6 @@ class AsAdUnit extends BaseModel
         'activities' => 'Activities board',
         'modules' => 'Other schedule modules',
         'community' => 'Community',
-        'pricing' => 'Public pricing page',
         'upgrade' => 'Upgrade / renewal pages',
     ];
 
