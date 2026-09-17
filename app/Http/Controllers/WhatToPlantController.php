@@ -209,7 +209,7 @@ class WhatToPlantController extends Controller
             'area' => 'nullable|string|max:60',
             'notes' => 'nullable|string|max:400',
             'ph' => 'nullable|in:' . implode(',', array_keys(self::PH_LEVELS)),
-            'phValue' => 'nullable|numeric|min:3|max:10',
+            'phValue' => 'nullable|string|max:24',
             // The two pick-many answers arrive as lists (an older page may still send one key).
             'waterLook' => 'nullable',
             'waterLook.*' => 'string|max:24',
@@ -495,7 +495,8 @@ class WhatToPlantController extends Controller
             'problems' => array_values((array) $request->input('problems', [])),
             // The extra signals, each optional; an unknown reads as "not sure".
             'ph' => array_key_exists((string) $request->input('ph'), self::PH_LEVELS) ? (string) $request->input('ph') : 'unsure',
-            'phValue' => $request->filled('phValue') ? round((float) $request->input('phValue'), 1) : null,
+            // A tested pH as the farmer wrote it: one reading or a range ("5.5–6.2").
+            'phValue' => $request->filled('phValue') ? trim((string) preg_replace('/\s+/', ' ', (string) $request->input('phValue'))) : null,
             'waterLook' => self::picks(self::WATER_LOOKS, $request->input('waterLook')),
             'lay' => array_key_exists((string) $request->input('lay'), self::LAYS) ? (string) $request->input('lay') : null,
             'elevation' => array_key_exists((string) $request->input('elevation'), self::ELEVATIONS) ? (string) $request->input('elevation') : null,

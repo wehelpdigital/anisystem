@@ -301,8 +301,8 @@
                 <p class="wp-qh">Soil pH <small>a test kit, or the signs</small></p>
                 <div class="wtp-choices" id="wpPhs"></div>
                 <div class="wp-ph-in" id="wpPhIn" hidden>
-                    <label class="form-label text-xs" for="wpPhValue">Tested value <span class="text-gray-400 font-normal">(optional)</span></label>
-                    <input type="number" id="wpPhValue" class="form-input" min="3" max="10" step="0.1" inputmode="decimal" placeholder="e.g. 5.8">
+                    <label class="form-label text-xs" for="wpPhValue">Tested value or range <span class="text-gray-400 font-normal">(optional)</span></label>
+                    <input type="text" id="wpPhValue" class="form-input" maxlength="24" autocomplete="off" placeholder="e.g. 5.8, or a range like 5.5–6.2">
                 </div>
                 <p class="wp-qh mt-4">How does the irrigation water look? <small>pick all that apply</small></p>
                 <div class="wtp-choices" id="wpWaterLooks"></div>
