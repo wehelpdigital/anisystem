@@ -902,7 +902,9 @@
 
     /* The report full screen: the tabs and the wizard are out of sight
        until the ✕; the page's own copy of the report stays underneath. */
+    let VIEW_MODE = null;   // 'fresh' right after a run, 'saved' from the shelf
     function openView(item, mode) {
+        VIEW_MODE = mode || null;
         const view = $id('vaView');
         const crop = (OPT ? OPT.crops.find((c) => c.key === (item.params || {}).crop) : null) || {};
         $id('vaViewTitle').textContent = (crop.label ? crop.label + ' — ' : '') + 'variety research';
@@ -919,7 +921,11 @@
         if (view.hidden) return;
         view.classList.remove('is-on');
         document.documentElement.classList.remove('va-view-lock');
-        setTimeout(() => { view.hidden = true; $id('vaViewReport').innerHTML = ''; }, 300);
+        // A fresh result was drawn over a hidden wizard: closing it brings
+        // the wizard back, or the Generate tab stands empty.
+        const wasFresh = VIEW_MODE === 'fresh';
+        VIEW_MODE = null;
+        setTimeout(() => { view.hidden = true; $id('vaViewReport').innerHTML = ''; if (wasFresh) wizardBack(); }, 300);
     }
     $id('vaViewX').addEventListener('click', closeView);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeView(); });
