@@ -187,7 +187,9 @@
 
     /* THE FERTILIZER, DRAWN: a bar per application, its height the bags
        for the whole field, split by product. */
-    .cp-chart { display: flex; gap: .4rem; align-items: flex-end; height: 9rem; padding: .5rem .2rem 0; border-bottom: 1px solid var(--color-gray-200); overflow-x: auto; }
+    .cp-chart { display: flex; gap: .4rem; align-items: flex-end; height: 9rem; padding: .5rem .2rem 0; border-bottom: 1px solid var(--color-gray-200); overflow-x: auto; scrollbar-width: none; }
+    .cp-chart::-webkit-scrollbar, .cp-lbls::-webkit-scrollbar { display: none; }
+    .cp-lbls { scrollbar-width: none; }
     .cp-col { flex: 1 1 0; min-width: 3.2rem; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; }
     .cp-col-val { font-size: .66rem; font-weight: 800; color: var(--color-gray-700); margin-bottom: .2rem; white-space: nowrap; }
     .cp-bar { width: 70%; max-width: 2.6rem; display: flex; flex-direction: column-reverse; border-radius: .35rem .35rem 0 0; overflow: hidden;
@@ -272,13 +274,18 @@
     .cp2-pill.is-src { background: var(--color-gray-100); color: var(--color-gray-600); border-color: var(--color-gray-200); }
     .wp-watch { font-size: .76rem; color: #92610e; margin-top: .3rem; }
     /* the stage picker */
-    .cp2-chart, .cp2-lbls { scrollbar-width: none; }
-    .cp2-chart::-webkit-scrollbar, .cp2-lbls::-webkit-scrollbar { display: none; }
-    .cp2-chart .cp2-col { border: 0; background: transparent; padding: 0; cursor: pointer; border-radius: .5rem .5rem 0 0; transition: background .2s; }
+    /* The chart fits the screen whatever the count of stages: the columns
+       share the width (no minimum, no sideways scroll) and the labels are
+       the stage numbers, which the rows under the chart spell out. */
+    .cp2-chart { overflow: hidden; gap: .25rem; padding-left: 0; padding-right: 0; }
+    .cp2-chart .cp2-col { min-width: 0; border: 0; background: transparent; padding: 0; cursor: pointer; border-radius: .5rem .5rem 0 0; transition: background .2s; }
+    .cp2-chart .cp-bar { width: 72%; max-width: 2.4rem; }
+    .cp2-chart .cp-col-val { font-size: .62rem; }
+    .cp2-lbls { overflow: hidden; gap: .25rem; padding-left: 0; padding-right: 0; }
+    .cp2-lbls .cp-lbl { min-width: 0; }
     .cp2-chart .cp2-col:hover { background: var(--color-gray-50); }
     .cp2-chart .cp2-col.is-sel { background: var(--color-brand-50); }
     .cp2-chart .cp2-col.is-sel .cp-col-val { color: var(--color-brand-800); }
-    .cp2-lbls .cp-lbl { min-width: 3.2rem; }
     .cp2-lbls .cp-lbl.is-sel { color: var(--color-brand-800); }
     .cp2-detail { margin-top: .8rem; padding: .75rem .85rem; border-radius: .9rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-200); transition: opacity .28s; min-height: 4rem; }
     .cp2-detail.is-swap { opacity: 0; }
@@ -313,10 +320,12 @@
     .cp2-row-b { flex: none; font-size: .74rem; font-weight: 800; color: var(--color-brand-800); }
     /* totals */
     .cp2-tot { display: grid; gap: .5rem; }
-    .cp2-tot-row { display: grid; grid-template-columns: minmax(6rem, 1fr) 2fr auto auto; align-items: center; gap: .5rem; font-size: .78rem; }
-    .cp2-tot-row .n { display: flex; align-items: center; gap: .35rem; font-weight: 700; color: var(--color-gray-800); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cp2-tot-row { display: grid; grid-template-columns: 1fr auto auto; grid-template-areas: "n b s" "tr tr tr"; align-items: center; gap: .15rem .5rem; font-size: .78rem; }
+    .cp2-tot-row .n { grid-area: n; display: flex; align-items: center; gap: .35rem; font-weight: 700; color: var(--color-gray-800); min-width: 0; }
     .cp2-tot-row .n i { flex: none; width: .7rem; height: .7rem; border-radius: .2rem; }
-    .cp2-tot-row .tr { height: .75rem; border-radius: 999px; background: var(--color-gray-100); overflow: hidden; }
+    .cp2-tot-row b { grid-area: b; }
+    .cp2-tot-row small { grid-area: s; }
+    .cp2-tot-row .tr { grid-area: tr; height: .6rem; border-radius: 999px; background: var(--color-gray-100); overflow: hidden; }
     .cp2-tot-row .tr span { display: block; height: 100%; border-radius: 999px; transform-origin: left; transform: scaleX(0); transition: transform .7s cubic-bezier(.22,1,.36,1); }
     .wtp-report.is-drawn .cp2-tot-row .tr span { transform: scaleX(1); }
     .cp2-tot-row b { color: var(--color-gray-900); white-space: nowrap; }
