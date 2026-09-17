@@ -302,6 +302,9 @@
     .va-link { display: flex; align-items: center; gap: .5rem; font-size: .78rem; color: var(--color-brand-700);
         text-decoration: none; padding: .35rem .5rem; border-radius: .6rem; min-width: 0; }
     .va-link:hover { background: var(--color-brand-50); }
+    .va-link.is-plain { color: var(--color-gray-700); cursor: default; }
+    .va-link.is-plain:hover { background: transparent; }
+    html.dark .va-link.is-plain { color: #d5e3c5; }
     .va-link .l-t { min-width: 0; flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .va-link .l-h { flex: none; font-size: .66rem; color: var(--color-gray-400); max-width: 9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .va-nosearch { font-size: .78rem; color: #92400e; background: #fffbeb; border: 1px solid #fde68a; border-radius: .7rem; padding: .55rem .7rem; }
@@ -942,7 +945,9 @@
     /* ---------------- the report, drawn ---------------- */
     // Google hands its grounding pages back through a redirect door; the
     // title is then the site itself, and the door is not worth reading out.
-    const host = (u) => { try { const h = new URL(u).hostname.replace(/^www\./, ''); return /vertexaisearch\.cloud\.google\.com$/.test(h) ? 'via Google Search' : h; } catch (_) { return ''; } };
+    // The host a source came from, or nothing for a search redirect: the
+    // card names sources, it does not say how they were found.
+    const host = (u) => { try { const h = new URL(u).hostname.replace(/^www\./, ''); return /vertexaisearch\.cloud\.google\.com$/.test(h) ? '' : h; } catch (_) { return ''; } };
     function drawReport(hostEl, item, mode, quiet) {
         const r = item.report || {};
         const p = item.params || {};
@@ -1059,9 +1064,9 @@
             </div>
 
             <div class="wtp-card">
-                <h3>🌐 What Anee read</h3>
-                ${(r.webSources || []).length ? `<div class="va-links">${(r.webSources || []).map((s) => `
-                    <a class="va-link" href="${esc(s.url)}" target="_blank" rel="noopener nofollow"><span class="l-t">${esc(s.title || s.url)}</span><span class="l-h">${esc(host(s.url))}</span></a>`).join('')}</div>`
+                <h3>📚 Other Sources in Analysis</h3>
+                ${(r.webSources || []).length ? `<div class="va-links">${(() => { const seen = new Set(); return (r.webSources || []).map((s) => ({ name: s.title || host(s.url) || 'A published source', host: host(s.url) })).filter((x) => { const k = x.name.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; }).map((x) => `
+                    <span class="va-link is-plain"><span class="l-t">${esc(x.name)}</span>${x.host && x.host !== x.name ? `<span class="l-h">${esc(x.host)}</span>` : ''}</span>`).join(''); })()}</div>`
                     : (r.searched ? '<p class="wtp-fine">The pages she read were not handed back this time.</p>'
                         : '<p class="va-nosearch">Anee could not reach the web for this run, so this reading comes from her own knowledge and may miss the newest releases. Run it again later for a searched one.</p>')}
             </div>
