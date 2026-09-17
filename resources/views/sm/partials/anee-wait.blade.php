@@ -178,8 +178,12 @@
         if (P.misses > 0) { checkEl.textContent = `Can’t reach the server — retrying (${P.misses}/8)…`; checkEl.classList.add('is-lost'); return; }
         const ago = P.beatAgo == null ? null : Math.round(P.beatAgo + (Date.now() - P.heardAt) / 1000);
         if (ago == null) { checkEl.textContent = 'Checking on her…'; return; }
-        if (ago < 60) { checkEl.textContent = `Anee is working — heard from her ${ago < 5 ? 'just now' : ago + 's ago'}.`; return; }
-        checkEl.textContent = `A long read — no word for ${clock(ago)} (normal up to about 3 minutes; checking…)`;
+        // A single call to the model can run a couple of minutes without a
+        // word, so the line stays calm until a read is unusually long, and
+        // the server declares a dead job on its own a minute after that.
+        if (ago < 45) { checkEl.textContent = `Anee is working — heard from her ${ago < 5 ? 'just now' : ago + 's ago'}.`; return; }
+        if (ago < 150) { checkEl.textContent = `Anee is working — a deep read runs a couple of minutes between words (last one ${clock(ago)} ago).`; return; }
+        checkEl.textContent = `No word for ${clock(ago)} — longer than usual. Still checking; if she has stopped, this screen will say so within a minute.`;
         checkEl.classList.add('is-quiet');
     };
     const startProg = (phases) => {
