@@ -208,6 +208,12 @@
     .wtp-threat.sev-low { background: var(--color-gray-50); border-color: var(--color-gray-200); color: var(--color-gray-600); }
     .wtp-threat b { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .03em; opacity: .8; }
 
+    /* Chips on a light card (the hero's chips are white on green). */
+    .wtp-chips-dark { margin-top: 0; margin-bottom: .2rem; }
+    .wtp-chips-dark .wtp-chip { background: var(--color-brand-50); color: var(--color-brand-800); border: 1px solid var(--color-brand-100); }
+    html.dark .wtp-chips-dark .wtp-chip { background: #22301a; color: #cfe6b8; border-color: #2b3a1c; }
+    .wp-watch { font-size: .74rem; color: #92610e; }
+    html.dark .wp-watch { color: #e0b95c; }
     .wtp-gap { font-size: .78rem; color: var(--color-gray-500); line-height: 1.55; }
     .wtp-gap li { list-style: disc; margin-left: 1.1rem; }
     .wtp-fine { font-size: .72rem; color: var(--color-gray-400); line-height: 1.55; }
@@ -936,6 +942,18 @@
                     </div>`).join('')}
             </div>` : ''}
 
+            ${r.variety && r.variety.found ? `
+            <div class="wtp-card">
+                <h3>🧬 About ${esc(r.variety.name || p.variety || 'the variety')}</h3>
+                <div class="wtp-chips wtp-chips-dark">
+                    ${Number(r.variety.maturityDays) > 0 ? `<span class="wtp-chip">⏱ ${esc(String(Math.round(Number(r.variety.maturityDays))))} days to maturity</span>` : ''}
+                    ${r.variety.season ? `<span class="wtp-chip">🗓️ ${esc(r.variety.season)}</span>` : ''}
+                    ${r.variety.source ? `<span class="wtp-chip">📚 ${esc(r.variety.source)}</span>` : ''}
+                </div>
+                <p class="wtp-plain mt-2">${esc(sweep(r.variety.traits))}</p>
+                ${r.variety.caution ? `<p class="wp-watch mt-1">⚠️ ${esc(sweep(r.variety.caution))}</p>` : ''}
+            </div>` : ''}
+
             <div class="wtp-card">
                 <h3>In plain words</h3>
                 <p class="wtp-plain">${esc(sweep(r.summary))}</p>
@@ -947,7 +965,7 @@
             ${(r.webSources || []).length ? `
             <div class="wtp-card">
                 <h3>📚 Additional Sources of Analysis</h3>
-                <div class="va-links">${(r.webSources || []).map((s) => { const name = s.title || hostOf(s.url) || 'A published source'; const host = hostOf(s.url); return `<span class="va-link is-plain"><span class="l-t">${esc(name)}</span>${host && host !== name ? `<span class="l-h">${esc(host)}</span>` : ''}</span>`; }).join('')}</div>
+                <div class="va-links">${(() => { const seen = new Set(); return (r.webSources || []).map((s) => ({ name: s.title || hostOf(s.url) || 'A published source', host: hostOf(s.url) })).filter((x) => { const k = x.name.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; }).map((x) => `<span class="va-link is-plain"><span class="l-t">${esc(x.name)}</span>${x.host && x.host !== x.name ? `<span class="l-h">${esc(x.host)}</span>` : ''}</span>`).join(''); })()}</div>
             </div>` : ''}
 
             <div class="wtp-card">

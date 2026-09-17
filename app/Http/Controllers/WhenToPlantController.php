@@ -497,14 +497,24 @@ class WhenToPlantController extends Controller
         $to = (int) now('Asia/Manila')->year;
         $from = $to - 20;
         $cropLabel = CropCatalog::label($p['crop']);
+        // The variety, when the farmer named one: its published traits are
+        // looked up in the same search pass, so the document can time the
+        // crop by what this variety actually does rather than the crop's
+        // typical figures.
+        $variety = trim((string) ($p['variety'] ?? ''));
+        $registry = $fieldPH
+            ? 'the NSIC / PhilRice / IRRI registration and seed catalogues, the seed company\'s own page, DA and university extension notes'
+            : 'the breeder\'s or seed company\'s own page, the national variety registry, university extension notes';
+        $varietyAsk = $variety !== '' ? "\n0. THE VARIETY FIRST: \"{$variety}\" of {$cropLabel}. Search for its published characteristics: days to maturity (or harvest), yield potential, plant height and lodging, the season it is bred for (wet / dry, early / late), its tolerance to drought, flooding or submergence, heat, salinity and cold where they apply, its pest and disease resistance (for rice: blast, bacterial leaf blight, tungro, brown planthopper, stem borer; for other crops the ones that matter), and who released it and when. Prefer {$registry}. Give the figures with their source. If nothing reliable turns up, say plainly that the variety could not be found — never guess its traits.\n" : '';
+        $varietyHead = $variety !== '' ? ' and on the variety the farmer named' : '';
 
         return <<<PROMPT
-You are a research assistant for agronomy in {$country} with web search. SEARCH THE WEB NOW and write research notes on the climate RISK RECORD of one place over the past twenty years ({$from}–{$to}). Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it.
+You are a research assistant for agronomy in {$country} with web search. SEARCH THE WEB NOW and write research notes on the climate RISK RECORD of one place over the past twenty years ({$from}–{$to}){$varietyHead}. Do not answer from memory alone; every finding must come from a page you read, with the source name and year beside it.
 
 THE PLACE
 - {$p['location']}, {$country}. The farmer will plant {$cropLabel} there and needs to know, month by month, what has historically gone wrong.
 
-FIND, IN THIS ORDER
+FIND, IN THIS ORDER{$varietyAsk}
 1. Storms: the {$storms}, {$from}–{$to}: for each, the year, the month, the name where it has one, and the damage to agriculture where reported (hectares, pesos or dollars, or a plain word like severe / moderate).
 2. Drought and dry spells: the El Niño years and other drought years that hurt crops in this region in the same span, with the months affected and the damage reported.
 3. Floods: flooding events (from storms, monsoon rains or river overflow) that damaged crops there, with year, month and damage.
@@ -513,7 +523,7 @@ FIND, IN THIS ORDER
 
 THEN TALLY: for each of the twelve months, how many of the twenty years had a damaging event of each kind in that month, and how bad they tended to be. List the five worst years for this place and what happened. Where the record is thin or you could not find it, say so plainly.
 
-Prefer {$sources}, disaster databases (EM-DAT, ReliefWeb, NDRRMC / national disaster agencies), the national statistics office's crop-damage reports, and reputable news archives. Write plain prose notes under the headings, at most 900 words, no JSON, no markdown tables.
+Prefer {$sources}, disaster databases (EM-DAT, ReliefWeb, NDRRMC / national disaster agencies), the national statistics office's crop-damage reports, and reputable news archives. Write plain prose notes under the headings, at most 1100 words, no JSON, no markdown tables.
 PROMPT;
     }
 
@@ -562,7 +572,7 @@ FACTS GIVEN
 - Target season: {$this->seasonWords($p['season'], (int) $p['year'], $fc)}
 - Crop: {$cropLabel} — typical days to maturity: {$maturity}
 - Growth stages for calendar arithmetic: {$stages}
-- Stated variety: "{$p['variety']}" — use published characteristics of this variety ONLY if you genuinely know them; otherwise say variety-specific data is unavailable in dataGaps and reason from the crop's typical range. Never invent varietal traits.
+- Stated variety: "{$p['variety']}" — the research notes at the end carry what the web says about it (maturity, season it is bred for, tolerance to drought / flood / heat / cold, pest and disease resistance, who released it). USE those published traits: time the crop by the variety's own days to maturity where the notes give one, and let its tolerances and weaknesses move the windows, the month scores and the threats (a submergence-tolerant variety fears the flood month less; an early-maturing one can dodge it). Where the notes say the variety could not be found, say variety-specific data is unavailable in dataGaps and reason from the crop's typical range. Never invent varietal traits, and never use a trait the notes do not carry.
 - Location as the farmer wrote it: {$p['location']}
 - Field problems the farmer reports: {$problems}
 {$ensoBlock}
@@ -574,8 +584,9 @@ GROUND RULES
 - Write the summary and the "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
 
 Return ONLY a valid JSON object — no code fences, no commentary — in exactly this shape:
-{"bestWindow":{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"year":2026,"score":0,"note":""}],"riskHistory":{"years":"","months":[{"month":1,"storm":0,"flood":0,"drought":0,"heat":0,"frost":0,"note":""}],"events":[{"year":2013,"month":11,"kind":"storm","what":"","impact":"high"}],"note":""},"threats":[{"whenNot":"","threat":"","severity":"low"}],"confidence":"moderate","dataGaps":[""],"summary":""}
+{"bestWindow":{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"year":2026,"score":0,"note":""}],"riskHistory":{"years":"","months":[{"month":1,"storm":0,"flood":0,"drought":0,"heat":0,"frost":0,"note":""}],"events":[{"year":2013,"month":11,"kind":"storm","what":"","impact":"high"}],"note":""},"threats":[{"whenNot":"","threat":"","severity":"low"}],"variety":{"found":false,"name":"","maturityDays":0,"season":"","traits":"","caution":"","source":""},"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
+- variety: what the research found about the stated variety — found true only when the notes carry real published traits; name as published; maturityDays (0 when unknown); season it is bred for in a few words; traits ≤ 60 words in plain words (yield, height, tolerances, resistances, and how they shaped this timing); caution ≤ 25 words (its known weakness on this ground, or ""); source the registry, breeder or agency the notes cite. When the farmer named no variety, or none was found: found false and the rest empty or 0.
 - bestWindow must be a SPECIFIC, actionable range of roughly 2–6 weeks with explicit dates, and its label must spell the dates out WITH THE YEAR (e.g. "Dec 10, 2026 – Jan 5, 2027") — NEVER a season name or a whole season. fromYear/toYear carry the calendar year of each end; for the dry season the window may begin in {$p['year']} and end in the year after, or sit wholly in the year after.
 - avoidWindows: one to three ranges to KEEP AWAY FROM, each specific to the month and week and year (e.g. "Late July – mid October 2026") and grounded in the named region's historical typhoon/climate pattern; why says what historically happens there then; severity "moderate" or "high".
 - monthScores carries ALL twelve months of the season's own run, each with its year (for a season that crosses into the next year — the dry season at home, a winter/cool-season planting elsewhere: its first month with its year, then the eleven months after; for the others: January–December {$p['year']}); score 0–100 = how suitable STARTING to plant that month is; note ≤ 10 words. Differentiate months even inside the target season — a flat run of equal scores is an unfinished answer.
