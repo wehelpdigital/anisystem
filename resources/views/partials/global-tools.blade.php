@@ -70,7 +70,7 @@
             background: var(--color-white); border: 1px solid var(--color-gray-200);
             transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1),
                 border-color .28s cubic-bezier(.22,1,.36,1); }
-        .qa-tile:hover { transform: translateY(-1px); box-shadow: 0 10px 24px -16px rgb(0 0 0 / .5); }
+        @media (hover: hover) {.qa-tile:hover { transform: translateY(-1px); box-shadow: 0 10px 24px -16px rgb(0 0 0 / .5); } }
         .qa-tile .qa-ico { width: 2.6rem; height: 2.6rem; border-radius: .75rem; flex: none;
             display: inline-flex; align-items: center; justify-content: center; }
         .qa-tile .qa-ico svg { width: 1.3rem; height: 1.3rem; }
@@ -80,11 +80,16 @@
             color: var(--color-gray-500); }
         .qa-go { width: .95rem; height: .95rem; flex: none; color: var(--color-gray-300);
             transition: transform .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
-        .qa-tile:hover .qa-go { transform: translateX(2px); }
-        .qa-notes:hover { border-color: #f0dcae; } .qa-notes:hover .qa-go { color: #b45309; }
-        .qa-gallery:hover { border-color: #c7dbf5; } .qa-gallery:hover .qa-go { color: #1d4ed8; }
-        .qa-cap:hover { border-color: #cfe3b8; } .qa-cap:hover .qa-go { color: #3d6823; }
-        .qa-rec:hover { border-color: #f3c4c4; } .qa-rec:hover .qa-go { color: #b91c1c; }
+        @media (hover: hover) {.qa-tile:hover .qa-go { transform: translateX(2px); } }
+        @media (hover: hover) {.qa-notes:hover { border-color: #f0dcae; } .qa-notes:hover .qa-go { color: #b45309; } }
+        @media (hover: hover) {.qa-gallery:hover { border-color: #c7dbf5; } .qa-gallery:hover .qa-go { color: #1d4ed8; } }
+        @media (hover: hover) {.qa-cap:hover { border-color: #cfe3b8; } .qa-cap:hover .qa-go { color: #3d6823; } }
+        @media (hover: hover) {.qa-rec:hover { border-color: #f3c4c4; } .qa-rec:hover .qa-go { color: #b91c1c; } }
+        /* A tile is a door, not a choice: nothing lingers on it after a click
+           or a tap. Keyboard users still see where they are. */
+        .qa-tile:focus { outline: none; }
+        .qa-tile:focus:not(:focus-visible) { box-shadow: none; transform: none; }
+        .qa-tile:focus-visible { outline: 2px solid var(--color-brand-500); outline-offset: 2px; }
         html.dark .qa-tile { background: #151b12; border-color: #2b3a1c; }
         html.dark .qa-tile .qa-txt b { color: #e8efe1; }
         html.dark .qa-tile .qa-txt i { color: #93a684; }
@@ -317,5 +322,13 @@
             paint(folded);
             try { localStorage.setItem(KEY, folded ? '1' : '0'); } catch (_) {}
         });
+
+        // A tile opens a module; it is never "selected". Drop the focus a
+        // press leaves on it, and again when the page comes back from the
+        // module (a cached page returns with the same tile still focused).
+        const dropFocus = () => { const a = document.activeElement; if (a && a.classList && a.classList.contains('qa-tile')) a.blur(); };
+        panel.addEventListener('pointerup', (e) => { if (e.target.closest('.qa-tile')) setTimeout(dropFocus, 0); });
+        panel.addEventListener('click', (e) => { if (e.target.closest('.qa-tile')) setTimeout(dropFocus, 0); });
+        window.addEventListener('pageshow', dropFocus);
     })();
     </script>
