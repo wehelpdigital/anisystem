@@ -210,7 +210,9 @@ class WhatToPlantController extends Controller
             'notes' => 'nullable|string|max:400',
             'ph' => 'nullable|in:' . implode(',', array_keys(self::PH_LEVELS)),
             'phValue' => 'nullable|numeric|min:3|max:10',
-            'waterLook' => 'nullable|in:' . implode(',', array_keys(self::WATER_LOOKS)),
+            // The two pick-many answers arrive as lists (an older page may still send one key).
+            'waterLook' => 'nullable',
+            'waterLook.*' => 'string|max:24',
             'lay' => 'nullable|in:' . implode(',', array_keys(self::LAYS)),
             'elevation' => 'nullable|in:' . implode(',', array_keys(self::ELEVATIONS)),
             'sun' => 'nullable|in:' . implode(',', array_keys(self::SUNS)),
@@ -218,7 +220,8 @@ class WhatToPlantController extends Controller
             'grewWell' => 'nullable|string|max:160',
             'labor' => 'nullable|in:' . implode(',', array_keys(self::LABORS)),
             'budget' => 'nullable|in:' . implode(',', array_keys(self::BUDGETS)),
-            'market' => 'nullable|in:' . implode(',', array_keys(self::MARKETS)),
+            'market' => 'nullable',
+            'market.*' => 'string|max:24',
             'problems' => 'nullable|array',
             'problems.*' => 'string|in:' . implode(',', array_keys(self::PROBLEMS)),
         ]);
@@ -402,7 +405,9 @@ class WhatToPlantController extends Controller
         $text = "\n\n--- ATTACHED: What-to-plant analysis (the farmer generated this earlier; treat it as shared context) ---\n"
             . 'Case: ' . $r->title . "\n"
             . 'Ground: soil ' . (self::SOILS[$params['soil'] ?? ''] ?? '') . '; water ' . (self::WATERS[$params['water'] ?? ''] ?? '')
-            . (($params['ph'] ?? 'unsure') !== 'unsure' ? '; pH ' . (self::PH_LEVELS[$params['ph']] ?? '') : '') . (($params['waterLook'] ?? 'unsure') !== 'unsure' ? '; water looks ' . (self::WATER_LOOKS[$params['waterLook']] ?? '') : '')
+            . (($params['ph'] ?? 'unsure') !== 'unsure' ? '; pH ' . (self::PH_LEVELS[$params['ph']] ?? '') : '')
+            . (($looks = self::picks(self::WATER_LOOKS, $params['waterLook'] ?? null)) ? '; water looks ' . collect($looks)->map(fn ($k) => self::WATER_LOOKS[$k])->implode(', ') : '')
+            . (($outlets = self::picks(self::MARKETS, $params['market'] ?? null)) ? '; sells to ' . collect($outlets)->map(fn ($k) => self::MARKETS[$k])->implode(', ') : '')
             . '; aim ' . (self::AIMS[$params['aim'] ?? ''] ?? '') . ($params['area'] ?? null ? '; area ' . $params['area'] : '') . "\n"
             . 'Troubles considered: ' . ($problems ?: 'none') . "\n"
             . 'Top pick: ' . ($top['crop'] ?? '') . ' (' . ($top['category'] ?? '') . ') — ' . ($top['why'] ?? '') . "\n"
@@ -458,6 +463,24 @@ class WhatToPlantController extends Controller
         return $payerId === (int) Auth::id() ? Auth::user() : (User::find($payerId) ?? Auth::user());
     }
 
+    /**
+     * A pick-many answer as a clean list of the table's keys: takes a list or
+     * a single key (an older page, an older saved row), drops anything
+     * unknown and the "unsure" key, keeps the farmer's order.
+     */
+    public static function picks(array $table, mixed $v): array
+    {
+        $out = [];
+        foreach ((array) $v as $k) {
+            $k = (string) $k;
+            if ($k !== 'unsure' && isset($table[$k]) && ! in_array($k, $out, true)) {
+                $out[] = $k;
+            }
+        }
+
+        return $out;
+    }
+
     private function params(Request $request): array
     {
         return [
@@ -473,7 +496,7 @@ class WhatToPlantController extends Controller
             // The extra signals, each optional; an unknown reads as "not sure".
             'ph' => array_key_exists((string) $request->input('ph'), self::PH_LEVELS) ? (string) $request->input('ph') : 'unsure',
             'phValue' => $request->filled('phValue') ? round((float) $request->input('phValue'), 1) : null,
-            'waterLook' => array_key_exists((string) $request->input('waterLook'), self::WATER_LOOKS) ? (string) $request->input('waterLook') : 'unsure',
+            'waterLook' => self::picks(self::WATER_LOOKS, $request->input('waterLook')),
             'lay' => array_key_exists((string) $request->input('lay'), self::LAYS) ? (string) $request->input('lay') : null,
             'elevation' => array_key_exists((string) $request->input('elevation'), self::ELEVATIONS) ? (string) $request->input('elevation') : null,
             'sun' => array_key_exists((string) $request->input('sun'), self::SUNS) ? (string) $request->input('sun') : null,
@@ -481,7 +504,7 @@ class WhatToPlantController extends Controller
             'grewWell' => trim((string) $request->input('grewWell', '')),
             'labor' => array_key_exists((string) $request->input('labor'), self::LABORS) ? (string) $request->input('labor') : null,
             'budget' => array_key_exists((string) $request->input('budget'), self::BUDGETS) ? (string) $request->input('budget') : null,
-            'market' => array_key_exists((string) $request->input('market'), self::MARKETS) ? (string) $request->input('market') : null,
+            'market' => self::picks(self::MARKETS, $request->input('market')),
         ];
     }
 
@@ -498,7 +521,8 @@ class WhatToPlantController extends Controller
         // The extra signals, in words; "not stated" where the farmer skipped one.
         $said = fn (array $table, ?string $k) => ($k && $k !== 'unsure' && isset($table[$k])) ? $table[$k] : 'not stated';
         $ph = $said(self::PH_LEVELS, $p['ph'] ?? null) . (($p['phValue'] ?? null) ? ' (tested: pH ' . $p['phValue'] . ')' : '');
-        $waterLook = $said(self::WATER_LOOKS, $p['waterLook'] ?? null);
+        $saidMany = fn (array $table, mixed $v) => collect(self::picks($table, $v))->map(fn ($k) => $table[$k])->implode('; ') ?: 'not stated';
+        $waterLook = $saidMany(self::WATER_LOOKS, $p['waterLook'] ?? null);
         $lay = $said(self::LAYS, $p['lay'] ?? null);
         $elevation = $said(self::ELEVATIONS, $p['elevation'] ?? null);
         $sun = $said(self::SUNS, $p['sun'] ?? null);
@@ -506,7 +530,7 @@ class WhatToPlantController extends Controller
         $grewWell = ($p['grewWell'] ?? '') !== '' ? $p['grewWell'] : 'not stated';
         $labor = $said(self::LABORS, $p['labor'] ?? null);
         $budget = $said(self::BUDGETS, $p['budget'] ?? null);
-        $market = $said(self::MARKETS, $p['market'] ?? null);
+        $market = $saidMany(self::MARKETS, $p['market'] ?? null);
         $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
 
@@ -545,7 +569,7 @@ FACTS GIVEN
 - What the harvest is for: {$aim}
 - Land area: {$area}
 - Soil pH, as far as the farmer knows: {$ph}
-- The irrigation water, as it looks: {$waterLook}
+- The irrigation water, as it looks (every look the farmer ticked): {$waterLook}
 - The lay of the land: {$lay}
 - Elevation: {$elevation}
 - Sunlight: {$sun}
@@ -553,7 +577,7 @@ FACTS GIVEN
 - What has grown well there before: {$grewWell}
 - Labor and machinery: {$labor}
 - Budget for inputs: {$budget}
-- Where the harvest would be sold: {$market}
+- Where the harvest would be sold (every outlet the farmer ticked): {$market}
 - Field troubles the farmer reports: {$problems}
 - The farmer's own notes: {$notes}
 {$ensoBlock}

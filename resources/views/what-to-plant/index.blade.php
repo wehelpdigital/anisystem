@@ -304,7 +304,7 @@
                     <label class="form-label text-xs" for="wpPhValue">Tested value <span class="text-gray-400 font-normal">(optional)</span></label>
                     <input type="number" id="wpPhValue" class="form-input" min="3" max="10" step="0.1" inputmode="decimal" placeholder="e.g. 5.8">
                 </div>
-                <p class="wp-qh mt-4">How does the irrigation water look?</p>
+                <p class="wp-qh mt-4">How does the irrigation water look? <small>pick all that apply</small></p>
                 <div class="wtp-choices" id="wpWaterLooks"></div>
                 <p class="wp-qh mt-4">The lay of the land</p>
                 <div class="wtp-choices is-two" id="wpLays"></div>
@@ -325,7 +325,7 @@
                 <div class="wtp-choices" id="wpLabors"></div>
                 <p class="wp-qh mt-4">Budget for inputs</p>
                 <div class="wtp-choices" id="wpBudgets"></div>
-                <p class="wp-qh mt-4">Where would the harvest be sold?</p>
+                <p class="wp-qh mt-4">Where would the harvest be sold? <small>pick all that apply</small></p>
                 <div class="wtp-choices" id="wpMarkets"></div>
             </section>
             {{-- Step 7: the troubles --}}
@@ -410,7 +410,7 @@
     const CAT_E = { 'Grain': '🌾', 'Vegetable': '🥬', 'Root crop': '🍠', 'Legume': '🫘', 'Fruit / tree': '🌳' };
 
     let OPT = null;
-    const state = { location: '', startMonth: null, soil: null, water: null, aim: null, area: '', notes: '', problems: [], country: '', ph: 'unsure', phValue: '', waterLook: 'unsure', lay: null, elevation: null, sun: null, prevCrop: '', grewWell: '', labor: null, budget: null, market: null };
+    const state = { location: '', startMonth: null, soil: null, water: null, aim: null, area: '', notes: '', problems: [], country: '', ph: 'unsure', phValue: '', waterLook: [], lay: null, elevation: null, sun: null, prevCrop: '', grewWell: '', labor: null, budget: null, market: [] };
     const RULES = () => (window.ANEE_REGION_RULES || {});
     const rulesFor = (code) => RULES()[code] || RULES()['*'] || {};
     const countryName = (code) => (code === 'PH' ? 'the Philippines' : (rulesFor(code).name || code || ''));
@@ -436,8 +436,11 @@
         $id('wpWaters').innerHTML = Object.entries(OPT.waters).map(([k, label]) => `
             <button type="button" class="wtp-choice" data-water="${k}"><span class="c-e">${waterIcons[k] || '💧'}</span><span>${esc(label)}</span></button>`).join('');
         const group = (hostId, attr, table, icons, preset) => {
+            // A list preset is a pick-many group: each listed key lights, and
+            // "unsure" lights while the list is empty.
+            const lit = (k) => Array.isArray(preset) ? (preset.length ? preset.includes(k) : k === 'unsure') : preset === k;
             $id(hostId).innerHTML = Object.entries(table || {}).map(([k, label]) => { const [n, sub] = String(label).split(' — '); return `
-            <button type="button" class="wtp-choice${preset === k ? ' is-on' : ''}" data-${attr}="${esc(k)}"><span class="c-e">${icons[k] || '•'}</span><span>${esc(n)}${sub ? `<small>${esc(sub)}</small>` : ''}</span></button>`; }).join('');
+            <button type="button" class="wtp-choice${lit(k) ? ' is-on' : ''}" data-${attr}="${esc(k)}"><span class="c-e">${icons[k] || '•'}</span><span>${esc(n)}${sub ? `<small>${esc(sub)}</small>` : ''}</span></button>`; }).join('');
         };
         group('wpPhs', 'ph', OPT.phLevels, { unsure: '🤷', acidic: '🍋', neutral: '⚖️', alkaline: '🧂' }, state.ph);
         group('wpWaterLooks', 'waterlook', OPT.waterLooks, { unsure: '🤷', clear: '💧', muddy: '🟤', milky: '🥛', green: '🟢', salty: '🧂', smelly: '🛢️' }, state.waterLook);
@@ -518,7 +521,7 @@
         $id('wpReview').innerHTML = `📍 <b>${esc(state.location)}</b>${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(rulesFor(state.country).name || state.country) : ''} · starting ${esc(month)}`
             + `<br><span class="text-xs">${esc(OPT.soils[state.soil] || '')} · ${esc(OPT.waters[state.water] || '')} · ${esc(OPT.aims[state.aim] || '')}`
             + (state.problems.length ? ` · ${state.problems.length} trouble${state.problems.length === 1 ? '' : 's'} considered` : '')
-            + (() => { const n = ['ph', 'waterLook'].filter((k) => state[k] && state[k] !== 'unsure').length + ['lay', 'elevation', 'sun', 'labor', 'budget', 'market'].filter((k) => state[k]).length + ['prevCrop', 'grewWell'].filter((k) => state[k]).length; return n ? ` · ${n} extra signal${n === 1 ? '' : 's'}` : ''; })() + '</span>';
+            + (() => { const n = (state.ph && state.ph !== 'unsure' ? 1 : 0) + (state.waterLook.length ? 1 : 0) + (state.market.length ? 1 : 0) + ['lay', 'elevation', 'sun', 'labor', 'budget'].filter((k) => state[k]).length + ['prevCrop', 'grewWell'].filter((k) => state[k]).length; return n ? ` · ${n} extra signal${n === 1 ? '' : 's'}` : ''; })() + '</span>';
         $id('wpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
         $id('wpRunFine').textContent = OPT.canUse
             ? 'Charged to the same AI credits your questions use — it shows in your subscription’s credit log.'
@@ -554,13 +557,28 @@
     pickWire('wpWaters', 'water', 'water', 4);
     pickWire('wpAims', 'aim', 'aim', null);
     pickWire('wpPhs', 'ph', 'ph', null);
-    pickWire('wpWaterLooks', 'waterlook', 'waterLook', null);
+    // A pick-many group: answers toggle and gather in a list; "unsure" (where
+    // the group has one) clears the list and stands alone.
+    const manyWire = (hostId, attr, key) => {
+        $id(hostId).addEventListener('click', (e) => {
+            const b = e.target.closest(`[data-${attr}]`);
+            if (!b) return;
+            const k = b.getAttribute(`data-${attr}`);
+            const list = Array.isArray(state[key]) ? state[key] : [];
+            state[key] = k === 'unsure' ? [] : (list.includes(k) ? list.filter((x) => x !== k) : [...list, k]);
+            document.querySelectorAll(`#${hostId} .wtp-choice`).forEach((c) => {
+                const ck = c.getAttribute(`data-${attr}`);
+                c.classList.toggle('is-on', ck === 'unsure' ? state[key].length === 0 : state[key].includes(ck));
+            });
+        });
+    };
+    manyWire('wpWaterLooks', 'waterlook', 'waterLook');
     pickWire('wpLays', 'lay', 'lay', null);
     pickWire('wpElevations', 'elevation', 'elevation', null);
     pickWire('wpSuns', 'sun', 'sun', null);
     pickWire('wpLabors', 'labor', 'labor', null);
     pickWire('wpBudgets', 'budget', 'budget', null);
-    pickWire('wpMarkets', 'market', 'market', null);
+    manyWire('wpMarkets', 'market', 'market');
     // A tested pH can be typed once the farmer says the soil is anything but "not sure".
     $id('wpPhs').addEventListener('click', () => { $id('wpPhIn').hidden = state.ph === 'unsure'; if (state.ph === 'unsure') $id('wpPhValue').value = ''; });
     $id('wpProbs').addEventListener('change', (e) => {
@@ -664,7 +682,7 @@
                     <span class="wtp-chip">📍 ${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc(rulesFor(p.country).name || p.country) : ''}</span>
                     <span class="wtp-chip">🗓️ ${esc(month)}</span>
                     ${p.ph && p.ph !== 'unsure' ? `<span class="wtp-chip">pH ${esc(p.phValue || String((OPT && OPT.phLevels && OPT.phLevels[p.ph]) || p.ph).split(' — ')[0].toLowerCase())}</span>` : ''}
-                    ${p.waterLook && p.waterLook !== 'unsure' ? `<span class="wtp-chip">💧 ${esc(String((OPT && OPT.waterLooks && OPT.waterLooks[p.waterLook]) || p.waterLook).split(' — ')[0])}</span>` : ''}
+                    ${[].concat(p.waterLook || []).filter((k) => k && k !== 'unsure').map((k) => `<span class="wtp-chip">💧 ${esc(String((OPT && OPT.waterLooks && OPT.waterLooks[k]) || k).split(' — ')[0])}</span>`).join('')}
                     ${p.elevation ? `<span class="wtp-chip">${esc(String((OPT && OPT.elevations && OPT.elevations[p.elevation]) || p.elevation).split(' — ')[0])}</span>` : ''}
                     <span class="wtp-chip">Confidence: ${esc(r.confidence || 'moderate')}</span>
                     ${item.charged ? `<span class="wtp-chip">${item.charged} credits</span>` : ''}
