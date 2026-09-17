@@ -137,6 +137,87 @@
     html.dark .grx-card.is-do { background: rgb(107 159 61 / .1); border-color: #2f4d24; }
     html.dark .grx-card.is-watch { background: rgb(180 83 9 / .1); border-color: rgb(251 191 36 / .25); }
     html.dark .grx-btn.is-locked { background: #1c2416; color: #93a58b; }
+
+    /* ---- Where the crop is on its clock: the calendar's day and Anee's on one rail ---- */
+    .grx-rail-card { border-radius: 1rem; border: 1px solid var(--color-gray-200); background: var(--color-white); padding: .8rem .9rem; margin-bottom: .85rem; }
+    .grx-rail-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem; flex-wrap: wrap; margin-bottom: .6rem; }
+    .grx-rail-head h4 { font-size: .8rem; font-weight: 800; color: var(--color-gray-900); display: flex; align-items: center; gap: .4rem; }
+    .grx-seg { display: inline-flex; padding: .15rem; border-radius: 999px; background: var(--color-gray-100); }
+    .grx-seg button { border: 0; background: transparent; padding: .3rem .7rem; border-radius: 999px; font: inherit; font-size: .72rem; font-weight: 800; color: var(--color-gray-500); cursor: pointer;
+        transition: background .28s var(--ease-house, cubic-bezier(.22,1,.36,1)), color .28s, box-shadow .28s; }
+    .grx-seg button.is-on { background: var(--color-white); color: var(--color-brand-800); box-shadow: 0 2px 8px -4px rgb(0 0 0 / .35); }
+    .grx-seg button.is-on[data-grx-view="calendar"] { color: var(--color-gray-800); }
+    /* Anee's marker hangs above the rail, the calendar's below it, so two
+       days a week apart never collide. */
+    .grx-rail { padding: 1.9rem 0 .2rem; }
+    .grx-rail-track { position: relative; display: flex; gap: 3px; height: 1.05rem; }
+    .grx-rail-seg { flex: 1 1 0; min-width: 4px; border-radius: 999px; background: var(--color-gray-200); cursor: pointer; border: 0; padding: 0;
+        transition: background .35s var(--ease-house, cubic-bezier(.22,1,.36,1)), box-shadow .28s, transform .28s; }
+    .grx-rail-seg:first-child { border-radius: 999px 4px 4px 999px; } .grx-rail-seg:last-child { border-radius: 4px 999px 999px 4px; }
+    .grx-rail-seg:hover { transform: scaleY(1.15); }
+    .grx-rail-seg.is-past { background: #8fbf62; }
+    .grx-rail-seg.is-now { background: linear-gradient(90deg, #4a7c2a, #6b9f3d); box-shadow: 0 0 0 3px rgb(107 159 61 / .22); }
+    .grx-rail-seg.is-sel { outline: 2px solid #3d6823; outline-offset: 3px; }
+    html.dark .grx-rail-seg.is-sel { outline-color: #cfe6b5; }
+    .grx-rail-mark { position: absolute; top: -1.75rem; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; pointer-events: none;
+        transition: left .6s var(--ease-house, cubic-bezier(.22,1,.36,1)), opacity .35s, transform .35s; }
+    .grx-rail-mark b { font-size: .6rem; font-weight: 800; line-height: 1.15; text-align: center; white-space: nowrap; padding: .12rem .4rem; border-radius: .4rem; }
+    .grx-rail-mark i { width: 2px; height: 1.6rem; margin-top: .1rem; display: block; border-radius: 2px; }
+    .grx-rail-mark.is-cal { top: auto; bottom: -1.95rem; flex-direction: column-reverse; }
+    .grx-rail-mark.is-cal i { margin-top: 0; margin-bottom: .1rem; }
+    .grx-rail-mark.is-cal b { background: var(--color-gray-100); color: var(--color-gray-600); }
+    .grx-rail-mark.is-cal i { background: var(--color-gray-400); }
+    .grx-rail-mark.is-anee b { background: #3d6823; color: #fff; }
+    .grx-rail-mark.is-anee i { background: #3d6823; }
+    .grx-rail-mark.is-dim { opacity: .45; transform: translateX(-50%) scale(.92); }
+    .grx-rail-mark.is-lead { z-index: 2; }
+    .grx-rail-mark.is-lead b { box-shadow: 0 4px 12px -6px rgb(0 0 0 / .5); }
+    .grx-rail-shift { position: absolute; top: -.35rem; height: 1.75rem; border-radius: .3rem; background: repeating-linear-gradient(135deg, rgb(180 83 9 / .18) 0 4px, transparent 4px 8px); pointer-events: none;
+        transition: left .6s var(--ease-house, cubic-bezier(.22,1,.36,1)), width .6s var(--ease-house, cubic-bezier(.22,1,.36,1)); }
+    .grx-rail-shift.is-ahead { background: repeating-linear-gradient(135deg, rgb(29 78 216 / .16) 0 4px, transparent 4px 8px); }
+    .grx-rail-scale { display: flex; justify-content: space-between; font-size: .62rem; font-weight: 700; color: var(--color-gray-400); margin-top: 2.15rem; }
+    .grx-rail-cap { margin-top: .6rem; padding: .6rem .75rem; border-radius: .8rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-200); font-size: .78rem; line-height: 1.5; color: var(--color-gray-600);
+        transition: opacity .28s; }
+    .grx-rail-cap b { color: var(--color-gray-900); }
+    .grx-rail-cap.is-swap { opacity: 0; }
+    .grx-rail-cap-t { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; margin-bottom: .15rem; }
+    .grx-rail-cap-t small { font-size: .68rem; color: var(--color-gray-400); font-weight: 700; }
+    .grx-rail-cap-who { display: flex; gap: .35rem; flex-wrap: wrap; margin-top: .35rem; }
+    .grx-rail-cap-who span { font-size: .66rem; font-weight: 800; padding: .12rem .5rem; border-radius: 999px; }
+    .grx-rail-cap-who .is-anee { background: #e6f2d8; color: #2f5219; }
+    .grx-rail-cap-who .is-cal { background: var(--color-gray-100); color: var(--color-gray-600); }
+    .grx-stages { margin-top: .6rem; display: grid; gap: .2rem; }
+    .grx-stage-row { display: flex; align-items: center; gap: .55rem; width: 100%; text-align: left; border: 0; background: transparent; padding: .35rem .4rem; border-radius: .6rem; cursor: pointer; font: inherit; color: var(--color-gray-500);
+        transition: background .2s, color .28s; }
+    .grx-stage-row:hover { background: var(--color-gray-50); }
+    .grx-stage-row.is-sel { background: var(--color-gray-100); }
+    .grx-stage-dot { flex: none; width: .62rem; height: .62rem; border-radius: 999px; background: var(--color-gray-300); transition: background .35s, box-shadow .35s; }
+    .grx-stage-row.is-past .grx-stage-dot { background: #8fbf62; }
+    .grx-stage-row.is-now { color: var(--color-gray-900); font-weight: 700; }
+    .grx-stage-row.is-now .grx-stage-dot { background: #4a7c2a; box-shadow: 0 0 0 3px rgb(107 159 61 / .25); }
+    .grx-stage-t { flex: 1 1 auto; min-width: 0; font-size: .78rem; line-height: 1.25; }
+    .grx-stage-t small { display: block; font-size: .64rem; font-weight: 600; color: var(--color-gray-400); }
+    .grx-stage-tags { flex: none; display: flex; gap: .3rem; }
+    .grx-stage-tags em { font-style: normal; font-size: .6rem; font-weight: 800; padding: .1rem .45rem; border-radius: 999px; }
+    .grx-stage-tags .is-anee { background: #3d6823; color: #fff; }
+    .grx-stage-tags .is-cal { background: var(--color-gray-200); color: var(--color-gray-700); }
+    html.dark .grx-rail-card { background: #151b12; border-color: #2b3a1c; }
+    html.dark .grx-rail-head h4, html.dark .grx-rail-cap b, html.dark .grx-stage-row.is-now { color: #e8efe1; }
+    html.dark .grx-seg { background: #1c2416; }
+    html.dark .grx-seg button { color: #93a58b; }
+    html.dark .grx-seg button.is-on { background: #2b3a1c; color: #cfe6b5; }
+    html.dark .grx-seg button.is-on[data-grx-view="calendar"] { color: #e8efe1; }
+    html.dark .grx-rail-seg { background: #2b3a1c; }
+    html.dark .grx-rail-seg.is-past { background: #6f9a4a; }
+    html.dark .grx-rail-seg.is-now { background: linear-gradient(90deg, #8fc96a, #a8cc7e); box-shadow: 0 0 0 3px rgb(168 204 126 / .25); }
+    html.dark .grx-rail-mark.is-cal b { background: #2b3a1c; color: #d5e3c5; }
+    html.dark .grx-rail-mark.is-cal i { background: #93a58b; }
+    html.dark .grx-rail-cap { background: #10150c; border-color: #2b3a1c; color: #b7c2ad; }
+    html.dark .grx-rail-cap-who .is-anee { background: #2f4d24; color: #cfe6b5; }
+    html.dark .grx-rail-cap-who .is-cal, html.dark .grx-stage-tags .is-cal { background: #2b3a1c; color: #d5e3c5; }
+    html.dark .grx-stage-row:hover, html.dark .grx-stage-row.is-sel { background: #1c2416; }
+    html.dark .grx-stage-dot { background: #3a4a2c; }
+    @media (prefers-reduced-motion: reduce) { .grx-rail-seg, .grx-rail-mark, .grx-rail-shift, .grx-stage-dot, .grx-seg button, .grx-rail-cap { transition: none; } }
     @media (prefers-reduced-motion: reduce) { .grx-btn, .grx-hero { animation: none; } .grx-conf-bar span { transition: none; } }
 </style>
 
@@ -180,6 +261,87 @@
         return `<div class="grx-block" data-grx-lot="${Number(lotId)}">${btn}${note}</div>`;
     }
 
+    /* Where the crop is on its clock: every stage of the crop on one rail,
+       the calendar's day and Anee's marked on it, the stages listed under
+       it. The toggle chooses whose reading lights the "now" stage; a tap
+       on a segment or a row explains that stage and says where each
+       reading falls against it. Drawn only when the payload carries the
+       crop's stage table (a lot read before the table travelled has none). */
+    const stageAt = (stages, day) => { let at = -1; stages.forEach((s, i) => { if (day >= s.from) at = i; }); return at; };
+    function rail(r) {
+        const stages = Array.isArray(r.stages) ? r.stages : [];
+        if (stages.length < 2) return '';
+        const counter = r.counter || 'Day';
+        const calDay = Number(r.calendarDay) || 0;
+        const aneeDay = Number(r.physiologicalDay ?? (calDay + (Number(r.shiftDays) || 0)));
+        const last = stages[stages.length - 1].from;
+        const end = Math.max(Number(r.maturity) || 0, last + Math.max(10, Math.round(last * 0.15)), calDay + 1, aneeDay + 1);
+        const pct = (d) => Math.max(0, Math.min(100, (d / end) * 100));
+        const shift = Number(r.shiftDays) || 0;
+        const segs = stages.map((s, i) => { const until = i + 1 < stages.length ? stages[i + 1].from : end; return `<button type="button" class="grx-rail-seg" data-grx-stage="${i}" style="flex-basis:${Math.max(2, ((until - s.from) / end) * 100)}%" title="${esc(s.label)} · ${esc(counter)} ${s.from}${i + 1 < stages.length ? '–' + (until - 1) : '+'}" aria-label="${esc(s.label)}"></button>`; }).join('');
+        const lo = Math.min(calDay, aneeDay), hi = Math.max(calDay, aneeDay);
+        return `
+            <div class="grx-rail-card" data-grx-rail data-view="anee" data-sel="${stageAt(stages, aneeDay)}">
+                <div class="grx-rail-head">
+                    <h4>📍 Where the crop is on its clock</h4>
+                    <div class="grx-seg" role="group" aria-label="Whose reading to show">
+                        <button type="button" class="is-on" data-grx-view="anee">Anee</button>
+                        <button type="button" data-grx-view="calendar">Calendar</button>
+                    </div>
+                </div>
+                <div class="grx-rail">
+                    <div class="grx-rail-track">
+                        ${segs}
+                        ${shift !== 0 ? `<span class="grx-rail-shift ${shift > 0 ? 'is-ahead' : 'is-behind'}" style="left:${pct(lo)}%;width:${Math.max(0.5, pct(hi) - pct(lo))}%"></span>` : ''}
+                        <span class="grx-rail-mark is-cal" style="left:${pct(calDay)}%"><b>Calendar<br>${esc(counter)} ${calDay}</b><i></i></span>
+                        <span class="grx-rail-mark is-anee is-lead" style="left:${pct(aneeDay)}%"><b>Anee<br>${esc(counter)} ${aneeDay}</b><i></i></span>
+                    </div>
+                    <div class="grx-rail-scale"><span>${esc(counter)} 0</span><span>${Number(r.maturity) ? 'harvest ~' + esc(counter) + ' ' + Number(r.maturity) : esc(counter) + ' ' + end}</span></div>
+                </div>
+                <div class="grx-rail-cap" data-grx-cap></div>
+                <div class="grx-stages">
+                    ${stages.map((s, i) => `<button type="button" class="grx-stage-row" data-grx-stage="${i}"><span class="grx-stage-dot"></span><span class="grx-stage-t">${esc(s.label)}<small>${esc(counter)} ${s.from}+</small></span><span class="grx-stage-tags" data-grx-tags="${i}"></span></button>`).join('')}
+                </div>
+            </div>`;
+    }
+    function paintRail(card, r) {
+        const stages = Array.isArray(r.stages) ? r.stages : [];
+        const view = card.dataset.view || 'anee';
+        const sel = Math.max(0, Math.min(stages.length - 1, Number(card.dataset.sel) || 0));
+        const counter = r.counter || 'Day';
+        const calDay = Number(r.calendarDay) || 0;
+        const aneeDay = Number(r.physiologicalDay ?? (calDay + (Number(r.shiftDays) || 0)));
+        const calAt = stageAt(stages, calDay), aneeAt = stageAt(stages, aneeDay);
+        const nowAt = view === 'anee' ? aneeAt : calAt;
+        card.querySelectorAll('[data-grx-view]').forEach((b) => b.classList.toggle('is-on', b.dataset.grxView === view));
+        card.querySelectorAll('.grx-rail-seg').forEach((seg, i) => { seg.classList.toggle('is-past', i < nowAt); seg.classList.toggle('is-now', i === nowAt); seg.classList.toggle('is-sel', i === sel); });
+        card.querySelectorAll('.grx-stage-row').forEach((row, i) => { row.classList.toggle('is-past', i < nowAt); row.classList.toggle('is-now', i === nowAt); row.classList.toggle('is-sel', i === sel); });
+        card.querySelectorAll('[data-grx-tags]').forEach((t, i) => { t.innerHTML = (i === aneeAt ? '<em class="is-anee">Anee</em>' : '') + (i === calAt ? '<em class="is-cal">Calendar</em>' : ''); });
+        const mc = card.querySelector('.grx-rail-mark.is-cal'), ma = card.querySelector('.grx-rail-mark.is-anee');
+        if (mc && ma) { mc.classList.toggle('is-dim', view === 'anee'); ma.classList.toggle('is-dim', view !== 'anee'); mc.classList.toggle('is-lead', view !== 'anee'); ma.classList.toggle('is-lead', view === 'anee'); }
+        const s = stages[sel];
+        const cap = card.querySelector('[data-grx-cap]');
+        if (s && cap) {
+            const until = sel + 1 < stages.length ? stages[sel + 1].from - 1 : null;
+            const rel = (at, who) => at === sel ? `${who} is here` : (at > sel ? `${who}: ${at - sel} stage${at - sel === 1 ? '' : 's'} past this` : `${who}: ${sel - at} stage${sel - at === 1 ? '' : 's'} before this`);
+            cap.classList.add('is-swap');
+            setTimeout(() => {
+                cap.innerHTML = `<div class="grx-rail-cap-t"><b>${esc(s.label)}</b><small>${esc(counter)} ${s.from}${until !== null ? '–' + until : '+'}</small></div>${s.what ? `<div>${esc(s.what)}</div>` : ''}<div class="grx-rail-cap-who"><span class="is-anee">${esc(rel(aneeAt, 'Anee'))}</span><span class="is-cal">${esc(rel(calAt, 'Calendar'))}</span></div>`;
+                cap.classList.remove('is-swap');
+            }, cap.innerHTML ? 140 : 0);
+        }
+    }
+    document.addEventListener('click', (e) => {
+        const card = e.target.closest('[data-grx-rail]');
+        if (!card) return;
+        const r = card.__realign;
+        if (!r) return;
+        const v = e.target.closest('[data-grx-view]');
+        if (v) { card.dataset.view = v.dataset.grxView; paintRail(card, r); return; }
+        const st = e.target.closest('[data-grx-stage]');
+        if (st) { card.dataset.sel = st.dataset.grxStage; paintRail(card, r); }
+    });
+
     /* The reading, drawn into the result sheet. */
     function draw(r, lotName) {
         const conf = Math.max(0, Math.min(100, Number(r.confidence) || 0));
@@ -198,12 +360,15 @@
                 <div class="grx-cell"><i>The calendar said</i><b>${esc(r.calendarStageLabel || '—')}</b><span>${esc(counter)} ${esc(String(r.calendarDay ?? ''))}</span></div>
                 <div class="grx-cell is-anee"><i>Anee says</i><b>${esc(r.stageLabel || '')}</b><span>${esc(shiftWords(r.shiftDays))}</span></div>
             </div>
+            ${rail(r)}
             <div class="grx-conf"><span>Confidence</span><span class="grx-conf-bar"><span data-w="${conf}"></span></span><b>${conf}%</b></div>
             <p class="grx-sum">${esc(r.summary || '')}</p>
             ${listCard('', '🔎 Why she reads it this way', r.reasons, '•')}
             ${listCard('is-do', '✅ What to do now', r.recommendations, '👉')}
             ${listCard('is-watch', '👀 What to watch for this week', r.watch, '⚠️')}
             <p class="grx-applied">Applied to <b>${esc(lotName || 'this lot')}</b>: the board's day headers, the Tools sheet and the Growth Stages module now read this stage. The day count stays the calendar's; only the stage read off it has moved. Ask her again whenever the field tells a different story.</p>`;
+        const card = $id('grxResultBody').querySelector('[data-grx-rail]');
+        if (card) { card.__realign = r; paintRail(card, r); }
         openSheet('grRealignResultSheet');
         requestAnimationFrame(() => setTimeout(() => { $id('grxResultBody').querySelectorAll('.grx-conf-bar span').forEach((el) => { el.style.width = el.dataset.w + '%'; }); }, 60));
     }

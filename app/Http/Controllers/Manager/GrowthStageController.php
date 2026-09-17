@@ -80,9 +80,7 @@ class GrowthStageController extends BaseScheduleController
                 'tips' => $stage ? CropStageTips::for($crop, $stage['index'], $age['counter'] ?? null) : ['do' => [], 'watch' => []],
                 'timeline' => $crop ? CropStages::timeline($crop, $stageDay, $age['counter'] ?? null, $maturity) : [],
                 // What Anee found, when she was asked; null until she has been.
-                'realign' => ($lot->growthRealignedAt && is_array($lot->growthRealign))
-                    ? $lot->growthRealign + ['shiftDays' => (int) $lot->growthShiftDays]
-                    : null,
+                'realign' => $lot->realignPayload(),
                 // Why a lot cannot be read, said plainly, because "no stage"
                 // on its own is not a useful answer.
                 'blocked' => $this->whyBlocked($lot, $crop, $age, isset($dayZeroEff[$lot->id])),

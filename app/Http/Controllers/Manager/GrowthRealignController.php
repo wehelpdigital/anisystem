@@ -246,17 +246,14 @@ class GrowthRealignController extends BaseScheduleController
             'growthRealign' => $applied,
         ])->save();
 
-        return $applied;
+        // Handed back with the stage table, the way every page draws it.
+        return $lot->realignPayload() ?? $applied;
     }
 
-    /** The applied answer as the pages draw it, or null. */
+    /** The applied answer as the pages draw it (with the crop's stage table), or null. */
     private function applied(AsScheduleLot $lot): ?array
     {
-        if ($lot->growthRealignedAt === null || ! is_array($lot->growthRealign)) {
-            return null;
-        }
-
-        return $lot->growthRealign + ['shiftDays' => (int) $lot->growthShiftDays, 'at' => $lot->growthRealignedAt->toIso8601String()];
+        return $lot->realignPayload();
     }
 
     /** The calendar's reading of this lot on a date, and the table it read from. */

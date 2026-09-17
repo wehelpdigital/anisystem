@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* Realign by Anee: a signed shift in days a lot's STAGE is read at,
        and what she found. The count a day shows is still the calendar's. */
     const LOT_STAGE_SHIFT = @json((object) $schedule->lots->mapWithKeys(fn ($l) => [$l->id => (int) ($l->growthShiftDays ?? 0)])->all());
-    const LOT_REALIGN = @json((object) $schedule->lots->filter(fn ($l) => $l->growthRealignedAt && is_array($l->growthRealign))->mapWithKeys(fn ($l) => [$l->id => $l->growthRealign + ['shiftDays' => (int) $l->growthShiftDays]])->all());
+    const LOT_REALIGN = @json((object) $schedule->lots->filter(fn ($l) => $l->growthRealignedAt && is_array($l->growthRealign))->mapWithKeys(fn ($l) => [$l->id => $l->realignPayload()])->all());
     const LOT_MANUAL_DAY_ZERO = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->dayZeroDate ? $l->dayZeroDate->format('Y-m-d') : null]));
     const LOT_MANUAL_TRANSPLANT = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->transplantDate ? $l->transplantDate->format('Y-m-d') : null]));
 

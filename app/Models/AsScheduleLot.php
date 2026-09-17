@@ -109,6 +109,32 @@ class AsScheduleLot extends BaseModel
     }
 
     /**
+     * Realign by Anee, as every page draws it: her stored reading plus the
+     * shift, when she read, and the crop's own stage table (first day and
+     * name of each stage, and the days to harvest) so a page can lay the
+     * calendar's day and hers on the same rail. Null until she has read
+     * this lot. The table is read fresh, never stored: it is the crop's,
+     * and an older reading draws against today's table.
+     */
+    public function realignPayload(): ?array
+    {
+        if ($this->growthRealignedAt === null || ! is_array($this->growthRealign)) {
+            return null;
+        }
+        $r = $this->growthRealign;
+        $crop = \App\Support\CropStages::normalize($this->crop);
+        $maturity = $this->maturityDays();
+        $stages = $crop ? \App\Support\CropStages::stagesFor($crop, $r['counter'] ?? null, $maturity) : [];
+
+        return $r + [
+            'shiftDays' => (int) $this->growthShiftDays,
+            'at' => $this->growthRealignedAt->toIso8601String(),
+            'maturity' => $maturity,
+            'stages' => array_values(array_map(fn ($s) => ['from' => (int) $s[0], 'label' => (string) $s[1], 'what' => (string) ($s[2] ?? '')], $stages)),
+        ];
+    }
+
+    /**
      * How old this lot's trees are, in whole months, or null if it is not a
      * perennial or nobody has said when they went in.
      *
