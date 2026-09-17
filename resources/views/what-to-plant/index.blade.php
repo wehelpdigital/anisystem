@@ -113,6 +113,9 @@
 
     /* ---- THE REPORT ---- */
     .wtp-report { display: grid; gap: .9rem; }
+    /* A grid item's automatic minimum is its content's width — the timeline's
+       scroll box would widen the whole report without this. */
+    .wtp-report > * { min-width: 0; max-width: 100%; }
     .wtp-hero { border-radius: 1.1rem; padding: 1.1rem 1.2rem; color: #fff;
         background: linear-gradient(130deg, #4a7c2a, #2d5016 70%); }
     .wtp-hero h2 { font-size: 1.15rem; font-weight: 800; margin-bottom: .15rem; }
@@ -127,7 +130,7 @@
     .wtp-card h3 { font-weight: 800; font-size: .92rem; color: var(--color-gray-900); margin-bottom: .6rem; }
 
     /* The ranked shelf: one row per crop, a score bar that grows. */
-    .wp-rec { padding: .7rem 0; border-bottom: 1px solid var(--color-gray-100);
+    .wp-rec { padding: .7rem 0; border-bottom: 1px solid var(--color-gray-100); min-width: 0; overflow: hidden;
         opacity: 0; transform: translateY(6px); transition: all .45s cubic-bezier(.22,1,.36,1); }
     .wp-rec:last-child { border-bottom: 0; padding-bottom: .2rem; }
     .wtp-report.is-drawn .wp-rec { opacity: 1; transform: none; }
@@ -221,6 +224,126 @@
     html.dark .wtp-saved:hover { background: #161e10; }
     html.dark .wtp-saved b { color: #e8efe1; }
 
+
+    /* ---- what matters: a list the farmer reorders ---- */
+    .wp-prio { display: grid; gap: .45rem; }
+    .wp-prio-row { display: flex; align-items: center; gap: .6rem; padding: .6rem .7rem; border-radius: .9rem;
+        border: 1.5px solid var(--color-gray-200); background: var(--color-white); cursor: grab;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .2s, background .2s, opacity .2s; }
+    .wp-prio-row.is-drag { opacity: .45; }
+    .wp-prio-row.is-over { border-color: var(--color-brand-500); background: var(--color-brand-50); }
+    .wp-prio-n { flex: none; width: 1.6rem; height: 1.6rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center;
+        font-size: .74rem; font-weight: 800; background: var(--color-brand-100); color: var(--color-brand-800); }
+    .wp-prio-row:first-child .wp-prio-n { background: var(--color-brand-600); color: #fff; }
+    .wp-prio-t { flex: 1 1 auto; min-width: 0; font-size: .86rem; font-weight: 700; color: var(--color-gray-800); line-height: 1.3; }
+    .wp-prio-t small { display: block; font-weight: 500; font-size: .7rem; color: var(--color-gray-500); }
+    .wp-prio-b { flex: none; display: flex; flex-direction: column; gap: .15rem; }
+    .wp-prio-b button { width: 1.7rem; height: 1.35rem; border-radius: .45rem; border: 1px solid var(--color-gray-200); background: var(--color-gray-50);
+        color: var(--color-gray-600); font-size: .7rem; line-height: 1; cursor: pointer; }
+    .wp-prio-b button:disabled { opacity: .3; cursor: default; }
+    html.dark .wp-prio-row { background: #151b12; border-color: #2b3a1c; }
+    html.dark .wp-prio-row.is-over { background: #22301a; border-color: #6b9f3d; }
+    html.dark .wp-prio-t { color: #d5e3c5; }
+    html.dark .wp-prio-b button { background: #1c2416; border-color: #2b3a1c; color: #b7c2ad; }
+
+    /* ---- crops in mind: a tag that opens the book, chips for the picks ---- */
+    .crop-tag { display: flex; align-items: center; gap: .5rem; width: 100%; padding: .65rem .8rem; border-radius: .8rem; cursor: pointer; text-align: left;
+        border: 1.5px solid var(--color-gray-200); background: var(--color-white); transition: border-color .2s, background .2s; }
+    .crop-tag:hover { border-color: var(--color-brand-300); background: var(--color-brand-50); }
+    .crop-tag-e { font-size: 1.1rem; line-height: 1; flex: none; }
+    .crop-tag-t { flex: 1 1 auto; min-width: 0; font-size: .9rem; font-weight: 700; color: #3d6823; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .crop-tag-c { width: 1rem; height: 1rem; flex: none; color: var(--color-gray-400); }
+    html.dark .crop-tag { background: #1c2416; border-color: #2b3a1c; }
+    html.dark .crop-tag-t { color: #a5c97e; }
+    .wp-asked { display: flex; flex-wrap: wrap; gap: .4rem; margin: .6rem 0 .2rem; }
+    .wp-asked:empty { margin: 0; }
+    .wp-asked span { display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .4rem .3rem .6rem; border-radius: 999px;
+        background: var(--color-brand-50); border: 1px solid var(--color-brand-200); color: var(--color-brand-800); font-size: .78rem; font-weight: 700; }
+    .wp-asked button { width: 1.2rem; height: 1.2rem; border-radius: 999px; background: rgb(0 0 0 / .08); font-size: .7rem; line-height: 1; cursor: pointer; }
+    html.dark .wp-asked span { background: #22301a; border-color: #2b3a1c; color: #cfe6b8; }
+    .crop-search { position: relative; margin-bottom: .6rem; }
+    .crop-search svg { position: absolute; left: .8rem; top: 50%; transform: translateY(-50%); width: 1.05rem; height: 1.05rem; color: var(--color-gray-400); pointer-events: none; }
+    .crop-search .form-input { padding-left: 2.4rem; }
+    .crop-group-h { font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); margin: .8rem 0 .25rem; }
+    .crop-row { display: flex; align-items: center; gap: .65rem; width: 100%; text-align: left; padding: .5rem .6rem; border-radius: .7rem; cursor: pointer;
+        border: 1.5px solid transparent; transition: background .2s, border-color .2s; }
+    .crop-row:hover { background: var(--color-brand-50); }
+    .crop-row.is-on { background: var(--color-brand-50); border-color: var(--color-brand-500); }
+    .crop-row-e { font-size: 1.25rem; line-height: 1; flex: none; }
+    .crop-row-t { min-width: 0; flex: 1 1 auto; }
+    .crop-row-t b { display: block; font-size: .875rem; font-weight: 700; color: var(--color-gray-900); }
+    .crop-row-t small { display: block; font-size: .7rem; color: var(--color-gray-400); }
+    .crop-row-k { flex: none; font-size: .9rem; color: var(--color-brand-700); opacity: 0; transition: opacity .2s; }
+    .crop-row.is-on .crop-row-k { opacity: 1; }
+    .crop-none { font-size: .8rem; color: var(--color-gray-400); text-align: center; padding: 1rem 0; }
+    html.dark .crop-row:hover, html.dark .crop-row.is-on { background: #22301a; }
+    html.dark .crop-row-t b { color: #e8efe1; }
+
+    /* ---- the ranking rows: the harvest, its risk, the six fits ---- */
+    .wp-ask { font-size: .62rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: .12rem .45rem; border-radius: 999px;
+        background: #fef3c7; color: #92400e; white-space: nowrap; }
+    .wp-hv { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .6rem; margin-top: .3rem; font-size: .74rem; color: var(--color-gray-600); }
+    .wp-hr { display: inline-flex; align-items: center; gap: .3rem; padding: .12rem .5rem; border-radius: 999px; font-weight: 700; font-size: .7rem; }
+    .wp-hr.is-low { background: #dcfce7; color: #166534; }
+    .wp-hr.is-mid { background: #fef3c7; color: #92400e; }
+    .wp-hr.is-high { background: #fee2e2; color: #991b1b; }
+    .wp-hr-note { font-size: .72rem; color: var(--color-gray-500); margin-top: .1rem; line-height: 1.45; }
+    .wp-fit { display: flex; gap: .35rem; margin-top: .45rem; min-width: 0; }
+    .wp-fit-k { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: .2rem; overflow: hidden; }
+    .wp-fit-k i { display: block; width: 100%; max-width: 2.4rem; height: 1.7rem; border-radius: .3rem; background: var(--color-gray-100); position: relative; overflow: hidden; }
+    .wp-fit-k i::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: var(--v, 0%); background: var(--color-brand-500); border-radius: .3rem .3rem 0 0;
+        transform: scaleY(0); transform-origin: bottom; transition: transform .6s cubic-bezier(.22,1,.36,1); }
+    .wtp-report.is-drawn .wp-fit-k i::after { transform: scaleY(1); }
+    .wp-fit-k:first-child i::after { background: var(--color-brand-700); }
+    .wp-fit-k small { font-size: .58rem; font-weight: 700; color: var(--color-gray-500); white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+    .wp-fit-k b { font-size: .6rem; color: var(--color-gray-700); }
+    .wp-prio-line { font-size: .74rem; color: var(--color-gray-500); margin: -.3rem 0 .6rem; line-height: 1.5; }
+    .wp-prio-line b { color: var(--color-brand-700); }
+    html.dark .wp-hv { color: #b7c2ad; }
+    html.dark .wp-hr.is-low { background: #14301c; color: #86efac; }
+    html.dark .wp-hr.is-mid { background: #3a2a0a; color: #fcd34d; }
+    html.dark .wp-hr.is-high { background: #3b1414; color: #fca5a5; }
+    html.dark .wp-ask { background: #3a2a0a; color: #fcd34d; }
+    html.dark .wp-fit-k i { background: #222b1a; }
+    html.dark .wp-fit-k small { color: #93a684; }
+    html.dark .wp-fit-k b { color: #d5e3c5; }
+    html.dark .wp-prio-line { color: #93a684; }
+    html.dark .wp-prio-line b { color: #a5c97e; }
+
+    /* ---- from planting to harvest, against the year's risks ---- */
+    .wp-tl { position: relative; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .wp-tl-in { position: relative; min-width: 30rem; }
+    .wp-tl-bg { position: absolute; top: 0; bottom: 0; left: 6.2rem; right: 0; display: grid; grid-template-columns: repeat(12, 1fr); gap: 2px; pointer-events: none; }
+    .wp-tl-bg i { display: block; border-radius: .3rem; background: rgb(74 124 42 / .07); }
+    .wp-tl-bg i.is-mid { background: rgb(240 176 74 / .22); }
+    .wp-tl-bg i.is-high { background: rgb(239 118 118 / .25); }
+    .wp-tl-row { position: relative; display: grid; grid-template-columns: 6.2rem repeat(12, 1fr); gap: 2px; align-items: center; min-height: 1.9rem; }
+    .wp-tl-row.is-head { min-height: 2.2rem; }
+    .wp-tl-lbl { font-size: .7rem; font-weight: 700; color: var(--color-gray-700); padding-right: .4rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .wp-tl-lbl small { display: block; font-weight: 500; font-size: .6rem; color: var(--color-gray-400); }
+    .wp-tl-m { text-align: center; font-size: .58rem; font-weight: 700; color: var(--color-gray-500); line-height: 1.2; }
+    .wp-tl-m i { display: block; font-style: normal; font-size: .8rem; }
+    .wp-tl-bar { position: relative; height: .95rem; border-radius: 999px; background: var(--color-brand-400);
+        transform: scaleX(0); transform-origin: left; transition: transform .7s cubic-bezier(.22,1,.36,1); }
+    .wtp-report.is-drawn .wp-tl-bar { transform: scaleX(1); }
+    .wp-tl-bar.is-asked { background: repeating-linear-gradient(135deg, #a3c98a 0 6px, #86b26a 6px 12px); }
+    .wp-tl-bar.is-more::after { content: '›'; position: absolute; right: .3rem; top: -.2rem; color: #fff; font-weight: 800; font-size: .8rem; }
+    .wp-tl-dot { position: absolute; right: -.15rem; top: 50%; width: 1.05rem; height: 1.05rem; border-radius: 999px; transform: translateY(-50%);
+        border: 2px solid #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .25); }
+    .wp-tl-dot.is-low { background: #22c55e; } .wp-tl-dot.is-mid { background: #f0b04a; } .wp-tl-dot.is-high { background: #ef4444; }
+    .wp-tl-legend { display: flex; flex-wrap: wrap; gap: .3rem .8rem; margin-top: .6rem; font-size: .68rem; font-weight: 700; color: var(--color-gray-600); }
+    .wp-tl-legend span { display: inline-flex; align-items: center; gap: .3rem; }
+    .wp-tl-legend i { display: inline-block; width: .75rem; height: .75rem; border-radius: 999px; }
+    .wp-tl-legend i.is-bar { width: 1.2rem; height: .55rem; background: var(--color-brand-400); }
+    .wp-tl-legend i.is-tint { border-radius: .2rem; background: rgb(240 176 74 / .35); }
+    html.dark .wp-tl-lbl { color: #d5e3c5; }
+    html.dark .wp-tl-m { color: #93a684; }
+    html.dark .wp-tl-bg i { background: rgb(143 201 106 / .08); }
+    html.dark .wp-tl-bg i.is-mid { background: rgb(240 176 74 / .26); }
+    html.dark .wp-tl-bg i.is-high { background: rgb(239 118 118 / .34); }
+    html.dark .wp-tl-legend { color: #b7c2ad; }
+    html.dark .wp-tl-dot { border-color: #151b12; }
+
     @media (max-width: 639px) {
         .wtp-hero { padding: .9rem 1rem; }
         .wtp-hero .h-win { font-size: 1.15rem; }
@@ -232,7 +355,8 @@
     @media (prefers-reduced-motion: reduce) {
         .wtp-step.is-on { animation: none; }
         .wtp-run { animation: none; }
-        .wp-rec, .wp-fill, .wtp-dot { transition: none; transform: none; opacity: 1; }
+        .wp-rec, .wp-fill, .wtp-dot, .wp-tl-bar, .wp-fit-k i::after { transition: none; transform: none; opacity: 1; }
+        .wp-prio-row, .crop-row, .crop-tag { transition: none; }
         .wtp-wait, .q-body, .q-c, .q-hint, .wtp-prob { transition: none; }
     }
 </style>
@@ -254,7 +378,7 @@
             <div class="q-body">
                 <div class="q-body-in">
                     <div class="q-card" id="wpQuoteCost"></div>
-                    <div class="q-card">Anee weighs your soil, its pH, how the water looks, the lay and height of the land, the sun, what grew there before, your hands, budget and market, the timing and the region's climate against the crops a farm in <span id="wpQuoteCountry">{{ \App\Support\Region::ph() ? 'the Philippines' : \App\Support\Region::name() }}</span> actually chooses between — grains, vegetables, root crops, legumes and fruit trees — and ranks what fits YOUR ground.</div>
+                    <div class="q-card">Anee weighs your soil, its pH, how the water looks, the lay and height of the land, the sun, what grew there before, your hands, budget and market, the timing and the region's climate against the crops a farm in <span id="wpQuoteCountry">{{ \App\Support\Region::ph() ? 'the Philippines' : \App\Support\Region::name() }}</span> actually chooses between — grains, vegetables, root crops, legumes and fruit trees — and ranks what fits YOUR ground — in the order of what matters to you, with any crops you have in mind ranked alongside, and for each one when it would be harvested and what the weather usually does then.</div>
                 </div>
             </div>
         </div>
@@ -344,8 +468,27 @@
                 <label class="form-label mt-3" for="wpNotes">Anything else worth knowing? <span class="text-gray-400 font-normal">(optional)</span></label>
                 <textarea id="wpNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. thinking of ube; the neighbour grows onions well"></textarea>
             </section>
-            {{-- Step 9: the decision --}}
+            {{-- Step 9: what matters most -- a list the farmer reorders --}}
             <section class="wtp-step" data-step="8">
+                <p class="wtp-q">What matters most to you?</p>
+                <p class="wtp-sub">Put them in your order — the top one weighs most. Anee scores every crop against it.</p>
+                <div class="wp-prio" id="wpPrio"></div>
+            </section>
+            {{-- Step 10: crops the farmer has in mind -- optional, each ranked honestly --}}
+            <section class="wtp-step" data-step="9">
+                <p class="wtp-q">Any crops you have in mind?</p>
+                <p class="wtp-sub">Optional. Each one is analysed and ranked with Anee's own picks — honestly, even if it fits poorly.</p>
+                <button type="button" class="crop-tag" id="wpCropBtn">
+                    <span class="crop-tag-e">🌱</span>
+                    <span class="crop-tag-t" id="wpCropNow">Add a crop from the book</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="wp-asked" id="wpAsked"></div>
+                <label class="form-label mt-3" for="wpCropsOther">Others not in the book <span class="text-gray-400 font-normal">(optional)</span></label>
+                <input type="text" id="wpCropsOther" class="form-input" maxlength="160" placeholder="e.g. ampalaya, ube — separate with commas">
+            </section>
+            {{-- Step 11: the decision --}}
+            <section class="wtp-step" data-step="10">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="wpReview"></p>
                 <button type="button" class="wtp-run" id="wpRun">
@@ -393,6 +536,23 @@
     </div>
 </div>
 
+{{-- The crop book, searchable, pick as many as you like (up to eight). --}}
+<div class="sheet hidden" id="wpCropSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Crops you have in mind</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="crop-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            <input type="text" id="wpCropSearch" class="form-input" autocomplete="off" placeholder="{{ \App\Support\Region::t('cropSearch') }}">
+        </div>
+        <div id="wpCropList"></div>
+        <p class="crop-none hidden" id="wpCropNone">Nothing matches that — type it under “Others not in the book” instead.</p>
+    </div>
+</div>
+
 <script>
 (() => {
     const $id = (x) => document.getElementById(x);
@@ -410,12 +570,17 @@
     const CAT_E = { 'Grain': '🌾', 'Vegetable': '🥬', 'Root crop': '🍠', 'Legume': '🫘', 'Fruit / tree': '🌳' };
 
     let OPT = null;
-    const state = { location: '', startMonth: null, soil: null, water: null, aim: null, area: '', notes: '', problems: [], country: '', ph: 'unsure', phValue: '', waterLook: [], lay: null, elevation: null, sun: null, prevCrop: '', grewWell: '', labor: null, budget: null, market: [] };
+    const state = { location: '', startMonth: null, soil: null, water: null, aim: null, area: '', notes: '', problems: [], country: '', ph: 'unsure', phValue: '', waterLook: [], lay: null, elevation: null, sun: null, prevCrop: '', grewWell: '', labor: null, budget: null, market: [], priorities: [], cropsAsked: [], cropsOther: '' };
     const RULES = () => (window.ANEE_REGION_RULES || {});
     const rulesFor = (code) => RULES()[code] || RULES()['*'] || {};
     const countryName = (code) => (code === 'PH' ? 'the Philippines' : (rulesFor(code).name || code || ''));
     let step = 0;
-    const STEPS = 9;
+    const STEPS = 11;
+    const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const PRIO_E = { profit: '💰', survival: '🛡️', ease: '🧰', speed: '⏱️', market: '🏪', food: '🍚' };
+    // One word per fit, for the little bars under each ranked crop.
+    const PRIO_SHORT = { profit: 'Profit', survival: 'Hardy', ease: 'Easy', speed: 'Quick', market: 'Market', food: 'Food' };
+    const shortOf = (label) => String(label || '').split(' — ')[0];
 
     async function boot() {
         try {
@@ -450,6 +615,8 @@
         group('wpLabors', 'labor', OPT.labors, { hand: '🧑‍🌾', some: '🛠️', mech: '🚜' }, state.labor);
         group('wpBudgets', 'budget', OPT.budgets, { tight: '🪙', moderate: '💵', invest: '💰' }, state.budget);
         group('wpMarkets', 'market', OPT.markets, { farm: '🏠', town: '🏪', city: '🏙️', contract: '🤝' }, state.market);
+        if (!state.priorities.length) state.priorities = Object.keys(OPT.priorities || {});
+        paintPrio();
         const aimIcons = { sell: '🏪', family: '🍚', both: '⚖️' };
         $id('wpAims').innerHTML = Object.entries(OPT.aims).map(([k, label]) => `
             <button type="button" class="wtp-choice" data-aim="${k}"><span class="c-e">${aimIcons[k] || '🌱'}</span><span>${esc(label)}</span></button>`).join('');
@@ -458,6 +625,97 @@
         $id('wpDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
         paintQuote();
     }
+
+    /* ---- what matters: rows the farmer moves with the arrows or by dragging ---- */
+    function paintPrio() {
+        const host = $id('wpPrio');
+        const n = state.priorities.length;
+        host.innerHTML = state.priorities.map((k, i) => { const [name, sub] = String((OPT.priorities || {})[k] || k).split(' — '); return `
+            <div class="wp-prio-row" draggable="true" data-prio="${esc(k)}">
+                <span class="wp-prio-n">${i + 1}</span>
+                <span class="wp-prio-t">${PRIO_E[k] || '•'} ${esc(name)}${sub ? `<small>${esc(sub)}</small>` : ''}</span>
+                <span class="wp-prio-b">
+                    <button type="button" data-prio-up${i === 0 ? ' disabled' : ''} aria-label="Move up">▲</button>
+                    <button type="button" data-prio-down${i === n - 1 ? ' disabled' : ''} aria-label="Move down">▼</button>
+                </span>
+            </div>`; }).join('');
+    }
+    const movePrio = (k, to) => {
+        const from = state.priorities.indexOf(k);
+        if (from < 0 || to < 0 || to >= state.priorities.length || from === to) return;
+        state.priorities.splice(to, 0, state.priorities.splice(from, 1)[0]);
+        paintPrio();
+    };
+    $id('wpPrio').addEventListener('click', (e) => {
+        const row = e.target.closest('.wp-prio-row');
+        if (!row) return;
+        const k = row.getAttribute('data-prio');
+        const i = state.priorities.indexOf(k);
+        if (e.target.closest('[data-prio-up]')) movePrio(k, i - 1);
+        else if (e.target.closest('[data-prio-down]')) movePrio(k, i + 1);
+    });
+    let dragKey = null;
+    $id('wpPrio').addEventListener('dragstart', (e) => { const row = e.target.closest('.wp-prio-row'); if (!row) return; dragKey = row.getAttribute('data-prio'); row.classList.add('is-drag'); try { e.dataTransfer.setData('text/plain', dragKey); e.dataTransfer.effectAllowed = 'move'; } catch (_) { /* fine */ } });
+    $id('wpPrio').addEventListener('dragover', (e) => { const row = e.target.closest('.wp-prio-row'); if (!row || !dragKey) return; e.preventDefault(); document.querySelectorAll('#wpPrio .wp-prio-row').forEach((r) => r.classList.toggle('is-over', r === row)); });
+    $id('wpPrio').addEventListener('dragleave', (e) => { const row = e.target.closest('.wp-prio-row'); if (row) row.classList.remove('is-over'); });
+    $id('wpPrio').addEventListener('drop', (e) => { const row = e.target.closest('.wp-prio-row'); if (!row || !dragKey) return; e.preventDefault(); const to = state.priorities.indexOf(row.getAttribute('data-prio')); movePrio(dragKey, to); dragKey = null; });
+    $id('wpPrio').addEventListener('dragend', () => { dragKey = null; document.querySelectorAll('#wpPrio .wp-prio-row').forEach((r) => r.classList.remove('is-drag', 'is-over')); });
+
+    /* ---- crops in mind: the book for the FIELD's country, picked many at a time ---- */
+    const bookFor = () => (OPT.crops || []).filter((c) => state.country !== 'PH' || !c.intl);
+    function paintCropSheet() {
+        const groups = {};
+        bookFor().forEach((c) => { (groups[c.group] = groups[c.group] || []).push(c); });
+        $id('wpCropList').innerHTML = Object.entries(groups).map(([g, list]) => `
+            <div class="crop-group" data-crop-group>
+                <p class="crop-group-h">${esc(g)}</p>
+                ${list.map((c) => `
+                    <button type="button" class="crop-row${state.cropsAsked.includes(c.key) ? ' is-on' : ''}" data-crop="${esc(c.key)}" data-find="${esc((c.label + ' ' + g).toLowerCase())}">
+                        <span class="crop-row-e">${esc(c.icon)}</span>
+                        <span class="crop-row-t"><b>${esc(c.label)}</b><small>${c.perennial ? 'Tree crop — years to first harvest' : (c.maturity ? c.maturity + ' days to harvest' : '')}</small></span>
+                        <span class="crop-row-k">✓</span>
+                    </button>`).join('')}
+            </div>`).join('');
+        cropSift();
+    }
+    function paintAsked() {
+        const book = OPT.crops || [];
+        $id('wpAsked').innerHTML = state.cropsAsked.map((k) => { const c = book.find((x) => x.key === k) || {}; return `<span>${esc(c.icon || '🌱')} ${esc(c.label || k)}<button type="button" data-asked-x="${esc(k)}" aria-label="Remove">✕</button></span>`; }).join('');
+        $id('wpCropNow').textContent = state.cropsAsked.length ? `${state.cropsAsked.length} chosen — add another` : 'Add a crop from the book';
+    }
+    $id('wpCropBtn').addEventListener('click', () => {
+        paintCropSheet();
+        if (window.openSheet) window.openSheet('wpCropSheet');
+        if (!window.matchMedia('(hover: none)').matches) setTimeout(() => $id('wpCropSearch')?.focus(), 280);
+    });
+    $id('wpCropList').addEventListener('click', (e) => {
+        const row = e.target.closest('.crop-row');
+        if (!row) return;
+        const k = row.getAttribute('data-crop');
+        if (state.cropsAsked.includes(k)) state.cropsAsked = state.cropsAsked.filter((x) => x !== k);
+        else if (state.cropsAsked.length >= 8) { toast('Eight crops is plenty for one analysis.', 'error'); return; }
+        else state.cropsAsked.push(k);
+        row.classList.toggle('is-on', state.cropsAsked.includes(k));
+        paintAsked();
+    });
+    $id('wpAsked').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-asked-x]');
+        if (!b) return;
+        state.cropsAsked = state.cropsAsked.filter((x) => x !== b.getAttribute('data-asked-x'));
+        paintAsked();
+    });
+    const cropSift = () => {
+        const q = ($id('wpCropSearch').value || '').trim().toLowerCase();
+        let shown = 0;
+        document.querySelectorAll('#wpCropList [data-crop-group]').forEach((g) => {
+            let left = 0;
+            g.querySelectorAll('.crop-row').forEach((r) => { const hit = !q || (r.getAttribute('data-find') || '').includes(q); r.hidden = !hit; if (hit) left++; });
+            g.hidden = left === 0;
+            shown += left;
+        });
+        $id('wpCropNone').classList.toggle('hidden', shown > 0);
+    };
+    $id('wpCropSearch').addEventListener('input', cropSift);
 
     const QUOTE_MIN_KEY = 'anee-whatp-quote-min';
     let quoteMin = false;
@@ -512,6 +770,7 @@
             case 6: state.problems = [...document.querySelectorAll('#wpProbs input:checked')].map((i) => i.value); return true;
             case 7: state.area = $id('wpArea').value.trim(); state.notes = $id('wpNotes').value.trim();
                 return !!state.aim || (toast('Say what the harvest is for.', 'error'), false);
+            case 9: state.cropsOther = $id('wpCropsOther').value.trim(); return true;
             default: return true;
         }
     }
@@ -521,6 +780,8 @@
         $id('wpReview').innerHTML = `📍 <b>${esc(state.location)}</b>${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(rulesFor(state.country).name || state.country) : ''} · starting ${esc(month)}`
             + `<br><span class="text-xs">${esc(OPT.soils[state.soil] || '')} · ${esc(OPT.waters[state.water] || '')} · ${esc(OPT.aims[state.aim] || '')}`
             + (state.problems.length ? ` · ${state.problems.length} trouble${state.problems.length === 1 ? '' : 's'} considered` : '')
+            + (() => { const n = state.cropsAsked.length + (state.cropsOther ? state.cropsOther.split(',').filter((x) => x.trim()).length : 0); return n ? ` · ${n} crop${n === 1 ? '' : 's'} of your own to rank` : ''; })()
+            + (state.priorities.length ? ` · first: ${esc(shortOf((OPT.priorities || {})[state.priorities[0]] || state.priorities[0]).toLowerCase())}` : '')
             + (() => { const n = (state.ph && state.ph !== 'unsure' ? 1 : 0) + (state.waterLook.length ? 1 : 0) + (state.market.length ? 1 : 0) + ['lay', 'elevation', 'sun', 'labor', 'budget'].filter((k) => state[k]).length + ['prevCrop', 'grewWell'].filter((k) => state[k]).length; return n ? ` · ${n} extra signal${n === 1 ? '' : 's'}` : ''; })() + '</span>';
         $id('wpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
         $id('wpRunFine').textContent = OPT.canUse
@@ -540,6 +801,10 @@
         $id('wpLocation').placeholder = r.exampleLocation || '';
         const qc = $id('wpQuoteCountry');
         if (qc) qc.textContent = countryName(code);
+        // A crop picked for one country may not be in the other's book.
+        const keep = new Set(bookFor().map((c) => c.key));
+        state.cropsAsked = state.cropsAsked.filter((k) => keep.has(k));
+        paintAsked();
     });
     $id('wpNext').addEventListener('click', () => { if (stepReady()) show(step + 1); });
     $id('wpBack').addEventListener('click', () => show(step - 1, true));
@@ -591,7 +856,7 @@
         if (!stepReady()) return;
         const wiz = $id('wpWiz');
         wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = 'none');
-        window.aneeWait.show({ title: 'Anee is reading your ground…', lines: ['Soil, water and the region\'s climate…', 'Weighing every crop family a farm in ' + countryName(state.country) + ' grows…', 'Ranking what fits, and what to avoid…'], sub: 'Half a minute, usually.' });
+        window.aneeWait.show({ title: 'Anee is reading your ground…', lines: ['Soil, water and the region\'s climate…', 'Weighing every crop family a farm in ' + countryName(state.country) + ' grows…', 'Checking when each would be harvested, and what the weather does then…', 'Ranking by what matters to you…'], sub: 'Under a minute, usually.' });
         $id('wpReport').hidden = true;
         let landed = false;
         try {
@@ -601,6 +866,7 @@
                 problems: state.problems, country: state.country,
                 ph: state.ph, phValue: state.phValue || null, waterLook: state.waterLook, lay: state.lay, elevation: state.elevation, sun: state.sun,
                 prevCrop: state.prevCrop, grewWell: state.grewWell, labor: state.labor, budget: state.budget, market: state.market,
+                priorities: state.priorities, cropsAsked: state.cropsAsked, cropsOther: state.cropsOther,
             } });
             let data = res.data;
             if (data.pending) {
@@ -665,6 +931,46 @@
         $id('wpWiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
+    /* ---------------- the harvest: words for a risk score, the timeline ---------------- */
+    const riskBand = (v) => (Number(v) < 30 ? 'low' : (Number(v) < 60 ? 'mid' : 'high'));
+    const riskWord = (v) => ({ low: 'Low', mid: 'Moderate', high: 'High' }[riskBand(v)]);
+    const riskIcon = (kind) => ({ flood: '🌊', storm: '🌀', drought: '☀️', heat: '🔥', frost: '❄️' }[kind] || '🌤️');
+    /* From planting to harvest, drawn against the year's typical risks: one
+       bar per crop from its planting month to its harvest month, a dot at
+       the harvest coloured by the risk then, and the twelve columns tinted
+       by the worst of storm/flood/drought/heat/frost that month. The year
+       starts at the farmer's start month so it reads left to right. */
+    function timeline(r, p) {
+        const rows = (r.recommendations || []).filter((x) => x.plantMonth && x.harvestMonth);
+        if (!rows.length) return '';
+        const start = Number(String(p.startMonth || '').split('-')[1]) || rows[0].plantMonth || 1;
+        const col = (m) => ((Number(m) - start) % 12 + 12) % 12; // 0..11 from the start month
+        const mr = {};
+        (r.monthRisk || []).forEach((m) => { if (m && m.month) mr[Number(m.month)] = m; });
+        const worst = (m) => { const x = mr[m] || {}; const kinds = [['storm', x.storm], ['flood', x.flood], ['drought', x.drought], ['heat', x.heat], ['frost', x.frost]].map(([k, v]) => [k, Number(v) || 0]).sort((a, b) => b[1] - a[1]); return kinds[0]; };
+        const months = Array.from({ length: 12 }, (_, i) => ((start - 1 + i) % 12) + 1);
+        return `
+            <div class="wtp-card">
+                <h3>From planting to harvest, against the year's risks</h3>
+                <div class="wp-tl"><div class="wp-tl-in">
+                    <div class="wp-tl-bg">${months.map((m) => { const [k, v] = worst(m); return `<i class="is-${riskBand(v)}" title="${esc(MONTHS[m - 1])}: ${esc(k)} ${v}/100"></i>`; }).join('')}</div>
+                    <div class="wp-tl-row is-head"><span class="wp-tl-lbl">Crop<small>plant › harvest</small></span>${months.map((m) => { const [k, v] = worst(m); return `<span class="wp-tl-m"><i>${v >= 30 ? riskIcon(k) : ''}</i>${esc(MONTHS[m - 1])}</span>`; }).join('')}</div>
+                    ${rows.map((x) => { const a = col(x.plantMonth); let span = col(x.harvestMonth) - a + 1; const more = span <= 0 || (Number(x.daysToHarvest) || 0) > 365; if (span <= 0) span = 12 - a; const rk = x.harvestRisk || {}; return `
+                    <div class="wp-tl-row">
+                        <span class="wp-tl-lbl" title="${esc(x.crop || '')}">${esc(String(x.rank || ''))}. ${esc(x.crop || '')}<small>${x.daysToHarvest ? '~' + esc(String(Math.round(Number(x.daysToHarvest)))) + ' d' : ''}${x.farmerAsked ? ' · you asked' : ''}</small></span>
+                        <span class="wp-tl-bar${x.farmerAsked ? ' is-asked' : ''}${more ? ' is-more' : ''}" style="grid-column:${a + 2} / span ${span}" title="${esc(x.crop || '')}: plant ${esc(MONTHS[Number(x.plantMonth) - 1] || '')}, harvest ${esc(MONTHS[Number(x.harvestMonth) - 1] || '')}${rk.note ? ' — ' + esc(rk.note) : ''}">${rk.score != null && !more ? `<i class="wp-tl-dot is-${riskBand(rk.score)}"></i>` : ''}</span>
+                    </div>`; }).join('')}
+                </div></div>
+                <div class="wp-tl-legend">
+                    <span><i class="is-bar"></i> growing</span>
+                    <span><i class="wp-tl-dot is-low" style="position:static;transform:none"></i> harvest, calm</span>
+                    <span><i class="wp-tl-dot is-mid" style="position:static;transform:none"></i> some risk</span>
+                    <span><i class="wp-tl-dot is-high" style="position:static;transform:none"></i> risky harvest</span>
+                    <span><i class="is-tint"></i> a month the region's storms, floods, drought, heat or frost usually hit</span>
+                </div>
+            </div>`;
+    }
+
     /* ---------------- the report, drawn ---------------- */
     function drawReport(host, item, mode, quiet) {
         const r = item.report || {};
@@ -672,13 +978,16 @@
         const sweep = (t) => String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/\s{2,}/g, ' ').trim();
         const top = r.topPick || {};
         const month = (OPT ? (OPT.months.find((m) => m.key === p.startMonth) || {}).label : '') || p.startMonth || '';
+        // The farmer's priorities in their order (older rows have none: no fit bars, no line).
+        const prio = (Array.isArray(p.priorities) && p.priorities.length && (r.recommendations || []).some((x) => x.fit)) ? p.priorities : [];
 
         host.innerHTML = `
             <div class="wtp-hero">
                 <h2>${esc(CAT_E[top.category] || '🌱')} Best for your ground</h2>
                 <p class="h-win">${esc(top.crop || '')}</p>
-                <p class="h-why">${esc(sweep(top.why))}${top.window ? ' Plant it ' + esc(top.window) + '.' : ''}</p>
+                <p class="h-why">${esc(sweep(top.why))}${top.window ? ' Plant it ' + esc(top.window) + '.' : ''}${top.daysToHarvest ? ' Harvest in about ' + esc(String(Math.round(Number(top.daysToHarvest)))) + ' days' + (top.harvestWindow ? ' (' + esc(top.harvestWindow) + ')' : '') + (top.harvestRisk && top.harvestRisk.note ? ' — ' + esc(sweep(top.harvestRisk.note)) : '.') : ''}</p>
                 <div class="wtp-chips">
+                    ${top.harvestRisk && top.harvestRisk.score != null ? `<span class="wtp-chip">${riskWord(top.harvestRisk.score)} harvest-day risk</span>` : ''}
                     <span class="wtp-chip">📍 ${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc(rulesFor(p.country).name || p.country) : ''}</span>
                     <span class="wtp-chip">🗓️ ${esc(month)}</span>
                     ${p.ph && p.ph !== 'unsure' ? `<span class="wtp-chip">pH ${esc(p.phValue || String((OPT && OPT.phLevels && OPT.phLevels[p.ph]) || p.ph).split(' — ')[0].toLowerCase())}</span>` : ''}
@@ -691,19 +1000,30 @@
 
             <div class="wtp-card">
                 <h3>The ranking, best first</h3>
+                ${prio.length ? `<p class="wp-prio-line">Scored for what matters to you, most first: ${prio.map((k, i) => `${i ? ' › ' : ''}<b>${PRIO_E[k] || ''} ${esc(shortOf((OPT && OPT.priorities && OPT.priorities[k]) || k))}</b>`).join('')}</p>` : ''}
                 ${(r.recommendations || []).map((x, i) => `
                     <div class="wp-rec" style="transition-delay:${i * 70}ms">
                         <div class="wp-rec-top">
                             <span class="wp-rank">${esc(String(x.rank || i + 1))}</span>
                             <b>${esc(CAT_E[x.category] || '🌱')} ${esc(x.crop || '')}</b>
                             <span class="wp-cat">${esc(x.category || '')}</span>
+                            ${x.farmerAsked ? `<span class="wp-ask">You asked</span>` : ''}
                             ${x.window ? `<span class="wp-win">${esc(x.window)}</span>` : ''}
                         </div>
                         <div class="wp-track"><span class="wp-fill" style="width:${Math.max(4, Math.min(100, Number(x.score) || 0))}%;transition-delay:${120 + i * 70}ms"></span></div>
                         <p class="wp-why">${esc(sweep(x.why))}</p>
                         ${x.watch ? `<p class="wp-watch">⚠️ ${esc(x.watch)}</p>` : ''}
+                        ${x.daysToHarvest || (x.harvestRisk && x.harvestRisk.score != null) ? `
+                        <div class="wp-hv">
+                            ${x.daysToHarvest ? `<span>⏱ Harvest in ~${esc(String(Math.round(Number(x.daysToHarvest))))} days${x.harvestWindow ? ' · ' + esc(x.harvestWindow) : ''}</span>` : ''}
+                            ${x.harvestRisk && x.harvestRisk.score != null ? `<span class="wp-hr is-${riskBand(x.harvestRisk.score)}">${riskIcon(x.harvestRisk.kind)} ${riskWord(x.harvestRisk.score)} harvest-day risk${x.harvestRisk.kind && x.harvestRisk.kind !== 'none' ? ' · ' + esc(x.harvestRisk.kind) : ''}</span>` : ''}
+                        </div>
+                        ${x.harvestRisk && x.harvestRisk.note ? `<p class="wp-hr-note">${esc(sweep(x.harvestRisk.note))}</p>` : ''}` : ''}
+                        ${x.fit && prio.length ? `<div class="wp-fit">${prio.map((k) => `<span class="wp-fit-k" title="${esc(shortOf((OPT && OPT.priorities && OPT.priorities[k]) || k))}: ${esc(String(Math.round(Number(x.fit[k]) || 0)))}/100"><i style="--v:${Math.max(0, Math.min(100, Number(x.fit[k]) || 0))}%"></i><small>${PRIO_E[k] || ''} ${esc(PRIO_SHORT[k] || shortOf((OPT && OPT.priorities && OPT.priorities[k]) || k))}</small><b>${esc(String(Math.round(Number(x.fit[k]) || 0)))}</b></span>`).join('')}</div>` : ''}
                     </div>`).join('')}
             </div>
+
+            ${timeline(r, p)}
 
             ${(r.avoid || []).length ? `
             <div class="wtp-card">

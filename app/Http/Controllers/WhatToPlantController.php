@@ -112,6 +112,19 @@ class WhatToPlantController extends Controller
         'contract' => 'A contract or cooperative buyer',
     ];
 
+    /**
+     * What the farmer is after, ranked by them in the wizard: the top one
+     * weighs most in every crop's score. The order below is the default.
+     */
+    public const PRIORITIES = [
+        'profit' => 'Profit — the best money for this ground',
+        'survival' => 'Survivability — stands up to the weather, pests and disease',
+        'ease' => 'Low cost and easy management — few inputs, little labor',
+        'speed' => 'Quick harvest — money or food sooner',
+        'market' => 'A sure market — easy to sell where I am',
+        'food' => 'Food for the family — what we actually eat',
+    ];
+
     /** The ground's troubles — the sister module's list, minus the two the
      *  soil question already answers. */
     public const PROBLEMS = [
@@ -171,6 +184,18 @@ class WhatToPlantController extends Controller
             'labors' => self::LABORS,
             'budgets' => self::BUDGETS,
             'markets' => self::MARKETS,
+            'priorities' => self::PRIORITIES,
+            // The whole crop book, in the farmer's words; the page hides the
+            // temperate ones (`intl`) while the FIELD is in the Philippines.
+            'crops' => collect(\App\Support\CropCatalog::CROPS)->map(fn ($c, $key) => [
+                'key' => $key,
+                'label' => \App\Support\CropCatalog::label($key),
+                'icon' => $c['icon'] ?? '🌱',
+                'group' => $c['group'] ?? 'Other',
+                'maturity' => $c['maturity'] ?? null,
+                'perennial' => \App\Support\CropCatalog::isPerennial($key),
+                'intl' => ! empty($c['intl']),
+            ])->values(),
             'waters' => self::WATERS,
             'aims' => self::AIMS,
             'problems' => self::PROBLEMS,
@@ -224,6 +249,13 @@ class WhatToPlantController extends Controller
             'market.*' => 'string|max:24',
             'problems' => 'nullable|array',
             'problems.*' => 'string|in:' . implode(',', array_keys(self::PROBLEMS)),
+            // Crops the farmer has in mind (catalogue keys, plus free words) and
+            // what matters to them, in their order.
+            'cropsAsked' => 'nullable|array|max:8',
+            'cropsAsked.*' => 'string|max:40',
+            'cropsOther' => 'nullable|string|max:160',
+            'priorities' => 'nullable|array|max:8',
+            'priorities.*' => 'string|max:24',
         ]);
         if ($v->fails()) {
             return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
@@ -288,7 +320,9 @@ class WhatToPlantController extends Controller
     private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt): void
     {
         try {
-            $result = $this->ai->askForJson($settings, $prompt, 4000, fn (string $t) => $this->parseReport($t));
+            // Up to ten picks plus the farmer's own, each with its harvest and
+            // six fits, and twelve months of risk: a longer answer than before.
+            $result = $this->ai->askForJson($settings, $prompt, 10000, fn (string $t) => $this->parseReport($t));
             $report = $result['data'];
             if ($report === null) {
                 \Illuminate\Support\Facades\Log::warning('what-to-plant: unparsable answer', [
@@ -410,8 +444,13 @@ class WhatToPlantController extends Controller
             . (($outlets = self::picks(self::MARKETS, $params['market'] ?? null)) ? '; sells to ' . collect($outlets)->map(fn ($k) => self::MARKETS[$k])->implode(', ') : '')
             . '; aim ' . (self::AIMS[$params['aim'] ?? ''] ?? '') . ($params['area'] ?? null ? '; area ' . $params['area'] : '') . "\n"
             . 'Troubles considered: ' . ($problems ?: 'none') . "\n"
+            . (! empty($params['priorities']) ? 'What matters to the farmer, most first: ' . collect(self::ordered($params['priorities']))->map(fn ($k) => explode(' — ', self::PRIORITIES[$k])[0])->implode(' > ') . "\n" : '')
+            . (! empty($params['cropsAsked']) || ! empty($params['cropsOther']) ? 'Crops the farmer had in mind: ' . collect($params['cropsAsked'] ?? [])->map(fn ($k) => \App\Support\CropCatalog::label($k))->push($params['cropsOther'] ?? '')->filter()->implode('; ') . "\n" : '')
             . 'Top pick: ' . ($top['crop'] ?? '') . ' (' . ($top['category'] ?? '') . ') — ' . ($top['why'] ?? '') . "\n"
-            . 'Ranked: ' . collect($report['recommendations'] ?? [])->map(fn ($x) => ($x['rank'] ?? '') . '. ' . ($x['crop'] ?? '') . ' [' . ($x['category'] ?? '') . '] score ' . ($x['score'] ?? ''))->implode(' | ') . "\n"
+            . 'Ranked: ' . collect($report['recommendations'] ?? [])->map(fn ($x) => ($x['rank'] ?? '') . '. ' . ($x['crop'] ?? '') . ' [' . ($x['category'] ?? '') . '] score ' . ($x['score'] ?? '')
+                . (! empty($x['farmerAsked']) ? ' (the farmer\'s own)' : '')
+                . (! empty($x['daysToHarvest']) ? ', harvest in ~' . (int) $x['daysToHarvest'] . ' days' . (! empty($x['harvestWindow']) ? ' (' . $x['harvestWindow'] . ')' : '') : '')
+                . (isset($x['harvestRisk']['score']) ? ', harvest-day risk ' . (int) $x['harvestRisk']['score'] . '/100' . (! empty($x['harvestRisk']['kind']) && $x['harvestRisk']['kind'] !== 'none' ? ' ' . $x['harvestRisk']['kind'] : '') : ''))->implode(' | ') . "\n"
             . 'Better avoided: ' . collect($report['avoid'] ?? [])->map(fn ($x) => ($x['crop'] ?? '') . ' — ' . ($x['why'] ?? ''))->implode(' | ') . "\n"
             . 'Summary: ' . ($report['summary'] ?? '') . "\n"
             . 'Stated confidence: ' . ($report['confidence'] ?? '') . '; data gaps: ' . collect($report['dataGaps'] ?? [])->implode('; ')
@@ -481,11 +520,34 @@ class WhatToPlantController extends Controller
         return $out;
     }
 
+    /**
+     * The priorities in the farmer's order: the known keys they sent, first
+     * to last, then any they left out in the default order.
+     */
+    public static function ordered(mixed $v): array
+    {
+        $out = self::picks(self::PRIORITIES, $v);
+        foreach (array_keys(self::PRIORITIES) as $k) {
+            if (! in_array($k, $out, true)) {
+                $out[] = $k;
+            }
+        }
+
+        return $out;
+    }
+
     private function params(Request $request): array
     {
+        $country = \App\Support\Region::valid($request->input('country')) ?: \App\Support\Region::code();
+        // The crops the farmer named must be ones the FIELD's country grows.
+        $book = \App\Support\Region::as($country, fn () => \App\Support\CropCatalog::visible());
+
         return [
             'location' => trim((string) $request->input('location')),
-            'country' => \App\Support\Region::valid($request->input('country')) ?: \App\Support\Region::code(),
+            'country' => $country,
+            'cropsAsked' => self::picks($book, $request->input('cropsAsked')),
+            'cropsOther' => trim((string) preg_replace('/\s+/', ' ', (string) $request->input('cropsOther', ''))),
+            'priorities' => self::ordered($request->input('priorities')),
             'startMonth' => (string) $request->input('startMonth'),
             'soil' => (string) $request->input('soil'),
             'water' => (string) $request->input('water'),
@@ -550,10 +612,22 @@ class WhatToPlantController extends Controller
         // 85 Philippine crops and none of the temperate staples, abroad the
         // whole book. She picks from this pool, so a Philippine field is never
         // told to sow wheat and every pick has a calendar behind it.
+        $book = \App\Support\Region::as($fc, fn () => \App\Support\CropCatalog::visible());
         $pool = implode(', ', array_map(
-            fn (array $c) => (string) $c['label'],
-            \App\Support\Region::as($fc, fn () => \App\Support\CropCatalog::visible())
+            fn (array $c, string $k) => (string) $c['label'] . (\App\Support\CropCatalog::isPerennial($k)
+                ? ' [bears at ' . (int) ($c['bearingAt'] ?? 0) . ' months]'
+                : (! empty($c['maturity']) ? ' [' . (int) $c['maturity'] . ' d]' : '')),
+            $book, array_keys($book)
         ));
+        // The crops the farmer has in mind, by the book's name, plus their own words.
+        $askedNames = array_map(fn ($k) => (string) ($book[$k]['label'] ?? $k), self::picks($book, $p['cropsAsked'] ?? []));
+        $asked = ($askedNames ? implode('; ', $askedNames) : '')
+            . (($p['cropsOther'] ?? '') !== '' ? ($askedNames ? '; and in the farmer\'s own words: "' : 'in the farmer\'s own words: "') . $p['cropsOther'] . '"' : '');
+        $asked = $asked !== '' ? $asked : 'none';
+        // What matters to the farmer, most first, with the weight each carries.
+        $prio = self::ordered($p['priorities'] ?? null);
+        $prioLine = implode('; ', array_map(fn ($k, $i) => ($i + 1) . '. ' . self::PRIORITIES[$k] . ' (weight ' . (count($prio) - $i) . ')', $prio, array_keys($prio)));
+        $prioKeys = implode(', ', $prio);
         $realism = $fieldPH
             ? 'wheat, barley, oats, rye, apples, pears, cherries, plums, kiwi, blueberries, hops or any other temperate crop must not appear as a recommendation anywhere in the Philippines (the cool-highland exceptions such as Benguet strawberries, lettuce and cabbage only where the field is really up in that highland)'
             : 'coconut, lowland rice, sugarcane, mango, banana, papaya, cacao, coffee or any other tropical crop must not appear as a recommendation where the region named has frost and no season long enough for it; recommend them only where they are really grown commercially in that region';
@@ -581,10 +655,16 @@ FACTS GIVEN
 - Where the harvest would be sold (every outlet the farmer ticked): {$market}
 - Field troubles the farmer reports: {$problems}
 - The farmer's own notes: {$notes}
+- Crops the farmer has in mind (each must be analysed and ranked, honestly): {$asked}
+- What matters most to the farmer, in their order, with the weight each carries in the score: {$prioLine}
 {$ensoBlock}
 GROUND RULES
 - BE REALISTIC ABOUT THE PLACE. Recommend only crops that are actually grown commercially and sold in {$countryName}, and that really grow in the climate of the region and elevation named — the climate decides, not the wish list. Concretely: {$realism}. A crop that cannot grow in that climate is simply left out; it is not a recommendation and not padding for the avoid list.
-- CANDIDATE POOL. Choose the top pick and every recommendation from these crops, which this app keeps a calendar for in {$countryName}: {$pool}. If a crop that is genuinely important in the region named is missing from the pool, you may add it only when it is really grown commercially there, and you must say so in dataGaps.
+- CANDIDATE POOL. Choose the top pick and every recommendation from these crops, which this app keeps a calendar for in {$countryName} (days to harvest in brackets): {$pool}. If a crop that is genuinely important in the region named is missing from the pool, you may add it only when it is really grown commercially there, and you must say so in dataGaps.
+- THE FARMER'S OWN CROPS. Every crop listed under "crops the farmer has in mind" must appear in recommendations with farmerAsked true, scored and ranked as honestly as your own picks: if it fits this ground poorly, say so plainly in its why and rank it low — never drop it, never flatter it. A name there that is not a real crop grown in {$countryName} goes in avoid instead, with the reason.
+- THE FARMER'S PRIORITIES. Score every crop on the six fits (fit.profit, fit.survival, fit.ease, fit.speed, fit.market, fit.food, each 0-100 for THIS ground and farmer), then make score the weighted average of those six using the weights given above (the farmer's first priority weighs most). Rank by score. When a priority decided a placing, say so in the why.
+- HARVEST DAY. A fine planting window is not enough: the crop must also come off the field safely. For every recommendation give plantMonth (1-12, the month its window opens), daysToHarvest (days from planting to first harvest for this crop in this climate, from its real maturity — for a tree crop, months to first bearing times 30), harvestWindow in words (e.g. "late February – mid March"), harvestMonth (1-12, when most of the harvest lands), and harvestRisk: what the region's climate typically does in that harvest month — floods, typhoons/storms, drought, heat, frost — as score 0-100 (0 = calm, 100 = a harvest very likely lost or delayed), kind (one of "flood", "storm", "drought", "heat", "frost", "none") and a note of at most 20 words. A crop whose harvest lands in the flood or typhoon peak must say so, and that risk must pull down fit.survival and the score.
+- monthRisk: twelve rows, January to December, each 0-100 for storm, flood, drought, heat and frost in the region named, from its climatological normals — the chart under the ranking draws every crop's growing bar and harvest against it. Be consistent: a crop's harvestRisk must agree with monthRisk in its harvestMonth.
 - Reason only from established knowledge: {$climateRule}, the soil-water behaviour implied by the described soil and troubles, each candidate crop's real agronomic needs and calendar, and typical {$countryName} market/home-use patterns for the stated aim. No invented prices, no yield promises.
 - Read the extra signals as an agronomist would, and say in each "why" which ones moved the pick: soil pH sets which crops tolerate the ground (acid-tolerant vs lime-loving); the LOOK of the irrigation water is a clue — muddy/brown carries silt (fine for paddy, clogs drip), cloudy white or milky suggests suspended lime/minerals or fine clay (check salinity and hardness before drip or sensitive vegetables), greenish means algae and nutrient load (watch clogging and disease), salty taste or a white crust means salinity (favor salt-tolerant crops), a bad smell or oily film means contamination (avoid leafy vegetables eaten raw); the lay and elevation set drainage, cold and cloud; sunlight rules out sun-loving crops in shade; the previous crop sets rotation (do not repeat a family that shares its pests and diseases); labor, budget and the market decide whether a labor-heavy, input-heavy or perishable crop is realistic. A skipped signal is "not stated" — do not guess it; name it in dataGaps if it would have changed the ranking.
 - Cover the families honestly: at least one strong root crop and one perennial/tree option must be CONSIDERED — recommended if they fit, or placed in avoid with the reason if they do not.
@@ -593,10 +673,11 @@ GROUND RULES
 - Write every "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
 
 Return ONLY a valid JSON object — no code fences, no commentary — in exactly this shape:
-{"topPick":{"crop":"","category":"","why":"","window":""},"recommendations":[{"rank":1,"crop":"","category":"","score":0,"window":"","why":"","watch":""}],"avoid":[{"crop":"","why":""}],"confidence":"moderate","dataGaps":[""],"summary":""}
+{"topPick":{"crop":"","category":"","why":"","window":"","daysToHarvest":0,"harvestWindow":"","harvestRisk":{"score":0,"kind":"none","note":""}},"recommendations":[{"rank":1,"crop":"","category":"","score":0,"farmerAsked":false,"window":"","plantMonth":0,"daysToHarvest":0,"harvestWindow":"","harvestMonth":0,"harvestRisk":{"score":0,"kind":"none","note":""},"fit":{"profit":0,"survival":0,"ease":0,"speed":0,"market":0,"food":0},"why":"","watch":""}],"monthRisk":[{"month":1,"storm":0,"flood":0,"drought":0,"heat":0,"frost":0}],"avoid":[{"crop":"","why":""}],"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
-- recommendations: SIX to EIGHT crops, ranked best-first, each with: category (one of "Grain", "Vegetable", "Root crop", "Legume", "Fruit / tree"), score 0-100 (fit for THIS ground and start month), window (when to plant it, specific — e.g. "mid May – early June"), why (≤ 35 words, grounded in the facts), watch (the one thing to watch for on this ground, ≤ 15 words).
-- topPick repeats the rank-1 crop with a fuller why (≤ 60 words) and its window.
+- recommendations: TEN crops of your own choosing — the best ten, even where the tenth is only a modest fit, the score says how modest — plus every crop the farmer had in mind (so 10 + those), all in ONE ranking by score, best first, each with: category (one of "Grain", "Vegetable", "Root crop", "Legume", "Fruit / tree"), score 0-100 (the priority-weighted fit for THIS ground and start month), farmerAsked (true only for the farmer's own crops), window (when to plant it, specific — e.g. "mid May – early June"), plantMonth, daysToHarvest, harvestWindow, harvestMonth and harvestRisk as defined above, fit with all six numbers, why (≤ 35 words, grounded in the facts), watch (the one thing to watch for on this ground, ≤ 15 words). Fewer than ten of your own only when the pool truly has no more crops that could be grown on this ground at all.
+- topPick repeats the rank-1 crop with a fuller why (≤ 60 words), its window, daysToHarvest, harvestWindow and harvestRisk.
+- monthRisk: exactly twelve rows, month 1 to 12.
 - avoid: two to four crops a farmer in this region might otherwise try — crops that DO grow in {$countryName} but that this ground, water, season or market argues against — each with the plain reason. Never fill it with crops from another climate that no farmer there would plant anyway.
 - confidence "low"/"moderate"/"high"; dataGaps at most three; summary ≤ 90 words, plain and warm but factual.
 PROMPT;
