@@ -638,6 +638,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-gallery-images', [App\Http\Controllers\Manager\GalleryController::class, 'imageDestroy'])->name('sm.gallery.image.destroy');
     // Growth Stages: what each lot's crop is doing, read off its own day count.
     Route::get('/app/sm-growth', [App\Http\Controllers\Manager\GrowthStageController::class, 'page'])->name('sm.growth');
+    // One lot's card, re-read: swapped in place once Anee's reading lands.
+    Route::get('/app/sm-growth/card', [App\Http\Controllers\Manager\GrowthStageController::class, 'card'])->name('sm.growth.card');
     // Realign by Anee: where the crop in a lot actually is, read from its history (paid plans).
     Route::get('/app/sm-growth-realign-quote', [App\Http\Controllers\Manager\GrowthRealignController::class, 'quote'])->name('sm.growth.realign.quote');
     Route::post('/app/sm-growth-realign', [App\Http\Controllers\Manager\GrowthRealignController::class, 'generate'])->name('sm.growth.realign');

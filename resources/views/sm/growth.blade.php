@@ -147,6 +147,9 @@
     html.dark .gr-step.is-past .gr-dot, html.dark .gr-step.is-now .gr-dot { background: #a8cc7e; }
     .gr-when { margin-left: auto; flex: 0 0 auto; font-variant-numeric: tabular-nums; opacity: .7; }
 
+    .gr-card.is-refreshed { animation: grFresh 1.1s cubic-bezier(.22,1,.36,1); }
+    @keyframes grFresh { 0% { box-shadow: 0 0 0 0 rgb(107 159 61 / .0); } 25% { box-shadow: 0 0 0 4px rgb(107 159 61 / .35); } 100% { box-shadow: 0 0 0 0 rgb(107 159 61 / 0); } }
+    @media (prefers-reduced-motion: reduce) { .gr-card.is-refreshed { animation: none; } }
     .gr-blocked { padding: .9rem; font-size: .83rem; line-height: 1.5; color: var(--color-gray-600);
         background: var(--color-gray-100); border-radius: .7rem; }
     .gr-note { display: flex; gap: .6rem; align-items: flex-start; margin: .2rem 0 .6rem;
@@ -189,113 +192,7 @@
 
 <div id="grCards">
 @forelse ($rows as $r)
-    <div class="gr-card" data-lot="{{ $r['lot']->id }}">
-        <div class="gr-top" title="Tap to fold or open this lot">
-            <svg class="gr-chev" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            <span class="gr-emoji">{{ $r['icon'] }}</span>
-            <span class="min-w-0">
-                <span class="gr-lot block">{{ $r['lot']->lotName }}</span>
-                <span class="gr-crop">{{ $r['cropLabel'] ?: 'No crop set' }}</span>
-                {{-- Which ruler this lot is read against, because the same crop
-                     on the next block may be read against another one. --}}
-                <span class="gr-mode">{{ \App\Http\Controllers\Manager\GrowthStageController::counterSays($r['lot']->dayType) }}</span>
-                {{-- The stage, said as a chip in its band's colour — open or
-                     folded, the header names where the crop is. --}}
-                <span class="gr-stage-chip">{{ $r['blocked'] ? 'Not readable yet' : ($r['stage']['label'] ?? '') }}</span>
-            </span>
-            @if ($r['age'])
-                {{-- A tree's number is months, not days, and the label has to
-                     say so — "66 DAP" on a five-year-old mango reads as a
-                     seedling nine weeks out of the nursery. --}}
-                @php
-                    $isAge = ($r['age']['counter'] ?? '') === 'AGE';
-                    $ageYears = $isAge ? floor($r['age']['day'] / 12) : 0;
-                @endphp
-                <span class="gr-age" @if ($isAge) title="{{ $r['age']['day'] }} months old" @endif>
-                    <span class="gr-age-n block">{{ $isAge && $ageYears >= 2 ? $ageYears : $r['age']['day'] }}</span>
-                    <span class="gr-age-l">{{ $isAge ? ($ageYears >= 2 ? 'years old' : 'months') : $r['age']['counter'] }}</span>
-                </span>
-            @endif
-        </div>
-
-        <div class="gr-fold"><div class="gr-fold-inner">
-        <div class="gr-body">
-            @if ($r['blocked'])
-                <p class="gr-blocked">{{ $r['blocked'] }}</p>
-            @else
-                @php $st = $r['stage']; @endphp
-                <div class="gr-stage">{{ $st['label'] }}</div>
-                <p class="gr-what">{{ $st['what'] }}</p>
-                @if ($st['progress'] !== null)
-                    <div class="gr-bar"><span style="width: {{ round($st['progress'] * 100) }}%"></span></div>
-                @endif
-                {{-- A tree's stages are months apart, so "day 14 of this
-                     stage · next in about 24 days" would be wrong twice
-                     over — and a tree has no harvest window to be at the
-                     end of, only the last stage of its life. --}}
-                @php $unit = $st['unit'] ?? 'day'; @endphp
-                <p class="gr-next">
-                    {{ ucfirst($unit) }} {{ $st['dayInStage'] + 1 }} of this stage
-                    @if ($st['next'])
-                        · {{ $st['next']['label'] }} in about {{ $st['next']['inDays'] }} {{ \Illuminate\Support\Str::plural($unit, $st['next']['inDays']) }}
-                    @elseif ($unit === 'month')
-                        · the last of its stages
-                    @else
-                        · the harvest window
-                    @endif
-                </p>
-
-                {{-- What the stage asks for.
-                     The seven crops with hand-written guidance get the full
-                     do/watch lists below. Every other crop still carries the
-                     one line its stage was written with, and showing it is
-                     the difference between guidance and a bare label. --}}
-                @if (! $r['tips']['do'] && ! empty($st['needs']))
-                    <p class="gr-needs"><b>What it usually needs:</b> {{ $st['needs'] }}</p>
-                @endif
-
-                <div class="gr-lists">
-                    @if ($r['tips']['do'])
-                        <div class="gr-list gr-do">
-                            <h4>
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                                What to do now
-                            </h4>
-                            <ul>@foreach ($r['tips']['do'] as $t)<li>{{ $t }}</li>@endforeach</ul>
-                        </div>
-                    @endif
-                    @if ($r['tips']['watch'])
-                        <div class="gr-list gr-watch">
-                            <h4>
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
-                                What to watch for
-                            </h4>
-                            <ul>@foreach ($r['tips']['watch'] as $t)<li>{{ $t }}</li>@endforeach</ul>
-                        </div>
-                    @endif
-                </div>
-
-                @if ($r['timeline'])
-                    <div class="gr-steps">
-                        @foreach ($r['timeline'] as $step)
-                            <div class="gr-step{{ $step['isNow'] ? ' is-now' : ($step['isPast'] ? ' is-past' : '') }}">
-                                <span class="gr-dot"></span>
-                                <span class="grow">{{ $step['label'] }}</span>
-                                <span class="gr-when">{{ $r['age']['counter'] }} {{ $step['from'] }}+</span>
-                            </div>
-                        @endforeach
-                    </div>
-                @endif
-                {{-- Realign by Anee: filled by the shared renderer below, so
-                     the block here is the one the board's sheet draws. --}}
-                @unless ($r['isTree'])
-                    <div data-grx-mount data-lot-id="{{ $r['lot']->id }}" data-lot-name="{{ $r['lot']->lotName }}" data-realign='@json($r['realign'])'
-                         data-calendar="{{ $r['blocked'] ? '' : trim(($r['age']['counter'] ?? '') . ' ' . ($r['age']['day'] ?? '') . ' — ' . ($r['stage']['label'] ?? '')) }}"></div>
-                @endunless
-            @endif
-        </div>
-        </div></div>
-    </div>
+    @include('sm.partials.growth-card', ['r' => $r, 'schedule' => $schedule])
 @empty
     <div class="card card-body text-center text-gray-500 py-10">
         <p class="font-bold text-gray-800 mb-1">No lots yet</p>
@@ -379,11 +276,13 @@
 @endunless
 <script>
     /* Every lot's block, drawn by the shared renderer; and once she has
-       spoken, the page is redrawn from the server so the stage, the bar,
-       the tips and the timeline all read at the new day -- after the
-       reading has been read and its sheet closed. */
+       spoken, that lot's card is re-read from the server and swapped in
+       place -- the stage chip, the bar, the tips, the timeline and her
+       note all read at the new day by the time the reading's sheet is
+       closed, with no reload and no going back to the page. */
     (() => {
-        const mount = () => document.querySelectorAll('[data-grx-mount]').forEach((m) => {
+        const CARD_URL = @json(route('sm.growth.card', ['id' => $schedule->id])) + '&lot=';
+        const mountIn = (root) => root.querySelectorAll('[data-grx-mount]').forEach((m) => {
             let realign = null;
             try { realign = JSON.parse(m.dataset.realign || 'null'); } catch (_) {}
             const lotId = Number(m.dataset.lotId);
@@ -391,12 +290,34 @@
             window.growthRealign.names[lotId] = m.dataset.lotName || '';
             m.innerHTML = window.growthRealign.block({ lotId, lotName: m.dataset.lotName || '', realign, calendar: m.dataset.calendar || '' });
         });
-        mount();
-        let redraw = false;
-        window.growthRealign.onApplied = () => { redraw = true; };
-        document.addEventListener('sm:sheet-closed', (e) => {
-            if (redraw && e.detail && e.detail.id === 'grRealignResultSheet') { redraw = false; location.reload(); }
-        });
+        mountIn(document);
+        const refresh = async (lotId, realign) => {
+            const old = document.querySelector(`.gr-card[data-lot="${Number(lotId)}"]`);
+            // Her note shows at once, from what just landed; the rest of the
+            // card follows when the server has re-read the lot.
+            if (realign) {
+                window.growthRealign.known[lotId] = realign;
+                const m = old && old.querySelector('[data-grx-mount]');
+                if (m) { m.dataset.realign = JSON.stringify(realign); mountIn(old); }
+            }
+            try {
+                const res = await api(CARD_URL + Number(lotId), { method: 'GET' });
+                if (!res.data || !res.data.html || !old) return;
+                const tmp = document.createElement('div');
+                tmp.innerHTML = res.data.html.trim();
+                const fresh = tmp.firstElementChild;
+                if (!fresh) return;
+                fresh.classList.toggle('is-folded', old.classList.contains('is-folded'));
+                old.replaceWith(fresh);
+                mountIn(fresh);
+                fresh.classList.add('is-refreshed');
+                setTimeout(() => fresh.classList.remove('is-refreshed'), 1200);
+            } catch (err) {
+                // The reading is applied either way; the next open reads it.
+                console.warn('growth card refresh', err);
+            }
+        };
+        window.growthRealign.onApplied = (lotId, realign) => { refresh(lotId, realign); };
     })();
 </script>
 @endsection

@@ -33,6 +33,27 @@ class GrowthStageController extends BaseScheduleController
         ]);
     }
 
+    /**
+     * One lot's card, rendered fresh: the stage, the bar, the tips and the
+     * timeline all read at the lot's current shift. The page asks for it
+     * once Anee's reading has landed, and swaps it in place of the old one.
+     */
+    public function card(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request, 'id');
+        $on = $this->askedDate($request);
+        $lotId = (int) $request->query('lot');
+        $row = collect($this->rowsFor($schedule, $on))->first(fn ($r) => (int) $r['lot']->id === $lotId);
+        if (! $row) {
+            return response()->json(['success' => false, 'message' => 'That lot is not on this schedule.'], 404);
+        }
+
+        return response()->json(['success' => true, 'message' => 'ok', 'data' => [
+            'lotId' => $lotId,
+            'html' => view('sm.partials.growth-card', ['r' => $row, 'schedule' => $schedule])->render(),
+        ]]);
+    }
+
     private function askedDate(Request $request): \Carbon\Carbon
     {
         $asked = (string) $request->query('on');
