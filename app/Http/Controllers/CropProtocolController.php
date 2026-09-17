@@ -376,9 +376,15 @@ class CropProtocolController extends Controller
         $area = max(0.01, (float) $p['area']);
         $totals = [];
         $stages = [];
+        // Organic applications are not part of the protocol (the owner's
+        // ask, 2026-09-18): one that slips past the prompt is dropped here.
+        $organic = fn (string $name) => (bool) preg_match('/organic|compost|manure|vermi|bio-?fert|guano|chicken dung/i', $name);
         foreach ((array) ($report['recommendation']['stages'] ?? []) as $st) {
             $apps = [];
             foreach ((array) ($st['fertilizer'] ?? []) as $ap) {
+                if ($organic((string) ($ap['product'] ?? ''))) {
+                    continue;
+                }
                 $perHa = max(0, (float) ($ap['bagsPerHa'] ?? 0));
                 $ap['bagsPerHa'] = $perHa;
                 $ap['totalBags'] = round($perHa * $area, 1);
@@ -395,6 +401,7 @@ class CropProtocolController extends Controller
             ->map(fn ($perHa, $name) => ['product' => $name, 'bagsPerHa' => round($perHa, 1), 'bags' => round($perHa * $area, 1)])
             ->values()->all();
         $report['recommendation']['totalBags'] = round(array_sum($totals) * $area, 1);
+        $report['recommendation']['supplies'] = array_values(array_filter((array) ($report['recommendation']['supplies'] ?? []), fn ($it) => ! $organic((string) ($it['item'] ?? ''))));
         $report['area'] = $area;
         $report['format'] = 2;
 
@@ -689,7 +696,7 @@ THE CASE
 
 FIND, IN THIS ORDER
 1. THE VARIETY FIRST: its published specifications — days to maturity, yield potential and typical farm yields, plant height and lodging, the season and method it is bred for, its fertilizer response and any published fertilizer recommendation for it, resistance and tolerance ratings (pests, diseases, drought, flooding, salinity, heat), known weaknesses, who released it and when. Prefer the registry, the breeder's or seed company's own page, and extension notes. If the variety cannot be found, say so plainly and describe the widely grown variety you would assume instead.
-2. The official recommendations in {$rCountry} for this crop's nutrient management by growth stage in this region and season ({$rNutrient}): kg N-P-K per hectare, split timing by stage, common products (urea 46-0-0, 14-14-14, 16-20-0, 0-0-60, muriate of potash, organic/biofertilizers), and the soil-specific adjustments for {$f['soil']} and for these troubles.
+2. The official recommendations in {$rCountry} for this crop's nutrient management by growth stage in this region and season ({$rNutrient}): kg N-P-K per hectare, split timing by stage, common inorganic products (urea 46-0-0, 14-14-14, 16-20-0, 0-0-60, muriate of potash), and the soil-specific adjustments for {$f['soil']} and for these troubles.
 3. Integrated pest management for this crop in the region: the insects, diseases and weeds that matter by growth stage, their economic thresholds, the recommended controls (cultural, biological, chemical with active ingredients), and any current outbreak advisories.
 4. Irrigation and water management by growth stage for this crop and method (e.g. alternate wetting and drying for rice), and what to change under drought or flooding.
 5. The seasonal climate outlook from {$rMet} for the region for the months from planting to harvest (rainfall, temperature, severe-weather expectations) and the current ENSO advisory.
@@ -735,6 +742,7 @@ GROUND RULES
 - Stage names must be the crop's real stages in order (for rice e.g. Land preparation, Seedling/Nursery, Transplanting or Establishment, Tillering, Panicle initiation, Booting & heading, Flowering, Grain filling, Ripening & harvest; for corn Land preparation, Emergence, V4–V6, V8–V10, Tasseling & silking, Grain fill, Maturity; for vegetables the equivalent). Timing is the stage and a plain sign of it, plus "about week N–M" only as a hint (WEEKS, never days — no DAS/DAT anywhere).
 - OBSERVE AND INTERVENE: at each stage say in one line what to look for, and in one line what to do only if it is seen (the threshold, then the class or active ingredient) — never spray by calendar. Leave both empty at a stage with nothing to watch.
 - NO PRICES ANYWHERE. Totals are quantities only.
+- NO ORGANIC FERTILIZER: the program is inorganic products only (urea, complete, ammonium sulfate, ammonium phosphate, muriate of potash and the like). Do not recommend organic fertilizer, compost, manure, vermicast or biofertilizer at any stage, and do not list them among the supplies.
 - Water: one short plan for the season with THIS water source, and what changes if the sky turns dry or wet.
 - Yield: say plainly whether the target is realistic for this variety, place and season, and what realistic is.
 - Be scientific and neutral: products as classes or actives, brands only where the notes name a specific registered product; no marketing tone. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
@@ -747,9 +755,9 @@ Rules for the shape:
 - background.weather: outlook ≤ 55 words for the months from planting to harvest; enso ≤ 30 words; risks 2–4 items of ≤ 12 words.
 - background.variety: found true only when the notes carry real published specifications; name as published; by = breeder / company / institution; released = year or ""; maturityDays a number (0 when unknown); yieldPotential in words with the unit (e.g. "6–8 t/ha; farms average 4.5"); season = the season it is bred for; traits ≤ 55 words (strengths and weaknesses that matter here); caution ≤ 25 words (its known weakness on this ground, or ""); source = the registry, breeder or agency the notes cite. When nothing was found: found false, name = the variety assumed, traits says why it was assumed.
 - recommendation.intro: ≤ 80 words — the approach for this field and aim, and the one or two things that matter most this season.
-- recommendation.stages: SIX to TEN stages in order; signs ≤ 20 words; hint = "about week N–M after transplanting/sowing" or "n/a"; fertilizer = the applications at that stage (empty list when none), each with product (e.g. "Urea 46-0-0", "Complete 14-14-14", "Ammonium sulfate 21-0-0", "Muriate of potash 0-0-60", "Organic fertilizer"), bagsPerHa (a number, 50-kg bags per hectare; decimals allowed), purpose ≤ 14 words; observe ≤ 25 words or ""; intervene ≤ 30 words or "".
+- recommendation.stages: SIX to TEN stages in order; signs ≤ 20 words; hint = "about week N–M after transplanting/sowing" or "n/a"; fertilizer = the applications at that stage (empty list when none), each with product (e.g. "Urea 46-0-0", "Complete 14-14-14", "Ammonium sulfate 21-0-0", "Ammonium phosphate 16-20-0", "Muriate of potash 0-0-60"), bagsPerHa (a number, 50-kg bags per hectare; decimals allowed), purpose ≤ 14 words; observe ≤ 25 words or ""; intervene ≤ 30 words or "".
 - recommendation.npk: the season's kg N, P2O5 and K2O per hectare that the program adds up to, note ≤ 30 words (the LCC/MOET check if rice, or the soil-test caveat).
-- recommendation.supplies: 4–8 items to have for the whole field beyond the fertilizer (seed with kg, the one or two sprays to keep on hand by class, organic matter, tools if notable), qty a number, unit, when = a stage. Quantities only.
+- recommendation.supplies: 4–8 items to have for the whole field beyond the fertilizer (seed with kg, the one or two sprays to keep on hand by class, tools if notable), qty a number, unit, when = a stage. Quantities only.
 - recommendation.water: plan ≤ 60 words; ifDry ≤ 25 words; ifWet ≤ 25 words.
 - recommendation.threats: 3–6 items — the things most likely to go wrong here, each with the stage it strikes, the sign to act on (≤ 14 words) and the action (≤ 18 words).
 - recommendation.yield: target = the farmer's target restated in {$unitWord} (or "not set"); realistic = what this variety realistically gives here, same unit; note ≤ 30 words.
