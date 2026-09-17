@@ -459,6 +459,14 @@
            here would otherwise unroll behind the screen that asked for it. */
         html.mir-open .sheet { z-index: 400; }
         html.mir-open .sheet-backdrop { z-index: 390; }
+        /* The confirm ("Delete this activity?") pins itself at 200 by id,
+           which outranks the rule above -- so from in here it opened behind
+           the mirror and the delete never went through. It is the last
+           thing asked, so it clears the mirror and every sheet over it,
+           and the backdrop rises with it or it would dim nothing. */
+        html.mir-open #confirm-sheet { z-index: 420; }
+        html.mir-open:has(#confirm-sheet.is-open) .sheet-backdrop { z-index: 410; }
+        html.mir-open #toast-stack { z-index: 430; }
         /* A lot name gets its whole name here.
          *
          * On the board the lot strip is capped and scrolls sideways, so a
