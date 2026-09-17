@@ -333,6 +333,31 @@
     .wtp-report.is-drawn .cp2-tot-row .tr span { transform: scaleX(1); }
     .cp2-tot-row b { color: var(--color-gray-900); white-space: nowrap; }
     .cp2-tot-row small { color: var(--color-gray-400); font-size: .68rem; white-space: nowrap; }
+    /* The nutrient check: a bar of what the program delivers, a tick where the need sits. */
+    .cp2-nut { margin-top: .9rem; padding-top: .7rem; border-top: 1px dashed var(--color-gray-200); display: grid; grid-template-columns: minmax(0, 1fr); gap: .45rem; }
+    .cp2-nut-h b { display: block; font-size: .82rem; color: var(--color-gray-900); }
+    .cp2-nut-h small { display: block; font-size: .68rem; color: var(--color-gray-400); line-height: 1.4; }
+    .cp2-nut-row { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr) auto; grid-template-areas: "l tr v" "vd vd vd"; align-items: center; gap: .1rem .5rem; font-size: .78rem; }
+    .cp2-nut-row .l { grid-area: l; font-weight: 800; color: var(--color-gray-700); }
+    .cp2-nut-row .tr { grid-area: tr; position: relative; height: .7rem; border-radius: 999px; background: var(--color-gray-100); overflow: visible; }
+    .cp2-nut-row .have { display: block; height: 100%; border-radius: 999px; background: var(--color-brand-500); transform-origin: left; transform: scaleX(0); transition: transform .7s cubic-bezier(.22,1,.36,1); }
+    .wtp-report.is-drawn .cp2-nut-row .have { transform: scaleX(1); }
+    .cp2-nut-row .need { position: absolute; top: -.25rem; bottom: -.25rem; width: 3px; border-radius: 2px; background: var(--color-gray-800); transform: translateX(-50%); }
+    .cp2-nut-row .v { grid-area: v; font-variant-numeric: tabular-nums; color: var(--color-gray-700); white-space: nowrap; }
+    .cp2-nut-row .v b { color: var(--color-gray-900); }
+    .cp2-nut-row .v small { display: block; font-size: .64rem; color: var(--color-gray-400); text-align: right; }
+    .cp2-nut-row .vd { grid-area: vd; font-size: .7rem; font-weight: 700; color: var(--color-gray-500); padding-left: 3.1rem; }
+    .cp2-nut-row.is-ok .vd { color: #166534; }
+    .cp2-nut-row.is-short .vd { color: #b45309; }
+    .cp2-nut-row.is-short .have { background: #f0b04a; }
+    .cp2-nut-row.is-over .vd { color: var(--color-gray-500); }
+    html.dark .cp2-nut { border-color: #2b3a1c; }
+    html.dark .cp2-nut-h b, html.dark .cp2-nut-row .v b { color: #e8efe1; }
+    html.dark .cp2-nut-row .l, html.dark .cp2-nut-row .v { color: #d5e3c5; }
+    html.dark .cp2-nut-row .tr { background: #222b1a; }
+    html.dark .cp2-nut-row .need { background: #e8efe1; }
+    html.dark .cp2-nut-row.is-ok .vd { color: #86efac; }
+    html.dark .cp2-nut-row.is-short .vd { color: #fcd34d; }
     .cp2-npk { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem .9rem; margin-top: .7rem; font-size: .78rem; color: var(--color-gray-600); }
     .cp2-npk b { color: var(--color-gray-900); font-size: .9rem; }
     .cp2-npk small { flex-basis: 100%; font-size: .68rem; color: var(--color-gray-400); }
@@ -1193,13 +1218,25 @@
                 </div>
             </div>` : ''}
 
-            ${(totals.length || (rec.supplies || []).length) ? `
+            ${(totals.length || (rec.supplies || []).length || (npk.check || []).length) ? `
             <div class="wtp-card">
                 <h3>Totals to use <small>for the whole field — quantities only</small></h3>
                 ${totals.length ? `<div class="cp2-tot">
                     ${totals.map((t) => `<div class="cp2-tot-row"><span class="n"><i style="background:${colour(t.product)}"></i>${esc(t.product)}</span><div class="tr"><span style="width:${Math.max(2, Math.round((Number(t.bags) / maxTotal) * 100))}%;background:${colour(t.product)}"></span></div><b>${esc(trimN(t.bags))} bags</b><small>${esc(trimN(t.bagsPerHa))}/ha</small></div>`).join('')}
                 </div>` : ''}
-                ${(npk.n || npk.p || npk.k) ? `<div class="cp2-npk"><span>N <b>${esc(trimN(npk.n))}</b></span><span>P₂O₅ <b>${esc(trimN(npk.p))}</b></span><span>K₂O <b>${esc(trimN(npk.k))}</b></span><small>kg per hectare for the season</small></div>${npk.note ? `<p class="cp-note">${esc(sweep(npk.note))}</p>` : ''}` : ''}
+                ${(npk.check || []).length ? `
+                <div class="cp2-nut">
+                    <div class="cp2-nut-h"><b>Nutrients for the season</b><small>what the program delivers, against what the target needs — kg per hectare${Number(p.area) && Number(p.area) !== 1 ? ' (the field in brackets)' : ''}</small></div>
+                    ${(npk.check || []).map((c) => { const top = Math.max(1, Number(c.have) || 0, Number(c.need) || 0); return `
+                    <div class="cp2-nut-row is-${esc(c.verdict || 'unchecked')}">
+                        <span class="l">${esc(c.label)}</span>
+                        <div class="tr"><span class="have" style="width:${Math.max(2, Math.round(((Number(c.have) || 0) / top) * 100))}%"></span>${c.need !== null && c.need !== undefined ? `<i class="need" style="left:${Math.min(100, Math.round(((Number(c.need) || 0) / top) * 100))}%"></i>` : ''}</div>
+                        <span class="v"><b>${esc(trimN(c.have))}</b>${c.need !== null && c.need !== undefined ? ` / ${esc(trimN(c.need))}` : ''}${Number(p.area) && Number(p.area) !== 1 ? `<small>(${esc(trimN(c.haveField))}${c.needField !== null && c.needField !== undefined ? ' / ' + esc(trimN(c.needField)) : ''})</small>` : ''}</span>
+                        <span class="vd">${c.verdict === 'ok' ? '✅ on target' : (c.verdict === 'short' ? `⚠️ short by ${esc(trimN(Math.abs(c.gap)))}` : (c.verdict === 'over' ? `↑ over by ${esc(trimN(c.gap))}` : '—'))}</span>
+                    </div>`; }).join('')}
+                    ${(npk.unknownProducts || []).length ? `<p class="cp-note">Not counted (analysis unknown): ${esc((npk.unknownProducts || []).join(', '))}.</p>` : ''}
+                </div>${npk.note ? `<p class="cp-note">${esc(sweep(npk.note))}</p>` : ''}`
+                : ((npk.n || npk.p || npk.k) ? `<div class="cp2-npk"><span>N <b>${esc(trimN(npk.n))}</b></span><span>P₂O₅ <b>${esc(trimN(npk.p))}</b></span><span>K₂O <b>${esc(trimN(npk.k))}</b></span><small>kg per hectare for the season</small></div>${npk.note ? `<p class="cp-note">${esc(sweep(npk.note))}</p>` : ''}` : '')}
                 ${(rec.supplies || []).length ? `<div class="cp-shop cp2-shop">
                     ${(rec.supplies || []).map((x) => `<div class="cp-item"><span class="n">${esc(x.item || '')}<small>${esc(x.when || '')}</small></span><span class="q">${esc(x.qty != null && x.qty !== '' ? trimN(x.qty) : '')} ${esc(x.unit || '')}</span></div>`).join('')}
                 </div>` : ''}
