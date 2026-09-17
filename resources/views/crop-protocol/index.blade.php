@@ -143,6 +143,9 @@
 
     /* ---- THE REPORT ---- */
     .wtp-report { display: grid; gap: .9rem; }
+    /* A grid item's automatic minimum is its content's width — a chart's
+       scroll box would widen the whole report without this. */
+    .wtp-report > * { min-width: 0; max-width: 100%; }
     .wtp-hero { border-radius: 1.1rem; padding: 1.1rem 1.2rem; color: #fff;
         background: linear-gradient(130deg, #4a7c2a, #2d5016 70%); }
     .wtp-hero h2 { font-size: 1.15rem; font-weight: 800; margin-bottom: .15rem; }
@@ -248,6 +251,108 @@
     html.dark .cp-wrow .t b { color: #dbeafe; }
 
     /* Yield: target against realistic, as two bars. */
+
+    /* ---- the two-part protocol ---- */
+    .cp2-part { display: flex; align-items: center; gap: .6rem; margin: .4rem 0 -.3rem; }
+    .cp2-part-n { flex: none; width: 1.9rem; height: 1.9rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: .85rem; background: #3d6823; color: #fff; }
+    .cp2-part b { display: block; font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-gray-900); line-height: 1.1; }
+    .cp2-part small { display: block; font-size: .72rem; color: var(--color-gray-500); }
+    .cp2-bg { display: grid; gap: .8rem; }
+    .cp2-bg-row { display: flex; gap: .7rem; align-items: flex-start; }
+    .cp2-bg-row + .cp2-bg-row { padding-top: .8rem; border-top: 1px solid var(--color-gray-100); }
+    .cp2-bg-e { flex: none; font-size: 1.25rem; line-height: 1.2; }
+    .cp2-bg-row > div { min-width: 0; flex: 1 1 auto; }
+    .cp2-bg-row b { display: block; font-size: .9rem; color: var(--color-gray-900); margin-bottom: .2rem; }
+    .cp2-bg-row b small { font-weight: 600; color: var(--color-gray-500); font-size: .72rem; }
+    .cp2-bg-row p { font-size: .84rem; line-height: 1.55; color: var(--color-gray-700); }
+    .cp2-dim { color: var(--color-gray-500) !important; font-size: .78rem !important; margin-top: .2rem; }
+    .cp2-pills { display: flex; flex-wrap: wrap; gap: .35rem; margin: .4rem 0; }
+    .cp2-pill { font-size: .7rem; font-weight: 700; padding: .22rem .6rem; border-radius: 999px; background: var(--color-brand-50); color: var(--color-brand-800); border: 1px solid var(--color-brand-100); }
+    .cp2-pill.is-risk { background: #fff1e6; color: #9a3412; border-color: #fdd7b0; }
+    .cp2-pill.is-src { background: var(--color-gray-100); color: var(--color-gray-600); border-color: var(--color-gray-200); }
+    .wp-watch { font-size: .76rem; color: #92610e; margin-top: .3rem; }
+    /* the stage picker */
+    .cp2-chart, .cp2-lbls { scrollbar-width: none; }
+    .cp2-chart::-webkit-scrollbar, .cp2-lbls::-webkit-scrollbar { display: none; }
+    .cp2-chart .cp2-col { border: 0; background: transparent; padding: 0; cursor: pointer; border-radius: .5rem .5rem 0 0; transition: background .2s; }
+    .cp2-chart .cp2-col:hover { background: var(--color-gray-50); }
+    .cp2-chart .cp2-col.is-sel { background: var(--color-brand-50); }
+    .cp2-chart .cp2-col.is-sel .cp-col-val { color: var(--color-brand-800); }
+    .cp2-lbls .cp-lbl { min-width: 3.2rem; }
+    .cp2-lbls .cp-lbl.is-sel { color: var(--color-brand-800); }
+    .cp2-detail { margin-top: .8rem; padding: .75rem .85rem; border-radius: .9rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-200); transition: opacity .28s; min-height: 4rem; }
+    .cp2-detail.is-swap { opacity: 0; }
+    .cp2-d-head { display: flex; align-items: center; gap: .6rem; }
+    .cp2-d-head > span:nth-child(2) { flex: 1 1 auto; min-width: 0; }
+    .cp2-d-head b { display: block; font-size: .92rem; color: var(--color-gray-900); }
+    .cp2-d-head small { display: block; font-size: .68rem; color: var(--color-gray-400); }
+    .cp2-d-nav { flex: none; display: flex; gap: .25rem; }
+    .cp2-d-nav button { width: 1.8rem; height: 1.8rem; border-radius: 999px; border: 1px solid var(--color-gray-200); background: var(--color-white); color: var(--color-gray-700); font-size: 1rem; line-height: 1; cursor: pointer; }
+    .cp2-d-nav button:disabled { opacity: .3; cursor: default; }
+    .cp2-d-signs { font-size: .8rem; color: var(--color-gray-600); line-height: 1.5; margin-top: .4rem; }
+    .cp2-d-fert { display: grid; gap: .4rem; margin-top: .55rem; }
+    .cp2-d-app { display: flex; gap: .5rem; align-items: flex-start; font-size: .82rem; line-height: 1.45; color: var(--color-gray-700); }
+    .cp2-d-app i { flex: none; width: .7rem; height: .7rem; border-radius: .2rem; margin-top: .3rem; }
+    .cp2-d-app b { color: var(--color-gray-900); }
+    .cp2-d-app small { color: var(--color-gray-400); font-size: .7rem; }
+    .cp2-d-app em { display: block; font-style: normal; font-size: .76rem; color: var(--color-brand-800); }
+    .cp2-d-obs { display: flex; gap: .5rem; align-items: flex-start; margin-top: .5rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-700); }
+    .cp2-d-obs span { flex: none; font-size: .66rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: .18rem .5rem; border-radius: 999px; margin-top: .1rem; }
+    .cp2-d-obs .is-obs { background: #e6f2d8; color: #2f5219; }
+    .cp2-d-obs .is-act { background: #fff1e6; color: #9a3412; }
+    .cp2-d-obs p { margin: 0; }
+    .cp2-rows { display: grid; gap: .25rem; margin-top: .6rem; }
+    .cp2-row { display: flex; align-items: center; gap: .6rem; width: 100%; text-align: left; border: 0; background: transparent; padding: .45rem .5rem; border-radius: .7rem; cursor: pointer; font: inherit; color: var(--color-gray-700); transition: background .2s; }
+    .cp2-row:hover { background: var(--color-gray-50); }
+    .cp2-row.is-sel { background: var(--color-brand-50); }
+    .cp2-row-n { flex: none; width: 1.5rem; height: 1.5rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800; background: var(--color-brand-100); color: var(--color-brand-800); }
+    .cp2-row.is-sel .cp2-row-n { background: #3d6823; color: #fff; }
+    .cp2-row-t { flex: 1 1 auto; min-width: 0; }
+    .cp2-row-t b { display: block; font-size: .82rem; color: var(--color-gray-900); }
+    .cp2-row-t small { display: block; font-size: .68rem; color: var(--color-gray-400); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cp2-row-b { flex: none; font-size: .74rem; font-weight: 800; color: var(--color-brand-800); }
+    /* totals */
+    .cp2-tot { display: grid; gap: .5rem; }
+    .cp2-tot-row { display: grid; grid-template-columns: minmax(6rem, 1fr) 2fr auto auto; align-items: center; gap: .5rem; font-size: .78rem; }
+    .cp2-tot-row .n { display: flex; align-items: center; gap: .35rem; font-weight: 700; color: var(--color-gray-800); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cp2-tot-row .n i { flex: none; width: .7rem; height: .7rem; border-radius: .2rem; }
+    .cp2-tot-row .tr { height: .75rem; border-radius: 999px; background: var(--color-gray-100); overflow: hidden; }
+    .cp2-tot-row .tr span { display: block; height: 100%; border-radius: 999px; transform-origin: left; transform: scaleX(0); transition: transform .7s cubic-bezier(.22,1,.36,1); }
+    .wtp-report.is-drawn .cp2-tot-row .tr span { transform: scaleX(1); }
+    .cp2-tot-row b { color: var(--color-gray-900); white-space: nowrap; }
+    .cp2-tot-row small { color: var(--color-gray-400); font-size: .68rem; white-space: nowrap; }
+    .cp2-npk { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem .9rem; margin-top: .7rem; font-size: .78rem; color: var(--color-gray-600); }
+    .cp2-npk b { color: var(--color-gray-900); font-size: .9rem; }
+    .cp2-npk small { flex-basis: 100%; font-size: .68rem; color: var(--color-gray-400); }
+    .cp2-shop { margin-top: .7rem; }
+    .cp2-threats { display: grid; gap: .5rem; }
+    @media (min-width: 640px) { .cp2-threats { grid-template-columns: 1fr 1fr; } }
+    .cp2-threat { padding: .6rem .7rem; border-radius: .8rem; background: #fff7ed; border: 1px solid #fed7aa; }
+    .cp2-threat .tag { display: inline-block; font-size: .62rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #9a3412; margin-bottom: .15rem; }
+    .cp2-threat b { display: block; font-size: .84rem; color: var(--color-gray-900); }
+    .cp2-threat p { font-size: .76rem; line-height: 1.45; color: var(--color-gray-700); margin-top: .15rem; }
+    .cp2-threat em { font-style: normal; font-weight: 700; color: var(--color-gray-500); }
+    html.dark .cp2-part b { color: #e8efe1; }
+    html.dark .cp2-bg-row + .cp2-bg-row { border-color: #222b1a; }
+    html.dark .cp2-bg-row b, html.dark .cp2-d-head b, html.dark .cp2-d-app b, html.dark .cp2-row-t b, html.dark .cp2-tot-row b, html.dark .cp2-npk b, html.dark .cp2-threat b { color: #e8efe1; }
+    html.dark .cp2-bg-row p, html.dark .cp2-d-app, html.dark .cp2-d-obs, html.dark .cp2-row, html.dark .cp2-threat p { color: #b7c2ad; }
+    html.dark .cp2-pill { background: #22301a; color: #cfe6b8; border-color: #2b3a1c; }
+    html.dark .cp2-pill.is-risk { background: #3a2a0a; color: #fcd34d; border-color: #5a3d10; }
+    html.dark .cp2-pill.is-src { background: #1c2416; color: #93a684; border-color: #2b3a1c; }
+    html.dark .cp2-chart .cp2-col.is-sel, html.dark .cp2-row.is-sel { background: #22301a; }
+    html.dark .cp2-detail { background: #10150c; border-color: #2b3a1c; }
+    html.dark .cp2-d-nav button { background: #1c2416; border-color: #2b3a1c; color: #d5e3c5; }
+    html.dark .cp2-d-app em { color: #a5c97e; }
+    html.dark .cp2-d-obs .is-obs { background: #2f4d24; color: #cfe6b5; }
+    html.dark .cp2-d-obs .is-act { background: #3a2a0a; color: #fcd34d; }
+    html.dark .cp2-tot-row .tr { background: #222b1a; }
+    html.dark .cp2-threat { background: #2a1f10; border-color: #4a3416; }
+    html.dark .cp2-threat .tag { color: #fdba74; }
+    html.dark .wp-watch { color: #e0b95c; }
+    .va-link.is-plain { color: var(--color-gray-700); cursor: default; }
+    .va-link.is-plain:hover { background: transparent; }
+    html.dark .va-link.is-plain { color: #d5e3c5; }
+    @media (prefers-reduced-motion: reduce) { .cp2-detail, .cp2-tot-row .tr span, .cp2-row, .cp2-chart .cp2-col { transition: none; } }
     .cp-yo { display: grid; gap: .45rem; margin-top: .3rem; }
     .cp-yo-row { display: flex; align-items: center; gap: .6rem; font-size: .78rem; color: var(--color-gray-600); }
     .cp-yo-row small { flex: none; width: 5rem; font-weight: 700; }
@@ -787,13 +892,24 @@
     }
 
     /* ---------------- the report, drawn ---------------- */
-    const host = (u) => { try { const h = new URL(u).hostname.replace(/^www\./, ''); return /vertexaisearch\.cloud\.google\.com$/.test(h) ? 'via Google Search' : h; } catch (_) { return ''; } };
+    const host = (u) => { try { const h = new URL(u).hostname.replace(/^www\./, ''); return /vertexaisearch\.cloud\.google\.com$/.test(h) ? '' : h; } catch (_) { return ''; } };
     const list = (xs) => (Array.isArray(xs) ? xs : []).filter((x) => x && String(x).trim());
     const PALETTE = ['#4a7c2a', '#8fc96a', '#b45309', '#2563eb', '#7c3aed', '#db2777', '#0891b2', '#65a30d'];
     const trimN = (n) => { const v = Number(n) || 0; return Number.isInteger(v) ? String(v) : String(Math.round(v * 10) / 10); };
     const numOf = (s) => { const m = String(s || '').replace(/,/g, '').match(/(\d+(\.\d+)?)/); return m ? Number(m[1]) : null; };
 
+    /* Two shapes live on the shelf: protocols written before 2026-09-18
+       (stages + fertilizer program + protection lists) and the two-part
+       protocol (background + recommendation). Each is drawn by its own
+       hand; the tail (attach, again, delete) is shared. */
     function drawReport(hostEl, item, mode, quiet) {
+        const r = item.report || {};
+        if (r.recommendation && r.background) drawV2(hostEl, item, mode);
+        else drawV1(hostEl, item, mode);
+        finishDraw(hostEl, item, mode, quiet);
+    }
+
+    function drawV1(hostEl, item, mode) {
         const r = item.report || {};
         const p = item.params || {};
         const sweep = (t) => String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/\s{2,}/g, ' ').trim();
@@ -930,8 +1046,8 @@
 
             ${(r.webSources || []).length ? `
             <div class="wtp-card">
-                <h3>🌐 What Anee read</h3>
-                <div class="va-links">${(r.webSources || []).map((s) => `<a class="va-link" href="${esc(s.url)}" target="_blank" rel="noopener nofollow"><span class="l-t">${esc(s.title || s.url)}</span><span class="l-h">${esc(host(s.url))}</span></a>`).join('')}</div>
+                <h3>📚 Other Sources in Analysis</h3>
+                <div class="va-links">${(() => { const seen = new Set(); return (r.webSources || []).map((x) => ({ name: x.title || host(x.url) || 'A published source', h: host(x.url) })).filter((x) => { const k = x.name.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; }).map((x) => `<span class="va-link is-plain"><span class="l-t">${esc(x.name)}</span>${x.h && x.h !== x.name ? `<span class="l-h">${esc(x.h)}</span>` : ''}</span>`).join(''); })()}</div>
             </div>` : ''}
 
             <div class="wtp-card">
@@ -945,6 +1061,189 @@
                 <button type="button" class="btn btn-white w-full" data-cp-delete>🗑 Delete</button>
             </div>`;
 
+    }
+
+    /* ---- the shared tail: the actions under either drawing ---- */
+    const actionsHtml = (mode) => `
+            <div class="wtp-acts">
+                <button type="button" class="btn btn-primary w-full" data-cp-attach>${OPT && OPT.aneeFace ? `<img class="wtp-anee-face" src="${esc(OPT.aneeFace)}" alt="">` : '🤖'} Attach to Anee</button>
+                ${mode === 'fresh' ? `<button type="button" class="btn btn-white w-full" data-cp-again>📋 Write another protocol</button>` : ''}
+                <button type="button" class="btn btn-white w-full" data-cp-delete>🗑 Delete</button>
+            </div>`;
+    const sourcesHtml = (r) => (r.webSources || []).length ? `
+            <div class="wtp-card">
+                <h3>📚 Other Sources in Analysis</h3>
+                <div class="va-links">${(() => { const seen = new Set(); return (r.webSources || []).map((x) => ({ name: x.title || host(x.url) || 'A published source', h: host(x.url) })).filter((x) => { const k = x.name.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; }).map((x) => `<span class="va-link is-plain"><span class="l-t">${esc(x.name)}</span>${x.h && x.h !== x.name ? `<span class="l-h">${esc(x.h)}</span>` : ''}</span>`).join(''); })()}</div>
+            </div>` : '';
+
+    /* ---- THE TWO-PART PROTOCOL: background, then the recommendation ---- */
+    function drawV2(hostEl, item, mode) {
+        const r = item.report || {};
+        const p = item.params || {};
+        const sweep = (t) => String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/\s{2,}/g, ' ').trim();
+        const crop = (OPT ? OPT.crops.find((c) => c.key === p.crop) : null) || {};
+        const month = (OPT ? (OPT.months.find((m) => m.key === p.month) || {}).label : '') || p.month || '';
+        const bg = r.background || {};
+        const wx = bg.weather || {};
+        const v = bg.variety || {};
+        const rec = r.recommendation || {};
+        const stages = rec.stages || [];
+        const names = [...new Set(stages.flatMap((st) => (st.fertilizer || []).map((x) => x.product || 'Fertilizer')))];
+        const colour = (n) => PALETTE[Math.max(0, names.indexOf(n)) % PALETTE.length];
+        const maxBags = Math.max(0.1, ...stages.map((st) => Number(st.bags) || 0));
+        const totals = rec.totals || [];
+        const maxTotal = Math.max(0.1, ...totals.map((t) => Number(t.bags) || 0));
+        const yo = rec.yield || {};
+        const tN = numOf(yo.target), rN = numOf(yo.realistic);
+        const yMax = Math.max(tN || 0, rN || 0, 1);
+        const npk = rec.npk || {};
+        const water = rec.water || {};
+        const firstFert = Math.max(0, stages.findIndex((st) => (st.fertilizer || []).length));
+
+        hostEl.innerHTML = `
+            <div class="wtp-hero">
+                <h2>${esc(crop.icon || '🌱')} ${esc(crop.label || 'Your crop')}${(p.variety || v.name) ? ' · ' + esc(p.variety || v.name) : ''}</h2>
+                <p class="h-win">${esc(r.headline || 'Your season, stage by stage')}</p>
+                <div class="wtp-chips">
+                    <span class="wtp-chip">📍 ${esc(p.location || '')}</span>
+                    <span class="wtp-chip">🗓️ ${esc(month)}</span>
+                    <span class="wtp-chip">${esc(OPT?.methods?.[p.method]?.label || p.method || '')}</span>
+                    <span class="wtp-chip">${esc(trimN(p.area))} ha</span>
+                    ${Number(v.maturityDays) > 0 ? `<span class="wtp-chip">⏱️ ${esc(String(Math.round(Number(v.maturityDays))))} days</span>` : ''}
+                    <span class="wtp-chip">${esc(OPT?.priorities?.[p.priority]?.label || '')}</span>
+                    <span class="wtp-chip">Confidence: ${esc(r.confidence || 'moderate')}</span>
+                    ${item.charged ? `<span class="wtp-chip">${item.charged} credits</span>` : ''}
+                </div>
+            </div>
+
+            <div class="cp2-part"><span class="cp2-part-n">1</span><span><b>Background</b><small>the place, the weather ahead, the variety</small></span></div>
+
+            <div class="wtp-card cp2-bg">
+                <div class="cp2-bg-row"><span class="cp2-bg-e">📍</span><div><b>The place</b><p>${esc(sweep(bg.place))}</p>${bg.field ? `<p class="cp2-dim">${esc(sweep(bg.field))}</p>` : ''}</div></div>
+                <div class="cp2-bg-row"><span class="cp2-bg-e">🌤️</span><div><b>The weather ahead</b><p>${esc(sweep(wx.outlook))}</p>${wx.enso ? `<p class="cp2-dim">${esc(sweep(wx.enso))}</p>` : ''}
+                    ${list(wx.risks).length ? `<div class="cp2-pills">${list(wx.risks).map((x) => `<span class="cp2-pill is-risk">⚠️ ${esc(sweep(x))}</span>`).join('')}</div>` : ''}</div></div>
+                <div class="cp2-bg-row"><span class="cp2-bg-e">🧬</span><div><b>${esc(v.name || p.variety || 'The variety')}${v.by ? ` <small>by ${esc(v.by)}${v.released ? ', ' + esc(v.released) : ''}</small>` : ''}</b>
+                    ${v.found === false ? `<p class="cp2-dim">Not found online as published — the numbers below assume this variety.</p>` : ''}
+                    <div class="cp2-pills">
+                        ${Number(v.maturityDays) > 0 ? `<span class="cp2-pill">⏱ ${esc(String(Math.round(Number(v.maturityDays))))} days to maturity</span>` : ''}
+                        ${v.yieldPotential ? `<span class="cp2-pill">🌾 ${esc(v.yieldPotential)}</span>` : ''}
+                        ${v.season ? `<span class="cp2-pill">🗓️ ${esc(v.season)}</span>` : ''}
+                        ${v.source ? `<span class="cp2-pill is-src">📚 ${esc(v.source)}</span>` : ''}
+                    </div>
+                    ${v.traits ? `<p>${esc(sweep(v.traits))}</p>` : ''}
+                    ${v.caution ? `<p class="wp-watch">⚠️ ${esc(sweep(v.caution))}</p>` : ''}
+                </div></div>
+            </div>
+
+            <div class="cp2-part"><span class="cp2-part-n">2</span><span><b>Recommendation</b><small>what to apply at each stage, and why</small></span></div>
+
+            ${rec.intro ? `<div class="wtp-card"><p class="wtp-plain">${esc(sweep(rec.intro))}</p></div>` : ''}
+
+            <div class="cp-clock"><span class="e">👁️</span><span><b>The crop is the clock, not the calendar.</b> Tap a stage below to see what goes on then, and why.</span></div>
+
+            ${stages.length ? `
+            <div class="wtp-card" data-cp2-stages data-sel="${firstFert}">
+                <h3>Fertilizer by growth stage <small>50-kg bags for the whole field (${esc(trimN(p.area))} ha) — ${esc(trimN(rec.totalBags || 0))} bags in all</small></h3>
+                <div class="cp-chart cp2-chart">
+                    ${stages.map((st, i) => `<button type="button" class="cp-col cp2-col" data-cp2-stage="${i}" aria-label="${esc(st.stage || '')}"><span class="cp-col-val">${Number(st.bags) > 0 ? esc(trimN(st.bags)) : '·'}</span><div class="cp-bar" style="height:${Math.max(3, Math.round(((Number(st.bags) || 0) / maxBags) * 100))}%">${(st.fertilizer || []).map((x) => `<span class="cp-seg" style="height:${Math.max(0, ((Number(x.totalBags) || 0) / Math.max(0.1, Number(st.bags) || 0)) * 100)}%;background:${colour(x.product || 'Fertilizer')}"></span>`).join('')}</div></button>`).join('')}
+                </div>
+                <div class="cp-lbls cp2-lbls">${stages.map((st, i) => `<span class="cp-lbl" data-cp2-lbl="${i}">${i + 1}</span>`).join('')}</div>
+                ${names.length ? `<div class="cp-legend">${names.map((n) => `<span><i style="background:${colour(n)}"></i>${esc(n)}</span>`).join('')}</div>` : ''}
+                <div class="cp2-detail" data-cp2-detail></div>
+                <div class="cp2-rows">
+                    ${stages.map((st, i) => `
+                    <button type="button" class="cp2-row" data-cp2-stage="${i}">
+                        <span class="cp2-row-n">${i + 1}</span>
+                        <span class="cp2-row-t"><b>${esc(st.stage || '')}</b><small>${(st.fertilizer || []).length ? (st.fertilizer || []).map((x) => esc(trimN(x.totalBags)) + ' ' + esc(x.product || '')).join(' · ') : (st.observe ? 'watch' : 'no inputs')}</small></span>
+                        <span class="cp2-row-b">${Number(st.bags) > 0 ? esc(trimN(st.bags)) + ' bags' : ''}</span>
+                    </button>`).join('')}
+                </div>
+            </div>` : ''}
+
+            ${(totals.length || (rec.supplies || []).length) ? `
+            <div class="wtp-card">
+                <h3>Totals to use <small>for the whole field — quantities only</small></h3>
+                ${totals.length ? `<div class="cp2-tot">
+                    ${totals.map((t) => `<div class="cp2-tot-row"><span class="n"><i style="background:${colour(t.product)}"></i>${esc(t.product)}</span><div class="tr"><span style="width:${Math.max(2, Math.round((Number(t.bags) / maxTotal) * 100))}%;background:${colour(t.product)}"></span></div><b>${esc(trimN(t.bags))} bags</b><small>${esc(trimN(t.bagsPerHa))}/ha</small></div>`).join('')}
+                </div>` : ''}
+                ${(npk.n || npk.p || npk.k) ? `<div class="cp2-npk"><span>N <b>${esc(trimN(npk.n))}</b></span><span>P₂O₅ <b>${esc(trimN(npk.p))}</b></span><span>K₂O <b>${esc(trimN(npk.k))}</b></span><small>kg per hectare for the season</small></div>${npk.note ? `<p class="cp-note">${esc(sweep(npk.note))}</p>` : ''}` : ''}
+                ${(rec.supplies || []).length ? `<div class="cp-shop cp2-shop">
+                    ${(rec.supplies || []).map((x) => `<div class="cp-item"><span class="n">${esc(x.item || '')}<small>${esc(x.when || '')}</small></span><span class="q">${esc(x.qty != null && x.qty !== '' ? trimN(x.qty) : '')} ${esc(x.unit || '')}</span></div>`).join('')}
+                </div>` : ''}
+            </div>` : ''}
+
+            ${(rec.threats || []).length ? `
+            <div class="wtp-card">
+                <h3>Threats to check <small>the sign to act on, and the action</small></h3>
+                <div class="cp2-threats">
+                    ${(rec.threats || []).map((t) => `<div class="cp2-threat"><span class="tag">${esc(t.stage || '')}</span><b>${esc(t.threat || '')}</b>${t.sign ? `<p><em>Look for:</em> ${esc(sweep(t.sign))}</p>` : ''}${t.action ? `<p><em>Then:</em> ${esc(sweep(t.action))}</p>` : ''}</div>`).join('')}
+                </div>
+            </div>` : ''}
+
+            ${water.plan ? `
+            <div class="wtp-card">
+                <h3>Water <small>with ${esc((OPT?.waters?.[p.water] || '').toLowerCase())}</small></h3>
+                <p class="wtp-plain">${esc(sweep(water.plan))}</p>
+                <div class="cp2-pills">${water.ifDry ? `<span class="cp2-pill">☀️ If dry: ${esc(sweep(water.ifDry))}</span>` : ''}${water.ifWet ? `<span class="cp2-pill">🌧️ If wet: ${esc(sweep(water.ifWet))}</span>` : ''}</div>
+            </div>` : ''}
+
+            ${(tN || rN || yo.note) ? `
+            <div class="wtp-card">
+                <h3>Yield <small>your target against what this variety realistically gives here</small></h3>
+                <div class="cp-yo">
+                    ${tN ? `<div class="cp-yo-row"><small>Target</small><div class="tr"><span class="is-target" style="width:${Math.round((tN / yMax) * 100)}%"></span></div><b>${esc(yo.target || '')}</b></div>` : ''}
+                    ${rN ? `<div class="cp-yo-row"><small>Realistic</small><div class="tr"><span style="width:${Math.round((rN / yMax) * 100)}%"></span></div><b>${esc(yo.realistic || '')}</b></div>` : ''}
+                </div>
+                ${yo.note ? `<p class="cp-note">${esc(sweep(yo.note))}</p>` : ''}
+            </div>` : ''}
+
+            <div class="wtp-card">
+                <h3>In plain words</h3>
+                <p class="wtp-plain">${esc(sweep(r.summary))}</p>
+                ${(r.dataGaps || []).length ? `<h3 class="mt-4">What this protocol could not verify</h3><ul class="wtp-gap">${(r.dataGaps || []).map((g) => `<li>${esc(g)}</li>`).join('')}</ul>` : ''}
+            </div>
+
+            ${sourcesHtml(r)}
+
+            <div class="wtp-card">
+                <h3>🧭 A guide, not a promise</h3>
+                <p class="wtp-fine">This is a starting protocol, not a prescription: the rates follow the official recommendations bent to your answers, and the interventions are what to do only when the sign is seen, not what to pour on a date. Your own eyes on the crop, and a soil test where you can get one, finish what this starts.</p>
+            </div>
+            ${actionsHtml(mode)}`;
+
+        // The stage picker: the chart's bars and the rows both choose a
+        // stage; the detail panel explains it.
+        const card = hostEl.querySelector('[data-cp2-stages]');
+        if (card) {
+            const paint = () => {
+                const i = Math.max(0, Math.min(stages.length - 1, Number(card.dataset.sel) || 0));
+                const st = stages[i] || {};
+                card.querySelectorAll('[data-cp2-stage]').forEach((el) => el.classList.toggle('is-sel', Number(el.dataset.cp2Stage) === i));
+                card.querySelectorAll('[data-cp2-lbl]').forEach((el) => el.classList.toggle('is-sel', Number(el.dataset.cp2Lbl) === i));
+                const d = card.querySelector('[data-cp2-detail]');
+                d.classList.add('is-swap');
+                setTimeout(() => {
+                    d.innerHTML = `
+                        <div class="cp2-d-head"><span class="cp2-row-n">${i + 1}</span><span><b>${esc(st.stage || '')}</b>${st.hint && st.hint !== 'n/a' ? `<small>${esc(st.hint)}</small>` : ''}</span>
+                            <span class="cp2-d-nav"><button type="button" data-cp2-prev ${i === 0 ? 'disabled' : ''} aria-label="Previous stage">‹</button><button type="button" data-cp2-next ${i === stages.length - 1 ? 'disabled' : ''} aria-label="Next stage">›</button></span></div>
+                        ${st.signs ? `<p class="cp2-d-signs">👁️ ${esc(sweep(st.signs))}</p>` : ''}
+                        ${(st.fertilizer || []).length ? `<div class="cp2-d-fert">${(st.fertilizer || []).map((x) => `<div class="cp2-d-app"><i style="background:${colour(x.product || 'Fertilizer')}"></i><span><b>${esc(trimN(x.totalBags))} ${Number(x.totalBags) === 1 ? 'bag' : 'bags'} ${esc(x.product || '')}</b> <small>(${esc(trimN(x.bagsPerHa))}/ha)</small>${x.purpose ? `<em>${esc(sweep(x.purpose))}</em>` : ''}</span></div>`).join('')}</div>` : `<p class="cp2-dim">No fertilizer at this stage.</p>`}
+                        ${st.observe ? `<div class="cp2-d-obs"><span class="is-obs">🔎 Observe</span><p>${esc(sweep(st.observe))}</p></div>` : ''}
+                        ${st.intervene ? `<div class="cp2-d-obs"><span class="is-act">🛠️ Intervene</span><p>${esc(sweep(st.intervene))}</p></div>` : ''}`;
+                    d.classList.remove('is-swap');
+                }, d.innerHTML ? 140 : 0);
+            };
+            card.addEventListener('click', (e) => {
+                const b = e.target.closest('[data-cp2-stage]');
+                if (b) { card.dataset.sel = b.dataset.cp2Stage; paint(); return; }
+                if (e.target.closest('[data-cp2-prev]')) { card.dataset.sel = String(Math.max(0, Number(card.dataset.sel) - 1)); paint(); return; }
+                if (e.target.closest('[data-cp2-next]')) { card.dataset.sel = String(Math.min(stages.length - 1, Number(card.dataset.sel) + 1)); paint(); }
+            });
+            paint();
+        }
+    }
+
+    function finishDraw(hostEl, item, mode, quiet) {
         hostEl.hidden = false;
         if (!quiet) {
             requestAnimationFrame(() => requestAnimationFrame(() => hostEl.classList.add('is-drawn')));

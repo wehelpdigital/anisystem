@@ -366,51 +366,37 @@ class CropProtocolController extends Controller
      * from its per-hectare figure, and the program's totals per product
      * are added up from the lines rather than trusted from the model.
      */
+    /**
+     * The field's numbers: every application scaled from bags per hectare
+     * to bags for THIS field, the per-stage sums, and the season's totals
+     * per product. Quantities only — the protocol carries no prices.
+     */
     private function tidy(array $report, array $p): array
     {
         $area = max(0.01, (float) $p['area']);
         $totals = [];
-        $program = [];
-        foreach ((array) ($report['fertilizer']['program'] ?? []) as $step) {
-            $products = [];
-            foreach ((array) ($step['products'] ?? []) as $pr) {
-                $perHa = max(0, (float) ($pr['bagsPerHa'] ?? 0));
-                $total = round($perHa * $area, 1);
-                $pr['bagsPerHa'] = $perHa;
-                $pr['totalBags'] = $total;
-                $products[] = $pr;
-                $name = trim((string) ($pr['name'] ?? 'Fertilizer'));
-                $totals[$name] = ($totals[$name] ?? 0) + $total;
+        $stages = [];
+        foreach ((array) ($report['recommendation']['stages'] ?? []) as $st) {
+            $apps = [];
+            foreach ((array) ($st['fertilizer'] ?? []) as $ap) {
+                $perHa = max(0, (float) ($ap['bagsPerHa'] ?? 0));
+                $ap['bagsPerHa'] = $perHa;
+                $ap['totalBags'] = round($perHa * $area, 1);
+                $apps[] = $ap;
+                $name = trim((string) ($ap['product'] ?? 'Fertilizer')) ?: 'Fertilizer';
+                $totals[$name] = ($totals[$name] ?? 0) + $perHa;
             }
-            $step['products'] = $products;
-            $step['bags'] = round(array_sum(array_map(fn ($x) => (float) $x['totalBags'], $products)), 1);
-            $program[] = $step;
+            $st['fertilizer'] = $apps;
+            $st['bags'] = round(array_sum(array_map(fn ($x) => (float) $x['totalBags'], $apps)), 1);
+            $stages[] = $st;
         }
-        $report['fertilizer']['program'] = $program;
-        $report['fertilizer']['totals'] = collect($totals)->map(fn ($bags, $name) => ['name' => $name, 'bags' => round($bags, 1)])->values()->all();
-        $report['fertilizer']['totalBags'] = round(array_sum($totals), 1);
+        $report['recommendation']['stages'] = $stages;
+        $report['recommendation']['totals'] = collect($totals)
+            ->map(fn ($perHa, $name) => ['product' => $name, 'bagsPerHa' => round($perHa, 1), 'bags' => round($perHa * $area, 1)])
+            ->values()->all();
+        $report['recommendation']['totalBags'] = round(array_sum($totals) * $area, 1);
         $report['area'] = $area;
-
-        /* The shopping list's costs come back as anything from 7200 to
-           "≈ ₱7,200" to "not published"; a number becomes pesos, words
-           without a digit become nothing, and the whole list is added up. */
-        $sum = 0.0;
-        $known = 0;
-        $items = [];
-        foreach ((array) ($report['prepare'] ?? []) as $it) {
-            $raw = trim((string) ($it['estCost'] ?? ''));
-            $num = preg_match('/\d[\d,]*(\.\d+)?/', $raw, $m) ? (float) str_replace(',', '', $m[0]) : null;
-            if ($num !== null && $num > 0) {
-                $it['estCost'] = '≈ ' . \App\Support\Region::symbol() . number_format($num);
-                $sum += $num;
-                $known++;
-            } else {
-                $it['estCost'] = '';
-            }
-            $items[] = $it;
-        }
-        $report['prepare'] = $items;
-        $report['prepareCost'] = $known ? ['sum' => '≈ ' . \App\Support\Region::symbol() . number_format($sum), 'known' => $known, 'of' => count($items)] : null;
+        $report['format'] = 2;
 
         return $report;
     }
@@ -523,6 +509,35 @@ class CropProtocolController extends Controller
         }
         $report = json_decode($r->report, true) ?: [];
         $params = json_decode($r->params, true) ?: [];
+        $rec = $report['recommendation'] ?? null;
+        if (is_array($rec)) {
+            // The two-part protocol (2026-09-18).
+            $bg = $report['background'] ?? [];
+            $v = $bg['variety'] ?? [];
+            $fert = collect($rec['stages'] ?? [])->filter(fn ($st) => ! empty($st['fertilizer']))->map(fn ($st) => ($st['stage'] ?? '') . ': '
+                . collect($st['fertilizer'])->map(fn ($x) => ($x['totalBags'] ?? '') . ' bags ' . ($x['product'] ?? '') . (! empty($x['purpose']) ? ' (' . $x['purpose'] . ')' : ''))->implode(', '))->implode(' | ');
+            $watch = collect($rec['stages'] ?? [])->filter(fn ($st) => ! empty($st['observe']))->map(fn ($st) => ($st['stage'] ?? '') . ': ' . $st['observe'] . (! empty($st['intervene']) ? ' → ' . $st['intervene'] : ''))->implode(' | ');
+            $text = "\n\n--- ATTACHED: Crop Protocol Analysis (the farmer generated this earlier; treat it as shared context) ---\n"
+                . 'Case: ' . $r->title . "\n"
+                . 'Field: ' . ($params['area'] ?? '') . ' ha; method ' . (self::METHODS[$params['method'] ?? '']['label'] ?? '') . '; priority ' . (self::PRIORITIES[$params['priority'] ?? '']['label'] ?? '')
+                . '; target ' . (($params['targetYield'] ?? null) ? $params['targetYield'] . ' ' . (self::yieldUnits()[$params['yieldUnit'] ?? ''] ?? '') : 'not set') . "\n"
+                . 'Headline: ' . ($report['headline'] ?? '') . "\n"
+                . 'Background — place: ' . ($bg['place'] ?? '') . ' Field: ' . ($bg['field'] ?? '') . "\n"
+                . 'Weather ahead: ' . ($bg['weather']['outlook'] ?? '') . (! empty($bg['weather']['enso']) ? ' ENSO: ' . $bg['weather']['enso'] : '') . "\n"
+                . 'Variety: ' . ($v['name'] ?? '') . (! empty($v['by']) ? ' by ' . $v['by'] : '') . (! empty($v['maturityDays']) ? ', ' . $v['maturityDays'] . ' days' : '') . (! empty($v['yieldPotential']) ? ', ' . $v['yieldPotential'] : '') . ' — ' . ($v['traits'] ?? '') . "\n"
+                . 'Approach: ' . ($rec['intro'] ?? '') . "\n"
+                . 'Fertilizer by stage: ' . $fert . "\n"
+                . 'Totals for the field: ' . collect($rec['totals'] ?? [])->map(fn ($t) => ($t['bags'] ?? '') . ' bags ' . ($t['product'] ?? ''))->implode(', ') . "\n"
+                . 'Observe / intervene: ' . $watch . "\n"
+                . 'Threats: ' . collect($rec['threats'] ?? [])->map(fn ($t) => ($t['threat'] ?? '') . ' at ' . ($t['stage'] ?? '') . ' — ' . ($t['action'] ?? ''))->implode(' | ') . "\n"
+                . 'Water: ' . ($rec['water']['plan'] ?? '') . "\n"
+                . 'Yield: target ' . ($rec['yield']['target'] ?? '') . ', realistic ' . ($rec['yield']['realistic'] ?? '') . "\n"
+                . 'Summary: ' . ($report['summary'] ?? '') . "\n"
+                . 'Stated confidence: ' . ($report['confidence'] ?? '') . '; data gaps: ' . collect($report['dataGaps'] ?? [])->implode('; ')
+                . "\n--- END OF ATTACHED PROTOCOL ---\n";
+
+            return ['title' => $r->title, 'text' => $text];
+        }
         $fert = collect($report['fertilizer']['program'] ?? [])->map(fn ($s) => ($s['stage'] ?? '') . ': '
             . collect($s['products'] ?? [])->map(fn ($x) => ($x['totalBags'] ?? '') . ' bags ' . ($x['name'] ?? ''))->implode(', '))->implode(' | ');
         $text = "\n\n--- ATTACHED: Crop Protocol Analysis (the farmer generated this earlier; treat it as shared context) ---\n"
@@ -628,7 +643,7 @@ class CropProtocolController extends Controller
         $crop = CropCatalog::CROPS[$p['crop']];
         $when = \Illuminate\Support\Carbon::parse($p['month'] . '-01')->format('F Y');
         $target = $p['targetYield'] !== null
-            ? rtrim(rtrim(number_format((float) $p['targetYield'], 2), '0'), '.') . ' ' . (self::YIELD_UNITS[$p['yieldUnit']] ?? 'per hectare')
+            ? rtrim(rtrim(number_format((float) $p['targetYield'], 2), '0'), '.') . ' ' . (self::yieldUnits()[$p['yieldUnit']] ?? 'per hectare')
             : 'not set — aim for what the variety realistically gives here';
 
         return [
@@ -673,14 +688,13 @@ THE CASE
 - The farmer's aim: {$f['priority']}; target yield: {$f['target']}
 
 FIND, IN THIS ORDER
-1. The variety's published traits: days to maturity, yield potential and typical farm yields, recommended planting method and season, fertilizer response and any published fertilizer recommendation for it, resistance and tolerance ratings, known weaknesses (lodging, shattering, disease).
+1. THE VARIETY FIRST: its published specifications — days to maturity, yield potential and typical farm yields, plant height and lodging, the season and method it is bred for, its fertilizer response and any published fertilizer recommendation for it, resistance and tolerance ratings (pests, diseases, drought, flooding, salinity, heat), known weaknesses, who released it and when. Prefer the registry, the breeder's or seed company's own page, and extension notes. If the variety cannot be found, say so plainly and describe the widely grown variety you would assume instead.
 2. The official recommendations in {$rCountry} for this crop's nutrient management by growth stage in this region and season ({$rNutrient}): kg N-P-K per hectare, split timing by stage, common products (urea 46-0-0, 14-14-14, 16-20-0, 0-0-60, muriate of potash, organic/biofertilizers), and the soil-specific adjustments for {$f['soil']} and for these troubles.
 3. Integrated pest management for this crop in the region: the insects, diseases and weeds that matter by growth stage, their economic thresholds, the recommended controls (cultural, biological, chemical with active ingredients), and any current outbreak advisories.
 4. Irrigation and water management by growth stage for this crop and method (e.g. alternate wetting and drying for rice), and what to change under drought or flooding.
 5. The seasonal climate outlook from {$rMet} for the region for the months from planting to harvest (rainfall, temperature, severe-weather expectations) and the current ENSO advisory.
-6. Current published prices of the main inputs in {$rCountry} where available (a bag of urea, complete, potash; common insecticides/fungicides), for a rough cost picture.
 
-Prefer {$rSources}. Note the year of each finding. Where something cannot be found online, say so plainly. Write plain prose notes under the six headings, at most 1,100 words, no JSON, no markdown tables.
+Prefer {$rSources}. Note the year of each finding. Where something cannot be found online, say so plainly. Write plain prose notes under the five headings, at most 1,000 words, no JSON, no markdown tables.
 PROMPT;
     }
 
@@ -694,10 +708,9 @@ PROMPT;
         $unitWord = self::yieldUnits()[$p['yieldUnit']] ?? array_values(self::yieldUnits())[0];
         $countryName = \App\Support\Region::name();
         $regionBlock = \App\Support\Region::promptBlock();
-        $currencyName = \App\Support\Region::currencyName();
 
         return <<<PROMPT
-You are an agronomic decision-support analyst for farming in {$countryName}. Write a SEMI-COMPLETE SEASON PROTOCOL for one field, hung on the crop's GROWTH STAGES — never on day counts. The farmer will act when the crop reaches a stage, as their own eyes tell them; the protocol says what to do at each stage and what to have ready.
+You are an agronomic decision-support analyst for farming in {$countryName}. Write a SEASON PROTOCOL for one field in TWO PARTS a farmer reads in five minutes: first the BACKGROUND (the place, the weather ahead, the variety as published), then the RECOMMENDATION (an introduction, then what to apply at each growth stage and why, what to observe and when to step in, the totals to use, the threats to check). Hung on the crop's GROWTH STAGES — never on day counts: the farmer acts when the crop reaches a stage, as their own eyes tell them.
 
 FACTS GIVEN
 - {$regionBlock}
@@ -713,31 +726,34 @@ FACTS GIVEN
 - Weather now: {$forecast}
 {$ensoBlock}
 WHAT TO READ FROM
-Research notes gathered from the web just now follow at the end of this brief (the variety's traits, the official nutrient and pest recommendations for this crop and region, water management, the seasonal outlook, input prices). Rely on them first, over memory; where they and memory disagree, the notes win; where a thing is neither in the notes nor established agronomy, say so in dataGaps rather than inventing it.
+Research notes gathered from the web just now follow at the end of this brief (the variety's published specifications first, then the official nutrient and pest recommendations for this crop and region, water management, the seasonal outlook). Rely on them first, over memory; where they and memory disagree, the notes win; where a thing is neither in the notes nor established agronomy, say so in dataGaps rather than inventing it.
 
 GROUND RULES
-- Every quantity is for THIS field: give fertilizer per hectare (bagsPerHa, a 50-kg bag) and the model will scale to the field size; be specific with products and rates, and bend them to the aim (highest yield = the fuller recommended rate with a top-up; lower cost = the lean end, dropping what pays least; in the middle = the standard recommendation) and to the soil and troubles (acid soil, saline soil, poor drainage and the rest each change something).
-- Stage names must be the crop's real stages in order (for rice e.g. Land preparation, Seedling/Nursery, Transplanting or Establishment, Tillering, Panicle initiation, Booting & heading, Flowering, Grain filling, Ripening & harvest; for corn Land preparation, Emergence, V4–V6, V8–V10, Tasseling & silking, Grain fill, Maturity; for vegetables the equivalent). Timing is said as the stage, with plain signs of it a farmer can see, plus a rough "about N weeks after planting" only as a hint.
-- Insecticides, fungicides, herbicides and foliars: name them by what to look for and the threshold that justifies spending, then the product class or active ingredient; never spray-by-calendar. Say what to PREPARE (have in the shed) versus what to use only if the threshold is reached.
-- Irrigation: what the crop needs at each stage and how to run the water with THIS water source, including what to do if the sky turns dry or wet.
+- EASY TO READ. Short plain sentences a farmer reads easily; no jargon without a plain word beside it; nothing repeated between the two parts. Every word limit below is a ceiling, not a target.
+- THE VARIETY comes from the notes: name, breeder, maturity, yield potential, the season it is bred for, its strengths and weaknesses. Where the farmer's variety could not be found, say so (found false) and name the variety you assumed for the numbers.
+- Every quantity is for THIS field: give fertilizer per hectare (bagsPerHa, a 50-kg bag) and the app scales it to the field size; be specific with products and rates, and bend them to the aim (highest yield = the fuller recommended rate with a top-up; lower cost = the lean end, dropping what pays least; in the middle = the standard recommendation) and to the soil and troubles. Each application carries its PURPOSE in a few words (what the plant does with it at that stage).
+- Stage names must be the crop's real stages in order (for rice e.g. Land preparation, Seedling/Nursery, Transplanting or Establishment, Tillering, Panicle initiation, Booting & heading, Flowering, Grain filling, Ripening & harvest; for corn Land preparation, Emergence, V4–V6, V8–V10, Tasseling & silking, Grain fill, Maturity; for vegetables the equivalent). Timing is the stage and a plain sign of it, plus "about week N–M" only as a hint (WEEKS, never days — no DAS/DAT anywhere).
+- OBSERVE AND INTERVENE: at each stage say in one line what to look for, and in one line what to do only if it is seen (the threshold, then the class or active ingredient) — never spray by calendar. Leave both empty at a stage with nothing to watch.
+- NO PRICES ANYWHERE. Totals are quantities only.
+- Water: one short plan for the season with THIS water source, and what changes if the sky turns dry or wet.
 - Yield: say plainly whether the target is realistic for this variety, place and season, and what realistic is.
 - Be scientific and neutral: products as classes or actives, brands only where the notes name a specific registered product; no marketing tone. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
 
 Return ONLY a valid JSON object — no code fences, no commentary — in exactly this shape:
-{"headline":"","assumed":{"variety":"","maturityDays":"","season":"","note":""},"stages":[{"stage":"","signs":"","hint":"","tasks":[""]}],"fertilizer":{"program":[{"stage":"","timing":"","products":[{"name":"","bagsPerHa":0,"why":""}],"note":""}],"note":""},"protection":{"insects":[{"pest":"","stage":"","watchFor":"","threshold":"","action":"","prepare":""}],"diseases":[{"disease":"","stage":"","watchFor":"","action":"","prepare":""}],"weeds":[{"weed":"","when":"","control":""}]},"foliar":[{"product":"","stage":"","why":"","optional":true}],"irrigation":[{"stage":"","need":"","how":"","ifDry":"","ifWet":""}],"weather":{"outlook":"","enso":"","risks":[""]},"yieldOutlook":{"target":"","realistic":"","note":""},"prepare":[{"item":"","qty":"","unit":"","whenNeeded":"","estCost":""}],"watch":[""],"confidence":"moderate","dataGaps":[""],"summary":""}
+{"headline":"","background":{"place":"","field":"","weather":{"outlook":"","enso":"","risks":[""]},"variety":{"found":false,"name":"","by":"","released":"","maturityDays":0,"yieldPotential":"","season":"","traits":"","caution":"","source":""}},"recommendation":{"intro":"","stages":[{"stage":"","signs":"","hint":"","fertilizer":[{"product":"","bagsPerHa":0,"purpose":""}],"observe":"","intervene":""}],"npk":{"n":0,"p":0,"k":0,"note":""},"supplies":[{"item":"","qty":0,"unit":"","when":""}],"water":{"plan":"","ifDry":"","ifWet":""},"threats":[{"threat":"","stage":"","sign":"","action":""}],"yield":{"target":"","realistic":"","note":""}},"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
-- headline: one line, ≤ 16 words, the season in a breath.
-- assumed: the variety actually used for the numbers (the farmer's, or the one you assumed — say so in note), its maturityDays, the season this planting falls in.
-- stages: SIX to TEN stages in order; signs = what the farmer sees when the crop is there (≤ 25 words); hint = a rough "about week N–M after transplanting/sowing" (WEEKS, never days — no DAS/DAT anywhere in this document) or "n/a"; tasks = 2–5 short lines of what to do then (fertilizer, water, scouting, weeding, harvest prep).
-- fertilizer.program: one entry per application, in stage order; timing = the stage and the visible sign to apply at (e.g. "when the seedlings have settled and new leaves show", "at the first sign of the panicle inside the stem"), never a day count; each product with name (e.g. "Urea 46-0-0", "Complete 14-14-14", "Ammonium sulfate 21-0-0", "Muriate of potash 0-0-60", "Organic fertilizer"), bagsPerHa (a number, 50-kg bags per hectare; use decimals), why ≤ 20 words; note ≤ 40 words on the whole program (kg N-P-K per ha, the LCC/MOET check if rice).
-- protection: insects 3–6, diseases 2–5, weeds 2–4, each with the stage it matters (a stage name, not a day count), what to look for, the threshold (insects), the action, and what to prepare.
-- foliar: 0–4 entries; optional true when it only pays under the highest-yield aim.
-- irrigation: one entry per stage that needs a decision, with ifDry / ifWet contingencies ≤ 20 words each.
-- weather: outlook ≤ 60 words for the months from planting to harvest; enso ≤ 40 words; risks 2–5 short items.
-- yieldOutlook: target = the farmer's target restated in {$unitWord} (or "not set"); realistic = what this variety realistically gives here, in the same unit; note ≤ 40 words.
-- prepare: the shopping list for the whole field, 6–14 items (seed, every fertilizer product with total bags, the sprays to have on hand, foliars, tools/water if notable), qty as a number, unit, whenNeeded as a stage, estCost = the estimated cost of that quantity in {$currencyName} as a plain number (e.g. 7200) or "" when you truly cannot estimate it.
-- watch: 5–8 short lines — the things that go wrong here and the sign to act on.
-- confidence "low"/"moderate"/"high"; dataGaps at most five; summary ≤ 110 words, plain and warm but factual, ending with the reminder that the calendar is only a hint and the crop's stage is the clock.
+- headline: one line, ≤ 14 words, the season in a breath.
+- background.place: ≤ 40 words — the location, its climate zone and the season this planting falls in. background.field: ≤ 30 words — the soil, the water and the troubles in one breath, and what they ask of the protocol.
+- background.weather: outlook ≤ 55 words for the months from planting to harvest; enso ≤ 30 words; risks 2–4 items of ≤ 12 words.
+- background.variety: found true only when the notes carry real published specifications; name as published; by = breeder / company / institution; released = year or ""; maturityDays a number (0 when unknown); yieldPotential in words with the unit (e.g. "6–8 t/ha; farms average 4.5"); season = the season it is bred for; traits ≤ 55 words (strengths and weaknesses that matter here); caution ≤ 25 words (its known weakness on this ground, or ""); source = the registry, breeder or agency the notes cite. When nothing was found: found false, name = the variety assumed, traits says why it was assumed.
+- recommendation.intro: ≤ 80 words — the approach for this field and aim, and the one or two things that matter most this season.
+- recommendation.stages: SIX to TEN stages in order; signs ≤ 20 words; hint = "about week N–M after transplanting/sowing" or "n/a"; fertilizer = the applications at that stage (empty list when none), each with product (e.g. "Urea 46-0-0", "Complete 14-14-14", "Ammonium sulfate 21-0-0", "Muriate of potash 0-0-60", "Organic fertilizer"), bagsPerHa (a number, 50-kg bags per hectare; decimals allowed), purpose ≤ 14 words; observe ≤ 25 words or ""; intervene ≤ 30 words or "".
+- recommendation.npk: the season's kg N, P2O5 and K2O per hectare that the program adds up to, note ≤ 30 words (the LCC/MOET check if rice, or the soil-test caveat).
+- recommendation.supplies: 4–8 items to have for the whole field beyond the fertilizer (seed with kg, the one or two sprays to keep on hand by class, organic matter, tools if notable), qty a number, unit, when = a stage. Quantities only.
+- recommendation.water: plan ≤ 60 words; ifDry ≤ 25 words; ifWet ≤ 25 words.
+- recommendation.threats: 3–6 items — the things most likely to go wrong here, each with the stage it strikes, the sign to act on (≤ 14 words) and the action (≤ 18 words).
+- recommendation.yield: target = the farmer's target restated in {$unitWord} (or "not set"); realistic = what this variety realistically gives here, same unit; note ≤ 30 words.
+- confidence "low"/"moderate"/"high"; dataGaps at most four; summary ≤ 70 words, plain and warm but factual, ending with the reminder that the calendar is only a hint and the crop's stage is the clock.
 PROMPT;
     }
 
@@ -752,10 +768,11 @@ PROMPT;
             return null;
         }
         $json = json_decode(substr($text, $from, $to - $from + 1), true);
-        if (! is_array($json) || ! isset($json['stages'], $json['fertilizer'], $json['summary'])) {
+        if (! is_array($json) || ! isset($json['background'], $json['recommendation'], $json['summary'])) {
             return null;
         }
-        if (! is_array($json['stages']) || count($json['stages']) < 3) {
+        $stages = $json['recommendation']['stages'] ?? null;
+        if (! is_array($stages) || count($stages) < 3) {
             return null;
         }
 
