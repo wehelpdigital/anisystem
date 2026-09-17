@@ -536,7 +536,8 @@ class CropProtocolController extends Controller
                 . 'Fertilizer by stage: ' . $fert . "\n"
                 . 'Totals for the field: ' . collect($rec['totals'] ?? [])->map(fn ($t) => ($t['bags'] ?? '') . ' bags ' . ($t['product'] ?? ''))->implode(', ') . "\n"
                 . 'Observe / intervene: ' . $watch . "\n"
-                . 'Threats: ' . collect($rec['threats'] ?? [])->map(fn ($t) => ($t['threat'] ?? '') . ' at ' . ($t['stage'] ?? '') . ' — ' . ($t['action'] ?? ''))->implode(' | ') . "\n"
+                . 'Threats: ' . collect($rec['threats'] ?? [])->map(fn ($t) => ($t['threat'] ?? '') . ' at ' . ($t['stage'] ?? '') . ' — ' . ($t['action'] ?? '') . (! empty($t['product']) ? ' (' . $t['product'] . ')' : ''))->implode(' | ') . "\n"
+                . (! empty($rec['foliars']) ? 'Foliars: ' . collect($rec['foliars'])->map(fn ($f) => ($f['stage'] ?? '') . ': ' . ($f['product'] ?? '') . ' — ' . ($f['why'] ?? ''))->implode(' | ') . "\n" : '')
                 . 'Water: ' . ($rec['water']['plan'] ?? '') . "\n"
                 . 'Yield: target ' . ($rec['yield']['target'] ?? '') . ', realistic ' . ($rec['yield']['realistic'] ?? '') . "\n"
                 . 'Summary: ' . ($report['summary'] ?? '') . "\n"
@@ -745,10 +746,13 @@ GROUND RULES
 - NO ORGANIC FERTILIZER: the program is inorganic products only (urea, complete, ammonium sulfate, ammonium phosphate, muriate of potash and the like). Do not recommend organic fertilizer, compost, manure, vermicast or biofertilizer at any stage, and do not list them among the supplies.
 - Water: one short plan for the season with THIS water source, and what changes if the sky turns dry or wet.
 - Yield: say plainly whether the target is realistic for this variety, place and season, and what realistic is.
-- Be scientific and neutral: products as classes or actives, brands only where the notes name a specific registered product; no marketing tone. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
+- PRODUCTS, NAMED. Where a spray, drench or foliar is called for, name a product the farmer can ask for: a registered product sold in {$countryName} with its active ingredient or content in brackets, ending with the words "or equivalent" (e.g. "Padan 50 SP (cartap hydrochloride) or equivalent", "Zinc sulfate heptahydrate 1% spray or equivalent", "Sofit 300 EC (pretilachlor) or equivalent"). Prefer the products the notes name; where none is named, give the active ingredient or content and still say "or equivalent". This is a name to ask for, not a recommendation to buy a brand — no marketing tone.
+- FOLIARS: only where they pay for this crop, soil and aim — a micronutrient the soil or crop is known to lack (zinc on flooded or alkaline rice, boron and calcium on fruiting vegetables, magnesium on sandy ground) or a growth foliar the official guides accept — with the stage, the product and why. None when none pays.
+- Weeds are threats too: where weeds matter for this crop and method, one threat is the weed pressure, with the herbicide to use (pre- or post-emergence) named as above.
+- Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
 
 Return ONLY a valid JSON object — no code fences, no commentary — in exactly this shape:
-{"headline":"","background":{"place":"","field":"","weather":{"outlook":"","enso":"","risks":[""]},"variety":{"found":false,"name":"","by":"","released":"","maturityDays":0,"yieldPotential":"","season":"","traits":"","caution":"","source":""}},"recommendation":{"intro":"","stages":[{"stage":"","signs":"","hint":"","fertilizer":[{"product":"","bagsPerHa":0,"purpose":""}],"observe":"","intervene":""}],"npk":{"n":0,"p":0,"k":0,"note":""},"supplies":[{"item":"","qty":0,"unit":"","when":""}],"water":{"plan":"","ifDry":"","ifWet":""},"threats":[{"threat":"","stage":"","sign":"","action":""}],"yield":{"target":"","realistic":"","note":""}},"confidence":"moderate","dataGaps":[""],"summary":""}
+{"headline":"","background":{"place":"","field":"","weather":{"outlook":"","enso":"","risks":[""]},"variety":{"found":false,"name":"","by":"","released":"","maturityDays":0,"yieldPotential":"","season":"","traits":"","caution":"","source":""}},"recommendation":{"intro":"","stages":[{"stage":"","signs":"","hint":"","fertilizer":[{"product":"","bagsPerHa":0,"purpose":""}],"observe":"","intervene":""}],"npk":{"n":0,"p":0,"k":0,"note":""},"supplies":[{"item":"","qty":0,"unit":"","when":""}],"water":{"plan":"","ifDry":"","ifWet":""},"foliars":[{"stage":"","product":"","why":""}],"threats":[{"threat":"","stage":"","sign":"","action":"","product":""}],"yield":{"target":"","realistic":"","note":""}},"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
 - headline: one line, ≤ 14 words, the season in a breath.
 - background.place: ≤ 40 words — the location, its climate zone and the season this planting falls in. background.field: ≤ 30 words — the soil, the water and the troubles in one breath, and what they ask of the protocol.
@@ -757,9 +761,10 @@ Rules for the shape:
 - recommendation.intro: ≤ 80 words — the approach for this field and aim, and the one or two things that matter most this season.
 - recommendation.stages: SIX to TEN stages in order; signs ≤ 20 words; hint = "about week N–M after transplanting/sowing" or "n/a"; fertilizer = the applications at that stage (empty list when none), each with product (e.g. "Urea 46-0-0", "Complete 14-14-14", "Ammonium sulfate 21-0-0", "Ammonium phosphate 16-20-0", "Muriate of potash 0-0-60"), bagsPerHa (a number, 50-kg bags per hectare; decimals allowed), purpose ≤ 14 words; observe ≤ 25 words or ""; intervene ≤ 30 words or "".
 - recommendation.npk: the season's kg N, P2O5 and K2O per hectare that the program adds up to, note ≤ 30 words (the LCC/MOET check if rice, or the soil-test caveat).
-- recommendation.supplies: 4–8 items to have for the whole field beyond the fertilizer (seed with kg, the one or two sprays to keep on hand by class, tools if notable), qty a number, unit, when = a stage. Quantities only.
+- recommendation.supplies: 4–8 items to have for the whole field beyond the fertilizer (seed with kg, the sprays and foliars named above to keep on hand, tools if notable), qty a number, unit, when = a stage. Quantities only.
 - recommendation.water: plan ≤ 60 words; ifDry ≤ 25 words; ifWet ≤ 25 words.
-- recommendation.threats: 3–6 items — the things most likely to go wrong here, each with the stage it strikes, the sign to act on (≤ 14 words) and the action (≤ 18 words).
+- recommendation.foliars: 0–4 items, each with the stage, the product (named as above, ending "or equivalent") and why ≤ 16 words; [] when none pays.
+- recommendation.threats: 4–7 items — the insects, diseases and weeds most likely to hurt here, each with the stage it strikes, the sign to act on (≤ 14 words), the action (≤ 18 words) and product = the spray or herbicide to use for it, named as above ending "or equivalent" ("" only for a threat that no product answers, like heat).
 - recommendation.yield: target = the farmer's target restated in {$unitWord} (or "not set"); realistic = what this variety realistically gives here, same unit; note ≤ 30 words.
 - confidence "low"/"moderate"/"high"; dataGaps at most four; summary ≤ 70 words, plain and warm but factual, ending with the reminder that the calendar is only a hint and the crop's stage is the clock.
 PROMPT;
