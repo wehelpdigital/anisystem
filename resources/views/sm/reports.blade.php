@@ -1,4 +1,6 @@
-@extends('layouts.app')
+{{-- Inside the Activities shell (?partial=1) only the body is wanted;
+     the shell already wears the header and the menus. --}}
+@extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
 @section('title', 'Reports — ' . $schedule->title)
 @section('page-title', 'Reports')

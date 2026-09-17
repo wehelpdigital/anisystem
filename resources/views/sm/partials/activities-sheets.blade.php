@@ -839,6 +839,7 @@
                 'growth' => 'plant.png',
                 'gallery' => 'gallery.png',
                 'maps' => 'location-marker.png',
+                'reports' => 'pie-chart.png',
             ];
             $modNav = [
                 ['activities', 'Activities', 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01'],
@@ -854,6 +855,7 @@
                 ['gallery', 'Gallery', 'M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM8 14l2.5-3 2 2.5L15 10l3 4'],
                 ['growth', 'Growth Stages', 'M12 21c0-4 1-7 4-9M12 21c0-5-2-8-6-9m6 9V8m0 0c0-2.5 1.5-4 4-4 0 2.5-1.5 4-4 4zm0 0C12 5.5 10.5 4 6.5 4c0 2.5 1.5 4 5.5 4z'],
                 ['weather', 'Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z'],
+                ['reports', 'Reports', 'M11 3.055A9.001 9.001 0 1020.945 13H11V3.055zM20.488 9H15V3.512A9.025 9.025 0 0120.488 9z'],
                 ['ai', 'Chat Anee', 'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5'],
             ];
             // Filtered by the same doors the shell's MODULES table answers,
@@ -869,6 +871,7 @@
                 'tags' => $may('activities'),
                 'notes' => $may('notes'),
                 'maps' => $may('maps'),
+                'reports' => $may('reports'),
                 'ai' => $may('ai'),
             ];
             $modNav = array_values(array_filter($modNav, fn ($m) => $navDoor[$m[0]] ?? true));

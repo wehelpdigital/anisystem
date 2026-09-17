@@ -4601,6 +4601,10 @@
         growth:        { label: 'Growth Stages', url: @json(route('sm.growth',       ['id' => $schedule->id])), fresh: true },
         gallery:       { label: 'Gallery',       url: @json(route('sm.gallery',      ['id' => $schedule->id])) },
         weather:       { label: 'Weather',       url: @json(route('sm.weather.page', ['id' => $schedule->id])) },
+        // fresh: the reports read the season as it stands right now.
+        @if ($may('reports'))
+        reports:       { label: 'Reports',       url: @json(route('sm.reports',      ['id' => $schedule->id])), fresh: true },
+        @endif
         @if ($may('ai'))
         ai:            { label: 'Chat Anee',     url: @json(route('sm.ai',           ['id' => $schedule->id])) },
         @endif
