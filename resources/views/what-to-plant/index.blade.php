@@ -311,16 +311,52 @@
     html.dark .wp-prio-line b { color: #a5c97e; }
 
     /* ---- from planting to harvest, against the year's risks ---- */
-    .wp-tl { position: relative; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .wp-tl-in { position: relative; min-width: 30rem; }
-    .wp-tl-bg { position: absolute; top: 0; bottom: 0; left: 6.2rem; right: 0; display: grid; grid-template-columns: repeat(12, 1fr); gap: 2px; pointer-events: none; }
+    /* Slides by finger or by mouse-drag; no scrollbar is drawn, and the last
+       row keeps clear of where one would sit. */
+    .wp-tl { position: relative; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; cursor: grab; }
+    .wp-tl::-webkit-scrollbar { display: none; }
+    .wp-tl.is-dragging { cursor: grabbing; user-select: none; }
+    .wp-tl-in { position: relative; min-width: 31rem; padding-bottom: .8rem; }
+    .wp-tl-bg { position: absolute; top: 0; bottom: .8rem; left: 7.4rem; right: 0; display: grid; grid-template-columns: repeat(12, 1fr); gap: 2px; pointer-events: none; }
     .wp-tl-bg i { display: block; border-radius: .3rem; background: rgb(74 124 42 / .07); }
     .wp-tl-bg i.is-mid { background: rgb(240 176 74 / .22); }
     .wp-tl-bg i.is-high { background: rgb(239 118 118 / .25); }
-    .wp-tl-row { position: relative; display: grid; grid-template-columns: 6.2rem repeat(12, 1fr); gap: 2px; align-items: center; min-height: 1.9rem; }
+    .wp-tl-row { position: relative; display: grid; grid-template-columns: 7.4rem repeat(12, 1fr); gap: 2px; align-items: center; min-height: 2.1rem; }
+    .wp-tl-row + .wp-tl-row { border-top: 1px solid rgb(0 0 0 / .07); }
     .wp-tl-row.is-head { min-height: 2.2rem; }
-    .wp-tl-lbl { font-size: .7rem; font-weight: 700; color: var(--color-gray-700); padding-right: .4rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .wp-tl-lbl small { display: block; font-weight: 500; font-size: .6rem; color: var(--color-gray-400); }
+    .wp-tl-row.is-head + .wp-tl-row { border-top-color: rgb(0 0 0 / .12); }
+    .wp-tl-row.is-head .wp-tl-lbl { display: block; }
+    /* The label: the rank in its own narrow column, the name beside it and
+       free to wrap, the local name and the days under it in smaller type,
+       all lined up with the name, never with the number. */
+    .wp-tl-lbl { display: flex; align-items: flex-start; gap: .3rem; padding: .3rem .45rem .3rem 0; font-size: .7rem; font-weight: 700; color: var(--color-gray-700); min-width: 0; }
+    .wp-tl-lbl .wp-tl-n { flex: none; width: 1.15rem; text-align: right; font-style: normal; font-weight: 800; color: var(--color-gray-500); line-height: 1.25; }
+    .wp-tl-lbl .wp-tl-t { flex: 1 1 auto; min-width: 0; line-height: 1.25; }
+    .wp-tl-lbl b { display: block; font-weight: 700; overflow-wrap: anywhere; }
+    .wp-tl-lbl small { display: block; font-weight: 500; font-size: .6rem; color: var(--color-gray-400); line-height: 1.3; overflow-wrap: anywhere; }
+    .wp-tl-lbl small.wp-tl-alt { font-size: .62rem; color: var(--color-gray-500); }
+    .wp-tl-bar.is-surprise { background: repeating-linear-gradient(135deg, #c9a4e8 0 6px, #b48ad9 6px 12px); }
+    .wp-tl-legend i.is-surprise { width: 1.2rem; height: .55rem; border-radius: 999px; background: repeating-linear-gradient(135deg, #c9a4e8 0 4px, #b48ad9 4px 8px); }
+    html.dark .wp-tl-row + .wp-tl-row { border-top-color: rgb(255 255 255 / .07); }
+    html.dark .wp-tl-row.is-head + .wp-tl-row { border-top-color: rgb(255 255 255 / .14); }
+    html.dark .wp-tl-lbl .wp-tl-n { color: #93a684; }
+    html.dark .wp-tl-lbl small.wp-tl-alt { color: #a8bd93; }
+
+    /* ---- surprise me: the unusual crops the ground argues for ---- */
+    .wp-sur { padding: .7rem .8rem; border-radius: .9rem; margin-bottom: .5rem; border: 1px solid #e9d5ff;
+        background: linear-gradient(120deg, #faf5ff, #f5f3ff); opacity: 0; transform: translateY(6px); transition: all .45s cubic-bezier(.22,1,.36,1); }
+    .wp-sur:last-child { margin-bottom: 0; }
+    .wtp-report.is-drawn .wp-sur { opacity: 1; transform: none; }
+    .wp-sur-top { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
+    .wp-sur-top b { font-size: .9rem; color: #4c1d95; }
+    .wp-sur-why { font-size: .8rem; color: #4b5563; line-height: 1.55; margin-top: .25rem; }
+    html.dark .wp-sur { background: linear-gradient(120deg, #1e1530, #1a1628); border-color: #3b2a5e; }
+    html.dark .wp-sur-top b { color: #d8c5f7; }
+    html.dark .wp-sur-why { color: #b7c2ad; }
+
+    /* ---- families left out: toggles, never all of them ---- */
+    .wp-left-out { font-size: .74rem; color: var(--color-gray-500); margin: -.3rem 0 .6rem; }
+    html.dark .wp-left-out { color: #93a684; }
     .wp-tl-m { text-align: center; font-size: .58rem; font-weight: 700; color: var(--color-gray-500); line-height: 1.2; }
     .wp-tl-m i { display: block; font-style: normal; font-size: .8rem; }
     .wp-tl-bar { position: relative; height: .95rem; border-radius: 999px; background: var(--color-brand-400);
@@ -337,6 +373,7 @@
     .wp-tl-legend i.is-bar { width: 1.2rem; height: .55rem; background: var(--color-brand-400); }
     .wp-tl-legend i.is-tint { border-radius: .2rem; background: rgb(240 176 74 / .35); }
     html.dark .wp-tl-lbl { color: #d5e3c5; }
+    html.dark .wp-tl-lbl b { color: #d5e3c5; }
     html.dark .wp-tl-m { color: #93a684; }
     html.dark .wp-tl-bg i { background: rgb(143 201 106 / .08); }
     html.dark .wp-tl-bg i.is-mid { background: rgb(240 176 74 / .26); }
@@ -355,7 +392,7 @@
     @media (prefers-reduced-motion: reduce) {
         .wtp-step.is-on { animation: none; }
         .wtp-run { animation: none; }
-        .wp-rec, .wp-fill, .wtp-dot, .wp-tl-bar, .wp-fit-k i::after { transition: none; transform: none; opacity: 1; }
+        .wp-rec, .wp-fill, .wtp-dot, .wp-tl-bar, .wp-fit-k i::after, .wp-sur { transition: none; transform: none; opacity: 1; }
         .wp-prio-row, .crop-row, .crop-tag { transition: none; }
         .wtp-wait, .q-body, .q-c, .q-hint, .wtp-prob { transition: none; }
     }
@@ -474,8 +511,14 @@
                 <p class="wtp-sub">Put them in your order — the top one weighs most. Anee scores every crop against it.</p>
                 <div class="wp-prio" id="wpPrio"></div>
             </section>
-            {{-- Step 10: crops the farmer has in mind -- optional, each ranked honestly --}}
+            {{-- Step 10: families the farmer would rather not plant -- never all of them --}}
             <section class="wtp-step" data-step="9">
+                <p class="wtp-q">Anything you'd rather not plant?</p>
+                <p class="wtp-sub">Optional. Leave out whole families and the ranking skips them — at least one must stay in play.</p>
+                <div class="wtp-choices" id="wpExcludes"></div>
+            </section>
+            {{-- Step 11: crops the farmer has in mind -- optional, each ranked honestly --}}
+            <section class="wtp-step" data-step="10">
                 <p class="wtp-q">Any crops you have in mind?</p>
                 <p class="wtp-sub">Optional. Each one is analysed and ranked with Anee's own picks — honestly, even if it fits poorly.</p>
                 <button type="button" class="crop-tag" id="wpCropBtn">
@@ -487,8 +530,8 @@
                 <label class="form-label mt-3" for="wpCropsOther">Others not in the book <span class="text-gray-400 font-normal">(optional)</span></label>
                 <input type="text" id="wpCropsOther" class="form-input" maxlength="160" placeholder="e.g. ampalaya, ube — separate with commas">
             </section>
-            {{-- Step 11: the decision --}}
-            <section class="wtp-step" data-step="10">
+            {{-- Step 12: the decision --}}
+            <section class="wtp-step" data-step="11">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="wpReview"></p>
                 <button type="button" class="wtp-run" id="wpRun">
@@ -570,12 +613,12 @@
     const CAT_E = { 'Grain': '🌾', 'Vegetable': '🥬', 'Root crop': '🍠', 'Legume': '🫘', 'Fruit / tree': '🌳' };
 
     let OPT = null;
-    const state = { location: '', startMonth: null, soil: null, water: null, aim: null, area: '', notes: '', problems: [], country: '', ph: 'unsure', phValue: '', waterLook: [], lay: null, elevation: null, sun: null, prevCrop: '', grewWell: '', labor: null, budget: null, market: [], priorities: [], cropsAsked: [], cropsOther: '' };
+    const state = { location: '', startMonth: null, soil: null, water: null, aim: null, area: '', notes: '', problems: [], country: '', ph: 'unsure', phValue: '', waterLook: [], lay: null, elevation: null, sun: null, prevCrop: '', grewWell: '', labor: null, budget: null, market: [], priorities: [], cropsAsked: [], cropsOther: '', exclude: [] };
     const RULES = () => (window.ANEE_REGION_RULES || {});
     const rulesFor = (code) => RULES()[code] || RULES()['*'] || {};
     const countryName = (code) => (code === 'PH' ? 'the Philippines' : (rulesFor(code).name || code || ''));
     let step = 0;
-    const STEPS = 11;
+    const STEPS = 12;
     const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const PRIO_E = { profit: '💰', survival: '🛡️', ease: '🧰', speed: '⏱️', market: '🏪', food: '🍚' };
     // One word per fit, for the little bars under each ranked crop.
@@ -617,6 +660,7 @@
         group('wpMarkets', 'market', OPT.markets, { farm: '🏠', town: '🏪', city: '🏙️', contract: '🤝' }, state.market);
         if (!state.priorities.length) state.priorities = Object.keys(OPT.priorities || {});
         paintPrio();
+        group('wpExcludes', 'exclude', OPT.families, { grain: '🌾', vegetable: '🥬', root: '🍠', legume: '🫘', tree: '🌳' }, state.exclude);
         const aimIcons = { sell: '🏪', family: '🍚', both: '⚖️' };
         $id('wpAims').innerHTML = Object.entries(OPT.aims).map(([k, label]) => `
             <button type="button" class="wtp-choice" data-aim="${k}"><span class="c-e">${aimIcons[k] || '🌱'}</span><span>${esc(label)}</span></button>`).join('');
@@ -770,7 +814,7 @@
             case 6: state.problems = [...document.querySelectorAll('#wpProbs input:checked')].map((i) => i.value); return true;
             case 7: state.area = $id('wpArea').value.trim(); state.notes = $id('wpNotes').value.trim();
                 return !!state.aim || (toast('Say what the harvest is for.', 'error'), false);
-            case 9: state.cropsOther = $id('wpCropsOther').value.trim(); return true;
+            case 10: state.cropsOther = $id('wpCropsOther').value.trim(); return true;
             default: return true;
         }
     }
@@ -782,6 +826,7 @@
             + (state.problems.length ? ` · ${state.problems.length} trouble${state.problems.length === 1 ? '' : 's'} considered` : '')
             + (() => { const n = state.cropsAsked.length + (state.cropsOther ? state.cropsOther.split(',').filter((x) => x.trim()).length : 0); return n ? ` · ${n} crop${n === 1 ? '' : 's'} of your own to rank` : ''; })()
             + (state.priorities.length ? ` · first: ${esc(shortOf((OPT.priorities || {})[state.priorities[0]] || state.priorities[0]).toLowerCase())}` : '')
+            + (state.exclude.length ? ` · leaving out ${esc(state.exclude.map((k) => shortOf((OPT.families || {})[k] || k).toLowerCase()).join(', '))}` : '')
             + (() => { const n = (state.ph && state.ph !== 'unsure' ? 1 : 0) + (state.waterLook.length ? 1 : 0) + (state.market.length ? 1 : 0) + ['lay', 'elevation', 'sun', 'labor', 'budget'].filter((k) => state[k]).length + ['prevCrop', 'grewWell'].filter((k) => state[k]).length; return n ? ` · ${n} extra signal${n === 1 ? '' : 's'}` : ''; })() + '</span>';
         $id('wpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
         $id('wpRunFine').textContent = OPT.canUse
@@ -844,6 +889,16 @@
     pickWire('wpLabors', 'labor', 'labor', null);
     pickWire('wpBudgets', 'budget', 'budget', null);
     manyWire('wpMarkets', 'market', 'market');
+    $id('wpExcludes').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-exclude]');
+        if (!b) return;
+        const k = b.getAttribute('data-exclude');
+        const all = Object.keys((OPT && OPT.families) || {});
+        if (state.exclude.includes(k)) state.exclude = state.exclude.filter((x) => x !== k);
+        else if (state.exclude.length >= all.length - 1) { toast('Keep at least one family in play.', 'error'); return; }
+        else state.exclude = [...state.exclude, k];
+        document.querySelectorAll('#wpExcludes .wtp-choice').forEach((c) => c.classList.toggle('is-on', state.exclude.includes(c.getAttribute('data-exclude'))));
+    });
     // A tested pH can be typed once the farmer says the soil is anything but "not sure".
     $id('wpPhs').addEventListener('click', () => { $id('wpPhIn').hidden = state.ph === 'unsure'; if (state.ph === 'unsure') $id('wpPhValue').value = ''; });
     $id('wpProbs').addEventListener('change', (e) => {
@@ -866,7 +921,7 @@
                 problems: state.problems, country: state.country,
                 ph: state.ph, phValue: state.phValue || null, waterLook: state.waterLook, lay: state.lay, elevation: state.elevation, sun: state.sun,
                 prevCrop: state.prevCrop, grewWell: state.grewWell, labor: state.labor, budget: state.budget, market: state.market,
-                priorities: state.priorities, cropsAsked: state.cropsAsked, cropsOther: state.cropsOther,
+                priorities: state.priorities, cropsAsked: state.cropsAsked, cropsOther: state.cropsOther, exclude: state.exclude,
             } });
             let data = res.data;
             if (data.pending) {
@@ -941,8 +996,11 @@
        by the worst of storm/flood/drought/heat/frost that month. The year
        starts at the farmer's start month so it reads left to right. */
     function timeline(r, p) {
-        const rows = (r.recommendations || []).filter((x) => x.plantMonth && x.harvestMonth);
+        // The ranked crops, then the surprises, each drawn only when it has months.
+        const rows = [...(r.recommendations || []), ...(r.surprises || []).map((x) => ({ ...x, surprise: true }))].filter((x) => x.plantMonth && x.harvestMonth);
         if (!rows.length) return '';
+        // "Mungbean (Monggo)" → the name, and the local name for a smaller line under it.
+        const nameOf = (crop) => { const m = String(crop || '').match(/^(.*?)\s*(\([^()]*\))\s*$/); return m ? [m[1], m[2]] : [String(crop || ''), '']; };
         const start = Number(String(p.startMonth || '').split('-')[1]) || rows[0].plantMonth || 1;
         const col = (m) => ((Number(m) - start) % 12 + 12) % 12; // 0..11 from the start month
         const mr = {};
@@ -957,8 +1015,8 @@
                     <div class="wp-tl-row is-head"><span class="wp-tl-lbl">Crop<small>plant › harvest</small></span>${months.map((m) => { const [k, v] = worst(m); return `<span class="wp-tl-m"><i>${v >= 30 ? riskIcon(k) : ''}</i>${esc(MONTHS[m - 1])}</span>`; }).join('')}</div>
                     ${rows.map((x) => { const a = col(x.plantMonth); let span = col(x.harvestMonth) - a + 1; const more = span <= 0 || (Number(x.daysToHarvest) || 0) > 365; if (span <= 0) span = 12 - a; const rk = x.harvestRisk || {}; return `
                     <div class="wp-tl-row">
-                        <span class="wp-tl-lbl" title="${esc(x.crop || '')}">${esc(String(x.rank || ''))}. ${esc(x.crop || '')}<small>${x.daysToHarvest ? '~' + esc(String(Math.round(Number(x.daysToHarvest)))) + ' d' : ''}${x.farmerAsked ? ' · you asked' : ''}</small></span>
-                        <span class="wp-tl-bar${x.farmerAsked ? ' is-asked' : ''}${more ? ' is-more' : ''}" style="grid-column:${a + 2} / span ${span}" title="${esc(x.crop || '')}: plant ${esc(MONTHS[Number(x.plantMonth) - 1] || '')}, harvest ${esc(MONTHS[Number(x.harvestMonth) - 1] || '')}${rk.note ? ' — ' + esc(rk.note) : ''}">${rk.score != null && !more ? `<i class="wp-tl-dot is-${riskBand(rk.score)}"></i>` : ''}</span>
+                        <span class="wp-tl-lbl" title="${esc(x.crop || '')}"><i class="wp-tl-n">${x.surprise ? '🎁' : esc(String(x.rank || '')) + '.'}</i><span class="wp-tl-t"><b>${esc(nameOf(x.crop)[0])}</b>${nameOf(x.crop)[1] ? `<small class="wp-tl-alt">${esc(nameOf(x.crop)[1])}</small>` : ''}<small>${x.daysToHarvest ? '~' + esc(String(Math.round(Number(x.daysToHarvest)))) + ' d' : ''}${x.farmerAsked ? ' · you asked' : ''}${x.surprise ? ' · surprise' : ''}</small></span></span>
+                        <span class="wp-tl-bar${x.farmerAsked ? ' is-asked' : ''}${x.surprise ? ' is-surprise' : ''}${more ? ' is-more' : ''}" style="grid-column:${a + 2} / span ${span}" title="${esc(x.crop || '')}: plant ${esc(MONTHS[Number(x.plantMonth) - 1] || '')}, harvest ${esc(MONTHS[Number(x.harvestMonth) - 1] || '')}${rk.note ? ' — ' + esc(rk.note) : ''}">${rk.score != null && !more ? `<i class="wp-tl-dot is-${riskBand(rk.score)}"></i>` : ''}</span>
                     </div>`; }).join('')}
                 </div></div>
                 <div class="wp-tl-legend">
@@ -966,10 +1024,24 @@
                     <span><i class="wp-tl-dot is-low" style="position:static;transform:none"></i> harvest, calm</span>
                     <span><i class="wp-tl-dot is-mid" style="position:static;transform:none"></i> some risk</span>
                     <span><i class="wp-tl-dot is-high" style="position:static;transform:none"></i> risky harvest</span>
+                    ${(r.surprises || []).some((x) => x.plantMonth && x.harvestMonth) ? `<span><i class="is-surprise"></i> a surprise</span>` : ''}
                     <span><i class="is-tint"></i> a month the region's storms, floods, drought, heat or frost usually hit</span>
                 </div>
             </div>`;
     }
+
+    /* The chart slides under a mouse too: press, drag, let go. */
+    document.addEventListener('pointerdown', (e) => {
+        if (e.pointerType !== 'mouse' || e.button !== 0) return;
+        const box = e.target.closest('.wp-tl');
+        if (!box || box.scrollWidth <= box.clientWidth) return;
+        const x0 = e.clientX, left0 = box.scrollLeft;
+        let moved = false;
+        const move = (ev) => { const dx = ev.clientX - x0; if (Math.abs(dx) > 3) { moved = true; box.classList.add('is-dragging'); } box.scrollLeft = left0 - dx; };
+        const up = () => { document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', up); box.classList.remove('is-dragging'); if (moved) { const eat = (ev) => { ev.stopPropagation(); ev.preventDefault(); }; box.addEventListener('click', eat, { capture: true, once: true }); setTimeout(() => box.removeEventListener('click', eat, { capture: true }), 0); } };
+        document.addEventListener('pointermove', move);
+        document.addEventListener('pointerup', up);
+    });
 
     /* ---------------- the report, drawn ---------------- */
     function drawReport(host, item, mode, quiet) {
@@ -1001,6 +1073,7 @@
             <div class="wtp-card">
                 <h3>The ranking, best first</h3>
                 ${prio.length ? `<p class="wp-prio-line">Scored for what matters to you, most first: ${prio.map((k, i) => `${i ? ' › ' : ''}<b>${PRIO_E[k] || ''} ${esc(shortOf((OPT && OPT.priorities && OPT.priorities[k]) || k))}</b>`).join('')}</p>` : ''}
+                ${Array.isArray(p.exclude) && p.exclude.length ? `<p class="wp-left-out">Left out at your request: ${esc(p.exclude.map((k) => shortOf((OPT && OPT.families && OPT.families[k]) || k)).join(', '))}.</p>` : ''}
                 ${(r.recommendations || []).map((x, i) => `
                     <div class="wp-rec" style="transition-delay:${i * 70}ms">
                         <div class="wp-rec-top">
@@ -1022,6 +1095,27 @@
                         ${x.fit && prio.length ? `<div class="wp-fit">${prio.map((k) => `<span class="wp-fit-k" title="${esc(shortOf((OPT && OPT.priorities && OPT.priorities[k]) || k))}: ${esc(String(Math.round(Number(x.fit[k]) || 0)))}/100"><i style="--v:${Math.max(0, Math.min(100, Number(x.fit[k]) || 0))}%"></i><small>${PRIO_E[k] || ''} ${esc(PRIO_SHORT[k] || shortOf((OPT && OPT.priorities && OPT.priorities[k]) || k))}</small><b>${esc(String(Math.round(Number(x.fit[k]) || 0)))}</b></span>`).join('')}</div>` : ''}
                     </div>`).join('')}
             </div>
+
+            ${(r.surprises || []).length ? `
+            <div class="wtp-card">
+                <h3>🎁 Surprise me</h3>
+                <p class="wp-prio-line">Not what this place usually plants — but your ground, the climate and what matters to you argue for them.</p>
+                ${(r.surprises || []).map((x, i) => `
+                    <div class="wp-sur" style="transition-delay:${i * 80}ms">
+                        <div class="wp-sur-top">
+                            <b>${esc(CAT_E[x.category] || '✨')} ${esc(x.crop || '')}</b>
+                            <span class="wp-cat">${esc(x.category || '')}</span>
+                            ${x.window ? `<span class="wp-win">${esc(x.window)}</span>` : ''}
+                        </div>
+                        <p class="wp-sur-why">${esc(sweep(x.why))}</p>
+                        ${x.daysToHarvest || (x.harvestRisk && x.harvestRisk.score != null) ? `
+                        <div class="wp-hv">
+                            ${x.daysToHarvest ? `<span>⏱ Harvest in ~${esc(String(Math.round(Number(x.daysToHarvest))))} days${x.harvestWindow ? ' · ' + esc(x.harvestWindow) : ''}</span>` : ''}
+                            ${x.harvestRisk && x.harvestRisk.score != null ? `<span class="wp-hr is-${riskBand(x.harvestRisk.score)}">${riskIcon(x.harvestRisk.kind)} ${riskWord(x.harvestRisk.score)} harvest-day risk${x.harvestRisk.kind && x.harvestRisk.kind !== 'none' ? ' · ' + esc(x.harvestRisk.kind) : ''}</span>` : ''}
+                        </div>
+                        ${x.harvestRisk && x.harvestRisk.note ? `<p class="wp-hr-note">${esc(sweep(x.harvestRisk.note))}</p>` : ''}` : ''}
+                    </div>`).join('')}
+            </div>` : ''}
 
             ${timeline(r, p)}
 
