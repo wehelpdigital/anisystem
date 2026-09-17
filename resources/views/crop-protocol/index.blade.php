@@ -308,15 +308,18 @@
     .cp2-d-obs .is-obs { background: #e6f2d8; color: #2f5219; }
     .cp2-d-obs .is-act { background: #fff1e6; color: #9a3412; }
     .cp2-d-obs p { margin: 0; }
+    /* Every grid here is one bounded column: a track that may grow to its
+       content is how a long row pushed the whole report sideways. */
+    .cp2-rows, .cp2-tot, .cp2-bg, .cp2-shop, .cp2-d-fert { grid-template-columns: minmax(0, 1fr); }
     .cp2-rows { display: grid; gap: .25rem; margin-top: .6rem; }
-    .cp2-row { display: flex; align-items: center; gap: .6rem; width: 100%; text-align: left; border: 0; background: transparent; padding: .45rem .5rem; border-radius: .7rem; cursor: pointer; font: inherit; color: var(--color-gray-700); transition: background .2s; }
+    .cp2-row { display: flex; align-items: center; gap: .6rem; width: 100%; min-width: 0; max-width: 100%; text-align: left; border: 0; background: transparent; padding: .45rem .5rem; border-radius: .7rem; cursor: pointer; font: inherit; color: var(--color-gray-700); transition: background .2s; }
     .cp2-row:hover { background: var(--color-gray-50); }
     .cp2-row.is-sel { background: var(--color-brand-50); }
     .cp2-row-n { flex: none; width: 1.5rem; height: 1.5rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800; background: var(--color-brand-100); color: var(--color-brand-800); }
     .cp2-row.is-sel .cp2-row-n { background: #3d6823; color: #fff; }
     .cp2-row-t { flex: 1 1 auto; min-width: 0; }
     .cp2-row-t b { display: block; font-size: .82rem; color: var(--color-gray-900); }
-    .cp2-row-t small { display: block; font-size: .68rem; color: var(--color-gray-400); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cp2-row-t small { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-size: .68rem; line-height: 1.35; color: var(--color-gray-400); }
     .cp2-row-b { flex: none; font-size: .74rem; font-weight: 800; color: var(--color-brand-800); }
     /* totals */
     .cp2-tot { display: grid; gap: .5rem; }
@@ -335,7 +338,26 @@
     .cp2-npk small { flex-basis: 100%; font-size: .68rem; color: var(--color-gray-400); }
     .cp2-shop { margin-top: .7rem; }
     .cp2-threats { display: grid; gap: .5rem; }
-    @media (min-width: 640px) { .cp2-threats { grid-template-columns: 1fr 1fr; } }
+    .cp2-threats { grid-template-columns: minmax(0, 1fr); }
+    @media (min-width: 640px) { .cp2-threats { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+    .cp2-threat p.is-prod { color: var(--color-brand-800); }
+    .cp2-threat p.is-prod em { color: var(--color-brand-700); }
+    html.dark .cp2-threat p.is-prod { color: #a5c97e; }
+    .cp2-foliars { display: grid; grid-template-columns: minmax(0, 1fr); gap: .45rem; }
+    .cp2-foliar { display: flex; gap: .6rem; align-items: flex-start; padding: .6rem .7rem; border-radius: .8rem; background: #f4faee; border: 1px solid #cfe3bd; }
+    .cp2-foliar .e { flex: none; font-size: 1.1rem; }
+    .cp2-foliar b { display: block; font-size: .82rem; color: var(--color-gray-900); }
+    .cp2-foliar small { display: block; font-size: .66rem; font-weight: 700; color: var(--color-brand-700); text-transform: uppercase; letter-spacing: .04em; }
+    .cp2-foliar p { font-size: .76rem; color: var(--color-gray-600); line-height: 1.45; margin-top: .1rem; }
+    html.dark .cp2-foliar { background: rgb(107 159 61 / .1); border-color: #2f4d24; }
+    html.dark .cp2-foliar b { color: #e8efe1; }
+    html.dark .cp2-foliar small { color: #a5c97e; }
+    html.dark .cp2-foliar p { color: #b7c2ad; }
+    .cp2-d-fol { display: flex; gap: .5rem; align-items: flex-start; margin-top: .5rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-700); }
+    .cp2-d-fol span { flex: none; font-size: .66rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: .18rem .5rem; border-radius: 999px; margin-top: .1rem; background: #e0f2fe; color: #075985; }
+    .cp2-d-fol p { margin: 0; }
+    html.dark .cp2-d-fol { color: #b7c2ad; }
+    html.dark .cp2-d-fol span { background: #0c2a3a; color: #7dd3fc; }
     .cp2-threat { padding: .6rem .7rem; border-radius: .8rem; background: #fff7ed; border: 1px solid #fed7aa; }
     .cp2-threat .tag { display: inline-block; font-size: .62rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #9a3412; margin-bottom: .15rem; }
     .cp2-threat b { display: block; font-size: .84rem; color: var(--color-gray-900); }
@@ -1108,6 +1130,8 @@
         const npk = rec.npk || {};
         const water = rec.water || {};
         const firstFert = Math.max(0, stages.findIndex((st) => (st.fertilizer || []).length));
+        const norm = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+        const sameStage = (a, b) => { const x = norm(a), y = norm(b); return !!x && !!y && (x === y || x.includes(y) || y.includes(x)); };
 
         hostEl.innerHTML = `
             <div class="wtp-hero">
@@ -1185,7 +1209,15 @@
             <div class="wtp-card">
                 <h3>Threats to check <small>the sign to act on, and the action</small></h3>
                 <div class="cp2-threats">
-                    ${(rec.threats || []).map((t) => `<div class="cp2-threat"><span class="tag">${esc(t.stage || '')}</span><b>${esc(t.threat || '')}</b>${t.sign ? `<p><em>Look for:</em> ${esc(sweep(t.sign))}</p>` : ''}${t.action ? `<p><em>Then:</em> ${esc(sweep(t.action))}</p>` : ''}</div>`).join('')}
+                    ${(rec.threats || []).map((t) => `<div class="cp2-threat"><span class="tag">${esc(t.stage || '')}</span><b>${esc(t.threat || '')}</b>${t.sign ? `<p><em>Look for:</em> ${esc(sweep(t.sign))}</p>` : ''}${t.action ? `<p><em>Then:</em> ${esc(sweep(t.action))}</p>` : ''}${t.product ? `<p class="is-prod"><em>Use:</em> ${esc(sweep(t.product))}</p>` : ''}</div>`).join('')}
+                </div>
+            </div>` : ''}
+
+            ${(rec.foliars || []).length ? `
+            <div class="wtp-card">
+                <h3>Foliar sprays <small>only where they pay on this ground</small></h3>
+                <div class="cp2-foliars">
+                    ${(rec.foliars || []).map((f) => `<div class="cp2-foliar"><span class="e">🍃</span><div><small>${esc(f.stage || '')}</small><b>${esc(f.product || '')}</b>${f.why ? `<p>${esc(sweep(f.why))}</p>` : ''}</div></div>`).join('')}
                 </div>
             </div>` : ''}
 
@@ -1238,7 +1270,8 @@
                         ${st.signs ? `<p class="cp2-d-signs">👁️ ${esc(sweep(st.signs))}</p>` : ''}
                         ${(st.fertilizer || []).length ? `<div class="cp2-d-fert">${(st.fertilizer || []).map((x) => `<div class="cp2-d-app"><i style="background:${colour(x.product || 'Fertilizer')}"></i><span><b>${esc(trimN(x.totalBags))} ${Number(x.totalBags) === 1 ? 'bag' : 'bags'} ${esc(x.product || '')}</b> <small>(${esc(trimN(x.bagsPerHa))}/ha)</small>${x.purpose ? `<em>${esc(sweep(x.purpose))}</em>` : ''}</span></div>`).join('')}</div>` : `<p class="cp2-dim">No fertilizer at this stage.</p>`}
                         ${st.observe ? `<div class="cp2-d-obs"><span class="is-obs">🔎 Observe</span><p>${esc(sweep(st.observe))}</p></div>` : ''}
-                        ${st.intervene ? `<div class="cp2-d-obs"><span class="is-act">🛠️ Intervene</span><p>${esc(sweep(st.intervene))}</p></div>` : ''}`;
+                        ${st.intervene ? `<div class="cp2-d-obs"><span class="is-act">🛠️ Intervene</span><p>${esc(sweep(st.intervene))}</p></div>` : ''}
+                        ${(rec.foliars || []).filter((f) => sameStage(f.stage, st.stage)).map((f) => `<div class="cp2-d-fol"><span>🍃 Foliar</span><p><b>${esc(f.product || '')}</b>${f.why ? ' — ' + esc(sweep(f.why)) : ''}</p></div>`).join('')}`;
                     d.classList.remove('is-swap');
                 }, d.innerHTML ? 140 : 0);
             };
