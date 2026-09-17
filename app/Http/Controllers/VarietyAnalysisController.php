@@ -55,6 +55,9 @@ class VarietyAnalysisController extends Controller
 
     public const SOILS = WhatToPlantController::SOILS;
 
+    /** The lay of the land — a variety bred for the lowland is not the highland's. */
+    public const ELEVATIONS = WhatToPlantController::ELEVATIONS;
+
     /** The ground's troubles, the sister's list plus the two the soil matters most to. */
     public const PROBLEMS = [
         'drought' => 'Dries out / water runs short mid-season',
@@ -108,6 +111,11 @@ class VarietyAnalysisController extends Controller
                 'perennial' => CropCatalog::isPerennial($key),
             ])->values(),
             'soils' => self::SOILS,
+            'elevations' => self::ELEVATIONS,
+            'seasons' => \App\Support\Region::seasons(),
+            // The farmer's own country: the field is there unless they say otherwise.
+            'country' => \App\Support\Region::code(),
+            'years' => range((int) now('Asia/Manila')->format('Y'), (int) now('Asia/Manila')->format('Y') + 2),
             'problems' => self::PROBLEMS,
             'priorities' => self::PRIORITIES,
             'weights' => self::WEIGHTS,
@@ -134,9 +142,17 @@ class VarietyAnalysisController extends Controller
             return $this->json(false, 'The analysis needs the AI Technician (Boss or Lifetime plan).', [], 403);
         }
 
+        // The seasons on offer are the FIELD's country's, not the farmer's.
+        $fieldCountry = \App\Support\Region::valid($request->input('country')) ?: \App\Support\Region::code();
+        $seasonKeys = array_keys(\App\Support\Region::as($fieldCountry, fn () => \App\Support\Region::seasons()));
+        $thisYear = (int) now('Asia/Manila')->format('Y');
         $v = Validator::make($request->all(), [
             'location' => 'required|string|max:160',
+            'country' => 'nullable|string|size:2',
+            'year' => 'required|integer|min:' . $thisYear . '|max:' . ($thisYear + 2),
+            'season' => 'required|in:' . implode(',', $seasonKeys),
             'soil' => 'required|in:' . implode(',', array_keys(self::SOILS)),
+            'elevation' => 'nullable|in:' . implode(',', array_keys(self::ELEVATIONS)),
             'crop' => 'required|in:' . implode(',', array_keys(CropCatalog::CROPS)),
             'varieties' => 'nullable|array|max:8',
             'varieties.*' => 'string|max:60',
@@ -169,8 +185,11 @@ class VarietyAnalysisController extends Controller
         }
 
         $p = $this->params($request);
+        // A field in another country than the farmer's: Anee is told so in
+        // her own instructions, or she declines for being "set up" at home.
+        $settings = $settings->forField($p['country']);
         $crop = CropCatalog::CROPS[$p['crop']];
-        $title = 'Varieties · ' . $crop['label'] . ' · ' . $p['location'];
+        $title = 'Varieties · ' . $crop['label'] . ' · ' . \App\Support\Region::seasonTitle($p['season'], (int) $p['year'], $p['country']) . ' · ' . $p['location'];
         $id = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(),
             'kind' => 'variety',
@@ -222,8 +241,17 @@ class VarietyAnalysisController extends Controller
     /** The model call — with the web open — and the charge, off the request's clock. */
     private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, array $p): void
     {
+        /* The heartbeat: before every call to the model the row says which
+         * phase it is in and touches updated_at, so the page can show a
+         * live line and jobState can tell a killed job from a slow one. */
+        $beat = function (string $phase, int $try = 1) use ($id): void {
+            DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
+                'report' => json_encode(['phase' => $phase, 'try' => $try]),
+                'updated_at' => now(),
+            ]);
+        };
         try {
-            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 6000, fn (string $t) => $this->parseReport($t));
+            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 6000, fn (string $t) => $this->parseReport($t), $beat);
             $report = $result['data'];
             if ($report === null) {
                 \Illuminate\Support\Facades\Log::warning('variety-analysis: unparsable answer', [
@@ -316,6 +344,22 @@ class VarietyAnalysisController extends Controller
         return $report;
     }
 
+    /**
+     * A pending row is dead when its heart has not beaten for longer than
+     * any one call to the model may take (the document timeout plus a
+     * generous minute), or when it is simply too old. Killed processes
+     * write nothing, so this is the only way to tell — and the only way a
+     * job that finished late is never mistaken for one that hung.
+     */
+    private function dead(object $r): bool
+    {
+        $beatAt = \Illuminate\Support\Carbon::parse($r->updated_at ?: $r->created_at);
+        $quiet = \App\Services\AiClient::TIMEOUT_DOCUMENT + 60;
+
+        return $beatAt->lt(now()->subSeconds($quiet))
+            || \Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(20));
+    }
+
     /** Where a job stands — polled by the page until ready or failed. */
     public function jobState(int $id)
     {
@@ -325,19 +369,28 @@ class VarietyAnalysisController extends Controller
             return $this->json(false, 'That analysis is gone.', [], 404);
         }
         if ($r->status === 'pending') {
-            // A job nobody has heard from in a quarter of an hour is not
-            // coming: say so, rather than polling it for ever.
-            if (\Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(15))) {
-                DB::table('as_plant_analyses')->where('id', $id)->update([
+            if ($this->dead($r)) {
+                $why = \Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(20))
+                    ? 'The research took too long and was stopped. Nothing was charged — please try again.'
+                    : 'The research was interrupted mid-way (the server restarted under it). Nothing was charged — please run it again.';
+                DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
                     'status' => 'failed', 'deleteStatus' => 0,
-                    'error' => 'The research took too long and was stopped. Nothing was charged — please try again.',
+                    'error' => $why,
                     'updated_at' => now(),
                 ]);
 
-                return $this->json(false, 'The research took too long and was stopped. Nothing was charged — please try again.', ['status' => 'failed'], 502);
+                return $this->json(false, $why, ['status' => 'failed'], 502);
             }
+            $beat = json_decode((string) $r->report, true) ?: [];
 
-            return $this->json(true, 'Working…', ['pending' => true, 'id' => (int) $r->id, 'status' => 'pending']);
+            return $this->json(true, 'Working…', [
+                'pending' => true, 'id' => (int) $r->id, 'status' => 'pending',
+                'phase' => (string) ($beat['phase'] ?? 'start'),
+                'try' => (int) ($beat['try'] ?? 1),
+                'since' => (int) max(0, now()->diffInSeconds(\Illuminate\Support\Carbon::parse($r->created_at), true)),
+                // Seconds since the job last spoke: the page's own hang check.
+                'beatAgo' => (int) max(0, now()->diffInSeconds(\Illuminate\Support\Carbon::parse($r->updated_at ?: $r->created_at), true)),
+            ]);
         }
         if ($r->status === 'failed') {
             DB::table('as_plant_analyses')->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
@@ -404,8 +457,10 @@ class VarietyAnalysisController extends Controller
         $top = $report['topPick'] ?? [];
         $text = "\n\n--- ATTACHED: Variety research (the farmer generated this earlier; treat it as shared context) ---\n"
             . 'Case: ' . $r->title . "\n"
-            . 'Ground: soil ' . (self::SOILS[$params['soil'] ?? ''] ?? '') . '; troubles: '
-            . (collect($params['problems'] ?? [])->map(fn ($k) => self::PROBLEMS[$k] ?? $k)->implode('; ') ?: 'none') . "\n"
+            . 'Ground: soil ' . (self::SOILS[$params['soil'] ?? ''] ?? '')
+            . (! empty($params['elevation']) ? '; the land ' . (self::ELEVATIONS[$params['elevation']] ?? $params['elevation']) : '')
+            . '; troubles: ' . (collect($params['problems'] ?? [])->map(fn ($k) => self::PROBLEMS[$k] ?? $k)->implode('; ') ?: 'none') . "\n"
+            . (! empty($params['season']) ? 'Planned for: ' . \App\Support\Region::seasonTitle($params['season'], (int) ($params['year'] ?? now('Asia/Manila')->year), $params['country'] ?? null) . "\n" : '')
             . 'Priorities, most important first: ' . $order . "\n"
             . 'Top pick: ' . ($top['variety'] ?? '') . ($top['by'] ?? null ? ' (' . $top['by'] . ')' : '') . ' — ' . ($top['why'] ?? '') . "\n"
             . 'Ranked: ' . collect($report['ranking'] ?? [])->map(fn ($x) => ($x['rank'] ?? '') . '. ' . ($x['variety'] ?? '')
@@ -470,7 +525,11 @@ class VarietyAnalysisController extends Controller
 
         return [
             'location' => trim((string) $request->input('location')),
+            'country' => \App\Support\Region::valid($request->input('country')) ?: \App\Support\Region::code(),
+            'year' => (int) $request->input('year'),
+            'season' => (string) $request->input('season'),
             'soil' => (string) $request->input('soil'),
+            'elevation' => array_key_exists((string) $request->input('elevation'), self::ELEVATIONS) ? (string) $request->input('elevation') : null,
             'crop' => (string) $request->input('crop'),
             'varieties' => $varieties,
             'priorities' => array_values((array) $request->input('priorities')),
@@ -510,13 +569,19 @@ class VarietyAnalysisController extends Controller
         $soil = self::SOILS[$p['soil']] ?? $p['soil'];
         $problems = collect($p['problems'])->map(fn ($k) => self::PROBLEMS[$k] ?? $k)->implode('; ') ?: 'none reported';
 
-        $countryName = \App\Support\Region::name();
-        $seeds = \App\Support\Region::agency('seeds');
-        $met = \App\Support\Region::agency('met');
-        $sources = \App\Support\Region::agency('sources');
+        // The FIELD's country, which may not be the farmer's: its agencies,
+        // its seed houses, its seasons; the language stays the farmer's.
+        $fc = $p['country'] ?? \App\Support\Region::code();
+        $fieldPH = $fc === \App\Support\Region::HOME;
+        $countryName = \App\Support\Region::name($fc);
+        $seeds = \App\Support\Region::as($fc, fn () => \App\Support\Region::agency('seeds'));
+        $met = \App\Support\Region::as($fc, fn () => \App\Support\Region::agency('met'));
+        $sources = \App\Support\Region::as($fc, fn () => \App\Support\Region::agency('sources'));
         $cropLabel = CropCatalog::label($p['crop']);
-        $regionLine = \App\Support\Region::promptBlock();
-        $hybridHouses = \App\Support\Region::ph()
+        $regionLine = \App\Support\Region::promptBlock($fc, \App\Support\Region::code());
+        $plan = ! empty($p['season']) ? \App\Support\Region::as($fc, fn () => \App\Support\Region::seasonWords($p['season'], (int) ($p['year'] ?: $year))) : 'not stated';
+        $land = self::ELEVATIONS[$p['elevation'] ?? ''] ?? 'not stated';
+        $hybridHouses = $fieldPH
             ? '(for rice: SL Agritech / SL-8H and its line, Bayer Arize, Syngenta, Corteva-Pioneer, Bioseed, Longping High-Tech; for corn: Pioneer, Bayer-Dekalb, Syngenta NK, Bioseed; for vegetables: East-West Seed, Allied Botanical, Known-You, Condor, Ramgo — whichever apply to this crop), and the NSIC-registered public hybrids (e.g. Mestiso / Mestizo lines for rice)'
             : '(the top seed companies and public breeding programs actually selling this crop in ' . $countryName . ' — name them from what you find, never from memory)';
 
@@ -525,15 +590,16 @@ You are a research assistant for agronomy in {$countryName} with web search. SEA
 
 THE CASE
 - Crop: {$cropLabel}
-- Field: {$p['location']}; soil: {$soil}; troubles: {$problems}
+- Field: {$p['location']}; soil: {$soil}; the land: {$land}; troubles: {$problems}
+- When the farmer plans to plant: {$plan}
 - Varieties the farmer named: {$named}
 
 FIND, IN THIS ORDER
 1. The newest {$cropLabel} varieties registered or released in {$countryName} ({$seeds}) in {$year}, {$year}-1 and {$year}-2: name, breeder or company, year, what it was bred for.
 2. For each of the farmer's named varieties AND for 4–6 top-yielding released INBRED or open-pollinated varieties suited to this soil and these troubles: documented yield (trial or published figure, with unit and source), days to maturity, pest and disease resistance ratings, stress tolerance (drought, submergence, salinity, heat, acidity, alkalinity, lodging), grain or fruit quality notes, and any regional trial results in or near the farmer's region.
 2b. The same for 3–5 HYBRID varieties of {$cropLabel} sold in {$countryName} by the top seed companies {$hybridHouses}: yield, maturity, resistance, seed cost and availability per hectare where published, and whether the seed must be bought fresh each season.
-3. The seasonal climate outlook from {$met} for the farmer's region for the coming months (rainfall, ENSO state, severe-weather expectation).
-4. Anything published about which of these varieties do well or poorly on this soil type and with these troubles.
+3. The seasonal climate outlook from {$met} for the farmer's region for the PLANTING SEASON named above (rainfall, ENSO state, severe-weather expectation across the months the crop will stand in the field).
+4. Anything published about which of these varieties do well or poorly on this soil type, at this elevation, in this season and with these troubles — which are bred for the wet season and which for the dry, which stand the highland's cool nights or the lowland's heat.
 
 Prefer {$sources}. Where a variety cannot be found online, say so plainly. Write plain prose notes under the four headings, at most 900 words, no JSON, no markdown tables.
 PROMPT;
@@ -553,16 +619,21 @@ PROMPT;
         $orderText = implode('; ', $order);
         $given = $p['varieties']
             ? 'The farmer is weighing these: ' . implode(', ', $p['varieties']) . '. Assess EVERY one of them (in givenVarieties), and put those that fit in the ranking; add the top-yielding released varieties for these conditions that the farmer did not name — inbred/open-pollinated AND hybrid — so the ranking has 6–9 in all.'
-            : 'The farmer has not named any. Choose them yourself: 4–5 top-yielding released INBRED / open-pollinated varieties AND 3–4 HYBRID varieties from the top seed companies selling in ' . \App\Support\Region::name() . ', for these conditions — 7–9 in all, every one with its type filled in.';
+            : 'The farmer has not named any. Choose them yourself: 4–5 top-yielding released INBRED / open-pollinated varieties AND 3–4 HYBRID varieties from the top seed companies selling in ' . \App\Support\Region::name($p['country'] ?? null) . ', for these conditions — 7–9 in all, every one with its type filled in.';
         $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
         $forecast = $this->forecastLines($p['location']);
         $year = now('Asia/Manila')->year;
 
-        $countryName = \App\Support\Region::name();
-        $regionBlock = \App\Support\Region::promptBlock();
+        // The FIELD's country, which may not be the farmer's.
+        $fc = $p['country'] ?? \App\Support\Region::code();
+        $fieldPH = $fc === \App\Support\Region::HOME;
+        $countryName = \App\Support\Region::name($fc);
+        $regionBlock = \App\Support\Region::promptBlock($fc, \App\Support\Region::code());
         $cropLabel = CropCatalog::label($p['crop']);
-        $climateHint = \App\Support\Region::ph() ? 'wet/dry timing, typhoon seasonality' : 'frost dates, growing-season length, rainfall and heat timing, the severe-weather season';
+        $climateHint = $fieldPH ? 'wet/dry timing, typhoon seasonality' : 'frost dates, growing-season length, rainfall and heat timing, the severe-weather season';
+        $plan = ! empty($p['season']) ? \App\Support\Region::as($fc, fn () => \App\Support\Region::seasonWords($p['season'], (int) ($p['year'] ?: $year))) : 'not stated';
+        $land = self::ELEVATIONS[$p['elevation'] ?? ''] ?? 'not stated';
 
         return <<<PROMPT
 You are an agronomic decision-support analyst for farming in {$countryName}, with web search available. The farmer asks WHICH VARIETY of {$cropLabel} to plant on the ground described below. Research and compare varieties, score each on four criteria, and rank them by the farmer's own priorities.
@@ -571,6 +642,8 @@ FACTS GIVEN
 - {$regionBlock}
 - Location as the farmer wrote it: {$p['location']}
 - Crop: {$cropLabel}
+- When the farmer plans to plant: {$plan}
+- The lay of the land: {$land}
 - Soil, as the farmer describes it: {$soil}
 - Field troubles the farmer reports: {$problems}
 - The farmer's priorities, most important first: {$orderText}
@@ -583,6 +656,7 @@ Research notes gathered from the web just now follow at the end of this brief (t
 
 GROUND RULES
 - Reason from what you found and from established agronomy: the soil-water behaviour implied by the described soil and troubles, the region's climate ({$climateHint}) and the outlook above, each variety's documented traits. No invented yields; a yield figure must be a trial or published figure with its source.
+- THE SEASON AND THE LAND decide as much as the soil: a variety bred for the wet season is not the dry season's, an early one dodges the season's hazard (the typhoon peak, the late heat, the first frost) that a late one meets at flowering or harvest, and the highland's cool nights and the lowland's heat each rule varieties out. Score for the planting season and the elevation named, and say so in the why where they decided it.
 - Score each variety 0–100 on each criterion FOR THESE CONDITIONS: yield (documented yield potential here), protection (pest/disease resistance and stress tolerance relevant to the reported troubles), survival (establishment and hardiness through this ground's stresses), quickness (earliness — fewer days to maturity scores higher).
 - Be scientific and neutral: name the breeder or seed company as a fact, never as a recommendation to buy; no marketing tone.
 - Write every "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.

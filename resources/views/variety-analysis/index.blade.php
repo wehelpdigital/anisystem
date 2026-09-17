@@ -69,6 +69,8 @@
     .wtp-sub { font-size: .8rem; color: var(--color-gray-500); margin-bottom: .8rem; }
 
     .wtp-choices { display: grid; gap: .5rem; }
+    .wtp-choices.is-two { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 639px) { .wtp-choices.is-two { grid-template-columns: 1fr; } }
     .wtp-choice { display: flex; align-items: center; gap: .7rem; padding: .75rem .85rem; border-radius: .9rem;
         border: 1.5px solid var(--color-gray-200); background: var(--color-white); cursor: pointer;
         text-align: left; font-weight: 700; color: var(--color-gray-800); font-size: .9rem;
@@ -334,6 +336,11 @@
     html.dark .q-hint, html.dark .q-c { color: #a8bd93; }
     html.dark .q-card { background: rgb(255 255 255 / .05); border-color: #2b3a1c; color: #a8bd93; }
     html.dark .wtp-q { color: #e8efe1; }
+    .wp-qh { font-size: .84rem; font-weight: 800; color: var(--color-gray-800); margin-bottom: .45rem; }
+    .wp-qh small { display: block; font-weight: 500; font-size: .7rem; color: var(--color-gray-400); }
+    html.dark .wp-qh { color: #e8efe1; }
+    .wp-loc-country { margin-bottom: .8rem; }
+    .wp-loc-country .form-label { margin-bottom: .3rem; }
     html.dark .wtp-choice, html.dark .wtp-prob { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
     html.dark .wtp-choice.is-on { background: #22301a; border-color: #6b9f3d; color: #cfe6b8; }
     html.dark .wtp-prob.is-on { background: #22301a; border-color: #6b9f3d; }
@@ -384,17 +391,37 @@
             {{-- Step 1: the place --}}
             <section class="wtp-step is-on" data-step="0">
                 <p class="wtp-q">Where is the field?</p>
-                <p class="wtp-sub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate and the trial results differ by region.</p>
+                {{-- The field's country: the farmer's own unless they say
+                     otherwise. It decides the address words, the seasons on
+                     offer, and whose seed houses, trials and agencies the
+                     research reads. --}}
+                <div class="wp-loc-country">
+                    <label class="form-label">Country of the field</label>
+                    @include('partials.country-pick', ['id' => 'vaCountry', 'name' => 'country', 'value' => \App\Support\Region::code()])
+                </div>
+                <p class="wtp-sub" id="vaLocSub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate and the trial results differ by region.</p>
                 <input type="text" id="vaLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
             </section>
-            {{-- Step 2: the soil --}}
+            {{-- Step 2: when it will be planted -- the year, and the season
+                 with the months it usually spans where the field is. --}}
             <section class="wtp-step" data-step="1">
+                <p class="wtp-q">When will you plant it?</p>
+                <p class="wtp-sub">A variety bred for the wet season is not the dry season's — the research reads the outlook for the season you plan.</p>
+                <p class="wp-qh">The year</p>
+                <div class="wtp-choices is-two" id="vaYears"></div>
+                <p class="wp-qh mt-4">The season</p>
+                <div class="wtp-choices" id="vaSeasons"></div>
+            </section>
+            {{-- Step 3: the soil, and the lay of the land --}}
+            <section class="wtp-step" data-step="2">
                 <p class="wtp-q">What is the soil like?</p>
                 <p class="wtp-sub">As your hands know it — no test needed.</p>
                 <div class="wtp-choices" id="vaSoils"></div>
+                <p class="wp-qh mt-4">And the land? <small>lowland, upland or highland — a variety is bred for one of them</small></p>
+                <div class="wtp-choices" id="vaElevations"></div>
             </section>
-            {{-- Step 3: the crop --}}
-            <section class="wtp-step" data-step="2">
+            {{-- Step 4: the crop --}}
+            <section class="wtp-step" data-step="3">
                 <p class="wtp-q">Which crop?</p>
                 <p class="wtp-sub">The same catalogue your lots choose from.</p>
                 <button type="button" class="crop-tag" id="vaCropBtn">
@@ -403,8 +430,8 @@
                     <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>
             </section>
-            {{-- Step 4: the varieties --}}
-            <section class="wtp-step" data-step="3">
+            {{-- Step 5: the varieties --}}
+            <section class="wtp-step" data-step="4">
                 <p class="wtp-q">Which varieties are you weighing?</p>
                 <p class="wtp-sub">Type each as it is sold and add it — up to eight. Leave the list empty and Anee picks the top-yielding ones for your ground herself.</p>
                 <div class="va-add">
@@ -414,22 +441,22 @@
                 <div class="va-chips" id="vaChips"></div>
                 <div class="va-anee" id="vaAneePicks"><span id="vaAneeFaceSlot">🤖</span><span>No varieties yet — <b>Anee will choose the top-yielding released varieties</b> for your crop and ground, and compare those.</span></div>
             </section>
-            {{-- Step 5: the priorities --}}
-            <section class="wtp-step" data-step="4">
+            {{-- Step 6: the priorities --}}
+            <section class="wtp-step" data-step="5">
                 <p class="wtp-q">What matters most to you?</p>
                 <p class="wtp-sub">Put them in order — the first weighs 40% of the ranking, then 30%, 20%, 10%.</p>
                 <div class="va-rank" id="vaRank"></div>
             </section>
-            {{-- Step 6: the troubles --}}
-            <section class="wtp-step" data-step="5">
+            {{-- Step 7: the troubles --}}
+            <section class="wtp-step" data-step="6">
                 <p class="wtp-q">What does this ground struggle with?</p>
                 <p class="wtp-sub">Tick what you have seen — each one moves the scores.</p>
                 <div class="wtp-probs" id="vaProbs"></div>
                 <label class="form-label mt-4" for="vaNotes">Anything else worth knowing? <span class="text-gray-400 font-normal">(optional)</span></label>
                 <textarea id="vaNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. we transplant late; the buyer wants long grain"></textarea>
             </section>
-            {{-- Step 7: the decision --}}
-            <section class="wtp-step" data-step="6">
+            {{-- Step 8: the decision --}}
+            <section class="wtp-step" data-step="7">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="vaReview"></p>
                 <button type="button" class="wtp-run" id="vaRun">
@@ -510,9 +537,19 @@
     const VA_META_URL = '{{ route('vary.meta') }}';
 
     let OPT = null;
-    const state = { location: '', soil: null, crop: '', varieties: [], priorities: ['yield', 'protection', 'survival', 'quickness'], problems: [], notes: '' };
+    const state = { location: '', country: '', year: null, season: null, soil: null, elevation: null, crop: '', varieties: [], priorities: ['yield', 'protection', 'survival', 'quickness'], problems: [], notes: '' };
+    const RULES = () => (window.ANEE_REGION_RULES || {});
+    const rulesFor = (code) => RULES()[code] || RULES()['*'] || {};
+    // The seasons on offer are the FIELD's country's.
+    const seasonsFor = (code) => { const r = rulesFor(code); return (r.seasons && Object.keys(r.seasons).length) ? r.seasons : ((OPT && OPT.seasons) || {}); };
+    const seasonSaid = (season, year, country) => {
+        const y = Number(year) || 0;
+        const label = seasonsFor(country || state.country || (OPT && OPT.country))[season] || ((OPT && OPT.seasons && OPT.seasons[season]) || '');
+        const crosses = season === 'dry' || season === 'winter';
+        return crosses && y ? `${label} ${y}–${String(y + 1).slice(-2)}` : `${label} ${y || ''}`.trim();
+    };
     let step = 0;
-    const STEPS = 7;
+    const STEPS = 8;
 
     async function boot() {
         try {
@@ -523,6 +560,33 @@
     }
 
     function paintOptions() {
+        state.country = state.country || OPT.country || ((window.ANEE_REGION || {}).code) || 'PH';
+        $id('vaYears').innerHTML = (OPT.years || []).map((y) => `
+            <button type="button" class="wtp-choice${state.year === y ? ' is-on' : ''}" data-year="${y}"><span class="c-e">🗓️</span><span>${y}${y === OPT.years[0] ? '<small>This year</small>' : ''}</span></button>`).join('');
+        const seasonIcons = { dry: '☀️', wet: '🌧️', third: '🌗', spring: '🌱', summer: '☀️', autumn: '🍂', winter: '❄️' };
+        /* Each season card says the months it usually spans where the
+           field is; the dry season begins at a year's end and runs into
+           the next, and the card says so with both years. */
+        const seasonSubs = (y) => ({
+            dry: `Early December ${y} to May ${y + 1} in most lowland regions — planting into ${y + 1} is part of it`,
+            wet: `Roughly June to October ${y} in most lowland regions — planting as the rains set in`,
+            third: `After the dry-season harvest, before the rains — roughly March to May ${y}, where water can be assured`,
+            spring: `Roughly March to May ${y} in the northern hemisphere — the research places it for your location`,
+            summer: `Roughly June to August ${y} in the northern hemisphere`,
+            autumn: `Roughly September to November ${y} in the northern hemisphere`,
+            winter: `December ${y} to February ${y + 1} in the northern hemisphere — a cool-season or protected planting`,
+        });
+        const paintSeasons = () => {
+            const y = Number(state.year || (OPT.years || [new Date().getFullYear()])[0]);
+            const subs = seasonSubs(y);
+            $id('vaSeasons').innerHTML = Object.entries(seasonsFor(state.country)).map(([k, label]) => `
+                <button type="button" class="wtp-choice${state.season === k ? ' is-on' : ''}" data-season="${k}"><span class="c-e">${seasonIcons[k] || '🌱'}</span><span>${esc(label)}${(k === 'dry' || k === 'winter') ? ' ' + y + '–' + String(y + 1).slice(-2) : ''}<small>${esc(subs[k] || '')}</small></span></button>`).join('');
+        };
+        paintSeasons();
+        window.__vaPaintSeasons = paintSeasons;
+        const landIcons = { lowland: '🌾', upland: '🌄', highland: '🌫️' };
+        $id('vaElevations').innerHTML = Object.entries(OPT.elevations || {}).map(([k, label]) => `
+            <button type="button" class="wtp-choice${state.elevation === k ? ' is-on' : ''}" data-elevation="${k}"><span class="c-e">${landIcons[k] || '⛰️'}</span><span>${esc(String(label).split(' — ')[0])}${String(label).includes(' — ') ? `<small>${esc(String(label).split(' — ')[1])}</small>` : ''}</span></button>`).join('');
         const soilIcons = { clay: '🧱', loam: '🟤', sandy: '🏖️', silty: '🌊', rocky: '⛰️', unsure: '🤷' };
         $id('vaSoils').innerHTML = Object.entries(OPT.soils).map(([k, label]) => `
             <button type="button" class="wtp-choice" data-soil="${k}"><span class="c-e">${soilIcons[k] || '🟫'}</span><span>${esc(String(label).split(' — ')[0])}${String(label).includes(' — ') ? `<small>${esc(String(label).split(' — ').slice(1).join(' — '))}</small>` : ''}</span></button>`).join('');
@@ -589,7 +653,7 @@
         $id('vaNext').style.display = step === STEPS - 1 ? 'none' : '';
         // The field is focused on a desk, where a cursor is a courtesy; on a
         // phone the keypad would land on the step before it is read.
-        if (step === 3 && window.matchMedia('(min-width: 640px)').matches) setTimeout(() => $id('vaVarietyIn')?.focus({ preventScroll: true }), 300);
+        if (step === 4 && window.matchMedia('(min-width: 640px)').matches) setTimeout(() => $id('vaVarietyIn')?.focus({ preventScroll: true }), 300);
         if (step === STEPS - 1) review();
     }
 
@@ -597,10 +661,13 @@
         switch (step) {
             case 0: state.location = $id('vaLocation').value.trim();
                 return !!state.location || (toast('Say where the field is.', 'error'), false);
-            case 1: return !!state.soil || (toast('Pick the soil that sounds most like yours.', 'error'), false);
-            case 2: return !!state.crop || (toast('Choose the crop.', 'error'), false);
-            case 3: addVariety(); return true;
-            case 5: state.problems = [...document.querySelectorAll('#vaProbs input:checked')].map((i) => i.value);
+            case 1: if (!state.year) { toast('Pick the year first.', 'error'); return false; }
+                if (!state.season || !seasonsFor(state.country)[state.season]) { toast('Pick the season.', 'error'); return false; }
+                return true;
+            case 2: return !!state.soil || (toast('Pick the soil that sounds most like yours.', 'error'), false);
+            case 3: return !!state.crop || (toast('Choose the crop.', 'error'), false);
+            case 4: addVariety(); return true;
+            case 6: state.problems = [...document.querySelectorAll('#vaProbs input:checked')].map((i) => i.value);
                 state.notes = $id('vaNotes').value.trim(); return true;
             default: return true;
         }
@@ -609,8 +676,9 @@
     function review() {
         const crop = OPT.crops.find((c) => c.key === state.crop) || {};
         const order = state.priorities.map((k, i) => `${i + 1}. ${OPT.priorities[k]?.label || k}`).join(' · ');
-        $id('vaReview').innerHTML = `${esc(crop.icon || '🌱')} <b>${esc(crop.label || '')}</b> · 📍 ${esc(state.location)}`
-            + `<br><span class="text-xs">${esc(OPT.soils[state.soil] || '')}`
+        $id('vaReview').innerHTML = `${esc(crop.icon || '🌱')} <b>${esc(crop.label || '')}</b> · 📍 ${esc(state.location)}${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(rulesFor(state.country).name || state.country) : ''}`
+            + ` · ${esc(seasonSaid(state.season, state.year))}`
+            + `<br><span class="text-xs">${esc(OPT.soils[state.soil] || '')}${state.elevation ? ' · ' + esc(String((OPT.elevations || {})[state.elevation] || state.elevation).split(' — ')[0]) : ''}`
             + ` · ${state.varieties.length ? esc(state.varieties.join(', ')) : 'Anee picks the varieties'}`
             + (state.problems.length ? ` · ${state.problems.length} trouble${state.problems.length === 1 ? '' : 's'} considered` : '') + '</span>'
             + `<br><span class="text-xs">${esc(order)}</span>`;
@@ -623,12 +691,49 @@
 
     $id('vaNext').addEventListener('click', () => { if (stepReady()) show(step + 1); });
     $id('vaBack').addEventListener('click', () => show(step - 1, true));
+    $id('vaYears').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-year]');
+        if (!b) return;
+        state.year = Number(b.getAttribute('data-year'));
+        document.querySelectorAll('#vaYears .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
+        // The season cards say their years, and the dry one runs into the next.
+        window.__vaPaintSeasons?.();
+    });
+    $id('vaSeasons').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-season]');
+        if (!b) return;
+        if (!state.year) { toast('Pick the year first.', 'error'); return; }
+        state.season = b.getAttribute('data-season');
+        document.querySelectorAll('#vaSeasons .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
+        setTimeout(() => show(2), 180);
+    });
     $id('vaSoils').addEventListener('click', (e) => {
         const b = e.target.closest('[data-soil]');
         if (!b) return;
         state.soil = b.getAttribute('data-soil');
         document.querySelectorAll('#vaSoils .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
-        setTimeout(() => show(2), 180);
+        // The land is optional; the step moves on once the soil is picked.
+        setTimeout(() => show(3), 180);
+    });
+    $id('vaElevations').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-elevation]');
+        if (!b) return;
+        state.elevation = state.elevation === b.getAttribute('data-elevation') ? null : b.getAttribute('data-elevation');
+        document.querySelectorAll('#vaElevations .wtp-choice').forEach((c) => c.classList.toggle('is-on', c.getAttribute('data-elevation') === state.elevation));
+    });
+    $id('vaCountry')?.addEventListener('country:change', (e) => {
+        const code = e.detail && e.detail.code;
+        const r = e.detail && e.detail.rules;
+        if (!code || !r) return;
+        state.country = code;
+        const city = (r.address && r.address.city && r.address.city.label) || 'City';
+        const region = (r.address && r.address.region && r.address.region.label) || 'State / Region';
+        $id('vaLocSub').textContent = `${code === 'PH' ? 'Town and province' : city + ' and ' + region.toLowerCase()} is enough — the climate and the trial results differ by region.`;
+        $id('vaLocation').placeholder = r.exampleLocation || '';
+        // The seasons on offer follow the field's country; a season that is
+        // not one of them is dropped and asked for again.
+        if (!seasonsFor(code)[state.season]) state.season = null;
+        window.__vaPaintSeasons?.();
     });
     /* Some troubles cannot share a field: a soil is acidic or alkaline,
        not both. Ticking one quietly unticks its opposite. */
@@ -660,7 +765,7 @@
         now.textContent = c.label || 'Choose the crop';
         now.classList.remove('is-none');
         closeSheet('vaCropSheet');
-        setTimeout(() => show(3), 220);
+        setTimeout(() => show(4), 220);
     });
     const cropSift = () => {
         const q = ($id('vaCropSearch').value || '').trim().toLowerCase();
@@ -764,27 +869,25 @@
         let landed = false;
         try {
             const res = await api(U.generate, { method: 'POST', body: {
-                location: state.location, soil: state.soil, crop: state.crop,
+                location: state.location, country: state.country, year: state.year, season: state.season,
+                soil: state.soil, elevation: state.elevation, crop: state.crop,
                 varieties: state.varieties, priorities: state.priorities,
                 problems: state.problems, notes: state.notes,
             } });
             let data = res.data;
             if (data.pending) {
-                for (let i = 0; i < 200 && (!data || data.status !== 'ready'); i++) {
-                    await new Promise((r) => setTimeout(r, 3000));
-                    // api() throws on a failed job (success:false), which ends the wait with its words.
-                    const st = await api(U.job(data.id || res.data.id), { method: 'GET' });
-                    if (st.data && st.data.status === 'ready') { data = st.data; break; }
-                }
-                if (!data || data.status !== 'ready') {
-                    throw new Error('Still working — give it a minute, then look on the Saved tab.');
-                }
+                // The shared poll: the bar, the clock and the hang check ride
+                // along, and a poll that cannot reach the server is retried
+                // rather than taken for the job failing.
+                data = await window.aneeWait.poll({ id: data.id || res.data.id, job: U.job, phases: window.aneeWait.phases.research });
             }
             OPT.balance = data.balance;
             landed = true;
             const item = { report: data.report, params: data.params, charged: data.charged, savedId: data.savedId };
-            drawReport($id('vaReport'), item, 'fresh', true);
-            openView(item, 'fresh');
+            // A slip in drawing must not strand the veil: the result is on
+            // the shelf either way, and the wait still lifts.
+            try { drawReport($id('vaReport'), item, 'fresh', true); openView(item, 'fresh'); }
+            catch (drawErr) { console.error(drawErr); toast('The analysis is saved on the Saved tab, but this page could not draw it.', 'error'); }
             await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used — saved to the shelf.` });
             toast(`Done — ${data.charged} credits used. Saved to the shelf.`);
         } catch (err) {
