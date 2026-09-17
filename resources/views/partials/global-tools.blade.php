@@ -190,7 +190,7 @@
                 <span class="qa-ico"><img src="{{ asset('images/icons/checklist.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>Crop Protocol Analysis</b>
-                    <i>Your season by growth stage — how many bags and when, the sprays and foliars to prepare, irrigation, pests and weeds to watch — from your variety, field, the outlook and ENSO. Uses AI credits.</i>
+                    <i>Analyze the recommended protocol for your selected crop variety based on the location, historical data, forecasted weather, soil, climate, and irrigation.</i>
                 </span>
                 @if ($qWtpLocked)
                     <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
