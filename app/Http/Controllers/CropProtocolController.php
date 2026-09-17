@@ -458,6 +458,8 @@ class CropProtocolController extends Controller
                 'phase' => (string) ($beat['phase'] ?? 'start'),
                 'try' => (int) ($beat['try'] ?? 1),
                 'since' => (int) max(0, now()->diffInSeconds(\Illuminate\Support\Carbon::parse($r->created_at), true)),
+                // Seconds since the job last spoke: the page's own hang check.
+                'beatAgo' => (int) max(0, now()->diffInSeconds(\Illuminate\Support\Carbon::parse($r->updated_at ?: $r->created_at), true)),
             ]);
         }
         if ($r->status === 'failed') {

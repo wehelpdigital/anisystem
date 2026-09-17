@@ -778,20 +778,16 @@
                keeps the spinner up and asks the row how it is doing. A
                failed job comes back through api() as its own message. */
             if (data.pending) {
-                for (let i = 0; i < 100 && (!data || data.status !== 'ready'); i++) {
-                    await new Promise((r) => setTimeout(r, 3000));
-                    const st = await api(U.job(data.id || res.data.id), { method: 'GET' });
-                    if (st.data && st.data.status === 'ready') { data = st.data; break; }
-                }
-                if (!data || data.status !== 'ready') {
-                    throw new Error('Still working — give it a minute, then look on the Saved tab.');
-                }
+                // The shared poll: the bar, the clock and the hang check ride along.
+                data = await window.aneeWait.poll({ id: data.id || res.data.id, job: U.job, phases: window.aneeWait.phases.research });
             }
             LAST = { report: data.report, params: data.params, charged: data.charged, savedId: data.savedId || null };
             OPT.balance = data.balance;
             landed = true;
-            // Full screen first: the tabs and the wizard wait behind it.
-            openView(LAST, 'fresh');
+            // Full screen first: the tabs and the wizard wait behind it. A
+            // slip in drawing must not strand the veil: the result is saved.
+            try { openView(LAST, 'fresh'); }
+            catch (drawErr) { console.error(drawErr); toast('The analysis is saved on the Saved tab, but this page could not draw it.', 'error'); }
             await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used.` });
             toast(`Done — ${data.charged} credits used.`);
             loadSavedQuietly();

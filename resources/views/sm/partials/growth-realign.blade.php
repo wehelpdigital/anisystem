@@ -425,12 +425,8 @@
             const res = await api(`${U.run}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { lotId } });
             let data = res.data;
             if (data.pending) {
-                for (let i = 0; i < 80 && (!data || data.status !== 'ready'); i++) {
-                    await new Promise((r) => setTimeout(r, 3000));
-                    const st = await api(U.job(data.id || res.data.id));
-                    if (st.data && st.data.status === 'ready') { data = st.data; break; }
-                }
-                if (!data || data.status !== 'ready') throw new Error('Still working — give it a minute and open the lot again.');
+                // The shared poll: the bar and the clock ride along.
+                data = await window.aneeWait.poll({ id: data.id || res.data.id, job: U.job, phases: window.aneeWait.phases.plain, limit: 80 });
             }
             landed = true;
             const realign = data.realign || data.result;

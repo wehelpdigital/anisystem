@@ -221,6 +221,15 @@ class WhenToPlantController extends Controller
     /** The model call and the charge, off the request's clock. */
     private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, array $p = []): void
     {
+        /* The heartbeat: before every call to the model the row says which
+         * phase it is in and touches updated_at, so the page can move its
+         * bar and jobState can tell a killed job from a slow one. */
+        $beat = function (string $phase, int $try = 1) use ($id): void {
+            DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
+                'report' => json_encode(['phase' => $phase, 'try' => $try]),
+                'updated_at' => now(),
+            ]);
+        };
         try {
             /* Off the request's clock, the job can afford patience a chat
              * cannot. Two asks (2026-09-17): first the web is read for the
@@ -230,7 +239,7 @@ class WhenToPlantController extends Controller
              * the document is written with those notes appended. A
              * document-sized answer lane: the chat cap (1200) cut the JSON
              * mid-object on longer runs, which read as "unreadable". */
-            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 4500, fn (string $t) => $this->parseReport($t));
+            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 4500, fn (string $t) => $this->parseReport($t), $beat);
             $report = $result['data'];
             if ($report === null) {
                 // The head of what came back, kept where a debugger can read
@@ -275,6 +284,21 @@ class WhenToPlantController extends Controller
     }
 
     /** Where a job stands — polled by the page until ready or failed. */
+    /**
+     * A pending row is dead when its heart has not beaten for longer than
+     * any one call to the model may take (the document timeout plus a
+     * generous minute), or when it is simply too old. Killed processes
+     * write nothing, so this is the only way to tell.
+     */
+    private function dead(object $r): bool
+    {
+        $beatAt = \Illuminate\Support\Carbon::parse($r->updated_at ?: $r->created_at);
+        $quiet = \App\Services\AiClient::TIMEOUT_DOCUMENT + 60;
+
+        return $beatAt->lt(now()->subSeconds($quiet))
+            || \Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(20));
+    }
+
     public function jobState(int $id)
     {
         $r = DB::table('as_plant_analyses')->where('userId', Auth::id())
@@ -283,7 +307,28 @@ class WhenToPlantController extends Controller
             return $this->json(false, 'That analysis is gone.', [], 404);
         }
         if ($r->status === 'pending') {
-            return $this->json(true, 'Working…', ['pending' => true, 'id' => (int) $r->id, 'status' => 'pending']);
+            if ($this->dead($r)) {
+                $why = \Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(20))
+                    ? 'The analysis took too long and was stopped. Nothing was charged — please try again.'
+                    : 'The analysis was interrupted mid-way (the server restarted under it). Nothing was charged — please run it again.';
+                DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
+                    'status' => 'failed', 'deleteStatus' => 0,
+                    'error' => $why,
+                    'updated_at' => now(),
+                ]);
+
+                return $this->json(false, $why, ['status' => 'failed'], 502);
+            }
+            $beat = json_decode((string) $r->report, true) ?: [];
+
+            return $this->json(true, 'Working…', [
+                'pending' => true, 'id' => (int) $r->id, 'status' => 'pending',
+                'phase' => (string) ($beat['phase'] ?? 'start'),
+                'try' => (int) ($beat['try'] ?? 1),
+                'since' => (int) max(0, now()->diffInSeconds(\Illuminate\Support\Carbon::parse($r->created_at), true)),
+                // Seconds since the job last spoke: the page's own hang check.
+                'beatAgo' => (int) max(0, now()->diffInSeconds(\Illuminate\Support\Carbon::parse($r->updated_at ?: $r->created_at), true)),
+            ]);
         }
         if ($r->status === 'failed') {
             // A failed job is not worth a place on the shelf.
