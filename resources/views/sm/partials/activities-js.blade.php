@@ -6018,6 +6018,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (res.data && res.data.targetDate) { OPEN_DAYS.add(String(res.data.targetDate).slice(0, 10)); saveOpenDays(); }
             reorderAndRenumberActivities();
             recomputeLotDayZero();
+            // The card lands mid-screen when it moved day (an edited date) or
+            // is new: the same landing a drag gets, whatever road it took.
+            const movedDay = id && BEFORE_SNAPSHOT && String(BEFORE_SNAPSHOT.targetDate || '').slice(0, 10) !== String(res.data?.targetDate || '').slice(0, 10);
+            if (res.data && res.data.id && !boolFlag(res.data.isDraft) && (!id || movedDay)) keepMovedCardInView(res.data.id);
         } catch (err) {
             toast(err.message, 'error');
         } finally {
@@ -6325,7 +6329,8 @@ document.addEventListener('DOMContentLoaded', () => {
         card.setAttribute('data-sequence-order', 0);
 
         const items = [{ id: parseInt(id, 10), targetDate: newDate, targetEndDate: newEnd || null, sequenceOrder: 0 }];
-        reorderAndRenumberActivities();
+        reorderAndRenumberActivities(true);   // animated, like a drop
+        keepMovedCardInView(id);
 
         apiQ(U.reorder(), { method: 'POST', body: { items } }, 'Moved the plan', moveKey(items))
             .then(() => {
@@ -11171,19 +11176,22 @@ document.addEventListener('DOMContentLoaded', () => {
      *
      * Two frames of delay, because the rebuild is animated: asking for the
      * card's position while the FLIP is still running scrolls to where it
-     * was, not where it is going. And `nearest`, so a card that is already
-     * comfortably on screen does not get yanked to the middle for no
-     * reason. */
+     * was, not where it is going. Always to the middle of the screen (the
+     * owner's ask, 2026-09-18): after a move the eye wants the card where
+     * it landed, even when it landed close by. A folded day is unfolded
+     * first, or there would be nothing on screen to scroll to. */
     function keepMovedCardInView(id) {
         if (!id) return;
         requestAnimationFrame(() => requestAnimationFrame(() => {
             setTimeout(() => {
                 const el = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
                 if (!el) return;
-                const r = el.getBoundingClientRect();
-                const top = 120;                       // under the app bar and toolbar
-                const bottom = window.innerHeight - 90; // above the composer/tab bar
-                if (r.top >= top && r.bottom <= bottom) return;   // already in sight
+                const group = el.closest('.date-group');
+                if (group && group.classList.contains('is-folded')) {
+                    group.classList.remove('is-folded');
+                    const d = (group.getAttribute('data-date') || '').trim();
+                    if (d) { OPEN_DAYS.add(d); saveOpenDays(); }
+                }
                 el.scrollIntoView({
                     block: 'center',
                     behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
