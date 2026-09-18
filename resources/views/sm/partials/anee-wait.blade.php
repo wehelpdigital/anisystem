@@ -23,8 +23,11 @@
      The bar is honest about what it knows: each phase the job reports owns
      a slice of the hundred, and inside a phase the number creeps with the
      time that phase usually takes, never reaching the slice's end until
-     the next phase is heard. Under it, when the job was last heard from --
-     so a farmer can tell a slow read from a dead one.
+     the next phase is heard. Under it, one row: the job's own word on where
+     it stands, the percent and the clock -- the rotating lines stay above
+     the bar, and the heartbeat check runs silently (2026-09-18: it used to
+     say "heard from her 3s ago" and read as doubt), speaking only when the
+     server itself cannot be reached.
 
      Included once by any page that runs the model (@once inside). --}}
 @once
@@ -38,12 +41,16 @@
         </div>
         <p class="aw-title" id="aneeWaitTitle">Anee is thinking…</p>
         <p class="aw-line" id="aneeWaitLine"></p>
+        <p class="aw-sub" id="aneeWaitSub"></p>
+        {{-- Under the bar, one row and nothing else: where the job stands
+             (its own word, not a rotating line), the percent, the clock. The
+             hang check keeps running underneath but says nothing unless the
+             server itself cannot be reached. --}}
         <div class="aw-prog" id="aneeWaitProg" hidden>
             <div class="aw-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="aneeWaitBarBox"><span id="aneeWaitBar"></span></div>
             <div class="aw-prog-row"><b id="aneeWaitPct">0%</b><span id="aneeWaitStep">Starting…</span><i id="aneeWaitClock">0:00</i></div>
             <p class="aw-check" id="aneeWaitCheck"></p>
         </div>
-        <p class="aw-sub" id="aneeWaitSub"></p>
         <p class="aw-stay" id="aneeWaitStay">Please stay on this screen. Closing or leaving loses this run — and the credits it uses.</p>
     </div>
 </div>
@@ -172,19 +179,14 @@
         pctEl.textContent = n + '%';
         stepEl.textContent = P.ready ? 'Done' : (ph.label + (P.tries > 1 ? ' (again)' : '') + '…');
         clockEl.textContent = clock(Math.round((Date.now() - P.t0) / 1000));
-        // The hang check: when the job was last heard from.
+        // The hang check runs on (the heartbeat still decides when a job is
+        // dead, server-side), but it says nothing on screen: "heard from her
+        // 3s ago" read as doubt. The one line that survives is the server
+        // being out of reach -- that is the farmer's signal, not Anee's.
         checkEl.classList.remove('is-quiet', 'is-lost');
-        if (P.ready) { checkEl.textContent = ''; return; }
-        if (P.misses > 0) { checkEl.textContent = `Can’t reach the server — retrying (${P.misses}/8)…`; checkEl.classList.add('is-lost'); return; }
-        const ago = P.beatAgo == null ? null : Math.round(P.beatAgo + (Date.now() - P.heardAt) / 1000);
-        if (ago == null) { checkEl.textContent = 'Checking on her…'; return; }
-        // A single call to the model can run a couple of minutes without a
-        // word, so the line stays calm until a read is unusually long, and
-        // the server declares a dead job on its own a minute after that.
-        if (ago < 45) { checkEl.textContent = `Anee is working — heard from her ${ago < 5 ? 'just now' : ago + 's ago'}.`; return; }
-        if (ago < 150) { checkEl.textContent = `Anee is working — a deep read runs a couple of minutes between words (last one ${clock(ago)} ago).`; return; }
-        checkEl.textContent = `No word for ${clock(ago)} — longer than usual. Still checking; if she has stopped, this screen will say so within a minute.`;
-        checkEl.classList.add('is-quiet');
+        if (P.ready || P.misses <= 0) { checkEl.textContent = ''; return; }
+        checkEl.textContent = `Can’t reach the server — retrying (${P.misses}/8)…`;
+        checkEl.classList.add('is-lost');
     };
     const startProg = (phases) => {
         P = { phases: phases || RESEARCH_PHASES, phase: 'start', phaseAt: Date.now(), t0: Date.now(), pct: 0, tries: 1, beatAgo: null, heardAt: Date.now(), misses: 0, ready: false };
@@ -207,17 +209,46 @@
     const guard = (e) => { if (!pending) return; e.preventDefault(); e.returnValue = ''; };
     window.addEventListener('beforeunload', guard);
 
+    /* What she is doing: the page's own lines first, in order, then a
+       shared pool in a fresh shuffle each run, so a three-minute wait never
+       shows the same five sentences going round. */
+    const MORE_LINES = [
+        'Cross-checking the numbers against the official recommendations…',
+        'Reading the seasonal outlook once more…',
+        'Weighing what the soil can hold against what the crop can take…',
+        'Thinking about where the water will sit on this field…',
+        'Looking at what usually goes wrong here, and when…',
+        'Turning the guidance into stages a farmer can walk…',
+        'Checking that every number adds up…',
+        'Sizing each step to what the roots can drink…',
+        'Choosing plain words over technical ones…',
+        'Reading the calendar against the crop\'s own clock…',
+        'Considering the roads not taken, and why not here…',
+        'Making sure nothing is promised that the ground cannot keep…',
+        'Rounding the bags to what the store actually sells…',
+        'Listening for the signs to watch at each stage…',
+        'Setting the sprays aside until the field asks for them…',
+        'Putting the whole season on one page…',
+        'Reading it back once, as a farmer would…',
+        'Comparing this season with the ones before it…',
+        'Leaving room for the weather to change its mind…',
+        'Asking what a neighbour with the same soil would do…',
+    ];
     const rotate = (lines) => {
         clearInterval(lineTimer);
-        if (!lines || !lines.length) { line.textContent = ''; return; }
+        const own = (lines || []).filter(Boolean);
+        const pool = MORE_LINES.filter((l) => !own.includes(l));
+        for (let k = pool.length - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [pool[k], pool[j]] = [pool[j], pool[k]]; }
+        const all = own.concat(pool);
+        if (!all.length) { line.textContent = ''; return; }
         let i = 0;
-        line.textContent = lines[0];
-        if (lines.length < 2) return;
+        line.textContent = all[0];
+        if (all.length < 2) return;
         lineTimer = setInterval(() => {
-            i = (i + 1) % lines.length;
+            i = (i + 1) % all.length;
             line.style.opacity = 0;
-            setTimeout(() => { line.textContent = lines[i]; line.style.opacity = 1; }, 280);
-        }, 5200);
+            setTimeout(() => { line.textContent = all[i]; line.style.opacity = 1; }, 280);
+        }, 4600);
     };
 
     window.aneeWait = {
