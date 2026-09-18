@@ -254,6 +254,60 @@
 
     /* Yield: target against realistic, as two bars. */
 
+    /* ---- the five programs: tag-like tabs over the fertilizer card ---- */
+    .cp3-tabs { display: flex; gap: .4rem; overflow-x: auto; scrollbar-width: none; padding: .1rem .1rem .5rem; margin: -.1rem -.1rem .3rem; }
+    .cp3-tabs::-webkit-scrollbar { display: none; }
+    .cp3-tab { flex: none; display: flex; flex-direction: column; align-items: flex-start; gap: .05rem; padding: .4rem .75rem; border-radius: 999px; border: 1.5px solid var(--color-gray-200); background: var(--color-white); cursor: pointer; font: inherit; text-align: left;
+        transition: border-color .2s, background .2s, transform .28s cubic-bezier(.22,1,.36,1); }
+    .cp3-tab:hover { transform: translateY(-1px); }
+    .cp3-tab b { font-size: .78rem; color: var(--color-gray-800); white-space: nowrap; }
+    .cp3-tab small { font-size: .62rem; font-weight: 700; color: var(--color-gray-400); white-space: nowrap; }
+    .cp3-tab.is-on { border-color: var(--color-brand-600); background: var(--color-brand-50); }
+    .cp3-tab.is-on b { color: var(--color-brand-800); }
+    .cp3-tab.is-on small { color: var(--color-brand-700); }
+    .cp3-for { font-size: .76rem; color: var(--color-gray-600); line-height: 1.45; margin: 0 0 .6rem; padding: .5rem .65rem; border-radius: .7rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
+    .cp3-orphans { margin-top: .5rem; padding: .5rem .6rem; border-radius: .7rem; background: var(--color-gray-50); font-size: .76rem; color: var(--color-gray-600); line-height: 1.5; }
+    .cp3-orphans b { display: block; font-size: .68rem; text-transform: uppercase; letter-spacing: .04em; color: var(--color-gray-400); margin-bottom: .2rem; }
+    .cp3-gran { display: grid; gap: .7rem; }
+    .cp3-gran h3 { margin-bottom: 0; }
+    .cp3-gran-row { display: flex; gap: .65rem; align-items: flex-start; }
+    .cp3-gran-row .e { flex: none; font-size: 1.2rem; line-height: 1.2; }
+    .cp3-gran-row > div { min-width: 0; flex: 1 1 auto; }
+    .cp3-gran-row b { display: block; font-size: .84rem; color: var(--color-gray-900); margin-bottom: .15rem; }
+    .cp3-gran-row p { font-size: .82rem; line-height: 1.55; color: var(--color-gray-700); }
+    /* The roads not taken: what a farmer here would have done, and why not on this ground. */
+    .cp3-no { display: grid; gap: .4rem; margin-top: .3rem; }
+    .cp3-no-row { padding: .45rem .6rem .45rem .75rem; border-left: 3px solid var(--color-gray-300); border-radius: 0 .6rem .6rem 0; background: var(--color-gray-50); }
+    .cp3-no-row b { display: block; font-size: .8rem; color: var(--color-gray-800); margin: 0 0 .1rem; text-decoration: line-through; text-decoration-color: rgba(220, 38, 38, .55); text-decoration-thickness: 1.5px; }
+    .cp3-no-row p { font-size: .78rem; line-height: 1.5; color: var(--color-gray-600); }
+    html.dark .cp3-no-row { background: #10150c; border-left-color: #3d5028; }
+    html.dark .cp3-no-row b { color: #d5e3c5; }
+    html.dark .cp3-no-row p { color: #a3b095; }
+    .wtp-choices.is-four { grid-template-columns: 1fr 1fr; }
+    /* The granulars: a pick-many cloud of pills -- ten products fit a phone
+       in four rows instead of ten. A tick appears on the chosen ones. */
+    .wtp-choices.is-pills { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .wtp-choices.is-pills .wtp-choice { gap: .35rem; padding: .42rem .7rem; border-radius: 999px; font-size: .78rem; }
+    .wtp-choices.is-pills .wtp-choice .c-e { font-size: .8rem; width: .95rem; height: .95rem; border-radius: 50%; border: 1.5px solid var(--color-gray-300); display: inline-flex; align-items: center; justify-content: center; color: transparent; transition: background .2s, border-color .2s, color .2s; }
+    .wtp-choices.is-pills .wtp-choice.is-on .c-e { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
+    .wtp-choices.is-pills .wtp-choice.is-on .c-e::before { content: '✓'; font-size: .62rem; font-weight: 800; line-height: 1; }
+    html.dark .wtp-choices.is-pills .wtp-choice .c-e { border-color: #3d5028; }
+    html.dark .wtp-choices.is-pills .wtp-choice.is-on .c-e { background: #6b9f3d; border-color: #6b9f3d; }
+    /* The sub-question headings on the closer-look steps (as on What to Plant). */
+    .wp-qh { font-size: .84rem; font-weight: 800; color: var(--color-gray-800); margin-bottom: .45rem; }
+    .wp-qh small { display: block; font-weight: 500; font-size: .7rem; color: var(--color-gray-400); }
+    html.dark .wp-qh { color: #e8efe1; }
+    html.dark .cp3-tab { background: #151b12; border-color: #2b3a1c; }
+    html.dark .cp3-tab b { color: #d5e3c5; }
+    html.dark .cp3-tab small { color: #93a684; }
+    html.dark .cp3-tab.is-on { background: #22301a; border-color: #6b9f3d; }
+    html.dark .cp3-tab.is-on b { color: #cfe6b8; }
+    html.dark .cp3-tab.is-on small { color: #a5c97e; }
+    html.dark .cp3-for, html.dark .cp3-orphans { background: #10150c; border-color: #222b1a; color: #b7c2ad; }
+    html.dark .cp3-gran-row b { color: #e8efe1; }
+    html.dark .cp3-gran-row p { color: #b7c2ad; }
+    @media (prefers-reduced-motion: reduce) { .cp3-tab { transition: none; } }
+
     /* ---- the two-part protocol ---- */
     .cp2-part { display: flex; align-items: center; gap: .6rem; margin: .4rem 0 -.3rem; }
     .cp2-part-n { flex: none; width: 1.9rem; height: 1.9rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: .85rem; background: #3d6823; color: #fff; }
@@ -634,8 +688,32 @@
                 <label class="form-label mt-4" for="cpNotes">Anything else worth knowing? <span class="text-gray-400 font-normal">(optional)</span></label>
                 <textarea id="cpNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. last season tungro hit us; we have a pump but diesel is dear"></textarea>
             </section>
-            {{-- 8: the decision --}}
+            {{-- 8: the ground, closer -- what decides WHICH granular and WHEN --}}
             <section class="wtp-step" data-step="8">
+                <p class="wtp-q">The ground, a little closer</p>
+                <p class="wtp-sub">Optional, but each answer changes which bag goes on and when. Skip what you do not know.</p>
+                <p class="wp-qh">Soil condition <small>pH, sodium, salt — as far as you know</small></p>
+                <div class="wtp-choices" id="cpSoilConds"></div>
+                <p class="wp-qh mt-4">Phosphorus in the soil <small>from a soil test, or how the last crops went</small></p>
+                <div class="wtp-choices is-four" id="cpTestP"></div>
+                <p class="wp-qh mt-4">Potassium in the soil</p>
+                <div class="wtp-choices is-four" id="cpTestK"></div>
+            </section>
+            {{-- 9: the history and what can be bought --}}
+            <section class="wtp-step" data-step="9">
+                <p class="wtp-q">What came before, and what you can buy</p>
+                <p class="wtp-sub">A legume leaves nitrogen behind; burned straw gives back potash and not nitrogen; the program is built from the bags you can actually get.</p>
+                <p class="wp-qh">The previous crop</p>
+                <div class="wtp-choices" id="cpPrevCrops"></div>
+                <p class="wp-qh mt-4">Its residue was</p>
+                <div class="wtp-choices is-two" id="cpResidues"></div>
+                <label class="form-label mt-4" for="cpFertHistory">What did the field get last season? <span class="text-gray-400 font-normal">(optional)</span></label>
+                <input type="text" id="cpFertHistory" class="form-input" maxlength="200" placeholder="e.g. 4 bags complete at planting, 2 bags urea later">
+                <p class="wp-qh mt-4">Granulars you can buy locally <small>pick all that apply — the programs are built from these</small></p>
+                <div class="wtp-choices is-pills" id="cpGranulars" role="group" aria-label="Granulars you can buy"></div>
+            </section>
+            {{-- 10: the decision --}}
+            <section class="wtp-step" data-step="10">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="cpReview"></p>
                 <button type="button" class="wtp-run" id="cpRun">
@@ -692,9 +770,10 @@
     const META_URL = '{{ route('proto.meta') }}';
 
     let OPT = null;
-    const state = { location: '', crop: '', variety: '', month: null, method: null, priority: null, targetYield: '', yieldUnit: '', area: '', soil: null, water: null, problems: [], notes: '' };
+    const state = { location: '', crop: '', variety: '', month: null, method: null, priority: null, targetYield: '', yieldUnit: '', area: '', soil: null, water: null, problems: [], notes: '',
+        soilCondition: 'unsure', testP: 'unsure', testK: 'unsure', prevCrop: 'unsure', residue: 'unsure', fertHistory: '', granulars: [] };
     let step = 0;
-    const STEPS = 9;
+    const STEPS = 11;
     const phone = () => !window.matchMedia('(min-width: 640px)').matches;
 
     async function boot() {
@@ -727,6 +806,17 @@
         $id('cpSoils').innerHTML = Object.entries(OPT.soils).map(([k, label]) => { const [n, s] = split(label); return choice('soil', k, soilIcons[k] || '🟫', n, s); }).join('');
         const waterIcons = { irrigated: '🚰', limited: '🚿', rainfed: '🌧️' };
         $id('cpWaters').innerHTML = Object.entries(OPT.waters).map(([k, label]) => choice('water', k, waterIcons[k] || '💧', label, '')).join('');
+        const condIcons = { unsure: '🤷', acidic: '🍋', neutral: '⚖️', alkaline: '🧂', sodic: '🧱', saline: '🌊' };
+        $id('cpSoilConds').innerHTML = Object.entries(OPT.soilConditions || {}).map(([k, label]) => { const [n, s] = split(label); return choice('soilcond', k, condIcons[k] || '•', n, s); }).join('');
+        const lvlIcons = { unsure: '🤷', low: '🔻', medium: '➖', high: '🔺' };
+        $id('cpTestP').innerHTML = Object.entries(OPT.testLevels || {}).map(([k, label]) => choice('testp', k, lvlIcons[k] || '•', label, '')).join('');
+        $id('cpTestK').innerHTML = Object.entries(OPT.testLevels || {}).map(([k, label]) => choice('testk', k, lvlIcons[k] || '•', label, '')).join('');
+        const prevIcons = { unsure: '🤷', rice: '🌾', corn: '🌽', legume: '🫘', vegetables: '🥬', root: '🍠', fallow: '🌿' };
+        $id('cpPrevCrops').innerHTML = Object.entries(OPT.prevCrops || {}).map(([k, label]) => { const [n, s] = split(label); return choice('prevcrop', k, prevIcons[k] || '•', n, s); }).join('');
+        const resIcons = { unsure: '🤷', removed: '🚜', burned: '🔥', incorporated: '🔄' };
+        $id('cpResidues').innerHTML = Object.entries(OPT.residues || {}).map(([k, label]) => choice('residue', k, resIcons[k] || '•', label, '')).join('');
+        $id('cpGranulars').innerHTML = Object.entries(OPT.granulars || {}).map(([k, label]) => `<button type="button" class="wtp-choice" data-granular="${esc(k)}" aria-pressed="false"><span class="c-e"></span><span>${esc(label)}</span></button>`).join('');
+        ['cpSoilConds', 'cpTestP', 'cpTestK', 'cpPrevCrops', 'cpResidues'].forEach((h) => { const first = $id(h).querySelector('.wtp-choice'); if (first) first.classList.add('is-on'); });
         $id('cpProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
             <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
         $id('cpDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
@@ -812,7 +902,18 @@
                 if (!state.water) { toast('Say what water the field gets.', 'error'); return false; }
                 return true;
             case 7: state.problems = [...document.querySelectorAll('#cpProbs input:checked')].map((i) => i.value);
-                state.notes = $id('cpNotes').value.trim(); return true;
+                state.notes = $id('cpNotes').value.trim();
+                // A trouble ticked here answers the next step's soil
+                // condition while it is still "unsure" -- one tap fewer.
+                if (state.soilCondition === 'unsure') {
+                    const said = ['acidic', 'alkaline'].find((k) => state.problems.includes(k));
+                    if (said && (OPT.soilConditions || {})[said]) {
+                        state.soilCondition = said;
+                        document.querySelectorAll('#cpSoilConds .wtp-choice').forEach((c) => c.classList.toggle('is-on', c.getAttribute('data-soilcond') === said));
+                    }
+                }
+                return true;
+            case 9: state.fertHistory = $id('cpFertHistory').value.trim(); return true;
             default: return true;
         }
     }
@@ -823,6 +924,8 @@
         $id('cpReview').innerHTML = `${esc(crop.icon || '🌱')} <b>${esc(crop.label || '')}</b>${state.variety ? ' · ' + esc(state.variety) : ''} · 📍 ${esc(state.location)}`
             + `<br><span class="text-xs">${esc(month)} · ${esc(OPT.methods[state.method]?.label || '')} · ${esc(OPT.priorities[state.priority]?.label || '')} · ${esc(target)}</span>`
             + `<br><span class="text-xs">${esc(state.area)} ha · ${esc(split(OPT.soils[state.soil] || '')[0])} · ${esc(OPT.waters[state.water] || '')}${state.problems.length ? ' · ' + state.problems.length + ' trouble' + (state.problems.length === 1 ? '' : 's') : ''}</span>`;
+        const closer = ['soilCondition', 'testP', 'testK', 'prevCrop', 'residue'].filter((k) => state[k] && state[k] !== 'unsure').length + (state.fertHistory ? 1 : 0) + (state.granulars.length ? 1 : 0);
+        if (closer) $id('cpReview').innerHTML += `<br><span class="text-xs">${state.soilCondition !== 'unsure' ? esc(split((OPT.soilConditions || {})[state.soilCondition] || state.soilCondition)[0]) + ' soil · ' : ''}${closer} closer answer${closer === 1 ? '' : 's'}${state.granulars.length ? ' · ' + state.granulars.length + ' granulars you can buy' : ''}</span>`;
         $id('cpRunSays').textContent = OPT.canUse && OPT.quote ? `Write the protocol (${OPT.quote} credits)` : 'Write the protocol';
         $id('cpRunFine').textContent = OPT.canUse
             ? 'Anee analyzes this one deeply — a few minutes. Charged to the same AI credits your questions use.'
@@ -845,6 +948,19 @@
     pickWire('cpPriorities', 'priority', 'priority', null);
     pickWire('cpSoils', 'soil', 'soil', null);
     pickWire('cpWaters', 'water', 'water', null);
+    pickWire('cpSoilConds', 'soilcond', 'soilCondition', null);
+    pickWire('cpTestP', 'testp', 'testP', null);
+    pickWire('cpTestK', 'testk', 'testK', null);
+    pickWire('cpPrevCrops', 'prevcrop', 'prevCrop', null);
+    pickWire('cpResidues', 'residue', 'residue', null);
+    // The granulars are a pick-many: what the farmer can buy.
+    $id('cpGranulars').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-granular]');
+        if (!b) return;
+        const k = b.getAttribute('data-granular');
+        state.granulars = state.granulars.includes(k) ? state.granulars.filter((x) => x !== k) : [...state.granulars, k];
+        document.querySelectorAll('#cpGranulars .wtp-choice').forEach((c) => { const on = state.granulars.includes(c.getAttribute('data-granular')); c.classList.toggle('is-on', on); c.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    });
     $id('cpUnits').addEventListener('click', (e) => {
         const b = e.target.closest('[data-unit]');
         if (!b) return;
@@ -907,6 +1023,8 @@
                 location: state.location, crop: state.crop, variety: state.variety, month: state.month, method: state.method,
                 priority: state.priority, targetYield: state.targetYield || null, yieldUnit: state.yieldUnit, area: state.area,
                 soil: state.soil, water: state.water, problems: state.problems, notes: state.notes,
+                soilCondition: state.soilCondition, testP: state.testP, testK: state.testK, prevCrop: state.prevCrop, residue: state.residue,
+                fertHistory: state.fertHistory, granulars: state.granulars,
             } });
             let data = res.data;
             if (data.pending) {
@@ -1159,16 +1277,18 @@
         const v = bg.variety || {};
         const rec = r.recommendation || {};
         const stages = rec.stages || [];
-        const names = [...new Set(stages.flatMap((st) => (st.fertilizer || []).map((x) => x.product || 'Fertilizer')))];
+        // The five programs (older protocols have none: the stages' own
+        // fertilizer stands as the one program). Every program's colours
+        // come from one shared palette so a product keeps its colour across tabs.
+        const programs = (rec.programs || []).length ? rec.programs : [{ name: 'Recommended', for: '', byStage: stages.map((st) => st.fertilizer || []), stageBags: stages.map((st) => Number(st.bags) || 0), totals: rec.totals || [], totalBags: rec.totalBags || 0, check: (rec.npk || {}).check || [], unknownProducts: (rec.npk || {}).unknownProducts || [], orphans: [] }];
+        const names = [...new Set(programs.flatMap((g) => (g.byStage || []).flat().concat(g.orphans || []).map((x) => x.product || 'Fertilizer')))];
         const colour = (n) => PALETTE[Math.max(0, names.indexOf(n)) % PALETTE.length];
-        const maxBags = Math.max(0.1, ...stages.map((st) => Number(st.bags) || 0));
-        const totals = rec.totals || [];
-        const maxTotal = Math.max(0.1, ...totals.map((t) => Number(t.bags) || 0));
         const yo = rec.yield || {};
         const tN = numOf(yo.target), rN = numOf(yo.realistic);
         const yMax = Math.max(tN || 0, rN || 0, 1);
         const npk = rec.npk || {};
         const water = rec.water || {};
+        const gran = rec.granulars || {};
         const firstFert = Math.max(0, stages.findIndex((st) => (st.fertilizer || []).length));
         const norm = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
         const sameStage = (a, b) => { const x = norm(a), y = norm(b); return !!x && !!y && (x === y || x.includes(y) || y.includes(x)); };
@@ -1214,49 +1334,19 @@
 
             <div class="cp-clock"><span class="e">👁️</span><span><b>The crop is the clock, not the calendar.</b> Tap a stage below to see what goes on then, and why.</span></div>
 
-            ${stages.length ? `
-            <div class="wtp-card" data-cp2-stages data-sel="${firstFert}">
-                <h3>Fertilizer by growth stage <small>50-kg bags for the whole field (${esc(trimN(p.area))} ha) — ${esc(trimN(rec.totalBags || 0))} bags in all</small></h3>
-                <div class="cp-chart cp2-chart">
-                    ${stages.map((st, i) => `<button type="button" class="cp-col cp2-col" data-cp2-stage="${i}" aria-label="${esc(st.stage || '')}"><span class="cp-col-val">${Number(st.bags) > 0 ? esc(trimN(st.bags)) : '·'}</span><div class="cp-bar" style="height:${Math.max(3, Math.round(((Number(st.bags) || 0) / maxBags) * 100))}%">${(st.fertilizer || []).map((x) => `<span class="cp-seg" style="height:${Math.max(0, ((Number(x.totalBags) || 0) / Math.max(0.1, Number(st.bags) || 0)) * 100)}%;background:${colour(x.product || 'Fertilizer')}"></span>`).join('')}</div></button>`).join('')}
-                </div>
-                <div class="cp-lbls cp2-lbls">${stages.map((st, i) => `<span class="cp-lbl" data-cp2-lbl="${i}">${i + 1}</span>`).join('')}</div>
-                ${names.length ? `<div class="cp-legend">${names.map((n) => `<span><i style="background:${colour(n)}"></i>${esc(n)}</span>`).join('')}</div>` : ''}
-                <div class="cp2-detail" data-cp2-detail></div>
-                <div class="cp2-rows">
-                    ${stages.map((st, i) => `
-                    <button type="button" class="cp2-row" data-cp2-stage="${i}">
-                        <span class="cp2-row-n">${i + 1}</span>
-                        <span class="cp2-row-t"><b>${esc(st.stage || '')}${st.days ? ` <em class="cp2-days">${esc(st.days)}</em>` : ''}</b><small>${(st.fertilizer || []).length ? (st.fertilizer || []).map((x) => esc(trimN(x.totalBags)) + ' ' + esc(x.product || '')).join(' · ') : (st.observe ? 'watch' : 'no inputs')}</small></span>
-                        <span class="cp2-row-b">${Number(st.bags) > 0 ? esc(trimN(st.bags)) + ' bags' : ''}</span>
-                    </button>`).join('')}
-                </div>
+            ${(gran.soilLogic || gran.timingLogic) ? `
+            <div class="wtp-card cp3-gran">
+                <h3>Why these granulars <small>which bag, and when — thought through for this ground</small></h3>
+                ${gran.soilLogic ? `<div class="cp3-gran-row"><span class="e">🧪</span><div><b>The soil decides the bag</b><p>${esc(sweep(gran.soilLogic))}</p></div></div>` : ''}
+                ${gran.timingLogic ? `<div class="cp3-gran-row"><span class="e">⏱️</span><div><b>The stage decides the size</b><p>${esc(sweep(gran.timingLogic))}</p></div></div>` : ''}
+                ${(gran.rejected || []).filter((r) => r && r.what).length ? `<div class="cp3-gran-row"><span class="e">🚫</span><div><b>Considered, and set aside</b>
+                    <div class="cp3-no">${(gran.rejected || []).filter((r) => r && r.what).map((r) => `<div class="cp3-no-row"><b>${esc(sweep(r.what))}</b>${r.why ? `<p>${esc(sweep(r.why))}</p>` : ''}</div>`).join('')}</div></div></div>` : ''}
+                ${list(gran.cautions).length ? `<div class="cp2-pills">${list(gran.cautions).map((x) => `<span class="cp2-pill is-risk">⚠️ ${esc(sweep(x))}</span>`).join('')}</div>` : ''}
             </div>` : ''}
 
-            ${(totals.length || (rec.supplies || []).length || (npk.check || []).length) ? `
-            <div class="wtp-card">
-                <h3>Totals to use <small>for the whole field — quantities only</small></h3>
-                ${totals.length ? `<div class="cp2-tot">
-                    ${totals.map((t) => `<div class="cp2-tot-row"><span class="n"><i style="background:${colour(t.product)}"></i>${esc(t.product)}</span><div class="tr"><span style="width:${Math.max(2, Math.round((Number(t.bags) / maxTotal) * 100))}%;background:${colour(t.product)}"></span></div><b>${esc(trimN(t.bags))} bags</b><small>${esc(trimN(t.bagsPerHa))}/ha</small></div>`).join('')}
-                </div>` : ''}
-                ${(npk.check || []).length ? `
-                <div class="cp2-nut">
-                    <div class="cp2-nut-h"><b>Nutrients for the season</b><small>what the program delivers, against what the target needs — kg per hectare${Number(p.area) && Number(p.area) !== 1 ? ' (the field in brackets)' : ''}</small></div>
-                    ${(npk.check || []).map((c) => { const top = Math.max(1, Number(c.have) || 0, Number(c.need) || 0); return `
-                    <div class="cp2-nut-row is-${esc(c.verdict || 'unchecked')}">
-                        <span class="l">${esc(c.label)}</span>
-                        <div class="tr"><span class="have" style="width:${Math.max(2, Math.round(((Number(c.have) || 0) / top) * 100))}%"></span>${c.need !== null && c.need !== undefined ? `<i class="need" style="left:${Math.min(100, Math.round(((Number(c.need) || 0) / top) * 100))}%"></i>` : ''}</div>
-                        <span class="v"><b>${esc(trimN(c.have))}</b>${c.need !== null && c.need !== undefined ? ` / ${esc(trimN(c.need))}` : ''}${Number(p.area) && Number(p.area) !== 1 ? `<small>(${esc(trimN(c.haveField))}${c.needField !== null && c.needField !== undefined ? ' / ' + esc(trimN(c.needField)) : ''})</small>` : ''}</span>
-                        <span class="vd">${c.verdict === 'ok' ? '✅ on target' : (c.verdict === 'short' ? `⚠️ short by ${esc(trimN(Math.abs(c.gap)))}` : (c.verdict === 'over' ? `↑ over by ${esc(trimN(c.gap))}` : '—'))}</span>
-                    </div>`; }).join('')}
-                    ${(npk.unknownProducts || []).length ? `<p class="cp-note">Not counted (analysis unknown): ${esc((npk.unknownProducts || []).join(', '))}.</p>` : ''}
-                </div>${npk.note ? `<p class="cp-note">${esc(sweep(npk.note))}</p>` : ''}`
-                : ((npk.n || npk.p || npk.k) ? `<div class="cp2-npk"><span>N <b>${esc(trimN(npk.n))}</b></span><span>P₂O₅ <b>${esc(trimN(npk.p))}</b></span><span>K₂O <b>${esc(trimN(npk.k))}</b></span><small>kg per hectare for the season</small></div>${npk.note ? `<p class="cp-note">${esc(sweep(npk.note))}</p>` : ''}` : '')}
-                ${(rec.supplies || []).length ? `<div class="cp-shop cp2-shop">
-                    ${(rec.supplies || []).map((x) => `<div class="cp-item"><span class="n">${esc(x.item || '')}<small>${esc(x.when || '')}</small></span><span class="q">${esc(x.qty != null && x.qty !== '' ? trimN(x.qty) : '')} ${esc(x.unit || '')}</span></div>`).join('')}
-                </div>` : ''}
-            </div>` : ''}
+            <div data-cp3-fert></div>
 
+            ${'' /* the fertilizer and totals cards are painted below, per program */}
             ${(rec.deficiencies || []).length ? `
             <div class="wtp-card">
                 <h3>Deficiencies this soil invites <small>${esc(String((OPT && OPT.soils && OPT.soils[p.soil]) || '').split(' — ')[0].toLowerCase() || 'this ground')} — what to watch for, and why</small></h3>
@@ -1312,13 +1402,85 @@
             </div>
             ${actionsHtml(mode)}`;
 
+        /* THE FERTILIZER, PER PROGRAM: tag-like tabs choose one of the five
+           programs; the chart, the rows, the detail panel, the totals and
+           the nutrient check all repaint for it. The selected stage survives
+           a tab change. */
+        const fertHost = hostEl.querySelector('[data-cp3-fert]');
+        let PROG = 0;
+        let SEL = firstFert;
+        const paintFert = () => {
+            const g = programs[PROG] || programs[0];
+            const byStage = g.byStage || [];
+            const stageBags = g.stageBags || [];
+            const maxBags = Math.max(0.1, ...stageBags.map((b) => Number(b) || 0));
+            const totals = g.totals || [];
+            const maxTotal = Math.max(0.1, ...totals.map((t) => Number(t.bags) || 0));
+            const check = g.check || [];
+            fertHost.innerHTML = `
+            ${stages.length ? `
+            <div class="wtp-card" data-cp2-stages data-sel="${SEL}">
+                ${programs.length > 1 ? `<div class="cp3-tabs" role="tablist" aria-label="Fertilizer programs">${programs.map((pg, i) => `<button type="button" class="cp3-tab${i === PROG ? ' is-on' : ''}" role="tab" aria-selected="${i === PROG}" data-cp3-prog="${i}"><b>${esc(pg.name || ('Option ' + (i + 1)))}</b><small>${esc(trimN(pg.totalBags || 0))} bags${verdictWord(pg.check)}</small></button>`).join('')}</div>
+                ${g.for ? `<p class="cp3-for">${i0(PROG) ? '⭐ Recommended — ' : ''}${esc(sweep(g.for))}</p>` : ''}` : ''}
+                <h3>Fertilizer by growth stage <small>50-kg bags for the whole field (${esc(trimN(p.area))} ha) — ${esc(trimN(g.totalBags || 0))} bags in all</small></h3>
+                <div class="cp-chart cp2-chart">
+                    ${stages.map((st, i) => `<button type="button" class="cp-col cp2-col" data-cp2-stage="${i}" aria-label="${esc(st.stage || '')}"><span class="cp-col-val">${Number(stageBags[i]) > 0 ? esc(trimN(stageBags[i])) : '·'}</span><div class="cp-bar" style="height:${Math.max(3, Math.round(((Number(stageBags[i]) || 0) / maxBags) * 100))}%">${(byStage[i] || []).map((x) => `<span class="cp-seg" style="height:${Math.max(0, ((Number(x.totalBags) || 0) / Math.max(0.1, Number(stageBags[i]) || 0)) * 100)}%;background:${colour(x.product || 'Fertilizer')}"></span>`).join('')}</div></button>`).join('')}
+                </div>
+                <div class="cp-lbls cp2-lbls">${stages.map((st, i) => `<span class="cp-lbl" data-cp2-lbl="${i}">${i + 1}</span>`).join('')}</div>
+                ${names.length ? `<div class="cp-legend">${names.filter((n) => (g.byStage || []).flat().concat(g.orphans || []).some((x) => (x.product || 'Fertilizer') === n)).map((n) => `<span><i style="background:${colour(n)}"></i>${esc(n)}</span>`).join('')}</div>` : ''}
+                <div class="cp2-detail" data-cp2-detail></div>
+                <div class="cp2-rows">
+                    ${stages.map((st, i) => `
+                    <button type="button" class="cp2-row" data-cp2-stage="${i}">
+                        <span class="cp2-row-n">${i + 1}</span>
+                        <span class="cp2-row-t"><b>${esc(st.stage || '')}${st.days ? ` <em class="cp2-days">${esc(st.days)}</em>` : ''}</b><small>${(byStage[i] || []).length ? (byStage[i] || []).map((x) => esc(trimN(x.totalBags)) + ' ' + esc(x.product || '')).join(' · ') : (st.observe ? 'watch' : 'no inputs')}</small></span>
+                        <span class="cp2-row-b">${Number(stageBags[i]) > 0 ? esc(trimN(stageBags[i])) + ' bags' : ''}</span>
+                    </button>`).join('')}
+                    ${(g.orphans || []).length ? `<div class="cp3-orphans"><b>Other applications this program names</b>${(g.orphans || []).map((x) => `<div>${esc(trimN(x.totalBags))} bags ${esc(x.product || '')} · ${esc(x.stage || '')}${x.purpose ? ` <small>— ${esc(sweep(x.purpose))}</small>` : ''}</div>`).join('')}</div>` : ''}
+                </div>
+            </div>` : ''}
+
+            ${(totals.length || check.length) ? `
+            <div class="wtp-card">
+                <h3>Totals to use <small>for the whole field — quantities only${programs.length > 1 ? ' · ' + esc(g.name || '') : ''}</small></h3>
+                ${totals.length ? `<div class="cp2-tot">
+                    ${totals.map((t) => `<div class="cp2-tot-row"><span class="n"><i style="background:${colour(t.product)}"></i>${esc(t.product)}</span><div class="tr"><span style="width:${Math.max(2, Math.round((Number(t.bags) / maxTotal) * 100))}%;background:${colour(t.product)}"></span></div><b>${esc(trimN(t.bags))} bags</b><small>${esc(trimN(t.bagsPerHa))}/ha</small></div>`).join('')}
+                </div>` : ''}
+                ${check.length ? `
+                <div class="cp2-nut">
+                    <div class="cp2-nut-h"><b>Nutrients for the season</b><small>what this program delivers, against what the target needs — kg per hectare${Number(p.area) && Number(p.area) !== 1 ? ' (the field in brackets)' : ''}</small></div>
+                    ${check.map((c) => { const top = Math.max(1, Number(c.have) || 0, Number(c.need) || 0); return `
+                    <div class="cp2-nut-row is-${esc(c.verdict || 'unchecked')}">
+                        <span class="l">${esc(c.label)}</span>
+                        <div class="tr"><span class="have" style="width:${Math.max(2, Math.round(((Number(c.have) || 0) / top) * 100))}%"></span>${c.need !== null && c.need !== undefined ? `<i class="need" style="left:${Math.min(100, Math.round(((Number(c.need) || 0) / top) * 100))}%"></i>` : ''}</div>
+                        <span class="v"><b>${esc(trimN(c.have))}</b>${c.need !== null && c.need !== undefined ? ` / ${esc(trimN(c.need))}` : ''}${Number(p.area) && Number(p.area) !== 1 ? `<small>(${esc(trimN(c.haveField))}${c.needField !== null && c.needField !== undefined ? ' / ' + esc(trimN(c.needField)) : ''})</small>` : ''}</span>
+                        <span class="vd">${c.verdict === 'ok' ? '✅ on target' : (c.verdict === 'short' ? `⚠️ short by ${esc(trimN(Math.abs(c.gap)))}` : (c.verdict === 'over' ? `↑ over by ${esc(trimN(c.gap))}` : '—'))}</span>
+                    </div>`; }).join('')}
+                    ${(g.unknownProducts || []).length ? `<p class="cp-note">Not counted (analysis unknown): ${esc((g.unknownProducts || []).join(', '))}.</p>` : ''}
+                </div>${npk.note ? `<p class="cp-note">${esc(sweep(npk.note))}</p>` : ''}` : ''}
+            </div>` : ''}`;
+            wireStages();
+            if (hostEl.classList.contains('is-drawn')) { requestAnimationFrame(() => fertHost.querySelectorAll('.cp-bar, .cp2-tot-row .tr span, .cp2-nut-row .have').forEach((el) => { el.style.transition = 'none'; el.style.transform = 'none'; })); }
+        };
+        const i0 = (i) => i === 0;
+        // One word on the tab for the nutrient check: short beats over beats on target.
+        const verdictWord = (check) => {
+            const v = (check || []).map((c) => c.verdict);
+            if (!v.length) return '';
+            if (v.includes('short')) return ' · short';
+            if (v.includes('over')) return ' · over';
+            return v.every((x) => x === 'ok' || x === 'unchecked') ? ' · on target' : '';
+        };
         // The stage picker: the chart's bars and the rows both choose a
         // stage; the detail panel explains it.
-        const card = hostEl.querySelector('[data-cp2-stages]');
+        const wireStages = () => {
+        const card = fertHost.querySelector('[data-cp2-stages]');
         if (card) {
+            const g = programs[PROG] || programs[0];
             const paint = () => {
                 const i = Math.max(0, Math.min(stages.length - 1, Number(card.dataset.sel) || 0));
-                const st = stages[i] || {};
+                SEL = i;
+                const st = Object.assign({}, stages[i] || {}, { fertilizer: (g.byStage || [])[i] || [] });
                 card.querySelectorAll('[data-cp2-stage]').forEach((el) => el.classList.toggle('is-sel', Number(el.dataset.cp2Stage) === i));
                 card.querySelectorAll('[data-cp2-lbl]').forEach((el) => el.classList.toggle('is-sel', Number(el.dataset.cp2Lbl) === i));
                 const d = card.querySelector('[data-cp2-detail]');
@@ -1336,6 +1498,8 @@
                 }, d.innerHTML ? 140 : 0);
             };
             card.addEventListener('click', (e) => {
+                const tab = e.target.closest('[data-cp3-prog]');
+                if (tab) { PROG = Number(tab.dataset.cp3Prog) || 0; paintFert(); return; }
                 const b = e.target.closest('[data-cp2-stage]');
                 if (b) { card.dataset.sel = b.dataset.cp2Stage; paint(); return; }
                 if (e.target.closest('[data-cp2-prev]')) { card.dataset.sel = String(Math.max(0, Number(card.dataset.sel) - 1)); paint(); return; }
@@ -1343,6 +1507,8 @@
             });
             paint();
         }
+        };
+        paintFert();
     }
 
     function finishDraw(hostEl, item, mode, quiet) {
