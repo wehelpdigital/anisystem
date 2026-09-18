@@ -407,7 +407,12 @@
                                 </a>
                             @endif
                             <a href="{{ route('account.index') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">My Account</a>
-                            <a href="{{ route('ai.credits') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">My Credits</a>
+                            @php $__menuAnee = auth()->user()->canUseAi(); @endphp
+                            <a href="{{ route('ai.credits') }}" class="flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                               @unless ($__menuAnee) data-tier-lock="libreAnee" data-lock-say="Anee's credits come with Libre + Anee — the chat, the analyses and the credit shop, on top of everything Libre already has." @endunless>
+                                <span class="{{ $__menuAnee ? '' : 'tl-dim' }}">My Credits</span>
+                                @unless ($__menuAnee)<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endunless
+                            </a>
                             <a href="{{ route('account.subscription') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">My Subscription</a>
                             {{-- How the app behaves for this person: text size,
                                  contrast, movement. Account is who you are;

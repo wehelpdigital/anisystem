@@ -34,20 +34,31 @@
 
 {{-- AI credits: the log and the shop live on My Credits now; this is the
      signpost, with the number a reader came here to check. --}}
+@php $__aneeOpen = $user->canUseAi(); @endphp
 <div class="max-w-4xl mx-auto mb-5">
-    <a href="{{ route('ai.credits') }}" class="card block p-4 hover:border-brand-300 transition">
-        <div class="flex items-center gap-3">
-            <svg class="w-9 h-9 shrink-0" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg>
+    <div class="card p-4">
+        <a href="{{ route('ai.credits') }}" class="flex items-center gap-3 rounded-xl -m-1 p-1 hover:bg-gray-50 transition"
+           @unless ($__aneeOpen) data-tier-lock="libreAnee" data-lock-say="Anee's credits come with Libre + Anee — the chat, the analyses and the credit shop, on top of everything Libre already has." @endunless>
+            <svg class="w-9 h-9 shrink-0 {{ $__aneeOpen ? '' : 'tl-dim' }}" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg>
             <div class="min-w-0 grow">
-                <p class="font-bold text-gray-900">My Credits</p>
-                <p class="text-xs text-gray-500">The log of every credit spent and added, and the packs to buy more.</p>
+                <p class="font-bold text-gray-900 {{ $__aneeOpen ? '' : 'tl-dim' }}">My Credits</p>
+                <p class="text-xs text-gray-500">Credits to use Anee features</p>
             </div>
             <div class="text-right shrink-0">
-                <p class="text-lg font-extrabold {{ $creditsUnlimited || $creditBalance > 0 ? 'text-brand-700' : 'text-red-600' }}">{{ $creditsUnlimited ? 'Unlimited' : number_format((int) floor((float) $creditBalance)) }}</p>
-                <p class="text-xs text-gray-500">{{ $creditsUnlimited ? '' : 'on hand · ' }}<span class="text-brand-700 font-semibold">Buy credits →</span></p>
+                @if ($__aneeOpen)
+                    <p class="text-lg font-extrabold {{ $creditsUnlimited || $creditBalance > 0 ? 'text-brand-700' : 'text-red-600' }}">{{ $creditsUnlimited ? 'Unlimited' : number_format((int) floor((float) $creditBalance)) }}</p>
+                    <p class="text-xs text-gray-500">{{ $creditsUnlimited ? '' : 'on hand' }}</p>
+                @else
+                    <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>
+                @endif
             </div>
-        </div>
-    </a>
+        </a>
+        @if ($__aneeOpen && ! $creditsUnlimited)
+            <a href="{{ route('ai.credits', ['tab' => 'buy']) }}" class="btn btn-primary w-full mt-3">Buy Credits</a>
+        @elseif (! $__aneeOpen)
+            <a href="{{ route('purchase.plans', ['plan' => 'libre-anee']) }}" class="btn btn-primary w-full mt-3">Add Anee — {{ \App\Support\Region::priceTag(\App\Support\Region::tierPrice('libreAnee')) }}/month</a>
+        @endif
+    </div>
 </div>
 
 <div class="max-w-4xl mx-auto space-y-5">

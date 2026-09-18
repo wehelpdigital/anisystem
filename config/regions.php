@@ -221,8 +221,8 @@ return [
         ],
         'packs' => [
             'starter' => 1.99,
-            'farmer' => 5.99,
-            'season' => 14.99,
+            'farmer' => 8.99,
+            'season' => 17.99,
         ],
     ],
 ];

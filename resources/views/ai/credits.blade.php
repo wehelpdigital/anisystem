@@ -98,7 +98,7 @@
         <div class="cr-hero-row">
             <svg class="cr-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg>
             <div class="min-w-0">
-                <p class="cr-hero-k">AI credits on hand</p>
+                <p class="cr-hero-k">Anee credits on hand</p>
                 @if ($unlimited)
                     <p class="cr-hero-n">Unlimited</p>
                 @else
@@ -107,17 +107,14 @@
             </div>
         </div>
         <p class="cr-hero-p">
-            @if ($unlimited)
-                This account runs the platform and is never charged — but every credit Anee would have spent is still written in the log, so the house knows what she costs.
-            @elseif ($settings)
-                A text question costs about {{ $textCost }} credits; a photo adds about {{ $photoCost }}. The analyses have flat prices, said before anything is spent.
-            @endif
+            Credits are what Anee runs on. ANEE — the Agricultural Neural Expert Engine — is your smart agricultural technician:
+            every answer and every analysis draws on deep data analysis, your farm's own records and history, the weather and
+            climate forecast for your location, and the official recommendations for your crop and region. Each one spends a
+            few credits; the log below keeps the account.
+            @if ($unlimited) This account runs the platform and is never charged, but every credit Anee would have spent is still written down. @endif
         </p>
         <div class="cr-hero-acts">
-            <a href="{{ route('ai.credits', ['tab' => 'buy']) }}" class="btn btn-accent">Buy credits</a>
-            @if ($canBuy)
-                <a href="{{ route('ai.home') }}" class="btn btn-white">Ask Anee</a>
-            @endif
+            <a href="{{ route('ai.home') }}" class="btn btn-white">Ask Anee</a>
         </div>
     </div>
 
@@ -209,6 +206,9 @@
                 <p class="text-sm text-gray-500 mt-1">This account runs the platform and is never charged.</p>
             </div>
         @else
+            @if ($settings)
+                <p class="text-xs text-gray-500 px-1">A text question costs about {{ $textCost }} credits; a photo adds about {{ $photoCost }}. The analyses have flat prices, said before anything is spent.</p>
+            @endif
             @php $best = $packs->sortBy(fn ($p) => $p->credits > 0 ? \App\Support\Region::packPrice($p) / $p->credits : PHP_FLOAT_MAX)->first(); @endphp
             <div class="cr-packs">
                 @foreach ($packs as $pack)
@@ -218,7 +218,8 @@
                         <h4 class="font-bold text-gray-900">{{ $pack->packName }}</h4>
                         <p class="cr-pack-n mt-1">{{ number_format($pack->credits) }}<small>credits</small></p>
                         <p class="text-lg font-extrabold text-gray-900 mt-1">{{ \App\Support\Region::money($packPrice) }}</p>
-                        <p class="text-xs text-gray-500 mt-0.5">{{ \App\Support\Region::money($pack->credits > 0 ? $packPrice / $pack->credits : 0, 3) }} per credit</p>
+                        @php $bonus = \App\Support\Region::ph() ? (int) $pack->credits - (int) round($packPrice) : 0; @endphp
+                        <p class="text-xs text-gray-500 mt-0.5">{{ $bonus > 0 ? '+' . number_format($bonus) . ' free · ' : '' }}{{ \App\Support\Region::money($pack->credits > 0 ? $packPrice / $pack->credits : 0, 3) }} per credit</p>
                         @if ($pack->description)
                             <p class="text-sm text-gray-500 mt-2 grow">{{ $pack->description }}</p>
                         @endif

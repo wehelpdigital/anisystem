@@ -26,14 +26,17 @@ class AiCreditController extends Controller
 
     /**
      * My Credits: the balance, every movement in the ledger (one tab), and
-     * the packs to buy (the other). Open to everyone -- a member on a plan
-     * without Anee still has a log to read (the starter credits waiting for
-     * them) and sees, in place of the packs, the plan that would let them
-     * spend it. Paying and buying stay behind canUseAi below.
+     * the packs to buy (the other). Anee's own: a plan without her meets the
+     * locked page instead.
      */
     public function index(Request $request)
     {
         $user = $request->user();
+        // A plan without Anee has no credits to keep: the locked page, which
+        // sells the rung that opens her (2026-09-19, the owner's ask).
+        if (! $user->canUseAi()) {
+            return view('ai.locked', ['tier' => $user->planTier()]);
+        }
 
         return view('ai.credits', [
             'tab' => $request->query('tab') === 'buy' ? 'buy' : 'log',
