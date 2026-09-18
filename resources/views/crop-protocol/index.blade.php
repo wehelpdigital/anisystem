@@ -712,7 +712,7 @@
             <section class="wtp-step" data-step="8">
                 <p class="wtp-q">The ground, a little closer</p>
                 <p class="wtp-sub">Optional, but each answer changes which bag goes on and when. Skip what you do not know.</p>
-                <p class="wp-qh">Soil condition <small>pH, sodium, salt — as far as you know</small></p>
+                <p class="wp-qh">Soil condition <small>pH, sodium, salt — as far as you know; pick more than one where the ground is both (alkaline and sodic, say)</small></p>
                 <div class="wtp-choices" id="cpSoilConds"></div>
                 <p class="wp-qh mt-4">Phosphorus in the soil <small>from a soil test, or how the last crops went</small></p>
                 <div class="wtp-choices is-four" id="cpTestP"></div>
@@ -791,7 +791,7 @@
 
     let OPT = null;
     const state = { location: '', crop: '', variety: '', month: null, method: null, priority: null, targetYield: '', yieldUnit: '', area: '', soil: null, water: null, problems: [], notes: '',
-        soilCondition: 'unsure', testP: 'unsure', testK: 'unsure', prevCrop: 'unsure', residue: 'unsure', fertHistory: '', granulars: [] };
+        soilConditions: [], testP: 'unsure', testK: 'unsure', prevCrop: 'unsure', residue: 'unsure', fertHistory: '', granulars: [] };
     let step = 0;
     const STEPS = 11;
     const phone = () => !window.matchMedia('(min-width: 640px)').matches;
@@ -828,6 +828,7 @@
         $id('cpWaters').innerHTML = Object.entries(OPT.waters).map(([k, label]) => choice('water', k, waterIcons[k] || '💧', label, '')).join('');
         const condIcons = { unsure: '🤷', acidic: '🍋', neutral: '⚖️', alkaline: '🧂', sodic: '🧱', saline: '🌊' };
         $id('cpSoilConds').innerHTML = Object.entries(OPT.soilConditions || {}).map(([k, label]) => { const [n, s] = split(label); return choice('soilcond', k, condIcons[k] || '•', n, s); }).join('');
+        paintSoilConds();
         const lvlIcons = { unsure: '🤷', low: '🔻', medium: '➖', high: '🔺' };
         $id('cpTestP').innerHTML = Object.entries(OPT.testLevels || {}).map(([k, label]) => choice('testp', k, lvlIcons[k] || '•', label, '')).join('');
         $id('cpTestK').innerHTML = Object.entries(OPT.testLevels || {}).map(([k, label]) => choice('testk', k, lvlIcons[k] || '•', label, '')).join('');
@@ -836,7 +837,7 @@
         const resIcons = { unsure: '🤷', removed: '🚜', burned: '🔥', incorporated: '🔄' };
         $id('cpResidues').innerHTML = Object.entries(OPT.residues || {}).map(([k, label]) => choice('residue', k, resIcons[k] || '•', label, '')).join('');
         $id('cpGranulars').innerHTML = Object.entries(OPT.granulars || {}).map(([k, label]) => `<button type="button" class="wtp-choice" data-granular="${esc(k)}" aria-pressed="false"><span class="c-e"></span><span>${esc(label)}</span></button>`).join('');
-        ['cpSoilConds', 'cpTestP', 'cpTestK', 'cpPrevCrops', 'cpResidues'].forEach((h) => { const first = $id(h).querySelector('.wtp-choice'); if (first) first.classList.add('is-on'); });
+        ['cpTestP', 'cpTestK', 'cpPrevCrops', 'cpResidues'].forEach((h) => { const first = $id(h).querySelector('.wtp-choice'); if (first) first.classList.add('is-on'); });
         $id('cpProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
             <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
         $id('cpDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
@@ -925,12 +926,9 @@
                 state.notes = $id('cpNotes').value.trim();
                 // A trouble ticked here answers the next step's soil
                 // condition while it is still "unsure" -- one tap fewer.
-                if (state.soilCondition === 'unsure') {
+                if (!state.soilConditions.some((k) => PH_WORDS.includes(k))) {
                     const said = ['acidic', 'alkaline'].find((k) => state.problems.includes(k));
-                    if (said && (OPT.soilConditions || {})[said]) {
-                        state.soilCondition = said;
-                        document.querySelectorAll('#cpSoilConds .wtp-choice').forEach((c) => c.classList.toggle('is-on', c.getAttribute('data-soilcond') === said));
-                    }
+                    if (said && (OPT.soilConditions || {})[said]) { state.soilConditions = [said, ...state.soilConditions]; paintSoilConds(); }
                 }
                 return true;
             case 9: state.fertHistory = $id('cpFertHistory').value.trim(); return true;
@@ -944,8 +942,8 @@
         $id('cpReview').innerHTML = `${esc(crop.icon || '🌱')} <b>${esc(crop.label || '')}</b>${state.variety ? ' · ' + esc(state.variety) : ''} · 📍 ${esc(state.location)}`
             + `<br><span class="text-xs">${esc(month)} · ${esc(OPT.methods[state.method]?.label || '')} · ${esc(OPT.priorities[state.priority]?.label || '')} · ${esc(target)}</span>`
             + `<br><span class="text-xs">${esc(state.area)} ha · ${esc(split(OPT.soils[state.soil] || '')[0])} · ${esc(OPT.waters[state.water] || '')}${state.problems.length ? ' · ' + state.problems.length + ' trouble' + (state.problems.length === 1 ? '' : 's') : ''}</span>`;
-        const closer = ['soilCondition', 'testP', 'testK', 'prevCrop', 'residue'].filter((k) => state[k] && state[k] !== 'unsure').length + (state.fertHistory ? 1 : 0) + (state.granulars.length ? 1 : 0);
-        if (closer) $id('cpReview').innerHTML += `<br><span class="text-xs">${state.soilCondition !== 'unsure' ? esc(split((OPT.soilConditions || {})[state.soilCondition] || state.soilCondition)[0]) + ' soil · ' : ''}${closer} closer answer${closer === 1 ? '' : 's'}${state.granulars.length ? ' · ' + state.granulars.length + ' granulars you can buy' : ''}</span>`;
+        const closer = ['testP', 'testK', 'prevCrop', 'residue'].filter((k) => state[k] && state[k] !== 'unsure').length + (state.soilConditions.length ? 1 : 0) + (state.fertHistory ? 1 : 0) + (state.granulars.length ? 1 : 0);
+        if (closer) $id('cpReview').innerHTML += `<br><span class="text-xs">${state.soilConditions.length ? esc(state.soilConditions.map((k) => split((OPT.soilConditions || {})[k] || k)[0].toLowerCase()).join(', ')) + ' soil · ' : ''}${closer} closer answer${closer === 1 ? '' : 's'}${state.granulars.length ? ' · ' + state.granulars.length + ' granulars you can buy' : ''}</span>`;
         $id('cpRunSays').textContent = OPT.canUse && OPT.quote ? `Write the protocol (${OPT.quote} credits)` : 'Write the protocol';
         $id('cpRunFine').textContent = OPT.canUse
             ? 'Anee analyzes this one deeply — a few minutes. Charged to the same AI credits your questions use.'
@@ -968,7 +966,26 @@
     pickWire('cpPriorities', 'priority', 'priority', null);
     pickWire('cpSoils', 'soil', 'soil', null);
     pickWire('cpWaters', 'water', 'water', null);
-    pickWire('cpSoilConds', 'soilcond', 'soilCondition', null);
+    // The soil condition is a pick-many: a ground can be alkaline AND sodic.
+    // The pH words exclude one another; "not sure" clears the lot.
+    const PH_WORDS = ['acidic', 'neutral', 'alkaline'];
+    function paintSoilConds() {
+        document.querySelectorAll('#cpSoilConds .wtp-choice').forEach((c) => {
+            const k = c.getAttribute('data-soilcond');
+            const on = k === 'unsure' ? state.soilConditions.length === 0 : state.soilConditions.includes(k);
+            c.classList.toggle('is-on', on);
+            c.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+    }
+    $id('cpSoilConds').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-soilcond]');
+        if (!b) return;
+        const k = b.getAttribute('data-soilcond');
+        if (k === 'unsure') state.soilConditions = [];
+        else if (state.soilConditions.includes(k)) state.soilConditions = state.soilConditions.filter((x) => x !== k);
+        else state.soilConditions = [...state.soilConditions.filter((x) => !(PH_WORDS.includes(k) && PH_WORDS.includes(x))), k];
+        paintSoilConds();
+    });
     pickWire('cpTestP', 'testp', 'testP', null);
     pickWire('cpTestK', 'testk', 'testK', null);
     pickWire('cpPrevCrops', 'prevcrop', 'prevCrop', null);
@@ -1043,7 +1060,7 @@
                 location: state.location, crop: state.crop, variety: state.variety, month: state.month, method: state.method,
                 priority: state.priority, targetYield: state.targetYield || null, yieldUnit: state.yieldUnit, area: state.area,
                 soil: state.soil, water: state.water, problems: state.problems, notes: state.notes,
-                soilCondition: state.soilCondition, testP: state.testP, testK: state.testK, prevCrop: state.prevCrop, residue: state.residue,
+                soilConditions: state.soilConditions, testP: state.testP, testK: state.testK, prevCrop: state.prevCrop, residue: state.residue,
                 fertHistory: state.fertHistory, granulars: state.granulars,
             } });
             let data = res.data;
