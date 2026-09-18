@@ -149,6 +149,17 @@
                         </div>
                         <button type="button" @click="fill('libre.tier@anisystem.test', 'tier1234')" class="btn btn-outline btn-sm shrink-0">Fill</button>
                     </div>
+                    {{-- Libre with Anee: the same walls as Libre (one season, no
+                         workers, no inventory) with the chat and the analyses
+                         open, so the difference between the two rungs can be
+                         walked side by side. --}}
+                    <div class="flex items-center justify-between gap-3">
+                        <div class="min-w-0">
+                            <p class="text-sm font-semibold text-gray-800">Libre + Anee <span class="font-normal text-gray-400">· {{ \App\Support\Region::priceTag(\App\Support\Region::tierPrice('libreAnee')) }}/mo</span></p>
+                            <p class="text-xs text-gray-500 truncate">anee.tier@anisystem.test · tier1234</p>
+                        </div>
+                        <button type="button" @click="fill('anee.tier@anisystem.test', 'tier1234')" class="btn btn-outline btn-sm shrink-0">Fill</button>
+                    </div>
                     <div class="flex items-center justify-between gap-3">
                         <div class="min-w-0">
                             <p class="text-sm font-semibold text-gray-800">Solo Farmer <span class="font-normal text-gray-400">· {{ \App\Support\Region::priceTag(\App\Support\Region::tierPrice('solo')) }} tier</span></p>
