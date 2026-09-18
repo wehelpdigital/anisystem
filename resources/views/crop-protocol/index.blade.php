@@ -168,6 +168,22 @@
     .cp-clock { display: flex; gap: .7rem; align-items: flex-start; border-radius: 1rem; padding: .85rem 1rem;
         background: #fffbeb; border: 1px solid #fde68a; color: #78350f; font-size: .82rem; line-height: 1.5; }
     .cp-clock b { color: #92400e; }
+    /* The opening note: the protocol is a guide and the farm decides. A warm
+       panel with a green accent so it reads as advice, not a warning. */
+    .cp2-guide { position: relative; display: flex; gap: .8rem; align-items: flex-start; padding: 1rem 1.05rem 1rem 1.15rem; border-radius: 1.1rem; overflow: hidden;
+        background: linear-gradient(135deg, #f4f9ee 0%, #fdfaf0 100%); border: 1px solid #d9e8c8; }
+    .cp2-guide::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #5c8f34, #b7862b); }
+    .cp2-guide-e { flex: none; font-size: 1.55rem; line-height: 1.1; filter: drop-shadow(0 1px 1px rgba(0,0,0,.08)); }
+    .cp2-guide-t { min-width: 0; flex: 1 1 auto; }
+    .cp2-guide-t b { display: block; font-family: var(--font-heading); font-size: 1rem; line-height: 1.25; color: #2f5219; margin-bottom: .3rem; }
+    .cp2-guide-t p { font-size: .84rem; line-height: 1.58; color: #3f4a37; }
+    .cp2-guide-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .65rem; }
+    .cp2-guide-tags span { font-size: .7rem; font-weight: 700; padding: .22rem .6rem; border-radius: 999px; background: rgba(255,255,255,.75); border: 1px solid #cfe0bc; color: #3d6823; white-space: nowrap; }
+    html.dark .cp2-guide { background: linear-gradient(135deg, #17200f 0%, #221d10 100%); border-color: #2f3f1f; }
+    html.dark .cp2-guide::before { background: linear-gradient(180deg, #6b9f3d, #c9962f); }
+    html.dark .cp2-guide-t b { color: #cfe6b8; }
+    html.dark .cp2-guide-t p { color: #b7c2ad; }
+    html.dark .cp2-guide-tags span { background: rgba(255,255,255,.05); border-color: #3d5028; color: #a5c97e; }
     .cp-clock .e { font-size: 1.3rem; flex: none; }
     html.dark .cp-clock { background: #2a2413; border-color: #4a3d16; color: #e0c26a; }
     html.dark .cp-clock b { color: #fcd34d; }
@@ -1136,6 +1152,8 @@
                 </div>
             </div>
 
+            ${guideHtml()}
+
             <div class="cp-clock"><span class="e">👁️</span><span><b>The crop is the clock, not the calendar.</b> Every step below is hung on a growth stage and the signs you can see in the field. The "about N weeks" hints are only hints — go by the stage you actually see, look every few days, and act on what the plants and the pests are doing. That is precision farming.</span></div>
 
             ${(r.stages || []).length ? `
@@ -1243,11 +1261,6 @@
                 <div class="va-links">${(() => { const seen = new Set(); return (r.webSources || []).map((x) => ({ name: x.title || host(x.url) || 'A published source', h: host(x.url) })).filter((x) => { const k = x.name.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; }).map((x) => `<span class="va-link is-plain"><span class="l-t">${esc(x.name)}</span>${x.h && x.h !== x.name ? `<span class="l-h">${esc(x.h)}</span>` : ''}</span>`).join(''); })()}</div>
             </div>` : ''}
 
-            <div class="wtp-card">
-                <h3>🧭 A guide, not a promise</h3>
-                <p class="wtp-fine">This is a starting protocol, not a prescription: the rates follow the official recommendations bent to your answers, and the sprays are what to have ready, not what to pour on a date. What makes the season is observation — walk the field, read the plants, count the pests, and use each step when the crop reaches its stage. Ask {{ \App\Support\Region::t('extensionOffice') }} to confirm the products registered for your area.</p>
-            </div>
-
             <div class="wtp-acts">
                 <button type="button" class="btn btn-primary w-full" data-cp-attach>${OPT && OPT.aneeFace ? `<img class="wtp-anee-face" src="${esc(OPT.aneeFace)}" alt="">` : '🤖'} Attach to Anee</button>
                 ${mode === 'fresh' ? `<button type="button" class="btn btn-white w-full" data-cp-again>📋 Write another protocol</button>` : ''}
@@ -1268,6 +1281,17 @@
                 <h3>📚 Other Sources in Analysis</h3>
                 <div class="va-links">${(() => { const seen = new Set(); return (r.webSources || []).map((x) => ({ name: x.title || host(x.url) || 'A published source', h: host(x.url) })).filter((x) => { const k = x.name.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; }).map((x) => `<span class="va-link is-plain"><span class="l-t">${esc(x.name)}</span>${x.h && x.h !== x.name ? `<span class="l-h">${esc(x.h)}</span>` : ''}</span>`).join(''); })()}</div>
             </div>` : '';
+
+    /* ---- the opening note: a guide, and the farm has the last word ---- */
+    const guideHtml = () => `
+            <div class="cp2-guide" role="note">
+                <span class="cp2-guide-e">🧭</span>
+                <div class="cp2-guide-t">
+                    <b>Still a guide — your farm has the last word</b>
+                    <p>Anee wrote this from the official recommendations, the outlook and your answers, but it has not walked your field. Bend it to what is true where you are: your ground as you know it, when your water and your labor are actually free, the machines and hands you have, what the market is paying, and what the plants tell you when you walk the rows. Use each step when the crop reaches its stage, not when the calendar says so, and confirm the products with {{ \App\Support\Region::t('extensionOffice') }}.</p>
+                    <div class="cp2-guide-tags"><span>🕒 your timing</span><span>💧 your water</span><span>👩‍🌾 your labor &amp; tools</span><span>🛒 your market</span><span>🌱 what the field shows</span></div>
+                </div>
+            </div>`;
 
     /* ---- THE TWO-PART PROTOCOL: background, then the recommendation ---- */
     function drawV2(hostEl, item, mode) {
@@ -1312,6 +1336,8 @@
                     ${item.charged ? `<span class="wtp-chip">${item.charged} credits</span>` : ''}
                 </div>
             </div>
+
+            ${guideHtml()}
 
             <div class="cp2-part"><span class="cp2-part-n">1</span><span><b>Background</b><small>the place, the weather ahead, the variety</small></span></div>
 
@@ -1399,11 +1425,6 @@
             </div>
 
             ${sourcesHtml(r)}
-
-            <div class="wtp-card">
-                <h3>🧭 A guide, not a promise</h3>
-                <p class="wtp-fine">This is a starting protocol, not a prescription: the rates follow the official recommendations bent to your answers, and the interventions are what to do only when the sign is seen, not what to pour on a date. Your own eyes on the crop, and a soil test where you can get one, finish what this starts.</p>
-            </div>
             ${actionsHtml(mode)}`;
 
         /* THE FERTILIZER, PER PROGRAM: tag-like tabs choose one of the five
