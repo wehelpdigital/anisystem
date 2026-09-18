@@ -435,8 +435,10 @@ class CropProtocolController extends Controller
         $report['recommendation']['totalBags'] = round(array_sum($totals) * $area, 1);
         // No seed on the list either: how much a farmer sows is their own call.
         $seed = fn (string $name) => (bool) preg_match('/\bseeds?\b|seedling|\bbinhi\b|planting material|cuttings?\b|tubers? for planting/i', $name);
-        // Nor the fertilizers themselves: they are totalled above already.
-        $report['recommendation']['supplies'] = array_values(array_filter((array) ($report['recommendation']['supplies'] ?? []), fn ($it) => ! $organic((string) ($it['item'] ?? '')) && ! $seed((string) ($it['item'] ?? '')) && self::grade((string) ($it['item'] ?? '')) === null));
+        // No supplies list at all (2026-09-18): seed is the farmer's own call and
+        // a spray's amount is the label's — the only quantities are the bags.
+        $report['recommendation']['supplies'] = [];
+        unset($seed);
 
         /* The nutrient check: what the program actually delivers, from each
          * product's own analysis (46-0-0 is 46% N; a bag is 50 kg), against
@@ -596,7 +598,7 @@ class CropProtocolController extends Controller
             // The two-part protocol (2026-09-18).
             $bg = $report['background'] ?? [];
             $v = $bg['variety'] ?? [];
-            $fert = collect($rec['stages'] ?? [])->filter(fn ($st) => ! empty($st['fertilizer']))->map(fn ($st) => ($st['stage'] ?? '') . ': '
+            $fert = collect($rec['stages'] ?? [])->filter(fn ($st) => ! empty($st['fertilizer']))->map(fn ($st) => ($st['stage'] ?? '') . (! empty($st['days']) ? ' (' . $st['days'] . ')' : '') . ': '
                 . collect($st['fertilizer'])->map(fn ($x) => ($x['totalBags'] ?? '') . ' bags ' . ($x['product'] ?? '') . (! empty($x['purpose']) ? ' (' . $x['purpose'] . ')' : ''))->implode(', '))->implode(' | ');
             $watch = collect($rec['stages'] ?? [])->filter(fn ($st) => ! empty($st['observe']))->map(fn ($st) => ($st['stage'] ?? '') . ': ' . $st['observe'] . (! empty($st['intervene']) ? ' → ' . $st['intervene'] : ''))->implode(' | ');
             $text = "\n\n--- ATTACHED: Crop Protocol Analysis (the farmer generated this earlier; treat it as shared context) ---\n"
@@ -613,6 +615,7 @@ class CropProtocolController extends Controller
                 . (! empty($rec['npk']['check']) ? 'Nutrients per hectare (program delivers / target needs): ' . collect($rec['npk']['check'])->map(fn ($c) => $c['label'] . ' ' . $c['have'] . ($c['need'] !== null ? ' / ' . $c['need'] . ' kg (' . $c['verdict'] . ')' : ' kg'))->implode('; ') . "\n" : '')
                 . 'Observe / intervene: ' . $watch . "\n"
                 . 'Threats: ' . collect($rec['threats'] ?? [])->map(fn ($t) => ($t['threat'] ?? '') . ' at ' . ($t['stage'] ?? '') . ' — ' . ($t['action'] ?? '') . (! empty($t['product']) ? ' (' . $t['product'] . ')' : ''))->implode(' | ') . "\n"
+                . (! empty($rec['deficiencies']) ? 'Deficiencies this soil invites: ' . collect($rec['deficiencies'])->map(fn ($d) => ($d['nutrient'] ?? '') . ' (' . ($d['when'] ?? '') . ') — ' . ($d['why'] ?? ''))->implode(' | ') . "\n" : '')
                 . (! empty($rec['foliars']) ? 'Foliars: ' . collect($rec['foliars'])->map(fn ($f) => ($f['stage'] ?? '') . ': ' . ($f['product'] ?? '') . ' — ' . ($f['why'] ?? ''))->implode(' | ') . "\n" : '')
                 . 'Water: ' . ($rec['water']['plan'] ?? '') . "\n"
                 . 'Yield: target ' . ($rec['yield']['target'] ?? '') . ', realistic ' . ($rec['yield']['realistic'] ?? '') . "\n"
@@ -726,6 +729,17 @@ class CropProtocolController extends Controller
         $cropLabel = CropCatalog::label($p['crop']);
         $crop = CropCatalog::CROPS[$p['crop']];
         $when = \Illuminate\Support\Carbon::parse($p['month'] . '-01')->format('F Y');
+        // The app's own stage table for this crop and count, so the document's
+        // day numbers agree with what the Growth Stages module will say.
+        $counter = self::counterFor((string) $p['method'], (string) $p['crop']);
+        $table = \App\Support\CropStages::stagesFor($p['crop'], $counter, null);
+        $rows = [];
+        foreach (array_values($table) as $i => $st) {
+            $from = (int) $st[0];
+            $until = isset($table[$i + 1]) ? (int) $table[$i + 1][0] - 1 : null;
+            $rows[] = $st[1] . ' ' . $counter . ' ' . $from . ($until !== null ? '–' . $until : '+');
+        }
+        $stageTable = $rows ? implode('; ', $rows) : 'none on file — use the crop\'s published stage timing';
         $target = $p['targetYield'] !== null
             ? rtrim(rtrim(number_format((float) $p['targetYield'], 2), '0'), '.') . ' ' . (self::yieldUnits()[$p['yieldUnit']] ?? 'per hectare')
             : 'not set — aim for what the variety realistically gives here';
@@ -743,7 +757,30 @@ class CropProtocolController extends Controller
             'variety' => $p['variety'] !== '' ? $p['variety'] : 'not named — assume a widely grown, well-documented variety for this crop, season and region, and SAY which you assumed',
             'area' => rtrim(rtrim(number_format((float) $p['area'], 2), '0'), '.'),
             'notes' => $p['notes'] !== '' ? $p['notes'] : 'none',
+            'counter' => $counter,
+            'stageTable' => $stageTable,
         ];
+    }
+
+    /**
+     * The count a crop is managed by for a planting method: days after
+     * transplanting for a crop set out as seedlings, after sowing for one
+     * seeded in place, after planting for sets, cuttings and tubers.
+     */
+    public static function counterFor(string $method, string $crop): string
+    {
+        // The crop's own count first (corn is DAP even when sown in place),
+        // bent by the method: seedlings set out → DAT; a crop the app counts
+        // from transplanting but sown in place → DAS; the rest → DAP.
+        $own = \App\Support\CropStages::counter($crop);
+        if (in_array($method, ['transplanted', 'nursery', 'tree_seedlings'], true)) {
+            return 'DAT';
+        }
+        if (str_starts_with($method, 'direct')) {
+            return $own === 'DAT' ? 'DAS' : ($own === 'AGE' ? 'DAP' : $own);
+        }
+
+        return in_array($own, ['DAT', 'AGE'], true) ? 'DAP' : $own;
     }
 
     /**
@@ -801,6 +838,7 @@ FACTS GIVEN
 - Location as the farmer wrote it: {$p['location']}
 - Crop: {$f['cropLabel']}; variety: {$f['variety']}
 - Planting: {$f['when']}; method: {$f['method']}
+- The count this crop is managed by: {$f['counter']} (days after transplanting / sowing / planting). The app's own stage table for it: {$f['stageTable']}
 - Field size: {$f['area']} hectare(s)
 - Soil, as the farmer describes it: {$f['soil']}; water: {$f['water']}
 - Field troubles the farmer reports: {$f['problems']}
@@ -816,28 +854,30 @@ GROUND RULES
 - EASY TO READ. Short plain sentences a farmer reads easily; no jargon without a plain word beside it; nothing repeated between the two parts. Every word limit below is a ceiling, not a target.
 - THE VARIETY comes from the notes: name, breeder, maturity, yield potential, the season it is bred for, its strengths and weaknesses. Where the farmer's variety could not be found, say so (found false) and name the variety you assumed for the numbers.
 - Every quantity is for THIS field: give fertilizer per hectare (bagsPerHa, a 50-kg bag) and the app scales it to the field size; be specific with products and rates, and bend them to the aim (highest yield = the fuller recommended rate with a top-up; lower cost = the lean end, dropping what pays least; in the middle = the standard recommendation) and to the soil and troubles. Each application carries its PURPOSE in a few words (what the plant does with it at that stage).
-- Stage names must be the crop's real stages in order (for rice e.g. Land preparation, Seedling/Nursery, Transplanting or Establishment, Tillering, Panicle initiation, Booting & heading, Flowering, Grain filling, Ripening & harvest; for corn Land preparation, Emergence, V4–V6, V8–V10, Tasseling & silking, Grain fill, Maturity; for vegetables the equivalent). Timing is the stage and a plain sign of it, plus "about week N–M" only as a hint (WEEKS, never days — no DAS/DAT anywhere).
+- Stage names must be the crop's real stages in order, following the app's stage table above (split or merge a stage only where the crop truly needs it, keeping the numbers consistent; for corn say the V-stages too, e.g. "Early vegetative (V4–V6)"). EVERY stage carries its day count in `days`: the count and the range, e.g. "DAT 35–49", "DAS 0–7", "DAP 45–54", the last stage "DAT 90+", and land preparation "before DAT 0" — always the numbers, never weeks alone. Adjust the ranges to the variety's own maturity where the notes give it. Timing in words is the stage and a plain sign of it; the days are the second clock.
 - OBSERVE AND INTERVENE: at each stage say in one line what to look for, and in one line what to do only if it is seen (the threshold, then the class or active ingredient) — never spray by calendar. Leave both empty at a stage with nothing to watch.
 - NO PRICES ANYWHERE. Totals are quantities only.
 - NO ORGANIC FERTILIZER: the program is inorganic products only (urea, complete, ammonium sulfate, ammonium phosphate, muriate of potash and the like). Do not recommend organic fertilizer, compost, manure, vermicast or biofertilizer at any stage, and do not list them among the supplies.
 - Water: one short plan for the season with THIS water source, and what changes if the sky turns dry or wet.
 - Yield: say plainly whether the target is realistic for this variety, place and season, and what realistic is.
 - PRODUCTS, NAMED. Where a spray, drench or foliar is called for, name a product the farmer can ask for: a registered product sold in {$countryName} with its active ingredient or content in brackets, ending with the words "or equivalent" (e.g. "Padan 50 SP (cartap hydrochloride) or equivalent", "Zinc sulfate heptahydrate 1% spray or equivalent", "Sofit 300 EC (pretilachlor) or equivalent"). Prefer the products the notes name; where none is named, give the active ingredient or content and still say "or equivalent". This is a name to ask for, not a recommendation to buy a brand — no marketing tone.
+- DEFICIENCIES BY SOIL: analyse deeply which nutrient deficiencies THIS soil type is prone to for THIS crop — the heavy clay that locks zinc under flooding, the sandy ground that leaks nitrogen, potassium and magnesium, the acid soil that starves phosphorus and calcium and frees aluminium, the alkaline or limed soil that hides iron, zinc and manganese, the drained or saline ground with its own hunger — and for each: the nutrient by name, WHY this soil and this crop invite it, the SIGN the farmer sees on the plant, WHEN in the season it shows, and what to do about it in plain words. No amounts, no rates and no product or chemical names here — the nutrient, the reason and the sign are the point.
+- NO AMOUNTS FOR SPRAYS: for insecticides, fungicides, herbicides, molluscicides and foliars name the product (as above) and the moment, never a rate, a dose, a litre or a kilo — the dose is the label's and the farmer's own. The only quantities in this protocol are the fertilizer bags.
 - FOLIARS: only where they pay for this crop, soil and aim — a micronutrient the soil or crop is known to lack (zinc on flooded or alkaline rice, boron and calcium on fruiting vegetables, magnesium on sandy ground) or a growth foliar the official guides accept — with the stage, the product and why. None when none pays.
 - Weeds are threats too: where weeds matter for this crop and method, one threat is the weed pressure, with the herbicide to use (pre- or post-emergence) named as above.
 - Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
 
 Return ONLY a valid JSON object — no code fences, no commentary — in exactly this shape:
-{"headline":"","background":{"place":"","field":"","weather":{"outlook":"","enso":"","risks":[""]},"variety":{"found":false,"name":"","by":"","released":"","maturityDays":0,"yieldPotential":"","season":"","traits":"","caution":"","source":""}},"recommendation":{"intro":"","stages":[{"stage":"","signs":"","hint":"","fertilizer":[{"product":"","bagsPerHa":0,"purpose":""}],"observe":"","intervene":""}],"npk":{"need":{"n":0,"p":0,"k":0},"note":""},"supplies":[{"item":"","qty":0,"unit":"","when":""}],"water":{"plan":"","ifDry":"","ifWet":""},"foliars":[{"stage":"","product":"","why":""}],"threats":[{"threat":"","stage":"","sign":"","action":"","product":""}],"yield":{"target":"","realistic":"","note":""}},"confidence":"moderate","dataGaps":[""],"summary":""}
+{"headline":"","background":{"place":"","field":"","weather":{"outlook":"","enso":"","risks":[""]},"variety":{"found":false,"name":"","by":"","released":"","maturityDays":0,"yieldPotential":"","season":"","traits":"","caution":"","source":""}},"recommendation":{"intro":"","stages":[{"stage":"","days":"","signs":"","fertilizer":[{"product":"","bagsPerHa":0,"purpose":""}],"observe":"","intervene":""}],"npk":{"need":{"n":0,"p":0,"k":0},"note":""},"deficiencies":[{"nutrient":"","why":"","signs":"","when":"","action":""}],"water":{"plan":"","ifDry":"","ifWet":""},"foliars":[{"stage":"","product":"","why":""}],"threats":[{"threat":"","stage":"","sign":"","action":"","product":""}],"yield":{"target":"","realistic":"","note":""}},"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
 - headline: one line, ≤ 14 words, the season in a breath.
 - background.place: ≤ 40 words — the location, its climate zone and the season this planting falls in. background.field: ≤ 30 words — the soil, the water and the troubles in one breath, and what they ask of the protocol.
 - background.weather: outlook ≤ 55 words for the months from planting to harvest; enso ≤ 30 words; risks 2–4 items of ≤ 12 words.
 - background.variety: found true only when the notes carry real published specifications; name as published; by = breeder / company / institution; released = year or ""; maturityDays a number (0 when unknown); yieldPotential in words with the unit (e.g. "6–8 t/ha; farms average 4.5"); season = the season it is bred for; traits ≤ 55 words (strengths and weaknesses that matter here); caution ≤ 25 words (its known weakness on this ground, or ""); source = the registry, breeder or agency the notes cite. When nothing was found: found false, name = the variety assumed, traits says why it was assumed.
 - recommendation.intro: ≤ 80 words — the approach for this field and aim, and the one or two things that matter most this season.
-- recommendation.stages: SIX to TEN stages in order; signs ≤ 20 words; hint = "about week N–M after transplanting/sowing" or "n/a"; fertilizer = the applications at that stage (empty list when none), each with product (e.g. "Urea 46-0-0", "Complete 14-14-14", "Ammonium sulfate 21-0-0", "Ammonium phosphate 16-20-0", "Muriate of potash 0-0-60"), bagsPerHa (a number, 50-kg bags per hectare; decimals allowed), purpose ≤ 14 words; observe ≤ 25 words or ""; intervene ≤ 30 words or "".
+- recommendation.stages: SIX to TEN stages in order; days = the count and range as defined above (always given); signs ≤ 20 words; fertilizer = the applications at that stage (empty list when none), each with product (e.g. "Urea 46-0-0", "Complete 14-14-14", "Ammonium sulfate 21-0-0", "Ammonium phosphate 16-20-0", "Muriate of potash 0-0-60"), bagsPerHa (a number, 50-kg bags per hectare; decimals allowed), purpose ≤ 14 words; observe ≤ 25 words or ""; intervene ≤ 30 words or "" (the product and the moment, no rate).
 - recommendation.npk.need: the kg N, P2O5 and K2O per hectare this variety needs to reach the TARGET yield on this ground (the official recommendation for the region and season, bent to the soil and the aim; where the target is unrealistic, the need for the realistic yield instead) — and the fertilizer program above MUST add up to it: the app totals the program's nutrients from each product's analysis and shows the farmer where it falls short. note ≤ 30 words (the LCC/MOET check if rice, or the soil-test caveat).
-- recommendation.supplies: 3–8 items to have for the whole field beyond the fertilizer (the sprays and foliars named above to keep on hand, tools if notable), qty a number, unit, when = a stage. Quantities only. NEVER seed or seedlings — how much a farmer sows is their own call and is not part of this protocol.
+- recommendation.deficiencies: 2–5 items, the deficiencies this soil type and crop are prone to, most likely first: nutrient (e.g. "Zinc"), why ≤ 30 words (this soil, this crop), signs ≤ 25 words (what the plant shows), when = the stage or stages it shows, action ≤ 30 words in plain words with no amounts and no product names.
 - recommendation.water: plan ≤ 60 words; ifDry ≤ 25 words; ifWet ≤ 25 words.
 - recommendation.foliars: 0–4 items, each with the stage, the product (named as above, ending "or equivalent") and why ≤ 16 words; [] when none pays.
 - recommendation.threats: 4–7 items — the insects, diseases and weeds most likely to hurt here, each with the stage it strikes, the sign to act on (≤ 14 words), the action (≤ 18 words) and product = the spray or herbicide to use for it, named as above ending "or equivalent" ("" only for a threat that no product answers, like heat).

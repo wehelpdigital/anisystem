@@ -362,6 +362,21 @@
     .cp2-npk b { color: var(--color-gray-900); font-size: .9rem; }
     .cp2-npk small { flex-basis: 100%; font-size: .68rem; color: var(--color-gray-400); }
     .cp2-shop { margin-top: .7rem; }
+    .cp2-days { font-style: normal; font-weight: 800; font-size: .66rem; color: var(--color-brand-700); background: var(--color-brand-50); border: 1px solid var(--color-brand-100); border-radius: 999px; padding: .08rem .45rem; white-space: nowrap; vertical-align: middle; }
+    html.dark .cp2-days { color: #a5c97e; background: #22301a; border-color: #2b3a1c; }
+    .cp2-defs { display: grid; grid-template-columns: minmax(0, 1fr); gap: .5rem; }
+    .cp2-def { padding: .65rem .75rem; border-radius: .85rem; background: #f7fbf2; border: 1px solid #cfe3bd; opacity: 0; transform: translateY(6px); transition: all .45s cubic-bezier(.22,1,.36,1); }
+    .wtp-report.is-drawn .cp2-def { opacity: 1; transform: none; }
+    .cp2-def-h { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; margin-bottom: .2rem; }
+    .cp2-def-h b { font-size: .88rem; color: var(--color-gray-900); }
+    .cp2-def-h .tag { font-size: .62rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--color-brand-800); background: var(--color-brand-100); padding: .12rem .5rem; border-radius: 999px; }
+    .cp2-def p { font-size: .78rem; line-height: 1.5; color: var(--color-gray-700); margin-top: .15rem; }
+    .cp2-def em { font-style: normal; font-weight: 700; color: var(--color-gray-500); }
+    html.dark .cp2-def { background: rgb(107 159 61 / .1); border-color: #2f4d24; }
+    html.dark .cp2-def-h b { color: #e8efe1; }
+    html.dark .cp2-def-h .tag { color: #cfe6b5; background: #2f4d24; }
+    html.dark .cp2-def p { color: #b7c2ad; }
+    @media (prefers-reduced-motion: reduce) { .cp2-def { transition: none; transform: none; opacity: 1; } }
     .cp2-threats { display: grid; gap: .5rem; }
     .cp2-threats { grid-template-columns: minmax(0, 1fr); }
     @media (min-width: 640px) { .cp2-threats { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
@@ -1212,7 +1227,7 @@
                     ${stages.map((st, i) => `
                     <button type="button" class="cp2-row" data-cp2-stage="${i}">
                         <span class="cp2-row-n">${i + 1}</span>
-                        <span class="cp2-row-t"><b>${esc(st.stage || '')}</b><small>${(st.fertilizer || []).length ? (st.fertilizer || []).map((x) => esc(trimN(x.totalBags)) + ' ' + esc(x.product || '')).join(' · ') : (st.observe ? 'watch' : 'no inputs')}</small></span>
+                        <span class="cp2-row-t"><b>${esc(st.stage || '')}${st.days ? ` <em class="cp2-days">${esc(st.days)}</em>` : ''}</b><small>${(st.fertilizer || []).length ? (st.fertilizer || []).map((x) => esc(trimN(x.totalBags)) + ' ' + esc(x.product || '')).join(' · ') : (st.observe ? 'watch' : 'no inputs')}</small></span>
                         <span class="cp2-row-b">${Number(st.bags) > 0 ? esc(trimN(st.bags)) + ' bags' : ''}</span>
                     </button>`).join('')}
                 </div>
@@ -1240,6 +1255,14 @@
                 ${(rec.supplies || []).length ? `<div class="cp-shop cp2-shop">
                     ${(rec.supplies || []).map((x) => `<div class="cp-item"><span class="n">${esc(x.item || '')}<small>${esc(x.when || '')}</small></span><span class="q">${esc(x.qty != null && x.qty !== '' ? trimN(x.qty) : '')} ${esc(x.unit || '')}</span></div>`).join('')}
                 </div>` : ''}
+            </div>` : ''}
+
+            ${(rec.deficiencies || []).length ? `
+            <div class="wtp-card">
+                <h3>Deficiencies this soil invites <small>${esc(String((OPT && OPT.soils && OPT.soils[p.soil]) || '').split(' — ')[0].toLowerCase() || 'this ground')} — what to watch for, and why</small></h3>
+                <div class="cp2-defs">
+                    ${(rec.deficiencies || []).map((d, i) => `<div class="cp2-def" style="transition-delay:${i * 60}ms"><div class="cp2-def-h"><b>${esc(d.nutrient || '')}</b>${d.when ? `<span class="tag">${esc(d.when)}</span>` : ''}</div>${d.why ? `<p>${esc(sweep(d.why))}</p>` : ''}${d.signs ? `<p><em>Signs:</em> ${esc(sweep(d.signs))}</p>` : ''}${d.action ? `<p><em>What to do:</em> ${esc(sweep(d.action))}</p>` : ''}</div>`).join('')}
+                </div>
             </div>` : ''}
 
             ${(rec.threats || []).length ? `
@@ -1302,7 +1325,7 @@
                 d.classList.add('is-swap');
                 setTimeout(() => {
                     d.innerHTML = `
-                        <div class="cp2-d-head"><span class="cp2-row-n">${i + 1}</span><span><b>${esc(st.stage || '')}</b>${st.hint && st.hint !== 'n/a' ? `<small>${esc(st.hint)}</small>` : ''}</span>
+                        <div class="cp2-d-head"><span class="cp2-row-n">${i + 1}</span><span><b>${esc(st.stage || '')}</b>${st.days ? `<small><em class="cp2-days">${esc(st.days)}</em></small>` : (st.hint && st.hint !== 'n/a' ? `<small>${esc(st.hint)}</small>` : '')}</span>
                             <span class="cp2-d-nav"><button type="button" data-cp2-prev ${i === 0 ? 'disabled' : ''} aria-label="Previous stage">‹</button><button type="button" data-cp2-next ${i === stages.length - 1 ? 'disabled' : ''} aria-label="Next stage">›</button></span></div>
                         ${st.signs ? `<p class="cp2-d-signs">👁️ ${esc(sweep(st.signs))}</p>` : ''}
                         ${(st.fertilizer || []).length ? `<div class="cp2-d-fert">${(st.fertilizer || []).map((x) => `<div class="cp2-d-app"><i style="background:${colour(x.product || 'Fertilizer')}"></i><span><b>${esc(trimN(x.totalBags))} ${Number(x.totalBags) === 1 ? 'bag' : 'bags'} ${esc(x.product || '')}</b> <small>(${esc(trimN(x.bagsPerHa))}/ha)</small>${x.purpose ? `<em>${esc(sweep(x.purpose))}</em>` : ''}</span></div>`).join('')}</div>` : `<p class="cp2-dim">No fertilizer at this stage.</p>`}
