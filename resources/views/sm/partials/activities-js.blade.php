@@ -250,6 +250,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const LOT_REALIGN = @json((object) $schedule->lots->filter(fn ($l) => $l->growthRealignedAt && is_array($l->growthRealign))->mapWithKeys(fn ($l) => [$l->id => $l->realignPayload()])->all());
     const LOT_MANUAL_DAY_ZERO = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->dayZeroDate ? $l->dayZeroDate->format('Y-m-d') : null]));
     const LOT_MANUAL_TRANSPLANT = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->transplantDate ? $l->transplantDate->format('Y-m-d') : null]));
+    // The farmer's delay counter per lot: days the crop is behind the calendar.
+    const LOT_DELAY = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => (int) ($l->delayDays ?? 0)]));
 
     const U = {
         store:            ()  => `{{ route('sm.activities.store') }}?scheduleId=${SCHEDULE_ID}`,
@@ -444,16 +446,24 @@ document.addEventListener('DOMContentLoaded', () => {
     let LOT_DAY_ZERO_SOURCE = {};
     let LOT_TRANSPLANT_SOURCE = {};
 
-    /* "DAT+7 | DAS+12" on a chip: the part after the bar in its own colour. */
+    /* "DAT+7 | DAS+12 | DELAY DAT-3 | DELAY DAS+2" on a chip: the parts after
+       the first bar keep their bar, and the delayed counts wear their own
+       colour. The chip itself opens the delay counter sheet. */
     function dasHtml(das) {
-        const [main, alt] = String(das || '').split(' | ');
-        return esc(main) + (alt ? `<i class="lot-tag-das-alt">| ${esc(alt)}</i>` : '');
+        const parts = String(das || '').split(' | ');
+        const main = parts.shift();
+        // A space before each piece: inline-blocks with nothing between them
+        // have no place to wrap, and the chip ran off a phone's card.
+        return esc(main) + parts.map((p) => ` <i class="lot-tag-das-alt${p.startsWith('DELAY') ? ' is-delay' : ''}">| ${esc(p)}</i>`).join('');
     }
+    const sg = (n) => (n > 0 ? '+' : '') + n;
+    const lotDelay = (lotId) => Math.max(0, Number(LOT_DELAY[lotId]) || 0);
 
     function computeDasLabel(lotId, targetDate) {
         if (!targetDate) return '';
         const b = parseLocalDate(targetDate);
         if (!b) return '';
+        const delay = lotDelay(lotId);
         const mode = lotDayType(lotId);   // 'DAT' | 'DAS' | 'DAP'
         // Only a sown-then-transplanted lot flips to a fresh DAT count. A
         // direct-seeded lot keeps one count even if a transplant activity
@@ -470,10 +480,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (z) { const dd = Math.round((b - z) / 86400000); return ' · DAS' + (dd > 0 ? '+' : '') + dd + ' → DAT0'; }
                     }
                     // After the pivot the DAT leads and the count from
-                    // sowing rides beside it: "DAT+7 | DAS+12".
+                    // sowing rides beside it: "DAT+7 | DAS+12"; a delay
+                    // counter adds the delayed counts after them.
                     const z2 = LOT_DAY_ZERO_DATES[lotId] ? parseLocalDate(LOT_DAY_ZERO_DATES[lotId]) : null;
-                    const alt = z2 ? (() => { const dd = Math.round((b - z2) / 86400000); return ' | DAS' + (dd > 0 ? '+' : '') + dd; })() : '';
-                    return ' · DAT' + (datDelta > 0 ? '+' : '') + datDelta + alt;
+                    const dd = z2 ? Math.round((b - z2) / 86400000) : null;
+                    let out = ' · DAT' + sg(datDelta) + (dd !== null ? ' | DAS' + sg(dd) : '');
+                    if (delay > 0) {
+                        out += ' | DELAY DAT' + sg(datDelta - delay) + (dd !== null ? ' | DELAY DAS' + sg(dd - delay) : '');
+                    }
+                    return out;
                 }
             }
         }
@@ -483,7 +498,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const a = parseLocalDate(anchor);
         if (!a) return '';
         const delta = Math.round((b - a) / 86400000);
-        return ' · ' + lotBaseCounter(lotId) + (delta > 0 ? '+' : '') + delta;
+        const base = lotBaseCounter(lotId);
+        return ' · ' + base + sg(delta) + (delay > 0 ? ' | DELAY ' + base + sg(delta - delay) : '');
     }
 
     /* ---- Growth stages ----------------------------------------------------
@@ -801,7 +817,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const lotId = parseInt(tag.getAttribute('data-lot-id'), 10);
                 const name = tag.getAttribute('data-lot-name') || '';
                 const das = computeDasLabel(lotId, targetDate).replace(/^\s*·\s*/, '');
-                tag.innerHTML = esc(name) + (das ? `<span class="lot-tag-das">${dasHtml(das)}</span>` : '');
+                tag.innerHTML = esc(name) + (das ? `<span class="lot-tag-das" data-lot-delay="${lotId}" title="Tap to set a delay counter">${dasHtml(das)}</span>` : '');
             });
             // The meta row below the title is the variety alone now, and a
             // variety does not change when a card moves - but it is still
@@ -1078,7 +1094,7 @@ document.addEventListener('DOMContentLoaded', () => {
                  * name, and so the day search can still find it. */
                 const das = computeDasLabel(id, targetDateStr).replace(/^\s*·\s*/, '');
                 const hue = (id * 137) % 360;   // golden-angle → distinct, stable per lot
-                return `<span class="item-tag lot-tag" data-lot-id="${id}" data-lot-name="${esc(name)}" data-lot-variety="${esc(variety)}" style="background:hsl(${hue}, 55%, 40%)">${esc(name)}${das ? `<span class="lot-tag-das">${dasHtml(das)}</span>` : ''}</span>`;
+                return `<span class="item-tag lot-tag" data-lot-id="${id}" data-lot-name="${esc(name)}" data-lot-variety="${esc(variety)}" style="background:hsl(${hue}, 55%, 40%)">${esc(name)}${das ? `<span class="lot-tag-das" data-lot-delay="${id}" title="Tap to set a delay counter">${dasHtml(das)}</span>` : ''}</span>`;
             }).join('');
         } else if (a.activityType !== 'worker_payroll') {
             // A payroll day has no lot by nature, so saying so is noise.
@@ -7700,6 +7716,59 @@ document.addEventListener('DOMContentLoaded', () => {
         closeSheet('moveDateSheet');
         moveSingleActivity(CARD_MENU.id, newDate);
     });
+
+    /* ================================================================
+     * THE DELAY COUNTER — the farmer says the crop in a lot stands so
+     * many days behind the calendar; every chip then shows the delayed
+     * count beside the calendar's. A tap on the count opens the sheet;
+     * with a delay already set it offers to change or remove it.
+     * ================================================================ */
+    const LOT_DELAY_URL = @json(route('sm.lots.delay'));
+    let DELAY_LOT = null;
+    function openDelaySheet(lotId) {
+        if (!mayEditBoard()) return;
+        DELAY_LOT = Number(lotId);
+        const cur = lotDelay(DELAY_LOT);
+        $id('delayLotName').textContent = LOT_NAMES[DELAY_LOT] || ('Lot #' + DELAY_LOT);
+        $id('delaySheetTitle').textContent = cur > 0 ? 'Delay counter' : 'Add a delay counter?';
+        $id('delayAsk').hidden = cur > 0;
+        $id('delayHave').hidden = !(cur > 0);
+        $id('delayHaveDays').textContent = cur + ' day' + (cur === 1 ? '' : 's');
+        $id('delayDaysInput').value = cur > 0 ? String(cur) : '';
+        $id('delayRemoveBtn').hidden = !(cur > 0);
+        $id('delaySaveBtn').textContent = cur > 0 ? 'Save changes' : 'Add the delay';
+        openSheet('lotDelaySheet');
+        if (!window.matchMedia('(hover: none)').matches) setTimeout(() => $id('delayDaysInput')?.focus(), 280);
+    }
+    async function saveDelay(days) {
+        if (!DELAY_LOT) return;
+        try {
+            const res = await api(`${LOT_DELAY_URL}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { lotId: DELAY_LOT, delayDays: days } });
+            LOT_DELAY[DELAY_LOT] = Math.max(0, Number(res.data?.delayDays) || 0);
+            closeSheet('lotDelaySheet');
+            toast(res.message);
+            // Every chip of every card is re-read: the count is the lot's,
+            // not one card's. The mirror rebuilds from the cards when opened.
+            refreshActivityCardDasLabels();
+        } catch (err) {
+            toast(err.message, 'error');
+        }
+    }
+    $id('delaySaveBtn')?.addEventListener('click', () => {
+        const n = parseInt($id('delayDaysInput').value, 10);
+        if (isNaN(n) || n < 0) { toast('How many days is the crop behind? Enter a number.', 'error'); return; }
+        if (n === 0) { saveDelay(null); return; }
+        saveDelay(n);
+    });
+    $id('delayRemoveBtn')?.addEventListener('click', () => saveDelay(null));
+    $id('delayDaysInput')?.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); $id('delaySaveBtn').click(); } });
+    document.addEventListener('click', (e) => {
+        const chip = e.target.closest('#activitiesList .lot-tag-das[data-lot-delay]');
+        if (!chip) return;
+        e.preventDefault();
+        e.stopPropagation();
+        openDelaySheet(chip.getAttribute('data-lot-delay'));
+    }, true);
 
     /* ================================================================
      * SHARE A DAY — public, link-based (no login for the viewer). The

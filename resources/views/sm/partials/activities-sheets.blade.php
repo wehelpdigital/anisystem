@@ -1746,6 +1746,30 @@
 </div>
 
 {{-- ============================ MOVE SINGLE CARD TO DATE ============================ --}}
+{{-- THE DELAY COUNTER: the crop in a lot stands so many days behind the
+     calendar. Opened by a tap on a card's day count; with a delay already
+     set it offers to change or remove it. --}}
+<div class="sheet hidden" id="lotDelaySheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="delaySheetTitle">Add a delay counter?</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-3">
+        <p class="text-sm text-gray-600" id="delayAsk">The crop in <strong id="delayLotName" class="text-gray-900"></strong> is running behind the calendar? Say by how many days, and every activity's day count will show the delayed count beside the calendar's — <span class="whitespace-nowrap">DAT+20 | DELAY DAT+10</span>.</p>
+        <p class="text-sm text-gray-600" id="delayHave" hidden>This lot carries a delay of <strong id="delayHaveDays" class="text-gray-900"></strong>. Change it, or remove it.</p>
+        <div>
+            <label class="form-label" for="delayDaysInput">Days behind the calendar</label>
+            <input type="number" id="delayDaysInput" class="form-input" min="0" max="365" step="1" inputmode="numeric" placeholder="e.g. 10">
+        </div>
+    </div>
+    <div class="sheet-footer flex gap-2">
+        <button type="button" class="btn btn-white flex-1" data-sheet-close>Cancel</button>
+        <button type="button" class="btn btn-white flex-1 text-red-600!" id="delayRemoveBtn" hidden>Remove</button>
+        <button type="button" class="btn btn-primary flex-1" id="delaySaveBtn">Add the delay</button>
+    </div>
+</div>
+
 <div class="sheet hidden" id="moveDateSheet" style="--sheet-width:24rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">

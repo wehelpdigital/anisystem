@@ -61,6 +61,10 @@
             if (! in_array($mode, ['DAP', 'DAS', 'TREE'], true)) { $mode = 'DAT'; }
             $z = $lotDayZeroEff[$lot->id] ?? null;
             $suffix = null;
+            // The farmer's delay counter: the delayed count rides after the
+            // calendar's, one per count the chip already shows.
+            $delay = (int) ($lot->delayDays ?? 0);
+            $sg = fn (int $n) => ($n > 0 ? '+' : '') . $n;
 
             // Only a sown-then-transplanted lot flips to a fresh DAT count.
             if ($mode === 'DAT') {
@@ -74,12 +78,14 @@
                     } else {
                         // After the pivot the DAT leads, and the count from
                         // sowing rides beside it (the owner's ask, 2026-09-18):
-                        // "DAT+7 | DAS+12" — the part after the bar is drawn
-                        // in its own colour.
-                        $suffix = 'DAT' . ($datDelta > 0 ? '+' : '') . $datDelta;
-                        if ($z) {
-                            $dd = (int) $z->diffInDays($startC, false);
-                            $suffix .= ' | DAS' . ($dd > 0 ? '+' : '') . $dd;
+                        // "DAT+7 | DAS+12"; a delay counter adds the delayed
+                        // counts after them.
+                        $suffix = 'DAT' . $sg($datDelta);
+                        $dd = $z ? (int) $z->diffInDays($startC, false) : null;
+                        if ($dd !== null) { $suffix .= ' | DAS' . $sg($dd); }
+                        if ($delay > 0) {
+                            $suffix .= ' | DELAY DAT' . $sg($datDelta - $delay);
+                            if ($dd !== null) { $suffix .= ' | DELAY DAS' . $sg($dd - $delay); }
                         }
                     }
                 }
@@ -88,7 +94,9 @@
             // Base phase: DAS before any transplant, DAP throughout.
             if ($suffix === null && $z) {
                 $delta = (int) $z->diffInDays($startC, false);
-                $suffix = ($mode === 'DAP' ? 'DAP' : 'DAS') . ($delta > 0 ? '+' : '') . $delta;
+                $base = $mode === 'DAP' ? 'DAP' : 'DAS';
+                $suffix = $base . $sg($delta);
+                if ($delay > 0) { $suffix .= ' | DELAY ' . $base . $sg($delta - $delay); }
             }
 
             if ($suffix !== null) { $lotDaySuffix[$lot->id] = $suffix; }
@@ -254,7 +262,7 @@
                               data-lot-id="{{ $lot->id }}"
                               data-lot-name="{{ $lot->lotName }}"
                               data-lot-variety="{{ $lot->variety ?? '' }}"
-                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}@isset($lotDaySuffix[$lot->id])@php [$dasMain, $dasAlt] = array_pad(explode(' | ', $lotDaySuffix[$lot->id], 2), 2, null); @endphp<span class="lot-tag-das">{{ $dasMain }}@if ($dasAlt)<i class="lot-tag-das-alt">| {{ $dasAlt }}</i>@endif</span>@endisset</span>
+                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}@isset($lotDaySuffix[$lot->id])@php $dasParts = explode(' | ', $lotDaySuffix[$lot->id]); @endphp<span class="lot-tag-das" data-lot-delay="{{ $lot->id }}" title="Tap to set a delay counter">{{ array_shift($dasParts) }}@foreach ($dasParts as $dasPart) <i class="lot-tag-das-alt{{ str_starts_with($dasPart, 'DELAY') ? ' is-delay' : '' }}">| {{ $dasPart }}</i>@endforeach</span>@endisset</span>
                     @endforeach
                 @elseif ($a->activityType !== 'worker_payroll')
                     {{-- A payroll day is about who turned up, not which field,
@@ -274,7 +282,7 @@
                               data-lot-id="{{ $lot->id }}"
                               data-lot-name="{{ $lot->lotName }}"
                               data-lot-variety="{{ $lot->variety ?? '' }}"
-                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}@isset($lotDaySuffix[$lot->id])@php [$dasMain, $dasAlt] = array_pad(explode(' | ', $lotDaySuffix[$lot->id], 2), 2, null); @endphp<span class="lot-tag-das">{{ $dasMain }}@if ($dasAlt)<i class="lot-tag-das-alt">| {{ $dasAlt }}</i>@endif</span>@endisset</span>
+                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}@isset($lotDaySuffix[$lot->id])@php $dasParts = explode(' | ', $lotDaySuffix[$lot->id]); @endphp<span class="lot-tag-das" data-lot-delay="{{ $lot->id }}" title="Tap to set a delay counter">{{ array_shift($dasParts) }}@foreach ($dasParts as $dasPart) <i class="lot-tag-das-alt{{ str_starts_with($dasPart, 'DELAY') ? ' is-delay' : '' }}">| {{ $dasPart }}</i>@endforeach</span>@endisset</span>
                     @endforeach
                 @endif
                 @if($a->activityType === 'irrigation')

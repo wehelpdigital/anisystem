@@ -34,6 +34,8 @@ class AsScheduleLot extends BaseModel
         'growthShiftDays',
         'growthRealignedAt',
         'growthRealign',
+        // The farmer's own delay counter: days the crop is behind the calendar.
+        'delayDays',
         'notes',
         'deleteStatus',
     ];

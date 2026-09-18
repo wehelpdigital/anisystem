@@ -196,6 +196,35 @@ class LotController extends BaseScheduleController
         return $this->jsonOk('Map detached from ' . $lot->lotName . '.', ['data' => $this->lotPayload($lot->fresh())]);
     }
 
+    /**
+     * The farmer's delay counter: the crop in this lot stands so many days
+     * behind the calendar's count. Every activity's day chip then shows the
+     * delayed count beside the calendar's; nothing else moves. Null (or 0)
+     * clears it.
+     */
+    public function delay(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+
+        $data = Validator::make($request->all(), [
+            'lotId' => 'required|integer',
+            'delayDays' => 'nullable|integer|min:0|max:365',
+        ])->validate();
+
+        $lot = AsScheduleLot::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)
+            ->find($data['lotId']);
+        if (! $lot) {
+            return $this->jsonFail('That lot is not on this schedule.', 404);
+        }
+
+        $days = (int) ($data['delayDays'] ?? 0);
+        $lot->update(['delayDays' => $days > 0 ? $days : null]);
+
+        return $this->jsonOk($days > 0 ? 'Delay counter set: ' . $days . ' day' . ($days === 1 ? '' : 's') . ' behind.' : 'Delay counter removed.',
+            ['data' => $this->lotPayload($lot->fresh())]);
+    }
+
     public function pin(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request);

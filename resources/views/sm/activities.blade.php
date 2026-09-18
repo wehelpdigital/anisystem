@@ -2253,11 +2253,20 @@
             margin-left: .38rem; padding-left: .38rem;
             border-left: 1px solid rgb(255 255 255 / .38);
             font-weight: 700; font-variant-numeric: tabular-nums;
-            opacity: .92; white-space: nowrap;
+            opacity: .92; white-space: normal; min-width: 0;
         }
-        /* The count from sowing beside the DAT, in its own colour so the
-           two are never read as one number. */
-        .lot-tag .lot-tag-das-alt { font-style: normal; font-weight: 600; margin-left: .3rem; color: #fde68a; }
+        /* Each count is held on its own line piece ("DAT+7", "| DAS+12",
+           "| DELAY DAT-3"): the chip may wrap BETWEEN counts on a narrow
+           screen, never inside one. */
+        .lot-tag .lot-tag-das > i { display: inline-block; white-space: nowrap; }
+        .activity-card-lothead { min-width: 0; max-width: 100%; }
+        .activity-card-lothead .lot-tag { flex-wrap: wrap; min-width: 0; max-width: 100%; }
+        /* The count from sowing beside the DAT, white like it; the delayed
+           counts after them in amber, so a delay reads as a delay. The whole
+           count is a button for the delay counter sheet. */
+        .lot-tag .lot-tag-das { cursor: pointer; }
+        .lot-tag .lot-tag-das-alt { font-style: normal; font-weight: 600; margin-left: .1rem; color: #fff; }
+        .lot-tag .lot-tag-das-alt.is-delay { color: #fde68a; }
         /* The variety, below the title, as a regular neutral tag. */
         .activity-card-lotmeta { margin-top: .4rem; }
         .activity-card-lotmeta:empty { display: none; margin-top: 0; }
