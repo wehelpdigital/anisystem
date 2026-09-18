@@ -76,7 +76,8 @@
                 </div>
 
                 <label class="flex items-center gap-2.5 text-sm text-gray-700 select-none cursor-pointer py-1">
-                    <input type="checkbox" name="remember" value="1" {{ old('remember') ? 'checked' : '' }}
+                    {{-- Ticked by default; a re-rendered form keeps what the member chose. --}}
+                    <input type="checkbox" name="remember" value="1" {{ session()->hasOldInput() ? (old('remember') ? 'checked' : '') : 'checked' }}
                         class="w-5 h-5 rounded border-gray-300 text-brand-600 focus:ring-brand-500">
                     Keep me logged in
                 </label>

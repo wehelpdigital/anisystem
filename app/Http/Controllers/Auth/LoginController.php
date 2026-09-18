@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\SuperAdminBridge;
+use App\Support\SignIn;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -63,10 +64,9 @@ class LoginController extends Controller
             ]);
         }
 
-        // Always issue the persistent "remember" cookie. If the database-backed
-        // session is ever transiently lost (DB hiccup, connection cap), Laravel
-        // re-authenticates from this cookie so the user is never bounced to login.
-        Auth::login($user, true);
+        // A day of idleness ends the session; "Keep me logged in" adds the
+        // remember cookie, ten days from the last visit (see App\Support\SignIn).
+        SignIn::user($user, $request->boolean('remember'));
 
         $request->session()->regenerate();
 

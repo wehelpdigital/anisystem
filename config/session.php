@@ -32,9 +32,23 @@ return [
     |
     */
 
-    'lifetime' => (int) env('SESSION_LIFETIME', 120),
+    'lifetime' => (int) env('SESSION_LIFETIME', 1440),
 
     'expire_on_close' => env('SESSION_EXPIRE_ON_CLOSE', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Remember Me
+    |--------------------------------------------------------------------------
+    |
+    | A member who ticks "Keep me logged in" gets a remember cookie for this
+    | many minutes from their LAST visit (it slides; see the
+    | RefreshRememberCookie middleware). Ten days, so a week away from the
+    | field never means the login page. The idle session above is one day.
+    |
+    */
+
+    'remember_lifetime' => (int) env('SESSION_REMEMBER_LIFETIME', 14400),
 
     /*
     |--------------------------------------------------------------------------

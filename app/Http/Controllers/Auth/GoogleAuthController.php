@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use App\Support\SignIn;
 
 /**
  * "Continue with Google", hand-rolled: redirect out with a state nonce,
@@ -114,7 +115,7 @@ class GoogleAuthController extends Controller
             NewMemberWelcome::activate($user);
         }
 
-        Auth::login($user, true);
+        SignIn::user($user, true); // no box to tick at this door: kept for ten days
         $request->session()->regenerate();
         $user->forceFill(['currentSessionId' => $request->session()->getId()])->saveQuietly();
 

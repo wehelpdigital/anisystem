@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\URL;
+use App\Support\SignIn;
 
 class RegisterController extends Controller
 {
@@ -157,7 +158,7 @@ class RegisterController extends Controller
             return redirect()->route('login')->with('error', 'Your account is disabled.');
         }
 
-        Auth::login($user, true);
+        SignIn::user($user, true); // no box to tick at this door: kept for ten days
         $request->session()->regenerate();
         $user->forceFill(['currentSessionId' => $request->session()->getId()])->saveQuietly();
 

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Support\SignIn;
 
 /**
  * Public worker-invite flow (#25): a worker follows the emailed link, sets a
@@ -61,7 +62,7 @@ class WorkerInviteController extends Controller
         ]);
 
         // Log the worker in and drop them into this farm's context.
-        Auth::login($user, true);
+        SignIn::user($user, true); // no box to tick at this door: kept for ten days
         $request->session()->regenerate();
         $user->forceFill(['currentSessionId' => $request->session()->getId()])->saveQuietly();
         session(['activeBossId' => $grant->bossUserId]);

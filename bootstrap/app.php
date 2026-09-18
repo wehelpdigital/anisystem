@@ -32,8 +32,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'no-cache' => \App\Http\Middleware\NoCacheHeaders::class,
             'admin.panel' => \App\Http\Middleware\AdminPanelOnly::class,
         ]);
-        // Runs after StartSession — drops a session whose public IP changed,
-        // then refreshes the member's last-seen (online) timestamp.
         // Search engines: noindex on everything behind the login, and on the
         // public site until the mother app's switch opens it. Global, and so
         // outside the router: the guest redirect the auth middleware throws
@@ -43,8 +41,13 @@ return Application::configure(basePath: dirname(__DIR__))
             // Which country this request is in, before anything renders or
             // any route is generated (the public site's {face} default).
             \App\Http\Middleware\ResolveRegion::class,
-            \App\Http\Middleware\BindSessionToIp::class,
+            // One device at a time; then "keep me logged in" slides another
+            // ten days from this visit; then the last-seen (online) stamp.
+            // The session is no longer tied to the network it came from: a
+            // phone walking from wifi to mobile data lost its session every
+            // time, and the logout took the remember cookie with it.
             \App\Http\Middleware\EnforceSingleSession::class,
+            \App\Http\Middleware\RefreshRememberCookie::class,
             \App\Http\Middleware\UpdateLastSeen::class,
             // Whether the worker in front of us may be at this door at all.
             // Here rather than in ninety controller actions: that shape has
