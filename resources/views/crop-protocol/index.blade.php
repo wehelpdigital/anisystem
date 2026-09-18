@@ -1138,7 +1138,9 @@
     function drawV1(hostEl, item, mode) {
         const r = item.report || {};
         const p = item.params || {};
-        const sweep = (t) => String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/\s{2,}/g, ' ').trim();
+        // No emoji shortcodes, and no interjections -- a report saved before the
+        // register was written may still open with "Aray," or "Naku!"; they go.
+        const sweep = (t) => { const s = String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/(^|[.!?]\s+)(aray|naku|hala|grabe|whoa|wow|ooh|oh no|hay naku|sus|ay)\b[,!.]*\s*/gi, '$1').replace(/\s{2,}/g, ' ').trim(); return s.charAt(0).toUpperCase() + s.slice(1); };
         const crop = (OPT ? OPT.crops.find((c) => c.key === p.crop) : null) || {};
         const month = (OPT ? (OPT.months.find((m) => m.key === p.month) || {}).label : '') || p.month || '';
         const A = r.assumed || {};
@@ -1155,7 +1157,7 @@
         hostEl.innerHTML = `
             <div class="wtp-hero">
                 <h2>${esc(crop.icon || '🌱')} ${esc(crop.label || 'Your crop')}${p.variety ? ' · ' + esc(p.variety) : (A.variety ? ' · ' + esc(A.variety) : '')}</h2>
-                <p class="h-win">${esc(r.headline || 'Your season, stage by stage')}</p>
+                <p class="h-win">${esc(sweep(r.headline) || 'Your season, stage by stage')}</p>
                 <p class="h-why">${esc(sweep(A.note || ''))}</p>
                 <div class="wtp-chips">
                     <span class="wtp-chip">📍 ${esc(p.location || '')}</span>
@@ -1326,7 +1328,9 @@
     function drawV2(hostEl, item, mode) {
         const r = item.report || {};
         const p = item.params || {};
-        const sweep = (t) => String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/\s{2,}/g, ' ').trim();
+        // No emoji shortcodes, and no interjections -- a report saved before the
+        // register was written may still open with "Aray," or "Naku!"; they go.
+        const sweep = (t) => { const s = String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/(^|[.!?]\s+)(aray|naku|hala|grabe|whoa|wow|ooh|oh no|hay naku|sus|ay)\b[,!.]*\s*/gi, '$1').replace(/\s{2,}/g, ' ').trim(); return s.charAt(0).toUpperCase() + s.slice(1); };
         const crop = (OPT ? OPT.crops.find((c) => c.key === p.crop) : null) || {};
         const month = (OPT ? (OPT.months.find((m) => m.key === p.month) || {}).label : '') || p.month || '';
         const bg = r.background || {};
@@ -1353,7 +1357,7 @@
         hostEl.innerHTML = `
             <div class="wtp-hero">
                 <h2>${esc(crop.icon || '🌱')} ${esc(crop.label || 'Your crop')}${(p.variety || v.name) ? ' · ' + esc(p.variety || v.name) : ''}</h2>
-                <p class="h-win">${esc(r.headline || 'Your season, stage by stage')}</p>
+                <p class="h-win">${esc(sweep(r.headline) || 'Your season, stage by stage')}</p>
                 <div class="wtp-chips">
                     <span class="wtp-chip">📍 ${esc(p.location || '')}</span>
                     <span class="wtp-chip">🗓️ ${esc(month)}</span>

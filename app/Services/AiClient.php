@@ -114,6 +114,8 @@ class AiClient
      */
     public function askForJson(AiSetting $settings, string $prompt, int $maxOut, callable $parse, array $opts = []): array
     {
+        // A JSON document is a report: written, not spoken (see AiSetting::forDocument).
+        $settings = $settings->forDocument();
         $onPhase = is_callable($opts['onPhase'] ?? null) ? $opts['onPhase'] : null;
         unset($opts['onPhase']);
         $sum = ['tokensIn' => 0, 'tokensOut' => 0, 'searched' => false, 'sources' => []];
@@ -187,6 +189,8 @@ class AiClient
      */
     public function researchThenJson(AiSetting $settings, string $researchPrompt, string $jsonPrompt, int $maxOut, callable $parse, ?callable $onPhase = null): array
     {
+        // The notes and the document are both written work, not a chat turn.
+        $settings = $settings->forDocument();
         /* Whether the model searches is its own call, made per request; the
          * same brief is searched one time and answered from memory the next.
          * So an unsearched research is asked again, told plainly, and only

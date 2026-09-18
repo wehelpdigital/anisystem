@@ -298,6 +298,41 @@ class AiSetting extends BaseModel
         return $c;
     }
 
+    /**
+     * Writing a report, not answering a message. True on the copy every
+     * document run is given (AiClient::askForJson / researchThenJson set it),
+     * and the persona's reaction line -- "Aray", "Naku", "Whoa", the
+     * congratulations -- stays out of the document. The chat keeps her voice.
+     */
+    public bool $asDocument = false;
+
+    public function forDocument(): static
+    {
+        $c = clone $this;
+        $c->asDocument = true;
+
+        return $c;
+    }
+
+    /**
+     * The register of a written report. Said AFTER the persona and the
+     * admin's prompt so it wins: a protocol a farmer reads twice is not the
+     * place for "Aray, that is a hard week" (2026-09-19, the owner's ask).
+     */
+    private const DOCUMENT_VOICE = <<<'TXT'
+        --- This is a written report, not a chat ---
+        You are writing a document the farmer will read and read again, not
+        answering a message. So, above the persona: NO reaction line, NO
+        greeting, NO congratulations, NO exclamations and NO interjections
+        anywhere in it -- not in the headline, the intro, a note, a purpose,
+        a caution or the summary. None of "Aray", "Naku", "Hala", "Grabe",
+        "Whoa", "Ooh", "Wow", "Congratulations", "Ang galing", "Oh no", and
+        no sentence that ends in an exclamation mark. Warm, plain,
+        professional prose in the second person; the warmth is in the care
+        of the reasoning, never in an outburst. Keep the farmer's own units
+        and the language rule above; drop the emoji faces entirely.
+        TXT;
+
     private function adminPromptFor(): string
     {
         $text = trim((string) $this->systemPrompt);
@@ -351,11 +386,16 @@ class AiSetting extends BaseModel
         $country = "\n\n--- " . ($this->fieldCountry ? 'Where the field is' : 'Where the farmer is') . " ---\n"
             . \App\Support\Region::promptBlock($this->fieldCountry, \App\Support\Region::code()) . ' ' . \App\Support\Region::languageRule();
 
-        return trim($persona . $country . "\n\n" . $this->adminPromptFor())
-            . "\n\n" . self::HOUSE_RULES
-            // Built rather than written out: the list of faces lives with the
-            // pictures, so adding one to the sheet cannot leave the prompt
-            // offering a name that draws nothing.
-            . "\n\n" . \App\Support\AneeEmoji::promptLine();
+        $text = trim($persona . $country . "\n\n" . $this->adminPromptFor())
+            . "\n\n" . self::HOUSE_RULES;
+        if ($this->asDocument) {
+            // A report: the register above the persona, and no faces to offer.
+            return $text . "\n\n" . self::DOCUMENT_VOICE;
+        }
+
+        // Built rather than written out: the list of faces lives with the
+        // pictures, so adding one to the sheet cannot leave the prompt
+        // offering a name that draws nothing.
+        return $text . "\n\n" . \App\Support\AneeEmoji::promptLine();
     }
 }

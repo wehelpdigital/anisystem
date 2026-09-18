@@ -852,7 +852,9 @@
         const p = item.params;
         // Older saved reports carry the persona's :anee-…: shortcodes, which
         // have no renderer here — swept so prose reads as prose.
-        const sweep = (t) => String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/\s{2,}/g, ' ').trim();
+        // No emoji shortcodes, and no interjections -- a report saved before the
+        // register was written may still open with "Aray," or "Naku!"; they go.
+        const sweep = (t) => { const s = String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/(^|[.!?]\s+)(aray|naku|hala|grabe|whoa|wow|ooh|oh no|hay naku|sus|ay)\b[,!.]*\s*/gi, '$1').replace(/\s{2,}/g, ' ').trim(); return s.charAt(0).toUpperCase() + s.slice(1); };
         const crop = (OPT ? OPT.crops.find((c) => c.key === p.crop) : null) || {};
         const bw = r.bestWindow || {};
         const m1 = MONTHS[(bw.fromMonth || 1) - 1];

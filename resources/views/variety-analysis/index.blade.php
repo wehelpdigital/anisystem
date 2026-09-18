@@ -954,7 +954,9 @@
     function drawReport(hostEl, item, mode, quiet) {
         const r = item.report || {};
         const p = item.params || {};
-        const sweep = (t) => String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/\s{2,}/g, ' ').trim();
+        // No emoji shortcodes, and no interjections -- a report saved before the
+        // register was written may still open with "Aray," or "Naku!"; they go.
+        const sweep = (t) => { const s = String(t || '').replace(/:[a-z0-9_-]+:/gi, '').replace(/(^|[.!?]\s+)(aray|naku|hala|grabe|whoa|wow|ooh|oh no|hay naku|sus|ay)\b[,!.]*\s*/gi, '$1').replace(/\s{2,}/g, ' ').trim(); return s.charAt(0).toUpperCase() + s.slice(1); };
         const top = r.topPick || {};
         const crop = (OPT ? OPT.crops.find((c) => c.key === p.crop) : null) || {};
         const order = Array.isArray(p.priorities) ? p.priorities : Object.keys(OPT ? OPT.priorities : {});
