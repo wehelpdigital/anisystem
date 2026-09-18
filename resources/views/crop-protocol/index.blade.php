@@ -1282,6 +1282,18 @@
                 <div class="va-links">${(() => { const seen = new Set(); return (r.webSources || []).map((x) => ({ name: x.title || host(x.url) || 'A published source', h: host(x.url) })).filter((x) => { const k = x.name.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; }).map((x) => `<span class="va-link is-plain"><span class="l-t">${esc(x.name)}</span>${x.h && x.h !== x.name ? `<span class="l-h">${esc(x.h)}</span>` : ''}</span>`).join(''); })()}</div>
             </div>` : '';
 
+    /* A foliar is named by its nutrient -- "Zinc spray", never the salt or
+       the strength. The server rewrites new reports; this does the same for
+       the ones saved before it did. */
+    const NUTRIENTS = [['zinc', 'Zinc'], ['boron', 'Boron'], ['calcium', 'Calcium'], ['magnesium', 'Magnesium'], ['iron', 'Iron'], ['manganese', 'Manganese'], ['copper', 'Copper'], ['molybdenum', 'Molybdenum'], ['sulfur', 'Sulfur'], ['sulphur', 'Sulfur'], ['potassium', 'Potassium'], ['phosph', 'Phosphorus'], ['nitrogen', 'Nitrogen'], ['urea', 'Nitrogen'], ['silicon', 'Silicon'], ['seaweed', 'Seaweed'], ['amino', 'Amino acid'], ['micronutrient', 'Micronutrient']];
+    const foliarName = (product) => {
+        const t = String(product || '').toLowerCase();
+        const found = [];
+        NUTRIENTS.forEach(([needle, label]) => { if (t.includes(needle) && !found.includes(label)) found.push(label); });
+        if (found.length) return (found.length > 1 ? found[0] + ' and ' + found[1].toLowerCase() : found[0]) + ' spray';
+        return String(product || '').replace(/\b(sulfate|sulphate|heptahydrate|monohydrate|chelate|chelated|edta|solubor|borax|boric acid|nitrate|chloride|oxide|hydroxide)\b/gi, '').replace(/\d+(\.\d+)?\s*%/g, '').replace(/\s*or equivalent\.?$/i, '').replace(/\s{2,}/g, ' ').trim() || 'Foliar spray';
+    };
+
     /* ---- the opening note: a guide, and the farm has the last word ---- */
     const guideHtml = () => `
             <div class="cp2-guide" role="note">
@@ -1397,7 +1409,7 @@
             <div class="wtp-card">
                 <h3>Foliar sprays <small>only where they pay on this ground</small></h3>
                 <div class="cp2-foliars">
-                    ${(rec.foliars || []).map((f) => `<div class="cp2-foliar"><span class="e">🍃</span><div><small>${esc(f.stage || '')}</small><b>${esc(f.product || '')}</b>${f.why ? `<p>${esc(sweep(f.why))}</p>` : ''}</div></div>`).join('')}
+                    ${(rec.foliars || []).map((f) => `<div class="cp2-foliar"><span class="e">🍃</span><div><small>${esc(f.stage || '')}</small><b>${esc(foliarName(f.product))}</b>${f.why ? `<p>${esc(sweep(f.why))}</p>` : ''}</div></div>`).join('')}
                 </div>
             </div>` : ''}
 
@@ -1518,7 +1530,7 @@
                         ${(st.fertilizer || []).length ? `<div class="cp2-d-fert">${(st.fertilizer || []).map((x) => `<div class="cp2-d-app"><i style="background:${colour(x.product || 'Fertilizer')}"></i><span><b>${esc(trimN(x.totalBags))} ${Number(x.totalBags) === 1 ? 'bag' : 'bags'} ${esc(x.product || '')}</b> <small>(${esc(trimN(x.bagsPerHa))}/ha)</small>${x.purpose ? `<em>${esc(sweep(x.purpose))}</em>` : ''}</span></div>`).join('')}</div>` : `<p class="cp2-dim">No fertilizer at this stage.</p>`}
                         ${st.observe ? `<div class="cp2-d-obs"><span class="is-obs">🔎 Observe</span><p>${esc(sweep(st.observe))}</p></div>` : ''}
                         ${st.intervene ? `<div class="cp2-d-obs"><span class="is-act">🛠️ Intervene</span><p>${esc(sweep(st.intervene))}</p></div>` : ''}
-                        ${(rec.foliars || []).filter((f) => sameStage(f.stage, st.stage)).map((f) => `<div class="cp2-d-fol"><span>🍃 Foliar</span><p><b>${esc(f.product || '')}</b>${f.why ? ' — ' + esc(sweep(f.why)) : ''}</p></div>`).join('')}`;
+                        ${(rec.foliars || []).filter((f) => sameStage(f.stage, st.stage)).map((f) => `<div class="cp2-d-fol"><span>🍃 Foliar</span><p><b>${esc(foliarName(f.product))}</b>${f.why ? ' — ' + esc(sweep(f.why)) : ''}</p></div>`).join('')}`;
                     d.classList.remove('is-swap');
                 }, d.innerHTML ? 140 : 0);
             };

@@ -544,6 +544,46 @@ class CropProtocolController extends Controller
          * gets, so the tabs compare like with like. The recommended program
          * (the first) is what the stages carry; where the model gave one,
          * the stages take its applications so the two never disagree. */
+        /* FOLIARS BY NUTRIENT (2026-09-18): the owner wants "Zinc spray", never
+         * "zinc sulfate heptahydrate 1%". The prompt says so; this makes sure.
+         * A product string is read for the nutrients it names and rewritten as
+         * "<Nutrient> spray" (two nutrients: "Zinc and boron spray"); a string
+         * naming none is kept but stripped of salts and strengths. */
+        $nutrientSpray = function (string $product): string {
+            $t = mb_strtolower($product);
+            $names = ['zinc' => 'Zinc', 'boron' => 'Boron', 'calcium' => 'Calcium', 'magnesium' => 'Magnesium', 'iron' => 'Iron', 'manganese' => 'Manganese',
+                'copper' => 'Copper', 'molybdenum' => 'Molybdenum', 'sulfur' => 'Sulfur', 'sulphur' => 'Sulfur', 'potassium' => 'Potassium', 'phosph' => 'Phosphorus',
+                'nitrogen' => 'Nitrogen', 'urea' => 'Nitrogen', 'silicon' => 'Silicon', 'seaweed' => 'Seaweed', 'amino' => 'Amino acid', 'micronutrient' => 'Micronutrient'];
+            $found = [];
+            foreach ($names as $needle => $label) {
+                if (str_contains($t, $needle) && ! in_array($label, $found, true)) {
+                    $found[] = $label;
+                }
+            }
+            if ($found) {
+                $found = array_slice($found, 0, 2);
+                $head = count($found) === 2 ? $found[0] . ' and ' . mb_strtolower($found[1]) : $found[0];
+
+                return $head . ' spray';
+            }
+            // Nothing recognised: at least no salt, no strength, no "or equivalent".
+            $clean = preg_replace('/\b(sulfate|sulphate|heptahydrate|monohydrate|chelate|chelated|edta|solubor|borax|boric acid|nitrate|chloride|oxide|hydroxide)\b/iu', '', $product);
+            $clean = preg_replace('/\d+(\.\d+)?\s*%/u', '', $clean);
+            $clean = preg_replace('/\s*or equivalent\.?$/iu', '', trim($clean));
+            $clean = trim(preg_replace('/\s{2,}/', ' ', $clean));
+
+            return $clean !== '' ? $clean : 'Foliar spray';
+        };
+        if (! empty($report['recommendation']['foliars']) && is_array($report['recommendation']['foliars'])) {
+            $report['recommendation']['foliars'] = array_values(array_map(function ($fol) use ($nutrientSpray) {
+                if (is_array($fol) && ! empty($fol['product'])) {
+                    $fol['product'] = $nutrientSpray((string) $fol['product']);
+                }
+
+                return $fol;
+            }, $report['recommendation']['foliars']));
+        }
+
         $norm = fn (string $t) => trim(preg_replace('/[^a-z0-9]+/', ' ', mb_strtolower($t)));
         $stageIndex = function (string $name) use ($stages, $norm): int {
             $n = $norm($name);
@@ -1071,7 +1111,7 @@ GROUND RULES
 - NO ORGANIC FERTILIZER: the program is inorganic products only (urea, complete, ammonium sulfate, ammonium phosphate, muriate of potash and the like). Do not recommend organic fertilizer, compost, manure, vermicast or biofertilizer at any stage, and do not list them among the supplies.
 - Water: one short plan for the season with THIS water source, and what changes if the sky turns dry or wet.
 - Yield: say plainly whether the target is realistic for this variety, place and season, and what realistic is.
-- PRODUCTS, NAMED. Where a spray, drench or foliar is called for, name a product the farmer can ask for: a registered product sold in {$countryName} with its active ingredient or content in brackets, ending with the words "or equivalent" (e.g. "Padan 50 SP (cartap hydrochloride) or equivalent", "Zinc sulfate heptahydrate 1% spray or equivalent", "Sofit 300 EC (pretilachlor) or equivalent"). Prefer the products the notes name; where none is named, give the active ingredient or content and still say "or equivalent". This is a name to ask for, not a recommendation to buy a brand — no marketing tone.
+- PRODUCTS, NAMED. Where a spray, drench or foliar is called for, name a product the farmer can ask for: a registered product sold in {$countryName} with its active ingredient or content in brackets, ending with the words "or equivalent" (e.g. "Padan 50 SP (cartap hydrochloride) or equivalent", "Sofit 300 EC (pretilachlor) or equivalent"). Prefer the products the notes name; where none is named, give the active ingredient and still say "or equivalent". This is a name to ask for, not a recommendation to buy a brand — no marketing tone. FOLIARS ARE THE EXCEPTION: a foliar is named by its nutrient only — "Zinc spray", "Boron spray", "Calcium spray", "Magnesium spray", "Zinc and boron spray" — never the salt, the chemical or the strength (no "zinc sulfate", no "heptahydrate", no "solubor", no "chelate", no percentages): the farmer asks the store for a zinc foliar and the store knows.
 - DEFICIENCIES BY SOIL: analyse deeply which nutrient deficiencies THIS soil type is prone to for THIS crop — the heavy clay that locks zinc under flooding, the sandy ground that leaks nitrogen, potassium and magnesium, the acid soil that starves phosphorus and calcium and frees aluminium, the alkaline or limed soil that hides iron, zinc and manganese, the drained or saline ground with its own hunger — and for each: the nutrient by name, WHY this soil and this crop invite it, the SIGN the farmer sees on the plant, WHEN in the season it shows, and what to do about it in plain words. No amounts, no rates and no product or chemical names here — the nutrient, the reason and the sign are the point.
 - NO AMOUNTS FOR SPRAYS: for insecticides, fungicides, herbicides, molluscicides and foliars name the product (as above) and the moment, never a rate, a dose, a litre or a kilo — the dose is the label's and the farmer's own. The only quantities in this protocol are the fertilizer bags.
 - FOLIARS: only where they pay for this crop, soil and aim — a micronutrient the soil or crop is known to lack (zinc on flooded or alkaline rice, boron and calcium on fruiting vegetables, magnesium on sandy ground) or a growth foliar the official guides accept — with the stage, the product and why. None when none pays.
@@ -1092,7 +1132,7 @@ Rules for the shape:
 - recommendation.npk.need: the kg N, P2O5 and K2O per hectare this variety needs to reach the TARGET yield on this ground (the official recommendation for the region and season, bent to the soil and the aim; where the target is unrealistic, the need for the realistic yield instead) — and the fertilizer program above MUST add up to it: the app totals the program's nutrients from each product's analysis and shows the farmer where it falls short. note ≤ 30 words (the LCC/MOET check if rice, or the soil-test caveat).
 - recommendation.deficiencies: 2–5 items, the deficiencies this soil type and crop are prone to, most likely first: nutrient (e.g. "Zinc"), why ≤ 30 words (this soil, this crop), signs ≤ 25 words (what the plant shows), when = the stage or stages it shows, action ≤ 30 words in plain words with no amounts and no product names.
 - recommendation.water: plan ≤ 60 words; ifDry ≤ 25 words; ifWet ≤ 25 words.
-- recommendation.foliars: 0–4 items, each with the stage, the product (named as above, ending "or equivalent") and why ≤ 16 words; [] when none pays.
+- recommendation.foliars: 0–4 items, each with the stage, the product as the nutrient only ("Zinc spray", "Boron spray", "Calcium spray" — no chemical, no salt, no strength) and why ≤ 16 words; [] when none pays.
 - recommendation.threats: 4–7 items — the insects, diseases and weeds most likely to hurt here, each with the stage it strikes, the sign to act on (≤ 14 words), the action (≤ 18 words) and product = the spray or herbicide to use for it, named as above ending "or equivalent" ("" only for a threat that no product answers, like heat).
 - recommendation.yield: target = the farmer's target restated in {$unitWord} (or "not set"); realistic = what this variety realistically gives here, same unit; note ≤ 30 words.
 - confidence "low"/"moderate"/"high"; dataGaps at most four; summary ≤ 70 words, plain and warm but factual, ending with the reminder that the calendar is only a hint and the crop's stage is the clock.
