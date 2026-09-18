@@ -493,10 +493,14 @@
     <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 stagger-children hub-grid">
         @foreach ($moduleCards as [$label, $moduleKey, $count, $iconPath])
             @continue(array_key_exists($moduleKey, $doorOpen) && ! $doorOpen[$moduleKey])
-            <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => $moduleKey]) }}" data-nav-loader class="card card-hover block">
+            {{-- Workers and the Inventory are the Solo Farmer plan's: on a free
+                 plan the tile stays, locked, and opens the upgrade sheet. --}}
+            @php $tileLocked = in_array($moduleKey, ['workers', 'inventory'], true) && ! \App\Support\Tier::scheduleCan($schedule, $moduleKey); @endphp
+            <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => $moduleKey]) }}" @unless ($tileLocked) data-nav-loader @endunless class="card card-hover block"
+               @if ($tileLocked) data-tier-lock="solo" data-lock-say="{{ $moduleKey === 'workers' ? 'Workers come with the Solo Farmer plan — the crew, their days and their pay, on every activity.' : 'The Inventory comes with the Solo Farmer plan — the shed, its stock, and what each activity takes from it.' }}" @endif>
                 <div class="p-4 flex flex-col gap-3">
                     <div class="flex items-start justify-between">
-                        <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center">
+                        <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center {{ $tileLocked ? 'tl-dim' : '' }}">
                             @if ($moduleKey === 'ai')
                                 <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" class="w-7 h-7 rounded-full object-cover">
                             @elseif (isset($modulePics[$moduleKey]))
@@ -505,11 +509,13 @@
                                 <svg class="w-6 h-6 text-brand-700" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $iconPath }}"/></svg>
                             @endif
                         </div>
-                        @if ($count !== null)
+                        @if ($tileLocked)
+                            <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>
+                        @elseif ($count !== null)
                             <span class="badge {{ $count > 0 ? 'badge-green' : 'badge-gray' }}">{{ $count }}</span>
                         @endif
                     </div>
-                    <span class="font-bold text-gray-900 text-sm">{{ $label }}</span>
+                    <span class="font-bold text-gray-900 text-sm {{ $tileLocked ? 'tl-dim' : '' }}">{{ $label }}</span>
                 </div>
             </a>
         @endforeach

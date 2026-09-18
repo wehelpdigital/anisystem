@@ -4036,7 +4036,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!t) return;
         const names = $qsa('#activityWorkersContainer .worker-chip.is-selected')
             .map((c) => (c.textContent || '').trim()).filter(Boolean);
-        t.textContent = !names.length ? 'Nobody assigned (N/A)'
+        // On a plan without the Workers module the tag names the plan instead.
+        const shut = !!$id('activityWorkersBtn')?.dataset.tierLock;
+        t.textContent = !names.length ? (shut ? 'Workers — Solo Farmer plan' : 'Nobody assigned (N/A)')
             : (names.length <= 2 ? names.join(', ') : names.length + ' workers');
         t.classList.toggle('is-none', !names.length);
     }

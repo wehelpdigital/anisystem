@@ -1674,7 +1674,7 @@ class ActivityController extends BaseScheduleController
                  * AROUND them: the form never showed the section, and
                  * whatever lines the activity already carries stay exactly
                  * as they are — no replace, no purchase sync. */
-                if (\App\Support\WorkerContext::canWriteModule('inventory')) {
+                if (\App\Support\WorkerContext::canWriteModule('inventory') && \App\Support\Tier::scheduleCan($schedule, 'inventory')) {
 
                 // Replace-all item semantics: soft-delete everything, then
                 // recreate from the submitted payload.
@@ -1755,9 +1755,13 @@ class ActivityController extends BaseScheduleController
 
                 }
 
-                // Replace pivot rows with the submitted lot + worker sets.
+                // Replace pivot rows with the submitted lot + worker sets. The
+                // crew only where the farm's plan has the Workers module: a
+                // free plan's activity keeps whatever it already carried.
                 $activity->lots()->sync($submittedLotIds);
-                $activity->workers()->sync($this->workerPivot($request, $submittedWorkerIds));
+                if (\App\Support\Tier::scheduleCan($schedule, 'workers')) {
+                    $activity->workers()->sync($this->workerPivot($request, $submittedWorkerIds));
+                }
 
                 return $activity;
             });

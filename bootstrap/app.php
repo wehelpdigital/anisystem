@@ -53,6 +53,9 @@ return Application::configure(basePath: dirname(__DIR__))
             // Here rather than in ninety controller actions: that shape has
             // already cost this app twelve open endpoints once.
             \App\Http\Middleware\WorkerModuleAccess::class,
+            // And whether the farm's PLAN has the module at all: Workers and
+            // the Inventory are the Solo Farmer plan's. Same shape, same reason.
+            \App\Http\Middleware\TierModuleAccess::class,
             // Watches the /app/community hallway for suspended members. By
             // path, not per-route: a door added next month is still covered.
             \App\Http\Middleware\CommunityOpen::class,

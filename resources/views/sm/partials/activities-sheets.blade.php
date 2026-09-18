@@ -140,7 +140,9 @@
                      is on the job is asked the same way as what the job is. It
                      does not change the activity's type — that stays whatever
                      was picked to its left. --}}
-                <button type="button" class="activity-mode-tab" data-mode="payroll" data-act-tab="workers" aria-selected="false">
+                @php $tierWorkers = \App\Support\Tier::scheduleCan($schedule, 'workers'); $tierInventory = \App\Support\Tier::scheduleCan($schedule, 'inventory'); @endphp
+                <button type="button" class="activity-mode-tab" data-mode="payroll" data-act-tab="workers" aria-selected="false"
+                    @unless ($tierWorkers) data-tier-lock="solo" data-lock-say="{{ 'Workers come with the Solo Farmer plan — the crew, their days and their pay, on every activity.' }}" @endunless>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
                     Worker checklist
                     <span class="act-pane-count" id="activityWorkerCount" hidden>0</span>
@@ -485,9 +487,11 @@
 
             <div id="activityWorkersPane">
                 <span class="form-label">Workers</span>
-                <button type="button" class="crop-tag" id="activityWorkersBtn">
-                    <span class="crop-tag-e">👷</span>
-                    <span class="crop-tag-t is-none" id="activityWorkersNow">Nobody assigned (N/A)</span>
+                <button type="button" class="crop-tag" id="activityWorkersBtn"
+                    @unless ($tierWorkers) data-tier-lock="solo" data-lock-say="{{ 'Workers come with the Solo Farmer plan — the crew, their days and their pay, on every activity.' }}" @endunless>
+                    <span class="crop-tag-e {{ $tierWorkers ? '' : 'tl-dim' }}">👷</span>
+                    <span class="crop-tag-t is-none {{ $tierWorkers ? '' : 'tl-dim' }}" id="activityWorkersNow">{{ $tierWorkers ? 'Nobody assigned (N/A)' : 'Workers — Solo Farmer plan' }}</span>
+                    @unless ($tierWorkers)<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endunless
                     <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>
                 {{-- Who is on this, for how much of the day, and at what rate.
@@ -547,10 +551,13 @@
                  the JS keeps its handles either way, and the server ignores
                  item payloads from a hand this section was closed to. --}}
             <div id="activityItemsSection" @unless(\App\Support\WorkerContext::canWriteModule('inventory')) hidden @endunless>
-                <span class="form-label"><span id="itemsSectionLabel">Materials &amp; Items</span> <span class="text-gray-400 font-normal">(optional)</span></span>
+                <span class="form-label"><span id="itemsSectionLabel" class="{{ $tierInventory ? '' : 'tl-dim' }}">Materials &amp; Items</span> <span class="text-gray-400 font-normal">(optional)</span>
+                    @unless ($tierInventory)<span class="tl-lock ml-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endunless</span>
                 <div class="flex flex-wrap items-center gap-1.5">
                     <div id="itemsContainer" class="contents"></div>
-                    <button type="button" id="itemsToggleBtn" class="chip chip-dashed" aria-expanded="false" data-chip-manual>
+                    {{-- On a plan without the Inventory the button stays and opens the upgrade sheet. --}}
+                    <button type="button" id="itemsToggleBtn" class="chip chip-dashed {{ $tierInventory ? '' : 'tl-dim' }}" aria-expanded="false" data-chip-manual
+                        @unless ($tierInventory) data-tier-lock="solo" data-lock-say="{{ 'The Inventory comes with the Solo Farmer plan — the shed, its stock, and what each activity takes from it.' }}" @endunless>
                         <span id="itemsToggleLabel">+ Item</span>
                     </button>
                 </div>
@@ -882,9 +889,13 @@
             </span>
             All cropping schedules
         </a>
+        @php $tierShut = fn (string $k) => in_array($k, ['workers', 'inventory'], true) && ! \App\Support\Tier::scheduleCan($schedule, $k); @endphp
         @foreach ($modNav as [$key, $label, $icon])
+            {{-- A module the farm's plan lacks keeps its row, locked: the tap
+                 opens the upgrade sheet instead of the module. --}}
             <button type="button" class="module-nav-row w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50"
-                    data-module="{{ $key }}">
+                    data-module="{{ $key }}"
+                    @if ($tierShut($key)) data-tier-lock="solo" data-lock-say="{{ $key === 'workers' ? 'Workers come with the Solo Farmer plan — the crew, their days and their pay, on every activity.' : 'The Inventory comes with the Solo Farmer plan — the shed, its stock, and what each activity takes from it.' }}" @endif>
                 <span class="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
                     @if ($key === 'ai')
                         <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" class="w-6 h-6 rounded-full object-cover">
@@ -894,7 +905,8 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg>
                     @endif
                 </span>
-                <span class="grow">{{ $label }}</span>
+                <span class="grow {{ $tierShut($key) ? 'tl-dim' : '' }}">{{ $label }}</span>
+                @if ($tierShut($key))<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endif
                 <svg class="w-4 h-4 text-gray-300 module-nav-check hidden" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>
         @endforeach

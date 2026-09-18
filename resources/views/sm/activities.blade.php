@@ -4872,6 +4872,12 @@
                 const res = await fetch(MODULES[key].url + sep + 'partial=1' + (extra ? '&' + extra : ''), {
                     headers: { 'X-Requested-With': 'XMLHttpRequest' }, credentials: 'same-origin',
                 });
+                if (res.status === 403) {
+                    // The farm's plan lacks this module: the sheet, not a toast.
+                    let lock = null;
+                    try { lock = await res.clone().json(); } catch (_) {}
+                    if (lock && lock.tierLock) { window.aneeUpgrade?.(lock.message, lock.tier || 'solo'); throw Object.assign(new Error(''), { quiet: true }); }
+                }
                 if (!res.ok) throw new Error('Could not load ' + MODULES[key].label);
                 const wrap = document.createElement('div');
                 wrap.dataset.module = key;
@@ -4884,7 +4890,7 @@
                 /* Offline, this is not a failure worth a stack of jargon: it
                    is a room that was never put on the shelf. Say which, so
                    the next warm can be trusted to have fixed it. */
-                toast(window.aneeOffline?.isDown?.()
+                if (!err.quiet) toast(window.aneeOffline?.isDown?.()
                     ? (MODULES[key].label || 'That module') + ' is not on this phone yet — open it once with a signal and it will be here next time.'
                     : (err.message || 'Could not load that module.'), 'error');
                 activitiesRoot.classList.remove('module-hidden');

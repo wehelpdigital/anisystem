@@ -2552,9 +2552,9 @@ const AU_TIERS = {
         price: auRegionTier('solo', 'price', '₱200'), per: '/month', year: auRegionTier('solo', 'year', 'or ₱1,800/year — about ₱150/mo'),
         points: [
             '3 active seasons, 5 lots each',
+            'Workers (no logins) and the inventory',
             'Full weather, all reports, unlimited maps',
-            'Video & voice recording, document uploads',
-            '30 AI credits every renewal · 6 GB storage',
+            'Video & voice, documents · 30 AI credits every renewal · 6 GB',
         ],
     },
     owner: {
