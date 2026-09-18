@@ -407,6 +407,7 @@
                                 </a>
                             @endif
                             <a href="{{ route('account.index') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">My Account</a>
+                            <a href="{{ route('ai.credits') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">My Credits</a>
                             <a href="{{ route('account.subscription') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">My Subscription</a>
                             {{-- How the app behaves for this person: text size,
                                  contrast, movement. Account is who you are;

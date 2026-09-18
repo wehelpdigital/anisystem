@@ -636,7 +636,7 @@
         if (!OPT.quote) { q.hidden = true; return; }
         q.classList.toggle('is-min', quoteMin);
         $id('vaQuoteHead').setAttribute('aria-expanded', quoteMin ? 'false' : 'true');
-        $id('vaQuoteCost').innerHTML = `This research spends <b>${OPT.quote} credits</b> (a deep analysis, which is why it costs more than its sisters), and you have <b>${OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString()}</b>. Nothing is charged until you press Run.`;
+        $id('vaQuoteCost').innerHTML = `This research spends <b>${OPT.quote} credits</b> (a deep analysis, which is why it costs more than its sisters), and you have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
         $id('vaQuoteHint').textContent = `${OPT.quote} credits`;
         q.hidden = false;
     }

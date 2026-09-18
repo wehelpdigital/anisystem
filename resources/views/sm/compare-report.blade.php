@@ -130,7 +130,7 @@
                 <input type="checkbox" id="cpWithAi">
                 <span>
                     <b>Add {{ \App\Models\AiSetting::current()->assistantName }}'s analysis — <span id="cpPrice">30</span> credits</b>
-                    <i>She reads both and says what is different, what is better in each, and what to carry forward. Leave it off and the comparison is free — just the two reports, stacked. You have <b id="cpBalance">…</b>.</i>
+                    <i>She reads both and says what is different, what is better in each, and what to carry forward. Leave it off and the comparison is free — just the two reports, stacked. You have @if (\App\Support\WorkerContext::inWorkerContext())<span class="credit-coin">@else<a class="credit-coin" href="{{ route('ai.credits') }}" title="My Credits — the log, and credits to buy">@endif<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg><b id="cpBalance">…</b>@if (\App\Support\WorkerContext::inWorkerContext())</span>@else</a>@endif.</i>
                 </span>
             </label>
             <button type="button" class="btn btn-primary w-full mt-3" id="cpGenBtn" disabled>Compare them</button>

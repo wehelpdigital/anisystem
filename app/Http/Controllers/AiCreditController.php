@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AiCreditLedger;
 use App\Models\AiCreditPack;
 use App\Models\AiCreditPurchase;
 use App\Models\AiSetting;
@@ -23,18 +24,32 @@ class AiCreditController extends Controller
     ) {
     }
 
+    /**
+     * My Credits: the balance, every movement in the ledger (one tab), and
+     * the packs to buy (the other). Open to everyone -- a member on a plan
+     * without Anee still has a log to read (the starter credits waiting for
+     * them) and sees, in place of the packs, the plan that would let them
+     * spend it. Paying and buying stay behind canUseAi below.
+     */
     public function index(Request $request)
     {
         $user = $request->user();
-        if (! $user->canUseAi()) {
-            return view('ai.locked', ['tier' => $user->planTier()]);
-        }
 
         return view('ai.credits', [
+            'tab' => $request->query('tab') === 'buy' ? 'buy' : 'log',
+            'canBuy' => $user->canUseAi(),
+            'tier' => $user->planTier(),
             'balance' => $this->credits->balance($user->id),
+            'unlimited' => $this->credits->unlimited($user->id),
             'packs' => AiCreditPack::active()->where('isActive', 1)->orderBy('sortOrder')->get(),
             'settings' => AiSetting::current(),
-            'history' => $this->credits->history($user->id),
+            // The ledger, newest first, on its own page name so paging it
+            // never disturbs the tab the reader is on.
+            'ledger' => AiCreditLedger::active()
+                ->where('userId', $user->id)
+                ->orderByDesc('id')
+                ->paginate(25, ['*'], 'credits')
+                ->withQueryString(),
             'pending' => $this->pendingPurchase($user->id),
         ]);
     }
@@ -43,7 +58,7 @@ class AiCreditController extends Controller
     {
         $user = $request->user();
         if (! $user->canUseAi()) {
-            return redirect()->route('account.subscription')->with('error', 'AI credits come with Libre + Anee and every plan above it.');
+            return redirect()->route('ai.credits', ['tab' => 'buy'])->with('error', 'AI credits come with Libre + Anee and every plan above it.');
         }
         if ($pending = $this->pendingPurchase($user->id)) {
             return redirect()->route('ai.credits')
@@ -62,7 +77,7 @@ class AiCreditController extends Controller
         $user = $request->user();
 
         if (! $user->canUseAi()) {
-            return redirect()->route('account.subscription')->with('error', 'AI credits come with Libre + Anee and every plan above it.');
+            return redirect()->route('ai.credits', ['tab' => 'buy'])->with('error', 'AI credits come with Libre + Anee and every plan above it.');
         }
 
         // The price is the country's (pesos at home, dollars elsewhere),

@@ -239,6 +239,21 @@ html.dark .ico-mono { filter: brightness(0) invert(1); }
 /* The upgrade sheet a tier wall opens (window.aneeUpgrade). It sells the
    exact next rung: header names the tier, a mini plan card carries price
    and highlights, and the yellow button does the upgrading. */
+/* THE CREDIT COIN. Wherever a module names the credits on hand -- the
+   chat's header, an analysis's price card, a report's run card, Realign --
+   the number wears this coin, and the coin is the door to My Credits. A
+   worker spending the farm's purse gets the coin without the door (a
+   span), since the purse is not theirs to fill. */
+.credit-coin { display: inline-flex; align-items: center; gap: .3rem; padding: .08rem .6rem .08rem .4rem; border-radius: 999px;
+    background: #fff7e0; border: 1px solid #f3d58a; color: #7a4d00; font-weight: 800; font-variant-numeric: tabular-nums;
+    text-decoration: none; vertical-align: baseline; line-height: 1.35; white-space: nowrap;
+    transition: transform .28s cubic-bezier(.22, 1, .36, 1), background .2s; }
+a.credit-coin:hover { background: #ffefc2; transform: translateY(-1px); color: #5c3900; }
+.credit-coin svg { width: 1em; height: 1em; flex: none; }
+html.dark .credit-coin { background: #2c2213; border-color: #5a4515; color: #f2c46d; }
+html.dark a.credit-coin:hover { background: #3a2d14; color: #ffd88a; }
+@media (prefers-reduced-motion: reduce) { .credit-coin { transition: none; } }
+
 #aneeUpgradeBox { position: fixed; inset: 0; z-index: 420; display: none; align-items: center;
     justify-content: center; padding: 1.25rem; background: rgb(15 23 42 / .55); }
 #aneeUpgradeBox.is-open { display: flex; animation: auIn .28s cubic-bezier(.22, 1, .36, 1) both; }

@@ -2525,6 +2525,17 @@ const auRegionTier = (key, field, fallback) => {
     const t = ((window.ANEE_REGION || {}).tiers || {})[key];
     return (t && typeof t[field] === 'string' && t[field] !== '') ? t[field] : fallback;
 };
+/* The credit coin a page's JS draws beside a balance: a link to My Credits
+   for the person whose purse it is, a plain chip for a worker spending the
+   farm's. Text is already a number or the sign for unlimited. */
+window.creditCoin = function creditCoin(text) {
+    const svg = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg>';
+    const body = svg + '<b>' + String(text).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])) + '</b>';
+    return window.AU_IS_WORKER
+        ? '<span class="credit-coin">' + body + '</span>'
+        : '<a class="credit-coin" href="/app/ai-credits" title="My Credits — the log, and credits to buy">' + body + '</a>';
+};
+
 const AU_TIERS = {
     libreAnee: {
         name: 'Libre + Anee',

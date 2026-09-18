@@ -150,7 +150,7 @@
             </button>
             <div class="arq-body" id="arQuoteBody">
                 <div class="arq-card">
-                    This is a <b>deep AI analysis</b> — one report spends <b>{{ $price }} credits</b>, and you have <b id="arBalance">…</b>. Nothing is charged until you press Run{{ $isSofar ? '' : ', and the finished report saves itself to the shelf' }}.
+                    This is a <b>deep AI analysis</b> — one report spends <b>{{ $price }} credits</b>, and you have @if (\App\Support\WorkerContext::inWorkerContext())<span class="credit-coin">@else<a class="credit-coin" href="{{ route('ai.credits') }}" title="My Credits — the log, and credits to buy">@endif<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg><b id="arBalance">…</b>@if (\App\Support\WorkerContext::inWorkerContext())</span>@else</a>@endif. Nothing is charged until you press Run{{ $isSofar ? '' : ', and the finished report saves itself to the shelf' }}.
                 </div>
                 <div class="arq-card">
                     {{ $isSofar

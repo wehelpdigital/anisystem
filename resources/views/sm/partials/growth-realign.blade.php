@@ -15,7 +15,8 @@
 
      The wait is the shared one (sm/partials/anee-wait). --}}
 @php
-    $grxLocked = \App\Support\Tier::forSchedule($schedule) === 'libre';
+    // Realign is Anee's: a farm whose plan has her (Libre + Anee and up) may run it.
+    $grxLocked = ! \App\Support\Tier::scheduleCan($schedule, 'ai');
     $grxPrice = \App\Support\AiPrices::of('realign');
 @endphp
 @once
@@ -251,7 +252,7 @@
        the server to walk the season again. */
     function block({ lotId, lotName, realign, calendar }) {
         const btn = LOCKED
-            ? `<button type="button" class="grx-btn is-locked" data-tier-lock="solo" data-lock-say="Realign by Anee comes with a paid plan. Upgrade and she reads your lot's whole history to say where the crop really is."><img src="${esc(FACE)}" alt="">Realign by Anee <small>· 🔒 paid plans</small></button>`
+            ? `<button type="button" class="grx-btn is-locked" data-tier-lock="libreAnee" data-lock-say="Realign by Anee comes with Libre + Anee. Add Anee and she reads your lot's whole history to say where the crop really is."><img src="${esc(FACE)}" alt="">Realign by Anee <small>· 🔒 paid plans</small></button>`
             : `<button type="button" class="grx-btn" data-grx-open="${Number(lotId)}" data-grx-name="${esc(lotName)}" data-grx-cal="${esc(calendar || '')}"><img src="${esc(FACE)}" alt="">${realign ? 'Realign again' : 'Realign by Anee'} <small>· ${PRICE} credits</small></button>`;
         const note = realign ? `<div class="grx-note">
                 <div class="grx-note-head"><b>Realigned by Anee</b>${shiftChip(realign.shiftDays)}<span class="grx-note-when">${esc(when(realign.at || realign.asOf))}</span></div>
@@ -395,7 +396,7 @@
                 p.innerHTML = `<b>Her last reading</b> (${esc(when(p.dataset.at = d.realign.at || d.realign.asOf))}): ${esc(shiftWords(d.realign.shiftDays))} — ${esc(d.realign.summary || '')}`;
                 p.hidden = false;
             }
-            $id('grxBalance').textContent = d.unlimited ? ' · unlimited credits' : ` · you have ${Number(d.balance).toLocaleString()}`;
+            $id('grxBalance').innerHTML = ' · you have ' + creditCoin(d.unlimited ? '∞' : Number(d.balance).toLocaleString());
             if (d.blocked) { $id('grxBlocked').textContent = d.blocked; $id('grxBlocked').hidden = false; return; }
             if (!d.aiUsable) { $id('grxBlocked').textContent = 'The AI Technician is not available right now.'; $id('grxBlocked').hidden = false; return; }
             if (!d.unlimited && Number(d.balance) < Number(d.price)) {

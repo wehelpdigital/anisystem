@@ -778,7 +778,7 @@
         if (!OPT.quote) { q.hidden = true; return; }
         q.classList.toggle('is-min', quoteMin);
         $id('wpQuoteHead').setAttribute('aria-expanded', quoteMin ? 'false' : 'true');
-        $id('wpQuoteCost').innerHTML = `This deep read spends <b>${OPT.quote} credits</b>, and you have <b>${OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString()}</b>. Nothing is charged until you press Run.`;
+        $id('wpQuoteCost').innerHTML = `This deep read spends <b>${OPT.quote} credits</b>, and you have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
         $id('wpQuoteHint').textContent = `${OPT.quote} credits`;
         q.hidden = false;
     }

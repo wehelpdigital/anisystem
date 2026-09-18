@@ -35,6 +35,12 @@
     .ai-bal-chip::before { content: none; }
     html.dark .ai-bal-chip { background: #151b12; border-color: #2b3a1c; }
     .ai-bal b { font-weight: 900; color: var(--color-brand-700); }
+    /* As a link (the purse is the reader's own), the coin is the door to
+       My Credits: same look, a hand cursor, and a lift on hover. */
+    a.ai-bal { text-decoration: none; cursor: pointer; transition: transform .28s cubic-bezier(.22, 1, .36, 1), border-color .2s; }
+    a.ai-bal:hover { transform: translateY(-1px); color: var(--color-gray-600); }
+    a.ai-bal-chip:hover { border-color: var(--color-brand-300); }
+    @media (prefers-reduced-motion: reduce) { a.ai-bal { transition: none; } }
     /* The words "Current credits" became a coin: same meaning, no sentence. */
     .ai-coin { width: .95rem; height: .95rem; flex: none; display: inline-block; vertical-align: -.18em; }
     html.dark .ai-bal { color: #8ea37a; }

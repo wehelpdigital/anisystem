@@ -878,7 +878,7 @@
         if (!OPT.quote) { q.hidden = true; return; }
         q.classList.toggle('is-min', quoteMin);
         $id('cpQuoteHead').setAttribute('aria-expanded', quoteMin ? 'false' : 'true');
-        $id('cpQuoteCost').innerHTML = `This protocol spends <b>${OPT.quote} credits</b> (the deepest of the analyses, which is why it costs the most), and you have <b>${OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString()}</b>. Nothing is charged until you press Run.`;
+        $id('cpQuoteCost').innerHTML = `This protocol spends <b>${OPT.quote} credits</b> (the deepest of the analyses, which is why it costs the most), and you have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
         $id('cpQuoteHint').textContent = `${OPT.quote} credits`;
         q.hidden = false;
     }

@@ -56,8 +56,17 @@ class AiCreditService
 
     public function charge(int $userId, float $credits, string $reason, ?int $messageId = null): ?float
     {
-        if ($credits <= 0 || $this->unlimited($userId)) {
+        if ($credits <= 0) {
             return $this->balance($userId);
+        }
+
+        // The house is never refused and never short -- but what Anee cost
+        // it is written down like anyone else's spend (2026-09-18: the owner
+        // wants the unlimited accounts' usage in the log too), so the ledger
+        // is the one record of what she costs. The sum going negative on
+        // such an account means nothing; every screen shows it "Unlimited".
+        if ($this->unlimited($userId)) {
+            return $this->write($userId, -1 * round($credits, 2), $reason, 'usage', $messageId);
         }
 
         return DB::transaction(function () use ($userId, $credits, $reason, $messageId) {
@@ -88,10 +97,7 @@ class AiCreditService
     /** Deduct without refusing — used to true-up after a call already happened. */
     public function chargeAllowingNegative(int $userId, float $credits, string $reason, ?int $messageId = null): float
     {
-        if ($this->unlimited($userId)) {
-            return $this->balance($userId);
-        }
-
+        // Unlimited accounts write their spend too (see charge()).
         return $this->write($userId, -1 * round($credits, 2), $reason, 'usage', $messageId);
     }
 

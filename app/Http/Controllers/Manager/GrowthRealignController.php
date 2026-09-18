@@ -64,7 +64,7 @@ class GrowthRealignController extends BaseScheduleController
             'price' => AiPrices::of('realign'),
             'balance' => (float) $credits->balance($payer->id),
             'unlimited' => $credits->unlimited((int) $payer->id),
-            'locked' => Tier::forSchedule($schedule) === 'libre',
+            'locked' => ! Tier::scheduleCan($schedule, 'ai'),
             'aiUsable' => $payer->canUseAi() && AiSetting::current()->isUsable(),
             'lot' => ['id' => (int) $lot->id, 'name' => $lot->lotName, 'crop' => CropStages::label($lot->crop)],
             // Only what is known without a read: a lot with no crop cannot be asked about.
@@ -80,8 +80,8 @@ class GrowthRealignController extends BaseScheduleController
         $lot = $this->lotOf($schedule, (int) $request->input('lotId'));
 
         // The door: a paid plan's, said the way every other wall says it.
-        if (Tier::forSchedule($schedule) === 'libre') {
-            Tier::deny('Realign by Anee comes with a paid plan. Upgrade and she reads your lot\'s whole history to say where the crop really is.', 'solo');
+        if (! Tier::scheduleCan($schedule, 'ai')) {
+            Tier::deny('Realign by Anee comes with Libre + Anee. Add Anee and she reads your lot\'s whole history to say where the crop really is.', 'libreAnee');
         }
         $payer = $this->payer();
         $settings = AiSetting::current();
