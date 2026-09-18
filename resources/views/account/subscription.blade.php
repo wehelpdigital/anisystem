@@ -206,7 +206,7 @@
     <div class="mb-5">
         <h2 class="text-base font-bold text-gray-900 mb-1">Plans</h2>
         <p class="text-sm text-gray-500 mb-3">Pricing is set in the anee.io store; choose the tier that fits your farm.</p>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
             @foreach (config('tiers') as $key => $tier)
                 @continue($key === 'admin')
                 <div class="card p-4 {{ $currentTier === $key ? 'ring-2 ring-brand-500' : '' }}">

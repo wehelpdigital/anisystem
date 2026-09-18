@@ -10,6 +10,13 @@
  * owner) so nobody who ever paid is downgraded by the new ladder. A user
  * with no active subscription is 'libre' — the free floor.
  *
+ * Two AI switches, read by different doors: `ai` is Anee herself -- the
+ * chat, the credit shop, Realign by Anee, every run that spends a credit --
+ * and `aiAnalyses` is the four analysis wizards (What to Plant, When to
+ * Plant, Variety Research, Crop Protocol). Libre has neither; Libre + Anee
+ * (2026-09-18) is Libre with both, for ₱70 a month: the same farm limits,
+ * the same ads, and the whole of Anee. Solo and Owner have always had both.
+ *
  * Every limit the gates read lives HERE and only here. null = unlimited.
  * Schedule-scoped limits (lots, workers, video on a farm…) are judged by
  * the SCHEDULE OWNER's tier — a worker inside a farm rides the owner's
@@ -45,9 +52,10 @@ return [
         'communityVideo'    => false,
         'communityVoice'    => false,
         'storageGb'         => 1,
-        'creditsOnGrant'    => 20,      // one-time starter (≈3 text inquiries)
+        'creditsOnGrant'    => 20,      // the starter, kept for the day they add Anee
         'creditsMonthly'    => 0,
-        'ai'                => true,    // credits gate usage, not the tier
+        'ai'                => false,   // Anee is the ₱70 step up: Libre + Anee
+        'aiAnalyses'        => false,
 
         'features' => [
             '1 active cropping schedule (+1 archived)',
@@ -57,8 +65,59 @@ return [
             'Inventory, observations, labor report',
             '3 workers (planning only)',
             'Community access (photos)',
-            '20 starter AI credits',
             '1 GB storage',
+            'Supported by a few ads',
+        ],
+        'excludes' => [
+            'Anee: AI chat, analyses and credits (Libre + Anee)',
+            'Video recording, worker logins, collab room',
+            'Full weather, all reports, document uploads, offline mode',
+        ],
+    ],
+
+    /* Libre, plus Anee. Every farm limit above, word for word -- the one
+       season, the one lot, the two days of weather, the ads -- and the whole
+       of Anee: the chat, the four analyses, Realign, and the credit shop. */
+    'libreAnee' => [
+        'name'    => 'Libre + Anee',
+        'price'   => 70,
+        'period'  => 'month',
+        'priceYear' => 700,
+        'match'   => ['libre + anee', 'libre-anee', 'libre+anee', 'libre anee', 'libreanee'],
+        'tagline' => 'Your free diary, with Anee beside you.',
+
+        'schedulesActive'   => 1,
+        'schedulesArchived' => 1,
+        'lotsPerSchedule'   => 1,
+        'mapsTotal'         => 3,
+        'workersPerSchedule' => 3,
+        'workerLogins'      => false,
+        'videoRecording'    => false,
+        'voiceFarm'         => true,
+        'weatherDays'       => 2,
+        'weatherNow'        => false,
+        'docUploads'        => false,
+        'collab'            => false,
+        'reportsAll'        => false,
+        'offline'           => false,
+        'auditLogs'         => false,
+        'discussionCreate'  => false,
+        'discussionJoin'    => 1,
+        'discussionPrivateJoin' => false,
+        'communityVideo'    => false,
+        'communityVoice'    => false,
+        'storageGb'         => 1,
+        'creditsOnGrant'    => 0,       // the 20 starter credits came with the account
+        'creditsMonthly'    => 0,
+        'ai'                => true,
+        'aiAnalyses'        => true,
+
+        'features' => [
+            'Everything in Libre',
+            'Anee AI chat: ask anything, show a photo',
+            'All AI analyses: What to Plant, When to Plant, Variety Research, Crop Protocol',
+            'Realign by Anee on your growth stages',
+            'Buy AI credit packs whenever you need more',
             'Supported by a few ads',
         ],
         'excludes' => [
@@ -99,6 +158,7 @@ return [
         'creditsOnGrant'    => 30,
         'creditsMonthly'    => 30,
         'ai'                => true,
+        'aiAnalyses'        => true,
 
         'features' => [
             '3 active cropping schedules (+5 archived)',
@@ -150,6 +210,7 @@ return [
         'creditsOnGrant'    => 100,
         'creditsMonthly'    => 100,
         'ai'                => true,
+        'aiAnalyses'        => true,
 
         'features' => [
             'Everything in Solo Farmer, unlimited',
@@ -196,6 +257,7 @@ return [
         'creditsOnGrant'    => 0,
         'creditsMonthly'    => 0,
         'ai'                => true,
+        'aiAnalyses'        => true,
 
         'features' => [],
         'excludes' => [],

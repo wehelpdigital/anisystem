@@ -60,7 +60,8 @@
 
     /* ---- pricing cards ---- */
     .pr-grid { display: grid; gap: 1.25rem; }
-    @media (min-width: 900px) { .pr-grid { grid-template-columns: repeat(3, 1fr); align-items: stretch; } }
+    @media (min-width: 640px) { .pr-grid { grid-template-columns: repeat(2, 1fr); align-items: stretch; } }
+    @media (min-width: 1100px) { .pr-grid { grid-template-columns: repeat(4, 1fr); } }
     .pr-card { position: relative; display: flex; flex-direction: column; border-radius: 1.25rem;
         border: 1px solid var(--color-gray-200); background: #fff; padding: 1.6rem 1.4rem; }
     .pr-card.is-star { border-color: #4a7c2a; box-shadow: 0 24px 50px -30px rgb(47 82 25 / .45); }

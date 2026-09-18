@@ -2526,6 +2526,16 @@ const auRegionTier = (key, field, fallback) => {
     return (t && typeof t[field] === 'string' && t[field] !== '') ? t[field] : fallback;
 };
 const AU_TIERS = {
+    libreAnee: {
+        name: 'Libre + Anee',
+        price: auRegionTier('libreAnee', 'price', '₱70'), per: '/month', year: auRegionTier('libreAnee', 'year', 'or ₱700/year — about ₱58/mo'),
+        points: [
+            'Your Libre plan exactly as it is',
+            'Anee AI chat: ask anything, show a photo',
+            'All four AI analyses and Realign by Anee',
+            'Buy AI credit packs whenever you need more',
+        ],
+    },
     solo: {
         name: 'Solo Farmer',
         price: auRegionTier('solo', 'price', '₱200'), per: '/month', year: auRegionTier('solo', 'year', 'or ₱1,800/year — about ₱150/mo'),

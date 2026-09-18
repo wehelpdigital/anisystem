@@ -141,9 +141,9 @@
                  season, so it does not ask which one first. --}}
             {{-- On Libre these two stay in the row, wearing a lock where the
                  chevron sat — the tap opens the upgrade sheet, not the page. --}}
-            @php $qWtpLocked = ! \App\Support\Tier::farmCan('reportsAll'); @endphp
+            @php $qWtpLocked = ! \App\Support\Tier::farmCan('aiAnalyses'); @endphp
             <a href="{{ route('wtp.page') }}" class="qa-tile qa-wtp"
-               @if ($qWtpLocked) data-tier-lock="solo" data-lock-say="The When to Plant analysis comes with the Solo Farmer plan — Anee reads your town's climate and ENSO outlook to name your safest planting window." @endif>
+               @if ($qWtpLocked) data-tier-lock="libreAnee" data-lock-say="The When to Plant analysis comes with Libre + Anee — Anee reads your town's climate and ENSO outlook to name your safest planting window." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>When to Plant Analysis</b>
@@ -156,7 +156,7 @@
                 @endif
             </a>
             <a href="{{ route('whatp.page') }}" class="qa-tile qa-wtp"
-               @if ($qWtpLocked) data-tier-lock="solo" data-lock-say="The What to Plant analysis comes with the Solo Farmer plan — Anee weighs your location, season forecast and soil to recommend the crop." @endif>
+               @if ($qWtpLocked) data-tier-lock="libreAnee" data-lock-say="The What to Plant analysis comes with Libre + Anee — Anee weighs your location, season forecast and soil to recommend the crop." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/plant.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>What to Plant Analysis</b>
@@ -171,7 +171,7 @@
             {{-- The third: which variety, searched on the web and ranked by
                  the farmer's own priorities. --}}
             <a href="{{ route('vary.page') }}" class="qa-tile qa-wtp"
-               @if ($qWtpLocked) data-tier-lock="solo" data-lock-say="Variety research comes with the Solo Farmer plan — Anee analyzes the newest {{ \App\Support\Region::ph() ? 'Philippine' : 'local' }} varieties and hybrids deeply and ranks them for your soil, weather and priorities." @endif>
+               @if ($qWtpLocked) data-tier-lock="libreAnee" data-lock-say="Variety research comes with Libre + Anee — Anee analyzes the newest {{ \App\Support\Region::ph() ? 'Philippine' : 'local' }} varieties and hybrids deeply and ranks them for your soil, weather and priorities." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/biotechnology.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>Variety Research & Comparison</b>
@@ -186,7 +186,7 @@
             {{-- The fourth: the whole season written out by growth stage --
                  bags, sprays, water, watch-list -- for one field. --}}
             <a href="{{ route('proto.page') }}" class="qa-tile qa-wtp"
-               @if ($qWtpLocked) data-tier-lock="solo" data-lock-say="The Crop Protocol Analysis comes with the Solo Farmer plan — Anee writes your season by growth stage: the bags of fertilizer and when, the sprays to have ready, the water, the pests and weeds to watch." @endif>
+               @if ($qWtpLocked) data-tier-lock="libreAnee" data-lock-say="The Crop Protocol Analysis comes with Libre + Anee — Anee writes your season by growth stage: the bags of fertilizer and when, the sprays to have ready, the water, the pests and weeds to watch." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/checklist.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>Crop Protocol Analysis</b>

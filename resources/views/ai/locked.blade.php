@@ -23,13 +23,17 @@
                 <a href="{{ route('app.dashboard') }}" class="btn btn-white">Back to dashboard</a>
             </div>
         @else
-            <h2 class="text-xl font-bold text-gray-900" style="font-family:var(--font-heading)">AI Technician is a Boss feature</h2>
+            @php $__anee = config('tiers.libreAnee'); @endphp
+            <h2 class="text-xl font-bold text-gray-900" style="font-family:var(--font-heading)">Anee comes with Libre + Anee</h2>
             <p class="text-sm text-gray-500 mt-2">
-                Your <strong class="capitalize">{{ $tier === 'none' ? 'current' : $tier }}</strong> plan doesn't include the AI Technician.
-                Upgrade to <strong>Boss</strong> or <strong>Lifetime</strong> to ask the AI about your crops and buy AI credits.
+                Your <strong>{{ config('tiers.' . $tier . '.name') ?? ucfirst($tier) }}</strong> plan does not include Anee.
+                <strong>Libre + Anee</strong> is your plan exactly as it is, plus the whole of Anee — the chat, the analyses,
+                Realign and the credit shop — for {{ \App\Support\Region::priceTag(\App\Support\Region::tierPrice('libreAnee')) }} a month.
+                Every plan above it has Anee too.
             </p>
             <div class="mt-6 flex flex-col sm:flex-row gap-2 justify-center">
-                <a href="{{ route('account.subscription') }}" class="btn btn-primary">See plans</a>
+                <a href="{{ route('purchase.plans', ['plan' => 'libre-anee']) }}" class="btn btn-primary">Add Anee</a>
+                <a href="{{ route('account.subscription') }}" class="btn btn-white">See all plans</a>
                 <a href="{{ route('app.dashboard') }}" class="btn btn-white">Back to dashboard</a>
             </div>
         @endif

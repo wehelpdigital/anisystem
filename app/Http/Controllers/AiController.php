@@ -117,7 +117,7 @@ class AiController extends Controller
 
     private function page(Request $request, string $chrome)
     {
-        // AI is a Boss/Lifetime feature — Basic can't use it.
+        // Anee comes with Libre + Anee and every plan above it; Libre alone has no chat.
         if (! $this->aiPayer()->canUseAi()) {
             return view('ai.locked', ['tier' => $request->user()->planTier()]);
         }
@@ -188,8 +188,8 @@ class AiController extends Controller
         $payer = $this->aiPayer();
         if (! $payer->canUseAi()) {
             return $this->json(false, (int) $payer->id === (int) Auth::id()
-                ? 'AI is available on Boss and Lifetime plans. Upgrade to unlock the AI Technician.'
-                : 'The AI Technician needs a Boss/Lifetime plan on the farm owner\'s account.', [], 403);
+                ? 'Anee comes with Libre + Anee (₱70 a month) and every plan above it. Add Anee to unlock the chat, the analyses and credits.'
+                : 'Anee is not part of the plan the farm owner\'s account is on.', [], 403);
         }
 
         $userId = Auth::id();

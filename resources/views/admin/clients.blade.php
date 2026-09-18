@@ -177,6 +177,7 @@
                     <div><label class="form-label !mb-1 text-xs!">Assign tier</label>
                         <select id="ceTierSel" class="form-input">
                             <option value="libre" ${c.tier === 'libre' ? 'selected' : ''}>Libre (free)</option>
+                            <option value="libreAnee" ${c.tier === 'libreAnee' ? 'selected' : ''}>Libre + Anee</option>
                             <option value="solo" ${c.tier === 'solo' ? 'selected' : ''}>Solo Farmer</option>
                             <option value="owner" ${c.tier === 'owner' ? 'selected' : ''}>Farm Owner</option>
                         </select></div>

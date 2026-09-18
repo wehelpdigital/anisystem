@@ -226,7 +226,7 @@ class AdminPanelController extends Controller
      * Assign a tier by hand — the testing lever the ladder launches with.
      *
      * Libre cancels every active subscription (the floor needs no row);
-     * Solo/Owner write a zero-price manual subscription whose expiry is the
+     * Libre + Anee, Solo and Owner write a zero-price manual subscription whose expiry is the
      * assignment's own, and grant the tier's welcome credits. Real payments
      * keep flowing through the mother app's orders exactly as before — a
      * manual row is just another subscription to planTier's eyes.
@@ -235,7 +235,7 @@ class AdminPanelController extends Controller
     {
         $u = User::active()->findOrFail($id);
         $data = $request->validate([
-            'tier' => 'required|in:libre,solo,owner',
+            'tier' => 'required|in:libre,libreAnee,solo,owner',
             'expiresAt' => 'nullable|date|after:today',
         ]);
 

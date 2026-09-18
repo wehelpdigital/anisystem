@@ -248,7 +248,7 @@ class ScheduleAiController extends BaseScheduleController
         $ownerId = (int) $schedule->anisystemUserId;
         $owner = User::find($ownerId);
         if (! $owner || ! $owner->canUseAi()) {
-            return $this->jsonFail('The AI Technician needs a Boss/Lifetime plan on the schedule owner\'s account.', 403);
+            return $this->jsonFail('Anee is not part of the plan the schedule owner\'s account is on.', 403);
         }
 
         $settings = AiSetting::current();

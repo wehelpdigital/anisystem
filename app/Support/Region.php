@@ -594,7 +594,7 @@ final class Region
             'yieldUnits' => $c['yieldUnits'] ?? [],
             'words' => $c['words'] ?? [],
             // The upgrade sheet's price lines, in this country's money.
-            'tiers' => collect(['solo', 'owner'])->mapWithKeys(function ($tier) {
+            'tiers' => collect(['libreAnee', 'solo', 'owner'])->mapWithKeys(function ($tier) {
                 $m = self::tierPrice($tier, 'month');
                 $y = self::tierPrice($tier, 'year');
                 if ($m === null) {

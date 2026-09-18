@@ -1258,7 +1258,7 @@
                 {{-- A worker is never sent to the shop: if this farm's plan
                      does not carry her, the button says so and stays put. --}}
                 @php $__aneeShop = ! $canUseAi && \App\Support\WorkerContext::inWorkerContext(); @endphp
-                <a href="{{ $canUseAi ? route('ai.home') : ($__aneeShop ? '#' : route('purchase.plans')) }}"
+                <a href="{{ $canUseAi ? route('ai.home') : ($__aneeShop ? '#' : route('purchase.plans', ['plan' => 'libre-anee'])) }}"
                    class="dash-anee-go sweep-fill sweep-green" style="--sw-t: 13s; --sw-d: -4s"
                    @if ($__aneeShop) data-tier-lock="solo" data-lock-say="{{ $aneeName }} is not part of this farm's plan." @endif>
                     {{ $canUseAi ? 'Chat with ' . $aneeName : 'Unlock ' . $aneeName }}

@@ -57,11 +57,11 @@ class WhenToPlantController extends Controller
     {
     }
 
-    /** The tier wall: analyses ride the Solo Farmer plan and up. */
+    /** The tier wall: the analyses are Anee's, and Anee comes with Libre + Anee and up. */
     private function guardTier(): void
     {
-        if (! \App\Support\Tier::farmCan('reportsAll')) {
-            \App\Support\Tier::deny('The When to Plant analysis comes with the Solo Farmer plan.');
+        if (! \App\Support\Tier::farmCan('aiAnalyses')) {
+            \App\Support\Tier::deny('The When to Plant analysis comes with Libre + Anee, and with every plan above it.', 'libreAnee');
         }
     }
 

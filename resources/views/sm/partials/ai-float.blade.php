@@ -22,13 +22,19 @@
     // Same free-rider rule as the full pages: an account that is never
     // charged is never shown a price, a balance, or a purchase card.
     $aiFloatUnlimited = app(\App\Services\AiCreditService::class)->unlimited($aiFloatPayer);
+    // Anee herself is a plan's feature (Libre + Anee and up): on a farm
+    // without her the button stays, wears a lock, and opens the upgrade
+    // sheet instead of a chat that would refuse the first question.
+    $aiFloatLocked = ! \App\Support\Tier::farmCan('ai');
     // The menu's "save onto a task" picker — rendered with the page, since
     // the float already knows its schedule and tasks change rarely enough.
 @endphp
 @if ($aiFloatSettings && $aiFloatSettings->isUsable() && \App\Support\WorkerContext::canUseModule('ai'))
 <div id="aiFloat" class="ai-float{{ request('module') === 'ai' ? ' ai-float-off' : '' }}">
-    <button type="button" id="aiFloatFab" class="ai-float-fab" aria-label="Ask {{ $aiFloatSettings->assistantName }}" title="Ask {{ $aiFloatSettings->assistantName }}">
+    <button type="button" id="aiFloatFab" class="ai-float-fab{{ $aiFloatLocked ? ' is-locked' : '' }}" aria-label="Ask {{ $aiFloatSettings->assistantName }}" title="Ask {{ $aiFloatSettings->assistantName }}"
+        @if ($aiFloatLocked) data-tier-lock="libreAnee" data-lock-say="{{ $aiFloatSettings->assistantName }} comes with Libre + Anee — the chat, the analyses, Realign and the credit shop, on top of everything Libre already has." @endif>
         <img data-ai-face src="{{ $aiFloatAvatar }}" alt="">
+        @if ($aiFloatLocked)<span class="ai-float-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endif
     </button>
 
     <div id="aiFloatPanel" class="ai-float-panel hidden">
@@ -231,6 +237,15 @@
        is the only thing that ever needed clipping, and with the button
        clipping too there was nowhere for a dot on its edge to live. */
     .ai-float-fab { overflow: visible; }
+    /* Locked on this farm's plan: the face dims, a lock sits where the
+       online dot would, and the dot itself stays away. */
+    .ai-float-fab.is-locked img { filter: grayscale(.6); opacity: .8; }
+    .ai-float-fab.is-locked::after { display: none; }
+    .ai-float-lock { position: absolute; right: -.15rem; bottom: -.15rem; width: 1.35rem; height: 1.35rem; border-radius: 999px;
+        display: inline-flex; align-items: center; justify-content: center; background: #fff; color: #b45309;
+        box-shadow: 0 1px 4px rgba(0,0,0,.25); }
+    .ai-float-lock svg { width: .8rem; height: .8rem; }
+    html.dark .ai-float-lock { background: #1f2a17; color: #f2c46d; }
     .ai-float-fab img { border-radius: 999px; }
     .ai-float-fab::after { content: ""; position: absolute; right: .05rem; bottom: .05rem;
         width: .8rem; height: .8rem; border-radius: 999px; background: #7ee06a;
