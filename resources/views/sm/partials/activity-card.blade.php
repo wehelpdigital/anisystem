@@ -72,7 +72,15 @@
                         $dd = (int) $z->diffInDays($startC, false);
                         $suffix = 'DAS' . ($dd > 0 ? '+' : '') . $dd . ' → DAT0';
                     } else {
+                        // After the pivot the DAT leads, and the count from
+                        // sowing rides beside it (the owner's ask, 2026-09-18):
+                        // "DAT+7 | DAS+12" — the part after the bar is drawn
+                        // in its own colour.
                         $suffix = 'DAT' . ($datDelta > 0 ? '+' : '') . $datDelta;
+                        if ($z) {
+                            $dd = (int) $z->diffInDays($startC, false);
+                            $suffix .= ' | DAS' . ($dd > 0 ? '+' : '') . $dd;
+                        }
                     }
                 }
             }
@@ -246,7 +254,7 @@
                               data-lot-id="{{ $lot->id }}"
                               data-lot-name="{{ $lot->lotName }}"
                               data-lot-variety="{{ $lot->variety ?? '' }}"
-                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}@isset($lotDaySuffix[$lot->id])<span class="lot-tag-das">{{ $lotDaySuffix[$lot->id] }}</span>@endisset</span>
+                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}@isset($lotDaySuffix[$lot->id])@php [$dasMain, $dasAlt] = array_pad(explode(' | ', $lotDaySuffix[$lot->id], 2), 2, null); @endphp<span class="lot-tag-das">{{ $dasMain }}@if ($dasAlt)<i class="lot-tag-das-alt">| {{ $dasAlt }}</i>@endif</span>@endisset</span>
                     @endforeach
                 @elseif ($a->activityType !== 'worker_payroll')
                     {{-- A payroll day is about who turned up, not which field,
@@ -266,7 +274,7 @@
                               data-lot-id="{{ $lot->id }}"
                               data-lot-name="{{ $lot->lotName }}"
                               data-lot-variety="{{ $lot->variety ?? '' }}"
-                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}@isset($lotDaySuffix[$lot->id])<span class="lot-tag-das">{{ $lotDaySuffix[$lot->id] }}</span>@endisset</span>
+                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}@isset($lotDaySuffix[$lot->id])@php [$dasMain, $dasAlt] = array_pad(explode(' | ', $lotDaySuffix[$lot->id], 2), 2, null); @endphp<span class="lot-tag-das">{{ $dasMain }}@if ($dasAlt)<i class="lot-tag-das-alt">| {{ $dasAlt }}</i>@endif</span>@endisset</span>
                     @endforeach
                 @endif
                 @if($a->activityType === 'irrigation')

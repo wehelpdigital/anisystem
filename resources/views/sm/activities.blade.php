@@ -2255,6 +2255,9 @@
             font-weight: 700; font-variant-numeric: tabular-nums;
             opacity: .92; white-space: nowrap;
         }
+        /* The count from sowing beside the DAT, in its own colour so the
+           two are never read as one number. */
+        .lot-tag .lot-tag-das-alt { font-style: normal; font-weight: 600; margin-left: .3rem; color: #fde68a; }
         /* The variety, below the title, as a regular neutral tag. */
         .activity-card-lotmeta { margin-top: .4rem; }
         .activity-card-lotmeta:empty { display: none; margin-top: 0; }

@@ -444,6 +444,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let LOT_DAY_ZERO_SOURCE = {};
     let LOT_TRANSPLANT_SOURCE = {};
 
+    /* "DAT+7 | DAS+12" on a chip: the part after the bar in its own colour. */
+    function dasHtml(das) {
+        const [main, alt] = String(das || '').split(' | ');
+        return esc(main) + (alt ? `<i class="lot-tag-das-alt">| ${esc(alt)}</i>` : '');
+    }
+
     function computeDasLabel(lotId, targetDate) {
         if (!targetDate) return '';
         const b = parseLocalDate(targetDate);
@@ -463,7 +469,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         const z = LOT_DAY_ZERO_DATES[lotId] ? parseLocalDate(LOT_DAY_ZERO_DATES[lotId]) : null;
                         if (z) { const dd = Math.round((b - z) / 86400000); return ' · DAS' + (dd > 0 ? '+' : '') + dd + ' → DAT0'; }
                     }
-                    return ' · DAT' + (datDelta > 0 ? '+' : '') + datDelta;
+                    // After the pivot the DAT leads and the count from
+                    // sowing rides beside it: "DAT+7 | DAS+12".
+                    const z2 = LOT_DAY_ZERO_DATES[lotId] ? parseLocalDate(LOT_DAY_ZERO_DATES[lotId]) : null;
+                    const alt = z2 ? (() => { const dd = Math.round((b - z2) / 86400000); return ' | DAS' + (dd > 0 ? '+' : '') + dd; })() : '';
+                    return ' · DAT' + (datDelta > 0 ? '+' : '') + datDelta + alt;
                 }
             }
         }
@@ -791,7 +801,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const lotId = parseInt(tag.getAttribute('data-lot-id'), 10);
                 const name = tag.getAttribute('data-lot-name') || '';
                 const das = computeDasLabel(lotId, targetDate).replace(/^\s*·\s*/, '');
-                tag.innerHTML = esc(name) + (das ? `<span class="lot-tag-das">${esc(das)}</span>` : '');
+                tag.innerHTML = esc(name) + (das ? `<span class="lot-tag-das">${dasHtml(das)}</span>` : '');
             });
             // The meta row below the title is the variety alone now, and a
             // variety does not change when a card moves - but it is still
@@ -1068,7 +1078,7 @@ document.addEventListener('DOMContentLoaded', () => {
                  * name, and so the day search can still find it. */
                 const das = computeDasLabel(id, targetDateStr).replace(/^\s*·\s*/, '');
                 const hue = (id * 137) % 360;   // golden-angle → distinct, stable per lot
-                return `<span class="item-tag lot-tag" data-lot-id="${id}" data-lot-name="${esc(name)}" data-lot-variety="${esc(variety)}" style="background:hsl(${hue}, 55%, 40%)">${esc(name)}${das ? `<span class="lot-tag-das">${esc(das)}</span>` : ''}</span>`;
+                return `<span class="item-tag lot-tag" data-lot-id="${id}" data-lot-name="${esc(name)}" data-lot-variety="${esc(variety)}" style="background:hsl(${hue}, 55%, 40%)">${esc(name)}${das ? `<span class="lot-tag-das">${dasHtml(das)}</span>` : ''}</span>`;
             }).join('');
         } else if (a.activityType !== 'worker_payroll') {
             // A payroll day has no lot by nature, so saying so is noise.
