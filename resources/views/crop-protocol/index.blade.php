@@ -220,7 +220,10 @@
     .cp-lbl { flex: 1 1 0; min-width: 3.2rem; font-size: .6rem; font-weight: 700; color: var(--color-gray-500); text-align: center; line-height: 1.2; }
     .cp-legend { display: flex; flex-wrap: wrap; gap: .3rem .7rem; margin-top: .6rem; }
     .cp-legend span { display: inline-flex; align-items: center; gap: .3rem; font-size: .7rem; font-weight: 700; color: var(--color-gray-600); }
-    .cp-legend i { width: .7rem; height: .7rem; border-radius: .2rem; display: inline-block; }
+    .cp-legend i { width: .7rem; height: .7rem; border-radius: .2rem; display: inline-block; flex: none; }
+    /* On a phone the legend is a list, one product per row, not columns
+       that break where the names happen to. */
+    @media (max-width: 639px) { .cp-legend { flex-direction: column; align-items: flex-start; gap: .35rem; } }
     .cp-fert { margin-top: .8rem; display: grid; gap: .45rem; }
     .cp-fert-row { display: flex; gap: .6rem; align-items: flex-start; padding: .55rem .65rem; border-radius: .75rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
     .cp-fert-row .st { flex: none; width: 6.5rem; }
@@ -374,11 +377,14 @@
     .cp2-d-fert { display: grid; gap: .4rem; margin-top: .55rem; }
     .cp2-d-app { display: flex; gap: .5rem; align-items: flex-start; font-size: .82rem; line-height: 1.45; color: var(--color-gray-700); }
     .cp2-d-app i { flex: none; width: .7rem; height: .7rem; border-radius: .2rem; margin-top: .3rem; }
+    .cp2-d-app > span { min-width: 0; flex: 1 1 auto; }
     .cp2-d-app b { color: var(--color-gray-900); }
-    .cp2-d-app small { color: var(--color-gray-400); font-size: .7rem; }
+    .cp2-d-app small { color: var(--color-gray-400); font-size: .7rem; white-space: nowrap; }
     .cp2-d-app em { display: block; font-style: normal; font-size: .76rem; color: var(--color-brand-800); }
-    .cp2-d-obs { display: flex; gap: .5rem; align-items: flex-start; margin-top: .5rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-700); }
-    .cp2-d-obs span { flex: none; font-size: .66rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: .18rem .5rem; border-radius: 999px; margin-top: .1rem; }
+    /* Label on its own line, the words under it, everything on one left
+       edge -- a pill beside a paragraph left the text hanging off its side. */
+    .cp2-d-obs { display: block; margin-top: .6rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-700); }
+    .cp2-d-obs span { display: inline-flex; align-items: center; font-size: .66rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: .18rem .5rem; border-radius: 999px; margin: 0 0 .25rem; }
     .cp2-d-obs .is-obs { background: #e6f2d8; color: #2f5219; }
     .cp2-d-obs .is-act { background: #fff1e6; color: #9a3412; }
     .cp2-d-obs p { margin: 0; }
@@ -386,15 +392,24 @@
        content is how a long row pushed the whole report sideways. */
     .cp2-rows, .cp2-tot, .cp2-bg, .cp2-shop, .cp2-d-fert { grid-template-columns: minmax(0, 1fr); }
     .cp2-rows { display: grid; gap: .25rem; margin-top: .6rem; }
-    .cp2-row { display: flex; align-items: center; gap: .6rem; width: 100%; min-width: 0; max-width: 100%; text-align: left; border: 0; background: transparent; padding: .45rem .5rem; border-radius: .7rem; cursor: pointer; font: inherit; color: var(--color-gray-700); transition: background .2s; }
+    .cp2-row { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr) auto; grid-template-areas: 'n t b' '. s s'; column-gap: .6rem; row-gap: 0; align-items: start; width: 100%; min-width: 0; max-width: 100%; text-align: left; border: 0; background: transparent; padding: .45rem .5rem; border-radius: .7rem; cursor: pointer; font: inherit; color: var(--color-gray-700); transition: background .2s; }
     .cp2-row:hover { background: var(--color-gray-50); }
     .cp2-row.is-sel { background: var(--color-brand-50); }
     .cp2-row-n { flex: none; width: 1.5rem; height: 1.5rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800; background: var(--color-brand-100); color: var(--color-brand-800); }
     .cp2-row.is-sel .cp2-row-n { background: #3d6823; color: #fff; }
-    .cp2-row-t { flex: 1 1 auto; min-width: 0; }
-    .cp2-row-t b { display: block; font-size: .82rem; color: var(--color-gray-900); }
-    .cp2-row-t small { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-size: .68rem; line-height: 1.35; color: var(--color-gray-400); }
-    .cp2-row-b { flex: none; font-size: .74rem; font-weight: 800; color: var(--color-brand-800); }
+    /* A grid, not a row: the name and the bags share the first line, and
+       the line under the name runs the full width beneath them both, so a
+       second product is not squeezed into the gap beside the bags figure. */
+    .cp2-row-t { display: contents; }
+    .cp2-row-t b { grid-area: t; display: block; font-size: .82rem; line-height: 1.3; color: var(--color-gray-900); min-width: 0; }
+    .cp2-row-b { grid-area: b; }
+    .cp2-row-n { grid-area: n; }
+    /* The line under the name: the day count as a pill, then what goes on.
+       It wraps as it needs to; a clamp cut a second product mid-word. */
+    .cp2-row-t small { grid-area: s; display: block; margin-top: .2rem; font-size: .68rem; line-height: 1.5; color: var(--color-gray-400); min-width: 0; }
+    .cp2-row-t small .cp2-days { margin-right: .35rem; vertical-align: middle; }
+    .cp2-row-b { flex: none; font-size: .74rem; font-weight: 800; color: var(--color-brand-800); padding-top: .1rem; }
+    .cp2-row-n { margin-top: .05rem; }
     /* totals */
     .cp2-tot { display: grid; gap: .5rem; }
     .cp2-tot-row { display: grid; grid-template-columns: 1fr auto auto; grid-template-areas: "n b s" "tr tr tr"; align-items: center; gap: .15rem .5rem; font-size: .78rem; }
@@ -467,8 +482,8 @@
     html.dark .cp2-foliar b { color: #e8efe1; }
     html.dark .cp2-foliar small { color: #a5c97e; }
     html.dark .cp2-foliar p { color: #b7c2ad; }
-    .cp2-d-fol { display: flex; gap: .5rem; align-items: flex-start; margin-top: .5rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-700); }
-    .cp2-d-fol span { flex: none; font-size: .66rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: .18rem .5rem; border-radius: 999px; margin-top: .1rem; background: #e0f2fe; color: #075985; }
+    .cp2-d-fol { display: block; margin-top: .6rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-700); }
+    .cp2-d-fol span { display: inline-flex; align-items: center; font-size: .66rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: .18rem .5rem; border-radius: 999px; margin: 0 0 .25rem; background: #e0f2fe; color: #075985; }
     .cp2-d-fol p { margin: 0; }
     html.dark .cp2-d-fol { color: #b7c2ad; }
     html.dark .cp2-d-fol span { background: #0c2a3a; color: #7dd3fc; }
@@ -1318,8 +1333,8 @@
             <div class="cp2-guide" role="note">
                 <span class="cp2-guide-e">🧭</span>
                 <div class="cp2-guide-t">
-                    <b>Still a guide — your farm has the last word</b>
-                    <p>Anee wrote this from the official recommendations, the outlook and your answers, but it has not walked your field. Bend it to what is true where you are: your ground as you know it, when your water and your labor are actually free, the machines and hands you have, what the market is paying, and what the plants tell you when you walk the rows. Use each step when the crop reaches its stage, not when the calendar says so, and confirm the products with {{ \App\Support\Region::t('extensionOffice') }}.</p>
+                    <b>Remember: this is just a guide.</b>
+                    <p>Anee wrote this based on analyzing your crop, its strengths and weaknesses, the weather and climate forecast for your location, the soil and irrigation situation, and your target goal. However, as you know, Anee has not yet walked your field — that is why this protocol is just a guide. You are free to update it based on your own experience and knowledge of your farm.</p>
                     <div class="cp2-guide-tags"><span>🕒 your timing</span><span>💧 your water</span><span>👩‍🌾 your labor &amp; tools</span><span>🛒 your market</span><span>🌱 what the field shows</span></div>
                 </div>
             </div>`;
@@ -1491,7 +1506,7 @@
                     ${stages.map((st, i) => `
                     <button type="button" class="cp2-row" data-cp2-stage="${i}">
                         <span class="cp2-row-n">${i + 1}</span>
-                        <span class="cp2-row-t"><b>${esc(st.stage || '')}${st.days ? ` <em class="cp2-days">${esc(st.days)}</em>` : ''}</b><small>${(byStage[i] || []).length ? (byStage[i] || []).map((x) => esc(trimN(x.totalBags)) + ' ' + esc(x.product || '')).join(' · ') : (st.observe ? 'watch' : 'no inputs')}</small></span>
+                        <span class="cp2-row-t"><b>${esc(st.stage || '')}</b><small>${st.days ? `<em class="cp2-days">${esc(st.days)}</em>` : ''}${(byStage[i] || []).length ? (byStage[i] || []).map((x) => esc(trimN(x.totalBags)) + ' ' + esc(x.product || '')).join(' · ') : (st.observe ? 'watch' : 'no inputs')}</small></span>
                         <span class="cp2-row-b">${Number(stageBags[i]) > 0 ? esc(trimN(stageBags[i])) + ' bags' : ''}</span>
                     </button>`).join('')}
                     ${(g.orphans || []).length ? `<div class="cp3-orphans"><b>Other applications this program names</b>${(g.orphans || []).map((x) => `<div>${esc(trimN(x.totalBags))} bags ${esc(x.product || '')} · ${esc(x.stage || '')}${x.purpose ? ` <small>— ${esc(sweep(x.purpose))}</small>` : ''}</div>`).join('')}</div>` : ''}
