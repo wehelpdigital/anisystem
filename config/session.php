@@ -32,7 +32,10 @@ return [
     |
     */
 
-    'lifetime' => (int) env('SESSION_LIFETIME', 1440),
+    // A day, and never less: the deployed environment carries an older
+    // SESSION_LIFETIME=480 from the eight-hour days, set in a dashboard this
+    // code cannot reach, and the app promises a day. The env may lengthen it.
+    'lifetime' => max(1440, (int) env('SESSION_LIFETIME', 1440)),
 
     'expire_on_close' => env('SESSION_EXPIRE_ON_CLOSE', false),
 
