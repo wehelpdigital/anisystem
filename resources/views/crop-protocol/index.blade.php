@@ -146,6 +146,10 @@
     /* A grid item's automatic minimum is its content's width — a chart's
        scroll box would widen the whole report without this. */
     .wtp-report > * { min-width: 0; max-width: 100%; }
+    /* The per-program painter holds two cards (stages, totals) in one grid
+       child; without its own gap the totals card sat flush on the stages. */
+    [data-cp3-fert] { display: grid; gap: .9rem; }
+    [data-cp3-fert] > * { min-width: 0; max-width: 100%; }
     .wtp-hero { border-radius: 1.1rem; padding: 1.1rem 1.2rem; color: #fff;
         background: linear-gradient(130deg, #4a7c2a, #2d5016 70%); }
     .wtp-hero h2 { font-size: 1.15rem; font-weight: 800; margin-bottom: .15rem; }
