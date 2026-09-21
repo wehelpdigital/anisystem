@@ -79,6 +79,7 @@
     $ptMayGen = \App\Support\WorkerContext::canWriteModule('reports');
 @endphp
 @include('sm.partials.tag-picker')
+@include('sm.partials.report-view')
 <div class="pt-wrap">
     <div class="pt-tabs" role="tablist">
         <button type="button" class="pt-tab is-on" id="ptTabGen" @unless($ptMayGen) hidden @endunless>Generate</button>
@@ -86,6 +87,16 @@
     </div>
 
     <div id="ptGen">
+    {{-- What this report is, before the form that makes one. --}}
+    <div class="rx-about">
+        <span class="rx-about-e">📋</span>
+        <div class="rx-about-t">
+            <b>What View as Protocol gives you</b>
+            <p>One lot's season, written down as the recipe you actually followed: every activity that was ticked done, in order on the crop's own clock.</p>
+            <ul><li><b>Step by step</b> — the day count, the date, the work, how long it took and how many hands</li><li><b>The materials each step used</b>, as the inventory recorded them</li><li><b>What it produced</b> — the harvest the lot recorded at the end</li><li><b>Reusable</b> — a protocol on the shelf can be compared with another season's, or handed to Anee to read</li></ul>
+            <p class="rx-about-note">Planned work that was never ticked done stays out; this is the record of what happened, not the plan.</p>
+        </div>
+    </div>
         <div class="card p-4 mb-4 pt-wizard" id="ptWizard">
             <p class="text-sm font-bold text-gray-900">Which lot's season becomes the recipe?</p>
             <p class="text-xs text-gray-500 mt-1 mb-3">Only work that was ticked done goes in — this is the record of what you actually did, step by step on the lot's own day count. When a season turns out well, this is the page you keep.</p>
@@ -102,9 +113,10 @@
     <div id="ptSavedPane" class="hidden">
         <div class="card !p-0 overflow-hidden">
             <div id="ptSavedList"></div>
-            <div id="ptSavedEmpty" class="hidden text-center py-10">
-                <p class="font-bold text-gray-900">Nothing saved yet</p>
-                <p class="text-sm text-gray-400">Every protocol you write lands here by itself.</p>
+            <div id="ptSavedEmpty" class="hidden rx-empty">
+                <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg></span>
+                <p class="rx-empty-t">Nothing saved yet</p>
+                <p class="rx-empty-p">Write a protocol from a lot and it lands here by itself — every one you write, newest first, ready to rename and describe.</p>
             </div>
         </div>
         <div id="ptSavedReport" class="mt-4" hidden></div>
@@ -185,9 +197,8 @@ const __init = () => {
             const res = await api(U.gen, { method: 'POST', body: { scheduleId: @json($schedule->id), lotId: LOT_ID } });
             LAST = res.data;
             drawProtocol($id('ptReport'), LAST.report, LAST, 'fresh');
-            $id('ptReport').hidden = false;
-            $id('ptWizard').hidden = true;
             toast('Protocol written and saved to the shelf.');
+            showInView(LAST, $id('ptReport'), 'fresh');
         } catch (err) { toast(err.message, 'error'); }
         finally { btn.disabled = false; btn.textContent = 'Write the protocol'; }
     });
@@ -224,17 +235,7 @@ const __init = () => {
             <div class="pt-steps">${steps || '<p class="text-sm text-gray-400 py-6 text-center">No ticked work touches this lot yet.</p>'}</div>
             ${(r.yields || []).length ? `<div class="pt-yield"><b>🌾 What this protocol produced</b>${r.yields.map(esc).join('; ')}</div>` : ''}
             ${r.skippedPlanned ? `<p class="pt-note">${r.skippedPlanned} planned but never-ticked ${r.skippedPlanned === 1 ? 'activity is' : 'activities are'} left out — this page is what was actually done.</p>` : ''}
-            <div class="pt-acts">
-                <a class="btn btn-primary w-full" href="${U.ai}?freport=${meta.id}">
-                    <img src="${esc(FACE)}" alt="" style="width:1rem;height:1rem;border-radius:999px;object-fit:cover;margin-right:.35rem;">
-                    Ask ${esc(ANEE)}
-                </a>
-                <button type="button" class="btn btn-white w-full" data-pt-copy>Copy as Text</button>
-                <button type="button" class="btn btn-white w-full" onclick="window.print()">Print</button>
-                ${mode === 'fresh'
-                    ? '<button type="button" class="btn btn-white w-full" data-pt-again>Another lot</button>'
-                    : (meta.mine !== false ? `<button type="button" class="btn btn-white w-full" data-pt-del="${meta.id}">Delete</button>` : '')}
-            </div>`;
+`;
         host.querySelector('[data-pt-again]')?.addEventListener('click', () => {
             host.hidden = true;
             $id('ptWizard').hidden = false;
@@ -259,6 +260,43 @@ const __init = () => {
                 loadSaved();
             } catch (err) { toast(err.message, 'error'); }
         });
+    }
+
+    /* The full-screen view: a fresh protocol and a shelf row land in the
+       same screen, the actions under it. Closed, the farmer is on the shelf. */
+    let VIEWING = null;
+    function showInView(meta, host, mode) {
+        VIEWING = { id: meta.id, title: meta.title || '', mine: meta.mine !== false };
+        const actions = [{ label: 'Ask ' + ANEE, face: FACE, kind: 'primary', href: U.ai + '?freport=' + meta.id }];
+        if (@json($ptMayGen) && VIEWING.mine) {
+            actions.push({ label: 'Name & description', icon: 'pen', onClick: () => openMetaFor(meta.id) });
+            actions.push({ label: 'Delete', icon: 'trash', kind: 'danger', onClick: async () => {
+                const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this protocol?', message: 'It leaves the shelf.', confirmText: 'Delete' }) : confirm('Delete this protocol?');
+                if (!ok) return;
+                try { await api(U.del(meta.id), { method: 'DELETE' }); toast('Protocol removed.'); window.reportView.close(); }
+                catch (err) { toast(err.message, 'error'); }
+            } });
+        }
+        actions.push({ label: mode === 'fresh' ? 'Another lot' : 'Close', icon: mode === 'fresh' ? 'plus' : 'close', onClick: () => window.reportView.close() });
+        window.reportView.open({
+            title: VIEWING.title || ((meta.report && meta.report.lot ? meta.report.lot + ' — ' : '') + 'the protocol'),
+            node: host,
+            actions,
+            onClose: () => { VIEWING = null; showTab(false); },
+        });
+    }
+    async function openMetaFor(id) {
+        let r = PT_ROWS.find((x) => String(x.id) === String(id));
+        if (!r) {
+            try { const res = await api(U.one(id)); r = { id: res.data.id, title: res.data.title || '', description: res.data.description || '' }; }
+            catch (err) { toast(err.message, 'error'); return; }
+        }
+        PT_META_ID = r.id;
+        document.getElementById('ptMetaTitle').value = r.title || '';
+        document.getElementById('ptMetaDesc').value = r.description || '';
+        const mount = document.getElementById('ptMetaTags');
+        if (window.smTags && mount) { window.smTags.mount(mount); window.smTags.load(mount, 'report', r.id); }
+        openSheet('ptMetaSheet');
     }
 
     async function loadSaved() {
@@ -296,6 +334,10 @@ const __init = () => {
             });
             toast(res.message);
             closeSheet('ptMetaSheet');
+            if (VIEWING && VIEWING.id === PT_META_ID) {
+                VIEWING.title = document.getElementById('ptMetaTitle').value.trim();
+                window.reportView?.setTitle(VIEWING.title);
+            }
             loadSaved();
         } catch (err) { toast(err.message, 'error'); }
         finally { saveBtn.disabled = false; }
@@ -319,8 +361,7 @@ const __init = () => {
         try {
             const res = await api(U.one(row.getAttribute('data-pt-open')));
             drawProtocol($id('ptSavedReport'), res.data.report, res.data, 'saved');
-            $id('ptSavedReport').hidden = false;
-            $id('ptSavedReport').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            showInView(res.data, $id('ptSavedReport'), 'saved');
         } catch (err) { toast(err.message, 'error'); }
     });
 
@@ -332,8 +373,7 @@ const __init = () => {
             try {
                 const res = await api(U.one(String(want).replace(/[^\d]/g, '')));
                 drawProtocol($id('ptSavedReport'), res.data.report, res.data, 'saved');
-                $id('ptSavedReport').hidden = false;
-                $id('ptSavedReport').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                showInView(res.data, $id('ptSavedReport'), 'saved');
             } catch (err) { toast(err.message || 'That saved protocol could not be opened.', 'error'); }
         })();
     }

@@ -60,6 +60,9 @@
     html.dark .cp-anl .verdict, html.dark .cp-anl li { color: #a8bd93; }
 
     .cp-acts { display: grid; grid-template-columns: 1fr; gap: .5rem; margin-top: .9rem; }
+    .ar-pen { flex: none; width: 1.6rem; height: 1.6rem; border-radius: .45rem; display: inline-flex; align-items: center; justify-content: center; color: var(--color-gray-400); }
+    .ar-pen:hover { color: var(--color-brand-700); background: var(--color-brand-50); }
+    html.dark .ar-pen:hover { background: rgb(107 159 61 / .18); color: #a5c97e; }
     @media (min-width: 640px) { .cp-acts { grid-template-columns: repeat(3, 1fr); } }
 
     /* The wait veil, while Anee reads the two. */
@@ -90,6 +93,7 @@
 @endpush
 
 @section('content')
+@include('sm.partials.report-view')
 <div class="cp-wrap">
     <div class="cp-tabs" role="tablist">
         <button type="button" class="cp-tab is-on" id="cpTabGen">Compare</button>
@@ -97,6 +101,16 @@
     </div>
 
     <div id="cpGen">
+    {{-- What this report is, before the form that makes one. --}}
+    <div class="rx-about">
+        <span class="rx-about-e">⚖️</span>
+        <div class="rx-about-t">
+            <b>What Compare Reports gives you</b>
+            <p>Two saved reports of the same kind, laid side by side — this season's protocol against last season's, one labor report against another, two reads of the same field.</p>
+            <ul><li><b>A and B, stacked</b> — the two reports as they were saved, so the eye can run between them</li><li><b>What changed</b> — the figures that moved, named</li><li><b>Anee's reading, if you ask for it</b> — what is different, what is better in each, and what to carry forward (this part spends credits)</li></ul>
+            <p class="rx-about-note">Every comparison is saved on the shelf, where you can rename and describe it.</p>
+        </div>
+    </div>
         <div class="card p-4 mb-4" id="cpWizard">
             <p class="text-sm font-bold text-gray-900">Pick two saved reports</p>
             <p class="text-xs text-gray-500 mt-1 mb-3">Same kind against same kind — two protocols, two season reads, this year's profit against last year's. Pick the type first; they stack top and bottom, easy on a phone.</p>
@@ -141,9 +155,10 @@
     <div id="cpSavedPane" class="hidden">
         <div class="card !p-0 overflow-hidden">
             <div id="cpSavedList"></div>
-            <div id="cpSavedEmpty" class="hidden text-center py-10">
-                <p class="font-bold text-gray-900">Nothing saved yet</p>
-                <p class="text-sm text-gray-400">Every comparison lands here by itself.</p>
+            <div id="cpSavedEmpty" class="hidden rx-empty">
+                <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg></span>
+                <p class="rx-empty-t">Nothing saved yet</p>
+                <p class="rx-empty-p">Compare two saved reports and the comparison lands here by itself — every one you make, newest first.</p>
             </div>
         </div>
         <div id="cpSavedReport" class="mt-4" hidden></div>
@@ -155,6 +170,28 @@
 @endsection
 
 @push('sheets')
+{{-- Rename a saved comparison, describe it. --}}
+<div class="sheet hidden" id="cpMetaSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Edit this comparison</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body space-y-4">
+        <div>
+            <label class="form-label" for="cpMetaTitle">Name</label>
+            <input type="text" id="cpMetaTitle" class="form-input" maxlength="191">
+        </div>
+        <div>
+            <label class="form-label" for="cpMetaDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
+            <textarea id="cpMetaDesc" class="form-textarea" rows="3" maxlength="2000"></textarea>
+        </div>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" class="btn btn-primary" id="cpMetaSave">Save changes</button>
+    </div>
+</div>
 <div class="sheet hidden" id="cpKindSheet" style="--sheet-width:24rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -189,6 +226,7 @@ const __init = () => {
         list: @json(route('sm.anee.list') . '?id=' . $schedule->id . '&kind=compare'),
         one: (id) => @json(route('sm.anee.one', ['id' => '__ID__'])).replace('__ID__', id),
         del: (id) => @json(route('sm.anee.delete', ['id' => '__ID__'])).replace('__ID__', id),
+        meta: @json(route('sm.anee.meta')),
         ai: @json(route('ai.index')),
     };
     const KIND_L = { labor: 'Labor Report', expenses: 'Expenses Report', profit: 'Profit Report', season: 'Anee Season Report', sofar: 'Analyze So Far', protocol: 'Protocol' };
@@ -299,11 +337,10 @@ const __init = () => {
                 if (!data || !data.report) throw new Error('Still working — check the Saved tab in a minute.');
             }
             drawCompare($id('cpReport'), data.report, data, 'fresh');
-            $id('cpReport').hidden = false;
-            $id('cpWizard').hidden = true;
             landed = true;
             if (withAi) await window.aneeWait.done({ title: 'Done!', line: `${OPTS.price} credits used — saved to the shelf.` });
             toast(withAi ? `Done — ${OPTS.price} credits used. Saved to the shelf.` : 'Comparison saved to the shelf.');
+            showInView(data, $id('cpReport'), 'fresh');
         } catch (err) { toast(err.message, 'error'); }
         finally {
             btn.disabled = !(SEL.a && SEL.b);
@@ -328,14 +365,7 @@ const __init = () => {
                 ${(anl.betterInB || []).length ? `<h4>Better in B</h4><ul>${ul(anl.betterInB)}</ul>` : ''}
                 ${(anl.advice || []).length ? `<h4>Carry forward</h4><ul>${ul(anl.advice)}</ul>` : ''}
             </div>` : '')
-            + `<div class="cp-acts">
-                <a class="btn btn-primary w-full" href="${U.ai}?freport=${meta.id}">
-                    <img src="${esc(FACE)}" alt="" style="width:1rem;height:1rem;border-radius:999px;object-fit:cover;margin-right:.35rem;">
-                    Ask ${esc(ANEE)}
-                </a>
-                ${mode === 'fresh' ? '<button type="button" class="btn btn-white w-full" data-cp-again>Compare others</button>' : ''}
-                <button type="button" class="btn btn-white w-full" data-cp-del="${meta.id}">Delete</button>
-            </div>`;
+            + '';
         host.querySelector('[data-cp-again]')?.addEventListener('click', () => {
             host.hidden = true;
             $id('cpWizard').hidden = false;
@@ -356,27 +386,80 @@ const __init = () => {
         });
     }
 
+    /* The full-screen view: a fresh comparison and a shelf row land in
+       the same screen, the actions under it. Closed, the farmer is on the shelf. */
+    let VIEWING = null;
+    let CP_ROWS = [];
+    let CP_META_ID = null;
+    function showInView(meta, host, mode) {
+        VIEWING = { id: meta.id, title: meta.title || '', mine: meta.mine !== false };
+        const actions = [{ label: 'Ask ' + ANEE, face: FACE, kind: 'primary', href: U.ai + '?freport=' + meta.id }];
+        if (VIEWING.mine) {
+            actions.push({ label: 'Name & description', icon: 'pen', onClick: () => openMetaFor(meta.id) });
+            actions.push({ label: 'Delete', icon: 'trash', kind: 'danger', onClick: async () => {
+                const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this comparison?', message: 'It leaves the shelf. The credits it used are already spent.', confirmText: 'Delete' }) : confirm('Delete this comparison?');
+                if (!ok) return;
+                try { await api(U.del(meta.id), { method: 'DELETE' }); toast('Comparison removed.'); window.reportView.close(); }
+                catch (err) { toast(err.message, 'error'); }
+            } });
+        }
+        actions.push({ label: mode === 'fresh' ? 'Compare others' : 'Close', icon: mode === 'fresh' ? 'plus' : 'close', onClick: () => window.reportView.close() });
+        window.reportView.open({
+            title: VIEWING.title || 'Comparison',
+            node: host,
+            actions,
+            onClose: () => { VIEWING = null; $id('cpTabSaved')?.click(); },
+        });
+    }
+    async function openMetaFor(id) {
+        let r = CP_ROWS.find((x) => String(x.id) === String(id));
+        if (!r) {
+            try { const res = await api(U.one(id)); r = { id: res.data.id, title: res.data.title || '', description: res.data.description || '' }; }
+            catch (err) { toast(err.message, 'error'); return; }
+        }
+        CP_META_ID = r.id;
+        $id('cpMetaTitle').value = r.title || '';
+        $id('cpMetaDesc').value = r.description || '';
+        openSheet('cpMetaSheet');
+    }
+    $id('cpMetaSave')?.addEventListener('click', async (e) => {
+        if (CP_META_ID === null) return;
+        const btn = e.currentTarget;
+        btn.disabled = true;
+        try {
+            const res = await api(U.meta, { method: 'POST', body: { id: CP_META_ID, title: $id('cpMetaTitle').value.trim(), description: $id('cpMetaDesc').value.trim() } });
+            toast(res.message);
+            closeSheet('cpMetaSheet');
+            if (VIEWING && VIEWING.id === CP_META_ID) { VIEWING.title = $id('cpMetaTitle').value.trim(); window.reportView?.setTitle(VIEWING.title); }
+            loadSaved();
+        } catch (err) { toast(err.message, 'error'); }
+        finally { btn.disabled = false; }
+    });
+
     async function loadSaved() {
         try {
             const res = await api(U.list);
             const rows = res.data.rows || [];
+            CP_ROWS = rows;
             $id('cpSavedEmpty').classList.toggle('hidden', rows.length > 0);
             $id('cpSavedList').innerHTML = rows.map((r) => `
                 <button type="button" class="cp-saved-row" data-cp-open="${r.id}">
                     <span style="font-size:1.2rem;flex:none;">⚖️</span>
-                    <span class="min-w-0 grow"><b>${esc(r.title)}</b><small>${esc(r.when || '')}${r.credits > 0 ? ' · ' + r.credits + ' credits' : ''}</small></span>
+                    <span class="min-w-0 grow"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.when || '')}${r.credits > 0 ? ' · ' + r.credits + ' credits' : ''}</small></span>
+                    ${r.mine !== false ? `<span role="button" tabindex="0" class="ar-pen" data-cp-meta="${r.id}" title="Edit name and description" aria-label="Edit ${esc(r.title)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:.85rem;height:.85rem"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></span>` : ''}
                     <svg style="width:1rem;height:1rem;flex:none;color:var(--color-gray-300)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>`).join('');
         } catch (err) { toast(err.message, 'error'); }
     }
     $id('cpSavedList').addEventListener('click', async (e) => {
+        const pen = e.target.closest('[data-cp-meta]');
+        if (pen) { e.stopPropagation(); openMetaFor(pen.getAttribute('data-cp-meta')); return; }
         const row = e.target.closest('[data-cp-open]');
         if (!row) return;
         try {
             const res = await api(U.one(row.getAttribute('data-cp-open')));
             drawCompare($id('cpSavedReport'), res.data.report, res.data, 'saved');
-            $id('cpSavedReport').hidden = false;
-            $id('cpSavedReport').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            showInView(res.data, $id('cpSavedReport'), 'saved');
         } catch (err) { toast(err.message, 'error'); }
     });
 
@@ -388,8 +471,7 @@ const __init = () => {
             try {
                 const res = await api(U.one(String(want).replace(/[^\d]/g, '')));
                 drawCompare($id('cpSavedReport'), res.data.report, res.data, 'saved');
-                $id('cpSavedReport').hidden = false;
-                $id('cpSavedReport').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                showInView(res.data, $id('cpSavedReport'), 'saved');
             } catch (err) { toast(err.message || 'That saved comparison could not be opened.', 'error'); }
         })();
     }

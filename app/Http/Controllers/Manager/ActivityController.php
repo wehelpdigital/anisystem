@@ -732,7 +732,7 @@ class ActivityController extends BaseScheduleController
     public function laborReportPage(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request, 'id');
-        $schedule->load('workers');
+        $schedule->load(['workers', 'lots']);
 
         return view('sm.labor-report', ['schedule' => $schedule]);
     }
@@ -780,9 +780,15 @@ class ActivityController extends BaseScheduleController
         }
 
         // --- Effective Day 0 anchor per lot (matches the JS recompute logic). ---
+        // dayAnchor=transplant: the window is counted in DAT, so a lot that
+        // was transplanted counts from that day; a direct-seeded lot keeps
+        // its day zero either way (its DAT is its DAS).
+        $fromTransplant = $request->input('dayAnchor') === 'transplant';
         $lotDayZero = [];
         foreach ($schedule->lots as $lot) {
-            if ($lot->dayZeroDate) {
+            if ($fromTransplant && $lot->transplantDate) {
+                $lotDayZero[$lot->id] = Carbon::parse($lot->transplantDate);
+            } elseif ($lot->dayZeroDate) {
                 $lotDayZero[$lot->id] = Carbon::parse($lot->dayZeroDate);
             }
         }

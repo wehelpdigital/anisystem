@@ -102,12 +102,23 @@
     $xrMayGen = \App\Support\WorkerContext::canWriteModule('reports');
 @endphp
 @include('sm.partials.tag-picker')
+@include('sm.partials.report-view')
 <div class="xr-wrap">
     <div class="xr-mtabs" role="tablist">
         <button type="button" class="xr-mtab is-on" id="xrTabGen" @unless($xrMayGen) hidden @endunless>Generate</button>
         <button type="button" class="xr-mtab" id="xrTabSaved">Saved Reports</button>
     </div>
 
+    {{-- What this report is, before the form that makes one. --}}
+    <div class="rx-about">
+        <span class="rx-about-e">💸</span>
+        <div class="rx-about-t">
+            <b>What the Expenses Report tells you</b>
+            <p>Every peso the season spent, added up from the activities that were ticked done: the stock they took from the inventory, the services they paid for, and the cash lines on each day.</p>
+            <ul><li><b>Total spent</b> for the slice you choose — every lot or some, every category or some, planned and done or only done, between two dates</li><li><b>Where it went</b> — by category (fertilizer, seed, chemicals, services, cash) and by lot, with the biggest lines named</li><li><b>Net of the day-book income</b> the same days brought in</li><li><b>Breakdown</b> — every entry, card by card, with the activity it came from</li></ul>
+            <p class="rx-about-note">Every report you generate is saved on the Saved Reports shelf, where you can rename and describe it.</p>
+        </div>
+    </div>
     <div id="xrGenPane">
     {{-- The wizard: set the slice, then generate. Results come after, not under. --}}
     <div class="card p-4 mb-4 xr-filters" id="xrWizard">
@@ -169,24 +180,18 @@
     <div id="xrSavedPane" class="hidden">
         <div class="card !p-0 overflow-hidden">
             <div id="xrSavedList"></div>
-            <div id="xrSavedEmpty" class="hidden text-center py-10">
-                <p class="font-bold text-gray-900">Nothing saved yet</p>
-                <p class="text-sm text-gray-400">Every expenses report that is generated lands here by itself.</p>
+            <div id="xrSavedEmpty" class="hidden rx-empty">
+                <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg></span>
+                <p class="rx-empty-t">Nothing saved yet</p>
+                <p class="rx-empty-p">Generate an expenses report and it lands here by itself — every one you make, newest first, ready to rename and describe.</p>
             </div>
         </div>
     </div>
 
+    {{-- The report itself: lifted into the full-screen view (see
+         sm.partials.report-view) the moment it exists, with its actions
+         under it; this is only where it lives while it is not shown. --}}
     <div id="xrBody" hidden>
-        <div class="xr-actions grid grid-cols-2 sm:grid-cols-5 gap-2 mb-4">
-            <a class="btn btn-primary w-full" id="xrAskBtn" href="#">
-                <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" class="w-4 h-4 rounded-full object-cover mr-1" style="width:1rem;height:1rem;">
-                Ask {{ \App\Models\AiSetting::current()->assistantName }}
-            </a>
-            <button type="button" id="xrCopyBtn" class="btn btn-white w-full">Copy as Text</button>
-            <button type="button" id="xrPrintBtn" class="btn btn-white w-full">Print</button>
-            <button type="button" id="xrDeleteBtn" class="btn btn-white w-full !text-red-600" hidden>Delete</button>
-            <button type="button" id="xrBackBtn" class="btn btn-white w-full">New report</button>
-        </div>
 
         {{-- An older save carries only its text; it is shown as it was written. --}}
         <div id="xrBodyText" class="xr-card" hidden><pre class="whitespace-pre-wrap text-sm text-gray-700" id="xrBodyPre" style="font-family:inherit"></pre></div>
@@ -467,8 +472,8 @@ const __init = () => {
                     params,
                     report: DATA,
                 } });
-                SAVED = { id: snap.data.id, mine: true };
-                savedNote = ' It is saved on the Saved Reports shelf — rename it there any time.';
+                SAVED = { id: snap.data.id, mine: true, title: 'Expenses Report — ' + SCHEDULE_TITLE + (filtered ? ' (filtered)' : ''), description: '' };
+                savedNote = ' It is saved on the Saved Reports shelf.';
             } catch (err) {
                 SAVED = { id: null, mine: true };
                 toast(err.message, 'error');
@@ -480,17 +485,43 @@ const __init = () => {
     }
 
     /* One report area, two ways in. */
+    /* One report, two ways in -- and one screen: the full-screen view with
+       its actions under the report. Closed, a fresh one leaves the farmer
+       on the Saved shelf where it now sits. */
+    const FACE = @json(\App\Models\AiSetting::current()->faceUrl());
+    const ANEE = @json(\App\Models\AiSetting::current()->assistantName);
     function showReport(mode) {
         MODE = mode;
-        $id('xrGenPane').classList.add('hidden');
-        $id('xrSavedPane').classList.add('hidden');
-        $id('xrBody').hidden = false;
-        $id('xrBackBtn').textContent = mode === 'fresh' ? 'New report' : 'Back to the shelf';
-        $id('xrDeleteBtn').hidden = ! (mode === 'saved' && SAVED.mine && MAY_GEN);
-        const ask = $id('xrAskBtn');
-        ask.hidden = ! SAVED.id;
-        if (SAVED.id) ask.href = U.ai + '?freport=' + SAVED.id;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const actions = [];
+        if (SAVED.id) actions.push({ label: 'Ask ' + ANEE, face: FACE, kind: 'primary', href: U.ai + '?freport=' + SAVED.id });
+        if (SAVED.id && SAVED.mine && MAY_GEN) actions.push({ label: 'Name & description', icon: 'pen', onClick: () => openMetaFor(SAVED) });
+        if (SAVED.id && SAVED.mine && MAY_GEN) actions.push({ label: 'Delete', icon: 'trash', kind: 'danger', onClick: deleteShown });
+        actions.push({ label: mode === 'fresh' ? 'New report' : 'Close', icon: mode === 'fresh' ? 'plus' : 'close', onClick: () => window.reportView.close() });
+        window.reportView.open({
+            title: SAVED.title || ('Expenses Report — ' + SCHEDULE_TITLE),
+            node: $id('xrBody'),
+            actions,
+            onClose: () => { showTab(false); },
+        });
+    }
+    function openMetaFor(saved) {
+        META_ID = saved.id;
+        $id('xrMetaTitle').value = saved.title || '';
+        $id('xrMetaDesc').value = saved.description || '';
+        const mount = $id('xrMetaTags');
+        if (window.smTags && mount) { window.smTags.mount(mount); window.smTags.load(mount, 'report', saved.id); }
+        openSheet('xrMetaSheet');
+    }
+    async function deleteShown() {
+        if (!SAVED.id) return;
+        const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this saved report?', message: 'It leaves the shelf. The season\'s numbers stay — a new report can always be generated.', confirmText: 'Delete' }) : confirm('Delete this report?');
+        if (!ok) return;
+        try {
+            await api(U.del(SAVED.id), { method: 'DELETE' });
+            toast('Report removed.');
+            SAVED = { id: null, mine: true };
+            window.reportView.close();
+        } catch (err) { toast(err.message, 'error'); }
     }
 
     /* ---------------- rendering ---------------- */
@@ -593,16 +624,6 @@ const __init = () => {
     });
     $id('xrFrom')?.addEventListener('change', sayTags);
     $id('xrTo')?.addEventListener('change', sayTags);
-    $id('xrCopyBtn').addEventListener('click', () => {
-        // A rich report copies its text rendering; an older text-only save
-        // copies exactly what it holds.
-        const text = $id('xrBodyText').hidden ? (DATA ? buildText() : '') : $id('xrBodyPre').textContent;
-        if (!text) { toast('Nothing to copy yet.', 'info'); return; }
-        (navigator.clipboard?.writeText(text) || Promise.reject(new Error('no')))
-            .then(() => toast('Expenses report copied to clipboard.'))
-            .catch(() => toast('Copy failed on this browser.', 'error'));
-    });
-    $id('xrPrintBtn').addEventListener('click', () => window.print());
 
     /* ---------------- the two doors: Generate | Saved ---------------- */
     const showTab = (gen) => {
@@ -610,13 +631,11 @@ const __init = () => {
         $id('xrTabSaved').classList.toggle('is-on', !gen);
         $id('xrGenPane').classList.toggle('hidden', !gen);
         $id('xrSavedPane').classList.toggle('hidden', gen);
-        $id('xrBody').hidden = true;
         if (!gen) loadSaved();
     };
     $id('xrTabGen').addEventListener('click', () => showTab(true));
     $id('xrTabSaved').addEventListener('click', () => showTab(false));
 
-    $id('xrBackBtn').addEventListener('click', () => showTab(MODE === 'fresh' && MAY_GEN));
 
     /* ---------------- the shelf ---------------- */
     async function loadSaved() {
@@ -639,7 +658,7 @@ const __init = () => {
     async function openSaved(id) {
         try {
             const res = await api(U.one(id));
-            SAVED = { id: res.data.id, mine: res.data.mine !== false };
+            SAVED = { id: res.data.id, mine: res.data.mine !== false, title: res.data.title || '', description: res.data.description || '' };
             if (res.data.report) {
                 // The dataset rode along when it was saved — redraw it whole.
                 DATA = res.data.report;
@@ -686,21 +705,16 @@ const __init = () => {
             } });
             toast(res.message);
             closeSheet('xrMetaSheet');
+            if (SAVED.id === META_ID) {
+                SAVED.title = $id('xrMetaTitle').value.trim();
+                SAVED.description = $id('xrMetaDesc').value.trim();
+                window.reportView?.setTitle(SAVED.title);
+            }
             loadSaved();
         } catch (err) { toast(err.message, 'error'); }
         finally { btn.disabled = false; }
     });
 
-    $id('xrDeleteBtn').addEventListener('click', async () => {
-        if (!SAVED.id) return;
-        const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this saved report?', message: 'It leaves the shelf. The season\'s numbers stay — a new report can always be generated.', confirmText: 'Delete' }) : true;
-        if (!ok) return;
-        try {
-            await api(U.del(SAVED.id), { method: 'DELETE' });
-            toast('Report removed.');
-            showTab(false);
-        } catch (err) { toast(err.message, 'error'); }
-    });
 
     /* A view-level worker lands on the shelf; a tag shelf can name one
        saved report (?open=<id>) and it opens as if tapped. */

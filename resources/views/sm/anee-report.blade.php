@@ -134,6 +134,7 @@
     $arMayGen = \App\Support\WorkerContext::canWriteModule('reports');
 @endphp
 @include('sm.partials.tag-picker')
+@include('sm.partials.report-view')
 <div class="ar-wrap">
     <div class="ar-tabs" role="tablist">
         <button type="button" class="ar-tab is-on" id="arTabGen" @unless($arMayGen) hidden @endunless>Generate</button>
@@ -141,6 +142,33 @@
     </div>
 
     <div id="arGen">
+        {{-- What this report is, before the price and the checks. --}}
+        <div class="rx-about">
+            <span class="rx-about-e"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt=""></span>
+            <div class="rx-about-t">
+                @if ($isSofar)
+                    <b>What Analyze So Far tells you</b>
+                    <p>{{ \App\Models\AiSetting::current()->assistantName }} reads the season as it stands today — the work done and still to do, the money so far, the sky's recent records — and writes where the crop is and what comes next.</p>
+                    <ul>
+                        <li><b>Where the crop stands</b> against its own clock, lot by lot or the whole season</li>
+                        <li><b>The risks in front of it</b> — weather, pests, timing — and what to watch</li>
+                        <li><b>What to do next</b>, in order, and what to stop doing</li>
+                        <li><b>How the money is running</b> against the plan</li>
+                    </ul>
+                @else
+                    <b>What the {{ \App\Models\AiSetting::current()->assistantName }} Season Report tells you</b>
+                    <p>{{ \App\Models\AiSetting::current()->assistantName }} reads the whole finished season — every activity, the money, the harvest, your notes and photos, the sky's actual records and ENSO — and writes the season's story.</p>
+                    <ul>
+                        <li><b>What went right</b> and what it was worth</li>
+                        <li><b>What went wrong</b>, when, and what it cost</li>
+                        <li><b>What to change next season</b> — timing, inputs, labor, water</li>
+                        <li><b>A score</b> for the season, with the reasons</li>
+                    </ul>
+                @endif
+                <p class="rx-about-note">This is a deep AI read and spends credits; the price is said before anything runs. Every report is saved on the shelf, where you can rename and describe it.</p>
+            </div>
+        </div>
+
         {{-- The price, said before anything is spent — folding, like wtp. --}}
         <div class="ar-quote" id="arQuote">
             <button type="button" class="arq-head" id="arQuoteHead">
@@ -186,9 +214,10 @@
     <div id="arSavedPane" class="hidden">
         <div class="card !p-0 overflow-hidden">
             <div id="arSavedList"></div>
-            <div id="arSavedEmpty" class="hidden text-center py-10">
-                <p class="font-bold text-gray-900">Nothing saved yet</p>
-                <p class="text-sm text-gray-400">Every finished report lands here by itself.</p>
+            <div id="arSavedEmpty" class="hidden rx-empty">
+                <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg></span>
+                <p class="rx-empty-t">Nothing saved yet</p>
+                <p class="rx-empty-p">Run a report and it lands here by itself — every one you make, newest first, ready to rename and describe.</p>
             </div>
         </div>
         <div class="ar-report mt-4" id="arSavedReport" hidden></div>
@@ -325,13 +354,11 @@ const __init = () => {
                 }
             }
             drawReport($id('arReport'), data.report, data, 'fresh');
-            $id('arReport').hidden = false;
-            $id('arReadyCard').hidden = true;
-            $id('arQuote').hidden = true;
             landed = true;
             // Her face lights up over the finished report; the veil lifts after.
             await window.aneeWait.done({ title: 'Done!', line: `${data.credits} credits used — saved to the shelf.` });
             toast(`Done — ${data.credits} credits used. Saved to the shelf.`);
+            showInView(data, $id('arReport'), 'fresh');
         } catch (err) {
             toast(err.message, 'error');
         } finally {
@@ -399,15 +426,6 @@ const __init = () => {
                 <span><b>A word from ${esc(ANEE)}</b><br>${esc(r.encouragement)}</span></div>`);
         }
 
-        parts.push(`<div class="ar-acts">
-            <a class="btn btn-primary w-full" href="${U.ai}?freport=${meta.id}">
-                <img src="${esc(FACE)}" alt="" style="width:1rem;height:1rem;border-radius:999px;object-fit:cover;margin-right:.35rem;">
-                Ask ${esc(ANEE)} about it
-            </a>
-            ${mode === 'fresh' ? `<button type="button" class="btn btn-white w-full" data-ar-again>Run another</button>` : ''}
-            <button type="button" class="btn btn-white w-full" data-ar-del="${meta.id}">Delete</button>
-        </div>`);
-
         host.innerHTML = parts.join('');
         requestAnimationFrame(() => host.querySelectorAll('.ar-score .fill').forEach((f) => { f.style.width = f.dataset.w + '%'; }));
         host.querySelector('[data-ar-again]')?.addEventListener('click', () => {
@@ -432,6 +450,33 @@ const __init = () => {
         });
     }
 
+    /* ---------------- the full-screen view ----------------
+     * A fresh report and a shelf row land in the same screen, with the
+     * actions under the report. Closed, the farmer is on the Saved shelf. */
+    let VIEWING = null;
+    function showInView(meta, host, mode) {
+        VIEWING = { id: meta.id, title: meta.title || '', description: meta.description || '', mine: meta.mine !== false };
+        const actions = [
+            { label: 'Ask ' + ANEE + ' about it', face: FACE, kind: 'primary', href: U.ai + '?freport=' + meta.id },
+        ];
+        if (@json($arMayGen) && VIEWING.mine) {
+            actions.push({ label: 'Name & description', icon: 'pen', onClick: () => openReportMeta(meta.id) });
+            actions.push({ label: 'Delete', icon: 'trash', kind: 'danger', onClick: async () => {
+                const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this report?', message: 'It leaves the shelf. The credits it used are already spent.', confirmText: 'Delete' }) : confirm('Delete this report?');
+                if (!ok) return;
+                try { await api(U.del(meta.id), { method: 'DELETE' }); toast('Report removed.'); window.reportView.close(); }
+                catch (err) { toast(err.message, 'error'); }
+            } });
+        }
+        actions.push({ label: mode === 'fresh' ? 'Run another' : 'Close', icon: mode === 'fresh' ? 'plus' : 'close', onClick: () => window.reportView.close() });
+        window.reportView.open({
+            title: VIEWING.title || (KIND === 'sofar' ? 'Analyze So Far' : ANEE + ' Season Report'),
+            node: host,
+            actions,
+            onClose: () => { VIEWING = null; $id('arTabSaved')?.click(); },
+        });
+    }
+
     /* ---------------- saved shelf ---------------- */
     async function loadSaved() {
         try {
@@ -452,9 +497,12 @@ const __init = () => {
     }
     let SAVED_ROWS = [];
     let META_ID = null;
-    function openReportMeta(id) {
-        const r = SAVED_ROWS.find((x) => String(x.id) === String(id));
-        if (!r) return;
+    async function openReportMeta(id) {
+        let r = SAVED_ROWS.find((x) => String(x.id) === String(id));
+        if (!r) {
+            try { const res = await api(U.one(id)); r = { id: res.data.id, title: res.data.title || '', description: res.data.description || '' }; }
+            catch (err) { toast(err.message, 'error'); return; }
+        }
         META_ID = r.id;
         document.getElementById('arMetaTitle').value = r.title || '';
         document.getElementById('arMetaDesc').value = r.description || '';
@@ -481,6 +529,10 @@ const __init = () => {
             });
             toast(res.message);
             closeSheet('arMetaSheet');
+            if (VIEWING && VIEWING.id === META_ID) {
+                VIEWING.title = document.getElementById('arMetaTitle').value.trim();
+                window.reportView?.setTitle(VIEWING.title);
+            }
             loadSaved();
         } catch (err) { toast(err.message, 'error'); }
         finally { saveBtn.disabled = false; }
@@ -493,8 +545,7 @@ const __init = () => {
         try {
             const res = await api(U.one(row.getAttribute('data-ar-open')));
             drawReport($id('arSavedReport'), res.data.report, res.data, 'saved');
-            $id('arSavedReport').hidden = false;
-            $id('arSavedReport').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            showInView(res.data, $id('arSavedReport'), 'saved');
         } catch (err) { toast(err.message, 'error'); }
     });
 
@@ -508,8 +559,7 @@ const __init = () => {
             try {
                 const res = await api(U.one(String(want).replace(/[^\d]/g, '')));
                 drawReport($id('arSavedReport'), res.data.report, res.data, 'saved');
-                $id('arSavedReport').hidden = false;
-                $id('arSavedReport').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                showInView(res.data, $id('arSavedReport'), 'saved');
             } catch (err) { toast(err.message || 'That saved report could not be opened.', 'error'); }
         })();
     }

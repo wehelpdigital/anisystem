@@ -17,7 +17,30 @@
     /* Hero + phase tiles */
     .lr-hero { border-radius: 1.25rem; border: 1px solid var(--color-brand-100); background: linear-gradient(115deg, var(--color-brand-50) 0%, var(--color-white) 70%); padding: 1.1rem 1.25rem; }
     .lr-hero-label { font-size: .72rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--color-gray-500); }
-    .lr-hero-value { font-family: var(--font-sans); font-weight: 700; font-size: 2.5rem; line-height: 1.1; color: var(--color-gray-900); }
+    .lr-hero-value { font-family: var(--font-sans); font-weight: 800; font-size: 1.7rem; line-height: 1.15; color: var(--color-gray-900); }
+    /* The slice: whole season, a day-count range, or a date range. */
+    .lr-range { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .lr-range button { padding: .42rem .8rem; border-radius: 999px; font-size: .8rem; font-weight: 800; border: 1.5px solid var(--color-gray-200); background: var(--color-white); color: var(--color-gray-600); cursor: pointer;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .2s, background .2s; }
+    .lr-range button:hover { transform: translateY(-1px); }
+    .lr-range button.is-on { border-color: var(--color-brand-600); background: var(--color-brand-50); color: var(--color-brand-800); }
+    html.dark .lr-range button { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
+    html.dark .lr-range button.is-on { background: #22301a; border-color: #6b9f3d; color: #cfe6b8; }
+    /* Who carried the season: a donut of each worker's share of the labor cost. */
+    .lr-donut-wrap { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-top: .8rem; }
+    .lr-donut { position: relative; width: 9.5rem; height: 9.5rem; border-radius: 999px; flex: none; }
+    .lr-donut::after { content: ''; position: absolute; inset: 1.9rem; border-radius: 999px; background: var(--color-white); }
+    .lr-donut-c { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1; text-align: center; }
+    .lr-donut-c b { font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
+    .lr-donut-c small { font-size: .66rem; color: var(--color-gray-500); }
+    .lr-donut-l { flex: 1 1 10rem; min-width: 0; display: grid; gap: .3rem; }
+    .lr-donut-l span { display: flex; align-items: center; gap: .45rem; font-size: .78rem; color: var(--color-gray-700); min-width: 0; }
+    .lr-donut-l i { width: .7rem; height: .7rem; border-radius: .2rem; flex: none; }
+    .lr-donut-l em { font-style: normal; flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lr-donut-l b { font-variant-numeric: tabular-nums; color: var(--color-gray-900); }
+    html.dark .lr-donut::after { background: #151b12; }
+    html.dark .lr-donut-c b, html.dark .lr-donut-l b { color: #e8efe1; }
+    html.dark .lr-donut-l span { color: #b7c2ad; }
     .lr-tiles { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .9rem; }
     .lr-tile { flex: 1 1 10rem; min-width: 10rem; border-radius: .9rem; background: var(--color-white); border: 1px solid var(--color-gray-100); padding: .6rem .8rem; }
     .lr-tile .k { display: flex; align-items: center; gap: .4rem; font-size: .72rem; font-weight: 700; color: var(--color-gray-500); }
@@ -136,6 +159,7 @@
     $lrMayGen = \App\Support\WorkerContext::canWriteModule('reports');
 @endphp
 @include('sm.partials.tag-picker')
+@include('sm.partials.report-view')
 <div class="lr-wrap">
 
     <div class="lr-mtabs" role="tablist">
@@ -143,6 +167,16 @@
         <button type="button" class="lr-mtab" id="lrTabSaved">Saved Reports</button>
     </div>
 
+    {{-- What this report is, before the form that makes one. --}}
+    <div class="rx-about">
+        <span class="rx-about-e">🧾</span>
+        <div class="rx-about-t">
+            <b>What the Labor Report tells you</b>
+            <p>Everything the season paid its people, added up from the worker assignments on your activities — half days, whole days, and each worker's rate.</p>
+            <ul><li><b>Total labor expense</b> for the slice you choose — the whole season, a day-count range, or a date range</li><li><b>Busiest months</b> — where the labor cost and the activity count peak</li><li><b>Total worker earnings</b> and who carried the most work, on a donut of each worker's share</li><li><b>Breakdown</b> by worker and by activity, land preparation apart from main cropping</li></ul>
+            <p class="rx-about-note">Every report you generate is saved on the Saved Reports shelf, where you can rename and describe it.</p>
+        </div>
+    </div>
     <div id="lrGenPane">
     {{-- The wizard: set the slice, then generate. Results come after, not under. --}}
     <div class="card p-4 mb-4 lr-filters" id="lrWizard">
@@ -161,15 +195,36 @@
                 </button>
             </div>
         @endif
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        @if ($schedule->lots->count())
+            <div class="mb-2">
+                <span class="form-label text-xs! mb-1!">Lots</span>
+                {{-- One, a few, or all -- the same tag-and-chooser as the workers. --}}
+                <button type="button" class="crop-tag" id="lrLotsBtn">
+                    <span class="crop-tag-e">🌾</span>
+                    <span class="crop-tag-t is-none" id="lrLotsNow">All lots</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+            </div>
+        @endif
+        <span class="form-label text-xs! mb-1!">Which part of the season?</span>
+        {{-- The slice: the whole season, a stretch of the crop's own clock
+             (DAT, DAS or DAP as the chosen lots count it), or two dates. --}}
+        <div class="lr-range" id="lrRange" role="radiogroup" aria-label="Which part of the season">
+            <button type="button" class="is-on" data-lr-range="season" aria-checked="true">🌱 Whole season</button>
+            <button type="button" data-lr-range="day" aria-checked="false">⏱️ <span data-lr-dayword>{{ $schedule->dayType }}</span> range</button>
+            <button type="button" data-lr-range="date" aria-checked="false">📅 Date range</button>
+        </div>
+        <div class="grid grid-cols-2 gap-2 mt-2" id="lrRangeDay" hidden>
             <div>
-                <label class="form-label text-xs!" for="laborDasMin">{{ $schedule->dayType }} min</label>
-                <input type="number" id="laborDasMin" class="form-input" step="1" placeholder="−∞">
+                <label class="form-label text-xs!" for="laborDasMin"><span data-lr-dayword>{{ $schedule->dayType }}</span> from</label>
+                <input type="number" id="laborDasMin" class="form-input" step="1" placeholder="e.g. 0">
             </div>
             <div>
-                <label class="form-label text-xs!" for="laborDasMax">{{ $schedule->dayType }} max</label>
-                <input type="number" id="laborDasMax" class="form-input" step="1" placeholder="+∞">
+                <label class="form-label text-xs!" for="laborDasMax"><span data-lr-dayword>{{ $schedule->dayType }}</span> to</label>
+                <input type="number" id="laborDasMax" class="form-input" step="1" placeholder="e.g. 45">
             </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2 mt-2" id="lrRangeDate" hidden>
             <div>
                 <label class="form-label text-xs!" for="laborStartDate">From date</label>
                 @include('partials.date-tag', ['id' => 'laborStartDate', 'empty' => 'From'])
@@ -192,46 +247,39 @@
     <div id="lrSavedPane" class="hidden">
         <div class="card !p-0 overflow-hidden">
             <div id="lrSavedList"></div>
-            <div id="lrSavedEmpty" class="hidden text-center py-10">
-                <p class="font-bold text-gray-900">Nothing saved yet</p>
-                <p class="text-sm text-gray-400">Every labor report that is generated lands here by itself.</p>
+            <div id="lrSavedEmpty" class="hidden rx-empty">
+                <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg></span>
+                <p class="rx-empty-t">Nothing saved yet</p>
+                <p class="rx-empty-p">Generate a labor report and it lands here by itself — every one you make, newest first, ready to rename and describe.</p>
             </div>
         </div>
     </div>
 
+    {{-- The report itself. It is lifted into the full-screen view (see
+         sm.partials.report-view) the moment it exists, with its actions
+         under it; this is only where it lives while it is not shown. --}}
     <div id="lrBody" hidden>
-        <div class="lr-actions grid grid-cols-2 sm:grid-cols-5 gap-2 mb-4">
-            <a class="btn btn-primary w-full" id="lrAskBtn" href="#">
-                <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" class="w-4 h-4 rounded-full object-cover mr-1" style="width:1rem;height:1rem;">
-                Ask {{ \App\Models\AiSetting::current()->assistantName }}
-            </a>
-            <button type="button" id="laborCopyBtn" class="btn btn-white w-full">Copy as Text</button>
-            <button type="button" id="laborPrintBtn" class="btn btn-white w-full">Print</button>
-            <button type="button" id="lrDeleteBtn" class="btn btn-white w-full !text-red-600" hidden>Delete</button>
-            <button type="button" id="lrBackBtn" class="btn btn-white w-full">New report</button>
-        </div>
 
         {{-- An older save carries only its text; it is shown as it was written. --}}
         <div id="lrBodyText" class="lr-card" hidden><pre class="whitespace-pre-wrap text-sm text-gray-700" id="lrBodyPre" style="font-family:inherit"></pre></div>
 
         <div id="lrContent" class="hidden">
-            {{-- Hero --}}
-            <div class="lr-hero mb-1">
-                <div class="lr-hero-label">Total labor expense</div>
-                <div class="lr-hero-value" id="lrTotal">{{ \App\Support\Region::symbol() }}0</div>
-                <div class="text-xs text-gray-500 mt-1" id="lrMeta"></div>
-                <div class="lr-tiles" id="lrTiles"></div>
-            </div>
-
-            {{-- The view, chosen from a sheet — three underlined words in a
-                 row read fine on a desk and jostled on a phone. --}}
-            <div class="my-4 lr-tabs">
+            {{-- The view, chosen from a sheet, above the figures it shows. --}}
+            <div class="mb-3">
                 <span class="form-label text-xs! mb-1!">Report view</span>
                 <button type="button" class="crop-tag" id="lrPaneBtn">
                     <span class="crop-tag-e" id="lrPaneIcon">📊</span>
                     <span class="crop-tag-t" id="lrPaneNow">Busiest Months</span>
                     <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>
+            </div>
+
+            {{-- Hero: the total, then the figures as tags. --}}
+            <div class="lr-hero mb-4">
+                <div class="lr-hero-label">Total labor expense</div>
+                <div class="lr-hero-value" id="lrTotal">{{ \App\Support\Region::symbol() }}0</div>
+                <div class="rx-stats" id="lrMeta"></div>
+                <div class="lr-tiles" id="lrTiles"></div>
             </div>
 
             <div class="lr-pane is-active" id="lrPaneMonths">
@@ -254,7 +302,9 @@
                 <div class="lr-card">
                     <h3>Who earns the most</h3>
                     <p class="sub" id="lrWorkersSub"></p>
-                    <div class="lr-legend">
+                    {{-- Each worker's share of the labor cost, and who carried the most work. --}}
+                    <div class="lr-donut-wrap" id="lrWorkersDonut"></div>
+                    <div class="lr-legend mt-4">
                         <span><i style="background:#d97706"></i>Land Preparation</span>
                         <span><i style="background:#15803d"></i>Main Cropping</span>
                         <span id="lrLegendUna" class="hidden"><i style="background:#2563eb"></i>Unanchored</span>
@@ -272,6 +322,33 @@
 @endsection
 
 @push('sheets')
+@if ($schedule->lots->count())
+<div class="sheet hidden" id="lrLotsSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Which lots?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="flex items-center gap-3 mb-2">
+            <button type="button" id="lrLotsAll" class="text-xs font-bold text-brand-700">Select all</button>
+            <span class="text-gray-300">·</span>
+            <button type="button" id="lrLotsNone" class="text-xs font-bold text-brand-700">None (= every lot)</button>
+        </div>
+        <div class="dt-rows" id="lrLotsList">
+            @foreach ($schedule->lots as $lot)
+                @php $lotCounter = $lot->transplantDate ? 'DAT' : ($lot->dayType ?: $schedule->dayType); @endphp
+                <button type="button" class="dt-row" data-lr-lot="{{ $lot->id }}" data-lr-counter="{{ $lotCounter }}">
+                    <span class="dt-row-e">🌾</span>
+                    <span class="dt-row-body"><b>{{ $lot->lotName }}</b><i>{{ \App\Support\CropStages::label($lot->crop) ?: 'No crop set' }} · counts in {{ $lotCounter }}</i></span>
+                    <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                </button>
+            @endforeach
+        </div>
+        <button type="button" class="btn btn-primary w-full mt-3" data-sheet-close>Done</button>
+    </div>
+</div>
+@endif
 @if ($schedule->workers->count())
 <div class="sheet hidden" id="lrWorkersSheet" style="--sheet-width:24rem">
     <div class="sheet-handle"></div>
@@ -421,22 +498,90 @@ const __init = () => {
         sayWorkersTag(); updateHint();
     });
 
+    /* The lots, held the way the workers are: empty means every lot. */
+    const LOT_SEL = new Set();
+    function sayLotsTag() {
+        const t = $id('lrLotsNow');
+        if (!t) return;
+        const rows = document.querySelectorAll('#lrLotsList [data-lr-lot]');
+        if (!LOT_SEL.size) { t.textContent = 'All lots'; t.classList.add('is-none'); }
+        else if (LOT_SEL.size === 1) {
+            const row = document.querySelector(`#lrLotsList [data-lr-lot="${[...LOT_SEL][0]}"] b`);
+            t.textContent = row ? row.textContent : '1 lot';
+            t.classList.remove('is-none');
+        } else { t.textContent = `${LOT_SEL.size} of ${rows.length} lots`; t.classList.remove('is-none'); }
+        sayDayWord();
+    }
+    /* The crop's own clock, as the chosen lots count it: one word when they
+       agree, "Day" when they do not, the season's own when none is chosen. */
+    function dayWord() {
+        const rows = [...document.querySelectorAll('#lrLotsList [data-lr-lot]')];
+        const chosen = rows.filter((r) => !LOT_SEL.size || LOT_SEL.has(Number(r.getAttribute('data-lr-lot'))));
+        const words = [...new Set(chosen.map((r) => (r.getAttribute('data-lr-counter') || '').trim()).filter(Boolean))];
+        if (!words.length) return DAY_TYPE || 'Day';
+        return words.length === 1 ? words[0] : 'Day';
+    }
+    function sayDayWord() { document.querySelectorAll('[data-lr-dayword]').forEach((el) => { el.textContent = dayWord(); }); }
+    $id('lrLotsBtn')?.addEventListener('click', () => openSheet('lrLotsSheet'));
+    $id('lrLotsList')?.addEventListener('click', (e) => {
+        const row = e.target.closest('[data-lr-lot]');
+        if (!row) return;
+        const id = Number(row.getAttribute('data-lr-lot'));
+        if (LOT_SEL.has(id)) LOT_SEL.delete(id); else LOT_SEL.add(id);
+        row.classList.toggle('is-on', LOT_SEL.has(id));
+        sayLotsTag(); updateHint();
+    });
+    $id('lrLotsAll')?.addEventListener('click', () => {
+        document.querySelectorAll('#lrLotsList [data-lr-lot]').forEach((r) => { LOT_SEL.add(Number(r.getAttribute('data-lr-lot'))); r.classList.add('is-on'); });
+        sayLotsTag(); updateHint();
+    });
+    $id('lrLotsNone')?.addEventListener('click', () => {
+        LOT_SEL.clear();
+        document.querySelectorAll('#lrLotsList [data-lr-lot]').forEach((r) => r.classList.remove('is-on'));
+        sayLotsTag(); updateHint();
+    });
+    /* Which part of the season: the range inputs of the other two modes
+       are cleared when a mode is left, so a stale date cannot ride along. */
+    let RANGE = 'season';
+    $id('lrRange')?.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-lr-range]');
+        if (!b) return;
+        RANGE = b.getAttribute('data-lr-range');
+        document.querySelectorAll('#lrRange [data-lr-range]').forEach((x) => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-checked', on ? 'true' : 'false'); });
+        $id('lrRangeDay').hidden = RANGE !== 'day';
+        $id('lrRangeDate').hidden = RANGE !== 'date';
+        if (RANGE !== 'day') ['laborDasMin', 'laborDasMax'].forEach((i) => { if ($id(i)) $id(i).value = ''; });
+        if (RANGE !== 'date') ['laborStartDate', 'laborEndDate'].forEach((i) => { if ($id(i)) { $id(i).value = ''; $id(i).dispatchEvent(new Event('change')); } });
+        updateHint();
+    });
+    sayDayWord();
+    setTimeout(() => updateHint(), 0);
+
     function filterPayload() {
         const p = {};
         const w = [...WORKER_SEL];
         if (w.length) p.workerIds = w;
-        const dmin = ($id('laborDasMin')?.value || '').trim();
-        const dmax = ($id('laborDasMax')?.value || '').trim();
-        if (dmin !== '' && !isNaN(parseInt(dmin, 10))) p.dasMin = parseInt(dmin, 10);
-        if (dmax !== '' && !isNaN(parseInt(dmax, 10))) p.dasMax = parseInt(dmax, 10);
-        if ($id('laborStartDate')?.value) p.startDate = $id('laborStartDate').value;
-        if ($id('laborEndDate')?.value) p.endDate = $id('laborEndDate').value;
+        const l = [...LOT_SEL];
+        if (l.length) p.lotIds = l;
+        if (RANGE === 'day') {
+            const dmin = ($id('laborDasMin')?.value || '').trim();
+            const dmax = ($id('laborDasMax')?.value || '').trim();
+            if (dmin !== '' && !isNaN(parseInt(dmin, 10))) p.dasMin = parseInt(dmin, 10);
+            if (dmax !== '' && !isNaN(parseInt(dmax, 10))) p.dasMax = parseInt(dmax, 10);
+        }
+        if (RANGE === 'date') {
+            if ($id('laborStartDate')?.value) p.startDate = $id('laborStartDate').value;
+            if ($id('laborEndDate')?.value) p.endDate = $id('laborEndDate').value;
+        }
         return p;
     }
     function queryString() {
         const f = filterPayload();
         const parts = [];
         (f.workerIds || []).forEach((id) => parts.push(`workerIds[]=${id}`));
+        (f.lotIds || []).forEach((id) => parts.push(`lotIds[]=${id}`));
+        // A DAT window is counted from the transplant on the lots that had one.
+        if ((f.dasMin !== undefined || f.dasMax !== undefined) && dayWord() === 'DAT') parts.push('dayAnchor=transplant');
         if (f.dasMin !== undefined) parts.push(`dasMin=${f.dasMin}`);
         if (f.dasMax !== undefined) parts.push(`dasMax=${f.dasMax}`);
         if (f.startDate) parts.push(`startDate=${encodeURIComponent(f.startDate)}`);
@@ -447,9 +592,10 @@ const __init = () => {
         const f = filterPayload();
         const parts = [];
         if (f.workerIds) parts.push(`${f.workerIds.length} ${f.workerIds.length === 1 ? 'worker' : 'workers'}`);
-        if (f.dasMin !== undefined || f.dasMax !== undefined) parts.push(`${DAY_TYPE} [${f.dasMin ?? '−∞'}, ${f.dasMax ?? '+∞'}]`);
-        if (f.startDate || f.endDate) parts.push(`Date [${f.startDate || '—'}, ${f.endDate || '—'}]`);
-        $id('laborFilterHint').textContent = parts.length ? `Filters active: ${parts.join(' · ')}` : '';
+        if (f.lotIds) parts.push(`${f.lotIds.length} ${f.lotIds.length === 1 ? 'lot' : 'lots'}`);
+        if (f.dasMin !== undefined || f.dasMax !== undefined) parts.push(`${dayWord()} ${f.dasMin ?? '−∞'} to ${f.dasMax ?? '+∞'}`);
+        if (f.startDate || f.endDate) parts.push(`${f.startDate || '…'} to ${f.endDate || '…'}`);
+        $id('laborFilterHint').textContent = parts.length ? `Covers: ${parts.join(' · ')}` : 'Covers the whole season, every lot and every worker.';
     }
 
     /* Generate: compute the slice, save it to the shelf, then show it.
@@ -475,8 +621,8 @@ const __init = () => {
                     params: filters,
                     report: DATA,
                 } });
-                SAVED = { id: snap.data.id, mine: true };
-                savedNote = ' It is saved on the Saved Reports shelf — rename it there any time.';
+                SAVED = { id: snap.data.id, mine: true, title: 'Labor Report — ' + SCHEDULE_TITLE + (Object.keys(filters).length ? ' (filtered)' : ''), description: '' };
+                savedNote = ' It is saved on the Saved Reports shelf.';
             } catch (err) {
                 SAVED = { id: null, mine: true };
                 toast(err.message, 'error');
@@ -490,18 +636,44 @@ const __init = () => {
         }
     }
 
-    /* One report area, two ways in. */
+    /* One report, two ways in -- and one screen: the full-screen view,
+       with its actions under the report. A fresh one, once closed, leaves
+       the farmer on the Saved shelf where it now sits. */
+    const FACE = @json(\App\Models\AiSetting::current()->faceUrl());
+    const ANEE = @json(\App\Models\AiSetting::current()->assistantName);
     function showReport(mode) {
         MODE = mode;
-        $id('lrGenPane').classList.add('hidden');
-        $id('lrSavedPane').classList.add('hidden');
-        $id('lrBody').hidden = false;
-        $id('lrBackBtn').textContent = mode === 'fresh' ? 'New report' : 'Back to the shelf';
-        $id('lrDeleteBtn').hidden = ! (mode === 'saved' && SAVED.mine && MAY_GEN);
-        const ask = $id('lrAskBtn');
-        ask.hidden = ! SAVED.id;
-        if (SAVED.id) ask.href = U.ai + '?freport=' + SAVED.id;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        const actions = [];
+        if (SAVED.id) actions.push({ label: 'Ask ' + ANEE, face: FACE, kind: 'primary', href: U.ai + '?freport=' + SAVED.id });
+        if (SAVED.id && SAVED.mine && MAY_GEN) actions.push({ label: 'Name & description', icon: 'pen', onClick: () => openMetaFor(SAVED) });
+        if (SAVED.id && SAVED.mine && MAY_GEN) actions.push({ label: 'Delete', icon: 'trash', kind: 'danger', onClick: deleteShown });
+        actions.push({ label: mode === 'fresh' ? 'New report' : 'Close', icon: mode === 'fresh' ? 'plus' : 'close', onClick: () => window.reportView.close() });
+        window.reportView.open({
+            title: SAVED.title || ('Labor Report — ' + SCHEDULE_TITLE),
+            node: $id('lrBody'),
+            actions,
+            onClose: () => { showTab(mode !== 'fresh' ? false : false); },
+        });
+    }
+    /* The pen, from inside the view: the same sheet the shelf's pen opens. */
+    function openMetaFor(saved) {
+        META_ID = saved.id;
+        $id('lrMetaTitle').value = saved.title || '';
+        $id('lrMetaDesc').value = saved.description || '';
+        const mount = $id('lrMetaTags');
+        if (window.smTags && mount) { window.smTags.mount(mount); window.smTags.load(mount, 'report', saved.id); }
+        openSheet('lrMetaSheet');
+    }
+    async function deleteShown() {
+        if (!SAVED.id) return;
+        const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this saved report?', message: 'It leaves the shelf. The season\'s numbers stay — a new report can always be generated.', confirmText: 'Delete' }) : confirm('Delete this report?');
+        if (!ok) return;
+        try {
+            await api(U.del(SAVED.id), { method: 'DELETE' });
+            toast('Report removed.');
+            SAVED = { id: null, mine: true };
+            window.reportView.close();
+        } catch (err) { toast(err.message, 'error'); }
     }
 
     /* ---------------- shared tooltip ---------------- */
@@ -529,7 +701,14 @@ const __init = () => {
     function renderHero() {
         const d = DATA, t = d.totals || {};
         $id('lrTotal').textContent = fmtPeso(d.grandTotal);
-        $id('lrMeta').textContent = `${d.totalActivities} ${d.totalActivities === 1 ? 'activity' : 'activities'} · ${t.totalAssignments || 0} worker assignments · ${t.halfDays || 0} half-day / ${t.wholeDays || 0} whole-day / ${t.naCount || 0} N/A`;
+        const stat = (n, word) => `<span class="rx-stat"><b>${esc(String(n))}</b>${esc(word)}</span>`;
+        $id('lrMeta').innerHTML = [
+            stat(d.totalActivities, d.totalActivities === 1 ? 'activity' : 'activities'),
+            stat(t.totalAssignments || 0, 'worker assignments'),
+            stat(t.halfDays || 0, 'half days'),
+            stat(t.wholeDays || 0, 'whole days'),
+            (t.naCount || 0) > 0 ? stat(t.naCount, 'N/A') : '',
+        ].join('');
         const ph = d.phases || {};
         const tiles = [
             ['Land Preparation', `${DAY_TYPE} < 0`, ph.preDayZero, PHASE.pre],
@@ -634,8 +813,13 @@ const __init = () => {
         $id('lrLegendUna').classList.toggle('hidden', !showUna);
         if (!workers.length) { host.innerHTML = '<p class="text-sm text-gray-400 py-8 text-center">No workers have been assigned yet.</p>'; $id('lrWorkersSub').textContent = ''; return; }
         const max = Math.max(...workers.map((w) => w.total || 0), 1);
+        // Who carried the most work: half days count one, whole days two.
+        const units = (w) => (w.halfDays || 0) + 2 * (w.wholeDays || 0);
+        const busiest = workers.reduce((a, b) => (units(b) > units(a) ? b : a), workers[0]);
         $id('lrWorkersSub').textContent = (workers[0].total || 0) > 0
-            ? `${workers[0].name} leads with ${fmtPeso0(workers[0].total)} across the plan.` : 'No paid assignments in this slice.';
+            ? `${workers[0].name} earns the most at ${fmtPeso0(workers[0].total)}` + (units(busiest) > 0 ? `; ${busiest.name} carries the most work, ${units(busiest)} half-day${units(busiest) === 1 ? '' : 's'} of it.` : '.')
+            : 'No paid assignments in this slice.';
+        renderDonut(workers, units);
         host.innerHTML = workers.map((w, i) => {
             const segs = [
                 [PHASE.pre, w.preDayZeroTotal || 0, 'Land Preparation'],
@@ -662,6 +846,29 @@ const __init = () => {
             });
             row.addEventListener('pointerleave', hideTip);
         });
+    }
+
+    /* ---------------- the donut: each worker's share of the labor cost ----------------
+     * A conic gradient on a ring, one slice per worker in earning order,
+     * the small ones gathered as "others" so the legend stays readable. */
+    const DONUT_COLORS = ['#15803d', '#d97706', '#2563eb', '#7c3aed', '#db2777', '#0891b2', '#65a30d', '#ea580c'];
+    function renderDonut(workers, units) {
+        const host = $id('lrWorkersDonut');
+        if (!host) return;
+        const total = workers.reduce((n, w) => n + (w.total || 0), 0);
+        if (total <= 0) { host.innerHTML = ''; return; }
+        const top = workers.slice(0, 7);
+        const rest = workers.slice(7);
+        const slices = top.map((w, i) => ({ name: w.name, v: w.total || 0, c: DONUT_COLORS[i % DONUT_COLORS.length], u: units(w) }));
+        if (rest.length) slices.push({ name: `${rest.length} others`, v: rest.reduce((n, w) => n + (w.total || 0), 0), c: '#9ca3af', u: rest.reduce((n, w) => n + units(w), 0) });
+        let at = 0;
+        const stops = slices.map((sl) => { const from = at; at += (sl.v / total) * 100; return `${sl.c} ${from.toFixed(2)}% ${at.toFixed(2)}%`; });
+        const busiest = slices.reduce((a, b) => (b.u > a.u ? b : a), slices[0]);
+        host.innerHTML = `
+            <div class="lr-donut" style="background: conic-gradient(${stops.join(', ')})" role="img" aria-label="Share of labor cost per worker">
+                <div class="lr-donut-c"><b>${esc(fmtPeso0(total))}</b><small>${slices.length} ${slices.length === 1 ? 'worker' : 'workers'}</small></div>
+            </div>
+            <div class="lr-donut-l">${slices.map((sl) => `<span><i style="background:${sl.c}"></i><em title="${esc(sl.name)}">${esc(sl.name)}${sl === busiest && sl.u > 0 ? ' · busiest' : ''}</em><b>${Math.round((sl.v / total) * 100)}%</b></span>`).join('')}</div>`;
     }
 
     /* ---------------- breakdown cards ----------------
@@ -756,7 +963,11 @@ const __init = () => {
         WORKER_SEL.clear();
         document.querySelectorAll('#lrWorkersList [data-lr-worker]').forEach((r) => r.classList.remove('is-on'));
         sayWorkersTag();
+        LOT_SEL.clear();
+        document.querySelectorAll('#lrLotsList [data-lr-lot]').forEach((r) => r.classList.remove('is-on'));
+        sayLotsTag();
         ['laborDasMin', 'laborDasMax', 'laborStartDate', 'laborEndDate'].forEach((i) => { if ($id(i)) $id(i).value = ''; });
+        document.querySelector('#lrRange [data-lr-range="season"]')?.click();
         updateHint();
     });
     $id('laborStartDate')?.addEventListener('change', updateHint);
@@ -778,6 +989,7 @@ const __init = () => {
         lines.push(`  Main Cropping (${DAY_TYPE} 0 onwards): ${fmtPeso(main.cost)}  (${main.count})`);
         if (una.count > 0) lines.push(`  Unanchored (no ${DAY_TYPE} 0):         ${fmtPeso(una.cost)}  (${una.count})`);
         lines.push(`Activities: ${d.totalActivities} · Assignments: ${t.totalAssignments || 0} · ${t.halfDays || 0}H / ${t.wholeDays || 0}W / ${t.naCount || 0}N`);
+        lines.push(`Covers: ${$id('laborFilterHint')?.textContent?.replace(/^Covers: /, '') || 'the whole season'}`);
         lines.push('');
         lines.push('BY WORKER');
         lines.push('-'.repeat(50));
@@ -788,16 +1000,6 @@ const __init = () => {
         (d.perActivity || []).forEach((a) => lines.push(`${a.activityTitle} — ${a.targetDate || 'no date'} — ${fmtPeso(a.cost)}`));
         return lines.join('\n');
     }
-    $id('laborCopyBtn')?.addEventListener('click', () => {
-        // A rich report copies its text rendering; an older text-only save
-        // copies exactly what it holds.
-        const text = $id('lrBodyText').hidden ? (DATA ? buildText() : '') : $id('lrBodyPre').textContent;
-        if (!text) { toast('Nothing to copy yet.', 'info'); return; }
-        (navigator.clipboard?.writeText(text) || Promise.reject(new Error('Clipboard unavailable')))
-            .then(() => toast('Labor report copied to clipboard.'))
-            .catch(() => toast('Copy failed on this browser.', 'error'));
-    });
-    $id('laborPrintBtn')?.addEventListener('click', () => window.print());
 
     /* ---------------- the two doors: Generate | Saved ---------------- */
     const showTab = (gen) => {
@@ -805,13 +1007,11 @@ const __init = () => {
         $id('lrTabSaved').classList.toggle('is-on', !gen);
         $id('lrGenPane').classList.toggle('hidden', !gen);
         $id('lrSavedPane').classList.toggle('hidden', gen);
-        $id('lrBody').hidden = true;
         if (!gen) loadSaved();
     };
     $id('lrTabGen').addEventListener('click', () => showTab(true));
     $id('lrTabSaved').addEventListener('click', () => showTab(false));
 
-    $id('lrBackBtn').addEventListener('click', () => showTab(MODE === 'fresh' && MAY_GEN));
 
     /* ---------------- the shelf ---------------- */
     async function loadSaved() {
@@ -834,7 +1034,7 @@ const __init = () => {
     async function openSaved(id) {
         try {
             const res = await api(U.one(id));
-            SAVED = { id: res.data.id, mine: res.data.mine !== false };
+            SAVED = { id: res.data.id, mine: res.data.mine !== false, title: res.data.title || '', description: res.data.description || '' };
             if (res.data.report) {
                 // The dataset rode along when it was saved — redraw it whole.
                 DATA = res.data.report;
@@ -881,21 +1081,16 @@ const __init = () => {
             } });
             toast(res.message);
             closeSheet('lrMetaSheet');
+            if (SAVED.id === META_ID) {
+                SAVED.title = $id('lrMetaTitle').value.trim();
+                SAVED.description = $id('lrMetaDesc').value.trim();
+                window.reportView?.setTitle(SAVED.title);
+            }
             loadSaved();
         } catch (err) { toast(err.message, 'error'); }
         finally { btn.disabled = false; }
     });
 
-    $id('lrDeleteBtn').addEventListener('click', async () => {
-        if (!SAVED.id) return;
-        const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this saved report?', message: 'It leaves the shelf. The season\'s numbers stay — a new report can always be generated.', confirmText: 'Delete' }) : true;
-        if (!ok) return;
-        try {
-            await api(U.del(SAVED.id), { method: 'DELETE' });
-            toast('Report removed.');
-            showTab(false);
-        } catch (err) { toast(err.message, 'error'); }
-    });
 
     /* A view-level worker lands on the shelf; a tag shelf can name one
        saved report (?open=<id>) and it opens as if tapped. */

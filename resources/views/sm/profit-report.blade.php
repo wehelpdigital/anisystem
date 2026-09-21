@@ -69,17 +69,26 @@
 @endpush
 
 @section('content')
+@include('sm.partials.report-view')
 <div class="pr-wrap">
-    {{-- Stays hidden until there is a report to copy, print or attach —
-         a blocked season has nothing for these buttons to act on. --}}
-    <div class="card p-4 mb-4 pr-actions hidden" id="prActions">
-        <p class="text-xs text-gray-500 mb-2">The whole plan's costs against the recorded harvest. Numbers refresh every time this page opens.</p>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <button type="button" id="prCopyBtn" class="btn btn-white w-full">Copy as Text</button>
-            <button type="button" id="prPrintBtn" class="btn btn-white w-full">Print</button>
-            <button type="button" id="prAttachBtn" class="btn btn-white w-full">
-                <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" class="w-4 h-4 rounded-full object-cover mr-1" style="width:1rem;height:1rem;">
-                Attach to {{ \App\Models\AiSetting::current()->assistantName }}
+    {{-- What this report is, before the form that makes one. --}}
+    <div class="rx-about">
+        <span class="rx-about-e">📈</span>
+        <div class="rx-about-t">
+            <b>What the Profit Report tells you</b>
+            <p>The harvest the season recorded against everything it spent — inventory, services, cash lines and labor — for the whole season and lot by lot. It reads live: the numbers refresh every time this page opens.</p>
+            <ul><li><b>Net profit and margin</b> — money in against money out</li><li><b>Where the money went</b>, by kind of cost</li><li><b>Lot by lot</b> — what each lot earned, spent and cleared, and the cost per unit of harvest</li><li><b>Footnotes</b> — the things the numbers depend on (a harvest not yet recorded, a lot without a size)</li></ul>
+            <p class="rx-about-note">To keep a copy or talk it over, hand it to Anee at the bottom — that files it on the Reports shelf.</p>
+        </div>
+    </div>
+    {{-- Stays hidden until there is a report to hand over — a blocked
+         season has nothing for the button to act on. Moved under the
+         report by the script below. --}}
+    <div class="pr-actions hidden" id="prActions">
+        <div class="rv-acts" style="position:static;background:none;border:0;padding:.2rem 0 0;justify-content:center;backdrop-filter:none;-webkit-backdrop-filter:none;">
+            <button type="button" id="prAttachBtn" class="rv-btn is-primary">
+                <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="">
+                <span>Ask {{ \App\Models\AiSetting::current()->assistantName }} about it</span>
             </button>
         </div>
     </div>
@@ -237,13 +246,8 @@ const __init = () => {
         });
         return lines.join('\n');
     }
-    $id('prCopyBtn').addEventListener('click', () => {
-        if (!DATA || DATA.blocked) { toast('The report has nothing to copy yet.', 'info'); return; }
-        (navigator.clipboard?.writeText(buildText()) || Promise.reject(new Error('no')))
-            .then(() => toast('Profit report copied to clipboard.'))
-            .catch(() => toast('Copy failed on this browser.', 'error'));
-    });
-    $id('prPrintBtn').addEventListener('click', () => window.print());
+    // The one action sits under the report, not above it.
+    { const acts = $id('prActions'); if (acts && acts.parentNode) acts.parentNode.appendChild(acts); }
     $id('prAttachBtn').addEventListener('click', async (e) => {
         if (!DATA || DATA.blocked) { toast('The report is not ready to attach yet.', 'info'); return; }
         const btn = e.currentTarget;
