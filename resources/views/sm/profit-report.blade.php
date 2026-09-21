@@ -146,7 +146,7 @@ const __init = () => {
         ['materials', 'Materials', '#15803d'],
         ['labor', 'Labor', '#d97706'],
         ['services', 'Services', '#2563eb'],
-        ['expense', 'Day expenses', '#b91c1c'],
+        ['expense', 'Extra expenses', '#b91c1c'],
         ['purchase', 'Stock buys', '#7c3aed'],
     ];
     let DATA = null;

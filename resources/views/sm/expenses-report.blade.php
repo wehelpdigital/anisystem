@@ -267,6 +267,11 @@
             <span class="dt-row-body"><b>Any kind</b><i>The whole report, unfiltered</i></span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </button>
+        <button type="button" class="dt-row" data-xr-kind="__none">
+            <span class="dt-row-e">🚫</span>
+            <span class="dt-row-body"><b>No inventory</b><i>Leave the shed's stock out — material lines drawn from the inventory and stock buys. Hand-typed materials, services, labor and extra expenses stay.</i></span>
+            <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
         @foreach (\App\Models\AsInventoryItem::KINDS as $key => $k)
             <button type="button" class="dt-row" data-xr-kind="{{ $key }}">
                 <span class="dt-row-e">{{ $k['icon'] }}</span>
@@ -341,12 +346,12 @@ const __init = () => {
     const fmtPeso0 = (n) => ((window.ANEE_REGION || {}).symbol || '₱') + Math.round(Number(n || 0)).toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'));
     const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const CATS = {
-        materials: { label: 'Materials', e: '🧂', color: '#15803d' },
-        labor:     { label: 'Labor', e: '👷', color: '#d97706' },
-        services:  { label: 'Services', e: '🚜', color: '#2563eb' },
-        expense:   { label: 'Day expenses', e: '💸', color: '#b91c1c' },
-        purchase:  { label: 'Stock buys', e: '📦', color: '#7c3aed' },
-        income:    { label: 'Income', e: '💰', color: '#a16207' },
+        materials: { label: 'Materials', e: '🧂', color: '#15803d', hint: 'What the activities used — from the shed or typed by hand' },
+        labor:     { label: 'Labor', e: '👷', color: '#d97706', hint: 'Wages for the hands on the activities' },
+        services:  { label: 'Services', e: '🚜', color: '#2563eb', hint: 'Service lines and service activities' },
+        expense:   { label: 'Extra expenses', e: '💸', color: '#b91c1c', hint: "The extra expenses logged on the board's days" },
+        purchase:  { label: 'Stock buys', e: '📦', color: '#7c3aed', hint: 'Stock bought or opened in the inventory, outside any activity' },
+        income:    { label: 'Income', e: '💰', color: '#a16207', hint: "The day book's income lines" },
     };
     const LOT_NAMES = @json($schedule->lots->pluck('lotName', 'id'));
     const SCHEDULE_TITLE = @json($schedule->title);
@@ -375,7 +380,7 @@ const __init = () => {
     $id('xrCatsList').innerHTML = Object.entries(CATS).map(([k, c]) => `
         <button type="button" class="dt-row" data-xr-cat="${k}">
             <span class="dt-row-e">${c.e}</span>
-            <span class="dt-row-body"><b>${c.label}</b></span>
+            <span class="dt-row-body"><b>${c.label}</b>${c.hint ? `<i>${c.hint}</i>` : ''}</span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </button>`).join('');
 

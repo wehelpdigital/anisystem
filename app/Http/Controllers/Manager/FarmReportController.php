@@ -139,7 +139,12 @@ class FarmReportController extends BaseScheduleController
             foreach ($a->items as $it) {
                 $amount = round((float) $it->unitPrice * (float) $it->quantity, 2);
                 $inv = $it->inventoryItemId ? $invItems->get((int) $it->inventoryItemId) : null;
-                if ($invKind !== '' && (! $inv || $inv->kind !== $invKind)) {
+                // '__none' = no inventory: the shed's own stock stays out
+                // (linked material lines, stock buys); hand-typed materials,
+                // services, labor and the day book stay in.
+                if ($invKind === '__none') {
+                    if ($inv) continue;
+                } elseif ($invKind !== '' && (! $inv || $inv->kind !== $invKind)) {
                     if ($it->itemType !== 'service') continue;
                 }
                 $row = [
@@ -150,14 +155,14 @@ class FarmReportController extends BaseScheduleController
                     'invKind' => $inv?->kind,
                 ];
                 if ($it->itemType === 'service') {
-                    if ($invKind !== '') continue;   // services carry no inventory kind
+                    if ($invKind !== '' && $invKind !== '__none') continue;   // services carry no inventory kind
                     $push($row + ['cat' => 'services']);
                 } else {
                     $push($row + ['cat' => 'materials']);
                 }
             }
 
-            if ($invKind === '') {
+            if ($invKind === '' || $invKind === '__none') {
                 if ((float) ($a->servicePrice ?? 0) > 0) {
                     $push([
                         'on' => $on, 'done' => $done, 'lotIds' => $aLots, 'cat' => 'services',
@@ -190,12 +195,12 @@ class FarmReportController extends BaseScheduleController
             }
         }
 
-        if ($invKind === '') {
+        if ($invKind === '' || $invKind === '__none') {
             foreach ($schedule->dayExpenses as $e) {
                 $push([
                     'on' => $e->expenseDate ? substr((string) $e->expenseDate, 0, 10) : null,
                     'done' => null, 'lotIds' => [], 'cat' => 'expense',
-                    'label' => trim((string) $e->note) !== '' ? (string) $e->note : 'Day expense',
+                    'label' => trim((string) $e->note) !== '' ? (string) $e->note : 'Extra expense',
                     'meta' => 'Day book', 'amount' => round((float) $e->amount, 2),
                 ]);
             }
@@ -220,6 +225,7 @@ class FarmReportController extends BaseScheduleController
             $item = $invItems->get((int) $m->itemId);
             $amount = $m->cost($item);
             if ($amount <= 0) continue;
+            if ($invKind === '__none') continue;
             if ($invKind !== '' && (! $item || $item->kind !== $invKind)) continue;
             $price = $m->unitPrice !== null ? (float) $m->unitPrice : (float) ($item?->unitPrice ?? 0);
             $push([
@@ -1087,7 +1093,7 @@ class FarmReportController extends BaseScheduleController
             . ' (materials ' . \App\Support\Region::symbol() . number_format($pf['costCats']['materials'], 2)
             . ', labor ' . \App\Support\Region::symbol() . number_format($pf['costCats']['labor'], 2)
             . ', services ' . \App\Support\Region::symbol() . number_format($pf['costCats']['services'], 2)
-            . ', day expenses ' . \App\Support\Region::symbol() . number_format($pf['costCats']['expense'], 2)
+            . ', extra expenses (the day book) ' . \App\Support\Region::symbol() . number_format($pf['costCats']['expense'], 2)
             . ', stock buys ' . \App\Support\Region::symbol() . number_format($pf['costCats']['purchase'], 2)
             . '), net ' . ($pf['profit'] >= 0 ? 'profit' : 'LOSS') . ' ' . \App\Support\Region::symbol() . number_format(abs($pf['profit']), 2)
             . ($pf['margin'] !== null ? ' (margin ' . $pf['margin'] . '%)' : '') . '.';
