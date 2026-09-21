@@ -401,7 +401,8 @@ class ProtocolBuilderController extends Controller
         $region = \App\Support\Region::name();
         $lines = [];
         foreach ($tasks as $i => $t) {
-            $head = sprintf('%d. [%s] %s %d — %s', $i + 1, $t['id'], $t['counter'], $t['day'], $t['title']);
+            $when = $t['day'] < 0 ? sprintf('%d days before %s 0', -$t['day'], $t['counter']) : sprintf('%s %d', $t['counter'], $t['day']);
+            $head = sprintf('%d. [%s] %s — %s', $i + 1, $t['id'], $when, $t['title']);
             if ($t['subtitle'] !== '') {
                 $head .= ' (' . $t['subtitle'] . ')';
             }
@@ -445,7 +446,7 @@ Variety: {$variety}
 Day count: {$dt['label']} — {$dt['sub']}
 Description: {$description}
 
-THE TASKS, in the farmer's order (the code in [brackets] is the task's id — quote it exactly in "tasks")
+THE TASKS, in the farmer's order (the code in [brackets] is the task's id — quote it exactly in "tasks"; "14 days before DAS 0" is work done before the count starts, such as land preparation)
 {$taskText}
 
 THE APP'S OWN GROWTH STAGE TABLE for this crop (day the stage begins)
@@ -467,7 +468,7 @@ RETURN ONLY A JSON OBJECT of exactly this shape (no fences, no commentary):
   "gaps": [{"what": "<what is missing or weak>", "why": "<why it matters>", "fix": "<what to add or change>"}],
   "risks": [{"risk": "<what could go wrong>", "when": "<the day or stage, e.g. 'DAS 20-35'>", "action": "<what to do about it>"}],
   "tasks": [{"id": "<task id from the brackets>", "verdict": "good|check|concern", "note": "<one short sentence about this task>"}],
-  "additions": [{"counter": "<DAS|DAT|DAP, one this protocol uses>", "day": <integer>, "title": "<task to add>", "type": "<one of: {$typeKeys}>", "why": "<one sentence>"}],
+  "additions": [{"counter": "<DAS|DAT|DAP, one this protocol uses>", "day": <integer; a NEGATIVE number means that many days BEFORE that counter's day 0, e.g. -14 for land preparation two weeks before>, "title": "<task to add>", "type": "<one of: {$typeKeys}>", "why": "<one sentence>"}],
   "sequence": "<one short paragraph on the order and spacing of the tasks>",
   "summary": "<2-4 sentences the farmer can act on>"
 }

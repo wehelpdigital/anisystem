@@ -189,7 +189,16 @@
     html.dark .pb-btn.is-anee { background: #22301a; border-color: #3f5a2a; color: #cfe6b8; }
 
     /* The task sheet. */
+    .pbt-when { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .4rem; margin-bottom: .5rem; }
+    .pbt-when button { padding: .5rem .5rem; border-radius: .7rem; font-size: .78rem; font-weight: 800; border: 1px solid var(--color-gray-200); background: var(--color-white); color: var(--color-gray-600); }
+    .pbt-when button.is-on { background: #3d6823; color: #fff; border-color: #3d6823; }
     .pbt-day { display: flex; gap: .5rem; align-items: stretch; }
+    .pbt-unit { display: inline-flex; align-items: center; padding: 0 .6rem; border-radius: .75rem; font-size: .76rem; font-weight: 800; color: #2f5219; background: #f1f8ea; border: 1px solid #cfe3bd; white-space: nowrap; flex: none; }
+    html.dark .pbt-when button { background: #151b12; border-color: #2b3a1c; color: #cbd5c0; }
+    html.dark .pbt-when button.is-on { background: #3d6823; color: #fff; border-color: #3d6823; }
+    html.dark .pbt-unit { background: #22301a; border-color: #3f5a2a; color: #cfe6b8; }
+    .pb-day.is-before { background: repeating-linear-gradient(135deg, var(--prio, #6b7280) 0 6px, color-mix(in srgb, var(--prio, #6b7280) 78%, #000) 6px 12px); }
+    .pb-day.is-before b { font-size: .52rem; }
     .pbt-counter { display: inline-flex; border: 1px solid var(--color-gray-200); border-radius: .75rem; overflow: hidden; flex: none; }
     .pbt-counter button { padding: 0 .8rem; font-size: .8rem; font-weight: 800; color: var(--color-gray-500); background: var(--color-white); }
     .pbt-counter button.is-on { background: #3d6823; color: #fff; }
@@ -295,7 +304,7 @@
     <div class="rx-empty hidden" id="pbEmpty">
         <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 7h6m-6 4h4"/></svg></span>
         <p class="rx-empty-t">No tasks yet</p>
-        <p class="rx-empty-p" id="pbEmptyP">Add the first task: the day of the count it falls on, what is done, and what to apply.</p>
+        <p class="rx-empty-p" id="pbEmptyP">Add the first task: the day of the count it falls on, or how many days before it starts, what is done, and what to apply.</p>
     </div>
     <button type="button" class="pb-add-bottom" id="pbAddBottom">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Add a task
@@ -328,12 +337,18 @@
     </div>
     <div class="sheet-body">
         <div>
-            <span class="form-label">Which day of the count</span>
+            <span class="form-label">When</span>
+            <div class="pbt-when" id="pbtWhen">
+                <button type="button" data-when="on" class="is-on">On the count</button>
+                <button type="button" data-when="before">Before it starts</button>
+            </div>
             <div class="pbt-day">
                 <div class="pbt-counter" id="pbtCounter"></div>
-                <input type="number" id="pbtDay" class="form-input" inputmode="numeric" step="1" min="-365" max="999" placeholder="e.g. 14">
+                <input type="number" id="pbtDay" class="form-input" inputmode="numeric" step="1" min="0" max="999" placeholder="e.g. 14">
+                <span class="pbt-unit" id="pbtUnit" hidden>days before</span>
             </div>
             <p class="pbt-stage" id="pbtStage"></p>
+            <p class="pbh-hint" id="pbtHint"></p>
         </div>
         <div class="mt-4">
             <label class="form-label" for="pbtTitleIn">Title</label>
@@ -432,9 +447,14 @@
         <p class="pbf-say" id="pbFixSay"></p>
         <div class="mt-4">
             <span class="form-label">Change its day to</span>
+            <div class="pbt-when" id="pbFixWhen">
+                <button type="button" data-when="on" class="is-on">On the count</button>
+                <button type="button" data-when="before">Before it starts</button>
+            </div>
             <div class="pbt-day">
                 <div class="pbt-counter" id="pbFixCounter"></div>
-                <input type="number" id="pbFixDay" class="form-input" inputmode="numeric" step="1" min="-365" max="999">
+                <input type="number" id="pbFixDay" class="form-input" inputmode="numeric" step="1" min="0" max="999">
+                <span class="pbt-unit" id="pbFixUnit" hidden>days before</span>
             </div>
             <p class="pbf-hint" id="pbFixHint"></p>
         </div>
@@ -572,7 +592,6 @@
         for (const r of rows) { if (r[0] <= day) label = r[1]; else break; }
         return label;
     }
-    const sayDay = (t) => `${t.counter} ${t.day}`;
 
     /* ------------------------------------------------------------ autosave */
     let DIRTY = false, BUSY = false, AGAIN = false, STALE = false, FAILS = 0, saveTimer = null;
@@ -671,8 +690,10 @@
         d.textContent = P.description || '';
         d.classList.toggle('hidden', !P.description);
         const tags = [`<span class="pb-tag"><b>${TASKS.length}</b> ${TASKS.length === 1 ? 'task' : 'tasks'}</span>`];
+        const f = TASKS.length ? TASKS[0] : null;
+        if (f && f.day < 0) tags.push(`<span class="pb-tag">Starts <b>${esc(sayWhen(f.counter, f.day))}</b></span>`);
         const n = TASKS.length ? TASKS[TASKS.length - 1] : null;
-        if (n) tags.push(`<span class="pb-tag">Runs to <b>${esc(sayDay(n))}</b></span>`);
+        if (n) tags.push(`<span class="pb-tag">Runs to <b>${esc(sayWhen(n.counter, n.day))}</b></span>`);
         if (REVIEW) tags.push(`<span class="pb-tag is-score">Anee: <b>${REVIEW.score}/100</b></span>`);
         if (P.ported) tags.push(`<a class="pb-tag is-ported" href="${esc(P.ported.url)}">Ported ${esc(P.ported.at || '')} → <b>${esc(P.ported.title || 'the season')}</b></a>`);
         $id('pbHeadTags').innerHTML = tags.join('');
@@ -705,7 +726,7 @@
         if (rv && rv.note) more.push(`<div class="pb-anee">Anee: ${esc(rv.note)}</div>`);
         return `
             <div class="pb-card" data-id="${esc(t.id)}" data-prio="${esc(t.priority)}">
-                <div class="pb-day"><b>${esc(t.counter)}</b><span>${t.day}</span>${stage ? `<i title="${esc(stage)}">${esc(stage)}</i>` : ''}</div>
+                <div class="pb-day${t.day < 0 ? ' is-before' : ''}">${t.day < 0 ? `<b>BEFORE ${esc(t.counter)}</b><span>${-t.day}</span><i title="${esc(stage)}">${-t.day === 1 ? 'day' : 'days'} before</i>` : `<b>${esc(t.counter)}</b><span>${t.day}</span>${stage ? `<i title="${esc(stage)}">${esc(stage)}</i>` : ''}`}</div>
                 <div class="pb-body">
                     <div class="pb-body-t"><b>${esc(t.title)}</b>${t.subtitle ? `<i>${esc(t.subtitle)}</i>` : ''}</div>
                     <div class="pb-chips">${chips.join('')}</div>
@@ -724,7 +745,7 @@
         list.innerHTML = TASKS.map(cardHtml).join('');
         OPEN.forEach((id) => { const c = list.querySelector(`.pb-card[data-id="${CSS.escape(id)}"]`); if (c) c.classList.add('is-open'); });
         $id('pbEmpty').classList.toggle('hidden', TASKS.length > 0);
-        $id('pbEmptyP').textContent = editing() ? 'Add the first task: the day of the count it falls on, what is done, and what to apply.' : 'This protocol has no tasks yet. Edit it to add the first one.';
+        $id('pbEmptyP').textContent = editing() ? 'Add the first task: the day of the count it falls on, or how many days before it starts, what is done, and what to apply.' : 'This protocol has no tasks yet. Edit it to add the first one.';
         $id('pbUndo').disabled = !HIST.undo.length;
         $id('pbRedo').disabled = !HIST.redo.length;
         renderReview();
@@ -805,12 +826,40 @@
         const last = TASKS.length ? TASKS[TASKS.length - 1] : null;
         return { id: uid('t'), counter: last ? last.counter : counters()[0], day: last ? last.day : 0, title: '', subtitle: '', description: '', type: null, groups: [], note: '', priority: 'medium', workers: null, pos: last ? (last.pos ?? 0) + 10 : 0 };
     }
-    function paintCounter(host, counter, onPick) {
-        const list = counters();
-        host.innerHTML = list.map((c) => `<button type="button" data-c="${c}" class="${c === counter ? 'is-on' : ''}">${c}</button>`).join('');
-        host.style.display = list.length > 1 ? '' : 'none';
-        host.onclick = (e) => { const b = e.target.closest('[data-c]'); if (!b) return; host.querySelectorAll('button').forEach((x) => x.classList.toggle('is-on', x === b)); onPick(b.getAttribute('data-c')); };
+    /**
+     * The day picker: "On the count" (DAS 14) or "Before it starts" (7 days
+     * before DAS 0 -- land preparation, seedbed work, buying the inputs).
+     * A before-day is kept as a negative day on its counter, so the order
+     * and the port need nothing new. Wired over `${pfx}When/Counter/Day/
+     * Unit`; get() reads the signed day back.
+     */
+    function dayPicker(pfx, onChange) {
+        const st = { when: 'on', counter: counters()[0] };
+        const whenHost = $id(pfx + 'When'), cHost = $id(pfx + 'Counter'), dayIn = $id(pfx + 'Day'), unit = $id(pfx + 'Unit');
+        const paint = () => {
+            whenHost.querySelectorAll('[data-when]').forEach((b) => b.classList.toggle('is-on', b.getAttribute('data-when') === st.when));
+            const list = counters();
+            cHost.innerHTML = list.map((c) => `<button type="button" data-c="${c}" class="${c === st.counter ? 'is-on' : ''}">${c}</button>`).join('');
+            cHost.style.display = list.length > 1 ? '' : 'none';
+            unit.hidden = st.when !== 'before';
+        };
+        whenHost.onclick = (e) => {
+            const b = e.target.closest('[data-when]'); if (!b) return;
+            const was = st.when; st.when = b.getAttribute('data-when');
+            const n = Math.abs(parseInt(dayIn.value, 10) || 0);
+            if (st.when === 'before' && was !== 'before') dayIn.value = n > 0 ? n : 7;
+            if (st.when === 'on' && was !== 'on') dayIn.value = n;
+            paint(); if (onChange) onChange();
+        };
+        cHost.onclick = (e) => { const b = e.target.closest('[data-c]'); if (!b) return; st.counter = b.getAttribute('data-c'); paint(); if (onChange) onChange(); };
+        dayIn.oninput = () => { if (onChange) onChange(); };
+        return {
+            set(counter, day) { st.counter = counters().includes(counter) ? counter : counters()[0]; st.when = day < 0 ? 'before' : 'on'; dayIn.value = Math.abs(day); paint(); },
+            get() { const n = parseInt(dayIn.value, 10); if (!Number.isFinite(n)) return null; const v = Math.abs(n); return { counter: st.counter, day: st.when === 'before' ? -Math.max(1, v) : v }; },
+            when: () => st.when, counter: () => st.counter,
+        };
     }
+    function sayWhen(counter, day) { return day < 0 ? `${-day} ${-day === 1 ? 'day' : 'days'} before ${counter} 0` : `${counter} ${day}`; }
     function paintType() {
         const t = W.type ? OPT.types[W.type] : null;
         $id('pbtTypeIcon').textContent = W.type ? (TYPE_ICON[W.type] || '📌') : '📌';
@@ -818,9 +867,15 @@
         now.textContent = t || 'Choose a type';
         now.classList.toggle('is-none', !t);
     }
+    let TASK_DAY = null;
     function paintStage() {
-        const d = parseInt($id('pbtDay').value, 10);
-        $id('pbtStage').textContent = Number.isFinite(d) ? (stageLabel(W.counter, d) || '') : '';
+        const v = TASK_DAY ? TASK_DAY.get() : null;
+        $id('pbtStage').textContent = v ? (stageLabel(v.counter, v.day) || '') : '';
+        const two = counters().length === 2;
+        const c = TASK_DAY ? TASK_DAY.counter() : counters()[0];
+        $id('pbtHint').textContent = (TASK_DAY && TASK_DAY.when() === 'before')
+            ? `Counted back from ${c} 0${two ? (c === 'DAS' ? ' — the sowing in the seedbed' : ' — the transplant') : ''}. Land preparation, seedbed work, buying the inputs: anything done before the program starts.`
+            : `A day of the ${c} count${two ? (c === 'DAS' ? ' — in the seedbed' : ' — after the transplant') : ''}.`;
     }
     function paintPrio() {
         $id('pbtPrio').innerHTML = Object.entries(OPT.priorities).map(([k, p]) => `<button type="button" data-prio="${k}" class="${W.priority === k ? 'is-on' : ''}" title="${esc(p.sub)}">${esc(p.label)}</button>`).join('');
@@ -924,7 +979,6 @@
         closeSheet('pbTypeSheet');
     });
     $id('pbtPrio').addEventListener('click', (e) => { const b = e.target.closest('[data-prio]'); if (!b) return; W.priority = b.getAttribute('data-prio'); paintPrio(); });
-    $id('pbtDay').addEventListener('input', paintStage);
 
     function openTask(id) {
         const t = id ? TASKS.find((x) => x.id === id) : null;
@@ -932,8 +986,8 @@
         W_ID = t ? t.id : null;
         $id('pbTaskTitle').textContent = t ? 'Edit task' : 'New task';
         $id('pbtDelete').hidden = !t;
-        paintCounter($id('pbtCounter'), W.counter, (c) => { W.counter = c; paintStage(); });
-        $id('pbtDay').value = W.day;
+        if (!TASK_DAY) TASK_DAY = dayPicker('pbt', paintStage);
+        TASK_DAY.set(W.counter, W.day);
         $id('pbtTitleIn').value = W.title;
         $id('pbtSub').value = W.subtitle;
         $id('pbtDesc').value = W.description;
@@ -947,9 +1001,10 @@
     $id('pbAddTop').addEventListener('click', () => openTask(null));
     $id('pbAddBottom').addEventListener('click', () => openTask(null));
     $id('pbtSave').addEventListener('click', () => {
-        const day = parseInt($id('pbtDay').value, 10);
-        if (!Number.isFinite(day)) { toast('Which day of the count is it?', 'error'); $id('pbtDay').focus(); return; }
-        W.day = Math.max(-365, Math.min(999, day));
+        const picked = TASK_DAY.get();
+        if (!picked) { toast('Which day of the count is it?', 'error'); $id('pbtDay').focus(); return; }
+        W.counter = picked.counter;
+        W.day = Math.max(-365, Math.min(999, picked.day));
         W.title = $id('pbtTitleIn').value.trim();
         if (!W.title) { toast('Give the task a title.', 'error'); $id('pbtTitleIn').focus(); return; }
         W.subtitle = $id('pbtSub').value.trim();
@@ -1079,7 +1134,8 @@
         FIX = { id, order, prev, next };
         openFix(t, prev, next);
     });
-    function sayKey(t) { return t ? `${t.counter} ${t.day}` : null; }
+    function sayKey(t) { return t ? sayWhen(t.counter, t.day) : null; }
+    let FIX_DAY = null;
     function fixRangeOk(counter, day) {
         const k = [PHASE[counter] ?? 0, day];
         const okPrev = !FIX.prev || cmpDay(keyOf(FIX.prev), k) <= 0;
@@ -1087,35 +1143,34 @@
         return okPrev && okNext;
     }
     function openFix(t, prev, next) {
-        const between = prev && next ? `between <b>${esc(sayKey(prev))}</b> and <b>${esc(sayKey(next))}</b>` : (prev ? `after <b>${esc(sayKey(prev))}</b>` : `before <b>${esc(sayKey(next))}</b>`);
+        const between = prev && next ? `between <b>${esc(sayKey(prev))}</b> and <b>${esc(sayKey(next))}</b>` : (prev ? `after <b>${esc(sayKey(prev))}</b>` : `ahead of <b>${esc(sayKey(next))}</b>`);
         $id('pbFixSay').innerHTML = `<b>${esc(t.title)}</b> is on <b>${esc(sayKey(t))}</b>, but you put it ${between}. Change its day to fit there, or put it back where it was.`;
         const start = prev || next;
-        FIX.counter = start.counter;
-        paintCounter($id('pbFixCounter'), FIX.counter, (c) => { FIX.counter = c; fixHint(); });
-        $id('pbFixDay').value = start.day;
+        if (!FIX_DAY) FIX_DAY = dayPicker('pbFix', fixHint);
+        FIX_DAY.set(start.counter, start.day);
         fixHint();
         openSheet('pbFixSheet');
         setTimeout(() => { $id('pbFixDay').focus(); $id('pbFixDay').select(); }, 280);
     }
     function fixHint() {
-        if (!FIX) return;
-        const d = parseInt($id('pbFixDay').value, 10);
+        if (!FIX || !FIX_DAY) return;
+        const v = FIX_DAY.get();
         const h = $id('pbFixHint');
         const lo = FIX.prev ? sayKey(FIX.prev) : null, hi = FIX.next ? sayKey(FIX.next) : null;
         const range = lo && hi ? `${lo} up to ${hi}` : (lo ? `${lo} or later` : `${hi} or earlier`);
-        const ok = Number.isFinite(d) && fixRangeOk(FIX.counter, d);
+        const ok = !!v && fixRangeOk(v.counter, v.day);
         h.textContent = ok ? `Fits — ${range}.` : `It has to be ${range}.`;
         h.classList.toggle('is-bad', !ok);
         $id('pbFixGo').disabled = !ok;
     }
-    $id('pbFixDay').addEventListener('input', fixHint);
     const fixBack = () => { closeSheet('pbFixSheet'); FIX = null; render(); };
     $id('pbFixBack').addEventListener('click', fixBack);
     $id('pbFixX').addEventListener('click', fixBack);
     $id('pbFixGo').addEventListener('click', () => {
-        const d = parseInt($id('pbFixDay').value, 10);
-        if (!FIX || !Number.isFinite(d) || !fixRangeOk(FIX.counter, d)) return;
-        const { id, order, counter } = FIX;
+        const v = FIX_DAY ? FIX_DAY.get() : null;
+        if (!FIX || !v || !fixRangeOk(v.counter, v.day)) return;
+        const { id, order } = FIX;
+        const counter = v.counter, d = v.day;
         closeSheet('pbFixSheet'); FIX = null;
         commit('Moved', () => {
             const t = TASKS.find((x) => x.id === id);
@@ -1123,7 +1178,7 @@
             order.forEach((oid, i) => { const x = TASKS.find((y) => y.id === oid); if (x) x.pos = i * 10; });
             flash(id);
         });
-        toast(`Moved to ${counter} ${d}.`);
+        toast(`Moved to ${sayWhen(counter, d)}.`);
     });
 
     // Groups and items inside the task sheet reorder freely.
@@ -1258,7 +1313,7 @@
             const counter = counters().includes(a.counter) ? a.counter : counters()[0];
             const t = { ...blankTask(), counter, day: a.day, title: a.title || 'Suggested task', type: OPT.types[a.type] ? a.type : null, note: a.why ? 'Anee: ' + a.why : '' };
             commit('Added', () => { TASKS.push(t); flash(t.id); });
-            toast(`Added "${t.title}" on ${counter} ${a.day}.`);
+            toast(`Added "${t.title}" — ${sayWhen(counter, a.day)}.`);
         }
     });
     function askAnee() {
