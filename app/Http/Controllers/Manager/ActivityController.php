@@ -2386,27 +2386,97 @@ class ActivityController extends BaseScheduleController
      */
 
     /** Everything in this schedule an activity could be tagged with. */
+    /**
+     * What an activity can be tagged with: every drawing in the season
+     * (the notebook's, the board's day notes', the date notes'), every
+     * saved map, every notebook note -- each with the stamp, the date and
+     * the line a person picks it by, so the sheet can show a picture of a
+     * picture and the first words of a note.
+     */
     public function taggables(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request);
+        $when = fn ($t) => $t?->timezone('Asia/Manila')->format('M j, Y');
+        $mediaOf = function ($holder): array {
+            $media = $holder->media;
+            if (is_string($media)) {
+                $media = json_decode($media, true);
+            }
 
+            return is_array($media) ? array_values($media) : [];
+        };
+        $isDrawing = fn (array $m) => ($m['type'] ?? '') === 'drawing'
+            || preg_match('~/(board|draw)-[A-Za-z0-9]+\.png$~', (string) ($m['path'] ?? ''));
+        $stamp = fn (array $m) => \App\Support\MediaStore::url($m['thumb'] ?? ($m['path'] ?? null));
+
+        $drawings = [];
+        $noteRows = [];
         $notes = \App\Models\AsScheduleNote::active()
             ->where('croppingScheduleId', $schedule->id)
             ->orderByDesc('id')->limit(100)->get();
-
-        $drawings = [];
         foreach ($notes as $note) {
-            foreach ((is_array($note->media) ? array_values($note->media) : []) as $i => $m) {
+            $pictures = 0;
+            $first = null;
+            foreach ($mediaOf($note) as $i => $m) {
                 $path = (string) ($m['path'] ?? '');
-                $isDrawing = ($m['type'] ?? '') === 'drawing'
-                    || preg_match('~/(board|draw)-[A-Za-z0-9]+\.png$~', $path);
-                if (! $isDrawing || $path === '') {
+                if ($path === '') {
+                    continue;
+                }
+                $type = (string) ($m['type'] ?? 'image');
+                if (in_array($type, ['image', 'drawing', 'map'], true)) {
+                    $pictures++;
+                    $first ??= $stamp($m);
+                }
+                if (! $isDrawing($m)) {
                     continue;
                 }
                 $drawings[] = [
                     'ref' => $note->id . ':' . $i,
-                    'label' => (string) $note->title,
+                    'label' => (string) ($note->title ?: 'Drawing'),
                     'url' => \App\Support\MediaStore::url($path),
+                    'thumb' => $stamp($m),
+                    'when' => $when($note->updated_at),
+                    'meta' => 'In a note',
+                ];
+            }
+            $noteRows[] = [
+                'ref' => (string) $note->id,
+                'label' => (string) ($note->title ?: 'Untitled note'),
+                'url' => route('sm.notes', ['id' => $schedule->id, 'note' => $note->id]),
+                'thumb' => $first,
+                'excerpt' => \Illuminate\Support\Str::limit(trim((string) preg_replace('/\s+/u', ' ', strip_tags((string) $note->body))), 120),
+                'when' => $when($note->updated_at),
+                'meta' => $pictures ? $pictures . ' picture' . ($pictures === 1 ? '' : 's') : '',
+            ];
+        }
+        // Drawings kept with a day on the board, and with a date's own note.
+        foreach (\App\Models\AsInlineNote::active()->where('croppingScheduleId', $schedule->id)->orderByDesc('id')->limit(100)->get() as $note) {
+            foreach ($mediaOf($note) as $i => $m) {
+                if (! $isDrawing($m) || empty($m['path'])) {
+                    continue;
+                }
+                $drawings[] = [
+                    'ref' => 'inline:' . $note->id . ':' . $i,
+                    'label' => (string) ($note->title ?: 'Note on the board'),
+                    'url' => \App\Support\MediaStore::url($m['path']),
+                    'thumb' => $stamp($m),
+                    'when' => $when($note->updated_at),
+                    'meta' => $note->noteDate ? 'Day ' . $note->noteDate->format('M j') : 'On the board',
+                ];
+            }
+        }
+        foreach (\App\Models\AsScheduleDateNote::active()->where('croppingScheduleId', $schedule->id)->orderByDesc('id')->limit(100)->get() as $note) {
+            foreach ($mediaOf($note) as $i => $m) {
+                if (! $isDrawing($m) || empty($m['path'])) {
+                    continue;
+                }
+                $drawings[] = [
+                    'ref' => 'date:' . $note->id . ':' . $i,
+                    'label' => 'Note for ' . $note->noteDate->format('M j, Y'),
+                    'url' => \App\Support\MediaStore::url($m['path']),
+                    'thumb' => $stamp($m),
+                    'when' => $when($note->updated_at),
+                    'meta' => 'Day note',
                 ];
             }
         }
@@ -2414,20 +2484,25 @@ class ActivityController extends BaseScheduleController
         $maps = \App\Models\ScheduleMapSave::active()
             ->where('scheduleId', $schedule->id)
             ->orderByDesc('id')->limit(50)->get()
-            ->map(fn ($m) => [
-                'ref' => (string) $m->id,
-                'label' => (string) ($m->title ?: 'Map'),
-                'url' => route('sm.maps', ['id' => $schedule->id, 'save' => $m->id]),
-            ])->all();
+            ->map(function ($m) use ($schedule, $when) {
+                $n = count(json_decode((string) $m->objects, true) ?: []);
+
+                return [
+                    'ref' => (string) $m->id,
+                    'label' => (string) ($m->title ?: 'Map'),
+                    'url' => route('sm.maps', ['id' => $schedule->id, 'save' => $m->id]),
+                    // Always answerable: the filed picture, the satellite
+                    // render, or the shapes drawn by the app itself.
+                    'thumb' => route('sm.map.thumb', ['scheduleId' => $schedule->id, 'id' => $m->id]),
+                    'when' => $when($m->created_at),
+                    'meta' => $n . ' shape' . ($n === 1 ? '' : 's'),
+                ];
+            })->all();
 
         return $this->jsonOk('Loaded.', ['data' => [
             'drawings' => $drawings,
             'maps' => $maps,
-            'notes' => $notes->map(fn ($n) => [
-                'ref' => (string) $n->id,
-                'label' => (string) $n->title,
-                'url' => route('sm.notes', ['id' => $schedule->id, 'note' => $n->id]),
-            ])->all(),
+            'notes' => $noteRows,
         ]]);
     }
 

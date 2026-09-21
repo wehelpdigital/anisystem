@@ -428,18 +428,25 @@ class ScheduleMapController extends BaseScheduleController
         if (! is_string($binary) || $binary === '') {
             // A card-sized render, not the full save picture — a shelf of
             // megabyte thumbnails is what made the module feel slow.
+            // The satellite render first; when the map service is short of a
+            // key, a quota or a connection, the plan is drawn from its own
+            // shapes (App\Support\MapThumb) -- a saved map always has a face.
             $url = $this->staticMapUrl($objects, null, null, null, 'hybrid', 400, 1);
-            if ($url === null) {
-                return $this->jsonFail('No picture can be made for this map.', 404);
-            }
-            try {
-                $res = \Illuminate\Support\Facades\Http::timeout(20)->get($url);
-                if (! $res->ok() || ! str_starts_with((string) $res->header('Content-Type'), 'image/')) {
-                    return $this->jsonFail('Could not draw the map picture.', 502);
+            if ($url !== null) {
+                try {
+                    $res = \Illuminate\Support\Facades\Http::timeout(12)->get($url);
+                    if ($res->ok() && str_starts_with((string) $res->header('Content-Type'), 'image/')) {
+                        $binary = $res->body();
+                    }
+                } catch (\Throwable $e) {
+                    $binary = null;
                 }
-                $binary = $res->body();
-            } catch (\Throwable $e) {
-                return $this->jsonFail('Could not draw the map picture.', 502);
+            }
+            if (! is_string($binary) || $binary === '') {
+                $binary = \App\Support\MapThumb::png($objects, 400, 300);
+            }
+            if (! is_string($binary) || $binary === '') {
+                return $this->jsonFail('This map has no shapes to draw yet.', 404);
             }
             try {
                 \Illuminate\Support\Facades\Cache::put($cacheKey, $binary, now()->addDays(7));

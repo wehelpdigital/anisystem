@@ -247,7 +247,7 @@
                         + 'In a note</a>');
                 }
                 const thumb = d.url
-                    ? `<img src="${esc(d.url)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')"`
+                    ? `<img src="${esc(d.thumb || d.url)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')"`
                         + ` onerror="this.closest('.dr-thumb')?.classList.add('is-gone'); this.remove();">`
                     : '';
                 return `<div class="dr-card" data-i="${i}">

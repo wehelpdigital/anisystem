@@ -204,7 +204,7 @@
                                        preload="metadata" playsinline controls></video>
                                 @unless ($row['posterUrl'])<span class="tb-play"><span>▶</span></span>@endunless
                             @else
-                                <img src="{{ $row['url'] }}" alt="" loading="lazy" onerror="this.remove()">
+                                <img src="{{ $row['thumbUrl'] ?? $row['url'] }}" alt="" loading="lazy" onerror="this.remove()">
                             @endif
                             @unless ($goes)
                                 {{-- A recording is a thing people want off the app
@@ -331,7 +331,7 @@
                     grid.appendChild(wrap);
                     return;
                 }
-                const shot = it.posterUrl || (it.type === 'image' ? it.url : null);
+                const shot = it.thumbUrl || it.posterUrl || (it.type === 'image' ? it.url : null);
                 const wants = (!shot && it.type === 'video' && it.path)
                     ? ' data-needs-frame="' + it.path.replace(/"/g, '&quot;') + '" data-clip-url="' + (it.url || '') + '"'
                     : '';

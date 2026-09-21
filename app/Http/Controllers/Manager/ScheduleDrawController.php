@@ -59,6 +59,8 @@ class ScheduleDrawController extends BaseScheduleController
                     'pages' => DrawStrokes::pageCount($m['strokes'] ?? null),
                     'team' => $team,
                     'url' => \App\Support\MediaStore::url($path),
+                    // The stamp where one was made at save time; the picture itself before that.
+                    'thumb' => \App\Support\MediaStore::url($m['thumb'] ?? $path),
                     'when' => $holder->updated_at?->timezone('Asia/Manila')->format('M j, Y'),
                     'sortKey' => $holder->updated_at?->timestamp ?? 0,
                     // Every drawing lives in a note; this is the way back to
@@ -152,9 +154,16 @@ class ScheduleDrawController extends BaseScheduleController
             return $this->jsonFail('Could not keep that drawing.', 500);
         }
 
+        // A stamp-sized copy beside the picture, for every shelf that lists
+        // it (the pad's grid, the Gallery, the tag sheet) -- so a row of
+        // thumbnails is a few kilobytes, not the season's canvases.
+        $thumbBin = \App\Support\ImageThumb::png($binary, 480, 360);
+        $thumb = $thumbBin ? \App\Support\MediaStore::putBinary($thumbBin, 'drawings', 'png', $schedule->id, 'thumb-') : null;
+
         $entry = array_filter([
             'type' => $editable ? 'drawing' : 'image',
             'path' => $path,
+            'thumb' => $thumb,
             'strokes' => $strokes,
         ], fn ($v) => $v !== null);
 
@@ -168,6 +177,7 @@ class ScheduleDrawController extends BaseScheduleController
             // The old picture goes with the old version: nothing else points at
             // it, and a season of superseded drawings is dead weight on disk.
             $old = $media[$i]['path'] ?? null;
+            $oldThumb = $media[$i]['thumb'] ?? null;
             $media[$i] = $entry;
             // Only a notebook note takes its words from the pad's save sheet.
             // A board note's words belong to the board's own editor, and a day
@@ -182,6 +192,9 @@ class ScheduleDrawController extends BaseScheduleController
             $note->save();
             if ($old && $old !== $path) {
                 \App\Support\MediaStore::delete($old);
+            }
+            if ($oldThumb && $oldThumb !== $thumb) {
+                \App\Support\MediaStore::delete($oldThumb);
             }
         } else {
             $note = AsScheduleNote::create([

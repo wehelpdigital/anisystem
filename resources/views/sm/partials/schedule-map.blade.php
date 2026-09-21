@@ -717,6 +717,10 @@
     #cmapEditText { background: var(--color-brand-100); color: var(--color-brand-800); }
     @media (prefers-reduced-motion: reduce) { .cmap-editbar { transition: none; } }
     /* The autosave's only voice: it appears, says the word, and goes away. */
+    /* The shelf's stamp: a picture over the icon, the icon showing until it lands. */
+    .cmap-stamp { position: relative; overflow: hidden; width: 3.6rem; height: 2.7rem; border-radius: .65rem; flex: none; }
+    .cmap-stamp img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .28s ease; }
+    .cmap-stamp img.is-loaded { opacity: 1; }
     .cmap-saved { position: absolute; top: .6rem; right: .6rem; z-index: 6; pointer-events: none;
         display: flex; align-items: center; gap: .35rem; padding: .25rem .6rem; border-radius: 999px;
         font-size: .7rem; font-weight: 800; color: var(--color-gray-600);
@@ -3827,12 +3831,14 @@
             b.type = 'button';
             b.className = 'cmap-saverow';
             const shapes = sv.count + ' shape' + (sv.count === 1 ? '' : 's');
-            // An icon, not a picture: the thumbnails were a download each,
-            // told you nothing a title does not, and turned into a column of
-            // broken frames whenever a file went missing.
+            // A stamp of the plan over the icon: the thumb endpoint always
+            // answers now (the filed picture, the satellite render, or the
+            // shapes drawn by the app itself), and a picture that still fails
+            // leaves the icon showing rather than a broken frame.
             b.innerHTML = `
-                <span class="cmap-mark ${sv.source === 'team' ? 'is-team' : ''}">
+                <span class="cmap-mark cmap-stamp ${sv.source === 'team' ? 'is-team' : ''}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
+                    ${sv.thumbUrl ? `<img src="${esc(sv.thumbUrl)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')" onerror="this.remove()">` : ''}
                 </span>
                 <span class="cmap-saverow-main">
                     <span class="cmap-saverow-t">${esc(sv.title || 'Map')}</span>

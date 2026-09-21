@@ -546,7 +546,9 @@ class ScheduleBoardController extends BaseScheduleController
             }
             $path = \App\Support\MediaStore::putBinary($binary, 'board', 'png', $schedule->id, 'board-');
             if ($path !== null) {
-                $media[] = ['type' => 'image', 'path' => $path, 'poster' => null];
+                $thumbBin = \App\Support\ImageThumb::png($binary, 480, 360);
+                $thumb = $thumbBin ? \App\Support\MediaStore::putBinary($thumbBin, 'board', 'png', $schedule->id, 'thumb-') : null;
+                $media[] = array_filter(['type' => 'image', 'path' => $path, 'thumb' => $thumb, 'poster' => null], fn ($v, $k) => $k === 'poster' || $v !== null, ARRAY_FILTER_USE_BOTH);
             }
         }
 

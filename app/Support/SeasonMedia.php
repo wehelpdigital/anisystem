@@ -79,6 +79,9 @@ class SeasonMedia
                 'title' => $title !== '' ? $title : 'Untitled',
                 'url' => MediaStore::url($path),
                 'posterUrl' => ! empty($m['poster']) ? MediaStore::url($m['poster']) : null,
+                // The stamp made at save time, where there is one; a tile
+                // should not download the whole canvas to be an inch wide.
+                'thumbUrl' => ! empty($m['thumb']) ? MediaStore::url($m['thumb']) : (! empty($m['poster']) ? MediaStore::url($m['poster']) : MediaStore::url($path)),
                 'href' => $href,
                 'when' => $when?->timezone('Asia/Manila')->format('M j, Y'),
                 'sortKey' => (int) ($when?->timestamp ?? 0),
