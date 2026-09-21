@@ -143,6 +143,63 @@
     .lr-bphase { display: flex; flex-wrap: wrap; gap: .35rem .9rem; margin-top: .4rem; font-size: .75rem; color: var(--color-gray-600); }
     .lr-bphase i { display: inline-block; width: .6rem; height: .6rem; border-radius: .2rem; margin-right: .3rem; vertical-align: -1px; font-style: normal; }
     .lr-bzero { color: var(--color-gray-400); }
+    /* BY ACTIVITY TYPE -- the activities of the slice grouped by date, each
+       day under a header in its own hue like the activities board, each
+       card opening to the hands that did it and what each was paid. */
+    .lr-days { display: grid; gap: .6rem; margin-top: .6rem; }
+    .lr-day { border: 1px solid var(--color-gray-200); border-left: 4px solid var(--date-color, #4A90E2); border-radius: 1rem; background: var(--color-white); overflow: hidden; }
+    .lr-day-h { display: flex; align-items: center; flex-wrap: wrap; column-gap: .4rem; row-gap: .2rem; width: 100%; text-align: left; padding: .55rem .75rem; cursor: pointer;
+        background: linear-gradient(115deg, color-mix(in srgb, var(--date-color, #4A90E2) 12%, var(--color-white)), color-mix(in srgb, var(--date-color, #4A90E2) 26%, var(--color-white)) 55%, color-mix(in srgb, var(--date-color, #4A90E2) 10%, var(--color-white))); }
+    .lr-day-dow { font-weight: 800; font-size: .74rem; color: var(--date-color); text-transform: uppercase; }
+    .lr-day-date { font-weight: 800; font-size: .95rem; color: var(--color-gray-900); }
+    .lr-day-das { display: inline-flex; align-items: center; font-size: .66rem; font-weight: 800; padding: .1rem .48rem; border-radius: 999px; color: var(--date-color); background: rgb(255 255 255 / .75); border: 1px solid color-mix(in srgb, var(--date-color) 40%, transparent); }
+    .lr-day-count { margin-left: auto; font-size: .69rem; font-weight: 700; color: var(--date-color); background: rgb(255 255 255 / .8); border-radius: 999px; padding: .12rem .55rem; flex-shrink: 0; }
+    .lr-day-cost { font-size: .74rem; font-weight: 800; color: var(--color-gray-900); background: rgb(255 255 255 / .8); border-radius: 999px; padding: .12rem .55rem; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+    .lr-day-c { width: 1rem; height: 1rem; flex: none; color: var(--date-color); opacity: .7; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    @media (max-width: 479px) { .lr-day-count .lr-w { display: none; } .lr-day-date { font-size: .9rem; } }
+    .lr-day.is-folded .lr-day-c { transform: rotate(-90deg); }
+    .lr-day-body { display: grid; gap: .45rem; padding: .55rem .6rem .6rem; }
+    .lr-day.is-folded .lr-day-body { display: none; }
+    .lr-act { border: 1px solid var(--color-gray-200); border-left: 4px solid var(--type-color, #94a3b8); border-radius: .8rem; background: var(--color-white); padding: .55rem .7rem; cursor: pointer;
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .lr-act:hover { border-color: #cfe3bd; }
+    .lr-act.is-open { box-shadow: 0 6px 18px rgb(15 23 42 / .08); }
+    .lr-act-top { display: flex; align-items: flex-start; justify-content: space-between; gap: .6rem; }
+    .lr-act-top b { font-size: .9rem; color: var(--color-gray-900); min-width: 0; overflow-wrap: anywhere; line-height: 1.3; }
+    .lr-act-amt { font-weight: 800; font-size: .95rem; color: var(--color-gray-900); white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .lr-act-chips { display: flex; flex-wrap: wrap; gap: .3rem .4rem; margin-top: .35rem; align-items: center; }
+    .lr-act-chips .badge { font-variant-numeric: tabular-nums; }
+    .lr-act-type { display: inline-flex; align-items: center; gap: .25rem; font-size: .68rem; font-weight: 800; padding: .12rem .5rem; border-radius: 999px; color: var(--type-color, #475569); background: color-mix(in srgb, var(--type-color, #94a3b8) 14%, var(--color-white)); border: 1px solid color-mix(in srgb, var(--type-color, #94a3b8) 35%, transparent); }
+    .lr-act-more { display: none; margin-top: .55rem; padding-top: .55rem; border-top: 1px dashed var(--color-gray-200); font-size: .8rem; color: var(--color-gray-700); }
+    .lr-act.is-open .lr-act-more { display: block; }
+    .lr-act-more .lr-hands { display: grid; gap: .25rem; margin: .25rem 0 .4rem; }
+    .lr-act-more .lr-hand { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; padding: .3rem .55rem; border-radius: .55rem; background: var(--color-gray-50); }
+    .lr-act-more .lr-hand b { font-weight: 700; color: var(--color-gray-900); }
+    .lr-act-more .lr-hand small { color: var(--color-gray-500); margin-left: .3rem; }
+    .lr-act-more .lr-hand span { font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .lr-act-more .lr-facts { display: flex; flex-wrap: wrap; gap: .3rem .4rem; }
+    .lr-act-more p.lr-k { font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); margin: .35rem 0 .15rem; }
+    .lr-act-c { width: .95rem; height: .95rem; flex: none; color: var(--color-gray-400); margin-left: auto; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .lr-act.is-open .lr-act-c { transform: rotate(180deg); }
+    .lr-type-sum { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .4rem; font-size: .8rem; color: var(--color-gray-600); margin: .4rem 0 0; }
+    .lr-type-sum strong { color: var(--color-gray-900); font-variant-numeric: tabular-nums; }
+    .lr-dc-0 { --date-color: #4A90E2; } .lr-dc-1 { --date-color: #50C878; } .lr-dc-2 { --date-color: #F39C12; } .lr-dc-3 { --date-color: #9B59B6; }
+    .lr-dc-4 { --date-color: #1ABC9C; } .lr-dc-5 { --date-color: #E74C3C; } .lr-dc-6 { --date-color: #5C6BC0; } .lr-dc-7 { --date-color: #16A085; }
+    html.dark .lr-dc-0 { --date-color: #7FB3EF; } html.dark .lr-dc-1 { --date-color: #6ED694; } html.dark .lr-dc-2 { --date-color: #F5B450; } html.dark .lr-dc-3 { --date-color: #C48AD8; }
+    html.dark .lr-dc-4 { --date-color: #4FD6BC; } html.dark .lr-dc-5 { --date-color: #F5837A; } html.dark .lr-dc-6 { --date-color: #8C97E6; } html.dark .lr-dc-7 { --date-color: #3FC3A6; }
+    html.dark .lr-day { background: #151b12; border-color: #2b3a1c; }
+    html.dark .lr-day-h { background: linear-gradient(115deg, color-mix(in srgb, var(--date-color) 16%, #151b12), color-mix(in srgb, var(--date-color) 30%, #151b12) 55%, color-mix(in srgb, var(--date-color) 14%, #151b12)); }
+    html.dark .lr-day-date, html.dark .lr-day-cost { color: #e8efe1; }
+    html.dark .lr-day-das, html.dark .lr-day-count, html.dark .lr-day-cost { background: rgb(0 0 0 / .28); }
+    html.dark .lr-act { background: #151b12; border-color: #2b3a1c; }
+    html.dark .lr-act:hover { border-color: #3f5a2a; }
+    html.dark .lr-act-top b, html.dark .lr-act-amt { color: #e8efe1; }
+    html.dark .lr-act-type { background: color-mix(in srgb, var(--type-color, #94a3b8) 22%, #151b12); }
+    html.dark .lr-act-more { color: #cbd5c0; border-color: #2b3a1c; }
+    html.dark .lr-act-more .lr-hand { background: #1c2416; }
+    html.dark .lr-act-more .lr-hand b { color: #e8efe1; }
+    html.dark .lr-type-sum strong { color: #e8efe1; }
+    @media (prefers-reduced-motion: reduce) { .lr-day-c, .lr-act, .lr-act-c { transition: none; } }
     html.dark .lr-bcard { background: #151b12; border-color: #2b3a1c; }
     html.dark .lr-bcard-top b, html.dark .lr-bcard-amt { color: #e8efe1; }
 
@@ -406,7 +463,7 @@
 <div class="sheet hidden" id="lrActSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Which activity?</h3>
+        <h3 class="sheet-title">Which activity type?</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body dt-rows" id="lrActList"></div>
@@ -906,73 +963,114 @@ const __init = () => {
             </div>`).join('')
             || '<p class="text-sm text-gray-400 py-4 text-center">No workers assigned yet.</p>';
 
-        const card = (a) => {
+        const TYPE_ICON = { equipment_prep: '🛠️', land_prep: '🚜', seed_treatment: '🧪', planting: '🌱', irrigation: '💧', service: '🧾', fertilizer: '🧂', foliar_spray: '🌫️', herbicide: '🌿', pesticide: '🐛', copper_fungicide: '🟠', fungicide: '🍄', microbial: '🦠', harvest: '🌾', monitoring: '🔍', worker_payroll: '👷', reminder_checklist: '✅', other: '📌' };
+        const TYPE_COLOR = { equipment_prep: '#6b7280', land_prep: '#b45309', seed_treatment: '#7c3aed', planting: '#15803d', irrigation: '#2563eb', service: '#0f766e', fertilizer: '#a16207', foliar_spray: '#0891b2', herbicide: '#65a30d', pesticide: '#dc2626', copper_fungicide: '#ea580c', fungicide: '#9333ea', microbial: '#0d9488', harvest: '#ca8a04', monitoring: '#4f46e5', worker_payroll: '#475569', reminder_checklist: '#059669', other: '#64748b' };
+        const typeKey = (a) => a.activityType || '__none';
+        const typeWord = (a) => a.typeLabel || 'No type';
+        const phaseWord = { preDayZero: 'Land Preparation', cropping: 'Main Cropping', unanchored: 'Unanchored' };
+        const phaseColor = { preDayZero: PHASE.pre, cropping: PHASE.crop, unanchored: PHASE.una };
+        const dasWord = (das) => (das === null || das === undefined) ? null : `${DAY_TYPE}${das >= 0 ? '+' : ''}${das}`;
+        const prettyRange = (a) => {
             const s = a.targetDate ? parseD(a.targetDate) : null;
             const e = a.targetEndDate ? parseD(a.targetEndDate) : null;
-            let pretty = 'No date';
-            if (s && e && e > s) pretty = `${MONTH_SHORT[s.getMonth()]} ${s.getDate()} → ${MONTH_SHORT[e.getMonth()]} ${e.getDate()}, ${e.getFullYear()}`;
-            else if (s) pretty = `${MONTH_SHORT[s.getMonth()]} ${s.getDate()}, ${s.getFullYear()}`;
-            const dasLbl = (a.das === null || a.das === undefined) ? null : `${DAY_TYPE}${a.das >= 0 ? '+' : ''}${a.das}`;
+            if (s && e && e > s) return `${MONTH_SHORT[s.getMonth()]} ${s.getDate()} → ${MONTH_SHORT[e.getMonth()]} ${e.getDate()}, ${e.getFullYear()}`;
+            return s ? `${MONTH_SHORT[s.getMonth()]} ${s.getDate()}, ${s.getFullYear()}` : 'No date';
+        };
+        const card = (a) => {
             const tr = a.timeRequired === 'whole' ? 'Whole day' : (a.timeRequired === 'half' ? 'Half day' : 'N/A');
-            return `<div class="lr-bcard${a.cost === 0 ? ' lr-bzero' : ''}">
-                <div class="lr-bcard-top"><b>${esc(a.activityTitle)}</b><span class="lr-bcard-amt">${fmtPeso(a.cost)}</span></div>
-                <div class="lr-bcard-meta">
-                    <span class="badge badge-gray">${esc(pretty)}</span>
-                    ${(a.rangeDays || 1) > 1 ? `<span class="badge badge-yellow">${a.rangeDays} days</span>` : ''}
-                    ${dasLbl ? `<span class="badge badge-gray">${esc(dasLbl)}</span>` : ''}
+            const hands = (a.workers || []);
+            const key = typeKey(a);
+            const color = TYPE_COLOR[key] || '#94a3b8';
+            return `<div class="lr-act${a.cost === 0 ? ' lr-bzero' : ''}${OPEN_ACTS.has(String(a.id)) ? ' is-open' : ''}" data-lr-open="${esc(String(a.id))}" style="--type-color:${color}">
+                <div class="lr-act-top"><b>${esc(a.activityTitle)}</b><span class="lr-act-amt">${fmtPeso(a.cost)}</span></div>
+                <div class="lr-act-chips">
+                    <span class="lr-act-type">${TYPE_ICON[key] || '📌'} ${esc(typeWord(a))}</span>
                     <span class="badge badge-gray">${tr}</span>
+                    ${(a.rangeDays || 1) > 1 ? `<span class="badge badge-yellow">${a.rangeDays} days</span>` : ''}
                     <span class="badge badge-gray">${a.workerCount} ${a.workerCount === 1 ? 'worker' : 'workers'}</span>
+                    <svg class="lr-act-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </div>
+                <div class="lr-act-more">
+                    <p class="lr-k">Who did it</p>
+                    ${hands.length ? `<div class="lr-hands">${hands.map((h) => `<div class="lr-hand"><b>${esc(h.name)}<small>${fmtPeso0(h.rate)} / half-day</small></b><span>${fmtPeso(h.pay)}</span></div>`).join('')}</div>` : '<p class="text-xs text-gray-400 mb-2">No worker assigned.</p>'}
+                    <p class="lr-k">The day</p>
+                    <div class="lr-facts">
+                        <span class="badge badge-gray">${esc(prettyRange(a))}</span>
+                        ${dasWord(a.das) ? `<span class="badge badge-gray">${esc(dasWord(a.das))}</span>` : ''}
+                        <span class="badge badge-gray" style="color:${phaseColor[a.phase] || '#64748b'}">${esc(phaseWord[a.phase] || '')}</span>
+                        ${(a.lots || []).map((l) => `<span class="badge badge-gray">🌾 ${esc(l)}</span>`).join('') || '<span class="badge badge-gray">Not lot-specific</span>'}
+                    </div>
                 </div>
             </div>`;
         };
-        const section = (items, label, color, subtotal) => !items.length ? '' : `
-            <div class="mt-4 pl-3" style="border-left:3px solid ${color}">
-                <div class="flex items-center justify-between flex-wrap gap-2">
-                    <p class="font-bold text-sm mb-0" style="color:${color}">${esc(label)} <span class="text-gray-400 font-normal">· ${items.length} ${items.length === 1 ? 'activity' : 'activities'}</span></p>
-                    <p class="text-sm mb-0">Subtotal: <strong style="color:${color}">${fmtPeso(subtotal)}</strong></p>
-                </div>
-                <div class="lr-bcards">${items.map(card).join('')}</div>
-            </div>`;
         const ph = d.phases || {};
-        // One activity, or all of them: the chooser's pick narrows the list
-        // and its phase's subtotal says that one activity's cost.
+        // One activity type, or all of them: the chooser's pick narrows the
+        // list; the days stay in order and each opens to its cards.
         const all = d.perActivity || [];
-        const shown = BREAK_ACT === null ? all : all.filter((a) => String(a.id) === String(BREAK_ACT));
-        const one = BREAK_ACT !== null && shown.length ? shown[0] : null;
-        const sub = (key, fallback) => one ? (one.cost || 0) : fallback;
+        const shown = BREAK_ACT === null ? all : all.filter((a) => typeKey(a) === BREAK_ACT);
+        const chosen = BREAK_ACT === null ? null : (shown[0] ? typeWord(shown[0]) : (BREAK_ACT === '__none' ? 'No type' : BREAK_ACT));
+        const byDate = new Map();
+        shown.forEach((a) => { const k = a.targetDate || ''; if (!byDate.has(k)) byDate.set(k, []); byDate.get(k).push(a); });
+        const dateKeys = [...byDate.keys()].sort((x, y) => (x === '' ? 1 : y === '' ? -1 : x.localeCompare(y)));
+        const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const dayGroups = dateKeys.map((k, i) => {
+            const items = byDate.get(k);
+            const dt = k ? parseD(k) : null;
+            const cost = items.reduce((n, a) => n + (a.cost || 0), 0);
+            const das = dasWord(items[0].das);
+            return `<div class="lr-day lr-dc-${i % 8}${FOLDED_DAYS.has(k) ? ' is-folded' : ''}" data-lr-day="${esc(k)}">
+                <button type="button" class="lr-day-h">
+                    ${dt ? `<span class="lr-day-dow">${DOW[dt.getDay()]}</span><span class="lr-day-date">${MONTH_SHORT[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}</span>` : '<span class="lr-day-date">No date</span>'}
+                    ${das ? `<span class="lr-day-das">${esc(das)}</span>` : ''}
+                    <span class="lr-day-count">${items.length}<span class="lr-w"> ${items.length === 1 ? 'activity' : 'activities'}</span></span>
+                    <span class="lr-day-cost">${fmtPeso(cost)}</span>
+                    <svg class="lr-day-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="lr-day-body">${items.map(card).join('')}</div>
+            </div>`;
+        }).join('');
+        const shownCost = shown.reduce((n, a) => n + (a.cost || 0), 0);
         $id('lrBreakdown').innerHTML = `
             <h3>By worker</h3>
             <div class="lr-bcards">${workerCards}</div>
-            <h3 class="mt-5">By activity</h3>
-            <div class="mb-3">
+            <h3 class="mt-5">By activity type</h3>
+            <div class="mb-2">
                 <button type="button" class="crop-tag" id="lrActBtn">
-                    <span class="crop-tag-e">🧾</span>
-                    <span class="crop-tag-t${one ? '' : ' is-none'}" id="lrActNow">${one ? esc(one.activityTitle) : 'All activities'}</span>
+                    <span class="crop-tag-e">${chosen ? (TYPE_ICON[BREAK_ACT] || '📌') : '🧾'}</span>
+                    <span class="crop-tag-t${chosen ? '' : ' is-none'}" id="lrActNow">${chosen ? esc(chosen) : 'All activity types'}</span>
                     <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>
             </div>
-            ${section(shown.filter((a) => a.phase === 'preDayZero'), 'Land Preparation', PHASE.pre, sub('preDayZero', (ph.preDayZero || {}).cost || 0))}
-            ${section(shown.filter((a) => a.phase === 'cropping'), 'Main Cropping', PHASE.crop, sub('cropping', (ph.cropping || {}).cost || 0))}
-            ${section(shown.filter((a) => a.phase === 'unanchored'), 'Unanchored', PHASE.una, sub('unanchored', (ph.unanchored || {}).cost || 0))}
-            ${BREAK_ACT !== null && !shown.length ? '<p class="text-sm text-gray-400 py-4 text-center">That activity is not in this slice.</p>' : ''}`;
-        // The chooser's rows: every activity in the slice, newest phase first as the list is.
+            <p class="lr-type-sum"><span>${shown.length} ${shown.length === 1 ? 'activity' : 'activities'} on ${dateKeys.length} ${dateKeys.length === 1 ? 'day' : 'days'}${chosen ? ` · ${esc(chosen)}` : ''}</span><strong>${fmtPeso(shownCost)}</strong></p>
+            <div class="lr-days">${dayGroups}</div>
+            ${!shown.length ? '<p class="text-sm text-gray-400 py-4 text-center">Nothing of that type in this slice.</p>' : ''}`;
+        // The chooser's rows: every type in the slice, the costliest first.
         const list = $id('lrActList');
         if (list) {
-            const when = (a) => { const s = a.targetDate ? parseD(a.targetDate) : null; return s ? `${MONTH_SHORT[s.getMonth()]} ${s.getDate()}, ${s.getFullYear()}` : 'No date'; };
-            const phaseWord = { preDayZero: 'Land Preparation', cropping: 'Main Cropping', unanchored: 'Unanchored' };
+            const types = new Map();
+            all.forEach((a) => { const k = typeKey(a); if (!types.has(k)) types.set(k, { key: k, label: typeWord(a), count: 0, cost: 0 }); const t = types.get(k); t.count++; t.cost += a.cost || 0; });
+            const rows = [...types.values()].sort((x, y) => (y.cost - x.cost) || (y.count - x.count));
             list.innerHTML = `
                 <button type="button" class="dt-row${BREAK_ACT === null ? ' is-on' : ''}" data-lr-act="">
                     <span class="dt-row-e">🧾</span>
-                    <span class="dt-row-body"><b>All activities</b><i>${all.length} in this slice</i></span>
+                    <span class="dt-row-body"><b>All activity types</b><i>${all.length} ${all.length === 1 ? 'activity' : 'activities'} in this slice</i></span>
                     <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                </button>` + all.map((a) => `
-                <button type="button" class="dt-row${String(a.id) === String(BREAK_ACT) ? ' is-on' : ''}" data-lr-act="${esc(String(a.id))}">
-                    <span class="dt-row-e">${a.phase === 'preDayZero' ? '🚜' : (a.phase === 'cropping' ? '🌱' : '📍')}</span>
-                    <span class="dt-row-body"><b>${esc(a.activityTitle)}</b><i>${esc(when(a))} · ${esc(phaseWord[a.phase] || '')} · ${esc(fmtPeso0(a.cost))}</i></span>
+                </button>` + rows.map((t) => `
+                <button type="button" class="dt-row${t.key === BREAK_ACT ? ' is-on' : ''}" data-lr-act="${esc(t.key)}">
+                    <span class="dt-row-e">${TYPE_ICON[t.key] || '📌'}</span>
+                    <span class="dt-row-body"><b>${esc(t.label)}</b><i>${t.count} ${t.count === 1 ? 'activity' : 'activities'} · ${esc(fmtPeso0(t.cost))}</i></span>
                     <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                 </button>`).join('');
         }
     }
+    const OPEN_ACTS = new Set();
+    const FOLDED_DAYS = new Set();
+    document.addEventListener('click', (e) => {
+        const dayH = e.target.closest('#lrBreakdown .lr-day-h');
+        if (dayH) { const g = dayH.closest('.lr-day'); const k = g.getAttribute('data-lr-day'); g.classList.toggle('is-folded'); if (g.classList.contains('is-folded')) FOLDED_DAYS.add(k); else FOLDED_DAYS.delete(k); return; }
+        const act = e.target.closest('#lrBreakdown .lr-act[data-lr-open]');
+        if (act) { const id = act.getAttribute('data-lr-open'); act.classList.toggle('is-open'); if (act.classList.contains('is-open')) OPEN_ACTS.add(id); else OPEN_ACTS.delete(id); }
+    });
     let BREAK_ACT = null;
     document.addEventListener('click', (e) => {
         if (e.target.closest('#lrActBtn')) { openSheet('lrActSheet'); return; }
@@ -986,6 +1084,7 @@ const __init = () => {
 
     function renderAll() {
         BREAK_ACT = null;
+        OPEN_ACTS.clear(); FOLDED_DAYS.clear();
         $id('lrContent').classList.remove('hidden');
         $id('lrBodyText').hidden = true;
         if (!DATA || DATA.totalActivities === 0) {

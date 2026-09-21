@@ -891,6 +891,7 @@ class ActivityController extends BaseScheduleController
 
             $activityCost = 0.0;
             $workerRateSum = 0.0;
+            $workerRows = [];
 
             foreach ($effectiveWorkers as $worker) {
                 $rate = (float) $worker->costPerHalfDay;
@@ -898,6 +899,7 @@ class ActivityController extends BaseScheduleController
                 $costPerWorkerPerDay = $rate * $units;
                 $cost = $costPerWorkerPerDay * $rangeDays;
                 $activityCost += $cost;
+                $workerRows[] = ['id' => $worker->id, 'name' => $worker->workerName, 'rate' => $rate, 'pay' => round($cost, 2)];
                 $totals['totalAssignments']++;
                 $phases[$phaseKey]['assignments']++;
 
@@ -955,6 +957,10 @@ class ActivityController extends BaseScheduleController
                 'das'           => $activityDas,
                 'phase'         => $phaseKey,
                 'cost'          => round($activityCost, 2),
+                'activityType'  => $activity->activityType ?: null,
+                'typeLabel'     => $activity->activityType ? (\App\Models\AsScheduleActivity::ACTIVITY_TYPES[$activity->activityType] ?? null) : null,
+                'lots'          => $activity->lots->pluck('lotName')->values()->all(),
+                'workers'       => $workerRows,
             ];
         }
 
