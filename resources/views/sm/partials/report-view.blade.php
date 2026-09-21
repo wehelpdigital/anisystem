@@ -80,6 +80,25 @@
     html.dark .rx-about-t b { color: #cfe6b8; }
     html.dark .rx-about-t p, html.dark .rx-about-t li { color: #b7c2ad; }
     html.dark .rx-about-note { color: #93a684; }
+    /* The same card, folded to its title: the head is a button, the body
+       folds on grid rows (animated, never a snap) and the choice is kept
+       per report in localStorage. Wired by the script below on load. */
+    .rx-about.is-fold { display: block; padding: 0; }
+    .rx-about-head { display: flex; align-items: center; gap: .7rem; width: 100%; text-align: left; padding: .8rem 1.05rem; cursor: pointer; }
+    .rx-about-head .rx-about-e { font-size: 1.25rem; }
+    .rx-about-title { flex: 1 1 auto; min-width: 0; font-family: var(--font-heading); font-size: .98rem; font-weight: 700; color: #2f5219; }
+    .rx-about-hint { flex: none; font-size: .72rem; font-weight: 700; color: #4a5a3c; opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .rx-about.is-min .rx-about-hint { opacity: .8; }
+    .rx-about-c { flex: none; width: 1rem; height: 1rem; color: #4a5a3c; opacity: .6; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .rx-about.is-min .rx-about-c { transform: rotate(-90deg); }
+    .rx-about-body { display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    .rx-about.is-min .rx-about-body { grid-template-rows: 0fr; opacity: 0; }
+    .rx-about-in { min-height: 0; overflow: hidden; }
+    .rx-about-in .rx-about-t { padding: 0 1.05rem .95rem 1.05rem; }
+    .rx-about-in .rx-about-t > p:first-child { margin-top: 0; }
+    html.dark .rx-about-title { color: #cfe6b8; }
+    html.dark .rx-about-hint, html.dark .rx-about-c { color: #a8bd93; }
+    @media (prefers-reduced-motion: reduce) { .rx-about-body, .rx-about-c, .rx-about-hint { transition: none; } }
 
     /* The shelf with nothing on it yet. */
     .rx-empty { text-align: center; padding: 2.4rem 1.5rem; }
@@ -176,6 +195,35 @@
     document.getElementById('rvX').addEventListener('click', close);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !view.hidden) close(); });
     window.reportView = { open, close, setTitle: (t) => { title.textContent = t || 'Report'; }, isOpen: () => !view.hidden, actions: paintActs };
+
+    // WHAT THIS REPORT IS, folded to its title on request. Every .rx-about
+    // on the page becomes head + body; the fold is remembered per report.
+    function foldAbouts() {
+        document.querySelectorAll('.rx-about:not(.is-fold)').forEach((card, i) => {
+            const t = card.querySelector('.rx-about-t');
+            const e = card.querySelector('.rx-about-e');
+            const b = t ? t.querySelector(':scope > b') : null;
+            if (!t || !b) return;
+            const key = 'anee-rx-about-min:' + location.pathname + ':' + i;
+            let min = false;
+            try { min = localStorage.getItem(key) === '1'; } catch (_) { /* opens full */ }
+            const head = document.createElement('button');
+            head.type = 'button'; head.className = 'rx-about-head';
+            head.innerHTML = `${e ? e.outerHTML : ''}<span class="rx-about-title">${esc(b.textContent)}</span><span class="rx-about-hint">Tap to read</span><svg class="rx-about-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>`;
+            b.remove();
+            if (e) e.remove();
+            const body = document.createElement('div'); body.className = 'rx-about-body';
+            const inner = document.createElement('div'); inner.className = 'rx-about-in';
+            inner.appendChild(t); body.appendChild(inner);
+            card.innerHTML = '';
+            card.appendChild(head); card.appendChild(body);
+            card.classList.add('is-fold');
+            const paint = () => { card.classList.toggle('is-min', min); head.setAttribute('aria-expanded', min ? 'false' : 'true'); };
+            head.addEventListener('click', () => { min = !min; try { localStorage.setItem(key, min ? '1' : '0'); } catch (_) { /* not remembered */ } paint(); });
+            paint();
+        });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', foldAbouts); else foldAbouts();
 })();
 </script>
 @endonce
