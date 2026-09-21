@@ -205,26 +205,24 @@
     .pbt-day .form-input { flex: 1 1 auto; min-width: 0; font-weight: 800; font-variant-numeric: tabular-nums; }
     .pbt-stage { font-size: .74rem; color: #3d6823; font-weight: 700; margin-top: .3rem; min-height: 1rem; }
     .pbt-sec { margin-top: 1.1rem; }
-    .pbt-sec-h { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; margin-bottom: .4rem; }
+    .pbt-sec-h { margin-bottom: .1rem; }
     .pbt-sec-h .form-label { margin: 0; }
-    .pbt-sec-h small { font-size: .72rem; color: var(--color-gray-500); }
+    .pbt-sec-p { margin: 0 0 .55rem; }
+    .pbt-day .crop-tag { flex: 1 1 auto; min-width: 0; }
+    .pbt-day .form-input { flex: 0 0 5rem; text-align: center; }
     .pbg { border: 1px solid var(--color-gray-200); border-radius: .9rem; padding: .6rem .6rem .5rem; margin-bottom: .55rem; background: var(--color-gray-50); position: relative; }
     .pbg.dragging { opacity: .32; outline: 2px dashed #b9c6a8; }
     .pbg-head { display: flex; align-items: center; gap: .4rem; }
-    .pbg-head .form-input { flex: 1 1 auto; min-width: 0; font-weight: 700; }
-    .pbg-knap { display: inline-flex; align-items: center; gap: .35rem; padding: .35rem .55rem; border-radius: .6rem; font-size: .7rem; font-weight: 800; color: var(--color-gray-500); border: 1px solid var(--color-gray-200); background: var(--color-white); white-space: nowrap; flex: none; }
-    .pbg-knap.is-on { color: #2f5219; border-color: #cfe3bd; background: #f1f8ea; }
+    .pbg-head .crop-tag { flex: 1 1 auto; min-width: 0; }
     .pbg-items { display: flex; flex-direction: column; gap: .35rem; margin-top: .45rem; }
-    .pbi { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: 'grip name x' 'grip meta x'; gap: .25rem .35rem; align-items: center; padding: .4rem .4rem; border-radius: .7rem; background: var(--color-white); border: 1px solid var(--color-gray-200); }
+    .pbi { display: grid; gap: .35rem; padding: .4rem .4rem .45rem; border-radius: .7rem; background: var(--color-white); border: 1px solid var(--color-gray-200); }
+    .pbi-row { display: flex; align-items: center; gap: .35rem; }
+    .pbi-row .form-input { flex: 1 1 auto; min-width: 0; }
+    .pbi > .crop-tag, .pbi > .pbi-amount { margin-left: 2.25rem; width: calc(100% - 2.25rem); }
+    .pbg-custom { margin-top: .6rem; display: grid; gap: .5rem; }
     .pbi.dragging { opacity: .32; outline: 2px dashed #b9c6a8; }
-    .pbi-grip { grid-area: grip; }
-    .pbi-x { grid-area: x; }
-    .pbi-name { grid-area: name; }
-    .pbi-meta { grid-area: meta; display: flex; gap: .35rem; min-width: 0; }
-    .pbi-kind { flex: 1 1 55%; min-width: 0; display: inline-flex; align-items: center; gap: .3rem; padding: .35rem .5rem; border-radius: .6rem; font-size: .72rem; font-weight: 700; color: var(--color-gray-700); border: 1px solid var(--color-gray-200); background: var(--color-gray-50); text-align: left; }
-    .pbi-kind span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .pbi-kind svg { width: .8rem; height: .8rem; flex: none; margin-left: auto; color: var(--color-gray-400); }
-    .pbi-amount { flex: 1 1 45%; min-width: 0; }
+    .pbi .crop-tag { padding: .42rem .6rem; }
+    .pbi .crop-tag-t { font-size: .82rem; }
     .pbi .form-input, .pbg .form-input { padding: .42rem .6rem !important; font-size: .82rem !important; }
     .pb-mini { width: 1.9rem; height: 1.9rem; border-radius: .55rem; display: inline-flex; align-items: center; justify-content: center; color: var(--color-gray-400); flex: none; }
     .pb-mini:hover { background: var(--color-gray-100); color: var(--color-gray-700); }
@@ -247,8 +245,6 @@
     html.dark .pbt-counter button.is-on { background: #3d6823; color: #fff; }
     html.dark .pbg { background: #1c2416; border-color: #2b3a1c; }
     html.dark .pbi { background: #151b12; border-color: #2b3a1c; }
-    html.dark .pbg-knap, html.dark .pbi-kind { background: #151b12; border-color: #2b3a1c; color: #cbd5c0; }
-    html.dark .pbg-knap.is-on { background: #22301a; border-color: #3f5a2a; color: #cfe6b8; }
     html.dark .pbt-prio button { background: #151b12; border-color: #2b3a1c; color: #cbd5c0; }
     html.dark .pb-mini:hover { background: #22301a; }
 
@@ -338,17 +334,15 @@
     <div class="sheet-body">
         <div>
             <span class="form-label">When</span>
-            <div class="pbt-when" id="pbtWhen">
-                <button type="button" data-when="on" class="is-on">On the count</button>
-                <button type="button" data-when="before">Before it starts</button>
-            </div>
             <div class="pbt-day">
-                <div class="pbt-counter" id="pbtCounter"></div>
-                <input type="number" id="pbtDay" class="form-input" inputmode="numeric" step="1" min="0" max="999" placeholder="e.g. 14">
-                <span class="pbt-unit" id="pbtUnit" hidden>days before</span>
+                <button type="button" class="crop-tag" id="pbtWhenBtn">
+                    <span class="crop-tag-e" id="pbtWhenIcon">🗓️</span>
+                    <span class="crop-tag-t" id="pbtWhenNow">On the count</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <input type="number" id="pbtDay" class="form-input" inputmode="numeric" step="1" min="0" max="999" placeholder="day" aria-label="Day">
             </div>
             <p class="pbt-stage" id="pbtStage"></p>
-            <p class="pbh-hint" id="pbtHint"></p>
         </div>
         <div class="mt-4">
             <label class="form-label" for="pbtTitleIn">Title</label>
@@ -372,10 +366,8 @@
         </div>
 
         <div class="pbt-sec">
-            <div class="pbt-sec-h">
-                <span class="form-label">What to apply</span>
-                <small>Groups of items — a group can be per knapsack</small>
-            </div>
+            <div class="pbt-sec-h"><span class="form-label">What to apply</span></div>
+            <p class="pbh-hint pbt-sec-p">Groups of items — per knapsack, per hectare, or a name of your own.</p>
             <div id="pbGroups"></div>
             <button type="button" class="pbt-add" id="pbGroupAdd">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Add a group
@@ -388,7 +380,11 @@
         </div>
         <div class="mt-4">
             <span class="form-label">Importance</span>
-            <div class="pbt-prio" id="pbtPrio"></div>
+            <button type="button" class="crop-tag" id="pbtPrioBtn">
+                <span class="crop-tag-e" id="pbtPrioIcon">🟡</span>
+                <span class="crop-tag-t" id="pbtPrioNow">Medium</span>
+                <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
         </div>
         <div class="mt-4">
             <label class="form-label" for="pbtWorkers">Workers needed <span class="text-gray-400 font-normal">(optional)</span></label>
@@ -399,6 +395,42 @@
         <button type="button" class="btn text-red-600 bg-red-50 hover:bg-red-100 border border-red-100" id="pbtDelete" hidden>Delete</button>
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
         <button type="button" class="btn btn-primary" id="pbtSave">Save task</button>
+    </div>
+</div>
+
+{{-- When: which count, on it or before it --}}
+<div class="sheet hidden" id="pbWhenSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">When is it?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="pbWhenList"></div>
+</div>
+
+{{-- Importance --}}
+<div class="sheet hidden" id="pbPrioSheet" style="--sheet-width:24rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">How much does it matter?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="pbPrioList"></div>
+</div>
+
+{{-- A group's name: per knapsack, per hectare, or your own --}}
+<div class="sheet hidden" id="pbGroupSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Name the group</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="dt-rows" id="pbGroupList"></div>
+        <div class="pbg-custom" id="pbGroupCustomWrap" hidden>
+            <input type="text" id="pbGroupCustom" class="form-input" maxlength="120" placeholder="e.g. Tank mix A, Per 10 L bucket">
+            <button type="button" class="btn btn-primary w-full" id="pbGroupCustomGo">Use this name</button>
+        </div>
     </div>
 </div>
 
@@ -447,14 +479,13 @@
         <p class="pbf-say" id="pbFixSay"></p>
         <div class="mt-4">
             <span class="form-label">Change its day to</span>
-            <div class="pbt-when" id="pbFixWhen">
-                <button type="button" data-when="on" class="is-on">On the count</button>
-                <button type="button" data-when="before">Before it starts</button>
-            </div>
             <div class="pbt-day">
-                <div class="pbt-counter" id="pbFixCounter"></div>
-                <input type="number" id="pbFixDay" class="form-input" inputmode="numeric" step="1" min="0" max="999">
-                <span class="pbt-unit" id="pbFixUnit" hidden>days before</span>
+                <button type="button" class="crop-tag" id="pbFixWhenBtn">
+                    <span class="crop-tag-e" id="pbFixWhenIcon">🗓️</span>
+                    <span class="crop-tag-t" id="pbFixWhenNow">On the count</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <input type="number" id="pbFixDay" class="form-input" inputmode="numeric" step="1" min="0" max="999" placeholder="day" aria-label="Day">
             </div>
             <p class="pbf-hint" id="pbFixHint"></p>
         </div>
@@ -564,7 +595,7 @@
     const GRIP = '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>';
     const DOTS = '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>';
     const X = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
-    const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>';
+    const CHEV = '<svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>';
 
     /* ------------------------------------------------------------ state */
     let P = { id: BOOT.id, title: BOOT.title, description: BOOT.description, crop: BOOT.crop, cropLabel: BOOT.cropLabel, cropIcon: BOOT.cropIcon, variety: BOOT.variety, dayType: BOOT.dayType, ported: BOOT.ported };
@@ -833,31 +864,54 @@
      * and the port need nothing new. Wired over `${pfx}When/Counter/Day/
      * Unit`; get() reads the signed day back.
      */
-    function dayPicker(pfx, onChange) {
+    /**
+     * The when picker: one tag that says which count and whether the day
+     * is on it or before it (Before DAS 0 = land preparation, seedbed work,
+     * buying the inputs), and one number beside it. Only the tag changes
+     * when the choice does; a before-day is kept as a negative day.
+     */
+    let WHEN_FOR = null;
+    const whenWord = (when, c) => {
+        const two = counters().length === 2;
+        if (when === 'before') return `Before ${c} 0`;
+        return two ? (c === 'DAS' ? 'DAS count (seedbed)' : 'DAT count') : `${c} count`;
+    };
+    function paintWhenList(st) {
+        const two = counters().length === 2;
+        const rows = [];
+        counters().forEach((c) => {
+            rows.push({ when: 'before', c, e: '⏮️', b: `Before ${c} 0`, i: `Days counted back from ${c} 0${two ? (c === 'DAS' ? ', the sowing' : ', the transplant') : ''} — land preparation, seedbed work, buying the inputs.` });
+            rows.push({ when: 'on', c, e: '🗓️', b: whenWord('on', c), i: two ? (c === 'DAS' ? 'A day of the DAS count — from sowing to the transplant.' : 'A day of the DAT count — from the transplant on.') : `A day of the ${c} count.` });
+        });
+        $id('pbWhenList').innerHTML = rows.map((r) => `
+            <button type="button" class="dt-row${r.when === st.when && r.c === st.counter ? ' is-on' : ''}" data-when="${r.when}" data-c="${r.c}">
+                <span class="dt-row-e">${r.e}</span><span class="dt-row-body"><b>${esc(r.b)}</b><i>${esc(r.i)}</i></span>
+                <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            </button>`).join('');
+    }
+    $id('pbWhenList').addEventListener('click', (e) => {
+        const r = e.target.closest('[data-when]'); if (!r || !WHEN_FOR) return;
+        WHEN_FOR.pick(r.getAttribute('data-when'), r.getAttribute('data-c'));
+        closeSheet('pbWhenSheet');
+    });
+    function whenPicker(pfx, onChange) {
         const st = { when: 'on', counter: counters()[0] };
-        const whenHost = $id(pfx + 'When'), cHost = $id(pfx + 'Counter'), dayIn = $id(pfx + 'Day'), unit = $id(pfx + 'Unit');
-        const paint = () => {
-            whenHost.querySelectorAll('[data-when]').forEach((b) => b.classList.toggle('is-on', b.getAttribute('data-when') === st.when));
-            const list = counters();
-            cHost.innerHTML = list.map((c) => `<button type="button" data-c="${c}" class="${c === st.counter ? 'is-on' : ''}">${c}</button>`).join('');
-            cHost.style.display = list.length > 1 ? '' : 'none';
-            unit.hidden = st.when !== 'before';
-        };
-        whenHost.onclick = (e) => {
-            const b = e.target.closest('[data-when]'); if (!b) return;
-            const was = st.when; st.when = b.getAttribute('data-when');
-            const n = Math.abs(parseInt(dayIn.value, 10) || 0);
-            if (st.when === 'before' && was !== 'before') dayIn.value = n > 0 ? n : 7;
-            if (st.when === 'on' && was !== 'on') dayIn.value = n;
-            paint(); if (onChange) onChange();
-        };
-        cHost.onclick = (e) => { const b = e.target.closest('[data-c]'); if (!b) return; st.counter = b.getAttribute('data-c'); paint(); if (onChange) onChange(); };
-        dayIn.oninput = () => { if (onChange) onChange(); };
-        return {
+        const now = $id(pfx + 'WhenNow'), icon = $id(pfx + 'WhenIcon'), dayIn = $id(pfx + 'Day');
+        const paint = () => { now.textContent = whenWord(st.when, st.counter); icon.textContent = st.when === 'before' ? '⏮️' : '🗓️'; dayIn.placeholder = st.when === 'before' ? 'days' : 'day'; };
+        const api = {
             set(counter, day) { st.counter = counters().includes(counter) ? counter : counters()[0]; st.when = day < 0 ? 'before' : 'on'; dayIn.value = Math.abs(day); paint(); },
             get() { const n = parseInt(dayIn.value, 10); if (!Number.isFinite(n)) return null; const v = Math.abs(n); return { counter: st.counter, day: st.when === 'before' ? -Math.max(1, v) : v }; },
+            pick(when, counter) {
+                const was = st.when; st.when = when; st.counter = counters().includes(counter) ? counter : counters()[0];
+                const n = Math.abs(parseInt(dayIn.value, 10) || 0);
+                if (when === 'before' && was !== 'before' && n === 0) dayIn.value = 7;
+                paint(); if (onChange) onChange();
+            },
             when: () => st.when, counter: () => st.counter,
         };
+        $id(pfx + 'WhenBtn').addEventListener('click', () => { WHEN_FOR = api; paintWhenList(st); openSheet('pbWhenSheet'); });
+        dayIn.oninput = () => { if (onChange) onChange(); };
+        return api;
     }
     function sayWhen(counter, day) { return day < 0 ? `${-day} ${-day === 1 ? 'day' : 'days'} before ${counter} 0` : `${counter} ${day}`; }
     function paintType() {
@@ -871,22 +925,30 @@
     function paintStage() {
         const v = TASK_DAY ? TASK_DAY.get() : null;
         $id('pbtStage').textContent = v ? (stageLabel(v.counter, v.day) || '') : '';
-        const two = counters().length === 2;
-        const c = TASK_DAY ? TASK_DAY.counter() : counters()[0];
-        $id('pbtHint').textContent = (TASK_DAY && TASK_DAY.when() === 'before')
-            ? `Counted back from ${c} 0${two ? (c === 'DAS' ? ' — the sowing in the seedbed' : ' — the transplant') : ''}. Land preparation, seedbed work, buying the inputs: anything done before the program starts.`
-            : `A day of the ${c} count${two ? (c === 'DAS' ? ' — in the seedbed' : ' — after the transplant') : ''}.`;
     }
+    const PRIO_ICON = { critical: '🔴', high: '🟠', medium: '🟡', low: '⚪' };
     function paintPrio() {
-        $id('pbtPrio').innerHTML = Object.entries(OPT.priorities).map(([k, p]) => `<button type="button" data-prio="${k}" class="${W.priority === k ? 'is-on' : ''}" title="${esc(p.sub)}">${esc(p.label)}</button>`).join('');
+        const p = OPT.priorities[W.priority] || OPT.priorities.medium;
+        $id('pbtPrioIcon').textContent = PRIO_ICON[W.priority] || '🟡';
+        $id('pbtPrioNow').textContent = p.label;
     }
+    $id('pbPrioList').innerHTML = Object.entries(OPT.priorities).map(([k, p]) => `
+        <button type="button" class="dt-row" data-prio="${k}"><span class="dt-row-e">${PRIO_ICON[k] || '🟡'}</span><span class="dt-row-body"><b>${esc(p.label)}</b><i>${esc(p.sub)}</i></span>
+        <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`).join('');
+    $id('pbtPrioBtn').addEventListener('click', () => {
+        $id('pbPrioList').querySelectorAll('[data-prio]').forEach((r) => r.classList.toggle('is-on', r.getAttribute('data-prio') === W.priority));
+        openSheet('pbPrioSheet');
+    });
+    $id('pbPrioList').addEventListener('click', (e) => { const r = e.target.closest('[data-prio]'); if (!r || !W) return; W.priority = r.getAttribute('data-prio'); paintPrio(); closeSheet('pbPrioSheet'); });
+    const GROUP_PRESETS = [['Per knapsack (16 L)', '🎒'], ['Per knapsack (20 L)', '🎒'], ['Per drum (200 L)', '🛢️'], ['Per hectare', '🌾'], ['Per 1,000 m²', '📐'], ['Per 100 m² of seedbed', '🌱'], ['Per bag of seed', '🌰'], ['Whole lot', '📦']];
+    const groupIcon = (g) => g.perKnapsack ? '🎒' : ((GROUP_PRESETS.find(([n]) => n === g.title) || [])[1] || '📦');
+    const groupTag = (g) => `<span class="crop-tag-e">${groupIcon(g)}</span><span class="crop-tag-t${g.title ? '' : ' is-none'}">${g.title ? esc(g.title) : 'Name the group'}</span><svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>`;
     function groupHtml(g) {
         return `
             <div class="pbg" data-g="${esc(g.id)}">
                 <div class="pbg-head">
                     <button type="button" class="pb-mini is-grip pbg-grip" aria-label="Drag the group">${GRIP}</button>
-                    <input type="text" class="form-input pbg-title" maxlength="120" placeholder="Group name — e.g. Tank mix A, Per knapsack (16 L)" value="${esc(g.title)}">
-                    <button type="button" class="pbg-knap ${g.perKnapsack ? 'is-on' : ''}" title="The amounts are per knapsack">🎒 <span>${g.perKnapsack ? 'Per knapsack' : 'Per knapsack?'}</span></button>
+                    <button type="button" class="crop-tag pbg-name">${groupTag(g)}</button>
                     <button type="button" class="pb-mini is-x pbg-x" aria-label="Remove the group">${X}</button>
                 </div>
                 <div class="pbg-items">${g.items.map(itemHtml).join('')}</div>
@@ -897,13 +959,13 @@
         const k = OPT.kinds[it.kind] || OPT.kinds.other;
         return `
             <div class="pbi" data-i="${esc(it.id)}">
-                <button type="button" class="pb-mini is-grip pbi-grip" aria-label="Drag the item">${GRIP}</button>
-                <input type="text" class="form-input pbi-name" maxlength="160" placeholder="What — e.g. Butachlor 60 EC" value="${esc(it.name)}">
-                <div class="pbi-meta">
-                    <button type="button" class="pbi-kind">${esc(k.icon)} <span>${esc(k.label)}</span>${CHEV}</button>
-                    <input type="text" class="form-input pbi-amount" maxlength="80" placeholder="How much — e.g. 50 ml" value="${esc(it.amount)}">
+                <div class="pbi-row">
+                    <button type="button" class="pb-mini is-grip pbi-grip" aria-label="Drag the item">${GRIP}</button>
+                    <input type="text" class="form-input pbi-name" maxlength="160" placeholder="What — e.g. Butachlor 60 EC" value="${esc(it.name)}">
+                    <button type="button" class="pb-mini is-x pbi-x" aria-label="Remove the item">${X}</button>
                 </div>
-                <button type="button" class="pb-mini is-x pbi-x" aria-label="Remove the item">${X}</button>
+                <button type="button" class="crop-tag pbi-kind"><span class="crop-tag-e">${esc(k.icon)}</span><span class="crop-tag-t">${esc(k.label)}</span>${CHEV}</button>
+                <input type="text" class="form-input pbi-amount" maxlength="80" placeholder="How much — e.g. 50 ml" value="${esc(it.amount)}">
             </div>`;
     }
     function paintGroups() {
@@ -914,18 +976,13 @@
     function iOf(el) { const g = gOf(el); const i = el.closest('.pbi'); return (g && i) ? g.items.find((x) => x.id === i.getAttribute('data-i')) : null; }
     $id('pbGroups').addEventListener('input', (e) => {
         const g = gOf(e.target); if (!g) return;
-        if (e.target.classList.contains('pbg-title')) { g.title = e.target.value; return; }
         const it = iOf(e.target); if (!it) return;
         if (e.target.classList.contains('pbi-name')) it.name = e.target.value;
         if (e.target.classList.contains('pbi-amount')) it.amount = e.target.value;
     });
     $id('pbGroups').addEventListener('click', (e) => {
         const g = gOf(e.target); if (!g) return;
-        if (e.target.closest('.pbg-knap')) {
-            g.perKnapsack = !g.perKnapsack;
-            const b = e.target.closest('.pbg-knap'); b.classList.toggle('is-on', g.perKnapsack); b.querySelector('span').textContent = g.perKnapsack ? 'Per knapsack' : 'Per knapsack?';
-            return;
-        }
+        if (e.target.closest('.pbg-name')) { openGroupName(g, e.target.closest('.pbg-name')); return; }
         if (e.target.closest('.pbg-x')) { W.groups = W.groups.filter((x) => x !== g); paintGroups(); return; }
         if (e.target.closest('.pbi-add')) {
             const it = { id: uid('i'), name: '', kind: 'other', amount: '' };
@@ -945,14 +1002,47 @@
         }
     });
     $id('pbGroupAdd').addEventListener('click', () => {
-        const g = { id: uid('g'), title: '', perKnapsack: W.groups.length === 0, items: [{ id: uid('i'), name: '', kind: 'other', amount: '' }] };
+        const g = { id: uid('g'), title: '', perKnapsack: false, items: [{ id: uid('i'), name: '', kind: 'other', amount: '' }] };
         W.groups.push(g);
         $id('pbGroups').insertAdjacentHTML('beforeend', groupHtml(g));
         wireGroupDrags();
         const el = $id('pbGroups').lastElementChild;
-        el.querySelector('.pbg-title').focus();
         el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        openGroupName(g, el.querySelector('.pbg-name'));
     });
+    // The group's name: a preset, or one of your own.
+    let GROUP_FOR = null;
+    function openGroupName(g, btn) {
+        GROUP_FOR = { g, btn };
+        const custom = g.title && !GROUP_PRESETS.some(([n]) => n === g.title);
+        $id('pbGroupList').innerHTML = GROUP_PRESETS.map(([n, e]) => `
+            <button type="button" class="dt-row${g.title === n ? ' is-on' : ''}" data-gname="${esc(n)}"><span class="dt-row-e">${e}</span><span class="dt-row-body"><b>${esc(n)}</b></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`).join('')
+            + `<button type="button" class="dt-row${custom ? ' is-on' : ''}" data-gname="__other"><span class="dt-row-e">✏️</span><span class="dt-row-body"><b>Others…</b><i>${custom ? esc(g.title) : 'Type a name of your own'}</i></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`;
+        $id('pbGroupCustomWrap').hidden = !custom;
+        $id('pbGroupCustom').value = custom ? g.title : '';
+        openSheet('pbGroupSheet');
+    }
+    function setGroupName(name) {
+        if (!GROUP_FOR) return;
+        const { g, btn } = GROUP_FOR;
+        g.title = name.trim();
+        g.perKnapsack = /knapsack|sprayer/i.test(g.title);
+        btn.innerHTML = groupTag(g);
+        closeSheet('pbGroupSheet');
+    }
+    $id('pbGroupList').addEventListener('click', (e) => {
+        const r = e.target.closest('[data-gname]'); if (!r) return;
+        const n = r.getAttribute('data-gname');
+        if (n === '__other') {
+            $id('pbGroupList').querySelectorAll('[data-gname]').forEach((x) => x.classList.toggle('is-on', x === r));
+            $id('pbGroupCustomWrap').hidden = false;
+            setTimeout(() => $id('pbGroupCustom').focus(), 60);
+            return;
+        }
+        setGroupName(n);
+    });
+    $id('pbGroupCustomGo').addEventListener('click', () => { const v = $id('pbGroupCustom').value.trim(); if (!v) { $id('pbGroupCustom').focus(); return; } setGroupName(v); });
+    $id('pbGroupCustom').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); $id('pbGroupCustomGo').click(); } });
     $id('pbKindList').innerHTML = Object.entries(OPT.kinds).map(([k, v]) => `
         <button type="button" class="dt-row" data-kind="${k}"><span class="dt-row-e">${esc(v.icon)}</span><span class="dt-row-body"><b>${esc(v.label)}</b></span>
         <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`).join('');
@@ -960,7 +1050,7 @@
         const r = e.target.closest('[data-kind]'); if (!r || !KIND_FOR) return;
         KIND_FOR.it.kind = r.getAttribute('data-kind');
         const k = OPT.kinds[KIND_FOR.it.kind];
-        KIND_FOR.btn.innerHTML = `${esc(k.icon)} <span>${esc(k.label)}</span>${CHEV}`;
+        KIND_FOR.btn.innerHTML = `<span class="crop-tag-e">${esc(k.icon)}</span><span class="crop-tag-t">${esc(k.label)}</span>${CHEV}`;
         closeSheet('pbKindSheet');
     });
     $id('pbTypeList').innerHTML = `<button type="button" class="dt-row" data-type=""><span class="dt-row-e">📌</span><span class="dt-row-body"><b>No type</b></span>
@@ -978,7 +1068,6 @@
         paintType();
         closeSheet('pbTypeSheet');
     });
-    $id('pbtPrio').addEventListener('click', (e) => { const b = e.target.closest('[data-prio]'); if (!b) return; W.priority = b.getAttribute('data-prio'); paintPrio(); });
 
     function openTask(id) {
         const t = id ? TASKS.find((x) => x.id === id) : null;
@@ -986,7 +1075,7 @@
         W_ID = t ? t.id : null;
         $id('pbTaskTitle').textContent = t ? 'Edit task' : 'New task';
         $id('pbtDelete').hidden = !t;
-        if (!TASK_DAY) TASK_DAY = dayPicker('pbt', paintStage);
+        if (!TASK_DAY) TASK_DAY = whenPicker('pbt', paintStage);
         TASK_DAY.set(W.counter, W.day);
         $id('pbtTitleIn').value = W.title;
         $id('pbtSub').value = W.subtitle;
@@ -1146,7 +1235,7 @@
         const between = prev && next ? `between <b>${esc(sayKey(prev))}</b> and <b>${esc(sayKey(next))}</b>` : (prev ? `after <b>${esc(sayKey(prev))}</b>` : `ahead of <b>${esc(sayKey(next))}</b>`);
         $id('pbFixSay').innerHTML = `<b>${esc(t.title)}</b> is on <b>${esc(sayKey(t))}</b>, but you put it ${between}. Change its day to fit there, or put it back where it was.`;
         const start = prev || next;
-        if (!FIX_DAY) FIX_DAY = dayPicker('pbFix', fixHint);
+        if (!FIX_DAY) FIX_DAY = whenPicker('pbFix', fixHint);
         FIX_DAY.set(start.counter, start.day);
         fixHint();
         openSheet('pbFixSheet');
