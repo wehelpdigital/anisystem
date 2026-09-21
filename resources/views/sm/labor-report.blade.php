@@ -402,6 +402,16 @@
     </div>
 </div>
 
+{{-- The breakdown's activity chooser: one at a time, or all of them. --}}
+<div class="sheet hidden" id="lrActSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Which activity?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="lrActList"></div>
+</div>
+
 {{-- Rename a saved report, describe it, retie its tags. --}}
 <div class="sheet hidden" id="lrMetaSheet" style="--sheet-width:28rem">
     <div class="sheet-handle"></div>
@@ -924,16 +934,58 @@ const __init = () => {
                 <div class="lr-bcards">${items.map(card).join('')}</div>
             </div>`;
         const ph = d.phases || {};
+        // One activity, or all of them: the chooser's pick narrows the list
+        // and its phase's subtotal says that one activity's cost.
+        const all = d.perActivity || [];
+        const shown = BREAK_ACT === null ? all : all.filter((a) => String(a.id) === String(BREAK_ACT));
+        const one = BREAK_ACT !== null && shown.length ? shown[0] : null;
+        const sub = (key, fallback) => one ? (one.cost || 0) : fallback;
         $id('lrBreakdown').innerHTML = `
             <h3>By worker</h3>
             <div class="lr-bcards">${workerCards}</div>
             <h3 class="mt-5">By activity</h3>
-            ${section((d.perActivity || []).filter((a) => a.phase === 'preDayZero'), 'Land Preparation', PHASE.pre, (ph.preDayZero || {}).cost || 0)}
-            ${section((d.perActivity || []).filter((a) => a.phase === 'cropping'), 'Main Cropping', PHASE.crop, (ph.cropping || {}).cost || 0)}
-            ${section((d.perActivity || []).filter((a) => a.phase === 'unanchored'), 'Unanchored', PHASE.una, (ph.unanchored || {}).cost || 0)}`;
+            <div class="mb-3">
+                <button type="button" class="crop-tag" id="lrActBtn">
+                    <span class="crop-tag-e">🧾</span>
+                    <span class="crop-tag-t${one ? '' : ' is-none'}" id="lrActNow">${one ? esc(one.activityTitle) : 'All activities'}</span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+            </div>
+            ${section(shown.filter((a) => a.phase === 'preDayZero'), 'Land Preparation', PHASE.pre, sub('preDayZero', (ph.preDayZero || {}).cost || 0))}
+            ${section(shown.filter((a) => a.phase === 'cropping'), 'Main Cropping', PHASE.crop, sub('cropping', (ph.cropping || {}).cost || 0))}
+            ${section(shown.filter((a) => a.phase === 'unanchored'), 'Unanchored', PHASE.una, sub('unanchored', (ph.unanchored || {}).cost || 0))}
+            ${BREAK_ACT !== null && !shown.length ? '<p class="text-sm text-gray-400 py-4 text-center">That activity is not in this slice.</p>' : ''}`;
+        // The chooser's rows: every activity in the slice, newest phase first as the list is.
+        const list = $id('lrActList');
+        if (list) {
+            const when = (a) => { const s = a.targetDate ? parseD(a.targetDate) : null; return s ? `${MONTH_SHORT[s.getMonth()]} ${s.getDate()}, ${s.getFullYear()}` : 'No date'; };
+            const phaseWord = { preDayZero: 'Land Preparation', cropping: 'Main Cropping', unanchored: 'Unanchored' };
+            list.innerHTML = `
+                <button type="button" class="dt-row${BREAK_ACT === null ? ' is-on' : ''}" data-lr-act="">
+                    <span class="dt-row-e">🧾</span>
+                    <span class="dt-row-body"><b>All activities</b><i>${all.length} in this slice</i></span>
+                    <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                </button>` + all.map((a) => `
+                <button type="button" class="dt-row${String(a.id) === String(BREAK_ACT) ? ' is-on' : ''}" data-lr-act="${esc(String(a.id))}">
+                    <span class="dt-row-e">${a.phase === 'preDayZero' ? '🚜' : (a.phase === 'cropping' ? '🌱' : '📍')}</span>
+                    <span class="dt-row-body"><b>${esc(a.activityTitle)}</b><i>${esc(when(a))} · ${esc(phaseWord[a.phase] || '')} · ${esc(fmtPeso0(a.cost))}</i></span>
+                    <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                </button>`).join('');
+        }
     }
+    let BREAK_ACT = null;
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('#lrActBtn')) { openSheet('lrActSheet'); return; }
+        const row = e.target.closest('#lrActList [data-lr-act]');
+        if (!row) return;
+        const v = row.getAttribute('data-lr-act');
+        BREAK_ACT = v === '' ? null : v;
+        closeSheet('lrActSheet');
+        if (DATA) renderBreakdown();
+    });
 
     function renderAll() {
+        BREAK_ACT = null;
         $id('lrContent').classList.remove('hidden');
         $id('lrBodyText').hidden = true;
         if (!DATA || DATA.totalActivities === 0) {
