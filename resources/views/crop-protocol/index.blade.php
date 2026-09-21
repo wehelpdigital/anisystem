@@ -630,6 +630,7 @@
             <div class="q-body">
                 <div class="q-body-in">
                     <div class="q-card" id="cpQuoteCost"></div>
+                    <div class="q-card"><b>A guide, not the protocol itself.</b> What Anee writes here is a starting point built from the records and the science. Your own protocol is still yours to write — by hand, in the Protocol Builder — from your field's experience, with this new knowledge folded in where it fits. No analysis knows your paddy the way you do.</div>
                     <div class="q-card">Anee <b>analyzes deeply</b> for this one — your variety's real traits, the official nutrient and pest recommendations for your crop and region, the seasonal outlook and the ENSO state — and writes a <b>season protocol by growth stage</b>: the bags of fertilizer and when, the sprays and foliars to have ready, how to run the water, what to watch for. Hung on the crop's stages, never on a day count.</div>
                 </div>
             </div>
@@ -1619,7 +1620,7 @@
         ROWS = res.data.rows || [];
         $id('cpSavedList').innerHTML = ROWS.map((r) => `
             <button type="button" class="wtp-saved" data-saved="${r.id}">
-                <span class="grow min-w-0"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.at)} · ${r.credits} credits</small></span>
+                <span class="grow min-w-0"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.at)} · ${r.credits} credits</small>${window.userTags ? window.userTags.chips(r.tags) : ''}</span>
                 <span role="button" tabindex="0" class="wtp-pen" data-meta="${r.id}" title="Edit name and description" aria-label="Edit ${esc(r.title)}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:.85rem;height:.85rem"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </span>
@@ -1632,7 +1633,7 @@
         if (saveBtn && META_ID !== null) {
             saveBtn.disabled = true;
             try {
-                const res = await api(META_URL, { method: 'POST', body: { id: META_ID, title: $id('cpMetaTitle').value.trim(), description: $id('cpMetaDesc').value.trim() } });
+                const res = await api(META_URL, { method: 'POST', body: { id: META_ID, title: $id('cpMetaTitle').value.trim(), description: $id('cpMetaDesc').value.trim(), tags: window.userTags ? window.userTags.value($id('cpMetaTags')) : [] } });
                 toast(res.message);
                 closeSheet('cpMetaSheet');
                 loadSaved().catch(() => {});
@@ -1648,6 +1649,7 @@
             META_ID = r.id;
             $id('cpMetaTitle').value = r.title || '';
             $id('cpMetaDesc').value = r.description || '';
+            if (window.userTags) window.userTags.set($id('cpMetaTags'), r.tags || []);
             openSheet('cpMetaSheet');
             return;
         }
@@ -1676,6 +1678,7 @@
 @endsection
 
 @push('sheets')
+@include('partials.user-tags')
 <div class="sheet hidden" id="cpMetaSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -1690,6 +1693,10 @@
         <div>
             <label class="form-label" for="cpMetaDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="cpMetaDesc" class="form-textarea" rows="3" maxlength="2000"></textarea>
+        </div>
+        <div>
+            <span class="form-label">Tags <span class="text-gray-400 font-normal">(optional)</span></span>
+            <div class="ut-mount" id="cpMetaTags"></div>
         </div>
     </div>
     <div class="sheet-footer">

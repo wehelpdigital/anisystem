@@ -1126,7 +1126,7 @@
         VA_ROWS = rows;
         $id('vaSavedList').innerHTML = rows.map((r) => `
             <button type="button" class="wtp-saved" data-saved="${r.id}">
-                <span class="grow min-w-0"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.at)} · ${r.credits} credits</small></span>
+                <span class="grow min-w-0"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.at)} · ${r.credits} credits</small>${window.userTags ? window.userTags.chips(r.tags) : ''}</span>
                 <span role="button" tabindex="0" class="wtp-pen" data-meta="${r.id}" title="Edit name and description" aria-label="Edit ${esc(r.title)}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:.85rem;height:.85rem"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </span>
@@ -1146,6 +1146,7 @@
                     id: VA_META_ID,
                     title: $id('vaMetaTitle').value.trim(),
                     description: $id('vaMetaDesc').value.trim(),
+                    tags: window.userTags ? window.userTags.value($id('vaMetaTags')) : [],
                 } });
                 toast(res.message);
                 closeSheet('vaMetaSheet');
@@ -1162,6 +1163,7 @@
             VA_META_ID = r.id;
             $id('vaMetaTitle').value = r.title || '';
             $id('vaMetaDesc').value = r.description || '';
+            if (window.userTags) window.userTags.set($id('vaMetaTags'), r.tags || []);
             openSheet('vaMetaSheet');
             return;
         }
@@ -1193,6 +1195,7 @@
 
 @push('sheets')
 {{-- Rename a saved research and describe it in your own words. --}}
+@include('partials.user-tags')
 <div class="sheet hidden" id="vaMetaSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -1207,6 +1210,10 @@
         <div>
             <label class="form-label" for="vaMetaDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="vaMetaDesc" class="form-textarea" rows="3" maxlength="2000"></textarea>
+        </div>
+        <div>
+            <span class="form-label">Tags <span class="text-gray-400 font-normal">(optional)</span></span>
+            <div class="ut-mount" id="vaMetaTags"></div>
         </div>
     </div>
     <div class="sheet-footer">

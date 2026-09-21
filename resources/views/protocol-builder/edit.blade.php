@@ -36,14 +36,14 @@
     .pb-tools { display: none; align-items: center; gap: .4rem; margin-bottom: .75rem; position: sticky; top: calc(3.6rem + env(safe-area-inset-top, 0px)); z-index: 5;
         padding: .45rem .5rem; border-radius: .9rem; background: rgba(255,255,255,.92); border: 1px solid var(--color-gray-200); backdrop-filter: blur(6px); }
     .pb-page[data-mode="edit"] .pb-tools { display: flex; }
-    .pb-tool { display: inline-flex; align-items: center; gap: .3rem; padding: .42rem .65rem; border-radius: .7rem; font-size: .78rem; font-weight: 800; color: var(--color-gray-700); border: 1px solid var(--color-gray-200); background: var(--color-white);
+    .pb-tool { display: inline-flex; align-items: center; gap: .3rem; padding: .42rem .55rem; border-radius: .7rem; font-size: .76rem; font-weight: 800; white-space: nowrap; color: var(--color-gray-700); border: 1px solid var(--color-gray-200); background: var(--color-white);
         transition: opacity .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
     .pb-tool svg { width: 1rem; height: 1rem; }
     .pb-tool:disabled { opacity: .38; cursor: default; }
     .pb-tool:not(:disabled):hover { background: var(--color-brand-50); border-color: var(--color-brand-300); }
-    .pb-tool.is-add { margin-left: auto; background: #3d6823; color: #fff; border-color: #3d6823; }
+    .pb-tool.is-add { background: #3d6823; color: #fff; border-color: #3d6823; }
     .pb-tool.is-add:not(:disabled):hover { background: #2f5219; border-color: #2f5219; }
-    .pb-save { font-size: .7rem; font-weight: 700; color: var(--color-gray-400); padding: 0 .3rem; min-width: 3.6rem; transition: color .28s cubic-bezier(.22,1,.36,1); white-space: nowrap; }
+    .pb-save { font-size: .68rem; font-weight: 700; color: var(--color-gray-400); padding: 0 .2rem; min-width: 0; flex: 1 1 auto; text-align: center; transition: color .28s cubic-bezier(.22,1,.36,1); white-space: nowrap; }
     .pb-save.is-saved { color: #4a7c2a; }
     .pb-save.is-failed { color: #b91c1c; }
     .pb-save.is-stale { color: #b45309; }
@@ -343,7 +343,7 @@
         </button>
         <span class="pb-save" id="pbSaveState" aria-live="polite"></span>
         <button type="button" class="pb-tool is-add" id="pbAddTop">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Add task
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Task
         </button>
         <button type="button" class="pb-tool" id="pbAddNoteTop" title="A note between the tasks">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12l-4 4H4z"/><path d="M16 20v-4h4"/></svg> Note

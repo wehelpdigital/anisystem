@@ -1022,7 +1022,7 @@
     const SHELF = { page: 1, hasMore: false, q: '', busy: false };
     const rowHtml = (r) => `
                 <button type="button" class="wtp-saved" data-saved="${r.id}">
-                    <span class="grow min-w-0"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.at)} · ${r.credits} credits</small></span>
+                    <span class="grow min-w-0"><b>${esc(r.title)}</b><small>${r.description ? esc(r.description) + ' · ' : ''}${esc(r.at)} · ${r.credits} credits</small>${window.userTags ? window.userTags.chips(r.tags) : ''}</span>
                     <span role="button" tabindex="0" class="wtp-pen" data-meta="${r.id}" title="Edit name and description" aria-label="Edit ${esc(r.title)}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:.85rem;height:.85rem"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </span>
@@ -1068,6 +1068,7 @@
                     id: WTP_META_ID,
                     title: $id('wtpMetaTitle').value.trim(),
                     description: $id('wtpMetaDesc').value.trim(),
+                    tags: window.userTags ? window.userTags.value($id('wtpMetaTags')) : [],
                 } });
                 toast(res.message);
                 closeSheet('wtpMetaSheet');
@@ -1084,6 +1085,7 @@
             WTP_META_ID = r.id;
             $id('wtpMetaTitle').value = r.title || '';
             $id('wtpMetaDesc').value = r.description || '';
+            if (window.userTags) window.userTags.set($id('wtpMetaTags'), r.tags || []);
             openSheet('wtpMetaSheet');
             return;
         }
@@ -1117,6 +1119,7 @@
 
 @push('sheets')
 {{-- Rename a saved analysis and describe it in your own words. --}}
+@include('partials.user-tags')
 <div class="sheet hidden" id="wtpMetaSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -1131,6 +1134,10 @@
         <div>
             <label class="form-label" for="wtpMetaDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="wtpMetaDesc" class="form-textarea" rows="3" maxlength="2000"></textarea>
+        </div>
+        <div>
+            <span class="form-label">Tags <span class="text-gray-400 font-normal">(optional)</span></span>
+            <div class="ut-mount" id="wtpMetaTags"></div>
         </div>
     </div>
     <div class="sheet-footer">

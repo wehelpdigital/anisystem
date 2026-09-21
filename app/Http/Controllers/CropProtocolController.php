@@ -814,12 +814,13 @@ class CropProtocolController extends Controller
         $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())
             ->where('kind', 'protocol')
             ->where('deleteStatus', 1)->where('status', 'ready')->orderByDesc('id')
-            ->get(['id', 'title', 'description', 'credits', 'created_at']);
+            ->get(['id', 'title', 'description', 'tags', 'credits', 'created_at']);
 
         return $this->json(true, 'ok', ['rows' => $rows->map(fn ($r) => [
             'id' => $r->id,
             'title' => $r->title,
             'description' => $r->description,
+            'tags' => array_values(array_filter((array) (json_decode((string) ($r->tags ?? ''), true) ?: []), 'is_string')),
             'credits' => (float) $r->credits,
             'at' => \Illuminate\Support\Carbon::parse($r->created_at)->format('M j, Y'),
         ])->values()]);
@@ -933,6 +934,7 @@ class CropProtocolController extends Controller
             ->update([
                 'title' => $title,
                 'description' => $description !== '' ? mb_substr($description, 0, 2000) : null,
+                'tags' => json_encode(\App\Http\Controllers\UserTagController::tidy($request->input('tags', []))),
                 'updated_at' => now(),
             ]);
         if (! $updated) {
