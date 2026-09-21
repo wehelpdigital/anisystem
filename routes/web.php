@@ -233,6 +233,8 @@ Route::middleware('auth')->group(function () {
     // "Do I already know this email?" — the workers module asks before offering
     // to file a new worker in the phonebook.
     Route::get('/app/contacts-lookup', [App\Http\Controllers\ContactListController::class, 'lookup'])->name('contacts.lookup');
+    // A member's own tag vocabulary, across contacts, analyses and protocols.
+    Route::get('/app/my-tags', [App\Http\Controllers\UserTagController::class, 'index'])->name('tags.mine');
     Route::post('/app/contacts', [App\Http\Controllers\ContactListController::class, 'store'])->name('contacts.store');
     Route::post('/app/contacts/{id}', [App\Http\Controllers\ContactListController::class, 'update'])->name('contacts.update');
     Route::post('/app/contacts/{id}/delete', [App\Http\Controllers\ContactListController::class, 'destroy'])->name('contacts.destroy');
@@ -504,7 +506,6 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/protocol-builder/{id}/delete', [App\Http\Controllers\ProtocolBuilderController::class, 'destroy'])->whereNumber('id')->name('pb.delete');
     Route::post('/app/protocol-builder/{id}/analyze', [App\Http\Controllers\ProtocolBuilderController::class, 'analyze'])->whereNumber('id')->name('pb.analyze');
     Route::get('/app/protocol-builder/{id}/job', [App\Http\Controllers\ProtocolBuilderController::class, 'job'])->whereNumber('id')->name('pb.job');
-    Route::post('/app/protocol-builder/{id}/port', [App\Http\Controllers\ProtocolBuilderController::class, 'port'])->whereNumber('id')->name('pb.port');
     Route::get('/app/weather', [App\Http\Controllers\WeatherController::class, 'forecast'])->name('app.weather');
     Route::get('/app/sm-weather', [App\Http\Controllers\WeatherController::class, 'scheduleForecast'])->name('sm.weather');
     // Weather as a schedule module: the 6-day view plus an hourly tab.

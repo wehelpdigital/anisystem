@@ -126,6 +126,7 @@
                 $id(pfx + 'Title').value = p.title || '';
                 $id(pfx + 'Variety').value = p.variety || '';
                 $id(pfx + 'Desc').value = p.description || '';
+                window.userTags.set($id(pfx + 'Tags'), p.tags || []);
                 state.crop = p.crop || null;
                 state.dayType = p.dayType || 'DAS';
                 paintCrop(); paintDay();
@@ -137,6 +138,7 @@
                     variety: $id(pfx + 'Variety').value.trim(),
                     dayType: state.dayType,
                     description: $id(pfx + 'Desc').value.trim(),
+                    tags: window.userTags.value($id(pfx + 'Tags')),
                 };
             },
             check() {
@@ -171,6 +173,10 @@
         <span class="form-label">How the days are counted</span>
         <div class="dt-rows" id="{{ $pfx }}DayTypes"></div>
         <p class="pbh-hint">Every task is pinned to a day of this count. A DAS → DAT protocol counts DAS in the seedbed and DAT from the transplant.</p>
+    </div>
+    <div>
+        <span class="form-label">Tags <span class="text-gray-400 font-normal">(optional)</span></span>
+        <div class="ut-mount" id="{{ $pfx }}Tags"></div>
     </div>
     <div>
         <label class="form-label" for="{{ $pfx }}Desc">Description <span class="text-gray-400 font-normal">(optional)</span></label>

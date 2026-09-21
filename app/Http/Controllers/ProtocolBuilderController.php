@@ -17,6 +17,7 @@ use App\Support\CropStages;
 use App\Support\HtmlSanitizer;
 use App\Support\Tier;
 use App\Support\WorkerContext;
+use App\Http\Controllers\UserTagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +41,7 @@ class ProtocolBuilderController extends Controller
 {
     /** How a protocol counts its days, and which counters its tasks may use. */
     public const DAY_TYPES = [
-        'DAT' => ['label' => 'DAS → DAT', 'sub' => 'Sown in a seedbed, then transplanted — the count restarts at the transplant.', 'counters' => ['DAS', 'DAT'], 'icon' => '🌾'],
+        'DAT' => ['label' => 'DAS → DAT', 'sub' => 'Sown in a seedbed, then transplanted — the count restarts at the transplant. Work before the program is counted back from the sowing.', 'counters' => ['DAS', 'DAT'], 'icon' => '🌾'],
         'DAS' => ['label' => 'DAS only', 'sub' => 'Direct seeded — one count from sowing to harvest.', 'counters' => ['DAS'], 'icon' => '🌱'],
         'DAP' => ['label' => 'DAP', 'sub' => 'Planted from seedlings, cuttings, tubers or setts — days after planting.', 'counters' => ['DAP'], 'icon' => '🪴'],
     ];
@@ -118,6 +119,8 @@ class ProtocolBuilderController extends Controller
             'crop' => 'nullable|string|max:60',
             'variety' => 'nullable|string|max:120',
             'dayType' => 'required|in:DAS,DAT,DAP',
+            'tags' => 'nullable|array|max:10',
+            'tags.*' => 'string|max:30',
         ]);
         if ($v->fails()) {
             return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
@@ -127,6 +130,7 @@ class ProtocolBuilderController extends Controller
             'userId' => (int) Auth::id(),
             'title' => trim((string) $request->input('title')),
             'description' => $this->text($request->input('description'), 2000),
+            'tags' => UserTagController::tidy($request->input('tags', [])),
             'crop' => $crop,
             'variety' => $this->text($request->input('variety'), 120),
             'dayType' => $request->input('dayType'),
@@ -182,6 +186,8 @@ class ProtocolBuilderController extends Controller
             'crop' => 'nullable|string|max:60',
             'variety' => 'nullable|string|max:120',
             'dayType' => 'required|in:DAS,DAT,DAP',
+            'tags' => 'nullable|array|max:10',
+            'tags.*' => 'string|max:30',
         ]);
         if ($v->fails()) {
             return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
@@ -202,6 +208,7 @@ class ProtocolBuilderController extends Controller
         $p->forceFill([
             'title' => trim((string) $request->input('title')),
             'description' => $this->text($request->input('description'), 2000),
+            'tags' => UserTagController::tidy($request->input('tags', [])),
             'crop' => CropStages::normalize($request->input('crop')),
             'variety' => $this->text($request->input('variety'), 120),
             'dayType' => $dayType,
@@ -223,6 +230,7 @@ class ProtocolBuilderController extends Controller
             'userId' => (int) Auth::id(),
             'title' => mb_substr($p->title . ' (copy)', 0, 190),
             'description' => $p->description,
+            'tags' => $p->tags ?? [],
             'crop' => $p->crop,
             'variety' => $p->variety,
             'dayType' => $p->dayType,
@@ -268,7 +276,7 @@ class ProtocolBuilderController extends Controller
             return $this->json(false, 'Anee is not available on this plan.', [], 403);
         }
         $tasks = $this->cleanTasks((array) ($p->tasks ?? []), $p->dayType);
-        if (count($tasks) < 1) {
+        if (! count(array_filter($tasks, fn ($t) => ($t['kind'] ?? '') !== 'note'))) {
             return $this->json(false, 'Add at least one task before asking Anee to read the protocol.', [], 422);
         }
         $price = AiPrices::of('builder');
@@ -400,7 +408,13 @@ class ProtocolBuilderController extends Controller
         $dt = self::DAY_TYPES[$p->dayType] ?? self::DAY_TYPES['DAS'];
         $region = \App\Support\Region::name();
         $lines = [];
-        foreach ($tasks as $i => $t) {
+        $n = 0;
+        foreach ($tasks as $t) {
+            if (($t['kind'] ?? '') === 'note') {
+                $lines[] = '   NOTE (the farmer\'s own words, placed here): ' . preg_replace('/\s+/', ' ', $t['text']);
+                continue;
+            }
+            $i = $n++;
             $when = $t['day'] < 0 ? sprintf('%d days before %s 0', -$t['day'], $t['counter']) : sprintf('%s %d', $t['counter'], $t['day']);
             $head = sprintf('%d. [%s] %s — %s', $i + 1, $t['id'], $when, $t['title']);
             if ($t['subtitle'] !== '') {
@@ -511,7 +525,11 @@ PROMPT;
 
     /* ------------------------------------------------------------ into a season */
 
-    /** Make a cropping schedule out of the protocol: one lot, one activity per task, dated from a start. */
+    /**
+     * Make a cropping schedule out of the protocol: one lot, one activity per
+     * task, dated from a start. NOT ROUTED for now — the owner will give the
+     * port its own module; the method waits here for it.
+     */
     public function port(Request $request, int $id)
     {
         $p = $this->mine($id);
@@ -536,6 +554,8 @@ PROMPT;
             return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
         }
         $tasks = $this->cleanTasks((array) ($p->tasks ?? []), $p->dayType);
+        $notes = array_values(array_filter($tasks, fn ($t) => ($t['kind'] ?? '') === 'note'));
+        $tasks = array_values(array_filter($tasks, fn ($t) => ($t['kind'] ?? '') !== 'note'));
         if (! count($tasks)) {
             return $this->json(false, 'The protocol has no tasks yet — nothing to port.', [], 422);
         }
@@ -543,7 +563,7 @@ PROMPT;
         $transplant = $isDat ? Carbon::parse($request->input('transplantDate'))->startOfDay() : null;
         $cropLabel = $p->crop ? (CropStages::label($p->crop) ?: $p->crop) : null;
 
-        $schedule = DB::transaction(function () use ($p, $tasks, $request, $start, $transplant, $cropLabel, $isDat) {
+        $schedule = DB::transaction(function () use ($p, $tasks, $notes, $request, $start, $transplant, $cropLabel, $isDat) {
             $schedule = AsCroppingSchedule::create([
                 'anisystemUserId' => (int) Auth::id(),
                 'usersId' => (int) config('anisystem.order_users_id', 1),
@@ -602,13 +622,25 @@ PROMPT;
                 ]);
                 $activity->lots()->attach($lot->id);
             }
+            // The notes land on the day book, on the day their place implies.
+            foreach ($notes as $nt) {
+                $base = ($nt['counter'] === 'DAT' && $transplant) ? $transplant : $start;
+                \App\Models\AsScheduleDateNote::create([
+                    'croppingScheduleId' => $schedule->id,
+                    'versionId' => $version->id,
+                    'noteDate' => $base->copy()->addDays((int) $nt['day'])->format('Y-m-d'),
+                    'noteContent' => HtmlSanitizer::rich('<p>' . nl2br(htmlspecialchars($nt['text'], ENT_QUOTES, 'UTF-8')) . '</p>'),
+                    'lotId' => $lot->id,
+                    'deleteStatus' => 1,
+                ]);
+            }
 
             return $schedule;
         });
 
         $p->forceFill(['portedScheduleId' => $schedule->id, 'portedAt' => now()])->save();
 
-        return $this->json(true, 'The season is set up — ' . count($tasks) . ' activities on the board.', [
+        return $this->json(true, 'The season is set up — ' . count($tasks) . ' activities on the board' . (count($notes) ? ' and ' . count($notes) . ($notes && count($notes) === 1 ? ' note' : ' notes') . ' on the day book' : '') . '.', [
             'scheduleId' => $schedule->id,
             'redirect' => route('sm.hub', ['id' => $schedule->id]),
         ]);
@@ -688,8 +720,6 @@ PROMPT;
             'aiLocked' => ! Tier::farmCan('aiAnalyses'),
             'aneeFace' => $settings->faceUrl(),
             'isWorker' => WorkerContext::inWorkerContext(),
-            'canPort' => (bool) optional(Auth::user())->canCreateSchedule(),
-            'portRung' => $this->portRung(),
             'creditsUrl' => route('ai.credits'),
         ];
     }
@@ -710,12 +740,14 @@ PROMPT;
             'id' => $p->id,
             'title' => $p->title,
             'description' => $p->description,
+            'tags' => array_values((array) ($p->tags ?? [])),
             'crop' => $p->crop,
             'cropLabel' => $p->crop ? CropStages::label($p->crop) : null,
             'cropIcon' => $p->crop ? CropStages::icon($p->crop) : '🌱',
             'variety' => $p->variety,
             'dayType' => $p->dayType,
-            'count' => count($tasks),
+            'count' => count(array_filter($tasks, fn ($t) => ($t['kind'] ?? 'task') !== 'note')),
+            'notes' => count(array_filter($tasks, fn ($t) => ($t['kind'] ?? 'task') === 'note')),
             'score' => $review ? (int) ($review['score'] ?? 0) : null,
             'reviewed' => ($review && $p->analysisAt) ? Carbon::parse($p->analysisAt)->format('M j, Y') : null,
             'ported' => $p->portedScheduleId ? [
@@ -773,6 +805,27 @@ PROMPT;
             $counter = strtoupper((string) ($t['counter'] ?? $allowed[0]));
             if (! in_array($counter, $allowed, true)) {
                 $counter = $allowed[0];
+            }
+            // "Before" is only ever before the program starts — before the
+            // sowing or the planting, never before a transplant.
+            if ((int) ($t['day'] ?? 0) < 0) {
+                $counter = $allowed[0];
+            }
+            // A note between the tasks: words on a day, nothing else.
+            if (($t['kind'] ?? '') === 'note') {
+                $text = $this->text($t['text'] ?? '', 2000);
+                if ($text === null) {
+                    continue;
+                }
+                $out[] = [
+                    'id' => $id,
+                    'kind' => 'note',
+                    'counter' => $counter,
+                    'day' => max(-365, min(999, (int) ($t['day'] ?? 0))),
+                    'text' => $text,
+                    'pos' => (int) ($t['pos'] ?? $i * 10),
+                ];
+                continue;
             }
             $groups = [];
             foreach (array_slice((array) ($t['groups'] ?? []), 0, 20) as $g) {

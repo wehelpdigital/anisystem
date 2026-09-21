@@ -84,9 +84,7 @@
         </button>
         <div class="q-body">
             <div class="q-body-in">
-                <div class="q-card"><b>Your season, written by you.</b>A protocol is the plan you actually follow: every task pinned to a day of the count — DAS, DAT or DAP — with what to apply and how much per knapsack, who it needs and how much it matters. The Crop Protocol Analysis has Anee write a season for one field; here you write it yourself, from your own experience or an agronomist's sheet, and keep it to reuse season after season.</div>
-                <div class="q-card"><b>How it works.</b>Name it, choose the crop and how its days are counted, then add the tasks one by one. Drag them into order — the count keeps them honest: a task cannot land before an earlier day without its day changing. Every change saves itself, with undo and redo.</div>
-                <div class="q-card"><b>What it turns into.</b>Port a finished protocol into a real cropping schedule from a start date — one lot, one activity per task, each on its own date. Or ask Anee to review it: she reads every task against the crop's growth stages and says what is strong, what is missing and what could go wrong.</div>
+                <div class="q-card"><b>Your season, written by you.</b>A protocol is the plan you actually follow: every task pinned to a day of the count — DAS, DAT or DAP — with what to apply, who it needs and how much it matters. Write it from your own experience or an agronomist's sheet, keep it season after season, port it into a cropping schedule when the day comes, or have Anee review it.</div>
                 <div class="q-card" id="pbAboutCost"></div>
             </div>
         </div>
@@ -115,6 +113,8 @@
         </div>
     </div>
 </div>
+
+@include('partials.user-tags')
 
 {{-- New protocol --}}
 <div class="sheet hidden" id="pbNewSheet" style="--sheet-width:30rem">
@@ -185,13 +185,14 @@
 
     function paint() {
         const q = ($id('pbSearch').value || '').trim().toLowerCase();
-        const shown = ROWS.filter((r) => !q || (r.title + ' ' + (r.cropLabel || '') + ' ' + (r.variety || '')).toLowerCase().includes(q));
+        const shown = ROWS.filter((r) => !q || (r.title + ' ' + (r.cropLabel || '') + ' ' + (r.variety || '') + ' ' + (r.tags || []).join(' ')).toLowerCase().includes(q));
         $id('pbRows').innerHTML = shown.map((r) => `
             <div class="pb-row" data-id="${r.id}" role="button" tabindex="0">
                 <span class="pb-row-e">${esc(r.cropIcon || '🌱')}</span>
                 <span class="pb-row-t">
                     <b>${esc(r.title)}</b>
-                    <small>${esc(r.cropLabel || 'No crop yet')}${r.variety ? ' · ' + esc(r.variety) : ''} · ${esc((DAY_TYPES[r.dayType] || {}).label || r.dayType)} · ${r.count} ${r.count === 1 ? 'task' : 'tasks'}</small>
+                    <small>${esc(r.cropLabel || 'No crop yet')}${r.variety ? ' · ' + esc(r.variety) : ''} · ${esc((DAY_TYPES[r.dayType] || {}).label || r.dayType)} · ${r.count} ${r.count === 1 ? 'task' : 'tasks'}${r.notes ? ` · ${r.notes} ${r.notes === 1 ? 'note' : 'notes'}` : ''}</small>
+                    ${window.userTags ? window.userTags.chips(r.tags) : ''}
                     <span class="pb-row-tags">
                         ${r.score !== null ? `<span class="pb-tag is-score">Anee: ${r.score}/100</span>` : ''}
                         ${r.ported ? `<span class="pb-tag is-ported">Ported ${esc(r.ported.at || '')}</span>` : ''}

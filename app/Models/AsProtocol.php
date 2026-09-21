@@ -10,7 +10,7 @@ class AsProtocol extends BaseModel
     protected $table = 'as_protocols';
 
     protected $fillable = [
-        'userId', 'title', 'description', 'crop', 'variety', 'dayType',
+        'userId', 'title', 'description', 'tags', 'crop', 'variety', 'dayType',
         'tasks', 'history', 'rev',
         'analysis', 'analysisStatus', 'analysisError', 'analysisCredits', 'analysisAt', 'analysisBeatAt',
         'portedScheduleId', 'portedAt', 'deleteStatus',
@@ -20,6 +20,7 @@ class AsProtocol extends BaseModel
     {
         return array_merge(parent::casts(), [
             'tasks' => 'array',
+            'tags' => 'array',
             'history' => 'array',
             'analysis' => 'array',
             'rev' => 'integer',

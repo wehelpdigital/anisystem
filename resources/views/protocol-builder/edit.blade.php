@@ -70,15 +70,27 @@
     .pb-card[data-prio="medium"] { --prio: #c9902e; }
     .pb-card[data-prio="low"] { --prio: #7d8a99; }
     .pb-body { flex: 1 1 auto; min-width: 0; padding: .7rem .8rem; cursor: pointer; }
+    .pb-body-t { display: flex; align-items: flex-start; gap: .5rem; }
+    .pb-body-t > span { flex: 1 1 auto; min-width: 0; }
     .pb-body-t b { display: block; font-size: .95rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.3; }
+    .pb-chev { display: none; flex: none; width: 1.7rem; height: 1.7rem; border-radius: 999px; align-items: center; justify-content: center; color: var(--color-gray-400); background: var(--color-gray-50); border: 1px solid var(--color-gray-200); margin-top: -.1rem;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+    .pb-chev svg { width: .95rem; height: .95rem; }
+    .pb-page[data-mode="view"] .pb-chev { display: inline-flex; }
+    .pb-card.is-open .pb-chev { transform: rotate(180deg); background: #f1f8ea; color: #3d6823; border-color: #cfe3bd; }
+    html.dark .pb-chev { background: #1c2416; border-color: #2b3a1c; color: #a5b89a; }
+    html.dark .pb-card.is-open .pb-chev { background: #22301a; color: #cfe6b8; border-color: #3f5a2a; }
     .pb-body-t i { display: block; font-style: normal; font-size: .78rem; color: var(--color-gray-500); margin-top: .1rem; }
     .pb-chips { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .45rem; }
     .pb-chip { display: inline-flex; align-items: center; gap: .25rem; padding: .16rem .5rem; border-radius: 999px; font-size: .68rem; font-weight: 700; border: 1px solid var(--color-gray-200); color: var(--color-gray-600); background: var(--color-gray-50); }
     .pb-chip.is-anee-good { border-color: #cfe3bd; background: #f1f8ea; color: #2f5219; }
     .pb-chip.is-anee-check { border-color: #f3d9a4; background: #fdf6e6; color: #92400e; }
     .pb-chip.is-anee-concern { border-color: #f5c2c2; background: #fdecec; color: #991b1b; }
-    .pb-more { display: none; margin-top: .6rem; padding-top: .6rem; border-top: 1px dashed var(--color-gray-200); font-size: .82rem; color: var(--color-gray-700); line-height: 1.5; }
-    .pb-card.is-open .pb-more { display: block; }
+    .pb-more { display: grid; grid-template-rows: 0fr; opacity: 0; font-size: .82rem; color: var(--color-gray-700); line-height: 1.5;
+        transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1), margin-top .28s cubic-bezier(.22,1,.36,1), padding-top .28s cubic-bezier(.22,1,.36,1); margin-top: 0; padding-top: 0; border-top: 1px dashed transparent; }
+    .pb-more-in { min-height: 0; overflow: hidden; }
+    .pb-card.is-open .pb-more { grid-template-rows: 1fr; opacity: 1; margin-top: .6rem; padding-top: .6rem; border-top-color: var(--color-gray-200); }
+    @media (prefers-reduced-motion: reduce) { .pb-more, .pb-chev { transition: none; } }
     .pb-more p { margin: 0 0 .4rem; white-space: pre-wrap; }
     .pb-more .pb-g { margin: .35rem 0; }
     .pb-more .pb-g b { display: block; font-size: .76rem; color: var(--color-gray-900); }
@@ -97,6 +109,46 @@
     .pb-grip svg, .pb-menu svg { width: 1.15rem; height: 1.15rem; }
     .pb-ghost { position: fixed; top: 0; left: 0; z-index: 90; margin: 0; pointer-events: none; opacity: .78; box-shadow: 0 18px 40px rgba(15,23,42,.3); transform-origin: top left; will-change: transform; transition: none !important; }
     body.pb-dragging { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; overscroll-behavior: contain; }
+    .pb-warn { border-radius: 1rem; border: 1px solid #f3d9a4; background: linear-gradient(135deg, #fffbf0, #fff7e6); margin-bottom: .75rem; overflow: hidden; }
+    .pb-warn-h { display: flex; align-items: center; gap: .55rem; width: 100%; text-align: left; padding: .65rem .9rem; cursor: pointer; }
+    .pb-warn-e { font-size: 1.05rem; }
+    .pb-warn-t { flex: 1 1 auto; font-size: .86rem; font-weight: 800; color: #92400e; }
+    .pb-warn-c { width: 1rem; height: 1rem; color: #b45309; opacity: .7; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .pb-warn.is-folded .pb-warn-c { transform: rotate(-90deg); }
+    .pb-warn-body { display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    .pb-warn.is-folded .pb-warn-body { grid-template-rows: 0fr; opacity: 0; }
+    .pb-warn-in { min-height: 0; overflow: hidden; display: grid; gap: .4rem; padding: 0 .9rem .8rem; }
+    .pb-warn-row { padding: .5rem .65rem; border-radius: .7rem; background: rgb(255 255 255 / .7); border: 1px solid #f3d9a4; font-size: .78rem; line-height: 1.5; color: #713f12; cursor: pointer; }
+    .pb-warn-row b { display: block; color: #92400e; margin-bottom: .1rem; }
+    .pb-chip.is-warn { border-color: #f3d9a4; background: #fdf6e6; color: #92400e; }
+    .pb-more .pb-warnnote { margin-top: .4rem; padding: .5rem .65rem; border-radius: .6rem; background: #fdf6e6; border: 1px solid #f3d9a4; color: #713f12; font-size: .78rem; }
+    .pbt-warn { display: grid; gap: .3rem; margin-top: .5rem; }
+    .pbt-warn span { display: block; padding: .45rem .6rem; border-radius: .6rem; background: #fdf6e6; border: 1px solid #f3d9a4; color: #713f12; font-size: .76rem; line-height: 1.45; }
+    html.dark .pb-warn { background: linear-gradient(135deg, #262012, #2a2210); border-color: #6b4f16; }
+    html.dark .pb-warn-t { color: #f0d9a8; }
+    html.dark .pb-warn-row { background: rgb(0 0 0 / .2); border-color: #6b4f16; color: #f0d9a8; }
+    html.dark .pb-warn-row b { color: #fcd9a0; }
+    html.dark .pb-chip.is-warn, html.dark .pb-more .pb-warnnote, html.dark .pbt-warn span { background: #2a2210; border-color: #6b4f16; color: #f0d9a8; }
+    @media (prefers-reduced-motion: reduce) { .pb-warn-body, .pb-warn-c { transition: none; } }
+    .pb-note { display: flex; align-items: stretch; border-radius: 1rem; background: #fff9db; border: 1px solid #f1e3a0; overflow: hidden; position: relative;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    .pb-note.dragging { opacity: .32; outline: 2px dashed #d4b85a; outline-offset: -2px; }
+    .pb-note.just-moved { box-shadow: 0 0 0 3px rgba(212,184,90,.4); }
+    .pb-note-rail { flex: none; width: 4.4rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .15rem; padding: .6rem .3rem; background: #f6e7a4; color: #7a5a06; }
+    .pb-note-rail svg { width: 1.3rem; height: 1.3rem; }
+    .pb-note-rail b { font-size: .58rem; letter-spacing: .06em; text-transform: uppercase; }
+    .pb-note-body { flex: 1 1 auto; min-width: 0; padding: .7rem .8rem; font-size: .86rem; line-height: 1.5; color: #4a3a05; white-space: pre-wrap; cursor: pointer; }
+    .pb-page[data-mode="view"] .pb-note-body { cursor: default; }
+    html.dark .pb-note { background: #2a2410; border-color: #4c4018; }
+    html.dark .pb-note-rail { background: #3a3114; color: #f0d68a; }
+    html.dark .pb-note-body { color: #f2e6bf; }
+    .pb-add-row { display: none; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .5rem; margin-top: .7rem; }
+    .pb-page[data-mode="edit"] .pb-add-row { display: grid; }
+    .pb-add-row .pb-add-bottom { margin-top: 0; display: flex; }
+    .pb-add-row .pb-add-bottom.is-note { border-color: #e2c86a; color: #7a5a06; }
+    .pb-add-row .pb-add-bottom.is-note:hover { background: #fff9db; }
+    html.dark .pb-add-row .pb-add-bottom.is-note { border-color: #6b5a1f; color: #f0d68a; }
+    html.dark .pb-add-row .pb-add-bottom.is-note:hover { background: #2a2410; }
     .pb-add-bottom { display: none; align-items: center; justify-content: center; gap: .4rem; width: 100%; margin-top: .7rem; padding: .8rem; border-radius: 1rem; border: 1.5px dashed #b9c6a8; color: #3d6823; font-weight: 800; font-size: .86rem; background: transparent;
         transition: background .28s cubic-bezier(.22,1,.36,1); }
     .pb-add-bottom:hover { background: #f1f8ea; }
@@ -106,7 +158,8 @@
     html.dark .pb-card:hover { border-color: #3f5a2a; }
     html.dark .pb-body-t b { color: #e8efe1; }
     html.dark .pb-chip { background: #1c2416; border-color: #2b3a1c; color: #a5b89a; }
-    html.dark .pb-more { color: #cbd5c0; border-color: #2b3a1c; }
+    html.dark .pb-more { color: #cbd5c0; }
+    html.dark .pb-card.is-open .pb-more { border-top-color: #2b3a1c; }
     html.dark .pb-more .pb-g b { color: #e8efe1; }
     html.dark .pb-more .pb-note { background: #2a2210; color: #f0d9a8; }
     html.dark .pb-more .pb-anee { background: #22301a; color: #cfe6b8; }
@@ -292,9 +345,13 @@
         <button type="button" class="pb-tool is-add" id="pbAddTop">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Add task
         </button>
+        <button type="button" class="pb-tool" id="pbAddNoteTop" title="A note between the tasks">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12l-4 4H4z"/><path d="M16 20v-4h4"/></svg> Note
+        </button>
     </div>
 
     <div id="pbReview"></div>
+    <div id="pbWarn"></div>
 
     <div class="pb-list" id="pbList"></div>
     <div class="rx-empty hidden" id="pbEmpty">
@@ -302,22 +359,23 @@
         <p class="rx-empty-t">No tasks yet</p>
         <p class="rx-empty-p" id="pbEmptyP">Add the first task: the day of the count it falls on, or how many days before it starts, what is done, and what to apply.</p>
     </div>
-    <button type="button" class="pb-add-bottom" id="pbAddBottom">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Add a task
-    </button>
+    <div class="pb-add-row">
+        <button type="button" class="pb-add-bottom" id="pbAddBottom">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Add a task
+        </button>
+        <button type="button" class="pb-add-bottom is-note" id="pbAddNoteBottom">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12l-4 4H4z"/><path d="M16 20v-4h4"/></svg> Add a note
+        </button>
+    </div>
 </div>
 
 <div class="pb-bar" id="pbBar">
     <button type="button" class="pb-btn is-green" data-mode-only="view" id="pbEditBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5m-1.414-9.414a2 2 0 1 1 2.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg> Edit
     </button>
-    <button type="button" class="pb-btn" data-mode-only="view" id="pbPortBtn"
-        @if (! $options['canPort']) data-tier-lock="{{ $options['portRung'] }}" data-lock-say="Every plan has a number of active seasons. Yours is full — finish or archive one, or upgrade for more room." @endif>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2v4M16 2v4M12 12v6M9 15h6"/></svg> <span class="pb-long">Port into a season</span><span class="pb-short">Port to season</span>
-    </button>
     <button type="button" class="pb-btn is-anee" data-mode-only="view" id="pbAneeBtn"
         @if ($options['aiLocked']) data-tier-lock="libreAnee" data-lock-say="Anee's review of your protocol comes with Libre + Anee — she reads every task and says what is strong, what is missing and what could go wrong." @endif>
-        <img src="{{ $options['aneeFace'] }}" alt=""> <span class="pb-long">Ask Anee to review</span><span class="pb-short">Ask Anee</span>
+        <img src="{{ $options['aneeFace'] }}" alt=""> <span class="pb-long">Ask Anee to analyze this</span><span class="pb-short">Ask Anee</span>
     </button>
     <button type="button" class="pb-btn is-green" data-mode-only="edit" id="pbDoneBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg> Done editing
@@ -360,6 +418,7 @@
                 <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
             </button>
         </div>
+        <p class="pbt-warn" id="pbtWarn" hidden></p>
         <div class="mt-3">
             <label class="form-label" for="pbtDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="pbtDesc" class="form-textarea" rows="3" maxlength="4000" placeholder="How it is done, what to watch while doing it…"></textarea>
@@ -454,6 +513,25 @@
     <div class="sheet-body dt-rows" id="pbKindList"></div>
 </div>
 
+{{-- A note between the tasks --}}
+<div class="sheet hidden" id="pbNoteSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="pbNoteTitle">New note</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <label class="form-label" for="pbnText">The note</label>
+        <textarea id="pbnText" class="form-textarea" rows="5" maxlength="2000" placeholder="A reminder between the tasks — what to watch for, what last season taught you, who to call…"></textarea>
+        <p class="pbh-hint">It sits where you drag it and follows the task above it. When the protocol is ported, it lands on that day's day book.</p>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn text-red-600 bg-red-50 hover:bg-red-100 border border-red-100" id="pbnDelete" hidden>Delete</button>
+        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
+        <button type="button" class="btn btn-primary" id="pbnSave">Save note</button>
+    </div>
+</div>
+
 {{-- A task's menu --}}
 <div class="sheet hidden" id="pbTaskMenu" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
@@ -513,55 +591,11 @@
     </div>
 </div>
 
-{{-- Port into a season --}}
-<div class="sheet hidden" id="pbPortSheet" style="--sheet-width:30rem">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header">
-        <h3 class="sheet-title">Port into a cropping schedule</h3>
-        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
-    </div>
-    <div class="sheet-body space-y-4">
-        <p class="text-sm text-gray-600" id="pbPortSay"></p>
-        <div>
-            <label class="form-label" for="pbPortTitle">Season title</label>
-            <input type="text" id="pbPortTitle" class="form-input" maxlength="255">
-        </div>
-        <div>
-            <label class="form-label" for="pbPortStart" id="pbPortStartL">Start date</label>
-            <input type="date" id="pbPortStart" class="form-input">
-        </div>
-        <div id="pbPortTransWrap" hidden>
-            <label class="form-label" for="pbPortTrans">Transplant date <span class="text-gray-400 font-normal">(DAT 0)</span></label>
-            <input type="date" id="pbPortTrans" class="form-input">
-            <p class="pbh-hint" id="pbPortTransHint"></p>
-        </div>
-        <div>
-            <label class="form-label" for="pbPortLot">Lot name</label>
-            <input type="text" id="pbPortLot" class="form-input" maxlength="255">
-        </div>
-        <div>
-            <span class="form-label">Lot size</span>
-            <div class="pbp-two">
-                <input type="number" id="pbPortSize" class="form-input" inputmode="decimal" min="0" step="any" value="1">
-                <select id="pbPortUnit" class="form-select">
-                    <option value="hectare">Hectare</option>
-                    <option value="sqm">Square meter</option>
-                    <option value="acre">Acre</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="sheet-footer">
-        <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
-        <button type="button" class="btn btn-primary" id="pbPortGo">Create the season</button>
-    </div>
-</div>
-
 {{-- Ask Anee --}}
 <div class="sheet hidden" id="pbAskSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Ask Anee to review</h3>
+        <h3 class="sheet-title">Ask Anee to analyze this</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-4">
@@ -569,11 +603,11 @@
         <p class="text-sm text-gray-600">Anee reads every task against the crop's growth stages and says what is strong, what is missing, what could go wrong, and what she would add. The review is kept with the protocol; a new one replaces it.</p>
     </div>
     <div class="sheet-footer">
-        <button type="button" class="btn btn-ghost" data-sheet-close>Not now</button>
-        <button type="button" class="btn btn-primary" id="pbAskGo">Review it</button>
+        <button type="button" class="btn btn-primary w-full" id="pbAskGo">Analyze it</button>
     </div>
 </div>
 
+@include('partials.user-tags')
 @include('sm.partials.anee-wait')
 
 <script>
@@ -598,7 +632,7 @@
     const CHEV = '<svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>';
 
     /* ------------------------------------------------------------ state */
-    let P = { id: BOOT.id, title: BOOT.title, description: BOOT.description, crop: BOOT.crop, cropLabel: BOOT.cropLabel, cropIcon: BOOT.cropIcon, variety: BOOT.variety, dayType: BOOT.dayType, ported: BOOT.ported };
+    let P = { id: BOOT.id, title: BOOT.title, description: BOOT.description, tags: BOOT.tags || [], crop: BOOT.crop, cropLabel: BOOT.cropLabel, cropIcon: BOOT.cropIcon, variety: BOOT.variety, dayType: BOOT.dayType, ported: BOOT.ported };
     let TASKS = Array.isArray(BOOT.tasks) ? BOOT.tasks : [];
     let HIST = { undo: (BOOT.history && BOOT.history.undo) || [], redo: (BOOT.history && BOOT.history.redo) || [] };
     let REV = BOOT.rev || 1;
@@ -610,6 +644,7 @@
     const mode = () => $id('pbPage').getAttribute('data-mode');
     const editing = () => mode() === 'edit';
 
+    const isNote = (t) => t && t.kind === 'note';
     const keyOf = (t) => [PHASE[t.counter] ?? 0, t.day, t.pos ?? 0];
     const cmpKey = (a, b) => (a[0] - b[0]) || (a[1] - b[1]) || ((a[2] ?? 0) - (b[2] ?? 0));
     const cmpDay = (a, b) => (a[0] - b[0]) || (a[1] - b[1]);
@@ -617,7 +652,7 @@
     function stageLabel(counter, day) {
         const two = counters().length === 2;
         if (two && counter === 'DAS') return day < 0 ? 'Before sowing' : 'Seedbed';
-        if (day < 0) return counter === 'DAT' ? 'Before transplant' : (counter === 'DAP' ? 'Before planting' : 'Before sowing');
+        if (day < 0) return counter === 'DAP' ? 'Before planting' : 'Before sowing';
         const rows = STAGES[counter] || [];
         let label = '';
         for (const r of rows) { if (r[0] <= day) label = r[1]; else break; }
@@ -720,10 +755,14 @@
         const d = $id('pbHeadDesc');
         d.textContent = P.description || '';
         d.classList.toggle('hidden', !P.description);
-        const tags = [`<span class="pb-tag"><b>${TASKS.length}</b> ${TASKS.length === 1 ? 'task' : 'tasks'}</span>`];
-        const f = TASKS.length ? TASKS[0] : null;
+        const onlyTasks = TASKS.filter((t) => !isNote(t));
+        const noteCount = TASKS.length - onlyTasks.length;
+        const tags = [`<span class="pb-tag"><b>${onlyTasks.length}</b> ${onlyTasks.length === 1 ? 'task' : 'tasks'}</span>`];
+        if (noteCount) tags.push(`<span class="pb-tag"><b>${noteCount}</b> ${noteCount === 1 ? 'note' : 'notes'}</span>`);
+        (P.tags || []).forEach((t) => tags.push(`<span class="pb-tag is-score">🏷️ ${esc(t)}</span>`));
+        const f = onlyTasks.length ? onlyTasks[0] : null;
         if (f && f.day < 0) tags.push(`<span class="pb-tag">Starts <b>${esc(sayWhen(f.counter, f.day))}</b></span>`);
-        const n = TASKS.length ? TASKS[TASKS.length - 1] : null;
+        const n = onlyTasks.length ? onlyTasks[onlyTasks.length - 1] : null;
         if (n) tags.push(`<span class="pb-tag">Runs to <b>${esc(sayWhen(n.counter, n.day))}</b></span>`);
         if (REVIEW) tags.push(`<span class="pb-tag is-score">Anee: <b>${REVIEW.score}/100</b></span>`);
         if (P.ported) tags.push(`<a class="pb-tag is-ported" href="${esc(P.ported.url)}">Ported ${esc(P.ported.at || '')} → <b>${esc(P.ported.title || 'the season')}</b></a>`);
@@ -736,7 +775,19 @@
         if (!REVIEW || !Array.isArray(REVIEW.tasks)) return null;
         return REVIEW.tasks.find((r) => String(r.id) === String(id)) || null;
     }
+    function noteHtml(t) {
+        return `
+            <div class="pb-note pb-card" data-id="${esc(t.id)}" data-note="1">
+                <div class="pb-note-rail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12l-4 4H4z"/><path d="M16 20v-4h4"/></svg><b>Note</b></div>
+                <div class="pb-note-body">${esc(t.text)}</div>
+                <div class="pb-acts">
+                    <button type="button" class="pb-grip" aria-label="Drag to reorder" title="Drag to reorder">${GRIP}</button>
+                    <button type="button" class="pb-menu" aria-label="More" title="More">${DOTS}</button>
+                </div>
+            </div>`;
+    }
     function cardHtml(t) {
+        if (isNote(t)) return noteHtml(t);
         const stage = stageLabel(t.counter, t.day);
         const type = t.type ? OPT.types[t.type] : null;
         const items = t.groups.reduce((n, g) => n + g.items.length, 0);
@@ -748,6 +799,7 @@
         if (t.workers !== null && t.workers !== undefined) chips.push(`<span class="pb-chip">👷 ${t.workers}</span>`);
         if (t.note) chips.push(`<span class="pb-chip">📝 note</span>`);
         if (rv) chips.push(`<span class="pb-chip is-anee-${esc(rv.verdict || 'check')}">Anee: ${esc(rv.verdict || 'check')}</span>`);
+        if ((WARN[t.id] || []).length) chips.push(`<span class="pb-chip is-warn" title="${esc(uniq(WARN[t.id]).join(' '))}">⚠️ ${uniq(WARN[t.id]).length === 1 ? 'Check this' : uniq(WARN[t.id]).length + ' to check'}</span>`);
         const more = [];
         if (t.description) more.push(`<p>${esc(t.description)}</p>`);
         t.groups.forEach((g) => {
@@ -755,13 +807,14 @@
         });
         if (t.note) more.push(`<div class="pb-note">📝 ${esc(t.note)}</div>`);
         if (rv && rv.note) more.push(`<div class="pb-anee">Anee: ${esc(rv.note)}</div>`);
+        uniq(WARN[t.id] || []).forEach((w) => more.push(`<div class="pb-warnnote">⚠️ ${esc(w)}</div>`));
         return `
             <div class="pb-card" data-id="${esc(t.id)}" data-prio="${esc(t.priority)}">
                 <div class="pb-day${t.day < 0 ? ' is-before' : ''}">${t.day < 0 ? `<b>BEFORE ${esc(t.counter)}</b><span>${-t.day}</span><i title="${esc(stage)}">${-t.day === 1 ? 'day' : 'days'} before</i>` : `<b>${esc(t.counter)}</b><span>${t.day}</span>${stage ? `<i title="${esc(stage)}">${esc(stage)}</i>` : ''}`}</div>
                 <div class="pb-body">
-                    <div class="pb-body-t"><b>${esc(t.title)}</b>${t.subtitle ? `<i>${esc(t.subtitle)}</i>` : ''}</div>
+                    <div class="pb-body-t"><span><b>${esc(t.title)}</b>${t.subtitle ? `<i>${esc(t.subtitle)}</i>` : ''}</span><span class="pb-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>
                     <div class="pb-chips">${chips.join('')}</div>
-                    <div class="pb-more">${more.join('') || '<p class="text-gray-400">Nothing more on this task.</p>'}</div>
+                    <div class="pb-more"><div class="pb-more-in">${more.join('') || '<p class="text-gray-400">Nothing more on this task.</p>'}</div></div>
                 </div>
                 <div class="pb-acts">
                     <button type="button" class="pb-grip" aria-label="Drag to reorder" title="Drag to reorder">${GRIP}</button>
@@ -770,8 +823,22 @@
             </div>`;
     }
     let OPEN = new Set();
+    let WARN = {};
+    function renderWarnings() {
+        const host = $id('pbWarn');
+        const entries = Object.entries(WARN);
+        if (!entries.length) { host.innerHTML = ''; return; }
+        const rows = [];
+        entries.forEach(([id, ws]) => { const t = TASKS.find((x) => x.id === id); if (!t) return; uniq(ws).forEach((w) => rows.push({ t, w })); });
+        host.innerHTML = `<div class="pb-warn${host._folded ? ' is-folded' : ''}">
+            <button type="button" class="pb-warn-h" id="pbWarnHead"><span class="pb-warn-e">⚠️</span><span class="pb-warn-t">${rows.length} ${rows.length === 1 ? 'thing' : 'things'} to check</span><svg class="pb-warn-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+            <div class="pb-warn-body"><div class="pb-warn-in">${rows.map(({ t, w }) => `<div class="pb-warn-row" data-warn-for="${esc(t.id)}"><b>${esc(sayWhen(t.counter, t.day))} · ${esc(t.title)}</b>${esc(w)}</div>`).join('')}</div></div>
+        </div>`;
+    }
     function render() {
         renderHead();
+        WARN = warningsFor(TASKS);
+        renderWarnings();
         const list = $id('pbList');
         list.innerHTML = TASKS.map(cardHtml).join('');
         OPEN.forEach((id) => { const c = list.querySelector(`.pb-card[data-id="${CSS.escape(id)}"]`); if (c) c.classList.add('is-open'); });
@@ -799,6 +866,8 @@
         const id = card.getAttribute('data-id');
         if (e.target.closest('.pb-menu')) { openTaskMenu(id); return; }
         if (e.target.closest('.pb-grip')) return;
+        const entry = TASKS.find((x) => x.id === id);
+        if (isNote(entry)) { if (editing()) openNote(id); return; }
         if (editing()) { openTask(id); return; }
         card.classList.toggle('is-open');
         if (card.classList.contains('is-open')) OPEN.add(id); else OPEN.delete(id);
@@ -809,7 +878,7 @@
     function openTaskMenu(id) {
         MENU_ID = id;
         const t = TASKS.find((x) => x.id === id);
-        $id('pbTaskMenuTitle').textContent = t ? t.title : 'Task';
+        $id('pbTaskMenuTitle').textContent = t ? (isNote(t) ? 'Note' : t.title) : 'Task';
         openSheet('pbTaskMenu');
     }
     $id('pbTaskMenu').addEventListener('click', async (e) => {
@@ -818,13 +887,13 @@
         const act = b.getAttribute('data-task-act');
         const id = MENU_ID;
         closeSheet('pbTaskMenu');
-        if (act === 'edit') { setTimeout(() => openTask(id), 220); return; }
+        if (act === 'edit') { setTimeout(() => { const t = TASKS.find((x) => x.id === id); if (isNote(t)) openNote(id); else openTask(id); }, 220); return; }
         if (act === 'copy') {
             const t = TASKS.find((x) => x.id === id);
             if (!t) return;
             commit('Duplicated', () => {
-                const c = clone(t); c.id = uid('t'); c.pos = (t.pos ?? 0) + 5;
-                c.groups.forEach((g) => { g.id = uid('g'); g.items.forEach((it) => { it.id = uid('i'); }); });
+                const c = clone(t); c.id = uid(isNote(t) ? 'n' : 't'); c.pos = (t.pos ?? 0) + 5;
+                (c.groups || []).forEach((g) => { g.id = uid('g'); g.items.forEach((it) => { it.id = uid('i'); }); });
                 TASKS.push(c);
                 flash(c.id);
             });
@@ -834,8 +903,42 @@
         if (act === 'delete') {
             const t = TASKS.find((x) => x.id === id);
             commit('Deleted', () => { TASKS = TASKS.filter((x) => x.id !== id); });
-            toast(`Deleted "${t ? t.title : 'the task'}" — Undo brings it back.`);
+            toast(isNote(t) ? 'Deleted the note — Undo brings it back.' : `Deleted "${t ? t.title : 'the task'}" — Undo brings it back.`);
         }
+    });
+
+    /* ------------------------------------------------------------ notes between the tasks */
+    let NOTE_ID = null;
+    function blankNote() {
+        const last = TASKS.length ? TASKS[TASKS.length - 1] : null;
+        return { id: uid('n'), kind: 'note', counter: last ? last.counter : counters()[0], day: last ? last.day : 0, text: '', pos: last ? (last.pos ?? 0) + 10 : 0 };
+    }
+    function openNote(id) {
+        const t = id ? TASKS.find((x) => x.id === id) : null;
+        NOTE_ID = t ? t.id : null;
+        $id('pbNoteTitle').textContent = t ? 'Edit note' : 'New note';
+        $id('pbnText').value = t ? t.text : '';
+        $id('pbnDelete').hidden = !t;
+        openSheet('pbNoteSheet');
+        setTimeout(() => $id('pbnText').focus(), 280);
+    }
+    $id('pbAddNoteTop').addEventListener('click', () => openNote(null));
+    $id('pbAddNoteBottom').addEventListener('click', () => openNote(null));
+    $id('pbnSave').addEventListener('click', () => {
+        const text = $id('pbnText').value.trim();
+        if (!text) { toast('Write the note first.', 'error'); $id('pbnText').focus(); return; }
+        const id = NOTE_ID;
+        closeSheet('pbNoteSheet');
+        commit(id ? 'Changed' : 'Added', () => {
+            if (id) { const t = TASKS.find((x) => x.id === id); if (t) t.text = text; flash(id); }
+            else { const n = blankNote(); n.text = text; TASKS.push(n); flash(n.id); }
+        });
+    });
+    $id('pbnDelete').addEventListener('click', () => {
+        const id = NOTE_ID; if (!id) return;
+        closeSheet('pbNoteSheet');
+        commit('Deleted', () => { TASKS = TASKS.filter((x) => x.id !== id); });
+        toast('Deleted the note — Undo brings it back.');
     });
     let FLASH = null;
     function flash(id) { FLASH = id; }
@@ -879,9 +982,13 @@
     function paintWhenList(st) {
         const two = counters().length === 2;
         const rows = [];
+        const first = counters()[0];
+        // Before is only ever before the program starts: the sowing or the
+        // planting. Land preparation for a transplanted field is seedbed-time
+        // work, so it goes on the DAS count.
+        rows.push({ when: 'before', c: first, e: '⏮️', b: `Before ${first} 0`, i: `Days counted back from ${first} 0 — the ${first === 'DAP' ? 'planting' : 'sowing'}. Land preparation, seedbed work, buying the inputs.` });
         counters().forEach((c) => {
-            rows.push({ when: 'before', c, e: '⏮️', b: `Before ${c} 0`, i: `Days counted back from ${c} 0${two ? (c === 'DAS' ? ', the sowing' : ', the transplant') : ''} — land preparation, seedbed work, buying the inputs.` });
-            rows.push({ when: 'on', c, e: '🗓️', b: whenWord('on', c), i: two ? (c === 'DAS' ? 'A day of the DAS count — from sowing to the transplant.' : 'A day of the DAT count — from the transplant on.') : `A day of the ${c} count.` });
+            rows.push({ when: 'on', c, e: '🗓️', b: whenWord('on', c), i: two ? (c === 'DAS' ? 'A day of the DAS count — from sowing to the transplant. Preparing the main field belongs here too.' : 'A day of the DAT count — from the transplant on.') : `A day of the ${c} count.` });
         });
         $id('pbWhenList').innerHTML = rows.map((r) => `
             <button type="button" class="dt-row${r.when === st.when && r.c === st.counter ? ' is-on' : ''}" data-when="${r.when}" data-c="${r.c}">
@@ -899,10 +1006,10 @@
         const now = $id(pfx + 'WhenNow'), icon = $id(pfx + 'WhenIcon'), dayIn = $id(pfx + 'Day');
         const paint = () => { now.textContent = whenWord(st.when, st.counter); icon.textContent = st.when === 'before' ? '⏮️' : '🗓️'; dayIn.placeholder = st.when === 'before' ? 'days' : 'day'; };
         const api = {
-            set(counter, day) { st.counter = counters().includes(counter) ? counter : counters()[0]; st.when = day < 0 ? 'before' : 'on'; dayIn.value = Math.abs(day); paint(); },
+            set(counter, day) { st.when = day < 0 ? 'before' : 'on'; st.counter = (day < 0) ? counters()[0] : (counters().includes(counter) ? counter : counters()[0]); dayIn.value = Math.abs(day); paint(); },
             get() { const n = parseInt(dayIn.value, 10); if (!Number.isFinite(n)) return null; const v = Math.abs(n); return { counter: st.counter, day: st.when === 'before' ? -Math.max(1, v) : v }; },
             pick(when, counter) {
-                const was = st.when; st.when = when; st.counter = counters().includes(counter) ? counter : counters()[0];
+                const was = st.when; st.when = when; st.counter = (when === 'before') ? counters()[0] : (counters().includes(counter) ? counter : counters()[0]);
                 const n = Math.abs(parseInt(dayIn.value, 10) || 0);
                 if (when === 'before' && was !== 'before' && n === 0) dayIn.value = 7;
                 paint(); if (onChange) onChange();
@@ -914,6 +1021,51 @@
         return api;
     }
     function sayWhen(counter, day) { return day < 0 ? `${-day} ${-day === 1 ? 'day' : 'days'} before ${counter} 0` : `${counter} ${day}`; }
+
+    /* ------------------------------------------------------------ things to check
+     * The same kind of warning the activities board gives: a tank that must
+     * not be shared, two herbicides a day apart, a spray too close to the
+     * harvest. Read off the tasks as they stand; nothing is blocked. */
+    const SPRAY_TYPES = ['herbicide', 'pesticide', 'copper_fungicide', 'fungicide', 'foliar_spray', 'microbial'];
+    const hasKind = (t, kinds) => (t.groups || []).some((g) => (g.items || []).some((it) => kinds.includes(it.kind)));
+    const nameHas = (t, re) => (t.groups || []).some((g) => (g.items || []).some((it) => re.test(it.name || '')));
+    const isHerb = (t) => t.type === 'herbicide' || hasKind(t, ['herbicide']);
+    const isCopper = (t) => t.type === 'copper_fungicide' || nameHas(t, /copper|cupr|cuprous|oxychlor/i);
+    const isFert = (t) => t.type === 'fertilizer' || hasKind(t, ['fertilizer']);
+    const isFoliar = (t) => t.type === 'foliar_spray' || hasKind(t, ['foliar']);
+    const isSpray = (t) => SPRAY_TYPES.includes(t.type) || hasKind(t, ['herbicide', 'insecticide', 'fungicide', 'molluscicide', 'foliar', 'growth', 'bio']);
+    const isPesticide = (t) => ['pesticide', 'fungicide', 'copper_fungicide', 'herbicide'].includes(t.type) || hasKind(t, ['insecticide', 'fungicide', 'herbicide', 'molluscicide', 'rodenticide']);
+    const isHarvest = (t) => t.type === 'harvest';
+    const gap = (a, b) => (PHASE[a.counter] === PHASE[b.counter]) ? Math.abs(a.day - b.day) : null;
+    function warningsFor(list) {
+        const out = {};
+        const add = (t, w) => { (out[t.id] = out[t.id] || []).push(w); };
+        const tasks = list.filter((t) => !isNote(t));
+        tasks.forEach((t) => {
+            // inside one task: the tank
+            const herbItems = hasKind(t, ['herbicide']) || t.type === 'herbicide';
+            const helpItems = hasKind(t, ['fertilizer', 'foliar', 'growth', 'bio', 'insecticide', 'fungicide']);
+            if (herbItems && helpItems) add(t, 'Herbicide should go out alone — it must not share a tank with anything meant to help the crop, and the knapsack wants rinsing after.');
+            if (isCopper(t) && (hasKind(t, ['foliar', 'bio', 'adjuvant']) || nameHas(t, /\boil\b|acid/i))) add(t, 'Copper burns leaves when it meets oils or acidic partners, and it puts biologicals down. Spray it on its own.');
+        });
+        for (let i = 0; i < tasks.length; i++) {
+            for (let j = i + 1; j < tasks.length; j++) {
+                const a = tasks[i], b = tasks[j];
+                const d = gap(a, b);
+                if (d === null) continue;
+                const both = (w) => { add(a, w); add(b, w); };
+                if (isHerb(a) && isHerb(b) && d <= 3) both(`Two herbicide sprays ${d === 0 ? 'on the same day' : d + (d === 1 ? ' day' : ' days') + ' apart'} — a double dose injures the crop. Space them a week or more, or make sure they are different products for different weeds.`);
+                if (isFert(a) && isFert(b) && d <= 2 && !(isFoliar(a) && isFoliar(b))) both(`Two fertilizer applications ${d === 0 ? 'on the same day' : d + (d === 1 ? ' day' : ' days') + ' apart'} — usually one is enough; combine them, or space them out.`);
+                if (((isCopper(a) && isFoliar(b)) || (isCopper(b) && isFoliar(a))) && d <= 1) both('Copper and a foliar feed within a day — copper burns leaves with acidic partners. Give it three days.');
+                if (d === 0 && isSpray(a) && isSpray(b) && !(isHerb(a) && isHerb(b))) both('Two sprays on the same day — check the products can share a tank, or plan a rinse between them.');
+                const h = isHarvest(a) ? a : (isHarvest(b) ? b : null);
+                const sp = h === a ? b : a;
+                if (h && isPesticide(sp) && h.day - sp.day >= 0 && h.day - sp.day <= 14) add(sp, `A spray ${h.day - sp.day === 0 ? 'on the harvest day' : (h.day - sp.day) + (h.day - sp.day === 1 ? ' day' : ' days') + ' before the harvest'} — check the product's pre-harvest interval.`);
+            }
+        }
+        return out;
+    }
+    function uniq(arr) { return [...new Set(arr)]; }
     function paintType() {
         const t = W.type ? OPT.types[W.type] : null;
         $id('pbtTypeIcon').textContent = W.type ? (TYPE_ICON[W.type] || '📌') : '📌';
@@ -925,6 +1077,18 @@
     function paintStage() {
         const v = TASK_DAY ? TASK_DAY.get() : null;
         $id('pbtStage').textContent = v ? (stageLabel(v.counter, v.day) || '') : '';
+        paintTaskWarn();
+    }
+    // What the draft would trip, read against the other tasks as they stand.
+    function paintTaskWarn() {
+        const el = $id('pbtWarn');
+        if (!W || !TASK_DAY) { el.hidden = true; return; }
+        const v = TASK_DAY.get();
+        const draft = { ...W, counter: v ? v.counter : W.counter, day: v ? v.day : W.day };
+        const others = TASKS.filter((x) => x.id !== W_ID);
+        const ws = uniq((warningsFor([...others, draft])[draft.id]) || []);
+        el.hidden = !ws.length;
+        el.innerHTML = ws.map((w) => `<span>⚠️ ${esc(w)}</span>`).join('');
     }
     const PRIO_ICON = { critical: '🔴', high: '🟠', medium: '🟡', low: '⚪' };
     function paintPrio() {
@@ -977,7 +1141,7 @@
     $id('pbGroups').addEventListener('input', (e) => {
         const g = gOf(e.target); if (!g) return;
         const it = iOf(e.target); if (!it) return;
-        if (e.target.classList.contains('pbi-name')) it.name = e.target.value;
+        if (e.target.classList.contains('pbi-name')) { it.name = e.target.value; paintTaskWarn(); }
         if (e.target.classList.contains('pbi-amount')) it.amount = e.target.value;
     });
     $id('pbGroups').addEventListener('click', (e) => {
@@ -1051,7 +1215,7 @@
         KIND_FOR.it.kind = r.getAttribute('data-kind');
         const k = OPT.kinds[KIND_FOR.it.kind];
         KIND_FOR.btn.innerHTML = `<span class="crop-tag-e">${esc(k.icon)}</span><span class="crop-tag-t">${esc(k.label)}</span>${CHEV}`;
-        closeSheet('pbKindSheet');
+        closeSheet('pbKindSheet'); paintTaskWarn();
     });
     $id('pbTypeList').innerHTML = `<button type="button" class="dt-row" data-type=""><span class="dt-row-e">📌</span><span class="dt-row-body"><b>No type</b></span>
         <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`
@@ -1065,7 +1229,7 @@
     $id('pbTypeList').addEventListener('click', (e) => {
         const r = e.target.closest('[data-type]'); if (!r || !W) return;
         W.type = r.getAttribute('data-type') || null;
-        paintType();
+        paintType(); paintTaskWarn();
         closeSheet('pbTypeSheet');
     });
 
@@ -1211,8 +1375,22 @@
         if (!t) { render(); return; }
         const order = Array.from($id('pbList').children).map((c) => c.getAttribute('data-id'));
         const at = order.indexOf(id);
-        const prev = at > 0 ? TASKS.find((x) => x.id === order[at - 1]) : null;
-        const next = at < order.length - 1 ? TASKS.find((x) => x.id === order[at + 1]) : null;
+        const byId = (oid) => TASKS.find((x) => x.id === oid);
+        if (isNote(t)) {
+            // A note goes where it is put and takes its day from the task above it (or below, at the top).
+            let anchor = null;
+            for (let i = at - 1; i >= 0 && !anchor; i--) { const x = byId(order[i]); if (x && !isNote(x)) anchor = x; }
+            for (let i = at + 1; i < order.length && !anchor; i++) { const x = byId(order[i]); if (x && !isNote(x)) anchor = x; }
+            commit('Moved', () => {
+                if (anchor) { t.counter = anchor.counter; t.day = anchor.day; }
+                order.forEach((oid, i) => { const x = byId(oid); if (x) x.pos = i * 10; });
+                flash(id);
+            });
+            return;
+        }
+        let prev = null, next = null;
+        for (let i = at - 1; i >= 0 && !prev; i--) { const x = byId(order[i]); if (x && !isNote(x)) prev = x; }
+        for (let i = at + 1; i < order.length && !next; i++) { const x = byId(order[i]); if (x && !isNote(x)) next = x; }
         const k = keyOf(t);
         const okPrev = !prev || cmpDay(keyOf(prev), k) <= 0;
         const okNext = !next || cmpDay(k, keyOf(next)) <= 0;
@@ -1304,7 +1482,8 @@
         try {
             const res = await api(U.base + '/meta', { method: 'POST', body: metaForm.read() });
             const p = res.data.protocol;
-            P = { id: p.id, title: p.title, description: p.description, crop: p.crop, cropLabel: p.cropLabel, cropIcon: p.cropIcon, variety: p.variety, dayType: p.dayType, ported: p.ported };
+            P = { id: p.id, title: p.title, description: p.description, tags: p.tags || [], crop: p.crop, cropLabel: p.cropLabel, cropIcon: p.cropIcon, variety: p.variety, dayType: p.dayType, ported: p.ported };
+            if (window.userTags) window.userTags.invalidate();
             TASKS = p.tasks || []; REV = p.rev; STAGES = res.data.stages || {};
             sortTasks(); render();
             closeSheet('pbMetaSheet');
@@ -1320,42 +1499,6 @@
             STALE = true; DIRTY = false;
             window.location.href = U.list;
         } catch (err) { toast(err.message, 'error'); }
-    });
-
-    /* ------------------------------------------------------------ port */
-    const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-    $id('pbPortBtn').addEventListener('click', () => {
-        if (!TASKS.length) { toast('Add a task or two first — there is nothing to port yet.', 'error'); return; }
-        const isDat = P.dayType === 'DAT';
-        $id('pbPortSay').textContent = `A new cropping schedule with one lot and ${TASKS.length} ${TASKS.length === 1 ? 'activity' : 'activities'}, each on its own date counted from the start.`;
-        $id('pbPortTitle').value = P.title;
-        $id('pbPortStartL').textContent = P.dayType === 'DAP' ? 'Planting date (DAP 0)' : 'Sowing date (DAS 0)';
-        const today = new Date(); today.setHours(0, 0, 0, 0);
-        $id('pbPortStart').value = iso(today);
-        $id('pbPortTransWrap').hidden = !isDat;
-        if (isDat) {
-            const das = TASKS.filter((t) => t.counter === 'DAS');
-            const gap = das.length ? Math.max(...das.map((t) => t.day)) + 1 : 21;
-            const tp = new Date(today); tp.setDate(tp.getDate() + Math.max(1, gap));
-            $id('pbPortTrans').value = iso(tp);
-            $id('pbPortTransHint').textContent = das.length ? `The seedbed tasks run to DAS ${gap - 1}, so the transplant is put the day after. Change it to suit.` : 'No seedbed tasks — three weeks after sowing is usual for rice. Change it to suit.';
-        }
-        $id('pbPortLot').value = (P.cropLabel || 'Main') + ' lot';
-        openSheet('pbPortSheet');
-    });
-    $id('pbPortGo').addEventListener('click', async () => {
-        const body = { title: $id('pbPortTitle').value.trim(), startDate: $id('pbPortStart').value, transplantDate: P.dayType === 'DAT' ? $id('pbPortTrans').value : null, lotName: $id('pbPortLot').value.trim(), lotSize: $id('pbPortSize').value, lotSizeUnit: $id('pbPortUnit').value };
-        if (!body.title) { toast('Give the season a title.', 'error'); return; }
-        if (!body.startDate) { toast('Pick the start date.', 'error'); return; }
-        if (P.dayType === 'DAT' && !body.transplantDate) { toast('Pick the transplant date.', 'error'); return; }
-        const btn = $id('pbPortGo'); btn.disabled = true;
-        try {
-            await flushSave();
-            const res = await api(U.base + '/port', { method: 'POST', body });
-            toast(res.message);
-            DIRTY = false;
-            window.location.href = res.data.redirect;
-        } catch (err) { if (!err.tierLock) toast(err.message, 'error'); btn.disabled = false; }
     });
 
     /* ------------------------------------------------------------ Anee */
@@ -1391,6 +1534,11 @@
                 </div>
             </div>`;
     }
+    $id('pbWarn').addEventListener('click', (e) => {
+        if (e.target.closest('#pbWarnHead')) { const host = $id('pbWarn'); host._folded = !host._folded; renderWarnings(); return; }
+        const row = e.target.closest('[data-warn-for]');
+        if (row) { const c = $id('pbList').querySelector(`.pb-card[data-id="${CSS.escape(row.getAttribute('data-warn-for'))}"]`); if (c) { c.classList.add('is-open', 'just-moved'); OPEN.add(row.getAttribute('data-warn-for')); c.scrollIntoView({ block: 'center', behavior: 'smooth' }); setTimeout(() => c.classList.remove('just-moved'), 1200); } }
+    });
     $id('pbReview').addEventListener('click', (e) => {
         const host = $id('pbReview');
         if (e.target.closest('#pbFold')) { host._folded = !host._folded; renderReview(); return; }
