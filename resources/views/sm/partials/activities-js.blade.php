@@ -1525,16 +1525,42 @@ document.addEventListener('DOMContentLoaded', () => {
             : '';
     }
 
+    /* What is already on this activity, by kind and ref, so a row can say
+       "tagged" instead of offering the same thing twice. */
+    let TAG_CURRENT = [];
+    const TG_ICON = {
+        drawing: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4-1L20 7a2 2 0 0 0-3-3L5 16l-1 4zM14 6l4 4"/></svg>',
+        map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>',
+        note: '📝',
+    };
+    const TICK_SVG = '<span class="tg-tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>';
     function paintTagList() {
         const box = $id('activityTagList');
         if (!box) return;
         const rows = (TAGGABLES && TAGGABLES[TAG_TAB === 'drawing' ? 'drawings' : (TAG_TAB === 'map' ? 'maps' : 'notes')]) || [];
-        box.innerHTML = rows.length
-            ? rows.map((r) => `<button type="button" class="w-full flex items-center gap-2.5 rounded-xl p-2 text-left hover:bg-gray-50" data-pick="${esc(r.ref)}">
-                    ${r.url && TAG_TAB === 'drawing' ? `<span class="w-11 h-9 rounded-lg bg-gray-100 overflow-hidden shrink-0"><img src="${esc(r.url)}" alt="" class="w-full h-full object-cover"></span>` : ''}
-                    <span class="min-w-0 font-semibold text-gray-800 text-sm truncate">${esc(r.label || 'Untitled')}</span>
-                </button>`).join('')
-            : `<p class="text-sm text-gray-400 py-2">Nothing to tag yet — make a ${TAG_TAB} first and it will be listed here.</p>`;
+        const on = (ref) => TAG_CURRENT.some((t) => t && t.kind === TAG_TAB && String(t.ref) === String(ref));
+        if (!rows.length) {
+            const word = TAG_TAB === 'drawing' ? 'drawing' : (TAG_TAB === 'map' ? 'map' : 'note');
+            box.innerHTML = `<div class="tg-empty"><span class="e">${TAG_TAB === 'note' ? '📝' : (TAG_TAB === 'map' ? '🗺️' : '✏️')}</span>Nothing to tag yet — make a ${word} first and it will be listed here.</div>`;
+            return;
+        }
+        // A picture that fails to arrive leaves the stamp's own glyph showing,
+        // not a broken frame: the file may be gone; the thing it stood for is not.
+        const shot = (r, kind) => `<span class="tg-shot">${r.thumb ? `<img src="${esc(r.thumb)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')" onerror="this.remove()">` : ''}<span class="tg-ph">${TG_ICON[kind]}</span>${TICK_SVG}</span>`;
+        if (TAG_TAB === 'drawing' || TAG_TAB === 'map') {
+            box.innerHTML = `<div class="tg-grid">${rows.map((r) => `
+                <button type="button" class="tg-card${on(r.ref) ? ' is-on' : ''}" data-pick="${esc(r.ref)}" title="${on(r.ref) ? 'Already tagged — tap to tag again' : 'Tag this ' + TAG_TAB}">
+                    ${shot(r, TAG_TAB)}
+                    <span class="tg-meta"><b>${esc(r.label || 'Untitled')}</b><small>${esc([r.when, r.meta].filter(Boolean).join(' · '))}</small></span>
+                </button>`).join('')}</div>`;
+            return;
+        }
+        box.innerHTML = `<div class="tg-rows">${rows.map((r) => `
+            <button type="button" class="tg-row${on(r.ref) ? ' is-on' : ''}" data-pick="${esc(r.ref)}">
+                <span class="tg-row-e">${r.thumb ? `<img src="${esc(r.thumb)}" alt="" loading="lazy" onerror="this.remove()">` : TG_ICON.note}</span>
+                <span class="tg-row-body"><b>${esc(r.label || 'Untitled')}</b>${r.excerpt ? `<p>${esc(r.excerpt)}</p>` : ''}<small>${esc([r.when, r.meta].filter(Boolean).join(' · '))}</small></span>
+                ${TICK_SVG}
+            </button>`).join('')}</div>`;
     }
 
     /* ---- Advanced info: what went on this ground before ---------------
@@ -1660,6 +1686,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
         let current = [];
         try { current = JSON.parse(card?.getAttribute('data-tags') || '[]'); } catch (_) { current = []; }
+        TAG_CURRENT = current;
         paintTagCurrent(current);
         $id('activityTagList').innerHTML = '<p class="text-sm text-gray-400 py-2">Loading…</p>';
         openSheet('activityTagSheet');
@@ -1676,7 +1703,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const card = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
         if (card) card.setAttribute('data-tags', JSON.stringify(tags || []));
         paintCardTags(id, tags);
+        TAG_CURRENT = tags || [];
         paintTagCurrent(tags || []);
+        paintTagList();
     }
 
     document.addEventListener('click', async (e) => {
@@ -6128,6 +6157,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function moveActivityToDrafts(id, name) {
+        // A finished activity stays on its day: said as a notice, not a toast,
+        // whichever button asked (the card's own, the menu's, the mirror's).
+        if ($qs(`#activitiesList .activity-card[data-id="${id}"]`)?.getAttribute('data-is-done') === '1') {
+            window.noticeSheet?.({ title: 'This activity is done', message: 'A finished activity stays on its day — it cannot be moved to drafts. Untick Done first if you really mean to.' });
+            return;
+        }
         try {
             await api(U.toDraft(id), { method: 'POST' });
             toast(`"${name}" moved to drafts`);
@@ -7330,11 +7365,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }, out.length ? 180 : 0);
     }
 
+    /* The mirror holds copies of the cards; a tick taken there finds the
+       board's card by id, so the copy that was tapped kept its old face and
+       an untick looked like it had done nothing. Every paint reaches both. */
+    const mirrorTwin = (id) => $qs(`#mirrorBody .activity-card[data-id="${id}"]`);
     async function toggleActivityDone(id) {
         const card = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
         if (!card) return;
         const wantDone = card.getAttribute('data-is-done') !== '1';
         animateDoneSwap(card, wantDone);   // optimistic; revert on failure
+        const twin = mirrorTwin(id);
+        if (twin) animateDoneSwap(twin, wantDone);
         try {
             /* Queued rather than lost when the line is down.
              *
@@ -7358,6 +7399,8 @@ document.addEventListener('DOMContentLoaded', () => {
             toast(err.message, 'error');
             const cardNow = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
             if (cardNow) animateDoneSwap(cardNow, !wantDone);
+            const twinNow = mirrorTwin(id);
+            if (twinNow) animateDoneSwap(twinNow, !wantDone);
         }
     }
 
@@ -7425,6 +7468,10 @@ document.addEventListener('DOMContentLoaded', () => {
             CARD_MENU = { id: menuBtn.getAttribute('data-id'), name: menuBtn.getAttribute('data-name') || 'Activity' };
             $id('cardMenuTitle').textContent = CARD_MENU.name;
             paintMenuForTheLine($id('cardMenuSheet'));
+            // A done activity is locked: the rows that would change it wear
+            // the lock in the menu, and a tap on one explains itself.
+            const doneNow = $qs(`#activitiesList .activity-card[data-id="${CARD_MENU.id}"]`)?.getAttribute('data-is-done') === '1';
+            $id('cardMenuSheet')?.classList.toggle('is-done-locked', doneNow);
             openSheet('cardMenuSheet');
             return;
         }
@@ -7442,8 +7489,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // while the editor/duplicate fetch is in flight.
             const kebab = $qs(`#activitiesList .activity-card[data-id="${id}"] .card-menu-btn`);
             const cardIsDone = $qs(`#activitiesList .activity-card[data-id="${id}"]`)?.getAttribute('data-is-done') === '1';
-            if (cardIsDone && (action === 'edit' || action === 'move')) {
-                toast('This activity is marked done and locked — untick it first.');
+            if (cardIsDone && (action === 'edit' || action === 'move' || action === 'draft')) {
+                window.noticeSheet?.({
+                    title: 'This activity is done',
+                    message: action === 'draft'
+                        ? 'A finished activity stays on its day — it cannot be moved to drafts. Untick Done first if you really mean to.'
+                        : 'A finished activity is locked so it cannot be changed by accident. Untick Done first, then edit or move it.',
+                });
                 return;
             }
             /* Three of these rows are a QUESTION for the server rather than a

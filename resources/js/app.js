@@ -608,6 +608,39 @@ window.confirmAction = function confirmAction({
     });
 };
 
+/* A notice with one button: the same sheet as the confirm, asking
+   nothing. For the moment a tap cannot be honoured and a toast would be
+   missed -- "this activity is done and locked" -- said where the eye is. */
+window.noticeSheet = function noticeSheet({ title = 'Just so you know', message = '', detail = '', okText = 'OK' } = {}) {
+    return new Promise((resolve) => {
+        let el = document.getElementById('confirm-sheet');
+        if (!el) {
+            el = document.createElement('div');
+            el.id = 'confirm-sheet';
+            el.className = 'sheet hidden';
+            el.style.setProperty('--sheet-width', '26rem');
+            document.body.appendChild(el);
+        }
+        el.innerHTML = `
+            <div class="sheet-handle"></div>
+            <div class="sheet-body pt-5">
+                <div class="flex items-start gap-3">
+                    <span class="shrink-0 w-10 h-10 rounded-full bg-amber-50 text-amber-600 inline-flex items-center justify-center" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:1.3rem;height:1.3rem"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>
+                    <div class="min-w-0">
+                        <h3 class="text-lg font-bold text-gray-900 mb-1">${escapeHtml(title)}</h3>
+                        <p class="text-sm text-gray-600">${escapeHtml(message)}</p>
+                        ${detail ? `<p class="text-xs text-gray-400 mt-2">${escapeHtml(detail)}</p>` : ''}
+                    </div>
+                </div>
+            </div>
+            <div class="sheet-footer">
+                <button type="button" class="btn btn-primary" data-confirm-yes>${escapeHtml(okText)}</button>
+            </div>`;
+        el.querySelector('[data-confirm-yes]').addEventListener('click', () => { window.closeSheet('confirm-sheet'); resolve(true); });
+        window.openSheet('confirm-sheet');
+    });
+};
+
 /* ------------------------------------------------------------------ */
 /* Small shared utilities                                               */
 /* ------------------------------------------------------------------ */

@@ -446,7 +446,10 @@
         .mir-body .date-group.is-folded { contain-intrinsic-size: auto 92px; }
         .mir-body .activity-card { cursor: default; }
         .mir-body .activity-card:hover { transform: none; box-shadow: var(--shadow-card); }
-        .mir-body .done-check { pointer-events: none; opacity: 1; }
+        /* The done tick is live in here (2026-09-21, the owner's ask): the
+           mirror is where finished work is checked off and unchecked, and
+           its copies now follow the board's card either way. */
+        .mir-body .done-check { pointer-events: auto !important; opacity: 1; cursor: pointer; }
         .mir-body .date-header { cursor: default; }
         .mir-body [draggable] { -webkit-user-drag: none; }
         .mir-body input, .mir-body button, .mir-body a, .mir-body label { pointer-events: none; }
@@ -467,6 +470,67 @@
         html.mir-open #confirm-sheet { z-index: 420; }
         html.mir-open:has(#confirm-sheet.is-open) .sheet-backdrop { z-index: 410; }
         html.mir-open #toast-stack { z-index: 430; }
+        /* The day's three dots reach the camera, the recorder, the voice
+           note and the lightbox -- none of them sheets, each pinned under
+           the mirror's 340 -- so from in here they opened behind the screen
+           that asked for them. Raised while the mirror is up. */
+        html.mir-open .qc-overlay, html.mir-open .qr-modal, html.mir-open .qv-modal,
+        html.mir-open .rs-modal, html.mir-open .note-lb { z-index: 405; }
+        /* Drafts are the board's desk, not the mirror's: the row goes. */
+        html.mir-open #cardMenuSheet [data-card-menu-action="draft"] { display: none; }
+        /* A done activity's menu: the rows that would change it are dimmed
+           and wear the lock; a tap still answers (see the menu handler). */
+        #cardMenuSheet.is-done-locked [data-card-menu-action="edit"],
+        #cardMenuSheet.is-done-locked [data-card-menu-action="move"],
+        #cardMenuSheet.is-done-locked [data-card-menu-action="draft"] { color: var(--color-gray-400); }
+        #cardMenuSheet.is-done-locked [data-card-menu-action="edit"]::after,
+        #cardMenuSheet.is-done-locked [data-card-menu-action="move"]::after,
+        #cardMenuSheet.is-done-locked [data-card-menu-action="draft"]::after { content: 'Done · locked'; margin-left: auto; font-size: .68rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #b45309; background: #fff7e6; border: 1px solid #fde4b8; border-radius: 999px; padding: .12rem .5rem; }
+        html.dark #cardMenuSheet.is-done-locked [data-card-menu-action]::after { background: #2c2213; border-color: #5a4515; color: #f2c46d; }
+
+        /* ---- Tag a drawing, map or note: pictures for the pictures ----
+           A drawing and a map are looked at before they are chosen, so their
+           tab is a grid of stamps; a note is read, so its tab is card rows
+           with the first line and the date. */
+        .tg-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; }
+        .tg-card { display: flex; flex-direction: column; text-align: left; border: 1px solid var(--color-gray-200); border-radius: .9rem; overflow: hidden; background: var(--color-white); padding: 0; cursor: pointer; font: inherit; position: relative;
+            transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .2s, box-shadow .2s; }
+        .tg-card:hover { transform: translateY(-1px); border-color: var(--color-brand-300); }
+        .tg-card.is-on { border-color: var(--color-brand-500); box-shadow: 0 0 0 2px var(--color-brand-100); }
+        .tg-shot { position: relative; aspect-ratio: 4 / 3; background: linear-gradient(135deg, #eef4e6, #f7f4e9); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .tg-shot img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .28s ease; }
+        .tg-shot img.is-loaded { opacity: 1; }
+        .tg-shot .tg-ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #6b8f4a; }
+        .tg-shot .tg-ph svg { width: 2rem; height: 2rem; }
+        .tg-shot:has(img.is-loaded) .tg-ph { display: none; }
+        .tg-tick { position: absolute; top: .35rem; right: .35rem; width: 1.35rem; height: 1.35rem; border-radius: 999px; background: var(--color-brand-600); color: #fff; display: none; align-items: center; justify-content: center; }
+        .tg-tick svg { width: .8rem; height: .8rem; }
+        .tg-card.is-on .tg-tick { display: inline-flex; }
+        .tg-meta { padding: .45rem .55rem .55rem; min-width: 0; }
+        .tg-meta b { display: block; font-size: .8rem; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .tg-meta small { display: block; font-size: .68rem; color: var(--color-gray-400); margin-top: .1rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .tg-rows { display: grid; gap: .45rem; }
+        .tg-row { display: flex; gap: .65rem; align-items: flex-start; width: 100%; text-align: left; border: 1px solid var(--color-gray-200); border-radius: .85rem; background: var(--color-white); padding: .6rem .7rem; cursor: pointer; font: inherit; position: relative;
+            transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .2s, box-shadow .2s; }
+        .tg-row:hover { transform: translateY(-1px); border-color: var(--color-brand-300); }
+        .tg-row.is-on { border-color: var(--color-brand-500); box-shadow: 0 0 0 2px var(--color-brand-100); }
+        .tg-row-e { flex: none; width: 2.4rem; height: 2.4rem; border-radius: .7rem; background: var(--color-brand-50); color: var(--color-brand-700); display: inline-flex; align-items: center; justify-content: center; font-size: 1.15rem; overflow: hidden; }
+        .tg-row-e img { width: 100%; height: 100%; object-fit: cover; }
+        .tg-row-body { flex: 1 1 auto; min-width: 0; }
+        .tg-row-body b { display: block; font-size: .86rem; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .tg-row-body p { font-size: .76rem; line-height: 1.45; color: var(--color-gray-600); margin: .1rem 0 0; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+        .tg-row-body small { display: block; font-size: .68rem; color: var(--color-gray-400); margin-top: .2rem; }
+        .tg-row .tg-tick { position: static; flex: none; margin-top: .1rem; }
+        .tg-row.is-on .tg-tick { display: inline-flex; }
+        .tg-empty { text-align: center; padding: 1.4rem .8rem; color: var(--color-gray-400); font-size: .84rem; }
+        .tg-empty .e { display: block; font-size: 1.8rem; margin-bottom: .3rem; }
+        html.dark .tg-card, html.dark .tg-row { background: #151b12; border-color: #2b3a1c; }
+        html.dark .tg-card.is-on, html.dark .tg-row.is-on { border-color: #6b9f3d; box-shadow: 0 0 0 2px #22301a; }
+        html.dark .tg-shot { background: linear-gradient(135deg, #1c2417, #24201a); }
+        html.dark .tg-meta b, html.dark .tg-row-body b { color: #e8efe1; }
+        html.dark .tg-row-body p { color: #b7c2ad; }
+        html.dark .tg-row-e { background: #22301a; color: #a5c97e; }
+        @media (prefers-reduced-motion: reduce) { .tg-card, .tg-row, .tg-shot img { transition: none; } }
         /* A lot name gets its whole name here.
          *
          * On the board the lot strip is capped and scrolls sideways, so a
@@ -5351,8 +5415,10 @@
          * early. */
         const boardList = document.getElementById('activitiesList');
         if (boardList && window.MutationObserver) {
+            // The done tick is an attribute flip, not a new node -- watched by
+            // name, so a tick or an untick taken anywhere reaches the copies.
             new MutationObserver(() => { if (!panel.hidden) window.mirrorRefresh(); })
-                .observe(boardList, { childList: true, subtree: true, characterData: true });
+                .observe(boardList, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['data-is-done', 'data-is-hidden'] });
         }
 
         /* ---- Date Diff -------------------------------------------------
@@ -5738,7 +5804,8 @@
              * acting — the sheet it raises gates its own rows exactly as it
              * does on the board — so the click is let go on untouched to the
              * delegated handler in activities-js. */
-            if (e.target.closest('.day-menu-btn, .card-menu-btn')) return;
+            // ...and the done tick: checking work off is the mirror's job too.
+            if (e.target.closest('.day-menu-btn, .card-menu-btn, .done-check')) return;
             e.stopPropagation();
             // Before the fold, because the diff tag sits inside the header it
             // would otherwise fold: a tap meant to measure must not shut the
