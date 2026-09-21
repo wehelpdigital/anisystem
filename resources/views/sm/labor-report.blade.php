@@ -36,7 +36,7 @@
     .lr-donut-l { flex: 1 1 10rem; min-width: 0; display: grid; gap: .3rem; }
     .lr-donut-l span { display: flex; align-items: center; gap: .45rem; font-size: .78rem; color: var(--color-gray-700); min-width: 0; }
     .lr-donut-l i { width: .7rem; height: .7rem; border-radius: .2rem; flex: none; }
-    .lr-donut-l em { font-style: normal; flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lr-donut-l em { font-style: normal; flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
     .lr-donut-l b { font-variant-numeric: tabular-nums; color: var(--color-gray-900); }
     html.dark .lr-donut::after { background: #151b12; }
     html.dark .lr-donut-c b, html.dark .lr-donut-l b { color: #e8efe1; }
@@ -112,9 +112,10 @@
     .lr-legend { display: flex; flex-wrap: wrap; gap: .9rem; margin-top: .6rem; font-size: .78rem; font-weight: 600; color: var(--color-gray-600); }
     .lr-legend i { display: inline-block; width: .7rem; height: .7rem; border-radius: .2rem; margin-right: .3rem; vertical-align: -1px; }
     .lr-rows { margin-top: .9rem; display: flex; flex-direction: column; gap: .55rem; }
-    .lr-row { display: flex; align-items: center; gap: .6rem; cursor: default; }
-    .lr-rowname { width: 9.5rem; min-width: 6rem; font-size: .85rem; font-weight: 600; color: var(--color-gray-800); text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .lr-track { flex: 1 1 auto; display: flex; align-items: center; height: 22px; }
+    .lr-row { display: flex; flex-direction: column; gap: .25rem; cursor: default; }
+    .lr-rowhead { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; min-width: 0; }
+    .lr-rowname { flex: 1 1 auto; min-width: 0; font-size: .85rem; font-weight: 600; color: var(--color-gray-800); text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lr-track { width: 100%; display: flex; align-items: center; height: 18px; }
     .lr-seg { height: 100%; min-width: 2px; }
     .lr-seg + .lr-seg { margin-left: 2px; }           /* surface gap */
     .lr-seg:last-of-type { border-radius: 0 4px 4px 0; } /* data end */
@@ -828,9 +829,11 @@ const __init = () => {
             ].filter(([, v]) => v > 0);
             const width = ((w.total || 0) / max) * 100;
             return `<div class="lr-row" data-i="${i}">
-                <span class="lr-rowname" title="${esc(w.name)}">${esc(w.name)}</span>
+                <div class="lr-rowhead">
+                    <span class="lr-rowname" title="${esc(w.name)}">${esc(w.name)}</span>
+                    <span class="lr-rowtotal">${esc(fmtPeso0(w.total))}${i === 0 && (w.total || 0) > 0 ? '<span class="lr-toptag">Top earner</span>' : ''}</span>
+                </div>
                 <span class="lr-track"><span style="display:flex;width:${width}%;height:100%">${segs.map(([c, v]) => `<span class="lr-seg" style="background:${c};flex:${v} ${v} 0"></span>`).join('')}</span></span>
-                <span class="lr-rowtotal">${esc(fmtPeso0(w.total))}${i === 0 && (w.total || 0) > 0 ? '<span class="lr-toptag">Top earner</span>' : ''}</span>
             </div>`;
         }).join('');
         host.querySelectorAll('.lr-row').forEach((row) => {
