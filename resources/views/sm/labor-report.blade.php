@@ -169,6 +169,7 @@
     </div>
 
     {{-- What this report is, before the form that makes one. --}}
+    <div id="lrGenPane">
     <div class="rx-about">
         <span class="rx-about-e">🧾</span>
         <div class="rx-about-t">
@@ -178,7 +179,6 @@
             <p class="rx-about-note">Every report you generate is saved on the Saved Reports shelf, where you can rename and describe it.</p>
         </div>
     </div>
-    <div id="lrGenPane">
     {{-- The wizard: set the slice, then generate. Results come after, not under. --}}
     <div class="card p-4 mb-4 lr-filters" id="lrWizard">
         <p class="text-sm font-bold text-gray-900">What should the report cover?</p>
