@@ -64,7 +64,9 @@ class NotesHubController extends Controller
 
         // Global notes (this hub's own).
         foreach (AsScheduleNote::active()->where('userId', $userId)->where('croppingScheduleId', self::GLOBAL_SCHEDULE_ID)->orderByDesc('id')->get() as $n) {
-            $items->push($this->row($n->id, 'global', $n->title, $n->body, $n->imagePath, 'Global note', null, $n->updated_at, $n->media));
+            $row = $this->row($n->id, 'global', $n->title, $n->body, $n->imagePath, 'Global note', null, $n->updated_at, $n->media);
+            $row['tags'] = array_values(array_filter((array) ($n->tags ?? []), 'is_string'));
+            $items->push($row);
         }
 
         // A note the map save created points at its own save, so a map chip

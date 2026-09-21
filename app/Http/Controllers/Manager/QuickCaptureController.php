@@ -96,6 +96,9 @@ class QuickCaptureController extends BaseScheduleController
             'media' => $media,
             'deleteStatus' => 1,
         ]);
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'note', (int) $note->id, $request->input('tags', []));
+        }
 
         $count = count($media);
 
@@ -209,6 +212,9 @@ class QuickCaptureController extends BaseScheduleController
                 $image->description = $plainBody !== '' ? $plainBody : null;
             }
             $image->save();
+            if ($request->has('tags')) {
+                \App\Support\ScheduleTags::sync($schedule, 'image', (int) $image->id, $request->input('tags', []));
+            }
 
             return $this->jsonOk('Clip saved to "' . $album->title . '".', [
                 'albumId' => $album->id,
@@ -225,6 +231,10 @@ class QuickCaptureController extends BaseScheduleController
             'media' => $media,
             'deleteStatus' => 1,
         ]);
+
+        if ($request->has('tags')) {
+            \App\Support\ScheduleTags::sync($schedule, 'note', (int) $note->id, $request->input('tags', []));
+        }
 
         return $this->jsonOk('Clip saved as a note.', [
             'noteId' => $note->id,
@@ -280,6 +290,7 @@ class QuickCaptureController extends BaseScheduleController
                 'title' => $title,
                 'description' => $plainBody !== '' ? $plainBody : null,
             ], fn ($v) => $v !== null)],
+            'tags' => \App\Http\Controllers\UserTagController::tidy($request->input('tags', [])),
             'deleteStatus' => 1,
         ]);
 
@@ -498,6 +509,9 @@ class QuickCaptureController extends BaseScheduleController
                     : null;
             }
             $image->save();
+            if ($request->has('tags')) {
+                \App\Support\ScheduleTags::sync($schedule, 'image', (int) $image->id, $request->input('tags', []));
+            }
 
             $counts[$item['kind']]++;
             $added++;

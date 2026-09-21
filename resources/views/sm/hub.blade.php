@@ -592,6 +592,8 @@
     @include('sm.partials.share-sheet', ['schedule' => $schedule])
     {{-- The camera and the recorder come with their own sheets and pickers;
          with a door gone there is nothing left to open its sheet. --}}
+    @include('sm.partials.tag-picker', ['schedule' => $schedule])
+    @include('partials.user-tags')
     @if ($may('camera'))
     @include('sm.partials.quick-capture', ['fixedScheduleId' => $schedule->id])
     @endif

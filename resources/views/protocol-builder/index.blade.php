@@ -90,10 +90,7 @@
         </div>
     </div>
 
-    <button type="button" class="pb-new mb-4" id="pbNewBtn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-        New protocol
-    </button>
+    <button type="button" class="pb-new mb-4" id="pbNewBtn">New protocol</button>
 
     <div class="pb-search hidden" id="pbSearchWrap">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>

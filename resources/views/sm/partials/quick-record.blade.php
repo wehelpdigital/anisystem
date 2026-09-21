@@ -57,6 +57,11 @@
             @endif
 
             <div>
+                <span class="form-label">Tags <span class="text-gray-400 font-normal">(optional)</span></span>
+                <div class="tp-mount" id="qrTagsMount" data-tags></div>
+            </div>
+
+            <div>
                 <span class="form-label">Where should it go?</span>
                 @php
                     // The same rule the capture sheet follows: a worker who may
@@ -216,7 +221,14 @@
         if (modal.classList.contains('hidden')) setTimeout(open, 0);
     });
 
+    function syncTags() {
+        if (!window.smTags) return;
+        window.smTags.setSchedule(Number($('qrSchedule')?.value) || 0);
+        window.smTags.mount($('qrTagsMount'));
+    }
+    $('qrSchedule')?.addEventListener('change', syncTags);
     function open() {
+        setTimeout(syncTags, 0);
         modal.classList.remove('hidden');
         void modal.offsetWidth;
         modal.classList.add('is-open');
@@ -343,6 +355,7 @@
         form.append('scheduleId', $('qrSchedule').value);
         form.append('title', title);
         form.append('note', $('qrNote').value.trim());
+        (window.smTags ? window.smTags.value($('qrTagsMount')) : []).forEach((id) => form.append('tags[]', id));
         const target = modal.querySelector('input[name=qrTarget]:checked')?.value
             || modal.querySelector('input[name=qrTarget]')?.value
             || 'gallery';

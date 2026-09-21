@@ -296,6 +296,11 @@
             </div>
         </section>
 
+    {{-- The season tag picker (which season is chosen in the sheet) and the
+         member's own picker (voice notes are global) come along for the
+         three quick doors. --}}
+    @include('sm.partials.tag-picker', ['schedule' => null])
+    @include('partials.user-tags')
     @if (\App\Support\WorkerContext::canUseModule('camera'))
         @include('sm.partials.quick-capture', ['allSchedules' => $allSchedules])
     @endif

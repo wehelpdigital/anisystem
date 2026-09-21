@@ -117,6 +117,7 @@
 @endif
 
 <div id="nhList" class="nh-list">
+    @include('partials.user-tags')
     @include('sm.partials.notes-hub-rows', ['notes' => $notes])
 </div>
 @include('partials.list-pager', [

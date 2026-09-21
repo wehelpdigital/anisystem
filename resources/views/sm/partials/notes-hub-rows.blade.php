@@ -8,6 +8,9 @@
             <svg class="nh-chev" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             <span class="nh-headmain">
                 <span class="nh-title">{{ $note['title'] }}</span>
+                @if (! empty($note['tags']))
+                    <span class="ut-tags">@foreach ($note['tags'] as $t)<span class="ut-tag">{{ $t }}</span>@endforeach</span>
+                @endif
                 <span class="nh-meta">
                     <span class="nh-tag {{ $note['type'] }}">{{ $note['type'] }}</span>
                     <span class="nh-where">{{ $note['address'] }}</span>

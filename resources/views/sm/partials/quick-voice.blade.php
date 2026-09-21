@@ -47,6 +47,11 @@
                           placeholder="Anything worth adding in writing?"></textarea>
             </div>
 
+            <div>
+                <span class="form-label">Tags <span class="text-gray-400 font-normal">(optional)</span></span>
+                <div class="ut-mount" id="qvTagsMount"></div>
+            </div>
+
             {{-- No schedule question: a spoken thought is the speaker's own.
                  It files straight into Global Notes, and the Global Gallery
                  lists the same recording under Voice. --}}
@@ -194,6 +199,7 @@
     }
 
     function open() {
+        if (window.userTags) window.userTags.set($('qvTagsMount'), []);
         clip = null;
         $('qvTitle').value = '';
         $('qvNote').value = '';
@@ -249,6 +255,7 @@
         form.append('clip', clip, clip.name);
         form.append('title', title);
         form.append('note', $('qvNote').value.trim());
+        (window.userTags ? window.userTags.value($('qvTagsMount')) : []).forEach((t) => form.append('tags[]', t));
         /* THE LINE, NOT THE BROWSER'S OPINION OF IT.
          *
          * This used to keep the recording only when navigator.onLine said

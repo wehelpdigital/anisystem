@@ -101,12 +101,18 @@
     claimSheet();
     sweepDupes();
 
+    // The schedule can change under the picker (the dashboard's quick
+    // tools ask which season a capture belongs to), so the urls are read
+    // when used and setSchedule() throws the dictionary away.
+    const LIST_URL = @json(route('sm.tags.list'));
+    const OF_URL = @json(route('sm.tags.of'));
+    let SCHED = {{ (int) optional($schedule ?? null)->id }};
     const U = {
-        list: @json(route('sm.tags.list') . '?id=' . $schedule->id),
+        list: () => LIST_URL + '?id=' + SCHED,
         store: @json(route('sm.tags.store')),
-        of: @json(route('sm.tags.of') . '?id=' . $schedule->id),
+        of: () => OF_URL + '?id=' + SCHED,
     };
-    const SCHED = {{ (int) $schedule->id }};
+    const MOUNTS = [];
     const esc = (s) => (window.escapeHtml ? window.escapeHtml(String(s ?? '')) : String(s ?? ''));
     let ALL = null;          // the schedule's tags, fetched once and kept fresh on writes
     let ALLP = null;         // the fetch in flight, so two callers share one trip
@@ -114,8 +120,9 @@
 
     function ensureAll() {
         if (ALL) return Promise.resolve(ALL);
+        if (!SCHED) { ALL = []; return Promise.resolve(ALL); }
         if (!ALLP) {
-            ALLP = api(U.list)
+            ALLP = api(U.list())
                 .then((res) => { ALL = (res.data.tags || []); return ALL; })
                 .catch(() => { ALL = []; return ALL; })
                 .finally(() => { ALLP = null; });
@@ -153,6 +160,7 @@
             sweepDupes();   // a pane may have injected a dead twin since load
             el._tpMounted = true;
             el._tags = tags || [];
+            MOUNTS.push(el);
             paintRow(el);
             // Warm the dictionary now, quietly — by the time a finger finds
             // the chip, the list is usually already home. Over a slow line
@@ -193,7 +201,7 @@
             this.clear(el);
             if (!refId && !extra) return;
             try {
-                const res = await api(U.of + '&kind=' + encodeURIComponent(kind) + '&refId=' + (refId || 0) + (extra || ''));
+                const res = await api(U.of() + '&kind=' + encodeURIComponent(kind) + '&refId=' + (refId || 0) + (extra || ''));
                 this.set(el, res.data.tags || []);
             } catch (err) { /* an untagged sheet is a fine fallback */ }
         },
@@ -201,6 +209,15 @@
         // The board asks for the whole dictionary (filters, chips).
         all: ensureAll,
         invalidate() { ALL = null; },
+        // Another season: forget its words, and the words every mount wore.
+        setSchedule(id) {
+            id = Number(id) || 0;
+            if (id === SCHED) return;
+            SCHED = id; ALL = null; ALLP = null;
+            MOUNTS.forEach((el) => { el._tags = []; if (el._tpMounted) paintRow(el); });
+            if (SCHED) ensureAll();
+        },
+        schedule: () => SCHED,
     };
 
     document.getElementById('tagPickList')?.addEventListener('click', (e) => {

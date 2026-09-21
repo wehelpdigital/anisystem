@@ -275,6 +275,10 @@
                         <p class="form-error hidden" id="qcScheduleErr" role="alert">Choose which schedule this belongs to.</p>
                     </div>
                 @endif
+                <div>
+                    <span class="form-label">Tags <span class="text-gray-400 font-normal">(optional)</span></span>
+                    <div class="tp-mount" id="qcTagsMount" data-tags></div>
+                </div>
                 {{-- Only asked once the gallery is the destination. --}}
                 <div id="qcAlbumWrap" class="hidden">
                     <label class="form-label" for="qcAlbum">Album</label>
@@ -623,9 +627,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     $('qcFile').addEventListener('change', tookPhotos);
     $('qcPick').addEventListener('change', tookPhotos);
+    // The tags are the chosen season's; the mount follows the picker.
+    function syncTags() {
+        if (!window.smTags) return;
+        const sid = Number($('qcSchedule')?.value) || 0;
+        window.smTags.setSchedule(sid);
+        window.smTags.mount($('qcTagsMount'));
+    }
+    $('qcSchedule')?.addEventListener('change', syncTags);
     $('qcContinue').addEventListener('click', async () => {
         syncDestinations();
         showStep('details');
+        syncTags();
         try { await ensureQuill(); } catch (_) { /* editor optional */ }
     });
 
@@ -991,9 +1004,11 @@ document.addEventListener('DOMContentLoaded', () => {
         toast(message);
     }
 
+    const appendTags = (fd) => { (window.smTags ? window.smTags.value($('qcTagsMount')) : []).forEach((id) => fd.append('tags[]', id)); };
     async function saveGallery(scheduleId) {
         const fd = new FormData();
         fd.append('scheduleId', scheduleId);
+        appendTags(fd);
         const albumId = $('qcAlbum').value;
         if (albumId) {
             fd.append('albumId', albumId);
@@ -1038,6 +1053,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function saveNotes(scheduleId) {
         const fd = new FormData();
         fd.append('scheduleId', scheduleId);
+        appendTags(fd);
         if ($('qcNoteTitle').value.trim()) fd.append('title', $('qcNoteTitle').value.trim());
         const html = noteHtml();
         if (html && html !== '<p><br></p>') fd.append('note', html);

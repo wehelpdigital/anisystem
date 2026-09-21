@@ -18,12 +18,14 @@ class AsScheduleNote extends BaseModel
         'body',
         'imagePath',
         'media',
+        'tags',
         'sortOrder',
         'deleteStatus',
     ];
 
     protected $casts = [
         'media' => 'array',
+        'tags' => 'array',
         'sortOrder' => 'integer',
         'deleteStatus' => 'integer',
     ];

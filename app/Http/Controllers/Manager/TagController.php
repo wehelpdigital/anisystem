@@ -235,6 +235,17 @@ class TagController extends BaseScheduleController
                         'url' => route('sm.activities', array_filter(['id' => $schedule->id, 'day' => substr((string) ($n->noteDate ?: $n->created_at?->format('Y-m-d')), 0, 10)]))];
                 }
                 break;
+            case 'image':
+                foreach (\App\Models\AsGalleryImage::whereIn('id', $refIds)
+                    ->where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->get() as $g) {
+                    $clip = (bool) preg_match('/\.(mp4|webm|mov|m4v)$/i', (string) $g->path);
+                    $out[] = ['kind' => 'image', 'refId' => (int) $g->id, 'icon' => $clip ? '🎬' : '📷',
+                        'title' => trim((string) $g->caption) ?: ($clip ? 'Clip' : 'Photo'),
+                        'sub' => ($clip ? 'clip · ' : 'photo · ') . $day($g->created_at),
+                        'when' => $g->created_at?->format('Y-m-d'),
+                        'url' => route('sm.gallery', ['id' => $schedule->id])];
+                }
+                break;
             case 'item':
                 foreach (\App\Models\AsInventoryItem::whereIn('id', $refIds)
                     ->where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->get() as $i) {
