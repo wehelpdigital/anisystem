@@ -72,6 +72,61 @@
     .ar-hero .chip { display: inline-block; margin-top: .55rem; font-size: .68rem; font-weight: 800;
         letter-spacing: .05em; text-transform: uppercase; padding: .2rem .6rem; border-radius: 999px;
         background: rgb(255 255 255 / .18); }
+    /* The so-far hero: a standing word with a drawn mark, a score ring, a short headline. */
+    .ar-hero-row { display: flex; align-items: center; gap: .9rem; }
+    .ar-hero-t { min-width: 0; flex: 1 1 auto; }
+    .ar-stand { display: inline-flex; align-items: center; gap: .35rem; font-size: .68rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
+        padding: .22rem .65rem .22rem .5rem; border-radius: 999px; background: rgb(255 255 255 / .2); margin-bottom: .45rem; }
+    .ar-stand svg { width: .95rem; height: .95rem; }
+    .ar-ring { flex: none; width: 4.2rem; height: 4.2rem; border-radius: 999px; display: grid; place-items: center; position: relative;
+        background: conic-gradient(rgb(255 255 255 / .95) calc(var(--p, 0) * 1%), rgb(255 255 255 / .22) 0); }
+    .ar-ring::before { content: ''; position: absolute; inset: .38rem; border-radius: 999px; background: rgb(0 0 0 / .22); backdrop-filter: blur(2px); }
+    .ar-ring b { position: relative; font-size: 1.2rem; font-weight: 900; font-variant-numeric: tabular-nums; }
+    .ar-ring small { position: absolute; bottom: .5rem; font-size: .5rem; font-weight: 800; opacity: .8; letter-spacing: .04em; }
+    /* The graphs: the crop on its clock, the plan to today, the money by category. */
+    .ar-prog { display: grid; gap: .55rem; }
+    .ar-prog-row { display: grid; gap: .25rem; }
+    .ar-prog-h { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; font-size: .8rem; color: var(--color-gray-700); }
+    .ar-prog-h b { color: var(--color-gray-900); }
+    .ar-prog-h small { color: var(--color-gray-500); font-size: .72rem; white-space: nowrap; }
+    .ar-prog .track { display: block; height: 10px; border-radius: 999px; background: var(--color-gray-100); overflow: hidden; }
+    .ar-prog .fill { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #6b9f3d, #3d6823); width: 0; transition: width .7s cubic-bezier(.22,1,.36,1); }
+    .ar-prog .fill.is-plan { background: linear-gradient(90deg, #60a5fa, #2563eb); }
+    .ar-kv { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
+    .ar-kv span { display: inline-flex; align-items: baseline; gap: .3rem; padding: .22rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 700; border: 1px solid var(--color-gray-200); color: var(--color-gray-600); background: var(--color-white); }
+    .ar-kv span b { font-size: .84rem; font-weight: 800; color: var(--color-gray-900); font-variant-numeric: tabular-nums; }
+    .ar-kv span.is-bad b { color: #b91c1c; }
+    .ar-stack { display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: var(--color-gray-100); margin: .4rem 0 .5rem; }
+    .ar-stack i { display: block; height: 100%; }
+    .ar-legend { display: flex; flex-wrap: wrap; gap: .3rem .7rem; font-size: .72rem; color: var(--color-gray-600); }
+    .ar-legend i { display: inline-block; width: .6rem; height: .6rem; border-radius: .2rem; margin-right: .3rem; vertical-align: -1px; }
+    .ar-legend b { color: var(--color-gray-900); font-variant-numeric: tabular-nums; }
+    /* The good and the bad, as rows. */
+    .ar-gb { display: grid; gap: .4rem; }
+    .ar-gb-row { padding: .55rem .7rem; border-radius: .75rem; font-size: .8rem; line-height: 1.5; border: 1px solid var(--color-gray-200); color: var(--color-gray-700); background: var(--color-white); }
+    .ar-gb-row b { display: block; color: var(--color-gray-900); }
+    .ar-gb-row.is-good { border-color: #cfe3bd; background: #f6fbf0; }
+    .ar-gb-row.is-bad { border-color: #f3d9a4; background: #fffbf0; }
+    .ar-gb-row.is-bad em { display: block; font-style: normal; color: #92400e; margin-top: .15rem; }
+    .ar-two { display: grid; grid-template-columns: minmax(0, 1fr); gap: .5rem; margin-top: .5rem; }
+    @media (min-width: 560px) { .ar-two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+    .ar-two > div { border-radius: .75rem; padding: .55rem .7rem; font-size: .8rem; line-height: 1.5; border: 1px solid var(--color-gray-200); }
+    .ar-two > div b { display: block; font-size: .7rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; margin-bottom: .25rem; }
+    .ar-two .is-ok { border-color: #cfe3bd; background: #f6fbf0; color: #2f5219; }
+    .ar-two .is-miss { border-color: #f5c2c2; background: #fff7f7; color: #7f1d1d; }
+    .ar-two ul { margin: 0; padding-left: 1.05rem; }
+    .ar-drift { margin-top: .5rem; font-size: .8rem; color: var(--color-gray-700); line-height: 1.5; padding: .5rem .7rem; border-radius: .7rem; background: var(--color-gray-50); }
+    html.dark .ar-prog-h, html.dark .ar-drift { color: #cbd5c0; }
+    html.dark .ar-prog-h b, html.dark .ar-kv span b, html.dark .ar-legend b, html.dark .ar-gb-row b { color: #e8efe1; }
+    html.dark .ar-prog .track, html.dark .ar-stack { background: #22301a; }
+    html.dark .ar-kv span, html.dark .ar-gb-row { background: #151b12; border-color: #2b3a1c; color: #cbd5c0; }
+    html.dark .ar-gb-row.is-good { background: #1a2513; border-color: #3f5a2a; }
+    html.dark .ar-gb-row.is-bad { background: #262012; border-color: #6b4f16; }
+    html.dark .ar-gb-row.is-bad em { color: #f0d9a8; }
+    html.dark .ar-two .is-ok { background: #1a2513; border-color: #3f5a2a; color: #cfe6b8; }
+    html.dark .ar-two .is-miss { background: #2a1717; border-color: #6b2b2b; color: #f0a3a3; }
+    html.dark .ar-drift { background: #1c2416; }
+    html.dark .ar-legend { color: #a5b89a; }
     .ar-card { border-radius: 1rem; border: 1px solid var(--color-gray-200); background: var(--color-white);
         padding: 1rem 1.1rem; }
     .ar-card h3 { font-weight: 800; font-size: .92rem; color: var(--color-gray-900); margin-bottom: .6rem; }
@@ -373,9 +428,22 @@ const __init = () => {
         const parts = [];
         const standing = (r.standing || '').toLowerCase();
         const heroCls = KIND === 'sofar' ? (standing === 'rescue' ? ' is-rescue' : (standing === 'watch' ? ' is-watch' : '')) : '';
+        // The standing, said with a drawn mark and plain words.
+        const STAND = {
+            'on-track': { word: 'On track', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5"/></svg>' },
+            watch: { word: 'Needs attention', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2.5 20h19L12 3z"/><path d="M12 9v5m0 3h.01"/></svg>' },
+            rescue: { word: 'Needs rescue', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6m5.6 5.6 3.6 3.6m0-12.8-3.6 3.6m-5.6 5.6-3.6 3.6"/></svg>' },
+        };
+        const st = KIND === 'sofar' ? (STAND[standing] || null) : null;
+        const score = Number.isFinite(Number(r.score)) ? Math.max(0, Math.min(100, Math.round(Number(r.score)))) : null;
         parts.push(`<div class="ar-hero${heroCls}">
-            <h2>${esc(r.headline || meta.title || '')}</h2>
-            ${KIND === 'sofar' && standing ? `<span class="chip">${standing === 'rescue' ? '🚨 needs rescue' : (standing === 'watch' ? '👀 on watch' : '✅ on track')}</span>` : ''}
+            <div class="ar-hero-row">
+                ${KIND === 'sofar' && score !== null ? `<div class="ar-ring" style="--p:${score}"><b>${score}</b><small>/100</small></div>` : ''}
+                <div class="ar-hero-t">
+                    ${st ? `<span class="ar-stand">${st.icon}${st.word}</span>` : ''}
+                    <h2>${esc(r.headline || meta.title || '')}</h2>
+                </div>
+            </div>
             <p class="why">${esc(r.verdict || '')}</p>
         </div>`);
 
@@ -406,6 +474,72 @@ const __init = () => {
             if (r.comparison) parts.push(`<div class="ar-card"><h3>📊 Against your past seasons</h3><p class="ar-prose">${esc(r.comparison)}</p></div>`);
             parts.push(listCard('📋 Next season checklist', r.nextSeason, '☑️'));
         } else {
+            // The scores, five ways.
+            if (r.scores && typeof r.scores === 'object') {
+                const S = r.scores;
+                const rows = [['protocol', 'Protocol'], ['timing', 'Timing'], ['weather', 'Weather'], ['money', 'Money'], ['records', 'Records']].filter(([k]) => S[k] !== undefined && S[k] !== null);
+                if (rows.length) parts.push(`<div class="ar-card"><h3>📈 The season so far, scored</h3>${rows.map(([k, label]) => `
+                    <div class="ar-score"><span>${label}</span><span class="track"><span class="fill" data-w="${Math.max(0, Math.min(100, Number(S[k]) || 0))}"></span></span><b>${Math.max(0, Math.min(100, Number(S[k]) || 0))}</b></div>`).join('')}</div>`);
+            }
+            // The graphs: the app's own arithmetic, kept with the report.
+            const F = r.facts || null;
+            if (F && (F.lots || []).length) {
+                parts.push(`<div class="ar-card"><h3>🌱 Where the crop stands</h3><div class="ar-prog">${F.lots.map((l) => `
+                    <div class="ar-prog-row">
+                        <div class="ar-prog-h"><span><b>${esc(l.name)}</b> · ${esc(l.icon || '')} ${esc(l.crop || '')}</span><small>${l.day !== null && l.day !== undefined ? `${esc(l.counter)} ${l.day}` : 'no day zero'}${l.maturity ? ` of ~${l.maturity}` : ''}${l.stage ? ` · ${esc(l.stage)}` : ''}</small></div>
+                        <span class="track"><span class="fill" data-w="${l.pct === null || l.pct === undefined ? 0 : l.pct}"></span></span>
+                    </div>`).join('')}</div><p class="text-xs text-gray-400 mt-2">As of ${esc(F.asOf || '')} — the bar is the crop's calendar, day zero to typical maturity.</p></div>`);
+            }
+            if (F && F.plan && F.plan.total) {
+                const P = F.plan;
+                const pct = P.planned ? Math.round(P.done / P.planned * 100) : 0;
+                parts.push(`<div class="ar-card"><h3>📋 The plan to today</h3>
+                    <div class="ar-prog"><div class="ar-prog-row"><div class="ar-prog-h"><span><b>${P.done}</b> of ${P.planned} planned to date ticked done</span><small>${pct}%</small></div><span class="track"><span class="fill is-plan" data-w="${pct}"></span></span></div></div>
+                    <div class="ar-kv"><span class="${P.overdue ? 'is-bad' : ''}"><b>${P.overdue}</b> overdue</span><span><b>${P.coming}</b> in the next 14 days</span><span><b>${P.doneAll}</b> of ${P.total} done overall</span></div></div>`);
+            }
+            if (F && F.money && (Number(F.money.cost) > 0 || Number(F.money.revenue) > 0)) {
+                const M = F.money; const C = M.cats || {};
+                const CATS = [['materials', 'Materials', '#15803d'], ['labor', 'Labor', '#d97706'], ['services', 'Services', '#2563eb'], ['expense', 'Extra expenses', '#b91c1c'], ['purchase', 'Stock buys', '#7c3aed']].filter(([k]) => Number(C[k]) > 0);
+                const total = CATS.reduce((n, [k]) => n + Number(C[k]), 0) || 1;
+                const peso = (n) => ((window.ANEE_REGION || {}).symbol || '₱') + Math.round(Number(n || 0)).toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'));
+                parts.push(`<div class="ar-card"><h3>💸 The money so far</h3>
+                    <div class="ar-kv"><span>Spent <b>${peso(M.cost)}</b></span><span>Earned <b>${peso(M.revenue)}</b></span><span class="${Number(M.profit) < 0 ? 'is-bad' : ''}">${Number(M.profit) < 0 ? 'Loss' : 'Net'} <b>${peso(Math.abs(Number(M.profit)))}</b></span>${r.money && r.money.verdict ? `<span>Spend is <b>${esc(r.money.verdict)}</b></span>` : ''}</div>
+                    ${CATS.length ? `<div class="ar-stack">${CATS.map(([k, , c]) => `<i style="width:${(Number(C[k]) / total * 100).toFixed(1)}%;background:${c}" title="${k}"></i>`).join('')}</div>
+                    <div class="ar-legend">${CATS.map(([k, label, c]) => `<span><i style="background:${c}"></i>${label} <b>${peso(C[k])}</b></span>`).join('')}</div>` : ''}
+                    ${r.money && r.money.summary ? `<p class="ar-prose mt-3">${esc(r.money.summary)}</p>` : ''}</div>`);
+            } else if (r.money && r.money.summary) {
+                parts.push(`<div class="ar-card"><h3>💸 The money so far</h3><p class="ar-prose">${esc(r.money.summary)}</p></div>`);
+            }
+            // The good and the bad.
+            if ((r.good || []).length) parts.push(`<div class="ar-card"><h3>💪 What's good</h3><div class="ar-gb">${r.good.map((g) => `<div class="ar-gb-row is-good"><b>${esc(g.point || '')}</b>${esc(g.why || '')}</div>`).join('')}</div></div>`);
+            if ((r.bad || []).length) parts.push(`<div class="ar-card"><h3>🩹 What needs work</h3><div class="ar-gb">${r.bad.map((b) => `<div class="ar-gb-row is-bad"><b>${esc(b.point || '')}</b>${esc(b.why || '')}${b.fix ? `<em>Fix: ${esc(b.fix)}</em>` : ''}</div>`).join('')}</div></div>`);
+            // The protocol so far.
+            if (r.protocol && typeof r.protocol === 'object') {
+                const Pp = r.protocol;
+                parts.push(`<div class="ar-card"><h3>📋 The protocol so far</h3>
+                    ${Pp.summary ? `<p class="ar-prose">${esc(Pp.summary)}</p>` : ''}
+                    ${((Pp.followed || []).length || (Pp.missed || []).length) ? `<div class="ar-two">
+                        ${(Pp.followed || []).length ? `<div class="is-ok"><b>Done as planned</b><ul>${Pp.followed.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
+                        ${(Pp.missed || []).length ? `<div class="is-miss"><b>Missed, late or never planned</b><ul>${Pp.missed.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
+                    </div>` : ''}
+                    ${Pp.drift ? `<p class="ar-drift">${esc(Pp.drift)}</p>` : ''}</div>`);
+            }
+            if (r.timing && typeof r.timing === 'object' && (r.timing.summary || r.timing.stage)) {
+                const T = r.timing;
+                const behind = Number.isFinite(Number(T.daysBehind)) && T.daysBehind !== null ? Number(T.daysBehind) : null;
+                parts.push(`<div class="ar-card"><h3>⏱️ Timing</h3>
+                    <div class="ar-kv" style="margin:0 0 .5rem">${T.stage ? `<span>Stage <b>${esc(T.stage)}</b></span>` : ''}${behind !== null ? `<span class="${behind > 0 ? 'is-bad' : ''}"><b>${behind > 0 ? behind + ' days behind' : (behind < 0 ? (-behind) + ' days ahead' : 'On time')}</b></span>` : ''}</div>
+                    ${T.summary ? `<p class="ar-prose">${esc(T.summary)}</p>` : ''}</div>`);
+            }
+            if (r.weather && typeof r.weather === 'object' && (r.weather.summary || r.weather.outlook)) {
+                const Wx = r.weather;
+                parts.push(`<div class="ar-card"><h3>🌦️ The weather</h3>
+                    ${Wx.summary ? `<p class="ar-prose">${esc(Wx.summary)}</p>` : ''}
+                    ${Wx.outlook ? `<p class="ar-prose mt-2"><b>Ahead:</b> ${esc(Wx.outlook)}</p>` : ''}
+                    ${(Wx.risks || []).length ? `<div class="ar-kv">${Wx.risks.map((x) => `<span>${esc(x)}</span>`).join('')}</div>` : ''}</div>`);
+            } else if (r.weatherStory) {
+                parts.push(`<div class="ar-card"><h3>🌦️ The weather ahead</h3><p class="ar-prose">${esc(r.weatherStory)}</p></div>`);
+            }
             if ((r.risks || []).length) {
                 parts.push(`<div class="ar-card"><h3>⚠️ The risks</h3>${r.risks.map((x) => `
                     <div class="ar-li"><span class="e">•</span><span><b>${esc(x.risk || '')}</b>
@@ -418,7 +552,6 @@ const __init = () => {
                         <small>${esc(x.when || '')}${x.why ? ' — ' + esc(x.why) : ''}</small></span></div>`).join('')}</div>`);
             }
             parts.push(listCard('🧾 What the records lack', r.lacking, '▫️'));
-            if (r.weatherStory) parts.push(`<div class="ar-card"><h3>🌦️ The weather ahead</h3><p class="ar-prose">${esc(r.weatherStory)}</p></div>`);
         }
 
         if (r.encouragement) {
@@ -427,7 +560,7 @@ const __init = () => {
         }
 
         host.innerHTML = parts.join('');
-        requestAnimationFrame(() => host.querySelectorAll('.ar-score .fill').forEach((f) => { f.style.width = f.dataset.w + '%'; }));
+        requestAnimationFrame(() => host.querySelectorAll('.ar-score .fill, .ar-prog .fill').forEach((f) => { f.style.width = f.dataset.w + '%'; }));
         host.querySelector('[data-ar-again]')?.addEventListener('click', () => {
             host.hidden = true;
             $id('arReadyCard').hidden = false;

@@ -585,7 +585,9 @@ class FarmReportController extends BaseScheduleController
         }
 
         $lot = $lotId ? $schedule->lots()->where('id', $lotId)->first() : null;
-        $title = ($kind === 'sofar' ? 'Analyze So Far' : 'Anee Season Report') . ' — ' . $schedule->title
+        // Short: the shelf already sits inside the season, so the title says
+        // the kind, the lot when one was asked for, and the day.
+        $title = ($kind === 'sofar' ? 'So far' : 'Season report')
             . ($lot ? ' · ' . $lot->lotName : '') . ' · ' . now('Asia/Manila')->format('M j, Y');
         $row = AsFarmReport::create([
             'userId' => Auth::id(),
@@ -631,6 +633,17 @@ class FarmReportController extends BaseScheduleController
             }
 
             $row = AsFarmReport::find($id);
+            if ($row->kind === 'sofar') {
+                // The graphs draw the app's own arithmetic, not the model's.
+                try {
+                    $sch = \App\Models\AsCroppingSchedule::find($row->croppingScheduleId);
+                    $lotId = (int) (($row->params ?? [])['lotId'] ?? 0);
+                    $lotRow = $lotId && $sch ? $sch->lots()->where('id', $lotId)->first() : null;
+                    if ($sch) $report['facts'] = $this->sofarFacts($sch, $lotRow);
+                } catch (\Throwable $e) {
+                    report($e);
+                }
+            }
             $note = AiUsage::record($row->kind === 'sofar' ? 'sofar' : 'season', (int) $row->userId, $payerId, $id, $settings, $result, (int) $price);
             $credits->chargeAllowingNegative($payerId, (float) $price,
                 mb_substr(($row->kind === 'sofar' ? 'Analyze So Far report' : 'Anee Season Report') . ' — ' . mb_substr((string) $row->title, 0, 120) . $note, 0, 250));
@@ -1188,10 +1201,10 @@ class FarmReportController extends BaseScheduleController
 
         $schema = $kind === 'season'
             ? '{"headline": string (one warm sentence naming the season\'s verdict), "verdict": string (3-5 sentences, plain and unbiased — the season as it really went), "scores": {"overall": int 0-100, "planning": int, "execution": int, "costControl": int, "timing": int, "recordKeeping": int}, "strengths": [3-6 strings — what genuinely went well, be specific], "wentWrong": [2-6 strings — honest, specific, never cruel], "improvements": [3-6 strings — concrete next-season moves], "protocolChanges": [2-5 of {"change": string, "current": string (what was done, with its date or day-count), "suggested": string (what to do instead), "timing": string (say it in ' . $schedule->dayType . ' day-counts, e.g. "' . $schedule->dayType . ' 25-30"), "why": string}], "lacking": [1-4 strings — records or practices the season was missing], "weatherStory": string (what the sky actually did to this season — rain, dry runs, wind, ENSO — and where it explains a delay or a loss), "delays": string (where the crop ran late or early against its maturity, and the honest reasons — weather, herbicide setbacks, labor), "comparison": string (against the farmer\'s own past seasons if given, else against typical figures for the crop; one short paragraph), "encouragement": string (2-3 warm sentences — genuine, a little jolly, proud of what deserves pride, and certain the next season can be better), "nextSeason": [3-6 short checklist strings]}'
-            : '{"headline": string (one warm sentence on where the season stands), "standing": "on-track" | "watch" | "rescue" (unbiased — say rescue when it is true), "verdict": string (3-5 sentences on the season as it stands today), "risks": [2-5 of {"risk": string, "severity": "low"|"moderate"|"high", "why": string}], "whatsNext": [3-7 of {"action": string, "when": string (a date or a ' . $schedule->dayType . ' day-count), "why": string, "urgency": "now"|"soon"|"routine"}], "lacking": [0-4 strings — what the records are missing that would sharpen this read], "weatherStory": string (what the recent sky and ENSO mean for the next few weeks here), "encouragement": string (2-3 warm sentences — honest about the hard parts, sure the farmer can land this)}';
+            : '{"headline": string (at most 10 words on where the season stands — a title, not a sentence), "standing": "on-track" | "watch" | "rescue" (unbiased — say rescue when it is true), "score": int 0-100 (how well the season stands today, all things weighed), "verdict": string (2-4 sentences on the season as it stands today), "scores": {"protocol": int 0-100 (how faithfully the plan has been followed so far), "timing": int 0-100 (how well the work sits on the crop\'s calendar), "weather": int 0-100 (how kindly the sky has treated the crop and what is ahead), "money": int 0-100 (how the spend runs against a sensible budget for this crop), "records": int 0-100 (how complete the records are)}, "good": [2-5 of {"point": string (short), "why": string (one sentence)}], "bad": [1-5 of {"point": string (short), "why": string (one sentence), "fix": string (what to do about it)}], "protocol": {"summary": string (2-3 sentences on the plan so far — done against planned, to today), "followed": [0-5 short strings — what was done as planned], "missed": [0-5 short strings — what was skipped, late or never planned that the crop needed], "drift": string (one sentence: how far the work has drifted from the plan and what it costs)}, "timing": {"summary": string (2-3 sentences on where the crop is on its own clock against the work done), "stage": string (the growth stage it is in now), "daysBehind": int or null (days the work runs behind the crop, 0 when on time, negative when ahead)}, "weather": {"summary": string (2-3 sentences on what the sky has done to the crop so far), "outlook": string (what the next few weeks and ENSO mean here), "risks": [0-4 short strings]}, "money": {"summary": string (2-3 sentences on the spend so far against the crop and the season), "verdict": "lean"|"fair"|"heavy"}, "risks": [2-5 of {"risk": string, "severity": "low"|"moderate"|"high", "why": string}], "whatsNext": [3-7 of {"action": string, "when": string (a date or a ' . $schedule->dayType . ' day-count), "why": string, "urgency": "now"|"soon"|"routine"}], "lacking": [0-4 strings — what the records are missing that would sharpen this read], "encouragement": string (2-3 warm sentences — honest about the hard parts, sure the farmer can land this)}';
 
         return 'You are an agricultural analyst for a smallholder farm in ' . \App\Support\Region::name() . ', writing '
-            . ($kind === 'season' ? 'a full season debrief now that the season is closed.' : 'a mid-season read of where things stand and what to do next.')
+            . ($kind === 'season' ? 'a full season debrief now that the season is closed.' : 'a mid-season read of where things stand and what to do next. Judge the PROTOCOL SO FAR from the activity list: what was planned up to today and what was actually ticked done, what was skipped or late, and what the crop needed that was never planned; judge the TIMING of that work against the crop\'s own stage today; judge the WEATHER\'s part so far and ahead; judge the MONEY so far against what this crop and stage usually cost. Say plainly what is good and what is bad.')
             . ' Everything below is the farm\'s own records, compiled by the app — treat the numbers as facts and the notes as the farmer\'s own words.'
             . ' Be unbiased: name what went wrong plainly. Be warm and a little jolly in tone — this is a debrief between friends, not an audit.'
             . ' Account for delays honestly: ENSO conditions, typhoons, drought spells, herbicide setbacks and labor gaps stretch a crop\'s calendar — use the weather records given before blaming the farmer.'
@@ -1280,6 +1293,58 @@ class FarmReportController extends BaseScheduleController
     }
 
     /** Strict-JSON parse: fences stripped, must decode to an object. */
+    /**
+     * What the so-far graphs draw: each lot on its own clock, the plan to
+     * today (planned, done, overdue, coming), and the money by category —
+     * all computed here, so the picture is the app's and not the model's.
+     */
+    private function sofarFacts(\App\Models\AsCroppingSchedule $schedule, $lot): array
+    {
+        $today = now('Asia/Manila')->startOfDay();
+        $lots = $lot ? collect([$lot]) : $schedule->lots;
+        [$dz, $tp] = \App\Support\LotCalendar::effectiveAnchors($schedule);
+        $lotRows = [];
+        foreach ($lots as $L) {
+            if (! $L->crop) continue;
+            $age = null;
+            try { $age = \App\Support\LotCalendar::ageOf($L, $today, $dz[$L->id] ?? null, $tp[$L->id] ?? null); } catch (\Throwable $e) { $age = null; }
+            $maturity = (int) ($L->daysToMaturity ?: (\App\Support\CropCatalog::CROPS[$L->crop]['maturity'] ?? 0));
+            $day = $age['day'] ?? null;
+            $counter = $age['counter'] ?? ($L->dayType ?: 'DAS');
+            $stage = ($day !== null && $counter !== 'AGE') ? \App\Support\CropStages::stageFor($L->crop, max(0, (int) $day), $counter, $maturity ?: null) : null;
+            $lotRows[] = [
+                'name' => $L->lotName,
+                'crop' => \App\Support\CropStages::label($L->crop) ?: $L->crop,
+                'icon' => \App\Support\CropStages::icon($L->crop),
+                'counter' => $counter,
+                'day' => $day,
+                'maturity' => $maturity ?: null,
+                'pct' => ($day !== null && $maturity && $counter !== 'AGE') ? max(0, min(100, (int) round($day / $maturity * 100))) : null,
+                'stage' => $stage['label'] ?? null,
+            ];
+        }
+        $acts = $schedule->activities()->with('lots:id')->get();
+        if ($lot) {
+            $acts = $acts->filter(fn ($a) => $a->lots->isEmpty() || $a->lots->contains('id', $lot->id));
+        }
+        $plan = ['planned' => 0, 'done' => 0, 'overdue' => 0, 'coming' => 0, 'total' => $acts->count(), 'doneAll' => 0];
+        foreach ($acts as $a) {
+            $d = $a->targetDate ? \Carbon\Carbon::parse($a->targetDate)->startOfDay() : null;
+            $done = (bool) $a->isDone;
+            if ($done) $plan['doneAll']++;
+            if ($d && $d->lte($today)) { $plan['planned']++; if ($done) $plan['done']++; elseif ($d->lt($today)) $plan['overdue']++; }
+            elseif ($d && ! $done && $d->lte($today->copy()->addDays(14))) { $plan['coming']++; }
+        }
+        $pf = $this->profitFacts($schedule);
+
+        return [
+            'asOf' => $today->format('M j, Y'),
+            'lots' => $lotRows,
+            'plan' => $plan,
+            'money' => ['cost' => $pf['cost'], 'revenue' => $pf['revenue'], 'profit' => $pf['profit'], 'cats' => $pf['costCats']],
+        ];
+    }
+
     private function parseAneeReport(string $text): ?array
     {
         $t = trim($text);
@@ -1335,7 +1400,37 @@ class FarmReportController extends BaseScheduleController
                 if (! empty($r[$k])) { $L[] = ''; $L[] = $h; $L[] = $r[$k]; }
             }
         } else {
-            $L[] = 'Standing: ' . strtoupper((string) ($r['standing'] ?? ''));
+            $L[] = 'Standing: ' . strtoupper((string) ($r['standing'] ?? '')) . (isset($r['score']) ? ' — ' . (int) $r['score'] . '/100' : '');
+            if (! empty($r['scores']) && is_array($r['scores'])) {
+                $L[] = 'Scores: ' . implode(', ', array_map(fn ($k, $v) => $k . ' ' . (int) $v, array_keys($r['scores']), $r['scores']));
+            }
+            if (! empty($r['good'])) {
+                $L[] = '';
+                $L[] = "WHAT'S GOOD";
+                foreach ((array) $r['good'] as $x) { $L[] = ' - ' . ($x['point'] ?? '') . ' — ' . ($x['why'] ?? ''); }
+            }
+            if (! empty($r['bad'])) {
+                $L[] = '';
+                $L[] = 'WHAT NEEDS WORK';
+                foreach ((array) $r['bad'] as $x) { $L[] = ' - ' . ($x['point'] ?? '') . ' — ' . ($x['why'] ?? '') . (isset($x['fix']) ? ' Fix: ' . $x['fix'] : ''); }
+            }
+            if (! empty($r['protocol']) && is_array($r['protocol'])) {
+                $L[] = '';
+                $L[] = 'THE PROTOCOL SO FAR';
+                if (! empty($r['protocol']['summary'])) $L[] = $r['protocol']['summary'];
+                foreach ((array) ($r['protocol']['followed'] ?? []) as $x) { $L[] = ' + ' . $x; }
+                foreach ((array) ($r['protocol']['missed'] ?? []) as $x) { $L[] = ' - ' . $x; }
+                if (! empty($r['protocol']['drift'])) $L[] = $r['protocol']['drift'];
+            }
+            foreach ([['timing', 'TIMING'], ['weather', 'THE WEATHER'], ['money', 'THE MONEY']] as [$k, $h]) {
+                if (! empty($r[$k]) && is_array($r[$k])) {
+                    $L[] = '';
+                    $L[] = $h;
+                    foreach (['summary', 'stage', 'outlook', 'verdict'] as $f) { if (! empty($r[$k][$f])) $L[] = ($f === 'summary' ? '' : ucfirst($f) . ': ') . $r[$k][$f]; }
+                    if (isset($r[$k]['daysBehind']) && $r[$k]['daysBehind'] !== null) $L[] = 'Days behind: ' . (int) $r[$k]['daysBehind'];
+                    foreach ((array) ($r[$k]['risks'] ?? []) as $x) { $L[] = ' - ' . $x; }
+                }
+            }
             if (! empty($r['risks'])) {
                 $L[] = '';
                 $L[] = 'RISKS';
