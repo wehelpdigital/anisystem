@@ -353,7 +353,7 @@
         </div>
         <div class="mt-3">
             <label class="form-label" for="pbtDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="pbtDesc" class="form-input" rows="3" maxlength="4000" placeholder="How it is done, what to watch while doing it…"></textarea>
+            <textarea id="pbtDesc" class="form-textarea" rows="3" maxlength="4000" placeholder="How it is done, what to watch while doing it…"></textarea>
         </div>
 
         <div class="pbt-sec">
@@ -369,7 +369,7 @@
 
         <div class="mt-4">
             <label class="form-label" for="pbtNote">Note <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="pbtNote" class="form-input" rows="2" maxlength="2000" placeholder="A caution, a reminder, a lesson from last season…"></textarea>
+            <textarea id="pbtNote" class="form-textarea" rows="2" maxlength="2000" placeholder="A caution, a reminder, a lesson from last season…"></textarea>
         </div>
         <div class="mt-4">
             <span class="form-label">Importance</span>

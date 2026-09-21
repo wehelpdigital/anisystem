@@ -174,6 +174,6 @@
     </div>
     <div>
         <label class="form-label" for="{{ $pfx }}Desc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
-        <textarea id="{{ $pfx }}Desc" class="form-input" rows="3" maxlength="2000" placeholder="What this protocol is for, where it was proven, what it assumes…"></textarea>
+        <textarea id="{{ $pfx }}Desc" class="form-textarea" rows="3" maxlength="2000" placeholder="What this protocol is for, where it was proven, what it assumes…"></textarea>
     </div>
 </div>

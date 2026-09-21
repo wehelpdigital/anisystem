@@ -7,19 +7,6 @@
 
 @push('head')
 <style>
-    .rx-about { display: flex; gap: .85rem; align-items: flex-start; padding: 1rem 1.05rem; margin-bottom: 1rem; border-radius: 1.1rem; position: relative; overflow: hidden;
-        background: linear-gradient(135deg, #f4f9ee 0%, #fdfaf0 100%); border: 1px solid #d9e8c8; }
-    .rx-about::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: linear-gradient(180deg, #5c8f34, #b7862b); }
-    .rx-about-e { flex: none; font-size: 1.5rem; line-height: 1.1; }
-    .rx-about-t { min-width: 0; flex: 1 1 auto; }
-    .rx-about-t b { display: block; font-family: var(--font-heading); font-size: 1rem; color: #2f5219; margin-bottom: .25rem; }
-    .rx-about-t p { font-size: .82rem; line-height: 1.55; color: #3f4a37; }
-    .rx-about-t ul { margin: .45rem 0 0; padding: 0; list-style: none; display: grid; gap: .25rem; }
-    .rx-about-t li { font-size: .8rem; line-height: 1.45; color: #3f4a37; padding-left: 1.1rem; position: relative; }
-    .rx-about-t li::before { content: '✓'; position: absolute; left: 0; top: 0; color: #4a7c2a; font-weight: 800; }
-    html.dark .rx-about { background: linear-gradient(135deg, #17200f 0%, #221d10 100%); border-color: #2f3f1f; }
-    html.dark .rx-about-t b { color: #cfe6b8; }
-    html.dark .rx-about-t p, html.dark .rx-about-t li { color: #b7c2ad; }
     .rx-empty { text-align: center; padding: 2.4rem 1.5rem; }
     .rx-empty-e { display: inline-flex; width: 3.4rem; height: 3.4rem; border-radius: 1rem; background: var(--color-brand-50); color: var(--color-brand-700); align-items: center; justify-content: center; margin-bottom: .7rem; }
     .rx-empty-e svg { width: 1.6rem; height: 1.6rem; }
@@ -28,6 +15,30 @@
     html.dark .rx-empty-e { background: #22301a; color: #a5c97e; }
     html.dark .rx-empty-t { color: #e8efe1; }
 
+    /* The note above the shelf — the same foldable card the analyses open
+       with. It folds to its title, the choice is remembered, and the fold
+       animates on grid rows rather than snapping. */
+    .wtp-quote { border-radius: .9rem; margin-bottom: 1rem; overflow: hidden; background: linear-gradient(115deg, #f3f8ec, #e4efd4); border: 1px solid #cfe3b8; }
+    .wtp-quote b { color: #2d5016; }
+    .q-head { display: flex; align-items: center; gap: .6rem; width: 100%; text-align: left; padding: .7rem .9rem; cursor: pointer; }
+    .q-head .q-ico { font-size: 1.15rem; flex: none; }
+    .q-title { flex: 1 1 auto; min-width: 0; font-size: .84rem; font-weight: 800; color: #2d5016; }
+    .q-hint { flex: none; font-size: .74rem; font-weight: 700; color: #3d5226; opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .is-min .q-hint { opacity: .8; }
+    .q-c { flex: none; width: 1rem; height: 1rem; color: #3d5226; opacity: .6; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .is-min .q-c { transform: rotate(-90deg); }
+    .q-body { display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    .is-min .q-body { grid-template-rows: 0fr; opacity: 0; }
+    .q-body-in { min-height: 0; overflow: hidden; display: grid; gap: .5rem; padding: 0 .9rem; }
+    .q-body-in::after { content: ''; height: .4rem; }
+    .q-card { border-radius: .7rem; padding: .6rem .75rem; font-size: .82rem; color: #3d5226; line-height: 1.5; background: rgb(255 255 255 / .6); border: 1px solid rgb(207 227 184 / .8); }
+    .q-card b { display: block; margin-bottom: .1rem; }
+    .q-card b.is-inline { display: inline; margin: 0; }
+    html.dark .wtp-quote { background: linear-gradient(115deg, #1c2913, #22301a); border-color: #2b3a1c; }
+    html.dark .wtp-quote b, html.dark .q-title { color: #cfe6b8; }
+    html.dark .q-hint, html.dark .q-c { color: #a8bd93; }
+    html.dark .q-card { background: rgb(0 0 0 / .18); border-color: #2f3f1f; color: #b7c2ad; }
+    @media (prefers-reduced-motion: reduce) { .q-body, .q-c, .q-hint { transition: none; } }
     .pb-new { display: flex; align-items: center; justify-content: center; gap: .5rem; width: 100%; padding: .8rem 1rem; border-radius: .9rem; font-weight: 800; font-size: .92rem;
         background: #3d6823; color: #fff; border: 1px solid #3d6823; transition: transform .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
     .pb-new:hover { background: #2f5219; transform: translateY(-1px); }
@@ -62,18 +73,22 @@
 @endpush
 
 @section('content')
+@php $aboutOpt = ['quote' => $options['quote'], 'balance' => $options['balance'], 'unlimited' => $options['unlimited'], 'canAnalyze' => $options['canAnalyze'], 'aiLocked' => $options['aiLocked']]; @endphp
 <div class="max-w-2xl mx-auto">
-    <div class="rx-about">
-        <span class="rx-about-e">📋</span>
-        <div class="rx-about-t">
-            <b>Write the protocol you actually follow</b>
-            <p>A protocol is your season on paper: every task pinned to a day of the count — DAS, DAT or DAP — with what to apply, how much per knapsack, who it needs and how much it matters.</p>
-            <ul>
-                <li>Drag tasks into order; the day count keeps them honest.</li>
-                <li>Every change saves itself, with undo and redo.</li>
-                <li>Port a finished protocol into a real cropping schedule from a start date.</li>
-                <li>Ask Anee to review it — what is strong, what is missing, what could go wrong.</li>
-            </ul>
+    <div class="wtp-quote" id="pbAbout">
+        <button type="button" class="q-head" id="pbAboutHead" aria-expanded="true">
+            <span class="q-ico">📋</span>
+            <span class="q-title">What the Protocol Builder is</span>
+            <span class="q-hint" id="pbAboutHint">Tap to read</span>
+            <svg class="q-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="q-body">
+            <div class="q-body-in">
+                <div class="q-card"><b>Your season, written by you.</b>A protocol is the plan you actually follow: every task pinned to a day of the count — DAS, DAT or DAP — with what to apply and how much per knapsack, who it needs and how much it matters. The Crop Protocol Analysis has Anee write a season for one field; here you write it yourself, from your own experience or an agronomist's sheet, and keep it to reuse season after season.</div>
+                <div class="q-card"><b>How it works.</b>Name it, choose the crop and how its days are counted, then add the tasks one by one. Drag them into order — the count keeps them honest: a task cannot land before an earlier day without its day changing. Every change saves itself, with undo and redo.</div>
+                <div class="q-card"><b>What it turns into.</b>Port a finished protocol into a real cropping schedule from a start date — one lot, one activity per task, each on its own date. Or ask Anee to review it: she reads every task against the crop's growth stages and says what is strong, what is missing and what could go wrong.</div>
+                <div class="q-card" id="pbAboutCost"></div>
+            </div>
         </div>
     </div>
 
@@ -144,6 +159,29 @@
     const DAY_TYPES = @json($options['dayTypes']);
     let ROWS = [];
     let MENU_ID = null;
+
+    // The note folds to its title and remembers the choice, like the analyses' cards.
+    const ABOUT_KEY = 'anee-pb-about-min';
+    let aboutMin = false;
+    try { aboutMin = localStorage.getItem(ABOUT_KEY) === '1'; } catch (_) { /* opens full */ }
+    function paintAbout() {
+        $id('pbAbout').classList.toggle('is-min', aboutMin);
+        $id('pbAboutHead').setAttribute('aria-expanded', aboutMin ? 'false' : 'true');
+    }
+    $id('pbAboutHead').addEventListener('click', () => {
+        aboutMin = !aboutMin;
+        try { localStorage.setItem(ABOUT_KEY, aboutMin ? '1' : '0'); } catch (_) { /* not remembered */ }
+        paintAbout();
+    });
+    paintAbout();
+    // The coin is the bundle's; paint the cost line once it is there.
+    function paintCost() {
+        const o = @json($aboutOpt);
+        const cost = $id('pbAboutCost');
+        if (o.aiLocked) { cost.innerHTML = "Building and porting cost nothing. Anee's review comes with <b class=\"is-inline\">Libre + Anee</b> and every plan above it."; return; }
+        if (!o.canAnalyze) { cost.innerHTML = "Building and porting cost nothing. Anee's review is not available right now."; return; }
+        cost.innerHTML = `Building and porting cost nothing. Anee's review spends <b class="is-inline">${o.quote} credits</b>, and you have ${window.creditCoin(o.unlimited ? '∞' : Number(o.balance).toLocaleString())}. Nothing is charged until you ask for one.`;
+    }
 
     function paint() {
         const q = ($id('pbSearch').value || '').trim().toLowerCase();
@@ -240,7 +278,7 @@
         } catch (err) { toast(err.message, 'error'); btn.disabled = false; }
     });
 
-    const boot = () => load();
+    const boot = () => { paintCost(); load(); };
     if (window.api) boot(); else window.addEventListener('load', boot, { once: true });
 })();
 </script>
