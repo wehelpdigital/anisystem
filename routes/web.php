@@ -493,6 +493,18 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/crop-protocol/job/{id}', [App\Http\Controllers\CropProtocolController::class, 'jobState'])->whereNumber('id')->name('proto.job');
     Route::delete('/app/crop-protocol/{id}', [App\Http\Controllers\CropProtocolController::class, 'destroy'])->whereNumber('id')->name('proto.delete');
     Route::get('/app/when-to-plant/job/{id}', [App\Http\Controllers\WhenToPlantController::class, 'jobState'])->whereNumber('id')->name('wtp.job');
+    // Protocol Builder — a farmer's own protocol, task by task on a day count, ported into a season when ready.
+    Route::get('/app/protocol-builder', [App\Http\Controllers\ProtocolBuilderController::class, 'page'])->name('pb.page');
+    Route::get('/app/protocol-builder/list', [App\Http\Controllers\ProtocolBuilderController::class, 'list'])->name('pb.list');
+    Route::post('/app/protocol-builder', [App\Http\Controllers\ProtocolBuilderController::class, 'store'])->name('pb.store');
+    Route::get('/app/protocol-builder/{id}', [App\Http\Controllers\ProtocolBuilderController::class, 'open'])->whereNumber('id')->name('pb.open');
+    Route::post('/app/protocol-builder/{id}/save', [App\Http\Controllers\ProtocolBuilderController::class, 'save'])->whereNumber('id')->name('pb.save');
+    Route::post('/app/protocol-builder/{id}/meta', [App\Http\Controllers\ProtocolBuilderController::class, 'meta'])->whereNumber('id')->name('pb.meta');
+    Route::post('/app/protocol-builder/{id}/duplicate', [App\Http\Controllers\ProtocolBuilderController::class, 'duplicate'])->whereNumber('id')->name('pb.duplicate');
+    Route::post('/app/protocol-builder/{id}/delete', [App\Http\Controllers\ProtocolBuilderController::class, 'destroy'])->whereNumber('id')->name('pb.delete');
+    Route::post('/app/protocol-builder/{id}/analyze', [App\Http\Controllers\ProtocolBuilderController::class, 'analyze'])->whereNumber('id')->name('pb.analyze');
+    Route::get('/app/protocol-builder/{id}/job', [App\Http\Controllers\ProtocolBuilderController::class, 'job'])->whereNumber('id')->name('pb.job');
+    Route::post('/app/protocol-builder/{id}/port', [App\Http\Controllers\ProtocolBuilderController::class, 'port'])->whereNumber('id')->name('pb.port');
     Route::get('/app/weather', [App\Http\Controllers\WeatherController::class, 'forecast'])->name('app.weather');
     Route::get('/app/sm-weather', [App\Http\Controllers\WeatherController::class, 'scheduleForecast'])->name('sm.weather');
     // Weather as a schedule module: the 6-day view plus an hourly tab.

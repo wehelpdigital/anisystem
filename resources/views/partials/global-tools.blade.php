@@ -106,6 +106,9 @@
         .qa-wtp:hover { border-color: #c7d2f5; } .qa-wtp:hover .qa-go { color: #4c65e0; }
         html.dark .qa-wtp .qa-ico { background: rgb(76 101 224 / .22); color: #a5b6f2; }
         .qa-rec .qa-ico { background: #fdecec; color: #b91c1c; }
+        .qa-build .qa-ico { background: #eef6e6; color: #3d6823; }
+        .qa-build:hover { border-color: #cfe3bd; } .qa-build:hover .qa-go { color: #3d6823; }
+        html.dark .qa-build .qa-ico { background: rgb(61 104 35 / .25); color: #a5c97e; }
         html.dark .qa-notes .qa-ico { background: rgb(180 83 9 / .18); color: #e0b457; }
         html.dark .qa-gallery .qa-ico { background: rgb(29 78 216 / .22); color: #9fc0f5; }
         html.dark .qa-cap .qa-ico { background: rgb(61 104 35 / .25); color: #a5c97e; }
@@ -198,6 +201,15 @@
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 @endif
             </a>
+
+        <a href="{{ route('pb.page') }}" class="qa-tile qa-build">
+            <span class="qa-ico"><img src="{{ asset('images/icons/biostimulant.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
+            <span class="qa-txt">
+                <b>Protocol Builder</b>
+                <i>Write your own protocol task by task on a DAS/DAT/DAP count — what to apply, per knapsack, who it needs — then port it into a season or have Anee review it.</i>
+            </span>
+            <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
             {{-- The four analyses first (the owner's order, 2026-09-16); the
                  notes and the pictures gathered across every season follow. --}}
             <a href="{{ route('notes.hub') }}" class="qa-tile qa-notes">

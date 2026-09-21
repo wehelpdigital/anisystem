@@ -29,6 +29,7 @@ final class AiPrices
         'sofar' => 200,
         'compare' => 30,
         'realign' => 60,
+        'builder' => 100,
     ];
 
     public const NAMES = [
@@ -40,6 +41,7 @@ final class AiPrices
         'sofar' => 'Analyze So Far report',
         'compare' => 'Comparison analysis',
         'realign' => 'Realign by Anee (growth stage)',
+        'builder' => 'Protocol Builder review (Anee reads a protocol you wrote)',
     ];
 
     /** @var array<string, int>|null */
