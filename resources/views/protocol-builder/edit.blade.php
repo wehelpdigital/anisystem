@@ -61,10 +61,10 @@
     @keyframes pbIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
     .pb-card.dragging { opacity: .32; outline: 2px dashed #b9c6a8; outline-offset: -2px; filter: grayscale(.5); }
     .pb-card.just-moved { box-shadow: 0 0 0 3px rgba(107,159,61,.35); }
-    .pb-day { flex: none; width: 3.9rem; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: .6rem .25rem; color: #fff; text-align: center; background: var(--prio, #6b7280); }
+    .pb-day { flex: none; width: 4.4rem; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: .6rem .3rem; color: #fff; text-align: center; background: var(--prio, #6b7280); }
     .pb-day b { font-size: .6rem; letter-spacing: .06em; opacity: .9; }
     .pb-day span { font-size: 1.35rem; font-weight: 900; line-height: 1.1; font-variant-numeric: tabular-nums; }
-    .pb-day i { font-style: normal; font-size: .58rem; opacity: .85; margin-top: .15rem; line-height: 1.15; max-width: 3.6rem; max-height: 2.3em; overflow: hidden; }
+    .pb-day i { font-style: normal; font-size: .58rem; opacity: .85; margin-top: .15rem; line-height: 1.15; max-width: 4rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
     .pb-card[data-prio="critical"] { --prio: #9c1c1c; }
     .pb-card[data-prio="high"] { --prio: #d9534f; }
     .pb-card[data-prio="medium"] { --prio: #c9902e; }
@@ -676,7 +676,7 @@
         if (REVIEW) tags.push(`<span class="pb-tag is-score">Anee: <b>${REVIEW.score}/100</b></span>`);
         if (P.ported) tags.push(`<a class="pb-tag is-ported" href="${esc(P.ported.url)}">Ported ${esc(P.ported.at || '')} → <b>${esc(P.ported.title || 'the season')}</b></a>`);
         $id('pbHeadTags').innerHTML = tags.join('');
-        const pageTitle = $id('appPageTitle'); if (pageTitle) pageTitle.textContent = P.title;
+        const pageTitle = $id('appPageTitle'); if (pageTitle) { pageTitle.textContent = P.title; const sub = pageTitle.nextElementSibling; if (sub && sub.tagName === 'P') sub.textContent = `${P.cropLabel || 'No crop yet'} · ${dt.label || P.dayType}`; }
         document.title = P.title + ' | anee.io';
         $id('pbMetaBtn').style.display = editing() ? '' : 'none';
     }
