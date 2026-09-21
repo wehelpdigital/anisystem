@@ -70,14 +70,15 @@
     .rx-about-e { flex: none; font-size: 1.5rem; line-height: 1.1; }
     .rx-about-e img { width: 1.9rem; height: 1.9rem; border-radius: 999px; object-fit: cover; }
     .rx-about-t { min-width: 0; flex: 1 1 auto; }
-    .rx-about-t b { display: block; font-family: var(--font-heading); font-size: 1rem; color: #2f5219; margin-bottom: .25rem; }
+    .rx-about-t > b { display: block; font-family: var(--font-heading); font-size: 1rem; color: #2f5219; margin-bottom: .25rem; }
+    .rx-about-t li b { font-weight: 800; color: #2f5219; }
     .rx-about-t p { font-size: .82rem; line-height: 1.55; color: #3f4a37; }
     .rx-about-t ul { margin: .45rem 0 0; padding: 0; list-style: none; display: grid; gap: .25rem; }
     .rx-about-t li { font-size: .8rem; line-height: 1.45; color: #3f4a37; padding-left: 1.1rem; position: relative; }
     .rx-about-t li::before { content: '✓'; position: absolute; left: 0; top: 0; color: #4a7c2a; font-weight: 800; }
     .rx-about-note { margin-top: .5rem; font-size: .74rem; color: #6b7a5e; }
     html.dark .rx-about { background: linear-gradient(135deg, #17200f 0%, #221d10 100%); border-color: #2f3f1f; }
-    html.dark .rx-about-t b { color: #cfe6b8; }
+    html.dark .rx-about-t > b, html.dark .rx-about-t li b { color: #cfe6b8; }
     html.dark .rx-about-t p, html.dark .rx-about-t li { color: #b7c2ad; }
     html.dark .rx-about-note { color: #93a684; }
     /* The same card, folded to its title: the head is a button, the body
