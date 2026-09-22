@@ -525,53 +525,112 @@ PROMPT;
 
     /* ------------------------------------------------------------ into a season */
 
-    /**
-     * Make a cropping schedule out of the protocol: one lot, one activity per
-     * task, dated from a start. NOT ROUTED for now — the owner will give the
-     * port its own module; the method waits here for it.
-     */
-    public function port(Request $request, int $id)
+    /** The member's lots across their seasons — the port sheet's "from an existing lot" picker. */
+    public function lots()
     {
-        $p = $this->mine($id);
-        if (! $p) {
-            return $this->json(false, 'That protocol is not yours.', [], 404);
-        }
+        $rows = DB::table('as_schedule_lots as l')
+            ->join('as_cropping_schedules as s', 's.id', '=', 'l.croppingScheduleId')
+            ->where('s.anisystemUserId', (int) Auth::id())->where('s.deleteStatus', 1)->where('l.deleteStatus', 1)
+            ->orderByDesc('s.id')->orderBy('l.id')->limit(300)
+            ->get(['l.id', 'l.lotName', 'l.lotSize', 'l.lotSizeUnit', 'l.crop', 'l.variety', 'l.dayType', 's.title as scheduleTitle', 's.id as scheduleId']);
+
+        return $this->json(true, '', ['lots' => $rows->map(fn ($r) => [
+            'id' => (int) $r->id,
+            'name' => $r->lotName,
+            'size' => (float) $r->lotSize,
+            'unit' => $r->lotSizeUnit ?: 'hectare',
+            'crop' => $r->crop,
+            'cropLabel' => $r->crop ? (CropStages::label($r->crop) ?: $r->crop) : null,
+            'cropIcon' => $r->crop ? CropStages::icon($r->crop) : '🌱',
+            'variety' => $r->variety,
+            'dayType' => $r->dayType,
+            'schedule' => $r->scheduleTitle,
+            'scheduleId' => (int) $r->scheduleId,
+        ])->values()->all()]);
+    }
+
+    /**
+     * PORT TO A CROPPING SCHEDULE — one new season, several lots, each lot on
+     * its own protocol from its own start date. Every task becomes an
+     * activity on its computed date and every note a day-book note. With
+     * "spread", no day holds more activities than there are hands: the
+     * overflow slides to the next day, in order, while day-zero and
+     * transplant work stand where they are.
+     */
+    public function port(Request $request)
+    {
         $user = $request->user();
         if (! $user->canCreateSchedule()) {
             $limit = $user->scheduleLimit();
             Tier::deny('Your plan allows ' . ($limit === 0 ? 'no' : 'up to ' . $limit) . ' active ' . ($limit === 1 ? 'season' : 'seasons') . '. Finish or archive one, or upgrade for more.', $this->portRung());
         }
-        $isDat = $p->dayType === 'DAT';
         $v = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
-            'startDate' => 'required|date',
-            'transplantDate' => ($isDat ? 'required' : 'nullable') . '|date|after_or_equal:startDate',
-            'lotName' => 'nullable|string|max:255',
-            'lotSize' => 'nullable|numeric|min:0|max:99999',
-            'lotSizeUnit' => 'nullable|in:hectare,sqm,acre',
+            'description' => 'nullable|string|max:5000',
+            'workers' => 'nullable|integer|min:1|max:200',
+            'adjust' => 'nullable|in:spread,allow',
+            'lots' => 'required|array|min:1|max:20',
+            'lots.*.name' => 'required|string|max:255',
+            'lots.*.size' => 'nullable|numeric|min:0|max:99999',
+            'lots.*.unit' => 'nullable|in:hectare,sqm,acre',
+            'lots.*.sourceLotId' => 'nullable|integer',
+            'lots.*.protocolId' => 'required|integer',
+            'lots.*.startDate' => 'required|date',
+            'lots.*.transplantDate' => 'nullable|date',
         ]);
         if ($v->fails()) {
             return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
         }
-        $tasks = $this->cleanTasks((array) ($p->tasks ?? []), $p->dayType);
-        $notes = array_values(array_filter($tasks, fn ($t) => ($t['kind'] ?? '') === 'note'));
-        $tasks = array_values(array_filter($tasks, fn ($t) => ($t['kind'] ?? '') !== 'note'));
-        if (! count($tasks)) {
-            return $this->json(false, 'The protocol has no tasks yet — nothing to port.', [], 422);
+        $lotsIn = array_values((array) $request->input('lots'));
+        $cap = Tier::limit('lotsPerSchedule');
+        if ($cap !== null && count($lotsIn) > (int) $cap) {
+            Tier::deny('Your plan allows ' . (int) $cap . ' ' . ((int) $cap === 1 ? 'lot' : 'lots') . ' in a season.', $this->portRung());
         }
-        $start = Carbon::parse($request->input('startDate'))->startOfDay();
-        $transplant = $isDat ? Carbon::parse($request->input('transplantDate'))->startOfDay() : null;
-        $cropLabel = $p->crop ? (CropStages::label($p->crop) ?: $p->crop) : null;
+        $protocols = AsProtocol::active()->where('userId', (int) Auth::id())
+            ->whereIn('id', array_map(fn ($l) => (int) $l['protocolId'], $lotsIn))->get()->keyBy('id');
+        $sources = DB::table('as_schedule_lots as l')->join('as_cropping_schedules as s', 's.id', '=', 'l.croppingScheduleId')
+            ->where('s.anisystemUserId', (int) Auth::id())
+            ->whereIn('l.id', array_values(array_filter(array_map(fn ($l) => (int) ($l['sourceLotId'] ?? 0), $lotsIn))))
+            ->get(['l.id', 'l.lotSize', 'l.lotSizeUnit', 'l.crop', 'l.variety', 'l.locBarangay', 'l.locZone', 'l.locTown', 'l.locProvince', 'l.daysToMaturity'])->keyBy('id');
+        $plan = [];
+        foreach ($lotsIn as $n => $l) {
+            $proto = $protocols->get((int) $l['protocolId']);
+            if (! $proto) {
+                return $this->json(false, 'Lot ' . ($n + 1) . ' points at a protocol that is not yours.', [], 422);
+            }
+            $tasks = $this->cleanTasks((array) ($proto->tasks ?? []), $proto->dayType);
+            if (! count(array_filter($tasks, fn ($t) => ($t['kind'] ?? '') !== 'note'))) {
+                return $this->json(false, '"' . $proto->title . '" has no tasks yet — nothing to port for ' . $l['name'] . '.', [], 422);
+            }
+            $start = Carbon::parse($l['startDate'])->startOfDay();
+            $transplant = null;
+            if ($proto->dayType === 'DAT') {
+                if (empty($l['transplantDate'])) {
+                    return $this->json(false, $l['name'] . ' runs a DAS → DAT protocol and needs a transplant date.', [], 422);
+                }
+                $transplant = Carbon::parse($l['transplantDate'])->startOfDay();
+                if ($transplant->lt($start)) {
+                    return $this->json(false, $l['name'] . ': the transplant date is before the sowing date.', [], 422);
+                }
+            }
+            $plan[] = ['in' => $l, 'proto' => $proto, 'tasks' => $tasks, 'start' => $start, 'transplant' => $transplant, 'source' => $sources->get((int) ($l['sourceLotId'] ?? 0))];
+        }
+        $workers = max(1, (int) $request->input('workers', 1));
+        $adjust = $request->input('adjust') === 'allow' ? 'allow' : 'spread';
+        $dayTypes = array_unique(array_map(fn ($x) => $x['proto']->dayType, $plan));
+        $dayType = count($dayTypes) === 1 ? $dayTypes[0] : (in_array('DAT', $dayTypes, true) ? 'DAT' : $dayTypes[0]);
+        $firstCrop = $plan[0]['source']->crop ?? $plan[0]['proto']->crop;
 
-        $schedule = DB::transaction(function () use ($p, $tasks, $notes, $request, $start, $transplant, $cropLabel, $isDat) {
+        $made = ['activities' => 0, 'notes' => 0, 'moved' => 0];
+        $schedule = DB::transaction(function () use ($request, $plan, $dayType, $firstCrop, $workers, $adjust, &$made) {
             $schedule = AsCroppingSchedule::create([
                 'anisystemUserId' => (int) Auth::id(),
                 'usersId' => (int) config('anisystem.order_users_id', 1),
                 'title' => trim((string) $request->input('title')),
-                'description' => $this->text($p->description, 5000),
-                'cropType' => $cropLabel,
-                'cropVariety' => $p->variety,
-                'dayType' => $p->dayType,
+                'description' => $this->text($request->input('description'), 5000),
+                'cropType' => $firstCrop ? (CropStages::label($firstCrop) ?: $firstCrop) : null,
+                'cropVariety' => $plan[0]['source']->variety ?? $plan[0]['proto']->variety,
+                'dayType' => $dayType,
                 'status' => 'setup',
                 'isActive' => 1,
                 'deleteStatus' => 1,
@@ -584,66 +643,152 @@ PROMPT;
                 'versionOrder' => 0,
                 'deleteStatus' => 1,
             ]);
-            $lot = AsScheduleLot::create([
-                'croppingScheduleId' => $schedule->id,
-                'lotName' => $this->text($request->input('lotName'), 255) ?: (($cropLabel ?: 'Main') . ' lot'),
-                'lotSize' => $request->filled('lotSize') ? (float) $request->input('lotSize') : 1,
-                'lotSizeUnit' => $request->input('lotSizeUnit') ?: 'hectare',
-                'variety' => $p->variety,
-                'crop' => $p->crop,
-                'dayType' => $p->dayType,
-                'dayZeroDate' => $start->format('Y-m-d'),
-                'transplantDate' => $transplant ? $transplant->format('Y-m-d') : null,
-                'deleteStatus' => 1,
-            ]);
-            $perDate = [];
-            foreach ($tasks as $t) {
-                $base = ($t['counter'] === 'DAT' && $transplant) ? $transplant : $start;
-                $date = $base->copy()->addDays((int) $t['day'])->format('Y-m-d');
-                $perDate[$date] = ($perDate[$date] ?? 0) + 1;
-                $activity = AsScheduleActivity::create([
+            $all = [];
+            foreach ($plan as $x) {
+                $in = $x['in']; $proto = $x['proto']; $src = $x['source'];
+                $crop = $src->crop ?? $proto->crop;
+                $lot = AsScheduleLot::create(array_filter([
                     'croppingScheduleId' => $schedule->id,
-                    'versionId' => $version->id,
-                    'activityTitle' => mb_substr($t['title'], 0, 255),
-                    'targetDate' => $date,
-                    'priority' => $t['priority'],
-                    'activityType' => $t['type'],
-                    'description' => HtmlSanitizer::rich($this->activityHtml($t)),
-                    'timeRequired' => 'n/a',
-                    'isDayZero' => $t['day'] === 0 && $t['counter'] !== 'DAT',
-                    'isTransplant' => $t['day'] === 0 && $t['counter'] === 'DAT' && $isDat,
-                    'isDraft' => false,
-                    'isHidden' => false,
-                    'isDone' => false,
-                    'workerChecklist' => false,
-                    'workerSelfCheck' => false,
-                    'sequenceOrder' => ($perDate[$date] - 1) * 10,
+                    'lotName' => mb_substr(trim((string) $in['name']), 0, 255),
+                    'lotSize' => isset($in['size']) && $in['size'] !== '' && $in['size'] !== null ? (float) $in['size'] : (float) ($src->lotSize ?? 1),
+                    'lotSizeUnit' => $in['unit'] ?? ($src->lotSizeUnit ?? 'hectare'),
+                    'variety' => $src->variety ?? $proto->variety,
+                    'crop' => $crop,
+                    'daysToMaturity' => $src->daysToMaturity ?? null,
+                    'locBarangay' => $src->locBarangay ?? null,
+                    'locZone' => $src->locZone ?? null,
+                    'locTown' => $src->locTown ?? null,
+                    'locProvince' => $src->locProvince ?? null,
+                    'dayType' => $proto->dayType,
+                    'dayZeroDate' => $x['start']->format('Y-m-d'),
+                    'transplantDate' => $x['transplant'] ? $x['transplant']->format('Y-m-d') : null,
                     'deleteStatus' => 1,
-                ]);
-                $activity->lots()->attach($lot->id);
+                ], fn ($v) => $v !== null));
+                $planted = $this->plant($schedule, $version, $lot, $x['tasks'], $x['start'], $x['transplant']);
+                $made['activities'] += count($planted['activities']);
+                $made['notes'] += $planted['notes'];
+                $all = array_merge($all, $planted['activities']);
             }
-            // The notes land on the day book, on the day their place implies.
-            foreach ($notes as $nt) {
-                $base = ($nt['counter'] === 'DAT' && $transplant) ? $transplant : $start;
-                \App\Models\AsScheduleDateNote::create([
-                    'croppingScheduleId' => $schedule->id,
-                    'versionId' => $version->id,
-                    'noteDate' => $base->copy()->addDays((int) $nt['day'])->format('Y-m-d'),
-                    'noteContent' => HtmlSanitizer::rich('<p>' . nl2br(htmlspecialchars($nt['text'], ENT_QUOTES, 'UTF-8')) . '</p>'),
-                    'lotId' => $lot->id,
-                    'deleteStatus' => 1,
-                ]);
+            if ($adjust === 'spread') {
+                $made['moved'] = $this->spread($all, $workers);
             }
 
             return $schedule;
         });
+        foreach ($plan as $x) {
+            $x['proto']->forceFill(['portedScheduleId' => $schedule->id, 'portedAt' => now()])->save();
+        }
+        $say = 'The season is set up — ' . count($plan) . ($plan && count($plan) === 1 ? ' lot, ' : ' lots, ') . $made['activities'] . ' activities on the board'
+            . ($made['notes'] ? ' and ' . $made['notes'] . ($made['notes'] === 1 ? ' note' : ' notes') . ' on the day book' : '')
+            . ($made['moved'] ? '; ' . $made['moved'] . ($made['moved'] === 1 ? ' activity slid' : ' activities slid') . ' to a later day so no day asks for more than ' . $workers . ($workers === 1 ? ' worker' : ' workers') : '') . '.';
 
-        $p->forceFill(['portedScheduleId' => $schedule->id, 'portedAt' => now()])->save();
-
-        return $this->json(true, 'The season is set up — ' . count($tasks) . ' activities on the board' . (count($notes) ? ' and ' . count($notes) . ($notes && count($notes) === 1 ? ' note' : ' notes') . ' on the day book' : '') . '.', [
+        return $this->json(true, $say, [
             'scheduleId' => $schedule->id,
             'redirect' => route('sm.hub', ['id' => $schedule->id]),
+            'made' => $made,
         ]);
+    }
+
+    /**
+     * One protocol onto one lot: an activity per task on its computed date
+     * (DAS/DAP from the start, DAT from the transplant), a day-book note per
+     * note. Returns the activities as [{id, date, fixed}] for the spread.
+     */
+    private function plant(AsCroppingSchedule $schedule, AsScheduleActivityVersion $version, AsScheduleLot $lot, array $tasks, Carbon $start, ?Carbon $transplant): array
+    {
+        $isDat = $lot->dayType === 'DAT';
+        $out = ['activities' => [], 'notes' => 0];
+        $perDate = [];
+        $anchored = [];   // the first day-0 task of each count is the anchor and stays put
+        foreach ($tasks as $t) {
+            $base = ($t['counter'] === 'DAT' && $transplant) ? $transplant : $start;
+            $date = $base->copy()->addDays((int) $t['day'])->format('Y-m-d');
+            if (($t['kind'] ?? '') === 'note') {
+                \App\Models\AsScheduleDateNote::create([
+                    'croppingScheduleId' => $schedule->id,
+                    'versionId' => $version->id,
+                    'noteDate' => $date,
+                    'noteContent' => HtmlSanitizer::rich('<p>' . nl2br(htmlspecialchars($t['text'], ENT_QUOTES, 'UTF-8')) . '</p>'),
+                    'lotId' => $lot->id,
+                    'deleteStatus' => 1,
+                ]);
+                $out['notes']++;
+                continue;
+            }
+            $perDate[$date] = ($perDate[$date] ?? 0) + 1;
+            $fixed = $t['day'] === 0 && empty($anchored[$t['counter']]);
+            if ($fixed) {
+                $anchored[$t['counter']] = true;
+            }
+            $activity = AsScheduleActivity::create([
+                'croppingScheduleId' => $schedule->id,
+                'versionId' => $version->id,
+                'activityTitle' => mb_substr($t['title'], 0, 255),
+                'targetDate' => $date,
+                'priority' => $t['priority'],
+                'activityType' => $t['type'],
+                'description' => HtmlSanitizer::rich($this->activityHtml($t)),
+                'timeRequired' => 'n/a',
+                'isDayZero' => $t['day'] === 0 && $t['counter'] !== 'DAT',
+                'isTransplant' => $t['day'] === 0 && $t['counter'] === 'DAT' && $isDat,
+                'isDraft' => false,
+                'isHidden' => false,
+                'isDone' => false,
+                'workerChecklist' => false,
+                'workerSelfCheck' => false,
+                'sequenceOrder' => ($perDate[$date] - 1) * 10,
+                'deleteStatus' => 1,
+            ]);
+            $activity->lots()->attach($lot->id);
+            $out['activities'][] = ['id' => $activity->id, 'date' => $date, 'fixed' => $fixed];
+        }
+
+        return $out;
+    }
+
+    /**
+     * No day heavier than the hands: walk the calendar day by day; the
+     * fixed work (day zero, the transplant) stays, the rest fills what room
+     * is left in order and the overflow carries to the next day. Returns
+     * how many activities moved.
+     */
+    private function spread(array $made, int $workers): int
+    {
+        if (! $made) {
+            return 0;
+        }
+        $byDate = [];
+        foreach ($made as $a) {
+            $byDate[$a['date']][] = $a;
+        }
+        ksort($byDate);
+        $day = Carbon::parse(array_key_first($byDate));
+        $last = Carbon::parse(array_key_last($byDate));
+        $carry = [];
+        $moved = 0;
+        $guard = 0;
+        while (($day->lte($last) || $carry) && $guard++ < 2000) {
+            $key = $day->format('Y-m-d');
+            $today = $byDate[$key] ?? [];
+            $fixed = array_values(array_filter($today, fn ($a) => $a['fixed']));
+            $loose = array_values(array_filter($today, fn ($a) => ! $a['fixed']));
+            $queue = array_merge($carry, $loose);   // what waited longest goes first
+            $room = max(0, $workers - count($fixed));
+            $keep = array_slice($queue, 0, $room);
+            $carry = array_slice($queue, $room);
+            $seq = 0;
+            foreach (array_merge($fixed, $keep) as $a) {
+                $set = ['sequenceOrder' => ($seq++) * 10];
+                if ($a['date'] !== $key) {
+                    $set['targetDate'] = $key;
+                    $moved++;
+                }
+                AsScheduleActivity::where('id', $a['id'])->update($set);
+            }
+            $day->addDay();
+        }
+
+        return $moved;
     }
 
     /** The task's words as the activity's description: subtitle, description, what to apply, the note, the hands. */

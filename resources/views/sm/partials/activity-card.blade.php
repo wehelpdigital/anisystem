@@ -262,7 +262,7 @@
                               data-lot-id="{{ $lot->id }}"
                               data-lot-name="{{ $lot->lotName }}"
                               data-lot-variety="{{ $lot->variety ?? '' }}"
-                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}@isset($lotDaySuffix[$lot->id])@php $dasParts = explode(' | ', $lotDaySuffix[$lot->id]); @endphp<span class="lot-tag-das" data-lot-delay="{{ $lot->id }}" title="Tap to set a delay counter">{{ array_shift($dasParts) }}@foreach ($dasParts as $dasPart) <i class="lot-tag-das-alt{{ str_starts_with($dasPart, 'DELAY') ? ' is-delay' : '' }}">| {{ $dasPart }}</i>@endforeach</span>@endisset</span>
+                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}@isset($lotDaySuffix[$lot->id])@php $dasParts = explode(' | ', $lotDaySuffix[$lot->id]); @endphp<span class="lot-tag-das" data-lot-delay="{{ $lot->id }}" title="Tap to set a delay counter">{{ array_shift($dasParts) }}@foreach ($dasParts as $dasPart) <i class="lot-tag-das-alt{{ str_starts_with($dasPart, 'DELAY') ? ' is-delay' : '' }}">● {{ $dasPart }}</i>@endforeach</span>@endisset</span>
                     @endforeach
                 @elseif ($a->activityType !== 'worker_payroll')
                     {{-- A payroll day is about who turned up, not which field,
@@ -282,7 +282,7 @@
                               data-lot-id="{{ $lot->id }}"
                               data-lot-name="{{ $lot->lotName }}"
                               data-lot-variety="{{ $lot->variety ?? '' }}"
-                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}@isset($lotDaySuffix[$lot->id])@php $dasParts = explode(' | ', $lotDaySuffix[$lot->id]); @endphp<span class="lot-tag-das" data-lot-delay="{{ $lot->id }}" title="Tap to set a delay counter">{{ array_shift($dasParts) }}@foreach ($dasParts as $dasPart) <i class="lot-tag-das-alt{{ str_starts_with($dasPart, 'DELAY') ? ' is-delay' : '' }}">| {{ $dasPart }}</i>@endforeach</span>@endisset</span>
+                              style="background: hsl({{ ($lot->id * 137) % 360 }}, 55%, 40%)">{{ $lot->lotName }}@isset($lotDaySuffix[$lot->id])@php $dasParts = explode(' | ', $lotDaySuffix[$lot->id]); @endphp<span class="lot-tag-das" data-lot-delay="{{ $lot->id }}" title="Tap to set a delay counter">{{ array_shift($dasParts) }}@foreach ($dasParts as $dasPart) <i class="lot-tag-das-alt{{ str_starts_with($dasPart, 'DELAY') ? ' is-delay' : '' }}">● {{ $dasPart }}</i>@endforeach</span>@endisset</span>
                     @endforeach
                 @endif
                 @if($a->activityType === 'irrigation')

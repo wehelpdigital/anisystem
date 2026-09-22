@@ -454,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const main = parts.shift();
         // A space before each piece: inline-blocks with nothing between them
         // have no place to wrap, and the chip ran off a phone's card.
-        return esc(main) + parts.map((p) => ` <i class="lot-tag-das-alt${p.startsWith('DELAY') ? ' is-delay' : ''}">| ${esc(p)}</i>`).join('');
+        return esc(main) + parts.map((p) => ` <i class="lot-tag-das-alt${p.startsWith('DELAY') ? ' is-delay' : ''}">● ${esc(p)}</i>`).join('');
     }
     const sg = (n) => (n > 0 ? '+' : '') + n;
     const lotDelay = (lotId) => Math.max(0, Number(LOT_DELAY[lotId]) || 0);

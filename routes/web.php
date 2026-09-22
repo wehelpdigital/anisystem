@@ -506,6 +506,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/protocol-builder/{id}/delete', [App\Http\Controllers\ProtocolBuilderController::class, 'destroy'])->whereNumber('id')->name('pb.delete');
     Route::post('/app/protocol-builder/{id}/analyze', [App\Http\Controllers\ProtocolBuilderController::class, 'analyze'])->whereNumber('id')->name('pb.analyze');
     Route::get('/app/protocol-builder/{id}/job', [App\Http\Controllers\ProtocolBuilderController::class, 'job'])->whereNumber('id')->name('pb.job');
+    Route::get('/app/protocol-builder/lots', [App\Http\Controllers\ProtocolBuilderController::class, 'lots'])->name('pb.lots');
+    Route::post('/app/protocol-builder/port', [App\Http\Controllers\ProtocolBuilderController::class, 'port'])->name('pb.port');
     Route::get('/app/weather', [App\Http\Controllers\WeatherController::class, 'forecast'])->name('app.weather');
     Route::get('/app/sm-weather', [App\Http\Controllers\WeatherController::class, 'scheduleForecast'])->name('sm.weather');
     // Weather as a schedule module: the 6-day view plus an hourly tab.
