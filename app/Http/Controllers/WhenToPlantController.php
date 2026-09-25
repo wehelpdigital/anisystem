@@ -79,13 +79,17 @@ class WhenToPlantController extends Controller
         $canUse = $payer->canUseAi() && $settings->isUsable();
 
         return response()->json(['success' => true, 'message' => 'ok', 'data' => [
-            'crops' => collect(CropCatalog::visible())->map(fn ($c, $key) => [
+            // The whole crop book, in the farmer's words, as What to Plant
+            // sends it: the page hides the temperate ones (`intl`) while the
+            // FIELD is in the Philippines, and shows them for a field abroad.
+            'crops' => collect(CropCatalog::CROPS)->map(fn ($c, $key) => [
                 'key' => $key,
-                'label' => $c['label'],
-                'icon' => $c['icon'],
-                'group' => $c['group'],
+                'label' => CropCatalog::label($key),
+                'icon' => $c['icon'] ?? '🌱',
+                'group' => $c['group'] ?? 'Other',
                 'maturity' => $c['maturity'] ?? null,
                 'perennial' => CropCatalog::isPerennial($key),
+                'intl' => ! empty($c['intl']),
             ])->values(),
             'problems' => self::PROBLEMS,
             'seasons' => \App\Support\Region::seasons(),

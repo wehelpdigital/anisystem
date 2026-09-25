@@ -377,22 +377,38 @@
         </div>
 
         <div class="card p-5 wtp-wiz" id="wtpWiz">
-            {{-- Step 1: the year --}}
+            {{-- Step 1: the place, first, as What to Plant asks it. The
+                 field's country is the farmer's own (their account's) unless
+                 they say otherwise, and it comes before the seasons because
+                 it decides them: dry / wet / third crop at home, spring to
+                 winter abroad. It also sets the address words, the example
+                 place, the crop book and whose climate record and agencies
+                 the analysis reads. --}}
             <section class="wtp-step is-on" data-step="0">
+                <p class="wtp-q">Where is the field?</p>
+                <div class="wtp-loc-country">
+                    <label class="form-label">Country of the field</label>
+                    @include('partials.country-pick', ['id' => 'wtpCountry', 'name' => 'country', 'value' => \App\Support\Region::code()])
+                </div>
+                <p class="wtp-sub" id="wtpLocSub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate patterns differ by region.</p>
+                <input type="text" id="wtpLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
+            </section>
+            {{-- Step 2: the year --}}
+            <section class="wtp-step" data-step="1">
                 <p class="wtp-q">What year will you plant?</p>
                 <p class="wtp-sub">The analysis reads the climate's patterns for that calendar year.</p>
                 <div class="wtp-choices" id="wtpYears"></div>
             </section>
-            {{-- Step 2: the season --}}
-            <section class="wtp-step" data-step="1">
+            {{-- Step 3: the season — the field's country's own --}}
+            <section class="wtp-step" data-step="2">
                 <p class="wtp-q">Which cropping season?</p>
                 <p class="wtp-sub">The window is searched inside the season you actually farm.</p>
                 <div class="wtp-choices" id="wtpSeasons"></div>
             </section>
-            {{-- Step 3: the crop. The lot form's tag-and-sheet, not a
+            {{-- Step 4: the crop. The lot form's tag-and-sheet, not a
                  dropdown: the tag wears the chosen crop's face, the sheet
-                 holds the whole searchable catalogue. --}}
-            <section class="wtp-step" data-step="2">
+                 holds the searchable catalogue for the field's country. --}}
+            <section class="wtp-step" data-step="3">
                 <p class="wtp-q">What will you plant?</p>
                 <p class="wtp-sub">The same catalogue your lots choose from.</p>
                 <button type="button" class="crop-tag" id="wtpCropBtn">
@@ -401,25 +417,11 @@
                     <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>
             </section>
-            {{-- Step 4: the variety --}}
-            <section class="wtp-step" data-step="3">
-                <p class="wtp-q">Which variety?</p>
-                <p class="wtp-sub">Type it as it is sold — e.g. {{ \App\Support\Region::ph() ? 'NSIC Rc222' : 'Pioneer P1197' }}. If its data is not published, the analysis will say so rather than guess.</p>
-                <input type="text" id="wtpVariety" class="form-input" maxlength="80" placeholder="Variety name (optional)">
-            </section>
-            {{-- Step 5: the place --}}
+            {{-- Step 5: the variety --}}
             <section class="wtp-step" data-step="4">
-                <p class="wtp-q">Where is the field?</p>
-                {{-- The field's country, the farmer's own unless they say
-                     otherwise: it decides the address words, the example
-                     place, the seasons offered and whose climate record and
-                     agencies the analysis reads. --}}
-                <div class="wtp-loc-country">
-                    <label class="form-label">Country of the field</label>
-                    @include('partials.country-pick', ['id' => 'wtpCountry', 'name' => 'country', 'value' => \App\Support\Region::code()])
-                </div>
-                <p class="wtp-sub" id="wtpLocSub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate patterns differ by region.</p>
-                <input type="text" id="wtpLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
+                <p class="wtp-q">Which variety?</p>
+                <p class="wtp-sub">Type it as it is sold — e.g. <span id="wtpVarEx">{{ \App\Support\Region::ph() ? 'NSIC Rc222' : 'Pioneer P1197' }}</span>. If its data is not published, the analysis will say so rather than guess.</p>
+                <input type="text" id="wtpVariety" class="form-input" maxlength="80" placeholder="Variety name (optional)">
             </section>
             {{-- Step 6: the troubles --}}
             <section class="wtp-step" data-step="5">
@@ -521,6 +523,12 @@
        (window.ANEE_REGION_RULES comes with the country picker). */
     const RULES = () => (window.ANEE_REGION_RULES || {});
     const rulesFor = (code) => RULES()[code] || RULES()['*'] || {};
+    /* A country's own name, from the picker's list: the rules only know the
+       configured few and call every other country "International". */
+    const nameOf = (code) => ((document.querySelector(`#wtpCountryList [data-country="${code}"] .country-row-t`) || {}).textContent || '').trim()
+        || (RULES()[code] || {}).name || code || '';
+    // "in the Philippines", "for the United States": the few names that take "the".
+    const countryName = (code) => { const n = nameOf(code) || 'that country'; return ['PH', 'US', 'GB', 'NL', 'AE'].includes(code) ? 'the ' + n : n; };
     const seasonsFor = (code) => { const r = rulesFor(code); return (r.seasons && Object.keys(r.seasons).length) ? r.seasons : ((OPT && OPT.seasons) || {}); };
     const seasonSaid = (season, year, country) => {
         const y = Number(year) || 0;
@@ -530,6 +538,9 @@
     };
     let step = 0;
     const STEPS = 7;
+    // A season or crop let go because the field's country changed: the
+    // step that asks for it again says why.
+    let seasonDropped = false, cropDropped = false;
     let LAST = null;   // {report, params, charged} — what Save keeps
 
     /* ---------------- boot ---------------- */
@@ -542,7 +553,8 @@
     }
 
     function paintOptions() {
-        state.country = state.country || OPT.country || ((window.ANEE_REGION || {}).code) || 'PH';
+        // The tag says the account's country until the farmer picks another.
+        state.country = state.country || ($id('wtpCountry') || {}).value || OPT.country || ((window.ANEE_REGION || {}).code) || 'PH';
         $id('wtpYears').innerHTML = OPT.years.map((y) => `
             <button type="button" class="wtp-choice" data-year="${y}"><span class="c-e">🗓️</span><span>${y}${y === OPT.years[0] ? '<small>This year</small>' : ''}</span></button>`).join('');
         const seasonIcons = { dry: '☀️', wet: '🌧️', third: '🌗', spring: '🌱', summer: '☀️', autumn: '🍂', winter: '❄️' };
@@ -565,8 +577,20 @@
         };
         paintSeasons();
         window.__wtpPaintSeasons = paintSeasons;
+        paintCrops();
+        $id('wtpProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
+            <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
+        $id('wtpDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
+
+        paintQuote();
+    }
+
+    /* The crop book for the FIELD's country, as What to Plant keeps it: the
+       temperate crops (wheat, apple...) only for a field abroad. */
+    const bookFor = () => ((OPT && OPT.crops) || []).filter((c) => state.country !== 'PH' || !c.intl);
+    function paintCrops() {
         const groups = {};
-        OPT.crops.forEach((c) => { (groups[c.group] = groups[c.group] || []).push(c); });
+        bookFor().forEach((c) => { (groups[c.group] = groups[c.group] || []).push(c); });
         $id('wtpCropList').innerHTML = Object.entries(groups).map(([g, list]) => `
             <div class="crop-group" data-crop-group>
                 <p class="crop-group-h">${esc(g)}</p>
@@ -579,11 +603,7 @@
                         </span>
                     </button>`).join('')}
             </div>`).join('');
-        $id('wtpProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
-            <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
-        $id('wtpDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
-
-        paintQuote();
+        if (($id('wtpCropSearch').value || '').trim()) cropSift();
     }
 
     /* The price note, in two sizes. The X shrinks it to the one line that
@@ -636,17 +656,25 @@
 
     function stepReady() {
         switch (step) {
-            case 0: return !!state.year || (toast('Pick the year first.', 'error'), false);
-            case 1: return !!state.season || (toast('Pick the season.', 'error'), false);
-            case 2: return !!state.crop || (toast('Pick the crop.', 'error'), false);
-            case 3: state.variety = $id('wtpVariety').value.trim(); return true;
-            case 4: state.location = $id('wtpLocation').value.trim();
-                if (!state.location) { toast('Say where the field is.', 'error'); return false; }
-                // The country changed the seasons on offer and the one picked is not among them.
-                if (!seasonsFor(state.country)[state.season]) { toast(`The seasons are different in ${rulesFor(state.country).name || 'that country'} — pick the season again.`, 'error'); state.season = null; window.__wtpPaintSeasons?.(); setTimeout(() => show(1, true), 250); return false; }
-                return true;
+            case 0: state.location = $id('wtpLocation').value.trim();
+                return !!state.location || (toast('Say where the field is.', 'error'), false);
+            case 1: return !!state.year || (toast('Pick the year.', 'error'), false);
+            case 2: if (state.season && seasonsFor(state.country)[state.season]) return true;
+                // A season picked before the country changed is not one of the new country's.
+                toast(seasonDropped ? `The seasons are different in ${countryName(state.country)} — pick the season again.` : 'Pick the season.', 'error');
+                return false;
+            case 3: return !!state.crop || (toast(cropDropped ? `The crop list is different for ${countryName(state.country)} — pick the crop again.` : 'Pick the crop.', 'error'), false);
+            case 4: state.variety = $id('wtpVariety').value.trim(); return true;
             case 5: state.problems = [...document.querySelectorAll('#wtpProbs input:checked')].map((i) => i.value); return true;
-            default: return true;
+            default: {
+                // The run itself: every answer still stands for the field's country.
+                state.location = $id('wtpLocation').value.trim();
+                const back = !state.location ? 0 : !state.year ? 1 : !(state.season && seasonsFor(state.country)[state.season]) ? 2 : !state.crop ? 3 : -1;
+                if (back < 0) return true;
+                toast(['Say where the field is.', 'Pick the year.', 'Pick the season again.', 'Pick the crop again.'][back], 'error');
+                setTimeout(() => show(back, true), 250);
+                return false;
+            }
         }
     }
 
@@ -654,7 +682,7 @@
         const crop = (OPT.crops.find((c) => c.key === state.crop) || {});
         $id('wtpReview').innerHTML = `${esc(crop.icon || '')} <b>${esc(crop.label || '')}</b>`
             + `${state.variety ? ' · ' + esc(state.variety) : ''} · ${esc(seasonSaid(state.season, state.year))}`
-            + ` · ${esc(state.location)}${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(rulesFor(state.country).name || state.country) : ''}`
+            + ` · ${esc(state.location)}${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(nameOf(state.country)) : ''}`
             + (state.problems.length ? `<br><span class="text-xs">${state.problems.length} field problem${state.problems.length === 1 ? '' : 's'} considered</span>` : '');
         $id('wtpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
         $id('wtpRunFine').textContent = OPT.canUse
@@ -672,14 +700,15 @@
         document.querySelectorAll('#wtpYears .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
         // The season cards say their years, and the dry one runs into the next.
         window.__wtpPaintSeasons?.();
-        setTimeout(() => show(1), 180);
+        setTimeout(() => show(2), 180);
     });
     $id('wtpSeasons').addEventListener('click', (e) => {
         const b = e.target.closest('[data-season]');
         if (!b) return;
         state.season = b.getAttribute('data-season');
+        seasonDropped = false;
         document.querySelectorAll('#wtpSeasons .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
-        setTimeout(() => show(2), 180);
+        setTimeout(() => show(3), 180);
     });
     $id('wtpCountry')?.addEventListener('country:change', (e) => {
         const code = e.detail && e.detail.code;
@@ -690,10 +719,23 @@
         const region = (r.address && r.address.region && r.address.region.label) || 'State / Region';
         $id('wtpLocSub').textContent = `${code === 'PH' ? 'Town and province' : city + ' and ' + region.toLowerCase()} is enough — the climate patterns differ by region.`;
         $id('wtpLocation').placeholder = r.exampleLocation || '';
+        const ex = $id('wtpVarEx');
+        if (ex) ex.textContent = code === 'PH' ? 'NSIC Rc222' : 'Pioneer P1197';
         // The seasons on offer follow the field's country; a season that is
-        // not one of them is dropped and asked for again on the way out.
-        if (!seasonsFor(code)[state.season]) state.season = null;
+        // not one of them is dropped and asked for again on the way through.
+        if (state.season && !seasonsFor(code)[state.season]) { state.season = null; seasonDropped = true; }
         window.__wtpPaintSeasons?.();
+        // So does the crop book: a crop that is not in the new one is let go.
+        if (!OPT) return;
+        paintCrops();
+        if (state.crop && !bookFor().some((c) => c.key === state.crop)) {
+            state.crop = '';
+            cropDropped = true;
+            $id('wtpCropIcon').textContent = '🌱';
+            const now = $id('wtpCropNow');
+            now.textContent = 'Choose the crop';
+            now.classList.add('is-none');
+        }
     });
     $id('wtpCropBtn').addEventListener('click', () => {
         openSheet('wtpCropSheet');
@@ -710,8 +752,9 @@
         const now = $id('wtpCropNow');
         now.textContent = c.label || 'Choose the crop';
         now.classList.remove('is-none');
+        cropDropped = false;
         closeSheet('wtpCropSheet');
-        setTimeout(() => show(3), 220);
+        setTimeout(() => show(4), 220);
     });
     const cropSift = () => {
         const q = ($id('wtpCropSearch').value || '').trim().toLowerCase();
@@ -907,7 +950,7 @@
                 <p class="h-win">${esc(bw.label || (m1 + ' ' + (bw.fromDay || '') + (bw.fromYear ? ', ' + bw.fromYear : '') + ' – ' + m2 + ' ' + (bw.toDay || '') + (bw.toYear ? ', ' + bw.toYear : '')))}</p>
                 <p class="h-why">${esc(sweep(bw.why))}</p>
                 <div class="wtp-chips">
-                    <span class="wtp-chip">📍 ${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc((rulesFor(p.country).name) || p.country) : ''}</span>
+                    <span class="wtp-chip">📍 ${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc(nameOf(p.country)) : ''}</span>
                     ${p.variety ? `<span class="wtp-chip">🧬 ${esc(p.variety)}</span>` : ''}
                     <span class="wtp-chip">Confidence: ${esc(r.confidence || 'moderate')}</span>
                     ${item.charged ? `<span class="wtp-chip">${item.charged} credits</span>` : ''}
