@@ -317,7 +317,7 @@
     const $ = (id) => document.getElementById(id);
     const list = $('ctList'), chips = $('ctChips'), empty = $('ctEmpty'), loading = $('ctLoading'), more = $('ctMore');
 
-    const state = { q: '', tag: '', page: 1, hasMore: false, busy: false, editing: null, tags: [], tagCounts: {} };
+    const state = { q: '', tag: new URLSearchParams(location.search).get('tag') || '', page: 1, hasMore: false, busy: false, editing: null, tags: [], tagCounts: {} };
 
     /* A face from a name: the same name always wears the same colour. */
     const hueOf = (name) => {

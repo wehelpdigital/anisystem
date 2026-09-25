@@ -1,7 +1,8 @@
 {{-- A MEMBER'S OWN TAGS — the picker for the things that are theirs and not a
-     season's (analyses, protocols, contacts). A mount is a div.ut-mount; the
-     JS paints chips and an Add button into it, and the sheet below offers the
-     words already used across the tools plus a way to add one.
+     season's (analyses, protocols, contacts, global notes). A mount is a
+     div.ut-mount; the JS paints chips and an Add button into it, and the sheet
+     below offers the words already used across the tools AND the member's own
+     seasons (GET /app/my-tags, one vocabulary) plus a way to add one.
 
        window.userTags.mount(el, tags)   paint (safe to repeat)
        window.userTags.set(el, tags)     replace the words
@@ -70,11 +71,21 @@
         const names = [];
         const push = (n) => { if (!names.some((x) => same(x, n))) names.push(n); };
         mine.forEach(push); (POOL || []).forEach((t) => push(t.name)); SUGGEST.forEach(push);
-        const count = (n) => { const p = (POOL || []).find((t) => same(t.name, n)); return p ? p.count : 0; };
+        // Where a word is already worn: on the member's things outside a
+        // season, and/or in their seasons (the one vocabulary, both sides).
+        const said = (n) => {
+            const p = (POOL || []).find((t) => same(t.name, n));
+            if (!p) return '';
+            const bits = [];
+            const out = p.things ?? p.count ?? 0;
+            if (out) bits.push(`on ${out} ${out === 1 ? 'thing' : 'things'}`);
+            if (p.seasons) bits.push(`${p.seasons} in your seasons`);
+            return bits.join(' · ');
+        };
         $id('utList').innerHTML = names.map((n) => `
             <button type="button" class="dt-row${mine.some((x) => same(x, n)) ? ' is-on' : ''}" data-ut-pick="${esc(n)}">
                 <span class="dt-row-e">🏷️</span>
-                <span class="dt-row-body"><b>${esc(n)}</b>${count(n) ? `<i>on ${count(n)} ${count(n) === 1 ? 'thing' : 'things'}</i>` : ''}</span>
+                <span class="dt-row-body"><b>${esc(n)}</b>${said(n) ? `<i>${esc(said(n))}</i>` : ''}</span>
                 <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>`).join('');
         $id('utEmpty').hidden = names.length > 0;
