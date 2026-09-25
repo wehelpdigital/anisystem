@@ -67,6 +67,20 @@
     html.dark .xr-row-e { background: #1c2416; }
     .xr-refetch { opacity: .5; pointer-events: none; }
 
+    /* The slice: whole season, a stretch of the crop's own clock, or two
+       dates -- the labor report's chooser, word for word. */
+    .xr-range { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .xr-range button { padding: .42rem .8rem; border-radius: 999px; font-size: .8rem; font-weight: 800; border: 1.5px solid var(--color-gray-200); background: var(--color-white); color: var(--color-gray-600); cursor: pointer;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .2s, background .2s; }
+    .xr-range button:hover { transform: translateY(-1px); }
+    .xr-range button.is-on { border-color: var(--color-brand-600); background: var(--color-brand-50); color: var(--color-brand-800); }
+    html.dark .xr-range button { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
+    html.dark .xr-range button.is-on { background: #22301a; border-color: #6b9f3d; color: #cfe6b8; }
+    .xr-range-pane:not([hidden]) { animation: xrPaneIn .28s cubic-bezier(.22,1,.36,1); }
+    @keyframes xrPaneIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+    .xr-unit { font-size: .72rem; color: var(--color-gray-500); margin-top: .35rem; }
+    @media (prefers-reduced-motion: reduce) { .xr-range button { transition: none; } .xr-range-pane:not([hidden]) { animation: none; } }
+
     /* The page's two doors: make a report, or read the shelf. */
     .xr-mtabs { display: flex; gap: .4rem; margin-bottom: 1rem; }
     .xr-mtab { flex: 1 1 0; padding: .6rem; border-radius: .8rem; font-weight: 800; font-size: .9rem;
@@ -116,7 +130,7 @@
         <div class="rx-about-t">
             <b>What the Expenses Report tells you</b>
             <p>Every peso the season spent, added up from the activities that were ticked done: the stock they took from the inventory, the services they paid for, and the cash lines on each day.</p>
-            <ul><li><b>Total spent</b> for the slice you choose — every lot or some, every category or some, planned and done or only done, between two dates</li><li><b>Where it went</b> — by category (fertilizer, seed, chemicals, services, cash) and by lot, with the biggest lines named</li><li><b>Net of the day-book income</b> the same days brought in</li><li><b>Breakdown</b> — every entry, card by card, with the activity it came from</li></ul>
+            <ul><li><b>Total spent</b> for the slice you choose — every lot or some, every category or some, planned and done or only done, and the whole season, a day-count range or a date range</li><li><b>Where it went</b> — by category (fertilizer, seed, chemicals, services, cash) and by lot, with the biggest lines named</li><li><b>Net of the day-book income</b> the same days brought in</li><li><b>Breakdown</b> — every entry, card by card, with the activity it came from</li></ul>
             <p class="rx-about-note">Every report you generate is saved on the Saved Reports shelf, where you can rename and describe it.</p>
         </div>
     </div>
@@ -158,7 +172,34 @@
                 </button>
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-2">
+        <span class="form-label text-xs! mb-1! mt-1 block">Which part of the season?</span>
+        {{-- The slice: the whole season, a stretch of the crop's own clock
+             (DAS, DAT, DAP or a tree's age, as the chosen lots count it --
+             each row read on its own lots), or two dates. --}}
+        @php
+            $xrWords = array_values(array_unique(array_values($lotCounters ?? [])));
+            $xrWord = count($xrWords) === 1 ? $xrWords[0] : (count($xrWords) ? 'Day' : ($schedule->dayType ?: 'DAS'));
+            $xrWordSaid = $xrWord === 'AGE' ? 'Age' : $xrWord;
+        @endphp
+        <div class="xr-range" id="xrRange" role="radiogroup" aria-label="Which part of the season">
+            <button type="button" class="is-on" data-xr-range="season" aria-checked="true">🌱 Whole season</button>
+            <button type="button" data-xr-range="day" aria-checked="false">⏱️ <span data-xr-dayword>{{ $xrWordSaid }}</span> range</button>
+            <button type="button" data-xr-range="date" aria-checked="false">📅 Date range</button>
+        </div>
+        <div class="xr-range-pane mt-2" id="xrRangeDay" hidden>
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="form-label text-xs!" for="xrDayMin"><span data-xr-dayword>{{ $xrWordSaid }}</span> from</label>
+                    <input type="number" id="xrDayMin" class="form-input" step="1" placeholder="e.g. 0" inputmode="numeric">
+                </div>
+                <div>
+                    <label class="form-label text-xs!" for="xrDayMax"><span data-xr-dayword>{{ $xrWordSaid }}</span> to</label>
+                    <input type="number" id="xrDayMax" class="form-input" step="1" placeholder="e.g. 45" inputmode="numeric">
+                </div>
+            </div>
+            <p class="xr-unit" id="xrDayUnit"></p>
+        </div>
+        <div class="xr-range-pane grid grid-cols-2 gap-2 mt-2" id="xrRangeDate" hidden>
             <div>
                 <label class="form-label text-xs!" for="xrFrom">From date</label>
                 @include('partials.date-tag', ['id' => 'xrFrom', 'empty' => 'From'])
@@ -232,9 +273,10 @@
         <p class="text-xs text-gray-500 mb-2">Costs on an activity that touches several lots are shared between them. Nothing chosen = every lot, plus general costs.</p>
         <div class="dt-rows" id="xrLotsList">
             @foreach ($schedule->lots as $lot)
-                <button type="button" class="dt-row" data-xr-lot="{{ $lot->id }}">
-                    <span class="dt-row-e">🌾</span>
-                    <span class="dt-row-body"><b>{{ $lot->lotName }}</b><i>{{ \App\Support\CropStages::label($lot->crop) ?: 'No crop set' }}</i></span>
+                @php $xrCounter = ($lotCounters ?? [])[$lot->id] ?? ($schedule->dayType ?: 'DAS'); @endphp
+                <button type="button" class="dt-row" data-xr-lot="{{ $lot->id }}" data-xr-counter="{{ $xrCounter }}">
+                    <span class="dt-row-e">{{ $xrCounter === 'AGE' ? '🌳' : '🌾' }}</span>
+                    <span class="dt-row-body"><b>{{ $lot->lotName }}</b><i>{{ \App\Support\CropStages::label($lot->crop) ?: 'No crop set' }} · {{ $xrCounter === 'AGE' ? 'counts its age in months' : 'counts in ' . $xrCounter }}</i></span>
                     <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                 </button>
             @endforeach
@@ -370,6 +412,28 @@ const __init = () => {
     const CAT_SEL = new Set();
     let KIND = '';
     let STATUS = 'all';
+    let RANGE = 'season';
+    const DAY_TYPE = @json($schedule->dayType ?: 'DAS');
+    /* The crop's own clock, as the chosen lots keep it: one word when they
+       agree, "Day" when they do not (each lot still reads its own count),
+       the season's word when the season has no lots. A tree keeps its age
+       in months. */
+    function dayWord() {
+        const rows = [...document.querySelectorAll('#xrLotsList [data-xr-lot]')];
+        const chosen = rows.filter((r) => !LOT_SEL.size || LOT_SEL.has(Number(r.dataset.xrLot)));
+        const words = [...new Set(chosen.map((r) => (r.dataset.xrCounter || '').trim()).filter(Boolean))];
+        if (!words.length) return DAY_TYPE;
+        return words.length === 1 ? words[0] : 'Day';
+    }
+    const daySaid = (w = dayWord()) => (w === 'AGE' ? 'Age' : w);
+    function sayDayWord() {
+        const w = dayWord();
+        document.querySelectorAll('[data-xr-dayword]').forEach((el) => { el.textContent = daySaid(w); });
+        const unit = $id('xrDayUnit');
+        if (unit) unit.textContent = w === 'AGE'
+            ? 'Counted in months since the trees were planted.'
+            : (w === 'Day' ? 'The chosen lots keep different counts; each row is read on its own lot\'s count.' : `Counted in days, ${w} 0 being each lot's own day zero${w === 'DAT' ? ' (its transplant)' : ''}.`);
+    }
     // What the report area is showing: a fresh generate, or a shelf row.
     let MODE = 'fresh';
     let SAVED = { id: null, mine: true };
@@ -398,14 +462,50 @@ const __init = () => {
         const st = $id('xrStatusNow');
         st.textContent = document.querySelector(`#xrStatusList [data-xr-status="${STATUS}"] b`)?.textContent || 'Planned + done';
         st.classList.toggle('is-none', STATUS === 'all');
+        sayDayWord();
+        $id('xrHint').textContent = coversLine();
+    };
+    function sliceParams() {
+        const p = {};
+        if (RANGE === 'day') {
+            const a = ($id('xrDayMin')?.value || '').trim(), b = ($id('xrDayMax')?.value || '').trim();
+            if (a !== '' && !isNaN(parseInt(a, 10))) p.dayMin = parseInt(a, 10);
+            if (b !== '' && !isNaN(parseInt(b, 10))) p.dayMax = parseInt(b, 10);
+        }
+        if (RANGE === 'date') {
+            if ($id('xrFrom')?.value) p.from = $id('xrFrom').value;
+            if ($id('xrTo')?.value) p.to = $id('xrTo').value;
+        }
+        return p;
+    }
+    function coversLine() {
+        const sl = sliceParams();
         const bits = [];
         if (LOT_SEL.size) bits.push(`${LOT_SEL.size} ${LOT_SEL.size === 1 ? 'lot' : 'lots'}`);
         if (CAT_SEL.size) bits.push(`${CAT_SEL.size} ${CAT_SEL.size === 1 ? 'category' : 'categories'}`);
-        if (KIND) bits.push('kind: ' + KIND);
+        if (KIND) bits.push('inventory: ' + ($id('xrKindNow')?.textContent || KIND));
         if (STATUS !== 'all') bits.push(STATUS === 'done' ? 'done only' : 'still ahead');
-        if ($id('xrFrom')?.value || $id('xrTo')?.value) bits.push(`dates [${$id('xrFrom').value || '—'}, ${$id('xrTo').value || '—'}]`);
-        $id('xrHint').textContent = bits.length ? 'Filters active: ' + bits.join(' · ') : '';
-    };
+        const dayOn = sl.dayMin !== undefined || sl.dayMax !== undefined;
+        if (dayOn) bits.push(`${daySaid()} ${sl.dayMin ?? '−∞'} to ${sl.dayMax ?? '+∞'}${dayWord() === 'AGE' ? ' months' : ''}`);
+        if (sl.from || sl.to) bits.push(`${sl.from || '…'} to ${sl.to || '…'}`);
+        const line = bits.length ? `Covers: ${bits.join(' · ')}` : 'Covers the whole season, every lot and every category.';
+        return dayOn ? line + '. Lines with no lot (the day book, stock buys) have no day count, so a day-count range leaves them out.' : line;
+    }
+
+    /* Which part of the season: leaving a mode clears its inputs, so a
+       stale date cannot ride along with a day range. */
+    $id('xrRange')?.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-xr-range]');
+        if (!b) return;
+        RANGE = b.dataset.xrRange;
+        document.querySelectorAll('#xrRange [data-xr-range]').forEach((x) => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-checked', on ? 'true' : 'false'); });
+        $id('xrRangeDay').hidden = RANGE !== 'day';
+        $id('xrRangeDate').hidden = RANGE !== 'date';
+        if (RANGE !== 'day') ['xrDayMin', 'xrDayMax'].forEach((i) => { if ($id(i)) $id(i).value = ''; });
+        if (RANGE !== 'date') ['xrFrom', 'xrTo'].forEach((i) => { if ($id(i) && $id(i).value) { $id(i).value = ''; $id(i).dispatchEvent(new Event('change')); } });
+        sayTags();
+    });
+    ['xrDayMin', 'xrDayMax'].forEach((i) => $id(i)?.addEventListener('input', sayTags));
 
     $id('xrLotsBtn').addEventListener('click', () => openSheet('xrLotsSheet'));
     $id('xrLotsList').addEventListener('click', (e) => {
@@ -450,8 +550,11 @@ const __init = () => {
         CAT_SEL.forEach((k) => parts.push(`cats[]=${encodeURIComponent(k)}`));
         if (KIND) parts.push('invKind=' + encodeURIComponent(KIND));
         if (STATUS !== 'all') parts.push('status=' + STATUS);
-        if ($id('xrFrom')?.value) parts.push('from=' + encodeURIComponent($id('xrFrom').value));
-        if ($id('xrTo')?.value) parts.push('to=' + encodeURIComponent($id('xrTo').value));
+        const sl = sliceParams();
+        if (sl.dayMin !== undefined) parts.push('dayMin=' + sl.dayMin);
+        if (sl.dayMax !== undefined) parts.push('dayMax=' + sl.dayMax);
+        if (sl.from) parts.push('from=' + encodeURIComponent(sl.from));
+        if (sl.to) parts.push('to=' + encodeURIComponent(sl.to));
         return parts.length ? '&' + parts.join('&') : '';
     }
 
@@ -465,8 +568,14 @@ const __init = () => {
             render();
             // The shelf copy: the text Anee reads plus the dataset that lets
             // the Saved tab redraw this exact report later.
-            const params = { lotIds: [...LOT_SEL], cats: [...CAT_SEL], invKind: KIND, status: STATUS, from: $id('xrFrom')?.value || null, to: $id('xrTo')?.value || null };
-            const filtered = LOT_SEL.size || CAT_SEL.size || KIND || STATUS !== 'all' || params.from || params.to;
+            const sl = sliceParams();
+            const params = {
+                lotIds: [...LOT_SEL], cats: [...CAT_SEL], invKind: KIND, status: STATUS,
+                range: RANGE, dayWord: RANGE === 'day' ? dayWord() : null,
+                dayMin: sl.dayMin ?? null, dayMax: sl.dayMax ?? null,
+                from: sl.from || null, to: sl.to || null,
+            };
+            const filtered = LOT_SEL.size || CAT_SEL.size || KIND || STATUS !== 'all' || Object.keys(sl).length;
             let savedNote = '';
             try {
                 const snap = await api(U.snapshot, { method: 'POST', body: {
@@ -489,10 +598,9 @@ const __init = () => {
         finally { loader.hide(); }
     }
 
-    /* One report area, two ways in. */
-    /* One report, two ways in -- and one screen: the full-screen view with
-       its actions under the report. Closed, a fresh one leaves the farmer
-       on the Saved shelf where it now sits. */
+    /* One report, two ways in -- and one screen: the full-screen view, its
+       actions as icons in the top bar (the X is the close). Closed, a fresh
+       one leaves the farmer on the Saved shelf where it now sits. */
     const FACE = @json(\App\Models\AiSetting::current()->faceUrl());
     const ANEE = @json(\App\Models\AiSetting::current()->assistantName);
     function showReport(mode) {
@@ -501,7 +609,6 @@ const __init = () => {
         if (SAVED.id) actions.push({ label: 'Ask ' + ANEE, face: FACE, kind: 'primary', href: U.ai + '?freport=' + SAVED.id });
         if (SAVED.id && SAVED.mine && MAY_GEN) actions.push({ label: 'Name & description', icon: 'pen', onClick: () => openMetaFor(SAVED) });
         if (SAVED.id && SAVED.mine && MAY_GEN) actions.push({ label: 'Delete', icon: 'trash', kind: 'danger', onClick: deleteShown });
-        actions.push({ label: mode === 'fresh' ? 'New report' : 'Close', icon: mode === 'fresh' ? 'plus' : 'close', onClick: () => window.reportView.close() });
         window.reportView.open({
             title: SAVED.title || ('Expenses Report — ' + SCHEDULE_TITLE),
             node: $id('xrBody'),
@@ -601,6 +708,7 @@ const __init = () => {
             lines.push(`  ${c.label}: ${fmtPeso(d.totals[k])}`);
         });
         lines.push(`Income: ${fmtPeso(d.totals.income)} · Net: ${fmtPeso(d.net)}`);
+        lines.push(coversLine());
         lines.push('');
         lines.push('BY MONTH');
         lines.push('-'.repeat(50));
@@ -624,7 +732,8 @@ const __init = () => {
         document.querySelectorAll('#xrLotsList .is-on, #xrCatsList .is-on').forEach((r) => r.classList.remove('is-on'));
         document.querySelectorAll('#xrKindList [data-xr-kind]').forEach((r) => r.classList.toggle('is-on', r.dataset.xrKind === ''));
         document.querySelectorAll('#xrStatusList [data-xr-status]').forEach((r) => r.classList.toggle('is-on', r.dataset.xrStatus === 'all'));
-        ['xrFrom', 'xrTo'].forEach((i) => { if ($id(i)) $id(i).value = ''; });
+        ['xrFrom', 'xrTo', 'xrDayMin', 'xrDayMax'].forEach((i) => { if ($id(i)) $id(i).value = ''; });
+        document.querySelector('#xrRange [data-xr-range="season"]')?.click();
         sayTags();
     });
     $id('xrFrom')?.addEventListener('change', sayTags);

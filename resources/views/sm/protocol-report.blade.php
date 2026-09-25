@@ -263,7 +263,8 @@ const __init = () => {
     }
 
     /* The full-screen view: a fresh protocol and a shelf row land in the
-       same screen, the actions under it. Closed, the farmer is on the shelf. */
+       same screen, its actions as icons in the top bar (the X is the
+       close). Closed, the farmer is on the shelf. */
     let VIEWING = null;
     function showInView(meta, host, mode) {
         VIEWING = { id: meta.id, title: meta.title || '', mine: meta.mine !== false };
@@ -277,7 +278,6 @@ const __init = () => {
                 catch (err) { toast(err.message, 'error'); }
             } });
         }
-        actions.push({ label: mode === 'fresh' ? 'Another lot' : 'Close', icon: mode === 'fresh' ? 'plus' : 'close', onClick: () => window.reportView.close() });
         window.reportView.open({
             title: VIEWING.title || ((meta.report && meta.report.lot ? meta.report.lot + ' — ' : '') + 'the protocol'),
             node: host,

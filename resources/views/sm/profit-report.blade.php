@@ -61,6 +61,17 @@
     html.dark .pr-card, html.dark .pr-lot { background: #151b12; border-color: #2b3a1c; }
     html.dark .pr-card h3, html.dark .pr-lot-top b, html.dark .pr-anat b { color: #e8efe1; }
 
+    /* The one action, a button under the report -- not a bar. */
+    .pr-ask-row { display: flex; justify-content: center; padding: 1rem 0 .4rem; }
+    .pr-ask { display: inline-flex; align-items: center; gap: .45rem; padding: .45rem 1rem .45rem .4rem; border-radius: 999px; font-size: .84rem; font-weight: 800;
+        background: var(--color-brand-600); border: 1px solid var(--color-brand-600); color: #fff; cursor: pointer;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), background .2s; }
+    .pr-ask:hover { transform: translateY(-1px); background: var(--color-brand-700); }
+    .pr-ask:disabled { opacity: .6; cursor: default; transform: none; }
+    .pr-ask img { width: 1.6rem; height: 1.6rem; border-radius: 999px; object-fit: cover; }
+    html.dark .pr-ask { background: #4a7c2a; border-color: #4a7c2a; }
+    @media (prefers-reduced-motion: reduce) { .pr-ask { transition: none; } }
+
     @media print {
         header, nav, .pr-actions, .bottom-nav, .tabbar, #aiFloat { display: none !important; }
         .pr-card { box-shadow: none; page-break-inside: avoid; }
@@ -85,8 +96,8 @@
          season has nothing for the button to act on. Moved under the
          report by the script below. --}}
     <div class="pr-actions hidden" id="prActions">
-        <div class="rv-acts" style="position:static;background:none;border:0;padding:.2rem 0 0;justify-content:center;backdrop-filter:none;-webkit-backdrop-filter:none;">
-            <button type="button" id="prAttachBtn" class="rv-btn is-primary">
+        <div class="pr-ask-row">
+            <button type="button" id="prAttachBtn" class="pr-ask">
                 <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="">
                 <span>Ask {{ \App\Models\AiSetting::current()->assistantName }} about it</span>
             </button>

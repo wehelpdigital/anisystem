@@ -584,8 +584,9 @@ const __init = () => {
     }
 
     /* ---------------- the full-screen view ----------------
-     * A fresh report and a shelf row land in the same screen, with the
-     * actions under the report. Closed, the farmer is on the Saved shelf. */
+     * A fresh report and a shelf row land in the same screen, its actions
+     * as icons in the top bar (the X is the close). Closed, the farmer is
+     * on the Saved shelf. */
     let VIEWING = null;
     function showInView(meta, host, mode) {
         VIEWING = { id: meta.id, title: meta.title || '', description: meta.description || '', mine: meta.mine !== false };
@@ -601,7 +602,6 @@ const __init = () => {
                 catch (err) { toast(err.message, 'error'); }
             } });
         }
-        actions.push({ label: mode === 'fresh' ? 'Run another' : 'Close', icon: mode === 'fresh' ? 'plus' : 'close', onClick: () => window.reportView.close() });
         window.reportView.open({
             title: VIEWING.title || (KIND === 'sofar' ? 'Analyze So Far' : ANEE + ' Season Report'),
             node: host,

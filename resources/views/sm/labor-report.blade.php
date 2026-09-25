@@ -86,24 +86,38 @@
     .lr-card h3 { font-family: var(--font-heading); font-weight: 700; font-size: 1.02rem; color: var(--color-gray-900); }
     .lr-card .sub { font-size: .8rem; color: var(--color-gray-500); }
 
-    /* Column chart (months) */
-    /* Extra headroom: the top y-tick pokes above the plot, so keep the chart
-       clear of the title/subtitle text above it. */
-    .lr-plot { position: relative; margin-top: 2.25rem; }
-    .lr-grid { position: absolute; inset: 0 0 1.6rem 3.2rem; }
+    /* Column chart (months)
+       The bars scroll sideways, and a box that scrolls one way clips the
+       other -- so the tallest bar's caption was cut off above the plot.
+       The headroom now lives INSIDE the scroller (its top padding) and the
+       grid and y ticks start the same distance down, so the 100% line,
+       the tallest bar and the caption over it are all in view. */
+    .lr-plot { --lr-head: 2.4rem; position: relative; margin-top: .75rem; }
+    .lr-grid { position: absolute; inset: var(--lr-head) 0 1.6rem 3.2rem; }
     .lr-grid i { position: absolute; left: 0; right: 0; height: 1px; background: var(--color-gray-100); }
-    .lr-yticks { position: absolute; left: 0; top: 0; bottom: 1.6rem; width: 3rem; }
+    .lr-yticks { position: absolute; left: 0; top: var(--lr-head); bottom: 1.6rem; width: 3rem; }
     .lr-yticks span { position: absolute; right: .2rem; transform: translateY(-50%); font-size: .66rem; color: var(--color-gray-400); font-variant-numeric: tabular-nums; }
-    .lr-cols { position: relative; margin-left: 3.2rem; display: flex; gap: 6px; height: 13rem; overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; scrollbar-color: var(--color-gray-300) transparent; }
+    .lr-cols { position: relative; margin-left: 3.2rem; display: flex; gap: 6px; height: calc(13rem + var(--lr-head)); padding-top: var(--lr-head); overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; scrollbar-color: var(--color-gray-300) transparent; }
     .lr-colband { flex: 1 1 0; min-width: 30px; max-width: 64px; display: flex; flex-direction: column; cursor: default; }
     .lr-colarea { flex: 1 1 auto; display: flex; align-items: flex-end; justify-content: center; }
     .lr-colpos { position: relative; width: 100%; max-width: 24px; }
-    .lr-col { width: 100%; height: 100%; border-radius: 4px 4px 0 0; background: var(--color-brand-500); min-height: 2px; }
+    .lr-col { width: 100%; height: 100%; border-radius: 4px 4px 0 0; background: var(--color-brand-500); min-height: 2px; transform-origin: bottom; animation: lrGrow .5s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes lrGrow { from { transform: scaleY(0); } to { transform: none; } }
+    @keyframes lrFade { from { opacity: 0; transform: translate(var(--lr-cx, -50%), 4px); } to { opacity: 1; transform: translate(var(--lr-cx, -50%), 0); } }
     .lr-colband:hover .lr-col { filter: brightness(1.08); }
     .lr-colband.is-max .lr-col { background: var(--color-brand-800); }
     .lr-collabel { height: 1.6rem; display: flex; align-items: center; justify-content: center; font-size: .66rem; color: var(--color-gray-500); white-space: nowrap; }
-    .lr-colcap { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); font-size: .66rem; font-weight: 700; color: var(--color-gray-800); white-space: nowrap; padding-bottom: 2px; }
-    .lr-colcap .tag { display: inline-block; margin-left: .25rem; padding: 0 .35rem; border-radius: 999px; background: var(--color-brand-100); color: var(--color-brand-800); font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+    /* Every bar says its figure; the busiest one says it in full under a
+       "Busiest" tag. The first and last captions hug their bar's outer
+       edge so neither end of the scroller cuts them. */
+    .lr-colcap { --lr-cx: -50%; position: absolute; bottom: 100%; left: 50%; transform: translateX(var(--lr-cx)); display: flex; flex-direction: column; align-items: center; gap: 2px;
+        padding-bottom: 3px; font-size: .6rem; line-height: 1.15; font-weight: 700; color: var(--color-gray-500); white-space: nowrap; font-variant-numeric: tabular-nums;
+        animation: lrFade .4s .12s cubic-bezier(.22,1,.36,1) both; }
+    .lr-colcap.is-max { font-size: .68rem; color: var(--color-gray-900); }
+    .lr-colcap.is-l { --lr-cx: 0%; left: 0; align-items: flex-start; }
+    .lr-colcap.is-r { --lr-cx: 0%; left: auto; right: 0; align-items: flex-end; }
+    .lr-colcap .tag { display: inline-block; padding: 0 .35rem; border-radius: 999px; background: var(--color-brand-100); color: var(--color-brand-800); font-size: 9.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+    @media (prefers-reduced-motion: reduce) { .lr-col, .lr-colcap { animation: none; } }
     .lr-metric { display: inline-flex; border: 1px solid var(--color-gray-200); border-radius: .6rem; overflow: hidden; }
     .lr-metric button { padding: .3rem .7rem; font-size: .78rem; font-weight: 700; color: var(--color-gray-500); background: var(--color-white); cursor: pointer; }
     .lr-metric button.is-on { background: var(--color-brand-600); color: #fff; }
@@ -158,8 +172,13 @@
     .lr-day-c { width: 1rem; height: 1rem; flex: none; color: var(--date-color); opacity: .7; transition: transform .28s cubic-bezier(.22,1,.36,1); }
     @media (max-width: 479px) { .lr-day-count .lr-w { display: none; } .lr-day-date { font-size: .9rem; } }
     .lr-day.is-folded .lr-day-c { transform: rotate(-90deg); }
-    .lr-day-body { display: grid; gap: .45rem; padding: .55rem .6rem .6rem; }
-    .lr-day.is-folded .lr-day-body { display: none; }
+    /* A day folds on grid rows -- 1fr to 0fr, animated, never a snap. The
+       padding lives on the list inside, so a folded day is truly flat. */
+    .lr-day-body { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+    .lr-day.is-folded .lr-day-body { grid-template-rows: 0fr; }
+    .lr-day-in { min-height: 0; overflow: hidden; opacity: 1; transition: opacity .28s cubic-bezier(.22,1,.36,1), visibility 0s; }
+    .lr-day.is-folded .lr-day-in { opacity: 0; visibility: hidden; transition: opacity .28s cubic-bezier(.22,1,.36,1), visibility 0s .28s; }
+    .lr-day-list { display: grid; gap: .45rem; padding: .55rem .6rem .6rem; }
     .lr-act { border: 1px solid var(--color-gray-200); border-left: 4px solid var(--type-color, #94a3b8); border-radius: .8rem; background: var(--color-white); padding: .55rem .7rem; cursor: pointer;
         transition: border-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
     .lr-act:hover { border-color: #cfe3bd; }
@@ -170,8 +189,13 @@
     .lr-act-chips { display: flex; flex-wrap: wrap; gap: .3rem .4rem; margin-top: .35rem; align-items: center; }
     .lr-act-chips .badge { font-variant-numeric: tabular-nums; }
     .lr-act-type { display: inline-flex; align-items: center; gap: .25rem; font-size: .68rem; font-weight: 800; padding: .12rem .5rem; border-radius: 999px; color: var(--type-color, #475569); background: color-mix(in srgb, var(--type-color, #94a3b8) 14%, var(--color-white)); border: 1px solid color-mix(in srgb, var(--type-color, #94a3b8) 35%, transparent); }
-    .lr-act-more { display: none; margin-top: .55rem; padding-top: .55rem; border-top: 1px dashed var(--color-gray-200); font-size: .8rem; color: var(--color-gray-700); }
-    .lr-act.is-open .lr-act-more { display: block; }
+    /* A card opens the same way a day folds: on grid rows. */
+    .lr-act-more { display: grid; grid-template-rows: 0fr; opacity: 0; font-size: .8rem; color: var(--color-gray-700);
+        transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    .lr-act.is-open .lr-act-more { grid-template-rows: 1fr; opacity: 1; }
+    .lr-act-more-in { min-height: 0; overflow: hidden; }
+    .lr-act-more-pad { margin-top: .55rem; padding-top: .55rem; border-top: 1px dashed var(--color-gray-200); }
+    .lr-act-more .lr-hand.is-me { background: var(--color-brand-50); box-shadow: inset 0 0 0 1px var(--color-brand-200); }
     .lr-act-more .lr-hands { display: grid; gap: .25rem; margin: .25rem 0 .4rem; }
     .lr-act-more .lr-hand { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; padding: .3rem .55rem; border-radius: .55rem; background: var(--color-gray-50); }
     .lr-act-more .lr-hand b { font-weight: 700; color: var(--color-gray-900); }
@@ -195,11 +219,43 @@
     html.dark .lr-act:hover { border-color: #3f5a2a; }
     html.dark .lr-act-top b, html.dark .lr-act-amt { color: #e8efe1; }
     html.dark .lr-act-type { background: color-mix(in srgb, var(--type-color, #94a3b8) 22%, #151b12); }
-    html.dark .lr-act-more { color: #cbd5c0; border-color: #2b3a1c; }
+    html.dark .lr-act-more { color: #cbd5c0; }
+    html.dark .lr-act-more-pad { border-color: #2b3a1c; }
+    html.dark .lr-act-more .lr-hand.is-me { background: #22301a; box-shadow: inset 0 0 0 1px #3f5a2a; }
     html.dark .lr-act-more .lr-hand { background: #1c2416; }
     html.dark .lr-act-more .lr-hand b { color: #e8efe1; }
     html.dark .lr-type-sum strong { color: #e8efe1; }
-    @media (prefers-reduced-motion: reduce) { .lr-day-c, .lr-act, .lr-act-c { transition: none; } }
+    /* THE ONE FILTER -- activity type and worker, picked in one sheet. The
+       tag says what is on; the small x beside it clears both at once. */
+    .lr-filter-row { display: flex; align-items: center; gap: .4rem; margin-bottom: .5rem; }
+    .lr-filter-row .crop-tag { flex: 1 1 auto; min-width: 0; }
+    .lr-filter-row .crop-tag.is-active { border-color: var(--color-brand-500); background: var(--color-brand-50); }
+    .lr-filter-e { display: inline-flex; width: 1.1rem; height: 1.1rem; color: var(--color-gray-500); }
+    .crop-tag.is-active .lr-filter-e { color: var(--color-brand-700); }
+    .lr-filter-e svg { width: 100%; height: 100%; }
+    .lr-filter-n { flex: none; min-width: 1.25rem; height: 1.25rem; padding: 0 .3rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center;
+        font-size: .68rem; font-weight: 800; background: var(--color-brand-600); color: #fff; }
+    .lr-filter-x { flex: none; width: 2.5rem; height: 2.5rem; border-radius: .75rem; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+        border: 1px solid var(--color-gray-200); background: var(--color-white); color: var(--color-gray-500); animation: lrPop .28s cubic-bezier(.22,1,.36,1) both;
+        transition: color .2s, border-color .2s; }
+    .lr-filter-x:hover { color: #b91c1c; border-color: #fca5a5; }
+    .lr-filter-x svg { width: 1rem; height: 1rem; }
+    @keyframes lrPop { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: none; } }
+    .lr-days.is-fresh { animation: lrPaneIn .28s cubic-bezier(.22,1,.36,1); }
+    .lr-fk { font-size: .68rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--color-gray-500); margin: .2rem 0 .4rem; }
+    .lr-fk + .dt-rows { margin-bottom: 1rem; }
+    .dt-row.is-empty { opacity: .5; }
+    html.dark .lr-filter-row .crop-tag.is-active { background: #22301a; border-color: #6b9f3d; }
+    html.dark .lr-filter-x { background: #1c2416; border-color: #2b3a1c; color: #9aa78d; }
+    html.dark .lr-fk { color: #93a684; }
+    /* On a phone the breakdown drops its card: the days and their cards
+       run the full width of the report instead of sitting three insets in. */
+    @media (max-width: 639px) {
+        #lrPaneBreakdown > .lr-card { padding: .15rem 0 0; background: none; border: 0; box-shadow: none; }
+        .lr-day-list { padding: .45rem .35rem .5rem; }
+        .lr-act { padding: .55rem .6rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { .lr-day-c, .lr-act, .lr-act-c, .lr-day-body, .lr-day-in, .lr-act-more { transition: none; } .lr-filter-x, .lr-days.is-fresh { animation: none; } }
     html.dark .lr-bcard { background: #151b12; border-color: #2b3a1c; }
     html.dark .lr-bcard-top b, html.dark .lr-bcard-amt { color: #e8efe1; }
 
@@ -459,14 +515,26 @@
     </div>
 </div>
 
-{{-- The breakdown's activity chooser: one at a time, or all of them. --}}
+{{-- The breakdown's one filter: an activity type AND a worker, both
+     "All" to start, either or both narrowing the list. --}}
 <div class="sheet hidden" id="lrActSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Which activity type?</h3>
+        <h3 class="sheet-title">Filter the activities</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
-    <div class="sheet-body dt-rows" id="lrActList"></div>
+    <div class="sheet-body">
+        <p class="lr-fk">Activity type</p>
+        <div class="dt-rows" id="lrActList"></div>
+        <div id="lrWkWrap">
+            <p class="lr-fk">Worker</p>
+            <div class="dt-rows" id="lrWkList"></div>
+        </div>
+    </div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost" id="lrFilterClearAll">Clear</button>
+        <button type="button" class="btn btn-primary" data-sheet-close id="lrFilterGo">Show them</button>
+    </div>
 </div>
 
 {{-- Rename a saved report, describe it, retie its tags. --}}
@@ -705,8 +773,8 @@ const __init = () => {
     }
 
     /* One report, two ways in -- and one screen: the full-screen view,
-       with its actions under the report. A fresh one, once closed, leaves
-       the farmer on the Saved shelf where it now sits. */
+       its actions as icons in the top bar (the X is the close). A fresh
+       one, once closed, leaves the farmer on the Saved shelf. */
     const FACE = @json(\App\Models\AiSetting::current()->faceUrl());
     const ANEE = @json(\App\Models\AiSetting::current()->assistantName);
     function showReport(mode) {
@@ -715,12 +783,11 @@ const __init = () => {
         if (SAVED.id) actions.push({ label: 'Ask ' + ANEE, face: FACE, kind: 'primary', href: U.ai + '?freport=' + SAVED.id });
         if (SAVED.id && SAVED.mine && MAY_GEN) actions.push({ label: 'Name & description', icon: 'pen', onClick: () => openMetaFor(SAVED) });
         if (SAVED.id && SAVED.mine && MAY_GEN) actions.push({ label: 'Delete', icon: 'trash', kind: 'danger', onClick: deleteShown });
-        actions.push({ label: mode === 'fresh' ? 'New report' : 'Close', icon: mode === 'fresh' ? 'plus' : 'close', onClick: () => window.reportView.close() });
         window.reportView.open({
             title: SAVED.title || ('Labor Report — ' + SCHEDULE_TITLE),
             node: $id('lrBody'),
             actions,
-            onClose: () => { showTab(mode !== 'fresh' ? false : false); },
+            onClose: () => { showTab(false); },
         });
     }
     /* The pen, from inside the view: the same sheet the shelf's pen opens. */
@@ -841,6 +908,20 @@ const __init = () => {
 
         const ticks = [0, .25, .5, .75, 1].map((f) => f * top);
         const fmtTick = (v) => METRIC === 'cost' ? ((window.ANEE_REGION || {}).symbol || '₱') + (v >= 1000 ? (v / 1000).toLocaleString() + 'k' : v.toLocaleString()) : String(v);
+        // A bar's own figure, short: ₱4.7k, ₱850, 3.
+        const fmtShort = (v) => {
+            if (METRIC !== 'cost') return String(v);
+            const sym = (window.ANEE_REGION || {}).symbol || '₱';
+            if (v >= 1000) { const k = v / 1000; return sym + (k >= 10 ? Math.round(k) : Math.round(k * 10) / 10) + 'k'; }
+            return sym + Math.round(v);
+        };
+        const last = series.length - 1;
+        const edge = (i) => (i === 0 && last > 0 ? ' is-l' : (i === last && last > 0 ? ' is-r' : ''));
+        const cap = (s, i) => {
+            if (!(val(s) > 0)) return '';
+            if (s === busiest) return `<span class="lr-colcap is-max${edge(i)}"><span class="tag">Busiest</span>${METRIC === 'cost' ? fmtPeso0(s.cost) : s.count}</span>`;
+            return series.length > 14 ? '' : `<span class="lr-colcap${edge(i)}">${esc(fmtShort(val(s)))}</span>`;
+        };
         host.innerHTML = `<div class="lr-plot">
             <div class="lr-grid">${ticks.slice(1).map((v) => `<i style="bottom:${(v / top) * 100}%"></i>`).join('')}</div>
             <div class="lr-yticks">${ticks.map((v) => `<span style="bottom:${(v / top) * 100}%">${fmtTick(v)}</span>`).join('')}</div>
@@ -848,8 +929,8 @@ const __init = () => {
                 <div class="lr-colband${s === busiest && val(s) > 0 ? ' is-max' : ''}" data-i="${i}">
                     <div class="lr-colarea">
                         <div class="lr-colpos" style="height:${top > 0 ? Math.max((val(s) / top) * 100, 1) : 1}%">
-                            ${s === busiest && val(s) > 0 ? `<span class="lr-colcap">${METRIC === 'cost' ? fmtPeso0(s.cost) : s.count}<span class="tag">Busiest</span></span>` : ''}
-                            <div class="lr-col"></div>
+                            ${cap(s, i)}
+                            <div class="lr-col" style="animation-delay:${Math.min(i, 12) * 30}ms"></div>
                         </div>
                     </div>
                     <span class="lr-collabel">${series.length > 14 && i % 2 ? '' : esc(s.label)}</span>
@@ -944,7 +1025,7 @@ const __init = () => {
     /* ---------------- breakdown cards ----------------
      * Tables asked a phone to scroll sideways twice; a card says one
      * worker or one activity whole, and stacks however narrow it gets. */
-    function renderBreakdown() {
+    function renderBreakdown(fresh = false) {
         const d = DATA;
         const showUna = ((d.phases || {}).unanchored || {}).count > 0;
 
@@ -976,13 +1057,16 @@ const __init = () => {
             if (s && e && e > s) return `${MONTH_SHORT[s.getMonth()]} ${s.getDate()} → ${MONTH_SHORT[e.getMonth()]} ${e.getDate()}, ${e.getFullYear()}`;
             return s ? `${MONTH_SHORT[s.getMonth()]} ${s.getDate()}, ${s.getFullYear()}` : 'No date';
         };
+        // With a worker chosen, a card's figure is that worker's pay on it.
+        const payOf = (a, wid) => { const h = (a.workers || []).find((x) => String(x.id) === wid); return h ? (h.pay || 0) : 0; };
+        const amt = (a) => (BREAK_WORKER === null ? (a.cost || 0) : payOf(a, BREAK_WORKER));
         const card = (a) => {
             const tr = a.timeRequired === 'whole' ? 'Whole day' : (a.timeRequired === 'half' ? 'Half day' : 'N/A');
             const hands = (a.workers || []);
             const key = typeKey(a);
             const color = TYPE_COLOR[key] || '#94a3b8';
-            return `<div class="lr-act${a.cost === 0 ? ' lr-bzero' : ''}${OPEN_ACTS.has(String(a.id)) ? ' is-open' : ''}" data-lr-open="${esc(String(a.id))}" style="--type-color:${color}">
-                <div class="lr-act-top"><b>${esc(a.activityTitle)}</b><span class="lr-act-amt">${fmtPeso(a.cost)}</span></div>
+            return `<div class="lr-act${amt(a) === 0 ? ' lr-bzero' : ''}${OPEN_ACTS.has(String(a.id)) ? ' is-open' : ''}" data-lr-open="${esc(String(a.id))}" style="--type-color:${color}" role="button" tabindex="0" aria-expanded="${OPEN_ACTS.has(String(a.id)) ? 'true' : 'false'}">
+                <div class="lr-act-top"><b>${esc(a.activityTitle)}</b><span class="lr-act-amt">${fmtPeso(amt(a))}</span></div>
                 <div class="lr-act-chips">
                     <span class="lr-act-type">${TYPE_ICON[key] || '📌'} ${esc(typeWord(a))}</span>
                     <span class="badge badge-gray">${tr}</span>
@@ -990,9 +1074,9 @@ const __init = () => {
                     <span class="badge badge-gray">${a.workerCount} ${a.workerCount === 1 ? 'worker' : 'workers'}</span>
                     <svg class="lr-act-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </div>
-                <div class="lr-act-more">
+                <div class="lr-act-more"><div class="lr-act-more-in"><div class="lr-act-more-pad">
                     <p class="lr-k">Who did it</p>
-                    ${hands.length ? `<div class="lr-hands">${hands.map((h) => `<div class="lr-hand"><b>${esc(h.name)}<small>${fmtPeso0(h.rate)} / half-day</small></b><span>${fmtPeso(h.pay)}</span></div>`).join('')}</div>` : '<p class="text-xs text-gray-400 mb-2">No worker assigned.</p>'}
+                    ${hands.length ? `<div class="lr-hands">${hands.map((h) => `<div class="lr-hand${BREAK_WORKER !== null && String(h.id) === BREAK_WORKER ? ' is-me' : ''}"><b>${esc(h.name)}<small>${fmtPeso0(h.rate)} / half-day</small></b><span>${fmtPeso(h.pay)}</span></div>`).join('')}</div>` : '<p class="text-xs text-gray-400 mb-2">No worker assigned.</p>'}
                     <p class="lr-k">The day</p>
                     <div class="lr-facts">
                         <span class="badge badge-gray">${esc(prettyRange(a))}</span>
@@ -1000,15 +1084,22 @@ const __init = () => {
                         <span class="badge badge-gray" style="color:${phaseColor[a.phase] || '#64748b'}">${esc(phaseWord[a.phase] || '')}</span>
                         ${(a.lots || []).map((l) => `<span class="badge badge-gray">🌾 ${esc(l)}</span>`).join('') || '<span class="badge badge-gray">Not lot-specific</span>'}
                     </div>
-                </div>
+                </div></div></div>
             </div>`;
         };
-        const ph = d.phases || {};
-        // One activity type, or all of them: the chooser's pick narrows the
-        // list; the days stay in order and each opens to its cards.
+        // The filter: one activity type (or all) AND one worker (or all).
         const all = d.perActivity || [];
-        const shown = BREAK_ACT === null ? all : all.filter((a) => typeKey(a) === BREAK_ACT);
-        const chosen = BREAK_ACT === null ? null : (shown[0] ? typeWord(shown[0]) : (BREAK_ACT === '__none' ? 'No type' : BREAK_ACT));
+        const byType = (a, t) => t === null || typeKey(a) === t;
+        const byWorker = (a, w) => w === null || (a.workers || []).some((h) => String(h.id) === w);
+        // A pick the slice no longer holds (a saved report, a new slice) lets go.
+        if (BREAK_ACT !== null && !all.some((a) => typeKey(a) === BREAK_ACT)) BREAK_ACT = null;
+        if (BREAK_WORKER !== null && !all.some((a) => byWorker(a, BREAK_WORKER))) BREAK_WORKER = null;
+        const shown = all.filter((a) => byType(a, BREAK_ACT) && byWorker(a, BREAK_WORKER));
+        const typeName = BREAK_ACT === null ? null : (typeWord(all.find((a) => typeKey(a) === BREAK_ACT) || {}) || 'No type');
+        const hands = new Map();
+        all.forEach((a) => (a.workers || []).forEach((h) => { if (h.id !== undefined && !hands.has(String(h.id))) hands.set(String(h.id), h.name); }));
+        const workerName = BREAK_WORKER === null ? null : (hands.get(BREAK_WORKER) || 'One worker');
+        const active = [typeName, workerName].filter(Boolean);
         const byDate = new Map();
         shown.forEach((a) => { const k = a.targetDate || ''; if (!byDate.has(k)) byDate.set(k, []); byDate.get(k).push(a); });
         const dateKeys = [...byDate.keys()].sort((x, y) => (x === '' ? 1 : y === '' ? -1 : x.localeCompare(y)));
@@ -1016,74 +1107,118 @@ const __init = () => {
         const dayGroups = dateKeys.map((k, i) => {
             const items = byDate.get(k);
             const dt = k ? parseD(k) : null;
-            const cost = items.reduce((n, a) => n + (a.cost || 0), 0);
+            const cost = items.reduce((n, a) => n + amt(a), 0);
             const das = dasWord(items[0].das);
-            return `<div class="lr-day lr-dc-${i % 8}${FOLDED_DAYS.has(k) ? ' is-folded' : ''}" data-lr-day="${esc(k)}">
-                <button type="button" class="lr-day-h">
+            const folded = FOLDED_DAYS.has(k);
+            return `<div class="lr-day lr-dc-${i % 8}${folded ? ' is-folded' : ''}" data-lr-day="${esc(k)}">
+                <button type="button" class="lr-day-h" aria-expanded="${folded ? 'false' : 'true'}">
                     ${dt ? `<span class="lr-day-dow">${DOW[dt.getDay()]}</span><span class="lr-day-date">${MONTH_SHORT[dt.getMonth()]} ${dt.getDate()}, ${dt.getFullYear()}</span>` : '<span class="lr-day-date">No date</span>'}
                     ${das ? `<span class="lr-day-das">${esc(das)}</span>` : ''}
                     <span class="lr-day-count">${items.length}<span class="lr-w"> ${items.length === 1 ? 'activity' : 'activities'}</span></span>
                     <span class="lr-day-cost">${fmtPeso(cost)}</span>
                     <svg class="lr-day-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>
-                <div class="lr-day-body">${items.map(card).join('')}</div>
+                <div class="lr-day-body"><div class="lr-day-in"><div class="lr-day-list">${items.map(card).join('')}</div></div></div>
             </div>`;
         }).join('');
-        const shownCost = shown.reduce((n, a) => n + (a.cost || 0), 0);
+        const shownCost = shown.reduce((n, a) => n + amt(a), 0);
+        const FUNNEL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8.5V19l-4 2v-7.5z"/></svg>';
         $id('lrBreakdown').innerHTML = `
             <h3>By worker</h3>
             <div class="lr-bcards">${workerCards}</div>
-            <h3 class="mt-5">By activity type</h3>
-            <div class="mb-2">
-                <button type="button" class="crop-tag" id="lrActBtn">
-                    <span class="crop-tag-e">${chosen ? (TYPE_ICON[BREAK_ACT] || '📌') : '🧾'}</span>
-                    <span class="crop-tag-t${chosen ? '' : ' is-none'}" id="lrActNow">${chosen ? esc(chosen) : 'All activity types'}</span>
+            <h3 class="mt-5">By activity</h3>
+            <div class="lr-filter-row">
+                <button type="button" class="crop-tag${active.length ? ' is-active' : ''}" id="lrActBtn" aria-haspopup="dialog">
+                    <span class="crop-tag-e lr-filter-e">${FUNNEL}</span>
+                    <span class="crop-tag-t${active.length ? '' : ' is-none'}" id="lrActNow">${active.length ? esc(active.join(' · ')) : 'Filter · every type, every worker'}</span>
+                    ${active.length ? `<span class="lr-filter-n">${active.length}</span>` : ''}
                     <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>
+                ${active.length ? `<button type="button" class="lr-filter-x" id="lrFilterClear" aria-label="Clear the filter" title="Clear the filter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>` : ''}
             </div>
-            <p class="lr-type-sum"><span>${shown.length} ${shown.length === 1 ? 'activity' : 'activities'} on ${dateKeys.length} ${dateKeys.length === 1 ? 'day' : 'days'}${chosen ? ` · ${esc(chosen)}` : ''}</span><strong>${fmtPeso(shownCost)}</strong></p>
-            <div class="lr-days">${dayGroups}</div>
-            ${!shown.length ? '<p class="text-sm text-gray-400 py-4 text-center">Nothing of that type in this slice.</p>' : ''}`;
-        // The chooser's rows: every type in the slice, the costliest first.
+            <p class="lr-type-sum"><span>${shown.length} ${shown.length === 1 ? 'activity' : 'activities'} on ${dateKeys.length} ${dateKeys.length === 1 ? 'day' : 'days'}${workerName ? ` · ${esc(workerName)}'s pay` : ''}</span><strong>${fmtPeso(shownCost)}</strong></p>
+            <div class="lr-days${fresh ? ' is-fresh' : ''}">${dayGroups}</div>
+            ${!shown.length ? '<p class="text-sm text-gray-400 py-4 text-center">Nothing matches that filter in this slice.</p>' : ''}`;
+        // The sheet's rows. Each list counts under the OTHER pick, so the
+        // numbers say what a tap would show.
         const list = $id('lrActList');
         if (list) {
+            const pool = all.filter((a) => byWorker(a, BREAK_WORKER));
             const types = new Map();
-            all.forEach((a) => { const k = typeKey(a); if (!types.has(k)) types.set(k, { key: k, label: typeWord(a), count: 0, cost: 0 }); const t = types.get(k); t.count++; t.cost += a.cost || 0; });
-            const rows = [...types.values()].sort((x, y) => (y.cost - x.cost) || (y.count - x.count));
+            all.forEach((a) => { const k = typeKey(a); if (!types.has(k)) types.set(k, { key: k, label: typeWord(a), count: 0, cost: 0 }); });
+            pool.forEach((a) => { const t = types.get(typeKey(a)); t.count++; t.cost += amt(a); });
+            const rows = [...types.values()].sort((x, y) => (y.cost - x.cost) || (y.count - x.count) || x.label.localeCompare(y.label));
+            const tick = '<svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
             list.innerHTML = `
                 <button type="button" class="dt-row${BREAK_ACT === null ? ' is-on' : ''}" data-lr-act="">
                     <span class="dt-row-e">🧾</span>
-                    <span class="dt-row-body"><b>All activity types</b><i>${all.length} ${all.length === 1 ? 'activity' : 'activities'} in this slice</i></span>
-                    <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    <span class="dt-row-body"><b>All activity types</b><i>${pool.length} ${pool.length === 1 ? 'activity' : 'activities'} · ${esc(fmtPeso0(pool.reduce((n, a) => n + amt(a), 0)))}</i></span>
+                    ${tick}
                 </button>` + rows.map((t) => `
-                <button type="button" class="dt-row${t.key === BREAK_ACT ? ' is-on' : ''}" data-lr-act="${esc(t.key)}">
+                <button type="button" class="dt-row${t.key === BREAK_ACT ? ' is-on' : ''}${t.count ? '' : ' is-empty'}" data-lr-act="${esc(t.key)}">
                     <span class="dt-row-e">${TYPE_ICON[t.key] || '📌'}</span>
                     <span class="dt-row-body"><b>${esc(t.label)}</b><i>${t.count} ${t.count === 1 ? 'activity' : 'activities'} · ${esc(fmtPeso0(t.cost))}</i></span>
-                    <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                    ${tick}
                 </button>`).join('');
+            const wl = $id('lrWkList');
+            $id('lrWkWrap').hidden = !hands.size;
+            if (wl) {
+                const wpool = all.filter((a) => byType(a, BREAK_ACT));
+                const wrows = [...hands.entries()].map(([id, name]) => {
+                    const mine = wpool.filter((a) => byWorker(a, id));
+                    return { id, name, count: mine.length, pay: mine.reduce((n, a) => n + payOf(a, id), 0) };
+                }).sort((x, y) => (y.pay - x.pay) || x.name.localeCompare(y.name));
+                wl.innerHTML = `
+                <button type="button" class="dt-row${BREAK_WORKER === null ? ' is-on' : ''}" data-lr-wk="">
+                    <span class="dt-row-e">👥</span>
+                    <span class="dt-row-body"><b>All workers</b><i>${wpool.length} ${wpool.length === 1 ? 'activity' : 'activities'} · ${esc(fmtPeso0(wpool.reduce((n, a) => n + (a.cost || 0), 0)))}</i></span>
+                    ${tick}
+                </button>` + wrows.map((w) => `
+                <button type="button" class="dt-row${w.id === BREAK_WORKER ? ' is-on' : ''}${w.count ? '' : ' is-empty'}" data-lr-wk="${esc(w.id)}">
+                    <span class="dt-row-e">👤</span>
+                    <span class="dt-row-body"><b>${esc(w.name)}</b><i>${w.count} ${w.count === 1 ? 'activity' : 'activities'} · ${esc(fmtPeso0(w.pay))} pay</i></span>
+                    ${tick}
+                </button>`).join('');
+            }
+            const go = $id('lrFilterGo');
+            if (go) go.textContent = shown.length ? `Show ${shown.length} ${shown.length === 1 ? 'activity' : 'activities'}` : 'Nothing matches';
         }
     }
     const OPEN_ACTS = new Set();
     const FOLDED_DAYS = new Set();
     document.addEventListener('click', (e) => {
         const dayH = e.target.closest('#lrBreakdown .lr-day-h');
-        if (dayH) { const g = dayH.closest('.lr-day'); const k = g.getAttribute('data-lr-day'); g.classList.toggle('is-folded'); if (g.classList.contains('is-folded')) FOLDED_DAYS.add(k); else FOLDED_DAYS.delete(k); return; }
+        if (dayH) { const g = dayH.closest('.lr-day'); const k = g.getAttribute('data-lr-day'); const f = g.classList.toggle('is-folded'); dayH.setAttribute('aria-expanded', f ? 'false' : 'true'); if (f) FOLDED_DAYS.add(k); else FOLDED_DAYS.delete(k); return; }
         const act = e.target.closest('#lrBreakdown .lr-act[data-lr-open]');
-        if (act) { const id = act.getAttribute('data-lr-open'); act.classList.toggle('is-open'); if (act.classList.contains('is-open')) OPEN_ACTS.add(id); else OPEN_ACTS.delete(id); }
+        if (act) { const id = act.getAttribute('data-lr-open'); const o = act.classList.toggle('is-open'); act.setAttribute('aria-expanded', o ? 'true' : 'false'); if (o) OPEN_ACTS.add(id); else OPEN_ACTS.delete(id); }
     });
+    document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const act = e.target.closest && e.target.closest('#lrBreakdown .lr-act[data-lr-open]');
+        if (act && e.target === act) { e.preventDefault(); act.click(); }
+    });
+    // The one filter: a type (or all) and a worker (or all), both live --
+    // a tap in the sheet redraws the list behind it; the x clears both.
     let BREAK_ACT = null;
+    let BREAK_WORKER = null;
     document.addEventListener('click', (e) => {
         if (e.target.closest('#lrActBtn')) { openSheet('lrActSheet'); return; }
+        if (e.target.closest('#lrFilterClear, #lrFilterClearAll')) {
+            if (BREAK_ACT === null && BREAK_WORKER === null) return;
+            BREAK_ACT = null; BREAK_WORKER = null;
+            if (DATA) renderBreakdown(true);
+            return;
+        }
         const row = e.target.closest('#lrActList [data-lr-act]');
-        if (!row) return;
-        const v = row.getAttribute('data-lr-act');
-        BREAK_ACT = v === '' ? null : v;
-        closeSheet('lrActSheet');
-        if (DATA) renderBreakdown();
+        const wk = e.target.closest('#lrWkList [data-lr-wk]');
+        if (!row && !wk) return;
+        if (row) { const v = row.getAttribute('data-lr-act'); BREAK_ACT = v === '' ? null : v; }
+        if (wk) { const v = wk.getAttribute('data-lr-wk'); BREAK_WORKER = v === '' ? null : v; }
+        if (DATA) renderBreakdown(true);
     });
 
     function renderAll() {
-        BREAK_ACT = null;
+        BREAK_ACT = null; BREAK_WORKER = null;
         OPEN_ACTS.clear(); FOLDED_DAYS.clear();
         $id('lrContent').classList.remove('hidden');
         $id('lrBodyText').hidden = true;

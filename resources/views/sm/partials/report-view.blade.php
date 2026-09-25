@@ -2,15 +2,20 @@
      Reports module opens into (2026-09-21, the owner's ask: "like the What
      to Plant analysis"). A fresh report lands in it the moment it is
      generated and saved; a row on the Saved shelf opens into the same
-     screen. Under the report, one row of small actions: ask Anee about it,
-     rename or describe it, delete it, and close.
+     screen. Its actions -- ask Anee about it, rename or describe it,
+     delete it -- are small round icons in the top bar, left of the X
+     (2026-09-25: the bottom bar is gone, and the X is the only close).
 
      One partial, one API:
 
          window.reportView.open({ title, node, actions, onClose })
              node    -> a DOM element the page already rendered; it is moved
                         into the view and handed back where it was on close
-             actions -> [{ label, icon?, kind: 'primary'|'ghost'|'danger', href?, onClick? }]
+             actions -> [{ label, icon?, face?, kind: 'primary'|'ghost'|'danger', href?, onClick? }]
+                        each one an icon button in the top bar; label is its
+                        tooltip and aria-label. An action whose icon is
+                        'close' or 'plus' (the old Close / New report) is
+                        not drawn -- the X closes the view.
          window.reportView.close()
          window.reportView.setTitle(text)
 
@@ -27,7 +32,7 @@
     .va-view-bar b { flex: 1 1 auto; min-width: 0; font-size: .95rem; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .va-view-x { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center;
         background: var(--color-white); border: 1px solid var(--color-gray-200); color: var(--color-gray-700); font-size: 1rem; cursor: pointer; }
-    .va-view-body { max-width: 42rem; margin: 0 auto; padding: 1rem 1rem calc(5.5rem + env(safe-area-inset-bottom)); }
+    .va-view-body { max-width: 42rem; margin: 0 auto; padding: 1rem 1rem calc(2rem + env(safe-area-inset-bottom)); }
     html.va-view-lock { overflow: hidden; }
     /* A sheet opened from inside the view -- the pen's editor, the delete's
        confirm -- has to clear it, and the toast has to clear them both. */
@@ -40,27 +45,43 @@
     html.dark .va-view-bar b { color: #e8efe1; }
     html.dark .va-view-x { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
 
-    /* The actions: one row of small pills pinned to the bottom, not a
-       second set of tabs. Ask Anee is the one green pill; the rest are
-       quiet; delete is red only in its word. */
-    .rv-acts { position: sticky; bottom: 0; z-index: 2; display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; padding: .6rem .8rem;
-        padding-bottom: max(.6rem, env(safe-area-inset-bottom)); background: rgb(250 250 248 / .94); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-        border-top: 1px solid var(--color-gray-200); }
-    .rv-btn { display: inline-flex; align-items: center; gap: .35rem; padding: .42rem .8rem; border-radius: 999px; font-size: .78rem; font-weight: 800;
-        border: 1px solid var(--color-gray-200); background: var(--color-white); color: var(--color-gray-700); cursor: pointer; text-decoration: none; white-space: nowrap;
-        transition: transform .28s cubic-bezier(.22,1,.36,1), background .2s, border-color .2s; }
-    .rv-btn:hover { transform: translateY(-1px); border-color: var(--color-brand-300); }
-    .rv-btn img { width: 1rem; height: 1rem; border-radius: 999px; object-fit: cover; }
-    .rv-btn svg { width: .95rem; height: .95rem; }
-    .rv-btn.is-primary { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
-    .rv-btn.is-primary:hover { background: var(--color-brand-700); }
-    .rv-btn.is-danger { color: #b91c1c; }
-    html.dark .rv-acts { background: rgb(13 17 10 / .94); border-color: #2b3a1c; }
+    /* The actions: small round icons in the top bar, left of the X -- not
+       a bar of pills under the report. Ask Anee wears her face on a green
+       ring; delete is the one red icon. The label rides as the tooltip
+       (and the screen reader's name); on a wide screen Ask Anee says it. */
+    /* Scoped to the bar: the review prompt has an .rv-acts of its own. */
+    .va-view-bar .rv-acts { flex: none; display: flex; align-items: center; justify-content: flex-end; gap: .4rem; margin: 0; }
+    .va-view-bar .rv-acts[hidden] { display: none; }
+    .rv-btn { position: relative; flex: none; height: 2.2rem; min-width: 2.2rem; padding: 0; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+        font-size: .78rem; font-weight: 800; border: 1px solid var(--color-gray-200); background: var(--color-white); color: var(--color-gray-700); cursor: pointer; text-decoration: none; white-space: nowrap;
+        opacity: 0; transform: scale(.8);
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1), background .2s, border-color .2s, color .2s; }
+    .va-view.is-on .rv-btn { opacity: 1; transform: none; }
+    .va-view.is-on .rv-btn:hover { transform: translateY(-1px); border-color: var(--color-brand-300); }
+    .rv-btn:focus-visible { outline: 2px solid var(--color-brand-500); outline-offset: 2px; }
+    .rv-btn img { width: 1.7rem; height: 1.7rem; border-radius: 999px; object-fit: cover; }
+    .rv-btn svg { width: 1.02rem; height: 1.02rem; }
+    .rv-btn .rv-btn-t { display: none; }
+    .rv-btn.is-primary { border: 2px solid var(--color-brand-600); background: var(--color-brand-50); color: var(--color-brand-800); }
+    .rv-btn.is-danger { color: #b91c1c; border-color: #fecaca; background: #fef2f2; }
+    .va-view.is-on .rv-btn.is-danger:hover { border-color: #f87171; }
+    @media (min-width: 640px) {
+        .rv-btn.is-primary { padding: 0 .75rem 0 .2rem; }
+        .rv-btn.is-primary .rv-btn-t { display: inline; }
+    }
+    /* A tooltip that also shows on a pointer hover or keyboard focus,
+       quicker than the browser's own title. */
+    .rv-btn[data-tip]::after { content: attr(data-tip); position: absolute; top: calc(100% + .45rem); right: 0; z-index: 3; padding: .3rem .55rem; border-radius: .5rem;
+        background: var(--color-gray-900); color: #fff; font-size: .7rem; font-weight: 700; white-space: nowrap; pointer-events: none;
+        opacity: 0; transform: translateY(-3px); transition: opacity .2s cubic-bezier(.22,1,.36,1), transform .2s cubic-bezier(.22,1,.36,1); }
+    @media (hover: hover) { .rv-btn[data-tip]:hover::after { opacity: 1; transform: none; } }
+    .rv-btn[data-tip]:focus-visible::after { opacity: 1; transform: none; }
     html.dark .rv-btn { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
-    html.dark .rv-btn.is-primary { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
-    html.dark .rv-btn.is-danger { color: #fca5a5; }
-    @media (prefers-reduced-motion: reduce) { .va-view, .rv-btn { transition: none; } }
-    @media print { .va-view-bar, .rv-acts { display: none !important; } .va-view { position: static; overflow: visible; } }
+    html.dark .rv-btn.is-primary { background: #1c2913; border-color: #6b9f3d; color: #cfe6b8; }
+    html.dark .rv-btn.is-danger { color: #fca5a5; background: #2a1414; border-color: #5b2323; }
+    html.dark .rv-btn[data-tip]::after { background: #e8efe1; color: #0d110a; }
+    @media (prefers-reduced-motion: reduce) { .va-view, .rv-btn, .rv-btn[data-tip]::after { transition: none; } }
+    @media print { .va-view-bar { display: none !important; } .va-view { position: static; overflow: visible; } }
 
     /* WHAT THIS REPORT IS -- the card at the top of every report's Generate
        tab, before the form that makes one: what it adds up, what it shows. */
@@ -122,10 +143,10 @@
 <div class="va-view" id="rvView" hidden role="dialog" aria-modal="true" aria-label="Report">
     <div class="va-view-bar">
         <b id="rvTitle">Report</b>
-        <button type="button" class="va-view-x" id="rvX" aria-label="Close">✕</button>
+        <div class="rv-acts" id="rvActs" hidden></div>
+        <button type="button" class="va-view-x" id="rvX" aria-label="Close" title="Close">✕</button>
     </div>
     <div class="va-view-body"><div id="rvBody"></div></div>
-    <div class="rv-acts" id="rvActs"></div>
 </div>
 
 <script>
@@ -143,19 +164,26 @@
         trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14"/></svg>',
         plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>',
         close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+        dot: '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/></svg>',
     };
+    // The X is the close: an old "Close" / "New report" action is not drawn.
+    const isCloser = (a) => a && (a.icon === 'close' || a.icon === 'plus');
     function paintActs(list) {
         acts.innerHTML = '';
-        (list || []).forEach((a) => {
+        const shown = (list || []).filter((a) => a && !isCloser(a));
+        shown.forEach((a) => {
             const el = document.createElement(a.href ? 'a' : 'button');
             if (!a.href) el.type = 'button';
             el.className = 'rv-btn' + (a.kind === 'primary' ? ' is-primary' : (a.kind === 'danger' ? ' is-danger' : ''));
             if (a.href) el.href = a.href;
-            el.innerHTML = (a.face ? `<img src="${esc(a.face)}" alt="">` : (ICONS[a.icon] || '')) + `<span>${esc(a.label)}</span>`;
+            el.setAttribute('aria-label', a.label || '');
+            el.setAttribute('title', a.label || '');
+            el.setAttribute('data-tip', a.label || '');
+            el.innerHTML = (a.face ? `<img src="${esc(a.face)}" alt="">` : (ICONS[a.icon] || ICONS.dot)) + `<span class="rv-btn-t">${esc(a.label)}</span>`;
             if (a.onClick) el.addEventListener('click', (e) => { if (!a.href) e.preventDefault(); a.onClick(e); });
             acts.appendChild(el);
         });
-        acts.hidden = !(list || []).length;
+        acts.hidden = !shown.length;
     }
     function open({ title: t, node, html, actions, onClose } = {}) {
         if (held) putBack();

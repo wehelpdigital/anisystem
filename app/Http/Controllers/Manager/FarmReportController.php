@@ -90,9 +90,39 @@ class FarmReportController extends BaseScheduleController
     {
         $schedule = $this->schedule($request->query('id'));
         $this->guardReports($schedule);
-        $schedule->load('lots');
+        $schedule->load(['lots', 'activities.lots']);
 
-        return view('sm.expenses-report', ['schedule' => $schedule]);
+        // Each lot's own count word, so the day-count range can say DAS,
+        // DAT, DAP or a tree's age the way the chosen lots keep it.
+        return view('sm.expenses-report', ['schedule' => $schedule, 'lotCounters' => $this->lotCounters($schedule)]);
+    }
+
+    /**
+     * The count each lot keeps, as a word: AGE for a tree (months since
+     * planting), DAT once the lot has a transplant (its column or a ticked
+     * transplant activity -- LotCalendar::effectiveAnchors), else the lot's
+     * own day type, else the season's.
+     *
+     * @return array<int, string>
+     */
+    private function lotCounters(\App\Models\AsCroppingSchedule $schedule, ?array $transplant = null): array
+    {
+        if ($transplant === null) {
+            [, $transplant] = \App\Support\LotCalendar::effectiveAnchors($schedule);
+        }
+        $out = [];
+        foreach ($schedule->lots as $lot) {
+            $type = strtoupper((string) ($lot->dayType ?: ''));
+            if ($type === 'TREE' || \App\Support\CropStages::isPerennial($lot->crop ?? null)) {
+                $out[$lot->id] = 'AGE';
+            } elseif (isset($transplant[$lot->id]) && $type !== 'DAP') {
+                $out[$lot->id] = 'DAT';
+            } else {
+                $out[$lot->id] = $type !== '' ? $type : strtoupper((string) ($schedule->dayType ?: 'DAS'));
+            }
+        }
+
+        return $out;
     }
 
     /**
@@ -118,14 +148,60 @@ class FarmReportController extends BaseScheduleController
         $invKind = (string) $request->query('invKind', '');
         $status = in_array($request->query('status'), ['done', 'pending'], true) ? $request->query('status') : 'all';
 
-        $schedule->load(['activities.items', 'activities.workers', 'activities.lots', 'dayExpenses', 'dayIncomes']);
+        $schedule->load(['lots', 'activities.items', 'activities.workers', 'activities.lots', 'dayExpenses', 'dayIncomes']);
         $invItems = AsInventoryItem::where('croppingScheduleId', $schedule->id)->get()->keyBy('id');
 
+        // A stretch of the crop's own clock (the labor report's "DAS 0 to
+        // 45"), read on EACH ROW'S OWN LOTS: every lot counts from its own
+        // anchor -- day zero, its transplant for a DAT lot, planting in
+        // months for a tree -- and a row is in when any of its lots (the
+        // chosen ones, if lots are chosen) reads inside the window. A row
+        // with no lot, or no anchored lot, has no count to read, so it sits
+        // outside a day-count range -- the labor report's rule.
+        $hasDayMin = is_numeric($request->query('dayMin'));
+        $hasDayMax = is_numeric($request->query('dayMax'));
+        $dayMin = $hasDayMin ? (int) $request->query('dayMin') : PHP_INT_MIN;
+        $dayMax = $hasDayMax ? (int) $request->query('dayMax') : PHP_INT_MAX;
+        $dayOn = $hasDayMin || $hasDayMax;
+        $inDays = fn (array $r) => true;
+        if ($dayOn) {
+            [$dz, $tp] = \App\Support\LotCalendar::effectiveAnchors($schedule);
+            $counters = $this->lotCounters($schedule, $tp);
+            $lotsById = $schedule->lots->keyBy('id');
+            $clock = function (int $lotId, string $on) use ($dz, $tp, $counters, $lotsById): ?int {
+                $lot = $lotsById->get($lotId);
+                if (! $lot) return null;
+                $day = \Carbon\Carbon::parse($on)->startOfDay();
+                $counter = $counters[$lotId] ?? 'DAS';
+                if ($counter === 'AGE') {
+                    if (! $lot->treePlantedAt) return null;
+                    $planted = \Carbon\Carbon::parse($lot->treePlantedAt)->startOfDay();
+
+                    return (int) floor($planted->diffInMonths($day, false));
+                }
+                $anchor = ($counter === 'DAT' && isset($tp[$lotId])) ? $tp[$lotId] : ($dz[$lotId] ?? null);
+                if (! $anchor) return null;
+
+                return (int) round($anchor->copy()->startOfDay()->diffInDays($day, false));
+            };
+            $inDays = function (array $r) use ($clock, $lotIds, $dayMin, $dayMax): bool {
+                if (! $r['on'] || ! $r['lotIds']) return false;
+                $considered = $lotIds ? array_values(array_intersect($r['lotIds'], $lotIds)) : $r['lotIds'];
+                foreach ($considered as $lid) {
+                    $d = $clock((int) $lid, $r['on']);
+                    if ($d !== null && $d >= $dayMin && $d <= $dayMax) return true;
+                }
+
+                return false;
+            };
+        }
+
         $rows = [];
-        $push = function (array $r) use (&$rows, $from, $to, $lotIds, $cats, $status) {
+        $push = function (array $r) use (&$rows, $from, $to, $lotIds, $cats, $status, $inDays) {
             if ($from && (! $r['on'] || $r['on'] < $from)) return;
             if ($to && (! $r['on'] || $r['on'] > $to)) return;
             if ($lotIds && ! array_intersect($lotIds, $r['lotIds'])) return;
+            if (! $inDays($r)) return;
             if ($cats && ! in_array($r['cat'], $cats, true)) return;
             if ($status !== 'all' && $r['done'] !== null && $r['done'] !== ($status === 'done')) return;
             $rows[] = $r;
@@ -270,6 +346,12 @@ class FarmReportController extends BaseScheduleController
             'net' => round($totals['income'] - $spend, 2),
             'perMonth' => $perMonth,
             'perLot' => $perLot,
+            'filters' => [
+                'dayMin' => $hasDayMin ? $dayMin : null,
+                'dayMax' => $hasDayMax ? $dayMax : null,
+                'from' => $from,
+                'to' => $to,
+            ],
         ]]);
     }
 
@@ -919,171 +1001,6 @@ class FarmReportController extends BaseScheduleController
         }
 
         return implode("\n", $L);
-    }
-
-    /* ============================ COMPARISON ============================ */
-
-    public const PRICE_COMPARE = AiPrices::DEFAULTS['compare'];
-
-    public function comparePage(Request $request)
-    {
-        $schedule = $this->schedule($request->query('id'));
-        $this->guardReports($schedule);
-
-        return view('sm.compare-report', ['schedule' => $schedule]);
-    }
-
-    /** Everything comparable: the user's saved reports across ALL seasons. */
-    public function compareOptions(Request $request)
-    {
-        $this->schedule($request->query('id'));   // access check only
-        $credits = app(AiCreditService::class);
-        $payer = $this->aneePayer();
-        $rows = AsFarmReport::where('userId', Auth::id())
-            ->where('status', 'ready')->where('deleteStatus', 1)
-            ->where('kind', '!=', 'compare')
-            ->orderByDesc('id')->limit(100)
-            ->get(['id', 'kind', 'title', 'created_at']);
-
-        return $this->jsonOk('ok', ['data' => [
-            'reports' => $rows->map(fn ($r) => [
-                'id' => $r->id, 'kind' => $r->kind, 'title' => $r->title,
-                'when' => $r->created_at?->format('M j, Y'),
-            ])->values(),
-            'price' => AiPrices::of('compare'),
-            'balance' => round($credits->balance($payer->id), 2),
-            'unlimited' => $credits->unlimited((int) $payer->id),
-            'canUseAi' => $payer->canUseAi() && AiSetting::current()->isUsable(),
-        ]]);
-    }
-
-    /**
-     * Two saved reports, side by side. By hand it is free and instant; with
-     * Anee's read (30 credits) her verdict on the difference rides along —
-     * the same job walk as her other reports.
-     */
-    public function compareGenerate(Request $request)
-    {
-        $schedule = $this->schedule($request->input('scheduleId'));
-        $withAi = (bool) $request->boolean('withAi');
-        $a = AsFarmReport::where('userId', Auth::id())->where('status', 'ready')
-            ->where('deleteStatus', 1)->where('id', (int) $request->input('aId'))->first();
-        $b = AsFarmReport::where('userId', Auth::id())->where('status', 'ready')
-            ->where('deleteStatus', 1)->where('id', (int) $request->input('bId'))->first();
-        if (! $a || ! $b || $a->id === $b->id) {
-            return $this->jsonFail('Pick two different saved reports.', 422);
-        }
-        if ($a->kind !== $b->kind) {
-            return $this->jsonFail('Compare two reports of the same type — apples with apples.', 422);
-        }
-
-        $meta = fn (AsFarmReport $r) => ['id' => $r->id, 'kind' => $r->kind, 'title' => $r->title, 'body' => (string) $r->body];
-        $report = ['a' => $meta($a), 'b' => $meta($b), 'analysis' => null];
-        $title = 'Comparison — ' . mb_substr($a->title, 0, 80) . ' vs ' . mb_substr($b->title, 0, 80);
-        $body = "COMPARISON\n" . str_repeat('=', 50)
-            . "\n\n### REPORT A ###\n" . mb_substr((string) $a->body, 0, 25000)
-            . "\n\n### REPORT B ###\n" . mb_substr((string) $b->body, 0, 25000);
-
-        if (! $withAi) {
-            $row = AsFarmReport::create([
-                'userId' => Auth::id(), 'croppingScheduleId' => $schedule->id,
-                'kind' => 'compare', 'title' => mb_substr($title, 0, 190),
-                'params' => ['aId' => $a->id, 'bId' => $b->id, 'withAi' => false],
-                'report' => $report, 'body' => mb_substr($body, 0, 60000),
-                'status' => 'ready', 'deleteStatus' => 1,
-            ]);
-
-            return $this->jsonOk('Comparison saved.', ['data' => [
-                'id' => $row->id, 'title' => $row->title, 'report' => $report, 'kind' => 'compare',
-            ]]);
-        }
-
-        $payer = $this->aneePayer();
-        $settings = AiSetting::current();
-        $credits = app(AiCreditService::class);
-        if (! $payer->canUseAi() || ! $settings->isUsable()) {
-            return $this->jsonFail('The AI analysis needs the AI Technician (Boss or Lifetime plan). You can still compare by hand.', 403);
-        }
-        $balance = $credits->balance($payer->id);
-        if ($balance < AiPrices::of('compare') && ! $credits->unlimited((int) $payer->id)) {
-            return $this->jsonFail('You need ' . AiPrices::of('compare') . ' credits for the AI analysis and have '
-                . number_format((int) floor($balance)) . '. You can still compare by hand.', 402, ['outOfCredits' => true]);
-        }
-
-        $row = AsFarmReport::create([
-            'userId' => Auth::id(), 'croppingScheduleId' => $schedule->id,
-            'kind' => 'compare', 'title' => mb_substr($title, 0, 190),
-            'params' => ['aId' => $a->id, 'bId' => $b->id, 'withAi' => true],
-            'report' => $report, 'status' => 'pending', 'deleteStatus' => 1,
-        ]);
-
-        $prompt = 'You are an agricultural analyst for a smallholder farm in ' . \App\Support\Region::name() . '. ' . \App\Support\Region::promptBlock() . ' Below are two of the farm\'s own '
-            . 'saved reports of the same kind. Compare them honestly and usefully — same warm, plain voice as a '
-            . 'debrief between friends.'
-            . "\n\n### REPORT A: " . $a->title . " ###\n" . mb_substr((string) $a->body, 0, 9000)
-            . "\n\n### REPORT B: " . $b->title . " ###\n" . mb_substr((string) $b->body, 0, 9000)
-            . "\n\nReturn ONLY a single JSON object, no fences, exactly this shape:\n"
-            . '{"headline": string (one sentence on the biggest difference), "verdict": string (3-4 plain sentences), '
-            . '"differences": [3-6 strings — the concrete differences that matter], '
-            . '"betterInA": [1-4 strings — where A comes out ahead], "betterInB": [1-4 strings — where B comes out ahead], '
-            . '"advice": [2-4 strings — what to carry forward from this comparison]}';
-
-        if (function_exists('fastcgi_finish_request')) {
-            ignore_user_abort(true);
-            @set_time_limit(0);
-            response()->json(['success' => true, 'message' => 'Working…', 'data' => [
-                'pending' => true, 'id' => $row->id,
-            ]])->send();
-            fastcgi_finish_request();
-            $this->runCompareJob($row->id, (int) $payer->id, $settings, $prompt, $body);
-            exit;
-        }
-        @set_time_limit(300);
-        $this->runCompareJob($row->id, (int) $payer->id, $settings, $prompt, $body);
-
-        return $this->aneeJob($row->id);
-    }
-
-    private function runCompareJob(int $id, int $payerId, AiSetting $settings, string $prompt, string $plainBody): void
-    {
-        $ai = app(AiClient::class);
-        $credits = app(AiCreditService::class);
-        try {
-            $result = $ai->askForJson($settings, $prompt, 2500, fn (string $t) => $this->parseAneeReport($t));
-            $analysis = $result['data'];
-            if ($analysis === null) {
-                Log::warning('compare-report: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
-                throw new \RuntimeException($result['error'] ?? 'The analysis came back unreadable. Nothing was charged — please try again.');
-            }
-
-            $row = AsFarmReport::find($id);
-            $price = AiPrices::of('compare');
-            $note = AiUsage::record('compare', (int) $row->userId, $payerId, $id, $settings, $result, $price);
-            $credits->chargeAllowingNegative($payerId, (float) $price,
-                mb_substr('Comparison analysis — ' . mb_substr((string) $row->title, 0, 140) . $note, 0, 250));
-
-            $rep = $row->report;
-            $rep['analysis'] = $analysis;
-            $aiText = "\n\n### ANEE'S READ OF THE DIFFERENCE ###\n" . ($analysis['headline'] ?? '') . "\n" . ($analysis['verdict'] ?? '')
-                . "\nDifferences: " . implode(' | ', (array) ($analysis['differences'] ?? []))
-                . "\nBetter in A: " . implode(' | ', (array) ($analysis['betterInA'] ?? []))
-                . "\nBetter in B: " . implode(' | ', (array) ($analysis['betterInB'] ?? []))
-                . "\nAdvice: " . implode(' | ', (array) ($analysis['advice'] ?? []));
-            $row->update([
-                'report' => $rep,
-                'body' => mb_substr($plainBody . $aiText, 0, 60000),
-                'credits' => $price,
-                'status' => 'ready',
-                'error' => null,
-            ]);
-        } catch (\Throwable $e) {
-            report($e);
-            AsFarmReport::where('id', $id)->update([
-                'status' => 'failed',
-                'error' => mb_substr($e->getMessage(), 0, 500),
-                'deleteStatus' => 0,
-            ]);
-        }
     }
 
     private function aneePayer(): \App\Models\User
