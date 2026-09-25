@@ -181,6 +181,19 @@ class RegisterController extends Controller
             'hash' => sha1(mb_strtolower($user->email)),
         ]);
 
+        /* The words live in the mother app's email editor (email_verification)
+         * like every other email; the view is only for a database that has
+         * not been given that template yet. */
+        $tags = [
+            'verifyUrl' => $link,
+            'thanks' => \App\Support\Region::as(\App\Support\Region::of($user), fn () => \App\Support\Region::t('thanks')),
+        ];
+        if ($this->mail->render('email_verification', $tags, $user)) {
+            $this->mail->sendTemplateToUser('email_verification', $user, $tags, ['userId' => $user->id]);
+
+            return;
+        }
+
         $html = \App\Support\Region::as(\App\Support\Region::of($user), fn () => view('emails.verify-email', [
             'firstName' => $user->firstName,
             'link' => $link,

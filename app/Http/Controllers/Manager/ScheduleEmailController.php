@@ -9,6 +9,7 @@ use App\Services\MailService;
 use App\Support\EmailSkin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\RateLimiter;
 
 /**
  * Sending a day, or one job, to the people who have to do it.
@@ -23,9 +24,23 @@ use Illuminate\Support\Carbon;
  * A worker with no address on file is offered and refused in the same breath
  * — shown, named, and locked — because "why is Nena not in this list" is a
  * worse question than "why is Nena greyed out", which answers itself.
+ *
+ * Both errands also take other addresses typed by hand (the buyer, the
+ * agronomist, a helper who is not on the season) and a short note from the
+ * sender. Those are the only strangers this file ever writes to, so they are
+ * counted: a few to a message, a few dozen an hour.
  */
 class ScheduleEmailController extends BaseScheduleController
 {
+    /** Typed addresses allowed on one send. */
+    private const MAX_EXTRA = 10;
+
+    /** Typed addresses one person may send to in an hour, across every send. */
+    private const EXTRA_PER_HOUR = 60;
+
+    /** The sender's note, in characters. */
+    private const MAX_NOTE = 1000;
+
     public function __construct(private MailService $mail)
     {
     }
@@ -61,11 +76,21 @@ class ScheduleEmailController extends BaseScheduleController
             $workers = $schedule->workers()->where('as_schedule_workers.deleteStatus', 1)->get();
             $what = null;
             $when = $date;
+            // What the sheet says is going out: "3 activities".
+            $count = AsScheduleActivity::active()
+                ->where('croppingScheduleId', $schedule->id)
+                ->where('isDraft', 0)
+                ->where('isHidden', 0)
+                ->whereDate('targetDate', $date->toDateString())
+                ->count();
         }
 
         return response()->json(['success' => true, 'data' => [
             'title' => $what,
             'dateLabel' => $when ? Carbon::parse($when)->format('l, M j, Y') : null,
+            'count' => $count ?? null,
+            'maxExtra' => self::MAX_EXTRA,
+            'maxNote' => self::MAX_NOTE,
             'workers' => $workers->map(fn ($w) => [
                 'id' => (int) $w->id,
                 'name' => (string) $w->workerName,
@@ -101,26 +126,29 @@ class ScheduleEmailController extends BaseScheduleController
             return $this->jsonFail('There is nothing planned on that day to send.', 422);
         }
 
-        $chosen = $this->chosenWorkers($request, $schedule);
-        if ($chosen->isEmpty()) {
-            return $this->jsonFail('Choose at least one worker with an email address.', 422);
+        $to = $this->recipients($request, $schedule);
+        if (is_string($to)) {
+            return $this->jsonFail($to, 422);
         }
 
         $label = $date->format('l, M j, Y');
         $sentBy = optional($request->user())->full_name ?: 'the farm';
+        // The sender's note sits above the work, in every copy.
+        $table = $this->notePanel($request, $sentBy) . $this->tasksTable($activities);
         $sent = 0;
 
-        foreach ($chosen as $worker) {
-            /* Each worker is told about the whole day, not only their own
+        foreach ($to as $person) {
+            /* Each person is told about the whole day, not only their own
              * jobs. An owner reaching for this button has decided that this
              * day matters to these people; narrowing it behind their back
-             * would send somebody an email that says nothing. */
-            $ok = $this->mail->sendTemplate('day_schedule', $worker->email, $worker->workerName, [
-                'workerName' => $worker->workerName ?: 'there',
+             * would send somebody an email that says nothing. A typed
+             * address has no name on file, so it is greeted "Hi there". */
+            $ok = $this->mail->sendTemplate('day_schedule', $person['email'], $person['name'], [
+                'workerName' => e($person['name'] ?: 'there'),
                 'scheduleTitle' => (string) $schedule->title,
                 'dateLabel' => $label,
-                'tasksTable' => $this->tasksTable($activities),
-                'sentBy' => $sentBy,
+                'tasksTable' => $table,
+                'sentBy' => e($sentBy),
             ], [
                 'relatedType' => 'schedule_day',
                 'croppingScheduleId' => $schedule->id,
@@ -128,7 +156,11 @@ class ScheduleEmailController extends BaseScheduleController
             $sent += $ok ? 1 : 0;
         }
 
-        return response()->json(['success' => true, 'message' => $this->said($sent, $chosen->count())]);
+        return response()->json([
+            'success' => true,
+            'message' => $this->said($sent, count($to)),
+            'data' => ['sentTo' => array_column($to, 'email')],
+        ]);
     }
 
     /** Send one activity to the workers on it. */
@@ -144,23 +176,24 @@ class ScheduleEmailController extends BaseScheduleController
             return $this->jsonFail('Activity not found.', 404);
         }
 
-        $chosen = $this->chosenWorkers($request, $schedule);
-        if ($chosen->isEmpty()) {
-            return $this->jsonFail('Choose at least one worker with an email address.', 422);
+        $to = $this->recipients($request, $schedule, $activity);
+        if (is_string($to)) {
+            return $this->jsonFail($to, 422);
         }
 
         $label = $activity->targetDate ? Carbon::parse($activity->targetDate)->format('l, M j, Y') : 'a day yet to be set';
         $sentBy = optional($request->user())->full_name ?: 'the farm';
+        $panel = $this->notePanel($request, $sentBy) . $this->activityPanel($activity);
         $sent = 0;
 
-        foreach ($chosen as $worker) {
-            $ok = $this->mail->sendTemplate('activity_notice', $worker->email, $worker->workerName, [
-                'workerName' => $worker->workerName ?: 'there',
+        foreach ($to as $person) {
+            $ok = $this->mail->sendTemplate('activity_notice', $person['email'], $person['name'], [
+                'workerName' => e($person['name'] ?: 'there'),
                 'scheduleTitle' => (string) $schedule->title,
                 'activityTitle' => (string) $activity->activityTitle,
                 'dateLabel' => $label,
-                'activityBody' => $this->activityPanel($activity),
-                'sentBy' => $sentBy,
+                'activityBody' => $panel,
+                'sentBy' => e($sentBy),
             ], [
                 'relatedType' => 'activity',
                 'relatedId' => $activity->id,
@@ -169,7 +202,11 @@ class ScheduleEmailController extends BaseScheduleController
             $sent += $ok ? 1 : 0;
         }
 
-        return response()->json(['success' => true, 'message' => $this->said($sent, $chosen->count())]);
+        return response()->json([
+            'success' => true,
+            'message' => $this->said($sent, count($to)),
+            'data' => ['sentTo' => array_column($to, 'email')],
+        ]);
     }
 
     /* ------------------------------------------------------------------ */
@@ -195,11 +232,110 @@ class ScheduleEmailController extends BaseScheduleController
         return $schedule;
     }
 
-    /** The workers actually asked for, minus anyone who cannot be reached. */
-    private function chosenWorkers(Request $request, AsCroppingSchedule $schedule)
+    /**
+     * Everybody this send goes to: the chosen workers, then the typed
+     * addresses, one message per address.
+     *
+     * Returns a list of ['email', 'name'], or a sentence saying what is
+     * wrong, which the caller hands back as a 422. A typed address that is
+     * already a chosen worker's is dropped rather than refused: the person
+     * gets one email, addressed by name.
+     */
+    private function recipients(Request $request, AsCroppingSchedule $schedule, ?AsScheduleActivity $activity = null): array|string
+    {
+        $note = trim((string) $request->input('message', ''));
+        if (mb_strlen($note) > self::MAX_NOTE) {
+            return 'The message can be up to ' . number_format(self::MAX_NOTE) . ' characters.';
+        }
+
+        // Typed addresses: an array, or one pasted string of them.
+        $raw = $request->input('emails', []);
+        $raw = is_array($raw) ? $raw : preg_split('/[\s,;]+/', (string) $raw);
+        if (count($raw) > self::MAX_EXTRA * 3) {
+            return 'Up to ' . self::MAX_EXTRA . ' other addresses at a time.';
+        }
+        $typed = [];
+        $bad = [];
+        foreach ($raw as $one) {
+            $one = strtolower(trim(is_scalar($one) ? (string) $one : ''));
+            if ($one === '') {
+                continue;
+            }
+            if (strlen($one) > 190 || ! filter_var($one, FILTER_VALIDATE_EMAIL)) {
+                $bad[] = mb_strimwidth($one, 0, 60, '…');
+
+                continue;
+            }
+            $typed[$one] = true;
+        }
+        if ($bad) {
+            return (count($bad) === 1 ? 'This is not an email address: ' : 'These are not email addresses: ')
+                . implode(', ', array_slice($bad, 0, 3)) . (count($bad) > 3 ? '…' : '') . '.';
+        }
+        if (count($typed) > self::MAX_EXTRA) {
+            return 'Up to ' . self::MAX_EXTRA . ' other addresses at a time.';
+        }
+
+        $to = [];
+        foreach ($this->chosenWorkers($request, $schedule, $activity) as $worker) {
+            $key = strtolower(trim((string) $worker->email));
+            // Two workers sharing one inbox get one email, not two.
+            $to[$key] ??= ['email' => trim((string) $worker->email), 'name' => (string) $worker->workerName];
+        }
+
+        $outside = array_values(array_diff(array_keys($typed), array_keys($to)));
+        foreach ($outside as $addr) {
+            $to[$addr] = ['email' => $addr, 'name' => ''];
+        }
+
+        if (! $to) {
+            return 'Choose a worker, or type an email address.';
+        }
+
+        /* The typed addresses are the only strangers this file writes to, so
+         * they are counted per sender, per hour. Workers on the season are
+         * not: they are the point of the button. */
+        if ($outside) {
+            $key = 'sm-email-outside:' . (int) optional($request->user())->id;
+            if (RateLimiter::remaining($key, self::EXTRA_PER_HOUR) < count($outside)) {
+                $mins = max(1, (int) ceil(RateLimiter::availableIn($key) / 60));
+
+                return "That is a lot of other addresses for one hour. Try again in {$mins} min, or send to the workers only.";
+            }
+            RateLimiter::increment($key, 3600, count($outside));
+        }
+
+        return array_values($to);
+    }
+
+    /** The sender's own words, set above the work. Empty when there are none. */
+    private function notePanel(Request $request, string $sentBy): string
+    {
+        $note = trim((string) $request->input('message', ''));
+        if ($note === '') {
+            return '';
+        }
+
+        return EmailSkin::panel(
+            EmailSkin::label('A note from ' . $sentBy)
+            . '<div style="white-space:pre-line;">' . e($note) . '</div>',
+            'gold'
+        );
+    }
+
+    /**
+     * The workers actually asked for, minus anyone who cannot be reached.
+     * One activity is only ever sent to the workers on it.
+     */
+    private function chosenWorkers(Request $request, AsCroppingSchedule $schedule, ?AsScheduleActivity $activity = null)
     {
         $ids = collect((array) $request->input('workerIds', []))
             ->map(fn ($i) => (int) $i)->filter()->unique()->all();
+
+        if ($activity) {
+            $on = $activity->workers->pluck('id')->map(fn ($i) => (int) $i)->all();
+            $ids = array_values(array_intersect($ids, $on));
+        }
 
         if (! $ids) {
             return collect();
@@ -218,7 +354,7 @@ class ScheduleEmailController extends BaseScheduleController
     private function said(int $sent, int $asked): string
     {
         if ($sent === $asked) {
-            return $sent === 1 ? 'Sent to 1 worker.' : "Sent to {$sent} workers.";
+            return $sent === 1 ? 'Sent to 1 person.' : "Sent to {$sent} people.";
         }
 
         return "Sent to {$sent} of {$asked}. The rest are in the mail log with the reason.";
@@ -237,18 +373,14 @@ class ScheduleEmailController extends BaseScheduleController
                 filled($a->timeRequired) ? '⏱ ' . e((string) $a->timeRequired) : null,
             ])->filter()->implode(' &nbsp;·&nbsp; ');
 
-            $rows .= '<tr><td style="padding:12px 0;border-bottom:1px solid ' . EmailSkin::LINE . ';">'
-                . '<div style="font-size:15px;font-weight:700;color:' . EmailSkin::INK . ';">' . e((string) $a->activityTitle) . '</div>'
-                . ($meta ? '<div style="margin-top:3px;font-size:12.5px;color:' . EmailSkin::MUTED . ';">' . $meta . '</div>' : '')
-                . (filled($a->description)
-                    ? '<div style="margin-top:6px;font-size:13.5px;color:' . EmailSkin::INK . ';">'
-                        . e(\Illuminate\Support\Str::limit(strip_tags((string) $a->description), 220)) . '</div>'
-                    : '')
-                . '</td></tr>';
+            $rows .= EmailSkin::taskRow(
+                e((string) $a->activityTitle),
+                $meta,
+                filled($a->description) ? e(\Illuminate\Support\Str::limit(strip_tags((string) $a->description), 220)) : '',
+            );
         }
 
-        return '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" '
-            . 'style="margin:14px 0;">' . $rows . '</table>';
+        return EmailSkin::taskList($rows);
     }
 
     /** One activity, said properly. */
@@ -260,22 +392,22 @@ class ScheduleEmailController extends BaseScheduleController
             ->map(fn ($i) => trim($i->itemName . ' ' . ($i->quantity ? '× ' . rtrim(rtrim(number_format((float) $i->quantity, 2), '0'), '.') : '') . ' ' . $i->unitOfMeasure))
             ->filter()->implode(', ');
 
-        $facts = collect([
-            $lots ? '<div><strong>Where:</strong> ' . e($lots) . '</div>' : null,
-            $who ? '<div><strong>Who:</strong> ' . e($who) . '</div>' : null,
-            filled($activity->timeRequired) ? '<div><strong>How long:</strong> ' . e((string) $activity->timeRequired) . '</div>' : null,
-            filled($activity->priority) ? '<div><strong>Priority:</strong> ' . e(ucfirst((string) $activity->priority)) . '</div>' : null,
-            $items ? '<div><strong>Bring:</strong> ' . e($items) . '</div>' : null,
-        ])->filter()->implode('');
+        $facts = array_filter([
+            'Where' => $lots ? e($lots) : null,
+            'Who' => $who ? e($who) : null,
+            'How long' => filled($activity->timeRequired) ? e((string) $activity->timeRequired) : null,
+            'Priority' => filled($activity->priority) ? e(ucfirst((string) $activity->priority)) : null,
+            'Bring' => $items ? e($items) : null,
+        ]);
 
-        $body = '<div style="font-size:17px;font-weight:800;color:' . EmailSkin::DEEP . ';margin-bottom:6px;">'
-            . e((string) $activity->activityTitle) . '</div>' . $facts;
+        $out = $facts ? EmailSkin::facts($facts) : '';
 
         if (filled($activity->description)) {
-            $body .= '<div style="margin-top:10px;">' . e(strip_tags((string) $activity->description)) . '</div>';
+            $out .= EmailSkin::label('What to do')
+                . '<p style="margin:0 0 16px;white-space:pre-line;">' . e(trim(strip_tags((string) $activity->description))) . '</p>';
         }
 
-        return EmailSkin::panel($body);
+        return $out;
     }
 
     private function readDate(Request $request): ?Carbon

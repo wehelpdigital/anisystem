@@ -61,6 +61,9 @@ class ResendMailer
             'to' => [$to],
             'subject' => $subject,
             'html' => $html,
+            // The plain-text twin, so a text-only reader (and a spam filter
+            // that looks for one) gets the words and every link spelled out.
+            'text' => \App\Support\EmailSkin::toText($html),
         ];
 
         try {

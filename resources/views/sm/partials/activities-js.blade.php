@@ -1142,7 +1142,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const typeIco = `<span class="type-ico ${typeIcoClass}" aria-hidden="true">${typeIcoSvg}</span>`;
         // Day-0 badge label follows the covered lots: DAP 0 only if every lot is
         // DAP, otherwise DAS 0 (the seeding anchor for DAS/DAT lots).
-        const dzMode = (lotIds.length && lotIds.every((id) => lotDayType(id) === 'DAP')) ? 'DAP' : 'DAS';
+        const dzMode = (lotIds.length && lotIds.every((id) => lotDayType(id) === 'TREE')) ? 'DOS' : ((lotIds.length && lotIds.every((id) => lotDayType(id) === 'DAP')) ? 'DAP' : 'DAS');
         const dayZeroBadge = isDayZeroFlag
             ? `<span class="badge day-zero-badge" title="This activity's start date becomes ${dzMode} 0 for every lot it covers">${SVG.star} ${dzMode} 0</span>`
             : '';
@@ -7536,19 +7536,213 @@ document.addEventListener('DOMContentLoaded', () => {
      * row answers it, and says what to go and fix.
      * ================================================================ */
     let EMAIL_WHO = null;   // { date } | { activityId, name }
+    let EW_TICKET = 0;      // the latest open; an older answer arriving late is dropped
+    let EW_EXTRA = [];      // typed addresses, lower-case, in the order they were added
+    let EW_MAX = 10;        // the server says; this is only the first guess
+    let EW_NOTHING = false; // a day with nothing on it has nothing to send
+    /* A working address, not a lawyer's one: something@somewhere.tld with no
+     * spaces or brackets. The server checks again with PHP's own validator. */
+    const EW_RE = /^[^\s@<>(),;:"\[\]\\]+@[^\s@<>(),;:"\[\]\\]+\.[^\s@<>(),;:"\[\]\\.]{2,}$/;
+
+    /* Who this will reach, said in the footer, and whether Send may be
+     * pressed. A typed address that is already a ticked worker's counts once,
+     * which is also what the server does. */
+    function ewTally() {
+        const boxes = $qsa('#emailWhoList input[type=checkbox]:not(:disabled)');
+        const picked = boxes.filter((b) => b.checked);
+        const inbox = new Set(picked.map((b) => (b.dataset.email || '').toLowerCase()));
+        const extra = EW_EXTRA.filter((a) => !inbox.has(a)).length;
+
+        const all = $id('emailWhoAll');
+        if (all) {
+            all.classList.toggle('is-gone', boxes.length < 2);
+            all.textContent = boxes.length && picked.length === boxes.length ? 'Select none' : 'Select all';
+        }
+
+        const bits = [];
+        if (picked.length) bits.push('<b>' + picked.length + (picked.length === 1 ? ' worker' : ' workers') + '</b>');
+        if (extra) bits.push('<b>' + extra + (extra === 1 ? ' other address' : ' other addresses') + '</b>');
+        // Text still in the box counts as meant: Send chips it first.
+        const input = $id('emailWhoExtraInput');
+        const pending = !!(input?.value || '').trim();
+        if (input) input.placeholder = !EW_EXTRA.length ? 'name@example.com' : (EW_EXTRA.length >= EW_MAX ? '' : 'Add another');
+
+        const tally = $id('emailWhoTally');
+        if (tally) {
+            tally.innerHTML = bits.length ? 'Going to ' + bits.join(' and ')
+                : (pending ? 'Going to <b>the address you typed</b>' : 'Nobody chosen yet');
+        }
+        const send = $id('emailWhoSend');
+        if (send && !send.dataset.busy) send.disabled = EW_NOTHING || (!bits.length && !pending);
+    }
+
+    function ewSay(text, bad) {
+        const say = $id('emailWhoExtraSay');
+        if (!say) return;
+        say.textContent = text || ('Type or paste, then press Enter. Up to ' + EW_MAX + '.');
+        say.classList.toggle('is-bad', !!bad);
+        $id('emailWhoChips')?.classList.toggle('is-bad', !!bad);
+    }
+
+    function ewChip(addr) {
+        const chip = document.createElement('span');
+        chip.className = 'ew-chip';
+        chip.dataset.addr = addr;
+        chip.innerHTML = '<span title="' + esc(addr) + '">' + esc(addr) + '</span>'
+            + '<button type="button" aria-label="Remove ' + esc(addr) + '">&times;</button>';
+        return chip;
+    }
+
+    /* Turn typed or pasted text into chips. Whatever cannot become one (not
+     * an address, or one too many) is put back in the box with the reason
+     * under it, so nothing the owner typed silently disappears. Returns true
+     * when the box ended up empty. */
+    function ewCommit(text) {
+        const input = $id('emailWhoExtraInput');
+        const wrap = $id('emailWhoChips');
+        if (!input || !wrap) return true;
+        const tokens = String(text || '')
+            .replace(/[^<>]*<([^<>]+)>/g, ' $1 ')      // "Nena <nena@farm.ph>" → the address
+            .replace(/mailto:/gi, ' ')
+            .split(/[\s,;]+/)
+            .map((s) => s.replace(/^['"(]+|['").]+$/g, '').toLowerCase())
+            .filter(Boolean);
+
+        const left = [];
+        let why = '';
+        tokens.forEach((addr) => {
+            if (!EW_RE.test(addr) || addr.length > 190) {
+                left.push(addr);
+                why = why || ('“' + addr + '” is not an email address.');
+                return;
+            }
+            if (EW_EXTRA.includes(addr)) {
+                // Already there: point at it rather than adding a twin.
+                const twin = wrap.querySelector('.ew-chip[data-addr="' + CSS.escape(addr) + '"]');
+                if (twin) { twin.classList.remove('is-flash'); void twin.offsetWidth; twin.classList.add('is-flash'); }
+                return;
+            }
+            if (EW_EXTRA.length >= EW_MAX) {
+                left.push(addr);
+                why = why || ('Up to ' + EW_MAX + ' other addresses at a time.');
+                return;
+            }
+            EW_EXTRA.push(addr);
+            wrap.insertBefore(ewChip(addr), input);
+        });
+
+        input.value = left.join(', ');
+        ewSay(why, !!why);
+        ewTally();
+        return !left.length;
+    }
+
+    function ewRemove(chip) {
+        if (!chip || chip.classList.contains('is-leaving')) return;
+        EW_EXTRA = EW_EXTRA.filter((a) => a !== chip.dataset.addr);
+        ewSay('', false);
+        ewTally();
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce) { chip.remove(); return; }
+        // Pin the width it has so the collapse has somewhere to start from.
+        chip.style.maxWidth = chip.getBoundingClientRect().width + 'px';
+        void chip.offsetWidth;
+        chip.classList.add('is-leaving');
+        chip.style.maxWidth = '';
+        let gone = false;
+        const done = () => { if (!gone) { gone = true; chip.remove(); } };
+        chip.addEventListener('transitionend', done, { once: true });
+        setTimeout(done, 360);
+    }
+
+    (function wireEmailChips() {
+        const input = $id('emailWhoExtraInput');
+        const wrap = $id('emailWhoChips');
+        if (!input || !wrap) return;
+
+        wrap.addEventListener('click', (e) => {
+            const x = e.target.closest('.ew-chip button');
+            if (x) { ewRemove(x.closest('.ew-chip')); input.focus(); return; }
+            if (e.target === wrap) input.focus();
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.isComposing) return;
+            const v = input.value.trim();
+            if (e.key === 'Enter' || e.key === ',' || e.key === ';' || e.key === ' ') {
+                e.preventDefault();
+                if (v) ewCommit(v);
+            } else if (e.key === 'Tab' && v) {
+                if (!ewCommit(v)) e.preventDefault();
+            } else if (e.key === 'Backspace' && !input.value) {
+                const last = wrap.querySelectorAll('.ew-chip:not(.is-leaving)');
+                if (last.length) { e.preventDefault(); ewRemove(last[last.length - 1]); }
+            }
+        });
+
+        // A phone keyboard often sends no usable key code: watch the text
+        // itself, and cut at the last separator it contains.
+        input.addEventListener('input', () => {
+            const v = input.value;
+            if ($id('emailWhoChips').classList.contains('is-bad')) ewSay('', false);
+            const cut = Math.max(v.lastIndexOf(','), v.lastIndexOf(';'), v.lastIndexOf(' '));
+            if (cut > 0) {
+                const head = v.slice(0, cut);
+                const tail = v.slice(cut + 1);
+                const clean = ewCommit(head);
+                input.value = clean ? tail : (input.value ? input.value + ', ' + tail : tail);
+            }
+            ewTally();
+        });
+
+        input.addEventListener('paste', (e) => {
+            const text = (e.clipboardData || window.clipboardData)?.getData('text');
+            if (!text) return;
+            e.preventDefault();
+            ewCommit(input.value + ' ' + text);
+        });
+
+        input.addEventListener('blur', () => { if (input.value.trim()) ewCommit(input.value); });
+
+        $id('emailWhoList')?.addEventListener('change', (e) => {
+            if (e.target.matches('input[type=checkbox]')) ewTally();
+        });
+
+        const msg = $id('emailWhoMsg');
+        msg?.addEventListener('input', () => {
+            const n = msg.value.length;
+            const out = $id('emailWhoMsgCount');
+            if (out) out.textContent = String(n);
+            out?.parentElement.classList.toggle('is-near', n > 900);
+        });
+    })();
 
     async function openEmailWho(about) {
         EMAIL_WHO = about;
+        const ticket = ++EW_TICKET;
         const list = $id('emailWhoList');
         const title = $id('emailWhoTitle');
-        const say = $id('emailWhoSay');
+        const what = $id('emailWhoWhat');
+        const when = $id('emailWhoWhen');
         const note = $id('emailWhoNote');
         if (!list) return;
 
+        // A fresh sheet every time: no chips, no note, nobody ticked.
+        EW_EXTRA = [];
+        EW_NOTHING = false;
+        $qsa('#emailWhoChips .ew-chip').forEach((c) => c.remove());
+        $id('emailWhoExtraInput').value = '';
+        $id('emailWhoMsg').value = '';
+        $id('emailWhoMsgCount').textContent = '0';
+        $id('emailWhoMsgCount').parentElement.classList.remove('is-near');
+        ewSay('', false);
+
         title.textContent = about.activityId ? 'Email this activity' : 'Email this date';
-        say.textContent = 'Loading…';
+        what.textContent = about.activityId ? (about.name || 'This activity') : 'The work for this day';
+        when.textContent = about.activityId ? '' : (about.date || '');
         note.textContent = '';
-        list.innerHTML = '<p class="text-sm text-gray-400 text-center py-6">Loading…</p>';
+        list.innerHTML = '<p class="ew-loading">Loading…</p>';
+        ewTally();
         openSheet('emailWhoSheet');
 
         const qs = new URLSearchParams({ scheduleId: String(SCHEDULE_ID) });
@@ -7557,18 +7751,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const d = (await api(@json(route('sm.email.audience')) + '?' + qs.toString())).data || {};
+            if (ticket !== EW_TICKET) return;
             const rows = d.workers || [];
+            if (d.maxExtra) EW_MAX = d.maxExtra;
+            ewSay('', false);
 
-            say.innerHTML = about.activityId
-                ? 'Send <strong>' + esc(d.title || 'this activity') + '</strong> (' + esc(d.dateLabel || '') + ') to:'
-                : 'Send the work planned for <strong>' + esc(d.dateLabel || '') + '</strong> to:';
+            if (about.activityId) {
+                what.textContent = d.title || about.name || 'This activity';
+                when.textContent = d.dateLabel || 'No date set yet';
+            } else {
+                const n = Number(d.count || 0);
+                EW_NOTHING = !n;
+                what.textContent = n
+                    ? "The day's work · " + n + (n === 1 ? ' activity' : ' activities')
+                    : 'Nothing planned on this day yet';
+                when.textContent = d.dateLabel || about.date || '';
+            }
 
             if (!rows.length) {
-                list.innerHTML = '<p class="text-sm text-gray-500 text-center py-6">'
-                    + (about.activityId
-                        ? 'Nobody is assigned to this activity yet.'
-                        : 'This season has no workers yet.')
-                    + '</p>';
+                const one = !!about.activityId;
+                list.innerHTML = '<div class="ew-empty"><span class="ew-empty-ico" aria-hidden="true">👷</span><span>'
+                    + '<b>' + (one ? 'Nobody is on this job yet' : 'This season has no workers yet') + '</b>'
+                    + '<i>' + (one
+                        ? 'Type an address below to send it anyway, or add someone to the activity first.'
+                        : 'Type an address below to send it anyway, or add workers in the Workers module.')
+                    + '</i></span></div>';
+                ewTally();
                 return;
             }
 
@@ -7576,6 +7784,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const off = !w.reachable;
                 return '<label class="ew-row' + (off ? ' is-off' : '') + '">'
                     + '<input type="checkbox" class="form-checkbox" value="' + w.id + '"'
+                    + ' data-email="' + esc(w.email || '') + '"'
                     + (off ? ' disabled' : '') + '>'
                     + '<span class="ew-who"><b>' + esc(w.name) + '</b>'
                     + '<i>' + (off ? 'No email on file' : esc(w.email)) + '</i></span>'
@@ -7587,8 +7796,10 @@ document.addEventListener('DOMContentLoaded', () => {
             note.textContent = off
                 ? off + (off === 1 ? ' worker has' : ' workers have') + ' no email address — add one in the Workers module and they can be sent to.'
                 : '';
+            ewTally();
         } catch (_) {
-            list.innerHTML = '<p class="text-sm text-red-600 text-center py-6">Could not load the list just now.</p>';
+            if (ticket !== EW_TICKET) return;
+            list.innerHTML = '<p class="ew-loading" style="color:#dc2626">Could not load the list just now.</p>';
         }
     }
 
@@ -7596,23 +7807,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const boxes = $qsa('#emailWhoList input[type=checkbox]:not(:disabled)');
         const turnOn = boxes.some((b) => !b.checked);
         boxes.forEach((b) => { b.checked = turnOn; });
-        $id('emailWhoAll').textContent = turnOn ? 'Select none' : 'Select all';
+        ewTally();
     });
 
     $id('emailWhoSend')?.addEventListener('click', async (e) => {
         if (!EMAIL_WHO) return;
+        // Whatever is still sitting in the box is meant: chip it first, and
+        // stop if any of it is not an address.
+        const input = $id('emailWhoExtraInput');
+        if (input && input.value.trim() && !ewCommit(input.value)) {
+            input.focus();
+            return;
+        }
         const ids = $qsa('#emailWhoList input[type=checkbox]:checked').map((b) => parseInt(b.value, 10));
-        if (!ids.length) { toast('Choose at least one worker.', 'error'); return; }
+        if (!ids.length && !EW_EXTRA.length) { toast('Choose a worker, or type an email address.', 'error'); return; }
 
         const btn = e.currentTarget;
         const was = btn.textContent;
+        btn.dataset.busy = '1';
         btn.disabled = true;
         btn.textContent = 'Sending…';
         try {
             const url = EMAIL_WHO.activityId ? @json(route('sm.email.activity')) : @json(route('sm.email.day'));
+            const common = { scheduleId: SCHEDULE_ID, workerIds: ids, emails: EW_EXTRA.slice(), message: ($id('emailWhoMsg')?.value || '').trim() };
             const body = EMAIL_WHO.activityId
-                ? { scheduleId: SCHEDULE_ID, activityId: EMAIL_WHO.activityId, workerIds: ids }
-                : { scheduleId: SCHEDULE_ID, date: EMAIL_WHO.date, workerIds: ids };
+                ? { ...common, activityId: EMAIL_WHO.activityId }
+                : { ...common, date: EMAIL_WHO.date };
             /* Through api(), like every other write on this board.
              *
              * This was a hand-rolled fetch reading a CSRF constant that does
@@ -7626,8 +7846,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             toast(err.message, 'error');
         } finally {
-            btn.disabled = false;
+            delete btn.dataset.busy;
             btn.textContent = was;
+            ewTally();
         }
     });
 

@@ -32,12 +32,7 @@ class MailService
             return false;
         }
 
-        $tags = array_merge([
-            'siteName' => config('app.name', 'anee.io'),
-            'loginUrl' => route('login'),
-        ], $tags);
-
-        $rendered = $template->render($tags);
+        $rendered = $this->fill($template, $tags);
 
         // What this message IS travels with it, so the mail book can say
         // which template a row came from and what it was about.
@@ -49,13 +44,64 @@ class MailService
 
     public function sendTemplateToUser(string $templateKey, User $user, array $tags = [], array $about = []): bool
     {
-        $tags = array_merge([
+        return $this->sendTemplate($templateKey, $user->email, $user->full_name, $this->userTags($user, $tags), $about);
+    }
+
+    /**
+     * What a template turns into, without sending it — the same subject and
+     * body sendTemplate() would hand over. Null when the template is missing
+     * or switched off.
+     *
+     * @return array{subject: string, body: string}|null
+     */
+    public function render(string $templateKey, array $tags = [], ?User $user = null): ?array
+    {
+        $template = EmailTemplate::find_(config('anisystem.mail_group', 'AniSystem'), $templateKey);
+
+        return $template ? $this->fill($template, $user ? $this->userTags($user, $tags) : $tags) : null;
+    }
+
+    /** The tags every member's email can use, under the caller's own. */
+    private function userTags(User $user, array $tags): array
+    {
+        // Their own money sign: a US member paid in dollars.
+        $currency = '₱';
+        try {
+            $currency = \App\Support\Region::as(\App\Support\Region::of($user), fn () => \App\Support\Region::symbol());
+        } catch (\Throwable $e) {
+            // The peso is the right default for most members.
+        }
+
+        return array_merge([
             'firstName' => $user->firstName,
             'lastName' => $user->lastName,
             'email' => $user->email,
+            'currency' => $currency,
+        ], $tags);
+    }
+
+    /**
+     * Fill a template's tags. The house tags go under the caller's, and any
+     * tag left with nothing to say is emptied — a reader should never see
+     * the plumbing, "{{planName}}" in an inbox least of all.
+     *
+     * @return array{subject: string, body: string}
+     */
+    private function fill(EmailTemplate $template, array $tags): array
+    {
+        $tags = array_merge([
+            'siteName' => config('app.name', 'anee.io'),
+            'loginUrl' => route('login'),
+            'supportEmail' => 'support@anee.io',
         ], $tags);
 
-        return $this->sendTemplate($templateKey, $user->email, $user->full_name, $tags, $about);
+        $rendered = $template->render($tags);
+        $leftover = '~\{\{\s*[A-Za-z0-9_]+\s*\}\}~';
+
+        return [
+            'subject' => trim(preg_replace($leftover, '', $rendered['subject']) ?? $rendered['subject']),
+            'body' => preg_replace($leftover, '', $rendered['body']) ?? $rendered['body'],
+        ];
     }
 
     public function send(string $toEmail, string $toName, string $subject, string $htmlBody, array $about = []): bool
@@ -78,7 +124,7 @@ class MailService
         $settings = MailSmtpSetting::forGroup(config('anisystem.mail_group', 'AniSystem'));
 
         if (! $settings || ! $settings->isActive || ! $settings->isConfigured()) {
-            Log::info("MailService (log fallback) → {$toEmail} | {$subject}\n".strip_tags($htmlBody));
+            Log::info("MailService (log fallback) → {$toEmail} | {$subject}\n".\App\Support\EmailSkin::toText($htmlBody));
 
             return true;
         }
@@ -107,7 +153,9 @@ class MailService
             $mail->isHTML(true);
             $mail->Subject = $subject;
             $mail->Body = $htmlBody;
-            $mail->AltBody = strip_tags($htmlBody);
+            // The words, not the stylesheet: strip_tags() alone would read
+            // the house style's <style> block out as the first paragraph.
+            $mail->AltBody = \App\Support\EmailSkin::toText($htmlBody);
 
             $mail->send();
 

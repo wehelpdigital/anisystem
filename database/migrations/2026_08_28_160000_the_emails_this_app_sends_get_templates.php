@@ -23,7 +23,7 @@ return new class extends Migration
         if (! Schema::hasTable('as_email_templates')) {
             return;
         }
-        (new \Database\Seeders\anee.ioEmailTemplateSeeder)->run();
+        (new \Database\Seeders\AniSystemEmailTemplateSeeder)->run();
     }
 
     public function down(): void

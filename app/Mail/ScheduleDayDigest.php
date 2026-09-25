@@ -50,7 +50,7 @@ class ScheduleDayDigest extends Mailable
 
         return $html !== null
             ? new Content(htmlString: $html)
-            : new Content(view: 'emails.schedule-day');
+            : new Content(view: 'emails.schedule-day', with: ['listHtml' => $this->activitiesHtml()]);
     }
 
     /** @return array<string, string> */
@@ -72,29 +72,36 @@ class ScheduleDayDigest extends Mailable
 
     /**
      * The one part of the email the layout cannot hold: this person's own
-     * work. Inline styles, because a stylesheet does not survive the trip.
+     * work, and — when the schedule has a public page — the way to it.
+     * Inline styles, because a stylesheet does not survive the trip.
      */
     private function activitiesHtml(): string
     {
+        $link = $this->publicUrl
+            ? \App\Support\EmailSkin::button('See the whole plan', $this->publicUrl, false)
+            : '';
+
         if (! $this->activities) {
-            return '<p style="margin:0 0 14px;font-family:Helvetica,Arial,sans-serif;font-size:15px;color:#6b7280;">'
-                . 'Nothing scheduled.</p>';
+            return \App\Support\EmailSkin::panel('Nothing is scheduled. Enjoy the rest day.') . $link;
         }
 
         $rows = '';
         foreach ($this->activities as $a) {
-            $rows .= '<tr><td style="padding:10px 0;border-bottom:1px solid #eef1f4;'
-                . 'font-family:Helvetica,Arial,sans-serif;">'
-                . '<div style="font-size:15px;font-weight:bold;color:#111827;">' . e($a['title'] ?? '') . '</div>'
-                . (filled($a['tags'] ?? null)
-                    ? '<div style="font-size:12px;color:#6b7280;margin-top:2px;">' . e($a['tags']) . '</div>' : '')
-                . (filled($a['description'] ?? null)
-                    ? '<div style="font-size:13px;color:#4b5563;margin-top:4px;">'
-                        . e(\Illuminate\Support\Str::limit((string) $a['description'], 220)) . '</div>' : '')
-                . '</td></tr>';
+            // "Today · Lot 2" — the day word becomes the badge, the rest the facts.
+            $meta = trim((string) ($a['tags'] ?? ''));
+            $when = '';
+            if (preg_match('~^(Today|Tomorrow)\b\s*(?:·\s*)?(.*)$~u', $meta, $m)) {
+                [$when, $meta] = [$m[1], trim($m[2])];
+            }
+            $rows .= \App\Support\EmailSkin::taskRow(
+                e($a['title'] ?? ''),
+                e($meta),
+                filled($a['description'] ?? null)
+                    ? e(\Illuminate\Support\Str::limit(strip_tags((string) $a['description']), 220)) : '',
+                e($when),
+            );
         }
 
-        return '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 16px;">'
-            . $rows . '</table>';
+        return \App\Support\EmailSkin::taskList($rows) . $link;
     }
 }

@@ -169,18 +169,40 @@ class AdminSupportController extends Controller
          * back to the thread. Queued through the house mail book so the Mail
          * Log shows it like everything else. */
         if ($t->user && $t->user->email) {
+            /* The words around the answer are the support_reply template,
+             * editable in the mother app like every other email. The frame
+             * below is only for a database that has not been given it. */
             $link = url('/app/support/' . $t->id);
-            app(EmailQueue::class)->queueAndSend(
-                $t->user->email,
-                trim(($t->user->firstName ?? '') . ' ' . ($t->user->lastName ?? '')),
-                '[' . $t->ticketNumber . '] Re: ' . Str::limit($t->subject, 120),
-                '<p>Hi ' . e($t->user->firstName ?: 'there') . ',</p>'
-                . '<p>Our team replied to your support ticket <strong>' . e($t->ticketNumber) . '</strong> — “' . e($t->subject) . '”:</p>'
-                . '<blockquote style="margin:12px 0;padding:10px 14px;border-left:3px solid #4c9a2a;background:#f6f9f2;">'
-                . ($isHtml ? $data['body'] : nl2br(e($data['body']))) . '</blockquote>'
-                . '<p><a href="' . $link . '">Open the ticket</a> to reply.</p>',
-                ['templateKey' => 'support_reply', 'relatedType' => 'support_ticket', 'relatedId' => $t->id],
-            );
+            $tags = [
+                'firstName' => e($t->user->firstName ?: 'there'),
+                'ticketNumber' => e($t->ticketNumber),
+                'ticketSubject' => e(Str::limit($t->subject, 120)),
+                'replyBody' => $isHtml ? $data['body'] : nl2br(e($data['body'])),
+                'adminName' => e($adminName ?: 'Our team'),
+                'ticketUrl' => $link,
+            ];
+            $about = ['relatedType' => 'support_ticket', 'relatedId' => $t->id];
+            $mail = app(\App\Services\MailService::class);
+            $toName = trim(($t->user->firstName ?? '') . ' ' . ($t->user->lastName ?? ''));
+
+            if ($mail->render('support_reply', $tags)) {
+                $mail->sendTemplate('support_reply', $t->user->email, $toName, $tags, $about);
+            } else {
+                app(EmailQueue::class)->queueAndSend(
+                    $t->user->email,
+                    $toName,
+                    '[' . $t->ticketNumber . '] Re: ' . Str::limit($t->subject, 120),
+                    \App\Support\EmailSkin::wrap(
+                        '<p>Hi ' . $tags['firstName'] . ',</p>'
+                        . '<p>' . $tags['adminName'] . ' from the anee.io team answered your ticket “' . $tags['ticketSubject'] . '”:</p>'
+                        . \App\Support\EmailSkin::panel($tags['replyBody'])
+                        . \App\Support\EmailSkin::button('Open the ticket', $link, false),
+                        'We replied to your ticket',
+                        ['face' => 'smile', 'eyebrow' => 'Support · ' . $tags['ticketNumber']]
+                    ),
+                    ['groupKey' => 'AniSystem', 'templateKey' => 'support_reply'] + $about,
+                );
+            }
         }
 
         return response()->json(['success' => true, 'message' => 'Reply sent — the client is notified in the app and by email.']);

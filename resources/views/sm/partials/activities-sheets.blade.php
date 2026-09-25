@@ -2250,8 +2250,14 @@
      A worker with no address on file is SHOWN and locked rather than left
      out: "why is Nena not in this list" is a worse question than "why is
      Nena greyed out", which answers itself, and it tells an owner exactly
-     what to go and fix. --}}
-<div class="sheet hidden" id="emailWhoSheet" style="--sheet-width:26rem">
+     what to go and fix.
+
+     Four plain cards, in the order the errand is thought through: what is
+     going out, who gets it (the people on it, and any other address typed
+     in as chips), a line from the sender, and the send itself with a count
+     of who it will reach. A job with nobody on it says so in one tidy note
+     instead of an empty list with a "Select all" over nothing. --}}
+<div class="sheet hidden" id="emailWhoSheet" style="--sheet-width:28rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
         <h3 class="sheet-title truncate" id="emailWhoTitle">Send to</h3>
@@ -2259,22 +2265,58 @@
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
     </div>
-    <div class="sheet-body">
-        <p class="text-sm text-gray-600 mb-3" id="emailWhoSay">Choose who should get this.</p>
+    <div class="sheet-body ew-body">
+        {{-- What is being sent --}}
+        <section class="ew-card ew-what" aria-labelledby="ewWhatHead">
+            <span class="ew-what-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3.5 7.5l8.5 6 8.5-6M4.5 5.5h15a1 1 0 011 1v11a1 1 0 01-1 1h-15a1 1 0 01-1-1v-11a1 1 0 011-1z"/></svg>
+            </span>
+            <div class="ew-what-text">
+                <span class="ew-kicker" id="ewWhatHead">What is going out</span>
+                <b id="emailWhoWhat">Loading…</b>
+                <i id="emailWhoWhen"></i>
+            </div>
+        </section>
 
-        <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-bold uppercase tracking-wide text-gray-500">Workers</span>
-            <button type="button" id="emailWhoAll" class="text-xs font-bold text-brand-700 hover:text-brand-800">Select all</button>
-        </div>
+        {{-- Who gets it --}}
+        <section class="ew-card" aria-labelledby="ewWhoHead">
+            <div class="ew-card-head">
+                <span class="ew-kicker" id="ewWhoHead">Who gets it</span>
+                <button type="button" id="emailWhoAll" class="ew-all is-gone">Select all</button>
+            </div>
 
-        <div id="emailWhoList" class="ew-list">
-            <p class="text-sm text-gray-400 text-center py-6">Loading…</p>
-        </div>
+            <div id="emailWhoList" class="ew-list">
+                <p class="ew-loading">Loading…</p>
+            </div>
+            <p class="ew-hint ew-warn" id="emailWhoNote"></p>
 
-        <p class="form-hint mt-3" id="emailWhoNote"></p>
+            <div class="ew-sub">
+                <label class="ew-sublabel" for="emailWhoExtraInput">Other email addresses <span>optional</span></label>
+                <div class="ew-chips" id="emailWhoChips">
+                    <input type="text" id="emailWhoExtraInput" class="ew-chip-input" inputmode="email"
+                           autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"
+                           placeholder="name@example.com" aria-describedby="emailWhoExtraSay">
+                </div>
+                <p class="ew-hint" id="emailWhoExtraSay">Type or paste, then press Enter. Up to 10.</p>
+            </div>
+        </section>
+
+        {{-- A message --}}
+        <section class="ew-card" aria-labelledby="ewMsgHead">
+            <div class="ew-card-head">
+                <label class="ew-kicker" id="ewMsgHead" for="emailWhoMsg">A message</label>
+                <span class="ew-opt">optional</span>
+            </div>
+            <textarea id="emailWhoMsg" class="form-input ew-msg" rows="3" maxlength="1000"
+                      placeholder="A line for everyone. e.g. Bring the knapsack sprayer."></textarea>
+            <div class="ew-count"><span id="emailWhoMsgCount">0</span> / 1000</div>
+        </section>
     </div>
-    <div class="sheet-footer">
-        <button type="button" class="btn btn-primary w-full" id="emailWhoSend">Send</button>
+
+    {{-- Send --}}
+    <div class="sheet-footer ew-foot">
+        <p class="ew-tally" id="emailWhoTally" aria-live="polite">Nobody chosen yet</p>
+        <button type="button" class="btn btn-primary" id="emailWhoSend" disabled>Send</button>
     </div>
 </div>
 

@@ -1123,6 +1123,96 @@
         html.dark .ew-row.is-off { background: rgb(255 255 255 / .03); }
         html.dark .ew-who b { color: #e8efe1; }
 
+        /* The four cards of the send sheet. Each is a quiet panel with a
+           small kicker; the first carries the envelope and what is going. */
+        #emailWhoSheet .ew-body { display: flex; flex-direction: column; gap: .75rem; padding-top: 1rem; }
+        .ew-card { border: 1px solid #e3ecd8; background: #fbfdf8; border-radius: 1rem; padding: .8rem .85rem .85rem; }
+        .ew-card-head { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .55rem; min-height: 1.4rem; }
+        .ew-kicker { display: block; font-size: .68rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #6b7f57; }
+        .ew-opt { font-size: .68rem; font-weight: 600; color: var(--color-gray-400, #9ca3af); }
+        .ew-all { font-size: .75rem; font-weight: 800; color: var(--color-brand-700, #3b6522); padding: .2rem .5rem; margin: -.2rem -.5rem;
+            border-radius: 999px; transition: background .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+        .ew-all:hover { background: #eef5e6; }
+        .ew-all.is-gone { opacity: 0; pointer-events: none; }
+        .ew-what { display: flex; align-items: center; gap: .75rem; background: #f2f8ec; border-color: #d6e6c3; }
+        .ew-what-ico { flex: none; width: 2.5rem; height: 2.5rem; border-radius: .8rem; display: grid; place-items: center;
+            background: #fff; color: #4a7c2a; box-shadow: 0 1px 0 #d6e6c3; }
+        .ew-what-ico svg { width: 1.35rem; height: 1.35rem; }
+        .ew-what-text { min-width: 0; flex: 1 1 auto; }
+        .ew-what-text b { display: block; font-size: .95rem; font-weight: 800; color: var(--color-gray-900, #111827); line-height: 1.3;
+            overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .ew-what-text i { display: block; font-style: normal; font-size: .76rem; color: var(--color-gray-500, #6b7280); margin-top: .1rem; }
+        .ew-what-text i:empty { display: none; }
+        .ew-loading { font-size: .85rem; color: var(--color-gray-400, #9ca3af); text-align: center; padding: 1rem 0; }
+        .ew-empty { display: flex; align-items: flex-start; gap: .6rem; padding: .7rem .75rem; border-radius: .75rem;
+            background: #fff; border: 1px dashed #d2dfc3; }
+        .ew-empty-ico { flex: none; font-size: 1.15rem; line-height: 1.2; }
+        .ew-empty b { display: block; font-size: .84rem; font-weight: 700; color: var(--color-gray-800, #1f2937); }
+        .ew-empty i { display: block; font-style: normal; font-size: .74rem; line-height: 1.45; color: var(--color-gray-500, #6b7280); margin-top: .1rem; }
+        .ew-hint { font-size: .72rem; line-height: 1.45; color: var(--color-gray-500, #6b7280); margin-top: .4rem; }
+        .ew-hint:empty { display: none; }
+        .ew-hint.ew-warn { color: #92400e; }
+        .ew-hint.is-bad { color: #b91c1c; font-weight: 600; }
+        .ew-sub { margin-top: .8rem; padding-top: .75rem; border-top: 1px dashed #dbe6cf; }
+        .ew-sublabel { display: block; font-size: .8rem; font-weight: 700; color: var(--color-gray-700, #374151); margin-bottom: .4rem; }
+        .ew-sublabel span { font-weight: 600; font-size: .68rem; color: var(--color-gray-400, #9ca3af); margin-left: .25rem; }
+        .ew-chips { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; min-height: 2.75rem; padding: .35rem .45rem;
+            border: 1px solid var(--color-gray-300, #d1d5db); border-radius: .75rem; background: #fff; cursor: text;
+            transition: border-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+        .ew-chips:focus-within { border-color: #6b9f3d; box-shadow: 0 0 0 3px rgb(107 159 61 / .18); }
+        .ew-chips.is-bad { border-color: #f87171; box-shadow: 0 0 0 3px rgb(248 113 113 / .16); }
+        .ew-chip-input { flex: 1 1 9rem; min-width: 7rem; border: 0 !important; outline: 0 !important; box-shadow: none !important;
+            background: transparent; padding: .3rem .25rem; font-size: 16px; color: var(--color-gray-900, #111827); }
+        .ew-chip { display: inline-flex; align-items: center; gap: .15rem; max-width: 100%; min-width: 0;
+            padding: .2rem .2rem .2rem .6rem; border-radius: 999px; background: #eaf3df; border: 1px solid #cfe0b8;
+            color: #2f5219; font-size: .78rem; font-weight: 700;
+            animation: ewChipIn .28s cubic-bezier(.22,1,.36,1) backwards;
+            transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1),
+                        max-width .28s cubic-bezier(.22,1,.36,1), padding .28s cubic-bezier(.22,1,.36,1), margin .28s cubic-bezier(.22,1,.36,1); }
+        .ew-chip > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+        .ew-chip button { flex: none; width: 1.5rem; height: 1.5rem; border-radius: 999px; display: grid; place-items: center;
+            color: #4a7c2a; font-size: 1rem; line-height: 1; transition: background .2s ease; }
+        .ew-chip button:hover { background: rgb(74 124 42 / .14); }
+        .ew-chip.is-leaving { opacity: 0; transform: scale(.85); max-width: 0; padding-left: 0; padding-right: 0; margin-right: -.35rem; border-width: 0; }
+        .ew-chip.is-flash { animation: ewChipFlash .6s cubic-bezier(.22,1,.36,1); }
+        @keyframes ewChipIn { from { opacity: 0; transform: scale(.8); } to { opacity: 1; transform: none; } }
+        @keyframes ewChipFlash { 0%, 100% { box-shadow: 0 0 0 0 rgb(107 159 61 / 0); } 35% { box-shadow: 0 0 0 4px rgb(107 159 61 / .35); } }
+        .ew-msg { width: 100%; resize: vertical; min-height: 4.5rem; font-size: 16px; }
+        .ew-count { text-align: right; font-size: .68rem; color: var(--color-gray-400, #9ca3af); margin-top: .25rem; font-variant-numeric: tabular-nums; }
+        .ew-count.is-near { color: #b45309; font-weight: 700; }
+        #emailWhoSheet .ew-foot { justify-content: space-between; }
+        .ew-tally { flex: 1 1 auto; min-width: 0; font-size: .8rem; font-weight: 600; color: var(--color-gray-600, #4b5563); line-height: 1.3;
+            transition: color .28s cubic-bezier(.22,1,.36,1); }
+        .ew-tally b { color: var(--color-gray-900, #111827); }
+        #emailWhoSheet .ew-foot .btn-primary { flex: 0 0 auto; min-width: 7.5rem; }
+        #emailWhoSheet .ew-foot .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+        .ew-list .ew-row, .ew-list .ew-empty { animation: ewChipIn .28s cubic-bezier(.22,1,.36,1) backwards; transform-origin: top center; }
+        .ew-list .ew-row { animation-name: ewRowIn; }
+        @keyframes ewRowIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+        @media (prefers-reduced-motion: reduce) {
+            .ew-chip, .ew-list .ew-row, .ew-list .ew-empty { animation: none; }
+            .ew-chip, .ew-chips, .ew-all, .ew-tally { transition: none; }
+            .ew-chip.is-flash { animation: none; }
+        }
+        html.dark .ew-card { background: #171e13; border-color: #2b3a1c; }
+        html.dark .ew-what { background: #1c2716; border-color: #34481f; }
+        html.dark .ew-what-ico { background: #151b12; color: #9cc972; box-shadow: none; }
+        html.dark .ew-what-text b, html.dark .ew-tally b { color: #e8efe1; }
+        html.dark .ew-what-text i, html.dark .ew-hint, html.dark .ew-tally { color: #a8bd93; }
+        html.dark .ew-hint.ew-warn { color: #fcd34d; }
+        html.dark .ew-hint.is-bad { color: #fca5a5; }
+        html.dark .ew-kicker { color: #9cb383; }
+        html.dark .ew-all { color: #9cc972; }
+        html.dark .ew-all:hover { background: rgb(156 201 114 / .12); }
+        html.dark .ew-empty { background: #151b12; border-color: #34481f; }
+        html.dark .ew-empty b, html.dark .ew-sublabel { color: #e8efe1; }
+        html.dark .ew-empty i { color: #a8bd93; }
+        html.dark .ew-sub { border-color: #2b3a1c; }
+        html.dark .ew-chips { background: #151b12; border-color: #34481f; }
+        html.dark .ew-chip-input { color: #e8efe1; }
+        html.dark .ew-chip { background: #22301a; border-color: #3f5626; color: #cfe6b6; }
+        html.dark .ew-chip button { color: #9cc972; }
+
         /* ---- A short list behind a tag --------------------------------
            Four options do not need an operating-system wheel that looks like
            nothing else in the app. Each row carries the word and the reason,
