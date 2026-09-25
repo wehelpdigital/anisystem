@@ -62,15 +62,9 @@
                 'img' => asset('images/icons/checklist.png'),
                 'badge' => null,
             ],
-            // Comparing is generating: the whole page is a Run button, so a
-            // view-level worker is not offered a door that only answers no.
-            ...(\App\Support\WorkerContext::canWriteModule('reports') ? [[
-                'label' => 'Compare Reports',
-                'desc' => 'Let Anee read two saved reports of the same type and analyze the difference.',
-                'url' => route('sm.compare.report', ['id' => $schedule->id]),
-                'img' => asset('images/icons/ab-testing.png'),
-                'badge' => null,
-            ]] : []),
+            // Compare Reports moved out to the Quick Tools (/app/compare,
+            // 2026-09-25): it compares any season's saved reports with any
+            // other's, so it is no longer one season's door.
             // Post Harvest Observations lived here too, but it was only a link
             // to the module that already has its own tile in the hub — the
             // same screen offered twice.

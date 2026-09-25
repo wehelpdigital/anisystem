@@ -235,6 +235,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/app/contacts-lookup', [App\Http\Controllers\ContactListController::class, 'lookup'])->name('contacts.lookup');
     // A member's own tag vocabulary, across contacts, analyses and protocols.
     Route::get('/app/my-tags', [App\Http\Controllers\UserTagController::class, 'index'])->name('tags.mine');
+    // Global Tags: every word the member has tied to anything, across all
+    // their seasons and the tools outside them (contacts, protocols, analyses,
+    // global notes). Rename and delete act everywhere the word appears.
+    Route::get('/app/tags', [App\Http\Controllers\GlobalTagController::class, 'page'])->name('tags.global');
+    Route::get('/app/tags/list', [App\Http\Controllers\GlobalTagController::class, 'list'])->name('tags.global.list');
+    Route::get('/app/tags/items', [App\Http\Controllers\GlobalTagController::class, 'items'])->name('tags.global.items');
+    Route::post('/app/tags/rename', [App\Http\Controllers\GlobalTagController::class, 'rename'])->name('tags.global.rename');
+    Route::post('/app/tags/delete', [App\Http\Controllers\GlobalTagController::class, 'destroy'])->name('tags.global.delete');
     Route::post('/app/contacts', [App\Http\Controllers\ContactListController::class, 'store'])->name('contacts.store');
     Route::post('/app/contacts/{id}', [App\Http\Controllers\ContactListController::class, 'update'])->name('contacts.update');
     Route::post('/app/contacts/{id}/delete', [App\Http\Controllers\ContactListController::class, 'destroy'])->name('contacts.destroy');
@@ -246,7 +254,8 @@ Route::middleware('auth')->group(function () {
     // "How are we doing?" — answered once, or waved away twice.
     Route::post('/app/review', [App\Http\Controllers\ReviewController::class, 'store'])->name('review.store');
     Route::post('/app/review-dismiss', [App\Http\Controllers\ReviewController::class, 'dismiss'])->name('review.dismiss');
-    // A screen's tutorial video, told "don't show this again" — kept per account.
+    // A screen's tutorial video, told "don't show this again". The card keeps that
+    // in a cookie now; this answers pages from before with the same cookie.
     Route::post('/app/tutorial-dismiss', [App\Http\Controllers\TutorialController::class, 'dismiss'])->name('tutorial.dismiss');
     Route::get('/app/support', [App\Http\Controllers\SupportController::class, 'index'])->name('support.index');
     Route::post('/app/support', [App\Http\Controllers\SupportController::class, 'store'])->name('support.store');
@@ -508,6 +517,14 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/protocol-builder/{id}/job', [App\Http\Controllers\ProtocolBuilderController::class, 'job'])->whereNumber('id')->name('pb.job');
     Route::get('/app/protocol-builder/lots', [App\Http\Controllers\ProtocolBuilderController::class, 'lots'])->name('pb.lots');
     Route::post('/app/protocol-builder/port', [App\Http\Controllers\ProtocolBuilderController::class, 'port'])->name('pb.port');
+    // Versions of a protocol, each with its own tasks, materials, rules & notes and files.
+    Route::post('/app/protocol-builder/{id}/versions', [App\Http\Controllers\ProtocolBuilderController::class, 'versionStore'])->whereNumber('id')->name('pb.versions.store');
+    Route::post('/app/protocol-builder/{id}/versions/{vid}/use', [App\Http\Controllers\ProtocolBuilderController::class, 'versionUse'])->whereNumber(['id', 'vid'])->name('pb.versions.use');
+    Route::post('/app/protocol-builder/{id}/versions/{vid}/rename', [App\Http\Controllers\ProtocolBuilderController::class, 'versionRename'])->whereNumber(['id', 'vid'])->name('pb.versions.rename');
+    Route::post('/app/protocol-builder/{id}/versions/{vid}/delete', [App\Http\Controllers\ProtocolBuilderController::class, 'versionDestroy'])->whereNumber(['id', 'vid'])->name('pb.versions.delete');
+    Route::post('/app/protocol-builder/{id}/versions/{vid}/rules', [App\Http\Controllers\ProtocolBuilderController::class, 'rules'])->whereNumber(['id', 'vid'])->name('pb.rules');
+    Route::post('/app/protocol-builder/{id}/versions/{vid}/files', [App\Http\Controllers\ProtocolBuilderController::class, 'fileStore'])->whereNumber(['id', 'vid'])->name('pb.files.store');
+    Route::post('/app/protocol-builder/{id}/versions/{vid}/files/{fid}/delete', [App\Http\Controllers\ProtocolBuilderController::class, 'fileDestroy'])->whereNumber(['id', 'vid'])->where('fid', '[A-Za-z0-9_-]+')->name('pb.files.delete');
     Route::get('/app/weather', [App\Http\Controllers\WeatherController::class, 'forecast'])->name('app.weather');
     Route::get('/app/sm-weather', [App\Http\Controllers\WeatherController::class, 'scheduleForecast'])->name('sm.weather');
     // Weather as a schedule module: the 6-day view plus an hourly tab.
@@ -913,9 +930,19 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-anee-report-meta', [App\Http\Controllers\Manager\FarmReportController::class, 'aneeMeta'])->name('sm.anee.meta');
     Route::get('/app/sm-protocol-report', [App\Http\Controllers\Manager\FarmReportController::class, 'protocolPage'])->name('sm.protocol.report');
     Route::post('/app/sm-protocol-generate', [App\Http\Controllers\Manager\FarmReportController::class, 'protocolGenerate'])->name('sm.protocol.generate');
-    Route::get('/app/sm-compare-report', [App\Http\Controllers\Manager\FarmReportController::class, 'comparePage'])->name('sm.compare.report');
-    Route::get('/app/sm-compare-options', [App\Http\Controllers\Manager\FarmReportController::class, 'compareOptions'])->name('sm.compare.options');
-    Route::post('/app/sm-compare-generate', [App\Http\Controllers\Manager\FarmReportController::class, 'compareGenerate'])->name('sm.compare.generate');
+    // Compare Reports is a Quick Tool at /app/compare (any season against any
+    // other); the season-scoped door redirects there. The endpoints keep the
+    // sm.compare.* names, so the worker gate and the season diary know them.
+    Route::get('/app/compare', [App\Http\Controllers\CompareController::class, 'page'])->name('compare.page');
+    Route::get('/app/sm-compare-report', [App\Http\Controllers\CompareController::class, 'legacy'])->name('sm.compare.report');
+    Route::get('/app/compare/options', [App\Http\Controllers\CompareController::class, 'options'])->name('sm.compare.options');
+    Route::get('/app/compare/shelf', [App\Http\Controllers\CompareController::class, 'shelf'])->name('sm.compare.shelf');
+    Route::post('/app/compare/generate', [App\Http\Controllers\CompareController::class, 'generate'])->name('sm.compare.generate');
+    Route::get('/app/compare/job/{id}', [App\Http\Controllers\CompareController::class, 'job'])->whereNumber('id')->name('sm.compare.job');
+    Route::get('/app/compare/saved', [App\Http\Controllers\CompareController::class, 'saved'])->name('sm.compare.saved');
+    Route::get('/app/compare/one/{id}', [App\Http\Controllers\CompareController::class, 'one'])->whereNumber('id')->name('sm.compare.one');
+    Route::post('/app/compare/meta', [App\Http\Controllers\CompareController::class, 'meta'])->name('sm.compare.meta');
+    Route::delete('/app/compare/{id}', [App\Http\Controllers\CompareController::class, 'destroy'])->whereNumber('id')->name('sm.compare.delete');
     Route::post('/app/sm-status', [App\Http\Controllers\Manager\CroppingScheduleController::class, 'setStatus'])->name('sm.status');
     // Tags: the words a farmer ties to the season's things.
     Route::get('/app/sm-tags-module', [App\Http\Controllers\Manager\TagController::class, 'page'])->name('sm.tags');
