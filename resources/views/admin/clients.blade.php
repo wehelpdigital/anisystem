@@ -23,11 +23,16 @@
 </style>
 @endpush
 
-@section('content')
-    <div class="ad-sticky">
-        <input type="search" id="clSearch" class="form-input" placeholder="Search by name or email…" autocomplete="off">
-    </div>
+{{-- The search rides in the sticky header, so it stays at the top of the
+     screen however far down the list goes. --}}
+@section('bar')
+    <label class="ad-search">
+        <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 100-15 7.5 7.5 0 000 15z"/></svg>
+        <input type="search" id="clSearch" class="form-input" placeholder="Search by name or email…" autocomplete="off" aria-label="Search clients">
+    </label>
+@endsection
 
+@section('content')
     <div class="card !p-0 overflow-hidden">
         <div id="clList"></div>
         <div id="clEmpty" class="hidden text-center py-10">
@@ -80,10 +85,11 @@
         <button type="button" class="ad-row" data-client="${c.id}">
             <span class="ad-face">${esc((c.name || '?').slice(0, 1).toUpperCase())}</span>
             <span class="ad-mid">
-                <span class="ad-name">${esc(c.name)}
-                    ${c.isAdmin ? '<span class="ad-badge is-admin ml-1">admin</span>' : ''}
-                    ${c.role ? `<span class="ad-badge is-role ml-1">${esc(c.role)}</span>` : ''}
-                    ${c.suspendedSays ? `<span class="ad-badge is-susp ml-1">suspended</span>` : ''}
+                <span class="ad-namerow">
+                    <span class="ad-name">${esc(c.name)}</span>
+                    ${c.isAdmin ? '<span class="ad-badge is-admin">admin</span>' : ''}
+                    ${c.role ? `<span class="ad-badge is-role">${esc(c.role)}</span>` : ''}
+                    ${c.suspendedSays ? `<span class="ad-badge is-susp">suspended</span>` : ''}
                 </span>
                 <span class="ad-meta">${esc(c.email)} · joined ${esc(c.registered || '')}</span>
             </span>

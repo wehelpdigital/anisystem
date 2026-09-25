@@ -110,7 +110,8 @@
 <style>
     .sa-form { display: grid; gap: .6rem; }
     .sa-row { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
-    .sa-row .crop-tag { flex: 1 1 10rem; min-width: 0; }
+    /* The tags stand the same height as the fields beside them. */
+    .sa-row .crop-tag { flex: 1 1 10rem; min-width: 0; min-height: var(--sa-field-h, 2.75rem); }
     /* The native pickers stand invisibly behind their tags — showPicker()
        needs them rendered, not display:none. */
     .sa-date-native { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
@@ -124,11 +125,14 @@
     .sa-card b { display: block; font-size: .9rem; color: var(--color-gray-900); }
     .sa-card i { display: block; font-style: normal; font-size: .72rem; color: var(--color-gray-500); margin-top: .1rem; }
     .sa-del { flex: none; width: 2rem; height: 2rem; border-radius: .55rem; display: inline-flex;
-        align-items: center; justify-content: center; color: var(--color-gray-300); }
-    .sa-del:hover { color: #dc2626; background: #fef2f2; }
+        align-items: center; justify-content: center; color: var(--color-gray-400);
+        transition: color .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
+    .sa-del:hover { color: #dc2626; background: var(--color-red-50, #fef2f2); }
+    html.dark .sa-del:hover { color: #fca5a5; }
     .sa-del svg { width: 1rem; height: 1rem; }
-    html.dark .sa-card { background: #151b12; border-color: #2b3a1c; }
-    html.dark .sa-card b { color: #e8efe1; }
+    .sa-go { width: 1rem; height: 1rem; flex: none; color: var(--color-gray-400); }
+    /* Night: every colour above is a token already -- the cards take the
+       same surface as the form card over them instead of a green-black. */
 
     /* The read: hero, funnel, unit economics, plan mix. */
     .sa-hero { border-radius: 1.1rem; padding: 1.1rem 1.2rem; color: #fff;
@@ -160,8 +164,7 @@
     .sa-stat b { display: block; font-size: 1.05rem; font-weight: 800; color: var(--color-gray-900);
         font-variant-numeric: tabular-nums; margin-top: .15rem; overflow: hidden; text-overflow: ellipsis; }
     .sa-stat small { display: block; font-size: .66rem; color: var(--color-gray-400); margin-top: .1rem; }
-    html.dark .sa-stat { background: #151b12; border-color: #2b3a1c; }
-    html.dark .sa-stat b { color: #e8efe1; }
+    html:not(.dark) .sa-stat i, html:not(.dark) .sa-stat small { color: var(--color-gray-500); }
 
     .sa-mix { margin-top: .9rem; border-radius: .9rem; border: 1px solid var(--color-gray-200);
         background: var(--color-white); padding: .8rem .9rem; }
@@ -169,8 +172,7 @@
     .sa-mix-row { display: flex; justify-content: space-between; gap: .6rem; font-size: .8rem;
         color: var(--color-gray-600); padding: .22rem 0; }
     .sa-mix-row b { color: var(--color-gray-900); font-variant-numeric: tabular-nums; }
-    html.dark .sa-mix { background: #151b12; border-color: #2b3a1c; }
-    html.dark .sa-mix h3, html.dark .sa-mix-row b { color: #e8efe1; }
+    @media (prefers-reduced-motion: reduce) { .sa-card, .sa-del, .sa-step .bar i { transition: none; } }
 </style>
 @endpush
 
@@ -244,8 +246,9 @@
                 <span role="button" tabindex="0" class="sa-del" data-sa-del="${r.id}" aria-label="Delete ${esc(r.name)}">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
                 </span>
-                <svg style="width:1rem;height:1rem;flex:none;color:var(--color-gray-300)" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                <svg class="sa-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </div>`).join('');
+        window.adminRise && adminRise($id('saList'));
     }
 
     /* ---- the read of one batch ---- */
@@ -253,7 +256,8 @@
         document.querySelectorAll('.sa-card').forEach((c) => c.classList.toggle('is-open', c.getAttribute('data-sa-open') === String(id)));
         const host = $id('saReport');
         host.hidden = false;
-        host.innerHTML = '<p class="text-sm text-gray-400 text-center py-4">Reading the records…</p>';
+        host.innerHTML = '<p class="text-sm text-gray-400 text-center py-4 flex items-center justify-center gap-2"><span class="ad-spin"></span> Reading the records…</p>';
+        window.adminRise && adminRise(host);
         let d;
         try { d = (await ask(U.one(id))).data; } catch (e) { say(e.message, 'error'); host.hidden = true; return; }
         const convPct = d.registrations > 0 ? Math.max(2, Math.round(d.converted / d.registrations * 100)) : 0;
@@ -289,7 +293,8 @@
                 <h3>What they bought</h3>
                 ${d.planMix.map((m) => `<div class="sa-mix-row"><span>${esc(m.plan)} × ${m.count}</span><b>${peso(m.revenue)}</b></div>`).join('')}
             </div>` : ''}`;
-        requestAnimationFrame(() => host.querySelectorAll('.sa-step .bar i').forEach((i) => { i.style.width = i.getAttribute('data-w') + '%'; }));
+        window.adminRise && adminRise(host);
+        requestAnimationFrame(() => requestAnimationFrame(() => host.querySelectorAll('.sa-step .bar i').forEach((i) => { i.style.width = i.getAttribute('data-w') + '%'; })));
         host.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
@@ -297,7 +302,10 @@
         const del = e.target.closest('[data-sa-del]');
         if (del) {
             e.stopPropagation();
-            if (!confirm('Delete this analysis? The registrations and sales it reads stay untouched.')) return;
+            const ok = window.confirmAction
+                ? await confirmAction({ title: 'Delete this analysis?', message: 'The registrations and sales it reads stay untouched.', confirmText: 'Delete', danger: true })
+                : confirm('Delete this analysis? The registrations and sales it reads stay untouched.');
+            if (!ok) return;
             try {
                 await ask(U.del(del.getAttribute('data-sa-del')), { method: 'DELETE' });
                 $id('saReport').hidden = true;
@@ -327,6 +335,9 @@
         } catch (err) { say(err.message, 'error'); }
         finally { btn.disabled = false; }
     });
+
+    const fieldH = $id('saCost').getBoundingClientRect().height;
+    if (fieldH) $id('saCost').closest('.sa-form').style.setProperty('--sa-field-h', fieldH + 'px');
 
     load();
 })();

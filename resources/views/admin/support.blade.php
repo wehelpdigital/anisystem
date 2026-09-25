@@ -3,18 +3,23 @@
 @section('title', 'Support')
 @section('subtitle', 'Tickets, answered from this side')
 
-@section('content')
-    {{-- Two rooms on one page: the tickets, and the shelf of canned answers
-         a reply can start from. --}}
-    <div class="flex gap-1.5 mb-3">
-        <button type="button" class="chip is-selected" id="tabBtnTickets">Tickets</button>
-        <button type="button" class="chip" id="tabBtnCanned">Canned responses</button>
+{{-- The sticky header's own row for this page. Two rooms on one page --
+     the tickets, and the shelf of canned answers a reply can start from --
+     and, while the tickets are showing, their search and status chips. All
+     of it stays at the top of the screen however far the list scrolls. --}}
+@section('bar')
+    <div class="ad-seg" id="tkSeg" data-on="0" role="tablist" aria-label="Support rooms">
+        <span class="ad-seg-thumb" aria-hidden="true"></span>
+        <button type="button" class="is-on" id="tabBtnTickets" role="tab" aria-selected="true">Tickets</button>
+        <button type="button" id="tabBtnCanned" role="tab" aria-selected="false">Canned responses</button>
     </div>
-
-    <div id="tabTickets">
-        <div class="ad-sticky space-y-2">
-            <input type="search" id="tkSearch" class="form-input" placeholder="Search subject, ticket # or client…" autocomplete="off">
-            <div class="flex gap-1.5 overflow-x-auto items-center" id="tkChips">
+    <div class="ad-fold" id="tkTools">
+        <div class="space-y-2">
+            <label class="ad-search">
+                <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 100-15 7.5 7.5 0 000 15z"/></svg>
+                <input type="search" id="tkSearch" class="form-input" placeholder="Search subject, ticket # or client…" autocomplete="off" aria-label="Search tickets">
+            </label>
+            <div class="ad-chips" id="tkChips">
                 <button type="button" class="chip is-selected" data-status="">All</button>
                 <button type="button" class="chip" data-status="open">Open <span id="cntOpen"></span></button>
                 <button type="button" class="chip" data-status="answered">Answered <span id="cntAnswered"></span></button>
@@ -22,7 +27,11 @@
                 <button type="button" class="chip hidden" id="tkClientChip" title="Show every client again">One client ✕</button>
             </div>
         </div>
+    </div>
+@endsection
 
+@section('content')
+    <div id="tabTickets">
         {{-- Grouped by the person: a client's row, their tickets folded under it. --}}
         <div class="card !p-0 overflow-hidden">
             <div id="tkList"></div>
@@ -81,6 +90,8 @@
     .tk-group { border-bottom: 1px solid var(--color-gray-100); }
     .tk-group:last-child { border-bottom: 0; }
     .tk-group-head .ad-face { font-size: .85rem; }
+    /* Resting states only: the slide itself is the concertina's, in
+       app.js (.tk-group is a row of its FOLDS table). */
     .tk-group-body { overflow: hidden;
         transition: max-height .28s cubic-bezier(.22,1,.36,1); }
     .tk-group.is-folded .tk-group-body { max-height: 0; }
@@ -90,9 +101,6 @@
     .tk-chev { width: 1rem; height: 1rem; color: var(--color-gray-400);
         transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .tk-group.is-folded .tk-chev { transform: rotate(-90deg); }
-    html.dark .tk-group { border-color: #222b1a; }
-    html.dark .tk-row { background: #131a0e; }
-    html.dark .tk-row:hover { background: #161e10; }
 
     /* The ticket number is a thing you copy: it looks like a chip, it acts
        like a button, and it never opens the row under it. */
@@ -100,8 +108,6 @@
         border-radius: .4rem; font-weight: 700; font-family: var(--font-mono, monospace);
         font-size: .7rem; background: var(--color-gray-100); color: var(--color-gray-600); cursor: copy; }
     .tk-copy:hover { background: var(--color-brand-50); color: var(--color-brand-800); }
-    html.dark .tk-copy { background: #1c2417; color: #a8bd93; }
-    html.dark .tk-copy:hover { background: #22301a; color: #cfe6b8; }
 
     /* The reply's small editor: a toolbar and an editable sheet of paper. */
     .tk-toolbar { display: flex; gap: .25rem; flex-wrap: wrap; align-items: center; }
@@ -119,10 +125,9 @@
     .tk-editor img { max-width: 100%; border-radius: .5rem; margin: .25rem 0; }
     .tk-editor a { color: var(--color-brand-700); text-decoration: underline; }
     .tk-editor ul { list-style: disc; padding-left: 1.2rem; }
-    html.dark .tk-toolbar button { background: #1c2417; color: #a8bd93; }
-    html.dark .tk-toolbar button:hover { background: #22301a; color: #cfe6b8; }
-    html.dark .tk-toolbar select { background: #131a0e; border-color: #2b3a1c; color: #d5e3c5; }
-    html.dark .tk-editor { background: #131a0e; border-color: #2b3a1c; color: #e8efe1; }
+    /* Night needs no second copy of these: every colour above is a token. */
+    .tk-toolbar button { transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .tk-toolbar select { min-width: 9rem; }
 
     /* Rich message bodies inside the thread. */
     .tk-msg .tk-rich img { max-width: 100%; border-radius: .5rem; margin: .25rem 0; }
@@ -132,7 +137,12 @@
     /* A canned row's preview keeps to one quiet line. */
     .cn-prev { display: block; font-size: .73rem; color: var(--color-gray-400);
         overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    @media (prefers-reduced-motion: reduce) { .tk-group-body, .tk-chev { transition: none; } }
+    html:not(.dark) .cn-prev { color: var(--color-gray-500); }
+    /* The shelf's two buttons: a word and a bin, the same height. */
+    .cn-bin { display: inline-flex; align-items: center; justify-content: center; }
+    .cn-bin svg { width: 1rem; height: 1rem; }
+    .cn-bin:hover { color: #dc2626; }
+    @media (prefers-reduced-motion: reduce) { .tk-group-body, .tk-chev, .tk-toolbar button { transition: none; } }
 </style>
 @endpush
 
@@ -202,7 +212,7 @@
 
     const groupRow = (g) => `
         <div class="tk-group" data-group="${g.clientId}">
-            <button type="button" class="ad-row tk-group-head" data-toggle-group="${g.clientId}">
+            <button type="button" class="ad-row tk-group-head" data-toggle-group="${g.clientId}" aria-expanded="true">
                 <span class="ad-face">${esc((g.clientName || '?').slice(0, 1).toUpperCase())}</span>
                 <span class="ad-mid">
                     <span class="ad-name">${esc(g.clientName)}</span>
@@ -253,7 +263,10 @@
 
     document.addEventListener('click', (e) => {
         const head = e.target.closest('[data-toggle-group]');
-        if (head) head.closest('.tk-group').classList.toggle('is-folded');
+        if (!head) return;
+        const g = head.closest('.tk-group');
+        const folded = g.classList.toggle('is-folded');
+        head.setAttribute('aria-expanded', folded ? 'false' : 'true');
     });
 
     /* The ticket number copies itself and swallows the click under it. */
@@ -437,10 +450,20 @@
 
     /* ---------------- the canned tab ---------------- */
     const showTab = (which) => {
-        $id('tabTickets').classList.toggle('hidden', which !== 'tickets');
-        $id('tabCanned').classList.toggle('hidden', which !== 'canned');
-        $id('tabBtnTickets').classList.toggle('is-selected', which === 'tickets');
-        $id('tabBtnCanned').classList.toggle('is-selected', which === 'canned');
+        const tickets = which === 'tickets';
+        const was = $id('tkSeg').getAttribute('data-on');
+        if (was === (tickets ? '0' : '1')) return;
+        $id('tkSeg').setAttribute('data-on', tickets ? '0' : '1');
+        $id('tabBtnTickets').classList.toggle('is-on', tickets);
+        $id('tabBtnCanned').classList.toggle('is-on', !tickets);
+        $id('tabBtnTickets').setAttribute('aria-selected', tickets ? 'true' : 'false');
+        $id('tabBtnCanned').setAttribute('aria-selected', tickets ? 'false' : 'true');
+        // The search and status chips belong to the tickets only.
+        adminFold($id('tkTools'), tickets);
+        $id('tabTickets').classList.toggle('hidden', !tickets);
+        $id('tabCanned').classList.toggle('hidden', tickets);
+        adminRise($id(tickets ? 'tabTickets' : 'tabCanned'));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
     $id('tabBtnTickets').addEventListener('click', () => showTab('tickets'));
     $id('tabBtnCanned').addEventListener('click', () => showTab('canned'));
@@ -454,7 +477,7 @@
                 </span>
                 <span class="ad-end flex gap-1.5">
                     <button type="button" class="btn btn-white btn-sm" data-cn-edit="${c.id}">Edit</button>
-                    <button type="button" class="btn btn-white btn-sm" data-cn-del="${c.id}">🗑</button>
+                    <button type="button" class="btn btn-white btn-sm cn-bin" data-cn-del="${c.id}" title="Remove this template" aria-label="Remove ${esc(c.title)}"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg></button>
                 </span>
             </div>`).join('');
         $id('cnEmpty').classList.toggle('hidden', CANNED.length > 0);

@@ -32,18 +32,30 @@
 (() => {
     const $id = (x) => document.getElementById(x);
     const money = (n) => '₱' + Number(n || 0).toLocaleString('en-PH', { maximumFractionDigits: 0 });
-    const short = (n) => n >= 1000 ? (Math.round(n / 100) / 10) + 'k' : String(Math.round(n));
+    /* A bar's label has about a finger's width over it on a phone: "148.7k"
+       beside "160.2k" ran into each other. Whole thousands from ten
+       thousand up, one decimal only below it. */
+    const short = (n) => {
+        if (n >= 1e6) return (n >= 1e7 ? Math.round(n / 1e6) : Math.round(n / 1e5) / 10) + 'M';
+        if (n >= 1e4) return Math.round(n / 1e3) + 'k';
+        if (n >= 1e3) return (Math.round(n / 100) / 10) + 'k';
+        return String(Math.round(n));
+    };
 
     /** Twelve months of divs. The tallest month sets the scale. */
     function bars(el, months, isMoney) {
         const max = Math.max(1, ...months.map((m) => m.value));
+        // Painted flat, then grown to height: the bars rise into place.
         el.innerHTML = months.map((m) => `
             <div class="ch-col">
-                <div class="ch-bar" style="height:${Math.max(2, Math.round((m.value / max) * 100))}%">
-                    ${m.value > 0 ? `<i>${isMoney ? short(m.value) : m.value}</i>` : ''}
+                <div class="ch-bar" style="height:2px" data-h="${Math.max(2, Math.round((m.value / max) * 100))}%">
+                    ${m.value > 0 ? `<i>${isMoney || m.value >= 1e4 ? short(m.value) : m.value}</i>` : ''}
                 </div>
                 <span class="ch-lbl">${m.label}</span>
             </div>`).join('');
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            el.querySelectorAll('.ch-bar').forEach((b) => { b.style.height = b.getAttribute('data-h'); });
+        }));
     }
 
     async function load() {
@@ -56,7 +68,8 @@
                 <div class="card ad-stat"><b>${d.activeSubscriptions.toLocaleString()}</b><span>Active subscriptions</span></div>
                 <div class="card ad-stat"><b>${money(d.salesThisMonth)}</b><span>Sales this month</span></div>
                 <div class="card ad-stat"><b>${d.openTickets.toLocaleString()}</b><span>Open tickets</span>
-                    ${d.creditsSpentThisMonth ? `<small>${d.creditsSpentThisMonth} AI credits used</small>` : ''}</div>`;
+                    ${d.creditsSpentThisMonth ? `<small>${Number(d.creditsSpentThisMonth).toLocaleString()} AI credits used</small>` : ''}</div>`;
+            window.adminRise && adminRise($id('dashStats'));
             bars($id('chartClients'), d.registrationsByMonth, false);
             bars($id('chartSales'), d.salesByMonth, true);
         } catch (err) { toast(err.message, 'error'); }

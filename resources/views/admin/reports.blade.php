@@ -3,16 +3,17 @@
 @section('title', 'Reports')
 @section('subtitle', 'What the community flagged')
 
-@section('content')
-    <div class="ad-sticky">
-        <div class="flex gap-1.5 overflow-x-auto" id="rpChips">
-            <button type="button" class="chip is-selected" data-status="open">Open <span id="rpOpen"></span></button>
-            <button type="button" class="chip" data-status="handled">Handled</button>
-            <button type="button" class="chip" data-status="dismissed">Dismissed</button>
-            <button type="button" class="chip" data-status="">All</button>
-        </div>
+{{-- The filter chips ride in the sticky header. --}}
+@section('bar')
+    <div class="ad-chips" id="rpChips">
+        <button type="button" class="chip is-selected" data-status="open">Open <span id="rpOpen"></span></button>
+        <button type="button" class="chip" data-status="handled">Handled</button>
+        <button type="button" class="chip" data-status="dismissed">Dismissed</button>
+        <button type="button" class="chip" data-status="">All</button>
     </div>
+@endsection
 
+@section('content')
     <div class="card !p-0 overflow-hidden">
         <div id="rpList"></div>
         <div id="rpEmpty" class="hidden text-center py-10">
@@ -37,15 +38,23 @@
     .rp-reason { font-size: .875rem; color: var(--color-gray-900); }
     html.dark .rp-reason { color: #e8efe1; }
     .rp-who { font-size: .73rem; color: var(--color-gray-400); }
+    html:not(.dark) .rp-who { color: var(--color-gray-500); }
     .rp-acts { display: flex; gap: .4rem; margin-top: .5rem; flex-wrap: wrap; }
-    /* A hand-width screen: the actions share the row instead of ragging. */
+    /* A hand-width screen: two even columns. The way to the flagged thing
+       takes the whole first line when the pair of verdicts follows it, so
+       the three never rag into two-and-a-straggler. */
     @media (max-width: 639px) {
-        .rp-acts .btn { flex: 1 1 auto; justify-content: center; }
+        .rp-acts { display: grid; grid-template-columns: 1fr 1fr; }
+        .rp-acts .btn { justify-content: center; min-width: 0; }
+        .rp-acts > :first-child:nth-last-child(3) { grid-column: 1 / -1; }
+        /* A settled report has the link and one verdict: the link keeps its
+           words on one line and the verdict takes what is left. */
+        .rp-acts:has(> :nth-child(2):last-child) { grid-template-columns: auto 1fr; }
+        .rp-acts .btn { white-space: nowrap; }
         .rp-who.ml-auto, .rp-line .rp-who { flex-basis: 100%; margin-left: 0; }
     }
-    html.dark .rp-row { border-color: #222b1a; }
+    /* The one colour here with no token. */
     html.dark .rp-type { background: #16202f; color: #9fc0f5; }
-    html.dark .rp-snap { background: #131a0e; border-color: #2b3a1c; color: #a8bd93; }
 </style>
 @endpush
 
