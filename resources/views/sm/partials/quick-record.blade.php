@@ -184,6 +184,9 @@
 @endpush
 
 @push('scripts')
+{{-- Its quick tutorial: the words and clips for the card, offered as the
+     sheet opens. --}}
+@include('partials.tutorial-offer', ['keys' => ['quick.record'], 'auto' => null])
 <script>
 (function quickRecord() {
     const modal = document.getElementById('quickRecordModal');
@@ -234,6 +237,9 @@
         modal.classList.add('is-open');
         document.body.style.overflow = 'hidden';
         window.registerOverlay?.('quickRecord', close);
+        // The quick tutorial, over the sheet once it has slid in.
+        (window.aneeTutorialQueue ||= []).push({ key: 'quick.record', over: true, delay: 420,
+            when: () => modal.classList.contains('is-open') });
     }
     function close() {
         modal.classList.remove('is-open');

@@ -158,6 +158,205 @@ return [
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
+        /* ---- the reports, each a page of its own (offered by route) ---- */
+
+        'report.labor' => [
+            'title' => 'Labor Report',
+            'blurb' => 'Every worker day this season and what it cost, person by person. Pick a stretch of dates to see just those.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'report.expenses' => [
+            'title' => 'Expenses Report',
+            'blurb' => 'Everything spent this season, gathered from the board and sorted by what it went on. Filter it down and print it for the books.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'report.profit' => [
+            'title' => 'Profit Report',
+            'blurb' => 'What the harvest brought in against everything the season cost — expenses and labor together — so you see what was really made.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'report.anee-season' => [
+            'title' => 'Anee Season Report',
+            'blurb' => 'Anee reads your whole finished season and tells you what went wrong, what to change next time, and what you did well.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'report.sofar' => [
+            'title' => 'Analyze So Far',
+            'blurb' => 'A check-up halfway through: where the crop stands today, the risks ahead, and what to do next.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'report.protocol' => [
+            'title' => 'View as Protocol',
+            'blurb' => 'Your season written out as a protocol, stage by stage and day by day — easy to read, easy to share, easy to print.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'report.compare' => [
+            'title' => 'Compare Reports',
+            'blurb' => 'Pick two saved reports of the same kind and Anee reads them side by side, then tells you what changed and why it matters.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        /* ---- the analyses ---- */
+
+        'analysis.when-to-plant' => [
+            'title' => 'When to Plant',
+            'blurb' => 'Tell Anee the crop and the place, and she weighs the climate to find the planting window that gives it the best chance.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'analysis.what-to-plant' => [
+            'title' => 'What to Plant',
+            'blurb' => 'Describe your ground and your plans, and Anee suggests the crops that suit them — with her reasons for each.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'analysis.variety' => [
+            'title' => 'Variety Research',
+            'blurb' => 'Anee looks up the varieties of a crop, compares them, and shows which fits your farm best.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'analysis.crop-protocol' => [
+            'title' => 'Crop Protocol Analysis',
+            'blurb' => 'A guide to growing a crop from start to harvest, stage by stage — what to apply, when, and what to watch for.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        /* ---- the tools that reach across every season ---- */
+
+        'tool.notes' => [
+            'title' => 'Global Notes',
+            'blurb' => 'Every note from every season in one place. Search them, filter them, or start a new one without opening a schedule first.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.gallery' => [
+            'title' => 'Global Gallery',
+            'blurb' => 'Every photo and clip you have taken, from every season, on one shelf — with the albums you made along the way.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.contacts' => [
+            'title' => 'Contact List',
+            'blurb' => 'Your farm’s phonebook: suppliers, buyers, helpers. Tap a name to call or message them straight away.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.protocols' => [
+            'title' => 'Protocol Builder',
+            'blurb' => 'Write down how you grow a crop, task by task, on a day count. Build it once and use it every season after.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.protocol-editor' => [
+            'title' => 'Building a protocol',
+            'blurb' => 'Add the tasks in order, set the day each one falls on, and drag to rearrange. When it is ready, put it on a season.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.tags' => [
+            'title' => 'Tags',
+            'blurb' => 'Every tag you have used, in every season and tool. Tap one to see everything wearing it, or rename it everywhere at once.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'tool.compare' => [
+            'title' => 'Compare Reports',
+            'blurb' => 'Pick two saved reports of the same kind — this season against last, or any two — and Anee lays them side by side and tells you what changed.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        /* ---- the quick tools: offered when their sheet opens, not by route ---- */
+
+        'quick.capture' => [
+            'title' => 'Quick Capture',
+            'blurb' => 'Snap a photo, add a line about it, and file it to a season’s notes or gallery — or ask Anee what she sees.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'quick.record' => [
+            'title' => 'Quick Record',
+            'blurb' => 'Record a short clip in the field, give it a name, and it lands in the season’s gallery or notes.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
+        'quick.voice' => [
+            'title' => 'Quick Voice',
+            'blurb' => 'Hands full? Say it instead. Record a voice note and file it to a season in two taps.',
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Screens that offer their tutorial by route
+    |--------------------------------------------------------------------------
+    |
+    | Route name => tutorial key. The layout looks the current route up here
+    | and, if it is listed, offers that key as the page loads -- so a screen
+    | gets its card by one line here and nothing in its own view. (The older
+    | screens -- dashboard, schedules, hub, the season's rooms -- still ask
+    | for theirs from their views; do not list them here as well.)
+    |
+    | Route names hold dots, so this map is read whole and indexed
+    | (config('tutorials.routes')[$name]), never through config()'s dot path.
+    |
+    */
+
+    'routes' => [
+        // The reports
+        'sm.labor.report'    => 'report.labor',
+        'sm.expenses.report' => 'report.expenses',
+        'sm.profit.report'   => 'report.profit',
+        'sm.anee.season'     => 'report.anee-season',
+        'sm.anee.sofar'      => 'report.sofar',
+        'sm.protocol.report' => 'report.protocol',
+        'sm.compare.report'  => 'report.compare',
+
+        // The analyses
+        'wtp.page'   => 'analysis.when-to-plant',
+        'whatp.page' => 'analysis.what-to-plant',
+        'vary.page'  => 'analysis.variety',
+        'proto.page' => 'analysis.crop-protocol',
+
+        // The tools that reach across every season
+        'notes.hub'     => 'tool.notes',
+        'gallery.hub'   => 'tool.gallery',
+        'contacts.page' => 'tool.contacts',
+        'pb.page'       => 'tool.protocols',
+        'pb.open'       => 'tool.protocol-editor',
+        'tags.global'   => 'tool.tags',
+        'compare.page'  => 'tool.compare',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | "Don't show this again" lives in a cookie
+    |--------------------------------------------------------------------------
+    |
+    | One cookie per key, set in the browser for five years (Chrome caps any
+    | cookie at 400 days, so the card renews every one it finds on each page
+    | load: in daily use it never runs out). Clear the site's cookies and the
+    | cards come back.
+    |
+    | Until 2026-09-25 the answer was a row in as_tutorial_dismissals. Those
+    | rows are still honoured -- someone who said "never" then is not asked
+    | again -- and are copied into the cookie the first time they are seen,
+    | but no new rows are written. Only the keys that existed then can have a
+    | row, so only they are looked up; every newer key costs no query.
+    |
+    */
+
+    'cookie_prefix' => 'anee_tutv_',
+    'cookie_days'   => 1826,
+
+    'account_keys' => ['dashboard', 'schedules', 'hub', 'module.*'],
 
 ];

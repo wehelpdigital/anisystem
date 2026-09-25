@@ -333,6 +333,9 @@
 </div>
 
 @push('scripts')
+{{-- Its quick tutorial: the words and clips for the card, offered below as
+     the sheet opens. --}}
+@include('partials.tutorial-offer', ['keys' => ['quick.capture'], 'auto' => null])
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('quickCaptureModal');
@@ -548,6 +551,10 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.setAttribute('aria-hidden', 'false');
         requestAnimationFrame(() => modal.classList.add('is-open'));
         document.body.style.overflow = 'hidden';
+        // The quick tutorial, over the sheet once it has slid in -- unless
+        // it was told never again, or closed already on this page.
+        (window.aneeTutorialQueue ||= []).push({ key: 'quick.capture', over: true, delay: 420,
+            when: () => modal.classList.contains('is-open') });
     }
     function close() {
         stopCamera();

@@ -109,6 +109,9 @@
 @endpush
 
 @push('scripts')
+{{-- Its quick tutorial: the words and clips for the card, offered as the
+     sheet opens. --}}
+@include('partials.tutorial-offer', ['keys' => ['quick.voice'], 'auto' => null])
 <script>
 (function quickVoice() {
     const modal = document.getElementById('quickVoiceModal');
@@ -210,6 +213,9 @@
         modal.classList.add('is-open');
         document.body.style.overflow = 'hidden';
         window.registerOverlay?.('quickVoice', close);
+        // The quick tutorial, over the sheet once it has slid in.
+        (window.aneeTutorialQueue ||= []).push({ key: 'quick.voice', over: true, delay: 420,
+            when: () => modal.classList.contains('is-open') });
     }
     function close() {
         killRec();

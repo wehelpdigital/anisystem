@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\AsTutorial;
 use App\Models\AsTutorialDismissal;
+use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 /**
@@ -14,12 +16,16 @@ use Illuminate\Validation\Rule;
  * The LIBRARY (index): a page of its own beside Community and Support,
  * whose catalogue is curated in the mother app.
  *
- * The CARD ON EACH SCREEN (dataFor, dismiss): a short video about the
- * screen just opened, from config/tutorials.php. A page asks for the
- * tutorials it may show and gets back their words, their clips, and which
- * of them this person has already told to stay closed; "don't show this
- * again" is written against the account, so the card stays closed on
- * every device they sign in from.
+ * The CARD ON EACH SCREEN (dataFor, forRoute, dismiss): a short video
+ * about the screen just opened, from config/tutorials.php. A page asks for
+ * the tutorials it may show -- or the layout asks on its behalf, by route
+ * name -- and gets back their words and their clips.
+ *
+ * "Don't show this again" is a cookie per key in this browser, set by the
+ * card itself (see partials/tutorial-modal). The account rows written
+ * before that (as_tutorial_dismissals) are still read, for the keys that
+ * existed then, so nobody who said "never" is asked again; none are
+ * written any more.
  */
 class TutorialController extends Controller
 {
@@ -76,10 +82,17 @@ class TutorialController extends Controller
             ];
         }
 
+        /* The old account rows. Only keys that existed while the answer was
+           kept on the account can have one, so a page asking only for newer
+           keys runs no query at all. */
         $seen = [];
-        if ($items && Auth::check()) {
+        $legacy = array_values(array_filter(
+            array_keys($items),
+            fn (string $k) => Str::is((array) config('tutorials.account_keys', []), $k)
+        ));
+        if ($legacy && Auth::check()) {
             $seen = AsTutorialDismissal::where('userId', (int) Auth::id())
-                ->whereIn('tutorialKey', array_keys($items))
+                ->whereIn('tutorialKey', $legacy)
                 ->pluck('tutorialKey')
                 ->values()
                 ->all();
@@ -88,18 +101,48 @@ class TutorialController extends Controller
         return ['items' => $items, 'seen' => $seen];
     }
 
-    /** "Don't show this again" -- for this person, on this screen, for good. */
+    /**
+     * The tutorial a route offers by itself (config tutorials.routes), or
+     * null. Read whole and indexed: route names hold dots, which config()'s
+     * own path would walk into.
+     */
+    public static function forRoute(?string $routeName): ?string
+    {
+        if (! $routeName) {
+            return null;
+        }
+        $key = ((array) config('tutorials.routes', []))[$routeName] ?? null;
+
+        return is_string($key) && isset(config('tutorials.pages', [])[$key]) ? $key : null;
+    }
+
+    /** The cookie that says "never again" for one key. Safe as a name: PHP
+        and browsers both keep letters, digits, `_` and `-` as they are. */
+    public static function cookieName(string $key): string
+    {
+        return config('tutorials.cookie_prefix', 'anee_tutv_') . preg_replace('/[^A-Za-z0-9_-]/', '_', $key);
+    }
+
+    /**
+     * "Don't show this again", for a page that still posts it here -- one
+     * held from before the answer moved to the browser (an offline copy, a
+     * tab left open over a deploy). It gets the same cookie the card now
+     * sets for itself, and no account row, so clearing the site's cookies
+     * brings its card back like every other.
+     */
     public function dismiss(Request $request)
     {
         $data = $request->validate([
             'key' => ['required', 'string', 'max:64', Rule::in(array_keys(config('tutorials.pages', [])))],
         ]);
 
-        AsTutorialDismissal::firstOrCreate([
-            'userId'      => (int) Auth::id(),
-            'tutorialKey' => $data['key'],
-        ]);
+        $name = self::cookieName($data['key']);
+        // Plain, not encrypted: the card reads it from document.cookie.
+        EncryptCookies::except($name);
 
-        return response()->json(['success' => true]);
+        return response()->json(['success' => true])->cookie(
+            $name, '1', (int) config('tutorials.cookie_days', 1826) * 1440,
+            '/', null, $request->isSecure(), false, false, 'lax'
+        );
     }
 }

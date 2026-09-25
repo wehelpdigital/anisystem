@@ -997,8 +997,11 @@
     @include('partials.review-prompt', ['askForReview' => \App\Http\Controllers\ReviewController::shouldAsk()])
 
     {{-- The tutorial card: one for the app, painted with whichever screen's
-         words a page hands it. Draws nothing until a page asks. --}}
+         words a page hands it. Draws nothing until a page asks. The second
+         include asks on behalf of any route listed in config('tutorials.routes'),
+         so those screens need nothing in their own views. --}}
     @include('partials.tutorial-modal')
+    @include('partials.tutorial-offer', ['byRoute' => true, 'keys' => [], 'auto' => null])
 
     @stack('scripts')
     <script>

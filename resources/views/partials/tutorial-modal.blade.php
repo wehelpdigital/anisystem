@@ -3,13 +3,19 @@
      A short video about the screen you just opened, in a card over that
      screen, with two ways out: Close, which is for now -- it is back the
      next time the page is opened -- and "don't show this again", which is
-     remembered against the account and followed onto every device.
+     a cookie for that screen in this browser, kept five years (see the
+     cookie notes in the script and in config/tutorials.php).
 
      One card for the whole app, painted with whichever screen's words and
-     clip a page hands it. Pages do not build modals; they include
-     partials.tutorial-offer with the keys they may show and the one to show
-     now, and this decides whether that one is due. Loaded from the layout
-     for anyone signed in; it draws nothing until a page asks.
+     clip a page hands it. Pages do not build modals: the layout offers the
+     card of any route listed in config('tutorials.routes'), older screens
+     include partials.tutorial-offer themselves, and the quick tools push
+     theirs as their sheet opens. This decides whether the one asked for is
+     due. Loaded from the layout for anyone signed in; it draws nothing
+     until something asks.
+
+     The clip is the device's shape -- portrait on a phone, landscape on a
+     desk -- and changes over if the phone is turned while the card is up.
 
      The clip does not autoplay. A tutorial with the sound off is a slideshow,
      and a browser will not start one with the sound on -- so the poster waits
@@ -124,6 +130,14 @@
     /* And the picture fades up under them once its poster is actually there. */
     .tutv-screen video, .tutv-screen iframe { opacity: 0; transition: opacity .4s ease .1s; }
     .tutv-wrap.is-open .tutv-screen video, .tutv-wrap.is-open .tutv-screen iframe { opacity: 1; }
+    /* Turning the phone: the clip in the old shape fades out, the other
+       fades in (see reshape() in the script). The card's own height eases
+       between the two shapes from an inline transition set there. */
+    .tutv-screen::before { transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .tutv-screen.is-swapping::before { opacity: 0; }
+    .tutv-wrap.is-open .tutv-screen.is-swapping video,
+    .tutv-wrap.is-open .tutv-screen.is-swapping iframe,
+    .tutv-wrap.is-open .tutv-screen.is-swapping .tutv-play { opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
 
     /* Above the body, which is positioned too and comes later in the DOM. */
     .tutv-x { position: absolute; top: .65rem; right: .65rem; z-index: 3; width: 2.1rem; height: 2.1rem; border-radius: 999px;
@@ -173,6 +187,21 @@
         .tutv-wrap.is-portrait .tutv-never { min-height: 2.3rem; padding: .4rem 1rem; }
         /* The X sits over the clip's top corner, clear of the phone's notch. */
         .tutv-wrap.is-portrait .tutv-x { top: calc(.65rem + env(safe-area-inset-top, 0px)); }
+    }
+    /* A PHONE TURNED ON ITS SIDE -- or any short, wide window -- gets the
+       clip on the left and the words and buttons on the right, all of it on
+       screen at once. Stacked, a 16:9 clip took most of a 400-tall screen
+       and Close had to be scrolled to. (Prefixed with the wrap so these
+       outrank the plain rules further down the sheet.) */
+    @media (min-width: 640px) and (max-height: 520px) {
+        .tutv-wrap .tutv-card { width: min(52rem, 100%); height: calc(100dvh - 2rem); display: grid;
+            grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); grid-template-rows: 100%; overflow: hidden; }
+        .tutv-wrap .tutv-screen, .tutv-wrap .tutv-screen[data-shape="portrait"] { aspect-ratio: auto; height: 100%; }
+        .tutv-wrap .tutv-screen video { object-fit: contain; }
+        .tutv-wrap .tutv-body { display: flex; flex-direction: column; justify-content: center; overflow: auto; padding: 1rem 1.1rem; }
+        .tutv-wrap .tutv-acts { flex-direction: column-reverse; align-items: stretch; margin-top: .85rem; }
+        .tutv-wrap .tutv-close, .tutv-wrap .tutv-never { width: 100%; }
+        .tutv-wrap .tutv-never { margin-right: 0; }
     }
     /* A portrait player from YouTube is a Short: 9:16 in the middle of the screen. */
     .tutv-screen[data-shape="portrait"] iframe { width: auto; aspect-ratio: 9 / 16; margin: 0 auto; }
@@ -255,8 +284,6 @@
     const screen = wrap.querySelector('.tutv-screen');
     const video = document.getElementById('tutvVideo');
     const play = document.getElementById('tutvPlay');
-    const CSRF = document.querySelector('meta[name=csrf-token]')?.content || '';
-    const DISMISS_URL = @json(route('tutorial.dismiss'));
     /* Long enough for the screen to have painted under it, short enough
        that it is still plainly about the screen you just opened. Counted
        from the page being fully loaded, not from the script running: a card
@@ -264,7 +291,6 @@
        loading, not as an arrival. */
     const DELAY = 650;
     const LOAD_CAP = 3000;   // but a slow image somewhere is not a reason to wait forever
-    const NEVER = (k) => 'anee-tutv-never:' + k;
     /* CLOSE MEANS FOR NOW. Not sessionStorage: a tab on a phone lives for
        days, so "closed for the sitting" turned into "closed for good" on
        every screen the card had been closed on once, and nobody had asked
@@ -279,8 +305,43 @@
     let closing = 0;         // which close is in flight; a new show() voids it
 
     const data = () => (window.ANEE_TUTORIALS ||= { items: {}, seen: [] });
-    const ls = { get: (k) => { try { return localStorage.getItem(k); } catch (_) { return null; } },
-                 set: (k, v) => { try { localStorage.setItem(k, v); } catch (_) { /* private mode */ } } };
+
+    /* "DON'T SHOW THIS AGAIN" IS A COOKIE, ONE PER KEY, IN THIS BROWSER.
+     *
+     * Five years asked for; Chrome keeps no cookie past 400 days whatever
+     * it is told, so every one found is renewed as each page loads -- in
+     * any real use it never runs out, and clearing the site's cookies (or
+     * all its data) is the one thing that brings the cards back.
+     *
+     * Two older records are folded in the first time they are met: the
+     * account rows the server still reports for the keys that had them
+     * (`seen`), and the localStorage flags the card used to keep beside
+     * them. The flag is moved, not copied -- left behind, it would keep a
+     * card closed after the cookie that is meant to decide was cleared. */
+    const PREFIX = @json(config('tutorials.cookie_prefix', 'anee_tutv_'));
+    const MAX_AGE = @json((int) config('tutorials.cookie_days', 1826) * 86400);
+    const OLD_LS = 'anee-tutv-never:';
+    const cookieName = (k) => PREFIX + String(k).replace(/[^A-Za-z0-9_-]/g, '_');
+    const setNever = (name) => {
+        try {
+            document.cookie = name + '=1;path=/;max-age=' + MAX_AGE + ';SameSite=Lax'
+                + (location.protocol === 'https:' ? ';Secure' : '');
+        } catch (_) { /* cookies off: the card simply keeps asking */ }
+    };
+    const cookieNames = () => document.cookie.split(';')
+        .map((c) => c.trim()).filter((c) => c.startsWith(PREFIX) && c.endsWith('=1'))
+        .map((c) => c.slice(0, -2));
+    const hasNever = (k) => cookieNames().includes(cookieName(k));
+    try {
+        for (let i = localStorage.length - 1; i >= 0; i--) {
+            const k = localStorage.key(i);
+            if (k && k.startsWith(OLD_LS)) {
+                if (localStorage.getItem(k) === '1') setNever(cookieName(k.slice(OLD_LS.length)));
+                localStorage.removeItem(k);
+            }
+        }
+    } catch (_) { /* private mode */ }
+    cookieNames().forEach(setNever);   // renewed: another 400 days from today
 
     /* WHICH CLIP: the phone's, on a phone. The card is a bottom sheet under
        640px, and that is the width at which a tutorial recorded on a phone
@@ -300,12 +361,20 @@
             : { shape: 'landscape', src: item.video, poster: item.poster, youtube: item.youtube };
     }
 
-    /* Told to stay closed -- by the server for this account, or by this
-       browser when the server could not be reached at the time. */
-    const neverAgain = (key) => data().seen.includes(key) || ls.get(NEVER(key)) === '1';
-    /* Never over something else that is already asking for attention. */
-    const blocked = () => current !== null
-        || !!document.querySelector('.sheet.is-open, .note-lb.is-open, .draw-modal.show, #reviewPrompt:not([hidden])');
+    /* Told to stay closed -- by this browser's cookie, or by an account row
+       from before the cookie (which is copied into one on sight). */
+    function neverAgain(key) {
+        if (hasNever(key)) return true;
+        if (data().seen.includes(key)) { setNever(cookieName(key)); return true; }
+        return false;
+    }
+    /* Never over something else that is already asking for attention --
+       unless that something is the very thing this card is about (a quick
+       tool's own sheet asks for its tutorial over itself). */
+    const OTHERS = '.sheet.is-open, .note-lb.is-open, .draw-modal.show, .qc-overlay.is-open, .qr-modal.is-open, .qv-modal.is-open';
+    const blocked = (over) => current !== null
+        || !!document.querySelector('#reviewPrompt:not([hidden])')
+        || (!over && !!document.querySelector(OTHERS));
 
     /* Everything the card needs before it moves: the page settled, and the
        poster in the browser's cache, so the screen fades up with the picture
@@ -347,39 +416,44 @@
         img.src = url;
     });
 
-    /** A page says which screen is on; this decides whether its card is due. */
-    function offer(key) {
+    /**
+     * A page says which screen is on; this decides whether its card is due.
+     *
+     * opts.over  -- may sit over an open sheet (a quick tool's own sheet)
+     * opts.delay -- ms after the page is settled (default DELAY)
+     * opts.when  -- asked again just before showing; false drops the offer
+     *               (the sheet it was for has been closed meanwhile)
+     */
+    function offer(key, opts = {}) {
         const item = data().items[key];
         if (!item || neverAgain(key) || closedNow.has(key)) return;
         const mine = ++offerSeq;
+        const wait = Number.isFinite(opts.delay) ? opts.delay : DELAY;
         Promise.all([
-            pageSettled().then(() => new Promise((r) => setTimeout(r, DELAY))),
+            pageSettled().then(() => new Promise((r) => setTimeout(r, wait))),
             posterReady((() => { const c = pick(item); return c.youtube ? '' : c.poster; })()),
         ]).then(() => {
             if (mine !== offerSeq) return;   // a later room was asked for meanwhile
-            if (!blocked()) show(key);
+            if (typeof opts.when === 'function' && !opts.when()) return;
+            if (neverAgain(key) || closedNow.has(key)) return;
+            if (!blocked(!!opts.over)) show(key);
         });
     }
     let offerSeq = 0;
 
-    function show(key) {
-        const item = data().items[key];
-        if (!item) return;
-        current = key;
-        closing = 0;         // a close still animating must not hide THIS card
-        lastFocus = document.activeElement;
-
-        document.getElementById('tutvTitle').textContent = item.title;
-        document.getElementById('tutvBlurb').textContent = item.blurb;
-        /* A YouTube id gets YouTube's own player in the same frame; a file
-           gets ours. The library at /app/tutorials is YouTube-based, so the
-           finished recordings are likely to arrive that way. */
-        const clip = pick(item);
+    /* The clip for the shape this device is in, put on the screen. A
+       YouTube id gets YouTube's own player in the same frame; a file gets
+       ours. The library at /app/tutorials is YouTube-based, so the finished
+       recordings are likely to arrive that way. */
+    function paintClip(item, clip) {
         screen.dataset.shape = clip.shape;
         wrap.classList.toggle('is-portrait', clip.shape === 'portrait');
         screen.style.setProperty('--tutv-poster', clip.poster ? `url("${clip.poster}")` : 'none');
         screen.querySelector('iframe')?.remove();
+        video.pause();
+        video.controls = false;
         if (clip.youtube) {
+            video.removeAttribute('src'); video.load();
             video.hidden = true; play.hidden = true;
             const f = document.createElement('iframe');
             f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(clip.youtube) + '?rel=0&modestbranding=1&playsinline=1';
@@ -395,6 +469,21 @@
             video.load();
             play.hidden = false;
         }
+    }
+
+    function show(key) {
+        const item = data().items[key];
+        if (!item) return;
+        current = key;
+        closing = 0;         // a close still animating must not hide THIS card
+        lastFocus = document.activeElement;
+
+        document.getElementById('tutvTitle').textContent = item.title;
+        document.getElementById('tutvBlurb').textContent = item.blurb;
+        screen.classList.remove('is-swapping');
+        card.style.removeProperty('height');
+        card.style.removeProperty('transition');
+        paintClip(item, pick(item));
 
         wrap.classList.remove('is-closing', 'is-open');
         wrap.hidden = false;
@@ -420,12 +509,77 @@
         });
     }
 
+    /* THE CLIP FOLLOWS THE DEVICE WHILE THE CARD IS UP.
+     *
+     * Turn a phone on its side and the portrait clip gives way to the
+     * landscape one (and back); drag a desk window narrow and the same.
+     * The screen fades out, the card eases to its new height while it is
+     * empty, the other clip goes in at the same second -- still playing if
+     * it was -- and the screen fades back up. Nothing about the card is
+     * redrawn: the words and the buttons stay where the eye left them. */
+    let swapSeq = 0;
+    function reshape() {
+        if (current === null || wrap.classList.contains('is-closing')) return;
+        const item = data().items[current];
+        if (!item) return;
+        const clip = pick(item);
+        if (clip.shape === screen.dataset.shape) return;
+        const mine = ++swapSeq;
+        const key = current;
+        const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const at = video.hidden ? 0 : (video.currentTime || 0);
+        const wasPlaying = !video.hidden && !video.paused && !video.ended;
+
+        const swap = () => {
+            if (mine !== swapSeq || current !== key) return;
+            const h0 = card.offsetHeight;
+            paintClip(item, clip);
+            if (!still) {
+                card.style.removeProperty('height');
+                const h1 = card.offsetHeight;
+                if (Math.abs(h1 - h0) > 1) {
+                    card.style.transition = 'height .28s cubic-bezier(.22,1,.36,1)';
+                    card.style.height = h0 + 'px';
+                    void card.offsetHeight;
+                    card.style.height = h1 + 'px';
+                    setTimeout(() => {
+                        if (mine !== swapSeq) return;
+                        card.style.removeProperty('height');
+                        card.style.removeProperty('transition');
+                    }, 320);
+                }
+            }
+            if (!clip.youtube && (at > 0 || wasPlaying)) {
+                video.addEventListener('loadedmetadata', () => {
+                    if (mine !== swapSeq) return;
+                    try { video.currentTime = Math.min(at, Math.max(0, (video.duration || at) - .2)); } catch (_) { /* not seekable yet */ }
+                    if (wasPlaying) video.play().catch(() => {});
+                }, { once: true });
+            }
+            posterReady(clip.youtube ? '' : clip.poster).then(() => {
+                if (mine === swapSeq) screen.classList.remove('is-swapping');
+            });
+        };
+        if (still) { swap(); return; }
+        screen.classList.add('is-swapping');
+        setTimeout(swap, 280);
+    }
+    let reshapeTimer = null;
+    const reshapeSoon = () => { clearTimeout(reshapeTimer); reshapeTimer = setTimeout(reshape, 120); };
+    ['(max-width: 639px)', '(orientation: portrait)', '(pointer: coarse)'].forEach((q) => {
+        const m = matchMedia(q);
+        if (m.addEventListener) m.addEventListener('change', reshapeSoon); else m.addListener?.(reshapeSoon);
+    });
+    window.addEventListener('resize', reshapeSoon);
+    window.addEventListener('orientationchange', reshapeSoon);
+
     /* Out the way it came in. The video is stopped and unhooked so it does
        not go on buffering behind a card that is no longer there. */
     function close() {
         if (current === null) return;
         const key = current;
         current = null;
+        swapSeq++;
         video.pause();
         video.controls = false;
         video.removeAttribute('src');
@@ -450,6 +604,9 @@
             wrap.hidden = true;
             wrap.setAttribute('aria-hidden', 'true');
             wrap.classList.remove('is-closing');
+            screen.classList.remove('is-swapping');
+            card.style.removeProperty('height');
+            card.style.removeProperty('transition');
             // The page moves again only once the card is gone: unlocking
             // while it is still sliding out would shift the page under it.
             if (current === null) {
@@ -468,20 +625,13 @@
         setTimeout(done, 450);
     }
 
-    /* "Don't show this again": remembered here first, so the card behaves
-       the same whether or not the server is reachable, then sent up so the
-       other devices learn it too. */
+    /* "Don't show this again": this browser's cookie for this key, and
+       nothing sent anywhere -- so it holds offline, and clearing the site's
+       cookies is the way back. */
     function never() {
         const key = current;
         if (!key) return;
-        ls.set(NEVER(key), '1');
-        data().seen.push(key);
-        const body = new FormData();
-        body.append('key', key);
-        fetch(DISMISS_URL, {
-            method: 'POST', body, credentials: 'same-origin',
-            headers: { 'X-CSRF-TOKEN': CSRF, Accept: 'application/json' },
-        }).catch(() => {});
+        setNever(cookieName(key));
         close();
     }
 
@@ -493,15 +643,21 @@
     video.addEventListener('play', () => { play.hidden = true; video.controls = true; });
     video.addEventListener('pause', () => { if (!video.seeking && video.currentTime < video.duration - .1) play.hidden = false; });
     video.addEventListener('ended', () => { play.hidden = false; });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && current !== null) close(); });
+    /* Escape closes the card and only the card: caught on the way down,
+       before a quick tool's sheet underneath hears it and closes as well. */
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && current !== null) { e.stopPropagation(); close(); }
+    }, true);
 
     window.aneeTutorial = { offer, close, showing: () => current };
 
     /* Pages may have asked before this script ran; answer them now, and
-       take the queue over so anything pushed later is answered at once. */
+       take the queue over so anything pushed later is answered at once.
+       An entry is a key, or { key, over, delay, when }. */
+    const take = (e) => (e && typeof e === 'object') ? offer(e.key, e) : offer(e);
     const queued = Array.isArray(window.aneeTutorialQueue) ? window.aneeTutorialQueue : [];
-    window.aneeTutorialQueue = { push: (k) => offer(k) };
-    queued.forEach(offer);
+    window.aneeTutorialQueue = { push: take };
+    queued.forEach(take);
 })();
 </script>
 @endauth
