@@ -21,7 +21,32 @@
     html.dark .crop-row:hover { background: #22301a; }
     html.dark .crop-row-t b { color: #e8efe1; }
     .pbh-hint { font-size: .74rem; color: var(--color-gray-500); margin-top: .3rem; line-height: 1.45; }
+    /* The day-count chooser: a tag that opens a sheet. The rows that do not
+       fit the crop stay on the list, greyed, with the reason. */
+    .pbh-dt .dt-row { transition: opacity .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+    .pbh-dt .dt-row.is-off { opacity: .45; cursor: not-allowed; background: var(--color-gray-50); }
+    .pbh-dt .dt-row.is-off:hover { border-color: var(--color-gray-200); background: var(--color-gray-50); }
+    .pbh-dt .dt-row-why { display: none; font-style: normal; font-size: .72rem; font-weight: 700; color: #92400e; margin-top: .25rem; }
+    .pbh-dt .dt-row.is-off .dt-row-why { display: block; }
+    html.dark .pbh-dt .dt-row.is-off { background: #151b12; }
+    html.dark .pbh-dt .dt-row-why { color: #f0d9a8; }
+    .pbh-dt-note { font-size: .74rem; color: var(--color-gray-500); margin-top: .6rem; line-height: 1.45; }
+    .crop-tag.pbh-moved { animation: pbhMoved .9s cubic-bezier(.22,1,.36,1); }
+    @keyframes pbhMoved { 0% { box-shadow: 0 0 0 0 rgba(107,159,61,0); } 25% { box-shadow: 0 0 0 4px rgba(107,159,61,.35); } 100% { box-shadow: 0 0 0 0 rgba(107,159,61,0); } }
+    @media (prefers-reduced-motion: reduce) { .pbh-dt .dt-row { transition: none; } .crop-tag.pbh-moved { animation: none; } }
 </style>
+{{-- How the days are counted: one sheet, shared by every head form on the page. --}}
+<div class="sheet hidden" id="pbDayTypeSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">How the days are counted</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body pbh-dt">
+        <div class="dt-rows" id="pbDayTypeList"></div>
+        <p class="pbh-dt-note" id="pbDayTypeNote"></p>
+    </div>
+</div>
 {{-- The crop sheet: inside the content so the script can wire it by id. --}}
 <div class="sheet hidden" id="pbCropSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>
@@ -80,13 +105,39 @@
         if (onPick) onPick(key, FLAT[key] || null);
     });
     window.pbCrop = (key) => FLAT[key] || null;
+    /* How the days are counted, narrowed by the crop exactly as the Lots
+       form narrows its select (CropCatalog::countersFor): a tree is only
+       read by its age, each annual keeps the counts that fit it, and no crop
+       leaves the three field counts open. */
+    const allowedFor = (crop) => (crop && FLAT[crop] && Array.isArray(FLAT[crop].counters) && FLAT[crop].counters.length) ? FLAT[crop].counters : ['DAT', 'DAS', 'DAP'];
+    const whyNot = (key, crop) => {
+        const c = crop ? FLAT[crop] : null;
+        const name = c ? c.label : '';
+        if (key === 'TREE') return c ? `Only for tree crops — ${name} is harvested within the season.` : 'Only for tree crops — choose one first.';
+        if (c && c.perennial) return `${name} is a standing tree — it is read by its age.`;
+        if (key === 'DAT') return `${name} is not raised in a seedbed and transplanted.`;
+        if (key === 'DAS') return `${name} is not sown straight into the field.`;
+        if (key === 'DAP') return `${name} is sown, not planted from seedlings or cuttings.`;
+        return 'Does not fit this crop.';
+    };
+    let dayFor = null;   // the head form the day-count sheet is answering
+    $id('pbDayTypeList').addEventListener('click', (e) => {
+        const r = e.target.closest('[data-day-type]');
+        if (!r || !dayFor) return;
+        if (r.classList.contains('is-off')) { toast(r.querySelector('.dt-row-why')?.textContent || 'That count does not fit this crop.', 'error'); return; }
+        dayFor.pickDay(r.getAttribute('data-day-type'));
+        closeSheet('pbDayTypeSheet');
+    });
     /**
      * pbHeadForm(pfx) → { fill(p), read(), check() } over the fields
      * `${pfx}Title`, `${pfx}CropBtn/CropIcon/CropNow`, `${pfx}Variety`,
-     * `${pfx}DayTypes` (rows), `${pfx}Desc`.
+     * `${pfx}DayTypeBtn/DayTypeIcon/DayTypeNow/DayTypeHint`, `${pfx}Desc`.
      */
     window.pbHeadForm = (pfx) => {
-        const state = { crop: null, dayType: 'DAS' };
+        // `chosen`: the farmer (or the saved protocol) has said how the days
+        // are counted. Until then a crop lands the count on how that crop is
+        // usually grown; after it, only a count that no longer fits moves.
+        const state = { crop: null, dayType: 'DAS', chosen: false };
         const paintCrop = () => {
             const c = state.crop ? FLAT[state.crop] : null;
             $id(pfx + 'CropIcon').textContent = c ? c.icon : '🌱';
@@ -95,30 +146,56 @@
             now.classList.toggle('is-none', !c);
         };
         const paintDay = () => {
-            document.querySelectorAll('#' + pfx + 'DayTypes [data-day-type]').forEach((r) => r.classList.toggle('is-on', r.getAttribute('data-day-type') === state.dayType));
+            const d = DAY_TYPES[state.dayType] || {};
+            $id(pfx + 'DayTypeIcon').textContent = d.icon || '🗓️';
+            $id(pfx + 'DayTypeNow').textContent = d.label || state.dayType;
+            const one = allowedFor(state.crop).length <= 1;
+            $id(pfx + 'DayTypeHint').textContent = (d.sub || '') + (one && state.crop ? ' It is the only count that fits this crop.' : '');
+        };
+        const moved = () => {
+            const b = $id(pfx + 'DayTypeBtn');
+            b.classList.remove('pbh-moved'); void b.offsetWidth; b.classList.add('pbh-moved');
+        };
+        // A crop that no longer fits the count moves it to the crop's own count.
+        const fitToCrop = () => {
+            const allow = allowedFor(state.crop);
+            if (!state.chosen || !allow.includes(state.dayType)) {
+                const was = state.dayType;
+                state.dayType = allow[0];
+                if (was !== state.dayType) moved();
+            }
+            paintDay();
         };
         $id(pfx + 'CropBtn').addEventListener('click', () => {
-            onPick = (key, c) => {
+            onPick = (key) => {
                 state.crop = key;
                 paintCrop();
-                // A crop that is transplanted counts DAS → DAT; the rest are told by the catalogue.
-                if (c && c.counter && DAY_TYPES[c.counter]) { state.dayType = c.counter; paintDay(); }
+                fitToCrop();
             };
             $id('pbCropSearch').value = ''; sift();
             openSheet('pbCropSheet');
             if (!window.matchMedia('(pointer: coarse)').matches) setTimeout(() => $id('pbCropSearch').focus(), 280);
         });
-        $id(pfx + 'DayTypes').innerHTML = Object.entries(DAY_TYPES).map(([k, d]) => `
-            <button type="button" class="dt-row" data-day-type="${esc(k)}">
-                <span class="dt-row-e">${esc(d.icon)}</span>
-                <span class="dt-row-body"><b>${esc(d.label)}</b><i>${esc(d.sub)}</i></span>
-                <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            </button>`).join('');
-        $id(pfx + 'DayTypes').addEventListener('click', (e) => {
-            const r = e.target.closest('[data-day-type]');
-            if (!r) return;
-            state.dayType = r.getAttribute('data-day-type');
-            paintDay();
+        const sheetApi = {
+            pickDay(key) { state.dayType = key; state.chosen = true; paintDay(); },
+        };
+        $id(pfx + 'DayTypeBtn').addEventListener('click', () => {
+            dayFor = sheetApi;
+            const allow = allowedFor(state.crop);
+            $id('pbDayTypeList').innerHTML = Object.entries(DAY_TYPES).map(([k, d]) => {
+                const off = !allow.includes(k);
+                return `
+                <button type="button" class="dt-row${k === state.dayType ? ' is-on' : ''}${off ? ' is-off' : ''}" data-day-type="${esc(k)}"${off ? ' aria-disabled="true"' : ''}>
+                    <span class="dt-row-e">${esc(d.icon)}</span>
+                    <span class="dt-row-body"><b>${esc(d.label)}</b><i>${esc(d.sub)}</i><i class="dt-row-why">${esc(whyNot(k, state.crop))}</i></span>
+                    <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                </button>`;
+            }).join('');
+            const c = state.crop ? FLAT[state.crop] : null;
+            $id('pbDayTypeNote').textContent = !c
+                ? 'No crop chosen yet, so the three field counts are open. Mature trees come with a tree crop.'
+                : (allow.length <= 1 ? `${c.label} has only one honest way of being counted.` : `Greyed answers do not fit ${c.label}.`);
+            openSheet('pbDayTypeSheet');
         });
         paintDay();
         return {
@@ -129,6 +206,8 @@
                 window.userTags.set($id(pfx + 'Tags'), p.tags || []);
                 state.crop = p.crop || null;
                 state.dayType = p.dayType || 'DAS';
+                // A saved protocol has already answered; a blank form has not.
+                state.chosen = !!p.id;
                 paintCrop(); paintDay();
             },
             read() {
@@ -171,8 +250,12 @@
     </div>
     <div>
         <span class="form-label">How the days are counted</span>
-        <div class="dt-rows" id="{{ $pfx }}DayTypes"></div>
-        <p class="pbh-hint">Every task is pinned to a day of this count. A DAS → DAT protocol counts DAS in the seedbed and DAT from the transplant.</p>
+        <button type="button" class="crop-tag" id="{{ $pfx }}DayTypeBtn">
+            <span class="crop-tag-e" id="{{ $pfx }}DayTypeIcon">🗓️</span>
+            <span class="crop-tag-t" id="{{ $pfx }}DayTypeNow">DAS only</span>
+            <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <p class="pbh-hint" id="{{ $pfx }}DayTypeHint"></p>
     </div>
     <div>
         <span class="form-label">Tags <span class="text-gray-400 font-normal">(optional)</span></span>

@@ -107,7 +107,7 @@
         </button>
         <div class="q-body">
             <div class="q-body-in">
-                <div class="q-card"><b>Your season, written by you.</b>A protocol is the plan you actually follow: every task pinned to a day of the count — DAS, DAT or DAP — with what to apply, who it needs and how much it matters. Write it from your own experience or an agronomist's sheet, keep it season after season, port it into a cropping schedule when the day comes, or have Anee review it.</div>
+                <div class="q-card"><b>Your season, written by you.</b>A protocol is the plan that you actually follow for your crop from the specific task pinned to when to apply, what to apply, why. Write it based on your experience, Anee's recommendations, or your knowledge of agronomy. You can ask Anee to review it.</div>
                 <div class="q-card" id="pbAboutCost"></div>
             </div>
         </div>
@@ -193,6 +193,19 @@
     <div class="sheet-body dt-rows" id="ppProtoList"></div>
 </div>
 
+{{-- Which version of the protocol runs the lot --}}
+<div class="sheet hidden" id="ppVerSheet" style="--sheet-width:26rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="ppVerTitle">Which version?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <p class="pp-hint mb-2" id="ppVerSay"></p>
+        <div class="dt-rows" id="ppVerList"></div>
+    </div>
+</div>
+
 {{-- Where a lot comes from: typed here, or one of your seasons' lots --}}
 <div class="sheet hidden" id="ppLotSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
@@ -227,8 +240,7 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body dt-rows">
-        <button type="button" class="dt-row" data-row-act="open"><span class="dt-row-e">📖</span><span class="dt-row-body"><b>Open</b><i>Read it, port it, or ask Anee.</i></span></button>
-        <button type="button" class="dt-row" data-row-act="edit"><span class="dt-row-e">✏️</span><span class="dt-row-body"><b>Edit</b><i>Add, change and reorder the tasks.</i></span></button>
+        <button type="button" class="dt-row" data-row-act="open"><span class="dt-row-e">📖</span><span class="dt-row-body"><b>Open</b><i>Add, change and reorder the tasks, or ask Anee.</i></span></button>
         <button type="button" class="dt-row" data-row-act="copy"><span class="dt-row-e">📑</span><span class="dt-row-body"><b>Duplicate</b><i>A copy to change without touching this one.</i></span></button>
         <button type="button" class="dt-row" data-row-act="delete"><span class="dt-row-e">🗑️</span><span class="dt-row-body"><b>Delete</b><i>Remove it from your list.</i></span></button>
     </div>
@@ -279,6 +291,7 @@
                 <span class="pb-row-t">
                     <b>${esc(r.title)}</b>
                     <small>${esc(r.cropLabel || 'No crop yet')}${r.variety ? ' · ' + esc(r.variety) : ''} · ${esc((DAY_TYPES[r.dayType] || {}).label || r.dayType)} · ${r.count} ${r.count === 1 ? 'task' : 'tasks'}${r.notes ? ` · ${r.notes} ${r.notes === 1 ? 'note' : 'notes'}` : ''}</small>
+                    ${(r.versions || []).length > 1 ? `<small>🗂️ ${r.versions.length} versions · in use: ${esc(r.versionName || '')}</small>` : ''}
                     ${window.userTags ? window.userTags.chips(r.tags) : ''}
                     <span class="pb-row-tags">
                         ${r.score !== null ? `<span class="pb-tag is-score">Anee: ${r.score}/100</span>` : ''}
@@ -327,7 +340,6 @@
         const r = ROWS.find((x) => x.id === MENU_ID);
         closeSheet('pbRowMenu');
         if (act === 'open') { window.location.href = U.open(MENU_ID); return; }
-        if (act === 'edit') { window.location.href = U.open(MENU_ID) + '?edit=1'; return; }
         if (act === 'copy') {
             try {
                 const res = await api(U.open(MENU_ID) + '/duplicate', { method: 'POST', body: {} });
@@ -357,12 +369,51 @@
     let MYLOTS = null;       // the member's lots across seasons, fetched once
     let PICK_FOR = null;     // which lot a chooser is answering
     const uidp = () => 'L' + Math.random().toString(36).slice(2, 8);
+    // A date as the calendar says it here — toISOString would give yesterday east of Greenwich.
+    const ymd = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
     const protoOf = (id) => ROWS.find((r) => r.id === id) || null;
     const isDat = (l) => { const p = protoOf(l.protocolId); return !!p && p.dayType === 'DAT'; };
-    function blankLot() { return { key: uidp(), name: '', size: '', unit: 'hectare', sourceLotId: null, sourceSay: '', protocolId: null, start: '', transplant: '' }; }
+    const isTree = (l) => { const p = protoOf(l.protocolId); return !!p && p.dayType === 'TREE'; };
+    function blankLot() { return { key: uidp(), name: '', size: '', unit: 'hectare', sourceLotId: null, sourceSay: '', sourcePlanted: null, protocolId: null, versionId: null, start: '', transplant: '', treeYears: '', treeMonths: '' }; }
+    // A protocol with several versions asks which one runs the lot; one version is taken as it is.
+    const versionsOf = (p) => (p && Array.isArray(p.versions)) ? p.versions : [];
+    const versionOf = (l) => { const p = protoOf(l.protocolId); return versionsOf(p).find((v) => v.id === l.versionId) || null; };
+    const TICK = '<svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+    function openVersionPick(l) {
+        const p = protoOf(l.protocolId); if (!p) return;
+        PICK_FOR = l;
+        $id('ppVerTitle').textContent = 'Which version?';
+        $id('ppVerSay').textContent = `"${p.title}" has ${versionsOf(p).length} versions. Choose the one this lot runs — its tasks, materials and rules go to the season.`;
+        $id('ppVerList').innerHTML = versionsOf(p).map((v) => `
+            <button type="button" class="dt-row${l.versionId === v.id ? ' is-on' : ''}" data-pp-pick-ver="${v.id}"><span class="dt-row-e">🗂️</span><span class="dt-row-body"><b>${esc(v.name)}</b><i>${v.count} ${v.count === 1 ? 'task' : 'tasks'} · ${v.materials} ${v.materials === 1 ? 'material' : 'materials'}${v.id === p.versionId ? ' · the one in use' : ''}</i></span>${TICK}</button>`).join('');
+        openSheet('ppVerSheet');
+    }
+    /* The trees' age, typed as years + months, stamped as the date they were
+       planted — the same turn the Lots form makes (stampTreeDate), so the
+       age never goes stale. */
+    function treePlantedOf(l) {
+        if (l.sourceLotId && l.sourcePlanted) return l.sourcePlanted;
+        if (l.treeYears === '' && l.treeMonths === '') return null;
+        const months = (Number(l.treeYears || 0) * 12) + Number(l.treeMonths || 0);
+        const d = new Date();
+        d.setMonth(d.getMonth() - months);
+        return ymd(d);
+    }
+    function sayAge(dateStr) {
+        const d = new Date(dateStr + 'T00:00:00'), now = new Date();
+        let m = (now.getFullYear() - d.getFullYear()) * 12 + (now.getMonth() - d.getMonth());
+        if (now.getDate() < d.getDate()) m--;
+        m = Math.max(0, m);
+        const y = Math.floor(m / 12), r = m % 12;
+        if (y < 1) return `${m} ${m === 1 ? 'month' : 'months'}`;
+        return `${y} ${y === 1 ? 'year' : 'years'}${r ? ` ${r} ${r === 1 ? 'month' : 'months'}` : ''}`;
+    }
     function lotHtml(l, i) {
         const p = protoOf(l.protocolId);
         const dat = isDat(l);
+        const tree = isTree(l);
+        const fromLot = tree && l.sourceLotId && l.sourcePlanted;
+        const ver = versionOf(l);
         return `
             <div class="pp-lot" data-key="${l.key}">
                 <div class="pp-lot-h"><b>Lot ${i + 1}</b>${PLOTS.length > 1 ? `<button type="button" class="pp-x" data-pp-x aria-label="Remove this lot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>` : ''}</div>
@@ -377,12 +428,28 @@
                 <div>
                     <span class="form-label">Protocol</span>
                     <button type="button" class="crop-tag" data-pp-proto><span class="crop-tag-e">${p ? '📋' : '📋'}</span><span class="crop-tag-t${p ? '' : ' is-none'}">${p ? esc(p.title) : 'Choose a protocol'}</span><svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
-                    ${p ? `<p class="pp-hint mt-1">${esc(p.cropLabel || 'No crop')} · ${esc((DAY_TYPES[p.dayType] || {}).label || p.dayType)} · ${p.count} ${p.count === 1 ? 'task' : 'tasks'}</p>` : ''}
+                    ${p ? `<p class="pp-hint mt-1">${esc(p.cropLabel || 'No crop')} · ${esc((DAY_TYPES[p.dayType] || {}).label || p.dayType)} · ${ver ? ver.count : p.count} ${(ver ? ver.count : p.count) === 1 ? 'task' : 'tasks'}</p>` : ''}
                 </div>
+                ${p && versionsOf(p).length > 1 ? `<div>
+                    <span class="form-label">Version</span>
+                    <button type="button" class="crop-tag" data-pp-ver><span class="crop-tag-e">🗂️</span><span class="crop-tag-t${ver ? '' : ' is-none'}">${ver ? esc(ver.name) : 'Choose a version'}</span><svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+                </div>` : ''}
                 <div>
-                    <span class="form-label">${dat ? 'Sowing date (DAS 0)' : (p && p.dayType === 'DAP' ? 'Planting date (DAP 0)' : 'Start date (day 0)')}</span>
+                    <span class="form-label">${dat ? 'Sowing date (DAS 0)' : (p && p.dayType === 'DAP' ? 'Planting date (DAP 0)' : (tree ? 'Program start (DOS 0)' : 'Start date (day 0)'))}</span>
                     ${DATE_TAG('ppStart_' + l.key, 'Pick the start date')}
+                    ${tree ? '<p class="pp-hint mt-1">The day the program starts on the trees. Every task counts its days from here.</p>' : ''}
                 </div>
+                ${tree ? (fromLot ? `<div>
+                    <span class="form-label">The trees' age</span>
+                    <p class="pp-hint">${esc(sayAge(l.sourcePlanted))} old — taken from the lot (planted ${esc(l.sourcePlanted)}).</p>
+                </div>` : `<div>
+                    <span class="form-label">How old are the trees?</span>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="block"><span class="pp-hint">Years</span><input type="number" class="form-input" inputmode="numeric" min="0" max="150" step="1" placeholder="e.g. 6" value="${esc(l.treeYears)}" data-pp-years></label>
+                        <label class="block"><span class="pp-hint">Months</span><input type="number" class="form-input" inputmode="numeric" min="0" max="11" step="1" placeholder="0" value="${esc(l.treeMonths)}" data-pp-months></label>
+                    </div>
+                    <p class="pp-hint mt-1">The lot reads its growth stages by the trees' age, as the Lots module does.</p>
+                </div>`) : ''}
                 ${dat ? `<div>
                     <span class="form-label">Transplant date (DAT 0)</span>
                     ${DATE_TAG('ppTrans_' + l.key, 'Pick the transplant date')}
@@ -402,13 +469,15 @@
     $id('ppLots').addEventListener('input', (e) => {
         const l = lotOf(e.target); if (!l) return;
         if (e.target.hasAttribute('data-pp-name')) l.name = e.target.value;
+        if (e.target.hasAttribute('data-pp-years')) l.treeYears = e.target.value;
+        if (e.target.hasAttribute('data-pp-months')) l.treeMonths = e.target.value;
     });
     $id('ppLots').addEventListener('change', (e) => {
         const l = lotOf(e.target); if (!l) return;
         if (e.target.id === 'ppStart_' + l.key) {
             l.start = e.target.value;
             // A transplant three weeks on is the usual for rice; the farmer can move it.
-            if (isDat(l) && !l.transplant && l.start) { const d = new Date(l.start + 'T00:00:00'); d.setDate(d.getDate() + 21); l.transplant = d.toISOString().slice(0, 10); const tr = $id('ppTrans_' + l.key); if (tr) { tr.value = l.transplant; if (window.smDateTags) window.smDateTags($id('ppLots')); } }
+            if (isDat(l) && !l.transplant && l.start) { const d = new Date(l.start + 'T00:00:00'); d.setDate(d.getDate() + 21); l.transplant = ymd(d); const tr = $id('ppTrans_' + l.key); if (tr) { tr.value = l.transplant; if (window.smDateTags) window.smDateTags($id('ppLots')); } }
         }
         if (e.target.id === 'ppTrans_' + l.key) l.transplant = e.target.value;
     });
@@ -418,11 +487,12 @@
         if (e.target.closest('[data-pp-proto]')) {
             PICK_FOR = l;
             $id('ppProtoList').innerHTML = ROWS.length ? ROWS.map((r) => `
-                <button type="button" class="dt-row${l.protocolId === r.id ? ' is-on' : ''}" data-pp-pick-proto="${r.id}"><span class="dt-row-e">${esc(r.cropIcon || '📋')}</span><span class="dt-row-body"><b>${esc(r.title)}</b><i>${esc(r.cropLabel || 'No crop')} · ${esc((DAY_TYPES[r.dayType] || {}).label || r.dayType)} · ${r.count} ${r.count === 1 ? 'task' : 'tasks'}</i></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`).join('')
+                <button type="button" class="dt-row${l.protocolId === r.id ? ' is-on' : ''}" data-pp-pick-proto="${r.id}"><span class="dt-row-e">${esc(r.cropIcon || '📋')}</span><span class="dt-row-body"><b>${esc(r.title)}</b><i>${esc(r.cropLabel || 'No crop')} · ${esc((DAY_TYPES[r.dayType] || {}).label || r.dayType)} · ${r.count} ${r.count === 1 ? 'task' : 'tasks'}${versionsOf(r).length > 1 ? ` · ${versionsOf(r).length} versions` : ''}</i></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`).join('')
                 : '<p class="text-sm text-gray-400 py-4 text-center">No protocol yet — write one first.</p>';
             openSheet('ppProtoSheet');
             return;
         }
+        if (e.target.closest('[data-pp-ver]')) { openVersionPick(l); return; }
         if (e.target.closest('[data-pp-src]')) {
             PICK_FOR = l;
             $id('ppLotList').innerHTML = '<p class="text-sm text-gray-400 py-4 text-center">Getting your lots…</p>';
@@ -436,15 +506,29 @@
     });
     $id('ppProtoList').addEventListener('click', (e) => {
         const r = e.target.closest('[data-pp-pick-proto]'); if (!r || !PICK_FOR) return;
+        const was = PICK_FOR.protocolId;
         PICK_FOR.protocolId = +r.getAttribute('data-pp-pick-proto');
         if (!isDat(PICK_FOR)) PICK_FOR.transplant = '';
+        const p = protoOf(PICK_FOR.protocolId);
+        const vs = versionsOf(p);
+        if (was !== PICK_FOR.protocolId) PICK_FOR.versionId = null;
+        // One version: taken without asking. Several: the lot waits for the answer.
+        if (vs.length <= 1) PICK_FOR.versionId = vs.length ? vs[0].id : null;
         closeSheet('ppProtoSheet'); paintLots();
+        if (vs.length > 1 && !PICK_FOR.versionId) { const l = PICK_FOR; setTimeout(() => openVersionPick(l), 260); }
+    });
+    $id('ppVerList').addEventListener('click', (e) => {
+        const r = e.target.closest('[data-pp-pick-ver]'); if (!r || !PICK_FOR) return;
+        PICK_FOR.versionId = +r.getAttribute('data-pp-pick-ver');
+        closeSheet('ppVerSheet'); paintLots();
+        const card = $id('ppLots').querySelector(`.pp-lot[data-key="${PICK_FOR.key}"] [data-pp-ver]`);
+        if (card) { card.style.transition = 'box-shadow .28s cubic-bezier(.22,1,.36,1)'; card.style.boxShadow = '0 0 0 3px rgba(107,159,61,.35)'; setTimeout(() => { card.style.boxShadow = ''; }, 900); }
     });
     $id('ppLotList').addEventListener('click', (e) => {
         const r = e.target.closest('[data-pp-pick-lot]'); if (!r || !PICK_FOR) return;
         const id = +r.getAttribute('data-pp-pick-lot');
-        if (!id) { PICK_FOR.sourceLotId = null; PICK_FOR.sourceSay = ''; }
-        else { const m = (MYLOTS || []).find((x) => x.id === id); if (m) { PICK_FOR.sourceLotId = m.id; PICK_FOR.sourceSay = `${m.name} · ${m.schedule}`; PICK_FOR.name = m.name; PICK_FOR.size = m.size; PICK_FOR.unit = m.unit; } }
+        if (!id) { PICK_FOR.sourceLotId = null; PICK_FOR.sourceSay = ''; PICK_FOR.sourcePlanted = null; }
+        else { const m = (MYLOTS || []).find((x) => x.id === id); if (m) { PICK_FOR.sourceLotId = m.id; PICK_FOR.sourceSay = `${m.name} · ${m.schedule}`; PICK_FOR.sourcePlanted = m.treePlantedAt || null; PICK_FOR.name = m.name; PICK_FOR.size = m.size; PICK_FOR.unit = m.unit; } }
         closeSheet('ppLotSheet'); paintLots();
     });
     $id('ppLotAdd').addEventListener('click', () => { PLOTS.push(blankLot()); paintLots(); $id('ppLots').lastElementChild?.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); });
@@ -461,8 +545,10 @@
         for (const [i, l] of PLOTS.entries()) {
             if (!l.name.trim()) { toast(`Name lot ${i + 1}.`, 'error'); $id('ppName_' + l.key)?.focus(); return; }
             if (!l.protocolId) { toast(`Choose a protocol for lot ${i + 1}.`, 'error'); return; }
+            if (versionsOf(protoOf(l.protocolId)).length > 1 && !versionOf(l)) { toast(`Choose which version lot ${i + 1} runs.`, 'error'); openVersionPick(l); return; }
             if (!l.start) { toast(`Pick the start date for lot ${i + 1}.`, 'error'); return; }
             if (isDat(l) && !l.transplant) { toast(`Pick the transplant date for lot ${i + 1}.`, 'error'); return; }
+            if (isTree(l) && !treePlantedOf(l)) { toast(`Say how old the trees are on lot ${i + 1}.`, 'error'); return; }
         }
         const btn = $id('ppGo'); btn.disabled = true; const was = btn.textContent; btn.textContent = 'Porting… this takes a moment';
         try {
@@ -470,7 +556,7 @@
                 title, description: $id('ppDesc').value.trim(),
                 workers: Math.max(1, parseInt($id('ppWorkers').value, 10) || 1),
                 adjust: $id('ppAdjust').querySelector('.is-on')?.getAttribute('data-pp-adjust') || 'spread',
-                lots: PLOTS.map((l) => ({ name: l.name.trim(), size: l.size === '' ? null : l.size, unit: l.unit || 'hectare', sourceLotId: l.sourceLotId, protocolId: l.protocolId, startDate: l.start, transplantDate: isDat(l) ? l.transplant : null })),
+                lots: PLOTS.map((l) => ({ name: l.name.trim(), size: l.size === '' ? null : l.size, unit: l.unit || 'hectare', sourceLotId: l.sourceLotId, protocolId: l.protocolId, versionId: l.versionId || null, startDate: l.start, transplantDate: isDat(l) ? l.transplant : null, treePlantedAt: isTree(l) ? treePlantedOf(l) : null })),
             } });
             toast(res.message);
             window.location.href = res.data.redirect;

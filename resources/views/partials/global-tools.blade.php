@@ -206,7 +206,7 @@
             <span class="qa-ico"><img src="{{ asset('images/icons/bricks.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
             <span class="qa-txt">
                 <b>Protocol Builder</b>
-                <i>Write your own protocol task by task on a DAS/DAT/DAP count — what to apply, per knapsack, who it needs — then port it into a season or have Anee review it.</i>
+                <i>Manually plan your protocol beforehand and save for later use. You can import it as a new cropping schedule, or let Anee review it for problems, strengths, weaknesses.</i>
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
