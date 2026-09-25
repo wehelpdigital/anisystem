@@ -33,7 +33,7 @@ class ReelController extends Controller
     public function store(Request $request)
     {
         if (! \App\Support\Tier::can('communityVideo')) {
-            \App\Support\Tier::deny('Uploading reels comes with the paid plans.');
+            \App\Support\Tier::denyFor('communityVideo', 'Uploading reels comes with {plan}.');
         }
         $data = $request->validate([
             'video' => 'required|file|max:2097152',

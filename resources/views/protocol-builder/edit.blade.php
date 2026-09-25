@@ -3,7 +3,7 @@
 @section('title', $protocol['title'])
 @section('page-title', $protocol['title'])
 @section('page-subtitle', ($protocol['cropLabel'] ?: 'No crop yet') . ' · ' . ($options['dayTypes'][$protocol['dayType']]['label'] ?? $protocol['dayType']))
-@section('back', route('pb.page'))
+@section('back', \App\Support\BackTo::key() === 'tags' ? route('tags.global') : \App\Support\BackTo::carry(route('pb.page')))
 
 @push('head')
 <style>
@@ -487,7 +487,7 @@
             </div>
             <div class="pb-head-acts">
                 <button type="button" class="pb-anee" id="pbAneeBtn" title="Ask Anee to analyze this" aria-label="Ask Anee to analyze this"
-                    @if ($options['aiLocked']) data-tier-lock="libreAnee" data-lock-say="Anee's review of your protocol comes with Libre + Anee — she reads every task against the crop's stages and says what is strong, what is missing and what could go wrong." @endif>
+                    @if ($options['aiLocked']) data-tier-lock="{{ \App\Support\Tier::farmUnlocksAt('aiAnalyses') }}" data-lock-say="Anee's review of your protocol comes with {{ \App\Support\Tier::withPlan(\App\Support\Tier::farmUnlocksAt('aiAnalyses')) }} — she reads every task against the crop's stages and says what is strong, what is missing and what could go wrong." @endif>
                     <img src="{{ $options['aneeFace'] }}" alt=""> <span>Ask Anee</span>
                 </button>
                 <button type="button" class="pb-pen" id="pbMetaBtn" title="Name, crop, variety, day count" aria-label="Edit the protocol's details">
@@ -970,7 +970,7 @@
     let STAGES = @json($stages);
     const U = {
         base: @json(url('/app/protocol-builder')) + '/' + BOOT.id,
-        list: @json(route('pb.page')),
+        list: @json(\App\Support\BackTo::key() === 'tags' ? route('tags.global') : \App\Support\BackTo::carry(route('pb.page'))),
         job: (id) => @json(url('/app/protocol-builder')) + '/' + id + '/job',
         ver: (vid) => @json(url('/app/protocol-builder')) + '/' + BOOT.id + '/versions/' + vid,
     };
@@ -2605,7 +2605,7 @@
         }
     });
     function askAnee() {
-        if (OPT.aiLocked) { window.aneeUpgrade("Anee's review of your protocol comes with Libre + Anee.", 'libreAnee'); return; }
+        if (OPT.aiLocked) { const b = $id('pbAneeBtn'); window.aneeUpgrade(b?.dataset.lockSay || "Anee's review of your protocol is not on your plan.", b?.dataset.tierLock); return; }
         if (!OPT.canAnalyze) { toast('Anee is not available right now.', 'error'); return; }
         if (!TASKS.filter(isTask).length) { toast('Add a task or two first — there is nothing to review yet.', 'error'); return; }
         $id('pbAskQuote').innerHTML = `This review spends <b>${OPT.quote} credits</b>, and you have ${window.creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Review.`;

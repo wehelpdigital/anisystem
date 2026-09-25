@@ -4067,7 +4067,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .map((c) => (c.textContent || '').trim()).filter(Boolean);
         // On a plan without the Workers module the tag names the plan instead.
         const shut = !!$id('activityWorkersBtn')?.dataset.tierLock;
-        t.textContent = !names.length ? (shut ? 'Workers — Solo Farmer plan' : 'Nobody assigned (N/A)')
+        t.textContent = !names.length ? (shut ? 'Workers — ' + (window.aneeTierName?.($id('activityWorkersBtn').dataset.tierLock) || 'a higher') + ' plan' : 'Nobody assigned (N/A)')
             : (names.length <= 2 ? names.join(', ') : names.length + ' workers');
         t.classList.toggle('is-none', !names.length);
     }

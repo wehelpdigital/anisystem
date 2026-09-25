@@ -230,7 +230,7 @@ class WorkerController extends BaseScheduleController
         // The tier's worker cap, judged by the schedule owner's plan.
         $wCap = \App\Support\Tier::scheduleLimit($schedule, 'workersPerSchedule');
         if ($wCap !== null && AsScheduleWorker::active()->where('croppingScheduleId', $schedule->id)->count() >= $wCap) {
-            \App\Support\Tier::deny('This plan allows up to ' . $wCap . ' workers per schedule. Upgrade to add more.');
+            \App\Support\Tier::scheduleDenyFor($schedule, 'workersPerSchedule', 'This plan allows up to ' . $wCap . ' workers per schedule. Move up to {plan} to add more.');
         }
 
         $allowedSkillKeys = array_keys(AsScheduleWorker::SKILLS);

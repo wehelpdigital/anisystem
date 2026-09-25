@@ -239,7 +239,7 @@ class CropProtocolController extends Controller
     private function guardTier(): void
     {
         if (! \App\Support\Tier::farmCan('aiAnalyses')) {
-            \App\Support\Tier::deny('The Crop Protocol Analysis comes with Libre + Anee, and with every plan above it.', 'libreAnee');
+            \App\Support\Tier::farmDenyFor('aiAnalyses', 'The Crop Protocol Analysis comes with {plan}, and with every plan above it.');
         }
     }
 

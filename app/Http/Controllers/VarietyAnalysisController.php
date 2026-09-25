@@ -83,7 +83,7 @@ class VarietyAnalysisController extends Controller
     private function guardTier(): void
     {
         if (! \App\Support\Tier::farmCan('aiAnalyses')) {
-            \App\Support\Tier::deny('Variety research comes with Libre + Anee, and with every plan above it.', 'libreAnee');
+            \App\Support\Tier::farmDenyFor('aiAnalyses', 'Variety research comes with {plan}, and with every plan above it.');
         }
     }
 

@@ -97,15 +97,15 @@
             <h3>Offline Mode</h3>
             <p class="st-why">For the field, where the signal isn't. Off by default; kept on this device.</p>
 
-            @php $offlineLocked = ! \App\Support\Tier::farmCan('offline'); @endphp
+            @php $offlineLocked = ! \App\Support\Tier::farmCan('offline'); $offlineRung = \App\Support\Tier::farmUnlocksAt('offline'); @endphp
             <button type="button" class="st-switch" id="stOffline" role="switch" aria-checked="false"
-                    @if ($offlineLocked) data-tier-lock="solo" data-lock-say="Offline mode comes with the Solo Farmer plan — the farm stays on your phone when the signal drops, and what you do out there syncs itself when it returns." @endif>
+                    @if ($offlineLocked) data-tier-lock="{{ $offlineRung }}" data-lock-say="{{ \App\Support\Tier::say($offlineRung, 'Offline mode comes with {plan} — the farm stays on your phone when the signal drops, and what you do out there syncs itself when it returns.') }}" @endif>
                 <span class="st-switch-txt {{ $offlineLocked ? 'tl-dim' : '' }}">
                     <b>Keep working without a signal</b>
                     <span>When on, anee keeps a copy on this phone of every page you visit, so they still
                     open when the internet drops — and a yellow bar tells you you're in offline mode.</span>
                     @if ($offlineLocked)
-                        <span class="st-locked-say">🔒 Comes with the Solo Farmer plan{{ \App\Support\WorkerContext::inWorkerContext() ? ' — on this farm' : '' }}. Tap to see the plans.</span>
+                        <span class="st-locked-say">🔒 Comes with {{ \App\Support\Tier::withPlan($offlineRung) }}{{ \App\Support\WorkerContext::inWorkerContext() ? ' — on this farm' : '' }}. Tap to see the plans.</span>
                     @endif
                 </span>
                 @if ($offlineLocked)

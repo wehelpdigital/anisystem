@@ -64,9 +64,12 @@
                 $abVidLocked = isset($schedule)
                     ? ! \App\Support\Tier::scheduleCan($schedule, 'videoRecording')
                     : ! \App\Support\Tier::farmCan('videoRecording');
+                $abVidRung = isset($schedule)
+                    ? \App\Support\Tier::scheduleUnlocksAt($schedule, 'videoRecording')
+                    : \App\Support\Tier::farmUnlocksAt('videoRecording');
             @endphp
             <button type="button" class="ab-btn js-video-record {{ $abVidLocked ? 'tl-dim' : '' }}" title="Record a video"
-                    @if ($abVidLocked) data-tier-lock="solo" data-lock-say="Video recording comes with the Solo Farmer plan. Photos and voice stay yours on Libre." @endif>
+                    @if ($abVidLocked) data-tier-lock="{{ $abVidRung }}" data-lock-say="{{ \App\Support\Tier::say($abVidRung, 'Video recording comes with {plan}. Photos and voice stay yours on every plan.') }}" @endif>
                 <svg viewBox="0 0 24 24" fill="currentColor" class="text-red-500"><circle cx="12" cy="12" r="7"/></svg>
                 <span>Record {{ $abVidLocked ? '🔒' : '' }}</span>
             </button>

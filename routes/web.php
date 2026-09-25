@@ -349,7 +349,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
         // A paid convenience, judged by the farm being worked (a worker in a
         // paid farm has it; the same person on their own Libre account does not).
         if (! \App\Support\Tier::farmCan('offline')) {
-            \App\Support\Tier::deny('Offline mode comes with the Solo Farmer plan.');
+            \App\Support\Tier::farmDenyFor('offline', 'Offline mode comes with {plan}.');
         }
         $owner = \App\Support\WorkerContext::effectiveOwnerId();
 

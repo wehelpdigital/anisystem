@@ -81,7 +81,7 @@ class GrowthRealignController extends BaseScheduleController
 
         // The door: a paid plan's, said the way every other wall says it.
         if (! Tier::scheduleCan($schedule, 'ai')) {
-            Tier::deny('Realign by Anee comes with Libre + Anee. Add Anee and she reads your lot\'s whole history to say where the crop really is.', 'libreAnee');
+            Tier::scheduleDenyFor($schedule, 'ai', 'Realign by Anee comes with {plan}. Add Anee and she reads your lot\'s whole history to say where the crop really is.');
         }
         $payer = $this->payer();
         $settings = AiSetting::current();

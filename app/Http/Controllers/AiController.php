@@ -187,9 +187,11 @@ class AiController extends Controller
     {
         $payer = $this->aiPayer();
         if (! $payer->canUseAi()) {
-            return $this->json(false, (int) $payer->id === (int) Auth::id()
-                ? 'Anee comes with Libre + Anee (₱70 a month) and every plan above it. Add Anee to unlock the chat, the analyses and credits.'
-                : 'Anee is not part of the plan the farm owner\'s account is on.', [], 403);
+            if ((int) $payer->id === (int) Auth::id()) {
+                \App\Support\Tier::denyFor('ai', 'Anee comes with {plan} and every plan above it. Add Anee to unlock the chat, the analyses and credits.', $payer->planTier());
+            }
+
+            return $this->json(false, 'Anee is not part of the plan the farm owner\'s account is on.', [], 403);
         }
 
         $userId = Auth::id();
@@ -1065,14 +1067,12 @@ class AiController extends Controller
             : null;
         $conversation?->loadMissing('linkedActivity');
 
-        /* Where Back goes. Only a path on this site is honoured — a `from`
-         * that can be anything is an open redirect wearing a back arrow. */
-        $from = (string) $request->query('from', '');
-
+        /* Where Back goes: a named origin (?from=dashboard, the tip of the
+         * day there) or a path on this site; anything else is the hub. See
+         * App\Support\BackTo — a `from` that can be anything is an open
+         * redirect wearing a back arrow. */
         return view('sm.ai', [
-            'backTo' => (str_starts_with($from, '/') && ! str_starts_with($from, '//'))
-                ? $from
-                : route('sm.hub', ['id' => $schedule->id]),
+            'backTo' => \App\Support\BackTo::url(route('sm.hub', ['id' => $schedule->id]), $schedule->id),
             'aiGone' => $this->goneShots($conversation
                 ? $conversation->messages()->reorder('id', 'desc')->limit(60)->get()
                 : collect()),

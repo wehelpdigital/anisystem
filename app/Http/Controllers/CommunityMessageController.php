@@ -282,7 +282,7 @@ class CommunityMessageController extends Controller
             // by extension, and audio/webm's honest audio extension is what
             // keeps a voice message from wearing a video's clothes.
             if (! \App\Support\Tier::can('communityVoice')) {
-                \App\Support\Tier::deny('Voice messages come with the paid plans.');
+                \App\Support\Tier::denyFor('communityVoice', 'Voice messages come with {plan}.');
             }
             $mediaPath = $request->file('voice')->storeAs(
                 'community/messages',

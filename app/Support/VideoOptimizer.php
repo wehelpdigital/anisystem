@@ -47,7 +47,7 @@ class VideoOptimizer
         // Community video is a plan feature; the farm-side video doors ask
         // their own schedule-scoped question before reaching here.
         if (str_starts_with($dir, 'community') && ! Tier::can('communityVideo')) {
-            Tier::deny('Uploading videos to the community comes with the paid plans.');
+            Tier::denyFor('communityVideo', 'Uploading videos to the community comes with {plan}.');
         }
 
         $ffmpeg = self::binary();

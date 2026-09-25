@@ -117,15 +117,140 @@ final class Tier
         return (bool) (self::scheduleLimit($schedule, $key) ?? false);
     }
 
+    /* ------------------------------------------- which plan opens a door */
+
+    /** The paid rungs, cheapest first, in config order. Never 'admin'. */
+    public const PAID_LADDER = ['libreAnee', 'solo', 'owner'];
+
+    /**
+     * THE CHEAPEST PLAN THAT OPENS THIS DOOR, for somebody standing on
+     * `$fromTier` (the acting user's own plan when not given).
+     *
+     * Every locked door asks here instead of naming a rung by hand, because a
+     * hand-named rung drifts the moment a key moves on the ladder -- and "the
+     * next plan up" is the wrong answer more often than not: the Collab Room
+     * is the Farm Owner plan's, so telling a Libre member to buy Libre + Anee
+     * sold them something that does not open it.
+     *
+     * Walks the paid ladder above `$fromTier` in order and returns the first
+     * rung whose value for `$key` opens it:
+     *  - a boolean switch opens on `true`;
+     *  - a numeric cap opens on null (unlimited) or a number larger than the
+     *    one the member has now -- "upgrade for more lots" means MORE lots.
+     * Falls back to 'owner', the top of what is sold.
+     */
+    public static function unlocksAt(string $key, ?string $fromTier = null): string
+    {
+        $fromTier = $fromTier ?? self::of();
+        $ladder = array_values(array_filter(
+            array_keys((array) config('tiers', [])),
+            fn ($k) => $k !== 'admin'
+        ));
+        if (! $ladder) {
+            $ladder = array_merge(['libre'], self::PAID_LADDER);
+        }
+        $pos = array_search($fromTier, $ladder, true);
+        $here = self::limits(in_array($fromTier, $ladder, true) ? $fromTier : 'libre')[$key] ?? null;
+
+        foreach ($ladder as $i => $rung) {
+            if ($rung === 'libre' || ($pos !== false && $i <= $pos)) {
+                continue;   // the free floor is never sold; nor is anything at or below you
+            }
+            $row = self::limits($rung);
+            if (! array_key_exists($key, $row)) {
+                continue;
+            }
+            $v = $row[$key];
+            if (is_bool($v) || is_bool($here)) {
+                if ($v === true) {
+                    return $rung;
+                }
+                continue;
+            }
+            if ($v === null) {
+                return $rung;   // unlimited
+            }
+            if (is_numeric($v) && ($here === null ? false : (float) $v > (float) $here)) {
+                return $rung;
+            }
+        }
+
+        return 'owner';
+    }
+
+    /** The rung for a door on the farm being worked (the boss's plan for a worker). */
+    public static function farmUnlocksAt(string $key): string
+    {
+        return self::unlocksAt($key, self::ofFarm());
+    }
+
+    /** The rung for a door judged by a schedule owner's plan. */
+    public static function scheduleUnlocksAt($schedule, string $key): string
+    {
+        return self::unlocksAt($key, self::forSchedule($schedule));
+    }
+
+    /** A rung's display name: 'Farm Owner', 'Libre + Anee'. */
+    public static function planName(string $tier): string
+    {
+        return (string) (config('tiers.' . $tier . '.name') ?? ucfirst($tier));
+    }
+
+    /**
+     * How a sentence names a rung: "Libre + Anee" (a name that already reads
+     * as a plan) or "the Solo Farmer plan". For words like "... comes with
+     * {withPlan}".
+     */
+    public static function withPlan(string $tier): string
+    {
+        return $tier === 'libreAnee'
+            ? self::planName($tier)
+            : 'the ' . self::planName($tier) . ' plan';
+    }
+
+    /** A door's words with `{plan}` filled in for a rung: what data-lock-say carries. */
+    public static function say(string $rung, string $words): string
+    {
+        return str_replace('{plan}', self::withPlan($rung), $words);
+    }
+
+    /**
+     * Deny, naming the cheapest rung that opens `$key` for somebody on
+     * `$fromTier` (the acting user's plan when not given). The message may
+     * carry `{plan}` -- replaced with withPlan() of that rung -- so the words
+     * and the card on the sheet can never disagree.
+     */
+    public static function denyFor(string $key, string $message, ?string $fromTier = null)
+    {
+        $rung = self::unlocksAt($key, $fromTier);
+
+        return self::deny(str_replace('{plan}', self::withPlan($rung), $message), $rung);
+    }
+
+    /** denyFor(), judged by the farm being worked. */
+    public static function farmDenyFor(string $key, string $message)
+    {
+        return self::denyFor($key, $message, self::ofFarm());
+    }
+
+    /** denyFor(), judged by a schedule owner's plan. */
+    public static function scheduleDenyFor($schedule, string $key, string $message)
+    {
+        return self::denyFor($key, $message, self::forSchedule($schedule));
+    }
+
     /**
      * The uniform refusal. JSON callers get the shape the upgrade modal
      * listens for; page loads bounce to the subscription page with the
      * message as a flash. `$unlocksAt` names the cheapest tier that opens
-     * this door ('solo' or 'owner') so the modal can sell that rung, not
-     * a vague "subscribers".
+     * this door so the modal can sell that rung, not a vague "subscribers"
+     * -- prefer denyFor(), which works the rung out from the ladder.
      */
     public static function deny(string $message, string $unlocksAt = 'solo')
     {
+        if (! in_array($unlocksAt, self::PAID_LADDER, true)) {
+            $unlocksAt = 'owner';
+        }
         $request = request();
         if ($request->expectsJson() || $request->ajax()) {
             abort(response()->json([
@@ -133,6 +258,7 @@ final class Tier
                 'tierLock' => true,
                 'message' => $message,
                 'tier' => $unlocksAt,
+                'tierName' => self::planName($unlocksAt),
             ], 403));
         }
 
@@ -143,7 +269,11 @@ final class Tier
                 . ' Only the farm owner can change that.'));
         }
 
-        abort(redirect()->route('account.subscription')->with('error', $message));
+        // The subscription page opens the same sheet the tap would have,
+        // selling the same rung (the layout reads `tierLock`).
+        abort(redirect()->route('account.subscription')
+            ->with('error', $message)
+            ->with('tierLock', $unlocksAt));
     }
 
     /* ---------------------------------------------------------- storage */
@@ -181,8 +311,9 @@ final class Tier
         if (self::storageUsed($user) + $addBytes <= $cap) {
             return;
         }
-        self::deny('Your ' . self::limits(self::of($user))['name'] . ' plan\'s '
-            . $capGb . ' GB storage is full. Free some space or upgrade for more.');
+        $tier = self::of($user);
+        self::denyFor('storageGb', 'Your ' . self::limits($tier)['name'] . ' plan\'s '
+            . $capGb . ' GB storage is full. Free some space, or move up to {plan} for more.', $tier);
     }
 
     /** Write an upload into the ledger, so the cap stays honest. */

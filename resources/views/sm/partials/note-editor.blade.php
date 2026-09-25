@@ -47,8 +47,11 @@
                 $neVidLocked = isset($schedule)
                     ? ! \App\Support\Tier::scheduleCan($schedule, 'videoRecording')
                     : ! \App\Support\Tier::farmCan('videoRecording');
+                $neVidRung = isset($schedule)
+                    ? \App\Support\Tier::scheduleUnlocksAt($schedule, 'videoRecording')
+                    : \App\Support\Tier::farmUnlocksAt('videoRecording');
                 $neVidLockAttrs = $neVidLocked
-                    ? 'data-tier-lock=solo data-lock-say="Video on notes comes with the Solo Farmer plan. Photos, drawings and voice stay yours on Libre."'
+                    ? 'data-tier-lock=' . $neVidRung . ' data-lock-say="' . e(\App\Support\Tier::say($neVidRung, 'Video on notes comes with {plan}. Photos, drawings and voice stay yours on every plan.')) . '"'
                     : '';
             @endphp
             <span class="ne-vid @if (! $neMayFilm) hidden @endif" data-video-host>

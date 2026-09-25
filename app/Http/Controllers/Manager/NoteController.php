@@ -195,7 +195,7 @@ class NoteController extends BaseScheduleController
     {
         $schedule = $this->scheduleForNoteMedia($request, ['video']);
         if (! \App\Support\Tier::scheduleCan($schedule, 'videoRecording')) {
-            \App\Support\Tier::deny('Video recording is not included in this plan. Upgrade to attach clips.');
+            \App\Support\Tier::scheduleDenyFor($schedule, 'videoRecording', 'Video on notes comes with {plan}. Photos, drawings and voice stay yours on every plan.');
         }
 
         $validator = Validator::make($request->all(), [

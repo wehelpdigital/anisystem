@@ -33,7 +33,7 @@ class QuickCaptureController extends BaseScheduleController
         $this->assertCanEdit();
         $this->assertUnlocked($schedule);
         if (! \App\Support\Tier::scheduleCan($schedule, 'videoRecording')) {
-            \App\Support\Tier::deny('Video recording is not included in this plan. Upgrade to record clips.');
+            \App\Support\Tier::scheduleDenyFor($schedule, 'videoRecording', 'Video recording comes with {plan}. Photos and voice notes stay yours on every plan.');
         }
 
         $request->validate([

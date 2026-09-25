@@ -197,6 +197,8 @@ class CompareController extends BaseScheduleController
         return redirect()->route('compare.page', array_filter([
             'open' => (int) $request->query('open', 0) ?: null,
             'season' => (int) $request->query('id', 0) ?: null,
+            // Where Back goes rides through the redirect (App\Support\BackTo).
+            'from' => \App\Support\BackTo::key(),
         ]));
     }
 
@@ -312,7 +314,7 @@ class CompareController extends BaseScheduleController
         $seasonA = $this->schedule($a->croppingScheduleId);
         $seasonB = (int) $b->croppingScheduleId === (int) $seasonA->id ? $seasonA : $this->schedule($b->croppingScheduleId);
         if (! Tier::scheduleCan($seasonA, 'reportsAll')) {
-            Tier::deny('Compare Reports comes with the Solo Farmer plan — Libre includes the Labor report.');
+            Tier::scheduleDenyFor($seasonA, 'reportsAll', 'Compare Reports comes with {plan} — every plan includes the Labor report.');
         }
         // The diary line belongs to the season the comparison lives on.
         $request->attributes->set('auditScheduleId', (int) $seasonA->id);
@@ -643,7 +645,7 @@ class CompareController extends BaseScheduleController
     private function gate(bool $write = false, bool $page = false): void
     {
         if (! Tier::farmCan('reportsAll')) {
-            Tier::deny('Compare Reports comes with the Solo Farmer plan — Libre includes the Labor report.');
+            Tier::farmDenyFor('reportsAll', 'Compare Reports comes with {plan} — every plan includes the Labor report.');
         }
         $may = WorkerContext::canView() && ($write ? WorkerContext::canWriteModule('reports') : WorkerContext::canUseModule('reports'));
         if ($may) {

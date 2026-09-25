@@ -6,7 +6,7 @@
 @section('page-title', 'Reports')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'reports')
-@section('back', route('sm.hub', ['id' => $schedule->id]))
+@section('back', \App\Support\BackTo::url(route('sm.hub', ['id' => $schedule->id]), $schedule->id))
 
 @section('content')
     {{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
@@ -71,9 +71,9 @@
         ];
     @endphp
     @foreach ($reports as $r)
-        @php $rLocked = ! $shelfOpen && empty($r['free']); @endphp
+        @php $rLocked = ! $shelfOpen && empty($r['free']); $rRung = $rLocked ? \App\Support\Tier::scheduleUnlocksAt($schedule, 'reportsAll') : ''; @endphp
         <a href="{{ $r['url'] }}" class="card card-hover block"
-           @if ($rLocked) data-tier-lock="solo" data-lock-say="The {{ $r['label'] }} comes with the Solo Farmer plan — Libre includes the Labor report." @endif>
+           @if ($rLocked) data-tier-lock="{{ $rRung }}" data-lock-say="The {{ $r['label'] }} comes with {{ \App\Support\Tier::withPlan($rRung) }} — every plan includes the Labor report." @endif>
             <div class="p-4 flex items-start gap-3">
                 <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center shrink-0 {{ $rLocked ? 'tl-dim' : '' }}">
                     <img src="{{ $r['img'] }}" alt="" class="w-7 h-7" style="object-fit:contain" loading="lazy">

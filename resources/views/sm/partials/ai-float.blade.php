@@ -32,7 +32,7 @@
 @if ($aiFloatSettings && $aiFloatSettings->isUsable() && \App\Support\WorkerContext::canUseModule('ai'))
 <div id="aiFloat" class="ai-float{{ request('module') === 'ai' ? ' ai-float-off' : '' }}">
     <button type="button" id="aiFloatFab" class="ai-float-fab{{ $aiFloatLocked ? ' is-locked' : '' }}" aria-label="Ask {{ $aiFloatSettings->assistantName }}" title="Ask {{ $aiFloatSettings->assistantName }}"
-        @if ($aiFloatLocked) data-tier-lock="libreAnee" data-lock-say="{{ $aiFloatSettings->assistantName }} comes with Libre + Anee — the chat, the analyses, Realign and the credit shop, on top of everything Libre already has." @endif>
+        @if ($aiFloatLocked) data-tier-lock="{{ \App\Support\Tier::farmUnlocksAt('ai') }}" data-lock-say="{{ $aiFloatSettings->assistantName }} comes with {{ \App\Support\Tier::withPlan(\App\Support\Tier::farmUnlocksAt('ai')) }} — the chat, the analyses, Realign and the credit shop, on top of everything your plan already has." @endif>
         <img data-ai-face src="{{ $aiFloatAvatar }}" alt="">
         @if ($aiFloatLocked)<span class="ai-float-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endif
     </button>

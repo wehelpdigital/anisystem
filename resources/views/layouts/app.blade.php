@@ -24,7 +24,7 @@
          a worker standing in a paid farm has it, the same person on their
          own Libre account does not. app.js reads this before it keeps
          anything on the phone. --}}
-    <meta name="anee-offline" content="{{ \App\Support\Tier::farmCan('offline') ? 'allowed' : 'solo' }}">
+    <meta name="anee-offline" content="{{ \App\Support\Tier::farmCan('offline') ? 'allowed' : \App\Support\Tier::farmUnlocksAt('offline') }}">
     {{-- Realtime endpoints, for the Collab Room and nothing else.
 
          A page that is the room says @section('realtime', 'room') — the room
@@ -409,7 +409,7 @@
                             <a href="{{ route('account.index') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">My Account</a>
                             @php $__menuAnee = auth()->user()->canUseAi(); @endphp
                             <a href="{{ route('ai.credits') }}" class="flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
-                               @unless ($__menuAnee) data-tier-lock="libreAnee" data-lock-say="Anee's credits come with Libre + Anee — the chat, the analyses and the credit shop, on top of everything Libre already has." @endunless>
+                               @unless ($__menuAnee) data-tier-lock="{{ \App\Support\Tier::unlocksAt('ai') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::unlocksAt('ai'), 'Anee\'s credits come with {plan} — the chat, the analyses and the credit shop, on top of everything your plan already has.') }}" @endunless>
                                 <span class="{{ $__menuAnee ? '' : 'tl-dim' }}">My Credits</span>
                                 @unless ($__menuAnee)<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endunless
                             </a>
@@ -444,7 +444,7 @@
                             <button type="button" id="offlineModeToggle"
                                 class="w-full flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
                                 role="switch" aria-checked="false" title="Keep pages on this phone for when the signal drops"
-                                @if ($offlineLocked) data-tier-lock="solo" data-lock-say="Offline mode comes with the Solo Farmer plan — the farm stays on your phone when the signal drops, and what you do out there syncs itself when it returns." @endif>
+                                @if ($offlineLocked) data-tier-lock="{{ \App\Support\Tier::farmUnlocksAt('offline') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::farmUnlocksAt('offline'), 'Offline mode comes with {plan} — the farm stays on your phone when the signal drops, and what you do out there syncs itself when it returns.') }}" @endif>
                                 <span class="flex items-center gap-2 {{ $offlineLocked ? 'tl-dim' : '' }}">
                                     <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 8.82A15 15 0 0112 5a15 15 0 0110 3.82M5.5 12.05A10 10 0 0112 9.5c2.44 0 4.68.87 6.42 2.32M8.8 15.3A5.5 5.5 0 0112 14c1.18 0 2.28.37 3.18 1M12 19h.01"/></svg>
                                     <span>Offline mode</span>
@@ -1008,7 +1008,8 @@
         {{-- window.toast lives in the Vite module bundle, which runs after
              inline scripts parse — so flashes wait for DOMContentLoaded. --}}
         @if (session('success')) document.addEventListener('DOMContentLoaded', () => window.toast?.(@json(session('success')), 'success')); @endif
-        @if (session('error')) document.addEventListener('DOMContentLoaded', () => window.toast?.(@json(session('error')), 'error')); @endif
+        @if (session('error') && session('tierLock')) document.addEventListener('DOMContentLoaded', () => window.aneeUpgrade?.(@json(session('error')), @json(session('tierLock'))));
+        @elseif (session('error')) document.addEventListener('DOMContentLoaded', () => window.toast?.(@json(session('error')), 'error')); @endif
 
         // Night mode. The class is already on <html> from the head script; this
         // only keeps the switch in sync and handles flipping it.

@@ -1400,7 +1400,7 @@ class FarmReportController extends BaseScheduleController
     private function guardReports($schedule): void
     {
         if (! \App\Support\Tier::scheduleCan($schedule, 'reportsAll')) {
-            \App\Support\Tier::deny('This plan includes the Labor report only. Upgrade to open the full report shelf.');
+            \App\Support\Tier::scheduleDenyFor($schedule, 'reportsAll', 'The full report shelf comes with {plan} — every plan includes the Labor report.');
         }
     }
 }

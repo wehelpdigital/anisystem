@@ -140,9 +140,10 @@
                      is on the job is asked the same way as what the job is. It
                      does not change the activity's type — that stays whatever
                      was picked to its left. --}}
-                @php $tierWorkers = \App\Support\Tier::scheduleCan($schedule, 'workers'); $tierInventory = \App\Support\Tier::scheduleCan($schedule, 'inventory'); @endphp
+                @php $tierWorkers = \App\Support\Tier::scheduleCan($schedule, 'workers'); $tierInventory = \App\Support\Tier::scheduleCan($schedule, 'inventory');
+                     $rungWorkers = \App\Support\Tier::scheduleUnlocksAt($schedule, 'workers'); $rungInventory = \App\Support\Tier::scheduleUnlocksAt($schedule, 'inventory'); @endphp
                 <button type="button" class="activity-mode-tab" data-mode="payroll" data-act-tab="workers" aria-selected="false"
-                    @unless ($tierWorkers) data-tier-lock="solo" data-lock-say="{{ 'Workers come with the Solo Farmer plan — the crew, their days and their pay, on every activity.' }}" @endunless>
+                    @unless ($tierWorkers) data-tier-lock="{{ $rungWorkers }}" data-lock-say="{{ \App\Support\Tier::say($rungWorkers, 'Workers come with {plan} — the crew, their days and their pay, on every activity.') }}" @endunless>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
                     Worker checklist
                     <span class="act-pane-count" id="activityWorkerCount" hidden>0</span>
@@ -488,9 +489,9 @@
             <div id="activityWorkersPane">
                 <span class="form-label">Workers</span>
                 <button type="button" class="crop-tag" id="activityWorkersBtn"
-                    @unless ($tierWorkers) data-tier-lock="solo" data-lock-say="{{ 'Workers come with the Solo Farmer plan — the crew, their days and their pay, on every activity.' }}" @endunless>
+                    @unless ($tierWorkers) data-tier-lock="{{ $rungWorkers }}" data-lock-say="{{ \App\Support\Tier::say($rungWorkers, 'Workers come with {plan} — the crew, their days and their pay, on every activity.') }}" @endunless>
                     <span class="crop-tag-e {{ $tierWorkers ? '' : 'tl-dim' }}">👷</span>
-                    <span class="crop-tag-t is-none {{ $tierWorkers ? '' : 'tl-dim' }}" id="activityWorkersNow">{{ $tierWorkers ? 'Nobody assigned (N/A)' : 'Workers — Solo Farmer plan' }}</span>
+                    <span class="crop-tag-t is-none {{ $tierWorkers ? '' : 'tl-dim' }}" id="activityWorkersNow">{{ $tierWorkers ? 'Nobody assigned (N/A)' : 'Workers — ' . \App\Support\Tier::planName($rungWorkers) . ' plan' }}</span>
                     @unless ($tierWorkers)<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endunless
                     <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>
@@ -557,7 +558,7 @@
                     <div id="itemsContainer" class="contents"></div>
                     {{-- On a plan without the Inventory the button stays and opens the upgrade sheet. --}}
                     <button type="button" id="itemsToggleBtn" class="chip chip-dashed {{ $tierInventory ? '' : 'tl-dim' }}" aria-expanded="false" data-chip-manual
-                        @unless ($tierInventory) data-tier-lock="solo" data-lock-say="{{ 'The Inventory comes with the Solo Farmer plan — the shed, its stock, and what each activity takes from it.' }}" @endunless>
+                        @unless ($tierInventory) data-tier-lock="{{ $rungInventory }}" data-lock-say="{{ \App\Support\Tier::say($rungInventory, 'The Inventory comes with {plan} — the shed, its stock, and what each activity takes from it.') }}" @endunless>
                         <span id="itemsToggleLabel">+ Item</span>
                     </button>
                 </div>
@@ -895,7 +896,7 @@
                  opens the upgrade sheet instead of the module. --}}
             <button type="button" class="module-nav-row w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50"
                     data-module="{{ $key }}"
-                    @if ($tierShut($key)) data-tier-lock="solo" data-lock-say="{{ $key === 'workers' ? 'Workers come with the Solo Farmer plan — the crew, their days and their pay, on every activity.' : 'The Inventory comes with the Solo Farmer plan — the shed, its stock, and what each activity takes from it.' }}" @endif>
+                    @if ($tierShut($key)) data-tier-lock="{{ \App\Support\Tier::scheduleUnlocksAt($schedule, $key) }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::scheduleUnlocksAt($schedule, $key), $key === 'workers' ? 'Workers come with {plan} — the crew, their days and their pay, on every activity.' : 'The Inventory comes with {plan} — the shed, its stock, and what each activity takes from it.') }}" @endif>
                 <span class="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
                     @if ($key === 'ai')
                         <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" class="w-6 h-6 rounded-full object-cover">

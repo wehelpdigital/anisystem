@@ -227,6 +227,8 @@
     if (window.growthRealign) return;
     const SCHEDULE_ID = @json((int) $schedule->id);
     const LOCKED = @json($grxLocked);
+    const LOCK_RUNG = @json(\App\Support\Tier::scheduleUnlocksAt($schedule, 'ai'));
+    const LOCK_SAY = @json(\App\Support\Tier::say(\App\Support\Tier::scheduleUnlocksAt($schedule, 'ai'), "Realign by Anee comes with {plan}. Add Anee and she reads your lot's whole history to say where the crop really is."));
     const PRICE = @json($grxPrice);
     const FACE = @json(\App\Models\AiSetting::current()->faceUrl());
     const U = {
@@ -252,7 +254,7 @@
        the server to walk the season again. */
     function block({ lotId, lotName, realign, calendar }) {
         const btn = LOCKED
-            ? `<button type="button" class="grx-btn is-locked" data-tier-lock="libreAnee" data-lock-say="Realign by Anee comes with Libre + Anee. Add Anee and she reads your lot's whole history to say where the crop really is."><img src="${esc(FACE)}" alt="">Realign by Anee <small>· 🔒 paid plans</small></button>`
+            ? `<button type="button" class="grx-btn is-locked" data-tier-lock="${esc(LOCK_RUNG)}" data-lock-say="${esc(LOCK_SAY)}"><img src="${esc(FACE)}" alt="">Realign by Anee <small>· 🔒 paid plans</small></button>`
             : `<button type="button" class="grx-btn" data-grx-open="${Number(lotId)}" data-grx-name="${esc(lotName)}" data-grx-cal="${esc(calendar || '')}"><img src="${esc(FACE)}" alt="">${realign ? 'Realign again' : 'Realign by Anee'} <small>· ${PRICE} credits</small></button>`;
         const note = realign ? `<div class="grx-note">
                 <div class="grx-note-head"><b>Realigned by Anee</b>${shiftChip(realign.shiftDays)}<span class="grx-note-when">${esc(when(realign.at || realign.asOf))}</span></div>

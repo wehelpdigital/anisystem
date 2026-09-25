@@ -33,10 +33,10 @@ class TierModuleAccess
 {
     /** Route-name patterns, the tier key they need, and what to say when it is missing. */
     private const RULES = [
-        ['sm.workers',     'workers',   'Workers come with the Solo Farmer plan — the crew, their days and their pay, on every activity.'],
-        ['sm.workers.*',   'workers',   'Workers come with the Solo Farmer plan — the crew, their days and their pay, on every activity.'],
-        ['sm.inventory',   'inventory', 'The Inventory comes with the Solo Farmer plan — the shed, its stock, and what each activity takes from it.'],
-        ['sm.inventory.*', 'inventory', 'The Inventory comes with the Solo Farmer plan — the shed, its stock, and what each activity takes from it.'],
+        ['sm.workers',     'workers',   'Workers come with {plan} — the crew, their days and their pay, on every activity.'],
+        ['sm.workers.*',   'workers',   'Workers come with {plan} — the crew, their days and their pay, on every activity.'],
+        ['sm.inventory',   'inventory', 'The Inventory comes with {plan} — the shed, its stock, and what each activity takes from it.'],
+        ['sm.inventory.*', 'inventory', 'The Inventory comes with {plan} — the shed, its stock, and what each activity takes from it.'],
     ];
 
     public function handle(Request $request, Closure $next): Response
@@ -52,7 +52,7 @@ class TierModuleAccess
 
         foreach (self::RULES as [$pattern, $key, $say]) {
             if (Str::is($pattern, $name) && ! Tier::farmCan($key)) {
-                Tier::deny($say, 'solo');
+                Tier::farmDenyFor($key, $say);
             }
         }
 

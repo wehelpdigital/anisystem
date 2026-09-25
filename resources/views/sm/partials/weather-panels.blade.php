@@ -153,8 +153,8 @@
                do the selling. */
             if (d.locked) {
                 return `
-            <button type="button" class="wx-day" style="opacity:.72" data-tier-lock="solo"
-                    data-lock-say="The full forecast comes with the Solo Farmer plan — Libre reads today and tomorrow."
+            <button type="button" class="wx-day" style="opacity:.72" data-tier-lock="{{ \App\Support\Tier::scheduleUnlocksAt($schedule ?? null, 'weatherDays') }}"
+                    data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::scheduleUnlocksAt($schedule ?? null, 'weatherDays'), 'The full forecast comes with {plan} — your plan reads today and tomorrow.') }}"
                     title="Upgrade to unlock ${esc(d.dow || 'this day')}">
                 <div class="wx-day-dow">${esc(d.dow || '')}</div>
                 <div class="wx-day-emoji" style="display:flex;align-items:center;justify-content:center;min-height:42px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;color:var(--color-gray-400)"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></div>

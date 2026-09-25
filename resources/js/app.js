@@ -245,7 +245,7 @@ window.api = async function api(url, { method = 'GET', body = null, headers = {}
     // A tier wall: the feature exists, this plan does not include it. The
     // upgrade sheet says so kindly instead of a bare red toast.
     if (res.status === 403 && json?.tierLock) {
-        window.aneeUpgrade?.(json.message, json.tier || 'solo');
+        window.aneeUpgrade?.(json.message, json.tier);
         const err = new Error(json.message || 'This feature is for subscribers.');
         err.tierLock = true;
         throw err;
@@ -2499,7 +2499,7 @@ document.addEventListener('pointerdown', (e) => {
         tierAllowed: () => ALLOWED,
         set(v) {
             if (v && !ALLOWED) {
-                window.aneeUpgrade?.('Offline mode comes with the Solo Farmer plan — the farm stays on your phone when the signal drops, and what you do out there syncs itself when it returns.', allowedMeta());
+                window.aneeUpgrade?.('Offline mode comes with ' + auWithPlan(allowedMeta()) + ' — the farm stays on your phone when the signal drops, and what you do out there syncs itself when it returns.', allowedMeta());
                 return;
             }
             try { localStorage.setItem(KEY, v ? '1' : '0'); } catch (_) { /* private mode */ }
@@ -2546,11 +2546,16 @@ document.addEventListener('pointerdown', (e) => {
 /* ------------------------------------------------------------------ */
 /* The upgrade sheet — what a tier wall says.                          */
 /*                                                                     */
-/* Server gates refuse with {tierLock: true, tier: 'solo'|'owner'} and */
-/* api() routes both here. The sheet sells the exact rung that opens   */
-/* the door — name, price, what it brings — instead of a vague         */
+/* Server gates refuse with {tierLock: true, tier: <rung>} and api()   */
+/* routes both here. The sheet sells the exact rung that opens the     */
+/* door — name, price, what it brings — instead of a vague             */
 /* "subscribers". Locked buttons across the app stay visible with a    */
 /* lock chip ([data-tier-lock], wired below); this is what they open.  */
+/*                                                                     */
+/* The rung is NEVER guessed here: every door carries the one          */
+/* App\Support\Tier::unlocksAt() worked out from config/tiers.php (the */
+/* cheapest plan whose value for that key opens it). A rung this sheet */
+/* has no card for gets a plain "see the plans" sheet, not Solo's.     */
 /* ------------------------------------------------------------------ */
 /* The price lines come from the layout's window.ANEE_REGION.tiers (pesos
    at home, dollars elsewhere); the peso strings are only the fallback. */
@@ -2569,6 +2574,8 @@ window.creditCoin = function creditCoin(text) {
         : '<a class="credit-coin" href="/app/ai-credits" title="My Credits — the log, and credits to buy">' + body + '</a>';
 };
 
+/* The cards, one per paid rung in config/tiers.php (names and points
+   mirror each rung's `name` and `features`). */
 const AU_TIERS = {
     libreAnee: {
         name: 'Libre + Anee',
@@ -2587,7 +2594,8 @@ const AU_TIERS = {
             '3 active seasons, 5 lots each',
             'Workers (no logins) and the inventory',
             'Full weather, all reports, unlimited maps',
-            'Video & voice, documents · 30 AI credits every renewal · 6 GB',
+            'Video & voice, documents, offline mode · ad-free',
+            '30 AI credits every renewal · 6 GB storage',
         ],
     },
     owner: {
@@ -2602,20 +2610,63 @@ const AU_TIERS = {
     },
 };
 
-window.aneeUpgrade = function aneeUpgrade(message, tier = 'solo') {
+/* A rung key as the server may spell it, to the card's key. */
+const auRung = (tier) => {
+    const k = String(tier || '').trim();
+    const alias = { 'libre-anee': 'libreAnee', libreanee: 'libreAnee', libre_anee: 'libreAnee', 'farm-owner': 'owner', basic: 'solo' };
+    return alias[k.toLowerCase()] || k;
+};
+/* A rung's display name ('Farm Owner'), and how a sentence names it. */
+window.aneeTierName = (tier) => AU_TIERS[auRung(tier)]?.name || '';
+function auWithPlan(tier) {
+    const k = auRung(tier);
+    const name = window.aneeTierName(k);
+    if (!name) return 'a higher plan';
+    return k === 'libreAnee' ? name : 'the ' + name + ' plan';
+}
+
+/* Anee's face on the sheet: the crying clip, the way the analysis loaders
+   wear hers -- silent, looping, no controls, in a ring. A reader who asked
+   the system for less motion gets the still. */
+const AU_FACE_VID = '/videos/anee/crying.mp4';
+const AU_FACE_POSTER = '/videos/anee/crying.jpg';
+const auFace = () => {
+    const still = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const media = still
+        ? '<img src="' + AU_FACE_POSTER + '" alt="">'
+        : '<video src="' + AU_FACE_VID + '" poster="' + AU_FACE_POSTER + '" muted autoplay loop playsinline preload="auto" disablepictureinpicture disableremoteplayback tabindex="-1" aria-hidden="true"></video>';
+    return '<div class="au-face" aria-hidden="true"><span class="au-halo"></span><span class="au-ring">' + media + '</span>'
+        + '<span class="au-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span></div>';
+};
+/* Muted as a PROPERTY too, then played: an innerHTML video's autoplay is
+   at the browser's mercy, and the sheet should never sit on a frozen face. */
+const auPlay = (box) => {
+    const v = box.querySelector('.au-face video');
+    if (!v) return;
+    v.muted = true;
+    v.play?.().catch(() => {});
+};
+
+window.aneeUpgrade = function aneeUpgrade(message, tier) {
     window.__tierLockMsg = message;
     window.__tierLockAt = Date.now();
-    const t = AU_TIERS[tier] || AU_TIERS.solo;
+    const rung = auRung(tier);
+    const t = AU_TIERS[rung] || null;
+    if (!t && !window.AU_IS_WORKER) console.warn('aneeUpgrade: no card for rung', tier);
     let box = document.getElementById('aneeUpgradeBox');
     if (!box) {
         box = document.createElement('div');
         box.id = 'aneeUpgradeBox';
         document.body.appendChild(box);
+        const close = () => {
+            box.classList.remove('is-open');
+            box.querySelector('.au-face video')?.pause?.();
+        };
         box.addEventListener('click', (e) => {
-            if (e.target === box || e.target.closest('[data-au-close]')) box.classList.remove('is-open');
+            if (e.target === box || e.target.closest('[data-au-close]')) close();
         });
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') box.classList.remove('is-open');
+            if (e.key === 'Escape' && box.classList.contains('is-open')) close();
         });
     }
     const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -2629,7 +2680,7 @@ window.aneeUpgrade = function aneeUpgrade(message, tier = 'solo') {
     if (window.AU_IS_WORKER) {
         box.innerHTML = '<div class="au-card" role="dialog" aria-modal="true" aria-label="Not on this farm\'s plan">'
             + '<div class="au-head">'
-            + '<span class="au-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>'
+            + auFace()
             + '<div class="au-head-say"><span class="au-kicker">Not on this farm\'s plan</span>'
             + '<h3>' + esc(window.AU_FARM_NAME || 'This farm') + ' does not have this</h3></div>'
             + '</div>'
@@ -2639,31 +2690,36 @@ window.aneeUpgrade = function aneeUpgrade(message, tier = 'solo') {
             + '<button type="button" class="btn btn-white" data-au-close>Close</button>'
             + '</div></div>';
         box.classList.add('is-open');
+        auPlay(box);
 
         return;
     }
+    const card = t
+        ? '<div class="au-tier" data-au-rung="' + esc(rung) + '">'
+            + '<div class="au-tier-top"><span class="au-tier-name">' + esc(t.name) + '</span>'
+            + '<span class="au-tier-price">' + esc(t.price) + '<em>' + esc(t.per) + '</em></span></div>'
+            + '<div class="au-tier-year">' + esc(t.year) + '</div>'
+            + '<ul class="au-tier-list">' + t.points.map((p) => '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>' + esc(p) + '</li>').join('') + '</ul>'
+            + '</div>'
+        : '';
     box.innerHTML = '<div class="au-card" role="dialog" aria-modal="true" aria-label="Upgrade">'
         + '<div class="au-head">'
-        + '<span class="au-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>'
+        + auFace()
         + '<div class="au-head-say"><span class="au-kicker">Locked on your plan</span>'
-        + '<h3>This comes with ' + esc(t.name) + '</h3></div>'
+        + '<h3>' + (t ? 'This comes with ' + esc(t.name) : 'This needs a higher plan') + '</h3></div>'
         + '</div>'
         + '<p class="au-msg">' + esc(message || 'Your current plan does not include this feature. Upgrade to unlock it.') + '</p>'
-        + '<div class="au-tier">'
-        + '<div class="au-tier-top"><span class="au-tier-name">' + esc(t.name) + '</span>'
-        + '<span class="au-tier-price">' + esc(t.price) + '<em>' + esc(t.per) + '</em></span></div>'
-        + '<div class="au-tier-year">' + esc(t.year) + '</div>'
-        + '<ul class="au-tier-list">' + t.points.map((p) => '<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg>' + esc(p) + '</li>').join('') + '</ul>'
-        + '</div>'
+        + card
         + '<div class="au-acts">'
-        + '<a class="btn btn-accent" href="/account/subscription">Upgrade your access</a>'
+        + '<a class="btn btn-accent" href="/account/subscription">' + (t ? 'Upgrade your access' : 'See the plans') + '</a>'
         + '<button type="button" class="btn btn-white" data-au-close>Not now</button>'
         + '</div></div>';
     box.classList.add('is-open');
+    auPlay(box);
 };
 
 /* Locked doors, wired once for the whole app: any element carrying
-   data-tier-lock="solo|owner" (with data-lock-say for the sentence)
+   data-tier-lock="<rung>" (with data-lock-say for the sentence)
    opens the upgrade sheet instead of doing what it looks like it does.
    Capture phase, so the element's own handlers never fire. */
 document.addEventListener('click', (e) => {
@@ -2671,7 +2727,7 @@ document.addEventListener('click', (e) => {
     if (!locked) return;
     e.preventDefault();
     e.stopPropagation();
-    window.aneeUpgrade(locked.dataset.lockSay || '', locked.dataset.tierLock || 'solo');
+    window.aneeUpgrade(locked.dataset.lockSay || '', locked.dataset.tierLock);
 }, true);
 
 /* ------------------------------------------------------------------ */

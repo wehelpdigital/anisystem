@@ -335,7 +335,7 @@ class CommunityGroupController extends Controller
     public function store(Request $request)
     {
         if (! \App\Support\Tier::can('discussionCreate')) {
-            \App\Support\Tier::deny('Creating discussions comes with the Farm Owner plan. You can join any open room.', 'owner');
+            \App\Support\Tier::denyFor('discussionCreate', 'Creating discussions comes with {plan}. You can join any open room.');
         }
         $data = $request->validate([
             'name' => 'required|string|max:150',
@@ -433,7 +433,7 @@ class CommunityGroupController extends Controller
                 ->where('deleteStatus', 1)->whereNull('removedAt')
                 ->where('groupId', '!=', $group->id)->count();
             if ($joined >= $joinCap) {
-                \App\Support\Tier::deny('Your plan joins ' . $joinCap . ' discussion at a time. Leave one first, or upgrade to join more.');
+                \App\Support\Tier::denyFor('discussionJoin', 'Your plan joins ' . $joinCap . ' discussion at a time. Leave one first, or move up to {plan} to join more.');
             }
         }
 
@@ -456,7 +456,7 @@ class CommunityGroupController extends Controller
         // Judged before the password/ask branches so Libre never even gets
         // to knock.
         if (! \App\Support\Tier::can('discussionPrivateJoin')) {
-            \App\Support\Tier::deny('Private discussions come with the Solo Farmer plan. Every open room is yours to join.');
+            \App\Support\Tier::denyFor('discussionPrivateJoin', 'Private discussions come with {plan}. Every open room is yours to join.');
         }
 
         if ($group->asksForPassword()) {

@@ -271,7 +271,7 @@ class LotController extends BaseScheduleController
         // The tier's lot cap, judged by the schedule owner's plan.
         $lotCap = \App\Support\Tier::scheduleLimit($schedule, 'lotsPerSchedule');
         if ($lotCap !== null && AsScheduleLot::active()->where('croppingScheduleId', $schedule->id)->count() >= $lotCap) {
-            \App\Support\Tier::deny('This plan allows up to ' . $lotCap . ' lot' . ($lotCap == 1 ? '' : 's') . ' per schedule. Upgrade for more room.');
+            \App\Support\Tier::scheduleDenyFor($schedule, 'lotsPerSchedule', 'This plan allows up to ' . $lotCap . ' lot' . ($lotCap == 1 ? '' : 's') . ' per schedule. Move up to {plan} for more room.');
         }
 
         $validator = Validator::make($request->all(), $this->rules());

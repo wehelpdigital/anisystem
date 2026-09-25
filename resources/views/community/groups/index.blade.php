@@ -5,7 +5,7 @@
 @section('page-title', 'Community')
 @section('help-key', 'community-discussions')
 @section('page-subtitle', 'Talk crops with other farmers')
-@section('back', route('community.index'))
+@section('back', \App\Support\BackTo::url(route('community.index')))
 
 @php use App\Support\CommunityAvatar; @endphp
 
@@ -289,7 +289,7 @@
              stays for everyone — locked, it opens the upgrade sheet. --}}
         @php $mayStartRoom = \App\Support\Tier::can('discussionCreate'); @endphp
         <button type="button" id="createGroupBtn" class="btn btn-outline btn-sm"
-                @unless ($mayStartRoom) data-tier-lock="owner" data-lock-say="Creating discussions comes with the Farm Owner plan. You can join any open room." @endunless>
+                @unless ($mayStartRoom) data-tier-lock="{{ \App\Support\Tier::unlocksAt('discussionCreate') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::unlocksAt('discussionCreate'), 'Creating discussions comes with {plan}. You can join any open room.') }}" @endunless>
             @if ($mayStartRoom)
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
             @else
@@ -851,7 +851,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } else if (data.tierLock) {
                 // A tier wall answers with the upgrade sheet, never a toast.
-                window.aneeUpgrade?.(data.message, data.tier || 'solo');
+                window.aneeUpgrade?.(data.message, data.tier);
                 btn.style.opacity = '';
             } else { toast(data.message, 'error'); btn.style.opacity = ''; }
         } catch (_) { toast('Network error — try again.', 'error'); btn.style.opacity = ''; }

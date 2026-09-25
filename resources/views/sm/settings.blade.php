@@ -4,7 +4,7 @@
 @section('page-title', 'Settings')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'settings')
-@section('back', route('sm.hub', ['id' => $schedule->id]))
+@section('back', \App\Support\BackTo::url(route('sm.hub', ['id' => $schedule->id]), $schedule->id))
 
 @push('head')
     @include('partials.tag-sheet-css')
@@ -647,7 +647,7 @@ const __init = () => {
              of the pane (the capture-phase handler wins the click). --}}
         @php $setLogsLocked = ! \App\Support\Tier::scheduleCan($schedule, 'auditLogs'); @endphp
         <button type="button" class="dt-row" data-set-tab-row="logs"
-                @if ($setLogsLocked) data-tier-lock="owner" data-lock-say="The activity Logs come with the Farm Owner plan — every change in the schedule, and by whose hand." @endif>
+                @if ($setLogsLocked) data-tier-lock="{{ \App\Support\Tier::scheduleUnlocksAt($schedule, 'auditLogs') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::scheduleUnlocksAt($schedule, 'auditLogs'), 'The activity Logs come with {plan} — every change in the schedule, and by whose hand.') }}" @endif>
             <span class="dt-row-e {{ $setLogsLocked ? 'tl-dim' : '' }}">🕒</span>
             <span class="dt-row-body {{ $setLogsLocked ? 'tl-dim' : '' }}"><b>Logs</b><i>Everything done in this schedule, and by whose hand.</i></span>
             @if ($setLogsLocked)

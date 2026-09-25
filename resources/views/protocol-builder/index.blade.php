@@ -3,7 +3,7 @@
 @section('title', 'Protocol Builder')
 @section('page-title', 'Protocol Builder')
 @section('page-subtitle', 'Your own protocols, task by task')
-@section('back', route('app.dashboard'))
+@section('back', \App\Support\BackTo::url(route('app.dashboard')))
 
 @push('head')
 <style>
@@ -248,10 +248,16 @@
 
 <script>
 (() => {
+    const PB_FROM = @json(\App\Support\BackTo::key());
+    const PB_FROM_Q = PB_FROM ? '?from=' + PB_FROM : '';
     const U = {
         list: @json(route('pb.list')),
         store: @json(route('pb.store')),
         open: (id) => @json(url('/app/protocol-builder')) + '/' + id,
+        // The editor as a page to go to: the list's own origin rides along
+        // (?from=, BackTo), so editor -> Back -> Back still ends where the
+        // list was opened from. open() stays bare for the API calls.
+        page: (id) => @json(url('/app/protocol-builder')) + '/' + id + PB_FROM_Q,
     };
     const $id = (i) => document.getElementById(i);
     const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -277,7 +283,7 @@
     function paintCost() {
         const o = @json($aboutOpt);
         const cost = $id('pbAboutCost');
-        if (o.aiLocked) { cost.innerHTML = "Building and porting cost nothing. Anee's review comes with <b class=\"is-inline\">Libre + Anee</b> and every plan above it."; return; }
+        if (o.aiLocked) { cost.innerHTML = "Building and porting cost nothing. Anee's review comes with <b class=\"is-inline\">" + @json(\App\Support\Tier::planName(\App\Support\Tier::farmUnlocksAt('aiAnalyses'))) + "</b> and every plan above it."; return; }
         if (!o.canAnalyze) { cost.innerHTML = "Building and porting cost nothing. Anee's review is not available right now."; return; }
         cost.innerHTML = `Building and porting cost nothing. Anee's review spends <b class="is-inline">${o.quote} credits</b>, and you have ${window.creditCoin(o.unlimited ? '∞' : Number(o.balance).toLocaleString())}. Nothing is charged until you ask for one.`;
     }
@@ -326,12 +332,12 @@
             return;
         }
         const row = e.target.closest('.pb-row[data-id]');
-        if (row) window.location.href = U.open(row.getAttribute('data-id'));
+        if (row) window.location.href = U.page(row.getAttribute('data-id'));
     });
     $id('pbRows').addEventListener('keydown', (e) => {
         if (e.key !== 'Enter' && e.key !== ' ') return;
         const row = e.target.closest('.pb-row[data-id]');
-        if (row && e.target === row) { e.preventDefault(); window.location.href = U.open(row.getAttribute('data-id')); }
+        if (row && e.target === row) { e.preventDefault(); window.location.href = U.page(row.getAttribute('data-id')); }
     });
     $id('pbRowMenu').addEventListener('click', async (e) => {
         const b = e.target.closest('[data-row-act]');
@@ -339,7 +345,7 @@
         const act = b.getAttribute('data-row-act');
         const r = ROWS.find((x) => x.id === MENU_ID);
         closeSheet('pbRowMenu');
-        if (act === 'open') { window.location.href = U.open(MENU_ID); return; }
+        if (act === 'open') { window.location.href = U.page(MENU_ID); return; }
         if (act === 'copy') {
             try {
                 const res = await api(U.open(MENU_ID) + '/duplicate', { method: 'POST', body: {} });
@@ -576,7 +582,7 @@
         btn.disabled = true;
         try {
             const res = await api(U.store, { method: 'POST', body: form.read() });
-            window.location.href = res.data.url;
+            window.location.href = res.data.url + (PB_FROM ? (String(res.data.url).includes('?') ? '&' : '?') + 'from=' + PB_FROM : '');
         } catch (err) { toast(err.message, 'error'); btn.disabled = false; }
     });
 

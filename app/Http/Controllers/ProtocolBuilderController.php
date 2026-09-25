@@ -528,7 +528,7 @@ class ProtocolBuilderController extends Controller
     private function guardTier(): void
     {
         if (! Tier::farmCan('aiAnalyses')) {
-            Tier::deny('Anee\'s review of a protocol comes with Libre + Anee, and with every plan above it.', 'libreAnee');
+            Tier::farmDenyFor('aiAnalyses', 'Anee\'s review of a protocol comes with {plan}, and with every plan above it.');
         }
     }
 
@@ -874,7 +874,7 @@ PROMPT;
         $user = $request->user();
         if (! $user->canCreateSchedule()) {
             $limit = $user->scheduleLimit();
-            Tier::deny('Your plan allows ' . ($limit === 0 ? 'no' : 'up to ' . $limit) . ' active ' . ($limit === 1 ? 'season' : 'seasons') . '. Finish or archive one, or upgrade for more.', $this->portRung());
+            Tier::denyFor('schedulesActive', 'Your plan allows ' . ($limit === 0 ? 'no' : 'up to ' . $limit) . ' active ' . ($limit === 1 ? 'season' : 'seasons') . '. Finish or archive one, or move up to {plan} for more.');
         }
         $v = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
@@ -898,7 +898,7 @@ PROMPT;
         $lotsIn = array_values((array) $request->input('lots'));
         $cap = Tier::limit('lotsPerSchedule');
         if ($cap !== null && count($lotsIn) > (int) $cap) {
-            Tier::deny('Your plan allows ' . (int) $cap . ' ' . ((int) $cap === 1 ? 'lot' : 'lots') . ' in a season.', $this->portRung());
+            Tier::denyFor('lotsPerSchedule', 'Your plan allows ' . (int) $cap . ' ' . ((int) $cap === 1 ? 'lot' : 'lots') . ' in a season. Move up to {plan} for more room.');
         }
         $protocols = AsProtocol::active()->where('userId', (int) Auth::id())
             ->whereIn('id', array_map(fn ($l) => (int) $l['protocolId'], $lotsIn))->get()->keyBy('id');
@@ -1326,14 +1326,6 @@ PROMPT;
             'isWorker' => WorkerContext::inWorkerContext(),
             'creditsUrl' => route('ai.credits'),
         ];
-    }
-
-    /** The plan a season-capped farmer is sold: Solo below it, Owner above. */
-    private function portRung(): string
-    {
-        $tier = (string) optional(Auth::user())->planTier();
-
-        return in_array($tier, ['libre', 'libreAnee'], true) ? 'solo' : 'owner';
     }
 
     private function shape(AsProtocol $p, bool $full, ?Collection $versions = null): array

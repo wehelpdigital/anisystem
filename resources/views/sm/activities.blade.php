@@ -4,7 +4,7 @@
 @section('page-title', 'Activities')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'activities')
-@section('back', route('sm.hub', ['id' => $schedule->id]))
+@section('back', \App\Support\BackTo::url(route('sm.hub', ['id' => $schedule->id]), $schedule->id))
 
 {{-- The activity board is the work surface: on a phone the bottom tab bar eats
      a strip of it for navigation that Back already provides. --}}
@@ -4794,9 +4794,17 @@
     const OFFLINE_ROOMS = new Set(['activities', 'notes', 'growth']);
 
     const ACTIVITIES_URL = MODULES.activities.url;
-    const shellUrl = (key) => key === 'activities'
-        ? ACTIVITIES_URL
-        : ACTIVITIES_URL + (ACTIVITIES_URL.includes('?') ? '&' : '?') + 'module=' + key;
+    /* Where the shell was opened from (?from=dashboard, ?from=tags), kept on
+       the address the shell rewrites, so a refresh still knows where the
+       header's back arrow goes. BackTo only honours its own short list. */
+    const SHELL_FROM = @json(\App\Support\BackTo::key());
+    const shellUrl = (key) => {
+        let u = key === 'activities'
+            ? ACTIVITIES_URL
+            : ACTIVITIES_URL + (ACTIVITIES_URL.includes('?') ? '&' : '?') + 'module=' + key;
+        if (SHELL_FROM) u += (u.includes('?') ? '&' : '?') + 'from=' + SHELL_FROM;
+        return u;
+    };
 
     const host = document.getElementById('moduleHost');
     const activitiesRoot = document.getElementById('activitiesRoot');
@@ -4885,7 +4893,10 @@
      * because recording where you came FROM while going back is how a back
      * button ends up bouncing between two screens for ever. */
     let noTrail = false;
-    const HUB_URL = @json(route('sm.hub', ['id' => $schedule->id]));
+    /* Out of the shell: the season's hub, unless the shell was opened from
+       somewhere else that said so (the dashboard's Open Activities, a tag).
+       The header's back arrow is painted from the same answer. */
+    const HUB_URL = @json(\App\Support\BackTo::url(route('sm.hub', ['id' => $schedule->id]), $schedule->id));
 
     /** Say where back goes, so the word on the button is not a guess. */
     function paintModuleBack() {
@@ -5030,7 +5041,7 @@
                     // The farm's plan lacks this module: the sheet, not a toast.
                     let lock = null;
                     try { lock = await res.clone().json(); } catch (_) {}
-                    if (lock && lock.tierLock) { window.aneeUpgrade?.(lock.message, lock.tier || 'solo'); throw Object.assign(new Error(''), { quiet: true }); }
+                    if (lock && lock.tierLock) { window.aneeUpgrade?.(lock.message, lock.tier); throw Object.assign(new Error(''), { quiet: true }); }
                 }
                 if (!res.ok) throw new Error('Could not load ' + MODULES[key].label);
                 const wrap = document.createElement('div');

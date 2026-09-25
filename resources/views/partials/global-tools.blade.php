@@ -109,6 +109,16 @@
         .qa-build .qa-ico { background: #fff4e5; color: #c2410c; }
         .qa-build:hover { border-color: #cfe3bd; } .qa-build:hover .qa-go { color: #3d6823; }
         html.dark .qa-build .qa-ico { background: rgb(194 65 12 / .22); color: #fdba74; }
+        /* The phonebook had no plate of its own and sat bare in the list. */
+        .qa-contacts .qa-ico { background: #fdeef4; color: #be185d; }
+        @media (hover: hover) {.qa-contacts:hover { border-color: #f5c9dc; } .qa-contacts:hover .qa-go { color: #be185d; } }
+        html.dark .qa-contacts .qa-ico { background: rgb(190 24 93 / .22); color: #f9a8d4; }
+        .qa-cmp .qa-ico { background: #f3effd; color: #6d28d9; }
+        @media (hover: hover) {.qa-cmp:hover { border-color: #d9ccf7; } .qa-cmp:hover .qa-go { color: #6d28d9; } }
+        html.dark .qa-cmp .qa-ico { background: rgb(109 40 217 / .24); color: #c4b5fd; }
+        .qa-tags .qa-ico { background: #e7f6f1; color: #0f766e; }
+        @media (hover: hover) {.qa-tags:hover { border-color: #bfe5d8; } .qa-tags:hover .qa-go { color: #0f766e; } }
+        html.dark .qa-tags .qa-ico { background: rgb(15 118 110 / .24); color: #7dd3c0; }
         html.dark .qa-notes .qa-ico { background: rgb(180 83 9 / .18); color: #e0b457; }
         html.dark .qa-gallery .qa-ico { background: rgb(29 78 216 / .22); color: #9fc0f5; }
         html.dark .qa-cap .qa-ico { background: rgb(61 104 35 / .25); color: #a5c97e; }
@@ -144,9 +154,9 @@
                  season, so it does not ask which one first. --}}
             {{-- On Libre these two stay in the row, wearing a lock where the
                  chevron sat — the tap opens the upgrade sheet, not the page. --}}
-            @php $qWtpLocked = ! \App\Support\Tier::farmCan('aiAnalyses'); @endphp
+            @php $qWtpLocked = ! \App\Support\Tier::farmCan('aiAnalyses'); $qWtpRung = \App\Support\Tier::farmUnlocksAt('aiAnalyses'); $qWtpWith = \App\Support\Tier::withPlan($qWtpRung); @endphp
             <a href="{{ route('wtp.page') }}" class="qa-tile qa-wtp"
-               @if ($qWtpLocked) data-tier-lock="libreAnee" data-lock-say="The When to Plant analysis comes with Libre + Anee — Anee reads your town's climate and ENSO outlook to name your safest planting window." @endif>
+               @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The When to Plant analysis comes with {{ $qWtpWith }} — Anee reads your town's climate and ENSO outlook to name your safest planting window." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>When to Plant Analysis</b>
@@ -159,7 +169,7 @@
                 @endif
             </a>
             <a href="{{ route('whatp.page') }}" class="qa-tile qa-wtp"
-               @if ($qWtpLocked) data-tier-lock="libreAnee" data-lock-say="The What to Plant analysis comes with Libre + Anee — Anee weighs your location, season forecast and soil to recommend the crop." @endif>
+               @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The What to Plant analysis comes with {{ $qWtpWith }} — Anee weighs your location, season forecast and soil to recommend the crop." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/plant.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>What to Plant Analysis</b>
@@ -174,7 +184,7 @@
             {{-- The third: which variety, searched on the web and ranked by
                  the farmer's own priorities. --}}
             <a href="{{ route('vary.page') }}" class="qa-tile qa-wtp"
-               @if ($qWtpLocked) data-tier-lock="libreAnee" data-lock-say="Variety research comes with Libre + Anee — Anee analyzes the newest {{ \App\Support\Region::ph() ? 'Philippine' : 'local' }} varieties and hybrids deeply and ranks them for your soil, weather and priorities." @endif>
+               @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="Variety research comes with {{ $qWtpWith }} — Anee analyzes the newest {{ \App\Support\Region::ph() ? 'Philippine' : 'local' }} varieties and hybrids deeply and ranks them for your soil, weather and priorities." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/biotechnology.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>Variety Research & Comparison</b>
@@ -189,7 +199,7 @@
             {{-- The fourth: the whole season written out by growth stage --
                  bags, sprays, water, watch-list -- for one field. --}}
             <a href="{{ route('proto.page') }}" class="qa-tile qa-wtp"
-               @if ($qWtpLocked) data-tier-lock="libreAnee" data-lock-say="The Crop Protocol Analysis comes with Libre + Anee — Anee writes your season by growth stage: the bags of fertilizer and when, the sprays to have ready, the water, the pests and weeds to watch." @endif>
+               @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The Crop Protocol Analysis comes with {{ $qWtpWith }} — Anee writes your season by growth stage: the bags of fertilizer and when, the sprays to have ready, the water, the pests and weeds to watch." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/checklist.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>Crop Protocol Analysis</b>
@@ -201,6 +211,28 @@
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 @endif
             </a>
+
+            {{-- Compare Reports: two saved reports side by side, any season
+                 against any other. Gated as CompareController::gate() gates
+                 it -- the farm's plan first (reportsAll), then a worker's
+                 Reports grant. A worker the farm keeps out of Reports does
+                 not see a door that only refuses. --}}
+            @if (\App\Support\WorkerContext::canView() && \App\Support\WorkerContext::canUseModule('reports'))
+                @php $qCmpLocked = ! \App\Support\Tier::farmCan('reportsAll'); $qCmpRung = \App\Support\Tier::farmUnlocksAt('reportsAll'); @endphp
+                <a href="{{ route('compare.page') }}" class="qa-tile qa-cmp"
+                   @if ($qCmpLocked) data-tier-lock="{{ $qCmpRung }}" data-lock-say="{{ \App\Support\Tier::say($qCmpRung, 'Compare Reports comes with {plan} — hold any two saved reports side by side, this season against the last.') }}" @endif>
+                    <span class="qa-ico"><img src="{{ asset('images/icons/ab-testing.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
+                    <span class="qa-txt {{ $qCmpLocked ? 'tl-dim' : '' }}">
+                        <b>Compare Reports</b>
+                        <i>Hold two saved reports side by side — this season against the last, one field against another — and see what changed.</i>
+                    </span>
+                    @if ($qCmpLocked)
+                        <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+                    @else
+                        <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    @endif
+                </a>
+            @endif
 
         <a href="{{ route('pb.page') }}" class="qa-tile qa-build">
             <span class="qa-ico"><img src="{{ asset('images/icons/bricks.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
@@ -238,6 +270,18 @@
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
+            {{-- Every tag in every season and every tool, and what wears it.
+                 Open to every plan and every login, as the page is: a worker
+                 standing in somebody else's farm is shown their own tags
+                 there, and the page says so. --}}
+            <a href="{{ route('tags.global') }}" class="qa-tile qa-tags">
+                <span class="qa-ico"><img src="{{ asset('images/label.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
+                <span class="qa-txt">
+                    <b>Global Tags</b>
+                    <i>Every tag from every season and tool, and everything wearing it, in one place.</i>
+                </span>
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </a>
             @php
                 /* The camera and the recorder are modules the owner grants,
                    and the Hub has always drawn these two tiles only for
@@ -262,10 +306,11 @@
                    worked: a worker rides the owner's plan both ways — they
                    get what the farm bought, and nothing it did not. */
                 $qVidLocked = ! \App\Support\Tier::farmCan('videoRecording');
+                $qVidRung = \App\Support\Tier::farmUnlocksAt('videoRecording');
             @endphp
             @if ($allSchedules->isNotEmpty() && $qMayVideo)
                 <button type="button" id="quickRecordBtn" class="qa-tile qa-rec"
-                        @if ($qVidLocked) data-tier-lock="solo" data-lock-say="Video recording comes with the Solo Farmer plan. Photos and voice notes are yours on Libre." @endif>
+                        @if ($qVidLocked) data-tier-lock="{{ $qVidRung }}" data-lock-say="{{ \App\Support\Tier::say($qVidRung, 'Video recording comes with {plan}. Photos and voice notes stay yours on every plan.') }}" @endif>
                     <span class="qa-ico"><img src="{{ asset('images/video-camera-b.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                     <span class="qa-txt {{ $qVidLocked ? 'tl-dim' : '' }}">
                         <b>Quick Record</b>

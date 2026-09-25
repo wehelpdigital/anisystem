@@ -214,7 +214,7 @@ class NotesHubController extends Controller
         // The farm's plan, not the worker's: a clip filmed on this farm rides
         // the plan the farm bought.
         if (! \App\Support\Tier::farmCan('videoRecording')) {
-            \App\Support\Tier::deny('Video recording is not included in this farm\'s plan.');
+            \App\Support\Tier::farmDenyFor('videoRecording', 'Video recording comes with {plan}. Photos and voice notes stay yours on every plan.');
         }
         $validator = Validator::make($request->all(), [
             'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-msvideo|max:2097152',

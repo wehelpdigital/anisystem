@@ -566,7 +566,7 @@ class ScheduleMapController extends BaseScheduleController
         $mapCap = \App\Support\Tier::limit('mapsTotal');
         if ($mapCap !== null && ! $request->input('saveId')
             && \App\Models\ScheduleMapSave::active()->where('userId', $meId)->count() >= $mapCap) {
-            \App\Support\Tier::deny('Your plan keeps up to ' . $mapCap . ' saved maps. Delete one or upgrade for more.');
+            \App\Support\Tier::denyFor('mapsTotal', 'Your plan keeps up to ' . $mapCap . ' saved maps. Delete one, or move up to {plan} for more.');
         }
 
         $validator = Validator::make($request->all(), [

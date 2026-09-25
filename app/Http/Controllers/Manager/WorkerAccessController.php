@@ -44,7 +44,7 @@ class WorkerAccessController extends Controller
             ], 403);
         }
         if (! $boss->canWorkerAccounts()) {
-            return response()->json(['success' => false, 'message' => 'Worker logins are a Boss/Lifetime feature. Upgrade to enable them.'], 403);
+            \App\Support\Tier::denyFor('workerLogins', 'Worker logins and access levels come with {plan}.', \App\Support\Tier::of($boss));
         }
 
         $validator = Validator::make($request->all(), [
@@ -155,7 +155,7 @@ class WorkerAccessController extends Controller
             ], 403);
         }
         if (! $boss->canWorkerAccounts()) {
-            return response()->json(['success' => false, 'message' => 'Worker logins are a Boss/Lifetime feature. Upgrade to enable them.'], 403);
+            \App\Support\Tier::denyFor('workerLogins', 'Worker logins and access levels come with {plan}.', \App\Support\Tier::of($boss));
         }
 
         $validator = Validator::make($request->all(), [

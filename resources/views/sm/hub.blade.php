@@ -4,7 +4,7 @@
 @section('page-title', $schedule->title)
 @section('page-subtitle', 'Schedule modules')
 @section('help-key', 'hub')
-@section('back', route('sm.index'))
+@section('back', \App\Support\BackTo::url(route('sm.index'), $schedule->id))
 
 @php
     $statusBadges = [
@@ -443,11 +443,12 @@
                (a worker rides it). Locked, the tile stays and sells: the
                tap opens the upgrade sheet. */
             $hubVidLocked = ! \App\Support\Tier::scheduleCan($schedule, 'videoRecording');
+            $hubVidRung = \App\Support\Tier::scheduleUnlocksAt($schedule, 'videoRecording');
         @endphp
         @if ($may('video'))
         <button type="button" id="quickRecordBtn"
             class="cta-tile qr-cta rounded-2xl p-5 flex items-center gap-4 text-left"
-            @if ($hubVidLocked) data-tier-lock="solo" data-lock-say="Video recording comes with the Solo Farmer plan. Photos and voice notes are yours on Libre." @endif>
+            @if ($hubVidLocked) data-tier-lock="{{ $hubVidRung }}" data-lock-say="{{ \App\Support\Tier::say($hubVidRung, 'Video recording comes with {plan}. Photos and voice notes stay yours on every plan.') }}" @endif>
             <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0 {{ $hubVidLocked ? 'tl-dim' : '' }}">
                 <img src="{{ asset('images/video-camera-b.png') }}" alt="" style="width:1.75rem;height:1.75rem;object-fit:contain">
             </span>
@@ -495,9 +496,12 @@
             @continue(array_key_exists($moduleKey, $doorOpen) && ! $doorOpen[$moduleKey])
             {{-- Workers and the Inventory are the Solo Farmer plan's: on a free
                  plan the tile stays, locked, and opens the upgrade sheet. --}}
-            @php $tileLocked = in_array($moduleKey, ['workers', 'inventory'], true) && ! \App\Support\Tier::scheduleCan($schedule, $moduleKey); @endphp
+            @php
+                $tileLocked = in_array($moduleKey, ['workers', 'inventory'], true) && ! \App\Support\Tier::scheduleCan($schedule, $moduleKey);
+                $tileRung = $tileLocked ? \App\Support\Tier::scheduleUnlocksAt($schedule, $moduleKey) : '';
+            @endphp
             <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => $moduleKey]) }}" @unless ($tileLocked) data-nav-loader @endunless class="card card-hover block"
-               @if ($tileLocked) data-tier-lock="solo" data-lock-say="{{ $moduleKey === 'workers' ? 'Workers come with the Solo Farmer plan — the crew, their days and their pay, on every activity.' : 'The Inventory comes with the Solo Farmer plan — the shed, its stock, and what each activity takes from it.' }}" @endif>
+               @if ($tileLocked) data-tier-lock="{{ $tileRung }}" data-lock-say="{{ \App\Support\Tier::say($tileRung, $moduleKey === 'workers' ? 'Workers come with {plan} — the crew, their days and their pay, on every activity.' : 'The Inventory comes with {plan} — the shed, its stock, and what each activity takes from it.') }}" @endif>
                 <div class="p-4 flex flex-col gap-3">
                     <div class="flex items-start justify-between">
                         <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center {{ $tileLocked ? 'tl-dim' : '' }}">
@@ -523,10 +527,13 @@
         {{-- Collab Room — right after AI Technician. When the tier lacks it
              the tile shows anyway, locked, so the door advertises the Farm
              Owner plan; with the tier it keeps its old has-a-team rule. --}}
-        @php $collabLocked = ! \App\Support\Tier::scheduleCan($schedule, 'collab'); @endphp
+        @php
+            $collabLocked = ! \App\Support\Tier::scheduleCan($schedule, 'collab');
+            $collabRung = \App\Support\Tier::scheduleUnlocksAt($schedule, 'collab');
+        @endphp
         @if ($collabLocked)
             <a href="{{ route('sm.collab', ['id' => $schedule->id]) }}" class="card card-hover block"
-               data-tier-lock="owner" data-lock-say="The Collab Room — team chat, whiteboard and calls — comes with the Farm Owner plan.">
+               data-tier-lock="{{ $collabRung }}" data-lock-say="{{ \App\Support\Tier::say($collabRung, 'The Collab Room — team chat, whiteboard and calls — comes with {plan}.') }}">
                 <div class="p-4 flex flex-col gap-3">
                     <div class="flex items-start justify-between">
                         <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center tl-dim">

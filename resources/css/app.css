@@ -263,11 +263,26 @@ html.dark a.credit-coin:hover { background: #3a2d14; color: #ffd88a; }
     padding: 1.35rem 1.3rem 1.25rem; box-shadow: 0 24px 60px rgb(0 0 0 / .35);
     animation: auCard .28s cubic-bezier(.22, 1, .36, 1) both; }
 @keyframes auCard { from { transform: translateY(14px) scale(.97); } to { transform: none; } }
-#aneeUpgradeBox .au-head { display: flex; align-items: center; gap: .8rem; }
-#aneeUpgradeBox .au-lock { flex: none; width: 2.9rem; height: 2.9rem; border-radius: 1rem;
-    display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(135deg, var(--color-brand-600), var(--color-brand-800)); color: #fff; }
-#aneeUpgradeBox .au-lock svg { width: 1.4rem; height: 1.4rem; }
+/* Anee's face heads the sheet: her crying clip in a ring, the way the
+   analysis loaders frame her, with the lock pinned to the ring's edge. */
+#aneeUpgradeBox .au-head { display: flex; flex-direction: column; align-items: center; gap: .7rem; text-align: center; }
+#aneeUpgradeBox .au-face { position: relative; flex: none; width: 6.5rem; height: 6.5rem;
+    animation: auFace .42s cubic-bezier(.22, 1, .36, 1) .06s both; }
+@keyframes auFace { from { transform: scale(.82); opacity: 0; } to { transform: none; opacity: 1; } }
+#aneeUpgradeBox .au-ring { position: absolute; inset: 0; border-radius: 999px; overflow: hidden; background: #cfe3bd;
+    box-shadow: 0 0 0 4px var(--color-white), 0 14px 34px -14px rgb(40 70 15 / .6); }
+#aneeUpgradeBox .au-ring video, #aneeUpgradeBox .au-ring img { position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; display: block; pointer-events: none; }
+#aneeUpgradeBox .au-ring video::-webkit-media-controls, #aneeUpgradeBox .au-ring video::-webkit-media-controls-enclosure { display: none !important; }
+#aneeUpgradeBox .au-halo { position: absolute; inset: -6px; border-radius: 999px; pointer-events: none;
+    animation: auHalo 2.4s ease-in-out infinite; }
+@keyframes auHalo { 0%, 100% { box-shadow: 0 0 0 0 rgb(107 159 61 / .35); } 50% { box-shadow: 0 0 0 12px rgb(107 159 61 / 0); } }
+#aneeUpgradeBox .au-lock { position: absolute; right: -.15rem; bottom: -.1rem; width: 2rem; height: 2rem; border-radius: 999px;
+    display: flex; align-items: center; justify-content: center; color: #fff;
+    background: linear-gradient(135deg, var(--color-brand-600), var(--color-brand-800));
+    box-shadow: 0 0 0 3px var(--color-white), 0 4px 10px -3px rgb(0 0 0 / .35); }
+#aneeUpgradeBox .au-lock svg { width: 1rem; height: 1rem; }
+html.dark #aneeUpgradeBox .au-ring { background: #2f4d24; box-shadow: 0 0 0 4px var(--color-white), 0 14px 34px -14px rgb(0 0 0 / .75); }
 #aneeUpgradeBox .au-kicker { display: block; font-size: .68rem; font-weight: 800;
     letter-spacing: .06em; text-transform: uppercase; color: var(--color-gray-400); }
 #aneeUpgradeBox h3 { font-size: 1.05rem; font-weight: 800; color: var(--color-gray-900); line-height: 1.25; }
@@ -284,7 +299,7 @@ html.dark a.credit-coin:hover { background: #3a2d14; color: #ffd88a; }
     font-size: .8rem; line-height: 1.45; color: var(--color-gray-700); }
 #aneeUpgradeBox .au-tier-list svg { flex: none; width: .95rem; height: .95rem; margin-top: .15rem; color: var(--color-brand-600); }
 #aneeUpgradeBox .au-acts { display: flex; flex-direction: column; gap: .45rem; margin-top: 1.05rem; }
-@media (prefers-reduced-motion: reduce) { #aneeUpgradeBox.is-open, #aneeUpgradeBox .au-card { animation: none; } }
+@media (prefers-reduced-motion: reduce) { #aneeUpgradeBox.is-open, #aneeUpgradeBox .au-card, #aneeUpgradeBox .au-face, #aneeUpgradeBox .au-halo { animation: none; } }
 
 /* The lock chip a tier-locked button wears in place of its usual arrow —
    pairs with the [data-tier-lock] click handler in app.js. */

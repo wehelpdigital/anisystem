@@ -219,7 +219,7 @@ class DocEntryController extends BaseScheduleController
     {
         if ($request->hasFile('files')
             && ! \App\Support\Tier::scheduleCan(\App\Models\AsCroppingSchedule::find($scheduleId), 'docUploads')) {
-            \App\Support\Tier::deny('Document uploads come with the paid plans. The entry\'s words still save.');
+            \App\Support\Tier::scheduleDenyFor(\App\Models\AsCroppingSchedule::find($scheduleId), 'docUploads', 'Attaching files to documentation comes with {plan}. The entry\'s words still save.');
         }
         if (! $request->hasFile('files')) {
             return [];

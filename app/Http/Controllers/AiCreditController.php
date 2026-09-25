@@ -61,7 +61,7 @@ class AiCreditController extends Controller
     {
         $user = $request->user();
         if (! $user->canUseAi()) {
-            return redirect()->route('ai.credits', ['tab' => 'buy'])->with('error', 'AI credits come with Libre + Anee and every plan above it.');
+            return redirect()->route('ai.credits', ['tab' => 'buy'])->with('error', 'AI credits come with ' . \App\Support\Tier::withPlan(\App\Support\Tier::unlocksAt('ai', $user->planTier())) . ' and every plan above it.');
         }
         if ($pending = $this->pendingPurchase($user->id)) {
             return redirect()->route('ai.credits')
@@ -80,7 +80,7 @@ class AiCreditController extends Controller
         $user = $request->user();
 
         if (! $user->canUseAi()) {
-            return redirect()->route('ai.credits', ['tab' => 'buy'])->with('error', 'AI credits come with Libre + Anee and every plan above it.');
+            return redirect()->route('ai.credits', ['tab' => 'buy'])->with('error', 'AI credits come with ' . \App\Support\Tier::withPlan(\App\Support\Tier::unlocksAt('ai', $user->planTier())) . ' and every plan above it.');
         }
 
         // The price is the country's (pesos at home, dollars elsewhere),

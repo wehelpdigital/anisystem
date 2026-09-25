@@ -61,7 +61,7 @@ class WhenToPlantController extends Controller
     private function guardTier(): void
     {
         if (! \App\Support\Tier::farmCan('aiAnalyses')) {
-            \App\Support\Tier::deny('The When to Plant analysis comes with Libre + Anee, and with every plan above it.', 'libreAnee');
+            \App\Support\Tier::farmDenyFor('aiAnalyses', 'The When to Plant analysis comes with {plan}, and with every plan above it.');
         }
     }
 

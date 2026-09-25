@@ -269,7 +269,8 @@ class CroppingScheduleController extends Controller
             return redirect()->route('sm.index')->with('error',
                 'Your ' . ($user->tierConfig()['name'] ?? ucfirst($user->planTier())) . ' plan allows '
                 . ($limit === 0 ? 'no' : ('up to ' . $limit)) . ' active cropping schedule' . ($limit == 1 ? '' : 's')
-                . '. Finish or archive a season, or upgrade for more.');
+                . '. Finish or archive a season, or move up to '
+                . \App\Support\Tier::withPlan(\App\Support\Tier::unlocksAt('schedulesActive', $user->planTier())) . ' for more.');
         }
 
         return null;
@@ -341,9 +342,9 @@ class CroppingScheduleController extends Controller
     {
         if ($request->user() && ! $request->user()->canCreateSchedule()) {
             $limit = $request->user()->scheduleLimit();
-            return response()->json(['success' => false, 'message' =>
-                'Your ' . ucfirst($request->user()->planTier()) . ' plan allows ' . ($limit === 0 ? 'no' : ('up to ' . $limit))
-                . ' schedules. Upgrade to Boss for unlimited.'], 403);
+            \App\Support\Tier::denyFor('schedulesActive', 'Your ' . ($request->user()->tierConfig()['name'] ?? ucfirst($request->user()->planTier())) . ' plan allows '
+                . ($limit === 0 ? 'no' : ('up to ' . $limit)) . ' active cropping schedule' . ($limit == 1 ? '' : 's')
+                . '. Finish or archive a season, or move up to {plan} for more.');
         }
 
         $validator = Validator::make($request->all(), [
@@ -677,7 +678,7 @@ class CroppingScheduleController extends Controller
         // The diary is the Farm Owner plan's story — the tab stays visible
         // below it, locked, and this wall answers anyone who slips past.
         if (! \App\Support\Tier::scheduleCan($schedule, 'auditLogs')) {
-            \App\Support\Tier::deny('The activity Logs come with the Farm Owner plan — every change in the schedule, and by whose hand.', 'owner');
+            \App\Support\Tier::scheduleDenyFor($schedule, 'auditLogs', 'The activity Logs come with {plan} — every change in the schedule, and by whose hand.');
         }
 
         $q = \App\Models\AsScheduleAudit::where('croppingScheduleId', $schedule->id);

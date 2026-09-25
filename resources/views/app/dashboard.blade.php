@@ -948,7 +948,7 @@
     @include('sm.partials.tip-of-day', [
         'tip' => $tip ?? null,
         'aiHref' => (($canUseAi ?? false) && $latestSchedules->isNotEmpty())
-            ? route('sm.ai', ['id' => $latestSchedules->first()->id])
+            ? route('sm.ai', ['id' => $latestSchedules->first()->id, 'from' => 'dashboard'])
             : null,
     ])
 
@@ -1080,7 +1080,7 @@
                                                 $moreLots = max(0, $act->lots->count() - 2);
                                             @endphp
                                             <a class="dn-card prio-{{ $prio }}"
-                                               href="{{ route('sm.activities', ['id' => $schedule->id]) }}">
+                                               href="{{ route('sm.activities', ['id' => $schedule->id, 'from' => 'dashboard']) }}">
                                                 <span class="dn-card-top">
                                                     @if ($typeLabel)
                                                         <span class="dn-type">{{ $typeLabel }}</span>
@@ -1135,7 +1135,7 @@
                                     </div>
                                 </div>
                             @else
-                                <a href="{{ route('sm.lots', ['id' => $schedule->id]) }}" class="inline-flex items-center gap-1 text-[0.688rem] font-semibold text-brand-600 hover:text-brand-700">
+                                <a href="{{ route('sm.lots', ['id' => $schedule->id, 'from' => 'dashboard']) }}" class="inline-flex items-center gap-1 text-[0.688rem] font-semibold text-brand-600 hover:text-brand-700">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                                     Add a lot address for local weather
                                 </a>
@@ -1167,7 +1167,7 @@
                                         @endif
                                     </p>
                                 @endunless
-                                <a href="{{ route('sm.activities', ['id' => $schedule->id]) }}"
+                                <a href="{{ route('sm.activities', ['id' => $schedule->id, 'from' => 'dashboard']) }}"
                                    class="ds-open sweep-fill sweep-green"
                                    style="--sw-t: 12s; --sw-d: -{{ $loop->index * 3 }}s">Open Activities</a>
                             </div>
@@ -1194,7 +1194,7 @@
                         <div class="divide-y divide-gray-100">
                             @foreach ($openTickets as $ticket)
                                 @php $tAnswered = $ticket->status === 'answered'; $tWhen = $ticket->lastReplyAt ?? $ticket->created_at; @endphp
-                                <a href="{{ route('support.show', ['id' => $ticket->id]) }}" class="block px-1 py-2.5 hover:bg-gray-50 transition">
+                                <a href="{{ route('support.show', ['id' => $ticket->id, 'from' => 'dashboard']) }}" class="block px-1 py-2.5 hover:bg-gray-50 transition">
                                     <div class="flex items-start justify-between gap-2">
                                         <p class="font-semibold text-gray-900 text-sm leading-snug min-w-0 line-clamp-1">{{ $ticket->subject }}</p>
                                         <span class="badge {{ $tAnswered ? 'badge-green' : 'badge-yellow' }} shrink-0">{{ $tAnswered ? 'Answered' : 'Open' }}</span>
@@ -1260,7 +1260,7 @@
                 @php $__aneeShop = ! $canUseAi && \App\Support\WorkerContext::inWorkerContext(); @endphp
                 <a href="{{ $canUseAi ? route('ai.home') : ($__aneeShop ? '#' : route('purchase.plans', ['plan' => 'libre-anee'])) }}"
                    class="dash-anee-go sweep-fill sweep-green" style="--sw-t: 13s; --sw-d: -4s"
-                   @if ($__aneeShop) data-tier-lock="solo" data-lock-say="{{ $aneeName }} is not part of this farm's plan." @endif>
+                   @if ($__aneeShop) data-tier-lock="{{ \App\Support\Tier::farmUnlocksAt('ai') }}" data-lock-say="{{ $aneeName }} is not part of this farm's plan." @endif>
                     {{ $canUseAi ? 'Chat with ' . $aneeName : 'Unlock ' . $aneeName }}
                 </a>
 
@@ -1425,7 +1425,7 @@
                         </span>
                         <h2>Discussion Groups</h2>
                         <p>Rooms where farmers ask each other things — a pest nobody can name, what a buyer is paying this week, whether to plant now or wait. Join one and your question reaches people who have already grown it.</p>
-                        <a href="{{ route('community.groups.index') }}" class="btn btn-primary btn-sm">Browse the groups</a>
+                        <a href="{{ route('community.groups.index', ['from' => 'dashboard']) }}" class="btn btn-primary btn-sm">Browse the groups</a>
                     </div>
                 </section>
             @else
@@ -1436,11 +1436,11 @@
                             <img src="{{ asset('images/speech-bubbles.png') }}" alt="" width="20" height="20" class="shrink-0" style="width:1.25rem;height:1.25rem;">
                             Latest Discussions
                         </h2>
-                        <a href="{{ route('community.groups.index') }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">See more →</a>
+                        <a href="{{ route('community.groups.index', ['from' => 'dashboard']) }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">See more →</a>
                     </div>
                     <div class="divide-y divide-gray-100">
                         @foreach ($latestDiscussions as $d)
-                            <a href="{{ route('community.groups.show', ['id' => $d->groupId]) }}" class="block px-1 py-2.5 hover:bg-gray-50 transition">
+                            <a href="{{ route('community.groups.show', ['id' => $d->groupId, 'from' => 'dashboard']) }}" class="block px-1 py-2.5 hover:bg-gray-50 transition">
                                 <p class="text-xs text-gray-400 leading-tight truncate">
                                     <span class="font-semibold text-brand-700">{{ optional($d->group)->name }}</span>
                                     · {{ optional($d->author)->full_name }}
@@ -1482,7 +1482,7 @@
                 <a href="{{ route('community.blog') }}" class="text-xs font-semibold text-brand-600 hover:text-brand-700 shrink-0">See all →</a>
             </div>
             <div class="blog-grid blog-grid-inset">
-                @include('community.blog.partials.cards', ['posts' => $latestBlog->take(3)])
+                @include('community.blog.partials.cards', ['posts' => $latestBlog->take(3), 'blogFrom' => 'dashboard'])
             </div>
         </div>
     @endif
@@ -1921,7 +1921,7 @@
         // date, no forecast. It stands in the row greyed with a lock, and
         // tapping it opens the upgrade sheet — the missing days SELL.
         if (d.locked) {
-            return `<div class="flex-1 min-w-0 text-center rounded-lg px-1 py-1.5 wx-locked-day" data-tier-lock="solo" data-lock-say="The full 5-day forecast comes with the Solo Farmer plan — Libre reads today and tomorrow.">
+            return `<div class="flex-1 min-w-0 text-center rounded-lg px-1 py-1.5 wx-locked-day" data-tier-lock="{{ \App\Support\Tier::unlocksAt('weatherDays') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::unlocksAt('weatherDays'), 'The full 5-day forecast comes with {plan} — your plan reads today and tomorrow.') }}">
                 <p class="text-[0.625rem] font-bold text-gray-400 truncate">${esc(d.dow || '')}</p>
                 <div class="dash-wx-art" style="display:flex;align-items:center;justify-content:center;opacity:.55"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:1.1rem;height:1.1rem;color:var(--color-gray-400)"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></div>
                 <p class="text-[0.562rem] font-bold text-gray-400">Locked</p>

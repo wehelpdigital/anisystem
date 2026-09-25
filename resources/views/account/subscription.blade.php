@@ -38,7 +38,7 @@
 <div class="max-w-4xl mx-auto mb-5">
     <div class="card p-4">
         <a href="{{ route('ai.credits') }}" class="flex items-center gap-3 rounded-xl -m-1 p-1 hover:bg-gray-50 transition"
-           @unless ($__aneeOpen) data-tier-lock="libreAnee" data-lock-say="Anee's credits come with Libre + Anee — the chat, the analyses and the credit shop, on top of everything Libre already has." @endunless>
+           @unless ($__aneeOpen) data-tier-lock="{{ \App\Support\Tier::unlocksAt('ai') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::unlocksAt('ai'), 'Anee\'s credits come with {plan} — the chat, the analyses and the credit shop, on top of everything your plan already has.') }}" @endunless>
             <svg class="w-9 h-9 shrink-0 {{ $__aneeOpen ? '' : 'tl-dim' }}" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg>
             <div class="min-w-0 grow">
                 <p class="font-bold text-gray-900 {{ $__aneeOpen ? '' : 'tl-dim' }}">My Credits</p>
