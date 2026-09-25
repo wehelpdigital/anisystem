@@ -3,7 +3,7 @@
 @section('title', 'Tags')
 @section('page-title', 'Tags')
 @section('page-subtitle', 'Every tag, in every season and tool')
-@section('back', route('app.dashboard'))
+@section('back', \App\Support\BackTo::url(route('app.dashboard')))
 
 @include('partials.tag-sheet-css')
 
@@ -341,13 +341,25 @@ const __init = () => {
         return bits.join(' and ');
     }
 
+    /* Every door out of this page says it was opened from here, so the page
+       it opens brings Back to the Tags page rather than to its own parent
+       (?from=tags, read by App\Support\BackTo). */
+    const fromTags = (u) => {
+        try {
+            const x = new URL(u, location.origin);
+            if (x.origin !== location.origin) return u;
+            x.searchParams.set('from', 'tags');
+            return x.pathname + x.search + x.hash;
+        } catch (_) { return u; }
+    };
+
     function paintItems(animate) {
         const shown = ITEMS.filter(itemShows);
         $id('gtItems').innerHTML = shown.map((it, i) => {
             const where = it.where === 'season'
                 ? `<span class="gt-where">In <span class="gt-schip">🌾 ${esc(it.place)}</span></span>`
                 : `<span class="gt-where is-out">Not in a cropping schedule — <b>${esc(it.place)}</b></span>`;
-            return `<a class="gt-item${animate ? ' gt-in' : ''}" href="${esc(it.url)}" data-where="${it.where}"
+            return `<a class="gt-item${animate ? ' gt-in' : ''}" href="${esc(fromTags(it.url))}" data-where="${it.where}"
                     ${animate ? `style="animation-delay:${Math.min(i, 20) * 18}ms"` : ''}>
                 <span class="e">${it.icon || '🏷️'}</span>
                 <span class="min-w-0 grow"><b>${esc(it.title)}</b><i>${esc(it.sub || '')}</i>${where}</span>
@@ -371,10 +383,21 @@ const __init = () => {
         $id('gtShelfSays').textContent = total ? `${plural(total, 'thing')} — ${spread(COUNTS)}` : 'Not on anything yet';
     }
 
+    /* The open tag rides on the address (?tag=), so a door out of the shelf
+       comes Back to this same shelf, and a refresh reopens it. */
+    function tagInAddress(name) {
+        try {
+            const u = new URL(location.href);
+            if (name) u.searchParams.set('tag', name); else u.searchParams.delete('tag');
+            history.replaceState(history.state, '', u.pathname + u.search + u.hash);
+        } catch (_) { /* the shelf still opens */ }
+    }
+
     async function openShelf(key) {
         const t = TAGS.find((x) => x.key === key);
         if (!t) return;
         OPEN = key;
+        tagInAddress(t.name);
         COUNTS = null; ITEMS = [];
         paintCloud(false);
         paintShelfHead(t.name);
@@ -416,6 +439,7 @@ const __init = () => {
 
     function closeShelf() {
         OPEN = null; SEQ++;
+        tagInAddress(null);
         $id('gtShelf').classList.remove('is-open');
         paintCloud(false);
     }

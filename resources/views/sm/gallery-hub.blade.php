@@ -14,7 +14,7 @@
 @section('title', 'Global Gallery')
 @section('page-title', 'Global Gallery')
 @section('page-subtitle', 'Every season, one shelf')
-@section('back', route('sm.index'))
+@section('back', \App\Support\BackTo::url(route('app.dashboard')))
 
 @push('head')
 @include('sm.partials.gallery-chrome-css')
@@ -80,7 +80,7 @@
         </div>
         <div class="ga-modal-body" role="tablist">
             @foreach ($shelves as [$key, $label, $n, $why])
-                <a href="{{ route('gallery.hub') }}?tab={{ $key }}{{ $q !== '' ? '&q=' . urlencode($q) : '' }}"
+                <a href="{{ \App\Support\BackTo::carry(route('gallery.hub') . '?tab=' . $key . ($q !== '' ? '&q=' . urlencode($q) : '')) }}"
                    class="ga-opt{{ $key === $tab ? ' is-on' : '' }}" role="tab"
                    aria-selected="{{ $key === $tab ? 'true' : 'false' }}">
                     <span class="ga-opt-txt">
@@ -100,13 +100,15 @@
     {{-- One search box for the whole shelf, whichever shelf it is. --}}
     <form method="GET" action="{{ route('gallery.hub') }}" class="gh-search-form" role="search">
         <input type="hidden" name="tab" value="{{ $tab }}">
+        {{-- Where Back goes survives a search (App\Support\BackTo). --}}
+        @if (\App\Support\BackTo::key())<input type="hidden" name="from" value="{{ \App\Support\BackTo::key() }}">@endif
         <label class="ga-search">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
             <input type="search" name="q" value="{{ $q }}" placeholder="Search by what it was about…" autocomplete="off">
         </label>
         <button type="submit" class="btn btn-primary btn-sm shrink-0">Search</button>
         @if ($q !== '')
-            <a href="{{ route('gallery.hub') }}?tab={{ $tab }}" class="btn btn-white btn-sm shrink-0">Clear</a>
+            <a href="{{ \App\Support\BackTo::carry(route('gallery.hub') . '?tab=' . $tab) }}" class="btn btn-white btn-sm shrink-0">Clear</a>
         @endif
     </form>
 

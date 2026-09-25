@@ -3,7 +3,7 @@
 @section('title', 'Compare Reports')
 @section('page-title', 'Compare Reports')
 @section('page-subtitle', 'Two saved reports, side by side')
-@section('back', route('app.dashboard'))
+@section('back', \App\Support\BackTo::url(route('app.dashboard')))
 
 {{-- COMPARE REPORTS, a Quick Tool (2026-09-25). Each side is chosen twice
      over -- the cropping schedule it comes from, then the saved report on
@@ -430,18 +430,7 @@
 @endpush
 
 @push('scripts')
-<script>
-    // Back goes where the farmer came from when that was inside the app.
-    document.getElementById('appBackLink')?.addEventListener('click', (e) => {
-        try {
-            const ref = document.referrer ? new URL(document.referrer) : null;
-            if (ref && ref.origin === location.origin && window.history.length > 1) {
-                e.preventDefault();
-                history.back();
-            }
-        } catch (_) { /* the href already points home */ }
-    });
-</script>
+{{-- Back: the dashboard, or the ?from= origin (App\Support\BackTo). --}}
 <script>
 (() => {
 const __init = () => {
@@ -879,7 +868,12 @@ const __init = () => {
         S.viewing = null;
         const fromAddress = new URLSearchParams(location.search).has('open');
         if (fromAddress) {
-            try { history.replaceState(history.state, '', location.pathname); } catch (_) { /* the address keeps it */ }
+            // Only ?open= goes: ?from= is where the back arrow leads, and a
+            // refresh should still know it.
+            const keep = new URLSearchParams(location.search);
+            keep.delete('open');
+            const rest = keep.toString();
+            try { history.replaceState(history.state, '', location.pathname + (rest ? '?' + rest : '')); } catch (_) { /* the address keeps it */ }
         }
         // A fresh one, or one the address opened, closes onto the shelf it lives on.
         if ((mode === 'fresh' || fromAddress) && CAN_WRITE && $id('cmpSavedPane').hidden) tab('saved');

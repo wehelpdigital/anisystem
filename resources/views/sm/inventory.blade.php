@@ -4,7 +4,7 @@
 @section('page-title', 'Inventory')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'inventory')
-@section('back', route('sm.hub', ['id' => $schedule->id]))
+@section('back', \App\Support\BackTo::url(route('sm.hub', ['id' => $schedule->id]), $schedule->id))
 
 @push('head')
 <style>

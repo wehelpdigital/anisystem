@@ -3,7 +3,7 @@
 @section('title', 'View as Protocol — ' . $schedule->title)
 @section('page-title', 'View as Protocol')
 @section('page-subtitle', $schedule->title)
-@section('back', route('sm.reports', ['id' => $schedule->id]))
+@section('back', \App\Support\BackTo::url(route('sm.reports', ['id' => $schedule->id]), $schedule->id))
 
 @push('head')
 @include('partials.tag-sheet-css')

@@ -3,20 +3,11 @@
 @section('page-title', 'Crop Protocol Analysis')
 @section('page-subtitle', 'Your season, stage by stage')
 
-@section('back', route('app.dashboard'))
-@push('scripts')
-<script>
-    document.getElementById('appBackLink')?.addEventListener('click', (e) => {
-        try {
-            const ref = document.referrer ? new URL(document.referrer) : null;
-            if (ref && ref.origin === location.origin && window.history.length > 1) {
-                e.preventDefault();
-                history.back();
-            }
-        } catch (_) { /* the href already points home */ }
-    });
-</script>
-@endpush
+@section('back', \App\Support\BackTo::url(route('app.dashboard')))
+{{-- Back is the dashboard, or wherever the door that opened this page said
+     it stood (?from=, App\Support\BackTo). It used to be history.back()
+     whenever the referrer was on this site, which after a reload, a
+     redirect or a page's own link went back to this page itself. --}}
 
 
 @section('content')

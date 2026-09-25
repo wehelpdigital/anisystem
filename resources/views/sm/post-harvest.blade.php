@@ -4,7 +4,7 @@
 @section('page-title', 'Observations')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'post-harvest')
-@section('back', route('sm.hub', ['id' => $schedule->id]))
+@section('back', \App\Support\BackTo::url(route('sm.hub', ['id' => $schedule->id]), $schedule->id))
 
 @php
     // An observation now carries clips as well as photos, and they share the

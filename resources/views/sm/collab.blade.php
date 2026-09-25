@@ -4,7 +4,7 @@
 @section('page-title', 'Collab Room')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'collab')
-@section('back', route('sm.hub', ['id' => $schedule->id]))
+@section('back', \App\Support\BackTo::url(route('sm.hub', ['id' => $schedule->id]), $schedule->id))
 
 {{-- The room is a workspace, not a page you scroll: on a phone the bottom tab
      bar covers the drawing surface and chat composer, so drop it here and give

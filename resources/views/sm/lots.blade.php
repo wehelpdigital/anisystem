@@ -4,7 +4,7 @@
 @section('page-title', 'Lots')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'lots')
-@section('back', route('sm.hub', ['id' => $schedule->id]))
+@section('back', \App\Support\BackTo::url(route('sm.hub', ['id' => $schedule->id]), $schedule->id))
 
 @section('content')
     @include('sm.partials.module-header', ['schedule' => $schedule, 'module' => 'lots'])

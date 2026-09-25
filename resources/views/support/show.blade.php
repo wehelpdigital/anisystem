@@ -3,7 +3,7 @@
 @section('title', 'Ticket — Support')
 @section('page-title', 'Support')
 @section('page-subtitle', $ticket->subject)
-@section('back', route('support.index'))
+@section('back', \App\Support\BackTo::url(route('support.index')))
 
 @section('content')
 <div class="card p-4 mb-4">

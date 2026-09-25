@@ -3,9 +3,10 @@
      Drawn by the page on first paint and by the search for every answer
      after it, so a card is described once and the two roads cannot drift.
 
-     Expects: $posts. --}}
+     Expects: $posts. Optional $blogFrom: where the card was shown
+     (?from=, App\Support\BackTo), so the article's Back returns there. --}}
 @foreach ($posts as $post)
-    <a href="{{ route('community.blog.show', ['id' => $post->id]) }}" class="blog-card bl-hue-{{ $post->id % 6 }}">
+    <a href="{{ route('community.blog.show', array_filter(['id' => $post->id, 'from' => $blogFrom ?? null])) }}" class="blog-card bl-hue-{{ $post->id % 6 }}">
         @php $covers = $post->covers(); @endphp
         {{-- Every cover the story wears, stacked: the page drifts through
              them on its own clock and a thumb can slide them left or right

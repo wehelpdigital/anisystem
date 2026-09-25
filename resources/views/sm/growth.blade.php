@@ -4,7 +4,7 @@
 @section('page-title', 'Growth Stages')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'growth')
-@section('back', route('sm.hub', ['id' => $schedule->id]))
+@section('back', \App\Support\BackTo::url(route('sm.hub', ['id' => $schedule->id]), $schedule->id))
 
 @push('head')
 <style>

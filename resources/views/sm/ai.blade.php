@@ -18,8 +18,7 @@
     /* The `from` this page arrived with, revalidated the way the controller
        does, so switching between recent chats keeps remembering where Back
        should go instead of forgetting it on the first hop. */
-    $aiFromQ = (($f = (string) request()->query('from')) !== ''
-        && str_starts_with($f, '/') && ! str_starts_with($f, '//'))
+    $aiFromQ = ($f = (\App\Support\BackTo::key() ?? \App\Support\BackTo::path())) !== null
         ? '&from=' . urlencode($f) : '';
 @endphp
 

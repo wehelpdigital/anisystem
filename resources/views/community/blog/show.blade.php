@@ -4,7 +4,7 @@
 @section('body-class', 'plaza-ground')
 @section('page-title', 'Technician\'s Blog')
 @section('page-subtitle', \Illuminate\Support\Str::limit($post->title, 40))
-@section('back', route('community.blog'))
+@section('back', \App\Support\BackTo::url(route('community.blog')))
 
 @push('head')
 @include('community.partials.plaza-css')

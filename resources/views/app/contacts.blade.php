@@ -3,7 +3,7 @@
 @section('title', 'Contact List')
 @section('page-title', 'Contact List')
 @section('page-subtitle', 'Your farm\'s phonebook')
-@section('back', route('sm.index'))
+@section('back', \App\Support\BackTo::url(route('app.dashboard')))
 @section('help-key', 'contacts')
 
 @include('partials.tag-sheet-css')
