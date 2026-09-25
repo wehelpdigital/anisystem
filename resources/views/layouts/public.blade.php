@@ -159,7 +159,9 @@
         </div>
         <div class="border-t border-gray-800">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 text-xs text-gray-500 flex flex-col sm:flex-row justify-between gap-2">
-                <span>© {{ date('Y') }} anee.io</span>
+                {{-- The legal pages, reachable before anyone signs up (inside the app
+                     they sit in the app footer instead). --}}
+                <span>© {{ date('Y') }} anee.io · <a href="{{ route('legal.show', ['slug' => 'privacy']) }}" class="hover:text-accent-500">Privacy</a> · <a href="{{ route('legal.show', ['slug' => 'terms']) }}" class="hover:text-accent-500">Terms</a> · <a href="{{ route('legal.show', ['slug' => 'cookies']) }}" class="hover:text-accent-500">Cookies</a></span>
                 <span>Helping {{ \App\Support\Region::t('farmersOf') }} reach maximum yield and income</span>
             </div>
         </div>
