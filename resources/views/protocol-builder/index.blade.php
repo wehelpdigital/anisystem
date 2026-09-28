@@ -437,6 +437,16 @@
                     <label class="form-label" for="ppName_${l.key}">Lot name</label>
                     <input type="text" id="ppName_${l.key}" class="form-input" maxlength="255" placeholder="e.g. Apartado 1" value="${esc(l.name)}" data-pp-name>
                 </div>
+                ${l.sourceLotId ? '' : `<div>
+                    <span class="form-label">Size</span>
+                    <div class="grid grid-cols-[1fr_auto] gap-2">
+                        <input type="number" class="form-input" min="0" step="0.0001" inputmode="decimal" placeholder="e.g. 1" value="${esc(l.size)}" data-pp-size aria-label="Lot size">
+                        <select class="form-select" data-pp-unit aria-label="Unit">
+                            ${[['hectare', 'hectare'], ['sqm', 'sq. m'], ['acre', 'acre']].map(([v, t]) => `<option value="${v}"${(l.unit || 'hectare') === v ? ' selected' : ''}>${t}</option>`).join('')}
+                        </select>
+                    </div>
+                    <p class="pp-hint mt-1">Left empty, the new lot is 1 hectare; the Lots module can change it later.</p>
+                </div>`}
                 <div>
                     <span class="form-label">Protocol</span>
                     <button type="button" class="crop-tag" data-pp-proto><span class="crop-tag-e">${p ? '📋' : '📋'}</span><span class="crop-tag-t${p ? '' : ' is-none'}">${p ? esc(p.title) : 'Choose a protocol'}</span><svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
@@ -481,11 +491,13 @@
     $id('ppLots').addEventListener('input', (e) => {
         const l = lotOf(e.target); if (!l) return;
         if (e.target.hasAttribute('data-pp-name')) l.name = e.target.value;
+        if (e.target.hasAttribute('data-pp-size')) l.size = e.target.value;
         if (e.target.hasAttribute('data-pp-years')) l.treeYears = e.target.value;
         if (e.target.hasAttribute('data-pp-months')) l.treeMonths = e.target.value;
     });
     $id('ppLots').addEventListener('change', (e) => {
         const l = lotOf(e.target); if (!l) return;
+        if (e.target.hasAttribute('data-pp-unit')) l.unit = e.target.value;
         if (e.target.id === 'ppStart_' + l.key) {
             l.start = e.target.value;
             // A transplant three weeks on is the usual for rice; the farmer can move it.

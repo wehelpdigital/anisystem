@@ -1015,7 +1015,8 @@
     let REVIEW = BOOT.analysis || null;
     let REVIEW_AT = BOOT.analysisAt || null;
     let REVIEW_CREDITS = BOOT.analysisCredits || 0;
-    const UNDO_MAX = 30;
+    // The same depth the server keeps, so a reload does not quietly halve it.
+    const UNDO_MAX = 15;
     const counters = () => (OPT.dayTypes[P.dayType] || OPT.dayTypes.DAS).counters;
 
     const isNote = (t) => t && t.kind === 'note';
@@ -1134,7 +1135,8 @@
         MATS = Array.isArray(s && s.materials) ? s.materials : MATS;
     }
     function commit(label, mutate) {
-        HIST.undo.push(snap());
+        // Each step remembers the tab it was made on, so undoing it can show it.
+        HIST.undo.push(Object.assign(snap(), { tab: $id('pbPage').dataset.tab || 'tasks' }));
         if (HIST.undo.length > UNDO_MAX) HIST.undo.shift();
         HIST.redo = [];
         mutate();
@@ -1144,15 +1146,25 @@
         markDirty();
         return label;
     }
+    /* Undo on the Materials tab used to remove a note on the Tasks tab with
+       only "Undone" to say so. The step now carries the tab it was made on,
+       and the page goes there to show what changed. */
+    const TAB_WORD = { tasks: 'Tasks', materials: 'Materials', rules: 'Rules & notes' };
     function travel(from, to, word) {
         if (!from.length) return;
-        to.push(snap());
-        restore(from.pop());
+        const step = from.pop();
+        const here = $id('pbPage').dataset.tab || 'tasks';
+        const where = (step && !Array.isArray(step) && step.tab) || here;
+        to.push(Object.assign(snap(), { tab: where }));
+        restore(step);
         syncLinks();
         sortTasks();
         render();
         markDirty();
-        toast(word);
+        if (where !== here && TAB_WORD[where]) {
+            showTab(where, true);
+            toast(`${word} on the ${TAB_WORD[where]} tab`);
+        } else toast(word);
     }
     const undo = () => travel(HIST.undo, HIST.redo, 'Undone');
     const redo = () => travel(HIST.redo, HIST.undo, 'Redone');

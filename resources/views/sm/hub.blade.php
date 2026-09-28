@@ -152,7 +152,15 @@
             <span class="sched-fact"><span class="sf-emoji">📐</span>{{ $schedule->lots_count }} {{ \Illuminate\Support\Str::plural('lot', $schedule->lots_count) }}</span>
             <span class="sched-fact"><span class="sf-emoji">👷</span>{{ $schedule->workers_count }} {{ \Illuminate\Support\Str::plural('worker', $schedule->workers_count) }}</span>
             <span class="sched-fact"><span class="sf-emoji">🗓️</span>{{ $schedule->dayType ?: 'DAS' }} counting</span>
-            <span class="sched-fact"><span class="sf-emoji">🌱</span>Started {{ $schedule->created_at->format('M j, Y') }}</span>
+            {{-- When the crop's clock starts: the earliest lot's day zero
+                 (a ported season is made days before its lots begin), and
+                 only when no lot has one, the day the season was made. --}}
+            @php
+                $dayZeroFirst = \App\Models\AsScheduleLot::where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->whereNotNull('dayZeroDate')->min('dayZeroDate');
+                $startsOn = $dayZeroFirst ? \Illuminate\Support\Carbon::parse($dayZeroFirst) : $schedule->created_at;
+                $startsAhead = $dayZeroFirst && $startsOn->isAfter(now('Asia/Manila')->startOfDay());
+            @endphp
+            <span class="sched-fact"><span class="sf-emoji">🌱</span>{{ $startsAhead ? 'Starts' : 'Started' }} {{ $startsOn->format('M j, Y') }}</span>
         </div>
 
         {{-- The share-to-community switch used to stand here. Sharing a whole
