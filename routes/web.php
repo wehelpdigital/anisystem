@@ -73,6 +73,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'wtpMonths' => str_contains((string) @file_get_contents(resource_path('views/when-to-plant/index.blade.php')), 'id="wtpMonths"'),
             'wtpWeeks' => str_contains((string) @file_get_contents(resource_path('views/when-to-plant/index.blade.php')), 'wtp-wks'),
             'reportSlice' => str_contains((string) @file_get_contents(resource_path('views/sm/expenses-report.blade.php')), 'sliceWordsOf'),
+            'wtpTyphoon' => str_contains((string) @file_get_contents(resource_path('views/when-to-plant/index.blade.php')), 'wtp-ty-bar'),
         ],
         'viewCacheCompiled' => count(glob(storage_path('framework/views/*.php')) ?: []),
         // Whether the deployed environment can reach the mailing list at all

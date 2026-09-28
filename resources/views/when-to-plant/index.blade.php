@@ -207,6 +207,38 @@
     .wtp-mlbl i { display: block; font-style: normal; font-size: .55rem; opacity: .7; line-height: 1; }
     .wtp-mlbl { font-size: .58rem; font-weight: 700; color: var(--color-gray-500); }
     .wtp-mnote { font-size: .68rem; color: var(--color-gray-500); margin-top: .5rem; line-height: 1.5; }
+    /* TYPHOON CHANCES: one series, so one colour -- the risk chart's storm
+       blue -- and the bar's height is the probability on a fixed 0-100%
+       scale (a dashed guide at 50%). The farmer's months wear a dot. */
+    .wtp-ty { position: relative; display: flex; align-items: flex-end; gap: 2px; height: 8rem;
+        border-bottom: 1px solid var(--color-gray-200); }
+    .wtp-ty::before { content: ''; position: absolute; left: 0; right: 0; bottom: 50%; border-top: 1px dashed var(--color-gray-200); }
+    .wtp-ty-col { position: relative; flex: 1 1 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; }
+    .wtp-ty-bar { width: 100%; max-width: 1.5rem; min-height: 2px; border-radius: 4px 4px 0 0; background: #2563eb;
+        transform-origin: bottom; transform: scaleY(0); transition: transform .6s cubic-bezier(.22,1,.36,1); }
+    .wtp-report.is-drawn .wtp-ty-bar { transform: scaleY(1); }
+    .wtp-ty-bar.is-zero { background: var(--color-gray-200); }
+    .wtp-ty-v { position: absolute; font-size: .62rem; font-weight: 800; color: var(--color-gray-700); white-space: nowrap; }
+    .wtp-ty-lbls { display: flex; gap: 2px; padding-top: .3rem; }
+    .wtp-ty-lbl { flex: 1 1 0; text-align: center; font-size: .58rem; font-weight: 700; color: var(--color-gray-500); }
+    .wtp-ty-lbl.is-mine { color: var(--color-brand-700); font-weight: 900; }
+    .wtp-ty-lbl.is-mine::after { content: ''; display: block; width: .3rem; height: .3rem; margin: .12rem auto 0; border-radius: 999px; background: currentColor; }
+    .wtp-ty-axis { display: flex; justify-content: space-between; font-size: .6rem; color: var(--color-gray-400); margin-bottom: .2rem; }
+    .wtp-ty-mine { margin-top: .6rem; font-size: .76rem; color: var(--color-gray-700); }
+    .wtp-ty-mine b { color: var(--color-gray-900); }
+    .wtp-ty-t { margin-top: .5rem; font-size: .74rem; }
+    .wtp-ty-t summary { cursor: pointer; font-weight: 700; color: var(--color-brand-700); }
+    .wtp-ty-t table { width: 100%; margin-top: .4rem; border-collapse: collapse; }
+    .wtp-ty-t th, .wtp-ty-t td { text-align: left; padding: .2rem .3rem; border-bottom: 1px solid var(--color-gray-100); color: var(--color-gray-700); }
+    .wtp-ty-t td:nth-child(2), .wtp-ty-t td:nth-child(3), .wtp-ty-t th:nth-child(2), .wtp-ty-t th:nth-child(3) { text-align: right; font-variant-numeric: tabular-nums; }
+    html.dark .wtp-ty-bar { background: #60a5fa; }
+    html.dark .wtp-ty-bar.is-zero, html.dark .wtp-ty { border-color: #2b3a1c; }
+    html.dark .wtp-ty-bar.is-zero { background: #2b3a1c; }
+    html.dark .wtp-ty::before { border-color: #2b3a1c; }
+    html.dark .wtp-ty-v, html.dark .wtp-ty-mine, html.dark .wtp-ty-t th, html.dark .wtp-ty-t td { color: #cfdcc3; }
+    html.dark .wtp-ty-mine b { color: #eef4e8; }
+    html.dark .wtp-ty-t th, html.dark .wtp-ty-t td { border-color: #22301a; }
+
     /* Twenty years of risk, month by month: a stacked bar per month, one
        colour per kind, under the same months as the score chart. */
     .wtp-rk { display: flex; align-items: flex-end; gap: .3rem; height: 7.5rem; border-bottom: 1px solid var(--color-gray-200); padding-bottom: .15rem; }
@@ -412,6 +444,7 @@
         .wtp-run { animation: none; }
         .wtp-mbar, .wtp-seg, .wtp-threat, .wtp-dot { transition: none; transform: none; opacity: 1; }
         .wtp-wk-bar i { transition: none; }
+        .wtp-ty-bar { transition: none; transform: none; }
         .wtp-wait, .q-body, .q-c, .q-hint, .wtp-prob, .wtp-mchip, .wtp-msay { transition: none; transform: none; }
     }
 </style>
@@ -1139,6 +1172,36 @@
                 </div>
             </div>` : '';
 
+        /* Typhoon chances by month: the share of the years read in which a
+           cyclone affected the place that month, in the season's own month
+           order so it reads under the charts above it. */
+        const to = r.typhoonOdds && Array.isArray(r.typhoonOdds.months) && r.typhoonOdds.months.length === 12 ? r.typhoonOdds : null;
+        const tyOf = (m) => (to ? to.months.find((x) => Number(x.month) === Number(m)) : null) || { chance: 0, storms: 0, note: '' };
+        const tyMine = (m) => !!(p.fromMonth && scores.some((s) => Number(s.month) === Number(m) && mine(s)));
+        const tyPeak = to ? Math.max(...to.months.map((x) => Number(x.chance) || 0)) : 0;
+        const PH_FIELD = !p.country || p.country === 'PH';
+        const mineList = to ? rkOrder.filter(tyMine).map((m) => `${MONTHS[m - 1]} <b>${tyOf(m).chance}%</b>`).join(' · ') : '';
+        const typhoonCard = to ? `
+            <div class="wtp-card">
+                <h3>${PH_FIELD ? 'Chance of a typhoon, month by month' : 'Chance of a tropical storm, month by month'} <small style="display:block;font-size:.72rem;font-weight:500;color:var(--color-gray-500);margin-top:.1rem">${esc(to.years || 'the past twenty years')} — the share of years in which one affected ${esc(p.location || 'the place')} that month</small></h3>
+                <div class="wtp-ty-axis"><span>100%</span><span>dashed line = 50%</span></div>
+                <div class="wtp-ty" role="img" aria-label="${esc((PH_FIELD ? 'Typhoon' : 'Tropical storm') + ' chance by month: ' + rkOrder.map((m) => MONTHS[m - 1] + ' ' + tyOf(m).chance + '%').join(', '))}">
+                    ${rkOrder.map((m) => { const x = tyOf(m); const c = Number(x.chance) || 0; return `<div class="wtp-ty-col" title="${esc(MONTHS[m - 1] + ': ' + c + '% of years · ' + (x.storms || 0) + ' ' + ((x.storms || 0) === 1 ? 'storm' : 'storms') + (x.note ? ' · ' + x.note : ''))}">
+                        ${c > 0 && c === tyPeak ? `<span class="wtp-ty-v" style="bottom:calc(${c}% + 2px)">${c}%</span>` : ''}
+                        <div class="wtp-ty-bar${c === 0 ? ' is-zero' : ''}" style="height:${Math.max(0.5, c)}%"></div>
+                    </div>`; }).join('')}
+                </div>
+                <div class="wtp-ty-lbls">${rkOrder.map((m) => `<span class="wtp-ty-lbl${tyMine(m) ? ' is-mine' : ''}">${MONTHS[m - 1]}</span>`).join('')}</div>
+                ${mineList ? `<p class="wtp-ty-mine">Your months: ${mineList}</p>` : ''}
+                ${to.peak ? `<p class="wtp-mnote">⚠️ ${esc(sweep(to.peak))}</p>` : ''}
+                <p class="wtp-mnote">${esc(sweep(to.note || 'Counted from the storm record for the place: how many of the years read had one that month.'))}</p>
+                <details class="wtp-ty-t"><summary>See the numbers</summary>
+                    <table><thead><tr><th>Month</th><th>Chance</th><th>Storms</th><th>Strongest</th></tr></thead><tbody>
+                    ${to.months.map((x) => `<tr><td>${MONTHS[x.month - 1]}</td><td>${Number(x.chance) || 0}%</td><td>${Number(x.storms) || 0}</td><td>${esc(x.note || '')}</td></tr>`).join('')}
+                    </tbody></table>
+                </details>
+            </div>` : '';
+
         const windowsCard = `
             <div class="wtp-card">
                 <h3>The calendar, plainly</h3>
@@ -1180,6 +1243,8 @@
                 </div>
                 <p class="wtp-mnote">Green is the recommended window; lighter green still works, amber is risky, red is asking for trouble.${p.fromMonth ? ' The months you picked carry a dot; the others are scored for comparison.' : ''} Hover a bar for its note.</p>
             </div>
+
+            ${typhoonCard}
 
             ${riskCard}
 

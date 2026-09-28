@@ -471,6 +471,7 @@ class WhenToPlantController extends Controller
             . 'Field problems considered: ' . ($problems ?: 'none') . "\n"
             . 'Recommended window: ' . ($bw['label'] ?? '') . ' — ' . ($bw['why'] ?? '') . "\n"
             . (! empty($report['weekRanks']) ? 'Best planting weeks, ranked: ' . collect($report['weekRanks'])->map(fn ($w) => ($w['rank'] ?? '') . ') ' . ($w['label'] ?? '') . ' (score ' . ($w['score'] ?? '') . ') — ' . ($w['why'] ?? ''))->implode(' | ') . "\n" : '')
+            . (! empty($report['typhoonOdds']['months']) ? 'Typhoon chance by month (share of years with a cyclone): ' . collect($report['typhoonOdds']['months'])->map(fn ($m) => date('M', mktime(0, 0, 0, (int) $m['month'], 1)) . ' ' . (int) $m['chance'] . '%')->implode(', ') . "\n" : '')
             . 'Timeline: ' . collect($report['timeline'] ?? [])->map(fn ($t) => ($t['stage'] ?? '') . ' ' . ($t['days'] ?? 0) . 'd')->implode(', ') . "\n"
             . 'Threats outside the window: ' . collect($report['threats'] ?? [])->map(fn ($t) => ($t['whenNot'] ?? '') . ': ' . ($t['threat'] ?? '') . ' (' . ($t['severity'] ?? '') . ')')->implode(' | ') . "\n"
             . 'Month scores (planting suitability 0-100): ' . collect($report['monthScores'] ?? [])->map(fn ($m) => ($m['month'] ?? '') . '=' . ($m['score'] ?? ''))->implode(' ') . "\n"
@@ -589,6 +590,10 @@ class WhenToPlantController extends Controller
             : 'the breeder\'s or seed company\'s own page, the national variety registry, university extension notes';
         $varietyAsk = $variety !== '' ? "\n0. THE VARIETY FIRST: \"{$variety}\" of {$cropLabel}. Search for its published characteristics: days to maturity (or harvest), yield potential, plant height and lodging, the season it is bred for (wet / dry, early / late), its tolerance to drought, flooding or submergence, heat, salinity and cold where they apply, its pest and disease resistance (for rice: blast, bacterial leaf blight, tungro, brown planthopper, stem borer; for other crops the ones that matter), and who released it and when. Prefer {$registry}. Give the figures with their source. If nothing reliable turns up, say plainly that the variety could not be found — never guess its traits.\n" : '';
         $varietyHead = $variety !== '' ? ' and on the variety the farmer named' : '';
+        // The typhoon chance chart is counted from this tally, not guessed.
+        $cycloneAsk = $fieldPH
+            ? 'count every typhoon and tropical storm that affected the province — a landfall, a close pass, or a PAGASA Tropical Cyclone Wind Signal raised over it — from PAGASA\'s tropical cyclone archive, NDRRMC reports and news archives.'
+            : 'count every hurricane, typhoon or tropical storm that affected the region — a landfall, a close pass, or an official warning over it — from the national weather service\'s storm archive; where the region lies outside the tropical cyclone belt, say so plainly.';
         // The calendar has moved: the farmer picked months, not a season,
         // because the rains no longer keep the textbook dates.
         $shiftAsk = $fieldPH
@@ -610,6 +615,8 @@ FIND, IN THIS ORDER{$varietyAsk}
 {$shiftAsk}
 
 THEN TALLY: for each of the twelve months, how many of the twenty years had a damaging event of each kind in that month, and how bad they tended to be. List the five worst years for this place and what happened. Where the record is thin or you could not find it, say so plainly.
+
+TROPICAL CYCLONES, MONTH BY MONTH ({$from}–{$to}): {$cycloneAsk} For each calendar month give (a) how many of those years had at least one cyclone affect the place in that month and (b) how many cyclones in all, and name the strongest of them with its year.
 
 Prefer {$sources}, disaster databases (EM-DAT, ReliefWeb, NDRRMC / national disaster agencies), the national statistics office's crop-damage reports, and reputable news archives. Write plain prose notes under the headings, at most 1100 words, no JSON, no markdown tables.
 PROMPT;
@@ -676,13 +683,14 @@ GROUND RULES
 - Write the summary and the "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
 
 Return ONLY a valid JSON object — no code fences, no commentary — in exactly this shape:
-{"weekRanks":[{"rank":1,"from":"2026-11-09","to":"2026-11-15","label":"","score":0,"why":"","factors":{"rain":"","storms":"","enso":"","field":""},"flowering":"","harvest":"","watch":""}],"bestWindow":{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"year":2026,"score":0,"note":""}],"riskHistory":{"years":"","months":[{"month":1,"storm":0,"flood":0,"drought":0,"heat":0,"frost":0,"note":""}],"events":[{"year":2013,"month":11,"kind":"storm","what":"","impact":"high"}],"note":""},"threats":[{"whenNot":"","threat":"","severity":"low"}],"variety":{"found":false,"name":"","maturityDays":0,"season":"","traits":"","caution":"","source":""},"confidence":"moderate","dataGaps":[""],"summary":""}
+{"weekRanks":[{"rank":1,"from":"2026-11-09","to":"2026-11-15","label":"","score":0,"why":"","factors":{"rain":"","storms":"","enso":"","field":""},"flowering":"","harvest":"","watch":""}],"bestWindow":{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"year":2026,"score":0,"note":""}],"typhoonOdds":{"years":"","months":[{"month":1,"chance":0,"storms":0,"note":""}],"peak":"","note":""},"riskHistory":{"years":"","months":[{"month":1,"storm":0,"flood":0,"drought":0,"heat":0,"frost":0,"note":""}],"events":[{"year":2013,"month":11,"kind":"storm","what":"","impact":"high"}],"note":""},"threats":[{"whenNot":"","threat":"","severity":"low"}],"variety":{"found":false,"name":"","maturityDays":0,"season":"","traits":"","caution":"","source":""},"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
 - weekRanks is THE CORE OF THIS ANALYSIS — the farmer wants the best WEEK, not the best month. Work through the farmer's months ({$whenShort}) WEEK BY WEEK (Monday to Sunday) and judge each week as a planting week against everything above: the place's recent rain onset and dry spells, its storm / flood / drought / heat record from the research notes, the ENSO outlook, the crop's own calendar (work out, from the variety's days to maturity where the notes give it or else the crop's, when a crop planted that week flowers or reaches its sensitive stage and when it is harvested, and what weather those stages meet), every field problem the farmer reported, and the variety's traits. Then return the best week ranges RANKED: rank 1 is the best, then the second best, and so on, up to five. A range is one week, or two or three adjacent weeks that score alike; ranges never overlap; all sit inside the farmer's months; rank 1 lies inside bestWindow. For each: from and to as ISO dates (YYYY-MM-DD: the Monday and the Sunday), label spelling the dates WITH THE YEAR (e.g. "Nov 9 – 15, 2026" or "Nov 30 – Dec 13, 2026"), score 0–100 as a planting week, why ≤ 45 words naming the concrete reasons for its place in the ranking, factors = one line each (≤ 14 words) on how rain, storms, ENSO and this field's reported problems bear on that range (field = "" when the farmer reported none), flowering "around Jan 20–27, 2027" (the sensitive stage for a planting in that range; "" for a crop without one), harvest "around Feb 25, 2027", watch ≤ 15 words — the one thing to watch for in that range. Differentiate the scores honestly; if fewer than five ranges are worth planting in, return fewer and say why in the summary.
 - variety: what the research found about the stated variety — found true only when the notes carry real published traits; name as published; maturityDays (0 when unknown); season it is bred for in a few words; traits ≤ 60 words in plain words (yield, height, tolerances, resistances, and how they shaped this timing); caution ≤ 25 words (its known weakness on this ground, or ""); source the registry, breeder or agency the notes cite. When the farmer named no variety, or none was found: found false and the rest empty or 0.
 - bestWindow must be a SPECIFIC, actionable range of roughly 2–6 weeks with explicit dates INSIDE the farmer's months ({$whenShort}), and its label must spell the dates out WITH THE YEAR (e.g. "Dec 10, 2026 – Jan 5, 2027") — NEVER a season name or a whole month range. fromYear/toYear carry the calendar year of each end. If none of the farmer's months is sound, still give the least risky weeks inside them, lower the confidence, and say plainly in the why, the threats and the summary which nearby months would be safer.
 - avoidWindows: one to three ranges to KEEP AWAY FROM, each specific to the month and week and year (e.g. "Late July – mid October 2026") and grounded in the named region's historical typhoon/climate pattern; why says what historically happens there then; severity "moderate" or "high".
 - monthScores carries TWELVE consecutive months, each with its year, starting with {$firstMonth} (the first of the farmer's months): the farmer's own months first, the rest for comparison, so a better month just outside their range shows; score 0–100 = how suitable STARTING to plant that month is; note ≤ 10 words. Differentiate months even inside the farmer's range — a flat run of equal scores is an unfinished answer.
+- typhoonOdds: the place's TROPICAL CYCLONE record, counted from the research notes' month-by-month cyclone tally — never guessed. years = the span read. months = ALL twelve calendar months (1–12, calendar order); chance = the percentage (0–100, whole number) of the years read in which at least one typhoon or tropical storm (a hurricane where that is the local word) affected the place in that month — e.g. 7 of 20 years = 35; storms = how many cyclones in all struck that month over the record; note ≤ 12 words (the strongest one, with its year, where there was one). peak ≤ 20 words naming the riskiest stretch. note ≤ 40 words on how it was counted and how thin the record is. Where the place lies outside the cyclone belt, every chance is 0 and the note says so. Use these odds when you rank the weeks: a crop that flowers or is harvested in a high-chance month carries that risk.
 - riskHistory: the place's twenty-year record from the research notes. years = the span read (e.g. "2006–2025"). months = ALL twelve calendar months (month 1–12, calendar order); for each kind — storm (typhoons/hurricanes/severe storms), flood, drought, heat, frost — a 0–100 DAMAGE INDEX for that month: how often a damaging event of that kind struck in that month over the twenty years, weighted by how bad it was (0 = never, 100 = most years and severe); frost is 0 where it does not occur; note ≤ 12 words on the month. events = the four to eight worst events found, each with year, month, kind, what (≤ 14 words, name the storm where it has one) and impact "high"/"moderate". note ≤ 40 words on how the record was read and how thin it is. Never invent an event; a month with no record scores 0 and says so.
 - threats: at most three, what the farmer risks by planting OUTSIDE bestWindow, each naming when; severity "low"/"moderate"/"high"; confidence "low"/"moderate"/"high"; dataGaps at most three; summary ≤ 90 words. Keep the whole answer tight.
 PROMPT;
@@ -767,6 +775,30 @@ PROMPT;
         // of the prose fields so :anee-…: never reaches a farmer raw.
         $sweep = fn ($v) => is_string($v) ? trim(preg_replace('/:[a-z0-9_-]+:/i', '', $v)) : $v;
         $json['summary'] = $sweep($json['summary'] ?? '');
+        // The cyclone odds: twelve calendar months, whole percentages.
+        if (isset($json['typhoonOdds']) && is_array($json['typhoonOdds'])) {
+            $byMonth = [];
+            foreach ((array) ($json['typhoonOdds']['months'] ?? []) as $m) {
+                $n = (int) (is_array($m) ? ($m['month'] ?? 0) : 0);
+                if ($n >= 1 && $n <= 12) {
+                    $byMonth[$n] = [
+                        'month' => $n,
+                        'chance' => max(0, min(100, (int) round((float) ($m['chance'] ?? 0)))),
+                        'storms' => max(0, (int) ($m['storms'] ?? 0)),
+                        'note' => $sweep($m['note'] ?? ''),
+                    ];
+                }
+            }
+            ksort($byMonth);
+            $json['typhoonOdds'] = count($byMonth) === 12 ? [
+                'years' => (string) ($json['typhoonOdds']['years'] ?? ''),
+                'months' => array_values($byMonth),
+                'peak' => $sweep($json['typhoonOdds']['peak'] ?? ''),
+                'note' => $sweep($json['typhoonOdds']['note'] ?? ''),
+            ] : null;
+        } else {
+            $json['typhoonOdds'] = null;
+        }
         // The ranked weeks: in rank order, at most five, prose swept.
         if (isset($json['weekRanks']) && is_array($json['weekRanks'])) {
             $weeks = array_values(array_filter($json['weekRanks'], fn ($w) => is_array($w) && ! empty($w['label'])));
