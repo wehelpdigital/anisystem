@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title', 'Sales Analysis')
-@section('subtitle', 'What a peso of advertising actually bought')
+@section('subtitle', 'What each ad peso bought')
 
 @section('content')
     {{-- Which analysis room — one for now, worn as the house tag so the

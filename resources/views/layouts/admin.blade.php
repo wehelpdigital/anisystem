@@ -115,6 +115,12 @@
         .ad-chips { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
         .ad-chips .chip { min-height: 2.1rem; padding: .3rem .8rem; font-size: .82rem; border-width: 1.5px; }
         .ad-chips .chip span:empty { display: none; }
+        /* The narrowest phones: tighter chips, so the pinned bar stays two
+           short rows rather than taking a third of the screen. */
+        @media (max-width: 379px) {
+            .ad-chips { gap: .3rem; }
+            .ad-chips .chip { min-height: 1.9rem; padding: .2rem .6rem; font-size: .78rem; }
+        }
 
         /* A TWO-ROOM SWITCH (Support's Tickets / Canned responses): one pill,
            a thumb that slides to the room you are in. */
@@ -184,6 +190,12 @@
         .ad-namerow .ad-name { min-width: 0; max-width: 100%; }
         .ad-meta { display: block; font-size: .73rem; color: var(--color-gray-400);
             overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        /* A meta line in two parts: the long part (an email, a category)
+           gives way, and the date at the end is never cut - when the line
+           will not hold it, it takes a second line of its own. */
+        .ad-meta.is-split { display: flex; flex-wrap: wrap; min-width: 0; column-gap: .25rem; white-space: normal; }
+        .ad-meta.is-split > * { flex: none; white-space: nowrap; }
+        .ad-meta.is-split > .ad-give { flex: 0 1 auto; min-width: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
         .ad-end { flex: none; text-align: right; }
 
         /* THE SCROLL'S OWN LOADER — visible while the next page travels. */

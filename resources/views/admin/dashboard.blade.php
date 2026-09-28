@@ -66,9 +66,9 @@
                 <div class="card ad-stat"><b>${d.clients.toLocaleString()}</b><span>Clients</span>
                     ${d.clientsThisMonth ? `<small>+${d.clientsThisMonth} this month</small>` : ''}</div>
                 <div class="card ad-stat"><b>${d.activeSubscriptions.toLocaleString()}</b><span>Active subscriptions</span></div>
-                <div class="card ad-stat"><b>${money(d.salesThisMonth)}</b><span>Sales this month</span></div>
-                <div class="card ad-stat"><b>${d.openTickets.toLocaleString()}</b><span>Open tickets</span>
-                    ${d.creditsSpentThisMonth ? `<small>${Number(d.creditsSpentThisMonth).toLocaleString()} AI credits used</small>` : ''}</div>`;
+                <div class="card ad-stat"><b>${money(d.salesThisMonth)}</b><span>Sales this month</span>
+                    ${d.creditsSpentThisMonth ? `<small>${Number(d.creditsSpentThisMonth).toLocaleString()} AI credits used</small>` : ''}</div>
+                <div class="card ad-stat"><b>${d.openTickets.toLocaleString()}</b><span>Open tickets</span></div>`;
             window.adminRise && adminRise($id('dashStats'));
             bars($id('chartClients'), d.registrationsByMonth, false);
             bars($id('chartSales'), d.salesByMonth, true);

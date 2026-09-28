@@ -1936,6 +1936,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const paneChat = document.getElementById('paneChat');
     const viewBar = document.getElementById('roomViewBar');
     const viewLabel = document.getElementById('roomViewLabel');
+    // A shut room (private, not a member) draws only its "Ask to join" card:
+    // there is no discussion or chat pane here to switch between.
+    if (!paneDiscussion || !paneChat) return;
     let chatStarted = false, lastId = 0, pollTimer = null;
 
     /* Which of the room's two views is showing.

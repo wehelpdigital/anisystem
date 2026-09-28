@@ -17,7 +17,7 @@
         <div class="space-y-2">
             <label class="ad-search">
                 <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 100-15 7.5 7.5 0 000 15z"/></svg>
-                <input type="search" id="tkSearch" class="form-input" placeholder="Search subject, ticket # or client…" autocomplete="off" aria-label="Search tickets">
+                <input type="search" id="tkSearch" class="form-input" placeholder="Subject, ticket # or client…" autocomplete="off" aria-label="Search tickets">
             </label>
             <div class="ad-chips" id="tkChips">
                 <button type="button" class="chip is-selected" data-status="">All</button>
@@ -202,7 +202,7 @@
         <button type="button" class="ad-row tk-row" data-ticket="${t.id}">
             <span class="ad-mid">
                 <span class="ad-name">${esc(t.subject)}</span>
-                <span class="ad-meta"><span class="tk-copy" role="button" tabindex="0" data-copy="${esc(t.no)}" title="Copy the ticket number">${esc(t.no)} ⧉</span> · ${esc(t.category)} · ${esc(t.last || '')}</span>
+                <span class="ad-meta is-split"><span class="tk-copy" role="button" tabindex="0" data-copy="${esc(t.no)}" title="Copy the ticket number">${esc(t.no)} ⧉</span><span class="ad-give">· ${esc(t.category)}</span><span class="ad-keep">· ${esc(t.last || '')}</span></span>
             </span>
             <span class="ad-end">
                 <span class="ad-badge ${BADGE[t.status] || 'is-closed'}">${esc(t.status)}</span>

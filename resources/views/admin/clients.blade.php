@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title', 'Clients')
-@section('subtitle', 'Every account, and what can be done for it')
+@section('subtitle', 'Every account, and its care')
 
 @push('head')
 <style>
@@ -91,7 +91,7 @@
                     ${c.role ? `<span class="ad-badge is-role">${esc(c.role)}</span>` : ''}
                     ${c.suspendedSays ? `<span class="ad-badge is-susp">suspended</span>` : ''}
                 </span>
-                <span class="ad-meta">${esc(c.email)} · joined ${esc(c.registered || '')}</span>
+                <span class="ad-meta is-split"><span class="ad-give">${esc(c.email)}</span><span class="ad-keep">· joined ${esc(c.registered || '')}</span></span>
             </span>
             <span class="ad-end">${c.online ? '<span class="ad-dot" title="Online now"></span>' : ''}</span>
         </button>`;
