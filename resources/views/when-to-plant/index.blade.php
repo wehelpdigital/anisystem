@@ -1003,8 +1003,8 @@
             wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = '');
             show(step);
             // The view has the floor; closing it brings the wizard back at
-            // its first step, with the run already on the Saved tab.
-            if (landed) { wiz.hidden = true; $id('wtpQuote').hidden = true; }
+            // its first step, EMPTY, with the run already on the Saved tab.
+            if (landed) { resetWizard(); wiz.hidden = true; $id('wtpQuote').hidden = true; }
         }
     });
 
@@ -1034,6 +1034,24 @@
     }
     $id('wtpViewX').addEventListener('click', closeView);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeView(); });
+
+    /* A finished run leaves a clean form: the place, the months, the crop,
+       the variety and the field's troubles all cleared, back at the first
+       step. The field's country stays -- a setting more than an answer. */
+    function resetWizard() {
+        Object.assign(state, { from: null, to: null, crop: '', variety: '', location: '', problems: [] });
+        cropDropped = false;
+        $id('wtpLocation').value = '';
+        $id('wtpVariety').value = '';
+        document.querySelectorAll('#wtpProbs input:checked').forEach((i) => { i.checked = false; i.closest('.wtp-prob')?.classList.remove('is-on'); });
+        $id('wtpCropIcon').textContent = '🌱';
+        const now = $id('wtpCropNow');
+        now.textContent = 'Choose the crop';
+        now.classList.add('is-none');
+        if ($id('wtpCropSearch')) { $id('wtpCropSearch').value = ''; cropSift(); }
+        paintRange();
+        show(0);
+    }
 
     function wizardBack() {
         $id('wtpWiz').hidden = false;
