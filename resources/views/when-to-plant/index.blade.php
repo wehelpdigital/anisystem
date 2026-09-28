@@ -97,6 +97,12 @@
     .wtp-mchip:hover { transform: translateY(-1px); }
     .wtp-mchip.is-in { background: var(--color-brand-50); border-color: var(--color-brand-300); color: var(--color-brand-800); }
     .wtp-mchip.is-end { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
+    .wtp-mchip:disabled { opacity: .35; cursor: not-allowed; transform: none; }
+    .wtp-mtags { display: grid; gap: .6rem; }
+    @media (min-width: 480px) { .wtp-mtags { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+    .wtp-mtags > div { min-width: 0; }
+    .wtp-mtags .crop-tag { width: 100%; max-width: 100%; min-width: 0; }
+    .wtp-mtags .crop-tag-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .wtp-msay { display: flex; align-items: center; gap: .6rem; margin-top: .8rem; padding: .6rem .75rem;
         border-radius: .8rem; background: #f4f9ee; border: 1px solid #dcebc9; font-size: .82rem; color: #3d5226;
         transition: opacity .28s cubic-bezier(.22,1,.36,1); }
@@ -152,6 +158,39 @@
     .wtp-card { border-radius: 1rem; border: 1px solid var(--color-gray-200); background: var(--color-white);
         padding: 1rem 1.1rem; }
     .wtp-card h3 { font-weight: 800; font-size: .92rem; color: var(--color-gray-900); margin-bottom: .6rem; }
+
+    /* THE BEST WEEKS, RANKED: the heart of the report. The first is the
+       green one; each row's bar fills when the report lands. */
+    .wtp-wks { display: grid; gap: .6rem; }
+    .wtp-wk { display: flex; gap: .7rem; padding: .75rem .8rem; border-radius: .9rem;
+        border: 1px solid var(--color-gray-200); background: var(--color-white); }
+    .wtp-wk.is-top { border-color: #9cc97a; background: linear-gradient(135deg, #f3f9ec, #e7f2da); }
+    .wtp-wk-n { flex: none; width: 2rem; height: 2rem; border-radius: 999px; display: grid; place-items: center;
+        font-weight: 900; font-size: .95rem; color: #3d5226; background: #eef4e6; }
+    .wtp-wk.is-top .wtp-wk-n { background: #4a7c2a; color: #fff; }
+    .wtp-wk-b { flex: 1 1 auto; min-width: 0; }
+    .wtp-wk-h { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; }
+    .wtp-wk-h b { font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
+    .wtp-wk-h small { flex: none; font-size: .72rem; font-weight: 800; color: #3d6823; }
+    .wtp-wk-bar { height: 6px; border-radius: 999px; background: var(--color-gray-100); overflow: hidden; margin: .35rem 0 .45rem; }
+    .wtp-wk-bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #8fc96a, #4a7c2a);
+        transform-origin: left; transform: scaleX(0); transition: transform .7s cubic-bezier(.22,1,.36,1); }
+    .wtp-report.is-drawn .wtp-wk-bar i { transform: scaleX(var(--w)); }
+    .wtp-wk p { font-size: .8rem; line-height: 1.5; color: var(--color-gray-700); }
+    .wtp-wk-f { display: grid; gap: .2rem; margin-top: .4rem; font-size: .74rem; color: var(--color-gray-600); }
+    .wtp-wk-f span b { color: var(--color-gray-800); font-weight: 700; }
+    .wtp-wk-c { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .45rem; }
+    .wtp-wk-c span { font-size: .68rem; font-weight: 700; padding: .16rem .5rem; border-radius: 999px; background: #eef4e6; color: #3d5226; }
+    .wtp-wk-w { margin-top: .35rem; font-size: .74rem !important; color: #92400e !important; }
+    html.dark .wtp-wk { background: #151b12; border-color: #2b3a1c; }
+    html.dark .wtp-wk.is-top { background: linear-gradient(135deg, #1c2a14, #172013); border-color: #3f5a2a; }
+    html.dark .wtp-wk-n { background: #22301a; color: #cfe6b8; }
+    html.dark .wtp-wk-h b { color: #eef4e8; }
+    html.dark .wtp-wk p, html.dark .wtp-wk-f { color: #b9c6ad; }
+    html.dark .wtp-wk-f span b { color: #dfe9d4; }
+    html.dark .wtp-wk-bar { background: #22301a; }
+    html.dark .wtp-wk-c span { background: #22301a; color: #cfe6b8; }
+    html.dark .wtp-wk-w { color: #fbbf24 !important; }
 
     /* Twelve bars: the year, scored. They grow when the report lands. */
     .wtp-months { display: flex; align-items: flex-end; gap: .3rem; height: 8rem; }
@@ -372,6 +411,7 @@
         .wtp-step.is-on { animation: none; }
         .wtp-run { animation: none; }
         .wtp-mbar, .wtp-seg, .wtp-threat, .wtp-dot { transition: none; transform: none; opacity: 1; }
+        .wtp-wk-bar i { transition: none; }
         .wtp-wait, .q-body, .q-c, .q-hint, .wtp-prob, .wtp-mchip, .wtp-msay { transition: none; transform: none; }
     }
 </style>
@@ -419,8 +459,27 @@
                  answer wrong. A start and an end, up to twelve months. --}}
             <section class="wtp-step" data-step="1">
                 <p class="wtp-q">When are you thinking of planting?</p>
-                <p class="wtp-sub">Tap the first month you might plant, then the last. The old wet and dry season dates no longer hold, so each month is read on its own — and the months after yours are scored too, in case one of them is safer.</p>
-                <div class="wtp-mpick" id="wtpMonths"></div>
+                <p class="wtp-sub">The first and the last month you might plant. The old wet and dry season dates no longer hold, so each week is read on its own — and the months after yours are scored too, in case one of them is safer.</p>
+                {{-- Two tags, the lot form's tag-and-sheet: each opens the
+                     month sheet for its own end of the range. --}}
+                <div class="wtp-mtags">
+                    <div>
+                        <span class="form-label">From</span>
+                        <button type="button" class="crop-tag" id="wtpFromBtn" data-m-end="from">
+                            <span class="crop-tag-e">🗓️</span>
+                            <span class="crop-tag-t is-none" id="wtpFromNow">Pick a month</span>
+                            <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                        </button>
+                    </div>
+                    <div>
+                        <span class="form-label">To</span>
+                        <button type="button" class="crop-tag" id="wtpToBtn" data-m-end="to">
+                            <span class="crop-tag-e">🏁</span>
+                            <span class="crop-tag-t is-none" id="wtpToNow">Pick a month</span>
+                            <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                        </button>
+                    </div>
+                </div>
                 <div class="wtp-msay is-empty" id="wtpMonthsSay" aria-live="polite"></div>
             </section>
             {{-- Step 4: the crop. The lot form's tag-and-sheet, not a
@@ -496,6 +555,19 @@
     </div>
 </div>
 
+{{-- One end of the planting months at a time: this month and the next 23. --}}
+<div class="sheet hidden" id="wtpMonthSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="wtpMonthSheetTitle">From which month?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <p class="form-hint mt-0 mb-3" id="wtpMonthSheetHint"></p>
+        <div class="wtp-mpick" id="wtpMonths"></div>
+    </div>
+</div>
+
 {{-- The whole catalogue, searchable — the same rows the lot form shows. --}}
 <div class="sheet hidden" id="wtpCropSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>
@@ -535,8 +607,8 @@
 
     let OPT = null;
     /* from / to: months as one number (year * 12 + month - 1), null until
-       picked. `picking` says which end the next tap sets. */
-    const state = { from: null, to: null, picking: 'start', crop: '', variety: '', location: '', problems: [], country: '' };
+       picked; the From and To tags each set their own end. */
+    const state = { from: null, to: null, crop: '', variety: '', location: '', problems: [], country: '' };
     const MONTHS_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const ym = (n) => ({ year: Math.floor(n / 12), month: (n % 12) + 1 });
     const monthIdx = (year, month) => Number(year) * 12 + Number(month) - 1;
@@ -601,6 +673,9 @@
     /* ---------------- the months ---------------- */
     const FIRST = () => monthIdx(OPT.monthsFrom.year, OPT.monthsFrom.month);
     const MAX_SPAN = () => Number(OPT.maxSpan) || 12;
+    /* Which end the month sheet is choosing: 'from' or 'to'. */
+    let M_END = 'from';
+    const monthWords = (i) => MONTHS_LONG[ym(i).month - 1] + ' ' + ym(i).year;
     function paintMonths() {
         if (!OPT || !OPT.monthsFrom) return;
         const first = FIRST();
@@ -610,19 +685,29 @@
         $id('wtpMonths').innerHTML = Object.entries(byYear).map(([y, list]) => `
             <div class="wtp-myear">
                 <p class="wtp-myear-h">${esc(y)}${Number(y) === OPT.monthsFrom.year ? ' · this year' : ''}</p>
-                <div class="wtp-mgrid">${list.map((i) => `<button type="button" class="wtp-mchip" data-m="${i}" aria-pressed="false" aria-label="${esc(MONTHS_LONG[ym(i).month - 1] + ' ' + ym(i).year)}">${MONTHS[ym(i).month - 1]}</button>`).join('')}</div>
+                <div class="wtp-mgrid">${list.map((i) => `<button type="button" class="wtp-mchip" data-m="${i}" aria-pressed="false" aria-label="${esc(monthWords(i))}">${MONTHS[ym(i).month - 1]}</button>`).join('')}</div>
             </div>`).join('');
         paintRange();
     }
     function paintRange() {
         const { from, to } = state;
+        // In the To sheet a month before From, or more than a year past it,
+        // is not a choice.
+        const lo = M_END === 'to' && from !== null ? from : -Infinity;
+        const hi = M_END === 'to' && from !== null ? from + MAX_SPAN() - 1 : Infinity;
         document.querySelectorAll('#wtpMonths .wtp-mchip').forEach((c) => {
             const i = Number(c.getAttribute('data-m'));
             const inside = from !== null && i >= from && i <= to;
             const end = from !== null && (i === from || i === to);
             c.classList.toggle('is-in', inside && !end);
             c.classList.toggle('is-end', end);
+            c.disabled = i < lo || i > hi;
             c.setAttribute('aria-pressed', inside ? 'true' : 'false');
+        });
+        [['wtpFromNow', from], ['wtpToNow', to]].forEach(([id, v]) => {
+            const t = $id(id);
+            t.textContent = v === null ? 'Pick a month' : monthWords(v);
+            t.classList.toggle('is-none', v === null);
         });
         const say = $id('wtpMonthsSay');
         if (from === null) {
@@ -636,28 +721,41 @@
         const words = n === 1
             ? `<b>${MONTHS_LONG[a.month - 1]} ${a.year}</b> only`
             : `Between <b>${MONTHS_LONG[a.month - 1]} ${a.year}</b> and <b>${MONTHS_LONG[b.month - 1]} ${b.year}</b> · ${n} months`;
-        const next = state.picking === 'end' ? ' — tap the last month, or go on with this one' : '';
-        say.innerHTML = `<span>${words}${next}</span><button type="button" data-m-clear>Clear</button>`;
+        say.innerHTML = `<span>${words}</span><button type="button" data-m-clear>Clear</button>`;
     }
+    function openMonthSheet(end) {
+        if (!OPT) return;
+        // No start yet: the To tag asks for the start first.
+        M_END = end === 'to' && state.from === null ? 'from' : end;
+        $id('wtpMonthSheetTitle').textContent = M_END === 'from' ? 'From which month?' : 'To which month?';
+        $id('wtpMonthSheetHint').textContent = M_END === 'from'
+            ? 'The first month you might plant.'
+            : `The last month you might plant — up to ${MAX_SPAN()} months from ${monthWords(state.from)}.`;
+        paintRange();
+        openSheet('wtpMonthSheet');
+    }
+    document.querySelectorAll('[data-m-end]').forEach((b) => b.addEventListener('click', () => openMonthSheet(b.getAttribute('data-m-end'))));
     $id('wtpMonths').addEventListener('click', (e) => {
         const c = e.target.closest('[data-m]');
-        if (!c) return;
+        if (!c || c.disabled) return;
         const i = Number(c.getAttribute('data-m'));
-        if (state.picking === 'start' || state.from === null) {
-            state.from = i; state.to = i; state.picking = 'end';
+        let askTo = false;
+        if (M_END === 'from') {
+            askTo = state.to === null;
+            state.from = i;
+            // The end follows a start moved past it, or more than a year before it.
+            if (state.to === null || state.to < i || state.to - i + 1 > MAX_SPAN()) state.to = i;
         } else {
-            let a = Math.min(state.from, i), b = Math.max(state.from, i);
-            if (b - a + 1 > MAX_SPAN()) {
-                toast(`Up to ${MAX_SPAN()} months at a time — kept the first ${MAX_SPAN()}.`);
-                if (i > state.from) b = a + MAX_SPAN() - 1; else a = b - MAX_SPAN() + 1;
-            }
-            state.from = a; state.to = b; state.picking = 'start';
+            state.to = i;
         }
         paintRange();
+        closeSheet('wtpMonthSheet');
+        // A first start goes straight on to asking for the end.
+        if (askTo) setTimeout(() => openMonthSheet('to'), 320);
     });
     $id('wtpMonthsSay').addEventListener('click', (e) => {
         if (!e.target.closest('[data-m-clear]')) return;
-        state.from = null; state.to = null; state.picking = 'start';
+        state.from = null; state.to = null;
         paintRange();
     });
 
@@ -735,7 +833,7 @@
             case 0: state.location = $id('wtpLocation').value.trim();
                 return !!state.location || (toast('Say where the field is.', 'error'), false);
             case 1: if (state.from === null) { toast('Pick the months you are thinking of planting in.', 'error'); return false; }
-                state.picking = 'start';
+                if (state.to === null) state.to = state.from;
                 return true;
             case 2: return !!state.crop || (toast(cropDropped ? `The crop list is different for ${countryName(state.country)} — pick the crop again.` : 'Pick the crop.', 'error'), false);
             case 3: state.variety = $id('wtpVariety').value.trim(); return true;
@@ -871,7 +969,7 @@
         if (!stepReady()) return;
         const wiz = $id('wtpWiz');
         wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = 'none');
-        window.aneeWait.show({ title: 'Anee is reading the climate for your field…', lines: ['Reading twenty years of storms, droughts and floods for your region…', state.country === 'PH' ? 'Typhoon seasonality and the wet-dry rhythm…' : 'Frost dates, heat and the rain rhythm of the region…', 'Your crop\'s own calendar against it…', 'Finding the window, and the weeks to avoid…'], sub: 'Half a minute, usually.' });
+        window.aneeWait.show({ title: 'Anee is reading the climate for your field…', lines: ['Reading twenty years of storms, droughts and floods for your region…', state.country === 'PH' ? 'Typhoon seasonality and the wet-dry rhythm…' : 'Frost dates, heat and the rain rhythm of the region…', 'Your crop\'s own calendar against it…', 'Weighing each week of your months, one by one…', 'Ranking the best weeks, and the weeks to avoid…'], sub: 'Half a minute, usually.' });
         $id('wtpReport').hidden = true;
         let landed = false;
         try {
@@ -1000,6 +1098,29 @@
                 <p class="wtp-mnote">${esc(sweep(rh.note || 'Taller is worse. A month\'s bar stacks the kinds of trouble that struck it over the years read, each sized by how often and how badly.'))}</p>
             </div>` : '';
 
+        /* The best weeks, ranked — the week-by-week answer (older analyses
+           have none, and simply do not show the card). */
+        const weeks = Array.isArray(r.weekRanks) ? r.weekRanks : [];
+        const FACT = [['rain', '🌧️ Rain'], ['storms', '🌀 Storms'], ['enso', '🌡️ ENSO'], ['field', '🌾 Your field']];
+        const weeksCard = weeks.length ? `
+            <div class="wtp-card">
+                <h3>The best weeks to plant, ranked <small style="display:block;font-size:.72rem;font-weight:500;color:var(--color-gray-500);margin-top:.1rem">Each week of your months weighed against the rain, the storm record, ENSO, your field and your crop's calendar</small></h3>
+                <div class="wtp-wks">
+                    ${weeks.map((w, i) => `
+                        <div class="wtp-wk${i === 0 ? ' is-top' : ''}">
+                            <span class="wtp-wk-n">${esc(w.rank || i + 1)}</span>
+                            <div class="wtp-wk-b">
+                                <div class="wtp-wk-h"><b>${esc(w.label || '')}</b><small>${i === 0 ? 'Best · ' : (i === 1 ? 'Second · ' : (i === 2 ? 'Third · ' : ''))}${esc(w.score ?? '')}/100</small></div>
+                                <div class="wtp-wk-bar"><i style="--w:${Math.max(0, Math.min(100, Number(w.score) || 0)) / 100}"></i></div>
+                                <p>${esc(sweep(w.why))}</p>
+                                ${FACT.some(([k]) => w.factors && w.factors[k]) ? `<div class="wtp-wk-f">${FACT.filter(([k]) => w.factors && w.factors[k]).map(([k, lbl]) => `<span><b>${lbl}:</b> ${esc(sweep(w.factors[k]))}</span>`).join('')}</div>` : ''}
+                                ${(w.flowering || w.harvest) ? `<div class="wtp-wk-c">${w.flowering ? `<span>🌼 Flowers ${esc(w.flowering)}</span>` : ''}${w.harvest ? `<span>🧺 Harvest ${esc(w.harvest)}</span>` : ''}</div>` : ''}
+                                ${w.watch ? `<p class="wtp-wk-w">👁 ${esc(sweep(w.watch))}</p>` : ''}
+                            </div>
+                        </div>`).join('')}
+                </div>
+            </div>` : '';
+
         const windowsCard = `
             <div class="wtp-card">
                 <h3>The calendar, plainly</h3>
@@ -1022,6 +1143,8 @@
                     ${item.charged ? `<span class="wtp-chip">${item.charged} credits</span>` : ''}
                 </div>
             </div>
+
+            ${weeksCard}
 
             ${windowsCard}
 

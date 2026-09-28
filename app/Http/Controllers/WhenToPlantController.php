@@ -268,7 +268,8 @@ class WhenToPlantController extends Controller
              * the document is written with those notes appended. A
              * document-sized answer lane: the chat cap (1200) cut the JSON
              * mid-object on longer runs, which read as "unreadable". */
-            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 4500, fn (string $t) => $this->parseReport($t), $beat);
+            // Room for the week-by-week ranking as well as the rest.
+            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 6500, fn (string $t) => $this->parseReport($t), $beat);
             $report = $result['data'];
             if ($report === null) {
                 // The head of what came back, kept where a debugger can read
@@ -469,6 +470,7 @@ class WhenToPlantController extends Controller
             . 'Case: ' . $r->title . "\n"
             . 'Field problems considered: ' . ($problems ?: 'none') . "\n"
             . 'Recommended window: ' . ($bw['label'] ?? '') . ' — ' . ($bw['why'] ?? '') . "\n"
+            . (! empty($report['weekRanks']) ? 'Best planting weeks, ranked: ' . collect($report['weekRanks'])->map(fn ($w) => ($w['rank'] ?? '') . ') ' . ($w['label'] ?? '') . ' (score ' . ($w['score'] ?? '') . ') — ' . ($w['why'] ?? ''))->implode(' | ') . "\n" : '')
             . 'Timeline: ' . collect($report['timeline'] ?? [])->map(fn ($t) => ($t['stage'] ?? '') . ' ' . ($t['days'] ?? 0) . 'd')->implode(', ') . "\n"
             . 'Threats outside the window: ' . collect($report['threats'] ?? [])->map(fn ($t) => ($t['whenNot'] ?? '') . ': ' . ($t['threat'] ?? '') . ' (' . ($t['severity'] ?? '') . ')')->implode(' | ') . "\n"
             . 'Month scores (planting suitability 0-100): ' . collect($report['monthScores'] ?? [])->map(fn ($m) => ($m['month'] ?? '') . '=' . ($m['score'] ?? ''))->implode(' ') . "\n"
@@ -674,8 +676,9 @@ GROUND RULES
 - Write the summary and the "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown.
 
 Return ONLY a valid JSON object — no code fences, no commentary — in exactly this shape:
-{"bestWindow":{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"year":2026,"score":0,"note":""}],"riskHistory":{"years":"","months":[{"month":1,"storm":0,"flood":0,"drought":0,"heat":0,"frost":0,"note":""}],"events":[{"year":2013,"month":11,"kind":"storm","what":"","impact":"high"}],"note":""},"threats":[{"whenNot":"","threat":"","severity":"low"}],"variety":{"found":false,"name":"","maturityDays":0,"season":"","traits":"","caution":"","source":""},"confidence":"moderate","dataGaps":[""],"summary":""}
+{"weekRanks":[{"rank":1,"from":"2026-11-09","to":"2026-11-15","label":"","score":0,"why":"","factors":{"rain":"","storms":"","enso":"","field":""},"flowering":"","harvest":"","watch":""}],"bestWindow":{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":""},"avoidWindows":[{"fromMonth":1,"fromDay":1,"fromYear":2026,"toMonth":1,"toDay":1,"toYear":2026,"label":"","why":"","severity":"high"}],"monthScores":[{"month":1,"year":2026,"score":0,"note":""}],"riskHistory":{"years":"","months":[{"month":1,"storm":0,"flood":0,"drought":0,"heat":0,"frost":0,"note":""}],"events":[{"year":2013,"month":11,"kind":"storm","what":"","impact":"high"}],"note":""},"threats":[{"whenNot":"","threat":"","severity":"low"}],"variety":{"found":false,"name":"","maturityDays":0,"season":"","traits":"","caution":"","source":""},"confidence":"moderate","dataGaps":[""],"summary":""}
 Rules for the shape:
+- weekRanks is THE CORE OF THIS ANALYSIS — the farmer wants the best WEEK, not the best month. Work through the farmer's months ({$whenShort}) WEEK BY WEEK (Monday to Sunday) and judge each week as a planting week against everything above: the place's recent rain onset and dry spells, its storm / flood / drought / heat record from the research notes, the ENSO outlook, the crop's own calendar (work out, from the variety's days to maturity where the notes give it or else the crop's, when a crop planted that week flowers or reaches its sensitive stage and when it is harvested, and what weather those stages meet), every field problem the farmer reported, and the variety's traits. Then return the best week ranges RANKED: rank 1 is the best, then the second best, and so on, up to five. A range is one week, or two or three adjacent weeks that score alike; ranges never overlap; all sit inside the farmer's months; rank 1 lies inside bestWindow. For each: from and to as ISO dates (YYYY-MM-DD: the Monday and the Sunday), label spelling the dates WITH THE YEAR (e.g. "Nov 9 – 15, 2026" or "Nov 30 – Dec 13, 2026"), score 0–100 as a planting week, why ≤ 45 words naming the concrete reasons for its place in the ranking, factors = one line each (≤ 14 words) on how rain, storms, ENSO and this field's reported problems bear on that range (field = "" when the farmer reported none), flowering "around Jan 20–27, 2027" (the sensitive stage for a planting in that range; "" for a crop without one), harvest "around Feb 25, 2027", watch ≤ 15 words — the one thing to watch for in that range. Differentiate the scores honestly; if fewer than five ranges are worth planting in, return fewer and say why in the summary.
 - variety: what the research found about the stated variety — found true only when the notes carry real published traits; name as published; maturityDays (0 when unknown); season it is bred for in a few words; traits ≤ 60 words in plain words (yield, height, tolerances, resistances, and how they shaped this timing); caution ≤ 25 words (its known weakness on this ground, or ""); source the registry, breeder or agency the notes cite. When the farmer named no variety, or none was found: found false and the rest empty or 0.
 - bestWindow must be a SPECIFIC, actionable range of roughly 2–6 weeks with explicit dates INSIDE the farmer's months ({$whenShort}), and its label must spell the dates out WITH THE YEAR (e.g. "Dec 10, 2026 – Jan 5, 2027") — NEVER a season name or a whole month range. fromYear/toYear carry the calendar year of each end. If none of the farmer's months is sound, still give the least risky weeks inside them, lower the confidence, and say plainly in the why, the threats and the summary which nearby months would be safer.
 - avoidWindows: one to three ranges to KEEP AWAY FROM, each specific to the month and week and year (e.g. "Late July – mid October 2026") and grounded in the named region's historical typhoon/climate pattern; why says what historically happens there then; severity "moderate" or "high".
@@ -764,6 +767,23 @@ PROMPT;
         // of the prose fields so :anee-…: never reaches a farmer raw.
         $sweep = fn ($v) => is_string($v) ? trim(preg_replace('/:[a-z0-9_-]+:/i', '', $v)) : $v;
         $json['summary'] = $sweep($json['summary'] ?? '');
+        // The ranked weeks: in rank order, at most five, prose swept.
+        if (isset($json['weekRanks']) && is_array($json['weekRanks'])) {
+            $weeks = array_values(array_filter($json['weekRanks'], fn ($w) => is_array($w) && ! empty($w['label'])));
+            usort($weeks, fn ($a, $b) => ((int) ($a['rank'] ?? 99)) <=> ((int) ($b['rank'] ?? 99)));
+            $json['weekRanks'] = array_map(function ($w, $i) use ($sweep) {
+                $w['rank'] = $i + 1;
+                $w['score'] = max(0, min(100, (int) ($w['score'] ?? 0)));
+                foreach (['why', 'watch', 'flowering', 'harvest'] as $k) {
+                    $w[$k] = $sweep($w[$k] ?? '');
+                }
+                $w['factors'] = array_map($sweep, array_intersect_key((array) ($w['factors'] ?? []), array_flip(['rain', 'storms', 'enso', 'field'])));
+
+                return $w;
+            }, array_slice($weeks, 0, 5), array_keys(array_slice($weeks, 0, 5)));
+        } else {
+            $json['weekRanks'] = [];
+        }
         if (isset($json['bestWindow']['why'])) {
             $json['bestWindow']['why'] = $sweep($json['bestWindow']['why']);
         }
