@@ -141,7 +141,8 @@ class CropProtocolController extends Controller
      */
     public const METHODS_BY_CROP = [
         'rice' => ['transplanted', 'direct_wet', 'direct_dry'],
-        'rice_upland' => ['direct_dry'],
+        'rice_dsr_wet' => ['direct_wet'],
+        'rice_dsr_dry' => ['direct_dry'],
         'corn_yellow' => ['direct'], 'corn_sweet' => ['direct'], 'corn_glutinous' => ['direct'], 'sorghum' => ['direct'],
         'mungbean' => ['direct'], 'peanut' => ['direct'], 'soybean' => ['direct'], 'stringbean' => ['direct'],
         'cowpea' => ['direct'], 'wingedbean' => ['direct'], 'limabean' => ['direct'], 'pigeonpea' => ['direct'],

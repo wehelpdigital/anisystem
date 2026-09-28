@@ -75,7 +75,7 @@ class AsCropScene extends BaseModel
 
     /** Which family each crop key belongs to. Anything unlisted is 'mixed'. */
     public const OF_CROP = [
-        'rice' => 'grain', 'rice_upland' => 'grain', 'sorghum' => 'grain',
+        'rice' => 'grain', 'rice_dsr_wet' => 'grain', 'rice_dsr_dry' => 'grain', 'rice_upland' => 'grain', 'sorghum' => 'grain',
         'corn_yellow' => 'corn', 'corn_sweet' => 'corn', 'corn_glutinous' => 'corn',
         'sugarcane' => 'cane', 'bamboo' => 'cane', 'abaca' => 'cane',
         'mungbean' => 'legume', 'peanut' => 'legume', 'soybean' => 'legume',

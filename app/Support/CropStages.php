@@ -44,6 +44,34 @@ class CropStages
      * These are NOT stretched to a lot's maturity: the numbers are the crop's
      * actual dates, not a shape fitted to a length.
      */
+    /* Wet direct-seeded rice, from sowing: pre-germinated seed on a
+       puddled, levelled field. */
+    public const DSR_WET = [
+        [0, 'Germination & emergence', 'The seed sprouts where it will stand.', 'Keep the bed saturated, not flooded. Guard against birds.'],
+        [8, 'Seedling establishment', 'Roots anchor and the first leaves open.', 'Shallow water once anchored. Weed early — DSR fights weeds.'],
+        [21, 'Active tillering', 'Tillers build the panicle count.', 'First and second nitrogen. Keep 3–5 cm of water.'],
+        [40, 'Panicle initiation', 'The panicle forms inside the stem.', 'The season\'s biggest fertiliser goes on here.'],
+        [55, 'Booting & heading', 'The flag leaf swells; panicles push out.', 'Never let the field dry. Watch for stem borer.'],
+        [70, 'Flowering', 'Pollination — a few days that set the grain.', 'Keep water on. Do not spray at midday.'],
+        [85, 'Grain filling', 'Grains fill from milk to dough.', 'Water to the dough stage. Guard against rats and birds.'],
+        [105, 'Ripening & harvest', 'Grain hardens and the straw turns.', 'Drain 7–10 days before cutting.'],
+    ];
+
+    /* Dry direct-seeded rice, from sowing: dry seed drilled or dibbled into
+       unpuddled soil. It waits on moisture to come up, stands without
+       water at first and fights weeds hardest, so each stage comes a little
+       later than in the wet crop. */
+    public const DSR_DRY = [
+        [0, 'Germination & emergence', 'The dry seed waits for moisture, then sprouts in the row.', 'Sow into moist soil, or water or wait for rain right after. Guard against ants and birds.'],
+        [10, 'Seedling establishment', 'Roots anchor in unpuddled soil; the first leaves open.', 'Keep the soil moist, not flooded. Weed now — a dry-seeded field weeds hardest.'],
+        [25, 'Active tillering', 'Tillers build the panicle count.', 'First and second nitrogen. Bring water on where it can be held.'],
+        [42, 'Panicle initiation', 'The panicle forms inside the stem.', 'The season\'s biggest fertiliser goes on here. Do not let it go dry.'],
+        [58, 'Booting & heading', 'The flag leaf swells; panicles push out.', 'Water without fail. Watch for stem borer and blast.'],
+        [72, 'Flowering', 'Pollination — a few days that set the grain.', 'Drought here costs the most. Do not spray at midday.'],
+        [88, 'Grain filling', 'Grains fill from milk to dough.', 'Keep moisture to the dough stage. Guard against rats and birds.'],
+        [108, 'Ripening & harvest', 'Grain hardens and the straw turns.', 'Let the field dry down 7–10 days before cutting.'],
+    ];
+
     public const TABLES = [
         /*
          * Rice is two crops as far as a calendar is concerned.
@@ -70,18 +98,12 @@ class CropStages
                 [73, 'Grain filling', 'Grains fill from milk to dough.', 'Water to the dough stage. Guard against rats and birds.'],
                 [90, 'Ripening & harvest', 'Grain hardens and the straw turns.', 'Drain 7–10 days before cutting. Harvest at 80–85% golden.'],
             ],
-            // Direct seeded (DSR), from sowing.
-            'stagesDirect' => [
-                [0, 'Germination & emergence', 'The seed sprouts where it will stand.', 'Keep the bed saturated, not flooded. Guard against birds.'],
-                [8, 'Seedling establishment', 'Roots anchor and the first leaves open.', 'Shallow water once anchored. Weed early — DSR fights weeds.'],
-                [21, 'Active tillering', 'Tillers build the panicle count.', 'First and second nitrogen. Keep 3–5 cm of water.'],
-                [40, 'Panicle initiation', 'The panicle forms inside the stem.', 'The season\'s biggest fertiliser goes on here.'],
-                [55, 'Booting & heading', 'The flag leaf swells; panicles push out.', 'Never let the field dry. Watch for stem borer.'],
-                [70, 'Flowering', 'Pollination — a few days that set the grain.', 'Keep water on. Do not spray at midday.'],
-                [85, 'Grain filling', 'Grains fill from milk to dough.', 'Water to the dough stage. Guard against rats and birds.'],
-                [105, 'Ripening & harvest', 'Grain hardens and the straw turns.', 'Drain 7–10 days before cutting.'],
-            ],
+            // Direct seeded (DSR), from sowing — the wet crop's own table.
+            'stagesDirect' => self::DSR_WET,
         ],
+        // The two direct-seeded rice crops: DAS only, their own calendars.
+        'rice_dsr_wet' => ['stages' => self::DSR_WET],
+        'rice_dsr_dry' => ['stages' => self::DSR_DRY],
         'corn_yellow' => [
             'stages' => [
                 [0, 'Emergence', 'The shoot breaks through and lives on the seed.', 'Keep the soil damp, not wet. Watch for cutworm.'],
@@ -220,6 +242,11 @@ class CropStages
         'niyog' => 'coconut',
         'tubo' => 'sugarcane',
         'gulay' => 'vegetables',
+        // Upland rice became the two direct-seeded crops (2026-09-29); an
+        // old value lands on the dry one, which is what "upland" meant.
+        'rice_upland' => 'rice_dsr_dry',
+        'rice — upland (palay sa tuyo)' => 'rice_dsr_dry',
+        'rice — upland' => 'rice_dsr_dry',
     ];
 
     public static function normalize(?string $crop): ?string

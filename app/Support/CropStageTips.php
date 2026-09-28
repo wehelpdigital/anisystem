@@ -353,6 +353,10 @@ class CropStageTips
      *
      * @return array{do: array<int, string>, watch: array<int, string>}
      */
+    /* The direct-seeded rice crops take rice's tips, always read as direct
+       seeded — they have no transplant for the DAT set to be about. */
+    private const SAME_AS = ['rice_dsr_wet' => 'rice', 'rice_dsr_dry' => 'rice'];
+
     public static function for(?string $crop, ?int $stageIndex, ?string $counter = null): array
     {
         $key = CropStages::normalize($crop);
@@ -360,7 +364,8 @@ class CropStageTips
             return ['do' => [], 'watch' => []];
         }
 
-        $direct = $counter !== null && strtoupper($counter) !== 'DAT';
+        $direct = ($counter !== null && strtoupper($counter) !== 'DAT') || isset(self::SAME_AS[$key]);
+        $key = self::SAME_AS[$key] ?? $key;
         $rows = ($direct ? (self::DIRECT_OVERRIDES[$key][$stageIndex] ?? null) : null)
             ?? (self::TIPS[$key][$stageIndex] ?? []);
 
@@ -374,6 +379,7 @@ class CropStageTips
     public static function allFor(?string $crop): array
     {
         $key = CropStages::normalize($crop);
+        $key = self::SAME_AS[$key] ?? $key;
 
         return $key ? (self::TIPS[$key] ?? []) : [];
     }

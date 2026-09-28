@@ -131,9 +131,19 @@ class CropCatalog
             'label' => 'Rice — transplanted (Palay)', 'icon' => '🌾', 'group' => 'Cereals & grains',
             'kind' => self::ANNUAL, 'counter' => 'DAT', 'maturity' => 110,
         ],
-        'rice_upland' => [
-            'label' => 'Rice — upland (Palay sa tuyo)', 'icon' => '🌾', 'group' => 'Cereals & grains',
-            'kind' => self::ANNUAL, 'counter' => 'DAS', 'maturity' => 115, 'pattern' => 'cereal',
+        /* Direct-seeded rice (DSR) is two crops of its own, not "upland"
+         * (the owner's call, 2026-09-29): wet — pre-germinated seed
+         * broadcast or drum-seeded on puddled soil (sabog-tanim) — and dry —
+         * dry seed drilled or dibbled into unpuddled soil. Neither has a
+         * transplant or a planting to count from: DAS, from sowing, only.
+         * Their calendars are CropStages::TABLES, not a stretched pattern. */
+        'rice_dsr_wet' => [
+            'label' => 'Rice — Direct Seeded Wet (Palay)', 'icon' => '🌾', 'group' => 'Cereals & grains',
+            'kind' => self::ANNUAL, 'counter' => 'DAS', 'counters' => ['DAS'], 'maturity' => 110,
+        ],
+        'rice_dsr_dry' => [
+            'label' => 'Rice — Direct Seeded Dry (Palay)', 'icon' => '🌾', 'group' => 'Cereals & grains',
+            'kind' => self::ANNUAL, 'counter' => 'DAS', 'counters' => ['DAS'], 'maturity' => 115,
         ],
         'corn_yellow' => [
             'label' => 'Corn — yellow / field (Mais)', 'icon' => '🌽', 'group' => 'Cereals & grains',
