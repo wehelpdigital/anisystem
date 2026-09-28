@@ -1572,11 +1572,24 @@
         const add = (t, w) => { (out[t.id] = out[t.id] || []).push(w); };
         const tasks = list.filter(isTask);
         tasks.forEach((t) => {
-            // inside one task: the tank
-            const herbItems = hasKind(t, ['herbicide']) || t.type === 'herbicide';
-            const helpItems = hasKind(t, ['fertilizer', 'foliar', 'growth', 'bio', 'insecticide', 'fungicide']);
-            if (herbItems && helpItems) add(t, 'Herbicide should go out alone — it must not share a tank with anything meant to help the crop, and the knapsack wants rinsing after.');
-            if (isCopper(t) && (hasKind(t, ['foliar', 'bio', 'adjuvant']) || nameHas(t, /\boil\b|acid/i))) add(t, 'Copper burns leaves when it meets oils or acidic partners, and it puts biologicals down. Spray it on its own.');
+            // inside one task: the TANK, which is one group - urea broadcast
+            // per hectare and a herbicide in its own knapsack group are two
+            // applications, not one mix. A task typed as herbicide that lists
+            // no herbicide item is taken to carry it in every group.
+            const groups = t.groups || [];
+            const gHas = (g, kinds) => (g.items || []).some((it) => kinds.includes(it.kind));
+            const gName = (g, re) => (g.items || []).some((it) => re.test(it.name || ''));
+            const herbNamed = groups.some((g) => gHas(g, ['herbicide']));
+            const HELP = ['fertilizer', 'foliar', 'growth', 'bio', 'insecticide', 'fungicide'];
+            if (groups.some((g) => (gHas(g, ['herbicide']) || (t.type === 'herbicide' && !herbNamed)) && gHas(g, HELP))) {
+                add(t, 'Herbicide should go out alone — it must not share a tank with anything meant to help the crop, and the knapsack wants rinsing after.');
+            }
+            const COPPER = /copper|cupr|cuprous|oxychlor/i;
+            const copperNamed = groups.some((g) => gName(g, COPPER));
+            if (groups.some((g) => (gName(g, COPPER) || (t.type === 'copper_fungicide' && !copperNamed))
+                && (gHas(g, ['foliar', 'bio', 'adjuvant']) || gName(g, /\boil\b|acid/i)))) {
+                add(t, 'Copper burns leaves when it meets oils or acidic partners, and it puts biologicals down. Spray it on its own.');
+            }
         });
         for (let i = 0; i < tasks.length; i++) {
             for (let j = i + 1; j < tasks.length; j++) {
