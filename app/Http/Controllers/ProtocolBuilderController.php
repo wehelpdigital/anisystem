@@ -10,6 +10,7 @@ use App\Models\AsScheduleActivityItem;
 use App\Models\AsScheduleActivity;
 use App\Models\AsScheduleActivityVersion;
 use App\Models\AsScheduleLot;
+use App\Models\AsScheduleNote;
 use App\Models\User;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
@@ -234,6 +235,7 @@ class ProtocolBuilderController extends Controller
             'dayType' => 'required|in:DAS,DAT,DAP,TREE',
             'tags' => 'nullable|array|max:10',
             'tags.*' => 'string|max:30',
+            'preview' => 'nullable|boolean',
         ]);
         if ($v->fails()) {
             return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
@@ -242,23 +244,34 @@ class ProtocolBuilderController extends Controller
         // The count follows the crop the way the Lots form narrows it; an
         // answer already on the row survives a list that narrowed around it.
         $dayType = self::fitDayType($crop, (string) $request->input('dayType'), $p->dayType);
+        /* A NEW COUNT RELABELS, AND SAYS SO FIRST.
+         *
+         * Every version's tasks keep their days; only the word changes when
+         * the new count does not know their counter (DAT 14 becomes DAS 14).
+         * That used to happen silently and for good - switching back did not
+         * bring DAT back. Each relabelled entry now remembers what it was, so
+         * switching back restores it, and `preview` answers how many would
+         * move before anything is written, for the page to ask first. */
+        $moved = 0;
+        $restored = 0;
+        $plans = [];
         if ($dayType !== $p->dayType) {
-            // Every version's tasks keep their days; only the word changes
-            // when the new count does not know their counter.
             $allowed = self::DAY_TYPES[$dayType]['counters'];
             foreach ($this->versions($p) as $ver) {
-                $tasks = (array) ($ver->tasks ?? []);
-                foreach ($tasks as &$t) {
-                    if (is_array($t) && ! in_array($t['counter'] ?? '', $allowed, true)) {
-                        $t['counter'] = $allowed[0];
-                    }
-                }
-                unset($t);
-                $ver->forceFill([
-                    'tasks' => $this->cleanTasks($tasks, $dayType, (array) ($ver->materials ?? [])),
-                    'rev' => (int) $ver->rev + 1,
-                ])->save();
+                [$tasks, $m, $r] = self::relabel((array) ($ver->tasks ?? []), $allowed);
+                $moved += $m;
+                $restored += $r;
+                $plans[] = [$ver, $tasks];
             }
+        }
+        if ($request->boolean('preview')) {
+            return $this->json(true, 'Preview.', ['dayType' => $dayType, 'moved' => $moved, 'restored' => $restored]);
+        }
+        foreach ($plans as [$ver, $tasks]) {
+            $ver->forceFill([
+                'tasks' => $this->cleanTasks($tasks, $dayType, (array) ($ver->materials ?? [])),
+                'rev' => (int) $ver->rev + 1,
+            ])->save();
         }
         $p->forceFill([
             'title' => trim((string) $request->input('title')),
@@ -270,7 +283,38 @@ class ProtocolBuilderController extends Controller
         ])->save();
         $p = $p->fresh();
 
-        return $this->json(true, 'Saved.', ['protocol' => $this->shape($p, true), 'stages' => $this->stagesFor($p->crop)]);
+        return $this->json(true, 'Saved.', ['protocol' => $this->shape($p, true), 'stages' => $this->stagesFor($p->crop), 'moved' => $moved, 'restored' => $restored]);
+    }
+
+    /**
+     * Tasks under a new set of counters: an entry the new count does not know
+     * moves to its first counter and remembers the one it had; an entry moved
+     * that way before, and untouched since, goes back when its own counter is
+     * allowed again. [tasks, moved, restored].
+     */
+    private static function relabel(array $tasks, array $allowed): array
+    {
+        $moved = 0;
+        $restored = 0;
+        foreach ($tasks as &$t) {
+            if (! is_array($t)) {
+                continue;
+            }
+            $counter = strtoupper((string) ($t['counter'] ?? ''));
+            $was = is_array($t['relabel'] ?? null) ? $t['relabel'] : null;
+            if ($was && in_array($was['from'] ?? '', $allowed, true) && $counter === ($was['to'] ?? null)) {
+                $t['counter'] = $was['from'];
+                unset($t['relabel']);
+                $restored++;
+            } elseif (! in_array($counter, $allowed, true)) {
+                $t['relabel'] = ['from' => $counter, 'to' => $allowed[0]];
+                $t['counter'] = $allowed[0];
+                $moved++;
+            }
+        }
+        unset($t);
+
+        return [$tasks, $moved, $restored];
     }
 
     public function duplicate(int $id)
@@ -955,7 +999,7 @@ PROMPT;
                 }
                 $treePlanted = Carbon::parse($treePlanted)->format('Y-m-d');
             }
-            $plan[] = ['in' => $l, 'proto' => $proto, 'tasks' => $tasks, 'materials' => $materials, 'start' => $start, 'transplant' => $transplant, 'source' => $source, 'treePlanted' => $treePlanted];
+            $plan[] = ['in' => $l, 'proto' => $proto, 'ver' => $ver, 'versions' => $rowsOf->count(), 'tasks' => $tasks, 'materials' => $materials, 'start' => $start, 'transplant' => $transplant, 'source' => $source, 'treePlanted' => $treePlanted];
         }
         $workers = max(1, (int) $request->input('workers', 1));
         $adjust = $request->input('adjust') === 'allow' ? 'allow' : 'spread';
@@ -968,7 +1012,7 @@ PROMPT;
         $dayType = count($dayTypes) === 1 ? $dayTypes[0] : (in_array('DAT', $dayTypes, true) ? 'DAT' : ($fields[0] ?? $dayTypes[0]));
         $firstCrop = $plan[0]['source']->crop ?? $plan[0]['proto']->crop;
 
-        $made = ['activities' => 0, 'notes' => 0, 'moved' => 0];
+        $made = ['activities' => 0, 'notes' => 0, 'moved' => 0, 'rules' => 0];
         $schedule = DB::transaction(function () use ($request, $plan, $dayType, $firstCrop, $workers, $adjust, &$made) {
             $schedule = AsCroppingSchedule::create([
                 'anisystemUserId' => (int) Auth::id(),
@@ -1026,6 +1070,16 @@ PROMPT;
             if ($adjust === 'spread') {
                 $made['moved'] = $this->spread($all, $workers);
             }
+            // The version's Rules & notes go with it: one note in the season's
+            // Notes per version ported, however many lots run it.
+            $carried = [];
+            foreach ($plan as $x) {
+                if (isset($carried[$x['ver']->id])) {
+                    continue;
+                }
+                $carried[$x['ver']->id] = true;
+                $made['rules'] += $this->carryRules($schedule, $x['proto'], $x['ver'], $x['versions'] > 1) ? 1 : 0;
+            }
 
             return $schedule;
         });
@@ -1034,6 +1088,7 @@ PROMPT;
         }
         $say = 'The season is set up — ' . count($plan) . ($plan && count($plan) === 1 ? ' lot, ' : ' lots, ') . $made['activities'] . ' activities on the board'
             . ($made['notes'] ? ' and ' . $made['notes'] . ($made['notes'] === 1 ? ' note' : ' notes') . ' on the day book' : '')
+            . ($made['rules'] ? ', the rules and notes in the season\'s Notes' : '')
             . ($made['moved'] ? '; ' . $made['moved'] . ($made['moved'] === 1 ? ' activity slid' : ' activities slid') . ' to a later day so no day asks for more than ' . $workers . ($workers === 1 ? ' worker' : ' workers') : '') . '.';
 
         return $this->json(true, $say, [
@@ -1425,20 +1480,26 @@ PROMPT;
             if ((int) ($t['day'] ?? 0) < 0) {
                 $counter = $allowed[0];
             }
+            // What a change of count moved it from (see relabel()), kept only
+            // while it still stands where that change put it.
+            $was = is_array($t['relabel'] ?? null) ? $t['relabel'] : null;
+            $relabel = ($was && in_array($was['from'] ?? '', ['DAS', 'DAT', 'DAP', 'DOS'], true) && ($was['to'] ?? null) === $counter)
+                ? ['from' => $was['from'], 'to' => $counter] : null;
             // A note between the tasks: words on a day, nothing else.
             if (($t['kind'] ?? '') === 'note') {
                 $text = $this->text($t['text'] ?? '', 2000);
                 if ($text === null) {
                     continue;
                 }
-                $out[] = [
+                $out[] = array_filter([
                     'id' => $id,
                     'kind' => 'note',
                     'counter' => $counter,
                     'day' => max(-365, min(999, (int) ($t['day'] ?? 0))),
                     'text' => $text,
                     'pos' => (int) ($t['pos'] ?? $i * 10),
-                ];
+                    'relabel' => $relabel,
+                ], fn ($x) => $x !== null);
                 continue;
             }
             // A phase divider: a named line between the tasks ("Vegetative
@@ -1450,7 +1511,7 @@ PROMPT;
                     continue;
                 }
                 $color = (string) ($t['color'] ?? 'amber');
-                $out[] = [
+                $out[] = array_filter([
                     'id' => $id,
                     'kind' => 'divider',
                     'counter' => $counter,
@@ -1458,7 +1519,8 @@ PROMPT;
                     'label' => $label,
                     'color' => in_array($color, self::DIVIDER_COLORS, true) ? $color : 'amber',
                     'pos' => (int) ($t['pos'] ?? $i * 10),
-                ];
+                    'relabel' => $relabel,
+                ], fn ($x) => $x !== null);
                 continue;
             }
             $groups = [];
@@ -1527,7 +1589,7 @@ PROMPT;
                 'priority' => isset(self::PRIORITIES[$priority]) ? $priority : 'medium',
                 'workers' => ($workers === null || $workers === '') ? null : max(0, min(999, (int) $workers)),
                 'pos' => (int) ($t['pos'] ?? $i * 10),
-            ];
+            ] + ($relabel ? ['relabel' => $relabel] : []);
         }
 
         return $out;
@@ -1725,18 +1787,67 @@ PROMPT;
         ];
     }
 
-    /** True when another live version (of any protocol — copies share files) still lists this stored file. */
+    /**
+     * A version's Rules & notes document and its files, as a note in the
+     * ported season's Notes. The document is already sanitised; a picture
+     * rides as the note's own image, anything else (a PDF label, a soil
+     * test) as a link under the words. The files are shared, not copied —
+     * fileShared() keeps a file a note still shows.
+     */
+    private function carryRules(AsCroppingSchedule $schedule, AsProtocol $proto, AsProtocolVersion $ver, bool $named): bool
+    {
+        $html = trim((string) ($ver->rules ?? ''));
+        $files = array_values(array_filter((array) ($ver->files ?? []), fn ($f) => is_array($f) && ! empty($f['path'])));
+        if ($html === '' && ! $files) {
+            return false;
+        }
+        $media = [];
+        $links = [];
+        foreach ($files as $f) {
+            $name = trim((string) ($f['name'] ?? '')) ?: 'File';
+            if (str_starts_with((string) ($f['mime'] ?? ''), 'image/')) {
+                $media[] = ['type' => 'image', 'path' => (string) $f['path'], 'title' => mb_substr($name, 0, 190)];
+                continue;
+            }
+            $url = MediaStore::url($f['path']);
+            if ($url) {
+                $links[] = '<li><a href="' . e($url) . '" target="_blank" rel="noopener">' . e($name) . '</a></li>';
+            }
+        }
+        $body = $html . ($links ? '<p><strong>Files</strong></p><ul>' . implode('', $links) . '</ul>' : '');
+        AsScheduleNote::create([
+            'croppingScheduleId' => $schedule->id,
+            'userId' => (int) Auth::id(),
+            'title' => mb_substr('Rules & notes — ' . $proto->title . ($named ? ' (' . $ver->name . ')' : ''), 0, 191),
+            'body' => $body !== '' ? HtmlSanitizer::rich($body) : null,
+            'media' => $media ?: null,
+            'sortOrder' => 0,
+            'deleteStatus' => 1,
+        ]);
+
+        return true;
+    }
+
+    /**
+     * True when another live version (of any protocol — copies share files)
+     * still lists this stored file, or a season's note carries it (a ported
+     * version's Rules & notes).
+     */
     private function fileShared(string $path, int $exceptVersionId): bool
     {
         $needle = basename(MediaStore::strip($path));
         if ($needle === '') {
             return false;
         }
+        $like = '%' . addcslashes($needle, '%_\\') . '%';
 
         return AsProtocolVersion::active()->where('id', '!=', $exceptVersionId)
-            ->where('files', 'like', '%' . addcslashes($needle, '%_\\') . '%')
+            ->where('files', 'like', $like)
             ->get(['id', 'files'])
-            ->contains(fn ($x) => collect((array) ($x->files ?? []))->contains(fn ($f) => is_array($f) && ($f['path'] ?? null) === $path));
+            ->contains(fn ($x) => collect((array) ($x->files ?? []))->contains(fn ($f) => is_array($f) && ($f['path'] ?? null) === $path))
+            || AsScheduleNote::where('deleteStatus', 1)
+                ->where(fn ($q) => $q->where('media', 'like', $like)->orWhere('body', 'like', $like))
+                ->exists();
     }
 
     /** The two stacks, the newest few, and never more than the row can hold. */

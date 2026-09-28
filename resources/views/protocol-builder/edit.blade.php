@@ -25,10 +25,21 @@
     .pb-pen svg { width: 1rem; height: 1rem; }
     /* The head's corner: Anee's review, then the pencil for the details. */
     .pb-head-acts { flex: none; display: flex; align-items: center; gap: .35rem; }
+    /* On a phone the corner keeps its place (icon left, Anee and the pen
+       right) and the name takes the whole width under them, rather than a
+       narrow column of four or five lines beside them. */
+    @media (max-width: 559px) {
+        .pb-head-row { display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: "e . acts" "t t t"; row-gap: .6rem; column-gap: .6rem; align-items: center; }
+        .pb-head-e { grid-area: e; }
+        .pb-head-t { grid-area: t; }
+        .pb-head-acts { grid-area: acts; }
+    }
     .pb-anee { display: inline-flex; align-items: center; gap: .35rem; height: 2.1rem; padding: 0 .65rem 0 .2rem; border-radius: 999px; font-size: .74rem; font-weight: 800; white-space: nowrap;
         color: #2f5219; background: #f1f8ea; border: 1px solid #cfe3bd;
         transition: transform .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
     .pb-anee img { width: 1.65rem; height: 1.65rem; border-radius: 999px; object-fit: cover; flex: none; }
+    .pb-anee .tl-lock, .pbt-add .tl-lock { width: 1.3rem; height: 1.3rem; margin-left: .1rem; }
+    .pb-anee .tl-lock svg, .pbt-add .tl-lock svg { width: .72rem; height: .72rem; }
     .pb-anee:hover { background: #e4f1d6; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(61,104,35,.15); }
     html.dark .pb-anee { background: #22301a; border-color: #3f5a2a; color: #cfe6b8; }
     html.dark .pb-anee:hover { background: #2a3b20; }
@@ -488,7 +499,10 @@
             <div class="pb-head-acts">
                 <button type="button" class="pb-anee" id="pbAneeBtn" title="Ask Anee to analyze this" aria-label="Ask Anee to analyze this"
                     @if ($options['aiLocked']) data-tier-lock="{{ \App\Support\Tier::farmUnlocksAt('aiAnalyses') }}" data-lock-say="Anee's review of your protocol comes with {{ \App\Support\Tier::withPlan(\App\Support\Tier::farmUnlocksAt('aiAnalyses')) }} — she reads every task against the crop's stages and says what is strong, what is missing and what could go wrong." @endif>
-                    <img src="{{ $options['aneeFace'] }}" alt=""> <span>Ask Anee</span>
+                    <img src="{{ $options['aneeFace'] }}" alt=""@if ($options['aiLocked']) class="tl-dim"@endif> <span @if ($options['aiLocked']) class="tl-dim" @endif>Ask Anee</span>
+                    {{-- Locked doors look locked before they are tapped, as the
+                         dashboard's tools and the menu do. --}}
+                    @if ($options['aiLocked'])<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endif
                 </button>
                 <button type="button" class="pb-pen" id="pbMetaBtn" title="Name, crop, variety, day count" aria-label="Edit the protocol's details">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5m-1.414-9.414a2 2 0 1 1 2.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
@@ -584,7 +598,8 @@
             <div class="pbr-files" id="pbFiles"></div>
             <button type="button" class="pbt-add" id="pbFileBtn"
                 @unless ($options['canUpload']) data-tier-lock="libreAnee" data-lock-say="Files beside your protocol — product labels, leaflets, a soil test — come with Libre + Anee. Writing the rules and notes stays free on every plan." @endunless>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg> Upload a file
+                <svg @unless ($options['canUpload']) class="tl-dim" @endunless viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg> <span @unless ($options['canUpload']) class="tl-dim" @endunless>Upload a file</span>
+                @unless ($options['canUpload'])<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endunless
             </button>
             <input type="file" id="pbFileIn" hidden multiple accept=".jpg,.jpeg,.png,.gif,.webp,.pdf,.doc,.docx,.txt,.csv,.xls,.xlsx,.ppt,.pptx,image/*,application/pdf">
         </div>
@@ -1185,7 +1200,9 @@
         $id('pbTabTasksN').textContent = onlyTasks.length ? onlyTasks.length : '';
         const matN = $id('pbTabMatN');
         const shortN = MATS.filter((m) => matLeft(m, USE) < -1e-9).length;
-        matN.textContent = MATS.length ? (shortN ? '⚠ ' + MATS.length : MATS.length) : '';
+        // The count of materials, and - only when some run short - how many:
+        // "12 · 1 short", not a warning sign that read as twelve warnings.
+        matN.textContent = MATS.length ? (shortN ? MATS.length + ' · ' + shortN + ' short' : MATS.length) : '';
         matN.classList.toggle('is-short', shortN > 0);
         const pageTitle = $id('appPageTitle'); if (pageTitle) { pageTitle.textContent = P.title; const sub = pageTitle.nextElementSibling; if (sub && sub.tagName === 'P') sub.textContent = `${P.cropLabel || 'No crop yet'} · ${dt.label || P.dayType}`; }
         document.title = P.title + ' | anee.io';
@@ -2130,7 +2147,7 @@
         $id('pbMatSum').innerHTML = MATS.length ? `
             <div><b>${MATS.length}</b><span>${MATS.length === 1 ? 'material' : 'materials'}</span></div>
             <div><b>${drawnBy.size}</b><span>${drawnBy.size === 1 ? 'task draws' : 'tasks draw'} from them</span></div>
-            <div class="${short.length ? 'is-short' : ''}"><b>${short.length}</b><span>${short.length ? 'running short' : 'short — all covered'}</span></div>` : '';
+            <div class="${short.length ? 'is-short' : ''}"><b>${short.length || '✓'}</b><span>${short.length ? 'running short' : 'all covered'}</span></div>` : '';
         if (FLASH_MAT) {
             const cEl = list.querySelector(`.pbm-card[data-mid="${CSS.escape(FLASH_MAT)}"]`);
             if (cEl && $id('pbPage').dataset.tab === 'materials') { cEl.classList.add('is-new', 'just-moved'); setTimeout(() => cEl.classList.remove('just-moved'), 1200); cEl.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
@@ -2530,7 +2547,29 @@
         if (STALE) { toast('Reload the page first.', 'error'); return; }
         const btn = $id('pbMetaSave'); btn.disabled = true;
         try {
-            const res = await api(U.base + '/meta', { method: 'POST', body: metaForm.read() });
+            const body = metaForm.read();
+            /* A new count relabels what it cannot keep (DAT 14 becomes DAS
+               14, in every version). Asked first, with the real number from
+               the server, and said to be reversible - because it is. */
+            if (body.dayType && body.dayType !== P.dayType) {
+                const pv = (await api(U.base + '/meta', { method: 'POST', body: { ...body, preview: 1 } })).data || {};
+                const to = (OPT.dayTypes[pv.dayType] || {}).counters || [];
+                const toLabel = (OPT.dayTypes[pv.dayType] || {}).label || pv.dayType;
+                if (pv.moved > 0) {
+                    const n = pv.moved;
+                    const ok = await window.confirmAction({
+                        title: 'Count the days as ' + toLabel + '?',
+                        message: n + (n === 1 ? ' task, note or divider is' : ' tasks, notes and dividers are')
+                            + ' counted in a way ' + toLabel + ' does not use, across your versions. '
+                            + (n === 1 ? 'It moves' : 'They move') + ' to ' + (to[0] || 'the new count') + ' and keep their day numbers.',
+                        detail: 'Switch the count back and they return to what they were.',
+                        confirmText: 'Change the count',
+                        confirmClass: 'btn-primary',
+                    });
+                    if (!ok) return;
+                }
+            }
+            const res = await api(U.base + '/meta', { method: 'POST', body });
             const p = res.data.protocol;
             P = { id: p.id, title: p.title, description: p.description, tags: p.tags || [], crop: p.crop, cropLabel: p.cropLabel, cropIcon: p.cropIcon, variety: p.variety, dayType: p.dayType, ported: p.ported };
             if (window.userTags) window.userTags.invalidate();
@@ -2538,7 +2577,9 @@
             VERSIONS = p.versions || VERSIONS; VER = { id: p.versionId || VER.id, name: p.versionName || VER.name };
             sortTasks(); render();
             closeSheet('pbMetaSheet');
-            toast('Saved.');
+            const moved = res.data.moved || 0, back = res.data.restored || 0;
+            toast(back ? `Saved. ${back} ${back === 1 ? 'entry is' : 'entries are'} back on the count ${back === 1 ? 'it' : 'they'} had.`
+                : (moved ? `Saved. ${moved} ${moved === 1 ? 'entry was' : 'entries were'} relabelled; switching back restores ${moved === 1 ? 'it' : 'them'}.` : 'Saved.'));
         } catch (err) { toast(err.message, 'error'); }
         finally { btn.disabled = false; }
     });
@@ -2608,11 +2649,22 @@
         if (OPT.aiLocked) { const b = $id('pbAneeBtn'); window.aneeUpgrade(b?.dataset.lockSay || "Anee's review of your protocol is not on your plan.", b?.dataset.tierLock); return; }
         if (!OPT.canAnalyze) { toast('Anee is not available right now.', 'error'); return; }
         if (!TASKS.filter(isTask).length) { toast('Add a task or two first — there is nothing to review yet.', 'error'); return; }
-        $id('pbAskQuote').innerHTML = `This review spends <b>${OPT.quote} credits</b>, and you have ${window.creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Review.`;
+        /* Short of credits is said here, before the tap, with the way to
+           top up as the button - not learned from a failed request. */
+        const have = Number(OPT.balance) || 0, price = Number(OPT.quote) || 0;
+        const short = !OPT.unlimited && have < price;
+        const coin = window.creditCoin(OPT.unlimited ? '∞' : have.toLocaleString());
+        $id('pbAskQuote').innerHTML = short
+            ? `This review spends <b>${price} credits</b>, and you have ${coin} — <b>${(price - have).toLocaleString()} short</b>. Top up and she is ready when you are.`
+            : `This review spends <b>${price} credits</b>, and you have ${coin}. Nothing is charged until you press <b>Analyze it</b>.`;
+        const go = $id('pbAskGo');
+        go.textContent = short ? 'Top up credits' : 'Analyze it';
+        go.dataset.short = short ? '1' : '';
         openSheet('pbAskSheet');
     }
     $id('pbAneeBtn').addEventListener('click', askAnee);
     $id('pbAskGo').addEventListener('click', async () => {
+        if ($id('pbAskGo').dataset.short === '1' && OPT.creditsUrl) { window.location.href = OPT.creditsUrl; return; }
         closeSheet('pbAskSheet');
         await flushSave();
         if (STALE) { toast('Reload the page first.', 'error'); return; }

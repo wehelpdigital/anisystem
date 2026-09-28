@@ -80,6 +80,12 @@
     .pp-x svg { width: 1rem; height: 1rem; }
     .pp-lot .form-label { margin-bottom: .2rem; font-size: .74rem; }
     .pp-lot .date-tag { width: 100%; justify-content: flex-start; }
+    /* A long protocol name ("Demo — Carabao mango, mature trees (flower
+       induction)") is cut with an ellipsis inside its tag rather than
+       pushing the card, and the sheet, sideways on a phone. */
+    .pp-lot > * { min-width: 0; }
+    .pp-lot .crop-tag { max-width: 100%; min-width: 0; }
+    .pp-lot .crop-tag-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .pp-hint { font-size: .72rem; color: var(--color-gray-500); line-height: 1.45; }
     .pp-add { display: flex; align-items: center; justify-content: center; gap: .4rem; width: 100%; padding: .65rem; border-radius: .9rem; border: 1.5px dashed #b9c6a8; color: #3d6823; font-weight: 800; font-size: .84rem; background: transparent; }
     .pp-add:hover { background: #f1f8ea; }
@@ -389,7 +395,7 @@
         const p = protoOf(l.protocolId); if (!p) return;
         PICK_FOR = l;
         $id('ppVerTitle').textContent = 'Which version?';
-        $id('ppVerSay').textContent = `"${p.title}" has ${versionsOf(p).length} versions. Choose the one this lot runs — its tasks, materials and rules go to the season.`;
+        $id('ppVerSay').textContent = `"${p.title}" has ${versionsOf(p).length} versions. Choose the one this lot runs — its tasks and materials go to the board, its rules and files to the season's Notes.`;
         $id('ppVerList').innerHTML = versionsOf(p).map((v) => `
             <button type="button" class="dt-row${l.versionId === v.id ? ' is-on' : ''}" data-pp-pick-ver="${v.id}"><span class="dt-row-e">🗂️</span><span class="dt-row-body"><b>${esc(v.name)}</b><i>${v.count} ${v.count === 1 ? 'task' : 'tasks'} · ${v.materials} ${v.materials === 1 ? 'material' : 'materials'}${v.id === p.versionId ? ' · the one in use' : ''}</i></span>${TICK}</button>`).join('');
         openSheet('ppVerSheet');
