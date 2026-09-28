@@ -76,7 +76,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'wtpTyphoon' => str_contains((string) @file_get_contents(resource_path('views/when-to-plant/index.blade.php')), 'wtp-ty-bar'),
             'dsrRice' => isset(\App\Support\CropCatalog::CROPS['rice_dsr_wet']) && ! isset(\App\Support\CropCatalog::CROPS['rice_upland']),
             'cxEmbed' => str_contains((string) @file_get_contents(resource_path('views/compare/partials/result.blade.php')), 'anee-embed-open'),
-            'cxWinShut' => str_contains((string) @file_get_contents(resource_path('views/compare/partials/result.blade.php')), '.cx-win[hidden]'),
+            'cxWinShut' => str_contains((string) @file_get_contents(resource_path('views/compare/partials/result.blade.php')), '.cxw[hidden]'),
         ],
         'viewCacheCompiled' => count(glob(storage_path('framework/views/*.php')) ?: []),
         // Whether the deployed environment can reach the mailing list at all

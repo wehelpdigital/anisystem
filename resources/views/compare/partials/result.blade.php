@@ -365,49 +365,49 @@
     html.dark .cx-src-card .go { background: #1c2913; border-color: #2f3f1f; color: #bfe3a4; }
 
     /* The window: the report page itself, embedded (?embed=1), full screen
-       on a phone and a tall dialog on a wide screen; A and B switch in its
-       head. Above the report view (90) and its sheets (120). */
-    .cx-win { position: fixed; inset: 0; z-index: 190; display: flex; align-items: stretch; justify-content: center;
+       at every width, edge to edge like the report view it shows; A and B
+       switch in its head. Above the report view (90) and its sheets (120).
+       Its own class, .cxw: the metrics' "Better" chip is already .cx-win. */
+    .cxw { position: fixed; inset: 0; z-index: 190; display: flex; align-items: stretch; justify-content: center;
         background: rgb(15 23 10 / .55); opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
-    .cx-win.is-on { opacity: 1; }
+    .cxw.is-on { opacity: 1; }
     /* Shut means GONE: the class's display:flex outranks the browser's own
        [hidden] rule, so a closed window stayed over the page as an invisible
        sheet and swallowed every scroll and tap after it (the "cannot scroll
        the comparison" of 2026-09-29). While it fades it takes no taps. */
-    .cx-win[hidden] { display: none !important; }
-    .cx-win:not(.is-on) { pointer-events: none; }
-    .cx-win-box { position: relative; display: flex; flex-direction: column; width: 100%; max-width: 56rem; background: var(--color-gray-50);
+    .cxw[hidden] { display: none !important; }
+    .cxw:not(.is-on) { pointer-events: none; }
+    .cxw-box { position: relative; display: flex; flex-direction: column; width: 100%; background: var(--color-gray-50);
         transform: translateY(18px); transition: transform .28s cubic-bezier(.22,1,.36,1); }
-    .cx-win.is-on .cx-win-box { transform: none; }
-    @media (min-width: 760px) { .cx-win { padding: 2.5vh 1rem; } .cx-win-box { border-radius: 1.2rem; overflow: hidden; box-shadow: 0 30px 70px -30px rgb(0 0 0 / .6); } }
-    .cx-win-h { flex: none; display: flex; align-items: center; gap: .55rem; padding: .65rem .8rem; padding-top: calc(.65rem + env(safe-area-inset-top));
+    .cxw.is-on .cxw-box { transform: none; }
+    .cxw-h { flex: none; display: flex; align-items: center; gap: .55rem; padding: .65rem .8rem; padding-top: calc(.65rem + env(safe-area-inset-top));
         background: var(--color-white); border-bottom: 1px solid var(--color-gray-200); }
-    .cx-win-h .t { flex: 1 1 auto; min-width: 0; }
-    .cx-win-h .t b { display: block; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .cx-win-h .t small { display: block; font-size: .7rem; color: var(--color-gray-500); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .cx-win-ab { flex: none; display: inline-flex; padding: 3px; border-radius: 999px; background: var(--color-gray-100); gap: 2px; }
-    .cx-win-ab button { width: 2rem; height: 1.8rem; border-radius: 999px; font-size: .78rem; font-weight: 900; color: var(--color-gray-500);
+    .cxw-h .t { flex: 1 1 auto; min-width: 0; }
+    .cxw-h .t b { display: block; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cxw-h .t small { display: block; font-size: .7rem; color: var(--color-gray-500); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cxw-ab { flex: none; display: inline-flex; padding: 3px; border-radius: 999px; background: var(--color-gray-100); gap: 2px; }
+    .cxw-ab button { width: 2rem; height: 1.8rem; border-radius: 999px; font-size: .78rem; font-weight: 900; color: var(--color-gray-500);
         transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
-    .cx-win-ab button.is-on.is-a { background: #4a7c2a; color: #fff; }
-    .cx-win-ab button.is-on.is-b { background: #c2620c; color: #fff; }
-    .cx-win-x { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: grid; place-items: center; border: 1px solid var(--color-gray-200);
+    .cxw-ab button.is-on.is-a { background: #4a7c2a; color: #fff; }
+    .cxw-ab button.is-on.is-b { background: #c2620c; color: #fff; }
+    .cxw-x { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: grid; place-items: center; border: 1px solid var(--color-gray-200);
         background: var(--color-white); color: var(--color-gray-700); }
-    .cx-win-b { position: relative; flex: 1 1 auto; min-height: 0; }
-    .cx-win-b iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: var(--color-gray-50);
+    .cxw-b { position: relative; flex: 1 1 auto; min-height: 0; }
+    .cxw-b iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: var(--color-gray-50);
         opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
-    .cx-win-b iframe.is-ready { opacity: 1; }
-    .cx-win-wait { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; gap: .6rem; font-size: .8rem; color: var(--color-gray-500); }
-    .cx-win-wait i { width: 2rem; height: 2rem; border-radius: 999px; border: 3px solid #cfe3bd; border-top-color: #4a7c2a; animation: cxSpin .8s linear infinite; }
+    .cxw-b iframe.is-ready { opacity: 1; }
+    .cxw-wait { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; gap: .6rem; font-size: .8rem; color: var(--color-gray-500); }
+    .cxw-wait i { width: 2rem; height: 2rem; border-radius: 999px; border: 3px solid #cfe3bd; border-top-color: #4a7c2a; animation: cxSpin .8s linear infinite; }
     @keyframes cxSpin { to { transform: rotate(360deg); } }
-    .cx-win-text { position: absolute; inset: 0; overflow: auto; padding: 1rem; }
-    .cx-win-text .cx-pre { border: 1px solid var(--color-gray-200); border-radius: 1rem; background: var(--color-white); max-height: none; font-size: .78rem; }
-    html.dark .cx-win-box, html.dark .cx-win-b iframe { background: #0d110a; }
-    html.dark .cx-win-h { background: #10160c; border-color: #2b3a1c; }
-    html.dark .cx-win-h .t b { color: #e8efe1; }
-    html.dark .cx-win-ab { background: #1c2416; }
-    html.dark .cx-win-x { background: #151b12; border-color: #2b3a1c; color: #cfdcc3; }
-    html.dark .cx-win-text .cx-pre { background: #151b12; border-color: #2b3a1c; }
-    @media (prefers-reduced-motion: reduce) { .cx-win, .cx-win-box, .cx-win-b iframe, .cx-src-card { transition: none; } .cx-win-wait i { animation: none; } }
+    .cxw-text { position: absolute; inset: 0; overflow: auto; padding: 1rem; }
+    .cxw-text .cx-pre { border: 1px solid var(--color-gray-200); border-radius: 1rem; background: var(--color-white); max-height: none; font-size: .78rem; }
+    html.dark .cxw-box, html.dark .cxw-b iframe { background: #0d110a; }
+    html.dark .cxw-h { background: #10160c; border-color: #2b3a1c; }
+    html.dark .cxw-h .t b { color: #e8efe1; }
+    html.dark .cxw-ab { background: #1c2416; }
+    html.dark .cxw-x { background: #151b12; border-color: #2b3a1c; color: #cfdcc3; }
+    html.dark .cxw-text .cx-pre { background: #151b12; border-color: #2b3a1c; }
+    @media (prefers-reduced-motion: reduce) { .cxw, .cxw-box, .cxw-b iframe, .cx-src-card { transition: none; } .cxw-wait i { animation: none; } }
 
     /* ---- a note, when there is something to say about the sources ---- */
     .cx-note { display: flex; gap: .6rem; align-items: flex-start; padding: .7rem .8rem; border-radius: .95rem; font-size: .8rem; line-height: 1.5;
@@ -797,61 +797,61 @@
     function winEl() {
         if (WIN) return WIN;
         WIN = document.createElement('div');
-        WIN.className = 'cx-win';
+        WIN.className = 'cxw';
         WIN.hidden = true;
         WIN.setAttribute('role', 'dialog');
         WIN.setAttribute('aria-modal', 'true');
-        WIN.innerHTML = `<div class="cx-win-box">
-            <div class="cx-win-h">
-                <span class="cx-letter" data-cx-win-letter>A</span>
-                <span class="t"><b data-cx-win-title>Report</b><small data-cx-win-sub></small></span>
-                <span class="cx-win-ab" role="tablist" aria-label="Which report">
-                    <button type="button" class="is-a" data-cx-win-side="a" aria-label="Report A">A</button>
-                    <button type="button" class="is-b" data-cx-win-side="b" aria-label="Report B">B</button>
+        WIN.innerHTML = `<div class="cxw-box">
+            <div class="cxw-h">
+                <span class="cx-letter" data-cxw-letter>A</span>
+                <span class="t"><b data-cxw-title>Report</b><small data-cxw-sub></small></span>
+                <span class="cxw-ab" role="tablist" aria-label="Which report">
+                    <button type="button" class="is-a" data-cxw-side="a" aria-label="Report A">A</button>
+                    <button type="button" class="is-b" data-cxw-side="b" aria-label="Report B">B</button>
                 </span>
-                <button type="button" class="cx-win-x" data-cx-win-x aria-label="Close">✕</button>
+                <button type="button" class="cxw-x" data-cxw-x aria-label="Close">✕</button>
             </div>
-            <div class="cx-win-b" data-cx-win-body></div>
+            <div class="cxw-b" data-cxw-body></div>
         </div>`;
         document.body.appendChild(WIN);
         WIN.addEventListener('click', (e) => {
-            if (e.target === WIN || e.target.closest('[data-cx-win-x]')) { closeWin(); return; }
-            const side = e.target.closest('[data-cx-win-side]');
-            if (side) showSide(side.getAttribute('data-cx-win-side'));
+            if (e.target === WIN || e.target.closest('[data-cxw-x]')) { closeWin(); return; }
+            const side = e.target.closest('[data-cxw-side]');
+            if (side) showSide(side.getAttribute('data-cxw-side'));
         });
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && WIN && !WIN.hidden) closeWin(); });
         // The embedded page says when its report is up.
         window.addEventListener('message', (e) => {
             if (e.origin !== location.origin || !e.data || e.data.type !== 'anee-embed-open' || !WIN) return;
             const f = WIN.querySelector('iframe');
-            if (f && e.source === f.contentWindow) { f.classList.add('is-ready'); WIN.querySelector('.cx-win-wait')?.remove(); }
+            if (f && e.source === f.contentWindow) { f.classList.add('is-ready'); WIN.querySelector('.cxw-wait')?.remove(); }
         });
         return WIN;
     }
     function showSide(k) {
         const w = winEl();
         const s = SRC[k] || {};
-        const letter = w.querySelector('[data-cx-win-letter]');
+        const letter = w.querySelector('[data-cxw-letter]');
         letter.textContent = k.toUpperCase();
         letter.className = 'cx-letter is-' + k;
-        w.querySelector('[data-cx-win-title]').textContent = s.title || ('Report ' + k.toUpperCase());
-        w.querySelector('[data-cx-win-sub]').textContent = [s.season, s.when, s.filtered].filter(Boolean).join(' · ');
-        w.querySelectorAll('[data-cx-win-side]').forEach((b) => {
-            const on = b.getAttribute('data-cx-win-side') === k;
+        w.querySelector('[data-cxw-title]').textContent = s.title || ('Report ' + k.toUpperCase());
+        w.querySelector('[data-cxw-sub]').textContent = [s.season, s.when, s.filtered].filter(Boolean).join(' · ');
+        w.querySelectorAll('[data-cxw-side]').forEach((b) => {
+            const on = b.getAttribute('data-cxw-side') === k;
             b.classList.toggle('is-on', on);
             b.setAttribute('aria-selected', on ? 'true' : 'false');
         });
-        const body = w.querySelector('[data-cx-win-body]');
+        const body = w.querySelector('[data-cxw-body]');
         const url = pageFor(s);
         if (url) {
-            body.innerHTML = `<div class="cx-win-wait"><i></i><span>Opening the report…</span></div><iframe title="${esc(s.title || 'Report')}" src="${esc(url)}"></iframe>`;
+            body.innerHTML = `<div class="cxw-wait"><i></i><span>Opening the report…</span></div><iframe title="${esc(s.title || 'Report')}" src="${esc(url)}"></iframe>`;
             // A page that never says it is ready is shown anyway after a while.
             const f = body.querySelector('iframe');
-            setTimeout(() => { if (f.isConnected && !f.classList.contains('is-ready')) { f.classList.add('is-ready'); body.querySelector('.cx-win-wait')?.remove(); } }, 12000);
+            setTimeout(() => { if (f.isConnected && !f.classList.contains('is-ready')) { f.classList.add('is-ready'); body.querySelector('.cxw-wait')?.remove(); } }, 12000);
         } else {
             const note = s.gone ? 'This report has since left its shelf. Here is what it said when it was compared.'
                 : 'This kind of report is kept as text only. Here it is as it was saved.';
-            body.innerHTML = `<div class="cx-win-text"><p class="text-xs text-gray-500 mb-2">${esc(note)}</p><pre class="cx-pre">${esc(s.body || 'Nothing was written down for this one.')}</pre></div>`;
+            body.innerHTML = `<div class="cxw-text"><p class="text-xs text-gray-500 mb-2">${esc(note)}</p><pre class="cx-pre">${esc(s.body || 'Nothing was written down for this one.')}</pre></div>`;
         }
     }
     function openWin(k) {
@@ -866,7 +866,7 @@
         WIN.classList.remove('is-on');
         setTimeout(() => {
             WIN.hidden = true;
-            WIN.querySelector('[data-cx-win-body]').innerHTML = '';
+            WIN.querySelector('[data-cxw-body]').innerHTML = '';
             // The report view underneath (a saved comparison) keeps its lock.
             if (!window.reportView?.isOpen?.()) document.documentElement.classList.remove('va-view-lock');
         }, 300);
