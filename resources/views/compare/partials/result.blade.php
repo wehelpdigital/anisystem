@@ -60,7 +60,9 @@
     .cx-chip.is-anee { background: rgb(240 180 41 / .22); border-color: rgb(240 180 41 / .45); }
     .cx-title { font-family: var(--font-heading); font-size: 1.28rem; font-weight: 800; line-height: 1.25; margin-top: .6rem; overflow-wrap: anywhere; }
     .cx-desc { font-size: .8rem; opacity: .85; line-height: 1.5; margin-top: .3rem; }
-    .cx-sides { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .55rem; margin-top: .9rem; position: relative; }
+    /* A | VS | B: the badge has its own gutter column, so on a phone it can
+       never sit on a title or a season chip (it used to float at 50%). */
+    .cx-sides { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: .3rem; margin-top: .9rem; position: relative; }
     .cx-side { border-radius: 1rem; padding: .7rem .7rem .65rem; background: rgb(255 255 255 / .1); border: 1px solid rgb(255 255 255 / .16);
         backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); min-width: 0; }
     .cx-side.is-a { box-shadow: inset 0 3px 0 #8fc96a; }
@@ -76,9 +78,12 @@
     .cx-badge span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .cx-badge svg { flex: none; width: .78rem; height: .78rem; opacity: .85; }
     .cx-badge .e { flex: none; font-size: .78rem; line-height: 1; }
-    .cx-badge.is-season { background: rgb(255 255 255 / .92); color: #1f3a10; border-color: transparent; }
+    .cx-badge.is-season { background: rgb(255 255 255 / .92); color: #1f3a10; border-color: transparent; align-items: flex-start; }
+    /* The season is the point of a comparison: its name wraps, never cut. */
+    .cx-badge.is-season span { white-space: normal; overflow: visible; overflow-wrap: anywhere; line-height: 1.3; }
+    .cx-badge.is-season svg, .cx-badge.is-season .e { margin-top: .05rem; }
     .cx-badge.is-season svg { opacity: 1; color: #4a7c2a; }
-    .cx-vs { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 2rem; height: 2rem; border-radius: 999px; display: grid; place-items: center;
+    .cx-vs { position: relative; z-index: 1; align-self: center; margin: 0 -.1rem; width: 1.9rem; height: 1.9rem; border-radius: 999px; display: grid; place-items: center;
         font-size: .64rem; font-weight: 900; letter-spacing: .04em; color: #1f3a10; background: #f4f9ee; box-shadow: 0 0 0 3px rgb(29 53 16 / .9), 0 6px 14px -6px rgb(0 0 0 / .6); }
     .cx-tally { margin-top: .85rem; }
     .cx-tally-bar { display: flex; gap: 3px; height: 8px; border-radius: 999px; overflow: hidden; background: rgb(255 255 255 / .14); }
@@ -514,13 +519,24 @@
             </div>`;
         };
         const icon = (opts.kinds || {})[rep.kind];
+        // Said without a zero: one side taking every scored figure reads
+        // "B did better on all 2 scored figures", not "A ahead on 0".
+        const dot = (bg) => `<span class="dot" style="background:${bg}"></span>`;
+        const figs = (n) => `${n} scored figure${n === 1 ? '' : 's'}`;
+        const sweep = !tally.e && (!tally.a || !tally.b) ? (tally.a ? 'a' : 'b') : '';
+        const tallyWords = sweep
+            ? `<span>${dot(sweep === 'a' ? '#a9d383' : '#f5b041')}${sweep.toUpperCase()} did better on <b>${total === 1 ? 'the' : 'all'} ${figs(total)}</b></span>`
+            : [tally.a ? `<span>${dot('#a9d383')}A ahead on <b>${tally.a}</b></span>` : '',
+               tally.b ? `<span>${dot('#f5b041')}B ahead on <b>${tally.b}</b></span>` : '',
+               tally.e ? `<span>${dot('rgb(255 255 255 / .55)')}<b>${tally.e}</b> even</span>` : '',
+               `<span style="opacity:.8">of ${figs(total)}</span>`].join('');
         const tallyHtml = total ? `<div class="cx-tally">
                 <div class="cx-tally-bar">
                     ${tally.a ? `<i class="a" style="--w:${(tally.a / total * 100).toFixed(1)}%"></i>` : ''}
                     ${tally.e ? `<i class="e" style="--w:${(tally.e / total * 100).toFixed(1)}%"></i>` : ''}
                     ${tally.b ? `<i class="b" style="--w:${(tally.b / total * 100).toFixed(1)}%"></i>` : ''}
                 </div>
-                <p><span><span class="dot" style="background:#a9d383"></span>A ahead on <b>${tally.a}</b></span><span><span class="dot" style="background:#f5b041"></span>B ahead on <b>${tally.b}</b></span>${tally.e ? `<span><span class="dot" style="background:rgb(255 255 255 / .55)"></span><b>${tally.e}</b> even</span>` : ''}</p>
+                <p>${tallyWords}</p>
             </div>` : '';
         return `<header class="cx-hero cx-rise" style="--i:0">
             <div class="cx-kick">
@@ -529,7 +545,7 @@
             </div>
             <h2 class="cx-title">${esc(data.title || 'Comparison')}</h2>
             ${data.description ? `<p class="cx-desc">${esc(data.description)}</p>` : ''}
-            <div class="cx-sides">${side('a', rep.a)}${side('b', rep.b)}<span class="cx-vs" aria-hidden="true">VS</span></div>
+            <div class="cx-sides">${side('a', rep.a)}<span class="cx-vs" aria-hidden="true">VS</span>${side('b', rep.b)}</div>
             ${tallyHtml}
         </header>`;
     }

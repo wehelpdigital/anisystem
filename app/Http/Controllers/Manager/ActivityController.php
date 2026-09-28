@@ -732,9 +732,14 @@ class ActivityController extends BaseScheduleController
     public function laborReportPage(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request, 'id');
-        $schedule->load(['workers', 'lots']);
+        $schedule->load(['workers', 'lots', 'activities.lots']);
 
-        return view('sm.labor-report', ['schedule' => $schedule]);
+        // The lot's transplant as the Expenses report resolves it (its
+        // column OR a ticked transplant activity), so the two reports say
+        // the same DAS/DAT for a lot and the same window covers the same days.
+        [, $transplant] = \App\Support\LotCalendar::effectiveAnchors($schedule);
+
+        return view('sm.labor-report', ['schedule' => $schedule, 'lotTransplanted' => array_fill_keys(array_keys($transplant), true)]);
     }
 
     public function laborSummary(Request $request)
@@ -783,22 +788,30 @@ class ActivityController extends BaseScheduleController
         // dayAnchor=transplant: the window is counted in DAT, so a lot that
         // was transplanted counts from that day; a direct-seeded lot keeps
         // its day zero either way (its DAT is its DAS).
+        // Both anchors resolve the way LotCalendar::effectiveAnchors does
+        // (the lot's column, or the earliest ticked activity), so a lot whose
+        // transplant is only ticked on an activity still counts in DAT.
         $fromTransplant = $request->input('dayAnchor') === 'transplant';
-        $lotDayZero = [];
+        $dz = [];
+        $tp = [];
         foreach ($schedule->lots as $lot) {
-            if ($fromTransplant && $lot->transplantDate) {
-                $lotDayZero[$lot->id] = Carbon::parse($lot->transplantDate);
-            } elseif ($lot->dayZeroDate) {
-                $lotDayZero[$lot->id] = Carbon::parse($lot->dayZeroDate);
-            }
+            if ($lot->dayZeroDate) $dz[$lot->id] = Carbon::parse($lot->dayZeroDate);
+            if ($lot->transplantDate) $tp[$lot->id] = Carbon::parse($lot->transplantDate);
         }
         foreach ($activities as $a) {
-            if (!$a->isDayZero || !$a->targetDate) continue;
+            if (!$a->targetDate || (!$a->isDayZero && !$a->isTransplant)) continue;
             $aDate = Carbon::parse($a->targetDate);
             foreach ($a->lots as $lot) {
-                if (!isset($lotDayZero[$lot->id]) || $aDate->lt($lotDayZero[$lot->id])) {
-                    $lotDayZero[$lot->id] = $aDate->copy();
-                }
+                if ($a->isDayZero && (!isset($dz[$lot->id]) || $aDate->lt($dz[$lot->id]))) $dz[$lot->id] = $aDate->copy();
+                if ($a->isTransplant && (!isset($tp[$lot->id]) || $aDate->lt($tp[$lot->id]))) $tp[$lot->id] = $aDate->copy();
+            }
+        }
+        $lotDayZero = [];
+        foreach ($schedule->lots as $lot) {
+            if ($fromTransplant && isset($tp[$lot->id]) && strtoupper((string) $lot->dayType) !== 'DAP') {
+                $lotDayZero[$lot->id] = $tp[$lot->id];
+            } elseif (isset($dz[$lot->id])) {
+                $lotDayZero[$lot->id] = $dz[$lot->id];
             }
         }
 

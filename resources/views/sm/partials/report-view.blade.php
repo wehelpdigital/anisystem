@@ -32,14 +32,20 @@
     .va-view-bar b { flex: 1 1 auto; min-width: 0; font-size: .95rem; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .va-view-x { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center;
         background: var(--color-white); border: 1px solid var(--color-gray-200); color: var(--color-gray-700); font-size: 1rem; cursor: pointer; }
+    /* On a phone the title gets two lines, not one cut short: beside three
+       icons and the X it had ~160px, and the season name is the point. */
+    @media (max-width: 639px) {
+        .va-view-bar b { white-space: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; line-height: 1.25; font-size: .9rem; overflow-wrap: anywhere; }
+    }
     .va-view-body { max-width: 42rem; margin: 0 auto; padding: 1rem 1rem calc(2rem + env(safe-area-inset-bottom)); }
     html.va-view-lock { overflow: hidden; }
-    /* A sheet opened from inside the view -- the pen's editor, the delete's
-       confirm -- has to clear it, and the toast has to clear them both. */
+    /* A sheet opened from inside the view -- the pen's editor -- has to
+       clear it. The delete's confirm and the toast are NOT restated here:
+       app.css already lifts them (200 / 250) and lifts the backdrop to 199
+       while the confirm is open, so a lower number here put the confirm
+       UNDER its own backdrop and a real tap on Delete landed on the dimmer. */
     html.va-view-lock .sheet { z-index: 120; }
     html.va-view-lock .sheet-backdrop { z-index: 110; }
-    html.va-view-lock #confirm-sheet { z-index: 125; }
-    html.va-view-lock #toast-stack { z-index: 130; }
     html.dark .va-view { background: #0d110a; }
     html.dark .va-view-bar { background: rgb(13 17 10 / .92); border-color: #2b3a1c; }
     html.dark .va-view-bar b { color: #e8efe1; }

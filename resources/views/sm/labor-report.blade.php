@@ -451,7 +451,7 @@
         </div>
         <div class="dt-rows" id="lrLotsList">
             @foreach ($schedule->lots as $lot)
-                @php $lotCounter = $lot->transplantDate ? 'DAT' : ($lot->dayType ?: $schedule->dayType); @endphp
+                @php $lotType = strtoupper((string) ($lot->dayType ?: '')); $lotCounter = (!empty(($lotTransplanted ?? [])[$lot->id]) && $lotType !== 'DAP') ? 'DAT' : ($lotType !== '' ? $lotType : strtoupper((string) ($schedule->dayType ?: 'DAS'))); @endphp
                 <button type="button" class="dt-row" data-lr-lot="{{ $lot->id }}" data-lr-counter="{{ $lotCounter }}">
                     <span class="dt-row-e">🌾</span>
                     <span class="dt-row-body"><b>{{ $lot->lotName }}</b><i>{{ \App\Support\CropStages::label($lot->crop) ?: 'No crop set' }} · counts in {{ $lotCounter }}</i></span>
