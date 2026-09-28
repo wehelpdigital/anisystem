@@ -81,6 +81,34 @@
 
     .wtp-nav { display: flex; gap: .6rem; margin-top: 1.1rem; }
 
+    /* THE MONTHS, picked as a range: this month and the next 23, a year to
+       a block. The two ends are solid, the months between tinted; every
+       change of state eases on the house curve. */
+    .wtp-mpick { display: grid; gap: .8rem; }
+    .wtp-myear-h { font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+        color: var(--color-gray-500); margin-bottom: .35rem; }
+    .wtp-mgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .35rem; }
+    @media (min-width: 640px) { .wtp-mgrid { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+    .wtp-mchip { padding: .6rem .25rem; border-radius: .75rem; border: 1.5px solid var(--color-gray-200);
+        background: var(--color-white); font-weight: 800; font-size: .86rem; color: var(--color-gray-700);
+        text-align: center; cursor: pointer;
+        transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1),
+            color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .wtp-mchip:hover { transform: translateY(-1px); }
+    .wtp-mchip.is-in { background: var(--color-brand-50); border-color: var(--color-brand-300); color: var(--color-brand-800); }
+    .wtp-mchip.is-end { background: var(--color-brand-600); border-color: var(--color-brand-600); color: #fff; }
+    .wtp-msay { display: flex; align-items: center; gap: .6rem; margin-top: .8rem; padding: .6rem .75rem;
+        border-radius: .8rem; background: #f4f9ee; border: 1px solid #dcebc9; font-size: .82rem; color: #3d5226;
+        transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .wtp-msay b { color: #1f3a10; }
+    .wtp-msay span { flex: 1 1 auto; min-width: 0; }
+    .wtp-msay button { flex: none; font-size: .76rem; font-weight: 800; color: var(--color-brand-700); padding: .2rem .45rem; border-radius: .5rem; }
+    .wtp-msay button:hover { background: rgb(255 255 255 / .7); }
+    .wtp-msay.is-empty { opacity: .75; }
+    /* The report's chart marks the farmer's own months under their bars. */
+    .wtp-mlbl.is-mine { color: var(--color-brand-700); font-weight: 900; }
+    .wtp-mlbl.is-mine::after { content: ''; display: block; width: .3rem; height: .3rem; margin: .12rem auto 0; border-radius: 999px; background: currentColor; }
+
     /* The run button breathes the moving green the app's doors wear. */
     .wtp-run { display: flex; align-items: center; justify-content: center; gap: .5rem; width: 100%;
         padding: .85rem 1rem; border-radius: 1rem; color: #fff; font-weight: 800; font-size: .95rem;
@@ -232,6 +260,11 @@
     html.dark .wtp-choice, html.dark .wtp-prob { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
     html.dark .wtp-choice.is-on { background: #22301a; border-color: #6b9f3d; color: #cfe6b8; }
     html.dark .wtp-prob.is-on { background: #22301a; border-color: #6b9f3d; }
+    html.dark .wtp-mchip { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
+    html.dark .wtp-mchip.is-in { background: #22301a; border-color: #3f5a2a; color: #cfe6b8; }
+    html.dark .wtp-mchip.is-end { background: #4a7c2a; border-color: #6b9f3d; color: #fff; }
+    html.dark .wtp-msay { background: #172013; border-color: #2b3a1c; color: #cfe6b8; }
+    html.dark .wtp-msay b { color: #eef4e8; }
     html.dark .wtp-card { background: #151b12; border-color: #2b3a1c; }
     html.dark .wtp-card h3 { color: #e8efe1; }
     html.dark .wtp-mbar { background: #2b3a1c; }
@@ -339,7 +372,7 @@
         .wtp-step.is-on { animation: none; }
         .wtp-run { animation: none; }
         .wtp-mbar, .wtp-seg, .wtp-threat, .wtp-dot { transition: none; transform: none; opacity: 1; }
-        .wtp-wait, .q-body, .q-c, .q-hint, .wtp-prob { transition: none; }
+        .wtp-wait, .q-body, .q-c, .q-hint, .wtp-prob, .wtp-mchip, .wtp-msay { transition: none; transform: none; }
     }
 </style>
 
@@ -368,9 +401,7 @@
         <div class="card p-5 wtp-wiz" id="wtpWiz">
             {{-- Step 1: the place, first, as What to Plant asks it. The
                  field's country is the farmer's own (their account's) unless
-                 they say otherwise, and it comes before the seasons because
-                 it decides them: dry / wet / third crop at home, spring to
-                 winter abroad. It also sets the address words, the example
+                 they say otherwise. It sets the address words, the example
                  place, the crop book and whose climate record and agencies
                  the analysis reads. --}}
             <section class="wtp-step is-on" data-step="0">
@@ -382,22 +413,20 @@
                 <p class="wtp-sub" id="wtpLocSub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate patterns differ by region.</p>
                 <input type="text" id="wtpLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
             </section>
-            {{-- Step 2: the year --}}
+            {{-- Step 2: the MONTHS the farmer is weighing, not a named
+                 season (the owner's call, 2026-09-28): the rains keep no
+                 calendar any more, so the old wet / dry dates would steer the
+                 answer wrong. A start and an end, up to twelve months. --}}
             <section class="wtp-step" data-step="1">
-                <p class="wtp-q">What year will you plant?</p>
-                <p class="wtp-sub">The analysis reads the climate's patterns for that calendar year.</p>
-                <div class="wtp-choices" id="wtpYears"></div>
-            </section>
-            {{-- Step 3: the season — the field's country's own --}}
-            <section class="wtp-step" data-step="2">
-                <p class="wtp-q">Which cropping season?</p>
-                <p class="wtp-sub">The window is searched inside the season you actually farm.</p>
-                <div class="wtp-choices" id="wtpSeasons"></div>
+                <p class="wtp-q">When are you thinking of planting?</p>
+                <p class="wtp-sub">Tap the first month you might plant, then the last. The old wet and dry season dates no longer hold, so each month is read on its own — and the months after yours are scored too, in case one of them is safer.</p>
+                <div class="wtp-mpick" id="wtpMonths"></div>
+                <div class="wtp-msay is-empty" id="wtpMonthsSay" aria-live="polite"></div>
             </section>
             {{-- Step 4: the crop. The lot form's tag-and-sheet, not a
                  dropdown: the tag wears the chosen crop's face, the sheet
                  holds the searchable catalogue for the field's country. --}}
-            <section class="wtp-step" data-step="3">
+            <section class="wtp-step" data-step="2">
                 <p class="wtp-q">What will you plant?</p>
                 <p class="wtp-sub">The same catalogue your lots choose from.</p>
                 <button type="button" class="crop-tag" id="wtpCropBtn">
@@ -407,19 +436,19 @@
                 </button>
             </section>
             {{-- Step 5: the variety --}}
-            <section class="wtp-step" data-step="4">
+            <section class="wtp-step" data-step="3">
                 <p class="wtp-q">Which variety?</p>
                 <p class="wtp-sub">Type it as it is sold — e.g. <span id="wtpVarEx">{{ \App\Support\Region::ph() ? 'NSIC Rc222' : 'Pioneer P1197' }}</span>. If its data is not published, the analysis will say so rather than guess.</p>
                 <input type="text" id="wtpVariety" class="form-input" maxlength="80" placeholder="Variety name (optional)">
             </section>
             {{-- Step 6: the troubles --}}
-            <section class="wtp-step" data-step="5">
+            <section class="wtp-step" data-step="4">
                 <p class="wtp-q">What does this field struggle with?</p>
                 <p class="wtp-sub">Tick what you have seen — each one moves the window.</p>
                 <div class="wtp-probs" id="wtpProbs"></div>
             </section>
             {{-- Step 7: the decision --}}
-            <section class="wtp-step" data-step="6">
+            <section class="wtp-step" data-step="5">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="wtpReview"></p>
                 <button type="button" class="wtp-run" id="wtpRun">
@@ -505,7 +534,23 @@
     const SEG_HUES = ['#4a7c2a', '#6b9f3d', '#b45309', '#1d4ed8', '#5b21b6', '#0e7490', '#9f1239'];
 
     let OPT = null;
-    const state = { year: null, season: null, crop: '', variety: '', location: '', problems: [], country: '' };
+    /* from / to: months as one number (year * 12 + month - 1), null until
+       picked. `picking` says which end the next tap sets. */
+    const state = { from: null, to: null, picking: 'start', crop: '', variety: '', location: '', problems: [], country: '' };
+    const MONTHS_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const ym = (n) => ({ year: Math.floor(n / 12), month: (n % 12) + 1 });
+    const monthIdx = (year, month) => Number(year) * 12 + Number(month) - 1;
+    /* The months as words: "Nov 2026 – Jan 2027", or one month alone. An
+       analysis saved before the months replaced the season keeps its
+       season's name. */
+    const whenSaid = (p) => {
+        if (p && p.fromMonth) {
+            const a = MONTHS[p.fromMonth - 1] + ' ' + p.fromYear;
+            const b = MONTHS[(p.toMonth || p.fromMonth) - 1] + ' ' + (p.toYear || p.fromYear);
+            return a === b ? a : a + ' – ' + b;
+        }
+        return seasonSaid((p || {}).season, (p || {}).year, (p || {}).country);
+    };
     // "Dry season 2026–27": the season named with the years it actually spans.
     /* The seasons offered are the FIELD's country's: dry / wet / third crop
        for a Philippine field, spring / summer / autumn / winter elsewhere
@@ -526,10 +571,10 @@
         return crosses && y ? `${label} ${y}–${String(y + 1).slice(-2)}` : `${label} ${y || ''}`.trim();
     };
     let step = 0;
-    const STEPS = 7;
-    // A season or crop let go because the field's country changed: the
-    // step that asks for it again says why.
-    let seasonDropped = false, cropDropped = false;
+    const STEPS = 6;
+    // A crop let go because the field's country changed: the step that asks
+    // for it again says why.
+    let cropDropped = false;
     let LAST = null;   // {report, params, charged} — what Save keeps
 
     /* ---------------- boot ---------------- */
@@ -544,28 +589,7 @@
     function paintOptions() {
         // The tag says the account's country until the farmer picks another.
         state.country = state.country || ($id('wtpCountry') || {}).value || OPT.country || ((window.ANEE_REGION || {}).code) || 'PH';
-        $id('wtpYears').innerHTML = OPT.years.map((y) => `
-            <button type="button" class="wtp-choice" data-year="${y}"><span class="c-e">🗓️</span><span>${y}${y === OPT.years[0] ? '<small>This year</small>' : ''}</span></button>`).join('');
-        const seasonIcons = { dry: '☀️', wet: '🌧️', third: '🌗', spring: '🌱', summer: '☀️', autumn: '🍂', winter: '❄️' };
-        /* The dry season of a year begins at its end and runs into the next:
-           the words say so, with the years, so January is not a surprise. */
-        const seasonSubs = (y) => ({
-            dry: `Early December ${y} to May ${y + 1} in most lowland regions — planting into ${y + 1} is part of it`,
-            wet: `Roughly June to October ${y} in most lowland regions — planting as the rains set in`,
-            third: `After the dry-season harvest, before the rains — roughly March to May ${y}, where water can be assured`,
-            spring: `Roughly March to May ${y} in the northern hemisphere — the analysis places it for your location`,
-            summer: `Roughly June to August ${y} in the northern hemisphere`,
-            autumn: `Roughly September to November ${y} in the northern hemisphere`,
-            winter: `December ${y} to February ${y + 1} in the northern hemisphere — a cool-season or protected planting`,
-        });
-        const paintSeasons = () => {
-            const y = Number(state.year || OPT.years[0]);
-            const subs = seasonSubs(y);
-            $id('wtpSeasons').innerHTML = Object.entries(seasonsFor(state.country)).map(([k, label]) => `
-                <button type="button" class="wtp-choice${state.season === k ? ' is-on' : ''}" data-season="${k}"><span class="c-e">${seasonIcons[k] || '🌱'}</span><span>${esc(label)}${(k === 'dry' || k === 'winter') ? ' ' + y + '–' + String(y + 1).slice(-2) : ''}<small>${esc(subs[k] || '')}</small></span></button>`).join('');
-        };
-        paintSeasons();
-        window.__wtpPaintSeasons = paintSeasons;
+        paintMonths();
         paintCrops();
         $id('wtpProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
             <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
@@ -573,6 +597,69 @@
 
         paintQuote();
     }
+
+    /* ---------------- the months ---------------- */
+    const FIRST = () => monthIdx(OPT.monthsFrom.year, OPT.monthsFrom.month);
+    const MAX_SPAN = () => Number(OPT.maxSpan) || 12;
+    function paintMonths() {
+        if (!OPT || !OPT.monthsFrom) return;
+        const first = FIRST();
+        const n = Number(OPT.monthsAhead) || 24;
+        const byYear = {};
+        for (let i = first; i < first + n; i++) (byYear[ym(i).year] = byYear[ym(i).year] || []).push(i);
+        $id('wtpMonths').innerHTML = Object.entries(byYear).map(([y, list]) => `
+            <div class="wtp-myear">
+                <p class="wtp-myear-h">${esc(y)}${Number(y) === OPT.monthsFrom.year ? ' · this year' : ''}</p>
+                <div class="wtp-mgrid">${list.map((i) => `<button type="button" class="wtp-mchip" data-m="${i}" aria-pressed="false" aria-label="${esc(MONTHS_LONG[ym(i).month - 1] + ' ' + ym(i).year)}">${MONTHS[ym(i).month - 1]}</button>`).join('')}</div>
+            </div>`).join('');
+        paintRange();
+    }
+    function paintRange() {
+        const { from, to } = state;
+        document.querySelectorAll('#wtpMonths .wtp-mchip').forEach((c) => {
+            const i = Number(c.getAttribute('data-m'));
+            const inside = from !== null && i >= from && i <= to;
+            const end = from !== null && (i === from || i === to);
+            c.classList.toggle('is-in', inside && !end);
+            c.classList.toggle('is-end', end);
+            c.setAttribute('aria-pressed', inside ? 'true' : 'false');
+        });
+        const say = $id('wtpMonthsSay');
+        if (from === null) {
+            say.classList.add('is-empty');
+            say.innerHTML = '<span>No months picked yet.</span>';
+            return;
+        }
+        say.classList.remove('is-empty');
+        const n = to - from + 1;
+        const a = ym(from), b = ym(to);
+        const words = n === 1
+            ? `<b>${MONTHS_LONG[a.month - 1]} ${a.year}</b> only`
+            : `Between <b>${MONTHS_LONG[a.month - 1]} ${a.year}</b> and <b>${MONTHS_LONG[b.month - 1]} ${b.year}</b> · ${n} months`;
+        const next = state.picking === 'end' ? ' — tap the last month, or go on with this one' : '';
+        say.innerHTML = `<span>${words}${next}</span><button type="button" data-m-clear>Clear</button>`;
+    }
+    $id('wtpMonths').addEventListener('click', (e) => {
+        const c = e.target.closest('[data-m]');
+        if (!c) return;
+        const i = Number(c.getAttribute('data-m'));
+        if (state.picking === 'start' || state.from === null) {
+            state.from = i; state.to = i; state.picking = 'end';
+        } else {
+            let a = Math.min(state.from, i), b = Math.max(state.from, i);
+            if (b - a + 1 > MAX_SPAN()) {
+                toast(`Up to ${MAX_SPAN()} months at a time — kept the first ${MAX_SPAN()}.`);
+                if (i > state.from) b = a + MAX_SPAN() - 1; else a = b - MAX_SPAN() + 1;
+            }
+            state.from = a; state.to = b; state.picking = 'start';
+        }
+        paintRange();
+    });
+    $id('wtpMonthsSay').addEventListener('click', (e) => {
+        if (!e.target.closest('[data-m-clear]')) return;
+        state.from = null; state.to = null; state.picking = 'start';
+        paintRange();
+    });
 
     /* The crop book for the FIELD's country, as What to Plant keeps it: the
        temperate crops (wheat, apple...) only for a field abroad. */
@@ -647,20 +734,19 @@
         switch (step) {
             case 0: state.location = $id('wtpLocation').value.trim();
                 return !!state.location || (toast('Say where the field is.', 'error'), false);
-            case 1: return !!state.year || (toast('Pick the year.', 'error'), false);
-            case 2: if (state.season && seasonsFor(state.country)[state.season]) return true;
-                // A season picked before the country changed is not one of the new country's.
-                toast(seasonDropped ? `The seasons are different in ${countryName(state.country)} — pick the season again.` : 'Pick the season.', 'error');
-                return false;
-            case 3: return !!state.crop || (toast(cropDropped ? `The crop list is different for ${countryName(state.country)} — pick the crop again.` : 'Pick the crop.', 'error'), false);
-            case 4: state.variety = $id('wtpVariety').value.trim(); return true;
-            case 5: state.problems = [...document.querySelectorAll('#wtpProbs input:checked')].map((i) => i.value); return true;
+            case 1: if (state.from === null) { toast('Pick the months you are thinking of planting in.', 'error'); return false; }
+                state.picking = 'start';
+                return true;
+            case 2: return !!state.crop || (toast(cropDropped ? `The crop list is different for ${countryName(state.country)} — pick the crop again.` : 'Pick the crop.', 'error'), false);
+            case 3: state.variety = $id('wtpVariety').value.trim(); return true;
+            case 4: state.problems = [...document.querySelectorAll('#wtpProbs input:checked')].map((i) => i.value); return true;
             default: {
                 // The run itself: every answer still stands for the field's country.
                 state.location = $id('wtpLocation').value.trim();
-                const back = !state.location ? 0 : !state.year ? 1 : !(state.season && seasonsFor(state.country)[state.season]) ? 2 : !state.crop ? 3 : -1;
+                const gone = state.from !== null && OPT && state.from < FIRST();
+                const back = !state.location ? 0 : (state.from === null || gone) ? 1 : !state.crop ? 2 : -1;
                 if (back < 0) return true;
-                toast(['Say where the field is.', 'Pick the year.', 'Pick the season again.', 'Pick the crop again.'][back], 'error');
+                toast(['Say where the field is.', gone ? 'Those months have started going by — pick them again.' : 'Pick the months.', 'Pick the crop again.'][back], 'error');
                 setTimeout(() => show(back, true), 250);
                 return false;
             }
@@ -670,7 +756,7 @@
     function review() {
         const crop = (OPT.crops.find((c) => c.key === state.crop) || {});
         $id('wtpReview').innerHTML = `${esc(crop.icon || '')} <b>${esc(crop.label || '')}</b>`
-            + `${state.variety ? ' · ' + esc(state.variety) : ''} · ${esc(seasonSaid(state.season, state.year))}`
+            + `${state.variety ? ' · ' + esc(state.variety) : ''} · ${esc(whenSaid(rangeParams()))}`
             + ` · ${esc(state.location)}${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(nameOf(state.country)) : ''}`
             + (state.problems.length ? `<br><span class="text-xs">${state.problems.length} field problem${state.problems.length === 1 ? '' : 's'} considered</span>` : '');
         $id('wtpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
@@ -680,25 +766,14 @@
         $id('wtpRun').disabled = !OPT.canUse;
     }
 
+    /* The picked months as the server asks for them. */
+    const rangeParams = () => {
+        if (state.from === null) return {};
+        const a = ym(state.from), b = ym(state.to);
+        return { fromMonth: a.month, fromYear: a.year, toMonth: b.month, toYear: b.year };
+    };
     $id('wtpNext').addEventListener('click', () => { if (stepReady()) show(step + 1); });
     $id('wtpBack').addEventListener('click', () => show(step - 1, true));
-    $id('wtpYears').addEventListener('click', (e) => {
-        const b = e.target.closest('[data-year]');
-        if (!b) return;
-        state.year = Number(b.getAttribute('data-year'));
-        document.querySelectorAll('#wtpYears .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
-        // The season cards say their years, and the dry one runs into the next.
-        window.__wtpPaintSeasons?.();
-        setTimeout(() => show(2), 180);
-    });
-    $id('wtpSeasons').addEventListener('click', (e) => {
-        const b = e.target.closest('[data-season]');
-        if (!b) return;
-        state.season = b.getAttribute('data-season');
-        seasonDropped = false;
-        document.querySelectorAll('#wtpSeasons .wtp-choice').forEach((c) => c.classList.toggle('is-on', c === b));
-        setTimeout(() => show(3), 180);
-    });
     $id('wtpCountry')?.addEventListener('country:change', (e) => {
         const code = e.detail && e.detail.code;
         const r = e.detail && e.detail.rules;
@@ -710,11 +785,8 @@
         $id('wtpLocation').placeholder = r.exampleLocation || '';
         const ex = $id('wtpVarEx');
         if (ex) ex.textContent = code === 'PH' ? 'NSIC Rc222' : 'Pioneer P1197';
-        // The seasons on offer follow the field's country; a season that is
-        // not one of them is dropped and asked for again on the way through.
-        if (state.season && !seasonsFor(code)[state.season]) { state.season = null; seasonDropped = true; }
-        window.__wtpPaintSeasons?.();
-        // So does the crop book: a crop that is not in the new one is let go.
+        // The crop book follows the field's country: a crop that is not in
+        // the new one is let go.
         if (!OPT) return;
         paintCrops();
         if (state.crop && !bookFor().some((c) => c.key === state.crop)) {
@@ -743,7 +815,7 @@
         now.classList.remove('is-none');
         cropDropped = false;
         closeSheet('wtpCropSheet');
-        setTimeout(() => show(4), 220);
+        setTimeout(() => show(3), 220);
     });
     const cropSift = () => {
         const q = ($id('wtpCropSearch').value || '').trim().toLowerCase();
@@ -804,7 +876,7 @@
         let landed = false;
         try {
             const res = await api(U.generate, { method: 'POST', body: {
-                year: state.year, season: state.season, crop: state.crop,
+                ...rangeParams(), crop: state.crop,
                 variety: state.variety, location: state.location, problems: state.problems,
                 country: state.country,
             } });
@@ -843,7 +915,7 @@
         const view = $id('wtpView');
         VIEW_MODE = mode;
         const crop = (OPT ? OPT.crops.find((c) => c.key === (item.params || {}).crop) : null) || {};
-        $id('wtpViewTitle').textContent = (crop.label ? crop.label + ' — ' : '') + seasonSaid((item.params || {}).season, (item.params || {}).year, (item.params || {}).country);
+        $id('wtpViewTitle').textContent = (crop.label ? crop.label + ' — ' : '') + whenSaid(item.params || {});
         const host = $id('wtpViewReport');
         host.classList.remove('is-drawn');
         drawReport(host, item, mode, true);
@@ -899,6 +971,11 @@
            sorted by year then month it reads as the season runs, and the
            year sits under the month so January is plainly next year's. */
         const scores = (r.monthScores || []).slice(0, 12).sort((a, b) => ((a.year || 0) - (b.year || 0)) || ((a.month || 0) - (b.month || 0)));
+        // The farmer's own months, marked under the bars; the rest are there
+        // for comparison. The year shows when the run crosses into another.
+        const mine = (s) => !!(p.fromMonth && s.year && monthIdx(s.year, s.month) >= monthIdx(p.fromYear, p.fromMonth)
+            && monthIdx(s.year, s.month) <= monthIdx(p.toYear || p.fromYear, p.toMonth || p.fromMonth));
+        const crossesYear = new Set(scores.map((s) => s.year).filter(Boolean)).size > 1 || p.season === 'dry' || p.season === 'winter';
 
         /* Twenty years of risk, month by month, in the season's own month
            order so it reads under the score chart. Each month is a stacked
@@ -935,7 +1012,7 @@
 
         host.innerHTML = `
             <div class="wtp-hero">
-                <h2>${esc(crop.icon || '🌱')} ${esc(crop.label || 'Your crop')} — ${esc(seasonSaid(p.season, p.year, p.country))}</h2>
+                <h2>${esc(crop.icon || '🌱')} ${esc(crop.label || 'Your crop')} — ${esc(whenSaid(p))}</h2>
                 <p class="h-win">${esc(bw.label || (m1 + ' ' + (bw.fromDay || '') + (bw.fromYear ? ', ' + bw.fromYear : '') + ' – ' + m2 + ' ' + (bw.toDay || '') + (bw.toYear ? ', ' + bw.toYear : '')))}</p>
                 <p class="h-why">${esc(sweep(bw.why))}</p>
                 <div class="wtp-chips">
@@ -956,11 +1033,11 @@
                         const cls = bestMonths.has(s.month) ? 'is-best' : (s.score >= 60 ? 'is-good' : (s.score >= 25 ? 'is-poor' : 'is-bad'));
                         return `<div class="wtp-mcol">
                             <div class="wtp-mbar ${cls}" style="height:${Math.max(4, s.score)}%" title="${esc(s.note || '')}"></div>
-                            <span class="wtp-mlbl">${MONTHS[(s.month || 1) - 1]}${s.year && (p.season === 'dry' || p.season === 'winter') ? `<i>${esc(String(s.year).slice(-2))}</i>` : ''}</span>
+                            <span class="wtp-mlbl${mine(s) ? ' is-mine' : ''}">${MONTHS[(s.month || 1) - 1]}${s.year && crossesYear ? `<i>${esc(String(s.year).slice(-2))}</i>` : ''}</span>
                         </div>`;
                     }).join('')}
                 </div>
-                <p class="wtp-mnote">Green is the recommended window; lighter green still works, amber is risky, red is asking for trouble. Hover a bar for its note.</p>
+                <p class="wtp-mnote">Green is the recommended window; lighter green still works, amber is risky, red is asking for trouble.${p.fromMonth ? ' The months you picked carry a dot; the others are scored for comparison.' : ''} Hover a bar for its note.</p>
             </div>
 
             ${riskCard}
