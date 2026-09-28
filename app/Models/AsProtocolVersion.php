@@ -5,7 +5,8 @@ namespace App\Models;
 /**
  * One version of a member's protocol ("Wet season", "Dry season") — its
  * tasks, its materials, its rules-and-notes document and files, and its
- * own undo/redo with its own rev. See the Protocol Builder.
+ * own undo/redo with its own rev (`rulesHistory` is the document's own
+ * undo/redo, apart from the tasks'). See the Protocol Builder.
  */
 class AsProtocolVersion extends BaseModel
 {
@@ -13,7 +14,7 @@ class AsProtocolVersion extends BaseModel
 
     protected $fillable = [
         'protocolId', 'userId', 'name',
-        'tasks', 'materials', 'rules', 'files', 'history', 'rev',
+        'tasks', 'materials', 'rules', 'files', 'history', 'rulesHistory', 'rev',
         'sortOrder', 'deleteStatus',
     ];
 
@@ -24,6 +25,7 @@ class AsProtocolVersion extends BaseModel
             'materials' => 'array',
             'files' => 'array',
             'history' => 'array',
+            'rulesHistory' => 'array',
             'rev' => 'integer',
             'sortOrder' => 'integer',
         ]);

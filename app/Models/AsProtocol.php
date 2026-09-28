@@ -16,7 +16,7 @@ class AsProtocol extends BaseModel
     protected $table = 'as_protocols';
 
     protected $fillable = [
-        'userId', 'title', 'description', 'tags', 'crop', 'variety', 'dayType',
+        'userId', 'title', 'description', 'tags', 'crop', 'variety', 'dayType', 'treeAgeMonths',
         'tasks', 'history', 'rev', 'versionId',
         'analysis', 'analysisStatus', 'analysisError', 'analysisCredits', 'analysisAt', 'analysisBeatAt',
         'portedScheduleId', 'portedAt', 'deleteStatus',
@@ -31,6 +31,7 @@ class AsProtocol extends BaseModel
             'analysis' => 'array',
             'rev' => 'integer',
             'versionId' => 'integer',
+            'treeAgeMonths' => 'integer',
             'analysisCredits' => 'float',
             'analysisAt' => 'datetime',
             'analysisBeatAt' => 'datetime',
