@@ -370,6 +370,12 @@
     .cx-win { position: fixed; inset: 0; z-index: 190; display: flex; align-items: stretch; justify-content: center;
         background: rgb(15 23 10 / .55); opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
     .cx-win.is-on { opacity: 1; }
+    /* Shut means GONE: the class's display:flex outranks the browser's own
+       [hidden] rule, so a closed window stayed over the page as an invisible
+       sheet and swallowed every scroll and tap after it (the "cannot scroll
+       the comparison" of 2026-09-29). While it fades it takes no taps. */
+    .cx-win[hidden] { display: none !important; }
+    .cx-win:not(.is-on) { pointer-events: none; }
     .cx-win-box { position: relative; display: flex; flex-direction: column; width: 100%; max-width: 56rem; background: var(--color-gray-50);
         transform: translateY(18px); transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .cx-win.is-on .cx-win-box { transform: none; }
