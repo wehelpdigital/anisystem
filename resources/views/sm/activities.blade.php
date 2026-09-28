@@ -682,6 +682,13 @@
             border-radius: 999px; padding: .14rem .5rem .14rem .42rem; flex-shrink: 0; }
         .date-header-cash svg { width: .85rem; height: .85rem; }
         .date-header-cash { cursor: pointer; }
+        /* A day whose cash to prepare just changed (a saved edit) pulses once. */
+        .date-header-cash.is-bumped { animation: dhCashBump 1s cubic-bezier(.22,1,.36,1); }
+        @keyframes dhCashBump {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgb(245 158 11 / 0); }
+            30% { transform: scale(1.14); box-shadow: 0 0 0 5px rgb(245 158 11 / .32); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgb(245 158 11 / 0); }
+        }
         .date-header-cash:hover { filter: brightness(.97); }
         /* TOTALLING A STRETCH OF DAYS.
            Every pill is an end to pick, and the two that are picked carry the
@@ -2572,8 +2579,13 @@
         html.dark .act-cost-task { color: #b9c6ad; }
         html.dark .act-cost-task b { color: #eef4e8; }
         html.dark .act-cost-day { color: #a5d67c; }
+        #activitySheet .act-cost-in.is-bumped { animation: actCostBump .9s cubic-bezier(.22,1,.36,1); }
+        #activitySheet .act-cost-in.is-bumped b { animation: actCostFig .9s cubic-bezier(.22,1,.36,1); display: inline-block; }
+        @keyframes actCostBump { 30% { box-shadow: 0 0 0 4px rgb(107 159 61 / .3); } }
+        @keyframes actCostFig { 30% { transform: scale(1.12); } }
         @media (prefers-reduced-motion: reduce) {
             #activitySheet .act-cost { transition: none; }
+            #activitySheet .act-cost-in.is-bumped, #activitySheet .act-cost-in.is-bumped b, .date-header-cash.is-bumped { animation: none; }
         }
         .wp-amount { width: 6.5rem !important; flex: 0 0 6.5rem; }
         #activitySheet .space-y-4.on-workers > * { display: none; }

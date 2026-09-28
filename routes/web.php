@@ -66,6 +66,11 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'eyeFilterButton' => str_contains($source, 'id="viewFilterBtn"'),
             'dragGrip' => str_contains($source, 'A grip says the card can be dragged'),
             'versionsButton' => str_contains($source, 'id="versionsSheetBtn"'),
+            // Checkable with no sign-in: a probe logging in to look signs the
+            // owner out elsewhere (the single-session rule), so live checks
+            // read these instead.
+            'cashBump' => str_contains($source, 'dhCashBump'),
+            'wtpMonths' => str_contains((string) @file_get_contents(resource_path('views/when-to-plant/index.blade.php')), 'id="wtpMonths"'),
         ],
         'viewCacheCompiled' => count(glob(storage_path('framework/views/*.php')) ?: []),
         // Whether the deployed environment can reach the mailing list at all

@@ -1775,6 +1775,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const extra = _expenseRowsFor(dateKey).reduce((t, r) => t + (Number(r.amount) || 0), 0);
         return labour + materials + stock + extra;
     }
+    /** What a day's cash pill says now: its total, 0 when it has none. */
+    function dayCashNow(dateKey) {
+        const g = $qs(`#activitiesList .date-group[data-date="${dateKey}"]`);
+        return g ? dayCashTotal(g) : 0;
+    }
+    /** A day's pill, pulsed once when its figure is no longer `was`. */
+    function bumpDayCash(dateKey, was) {
+        if (dayCashNow(dateKey) === Number(was || 0)) return;
+        $qsa(`#activitiesList .date-group[data-date="${dateKey}"] .date-header-cash`).forEach((pill) => {
+            pill.classList.remove('is-bumped');
+            void pill.offsetWidth;
+            pill.classList.add('is-bumped');
+            clearTimeout(pill.__bumpT);
+            pill.__bumpT = setTimeout(() => pill.classList.remove('is-bumped'), 1100);
+        });
+    }
     function paintDayCash(group) {
         const pill = group.querySelector('.date-header-cash');
         if (!pill) return;
@@ -4261,7 +4277,7 @@ document.addEventListener('DOMContentLoaded', () => {
             && (workers.length > 0 || materials > 0);
         box.classList.toggle('is-off', !show);
         box.setAttribute('aria-hidden', show ? 'false' : 'true');
-        if (!show) return;
+        if (!show) { box.classList.remove('is-on'); delete box.dataset.fig; return; }
 
         const wages = workers.reduce((t, id) => t + payFor(id), 0);
         const part = inheritedPart();
@@ -4273,8 +4289,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 : 'no wages: the time is N/A');
         }
         if (materials > 0) bits.push((workers.length ? '+ ' : '') + money(materials) + ' materials');
-        $id('activityCostTask').textContent = money(wages + materials);
+        const figure = money(wages + materials);
+        const moved = !!box.dataset.fig && box.dataset.fig !== figure && box.classList.contains('is-on');
+        box.dataset.fig = figure;
+        $id('activityCostTask').textContent = figure;
         $id('activityCostWhat').textContent = bits.join(' ');
+        // A new figure (half a day to a whole one) pulses, so the change is
+        // seen where the eye already is.
+        if (moved) {
+            const inner = box.querySelector('.act-cost-in');
+            inner?.classList.remove('is-bumped');
+            void inner?.offsetWidth;
+            inner?.classList.add('is-bumped');
+        }
+        box.classList.add('is-on');
 
         // The day: what its pill says now, less this activity as it was
         // saved (when it is on that day), plus this activity as it stands.
@@ -6188,6 +6216,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const optimistic = id
                 ? Object.assign({}, BEFORE_SNAPSHOT || {}, payload, { id: Number(id) })
                 : null;
+            // What the day (and the day it left, if it moved) costs before
+            // this save, so the pill can show the change the moment it lands.
+            const cashWas = {};
+            [String(BEFORE_SNAPSHOT?.targetDate || '').slice(0, 10), startDateVal].filter(Boolean)
+                .forEach((d) => { cashWas[d] = dayCashNow(d); });
             const res = await apiQ(
                 id ? U.update(id) : U.store(),
                 { method: id ? 'PUT' : 'POST', body: payload },
@@ -6261,6 +6294,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (res.data && res.data.targetDate) { OPEN_DAYS.add(String(res.data.targetDate).slice(0, 10)); saveOpenDays(); }
             reorderAndRenumberActivities();
             recomputeLotDayZero();
+            /* The day's cash to prepare, repainted NOW rather than on the
+               board's next quiet moment (the pill was rebuilt with the day and
+               sat empty for a beat), and a pill whose figure moved says so. */
+            paintAllDayCash();
+            Object.entries(cashWas).forEach(([d, was]) => bumpDayCash(d, was));
             // The card lands mid-screen when it moved day (an edited date) or
             // is new: the same landing a drag gets, whatever road it took.
             const movedDay = id && BEFORE_SNAPSHOT && String(BEFORE_SNAPSHOT.targetDate || '').slice(0, 10) !== String(res.data?.targetDate || '').slice(0, 10);
