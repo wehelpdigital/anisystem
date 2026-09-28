@@ -370,13 +370,13 @@ class ScheduleEmailController extends BaseScheduleController
             $meta = collect([
                 $lots ? '📐 ' . e($lots) : null,
                 $who ? '👷 ' . e($who) : null,
-                filled($a->timeRequired) ? '⏱ ' . e((string) $a->timeRequired) : null,
+                ($long = $this->howLong($a->timeRequired)) ? '⏱ ' . e($long) : null,
             ])->filter()->implode(' &nbsp;·&nbsp; ');
 
             $rows .= EmailSkin::taskRow(
                 e((string) $a->activityTitle),
                 $meta,
-                filled($a->description) ? e(\Illuminate\Support\Str::limit(strip_tags((string) $a->description), 220)) : '',
+                filled($a->description) ? nl2br(e(\Illuminate\Support\Str::limit($this->plainLines((string) $a->description), 220)), false) : '',
             );
         }
 
@@ -395,19 +395,48 @@ class ScheduleEmailController extends BaseScheduleController
         $facts = array_filter([
             'Where' => $lots ? e($lots) : null,
             'Who' => $who ? e($who) : null,
-            'How long' => filled($activity->timeRequired) ? e((string) $activity->timeRequired) : null,
+            'How long' => ($long = $this->howLong($activity->timeRequired)) ? e($long) : null,
             'Priority' => filled($activity->priority) ? e(ucfirst((string) $activity->priority)) : null,
             'Bring' => $items ? e($items) : null,
         ]);
 
         $out = $facts ? EmailSkin::facts($facts) : '';
 
-        if (filled($activity->description)) {
+        $what = filled($activity->description) ? $this->plainLines((string) $activity->description) : '';
+        if ($what !== '') {
             $out .= EmailSkin::label('What to do')
-                . '<p style="margin:0 0 16px;white-space:pre-line;">' . e(trim(strip_tags((string) $activity->description))) . '</p>';
+                . '<p style="margin:0 0 16px;">' . nl2br(e($what), false) . '</p>';
         }
 
         return $out;
+    }
+
+    /**
+     * The editor's rich text as the owner's own lines. strip_tags() alone
+     * runs every paragraph into one and leaves &nbsp; / &amp; to be escaped
+     * a second time, so a recipe arrived as "Mix:L-Proline - 15gNicotinamide".
+     */
+    private function plainLines(string $html): string
+    {
+        $t = preg_replace('~<br\s*/?>~i', "\n", $html) ?? $html;
+        $t = preg_replace('~<li\b[^>]*>~i', "\n• ", $t) ?? $t;
+        $t = preg_replace('~</(p|div|ul|ol|h[1-6]|blockquote|tr)>~i', "\n", $t) ?? $t;
+        $t = html_entity_decode(strip_tags($t), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $t = str_replace(["\u{00A0}", "\u{200B}", "\u{FEFF}", "\r"], [' ', '', '', ''], $t);
+        $lines = array_map(fn ($l) => trim(preg_replace('~[ \t]+~', ' ', $l) ?? $l), explode("\n", $t));
+
+        return trim(preg_replace("~\n{3,}~", "\n\n", implode("\n", $lines)) ?? '');
+    }
+
+    /** 'whole' / 'half' as a person says it; 'n/a' says nothing. */
+    private function howLong($value): ?string
+    {
+        return match (strtolower(trim((string) $value))) {
+            'whole' => 'Whole day',
+            'half' => 'Half day',
+            '', 'n/a', 'na', 'none' => null,
+            default => (string) $value,
+        };
     }
 
     private function readDate(Request $request): ?Carbon

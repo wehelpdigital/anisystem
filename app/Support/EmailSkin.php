@@ -310,7 +310,7 @@ HTML;
     public static function taskRow(string $title, string $meta = '', string $desc = '', string $when = ''): string
     {
         $badge = $when === '' ? '' :
-            '<span style="display:inline-block;margin:0 8px 4px 0;padding:2px 9px;border-radius:999px;background:#E8BE1C;'
+            '<span class="ae-badge" style="display:inline-block;margin:0 8px 4px 0;padding:2px 9px;border-radius:999px;background:#E8BE1C;'
             . 'font-size:11px;line-height:16px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#2B3A1C;">' . $when . '</span>';
 
         return '<tr><td class="ae-line ae-task" style="padding:14px 0 14px 14px;border-bottom:1px solid #e3eadb;border-left:3px solid #87B84C;">'
@@ -356,7 +356,12 @@ HTML;
         }, $t) ?? $t;
 
         $t = preg_replace('~<img\b[^>]*>~i', '', $t) ?? $t;
-        $t = preg_replace('~<br\s*/?>~i', "\n", $t) ?? $t;
+        // A task's when-badge sits on its title's line ("Today · Transplant"),
+        // and a block-styled title (a callout's heading) ends its own line;
+        // neither has a closing tag the rules below would break on.
+        $t = preg_replace('~<span class="ae-badge"[^>]*>(.*?)</span>~is', '$1 · ', $t) ?? $t;
+        $t = preg_replace('~(<(strong|b|span)\b[^>]*display:\s*block[^>]*>.*?</\2>)~is', "$1\n", $t) ?? $t;
+        $t = preg_replace('~<br\s*/?>\r?\n?~i', "\n", $t) ?? $t;
         $t = preg_replace('~<li\b[^>]*>~i', "\n- ", $t) ?? $t;
         $t = preg_replace('~</(p|h[1-6]|table|ul|ol|blockquote)>~i', "\n\n", $t) ?? $t;
         $t = preg_replace('~</(div|tr)>~i', "\n", $t) ?? $t;
