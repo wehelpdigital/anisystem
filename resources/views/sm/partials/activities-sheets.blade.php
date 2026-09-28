@@ -447,6 +447,21 @@
                 </div>
             </div>
 
+            {{-- What the task costs, and what its day then comes to — right
+                 under the length, because the length is what moves it. Worked
+                 out as the form is filled in (paintSheetCost), so half a day to
+                 a whole one shows its price before Save. Shut on a payroll day
+                 (its own total is in the checklist) and a reminder list. --}}
+            <div class="act-cost is-off" id="activityCostSay" aria-live="polite" aria-hidden="true">
+                <div class="act-cost-in">
+                    <span class="act-cost-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8a2 2 0 012-2h12a2 2 0 012 2M3 8v9a2 2 0 002 2h13a2 2 0 002-2v-2M3 8h16a2 2 0 012 2v1h-4a2 2 0 100 4h4"/></svg></span>
+                    <span class="act-cost-body">
+                        <span class="act-cost-task"><b id="activityCostTask"></b> <span id="activityCostWhat"></span></span>
+                        <span class="act-cost-day" id="activityCostDay"></span>
+                    </span>
+                </div>
+            </div>
+
             <div class="day-zero-panel" id="activityDayZeroPanel">
                 <label class="flex items-start gap-3 cursor-pointer select-none">
                     <input type="checkbox" id="activityIsDayZero" class="mt-1 w-5 h-5 rounded border-amber-400 text-amber-600 focus:ring-amber-300">
@@ -1733,12 +1748,12 @@
         <div class="border-t border-gray-200"></div>
 
         <div>
-            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Email the plan to workers</p>
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Email the plan</p>
             {{-- The parenthesis is directions to a module a worker no longer
                  has, so it is dropped for them rather than left pointing at a
                  door that is not there. --}}
             @php $emailHint = $isWorker ? '' : ' (add emails in the Workers module)'; @endphp
-            <p class="text-sm text-gray-600 mb-2">Sends the day's activities to workers who have a registered email{{ $emailHint }}.</p>
+            <p class="text-sm text-gray-600 mb-2">Choose who gets the day's activities: workers with a registered email{{ $emailHint }}, or any address you type.</p>
             <div class="grid gap-2">
                 {{-- Copying the link is reading; posting the day to every worker
                      on the roster is not, so these two follow $mayEdit while the

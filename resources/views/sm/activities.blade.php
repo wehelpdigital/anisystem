@@ -1133,7 +1133,10 @@
         .ew-all { font-size: .75rem; font-weight: 800; color: var(--color-brand-700, #3b6522); padding: .2rem .5rem; margin: -.2rem -.5rem;
             border-radius: 999px; transition: background .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
         .ew-all:hover { background: #eef5e6; }
-        .ew-all.is-gone { opacity: 0; pointer-events: none; }
+        /* Gone means gone for a keyboard and a screen reader too: visibility
+           drops out of the tab order once the fade has finished. */
+        .ew-all.is-gone { opacity: 0; visibility: hidden; pointer-events: none;
+            transition: background .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1), visibility 0s linear .28s; }
         .ew-what { display: flex; align-items: center; gap: .75rem; background: #f2f8ec; border-color: #d6e6c3; }
         .ew-what-ico { flex: none; width: 2.5rem; height: 2.5rem; border-radius: .8rem; display: grid; place-items: center;
             background: #fff; color: #4a7c2a; box-shadow: 0 1px 0 #d6e6c3; }
@@ -1191,7 +1194,7 @@
         @keyframes ewRowIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
         @media (prefers-reduced-motion: reduce) {
             .ew-chip, .ew-list .ew-row, .ew-list .ew-empty { animation: none; }
-            .ew-chip, .ew-chips, .ew-all, .ew-tally { transition: none; }
+            .ew-chip, .ew-chips, .ew-all, .ew-all.is-gone, .ew-tally { transition: none; }
             .ew-chip.is-flash { animation: none; }
         }
         html.dark .ew-card { background: #171e13; border-color: #2b3a1c; }
@@ -2547,6 +2550,31 @@
         html.dark .wp-name { color: #e6eddd; }
         html.dark .wp-part { background: #1c2416; }
         html.dark .wp-part button.is-on { background: #243019; color: #bfe3a4; }
+
+        /* The sheet's cost line (paintSheetCost). Opens and shuts by its row
+           height, so the fields below slide rather than jump. */
+        #activitySheet .act-cost { display: grid; grid-template-rows: 1fr; opacity: 1;
+            transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1), margin .28s cubic-bezier(.22,1,.36,1); }
+        #activitySheet .act-cost.is-off { grid-template-rows: 0fr; opacity: 0; margin-block: 0; pointer-events: none; }
+        #activitySheet .act-cost-in { min-height: 0; overflow: hidden; display: flex; align-items: flex-start; gap: .6rem;
+            padding: .6rem .75rem; border-radius: .9rem; background: #f4f9ee; border: 1px solid #dcebc9; }
+        #activitySheet .act-cost.is-off .act-cost-in { padding-block: 0; border-width: 0; }
+        .act-cost-ico { flex: none; width: 1.9rem; height: 1.9rem; border-radius: .6rem; display: grid; place-items: center;
+            background: #fff; color: #4a7c2a; box-shadow: 0 1px 0 #dcebc9; }
+        .act-cost-ico svg { width: 1.05rem; height: 1.05rem; }
+        .act-cost-body { min-width: 0; display: flex; flex-direction: column; gap: .1rem; line-height: 1.3; }
+        .act-cost-task { font-size: .85rem; color: var(--color-gray-600); overflow-wrap: anywhere; }
+        .act-cost-task b { font-size: .95rem; color: var(--color-gray-900); font-variant-numeric: tabular-nums; }
+        .act-cost-day { font-size: .78rem; font-weight: 700; color: #3b6522; font-variant-numeric: tabular-nums; }
+        .act-cost-day:empty { display: none; }
+        html.dark #activitySheet .act-cost-in { background: #172013; border-color: #2b3a1c; }
+        html.dark .act-cost-ico { background: #0f150b; color: #a5d67c; box-shadow: none; }
+        html.dark .act-cost-task { color: #b9c6ad; }
+        html.dark .act-cost-task b { color: #eef4e8; }
+        html.dark .act-cost-day { color: #a5d67c; }
+        @media (prefers-reduced-motion: reduce) {
+            #activitySheet .act-cost { transition: none; }
+        }
         .wp-amount { width: 6.5rem !important; flex: 0 0 6.5rem; }
         #activitySheet .space-y-4.on-workers > * { display: none; }
         #activitySheet .space-y-4.on-workers > #activityWorkersPane,
@@ -5477,13 +5505,22 @@
          * copies were made before it did. Rebuilt rather than patched: a copy
          * is cheap and a half-right mirror is worse than a slow one. */
         let rebuildTimer = null;
+        let rebuildAskedAt = 0;
         window.mirrorRefresh = () => {
             if (panel.hidden) return;
             // Debounced: one edit can touch the board half a dozen times as
             // the card is replaced, renumbered and re-sorted, and rebuilding
             // on each would be six copies of a season to throw five away.
+            // But never starved: a board that keeps changing (a slow phone
+            // still painting its days, a feed of edits) once pushed the
+            // rebuild back for ever and the mirror went on showing the old
+            // card. Once one has waited most of a second, it is let land.
+            const now = performance.now();
+            if (!rebuildTimer) rebuildAskedAt = now;
+            else if (now - rebuildAskedAt > 900) return;
             clearTimeout(rebuildTimer);
             rebuildTimer = setTimeout(() => {
+                rebuildTimer = null;
                 if (panel.hidden) return;
                 const keepScroll = body.scrollTop;
                 const openDays = new Set([...body.querySelectorAll('.date-group:not(.is-folded)[data-date]')]

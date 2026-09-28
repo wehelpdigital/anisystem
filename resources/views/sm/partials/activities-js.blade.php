@@ -196,14 +196,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // sheet, the reports and anything added later.
     const LOT_CROP = @json($schedule->lots->mapWithKeys(fn ($l) => [$l->id => $l->crop]));
     @php
-        // Built here rather than inside @json: the directive takes one
-        // expression on one line, and a nested map over the catalogue is
-        // neither.
-        $shapeStages = fn ($rows) => collect($rows)->map(fn ($st) => [
-            'from' => $st[0], 'label' => $st[1], 'what' => $st[2], 'needs' => $st[3],
-        ])->all();
-
-        /* ONLY THE CROPS THIS SCHEDULE ACTUALLY GROWS.
+        /* Built here rather than inside @json: the directive takes one
+         * expression on one line, and a nested map over the catalogue is
+         * neither.
+         *
+         * ONLY THE CROPS THIS SCHEDULE ACTUALLY GROWS.
          *
          * The whole catalogue used to be written into every board — which was
          * fine at seven crops and is eighty-five now, most of them for farms
@@ -214,27 +211,17 @@ document.addEventListener('DOMContentLoaded', () => {
          * board's pill and the growth module agree on where the crop is. Two
          * lots of the same crop with different varieties get their own table,
          * keyed by lot rather than by crop, because that is the level at
-         * which the answer actually differs.
+         * which the answer actually differs. (CropStages::boardTable is the
+         * one shape; a lot made later brings its own in the same shape.)
          */
         $cropTables = [];
         $lotStages = [];
         foreach ($schedule->lots as $lot) {
-            $key = \App\Support\CropStages::normalize($lot->crop);
-            if (! $key) { continue; }
-            $maturity = $lot->maturityDays();
-            $tag = $key . ':' . ($maturity ?: 'x');
+            $board = \App\Support\CropStages::boardTable($lot->crop, $lot->maturityDays());
+            if (! $board) { continue; }
+            [$tag, $table] = $board;
             $lotStages[$lot->id] = $tag;
-            if (isset($cropTables[$tag])) { continue; }
-            $cropTables[$tag] = [
-                'label' => \App\Support\CropStages::label($key),
-                'icon' => \App\Support\CropStages::icon($key),
-                'counter' => \App\Support\CropStages::counter($key),
-                'isTree' => \App\Support\CropStages::isPerennial($key),
-                'stages' => $shapeStages(\App\Support\CropStages::stagesFor($key, null, $maturity)),
-                // Rice grown from seed in the field keeps its own calendar;
-                // every other crop has one, and falls back to it.
-                'stagesDirect' => $shapeStages(\App\Support\CropStages::stagesFor($key, 'DAS', $maturity)),
-            ];
+            $cropTables[$tag] ??= $table;
         }
     @endphp
     const CROP_STAGES = @json((object) $cropTables);
@@ -587,7 +574,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const header = group.querySelector('.date-header');
         const rows = dayStageRows(dateKey, group);
         if (!rows.length) {
-            pill.hidden = true; pill.textContent = '';
+            if (!pill.hidden) pill.hidden = true;
+            if (pill.firstChild) pill.textContent = '';
+            delete pill.dataset.stageSig;
             syncRowBreak(header);
             return;
         }
@@ -602,14 +591,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const detail = rows.length === 1
             ? rows[0].stage.label
             : rows.map((r) => r.lotName + ': ' + r.stage.label).join(' · ');
-        pill.hidden = false;
-        pill.innerHTML = `<span class="dhs-emoji">${first.stage.icon || '🌱'}</span><span>${esc(label)}</span>`;
-        pill.title = detail;
-        pill.setAttribute('aria-label', 'Growth stage — ' + detail);
-        pill.setAttribute('data-date', dateKey);
-        // Remembered so the cost pill, which repaints on its own schedule,
-        // can re-fit the line without re-deriving what this one stands for.
-        pill.dataset.lots = String(rows.length);
+        /* REWRITTEN ONLY WHEN IT SAYS SOMETHING DIFFERENT — the rule the
+         * cost pill already keeps, and for the same reason. This painter
+         * runs inside paintAllDayCash, which runs whenever the board's list
+         * changes; writing the same words back WAS a change, which repainted
+         * every day again 120ms later, for ever. On a season of 120 days it
+         * held the main thread at ~8 full repaints a second, so a saved edit
+         * reached its day's pill late, and the mirror, which rebuilds only
+         * once the board has been still for 220ms, never rebuilt at all. */
+        const sig = dateKey + '|' + (first.stage.icon || '') + '|' + label + '|' + detail;
+        if (pill.dataset.stageSig !== sig || pill.hidden) {
+            pill.dataset.stageSig = sig;
+            pill.hidden = false;
+            pill.innerHTML = `<span class="dhs-emoji">${first.stage.icon || '🌱'}</span><span>${esc(label)}</span>`;
+            pill.title = detail;
+            pill.setAttribute('aria-label', 'Growth stage — ' + detail);
+            pill.setAttribute('data-date', dateKey);
+            // Remembered so the cost pill, which repaints on its own schedule,
+            // can re-fit the line without re-deriving what this one stands for.
+            pill.dataset.lots = String(rows.length);
+        }
         // Now that it is showing, the second line is wanted.
         syncRowBreak(header);
         fitDayStage(pill, rows.length);
@@ -1790,13 +1791,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const picking = document.body.classList.contains('cash-range-on')
             && !!dateKey && dateKey !== '__no-date__';
 
-        pill.hidden = total <= 0 && !picking;
+        // Each written only when it differs: an attribute set to what it
+        // already says is still a mutation, and this runs for every day.
+        const gone = total <= 0 && !picking;
+        if (pill.hidden !== gone) pill.hidden = gone;
         pill.classList.toggle('is-free', total <= 0 && picking);
         if (total > 0 || picking) {
             // The exact figure is kept on the element, because when the line
             // will not hold it the pill is rewritten short and the number it
             // was rounded from would otherwise be gone.
-            pill.dataset.total = String(total);
+            if (pill.dataset.total !== String(total)) pill.dataset.total = String(total);
             /* REWRITTEN ONLY WHEN IT SAYS SOMETHING DIFFERENT.
              *
              * The board watches its own list for changes and repaints these
@@ -1823,9 +1827,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     ? `${SVG.wallet}<span>${esc(money(total))}</span>`
                     : `${SVG.wallet}<span>&mdash;</span>`;
             }
-            pill.title = total > 0
+            const tip = total > 0
                 ? 'Cash to prepare for this day — wages for everyone on it, materials and stock bought, plus any extra expense logged against it'
                 : 'Nothing costed on this day';
+            if (pill.title !== tip) pill.title = tip;
         } else {
             if (pill.firstChild) pill.textContent = '';
             delete pill.dataset.total;
@@ -2269,6 +2274,12 @@ document.addEventListener('DOMContentLoaded', () => {
     /* True when a mutation record only moved our own decorations around — the
        cash line's break, the forecast strip, or the button it collapses into. */
     function ownBookkeeping(rec) {
+        /* Inside one of the day's own pills is always ours: a pill rewording
+           itself (the stage folding to "3 lots", the cost to "₱1.2k") is
+           never a card that changed, and answering it with another repaint
+           is how the board once repainted itself forever. */
+        const t = rec.target && (rec.target.nodeType === 1 ? rec.target : rec.target.parentElement);
+        if (t && t.closest && t.closest('.date-header-stage, .date-header-cash, .date-header-weather, .wx-mini-btn')) return true;
         const ours = (n) => n.nodeType === 1 && (
             n.classList.contains('dh-rowbreak')
             || n.classList.contains('date-header-weather')
@@ -4133,7 +4144,12 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('actWorkerChecklist')?.closest('label')?.classList.toggle('hidden', payroll);
     }
 
+    /* Every road through the roster ends by re-pricing the sheet's cost line. */
     function renderWorkerPay() {
+        renderWorkerPayPanel();
+        paintSheetCost();
+    }
+    function renderWorkerPayPanel() {
         const panel = $id('workerPayPanel'), rows = $id('workerPayRows');
         if (!panel || !rows) return;
 
@@ -4221,6 +4237,72 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Re-price anyone still following the task's own length when that changes.
     $id('activityTimeRequired')?.addEventListener('change', () => renderWorkerPay());
+
+    /* ---- WHAT THIS TASK COSTS, SAID WHILE IT IS WRITTEN ----------------
+     *
+     * Half a day to a whole one changes the wage, and the wage changes the
+     * day's cash to prepare - but the form said nothing, and the figure only
+     * surfaced on the board after Save. This line answers as the form is
+     * filled in: the task's own cost (each worker's rate for however long
+     * the task takes, plus priced materials), and what its day will then
+     * come to, counted the way the day's cost pill counts it. A payroll day
+     * keeps its own total below; a reminder list carries money on its lines. */
+    function sheetMaterials() {
+        if (activityMode === 'service' || activityMode === 'reminders') return 0;
+        return $qsa('#itemsContainer > span').reduce((t, s) =>
+            t + (Number(s.getAttribute('data-price')) || 0) * (Number(s.getAttribute('data-qty')) || 0), 0);
+    }
+    function paintSheetCost() {
+        const box = $id('activityCostSay');
+        if (!box) return;
+        const workers = getActivityWorkerIds();
+        const materials = sheetMaterials();
+        const show = activityMode !== 'payroll' && activityMode !== 'reminders'
+            && (workers.length > 0 || materials > 0);
+        box.classList.toggle('is-off', !show);
+        box.setAttribute('aria-hidden', show ? 'false' : 'true');
+        if (!show) return;
+
+        const wages = workers.reduce((t, id) => t + payFor(id), 0);
+        const part = inheritedPart();
+        const who = workers.length === 1 ? '1 worker' : workers.length + ' workers';
+        const bits = [];
+        if (workers.length) {
+            bits.push(part
+                ? 'wages, ' + (part === 'whole' ? 'whole day' : 'half day') + ' × ' + who
+                : 'no wages: the time is N/A');
+        }
+        if (materials > 0) bits.push((workers.length ? '+ ' : '') + money(materials) + ' materials');
+        $id('activityCostTask').textContent = money(wages + materials);
+        $id('activityCostWhat').textContent = bits.join(' ');
+
+        // The day: what its pill says now, less this activity as it was
+        // saved (when it is on that day), plus this activity as it stands.
+        const date = ($id('activityTargetDate')?.value || '').trim();
+        const dayLine = $id('activityCostDay');
+        if (!date) { dayLine.textContent = ''; return; }
+        const group = $qs(`#activitiesList .date-group[data-date="${date}"]`);
+        let base = 0;
+        // The day's ledgers are declared further down this script; a sheet
+        // painted before they exist says nothing about the day rather than
+        // throwing and taking the rest of the board's setup with it.
+        try {
+            base = group
+                ? dayCashTotal(group)
+                : _stockBuysFor(date).reduce((t, r) => t + (Number(r.amount) || 0), 0)
+                    + _expenseRowsFor(date).reduce((t, r) => t + (Number(r.amount) || 0), 0);
+        } catch (_) { dayLine.textContent = ''; return; }
+        const editing = ($id('activityId')?.value || '').trim();
+        const was = editing && group ? group.querySelector(`.activity-card[data-id="${editing}"]`) : null;
+        if (was) base -= (Number(was.getAttribute('data-labour')) || 0) + (Number(was.getAttribute('data-materials')) || 0);
+        const d = parseLocalDate(date);
+        const when = d ? MONTH_SHORT[d.getMonth()] + ' ' + d.getDate() : 'that day';
+        dayLine.textContent = 'Cash to prepare on ' + when + ': ' + money(Math.max(0, base) + wages + materials);
+    }
+    $id('activityTargetDate')?.addEventListener('change', paintSheetCost);
+    if ($id('itemsContainer') && window.MutationObserver) {
+        new MutationObserver(paintSheetCost).observe($id('itemsContainer'), { childList: true });
+    }
 
     function paintWorkerCount() {
         const badge = $id('activityWorkerCount');
@@ -5498,6 +5580,132 @@ document.addEventListener('DOMContentLoaded', () => {
         return isoFromDate(d);
     }
 
+    /* ---- THE GROUND AND THE CREW, LEARNED IN PLACE ----------------------
+     *
+     * The lots and workers this board reads were written into the page when
+     * it loaded — the sheet's chips, the filter's chips, and the maps every
+     * day count and wage is worked out from. The Lots and Workers modules
+     * live in this same page (the shell swaps them in), so a lot made there
+     * used to be missing from the very next activity until a reload. Each
+     * change is announced (sm:lot-saved / sm:lot-deleted, sm:worker-saved /
+     * sm:worker-deleted / sm:worker-rules) and learned here; the sheet's own
+     * "+ Lot" and "+ Worker" come through the same door. */
+    function upsertChip(host, attr, id, text, make, before) {
+        if (!host) return null;
+        let chip = host.querySelector(`[${attr}="${id}"]`);
+        if (!chip) {
+            chip = make();
+            host.insertBefore(chip, before && before.parentNode === host ? before : null);
+        }
+        if (chip.textContent.trim() !== text) chip.textContent = text;
+        return chip;
+    }
+
+    function learnLot(lot) {
+        if (!lot || !lot.id) return null;
+        const id = Number(lot.id);
+        LOT_NAMES[id] = lot.lotName;
+        LOT_VARIETIES[id] = lot.variety || null;
+        LOT_DAY_TYPE[id] = lot.dayType || 'DAT';
+        LOT_CROP[id] = lot.crop || null;
+        LOT_TREE_AGE[id] = lot.treeAgeMonths ?? null;
+        LOT_DELAY[id] = Math.max(0, Number(lot.delayDays) || 0);
+        LOT_STAGE_SHIFT[id] = Number(lot.growthShiftDays) || 0;
+        LOT_MANUAL_DAY_ZERO[id] = lot.dayZeroDate ? String(lot.dayZeroDate).slice(0, 10) : null;
+        LOT_MANUAL_TRANSPLANT[id] = lot.transplantDate ? String(lot.transplantDate).slice(0, 10) : null;
+        // The stage table comes with the lot, so a crop this board has never
+        // grown still gets its growth pill.
+        const board = Array.isArray(lot.boardStages) ? lot.boardStages : null;
+        if (board && board[0]) {
+            LOT_STAGE_KEY[id] = board[0];
+            if (!CROP_STAGES[board[0]]) CROP_STAGES[board[0]] = board[1];
+        } else {
+            delete LOT_STAGE_KEY[id];
+        }
+
+        const pick = upsertChip($id('activityLotsContainer'), 'data-lot-id', id, lot.lotName, () => {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'chip lot-chip';
+            b.setAttribute('data-lot-id', id);
+            b.setAttribute('aria-pressed', 'false');
+            return b;
+        }, $id('quickAddLotBtn'));
+        if (pick) pick.title = lot.variety || '';
+        const filterHost = $id('lotFilterChips');
+        const filt = upsertChip(filterHost, 'data-value', id,
+            lot.lotName + (lot.variety ? ' · ' + lot.variety : ''), () => {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.className = 'chip min-h-9! py-1! text-xs';
+                b.setAttribute('data-value', id);
+                return b;
+            }, filterHost?.querySelector('[data-value="__na__"]'));
+        if (filt) filt.title = 'Hide ' + lot.lotName + ' — cards covering another visible lot stay put';
+
+        // Its day zero and counter may be new facts for the cards already on
+        // the board, and its stage for the day headers.
+        recomputeLotDayZero();
+        refreshActivityModalLotState();
+        window.__repaintCash?.();
+        return pick;
+    }
+
+    function forgetLot(lotId) {
+        const id = Number(lotId);
+        if (!id) return;
+        [LOT_NAMES, LOT_VARIETIES, LOT_DAY_TYPE, LOT_CROP, LOT_TREE_AGE, LOT_DELAY, LOT_STAGE_SHIFT,
+         LOT_MANUAL_DAY_ZERO, LOT_MANUAL_TRANSPLANT, LOT_STAGE_KEY].forEach((m) => { delete m[id]; });
+        $qs(`#activityLotsContainer .lot-chip[data-lot-id="${id}"]`)?.remove();
+        $qs(`#lotFilterChips [data-value="${id}"]`)?.remove();
+        recomputeLotDayZero();
+        refreshActivityModalLotState();
+        window.__repaintCash?.();
+    }
+
+    function learnWorker(w) {
+        if (!w || !w.id) return null;
+        const id = Number(w.id);
+        WORKER_NAMES[id] = w.workerName;
+        WORKER_RATES[id] = Number(w.costPerHalfDay) || 0;
+        const chip = upsertChip($id('activityWorkersContainer'), 'data-worker-id', id, w.workerName, () => {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'chip worker-chip';
+            b.setAttribute('data-worker-id', id);
+            b.setAttribute('aria-pressed', 'false');
+            return b;
+        }, $id('quickAddWorkerBtn'));
+        // A chip that has just been made has not been through the rules yet,
+        // and a new rate re-prices anyone already on the open sheet.
+        markWorkerAvailability();
+        renderWorkerPay();
+        return chip;
+    }
+
+    function forgetWorker(workerId) {
+        const id = Number(workerId);
+        if (!id) return;
+        delete WORKER_NAMES[id];
+        delete WORKER_RATES[id];
+        delete WORKER_OFF[id];
+        $qs(`#activityWorkersContainer .worker-chip[data-worker-id="${id}"]`)?.remove();
+        renderWorkerPay();
+    }
+
+    // The modules' own announcements; the board's own (_from: 'board') are
+    // for the modules, and were learned before they were sent.
+    document.addEventListener('sm:lot-saved', (e) => { if (e.detail && e.detail._from !== 'board') learnLot(e.detail); });
+    document.addEventListener('sm:lot-deleted', (e) => forgetLot(e.detail?.id));
+    document.addEventListener('sm:worker-saved', (e) => { if (e.detail && e.detail._from !== 'board') learnWorker(e.detail); });
+    document.addEventListener('sm:worker-deleted', (e) => forgetWorker(e.detail?.id));
+    document.addEventListener('sm:worker-rules', (e) => {
+        const d = e.detail || {};
+        if (!d.id) return;
+        WORKER_OFF[d.id] = { days: (d.offDays || []).map(Number), dates: (d.offDates || []).filter(Boolean) };
+        markWorkerAvailability();
+    });
+
     $id('qalSave')?.addEventListener('click', async (e) => {
         const btn = e.currentTarget;
         const lotName = ($id('qalName').value || '').trim();
@@ -5527,18 +5735,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 notes: ($id('qalNotes')?.value || '').trim() || null,
             } });
             const lot = res.data;
-            LOT_NAMES[lot.id] = lot.lotName + (lot.variety ? ' · ' + lot.variety : '');
-            // The board's own map of how each lot counts has to learn the new
-            // one, or the lens above would read it as a default DAT lot.
-            if (lot.dayType) LOT_DAY_TYPE[lot.id] = lot.dayType;
-            const chip = document.createElement('button');
-            chip.type = 'button';
-            chip.className = 'chip lot-chip';
-            chip.setAttribute('data-lot-id', lot.id);
-            chip.setAttribute('aria-pressed', 'false');
-            chip.textContent = LOT_NAMES[lot.id];
-            $id('activityLotsContainer').insertBefore(chip, $id('quickAddLotBtn'));
-            chip.click();   // select it right away
+            // Everything the board knows about a lot, learned in one place;
+            // and the Lots module in this shell, if it is open, learns it too.
+            const chip = learnLot(lot);
+            document.dispatchEvent(new CustomEvent('sm:lot-saved', { detail: Object.assign({ _from: 'board' }, lot) }));
+            chip?.click();   // select it right away
             ['qalName', 'qalVariety', 'qalMaturity', 'qalTreeYears', 'qalTreeMonths',
              'qalBarangay', 'qalZone', 'qalNotes'].forEach((i) => { if ($id(i)) $id(i).value = ''; });
             if ($id('qalCrop')) { $id('qalCrop').value = ''; qalCropChanged(); }
@@ -5568,16 +5769,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 notes: ($id('qawNotes')?.value || '').trim() || null,
             } });
             const w = res.data;
-            WORKER_NAMES[w.id] = w.workerName;
-            WORKER_RATES[w.id] = Number(w.costPerHalfDay) || 0;
-            const chip = document.createElement('button');
-            chip.type = 'button';
-            chip.className = 'chip worker-chip';
-            chip.setAttribute('data-worker-id', w.id);
-            chip.setAttribute('aria-pressed', 'false');
-            chip.textContent = w.workerName;
-            $id('activityWorkersContainer').insertBefore(chip, $id('quickAddWorkerBtn'));
-            chip.click();   // on the activity right away
+            const chip = learnWorker(w);
+            document.dispatchEvent(new CustomEvent('sm:worker-saved', { detail: Object.assign({ _from: 'board' }, w) }));
+            chip?.click();   // on the activity right away
             // A chip that has just been made has not been through the rules
             // yet — a worker added on a Sunday should look as off as one who
             // was already there.
@@ -5765,6 +5959,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (hint) hint.classList.toggle('hidden', !ADD_AS_DRAFT);
         refreshActivityModalLotState();
         markWorkerAvailability();
+        paintSheetCost();
         openSheet('activitySheet');
         // The shed, fetched while the title is still being typed.
         ensureShelf();
@@ -5831,6 +6026,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
             refreshActivityModalLotState();
+            paintSheetCost();
             openSheet('activitySheet');
         // The shed, fetched while the title is still being typed.
         ensureShelf();
@@ -7690,9 +7886,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 const head = v.slice(0, cut);
                 const tail = v.slice(cut + 1);
                 const clean = ewCommit(head);
-                input.value = clean ? tail : (input.value ? input.value + ', ' + tail : tail);
+                // ewCommit has put back what could not be chipped; add the
+                // unfinished word after it, and no separator when there is none.
+                input.value = clean ? tail : (tail ? input.value + ', ' + tail : input.value);
             }
             ewTally();
+        });
+
+        // Full: typing more would only pile up in the box. Say why, where the
+        // eye is, and keep deleting (and the chips' x) working.
+        input.addEventListener('beforeinput', (e) => {
+            if (EW_EXTRA.length < EW_MAX || !/^insert/.test(e.inputType || '') || e.inputType === 'insertFromPaste') return;
+            e.preventDefault();
+            ewSay('Up to ' + EW_MAX + ' other addresses at a time. Remove one to add another.', true);
+            $id('emailWhoExtraSay')?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
         });
 
         input.addEventListener('paste', (e) => {
@@ -7816,7 +8023,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // stop if any of it is not an address.
         const input = $id('emailWhoExtraInput');
         if (input && input.value.trim() && !ewCommit(input.value)) {
-            input.focus();
+            // The reason sits under the box, which on a phone is off screen
+            // by now: say it here as well, and bring the box back to view.
+            toast($id('emailWhoExtraSay')?.textContent || 'Check the addresses you typed.', 'error');
+            input.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            input.focus({ preventScroll: true });
             return;
         }
         const ids = $qsa('#emailWhoList input[type=checkbox]:checked').map((b) => parseInt(b.value, 10));
@@ -8086,7 +8297,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ================================================================
      * QUICK SHARE — share the whole plan (public page) or email the
-     * day's activities to workers who have a registered email.
+     * day's activities (through the who-gets-it sheet).
      * ================================================================ */
     $id('quickShareBtn')?.addEventListener('click', () => {
         const S = window.SM_SHARE || {};
@@ -8113,34 +8324,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     $qsa('.quick-email-btn').forEach((btn) => {
-        btn.addEventListener('click', async () => {
-            // A raw fetch, so nothing that audits api() calls would ever have
-            // caught this one. Mailing the roster is not a view-only act.
+        btn.addEventListener('click', () => {
+            // Mailing the roster is not a view-only act. Nor does it fire on
+            // one tap any more: today/tomorrow open the same who-gets-it sheet
+            // as the day menu (workers to tick, typed addresses, a message),
+            // and that sheet sends the hand-sent day_schedule email.
             if (!mayEditBoard()) return;
-            const S = window.SM_SHARE || {};
-            const scope = btn.getAttribute('data-scope');
-            const orig = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = 'Sending…';
-            try {
-                const res = await fetch(S.emailUrl, {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
-                        'Content-Type': 'application/json',
-                        Accept: 'application/json',
-                    },
-                    body: JSON.stringify({ scheduleId: S.scheduleId, scope }),
-                });
-                const data = await res.json().catch(() => ({}));
-                toast(data.message || (data.success ? 'Emailed.' : 'Could not send.'), data.success ? 'success' : 'error');
-                if (data.success) closeSheet('quickShareSheet');
-            } catch (_) {
-                toast('Network error — try again.', 'error');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = orig;
+            let date = TODAY_KEY;
+            if (btn.getAttribute('data-scope') === 'tomorrow') {
+                const d = new Date(TODAY_KEY + 'T00:00:00');
+                d.setDate(d.getDate() + 1);
+                date = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
             }
+            closeSheet('quickShareSheet');
+            setTimeout(() => openEmailWho({ date }), 260);
         });
     });
 

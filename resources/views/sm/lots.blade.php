@@ -556,6 +556,11 @@ const __init = () => {
     const SCHEDULE_ID = {{ $schedule->id }};
     const DAY_TYPE = @json($schedule->dayType);
     let LOTS = @json($jsLots);
+    /* The Activities board in this same shell keeps its own lists of the
+       ground and the crew (the activity sheet's chips, the day counts, the
+       rates, the days off). Each change here is announced so the board
+       learns it in place and the next activity has it without a reload. */
+    const tellBoard = (name, detail) => document.dispatchEvent(new CustomEvent(name, { detail }));
 
     // Date fields (.cal-only): open the native calendar on click and block
     // manual typing, so the date always comes from the picker.
@@ -1022,6 +1027,7 @@ const __init = () => {
                 toast(res.message);
                 LOTS = LOTS.filter((l) => String(l.id) !== id);
                 renderList();
+                tellBoard('sm:lot-deleted', { id: Number(id) });
             } catch (err) {
                 toast(err.message, 'error');
             }
@@ -1351,26 +1357,8 @@ const __init = () => {
         try {
             const res = await api(url, { method: id ? 'PUT' : 'POST', body });
             toast(res.message);
-            const saved = {
-                id: res.data.id,
-                lotName: res.data.lotName,
-                lotSize: res.data.lotSize,
-                lotSizeUnit: res.data.lotSizeUnit,
-                crop: res.data.crop,
-                cropLabel: res.data.cropLabel,
-                cropIcon: res.data.cropIcon,
-                variety: res.data.variety,
-                locBarangay: res.data.locBarangay,
-                locZone: res.data.locZone,
-                locTown: res.data.locTown,
-                locProvince: res.data.locProvince,
-                fullAddress: composeAddress(res.data),
-                dayType: res.data.dayType || 'DAT',
-                notes: res.data.notes,
-            };
-            const idx = LOTS.findIndex((l) => String(l.id) === String(saved.id));
-            if (idx >= 0) LOTS[idx] = saved; else LOTS.push(saved);
-            renderList();
+            upsertLot(res.data);
+            tellBoard('sm:lot-saved', res.data);
             closeSheet('lotSheet');
         } catch (err) {
             toast(err.message, 'error');
@@ -1378,6 +1366,33 @@ const __init = () => {
             btn.disabled = false;
         }
     });
+
+    /** A saved lot, as this list keeps one. */
+    function upsertLot(d) {
+        const saved = {
+            id: d.id,
+            lotName: d.lotName,
+            lotSize: d.lotSize,
+            lotSizeUnit: d.lotSizeUnit,
+            crop: d.crop,
+            cropLabel: d.cropLabel,
+            cropIcon: d.cropIcon,
+            variety: d.variety,
+            locBarangay: d.locBarangay,
+            locZone: d.locZone,
+            locTown: d.locTown,
+            locProvince: d.locProvince,
+            fullAddress: composeAddress(d),
+            dayType: d.dayType || 'DAT',
+            notes: d.notes,
+        };
+        const idx = LOTS.findIndex((l) => String(l.id) === String(saved.id));
+        if (idx >= 0) LOTS[idx] = saved; else LOTS.push(saved);
+        renderList();
+    }
+    // A lot made from the activity sheet's "+ Lot" is on this list the next
+    // time it is looked at, without a reload (this pane is kept, not refetched).
+    document.addEventListener('sm:lot-saved', (e) => { if (e.detail && e.detail._from === 'board') upsertLot(e.detail); });
 
     renderList();
 

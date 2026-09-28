@@ -575,6 +575,11 @@ const __init = () => {
     const CHAT_ICON = @json(asset('images/icons/chat.png'));
 
     let WORKERS = @json($jsWorkers);
+    /* The Activities board in this same shell keeps its own lists of the
+       ground and the crew (the activity sheet's chips, the day counts, the
+       rates, the days off). Each change here is announced so the board
+       learns it in place and the next activity has it without a reload. */
+    const tellBoard = (name, detail) => document.dispatchEvent(new CustomEvent(name, { detail }));
     const CAN_LOGINS = @json($canWorkerLogins);
     let editingWorker = null;   // the worker whose sheet is open (for login controls)
 
@@ -971,6 +976,7 @@ const __init = () => {
                 login,
             });
             renderList();
+            tellBoard('sm:worker-saved', res.data);
             closeSheet('workerSheet');
             toast(said);
             window.smSpot?.('[data-worker-card="' + res.data.id + '"]');
@@ -1319,6 +1325,7 @@ const __init = () => {
                 WORKERS.push(saved);
             }
             renderList();
+            tellBoard('sm:worker-saved', res.data);
             closeSheet('workerSheet');
             // Filed in the phonebook too, if the offer above was left ticked.
             // Deliberately after the worker is saved and NOT awaited into the
@@ -1438,12 +1445,33 @@ const __init = () => {
                 w.offDates = [...offDatesState];
                 renderList();
             }
+            tellBoard('sm:worker-rules', { id: Number(id), offDays, offDates: [...offDatesState] });
             closeSheet('rulesSheet');
         } catch (err) {
             toast(err.message, 'error');
         } finally {
             btn.disabled = false;
         }
+    });
+
+    // A worker made from the activity sheet's "+ Worker" is on this list the
+    // next time it is looked at, without a reload (this pane is kept).
+    document.addEventListener('sm:worker-saved', (e) => {
+        const d = e.detail;
+        if (!d || d._from !== 'board' || WORKERS.some((w) => String(w.id) === String(d.id))) return;
+        WORKERS.push({
+            id: d.id,
+            workerName: d.workerName,
+            email: d.email,
+            phone: d.phone,
+            costPerHalfDay: d.costPerHalfDay,
+            priority: Number(d.priority) || 1,
+            skills: d.skills || [],
+            notes: d.notes,
+            offDays: [], offDates: [],
+            login: null,
+        });
+        renderList();
     });
 
     /* ---------------- List actions ---------------- */
@@ -1490,6 +1518,7 @@ const __init = () => {
                 toast(res.message);
                 WORKERS = WORKERS.filter((x) => String(x.id) !== id);
                 renderList();
+                tellBoard('sm:worker-deleted', { id: Number(id) });
             } catch (err) {
                 toast(err.message, 'error');
             }

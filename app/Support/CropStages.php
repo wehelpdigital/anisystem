@@ -310,6 +310,37 @@ class CropStages
     }
 
     /**
+     * One lot's stage table as the Activities board reads it, and the key it
+     * is filed under there (crop and maturity: two lots of one crop can be two
+     * varieties). The board writes one of these per crop it grows at page
+     * load; a lot made afterwards, in the Lots module or the activity sheet's
+     * quick add, carries its own so the board can learn it without a reload.
+     *
+     * @return array{0:string,1:array}|null  [key, table], or null with no crop
+     */
+    public static function boardTable(?string $crop, ?int $maturity): ?array
+    {
+        $key = self::normalize($crop);
+        if (! $key) {
+            return null;
+        }
+        $shape = fn ($rows) => collect($rows)->map(fn ($st) => [
+            'from' => $st[0], 'label' => $st[1], 'what' => $st[2], 'needs' => $st[3],
+        ])->all();
+
+        return [$key . ':' . ($maturity ?: 'x'), [
+            'label' => self::label($key),
+            'icon' => self::icon($key),
+            'counter' => self::counter($key),
+            'isTree' => self::isPerennial($key),
+            'stages' => $shape(self::stagesFor($key, null, $maturity)),
+            // Rice grown from seed in the field keeps its own calendar;
+            // every other crop has one, and falls back to it.
+            'stagesDirect' => $shape(self::stagesFor($key, 'DAS', $maturity)),
+        ]];
+    }
+
+    /**
      * Where this crop is on day $day of its count.
      *
      * For a perennial, $day is the tree's age in MONTHS.

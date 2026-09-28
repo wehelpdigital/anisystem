@@ -65,6 +65,9 @@ class LotController extends BaseScheduleController
             // said so itself or the crop's own figure stood in.
             'maturityDays' => $lot->maturityDays(),
             'treeAgeMonths' => $lot->treeAgeMonths(),
+            // The stage table the Activities board reads this lot against, so
+            // a board already open learns a new or re-cropped lot in place.
+            'boardStages' => \App\Support\CropStages::boardTable($lot->crop, $lot->maturityDays()),
             // Where it is, and the one link that acts on that.
             'pinned' => $lot->isPinned(),
             'mapsHref' => $lot->mapsHref(),
