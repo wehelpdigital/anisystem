@@ -204,6 +204,12 @@
             body.innerHTML = html || '';
         }
         paintActs(actions);
+        // Embedded (Compare's window onto a saved report): the window that
+        // holds this page draws its own title and close, and is told the
+        // report is up so it can take its loader away.
+        if (document.documentElement.classList.contains('is-embed') && window.parent !== window) {
+            try { window.parent.postMessage({ type: 'anee-embed-open', title: t || 'Report' }, location.origin); } catch (_) { /* a lone page */ }
+        }
         view.hidden = false;
         document.documentElement.classList.add('va-view-lock');
         view.scrollTop = 0;

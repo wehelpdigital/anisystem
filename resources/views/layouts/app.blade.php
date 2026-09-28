@@ -2,7 +2,11 @@
 {{-- class="booting": the page's own content stays out of sight until it is
      whole (see partials.boot-veil-css). Stamped by the server rather than by
      a script, so there is no frame in which it has not been applied. --}}
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="booting">
+{{-- ?embed=1: the page shown inside another page's window (Compare's
+     "the two reports, as saved"). The app's own chrome steps aside and only
+     the report's full-screen view is drawn; see report-view. --}}
+@php $isEmbed = request()->boolean('embed'); @endphp
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="booting{{ $isEmbed ? ' is-embed' : '' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
@@ -47,6 +51,18 @@
     @endif
     {{-- Ahead of everything: the page is shown whole or not at all. --}}
     @include('partials.boot-veil-css')
+    @if ($isEmbed)
+    <style>
+        /* Embedded: no header, tab bar, footer or floating doors, and the
+           page behind the report stays out of sight -- the report's own
+           view (.va-view) is the whole of it. */
+        html.is-embed body > header, html.is-embed footer, html.is-embed nav.tabbar,
+        html.is-embed .ai-float, html.is-embed #aiFloat, html.is-embed [data-help-fab] { display: none !important; }
+        html.is-embed main { visibility: hidden; }
+        html.is-embed .va-view { visibility: visible; }
+        html.is-embed .va-view-bar { display: none !important; }
+    </style>
+    @endif
     <title>@yield('title', 'Dashboard') | anee.io</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}?v=anee">
     {{-- The SVG is for browsers that take one; the rest get a PNG at the two
@@ -994,14 +1010,18 @@
 
     {{-- Asked at most once, of someone who has used the app long enough to
          have a view, and never again once they answer. --}}
+    @unless ($isEmbed)
     @include('partials.review-prompt', ['askForReview' => \App\Http\Controllers\ReviewController::shouldAsk()])
+    @endunless
 
     {{-- The tutorial card: one for the app, painted with whichever screen's
          words a page hands it. Draws nothing until a page asks. The second
          include asks on behalf of any route listed in config('tutorials.routes'),
          so those screens need nothing in their own views. --}}
+    @unless ($isEmbed)
     @include('partials.tutorial-modal')
     @include('partials.tutorial-offer', ['byRoute' => true, 'keys' => [], 'auto' => null])
+    @endunless
 
     @stack('scripts')
     <script>

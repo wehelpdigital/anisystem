@@ -349,6 +349,60 @@
     html.dark .cx-fold-h .t b { color: #e8efe1; }
     html.dark .cx-pre { border-color: #222b1a; color: #b7c2ad; }
 
+    /* ---- the two reports as saved: a card each, opening the report itself ---- */
+    .cx-src-card { display: flex; align-items: center; gap: .7rem; width: 100%; text-align: left; padding: .8rem .85rem;
+        border-radius: 1rem; border: 1px solid var(--color-gray-200); background: var(--color-white); min-width: 0; cursor: pointer;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .cx-src-card:hover { transform: translateY(-1px); border-color: #cfe3bd; box-shadow: 0 8px 20px -14px rgb(45 80 22 / .5); }
+    .cx-src-card .t { flex: 1 1 auto; min-width: 0; }
+    .cx-src-card .t b { display: block; font-size: .86rem; font-weight: 800; color: var(--color-gray-900); overflow-wrap: anywhere; line-height: 1.3; }
+    .cx-src-card .t small { display: block; font-size: .72rem; color: var(--color-gray-500); margin-top: .15rem; }
+    .cx-src-card .go { flex: none; display: inline-flex; align-items: center; gap: .3rem; padding: .35rem .7rem; border-radius: 999px;
+        font-size: .74rem; font-weight: 800; color: #2f5219; background: #eef6e6; border: 1px solid #cfe3bd; }
+    .cx-src-card .go svg { width: .9rem; height: .9rem; }
+    html.dark .cx-src-card { background: #151b12; border-color: #2b3a1c; }
+    html.dark .cx-src-card .t b { color: #e8efe1; }
+    html.dark .cx-src-card .go { background: #1c2913; border-color: #2f3f1f; color: #bfe3a4; }
+
+    /* The window: the report page itself, embedded (?embed=1), full screen
+       on a phone and a tall dialog on a wide screen; A and B switch in its
+       head. Above the report view (90) and its sheets (120). */
+    .cx-win { position: fixed; inset: 0; z-index: 190; display: flex; align-items: stretch; justify-content: center;
+        background: rgb(15 23 10 / .55); opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .cx-win.is-on { opacity: 1; }
+    .cx-win-box { position: relative; display: flex; flex-direction: column; width: 100%; max-width: 56rem; background: var(--color-gray-50);
+        transform: translateY(18px); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .cx-win.is-on .cx-win-box { transform: none; }
+    @media (min-width: 760px) { .cx-win { padding: 2.5vh 1rem; } .cx-win-box { border-radius: 1.2rem; overflow: hidden; box-shadow: 0 30px 70px -30px rgb(0 0 0 / .6); } }
+    .cx-win-h { flex: none; display: flex; align-items: center; gap: .55rem; padding: .65rem .8rem; padding-top: calc(.65rem + env(safe-area-inset-top));
+        background: var(--color-white); border-bottom: 1px solid var(--color-gray-200); }
+    .cx-win-h .t { flex: 1 1 auto; min-width: 0; }
+    .cx-win-h .t b { display: block; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cx-win-h .t small { display: block; font-size: .7rem; color: var(--color-gray-500); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cx-win-ab { flex: none; display: inline-flex; padding: 3px; border-radius: 999px; background: var(--color-gray-100); gap: 2px; }
+    .cx-win-ab button { width: 2rem; height: 1.8rem; border-radius: 999px; font-size: .78rem; font-weight: 900; color: var(--color-gray-500);
+        transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .cx-win-ab button.is-on.is-a { background: #4a7c2a; color: #fff; }
+    .cx-win-ab button.is-on.is-b { background: #c2620c; color: #fff; }
+    .cx-win-x { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: grid; place-items: center; border: 1px solid var(--color-gray-200);
+        background: var(--color-white); color: var(--color-gray-700); }
+    .cx-win-b { position: relative; flex: 1 1 auto; min-height: 0; }
+    .cx-win-b iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: var(--color-gray-50);
+        opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .cx-win-b iframe.is-ready { opacity: 1; }
+    .cx-win-wait { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; gap: .6rem; font-size: .8rem; color: var(--color-gray-500); }
+    .cx-win-wait i { width: 2rem; height: 2rem; border-radius: 999px; border: 3px solid #cfe3bd; border-top-color: #4a7c2a; animation: cxSpin .8s linear infinite; }
+    @keyframes cxSpin { to { transform: rotate(360deg); } }
+    .cx-win-text { position: absolute; inset: 0; overflow: auto; padding: 1rem; }
+    .cx-win-text .cx-pre { border: 1px solid var(--color-gray-200); border-radius: 1rem; background: var(--color-white); max-height: none; font-size: .78rem; }
+    html.dark .cx-win-box, html.dark .cx-win-b iframe { background: #0d110a; }
+    html.dark .cx-win-h { background: #10160c; border-color: #2b3a1c; }
+    html.dark .cx-win-h .t b { color: #e8efe1; }
+    html.dark .cx-win-ab { background: #1c2416; }
+    html.dark .cx-win-x { background: #151b12; border-color: #2b3a1c; color: #cfdcc3; }
+    html.dark .cx-win-text .cx-pre { background: #151b12; border-color: #2b3a1c; }
+    @media (prefers-reduced-motion: reduce) { .cx-win, .cx-win-box, .cx-win-b iframe, .cx-src-card { transition: none; } .cx-win-wait i { animation: none; } }
+
     /* ---- a note, when there is something to say about the sources ---- */
     .cx-note { display: flex; gap: .6rem; align-items: flex-start; padding: .7rem .8rem; border-radius: .95rem; font-size: .8rem; line-height: 1.5;
         background: #fdf8ec; border: 1px solid #f3e3b7; color: #7a5410; }
@@ -698,20 +752,118 @@
         </section>`;
     }
 
-    function sources(rep, i, open) {
+    /* THE TWO REPORTS, AS SAVED.
+     *
+     * A card each, and the card opens the report the way its own module
+     * draws it -- the Labor report with its charts and its filter, the
+     * Expenses report with its tiles -- in a window over the comparison,
+     * rather than the text Anee reads. The report page itself is embedded
+     * (?open=<id>&embed=1): one renderer, so the two can never drift. A
+     * report with no page of its own to open in (a profit snapshot, one
+     * that has since left its shelf) shows its text in the same window. */
+    const PAGE_OF = {
+        labor: @json(route('sm.labor.report', ['id' => '__S__'])),
+        expenses: @json(route('sm.expenses.report', ['id' => '__S__'])),
+        protocol: @json(route('sm.protocol.report', ['id' => '__S__'])),
+        season: @json(route('sm.anee.season', ['id' => '__S__'])),
+        sofar: @json(route('sm.anee.sofar', ['id' => '__S__'])),
+    };
+    const pageFor = (s) => (s && !s.gone && s.id && s.scheduleId && PAGE_OF[s.kind])
+        ? PAGE_OF[s.kind].replace('__S__', encodeURIComponent(s.scheduleId)) + '&open=' + encodeURIComponent(s.id) + '&embed=1'
+        : null;
+    let SRC = { a: null, b: null };
+    function sources(rep, i) {
+        SRC = { a: rep.a || {}, b: rep.b || {} };
         const one = (k) => {
             const s = rep[k] || {};
-            const sub = [s.season, s.when].filter(Boolean).join(' · ');
-            return `<div class="cx-fold${open ? ' is-open' : ''}" data-cx-fold-host>
-                <button type="button" class="cx-fold-h" data-cx-fold aria-expanded="${open ? 'true' : 'false'}">
-                    <span class="cx-letter is-${k}">${k.toUpperCase()}</span>
-                    <span class="t"><b>${esc(s.title || 'Report ' + k.toUpperCase())}</b>${sub ? `<small>${esc(sub)}</small>` : ''}</span>
-                    ${I('chevron')}
-                </button>
-                <div class="cx-fold-b"><pre class="cx-pre">${esc(s.body || 'Nothing was written down for this one.')}</pre></div>
-            </div>`;
+            const sub = [s.season, s.when, s.filtered].filter(Boolean).join(' · ');
+            return `<button type="button" class="cx-src-card" data-cx-open="${k}">
+                <span class="cx-letter is-${k}">${k.toUpperCase()}</span>
+                <span class="t"><b>${esc(s.title || 'Report ' + k.toUpperCase())}</b>${sub ? `<small>${esc(sub)}</small>` : ''}</span>
+                <span class="go">${pageFor(s) ? 'Open' : 'Read'} ${I('file')}</span>
+            </button>`;
         };
-        return `<section class="cx-rise" style="--i:${i}">${head('file', 'The two reports, as saved', 'Exactly what each one said when it was compared')}<div class="cx-src">${one('a')}${one('b')}</div></section>`;
+        return `<section class="cx-rise" style="--i:${i}">${head('file', 'The two reports, as saved', 'Open either one as its own report, charts and filters and all')}<div class="cx-src">${one('a')}${one('b')}</div></section>`;
+    }
+
+    /* The window: one per page, re-pointed at A or B. */
+    let WIN = null;
+    function winEl() {
+        if (WIN) return WIN;
+        WIN = document.createElement('div');
+        WIN.className = 'cx-win';
+        WIN.hidden = true;
+        WIN.setAttribute('role', 'dialog');
+        WIN.setAttribute('aria-modal', 'true');
+        WIN.innerHTML = `<div class="cx-win-box">
+            <div class="cx-win-h">
+                <span class="cx-letter" data-cx-win-letter>A</span>
+                <span class="t"><b data-cx-win-title>Report</b><small data-cx-win-sub></small></span>
+                <span class="cx-win-ab" role="tablist" aria-label="Which report">
+                    <button type="button" class="is-a" data-cx-win-side="a" aria-label="Report A">A</button>
+                    <button type="button" class="is-b" data-cx-win-side="b" aria-label="Report B">B</button>
+                </span>
+                <button type="button" class="cx-win-x" data-cx-win-x aria-label="Close">✕</button>
+            </div>
+            <div class="cx-win-b" data-cx-win-body></div>
+        </div>`;
+        document.body.appendChild(WIN);
+        WIN.addEventListener('click', (e) => {
+            if (e.target === WIN || e.target.closest('[data-cx-win-x]')) { closeWin(); return; }
+            const side = e.target.closest('[data-cx-win-side]');
+            if (side) showSide(side.getAttribute('data-cx-win-side'));
+        });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && WIN && !WIN.hidden) closeWin(); });
+        // The embedded page says when its report is up.
+        window.addEventListener('message', (e) => {
+            if (e.origin !== location.origin || !e.data || e.data.type !== 'anee-embed-open' || !WIN) return;
+            const f = WIN.querySelector('iframe');
+            if (f && e.source === f.contentWindow) { f.classList.add('is-ready'); WIN.querySelector('.cx-win-wait')?.remove(); }
+        });
+        return WIN;
+    }
+    function showSide(k) {
+        const w = winEl();
+        const s = SRC[k] || {};
+        const letter = w.querySelector('[data-cx-win-letter]');
+        letter.textContent = k.toUpperCase();
+        letter.className = 'cx-letter is-' + k;
+        w.querySelector('[data-cx-win-title]').textContent = s.title || ('Report ' + k.toUpperCase());
+        w.querySelector('[data-cx-win-sub]').textContent = [s.season, s.when, s.filtered].filter(Boolean).join(' · ');
+        w.querySelectorAll('[data-cx-win-side]').forEach((b) => {
+            const on = b.getAttribute('data-cx-win-side') === k;
+            b.classList.toggle('is-on', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        const body = w.querySelector('[data-cx-win-body]');
+        const url = pageFor(s);
+        if (url) {
+            body.innerHTML = `<div class="cx-win-wait"><i></i><span>Opening the report…</span></div><iframe title="${esc(s.title || 'Report')}" src="${esc(url)}"></iframe>`;
+            // A page that never says it is ready is shown anyway after a while.
+            const f = body.querySelector('iframe');
+            setTimeout(() => { if (f.isConnected && !f.classList.contains('is-ready')) { f.classList.add('is-ready'); body.querySelector('.cx-win-wait')?.remove(); } }, 12000);
+        } else {
+            const note = s.gone ? 'This report has since left its shelf. Here is what it said when it was compared.'
+                : 'This kind of report is kept as text only. Here it is as it was saved.';
+            body.innerHTML = `<div class="cx-win-text"><p class="text-xs text-gray-500 mb-2">${esc(note)}</p><pre class="cx-pre">${esc(s.body || 'Nothing was written down for this one.')}</pre></div>`;
+        }
+    }
+    function openWin(k) {
+        const w = winEl();
+        showSide(k);
+        w.hidden = false;
+        document.documentElement.classList.add('va-view-lock');
+        requestAnimationFrame(() => requestAnimationFrame(() => w.classList.add('is-on')));
+    }
+    function closeWin() {
+        if (!WIN || WIN.hidden) return;
+        WIN.classList.remove('is-on');
+        setTimeout(() => {
+            WIN.hidden = true;
+            WIN.querySelector('[data-cx-win-body]').innerHTML = '';
+            // The report view underneath (a saved comparison) keeps its lock.
+            if (!window.reportView?.isOpen?.()) document.documentElement.classList.remove('va-view-lock');
+        }, 300);
     }
 
     /* ---- folds: the house max-height slide, both ways ---- */
@@ -764,12 +916,15 @@
         parts.push(groups(rep.groups, i++));
         parts.push(facts(rep.facts, i++));
         parts.push(timeline(rep.timeline, rep, i++));
-        parts.push(sources(rep, i++, !hasFigures));
+        parts.push(sources(rep, i++));
         host.classList.add('cx-host');
         host.innerHTML = `<article class="cx">${parts.filter(Boolean).join('')}</article>`;
         host.querySelectorAll('.cx-tl-more-btn span').forEach((s) => { s.dataset.more = s.textContent; });
         host.querySelectorAll('[data-cx-fold]').forEach((btn) => {
             btn.addEventListener('click', () => toggle(btn.closest('[data-cx-fold-host]'), btn));
+        });
+        host.querySelectorAll('[data-cx-open]').forEach((btn) => {
+            btn.addEventListener('click', () => openWin(btn.getAttribute('data-cx-open')));
         });
         const add = host.querySelector('[data-cx-add-anee]');
         if (add && typeof opts.onAddAnee === 'function') {
