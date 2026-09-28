@@ -76,7 +76,7 @@
     .xr-range button.is-on { border-color: var(--color-brand-600); background: var(--color-brand-50); color: var(--color-brand-800); }
     html.dark .xr-range button { background: #151b12; border-color: #2b3a1c; color: #d5e3c5; }
     html.dark .xr-range button.is-on { background: #22301a; border-color: #6b9f3d; color: #cfe6b8; }
-    .xr-range-pane:not([hidden]) { animation: xrPaneIn .28s cubic-bezier(.22,1,.36,1); }
+    /* Opened and shut by slidePane (height); no keyframe on top of it. */
     @keyframes xrPaneIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
     .xr-unit { font-size: .72rem; color: var(--color-gray-500); margin-top: .35rem; }
     @media (prefers-reduced-motion: reduce) { .xr-range button { transition: none; } .xr-range-pane:not([hidden]) { animation: none; } }
@@ -437,6 +437,29 @@ const __init = () => {
     // What the report area is showing: a fresh generate, or a shelf row.
     let MODE = 'fresh';
     let SAVED = { id: null, mine: true };
+    /* What the report on screen was narrowed to, in words: "Lot B1 · DAT
+       0–30". Said in its hero and its title, so a saved filtered report is
+       never just "(filtered)". */
+    let SHOWN_PARAMS = null;
+    const prettyD = (s) => { if (!s) return ''; const d = new Date(s + 'T00:00:00'); return isNaN(d) ? s : MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear(); };
+    function sliceWordsOf(p) {
+        if (!p) return '';
+        const bits = [];
+        const ids = p.lotIds || [];
+        if (ids.length) {
+            const names = ids.map((id) => LOT_NAMES[id] || ('Lot #' + id));
+            bits.push(names.length > 3 ? names.slice(0, 3).join(', ') + ' +' + (names.length - 3) + ' more' : names.join(', '));
+        }
+        if (p.dayMin != null || p.dayMax != null) {
+            const w = p.dayWord || dayWord();
+            bits.push(`${daySaid(w)} ${p.dayMin ?? 'start'}–${p.dayMax ?? 'end'}${w === 'AGE' ? ' months' : ''}`);
+        }
+        if (p.from || p.to) bits.push(`${prettyD(p.from) || '…'} – ${prettyD(p.to) || '…'}`);
+        if ((p.cats || []).length) bits.push(p.cats.map((k) => (CATS[k] || {}).label || k).join(', '));
+        if (p.invKind) bits.push('inventory: ' + p.invKind);
+        if (p.status && p.status !== 'all') bits.push(p.status === 'done' ? 'done only' : 'still ahead');
+        return bits.join(' · ');
+    }
     let XR_ROWS = [];
     let META_ID = null;
 
@@ -492,6 +515,32 @@ const __init = () => {
         return dayOn ? line + '. Lines with no lot (the day book, stock buys) have no day count, so a day-count range leaves them out.' : line;
     }
 
+    /* A pane opens and shuts by its height, so what is under it slides
+       rather than jumps (the fade alone moved everything at once). */
+    function slidePane(el, show) {
+        if (!el || el.hidden === !show) return;
+        const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        clearTimeout(el.__slideT);
+        if (still) { el.hidden = !show; return; }
+        const ease = 'height .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1), margin .28s cubic-bezier(.22,1,.36,1)';
+        el.style.overflow = 'hidden';
+        if (show) {
+            el.hidden = false;
+            const h = el.scrollHeight;
+            el.style.height = '0px'; el.style.opacity = '0';
+            void el.offsetHeight;
+            el.style.transition = ease; el.style.height = h + 'px'; el.style.opacity = '1';
+        } else {
+            el.style.height = el.scrollHeight + 'px';
+            void el.offsetHeight;
+            el.style.transition = ease; el.style.height = '0px'; el.style.opacity = '0';
+        }
+        el.__slideT = setTimeout(() => {
+            if (!show) el.hidden = true;
+            ['height', 'opacity', 'overflow', 'transition'].forEach((k) => { el.style[k] = ''; });
+        }, 300);
+    }
+
     /* Which part of the season: leaving a mode clears its inputs, so a
        stale date cannot ride along with a day range. */
     $id('xrRange')?.addEventListener('click', (e) => {
@@ -499,8 +548,8 @@ const __init = () => {
         if (!b) return;
         RANGE = b.dataset.xrRange;
         document.querySelectorAll('#xrRange [data-xr-range]').forEach((x) => { const on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-checked', on ? 'true' : 'false'); });
-        $id('xrRangeDay').hidden = RANGE !== 'day';
-        $id('xrRangeDate').hidden = RANGE !== 'date';
+        slidePane($id('xrRangeDay'), RANGE === 'day');
+        slidePane($id('xrRangeDate'), RANGE === 'date');
         if (RANGE !== 'day') ['xrDayMin', 'xrDayMax'].forEach((i) => { if ($id(i)) $id(i).value = ''; });
         if (RANGE !== 'date') ['xrFrom', 'xrTo'].forEach((i) => { if ($id(i) && $id(i).value) { $id(i).value = ''; $id(i).dispatchEvent(new Event('change')); } });
         sayTags();
@@ -565,7 +614,6 @@ const __init = () => {
         try {
             const res = await api(DATA_URL + queryString());
             DATA = res.data;
-            render();
             // The shelf copy: the text Anee reads plus the dataset that lets
             // the Saved tab redraw this exact report later.
             const sl = sliceParams();
@@ -575,18 +623,22 @@ const __init = () => {
                 dayMin: sl.dayMin ?? null, dayMax: sl.dayMax ?? null,
                 from: sl.from || null, to: sl.to || null,
             };
+            SHOWN_PARAMS = params;
+            render();
             const filtered = LOT_SEL.size || CAT_SEL.size || KIND || STATUS !== 'all' || Object.keys(sl).length;
+            // Named, not "(filtered)": the slice is what the report is.
+            const titled = ('Expenses Report — ' + SCHEDULE_TITLE + (filtered ? ' (' + sliceWordsOf(params) + ')' : '')).slice(0, 190);
             let savedNote = '';
             try {
                 const snap = await api(U.snapshot, { method: 'POST', body: {
                     scheduleId: @json($schedule->id),
                     kind: 'expenses',
-                    title: 'Expenses Report — ' + SCHEDULE_TITLE + (filtered ? ' (filtered)' : ''),
+                    title: titled,
                     body: buildText(),
                     params,
                     report: DATA,
                 } });
-                SAVED = { id: snap.data.id, mine: true, title: 'Expenses Report — ' + SCHEDULE_TITLE + (filtered ? ' (filtered)' : ''), description: '' };
+                SAVED = { id: snap.data.id, mine: true, title: titled, description: '' };
                 savedNote = ' It is saved on the Saved Reports shelf.';
             } catch (err) {
                 SAVED = { id: null, mine: true };
@@ -647,7 +699,8 @@ const __init = () => {
             ? `Income ${fmtPeso(d.totals.income)} · Net ${d.net >= 0 ? '+' : '−'}${fmtPeso(Math.abs(d.net))}`
             : '';
         net.className = 'xr-hero-net ' + (d.net >= 0 ? 'is-up' : 'is-down');
-        $id('xrMeta').textContent = `${d.rowCount} ${d.rowCount === 1 ? 'entry' : 'entries'}`;
+        const slice = sliceWordsOf(SHOWN_PARAMS);
+        $id('xrMeta').textContent = `${d.rowCount} ${d.rowCount === 1 ? 'entry' : 'entries'} · ${slice || 'the whole season'}`;
         $id('xrTiles').innerHTML = Object.entries(CATS)
             .filter(([k]) => k !== 'income' ? d.totals[k] > 0 : d.totals.income > 0)
             .map(([k, c]) => `<div class="xr-tile"><div class="k"><i style="background:${c.color}"></i>${c.label}</div><div class="v">${fmtPeso(d.totals[k])}</div></div>`)
@@ -773,6 +826,7 @@ const __init = () => {
         try {
             const res = await api(U.one(id));
             SAVED = { id: res.data.id, mine: res.data.mine !== false, title: res.data.title || '', description: res.data.description || '' };
+            SHOWN_PARAMS = res.data.params || null;
             if (res.data.report) {
                 // The dataset rode along when it was saved — redraw it whole.
                 DATA = res.data.report;

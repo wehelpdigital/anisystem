@@ -969,9 +969,17 @@ class CompareController extends BaseScheduleController
     {
         $ids = [];
         foreach ($rows as $r) {
-            $lid = (int) (((array) ($r->params ?? []))['lotId'] ?? 0);
+            $p = (array) ($r->params ?? []);
+            $lid = (int) ($p['lotId'] ?? 0);
             if ($lid > 0) {
                 $ids[] = $lid;
+            }
+            // A filtered report names its lots in words (filterWords).
+            $rep = is_array($r->report ?? null) ? $r->report : [];
+            foreach (array_merge((array) ($p['lotIds'] ?? []), (array) (($rep['filters'] ?? [])['lotIds'] ?? [])) as $x) {
+                if ((int) $x > 0) {
+                    $ids[] = (int) $x;
+                }
             }
         }
 
@@ -983,26 +991,47 @@ class CompareController extends BaseScheduleController
      * whole season. Labor keeps its filters in the report, expenses in
      * the params.
      */
-    private function filterWords(string $kind, array $params, ?array $report = null): ?string
+    private function filterWords(string $kind, array $params, ?array $report = null, array $lots = []): ?string
     {
+        /* NAMED, NOT COUNTED: "DAT 0 to 30, Lot B1" rather than "a
+         * day-count range, some lots" — the numbers are what decide whether
+         * two reports can be compared at all. */
+        $lotWords = function (array $ids) use ($lots): string {
+            $names = array_values(array_filter(array_map(fn ($id) => $lots[(int) $id] ?? null, $ids)));
+            if (! $names) {
+                return count($ids) === 1 ? 'one lot' : count($ids) . ' lots';
+            }
+            $more = count($ids) - min(3, count($names));
+
+            return implode(', ', array_slice($names, 0, 3)) . ($more > 0 ? ' +' . $more . ' more' : '');
+        };
+        $dateWords = function ($from, $to): string {
+            $d = fn ($v) => $v ? \Illuminate\Support\Carbon::parse($v)->format('M j, Y') : '…';
+
+            return $d($from) . ' to ' . $d($to);
+        };
+        $dayWords = fn (string $word, $min, $max) => ($word === 'AGE' ? 'Age' : $word) . ' ' . ($min ?? 'start') . ' to ' . ($max ?? 'end') . ($word === 'AGE' ? ' months' : '');
+
         $words = [];
         if ($kind === 'labor') {
             $f = (array) (($report ?? [])['filters'] ?? $params);
-            if (! empty($f['lotIds'])) $words[] = 'some lots';
-            if (! empty($f['workerIds'])) $words[] = 'some workers';
-            if (! empty($f['groupIds'])) $words[] = 'some groups';
-            if (! empty($f['startDate']) || ! empty($f['endDate'])) $words[] = 'a date range';
-            if (($f['dasMin'] ?? null) !== null || ($f['dasMax'] ?? null) !== null) $words[] = 'a day-count range';
+            if (! empty($f['lotIds'])) $words[] = $lotWords((array) $f['lotIds']);
+            if (! empty($f['workerIds'])) $words[] = count((array) $f['workerIds']) . ' ' . (count((array) $f['workerIds']) === 1 ? 'worker' : 'workers');
+            if (! empty($f['groupIds'])) $words[] = count((array) $f['groupIds']) . ' ' . (count((array) $f['groupIds']) === 1 ? 'group' : 'groups');
+            if (! empty($f['startDate']) || ! empty($f['endDate'])) $words[] = $dateWords($f['startDate'] ?? null, $f['endDate'] ?? null);
+            if (($f['dasMin'] ?? null) !== null || ($f['dasMax'] ?? null) !== null) {
+                $words[] = $dayWords(($f['dayAnchor'] ?? '') === 'transplant' ? 'DAT' : 'DAS', $f['dasMin'] ?? null, $f['dasMax'] ?? null);
+            }
         } elseif ($kind === 'expenses') {
-            if (! empty($params['lotIds'])) $words[] = 'some lots';
-            if (! empty($params['cats'])) $words[] = 'some categories';
-            if (! empty($params['from']) || ! empty($params['to'])) $words[] = 'a date range';
-            if (isset($params['dayMin']) || isset($params['dayMax'])) $words[] = 'a day-count range';
+            if (! empty($params['lotIds'])) $words[] = $lotWords((array) $params['lotIds']);
+            if (! empty($params['cats'])) $words[] = implode(', ', array_map(fn ($c) => str_replace('_', ' ', (string) $c), (array) $params['cats']));
+            if (! empty($params['from']) || ! empty($params['to'])) $words[] = $dateWords($params['from'] ?? null, $params['to'] ?? null);
+            if (isset($params['dayMin']) || isset($params['dayMax'])) $words[] = $dayWords((string) ($params['dayWord'] ?? 'Day'), $params['dayMin'] ?? null, $params['dayMax'] ?? null);
             if (! empty($params['status']) && $params['status'] !== 'all') $words[] = $params['status'] === 'done' ? 'done work only' : 'planned work only';
             if (! empty($params['invKind'])) $words[] = 'one kind of stock';
         }
 
-        return $words ? 'Filtered to ' . implode(', ', $words) : null;
+        return $words ? 'Filtered to ' . implode(' · ', $words) : null;
     }
 
     /* -------------------------- the figures ----------------------------- */
@@ -1032,10 +1061,10 @@ class CompareController extends BaseScheduleController
             $fig = [];
         }
         if ($kind === 'labor' && $fig) {
-            $fig['f']['filters'] = $this->filterWords('labor', (array) ($row->params ?? []), $r) ?? 'The whole season';
+            $fig['f']['filters'] = $this->filterWords('labor', (array) ($row->params ?? []), $r, $lots) ?? 'The whole season';
         }
         if ($kind === 'expenses' && $fig) {
-            $fig['f']['filters'] = $this->filterWords('expenses', (array) ($row->params ?? [])) ?? 'The whole season';
+            $fig['f']['filters'] = $this->filterWords('expenses', (array) ($row->params ?? []), null, $lots) ?? 'The whole season';
         }
         if ($kind === 'sofar') {
             $lid = (int) (((array) ($row->params ?? []))['lotId'] ?? 0);

@@ -841,6 +841,8 @@ class FarmReportController extends BaseScheduleController
 
         return $this->jsonOk('ok', ['data' => [
             'id' => $r->id, 'title' => $r->title, 'report' => $r->report,
+            // What the report was narrowed to, so a saved one can say so.
+            'params' => $r->params,
             'body' => $r->body,
             'credits' => (float) $r->credits, 'kind' => $r->kind,
             'mine' => (int) $r->userId === (int) Auth::id(),

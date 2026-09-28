@@ -1029,7 +1029,8 @@ const __init = () => {
         const d = DATA;
         const showUna = ((d.phases || {}).unanchored || {}).count > 0;
 
-        const workerCards = (d.perWorker || []).map((w) => `
+        // Largest pay first, as the sheet's worker rows are ordered.
+        const workerCards = [...(d.perWorker || [])].sort((x, y) => (Number(y.total) || 0) - (Number(x.total) || 0)).map((w) => `
             <div class="lr-bcard">
                 <div class="lr-bcard-top"><b>${esc(w.name)}</b><span class="lr-bcard-amt">${fmtPeso(w.total)}</span></div>
                 <div class="lr-bcard-meta">
@@ -1214,7 +1215,20 @@ const __init = () => {
         if (!row && !wk) return;
         if (row) { const v = row.getAttribute('data-lr-act'); BREAK_ACT = v === '' ? null : v; }
         if (wk) { const v = wk.getAttribute('data-lr-wk'); BREAK_WORKER = v === '' ? null : v; }
-        if (DATA) renderBreakdown(true);
+        /* Behind the sheet the list is redrawn quietly: its entrance played
+           where nobody could see it. It plays when the sheet goes away. */
+        if (DATA) { renderBreakdown(false); FRESH_ON_CLOSE = true; }
+    });
+    let FRESH_ON_CLOSE = false;
+    document.addEventListener('sm:sheet-closed', (e) => {
+        if (!e.detail || e.detail.id !== 'lrActSheet' || !FRESH_ON_CLOSE) return;
+        FRESH_ON_CLOSE = false;
+        const days = document.querySelector('#lrBreakdown .lr-days');
+        if (!days) return;
+        days.classList.remove('is-fresh');
+        void days.offsetWidth;
+        days.classList.add('is-fresh');
+        document.querySelector('#lrBreakdown .lr-type-sum')?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     });
 
     function renderAll() {
