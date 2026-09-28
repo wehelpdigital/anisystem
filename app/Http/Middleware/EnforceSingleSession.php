@@ -76,8 +76,10 @@ class EnforceSingleSession
 
             // Claim (or re-claim) the single slot when this session has no owner
             // recorded yet, or when the framework just restored us from the
-            // remember cookie — the newest arrival owns the account.
-            if (empty($stored) || Auth::viaRemember()) {
+            // remember cookie — unless the session that owns the account is
+            // still in use (see liveElsewhere): a remember cookie is not a
+            // login, and must not take the account from someone using it.
+            if (empty($stored) || (Auth::viaRemember() && ! $this->liveElsewhere($stored, $sid, (int) $user->getAuthIdentifier()))) {
                 if ($stored !== $sid) {
                     $user->forceFill(['currentSessionId' => $sid])->saveQuietly();
                 }
@@ -102,5 +104,44 @@ class EnforceSingleSession
         }
 
         return $next($request);
+    }
+
+    /**
+     * Is the session that owns the account still being used on another device?
+     *
+     * THE RACE THIS CLOSES (2026-09-28). A device that lost the account is
+     * signed out by its next request, and that response forgets its remember
+     * cookie. But a busy page (the Activities board fires a dozen requests at
+     * once) has other requests already in flight carrying the OLD cookie; the
+     * first eviction invalidates the session under them, the guard restores
+     * them from the remember cookie, and a restore used to claim the account
+     * outright. So the device that had just been signed out took the account
+     * straight back, the person actually using it was signed out instead, and
+     * the two bounced for as long as both stayed open. A stale tab left on the
+     * board did exactly that to the owner's super admin.
+     *
+     * A remember cookie now only takes over an account nobody is using: the
+     * owning session is gone, signed out, or quiet for LIVE_MINUTES. A real
+     * login (the password form, Google, signup) still always wins — those
+     * write currentSessionId themselves.
+     */
+    private const LIVE_MINUTES = 15;
+
+    private function liveElsewhere(string $stored, string $sid, int $userId): bool
+    {
+        if ($stored === $sid || config('session.driver') !== 'database') {
+            return false;   // this session, or no way to tell: the old rule
+        }
+        try {
+            $last = \Illuminate\Support\Facades\DB::connection(config('session.connection'))
+                ->table(config('session.table', 'sessions'))
+                ->where('id', $stored)
+                ->where('user_id', $userId)
+                ->value('last_activity');
+        } catch (\Throwable $e) {
+            return false;
+        }
+
+        return $last !== null && (int) $last >= now()->subMinutes(self::LIVE_MINUTES)->getTimestamp();
     }
 }
