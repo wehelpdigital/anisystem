@@ -1278,7 +1278,7 @@ const __init = () => {
         lines.push(`  Main Cropping (${DAY_TYPE} 0 onwards): ${fmtPeso(main.cost)}  (${main.count})`);
         if (una.count > 0) lines.push(`  Unanchored (no ${DAY_TYPE} 0):         ${fmtPeso(una.cost)}  (${una.count})`);
         lines.push(`Activities: ${d.totalActivities} · Assignments: ${t.totalAssignments || 0} · ${t.halfDays || 0}H / ${t.wholeDays || 0}W / ${t.naCount || 0}N`);
-        lines.push(`Covers: ${$id('laborFilterHint')?.textContent?.replace(/^Covers: /, '') || 'the whole season'}`);
+        lines.push(`Covers: ${$id('laborFilterHint')?.textContent?.replace(/^Covers:? /, '') || 'the whole season'}`);
         lines.push('');
         lines.push('BY WORKER');
         lines.push('-'.repeat(50));

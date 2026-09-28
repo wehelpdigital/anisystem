@@ -1423,6 +1423,11 @@ class CompareController extends BaseScheduleController
             if ($hideZero && (float) $a == 0 && (float) $b == 0) {
                 continue;
             }
+            // With no income on either side, net is only the spend with a
+            // minus sign: it would say Total spent again and score it twice.
+            if ($key === 'net' && (float) ($fa['m']['income'] ?? 0) == 0 && (float) ($fb['m']['income'] ?? 0) == 0) {
+                continue;
+            }
             $qtyUnit = null;
             if ($unit === 'qty') {
                 $ua = $fa['u'][$key] ?? null;
