@@ -55,6 +55,9 @@ class LandingPage
             'sub' => 'Precision agriculture on your phone: the right spray, fertilizer and water on the right day, planned around your field\'s weather. Less waste, accurate application, fewer losses, more harvest, higher income.',
             'cta' => 'Create my free account',
             'note' => 'No credit card. Free forever on Libre. Works on any phone.',
+            // Where the hero's words sit beside the phone on a wide screen: left
+            // or right (against the phone). On a phone they always read left.
+            'align' => 'right',
             // An uploaded phone screenshot in place of the board's (blank: the board).
             'image' => '',
             // The two chips that float beside the phone.

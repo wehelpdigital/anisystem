@@ -61,7 +61,7 @@
     .lp-h1.is-long { font-size: clamp(1.8rem, 4.1vw, 2.9rem); line-height: 1.08; }
     .lp-h1 em, .lp-closer h2 em { font-style: normal; background: linear-gradient(transparent 62%, #fadd6d 62%); padding: 0 .1em; }
     .lp-closer h2 em { background: linear-gradient(transparent 62%, rgb(250 221 109 / .55) 62%); }
-    .lp-sub { color: #3f4a37; font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.65; }
+    .lp-sub { color: #3f4a37; font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.65; text-wrap: pretty; }
     .lp-form { display: flex; gap: .5rem; padding: .4rem; border-radius: 1.1rem; background: #fff;
         box-shadow: 0 18px 40px -22px rgb(20 33 12 / .45), 0 0 0 1px #dcead0; max-width: 34rem; }
     .lp-form input { flex: 1 1 auto; min-width: 0; border: 0; outline: none; background: transparent; padding: .8rem .9rem;
@@ -72,6 +72,13 @@
         .lp-form button { width: 100%; }
     }
     .lp-note { display: flex; flex-wrap: wrap; gap: .35rem 1rem; margin-top: .85rem; font-size: .82rem; font-weight: 700; color: #4b5a3d; }
+    /* The hero's words set against the phone, on a screen wide enough to have
+       the two side by side; stacked on a phone they read from the left. */
+    @media (min-width: 1024px) {
+        .lp-copy.is-right { text-align: right; }
+        .lp-copy.is-right .lp-sub, .lp-copy.is-right .lp-form { margin-left: auto; }
+        .lp-copy.is-right .lp-note { justify-content: flex-end; }
+    }
     .lp-note span { display: inline-flex; align-items: center; gap: .35rem; }
     .lp-note svg { width: 1rem; height: 1rem; color: #4a7c2a; }
     /* The hero's phone, and what floats beside it. */
@@ -225,7 +232,7 @@
             {{-- The brand, and nothing to click away to. --}}
             <span class="lp-logo"><img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" width="220" height="44"></span>
             <div class="grid lg:grid-cols-[1.1fr_1fr] gap-8 lg:gap-12 items-center mt-8 sm:mt-10">
-                <div class="animate-fade-up">
+                <div class="lp-copy animate-fade-up {{ ($lp['hero']['align'] ?? 'left') === 'right' ? 'is-right' : '' }}">
                     <span class="lp-kicker"><i aria-hidden="true"></i>{{ $lp['hero']['kicker'] }}</span>
                     <h1 class="lp-h1 mt-5 {{ mb_strlen($lp['hero']['headline']) > 70 ? 'is-long' : '' }}">{!! $mark($lp['hero']['headline']) !!}</h1>
                     <p class="lp-sub mt-5 max-w-xl">{{ $lp['hero']['sub'] }}</p>
