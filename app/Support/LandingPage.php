@@ -78,7 +78,7 @@ class LandingPage
         // diseases it brings (the owner, 2026-09-30). Photo left, words right.
         'problem' => [
             'kicker' => 'The weather changed',
-            'headline' => 'Weather you cannot predict brings pests and diseases you did not plan for',
+            'headline' => 'Weather you cannot predict brings pests, diseases and lodging you did not plan for',
             // An uploaded photo in place of the paddies under a grey sky (blank: that one).
             'image' => '',
             'bullets' => [
@@ -91,7 +91,7 @@ class LandingPage
             // One short line each, about 36 characters: they never wrap.
             'fixes' => [
                 'Analysis on when is the best time to plant',
-                'Pests to watch at every stage',
+                'Quickly ask Anee what to use to control the pests effectively',
                 'Anee checks a sick leaf in minutes',
             ],
             'solutionKicker' => 'How it works',

@@ -99,6 +99,9 @@
     .lp-problems { background: #fff; }
     .lp-row2 { display: grid; gap: 2.25rem; align-items: center; }
     .lp-row2 .lp-photo { aspect-ratio: 4 / 3; }
+    /* A grid column may shrink below its longest unbroken line, or a one-line
+       tick stretches the whole row past the phone's edge. */
+    .lp-row2 > * { min-width: 0; }
     @media (min-width: 1024px) {
         .lp-row2 { grid-template-columns: 1fr 1fr; gap: 3.5rem; }
         .lp-row2.is-flip > .lp-photo { order: 2; }
@@ -109,7 +112,8 @@
     .lp-fixes .fx-list { margin-top: .55rem; }
     /* One line each, never two (the owner, 2026-09-30): the words are kept
        short, and a longer one from the editor ends in an ellipsis. */
-    .lp-fixes .fx-list li { align-items: center; }
+    .lp-fixes .fx-list { grid-template-columns: minmax(0, 1fr); }
+    .lp-fixes .fx-list li { align-items: center; min-width: 0; }
     .lp-fixes .fx-list li span { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .lp-fixes .fx-list li svg { margin-top: 0; }
     @media (max-width: 400px) { .lp-fixes .fx-list li { font-size: .9rem; } }
