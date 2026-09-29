@@ -904,6 +904,104 @@
             background: #92400e; box-shadow: 0 12px 30px rgb(0 0 0 / .3);
             animation: app-pop-in .24s cubic-bezier(.22,1,.36,1) both; }
         .cr-hint > span { min-width: 0; white-space: nowrap; }
+        .cr-hint.is-dd { background: #3d6823; }
+        .cr-hint.is-dd button { color: #d9f99d; }
+
+        /* ===== Date Diff on the board (2026-09-29) =====
+           The arrows after a date, and the sheet of what lies between two. */
+        .dd-btn { flex: none; width: 1.6rem; height: 1.6rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center;
+            color: var(--tl-text-faint, #6b7280); background: rgb(255 255 255 / .55); border: 1px dashed currentColor; cursor: pointer;
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+        .dd-btn svg { width: .85rem; height: .85rem; }
+        .dd-btn:hover { color: #2f5219; background: #fff; }
+        .dd-btn.is-picked { color: #fff; background: #3d6823; border: 1px solid #3d6823; transform: scale(1.08);
+            box-shadow: 0 0 0 3px rgb(61 104 35 / .25); animation: ddPulse 1.6s ease-in-out infinite; }
+        @keyframes ddPulse { 0%, 100% { box-shadow: 0 0 0 3px rgb(61 104 35 / .25); } 50% { box-shadow: 0 0 0 6px rgb(61 104 35 / .08); } }
+        html.dark .dd-btn { background: rgb(255 255 255 / .06); color: #a5b89a; }
+        html.dark .dd-btn.is-picked { background: #6b9f3d; border-color: #6b9f3d; color: #fff; }
+        .dd-body { display: grid; gap: .8rem; }
+        .dd-hero { border-radius: 1rem; padding: 1rem 1.1rem; color: #fff; background: linear-gradient(130deg, #4a7c2a, #2d5016 75%); }
+        .dd-hero-n { display: flex; align-items: baseline; gap: .5rem; }
+        .dd-hero-n b { font-size: 2.6rem; line-height: 1; font-weight: 900; font-variant-numeric: tabular-nums; }
+        .dd-hero-n span { font-size: .95rem; font-weight: 700; opacity: .92; }
+        .dd-hero-when { margin-top: .35rem; font-size: .84rem; font-weight: 700; opacity: .95; }
+        .dd-hero-when span { opacity: .7; margin: 0 .2rem; }
+        .dd-chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
+        .dd-chip { font-size: .72rem; font-weight: 700; padding: .2rem .6rem; border-radius: 999px; background: rgb(255 255 255 / .18); }
+        .dd-chip b { font-weight: 900; }
+        .dd-chip.is-today { background: #fde68a; color: #713f12; }
+        .dd-figs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+        @media (min-width: 560px) { .dd-figs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+        .dd-fig { border: 1px solid var(--tl-border, #e5e7eb); border-radius: .85rem; padding: .55rem .7rem; background: var(--tl-surface, #fff); min-width: 0; }
+        .dd-fig small { display: block; font-size: .64rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--tl-text-faint, #6b7280); }
+        .dd-fig b { display: block; font-size: 1.3rem; font-weight: 900; color: var(--tl-text, #111827); font-variant-numeric: tabular-nums; line-height: 1.2; }
+        .dd-fig span { display: block; font-size: .7rem; color: var(--tl-text-faint, #6b7280); line-height: 1.3; }
+        .dd-card { border: 1px solid var(--tl-border, #e5e7eb); border-radius: 1rem; padding: .85rem .9rem; background: var(--tl-surface, #fff); }
+        .dd-card h4 { font-family: var(--font-heading); font-size: .92rem; font-weight: 800; color: var(--tl-text, #111827); margin-bottom: .55rem; }
+        .dd-axis { display: flex; justify-content: space-between; margin-left: 30%; font-size: .66rem; font-weight: 800; color: var(--tl-text-faint, #6b7280); margin-bottom: .1rem; }
+        .dd-lane { display: grid; grid-template-columns: 30% minmax(0, 1fr); align-items: center; gap: .5rem; padding: .35rem 0; }
+        .dd-lane + .dd-lane { border-top: 1px dashed var(--tl-border, #e5e7eb); }
+        .dd-lane-h { min-width: 0; }
+        .dd-lane-h b { display: block; font-size: .78rem; color: var(--tl-text, #111827); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .dd-lane-h small { display: block; font-size: .64rem; line-height: 1.3; color: var(--tl-text-faint, #6b7280); }
+        .dd-track { position: relative; height: 2.1rem; margin: 0 .45rem; }
+        .dd-track::before { content: ''; position: absolute; left: 0; right: 0; top: 1.35rem; height: 2px; border-radius: 2px; background: var(--tl-border, #e5e7eb); }
+        .dd-dot { position: absolute; top: 1.35rem; width: .8rem; height: .8rem; margin: -.34rem 0 0 -.4rem; border-radius: 999px;
+            box-shadow: 0 0 0 2px var(--tl-surface, #fff); }
+        .dd-dot.is-many { box-shadow: 0 0 0 2px var(--tl-surface, #fff), 0 0 0 3.5px currentColor; color: var(--tl-text-faint, #9ca3af); }
+        .dd-gap { position: absolute; top: .05rem; transform: translateX(-50%); font-size: .62rem; font-weight: 800; color: var(--tl-text-faint, #6b7280); white-space: nowrap; }
+        .dd-today { position: absolute; top: .6rem; bottom: 0; width: 2px; margin-left: -1px; background: #f59e0b; border-radius: 2px; }
+        .dd-legend { display: flex; flex-wrap: wrap; gap: .3rem .8rem; margin-top: .55rem; font-size: .7rem; color: var(--tl-text-faint, #6b7280); }
+        .dd-legend i { display: inline-block; width: .6rem; height: .6rem; border-radius: 999px; margin-right: .3rem; vertical-align: -1px; }
+        .dd-legend i.is-today { width: 2px; height: .8rem; border-radius: 2px; background: #f59e0b; vertical-align: -2px; }
+        .dd-cap { margin-top: .45rem; font-size: .7rem; line-height: 1.45; color: var(--tl-text-faint, #6b7280); }
+        .dd-none { font-size: .82rem; color: var(--tl-text-faint, #6b7280); padding: .2rem 0; }
+        .dd-kind + .dd-kind { margin-top: .6rem; padding-top: .6rem; border-top: 1px solid var(--tl-border, #e5e7eb); }
+        .dd-kind-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .45rem; margin-bottom: .15rem; }
+        .dd-kind-h i { display: inline-block; width: .7rem; height: .7rem; border-radius: 999px; align-self: center; }
+        .dd-kind-h b { font-size: .82rem; color: var(--tl-text, #111827); }
+        .dd-kind-h small { font-size: .7rem; color: var(--tl-text-faint, #6b7280); }
+        .dd-bar + .dd-bar { margin-top: .4rem; }
+        .dd-bar-h { display: flex; justify-content: space-between; gap: .5rem; font-size: .76rem; }
+        .dd-bar-h b { color: var(--tl-text, #111827); font-weight: 700; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .dd-bar-h small { color: var(--tl-text-faint, #6b7280); font-weight: 800; font-variant-numeric: tabular-nums; }
+        .dd-bar-t { display: block; height: 8px; border-radius: 999px; background: var(--tl-border, #eef0f2); overflow: hidden; margin-top: .2rem; }
+        .dd-bar-t i { display: block; height: 100%; border-radius: 999px; }
+        .dd-day-h { display: flex; align-items: baseline; gap: .45rem; margin-bottom: .25rem; }
+        .dd-day-h b { font-size: .8rem; color: var(--tl-text, #111827); }
+        .dd-day-h small { font-size: .68rem; font-weight: 800; color: var(--tl-text-faint, #6b7280); }
+        .dd-item { display: flex; gap: .5rem; align-items: flex-start; padding: .3rem 0 .3rem .15rem; }
+        .dd-item > i { flex: none; width: .55rem; height: .55rem; border-radius: 999px; margin-top: .35rem; }
+        .dd-item b { display: block; font-size: .8rem; font-weight: 700; color: var(--tl-text, #111827); }
+        .dd-item small { display: block; font-size: .68rem; color: var(--tl-text-faint, #6b7280); }
+        .dd-item.is-done b { text-decoration: line-through; text-decoration-color: rgb(0 0 0 / .3); }
+        .dd-sep { position: relative; text-align: center; margin: .35rem 0; }
+        .dd-sep::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; border-top: 1px dashed var(--tl-border, #e5e7eb); }
+        .dd-sep span { position: relative; font-size: .64rem; font-weight: 800; letter-spacing: .03em; color: var(--tl-text-faint, #6b7280);
+            background: var(--tl-surface, #fff); padding: 0 .5rem; }
+        /* A phone's first header line is full (the date, the count, + and the
+           kebab; measured, the arrows beside the date cut "Aug 17, 26" at
+           360px and dropped every kebab at 340). So on a phone they lead the
+           second line instead, straight under the date, before the growth
+           stage and the day's cost (order 91 sorts after the row break's 90
+           and, by the markup, ahead of the pills that share 91). */
+        @media (max-width: 767px) {
+            .dd-btn { order: 91; width: 1.5rem; height: 1.5rem; }
+            .dd-btn svg { width: .78rem; height: .78rem; }
+            /* A day with nothing on its second line (no stage, no cost, no
+               forecast) has no row break, and the arrows would fall back onto
+               the first line and squeeze the date. The header's own ::after
+               stands in for the break there. */
+            .date-header:has(> .dd-btn):not(:has(> .dh-rowbreak))::after {
+                content: ''; order: 90; flex-basis: 100%; height: 0; margin: 0; }
+        }
+        /* On a phone a lane is its name over a full-width line, so the days
+           have the room to stand apart. */
+        @media (max-width: 559px) {
+            .dd-lane { grid-template-columns: minmax(0, 1fr); gap: .15rem; }
+            .dd-axis { margin-left: 0; padding: 0 .45rem; }
+        }
+        @media (prefers-reduced-motion: reduce) { .dd-btn { transition: none; } .dd-btn.is-picked { animation: none; transform: none; } }
         .cr-hint svg { width: 1.05rem; height: 1.05rem; flex: none; }
         .cr-hint button { flex: none; margin-left: .2rem; color: #fde68a; font-weight: 800; text-decoration: underline; cursor: pointer; }
         @media (prefers-reduced-motion: reduce) {
@@ -4466,6 +4564,11 @@
                                     &rarr; {{ $latestEndCarbon->format('M j') }}@if($latestEndCarbon->year !== $dateCarbon->year), {{ $latestEndCarbon->year }}@endif ({{ $groupSpanDays }}d)
                                 </span>
                             @endif
+                            {{-- Date Diff on the board (2026-09-29): tap here, then on
+                                 another day, and the stretch between opens in a
+                                 sheet. Twin of the JS renderer's; wired in
+                                 activities-js (DATE DIFF). --}}
+                            <button type="button" class="dd-btn" data-dd-date="{{ $dateKey }}" title="Date Diff: measure from this day to another" aria-label="Date Diff from this day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg></button>
                         @else
                             <span class="date-header-date">No date</span>
                         @endif
@@ -5324,7 +5427,7 @@
             // (dx-* — see the expense/income blocks in activities-js). The
             // figures stay; the handles on them do not.
             '.dx-kebab', '.dx-grip', '.dx-menu', '.dx-actions', '.dx-btn', '.dx-edit', '.dx-del',
-            '.inline-note-grip',
+            '.inline-note-grip', '.dd-btn',
         ].join(',');
 
         /* Which lots this plan actually uses, read off the board's own tags so

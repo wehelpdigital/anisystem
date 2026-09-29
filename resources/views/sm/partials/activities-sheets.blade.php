@@ -1635,6 +1635,20 @@
     </div>
 </div>
 
+{{-- Date Diff: the stretch between two days, drawn (activities-js, DATE
+     DIFF). Closing it, however, lets both days go. --}}
+<div class="sheet hidden" id="dateDiffSheet" style="--sheet-width:34rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title truncate" id="dateDiffTitle">Between the dates</h3>
+        <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dd-body" id="dateDiffBody"></div>
+    <div class="sheet-footer">
+        <button type="button" class="btn btn-primary w-full" id="dateDiffDone">Done</button>
+    </div>
+</div>
+
 <div class="sheet hidden" id="dayCashSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
