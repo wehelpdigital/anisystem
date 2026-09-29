@@ -96,6 +96,20 @@
     /* The problem rows: photo and words side by side, the photo's side
        alternating (is-flip puts it on the right). White, so the hero's arc
        runs straight into it. */
+    /* The current reality: sourced figures, three to a row on a desk. */
+    .lp-reality { background: #fff; }
+    .lp-stats { display: grid; gap: 1rem; }
+    @media (min-width: 560px) { .lp-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 1024px) { .lp-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.15rem; } }
+    .lp-stat { position: relative; padding: 1.3rem 1.25rem 1.15rem 1.5rem; border-radius: 1.25rem; background: #fcfaf6;
+        border: 1px solid #efe6d8; overflow: hidden; }
+    .lp-stat::before { content: ''; position: absolute; inset: 0 auto 0 0; width: .3rem; background: linear-gradient(180deg, #f59e0b, #b45309); }
+    .lp-stat-n { font-family: var(--font-heading); font-weight: 900; font-size: clamp(2.1rem, 4vw, 2.6rem); line-height: 1;
+        color: #9a3412; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+    .lp-stat-l { margin-top: .5rem; font-weight: 800; color: #14210c; font-size: 1rem; line-height: 1.35; }
+    .lp-stat-t { margin-top: .3rem; font-size: .88rem; color: #57534e; line-height: 1.5; }
+    .lp-stat-s { margin-top: .7rem; font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #a8a29e; }
+    .lp-stats-note { margin-top: 1rem; text-align: center; font-size: .78rem; color: #a8a29e; line-height: 1.5; }
     .lp-problems { background: #fff; }
     /* The title over the three problem rows. */
     .lp-problems-h { font-family: var(--font-heading); font-weight: 800; color: #14210c; letter-spacing: -.02em; line-height: 1.15;
@@ -292,6 +306,32 @@
         ];
         $rowPhoto = fn (?string $upload, string $key) => \App\Support\LandingPage::imageUrl($upload, 'lp/' . (isset($photoAlts[$key]) ? $key : 'storm') . '.webp');
     @endphp
+    {{-- ================= The current reality of Filipino farming =================
+         Sourced figures, above the problem rows. The Philippine page only:
+         the international one speaks to farmers anywhere. --}}
+    @if (\App\Support\Region::ph() && ! empty($lp['reality']['items']))
+        <section class="lp-reality">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14">
+                <div class="max-w-3xl mx-auto text-center reveal">
+                    @if (trim($lp['reality']['kicker']) !== '')<span class="fx-kicker">{{ $lp['reality']['kicker'] }}</span>@endif
+                    <h2 class="fx-h text-balance">{{ $lp['reality']['headline'] }}</h2>
+                    @if (trim($lp['reality']['sub']) !== '')<p class="fx-p">{{ $lp['reality']['sub'] }}</p>@endif
+                </div>
+                <div class="lp-stats mt-9">
+                    @foreach ($lp['reality']['items'] as $i => $st)
+                        <div class="lp-stat reveal" style="--reveal-delay: {{ ($i % 3) * 0.07 }}s">
+                            <p class="lp-stat-n">{{ $st['figure'] }}</p>
+                            <p class="lp-stat-l">{{ $st['label'] }}</p>
+                            @if (trim($st['text']) !== '')<p class="lp-stat-t">{{ $st['text'] }}</p>@endif
+                            @if (trim($st['source']) !== '')<p class="lp-stat-s">Source: {{ $st['source'] }}</p>@endif
+                        </div>
+                    @endforeach
+                </div>
+                @if (trim($lp['reality']['note']) !== '')<p class="lp-stats-note reveal">{{ $lp['reality']['note'] }}</p>@endif
+            </div>
+        </section>
+    @endif
+
     <section class="lp-problems overflow-x-clip">
         @if (trim($lp['problem']['sectionTitle'] ?? '') !== '')
             <div class="max-w-3xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 text-center reveal">
