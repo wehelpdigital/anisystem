@@ -78,7 +78,7 @@ class LandingPage
         // diseases it brings (the owner, 2026-09-30). Photo left, words right.
         'problem' => [
             'kicker' => 'The weather changed',
-            'headline' => 'Weather you cannot predict brings pests, diseases and lodging you did not plan for',
+            'headline' => 'Unpredictable weather that brings pests, diseases, and lodging',
             // An uploaded photo in place of the paddies under a grey sky (blank: that one).
             'image' => '',
             'bullets' => [
