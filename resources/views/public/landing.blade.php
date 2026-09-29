@@ -93,11 +93,20 @@
     .lp-float.f2 { bottom: 16%; right: max(0px, calc(50% - 270px)); animation-delay: -3s; }
     @keyframes lpFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
     @media (max-width: 480px) { .lp-float.f1 { left: 0; top: 10%; } .lp-float.f2 { right: 0; bottom: 10%; } }
-    /* Proof strip */
-    .lp-proof { border-block: 1px solid #edf2e7; background: #fff; }
-    .lp-proof-row { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem 1.6rem; }
-    .lp-proof-row span { display: inline-flex; align-items: center; gap: .45rem; font-size: .88rem; font-weight: 700; color: #3f4a37; }
-    .lp-proof-row svg { width: 1.05rem; height: 1.05rem; color: #4a7c2a; }
+    /* The problem rows: photo and words side by side, the photo's side
+       alternating (is-flip puts it on the right). White, so the hero's arc
+       runs straight into it. */
+    .lp-problems { background: #fff; }
+    .lp-row2 { display: grid; gap: 2.25rem; align-items: center; }
+    .lp-row2 .lp-photo { aspect-ratio: 4 / 3; }
+    @media (min-width: 1024px) {
+        .lp-row2 { grid-template-columns: 1fr 1fr; gap: 3.5rem; }
+        .lp-row2.is-flip > .lp-photo { order: 2; }
+    }
+    /* How anee.io helps: a green card of ticks under each problem. */
+    .lp-fixes { margin-top: 1.4rem; padding: 1rem 1.1rem 1.05rem; border-radius: 1.1rem; background: #f3f8ec; border: 1px solid #dcead0; }
+    .lp-fixes-h { font-size: .74rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #3d6823; }
+    .lp-fixes .fx-list { margin-top: .55rem; }
     /* Problem */
     .lp-pain { display: grid; gap: .7rem; }
     .lp-pain li { display: flex; gap: .75rem; align-items: flex-start; padding: .85rem 1rem; border-radius: 1rem;
@@ -263,27 +272,25 @@
         </div>
     </section>
 
-    {{-- ================= 2. PROOF ================= --}}
-    <section class="lp-proof">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
-            <p class="text-center text-xs font-extrabold uppercase tracking-wider text-gray-500">{{ $lp['proof']['lead'] }}</p>
-            <div class="lp-proof-row mt-3">
-                @foreach ($lp['proof']['items'] as $item)
-                    <span>{!! $check !!}{{ $item }}</span>
-                @endforeach
-            </div>
-            @if (($lp['proof']['stats'] ?? 'show') !== 'hide' && ($stats['activities'] ?? '—') !== '—')
-                <p class="mt-3 text-center text-sm text-gray-500"><b class="text-gray-800">{{ $stats['activities'] }}</b> farm activities planned so far, across <b class="text-gray-800">{{ $stats['seasons'] }}</b> seasons.</p>
-            @endif
-        </div>
-    </section>
-
-    {{-- ================= 3. THE PROBLEM: weather and costs ================= --}}
-    <section class="py-16 sm:py-24">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
-                <div class="lp-photo reveal" style="aspect-ratio: 4 / 3">
-                    <img src="{{ \App\Support\LandingPage::imageUrl($lp['problem']['image'], 'lp/sacks.webp') }}" alt="A farmer in his fertilizer shed, trying to work out his notebook" width="1400" height="1046" loading="lazy">
+    {{-- ================= 2. THE PROBLEM: the weather, then fuel, then fertilizer =================
+         Photo and words side by side, the photo's side alternating: the
+         weather's on the left, fuel's on the right, fertilizer's on the left.
+         Each row says what goes wrong, then how anee.io helps. --}}
+    @php
+        $photoAlts = [
+            'storm' => 'Freshly transplanted paddies under a grey, rainy sky',
+            'tractor' => 'A farmer plowing a flooded paddy with a diesel hand tractor',
+            'sacks' => 'A farmer among the fertilizer sacks in his shed, working out his notebook',
+            'palay-phone' => 'A farmer checking anee.io on his phone among ripening palay',
+            'anee-chat-hand' => 'Anee answering a photo of a rice field, on a farmer\'s phone in the field',
+        ];
+        $rowPhoto = fn (?string $upload, string $key) => \App\Support\LandingPage::imageUrl($upload, 'lp/' . (isset($photoAlts[$key]) ? $key : 'storm') . '.webp');
+    @endphp
+    <section class="lp-problems overflow-x-clip">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-16 sm:pt-14 sm:pb-24 space-y-20 sm:space-y-28">
+            <div class="lp-row2">
+                <div class="lp-photo reveal">
+                    <img src="{{ $rowPhoto($lp['problem']['image'], 'storm') }}" alt="{{ $photoAlts['storm'] }}" width="1400" height="1050" loading="lazy">
                 </div>
                 <div class="reveal">
                     <span class="fx-kicker">{{ $lp['problem']['kicker'] }}</span>
@@ -293,8 +300,42 @@
                             <li><b aria-hidden="true">✕</b><span>{{ $b }}</span></li>
                         @endforeach
                     </ul>
+                    @if (! empty($lp['problem']['fixes']))
+                        <div class="lp-fixes">
+                            <p class="lp-fixes-h">{{ $lp['costs']['helpsLabel'] }}</p>
+                            <ul class="fx-list">
+                                @foreach ($lp['problem']['fixes'] as $f)
+                                    <li>{!! $check !!}<span>{{ $f }}</span></li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
             </div>
+
+            @foreach ($lp['costs']['items'] as $i => $c)
+                @php $key = $c['image'] ?: 'tractor'; @endphp
+                <div class="lp-row2 {{ $i % 2 === 0 ? 'is-flip' : '' }}">
+                    <div class="lp-photo reveal">
+                        <img src="{{ $rowPhoto($c['upload'] ?? '', $key) }}" alt="{{ $photoAlts[$key] ?? $c['headline'] }}" width="1400" height="1050" loading="lazy">
+                    </div>
+                    <div class="reveal">
+                        <span class="fx-kicker">{{ $c['kicker'] }}</span>
+                        <h2 class="fx-h">{{ $c['headline'] }}</h2>
+                        @if (trim($c['text']) !== '')<p class="fx-p">{{ $c['text'] }}</p>@endif
+                        @if (! empty($c['fixes']))
+                            <div class="lp-fixes">
+                                <p class="lp-fixes-h">{{ $lp['costs']['helpsLabel'] }}</p>
+                                <ul class="fx-list">
+                                    @foreach ($c['fixes'] as $f)
+                                        <li>{!! $check !!}<span>{{ $f }}</span></li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
         </div>
     </section>
 

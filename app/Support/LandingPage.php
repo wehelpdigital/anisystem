@@ -37,10 +37,14 @@ class LandingPage
     /** The built-in pictures a pillar may show (files in public/images/site/lp). */
     public const SHOTS = ['board', 'growth', 'weather', 'hub', 'report-top', 'report-money', 'datediff', 'anee-chat-hand'];
 
+    /** The built-in photos a cost row may show (files in public/images/site/lp). */
+    public const PHOTOS = ['tractor', 'sacks', 'storm', 'palay-phone', 'anee-chat-hand'];
+
     /*
-     * The argument, top to bottom (the owner, 2026-09-29): precision
-     * agriculture; a bigger harvest despite weather nobody can predict and
-     * costs that keep climbing; and every tool a farm needs, in one app.
+     * The argument, top to bottom (the owner, 2026-09-29/30): a bigger yield
+     * despite weather nobody can predict (and the pests it brings), fuel and
+     * fertilizer that keep climbing; precision agriculture as the answer; and
+     * every tool a farm needs, in one app.
      * Wrap words of a headline in *stars* to mark them.
      */
     public const DEFAULTS = [
@@ -66,22 +70,24 @@ class LandingPage
                 ['icon' => '🌧️', 'title' => 'Rain likely from 1 PM', 'sub' => 'The forecast for Lot A'],
             ],
         ],
-        'proof' => [
-            'lead' => 'Precision agriculture, made for the {farmers}\' field',
-            'items' => ['{crops} crops, each with its own growth calendar', 'The forecast for your own field', 'Every peso counted, lot by lot', 'Anee, your AI farm technician'],
-            // The live line under it ("430+ farm activities planned so far"): show or hide.
-            'stats' => 'show',
-        ],
+        // The first thing no farmer controls: the weather, and the pests and
+        // diseases it brings (the owner, 2026-09-30). Photo left, words right.
         'problem' => [
-            'kicker' => 'Farming got harder',
-            'headline' => 'Weather you cannot predict. Costs that keep climbing.',
-            // An uploaded photo in place of the farmer among the sacks (blank: that one).
+            'kicker' => 'The weather changed',
+            'headline' => 'Weather you cannot predict brings pests and diseases you did not plan for',
+            // An uploaded photo in place of the paddies under a grey sky (blank: that one).
             'image' => '',
             'bullets' => [
                 'Rain the day after you spray washes the chemical, and the money, off the field.',
-                'Fertilizer and pesticide cost more every season, so every wasted bag eats the profit.',
-                'A week late, and the pest, the weed or the missed stage has already taken its share of the harvest.',
-                'El Niño dry spells and La Niña floods move the planting window, and habit misses it.',
+                'Warm, wet weeks bring blast, sheath blight and bacterial leaf blight faster than you can react.',
+                'A long dry spell, then the first heavy rains, and the armyworms arrive all at once.',
+                'El Niño and La Niña move the planting window, and habit misses it.',
+            ],
+            // What anee.io does about it (a green tick each), under the costs' label.
+            'fixes' => [
+                'The forecast for each lot, by the hour, so you spray before the rain, not into it',
+                'The pests and diseases to watch for at every growth stage',
+                'Anee reads a photo of a sick leaf in minutes, before it spreads',
             ],
             'solutionKicker' => 'How it works',
             'solutionHeadline' => 'Start in two minutes, in three steps',
@@ -89,6 +95,35 @@ class LandingPage
                 ['title' => 'Add your lot and your crop', 'text' => 'Pick from {crops} crops and set the sowing or transplant date. Two minutes.'],
                 ['title' => 'Follow the plan, day by day', 'text' => 'Every task on its day, with the stage it falls in and the weather for your field.'],
                 ['title' => 'Record it, and see what paid', 'text' => 'Tick the work done; the costs, the harvest and the profit add up by themselves.'],
+            ],
+        ],
+        // The two costs that keep climbing, one row each after the weather:
+        // the first with its picture on the right, the next on the left.
+        'costs' => [
+            'helpsLabel' => 'How anee.io helps',
+            'items' => [
+                [
+                    'kicker' => 'Fuel keeps going up',
+                    'headline' => 'Every trip to the field burns more money than last season',
+                    'text' => 'The hand tractor, the water pump, the sprayer and the ride to town all run on fuel, and fuel keeps getting dearer. A job done twice, or on the wrong day, burns it twice.',
+                    'fixes' => [
+                        'Each job planned for the day it works, so the tractor and the sprayer go out once',
+                        'Water on the stages that need it, and the forecast rain doing the rest',
+                        'Fuel bought, used and left in the inventory, and every trip\'s cost on its day',
+                    ],
+                    'image' => 'tractor', 'upload' => '',
+                ],
+                [
+                    'kicker' => 'Fertilizer keeps going up',
+                    'headline' => 'A sack costs more every season. Make every sack count.',
+                    'text' => 'Urea and complete fertilizer cost more each planting. Put on at the wrong stage, a sack is paid for in full and only partly taken up by the crop.',
+                    'fixes' => [
+                        'Each application on the stage the crop takes it up, by DAS or DAT',
+                        'Rates set per lot in your protocol and drawn from the inventory, so no bag is bought twice',
+                        'Anee checks a leaf photo first: is it hunger, a pest or a disease, before you buy another sack',
+                    ],
+                    'image' => 'sacks', 'upload' => '',
+                ],
             ],
         ],
         // What guessing costs a hectare: the home page's own "up to" figures.

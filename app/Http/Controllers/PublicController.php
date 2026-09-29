@@ -28,9 +28,10 @@ class PublicController extends Controller
     {
         \App\Support\SignupSource::remember($request);
 
+        // No live counts any more: the proof strip that showed them was taken
+        // off the page (2026-09-30).
         return view('public.landing', [
             'lp' => \App\Support\LandingPage::content(),
-            'stats' => $this->liveStats(),
         ]);
     }
 
