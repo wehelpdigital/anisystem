@@ -57,22 +57,41 @@ final class Seo
         return self::publicIndexable() && self::isPublicPage($request) ? 'index, follow' : 'noindex, nofollow';
     }
 
+    /** Behind the login, or a door of its own: closed to every crawler. */
+    private const CLOSED = ['/app/', '/admin/', '/account', '/purchase', '/notifications', '/login', '/signup', '/auth/',
+        '/forgot-password', '/reset-password', '/verify-email', '/verify-notice', '/pw/', '/s/', '/worker-invite/',
+        '/ads/', '/storage/', '/broadcasting/', '/blog-preview', '/deploy-check', '/up'];
+
+    /**
+     * Facebook's own fetchers. They index nothing: they read a page to draw
+     * a shared link's preview, to review an ad's destination, and to check
+     * the domain-verification tag. Shut out with everyone else while the
+     * switch is off, the domain could not be verified ("blocked by
+     * robots.txt", 2026-09-29), so they may always read the public site.
+     */
+    private const LINK_READERS = ['facebookexternalhit', 'Facebot'];
+
     /** The body of robots.txt for the switch as it stands. */
     public static function robotsTxt(): string
     {
-        if (! self::publicIndexable()) {
-            return "User-agent: *\nDisallow: /\n";
-        }
+        $group = function (string $agent, bool $open): string {
+            $lines = ['User-agent: ' . $agent];
+            if (! $open) {
+                $lines[] = 'Disallow: /';
+            } else {
+                foreach (self::CLOSED as $path) {
+                    $lines[] = 'Disallow: ' . $path;
+                }
+                $lines[] = 'Allow: /';
+            }
 
-        $closed = ['/app/', '/admin/', '/account', '/purchase', '/notifications', '/login', '/signup', '/auth/',
-            '/forgot-password', '/reset-password', '/verify-email', '/verify-notice', '/pw/', '/s/', '/worker-invite/',
-            '/ads/', '/storage/', '/broadcasting/', '/blog-preview', '/deploy-check', '/up'];
-        $lines = ['User-agent: *'];
-        foreach ($closed as $path) {
-            $lines[] = 'Disallow: ' . $path;
-        }
-        $lines[] = 'Allow: /';
+            return implode("\n", $lines);
+        };
 
-        return implode("\n", $lines) . "\n";
+        // A crawler follows the group that names it, never the * group too.
+        $groups = array_map(fn ($agent) => $group($agent, true), self::LINK_READERS);
+        $groups[] = $group('*', self::publicIndexable());
+
+        return implode("\n\n", $groups) . "\n";
     }
 }
