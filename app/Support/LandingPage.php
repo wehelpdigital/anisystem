@@ -137,7 +137,7 @@ class LandingPage
         // hectare in pesos (shown on the Philippine page; the other page shows
         // the percentage of a hectare's gross instead).
         'losses' => [
-            'headline' => 'What guessing costs a hectare',
+            'headline' => 'What might be happening to your farm now',
             'sub' => 'Deciding without accuracy, and without a solution you can be sure of, costs you your yield security.',
             'items' => [
                 ['n' => 40, 'title' => 'Yield lost to pests and diseases', 'text' => 'When the intervention comes late, or never comes at all.', 'peso' => '₱25,000–₱40,000', 'image' => 'palay-heads', 'upload' => ''],
