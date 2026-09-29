@@ -4,6 +4,9 @@
 @section('page-title', $protocol['title'])
 @section('page-subtitle', ($protocol['cropLabel'] ?: 'No crop yet') . ' · ' . ($options['dayTypes'][$protocol['dayType']]['label'] ?? $protocol['dayType']))
 @section('back', \App\Support\BackTo::key() === 'tags' ? route('tags.global') : \App\Support\BackTo::carry(route('pb.page')))
+{{-- An open protocol is a workspace: on a phone the app's bottom bar steps
+     aside (the owner's ask, 2026-09-29), as it does in the chat. --}}
+@section('body-class', 'hide-tabbar')
 
 @push('head')
 <style>
@@ -61,6 +64,15 @@
     .pb-tool svg { width: 1rem; height: 1rem; }
     .pb-tool-w { display: none; }
     @media (max-width: 479px) { .pb-tools { gap: .3rem; padding: .4rem .4rem; } .pb-tool { padding: .42rem .45rem; gap: .25rem; } }
+    /* Stuck under the header on a phone, the bar runs edge to edge (the
+       owner's ask, 2026-09-29): the page's gutter is given back as its own
+       padding, so the buttons stay where they were. */
+    .pb-tools { transition: margin .28s cubic-bezier(.22,1,.36,1), padding .28s cubic-bezier(.22,1,.36,1), border-radius .28s cubic-bezier(.22,1,.36,1); }
+    @media (max-width: 639px) {
+        .pb-tools.is-stuck { margin-inline: -1rem; padding-inline: 1rem; border-radius: 0; border-left-color: transparent; border-right-color: transparent; border-top-color: transparent;
+            box-shadow: 0 6px 14px -10px rgba(15,23,42,.35); }
+    }
+    @media (prefers-reduced-motion: reduce) { .pb-tools { transition: none; } }
     @media (min-width: 480px) { .pb-tool-w { display: inline; } }
     .pb-tool.is-div { color: #92400e; border-color: #fcd34d; }
     .pb-tool.is-div:not(:disabled):hover { background: #fffbeb; border-color: #f59e0b; }
@@ -429,6 +441,7 @@
     .pba-del:hover { color: #b91c1c; background: #fdecec; }
     .pba-del svg { width: .95rem; height: .95rem; }
     .pba-more { font-size: .76rem; font-weight: 800; color: #3d6823; padding: .35rem .2rem 0; }
+    #rvBody .pb-review { margin-bottom: 0; }
     #pbPanelAn .rx-empty { margin-top: .6rem; }
     html.dark .pba-h-t b, html.dark .pba-t b { color: #e8efe1; }
     html.dark .pba-row { background: #151b12; border-color: #2b3a1c; }
@@ -526,6 +539,7 @@
 @endpush
 
 @section('content')
+@include('sm.partials.report-view')
 <div class="max-w-2xl mx-auto pb-page" id="pbPage">
     <div class="card pb-head">
         <div class="pb-head-row">
@@ -565,6 +579,7 @@
         <button type="button" class="pb-tab" role="tab" data-tab="analyses" aria-selected="false" aria-controls="pbPanelAn"><span class="pb-tab-e">🔎</span> Analyses <em id="pbTabAnN"></em></button>
     </div>
 
+    <div id="pbToolsMark" aria-hidden="true"></div>
     <div class="pb-tools" id="pbTools">
         <button type="button" class="pb-tool" id="pbUndo" disabled title="Undo (Ctrl+Z)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg><span class="pb-tool-w">Undo</span>
@@ -624,25 +639,21 @@
     </div>
 
     {{-- Analyses: every "Analyze by Anee" run on this protocol, kept, the
-         newest first; the one picked is read in full underneath. --}}
+         newest first; a tapped one opens in the full-screen report window
+         (sm/partials/report-view), as the saved reports do. --}}
     <div class="pb-panel" id="pbPanelAn" data-panel="analyses" role="tabpanel" hidden>
         <div class="card pba-card" id="pbAnCard">
             <div class="pba-h">
                 <div class="pba-h-t"><b>Saved analyses</b><small id="pbAnSay"></small></div>
-                <button type="button" class="pb-anee" id="pbAnRun"
-                    @if ($options['aiLocked']) data-tier-lock="{{ \App\Support\Tier::farmUnlocksAt('aiAnalyses') }}" @endif>
-                    <img src="{{ $options['aneeFace'] }}" alt=""@if ($options['aiLocked']) class="tl-dim"@endif> <span @if ($options['aiLocked']) class="tl-dim" @endif>Analyze by Anee</span>
-                    @if ($options['aiLocked'])<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endif
-                </button>
             </div>
             <div class="pba-list" id="pbAnList"></div>
             <div class="rx-empty hidden" id="pbAnEmpty">
                 <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M8.5 11h5M11 8.5v5"/></svg></span>
                 <p class="rx-empty-t">No analyses yet</p>
-                <p class="rx-empty-p">Tap Analyze by Anee and she reads every task against the crop's growth stages. Each analysis is kept here, so you can come back to it or set an older one beside a newer one.</p>
+                <p class="rx-empty-p">Tap Analyze by Anee at the top of the page and she reads every task against the crop's growth stages. Each analysis is kept here, so you can come back to it or set an older one beside a newer one.</p>
             </div>
         </div>
-        <div id="pbReview"></div>
+        <div id="pbReview" hidden></div>
     </div>
 
     {{-- Rules & notes: a document of the protocol's standing rules, and files beside it. --}}
@@ -2706,8 +2717,8 @@
                 </button>
             </div>`).join('') + (!AN_ALL && n > 5 ? `<button type="button" class="pba-more" data-an-all>Show all ${n}</button>` : '');
     }
-    // Picks the analysis read below the list: the latest comes from the
-    // protocol itself, an older one is asked for once and remembered.
+    // Opens one analysis in the full-screen window: the latest comes from
+    // the protocol itself, an older one is asked for once and remembered.
     async function viewAnalysis(id) {
         const latest = ANALYSES[0];
         if (!id || !latest) { VIEW = null; VIEW_ID = null; renderAnalyses(); renderReview(); return; }
@@ -2723,25 +2734,36 @@
         }
         renderAnalyses();
         renderReview();
+        if (window.reportView) {
+            window.reportView.open({
+                title: (VIEW && VIEW.verdict) || "Anee's analysis",
+                node: $id('pbReview'),
+                actions: [{ label: 'Remove this analysis', icon: 'trash', kind: 'danger', onClick: () => removeAnalysis(id, true) }],
+                onClose: () => { VIEW_ID = null; renderAnalyses(); },
+            });
+        }
+    }
+    async function removeAnalysis(id, fromView) {
+        const ok = await window.confirmAction({ title: 'Remove this analysis?', message: 'It leaves the Analyses tab. The credits it used are already spent.', confirmText: 'Remove' });
+        if (!ok) return;
+        try {
+            const d = (await api(U.base + '/analyses/' + id + '/delete', { method: 'POST', body: {} })).data || {};
+            AN_CACHE.delete(id);
+            ANALYSES = d.analyses || [];
+            REVIEW = d.analysis || null; REVIEW_AT = d.analysisAt || null; REVIEW_CREDITS = d.charged || 0;
+            if (fromView && window.reportView && window.reportView.isOpen()) window.reportView.close();
+            VIEW_ID = null;
+            render();
+            renderAnalyses();
+            toast('Analysis removed.');
+        } catch (err) { toast(err.message, 'error'); }
     }
     $id('pbAnList').addEventListener('click', async (e) => {
         if (e.target.closest('[data-an-all]')) { AN_ALL = true; renderAnalyses(); return; }
         const del = e.target.closest('[data-an-del]');
         if (del) {
             e.stopPropagation();
-            const id = +del.getAttribute('data-an-del');
-            const ok = await window.confirmAction({ title: 'Remove this analysis?', message: 'It leaves the Analyses tab. The credits it used are already spent.', confirmText: 'Remove' });
-            if (!ok) return;
-            try {
-                const d = (await api(U.base + '/analyses/' + id + '/delete', { method: 'POST', body: {} })).data || {};
-                AN_CACHE.delete(id);
-                ANALYSES = d.analyses || [];
-                REVIEW = d.analysis || null; REVIEW_AT = d.analysisAt || null; REVIEW_CREDITS = d.charged || 0;
-                if (VIEW_ID === id || !ANALYSES.some((a) => a.id === VIEW_ID)) VIEW_ID = ANALYSES[0] ? ANALYSES[0].id : null;
-                render();
-                await viewAnalysis(VIEW_ID);
-                toast('Analysis removed.');
-            } catch (err) { toast(err.message, 'error'); }
+            removeAnalysis(+del.getAttribute('data-an-del'), false);
             return;
         }
         const row = e.target.closest('[data-an]');
@@ -2779,10 +2801,7 @@
                     ${r.sequence ? `<p class="pb-rv-h">Order and spacing</p><p class="pb-rv-p">${esc(r.sequence)}</p>` : ''}
                     ${r.summary ? `<p class="pb-rv-h">In short</p><p class="pb-rv-p">${esc(r.summary)}</p>` : ''}
                 </div>
-                <div class="pb-rv-foot">
-                    <button type="button" class="pb-rv-again" id="pbAgain">Analyze again</button>
-                    ${ANALYSES[0] && VIEW_ID !== ANALYSES[0].id ? '<span class="pb-rv-fold">An earlier analysis. The latest is at the top of the list.</span>' : ''}
-                </div>
+                ${ANALYSES[0] && VIEW_ID !== ANALYSES[0].id ? '<div class="pb-rv-foot"><span class="pb-rv-fold">An earlier analysis. The latest is at the top of the list.</span></div>' : ''}
             </div>`;
     }
     $id('pbWarn').addEventListener('click', (e) => {
@@ -2792,7 +2811,6 @@
     });
     $id('pbReview').addEventListener('click', (e) => {
         const host = $id('pbReview');
-        if (e.target.closest('#pbAgain')) { askAnee(); return; }
         const add = e.target.closest('[data-add]');
         if (add && VIEW) {
             const a = (VIEW.additions || [])[+add.getAttribute('data-add')];
@@ -2821,7 +2839,6 @@
         openSheet('pbAskSheet');
     }
     $id('pbAneeBtn').addEventListener('click', askAnee);
-    $id('pbAnRun').addEventListener('click', askAnee);
     $id('pbAskGo').addEventListener('click', async () => {
         if ($id('pbAskGo').dataset.short === '1' && OPT.creditsUrl) { window.location.href = OPT.creditsUrl; return; }
         closeSheet('pbAskSheet');
@@ -2839,15 +2856,34 @@
             if (typeof data.balance === 'number') OPT.balance = data.balance;
             render();
             showTab('analyses', true);
-            await viewAnalysis(ANALYSES[0] ? ANALYSES[0].id : null);
+            renderAnalyses();
             await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used — kept on the Analyses tab.` });
-            $id('pbPanelAn').scrollIntoView({ block: 'start', behavior: 'smooth' });
+            await viewAnalysis(ANALYSES[0] ? ANALYSES[0].id : null);
         } catch (err) {
             if (err.data && err.data.outOfCredits) {
                 window.noticeSheet({ title: 'Not enough credits', message: err.message, detail: 'Top up on My Credits and come back.', okText: 'OK' });
             } else if (!err.tierLock) toast(err.message, 'error');
         } finally { if (!landed) window.aneeWait.fail(); }
     });
+
+    /* ------------------------------------------------------------ the bar, stuck */
+    // A mark just above the tools: once it has scrolled up under the header,
+    // the bar is stuck and (on a phone) spreads edge to edge.
+    (() => {
+        const bar = $id('pbTools'), mark = $id('pbToolsMark');
+        if (!bar || !mark || !('IntersectionObserver' in window)) return;
+        let io = null;
+        const watch = () => {
+            if (io) io.disconnect();
+            const top = parseFloat(getComputedStyle(bar).top) || 0;
+            io = new IntersectionObserver(([e]) => {
+                bar.classList.toggle('is-stuck', !e.isIntersecting && e.boundingClientRect.top < top + 1);
+            }, { rootMargin: `-${Math.round(top) + 1}px 0px 0px 0px`, threshold: 0 });
+            io.observe(mark);
+        };
+        watch();
+        window.addEventListener('resize', () => { clearTimeout(watch._t); watch._t = setTimeout(watch, 200); });
+    })();
 
     /* ------------------------------------------------------------ boot */
     sortTasks();
@@ -2856,7 +2892,7 @@
     let firstTab = 'tasks';
     try { firstTab = localStorage.getItem(TAB_KEY) || 'tasks'; } catch (_) { /* tasks */ }
     showTab(firstTab, false);
-    viewAnalysis(ANALYSES[0] ? ANALYSES[0].id : null);
+    renderAnalyses();
     // A review left mid-way by a closed tab: finish waiting for it.
     if (BOOT.analysisStatus === 'pending') {
         (async () => {
@@ -2865,7 +2901,7 @@
                 REVIEW = data.analysis; REVIEW_AT = data.analysisAt; REVIEW_CREDITS = data.charged || 0;
                 if (Array.isArray(data.analyses)) ANALYSES = data.analyses;
                 render();
-                await viewAnalysis(ANALYSES[0] ? ANALYSES[0].id : null);
+                renderAnalyses();
                 toast("Anee's analysis is in, on the Analyses tab.");
             } catch (_) {}
         })();

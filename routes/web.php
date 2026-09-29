@@ -86,6 +86,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'aneeRich' => str_contains((string) @file_get_contents(app_path('Http/Controllers/Manager/FarmReportController.php')), 'private function seasonFacts')
                 && str_contains((string) @file_get_contents(resource_path('views/sm/anee-report.blade.php')), 'function sofarCards'),
             'pbAnalyses' => str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), 'data-tab="analyses"'),
+            'pbWindow' => str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), 'function removeAnalysis')
+                && str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), "@section('body-class', 'hide-tabbar')"),
         ],
         'viewCacheCompiled' => count(glob(storage_path('framework/views/*.php')) ?: []),
         // Whether the deployed environment can reach the mailing list at all
