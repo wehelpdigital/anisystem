@@ -51,8 +51,8 @@ class LandingPage
         ],
         'hero' => [
             'kicker' => 'Precision agriculture for {farmers}',
-            'headline' => '*Increase your yield*, even when the weather is unpredictable and the costs of fertilizer and fuel are skyrocketing.',
-            'sub' => 'anee.io puts precision agriculture on your phone: every spray, fertilizer and irrigation on the day your crop needs it, planned around your own field\'s forecast, with every peso counted. Less waste, accurate application, fewer losses, more harvest, higher income.',
+            'headline' => '*Increase your yield*, even with unpredictable weather and costly fertilizer and fuel.',
+            'sub' => 'Precision agriculture on your phone: the right spray, fertilizer and water on the right day, planned around your field\'s weather. Less waste, accurate application, fewer losses, more harvest, higher income.',
             'cta' => 'Create my free account',
             'note' => 'No credit card. Free forever on Libre. Works on any phone.',
             // An uploaded phone screenshot in place of the board's (blank: the board).
