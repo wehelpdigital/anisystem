@@ -57,6 +57,8 @@
     @keyframes lpBeat { 0%, 100% { box-shadow: 0 0 0 3px rgb(107 159 61 / .25); } 50% { box-shadow: 0 0 0 7px rgb(107 159 61 / .05); } }
     .lp-h1 { font-family: var(--font-heading); font-weight: 800; color: #14210c; line-height: 1.06; letter-spacing: -.02em;
         font-size: clamp(2.1rem, 5.2vw, 3.6rem); text-wrap: balance; }
+    /* A long headline a size down, so the email box still shows on the first screen. */
+    .lp-h1.is-long { font-size: clamp(1.8rem, 4.1vw, 2.9rem); line-height: 1.08; }
     .lp-h1 em, .lp-closer h2 em { font-style: normal; background: linear-gradient(transparent 62%, #fadd6d 62%); padding: 0 .1em; }
     .lp-closer h2 em { background: linear-gradient(transparent 62%, rgb(250 221 109 / .55) 62%); }
     .lp-sub { color: #3f4a37; font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.65; }
@@ -225,7 +227,7 @@
             <div class="grid lg:grid-cols-[1.1fr_1fr] gap-8 lg:gap-12 items-center mt-8 sm:mt-10">
                 <div class="animate-fade-up">
                     <span class="lp-kicker"><i aria-hidden="true"></i>{{ $lp['hero']['kicker'] }}</span>
-                    <h1 class="lp-h1 mt-5">{!! $mark($lp['hero']['headline']) !!}</h1>
+                    <h1 class="lp-h1 mt-5 {{ mb_strlen($lp['hero']['headline']) > 70 ? 'is-long' : '' }}">{!! $mark($lp['hero']['headline']) !!}</h1>
                     <p class="lp-sub mt-5 max-w-xl">{{ $lp['hero']['sub'] }}</p>
                     <form class="lp-form mt-7" action="{{ route('signup') }}" method="get" id="lpHeroForm">
                         @foreach ($keep as $k => $v)<input type="hidden" name="{{ $k }}" value="{{ $v }}">@endforeach
