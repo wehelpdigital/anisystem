@@ -979,21 +979,27 @@
         .dd-sep::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; border-top: 1px dashed var(--tl-border, #e5e7eb); }
         .dd-sep span { position: relative; font-size: .64rem; font-weight: 800; letter-spacing: .03em; color: var(--tl-text-faint, #6b7280);
             background: var(--tl-surface, #fff); padding: 0 .5rem; }
-        /* A phone's first header line is full (the date, the count, + and the
-           kebab; measured, the arrows beside the date cut "Aug 17, 26" at
-           360px and dropped every kebab at 340). So on a phone they lead the
-           second line instead, straight under the date, before the growth
-           stage and the day's cost (order 91 sorts after the row break's 90
-           and, by the markup, ahead of the pills that share 91). */
+        /* On a phone the arrows stay on the date's own line (the owner:
+           "after the date in the same row"), and that line was already full:
+           as they came, they cut "Aug 17, 26" at 360px and dropped every
+           kebab at 340. The room is found in the line's trim instead: a
+           smaller arrows button, + and the kebab at their desktop width (the
+           same 2.6rem height to tap), a little less padding, gap and count
+           padding. Measured against the header without the arrows: the same
+           at 320, 340, 360 and 390px (no date cut, no kebab dropped that was
+           not already dropped). */
         @media (max-width: 767px) {
-            .dd-btn { order: 91; width: 1.5rem; height: 1.5rem; }
-            .dd-btn svg { width: .78rem; height: .78rem; }
-            /* A day with nothing on its second line (no stage, no cost, no
-               forecast) has no row break, and the arrows would fall back onto
-               the first line and squeeze the date. The header's own ::after
-               stands in for the break there. */
-            .date-header:has(> .dd-btn):not(:has(> .dh-rowbreak))::after {
-                content: ''; order: 90; flex-basis: 100%; height: 0; margin: 0; }
+            .dd-btn { width: 1.3rem; height: 1.3rem; }
+            .dd-btn svg { width: .72rem; height: .72rem; }
+            .date-header { padding-left: .65rem; padding-right: .65rem; column-gap: .35rem; }
+            .date-header .group-add-activity-btn, .date-header .day-menu-btn { width: 2.25rem; }
+            /* Two classes: the count's own rules sit later in this file. */
+            .date-header > .date-header-count { min-width: 1.7rem; padding-left: .45rem; padding-right: .45rem; }
+            /* The date still claims no width of its own (flex-basis 0, see the
+               phone header rules) but grows no wider than its words, so the
+               arrows sit right after it; the count's auto margin takes the
+               rest of the line, as it did. */
+            .date-header > .date-header-date { max-width: max-content; }
         }
         /* On a phone a lane is its name over a full-width line, so the days
            have the room to stand apart. */
