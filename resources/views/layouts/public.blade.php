@@ -35,6 +35,7 @@
     <meta name="description" content="@yield('meta_description', 'anee.io — the cropping schedule manager for ' . \App\Support\Region::t('farmersOf') . '. Plan lots, workers, materials, activities and irrigation in one mobile-friendly web app.')">
     {{-- Indexable only once the mother app's switch says so (App\Support\Seo). --}}
     <meta name="robots" content="{{ \App\Support\Seo::robots() }}">
+    @include('partials.site-verification')
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}?v=anee">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

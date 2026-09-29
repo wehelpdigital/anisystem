@@ -171,7 +171,16 @@ Route::prefix('{face}')->where(['face' => 'ph|en'])->group(function () {
 });
 // The old addresses still answer: each sends the visitor to its page on
 // their own face (302 — which face depends on who is asking).
-Route::get('/', fn () => redirect()->route('home'));
+// The root sends a visitor to their face, and its body carries the same
+// verification tags as every public page: Facebook's domain check reads
+// "the home page" at anee.io/ itself.
+Route::get('/', function () {
+    $to = route('home');
+
+    return response('<!doctype html><html><head><meta charset="utf-8">' . view('partials.site-verification')->render()
+        . '<meta http-equiv="refresh" content="0;url=' . e($to) . '"><title>anee.io</title></head><body><a href="' . e($to) . '">anee.io</a></body></html>', 302)
+        ->header('Location', $to);
+});
 foreach (['about', 'features', 'pricing', 'tutorial', 'contact'] as $publicPage) {
     Route::get('/' . $publicPage, fn () => redirect()->route($publicPage));
 }
