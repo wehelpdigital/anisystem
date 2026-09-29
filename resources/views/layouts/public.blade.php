@@ -72,7 +72,8 @@
     {{-- Shown whole or not at all, the same as inside the app. --}}
     @include('partials.boot-veil')
 
-    {{-- Header --}}
+    {{-- Header. The full bar starts at lg: between md and lg the six links
+         and three buttons did not fit and the page scrolled sideways. --}}
     <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100" x-data="{ open: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="flex items-center justify-between h-16 md:h-20">
@@ -80,7 +81,7 @@
                     <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-7 md:h-8 w-auto">
                 </a>
 
-                <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-gray-700">
+                <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700">
                     <a href="{{ route('home') }}" class="hover:text-brand-600 {{ request()->routeIs('home') ? 'text-brand-700' : '' }}">Home</a>
                     <a href="{{ route('features') }}" class="hover:text-brand-600 {{ request()->routeIs('features') ? 'text-brand-700' : '' }}">Features</a>
                     <a href="{{ route('pricing') }}" class="hover:text-brand-600 {{ request()->routeIs('pricing') ? 'text-brand-700' : '' }}">Pricing</a>
@@ -89,7 +90,7 @@
                     <a href="{{ route('contact') }}" class="hover:text-brand-600 {{ request()->routeIs('contact') ? 'text-brand-700' : '' }}">Contact</a>
                 </nav>
 
-                <div class="hidden md:flex items-center gap-3">
+                <div class="hidden lg:flex items-center gap-3">
                     @include('partials.face-switch')
                     @auth
                         <a href="{{ route('app.dashboard') }}" class="btn btn-accent btn-sm">Open My App</a>
@@ -99,7 +100,7 @@
                     @endauth
                 </div>
 
-                <button type="button" class="md:hidden p-2 -mr-2 text-gray-700" @click="open = !open" aria-label="Menu">
+                <button type="button" class="lg:hidden p-2 -mr-2 text-gray-700" @click="open = !open" aria-label="Menu">
                     <svg x-show="!open" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
                     <svg x-show="open" x-cloak class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
                 </button>
@@ -107,7 +108,7 @@
         </div>
 
         {{-- Mobile menu --}}
-        <div x-show="open" x-cloak x-transition.opacity class="md:hidden border-t border-gray-100 bg-white px-4 pb-5 pt-3 space-y-1">
+        <div x-show="open" x-cloak x-transition.opacity class="lg:hidden border-t border-gray-100 bg-white px-4 pb-5 pt-3 space-y-1">
             @foreach ([['home','Home'],['features','Features'],['pricing','Pricing'],['about','About'],['tutorial','Tutorial'],['contact','Contact Us']] as [$r, $label])
                 <a href="{{ route($r) }}" class="block rounded-xl px-4 py-3 text-base font-semibold {{ request()->routeIs($r) ? 'bg-brand-50 text-brand-700' : 'text-gray-700 hover:bg-gray-50' }}">{{ $label }}</a>
             @endforeach
@@ -161,7 +162,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 text-xs text-gray-500 flex flex-col sm:flex-row justify-between gap-2">
                 {{-- The legal pages, reachable before anyone signs up (inside the app
                      they sit in the app footer instead). --}}
-                <span>© {{ date('Y') }} anee.io · <a href="{{ route('legal.show', ['slug' => 'privacy']) }}" class="hover:text-accent-500">Privacy</a> · <a href="{{ route('legal.show', ['slug' => 'terms']) }}" class="hover:text-accent-500">Terms</a> · <a href="{{ route('legal.show', ['slug' => 'cookies']) }}" class="hover:text-accent-500">Cookies</a></span>
+                <span>© {{ date('Y') }} anee.io · <a href="{{ route('legal.show', ['slug' => 'privacy']) }}" class="hover:text-accent-500">Privacy</a> · <a href="{{ route('legal.show', ['slug' => 'terms']) }}" class="hover:text-accent-500">Terms</a> · <a href="{{ route('legal.show', ['slug' => 'cookies']) }}" class="hover:text-accent-500">Cookies</a> · <a href="{{ route('landing') }}" class="hover:text-accent-500">Start free</a></span>
                 <span>Helping {{ \App\Support\Region::t('farmersOf') }} reach maximum yield and income</span>
             </div>
         </div>

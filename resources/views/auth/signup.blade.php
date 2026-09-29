@@ -2,6 +2,10 @@
 
 @section('title', 'Create an Account')
 
+@push('head')
+    @include('partials.ad-tags')
+@endpush
+
 @section('content')
 <div class="bg-gray-50 py-10 md:py-16 px-4 min-h-[70vh] flex items-start justify-center">
     <div class="w-full max-w-md">
@@ -55,7 +59,8 @@
 
                 <div>
                     <label for="email" class="form-label">Email address</label>
-                    <input id="email" name="email" type="email" value="{{ old('email') }}"
+                    {{-- The landing page hands its email field over (?email=). --}}
+                    <input id="email" name="email" type="email" value="{{ old('email', is_string(request('email')) ? mb_substr(request('email'), 0, 190) : '') }}"
                         class="form-input" placeholder="you@example.com" required autocomplete="email">
                     @error('email') <p class="form-error">{{ $message }}</p> @enderror
                 </div>

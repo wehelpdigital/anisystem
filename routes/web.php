@@ -53,7 +53,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
     $probe = null;
     if ($request->query('probe') === 'home') {
         try {
-            $probe = ['ok' => true, 'bytes' => strlen(app(\App\Http\Controllers\PublicController::class)->home()->render())];
+            $probe = ['ok' => true, 'bytes' => strlen(app(\App\Http\Controllers\PublicController::class)->home($request)->render())];
         } catch (\Throwable $e) {
             $probe = ['ok' => false, 'error' => get_class($e), 'message' => mb_substr($e->getMessage(), 0, 240), 'at' => basename($e->getFile()).':'.$e->getLine()];
         }
@@ -88,6 +88,10 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'pbAnalyses' => str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), 'data-tab="analyses"'),
             'boardTrio' => str_contains((string) @file_get_contents(resource_path('views/sm/partials/activities-js.blade.php')), 'the stretch goes with it')
                 && str_contains((string) @file_get_contents(resource_path('views/sm/activities.blade.php')), 'if (wasOpen) setTimeout(land, 300)'),
+            'landingPage' => defined(\App\Support\LandingPage::class . '::DEFAULTS_KEY')
+                && class_exists(\App\Support\SignupSource::class)
+                && is_file(public_path('images/site/lp/board.webp'))
+                && str_contains((string) @file_get_contents(resource_path('views/layouts/public.blade.php')), 'class="hidden lg:flex items-center gap-7'),
             'ddActs' => str_contains((string) @file_get_contents(resource_path('views/sm/partials/activity-card.blade.php')), 'class="icon-btn dd-act-btn"'),
             'ddInline' => str_contains((string) @file_get_contents(resource_path('views/sm/activities.blade.php')), '.date-header > .date-header-date { max-width: max-content; }'),
             'boardDateDiff' => str_contains((string) @file_get_contents(resource_path('views/sm/partials/activities-js.blade.php')), 'function ddOpen(')
@@ -154,6 +158,8 @@ Route::prefix('{face}')->where(['face' => 'ph|en'])->group(function () {
     Route::get('/about', [App\Http\Controllers\PublicController::class, 'about'])->name('about');
     Route::get('/features', [App\Http\Controllers\PublicController::class, 'features'])->name('features');
     Route::get('/pricing', [App\Http\Controllers\PublicController::class, 'pricing'])->name('pricing');
+    // The ads landing page (2026-09-29): its words from the mother app.
+    Route::get('/start', [App\Http\Controllers\PublicController::class, 'landing'])->name('landing');
     // Editable legal / info pages (Privacy, Terms, Cookies, About) — public.
     Route::get('/legal/{slug}', [App\Http\Controllers\LegalController::class, 'show'])->where('slug', '[a-z0-9\-]+')->name('legal.show');
     Route::get('/tutorial', [App\Http\Controllers\PublicController::class, 'tutorial'])->name('tutorial');
@@ -167,6 +173,9 @@ foreach (['about', 'features', 'pricing', 'tutorial', 'contact'] as $publicPage)
     Route::get('/' . $publicPage, fn () => redirect()->route($publicPage));
 }
 Route::get('/legal/{slug}', fn (string $slug) => redirect()->route('legal.show', ['slug' => $slug]))->where('slug', '[a-z0-9\-]+');
+// An ad's link is anee.io/start?utm_...: the face is chosen as for every
+// page, and the tracking tags are carried across, or the campaign loses them.
+Route::get('/start', fn (Illuminate\Http\Request $request) => redirect()->to(route('landing') . ($request->getQueryString() ? '?' . $request->getQueryString() : '')));
 // The flag in the header: choose a face, remember it for a year, and go
 // back to the same page wearing it.
 Route::get('/face/{face}', function (Illuminate\Http\Request $request, string $face) {

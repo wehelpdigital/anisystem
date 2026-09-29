@@ -2,6 +2,11 @@
 
 @section('title', 'Confirm Your Email')
 
+{{-- Straight from the signup form: the ads count it as their conversion. --}}
+@push('head')
+    @include('partials.ad-tags', ['signedUp' => (bool) session('signup.fresh')])
+@endpush
+
 @section('content')
 <div class="bg-gray-50 py-10 md:py-16 px-4 min-h-[70vh] flex items-start justify-center">
     <div class="w-full max-w-md">

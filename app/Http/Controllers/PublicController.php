@@ -9,10 +9,27 @@ use Illuminate\Support\Facades\Log;
 
 class PublicController extends Controller
 {
-    public function home()
+    public function home(Request $request)
     {
+        // An ad pointed at the home page: its tags are kept for the signup.
+        \App\Support\SignupSource::remember($request);
+
         return view('public.home', [
             'tiers' => \Illuminate\Support\Arr::except(config('tiers'), ['admin']),
+            'stats' => $this->liveStats(),
+        ]);
+    }
+
+    /**
+     * The ads landing page: one offer, the free account, argued step by step.
+     * Its words come from App\Support\LandingPage (the mother app edits them).
+     */
+    public function landing(Request $request)
+    {
+        \App\Support\SignupSource::remember($request);
+
+        return view('public.landing', [
+            'lp' => \App\Support\LandingPage::content(),
             'stats' => $this->liveStats(),
         ]);
     }

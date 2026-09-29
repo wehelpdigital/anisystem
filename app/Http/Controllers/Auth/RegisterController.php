@@ -20,6 +20,9 @@ class RegisterController extends Controller
 
     public function show(Request $request)
     {
+        // An ad may point here directly: its tags are kept for the account.
+        \App\Support\SignupSource::remember($request);
+
         return view('auth.signup', [
             'plan' => $request->query('plan'),
         ]);
@@ -95,8 +98,11 @@ class RegisterController extends Controller
         ]);
 
         $this->sendVerification($user);
+        \App\Support\SignupSource::record($user, $request);
 
         $request->session()->put('signup.email', $user->email);
+        // One page view long: the inbox page reports the signup to the ads.
+        $request->session()->flash('signup.fresh', true);
         if ($request->filled('plan')) {
             $request->session()->put('signup.plan', $request->input('plan'));
         }

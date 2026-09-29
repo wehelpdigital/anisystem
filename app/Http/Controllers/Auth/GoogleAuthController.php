@@ -113,6 +113,7 @@ class GoogleAuthController extends Controller
                 'deleteStatus' => 1,
             ]);
             NewMemberWelcome::activate($user);
+            \App\Support\SignupSource::record($user, $request, 'google');
         }
 
         SignIn::user($user, true); // no box to tick at this door: kept for ten days
