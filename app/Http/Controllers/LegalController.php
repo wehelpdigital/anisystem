@@ -12,7 +12,16 @@ use Illuminate\Support\Str;
  */
 class LegalController extends Controller
 {
-    /** The face comes first on the address (/ph/legal/privacy); scalar route parameters arrive by position. */
+    /**
+     * The Philippine face's door: its pages live at the root (/legal/privacy,
+     * 2026-09-30), so there is no face on the address to arrive first.
+     */
+    public function showPh(string $slug)
+    {
+        return $this->show('ph', $slug);
+    }
+
+    /** The face comes first on the address (/en/legal/privacy); scalar route parameters arrive by position. */
     public function show(string $face, string $slug)
     {
         // One read serves the page and the switcher above it: every published

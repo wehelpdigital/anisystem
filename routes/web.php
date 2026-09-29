@@ -88,6 +88,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'pbAnalyses' => str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), 'data-tab="analyses"'),
             'boardTrio' => str_contains((string) @file_get_contents(resource_path('views/sm/partials/activities-js.blade.php')), 'the stretch goes with it')
                 && str_contains((string) @file_get_contents(resource_path('views/sm/activities.blade.php')), 'if (wasOpen) setTimeout(land, 300)'),
+            'phAtRoot' => Illuminate\Support\Facades\Route::has('ph.home') && url('/ph/pricing') === url('/pricing'),
             'landingPrecision' => isset(\App\Support\LandingPage::DEFAULTS['precision'], \App\Support\LandingPage::DEFAULTS['losses'])
                 && is_file(public_path('images/site/lp/weather.webp'))
                 && str_contains((string) @file_get_contents(resource_path('views/layouts/public.blade.php')), "@sectionMissing('noHeader')"),
@@ -152,13 +153,23 @@ Route::post('/worker-invite/{token}', [App\Http\Controllers\WorkerInviteControll
 Route::get('/robots.txt', fn () => response(App\Support\Seo::robotsTxt(), 200, ['Content-Type' => 'text/plain; charset=UTF-8']))->name('robots');
 
 /*
-| THE PUBLIC SITE HAS TWO FACES (2026-09-16): /ph for the Philippines and
-| /en for everyone else. The face on the address decides the words, the
-| currency and the prices. The route NAMES are unchanged, and the {face}
-| default is set for every request by ResolveRegion, so route('pricing')
-| still works wherever it is called and lands on the visitor's own face.
+| THE PUBLIC SITE HAS TWO FACES: the Philippines at the root (anee.io/,
+| anee.io/pricing, since 2026-09-30) and everyone else under /en. The face
+| on the address decides the words, the currency and the prices.
+|
+| The route NAMES are the {face} group's, unchanged, and ResolveRegion sets
+| the {face} default for every request, so route('pricing') still works
+| wherever it is called and lands on the visitor's own face: 'en' builds
+| /en/pricing, and 'ph' builds /ph/pricing, which AppServiceProvider's path
+| formatter turns into /pricing. The root routes serve those addresses (with
+| face=ph as a default, so Region reads the Philippines off them); their
+| names carry a ph. prefix. The old /ph/... addresses answer with a 301 to
+| their root twin.
+|
+| Why: anee.io/ was a redirect to /ph, and Facebook's domain verification
+| reads the tag on anee.io/ itself and would not follow it.
 */
-Route::prefix('{face}')->where(['face' => 'ph|en'])->group(function () {
+Route::prefix('{face}')->where(['face' => 'en'])->group(function () {
     Route::get('/', [App\Http\Controllers\PublicController::class, 'home'])->name('home');
     Route::get('/about', [App\Http\Controllers\PublicController::class, 'about'])->name('about');
     Route::get('/features', [App\Http\Controllers\PublicController::class, 'features'])->name('features');
@@ -171,33 +182,24 @@ Route::prefix('{face}')->where(['face' => 'ph|en'])->group(function () {
     Route::get('/contact', [App\Http\Controllers\PublicController::class, 'contact'])->name('contact');
     Route::post('/contact', [App\Http\Controllers\PublicController::class, 'submitContact'])->name('contact.submit');
 });
-// The old addresses still answer: each sends the visitor to its page on
-// their own face (302 — which face depends on who is asking).
-// The root sends a visitor to their face, and its body carries the same
-// verification tags as every public page: Facebook's domain check reads
-// "the home page" at anee.io/ itself.
-Route::get('/', function (Illuminate\Http\Request $request) {
-    // Facebook's own crawler gets the home page itself, not a redirect: its
-    // domain verification would not accept the tag behind a 302 (2026-09-29).
-    // Everyone else is still sent to their face.
-    if (preg_match('/facebookexternalhit|facebot/i', (string) $request->userAgent())) {
-        return app(App\Http\Controllers\PublicController::class)->home($request);
-    }
-    $to = route('home');
+// The Philippine face, at the root.
+Route::get('/', [App\Http\Controllers\PublicController::class, 'home'])->defaults('face', 'ph')->name('ph.home');
+Route::get('/about', [App\Http\Controllers\PublicController::class, 'about'])->defaults('face', 'ph')->name('ph.about');
+Route::get('/features', [App\Http\Controllers\PublicController::class, 'features'])->defaults('face', 'ph')->name('ph.features');
+Route::get('/pricing', [App\Http\Controllers\PublicController::class, 'pricing'])->defaults('face', 'ph')->name('ph.pricing');
+Route::get('/start', [App\Http\Controllers\PublicController::class, 'landing'])->defaults('face', 'ph')->name('ph.landing');
+Route::get('/legal/{slug}', [App\Http\Controllers\LegalController::class, 'showPh'])->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('ph.legal.show');
+Route::get('/tutorial', [App\Http\Controllers\PublicController::class, 'tutorial'])->defaults('face', 'ph')->name('ph.tutorial');
+Route::get('/contact', [App\Http\Controllers\PublicController::class, 'contact'])->defaults('face', 'ph')->name('ph.contact');
+Route::post('/contact', [App\Http\Controllers\PublicController::class, 'submitContact'])->defaults('face', 'ph')->name('ph.contact.submit');
+// The old Philippine addresses: for good at the root now, tracking tags and all.
+Route::get('/ph/{rest?}', function (Illuminate\Http\Request $request, string $rest = '') {
+    $q = $request->getQueryString();
 
-    return response('<!doctype html><html><head><meta charset="utf-8">' . view('partials.site-verification')->render()
-        . '<meta http-equiv="refresh" content="0;url=' . e($to) . '"><title>anee.io</title></head><body><a href="' . e($to) . '">anee.io</a></body></html>', 302)
-        ->header('Location', $to);
-});
-foreach (['about', 'features', 'pricing', 'tutorial', 'contact'] as $publicPage) {
-    Route::get('/' . $publicPage, fn () => redirect()->route($publicPage));
-}
-Route::get('/legal/{slug}', fn (string $slug) => redirect()->route('legal.show', ['slug' => $slug]))->where('slug', '[a-z0-9\-]+');
-// An ad's link is anee.io/start?utm_...: the face is chosen as for every
-// page, and the tracking tags are carried across, or the campaign loses them.
-Route::get('/start', fn (Illuminate\Http\Request $request) => redirect()->to(route('landing') . ($request->getQueryString() ? '?' . $request->getQueryString() : '')));
+    return redirect('/' . ltrim($rest, '/') . ($q ? '?' . $q : ''), 301);
+})->where('rest', '.*');
 // The flag in the header: choose a face, remember it for a year, and go
-// back to the same page wearing it.
+// back to the same page wearing it (anee.io/pricing <-> anee.io/en/pricing).
 Route::get('/face/{face}', function (Illuminate\Http\Request $request, string $face) {
     $code = $face === 'ph'
         ? App\Support\Region::HOME
@@ -205,11 +207,13 @@ Route::get('/face/{face}', function (Illuminate\Http\Request $request, string $f
             ->map(fn ($c) => App\Support\Region::valid($c))
             ->first(fn ($c) => $c && $c !== App\Support\Region::HOME) ?: 'US');
     App\Support\Region::choose($request, $code);
-    $to = '/' . ltrim((string) $request->query('to', ''), '/');
-    $to = preg_replace('#^/(ph|en)(?=/|$)#', '/' . $face, $to);
-    if (! preg_match('#^/(ph|en)(?=/|$)#', $to) || str_contains($to, '://')) {
-        $to = '/' . $face;
+    // The page without its face, then with the chosen one; only a public
+    // page is a place to go back to.
+    $page = preg_replace('#^/(ph|en)(?=/|$)#', '', '/' . ltrim((string) $request->query('to', ''), '/')) ?: '/';
+    if (! preg_match('#^/(about|features|pricing|start|tutorial|contact|legal/[a-z0-9\-]+)?$#', $page)) {
+        $page = '/';
     }
+    $to = $face === 'en' ? rtrim('/en' . $page, '/') : $page;
 
     return redirect($to)->withCookie(cookie(App\Support\Region::COOKIE, $code, 60 * 24 * 365));
 })->where('face', 'ph|en')->name('face.switch');
