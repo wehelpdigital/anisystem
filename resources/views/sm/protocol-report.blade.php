@@ -91,7 +91,7 @@
     <div class="rx-about">
         <span class="rx-about-e">📋</span>
         <div class="rx-about-t">
-            <b>What View as Protocol gives you</b>
+            <b>About Protocol</b>
             {{-- One short paragraph, no dashes or lists (the owner's ask,
                  2026-09-29), as the analyses introduce themselves. --}}
             <p>See one lot's season written down as the recipe you actually followed. Every activity marked done is listed in order by day count, with the date, the work, how long it took, how many people did it and the materials it used, ending with the harvest. Work that was planned but never marked done is left out, so this is a record of what really happened. Each protocol is kept on the Saved tab, and Compare Reports can set it beside another season's.</p>

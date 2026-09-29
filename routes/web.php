@@ -81,6 +81,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'cmpAbout' => str_contains((string) @file_get_contents(resource_path('views/compare/index.blade.php')), 'Each comparison is kept on the Saved tab.'),
             'reportAbouts' => str_contains((string) @file_get_contents(resource_path('views/sm/anee-report.blade.php')), 'you see the price before anything runs')
                 && str_contains((string) @file_get_contents(resource_path('views/sm/labor-report.blade.php')), 'kept on the Saved Reports tab'),
+            'aboutOneLine' => str_contains((string) @file_get_contents(resource_path('views/sm/labor-report.blade.php')), '<b>About Labor</b>')
+                && str_contains((string) @file_get_contents(resource_path('views/sm/hub.blade.php')), 'class="sched-acts"'),
         ],
         'viewCacheCompiled' => count(glob(storage_path('framework/views/*.php')) ?: []),
         // Whether the deployed environment can reach the mailing list at all

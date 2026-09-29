@@ -204,10 +204,10 @@
                 {{-- One short paragraph, no dashes or lists (the owner's ask,
                      2026-09-29), as the analyses introduce themselves. --}}
                 @if ($isSofar)
-                    <b>What Analyze So Far tells you</b>
+                    <b>About So Far</b>
                     <p>{{ $aneeName }} reads your season as it stands today, including the work done and still to do, the money spent so far and the recent weather, and tells you how far along each lot is, the risks ahead, what to do next, and how the money is holding up against the plan. This uses credits, and you see the price before anything runs. Every report is kept on the Saved tab.</p>
                 @else
-                    <b>What the {{ $aneeName }} Season Report tells you</b>
+                    <b>About this report</b>
                     <p>{{ $aneeName }} reads your whole finished season, including every activity, the money, the harvest, your notes and photos, and the actual weather, and writes its story: what went right, what went wrong and what it cost, what to change next season, and a score with the reasons. This uses credits, and you see the price before anything runs. Every report is kept on the Saved tab.</p>
                 @endif
             </div>

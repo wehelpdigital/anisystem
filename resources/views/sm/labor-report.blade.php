@@ -286,7 +286,7 @@
     <div class="rx-about">
         <span class="rx-about-e">🧾</span>
         <div class="rx-about-t">
-            <b>What the Labor Report tells you</b>
+            <b>About Labor</b>
             {{-- One short paragraph, no dashes or lists (the owner's ask,
                  2026-09-29), as the analyses introduce themselves. --}}
             <p>See everything the season paid its workers, added up from the half days and whole days on your activities at each worker's rate. Pick the whole season, a range of days or a range of dates, and you get the total cost, the busiest months, who did the most work, and a breakdown by worker and by activity. Every report you make is kept on the Saved Reports tab.</p>

@@ -128,7 +128,7 @@
     <div class="rx-about">
         <span class="rx-about-e">💸</span>
         <div class="rx-about-t">
-            <b>What the Expenses Report tells you</b>
+            <b>About Expenses</b>
             {{-- One short paragraph, no dashes or lists (the owner's ask,
                  2026-09-29), as the analyses introduce themselves. --}}
             <p>See every peso the season spent, added up from your activities: the stock they used from the inventory, the services you paid for, and the cash spent each day. Pick the lots, the kinds of cost and the days you want, and you get the total, where the money went by category and by lot, what is left after the income those days brought in, and every entry with the activity it came from. Every report you make is kept on the Saved Reports tab.</p>

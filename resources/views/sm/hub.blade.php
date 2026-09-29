@@ -175,7 +175,7 @@
              gap where something used to be. --}}
         @if (! $isWorker)
         <div class="sched-foot sched-foot-end">
-            <div class="flex items-center gap-3 shrink-0">
+            <div class="sched-acts">
                 {{-- "Mark completed" sounded like ticking a task off. What the
                      button does is close the season and lock it, and the way
                      back is Reopen — so it says that. --}}
@@ -282,6 +282,16 @@
             background-color: #4a7c2a; border-color: #4a7c2a; color: #fff;
         }
         .sched-foot .btn-primary:hover, .sched-foot .btn-accent:hover { background-color: #3d6823; border-color: #3d6823; }
+        /* The two season buttons, small. The group used to be shrink-0 and
+           pushed right, so on a phone it ran out past the card's left edge;
+           now it may wrap, and on a phone the two share the row. */
+        .sched-acts { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: .5rem; min-width: 0; }
+        .sched-acts .btn { min-height: 2rem; padding: .3rem .75rem; font-size: .78rem; line-height: 1.2; border-radius: .6rem; white-space: nowrap; }
+        @media (max-width: 639px) {
+            .sched-foot { padding: .6rem .8rem; }
+            .sched-acts { width: 100%; }
+            .sched-acts .btn { flex: 1 1 auto; padding: .3rem .55rem; }
+        }
 
         html.dark .sched-head { background: #151b12; border-color: #2b3a1c; }
         html.dark .sched-title { color: #e8efe1; }

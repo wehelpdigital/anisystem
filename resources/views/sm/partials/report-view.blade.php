@@ -114,7 +114,11 @@
     .rx-about.is-fold { display: block; padding: 0; }
     .rx-about-head { display: flex; align-items: center; gap: .7rem; width: 100%; text-align: left; padding: .8rem 1.05rem; cursor: pointer; }
     .rx-about-head .rx-about-e { font-size: 1.25rem; }
-    .rx-about-title { flex: 1 1 auto; min-width: 0; font-family: var(--font-heading); font-size: .98rem; font-weight: 700; color: #2f5219; }
+    /* One line, always (the owner's ask, 2026-09-29): the titles are kept
+       short enough to fit a 340px phone beside "Tap to read", and anything
+       longer is cut with an ellipsis rather than wrapped. */
+    .rx-about-title { flex: 1 1 auto; min-width: 0; font-family: var(--font-heading); font-size: .98rem; font-weight: 700; color: #2f5219;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .rx-about-hint { flex: none; font-size: .72rem; font-weight: 700; color: #4a5a3c; opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
     .rx-about.is-min .rx-about-hint { opacity: .8; }
     .rx-about-c { flex: none; width: 1rem; height: 1rem; color: #4a5a3c; opacity: .6; transition: transform .28s cubic-bezier(.22,1,.36,1); }

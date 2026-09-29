@@ -86,7 +86,7 @@
     <div class="rx-about">
         <span class="rx-about-e">📈</span>
         <div class="rx-about-t">
-            <b>What the Profit Report tells you</b>
+            <b>About Profit</b>
             {{-- One short paragraph, no dashes or lists (the owner's ask,
                  2026-09-29), as the analyses introduce themselves. --}}
             <p>See what your harvest earned against everything the season spent on inventory, services, cash and labor, for the whole season and for each lot. You get the net profit and margin, where the money went, and what each lot earned, spent and kept, with a note wherever something is still missing, like a harvest not yet recorded. The numbers update every time you open this page, and to keep a copy you can hand it to {{ \App\Models\AiSetting::current()->assistantName }} at the bottom.</p>
