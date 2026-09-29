@@ -88,6 +88,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'pbAnalyses' => str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), 'data-tab="analyses"'),
             'boardTrio' => str_contains((string) @file_get_contents(resource_path('views/sm/partials/activities-js.blade.php')), 'the stretch goes with it')
                 && str_contains((string) @file_get_contents(resource_path('views/sm/activities.blade.php')), 'if (wasOpen) setTimeout(land, 300)'),
+            'ddActs' => str_contains((string) @file_get_contents(resource_path('views/sm/partials/activity-card.blade.php')), 'class="icon-btn dd-act-btn"'),
             'ddInline' => str_contains((string) @file_get_contents(resource_path('views/sm/activities.blade.php')), '.date-header > .date-header-date { max-width: max-content; }'),
             'boardDateDiff' => str_contains((string) @file_get_contents(resource_path('views/sm/partials/activities-js.blade.php')), 'function ddOpen(')
                 && str_contains((string) @file_get_contents(resource_path('views/sm/partials/activities-sheets.blade.php')), 'id="dateDiffSheet"'),

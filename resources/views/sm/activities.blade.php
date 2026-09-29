@@ -906,9 +906,14 @@
         .cr-hint > span { min-width: 0; white-space: nowrap; }
         .cr-hint.is-dd { background: #3d6823; }
         .cr-hint.is-dd button { color: #d9f99d; }
+        /* Its words are longer than the cash hint's: they may take two lines
+           rather than run under Cancel on a narrow phone. */
+        .cr-hint.is-dd { border-radius: 1.1rem; }
+        .cr-hint.is-dd > span { white-space: normal; line-height: 1.3; }
 
         /* ===== Date Diff on the board (2026-09-29) =====
-           The arrows after a date, and the sheet of what lies between two. */
+           The arrows after a date and on every activity, and the sheet that
+           says how far apart the two picked are. */
         .dd-btn { flex: none; width: 1.6rem; height: 1.6rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center;
             color: var(--tl-text-faint, #6b7280); background: rgb(255 255 255 / .55); border: 1px dashed currentColor; cursor: pointer;
             transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
@@ -921,7 +926,7 @@
         html.dark .dd-btn.is-picked { background: #6b9f3d; border-color: #6b9f3d; color: #fff; }
         .dd-body { display: grid; gap: .8rem; }
         .dd-hero { border-radius: 1rem; padding: 1rem 1.1rem; color: #fff; background: linear-gradient(130deg, #4a7c2a, #2d5016 75%); }
-        .dd-hero-n { display: flex; align-items: baseline; gap: .5rem; }
+        .dd-hero-n { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
         .dd-hero-n b { font-size: 2.6rem; line-height: 1; font-weight: 900; font-variant-numeric: tabular-nums; }
         .dd-hero-n span { font-size: .95rem; font-weight: 700; opacity: .92; }
         .dd-hero-when { margin-top: .35rem; font-size: .84rem; font-weight: 700; opacity: .95; }
@@ -930,55 +935,48 @@
         .dd-chip { font-size: .72rem; font-weight: 700; padding: .2rem .6rem; border-radius: 999px; background: rgb(255 255 255 / .18); }
         .dd-chip b { font-weight: 900; }
         .dd-chip.is-today { background: #fde68a; color: #713f12; }
-        .dd-figs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
-        @media (min-width: 560px) { .dd-figs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-        .dd-fig { border: 1px solid var(--tl-border, #e5e7eb); border-radius: .85rem; padding: .55rem .7rem; background: var(--tl-surface, #fff); min-width: 0; }
-        .dd-fig small { display: block; font-size: .64rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--tl-text-faint, #6b7280); }
-        .dd-fig b { display: block; font-size: 1.3rem; font-weight: 900; color: var(--tl-text, #111827); font-variant-numeric: tabular-nums; line-height: 1.2; }
-        .dd-fig span { display: block; font-size: .7rem; color: var(--tl-text-faint, #6b7280); line-height: 1.3; }
-        .dd-card { border: 1px solid var(--tl-border, #e5e7eb); border-radius: 1rem; padding: .85rem .9rem; background: var(--tl-surface, #fff); }
-        .dd-card h4 { font-family: var(--font-heading); font-size: .92rem; font-weight: 800; color: var(--tl-text, #111827); margin-bottom: .55rem; }
-        .dd-axis { display: flex; justify-content: space-between; margin-left: 30%; font-size: .66rem; font-weight: 800; color: var(--tl-text-faint, #6b7280); margin-bottom: .1rem; }
-        .dd-lane { display: grid; grid-template-columns: 30% minmax(0, 1fr); align-items: center; gap: .5rem; padding: .35rem 0; }
-        .dd-lane + .dd-lane { border-top: 1px dashed var(--tl-border, #e5e7eb); }
-        .dd-lane-h { min-width: 0; }
-        .dd-lane-h b { display: block; font-size: .78rem; color: var(--tl-text, #111827); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .dd-lane-h small { display: block; font-size: .64rem; line-height: 1.3; color: var(--tl-text-faint, #6b7280); }
-        .dd-track { position: relative; height: 2.1rem; margin: 0 .45rem; }
-        .dd-track::before { content: ''; position: absolute; left: 0; right: 0; top: 1.35rem; height: 2px; border-radius: 2px; background: var(--tl-border, #e5e7eb); }
-        .dd-dot { position: absolute; top: 1.35rem; width: .8rem; height: .8rem; margin: -.34rem 0 0 -.4rem; border-radius: 999px;
-            box-shadow: 0 0 0 2px var(--tl-surface, #fff); }
-        .dd-dot.is-many { box-shadow: 0 0 0 2px var(--tl-surface, #fff), 0 0 0 3.5px currentColor; color: var(--tl-text-faint, #9ca3af); }
-        .dd-gap { position: absolute; top: .05rem; transform: translateX(-50%); font-size: .62rem; font-weight: 800; color: var(--tl-text-faint, #6b7280); white-space: nowrap; }
-        .dd-today { position: absolute; top: .6rem; bottom: 0; width: 2px; margin-left: -1px; background: #f59e0b; border-radius: 2px; }
-        .dd-legend { display: flex; flex-wrap: wrap; gap: .3rem .8rem; margin-top: .55rem; font-size: .7rem; color: var(--tl-text-faint, #6b7280); }
-        .dd-legend i { display: inline-block; width: .6rem; height: .6rem; border-radius: 999px; margin-right: .3rem; vertical-align: -1px; }
-        .dd-legend i.is-today { width: 2px; height: .8rem; border-radius: 2px; background: #f59e0b; vertical-align: -2px; }
-        .dd-cap { margin-top: .45rem; font-size: .7rem; line-height: 1.45; color: var(--tl-text-faint, #6b7280); }
-        .dd-none { font-size: .82rem; color: var(--tl-text-faint, #6b7280); padding: .2rem 0; }
-        .dd-kind + .dd-kind { margin-top: .6rem; padding-top: .6rem; border-top: 1px solid var(--tl-border, #e5e7eb); }
-        .dd-kind-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .45rem; margin-bottom: .15rem; }
-        .dd-kind-h i { display: inline-block; width: .7rem; height: .7rem; border-radius: 999px; align-self: center; }
-        .dd-kind-h b { font-size: .82rem; color: var(--tl-text, #111827); }
-        .dd-kind-h small { font-size: .7rem; color: var(--tl-text-faint, #6b7280); }
-        .dd-bar + .dd-bar { margin-top: .4rem; }
-        .dd-bar-h { display: flex; justify-content: space-between; gap: .5rem; font-size: .76rem; }
-        .dd-bar-h b { color: var(--tl-text, #111827); font-weight: 700; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .dd-bar-h small { color: var(--tl-text-faint, #6b7280); font-weight: 800; font-variant-numeric: tabular-nums; }
-        .dd-bar-t { display: block; height: 8px; border-radius: 999px; background: var(--tl-border, #eef0f2); overflow: hidden; margin-top: .2rem; }
-        .dd-bar-t i { display: block; height: 100%; border-radius: 999px; }
-        .dd-day-h { display: flex; align-items: baseline; gap: .45rem; margin-bottom: .25rem; }
-        .dd-day-h b { font-size: .8rem; color: var(--tl-text, #111827); }
-        .dd-day-h small { font-size: .68rem; font-weight: 800; color: var(--tl-text-faint, #6b7280); }
-        .dd-item { display: flex; gap: .5rem; align-items: flex-start; padding: .3rem 0 .3rem .15rem; }
-        .dd-item > i { flex: none; width: .55rem; height: .55rem; border-radius: 999px; margin-top: .35rem; }
-        .dd-item b { display: block; font-size: .8rem; font-weight: 700; color: var(--tl-text, #111827); }
-        .dd-item small { display: block; font-size: .68rem; color: var(--tl-text-faint, #6b7280); }
-        .dd-item.is-done b { text-decoration: line-through; text-decoration-color: rgb(0 0 0 / .3); }
-        .dd-sep { position: relative; text-align: center; margin: .35rem 0; }
-        .dd-sep::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; border-top: 1px dashed var(--tl-border, #e5e7eb); }
-        .dd-sep span { position: relative; font-size: .64rem; font-weight: 800; letter-spacing: .03em; color: var(--tl-text-faint, #6b7280);
-            background: var(--tl-surface, #fff); padding: 0 .5rem; }
+        /* The two ends, joined by the gap. */
+        .dd-ends { display: grid; gap: 0; }
+        .dd-end { display: flex; gap: .7rem; align-items: flex-start; padding: .75rem .85rem; border-radius: .95rem;
+            border: 1px solid var(--tl-border, #e5e7eb); background: var(--tl-surface, #fff); }
+        .dd-end-ico { flex: none; width: 2rem; height: 2rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center;
+            box-shadow: inset 0 0 0 3px rgb(255 255 255 / .55); }
+        .dd-end.is-day .dd-end-ico { background: #e4efd4; color: #2f5219; box-shadow: none; }
+        .dd-end-ico svg { width: 1.05rem; height: 1.05rem; }
+        .dd-end-t { min-width: 0; }
+        .dd-end-t small { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--tl-text-faint, #6b7280); }
+        .dd-end-t b { display: block; font-size: .92rem; color: var(--tl-text, #111827); line-height: 1.3; overflow-wrap: anywhere; }
+        .dd-end-t > span { display: block; font-size: .74rem; color: var(--tl-text-faint, #6b7280); margin-top: .1rem; }
+        .dd-end-lots { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .4rem; }
+        .dd-end-lot { font-size: .68rem; font-weight: 700; padding: .12rem .5rem; border-radius: 999px; background: var(--tl-pill, #f3f4f6); color: var(--tl-text-soft, #374151); }
+        .dd-end-t .dd-end-lot b { display: inline; font-size: inherit; font-weight: 900; color: inherit; }
+        .dd-link { position: relative; height: 2.6rem; display: flex; align-items: center; justify-content: center; }
+        .dd-link::before { content: ''; position: absolute; top: 0; bottom: 0; left: 1.85rem; border-left: 2px dashed #6b9f3d; }
+        .dd-link span { position: relative; font-size: .74rem; font-weight: 800; color: #2f5219; background: #e4efd4; border-radius: 999px; padding: .2rem .7rem; }
+        html.dark .dd-end.is-day .dd-end-ico { background: #22301a; color: #a8cc7e; }
+        html.dark .dd-link span { background: #22301a; color: #cfe6b8; }
+        /* The arrows on a card, beside the star: same footprint, its own wash. */
+        .activity-card .dd-act-btn { width: 2.1rem; height: 2.1rem; margin-top: .05rem; border-radius: .6rem; flex-shrink: 0;
+            display: inline-flex; align-items: center; justify-content: center; background: #ecfccb; color: #3f6212;
+            transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+        .activity-card .dd-act-btn svg { width: 1rem; height: 1rem; }
+        .activity-card .dd-act-btn:hover { background: #d9f99d; }
+        .activity-card .dd-act-btn.is-picked { background: #3d6823; color: #fff; animation: ddPulse 1.6s ease-in-out infinite; }
+        .activity-card.dd-card-picked { box-shadow: 0 0 0 2px #6b9f3d, var(--shadow-card, 0 1px 2px rgb(0 0 0 / .06)); }
+        html.dark .activity-card .dd-act-btn { background: rgb(101 163 13 / .22); color: #bef264; }
+        /* The arrows make the card's head run one chip longer. Below 360px
+           that ran past the card's edge (measured at 320), so there the chips
+           and their gaps give up a little: the run is back to the width it had
+           before the arrows. The id outranks the chip rules further down. */
+        @media (max-width: 359px) {
+            #activitiesList .activity-card .act-head-chips { column-gap: .45rem; }
+            #activitiesList .activity-card .act-head-chips > .star-btn,
+            #activitiesList .activity-card .act-head-chips > .card-menu-btn,
+            #activitiesList .activity-card .act-head-chips > .act-fold-chip,
+            #activitiesList .activity-card .act-head-chips > .dd-act-btn,
+            #activitiesList .activity-card .act-head-chips > .type-ico { width: 1.9rem; height: 1.9rem; }
+        }
+        html.dark .activity-card .dd-act-btn.is-picked { background: #6b9f3d; color: #fff; }
         /* On a phone the arrows stay on the date's own line (the owner:
            "after the date in the same row"), and that line was already full:
            as they came, they cut "Aug 17, 26" at 360px and dropped every
@@ -1001,13 +999,7 @@
                rest of the line, as it did. */
             .date-header > .date-header-date { max-width: max-content; }
         }
-        /* On a phone a lane is its name over a full-width line, so the days
-           have the room to stand apart. */
-        @media (max-width: 559px) {
-            .dd-lane { grid-template-columns: minmax(0, 1fr); gap: .15rem; }
-            .dd-axis { margin-left: 0; padding: 0 .45rem; }
-        }
-        @media (prefers-reduced-motion: reduce) { .dd-btn { transition: none; } .dd-btn.is-picked { animation: none; transform: none; } }
+        @media (prefers-reduced-motion: reduce) { .dd-btn, .activity-card .dd-act-btn { transition: none; } .dd-btn.is-picked, .activity-card .dd-act-btn.is-picked { animation: none; transform: none; } }
         .cr-hint svg { width: 1.05rem; height: 1.05rem; flex: none; }
         .cr-hint button { flex: none; margin-left: .2rem; color: #fde68a; font-weight: 800; text-decoration: underline; cursor: pointer; }
         @media (prefers-reduced-motion: reduce) {
@@ -4574,7 +4566,7 @@
                                  another day, and the stretch between opens in a
                                  sheet. Twin of the JS renderer's; wired in
                                  activities-js (DATE DIFF). --}}
-                            <button type="button" class="dd-btn" data-dd-date="{{ $dateKey }}" title="Date Diff: measure from this day to another" aria-label="Date Diff from this day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg></button>
+                            <button type="button" class="dd-btn" data-dd-date="{{ $dateKey }}" title="Date difference: measure from this day to another day or activity" aria-label="Date difference from this day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg></button>
                         @else
                             <span class="date-header-date">No date</span>
                         @endif

@@ -237,6 +237,10 @@
                     aria-label="Marker: {{ $starInkName }}">
                 <svg viewBox="0 0 24 24" stroke-linejoin="round"><path d="m12 3.4 2.63 5.33 5.88.86-4.25 4.15 1 5.86L12 16.85l-5.26 2.75 1-5.86-4.25-4.15 5.88-.86z"/></svg>
             </button>
+            {{-- Date difference from this activity (2026-09-29): tap here, then on
+                 another activity or a day's arrows. Twin of the JS card's;
+                 wired in activities-js (DATE DIFF). --}}
+            <button type="button" class="icon-btn dd-act-btn" data-dd-act="{{ $a->id }}" title="Date difference: measure from this activity to another activity or day" aria-label="Date difference from this activity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg></button>
             <button type="button" class="icon-btn card-menu-btn" data-id="{{ $a->id }}" data-name="{{ $a->activityTitle }}" title="Actions">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>

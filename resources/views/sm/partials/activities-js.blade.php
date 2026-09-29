@@ -1225,6 +1225,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </button>
             ${typeIco}
             <button type="button" class="icon-btn star-btn${LOCK_EDIT_CLS}" data-star-btn data-id="${a.id}" data-star="${starOf(a)}"${LOCK_EDIT} title="${esc(editTitle(starOf(a) ? `Marker: ${starName(starOf(a))}` : 'Marker — tap to pick a colour'))}" aria-label="Marker: ${esc(starName(starOf(a)))}">${SVG.star}</button>
+            <button type="button" class="icon-btn dd-act-btn${window.__ddPickedAct === String(a.id) ? ' is-picked' : ''}" data-dd-act="${a.id}" title="Date difference: measure from this activity to another activity or day" aria-label="Date difference from this activity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg></button>
             <button type="button" class="icon-btn card-menu-btn" data-id="${a.id}" data-name="${nameAttr}" title="Actions"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
             <span class="act-fold-chip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
             ${hasChecklist(a) ? '' : costTag(a.labourTotal, a.workerPay)}
@@ -2285,42 +2286,72 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ---- DATE DIFF ----------------------------------------------------------
-     * The owner, 2026-09-29: after each date an icon (the mirror's Date Diff
-     * arrows). Tap it, then another day's, and a sheet says what lies between:
-     * the days, each lot's count at both ends, every lot's work on one line
-     * with the gaps written in, how far apart the sprays of each kind fell,
-     * the kinds of work, and every activity in order. All of it read off the
-     * board itself (the cards carry their dates, types, lots and day counts),
-     * so it cannot disagree with what is on screen. Closing the sheet, however
-     * it is closed, lets both days go -- the Range total rule. */
-    const DD = { picked: null, second: null };
-    window.__ddPicked = null;
-    const DD_CATS = {
-        herbicide: { label: 'Herbicide', color: '#b45309', spray: true },
-        pesticide: { label: 'Pesticide / Insecticide', color: '#b91c1c', spray: true },
-        fungicide: { label: 'Fungicide', color: '#7c3aed', spray: true },
-        foliar: { label: 'Foliar spray', color: '#0891b2', spray: true },
-        fertilizer: { label: 'Fertilizer', color: '#15803d' },
-        water: { label: 'Irrigation', color: '#2563eb' },
-        crop: { label: 'Seed, planting & harvest', color: '#ca8a04' },
-        other: { label: 'Other work', color: '#6b7280' },
+     * How far apart two things are, in days. The owner, 2026-09-29: the
+     * arrows after each date, and the same arrows on every activity after its
+     * star, so a gap can be measured between two days, two activities, or an
+     * activity and a day. Tap one, then the other; the sheet says the
+     * difference and nothing more: the days, the weeks, both ends counted,
+     * each lot's day count at the two ends, and the two ends themselves.
+     * Closing the sheet, however it is closed, lets both go (the Range total
+     * rule); the hint's Cancel lets the first go. */
+    const DD = { a: null, b: null };
+    window.__ddPicked = null;      // a picked day, for the JS header twin
+    window.__ddPickedAct = null;   // a picked activity, for the JS card twin
+    const DD_COLOR = {
+        herbicide: '#b45309', pesticide: '#b91c1c', pest_control: '#b91c1c', fungicide: '#7c3aed', copper_fungicide: '#7c3aed',
+        foliar_spray: '#0891b2', fertilizer: '#15803d', fertilization: '#15803d', fertilizer_granular: '#15803d',
+        irrigation: '#2563eb', planting: '#ca8a04', seed_treatment: '#ca8a04', harvest: '#ca8a04', harvesting: '#ca8a04',
     };
-    const DD_OF = {
-        herbicide: 'herbicide', pesticide: 'pesticide', pest_control: 'pesticide',
-        fungicide: 'fungicide', copper_fungicide: 'fungicide', foliar_spray: 'foliar',
-        fertilizer: 'fertilizer', fertilization: 'fertilizer', fertilizer_granular: 'fertilizer',
-        irrigation: 'water', planting: 'crop', seed_treatment: 'crop', harvest: 'crop', harvesting: 'crop',
-    };
-    const ddCat = (slug) => DD_OF[slug] || 'other';
     const ddNum = (key) => { const [y, m, d] = String(key).split('-').map(Number); return Math.round(Date.UTC(y, m - 1, d) / 86400000); };
     const ddSay = (key, opts) => new Date(key + 'T00:00:00').toLocaleDateString('en-US', opts || { month: 'short', day: 'numeric' });
     const ddDays = (n) => n + (n === 1 ? ' day' : ' days');
-    const ddTypeName = (slug) => (typeof ACTIVITY_TYPE_LABELS !== 'undefined' && ACTIVITY_TYPE_LABELS[slug]) || (slug ? slug.replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase()) : 'Other');
+    const ddTypeName = (slug) => (typeof ACTIVITY_TYPE_LABELS !== 'undefined' && ACTIVITY_TYPE_LABELS[slug]) || (slug ? slug.replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase()) : 'Activity');
+    const ddLotsOf = (card) => {
+        const out = [];
+        const seen = new Set();
+        card.querySelectorAll('.lot-tag[data-lot-id]').forEach((l) => {
+            const id = l.getAttribute('data-lot-id');
+            if (seen.has(id)) return;
+            seen.add(id);
+            // "DAS+10" or "DAS0" off the tag, said "DAS 10" / "DAS 0".
+            const das = (((l.querySelector('.lot-tag-das') || {}).firstChild || {}).textContent || '').trim().replace(/^([A-Za-z]+)\s*\+?\s*/, '$1 ');
+            out.push({ id, name: l.getAttribute('data-lot-name') || l.textContent.trim(), das });
+        });
+        return out;
+    };
+    const ddCardsOn = (date) => [...document.querySelectorAll('#activitiesList .activity-card[data-id]')]
+        .filter((c) => (c.getAttribute('data-target-date') || c.closest('.date-group')?.getAttribute('data-date')) === date);
+
+    function ddDay(date) {
+        // A day's lots and their counts, off the cards that day holds.
+        const lots = new Map();
+        const cards = ddCardsOn(date);
+        cards.forEach((c) => ddLotsOf(c).forEach((l) => { if (l.das && !lots.has(l.id)) lots.set(l.id, l); }));
+        return { kind: 'day', key: 'd:' + date, date, count: cards.length, lots: [...lots.values()] };
+    }
+    function ddAct(card) {
+        const date = card.getAttribute('data-target-date') || card.closest('.date-group')?.getAttribute('data-date') || '';
+        const types = (card.getAttribute('data-activity-types') || card.getAttribute('data-activity-type') || '').split(',').map((s) => s.trim()).filter(Boolean);
+        return {
+            kind: 'act', key: 'a:' + card.getAttribute('data-id'), id: card.getAttribute('data-id'), date,
+            title: (card.querySelector('.activity-card-title')?.textContent || 'Untitled').trim(),
+            type: types[0] || '', done: card.getAttribute('data-is-done') === '1', lots: ddLotsOf(card),
+        };
+    }
 
     function ddPaint() {
+        const on = [DD.a, DD.b].filter(Boolean);
+        window.__ddPicked = on.find((p) => p.kind === 'day')?.date || null;
+        window.__ddPickedAct = on.find((p) => p.kind === 'act')?.id || null;
         document.querySelectorAll('#activitiesList .dd-btn').forEach((b) => {
             const d = b.getAttribute('data-dd-date');
-            b.classList.toggle('is-picked', d === DD.picked || d === DD.second);
+            b.classList.toggle('is-picked', on.some((p) => p.kind === 'day' && p.date === d));
+        });
+        document.querySelectorAll('#activitiesList .dd-act-btn').forEach((b) => {
+            const id = b.getAttribute('data-dd-act');
+            const hit = on.some((p) => p.kind === 'act' && p.id === id);
+            b.classList.toggle('is-picked', hit);
+            b.closest('.activity-card')?.classList.toggle('dd-card-picked', hit);
         });
     }
     function ddHint(say) {
@@ -2336,236 +2367,97 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function ddHintGone() { document.getElementById('ddHint')?.remove(); }
     function ddCancel() {
-        DD.picked = null;
-        DD.second = null;
-        window.__ddPicked = null;
+        DD.a = null;
+        DD.b = null;
         ddPaint();
         ddHintGone();
     }
-    window.dateDiff = { cancel: ddCancel, on: () => !!DD.picked };
+    window.dateDiff = { cancel: ddCancel, on: () => !!DD.a };
 
-    document.addEventListener('click', (e) => {
-        if (e.target.closest('[data-dd-stop]')) { ddCancel(); return; }
-        const b = e.target.closest('#activitiesList .dd-btn');
-        if (!b) return;
-        e.preventDefault();
-        e.stopPropagation();
-        const d = b.getAttribute('data-dd-date');
-        if (!d) return;
-        if (!DD.picked) {
+    function ddPick(p) {
+        if (!p.date || !/^\d{4}-\d{2}-\d{2}$/.test(p.date)) { toast('This one has no date yet, so there is nothing to measure from.', 'error'); return; }
+        if (!DD.a) {
             // One question at a time: a stretch being totalled is let go.
             if (typeof CASH_RANGE !== 'undefined' && CASH_RANGE.on) cashRangeSetMode(false);
-            DD.picked = d;
-            window.__ddPicked = d;
+            DD.a = p;
             ddPaint();
-            ddHint('Now tap ↔ on another day');
+            ddHint('Now tap ↔ on another day or activity');
             return;
         }
-        if (d === DD.picked) { ddCancel(); return; }
-        DD.second = d;
+        if (DD.a.key === p.key) { ddCancel(); return; }
+        DD.b = p;
         ddPaint();
         ddHintGone();
-        const [from, to] = [DD.picked, d].sort();
-        ddOpen(from, to);
+        ddOpen();
+    }
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('[data-dd-stop]')) { ddCancel(); return; }
+        const day = e.target.closest('#activitiesList .dd-btn');
+        const act = e.target.closest('#activitiesList .dd-act-btn');
+        if (!day && !act) return;
+        e.preventDefault();
+        e.stopPropagation();
+        if (day) ddPick(ddDay(day.getAttribute('data-dd-date')));
+        else {
+            const card = act.closest('.activity-card[data-id]');
+            if (card) ddPick(ddAct(card));
+        }
     });
     $id('dateDiffDone')?.addEventListener('click', () => closeSheet('dateDiffSheet'));
     $id('dateDiffSheet')?.addEventListener('sheet:close', ddCancel);
 
-    /* Everything planned from one day to the other, off the cards. */
-    function ddCollect(from, to) {
-        const f = ddNum(from);
-        const t = ddNum(to);
-        const seen = new Set();
-        const acts = [];
-        document.querySelectorAll('#activitiesList .activity-card[data-id]').forEach((c) => {
-            const id = c.getAttribute('data-id');
-            if (seen.has(id)) return;
-            const date = c.getAttribute('data-target-date') || c.closest('.date-group')?.getAttribute('data-date') || '';
-            if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
-            const n = ddNum(date);
-            if (n < f || n > t) return;
-            seen.add(id);
-            const types = (c.getAttribute('data-activity-types') || c.getAttribute('data-activity-type') || '')
-                .split(',').map((s) => s.trim()).filter(Boolean);
-            const lots = [];
-            const lotSeen = new Set();
-            c.querySelectorAll('.lot-tag[data-lot-id]').forEach((l) => {
-                const lid = l.getAttribute('data-lot-id');
-                if (lotSeen.has(lid)) return;
-                lotSeen.add(lid);
-                const das = ((l.querySelector('.lot-tag-das') || {}).firstChild || {}).textContent || '';
-                lots.push({ id: lid, name: l.getAttribute('data-lot-name') || l.textContent.trim(), das: das.trim().replace(/\+/, ' ') });
-            });
-            acts.push({
-                id, date, n, types, lots,
-                title: (c.querySelector('.activity-card-title')?.textContent || 'Untitled').trim(),
-                cat: ddCat(types[0]),
-                cats: [...new Set(types.map(ddCat))],
-                done: c.getAttribute('data-is-done') === '1',
-                seq: Number(c.getAttribute('data-sequence-order')) || 0,
-            });
-        });
-        acts.sort((a, b) => a.n - b.n || a.seq - b.seq);
-
-        return { from, to, f, t, span: t - f, acts };
-    }
-
-    /* The distances between consecutive days in a list of day numbers. */
-    function ddGaps(nums) {
-        const days = [...new Set(nums)].sort((a, b) => a - b);
-        const gaps = [];
-        for (let i = 1; i < days.length; i++) gaps.push({ a: days[i - 1], b: days[i], d: days[i] - days[i - 1] });
-
-        return { days, gaps };
-    }
-
-    /* One lane: a line from the first day to the last, a dot per activity,
-     * and the gap between neighbouring days written above it where it fits. */
-    function ddLane(R, label, items, color, sub) {
-        const at = (n) => (R.span > 0 ? (n - R.f) / R.span * 100 : 50);
-        const { days, gaps } = ddGaps(items.map((x) => x.n));
-        const byDay = new Map();
-        items.forEach((x) => { if (!byDay.has(x.n)) byDay.set(x.n, []); byDay.get(x.n).push(x); });
-        const dots = days.map((n) => {
-            const here = byDay.get(n);
-            const c = color || DD_CATS[here[0].cat].color;
-            const tip = ddSay(here[0].date) + ': ' + here.map((x) => x.title).join(', ');
-            return `<i class="dd-dot${here.length > 1 ? ' is-many' : ''}" style="left:${at(n).toFixed(2)}%;background:${c}" title="${esc(tip)}"></i>`;
-        }).join('');
-        const labels = gaps.map((g) => {
-            const w = at(g.b) - at(g.a);
-            return w >= 9 ? `<b class="dd-gap" style="left:${((at(g.a) + at(g.b)) / 2).toFixed(2)}%">${g.d}d</b>` : '';
-        }).join('');
-        const today = typeof TODAY_KEY !== 'undefined' && TODAY_KEY ? ddNum(TODAY_KEY) : null;
-        const todayMark = today !== null && today >= R.f && today <= R.t ? `<i class="dd-today" style="left:${at(today).toFixed(2)}%" title="Today"></i>` : '';
-
-        return `<div class="dd-lane">
-            <div class="dd-lane-h"><b>${esc(label)}</b>${sub ? `<small>${esc(sub)}</small>` : ''}</div>
-            <div class="dd-track">${todayMark}${labels}${dots}</div>
+    function ddEnd(p) {
+        const when = ddSay(p.date, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+        const lots = p.lots.filter((l) => l.das).map((l) => `<span class="dd-end-lot"><b>${esc(l.name)}</b> ${esc(l.das)}</span>`).join('');
+        if (p.kind === 'act') {
+            const c = DD_COLOR[p.type] || '#6b7280';
+            return `<div class="dd-end">
+                <span class="dd-end-ico" style="background:${c}"></span>
+                <div class="dd-end-t"><small>${esc(when)}</small><b>${esc(p.title)}</b>
+                    <span>${esc(ddTypeName(p.type))}${p.done ? ' · done' : ''}</span>
+                    ${lots ? `<div class="dd-end-lots">${lots}</div>` : ''}</div>
+            </div>`;
+        }
+        return `<div class="dd-end is-day">
+            <span class="dd-end-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>
+            <div class="dd-end-t"><small>The day</small><b>${esc(when)}</b>
+                <span>${p.count ? `${p.count} ${p.count === 1 ? 'activity' : 'activities'} that day` : 'Nothing planned that day'}</span>
+                ${lots ? `<div class="dd-end-lots">${lots}</div>` : ''}</div>
         </div>`;
     }
 
-    function ddOpen(from, to) {
-        const R = ddCollect(from, to);
-        const A = R.acts;
-        const weeks = Math.floor(R.span / 7);
-        const rest = R.span % 7;
-        const parts = [];
-
-        /* ---- the distance, and each lot's count at both ends ---- */
-        const endCounts = [];
-        const lotsAt = (n) => { const m = new Map(); A.filter((x) => x.n === n).forEach((x) => x.lots.forEach((l) => { if (l.das && !m.has(l.id)) m.set(l.id, l); })); return m; };
-        const atStart = lotsAt(R.f);
-        const atEnd = lotsAt(R.t);
-        atStart.forEach((l, id) => { if (atEnd.has(id)) endCounts.push(`<span class="dd-chip"><b>${esc(l.name)}</b> ${esc(l.das)} → ${esc(atEnd.get(id).das)}</span>`); });
+    function ddOpen() {
+        // The earlier one first; on the same day, in the order they were tapped.
+        const [A, B] = ddNum(DD.a.date) <= ddNum(DD.b.date) ? [DD.a, DD.b] : [DD.b, DD.a];
+        const span = ddNum(B.date) - ddNum(A.date);
+        const weeks = Math.floor(span / 7);
+        const rest = span % 7;
         const today = typeof TODAY_KEY !== 'undefined' ? TODAY_KEY : '';
-        parts.push(`<div class="dd-hero">
-            <div class="dd-hero-n"><b>${R.span}</b><span>${R.span === 1 ? 'day' : 'days'} between</span></div>
-            <p class="dd-hero-when">${esc(ddSay(from, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }))} <span>→</span> ${esc(ddSay(to, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }))}</p>
-            <div class="dd-chips">
-                ${weeks ? `<span class="dd-chip">${weeks} ${weeks === 1 ? 'week' : 'weeks'}${rest ? ' and ' + ddDays(rest) : ''}</span>` : ''}
-                <span class="dd-chip">${ddDays(R.span + 1)} counting both</span>
-                ${today && today >= from && today <= to ? '<span class="dd-chip is-today">Today is inside</span>' : ''}
-                ${endCounts.join('')}
+        // Each lot's count at both ends, where both ends name it.
+        const counts = A.lots.filter((l) => l.das).map((l) => {
+            const m = B.lots.find((x) => x.id === l.id && x.das);
+            return m ? `<span class="dd-chip"><b>${esc(l.name)}</b> ${esc(l.das)} → ${esc(m.das)}</span>` : '';
+        }).join('');
+        const html = `
+            <div class="dd-hero">
+                <div class="dd-hero-n">${span ? `<b>${span}</b><span>${span === 1 ? 'day' : 'days'} apart</span>` : '<b>0</b><span>days apart: the same day</span>'}</div>
+                <p class="dd-hero-when">${esc(ddSay(A.date, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }))}${span ? ` <span>→</span> ${esc(ddSay(B.date, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }))}` : ''}</p>
+                <div class="dd-chips">
+                    ${weeks ? `<span class="dd-chip">${weeks} ${weeks === 1 ? 'week' : 'weeks'}${rest ? ' and ' + ddDays(rest) : ''}</span>` : ''}
+                    ${span ? `<span class="dd-chip">${ddDays(span + 1)} counting both</span>` : ''}
+                    ${today && span && today > A.date && today < B.date ? '<span class="dd-chip is-today">Today falls between</span>' : ''}
+                    ${counts}
+                </div>
             </div>
-        </div>`);
-
-        if (!A.length) {
-            parts.push('<p class="dd-none">Nothing is planned from one day to the other.</p>');
-        } else {
-            /* ---- at a glance ---- */
-            const workDays = new Set(A.map((x) => x.n)).size;
-            const sprays = A.filter((x) => x.cats.some((c) => DD_CATS[c].spray));
-            const lotIds = new Set(A.flatMap((x) => x.lots.map((l) => l.id)));
-            const done = A.filter((x) => x.done).length;
-            parts.push(`<div class="dd-figs">
-                <div class="dd-fig"><small>Activities</small><b>${A.length}</b><span>${done} done</span></div>
-                <div class="dd-fig"><small>Days with work</small><b>${workDays}</b><span>of ${R.span + 1}</span></div>
-                <div class="dd-fig"><small>Sprays</small><b>${sprays.length}</b><span>${sprays.length ? 'herbicide, pest, fungus, foliar' : 'none'}</span></div>
-                <div class="dd-fig"><small>Lots</small><b>${lotIds.size}</b><span>${lotIds.size ? 'worked in the stretch' : 'whole farm only'}</span></div>
-            </div>`);
-
-            /* ---- lot by lot: one line each, the gaps written in ---- */
-            const lots = new Map();
-            A.forEach((x) => {
-                const keys = x.lots.length ? x.lots : [{ id: '_farm', name: 'Whole farm' }];
-                keys.forEach((l) => { if (!lots.has(l.id)) lots.set(l.id, { name: l.name, items: [] }); lots.get(l.id).items.push(x); });
-            });
-            const lotRows = [...lots.values()].map((L) => {
-                const { days, gaps } = ddGaps(L.items.map((x) => x.n));
-                const quiet = gaps.reduce((m, g) => (g.d > (m ? m.d : 0) ? g : m), null);
-                const avg = gaps.length ? Math.round(gaps.reduce((s, g) => s + g.d, 0) / gaps.length) : null;
-                const sub = `${L.items.length} ${L.items.length === 1 ? 'activity' : 'activities'} on ${ddDays(days.length)}`
-                    + (avg !== null ? ` · every ${ddDays(avg)} on average` : '')
-                    + (quiet && quiet.d > 1 ? ` · longest quiet stretch ${ddDays(quiet.d)} (${ddSay(ddKey(quiet.a))} to ${ddSay(ddKey(quiet.b))})` : '');
-                return ddLane(R, L.name, L.items, null, sub);
-            }).join('');
-            const catsHere = [...new Set(A.map((x) => x.cat))];
-            parts.push(`<div class="dd-card"><h4>Lot by lot</h4>
-                <div class="dd-axis"><span>${esc(ddSay(from))}</span><span>${esc(ddSay(to))}</span></div>
-                ${lotRows}
-                <div class="dd-legend">${catsHere.map((c) => `<span><i style="background:${DD_CATS[c].color}"></i>${esc(DD_CATS[c].label)}</span>`).join('')}${today && today >= from && today <= to ? '<span><i class="is-today"></i>Today</span>' : ''}</div>
-                <p class="dd-cap">Each dot is a day with work; the number above a line is the days between two of them. A ringed dot holds more than one activity.</p>
-            </div>`);
-
-            /* ---- between sprays, kind by kind, lot by lot ---- */
-            const sprayKinds = ['herbicide', 'pesticide', 'fungicide', 'foliar'];
-            const kindBlocks = sprayKinds.map((k) => {
-                const apps = A.filter((x) => x.cats.includes(k));
-                if (!apps.length) return '';
-                const byLot = new Map();
-                apps.forEach((x) => {
-                    const keys = x.lots.length ? x.lots : [{ id: '_farm', name: 'Whole farm' }];
-                    keys.forEach((l) => { if (!byLot.has(l.id)) byLot.set(l.id, { name: l.name, items: [] }); byLot.get(l.id).items.push(x); });
-                });
-                const allGaps = [...byLot.values()].flatMap((L) => ddGaps(L.items.map((x) => x.n)).gaps.map((g) => g.d));
-                const lo = allGaps.length ? Math.min(...allGaps) : 0;
-                const hi = allGaps.length ? Math.max(...allGaps) : 0;
-                const stat = !allGaps.length
-                    ? `once${apps.length === 1 ? ', on ' + ddSay(apps[0].date) : ' on each lot'}`
-                    : allGaps.length === 1
-                        ? `${ddDays(lo)} apart`
-                        : `every ${ddDays(Math.round(allGaps.reduce((s, d) => s + d, 0) / allGaps.length))} on average · ${lo === hi ? ddDays(lo) + ' apart each time' : lo + ' to ' + ddDays(hi) + ' apart'}`;
-                return `<div class="dd-kind">
-                    <div class="dd-kind-h"><i style="background:${DD_CATS[k].color}"></i><b>${esc(DD_CATS[k].label)}</b><small>${apps.length} ${apps.length === 1 ? 'time' : 'times'} · ${esc(stat)}</small></div>
-                    ${[...byLot.values()].map((L) => ddLane(R, L.name, L.items, DD_CATS[k].color, '')).join('')}
-                </div>`;
-            }).join('');
-            parts.push(`<div class="dd-card"><h4>Between sprays</h4>${kindBlocks || '<p class="dd-none">No herbicide, pesticide, fungicide or foliar spray falls in this stretch.</p>'}
-                ${kindBlocks ? '<p class="dd-cap">The days between applications of the same kind on the same lot. A tank mix counts for every kind in it.</p>' : ''}</div>`);
-
-            /* ---- the kinds of work ---- */
-            const kinds = new Map();
-            A.forEach((x) => { const k = x.types[0] || 'other'; kinds.set(k, (kinds.get(k) || 0) + 1); });
-            const kindRows = [...kinds.entries()].sort((a, b) => b[1] - a[1]);
-            const kmax = Math.max(...kindRows.map((r) => r[1]));
-            parts.push(`<div class="dd-card"><h4>The kinds of work</h4>${kindRows.map(([k, n]) => `
-                <div class="dd-bar"><span class="dd-bar-h"><b>${esc(ddTypeName(k))}</b><small>${n}</small></span>
-                    <span class="dd-bar-t"><i style="width:${(n / kmax * 100).toFixed(1)}%;background:${DD_CATS[ddCat(k)].color}"></i></span></div>`).join('')}</div>`);
-
-            /* ---- every activity, in order, the gaps between days said ---- */
-            const byDate = new Map();
-            A.forEach((x) => { if (!byDate.has(x.date)) byDate.set(x.date, []); byDate.get(x.date).push(x); });
-            let shown = 0;
-            let prev = null;
-            const list = [];
-            for (const [date, items] of byDate) {
-                if (shown >= 60) break;
-                const n = ddNum(date);
-                if (prev !== null) list.push(`<div class="dd-sep"><span>${ddDays(n - prev)} later</span></div>`);
-                prev = n;
-                list.push(`<div class="dd-day"><div class="dd-day-h"><b>${esc(ddSay(date, { weekday: 'short', month: 'short', day: 'numeric' }))}</b>${items[0].lots[0] && items[0].lots[0].das ? `<small>${esc(items[0].lots[0].das)}</small>` : ''}</div>
-                    ${items.map((x) => { shown++; return `<div class="dd-item${x.done ? ' is-done' : ''}"><i style="background:${DD_CATS[x.cat].color}"></i><span><b>${esc(x.title)}</b><small>${esc(ddTypeName(x.types[0]))}${x.lots.length ? ' · ' + esc(x.lots.map((l) => l.name).join(', ')) : ''}${x.done ? ' · done' : ''}</small></span></div>`; }).join('')}
-                </div>`);
-            }
-            parts.push(`<div class="dd-card"><h4>Every activity, in order</h4>${list.join('')}${A.length > shown ? `<p class="dd-cap">And ${A.length - shown} more.</p>` : ''}</div>`);
-        }
-
-        $id('dateDiffTitle').textContent = ddSay(from) + ' → ' + ddSay(to, { month: 'short', day: 'numeric', year: 'numeric' });
-        $id('dateDiffBody').innerHTML = parts.join('');
+            <div class="dd-ends">
+                ${ddEnd(A)}
+                <div class="dd-link"><span>${span ? ddDays(span) + ' later' : 'Same day'}</span></div>
+                ${ddEnd(B)}
+            </div>`;
+        $id('dateDiffTitle').textContent = 'Date difference';
+        $id('dateDiffBody').innerHTML = html;
         openSheet('dateDiffSheet');
     }
-    const ddKey = (n) => new Date(n * 86400000).toISOString().slice(0, 10);
 
     /* True when a mutation record only moved our own decorations around — the
        cash line's break, the forecast strip, or the button it collapses into. */
@@ -2924,7 +2816,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const headerDate = dateObj
             ? `<span class="date-header-day">${DAY_SHORT[dateObj.getDay()]}</span><span class="date-header-date${rangeShort ? ' has-range' : ''}"><span class="dh-long">${esc(prettyDate(dateKey))}</span><span class="dh-short">${esc(dateShort)}</span>${rangeShort ? `<span class="dh-rangeshort">${esc(rangeShort)}</span>` : ''}</span>${rangeBadge}`
                 // Date Diff: twin of the Blade button (see DATE DIFF below).
-                + `<button type="button" class="dd-btn${window.__ddPicked === dateKey ? ' is-picked' : ''}" data-dd-date="${esc(dateKey)}" title="Date Diff: measure from this day to another" aria-label="Date Diff from this day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg></button>`
+                + `<button type="button" class="dd-btn${window.__ddPicked === dateKey ? ' is-picked' : ''}" data-dd-date="${esc(dateKey)}" title="Date difference: measure from this day to another day or activity" aria-label="Date difference from this day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg></button>`
             : '<span class="date-header-date">No date</span>';
 
         // A day note can be attachments alone — chips with no words are
