@@ -37,6 +37,8 @@ return Application::configure(basePath: dirname(__DIR__))
         // outside the router: the guest redirect the auth middleware throws
         // (which runs ahead of anything in the web group) passes through it.
         $middleware->append(\App\Http\Middleware\RobotsHeaders::class);
+        // Facebook's link readers, noted as they come (see the class).
+        $middleware->append(\App\Http\Middleware\NoteLinkReaders::class);
         $middleware->web(append: [
             // Which country this request is in, before anything renders or
             // any route is generated (the public site's {face} default).

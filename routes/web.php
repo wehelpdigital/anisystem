@@ -132,6 +132,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
         // thing to rule out when "the email never came".
         'mail' => ['from' => (string) config('services.resend.from'), 'resendKey' => (bool) config('services.resend.key')],
         'probe' => $probe,
+        // Facebook's crawler visits the app saw, newest first (NoteLinkReaders).
+        'linkReaders' => rescue(fn () => Illuminate\Support\Facades\Cache::get(App\Http\Middleware\NoteLinkReaders::KEY, []), [], false),
     ]);
 })->name('deploy.check');
 
