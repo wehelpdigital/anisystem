@@ -5437,14 +5437,21 @@
             setTimeout(() => { pick.hidden = true; pick.setAttribute('aria-hidden', 'true'); }, 280);
         }
 
-        function build() {
+        function build(refresh = false) {
             body.innerHTML = '';
             todayKey = (document.querySelector('#activitiesList .date-group.is-today')
                 || {}).getAttribute?.('data-date') || '';
             readVocabulary();
-            lotsOn.clear();
-            typesOn.clear();
-            tagsOn.clear();
+            /* A rebuild after an edit keeps the question that was being asked.
+             * Clearing the lot, type and tag picks here used to hand back the
+             * whole season a tick later, at a different height, which is half
+             * of why a tick moved the screen (the owner, 2026-09-29). Only
+             * opening the mirror starts from nothing. */
+            if (!refresh) {
+                lotsOn.clear();
+                typesOn.clear();
+                tagsOn.clear();
+            }
             sayPicks();
             const groups = document.querySelectorAll('#activitiesList .date-group[data-date]');
             groups.forEach((g) => {
@@ -5507,7 +5514,14 @@
                 }
                 body.appendChild(copy);
             });
+            // Date Diff picks were buttons in the old copies; carried over by
+            // their dates on a refresh, let go on a fresh open.
+            const diffDates = refresh ? diffPicks.map((b) => b.dataset.date) : [];
             diffPicks.length = 0;
+            diffDates.forEach((d) => {
+                const b = body.querySelector('.mir-diff[data-date="' + (window.CSS?.escape ? CSS.escape(d) : d) + '"]');
+                if (b) diffPicks.push(b);
+            });
             paintDiff();
             /* The copies were taken from the board and carry whatever it was
              * wearing, but a rebuild can land between a pick and its paint -
@@ -5541,11 +5555,11 @@
             rebuildTimer = setTimeout(() => {
                 rebuildTimer = null;
                 if (panel.hidden) return;
-                const keepScroll = body.scrollTop;
                 const openDays = new Set([...body.querySelectorAll('.date-group:not(.is-folded)[data-date]')]
                     .map((g) => g.getAttribute('data-date')));
+                const anchor = mirrorAnchor();
                 body.innerHTML = '';
-                build();
+                build(true);
                 // Whatever was open stays open, and the eye keeps its place:
                 // a refresh that folds the season shut and jumps to the top
                 // is a worse answer than a stale card.
@@ -5554,9 +5568,64 @@
                         ?.classList.remove('is-folded');
                 });
                 syncFoldBtn();
-                body.scrollTop = keepScroll;
+                holdAnchor(anchor);
             }, 220);
         };
+
+        /* WHERE THE EYE WAS, AS A THING RATHER THAN A NUMBER.
+         *
+         * Putting scrollTop back used to be the whole of it, and it could not
+         * work: every day carries content-visibility:auto, so a fresh copy of
+         * the season stands on ESTIMATED heights until each day is drawn, and
+         * the same scrollTop then points somewhere else — a tick, or an edit
+         * saved through the three dots, and the screen moved (the owner,
+         * 2026-09-29). So the place is kept by what was there: the card last
+         * touched, if it is still on screen, else the first day showing at
+         * the top. After the rebuild that same thing is put back at the same
+         * height, and checked again as the days around it settle. */
+        let lastTouch = null;   // { id, at }
+        body.addEventListener('pointerdown', (e) => {
+            const card = e.target.closest?.('.activity-card[data-id]');
+            lastTouch = card ? { id: card.getAttribute('data-id'), at: performance.now() } : null;
+        }, true);
+        function mirrorAnchor() {
+            const top = body.getBoundingClientRect().top;
+            const bottom = body.getBoundingClientRect().bottom;
+            if (lastTouch && performance.now() - lastTouch.at < 120000) {
+                const c = body.querySelector('.activity-card[data-id="' + (window.CSS?.escape ? CSS.escape(lastTouch.id) : lastTouch.id) + '"]:not(.mir-away)');
+                const r = c?.getBoundingClientRect();
+                if (r && r.bottom > top && r.top < bottom) return { card: lastTouch.id, offset: r.top - top };
+            }
+            const day = [...body.querySelectorAll('.date-group[data-date]:not(.mir-away)')]
+                .find((g) => g.getBoundingClientRect().bottom > top + 1);
+            return day ? { date: day.getAttribute('data-date'), offset: day.getBoundingClientRect().top - top } : null;
+        }
+        function holdAnchor(a) {
+            if (!a) return;
+            const find = () => (a.card
+                ? body.querySelector('.activity-card[data-id="' + (window.CSS?.escape ? CSS.escape(a.card) : a.card) + '"]:not(.mir-away)')
+                : null)
+                || (a.date ? body.querySelector('.date-group[data-date="' + (window.CSS?.escape ? CSS.escape(a.date) : a.date) + '"]') : null);
+            // A farmer who starts scrolling has taken the screen back.
+            let theirs = false;
+            const mine = () => { theirs = true; };
+            ['wheel', 'touchmove', 'keydown'].forEach((t) => body.addEventListener(t, mine, { once: true, passive: true }));
+            setTimeout(() => ['wheel', 'touchmove', 'keydown'].forEach((t) => body.removeEventListener(t, mine)), 400);
+            const put = () => {
+                if (theirs) return;
+                const el = find();
+                if (!el) return;
+                const now = el.getBoundingClientRect().top - body.getBoundingClientRect().top;
+                const drift = now - a.offset;
+                if (Math.abs(drift) > 1) body.scrollTop += drift;
+            };
+            put();
+            // The days either side draw themselves over the next frames and
+            // can shift the ground once more; the place is re-held as they do.
+            requestAnimationFrame(() => { put(); requestAnimationFrame(put); });
+            setTimeout(put, 120);
+            setTimeout(put, 320);
+        }
 
         /* EVERY CHANGE, NOT THE ONES SOMEBODY REMEMBERED TO ANNOUNCE.
          *
