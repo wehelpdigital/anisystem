@@ -78,6 +78,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'cxEmbed' => str_contains((string) @file_get_contents(resource_path('views/compare/partials/result.blade.php')), 'anee-embed-open'),
             'cxWinShut' => str_contains((string) @file_get_contents(resource_path('views/compare/partials/result.blade.php')), '.cxw[hidden]'),
             'cxwFull' => str_contains((string) @file_get_contents(resource_path('views/compare/partials/result.blade.php')), "className = 'cxw'"),
+            'cmpAbout' => str_contains((string) @file_get_contents(resource_path('views/compare/index.blade.php')), 'Each comparison is kept on the Saved tab.'),
         ],
         'viewCacheCompiled' => count(glob(storage_path('framework/views/*.php')) ?: []),
         // Whether the deployed environment can reach the mailing list at all

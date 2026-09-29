@@ -249,13 +249,9 @@
                 <span class="rx-about-e"><img src="{{ asset('images/icons/ab-testing.png') }}" alt="" style="border-radius:0;object-fit:contain"></span>
                 <div class="rx-about-t">
                     <b>What Compare Reports gives you</b>
-                    <p>Two saved reports of the same kind, side by side — from one season or from two: this season's labor against last season's, one lot's protocol against another's.</p>
-                    <ul>
-                        <li><b>The season first, then the report</b> — for each side, from any of your cropping schedules, closed and archived ones too</li>
-                        <li><b>The figures, lined up</b> — every amount beside its match, with the difference and which one did better</li>
-                        <li><b>{{ $aneeName }}'s read, if you ask for it</b> — what changed, the strengths of each, and what to carry forward (this part spends credits)</li>
-                    </ul>
-                    <p class="rx-about-note">Every comparison lands on the Saved tab, where you can rename and describe it.</p>
+                    {{-- One short paragraph, no dashes or lists (the owner's ask,
+                         2026-09-29), as the analyses introduce themselves. --}}
+                    <p>Pick two saved reports of the same kind, from one season or from two, and see them side by side. Every figure sits next to its match, with the difference and which one did better. You can also ask {{ $aneeName }} to explain what changed and what to keep doing, which uses credits. Each comparison is kept on the Saved tab.</p>
                 </div>
             </div>
 
