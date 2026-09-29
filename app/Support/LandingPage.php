@@ -21,6 +21,7 @@ use App\Models\AsSiteSetting;
  * Tokens in any text: {farmers} (the region's word for its farmers),
  * {crops} (how many crops the catalogue keeps for the country), {pay}
  * (how paid plans are paid), {signupWays} (email, and Google when it is on), {libreAnee} and {solo} (their monthly prices),
+ * {cropResearch} and {pesoBasis} (the losses band's source note, by country),
  * so the page cannot drift from the app it sells.
  */
 class LandingPage
@@ -39,6 +40,9 @@ class LandingPage
 
     /** The built-in photos a cost row may show (files in public/images/site/lp). */
     public const PHOTOS = ['tractor', 'sacks', 'storm', 'palay-phone', 'anee-chat-hand'];
+
+    /** The photos a loss card may wear (files in public/images/site/lp/loss). */
+    public const LOSS_PHOTOS = ['palay-heads', 'sacks', 'palay-phone', 'sacks-shed', 'transplant', 'storm-paddies', 'farmer-hijab', 'hero-planting'];
 
     /*
      * The argument, top to bottom (the owner, 2026-09-29/30): a bigger yield
@@ -127,16 +131,25 @@ class LandingPage
                 ],
             ],
         ],
-        // What guessing costs a hectare: the home page's own "up to" figures.
+        // What guessing costs a hectare: the home page's eight "up to" leaks
+        // ("What a Season Loses Without Intervention"), each with its photo
+        // (lp/loss/<image>.webp, or an upload) and what it takes from a
+        // hectare in pesos (shown on the Philippine page; the other page shows
+        // the percentage of a hectare's gross instead).
         'losses' => [
             'headline' => 'What guessing costs a hectare',
+            'sub' => 'Deciding without accuracy, and without a solution you can be sure of, costs you your yield security.',
             'items' => [
-                ['n' => 40, 'title' => 'lost to pests and diseases', 'text' => 'When the spray comes late, or never comes at all.'],
-                ['n' => 25, 'title' => 'lost to fertilizer at the wrong time', 'text' => 'The right sack on the wrong week feeds the field a fraction of what it paid for.'],
-                ['n' => 25, 'title' => 'lost to water at the wrong time', 'text' => 'Dry at flowering, flooded at ripening: the stage the water missed never comes back.'],
-                ['n' => 20, 'title' => 'lost to planting outside the window', 'text' => 'A season started on habit instead of the climate\'s calendar pays for it at harvest.'],
+                ['n' => 40, 'title' => 'Yield lost to pests and diseases', 'text' => 'When the intervention comes late, or never comes at all.', 'peso' => '₱25,000–₱40,000', 'image' => 'palay-heads', 'upload' => ''],
+                ['n' => 30, 'title' => 'Wasted on the wrong solution', 'text' => 'A misread problem means the wrong product, at full price, while the real problem keeps eating.', 'peso' => '₱18,000–₱30,000', 'image' => 'sacks', 'upload' => ''],
+                ['n' => 30, 'title' => 'Yield lost to trying myths that are not true', 'text' => 'Hearsay remedies and lucky-timing beliefs, passed around as fact, and tested on a whole field before anyone checked.', 'peso' => '₱18,000–₱30,000', 'image' => 'palay-phone', 'upload' => ''],
+                ['n' => 30, 'title' => 'Profit lost to untracked spending', 'text' => 'Costs remembered instead of recorded leak all season, and only show themselves at settling time.', 'peso' => '₱18,000–₱30,000', 'image' => 'sacks-shed', 'upload' => ''],
+                ['n' => 25, 'title' => 'Yield lost to mistimed fertilizer', 'text' => 'The right sack on the wrong week feeds the field a fraction of what it paid for.', 'peso' => '₱15,000–₱25,000', 'image' => 'transplant', 'upload' => ''],
+                ['n' => 25, 'title' => 'Yield lost to water at the wrong time', 'text' => 'Dry at flowering, flooded at ripening: the stage the water missed never comes back.', 'peso' => '₱15,000–₱25,000', 'image' => 'storm-paddies', 'upload' => ''],
+                ['n' => 20, 'title' => 'Yield lost to delayed decisions', 'text' => 'Waiting days for someone else\'s answer, the technician\'s next visit or a reply that never comes, while the problem keeps growing.', 'peso' => '₱12,000–₱20,000', 'image' => 'farmer-hijab', 'upload' => ''],
+                ['n' => 20, 'title' => 'Yield lost to planting outside the window', 'text' => 'A season started on habit instead of the climate\'s actual calendar pays for it at harvest.', 'peso' => '₱12,000–₱20,000', 'image' => 'hero-planting', 'upload' => ''],
             ],
-            'note' => 'Of a hectare\'s harvest. Ranges drawn from FAO crop-loss and Philippine rice research estimates; your own farm\'s numbers vary. Most of it can be avoided, and that is the point.',
+            'note' => 'Percentage ranges drawn from FAO crop-loss and {cropResearch} research estimates{pesoBasis}. Your farm\'s exact numbers vary, which is the point.',
         ],
         // The answer, in the four words precision agriculture is built on.
         'precision' => [
@@ -316,6 +329,9 @@ class LandingPage
             // Google only where its sign-in is switched on.
             '{signupWays}' => filled(config('services.google.client_id')) ? 'your email or your Google account' : 'just your email',
             '{libreAnee}' => Region::priceTag(Region::tierPrice('libreAnee', 'month')),
+            // The losses band's source note, said for the page's own country.
+            '{cropResearch}' => Region::ph() ? 'Philippine rice' : 'published crop',
+            '{pesoBasis}' => Region::ph() ? '; peso ranges assume a typical palay hectare grossing ₱85,000–₱100,000' : '',
             '{solo}' => Region::priceTag(Region::tierPrice('solo', 'month')),
         ];
     }

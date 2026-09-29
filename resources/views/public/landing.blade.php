@@ -124,18 +124,10 @@
     /* What guessing costs: a dark band of "up to" figures that count up once seen. */
     .lp-losses { position: relative; isolation: isolate; overflow: hidden; color: #fff;
         background: radial-gradient(900px 420px at 90% 0%, rgb(180 35 24 / .28), transparent 60%), linear-gradient(180deg, #16210f, #0f170a); }
-    .lp-loss-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
-    .lp-loss { padding: 1.3rem 1.2rem 1.25rem; border-radius: 1.25rem; background: rgb(255 255 255 / .05);
-        border: 1px solid rgb(255 255 255 / .1); }
-    .lp-loss .n { display: flex; align-items: baseline; gap: .35rem; }
-    .lp-loss .n small { font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #fca5a5; }
-    .lp-loss .n b { font-family: var(--font-heading); font-size: 2.9rem; line-height: 1; font-weight: 900; color: #fecaca; font-variant-numeric: tabular-nums; }
-    .lp-loss .bar { height: .4rem; border-radius: 999px; margin: .8rem 0 .9rem; background: rgb(255 255 255 / .1); overflow: hidden; }
-    .lp-loss .bar i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, #f97316, #ef4444);
-        transition: width 1.2s cubic-bezier(.22,1,.36,1); }
-    .lp-loss.is-lit .bar i { width: var(--w); }
-    .lp-loss h3 { font-weight: 800; font-size: 1.02rem; line-height: 1.35; }
-    .lp-loss p { margin-top: .35rem; font-size: .88rem; line-height: 1.55; color: rgb(255 255 255 / .72); }
+    .lp-losses-sub { margin-top: .9rem; font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.6; color: rgb(255 255 255 / .8); }
+    .lp-loss-grid { display: grid; gap: 1.1rem; }
+    @media (min-width: 768px) { .lp-loss-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .lp-losses .loss-card { border-color: transparent; box-shadow: 0 20px 44px -26px rgb(0 0 0 / .7); }
     .lp-loss-note { margin-top: 1.1rem; font-size: .78rem; color: rgb(255 255 255 / .55); text-align: center; line-height: 1.55; }
     /* Precision: the four "rights" */
     .lp-rights { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14.5rem), 1fr)); }
@@ -234,7 +226,7 @@
     @media (min-width: 900px) { .lp-bar { display: none; } }
     @media (prefers-reduced-motion: reduce) {
         .lp-float, .lp-kicker i { animation: none; }
-        .lp-bar, .lp-qa .a, .lp-qa button svg, .lp-tile, .lp-right, .lp-loss .bar i { transition: none; }
+        .lp-bar, .lp-qa .a, .lp-qa button svg, .lp-tile, .lp-right, .loss-bar i { transition: none; }
     }
 </style>
 @endpush
@@ -345,19 +337,35 @@
         </div>
     </section>
 
-    {{-- ================= What guessing costs a hectare ================= --}}
+    {{-- ================= What guessing costs a hectare =================
+         The home page's eight leaks ("What a Season Loses Without
+         Intervention"), in its own cards: a photo, an "up to" counter that
+         counts up with its red bar, and what it takes from a hectare. White
+         cards on the dark band. --}}
     @if (! empty($lp['losses']['items']))
         <section class="lp-losses" id="lpLosses">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-                <h2 class="font-heading font-extrabold text-2xl sm:text-4xl text-center text-balance reveal">{{ $lp['losses']['headline'] }}</h2>
-                <div class="lp-loss-grid mt-9">
+                <div class="max-w-2xl mx-auto text-center reveal">
+                    <h2 class="font-heading font-extrabold text-2xl sm:text-4xl text-balance">{{ $lp['losses']['headline'] }}</h2>
+                    @if (trim($lp['losses']['sub'] ?? '') !== '')<p class="lp-losses-sub">{{ $lp['losses']['sub'] }}</p>@endif
+                </div>
+                <div class="lp-loss-grid mt-10">
                     @foreach ($lp['losses']['items'] as $i => $l)
-                        @php $n = max(0, min(100, (int) ($l['n'] ?? 0))); @endphp
-                        <div class="lp-loss reveal" style="--w: {{ $n }}%; --reveal-delay: {{ $i * 0.08 }}s">
-                            <div class="n"><small>Up to</small><b data-n="{{ $n }}">{{ $n }}%</b></div>
-                            <div class="bar" aria-hidden="true"><i></i></div>
-                            <h3>{{ $l['title'] ?? '' }}</h3>
-                            @if (trim($l['text'] ?? '') !== '')<p>{{ $l['text'] }}</p>@endif
+                        @php
+                            $n = max(0, min(100, (int) ($l['n'] ?? 0)));
+                            $pic = in_array($l['image'] ?? '', \App\Support\LandingPage::LOSS_PHOTOS, true) ? $l['image'] : 'palay-heads';
+                            $peso = trim($l['peso'] ?? '');
+                        @endphp
+                        <div class="loss-card loss-card2 reveal" style="--loss: {{ $n }}%; --reveal-delay: {{ ($i % 2) * 0.08 }}s">
+                            <div class="loss-img"><img src="{{ \App\Support\LandingPage::imageUrl($l['upload'] ?? '', 'lp/loss/' . $pic . '.webp') }}" alt="" width="400" height="500" loading="lazy"></div>
+                            <div class="loss-body">
+                                <p class="loss-upto">Up to</p>
+                                <p class="loss-n"><span data-n="{{ $n }}">{{ $n }}</span><small>%</small></p>
+                                <p class="loss-l">{{ $l['title'] ?? '' }}</p>
+                                @if (trim($l['text'] ?? '') !== '')<p class="loss-p">{{ $l['text'] }}</p>@endif
+                                <p class="loss-peso">{{ \App\Support\Region::ph() && $peso !== '' ? $peso . ' lost per hectare' : 'up to ' . $n . '% of a hectare\'s gross, lost' }}</p>
+                                <div class="loss-bar" aria-hidden="true"><i></i></div>
+                            </div>
                         </div>
                     @endforeach
                 </div>
@@ -561,22 +569,22 @@
 
     // What guessing costs: each figure counts up, and its bar fills, the first time it is seen.
     const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const losses = document.querySelectorAll('#lpLosses .lp-loss');
+    const losses = document.querySelectorAll('#lpLosses .loss-card');
     const light = (card) => {
         card.classList.add('is-lit');
-        const b = card.querySelector('b[data-n]');
+        const b = card.querySelector('[data-n]');
         const to = Number(b.dataset.n) || 0;
-        if (calm) { b.textContent = to + '%'; return; }
+        if (calm) { b.textContent = to; return; }
         const t0 = performance.now();
         const step = (t) => {
             const k = Math.min(1, (t - t0) / 1100);
-            b.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))) + '%';
+            b.textContent = Math.round(to * (1 - Math.pow(1 - k, 3)));
             if (k < 1) requestAnimationFrame(step);
         };
         requestAnimationFrame(step);
     };
     if (losses.length && 'IntersectionObserver' in window) {
-        losses.forEach((c) => { if (!calm) c.querySelector('b[data-n]').textContent = '0%'; });
+        losses.forEach((c) => { if (!calm) c.querySelector('[data-n]').textContent = '0'; });
         const io = new IntersectionObserver((entries) => entries.forEach((en) => {
             if (en.isIntersecting) { light(en.target); io.unobserve(en.target); }
         }), { threshold: .4 });
