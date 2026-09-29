@@ -86,7 +86,7 @@ class LandingPage
             // What anee.io does about it (a green tick each), under the costs' label.
             // One short line each, about 36 characters: they never wrap.
             'fixes' => [
-                'Hourly forecast for each lot',
+                'Analysis on when is the best time to plant',
                 'Pests to watch at every stage',
                 'Anee checks a sick leaf in minutes',
             ],
