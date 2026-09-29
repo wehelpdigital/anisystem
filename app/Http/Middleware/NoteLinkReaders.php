@@ -25,17 +25,30 @@ class NoteLinkReaders
 
     public function handle(Request $request, Closure $next): Response
     {
+        $t0 = microtime(true);
         $response = $next($request);
 
         $ua = (string) $request->userAgent();
         if ($ua !== '' && preg_match(self::PATTERN, $ua)) {
             try {
+                $body = $response->getContent();
                 $seen = Cache::get(self::KEY, []);
                 array_unshift($seen, [
                     'at' => now()->toIso8601String(),
                     'method' => $request->method(),
                     'path' => mb_substr('/' . ltrim($request->path(), '/'), 0, 80),
                     'status' => $response->getStatusCode(),
+                    // "The document returned no data": what the page really was.
+                    'bytes' => $body === false ? null : strlen($body),
+                    'type' => $response->headers->get('Content-Type'),
+                    'ms' => (int) round((microtime(true) - $t0) * 1000),
+                    'asked' => array_filter([
+                        'range' => $request->header('Range'),
+                        'encoding' => $request->header('Accept-Encoding'),
+                        'accept' => $request->header('Accept'),
+                        'lang' => $request->header('Accept-Language'),
+                        'country' => $request->header('CF-IPCountry'),
+                    ]),
                     'agent' => mb_substr($ua, 0, 90),
                     // The network, not the address: enough to tell Facebook's own.
                     'from' => preg_replace('/(\d+\.\d+)\.\d+\.\d+$/', '$1.x.x', (string) $request->ip()),
