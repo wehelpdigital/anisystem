@@ -55,10 +55,10 @@
     .lp-kicker i { width: .5rem; height: .5rem; border-radius: 999px; background: #6b9f3d; box-shadow: 0 0 0 4px rgb(107 159 61 / .2);
         animation: lpBeat 2.2s ease-in-out infinite; }
     @keyframes lpBeat { 0%, 100% { box-shadow: 0 0 0 3px rgb(107 159 61 / .25); } 50% { box-shadow: 0 0 0 7px rgb(107 159 61 / .05); } }
-    .lp-h1 { font-family: var(--font-heading); font-weight: 800; color: #14210c; line-height: 1.06; letter-spacing: -.02em;
+    .lp-h1 { font-family: var(--font-heading); font-weight: 800; color: #14210c; line-height: 1.2; letter-spacing: -.02em;
         font-size: clamp(2.1rem, 5.2vw, 3.6rem); text-wrap: balance; }
     /* A long headline a size down, so the email box still shows on the first screen. */
-    .lp-h1.is-long { font-size: clamp(1.8rem, 4.1vw, 2.9rem); line-height: 1.08; }
+    .lp-h1.is-long { font-size: clamp(1.8rem, 4.1vw, 2.9rem); line-height: 1.22; }
     .lp-h1 em, .lp-closer h2 em { font-style: normal; background: linear-gradient(transparent 62%, #fadd6d 62%); padding: 0 .1em; }
     .lp-closer h2 em { background: linear-gradient(transparent 62%, rgb(250 221 109 / .55) 62%); }
     .lp-sub { color: #3f4a37; font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.65; text-wrap: pretty; }
