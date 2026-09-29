@@ -10,8 +10,8 @@
     .ph-frame { position: relative; width: min(300px, 78vw); border-radius: 2.2rem; padding: .55rem;
         background: linear-gradient(160deg, #1d232b, #0e1116 70%); box-shadow:
             0 24px 60px -28px rgb(16 22 12 / .55), 0 0 0 1px rgb(255 255 255 / .08) inset; }
-    .ph-frame::before { content: ''; position: absolute; top: .95rem; left: 50%; transform: translateX(-50%);
-        width: 5.2rem; height: .45rem; border-radius: 999px; background: #0e1116; z-index: 2; }
+    /* No notch drawn over the glass (2026-09-29): it sat on the screenshot's
+       own header and cut off the title behind it. */
     .ph-frame img { display: block; width: 100%; border-radius: 1.7rem; }
     .ph-tilt-l { transform: rotate(-2.2deg); }
     .ph-tilt-r { transform: rotate(2.2deg); }
