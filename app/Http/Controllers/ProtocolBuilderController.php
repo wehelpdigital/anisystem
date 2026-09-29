@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AiSetting;
 use App\Models\AsCroppingSchedule;
 use App\Models\AsProtocol;
+use App\Models\AsProtocolAnalysis;
 use App\Models\AsProtocolVersion;
 use App\Models\AsScheduleActivityItem;
 use App\Models\AsScheduleActivity;
@@ -627,16 +628,16 @@ class ProtocolBuilderController extends Controller
             @set_time_limit(0);
             response()->json(['success' => true, 'message' => 'Working…', 'data' => ['pending' => true, 'id' => $p->id]])->send();
             fastcgi_finish_request();
-            $this->runJob($p->id, (int) $payer->id, $settings, $prompt);
+            $this->runJob($p->id, (int) $payer->id, $settings, $prompt, (int) $ver->id, (string) $ver->name);
             exit;
         }
         @set_time_limit(900);
-        $this->runJob($p->id, (int) $payer->id, $settings, $prompt);
+        $this->runJob($p->id, (int) $payer->id, $settings, $prompt, (int) $ver->id, (string) $ver->name);
 
         return $this->job($p->id);
     }
 
-    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt): void
+    private function runJob(int $id, int $payerId, AiSetting $settings, string $prompt, ?int $versionId = null, ?string $versionName = null): void
     {
         $beat = function (string $phase, int $try = 1) use ($id): void {
             AsProtocol::where('id', $id)->where('analysisStatus', 'pending')->update([
@@ -663,6 +664,21 @@ class ProtocolBuilderController extends Controller
                 'analysisAt' => now(),
                 'analysisBeatAt' => now(),
             ])->save();
+            // Kept on the Analyses tab: every run, not only the latest.
+            try {
+                AsProtocolAnalysis::create([
+                    'protocolId' => $row->id,
+                    'userId' => (int) $row->userId,
+                    'versionId' => $versionId,
+                    'versionName' => $versionName !== null ? mb_substr($versionName, 0, 120) : null,
+                    'score' => max(0, min(100, (int) ($review['score'] ?? 0))),
+                    'analysis' => $review,
+                    'credits' => round($charged, 2),
+                    'deleteStatus' => 1,
+                ]);
+            } catch (\Throwable $e) {
+                report($e);
+            }
         } catch (\Throwable $e) {
             report($e);
             AsProtocol::where('id', $id)->update([
@@ -707,6 +723,7 @@ class ProtocolBuilderController extends Controller
 
             return $this->json(true, 'Ready.', [
                 'status' => 'ready',
+                'analyses' => $this->analysisRows($p),
                 'analysis' => $p->analysis,
                 'analysisAt' => $p->analysisAt ? Carbon::parse($p->analysisAt)->format('M j, Y · g:i A') : null,
                 'charged' => (float) $p->analysisCredits,
@@ -715,6 +732,88 @@ class ProtocolBuilderController extends Controller
         }
 
         return $this->json(false, 'No review yet.', ['status' => 'none'], 404);
+    }
+
+    /* ------------------------------------------------------------ the Analyses tab */
+
+    /** Every kept analysis of a protocol, newest first, as the tab lists them. */
+    private function analysisRows(AsProtocol $p): array
+    {
+        return AsProtocolAnalysis::where('protocolId', $p->id)->where('deleteStatus', 1)
+            ->orderByDesc('id')->limit(50)->get()
+            ->map(fn (AsProtocolAnalysis $a) => [
+                'id' => (int) $a->id,
+                'score' => $a->score,
+                'verdict' => (string) (($a->analysis ?? [])['verdict'] ?? ''),
+                'headline' => (string) (($a->analysis ?? [])['headline'] ?? ''),
+                'versionName' => $a->versionName,
+                'credits' => (float) $a->credits,
+                'at' => $a->created_at ? Carbon::parse($a->created_at)->format('M j, Y · g:i A') : null,
+            ])->values()->all();
+    }
+
+    public function analyses(int $id)
+    {
+        $p = $this->mine($id);
+        if (! $p) {
+            return $this->json(false, 'That protocol is not yours.', [], 404);
+        }
+
+        return $this->json(true, 'ok', ['analyses' => $this->analysisRows($p)]);
+    }
+
+    public function analysisOne(int $id, int $aid)
+    {
+        $p = $this->mine($id);
+        $a = $p ? AsProtocolAnalysis::where('protocolId', $p->id)->where('id', $aid)->where('deleteStatus', 1)->first() : null;
+        if (! $a) {
+            return $this->json(false, 'That analysis is gone.', [], 404);
+        }
+
+        return $this->json(true, 'ok', [
+            'id' => (int) $a->id,
+            'analysis' => $a->analysis,
+            'at' => $a->created_at ? Carbon::parse($a->created_at)->format('M j, Y · g:i A') : null,
+            'versionName' => $a->versionName,
+            'credits' => (float) $a->credits,
+        ]);
+    }
+
+    /**
+     * Takes one analysis off the tab. When it was the latest, the one before
+     * it becomes the protocol's review (the task cards and the list read
+     * that), or the protocol simply has none again.
+     */
+    public function analysisDestroy(int $id, int $aid)
+    {
+        $p = $this->mine($id);
+        $a = $p ? AsProtocolAnalysis::where('protocolId', $p->id)->where('id', $aid)->where('deleteStatus', 1)->first() : null;
+        if (! $a) {
+            return $this->json(false, 'That analysis is gone.', [], 404);
+        }
+        $a->forceFill(['deleteStatus' => 0])->save();
+
+        if ($p->analysisStatus !== 'pending') {
+            $latest = AsProtocolAnalysis::where('protocolId', $p->id)->where('deleteStatus', 1)->orderByDesc('id')->first();
+            $p->forceFill($latest ? [
+                'analysis' => $latest->analysis,
+                'analysisStatus' => 'ready',
+                'analysisCredits' => $latest->credits,
+                'analysisAt' => $latest->created_at,
+            ] : [
+                'analysis' => null,
+                'analysisStatus' => null,
+                'analysisCredits' => 0,
+                'analysisAt' => null,
+            ])->save();
+        }
+
+        return $this->json(true, 'Analysis removed.', [
+            'analyses' => $this->analysisRows($p),
+            'analysis' => $p->analysisStatus === 'ready' ? $p->analysis : null,
+            'analysisAt' => $p->analysisAt ? Carbon::parse($p->analysisAt)->format('M j, Y · g:i A') : null,
+            'charged' => (float) $p->analysisCredits,
+        ]);
     }
 
     /** What Anee is asked, in the document voice, with the app's own stage table beside the farmer's plan. */
@@ -1421,6 +1520,7 @@ PROMPT;
             $out['analysisStatus'] = $p->analysisStatus;
             $out['analysisAt'] = $p->analysisAt ? Carbon::parse($p->analysisAt)->format('M j, Y · g:i A') : null;
             $out['analysisCredits'] = (float) $p->analysisCredits;
+            $out['analyses'] = $this->analysisRows($p);
         }
 
         return $out;

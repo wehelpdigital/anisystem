@@ -374,10 +374,10 @@
     .pbv-row .dt-row { flex: 1 1 auto; min-width: 0; }
     .pbv-row .pb-mini { width: 2.2rem; height: 2.2rem; }
 
-    /* The three tabs: tasks, materials, rules & notes. */
-    .pb-tabs { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; padding: .25rem; margin-bottom: .75rem; border-radius: .95rem;
+    /* The four tabs: tasks, materials, rules & notes, analyses. */
+    .pb-tabs { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; padding: .25rem; margin-bottom: .75rem; border-radius: .95rem;
         background: var(--color-gray-100); border: 1px solid var(--color-gray-200); }
-    .pb-tab-ind { position: absolute; top: .25rem; bottom: .25rem; left: .25rem; width: calc((100% - .5rem) / 3); border-radius: .75rem; background: var(--color-white);
+    .pb-tab-ind { position: absolute; top: .25rem; bottom: .25rem; left: .25rem; width: calc((100% - .5rem) / 4); border-radius: .75rem; background: var(--color-white);
         box-shadow: 0 1px 3px rgba(15,23,42,.12); transform: translateX(calc(var(--i, 0) * 100%)); transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .pb-tab { position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center; gap: .3rem; padding: .55rem .3rem; border-radius: .75rem; font-size: .8rem; font-weight: 800;
         color: var(--color-gray-500); white-space: nowrap; transition: color .28s cubic-bezier(.22,1,.36,1); }
@@ -386,7 +386,15 @@
     .pb-tab[aria-selected="true"] em { background: #e4f1d6; color: #2f5219; }
     .pb-tab em.is-short { background: #fdecec; color: #b91c1c; }
     .pb-tab em:empty { display: none; }
-    @media (max-width: 479px) { .pb-tab { font-size: .76rem; gap: .25rem; } .pb-tab-e { display: none; } }
+    .pb-tab-short { display: none; }
+    /* Four tabs on a small phone: the counts step aside, except a material running short. */
+    @media (max-width: 399px) { .pb-tab em:not(.is-short) { display: none; } }
+    @media (max-width: 559px) { .pb-tab { font-size: .76rem; gap: .25rem; padding-inline: .15rem; } .pb-tab-e, .pb-tab-long { display: none; } .pb-tab-short { display: inline; } }
+    .pb-n-short { display: none; }
+    @media (max-width: 699px) {
+        .pb-n-long { display: none; } .pb-n-short { display: inline; }
+        .pb-tab em.is-short { position: absolute; top: .12rem; right: .2rem; min-width: 1rem; padding: 0 .25rem; font-size: .6rem; line-height: 1rem; text-align: center; }
+    }
     html.dark .pb-tabs { background: #10150d; border-color: #2b3a1c; }
     html.dark .pb-tab-ind { background: #22301a; box-shadow: none; }
     html.dark .pb-tab { color: #9aa78d; }
@@ -397,7 +405,37 @@
     .pb-panel.is-entering { animation: pbPanelIn .28s cubic-bezier(.22,1,.36,1); }
     @keyframes pbPanelIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
     #pbPage[data-tab="materials"] .pb-tools [data-for="tasks"], #pbPage[data-tab="tasks"] .pb-tools [data-for="materials"] { display: none; }
-    #pbPage[data-tab="rules"] .pb-tools { display: none; }
+    #pbPage[data-tab="rules"] .pb-tools, #pbPage[data-tab="analyses"] .pb-tools { display: none; }
+    /* The Analyses tab: the kept runs as rows, the picked one read below. */
+    .pba-card { padding: .9rem 1rem; margin-bottom: .85rem; }
+    .pba-h { display: flex; align-items: center; gap: .6rem; }
+    .pba-h-t { flex: 1 1 auto; min-width: 0; }
+    .pba-h-t b { display: block; font-size: .92rem; color: var(--color-gray-900); }
+    .pba-h-t small { display: block; font-size: .72rem; color: var(--color-gray-500); margin-top: .1rem; }
+    .pba-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: .35rem; margin-top: .7rem; }
+    .pba-list:empty { display: none; }
+    .pba-row { display: flex; align-items: center; gap: .6rem; width: 100%; text-align: left; padding: .5rem .6rem; border-radius: .8rem; border: 1px solid var(--color-gray-200); background: var(--color-white);
+        cursor: pointer; transition: border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+    .pba-row:hover { border-color: #cfe3bd; }
+    .pba-row.is-on { border-color: #6b9f3d; background: #f6fbf0; box-shadow: 0 0 0 1px #6b9f3d inset; }
+    .pba-score { flex: none; width: 2.3rem; height: 2.3rem; border-radius: 999px; display: grid; place-items: center; font-size: .8rem; font-weight: 900; font-variant-numeric: tabular-nums;
+        color: #fff; background: #4a7c2a; }
+    .pba-score.is-mid { background: #c9902e; } .pba-score.is-low { background: #b91c1c; }
+    .pba-t { flex: 1 1 auto; min-width: 0; }
+    .pba-t b { display: block; font-size: .82rem; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pba-t small { display: block; font-size: .7rem; color: var(--color-gray-500); margin-top: .1rem; }
+    .pba-new { font-style: normal; font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #2f5219; background: #e4f1d6; border-radius: 999px; padding: .05rem .4rem; margin-right: .35rem; vertical-align: 1px; }
+    .pba-del { flex: none; width: 2rem; height: 2rem; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; color: var(--color-gray-400); }
+    .pba-del:hover { color: #b91c1c; background: #fdecec; }
+    .pba-del svg { width: .95rem; height: .95rem; }
+    .pba-more { font-size: .76rem; font-weight: 800; color: #3d6823; padding: .35rem .2rem 0; }
+    #pbPanelAn .rx-empty { margin-top: .6rem; }
+    html.dark .pba-h-t b, html.dark .pba-t b { color: #e8efe1; }
+    html.dark .pba-row { background: #151b12; border-color: #2b3a1c; }
+    html.dark .pba-row.is-on { background: #1a2513; border-color: #6b9f3d; }
+    html.dark .pba-new { background: #3f5a2a; color: #e8efe1; }
+    html.dark .pba-del:hover { background: #3a1a1a; color: #f0a3a3; }
+    @media (prefers-reduced-motion: reduce) { .pba-row { transition: none; } }
     @media (prefers-reduced-motion: reduce) { .pb-tab-ind, .pb-tab, .pb-ver { transition: none; } .pb-panel.is-entering { animation: none; } }
 
     /* The materials: what there is, what the tasks plan, what is left. */
@@ -497,9 +535,9 @@
                 <small id="pbHeadSub"></small>
             </div>
             <div class="pb-head-acts">
-                <button type="button" class="pb-anee" id="pbAneeBtn" title="Ask Anee to analyze this" aria-label="Ask Anee to analyze this"
+                <button type="button" class="pb-anee" id="pbAneeBtn" title="Analyze by Anee" aria-label="Analyze by Anee"
                     @if ($options['aiLocked']) data-tier-lock="{{ \App\Support\Tier::farmUnlocksAt('aiAnalyses') }}" data-lock-say="Anee's review of your protocol comes with {{ \App\Support\Tier::withPlan(\App\Support\Tier::farmUnlocksAt('aiAnalyses')) }} — she reads every task against the crop's stages and says what is strong, what is missing and what could go wrong." @endif>
-                    <img src="{{ $options['aneeFace'] }}" alt=""@if ($options['aiLocked']) class="tl-dim"@endif> <span @if ($options['aiLocked']) class="tl-dim" @endif>Ask Anee</span>
+                    <img src="{{ $options['aneeFace'] }}" alt=""@if ($options['aiLocked']) class="tl-dim"@endif> <span @if ($options['aiLocked']) class="tl-dim" @endif>Analyze by Anee</span>
                     {{-- Locked doors look locked before they are tapped, as the
                          dashboard's tools and the menu do. --}}
                     @if ($options['aiLocked'])<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endif
@@ -523,7 +561,8 @@
         <span class="pb-tab-ind" id="pbTabInd" aria-hidden="true"></span>
         <button type="button" class="pb-tab" role="tab" data-tab="tasks" aria-selected="true" aria-controls="pbPanelTasks"><span class="pb-tab-e">📋</span> Tasks <em id="pbTabTasksN"></em></button>
         <button type="button" class="pb-tab" role="tab" data-tab="materials" aria-selected="false" aria-controls="pbPanelMat"><span class="pb-tab-e">🧴</span> Materials <em id="pbTabMatN"></em></button>
-        <button type="button" class="pb-tab" role="tab" data-tab="rules" aria-selected="false" aria-controls="pbPanelRules"><span class="pb-tab-e">📜</span> Rules &amp; notes</button>
+        <button type="button" class="pb-tab" role="tab" data-tab="rules" aria-selected="false" aria-controls="pbPanelRules"><span class="pb-tab-e">📜</span> <span class="pb-tab-long">Rules &amp; notes</span><span class="pb-tab-short">Rules</span></button>
+        <button type="button" class="pb-tab" role="tab" data-tab="analyses" aria-selected="false" aria-controls="pbPanelAn"><span class="pb-tab-e">🔎</span> Analyses <em id="pbTabAnN"></em></button>
     </div>
 
     <div class="pb-tools" id="pbTools">
@@ -549,7 +588,6 @@
     </div>
 
     <div class="pb-panel" id="pbPanelTasks" data-panel="tasks" role="tabpanel">
-    <div id="pbReview"></div>
     <div id="pbWarn"></div>
 
     <div class="pb-list" id="pbList"></div>
@@ -583,6 +621,28 @@
         <button type="button" class="pb-add-bottom" id="pbAddMatBottom">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Add a material
         </button>
+    </div>
+
+    {{-- Analyses: every "Analyze by Anee" run on this protocol, kept, the
+         newest first; the one picked is read in full underneath. --}}
+    <div class="pb-panel" id="pbPanelAn" data-panel="analyses" role="tabpanel" hidden>
+        <div class="card pba-card" id="pbAnCard">
+            <div class="pba-h">
+                <div class="pba-h-t"><b>Saved analyses</b><small id="pbAnSay"></small></div>
+                <button type="button" class="pb-anee" id="pbAnRun"
+                    @if ($options['aiLocked']) data-tier-lock="{{ \App\Support\Tier::farmUnlocksAt('aiAnalyses') }}" @endif>
+                    <img src="{{ $options['aneeFace'] }}" alt=""@if ($options['aiLocked']) class="tl-dim"@endif> <span @if ($options['aiLocked']) class="tl-dim" @endif>Analyze by Anee</span>
+                    @if ($options['aiLocked'])<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endif
+                </button>
+            </div>
+            <div class="pba-list" id="pbAnList"></div>
+            <div class="rx-empty hidden" id="pbAnEmpty">
+                <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M8.5 11h5M11 8.5v5"/></svg></span>
+                <p class="rx-empty-t">No analyses yet</p>
+                <p class="rx-empty-p">Tap Analyze by Anee and she reads every task against the crop's growth stages. Each analysis is kept here, so you can come back to it or set an older one beside a newer one.</p>
+            </div>
+        </div>
+        <div id="pbReview"></div>
     </div>
 
     {{-- Rules & notes: a document of the protocol's standing rules, and files beside it. --}}
@@ -855,12 +915,12 @@
 <div class="sheet hidden" id="pbAskSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Ask Anee to analyze this</h3>
+        <h3 class="sheet-title">Analyze by Anee</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-4">
         <div class="pb-quote"><img src="{{ $options['aneeFace'] }}" alt=""><div id="pbAskQuote"></div></div>
-        <p class="text-sm text-gray-600">Anee reads every task against the crop's growth stages and says what is strong, what is missing, what could go wrong, and what she would add. The review is kept with the protocol; a new one replaces it.</p>
+        <p class="text-sm text-gray-600">Anee reads every task against the crop's growth stages and says what is strong, what is missing, what could go wrong, and what she would add. Every analysis is kept on the Analyses tab, the newest first.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-primary w-full" id="pbAskGo">Analyze it</button>
@@ -1015,6 +1075,12 @@
     let REVIEW = BOOT.analysis || null;
     let REVIEW_AT = BOOT.analysisAt || null;
     let REVIEW_CREDITS = BOOT.analysisCredits || 0;
+    // The Analyses tab: every kept run, newest first, and the one being read.
+    // REVIEW stays the latest (the task cards and the head read it).
+    let ANALYSES = Array.isArray(BOOT.analyses) ? BOOT.analyses : [];
+    let VIEW = null, VIEW_ID = null, VIEW_AT = null, VIEW_CREDITS = 0, VIEW_VER = null;
+    const AN_CACHE = new Map();
+    let AN_ALL = false;
     // The same depth the server keeps, so a reload does not quietly halve it.
     const UNDO_MAX = 15;
     const counters = () => (OPT.dayTypes[P.dayType] || OPT.dayTypes.DAS).counters;
@@ -1204,7 +1270,7 @@
         if (f && f.day < 0) tags.push(`<span class="pb-tag">Starts <b>${esc(sayWhen(f.counter, f.day))}</b></span>`);
         const n = onlyTasks.length ? onlyTasks[onlyTasks.length - 1] : null;
         if (n) tags.push(`<span class="pb-tag">Runs to <b>${esc(sayWhen(n.counter, n.day))}</b></span>`);
-        if (REVIEW) tags.push(`<span class="pb-tag is-score">Anee: <b>${REVIEW.score}/100</b></span>`);
+        if (REVIEW) tags.push(`<button type="button" class="pb-tag is-score" data-go-analyses title="Open the Analyses tab">Anee: <b>${REVIEW.score}/100</b></button>`);
         if (P.ported) tags.push(`<a class="pb-tag is-ported" href="${esc(P.ported.url)}">Ported ${esc(P.ported.at || '')} → <b>${esc(P.ported.title || 'the season')}</b></a>`);
         $id('pbHeadTags').innerHTML = tags.join('');
         $id('pbVerName').textContent = VER.name || 'Version 1';
@@ -1214,7 +1280,10 @@
         const shortN = MATS.filter((m) => matLeft(m, USE) < -1e-9).length;
         // The count of materials, and - only when some run short - how many:
         // "12 · 1 short", not a warning sign that read as twelve warnings.
-        matN.textContent = MATS.length ? (shortN ? MATS.length + ' · ' + shortN + ' short' : MATS.length) : '';
+        // Narrower, with four tabs abreast, only how many run short, as a
+        // corner badge that takes no room from the word.
+        matN.innerHTML = MATS.length ? (shortN ? `<span class="pb-n-long">${MATS.length} · ${shortN} short</span><span class="pb-n-short">${shortN}</span>` : String(MATS.length)) : '';
+        matN.title = shortN ? `${shortN} ${shortN === 1 ? 'material runs' : 'materials run'} short` : '';
         matN.classList.toggle('is-short', shortN > 0);
         const pageTitle = $id('appPageTitle'); if (pageTitle) { pageTitle.textContent = P.title; const sub = pageTitle.nextElementSibling; if (sub && sub.tagName === 'P') sub.textContent = `${P.cropLabel || 'No crop yet'} · ${dt.label || P.dayType}`; }
         document.title = P.title + ' | anee.io';
@@ -2309,7 +2378,7 @@
 
     /* ------------------------------------------------------------ the tabs */
     const TAB_KEY = 'anee-pb-tab-' + BOOT.id;
-    const TABS = ['tasks', 'materials', 'rules'];
+    const TABS = ['tasks', 'materials', 'rules', 'analyses'];
     function showTab(tab, animate) {
         if (!TABS.includes(tab)) tab = 'tasks';
         const page = $id('pbPage');
@@ -2619,10 +2688,75 @@
     });
 
     /* ------------------------------------------------------------ Anee */
+    /* The Analyses tab's list. */
+    function scoreCls(n) { return n >= 75 ? '' : (n >= 50 ? ' is-mid' : ' is-low'); }
+    function renderAnalyses() {
+        const n = ANALYSES.length;
+        $id('pbTabAnN').textContent = n ? n : '';
+        $id('pbAnSay').textContent = n ? `${n} ${n === 1 ? 'analysis' : 'analyses'}, the newest first. Tap one to read it.` : 'Nothing analyzed yet.';
+        $id('pbAnEmpty').classList.toggle('hidden', n > 0);
+        const shown = AN_ALL ? ANALYSES : ANALYSES.slice(0, 5);
+        $id('pbAnList').innerHTML = shown.map((a, i) => `
+            <div class="pba-row${a.id === VIEW_ID ? ' is-on' : ''}" role="button" tabindex="0" data-an="${a.id}" aria-pressed="${a.id === VIEW_ID ? 'true' : 'false'}">
+                <span class="pba-score${scoreCls(Number(a.score))}">${a.score ?? '?'}</span>
+                <span class="pba-t"><b>${esc(a.verdict || "Anee's analysis")}</b>
+                    <small>${i === 0 ? '<em class="pba-new">Latest</em>' : ''}${esc(a.at || '')}${a.versionName ? ' · ' + esc(a.versionName) : ''}${a.credits ? ` · ${a.credits} credits` : ''}</small></span>
+                <button type="button" class="pba-del" data-an-del="${a.id}" title="Remove this analysis" aria-label="Remove this analysis">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
+                </button>
+            </div>`).join('') + (!AN_ALL && n > 5 ? `<button type="button" class="pba-more" data-an-all>Show all ${n}</button>` : '');
+    }
+    // Picks the analysis read below the list: the latest comes from the
+    // protocol itself, an older one is asked for once and remembered.
+    async function viewAnalysis(id) {
+        const latest = ANALYSES[0];
+        if (!id || !latest) { VIEW = null; VIEW_ID = null; renderAnalyses(); renderReview(); return; }
+        if (latest && id === latest.id && REVIEW) {
+            VIEW = REVIEW; VIEW_ID = id; VIEW_AT = REVIEW_AT; VIEW_CREDITS = REVIEW_CREDITS; VIEW_VER = latest.versionName || null;
+        } else {
+            let one = AN_CACHE.get(id);
+            if (!one) {
+                try { one = (await api(U.base + '/analyses/' + id)).data; AN_CACHE.set(id, one); }
+                catch (err) { toast(err.message, 'error'); return; }
+            }
+            VIEW = one.analysis; VIEW_ID = id; VIEW_AT = one.at; VIEW_CREDITS = one.credits || 0; VIEW_VER = one.versionName || null;
+        }
+        renderAnalyses();
+        renderReview();
+    }
+    $id('pbAnList').addEventListener('click', async (e) => {
+        if (e.target.closest('[data-an-all]')) { AN_ALL = true; renderAnalyses(); return; }
+        const del = e.target.closest('[data-an-del]');
+        if (del) {
+            e.stopPropagation();
+            const id = +del.getAttribute('data-an-del');
+            const ok = await window.confirmAction({ title: 'Remove this analysis?', message: 'It leaves the Analyses tab. The credits it used are already spent.', confirmText: 'Remove' });
+            if (!ok) return;
+            try {
+                const d = (await api(U.base + '/analyses/' + id + '/delete', { method: 'POST', body: {} })).data || {};
+                AN_CACHE.delete(id);
+                ANALYSES = d.analyses || [];
+                REVIEW = d.analysis || null; REVIEW_AT = d.analysisAt || null; REVIEW_CREDITS = d.charged || 0;
+                if (VIEW_ID === id || !ANALYSES.some((a) => a.id === VIEW_ID)) VIEW_ID = ANALYSES[0] ? ANALYSES[0].id : null;
+                render();
+                await viewAnalysis(VIEW_ID);
+                toast('Analysis removed.');
+            } catch (err) { toast(err.message, 'error'); }
+            return;
+        }
+        const row = e.target.closest('[data-an]');
+        if (row) viewAnalysis(+row.getAttribute('data-an'));
+    });
+    $id('pbAnList').addEventListener('keydown', (e) => {
+        const row = e.target.closest('[data-an]');
+        if (row && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); viewAnalysis(+row.getAttribute('data-an')); }
+    });
+    $id('pbHeadTags').addEventListener('click', (e) => { if (e.target.closest('[data-go-analyses]')) showTab('analyses', true); });
+
     function renderReview() {
         const host = $id('pbReview');
-        if (!REVIEW) { host.innerHTML = ''; return; }
-        const r = REVIEW;
+        if (!VIEW) { host.innerHTML = ''; return; }
+        const r = VIEW;
         const ring = r.score >= 75 ? '#4a7c2a' : (r.score >= 50 ? '#c9902e' : '#b91c1c');
         const row = (cls, b, lines) => `<div class="pb-rv-row ${cls}"><b>${esc(b)}</b>${lines.filter(Boolean).map((l) => esc(l)).join('<br>')}</div>`;
         const additions = (r.additions || []).map((a, i) => `
@@ -2631,10 +2765,10 @@
                 <button type="button" class="pb-rv-add" data-add="${i}">+ Add</button>
             </div>`).join('');
         host.innerHTML = `
-            <div class="card pb-review${host._folded ? ' is-folded' : ''}">
+            <div class="card pb-review">
                 <div class="pb-rv-head">
                     <div class="pb-ring" style="--p:${r.score};--ring:${ring}"><b>${r.score}</b><small>/100</small></div>
-                    <div class="pb-rv-t"><b>${esc(r.verdict || "Anee's review")}</b><p>${esc(r.headline || '')}</p><small>Reviewed ${esc(REVIEW_AT || '')}${REVIEW_CREDITS ? ` · ${REVIEW_CREDITS} credits` : ''}</small></div>
+                    <div class="pb-rv-t"><b>${esc(r.verdict || "Anee's review")}</b><p>${esc(r.headline || '')}</p><small>Analyzed ${esc(VIEW_AT || '')}${VIEW_VER ? ' · ' + esc(VIEW_VER) : ''}${VIEW_CREDITS ? ` · ${VIEW_CREDITS} credits` : ''}</small></div>
                     <img class="pb-rv-face" src="${esc(OPT.aneeFace)}" alt="">
                 </div>
                 <div class="pb-rv-body">
@@ -2646,8 +2780,8 @@
                     ${r.summary ? `<p class="pb-rv-h">In short</p><p class="pb-rv-p">${esc(r.summary)}</p>` : ''}
                 </div>
                 <div class="pb-rv-foot">
-                    <button type="button" class="pb-rv-again" id="pbAgain">Review again</button>
-                    <button type="button" class="pb-rv-fold" id="pbFold">${host._folded ? 'Show the review' : 'Hide the review'}</button>
+                    <button type="button" class="pb-rv-again" id="pbAgain">Analyze again</button>
+                    ${ANALYSES[0] && VIEW_ID !== ANALYSES[0].id ? '<span class="pb-rv-fold">An earlier analysis. The latest is at the top of the list.</span>' : ''}
                 </div>
             </div>`;
     }
@@ -2658,11 +2792,10 @@
     });
     $id('pbReview').addEventListener('click', (e) => {
         const host = $id('pbReview');
-        if (e.target.closest('#pbFold')) { host._folded = !host._folded; renderReview(); return; }
         if (e.target.closest('#pbAgain')) { askAnee(); return; }
         const add = e.target.closest('[data-add]');
-        if (add && REVIEW) {
-            const a = REVIEW.additions[+add.getAttribute('data-add')];
+        if (add && VIEW) {
+            const a = (VIEW.additions || [])[+add.getAttribute('data-add')];
             if (!a) return;
             const counter = counters().includes(a.counter) ? a.counter : counters()[0];
             const t = { ...blankTask(), counter, day: a.day, title: a.title || 'Suggested task', type: OPT.types[a.type] ? a.type : null, note: a.why ? 'Anee: ' + a.why : '' };
@@ -2688,6 +2821,7 @@
         openSheet('pbAskSheet');
     }
     $id('pbAneeBtn').addEventListener('click', askAnee);
+    $id('pbAnRun').addEventListener('click', askAnee);
     $id('pbAskGo').addEventListener('click', async () => {
         if ($id('pbAskGo').dataset.short === '1' && OPT.creditsUrl) { window.location.href = OPT.creditsUrl; return; }
         closeSheet('pbAskSheet');
@@ -2701,11 +2835,13 @@
             if (data.pending) data = await window.aneeWait.poll({ id: P.id, job: U.job, phases: window.aneeWait.phases.plain, limit: 120 });
             landed = true;
             REVIEW = data.analysis; REVIEW_AT = data.analysisAt; REVIEW_CREDITS = data.charged || 0;
+            if (Array.isArray(data.analyses)) ANALYSES = data.analyses;
             if (typeof data.balance === 'number') OPT.balance = data.balance;
-            $id('pbReview')._folded = false;
             render();
-            await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used — the review is kept with the protocol.` });
-            $id('pbReview').scrollIntoView({ block: 'start', behavior: 'smooth' });
+            showTab('analyses', true);
+            await viewAnalysis(ANALYSES[0] ? ANALYSES[0].id : null);
+            await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used — kept on the Analyses tab.` });
+            $id('pbPanelAn').scrollIntoView({ block: 'start', behavior: 'smooth' });
         } catch (err) {
             if (err.data && err.data.outOfCredits) {
                 window.noticeSheet({ title: 'Not enough credits', message: err.message, detail: 'Top up on My Credits and come back.', okText: 'OK' });
@@ -2720,13 +2856,17 @@
     let firstTab = 'tasks';
     try { firstTab = localStorage.getItem(TAB_KEY) || 'tasks'; } catch (_) { /* tasks */ }
     showTab(firstTab, false);
+    viewAnalysis(ANALYSES[0] ? ANALYSES[0].id : null);
     // A review left mid-way by a closed tab: finish waiting for it.
     if (BOOT.analysisStatus === 'pending') {
         (async () => {
             try {
                 const data = await window.aneeWait.poll({ id: P.id, job: U.job, phases: window.aneeWait.phases.plain, limit: 100 });
-                REVIEW = data.analysis; REVIEW_AT = data.analysisAt; REVIEW_CREDITS = data.charged || 0; render();
-                toast("Anee's review is in.");
+                REVIEW = data.analysis; REVIEW_AT = data.analysisAt; REVIEW_CREDITS = data.charged || 0;
+                if (Array.isArray(data.analyses)) ANALYSES = data.analyses;
+                render();
+                await viewAnalysis(ANALYSES[0] ? ANALYSES[0].id : null);
+                toast("Anee's analysis is in, on the Analyses tab.");
             } catch (_) {}
         })();
     }

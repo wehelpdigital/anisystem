@@ -85,6 +85,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
                 && str_contains((string) @file_get_contents(resource_path('views/sm/hub.blade.php')), 'class="sched-acts"'),
             'aneeRich' => str_contains((string) @file_get_contents(app_path('Http/Controllers/Manager/FarmReportController.php')), 'private function seasonFacts')
                 && str_contains((string) @file_get_contents(resource_path('views/sm/anee-report.blade.php')), 'function sofarCards'),
+            'pbAnalyses' => str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), 'data-tab="analyses"'),
         ],
         'viewCacheCompiled' => count(glob(storage_path('framework/views/*.php')) ?: []),
         // Whether the deployed environment can reach the mailing list at all
@@ -534,6 +535,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/protocol-builder/{id}/delete', [App\Http\Controllers\ProtocolBuilderController::class, 'destroy'])->whereNumber('id')->name('pb.delete');
     Route::post('/app/protocol-builder/{id}/analyze', [App\Http\Controllers\ProtocolBuilderController::class, 'analyze'])->whereNumber('id')->name('pb.analyze');
     Route::get('/app/protocol-builder/{id}/job', [App\Http\Controllers\ProtocolBuilderController::class, 'job'])->whereNumber('id')->name('pb.job');
+    Route::get('/app/protocol-builder/{id}/analyses', [App\Http\Controllers\ProtocolBuilderController::class, 'analyses'])->whereNumber('id')->name('pb.analyses');
+    Route::get('/app/protocol-builder/{id}/analyses/{aid}', [App\Http\Controllers\ProtocolBuilderController::class, 'analysisOne'])->whereNumber(['id', 'aid'])->name('pb.analyses.one');
+    Route::post('/app/protocol-builder/{id}/analyses/{aid}/delete', [App\Http\Controllers\ProtocolBuilderController::class, 'analysisDestroy'])->whereNumber(['id', 'aid'])->name('pb.analyses.delete');
     Route::get('/app/protocol-builder/lots', [App\Http\Controllers\ProtocolBuilderController::class, 'lots'])->name('pb.lots');
     Route::post('/app/protocol-builder/port', [App\Http\Controllers\ProtocolBuilderController::class, 'port'])->name('pb.port');
     // Versions of a protocol, each with its own tasks, materials, rules & notes and files.
