@@ -454,6 +454,8 @@
                     <label class="form-label text-xs" for="wpPhValue">Tested value or range <span class="text-gray-400 font-normal">(optional)</span></label>
                     <input type="text" id="wpPhValue" class="form-input" maxlength="24" autocomplete="off" placeholder="e.g. 5.8, or a range like 5.5–6.2">
                 </div>
+                <p class="wp-qh mt-4">Sodium, salt or acid sulfate? <small>pick all that apply</small></p>
+                <div class="wtp-choices" id="wpSoilExtras"></div>
                 <p class="wp-qh mt-4">How does the irrigation water look? <small>pick all that apply</small></p>
                 <div class="wtp-choices" id="wpWaterLooks"></div>
                 <p class="wp-qh mt-4">The lay of the land</p>
@@ -602,7 +604,7 @@
     const CAT_E = { 'Grain': '🌾', 'Vegetable': '🥬', 'Root crop': '🍠', 'Legume': '🫘', 'Fruit / tree': '🌳' };
 
     let OPT = null;
-    const state = { location: '', startMonth: null, soil: null, water: null, aim: null, area: '', notes: '', problems: [], country: '', ph: 'unsure', phValue: '', waterLook: [], lay: null, elevation: null, sun: null, prevCrop: '', grewWell: '', labor: null, budget: null, market: [], priorities: [], cropsAsked: [], cropsOther: '', exclude: [] };
+    const state = { location: '', startMonth: null, soil: null, water: null, aim: null, area: '', notes: '', problems: [], country: '', ph: 'unsure', phValue: '', soilExtra: [], waterLook: [], lay: null, elevation: null, sun: null, prevCrop: '', grewWell: '', labor: null, budget: null, market: [], priorities: [], cropsAsked: [], cropsOther: '', exclude: [] };
     const RULES = () => (window.ANEE_REGION_RULES || {});
     const rulesFor = (code) => RULES()[code] || RULES()['*'] || {};
     const countryName = (code) => (code === 'PH' ? 'the Philippines' : (rulesFor(code).name || code || ''));
@@ -640,6 +642,7 @@
             <button type="button" class="wtp-choice${lit(k) ? ' is-on' : ''}" data-${attr}="${esc(k)}"><span class="c-e">${icons[k] || '•'}</span><span>${esc(n)}${sub ? `<small>${esc(sub)}</small>` : ''}</span></button>`; }).join('');
         };
         group('wpPhs', 'ph', OPT.phLevels, { unsure: '🤷', acidic: '🍋', neutral: '⚖️', alkaline: '🧂' }, state.ph);
+        group('wpSoilExtras', 'soilextra', OPT.soilExtras, { unsure: '🤷', sodic: '🧱', saline: '🌊', acid_sulfate: '🟠' }, state.soilExtra);
         group('wpWaterLooks', 'waterlook', OPT.waterLooks, { unsure: '🤷', clear: '💧', muddy: '🟤', milky: '🥛', green: '🟢', salty: '🧂', smelly: '🛢️' }, state.waterLook);
         group('wpLays', 'lay', OPT.lays, { flat: '▬', gentle: '⛰️', steep: '🏔️', low: '🕳️' }, state.lay);
         group('wpElevations', 'elevation', OPT.elevations, { lowland: '🌾', upland: '🌄', highland: '🌫️' }, state.elevation);
@@ -816,7 +819,7 @@
             + (() => { const n = state.cropsAsked.length + (state.cropsOther ? state.cropsOther.split(',').filter((x) => x.trim()).length : 0); return n ? ` · ${n} crop${n === 1 ? '' : 's'} of your own to rank` : ''; })()
             + (state.priorities.length ? ` · first: ${esc(shortOf((OPT.priorities || {})[state.priorities[0]] || state.priorities[0]).toLowerCase())}` : '')
             + (state.exclude.length ? ` · leaving out ${esc(state.exclude.map((k) => shortOf((OPT.families || {})[k] || k).toLowerCase()).join(', '))}` : '')
-            + (() => { const n = (state.ph && state.ph !== 'unsure' ? 1 : 0) + (state.waterLook.length ? 1 : 0) + (state.market.length ? 1 : 0) + ['lay', 'elevation', 'sun', 'labor', 'budget'].filter((k) => state[k]).length + ['prevCrop', 'grewWell'].filter((k) => state[k]).length; return n ? ` · ${n} extra signal${n === 1 ? '' : 's'}` : ''; })() + '</span>';
+            + (() => { const n = (state.ph && state.ph !== 'unsure' ? 1 : 0) + (state.soilExtra.length ? 1 : 0) + (state.waterLook.length ? 1 : 0) + (state.market.length ? 1 : 0) + ['lay', 'elevation', 'sun', 'labor', 'budget'].filter((k) => state[k]).length + ['prevCrop', 'grewWell'].filter((k) => state[k]).length; return n ? ` · ${n} extra signal${n === 1 ? '' : 's'}` : ''; })() + '</span>';
         $id('wpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
         $id('wpRunFine').textContent = OPT.canUse
             ? 'Charged to the same AI credits your questions use — it shows in your subscription’s credit log.'
@@ -872,6 +875,7 @@
         });
     };
     manyWire('wpWaterLooks', 'waterlook', 'waterLook');
+    manyWire('wpSoilExtras', 'soilextra', 'soilExtra');
     pickWire('wpLays', 'lay', 'lay', null);
     pickWire('wpElevations', 'elevation', 'elevation', null);
     pickWire('wpSuns', 'sun', 'sun', null);
@@ -908,7 +912,7 @@
                 location: state.location, startMonth: state.startMonth, soil: state.soil,
                 water: state.water, aim: state.aim, area: state.area, notes: state.notes,
                 problems: state.problems, country: state.country,
-                ph: state.ph, phValue: state.phValue || null, waterLook: state.waterLook, lay: state.lay, elevation: state.elevation, sun: state.sun,
+                ph: state.ph, phValue: state.phValue || null, soilExtra: state.soilExtra, waterLook: state.waterLook, lay: state.lay, elevation: state.elevation, sun: state.sun,
                 prevCrop: state.prevCrop, grewWell: state.grewWell, labor: state.labor, budget: state.budget, market: state.market,
                 priorities: state.priorities, cropsAsked: state.cropsAsked, cropsOther: state.cropsOther, exclude: state.exclude,
             } });
@@ -1050,6 +1054,7 @@
                     <span class="wtp-chip">📍 ${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc(rulesFor(p.country).name || p.country) : ''}</span>
                     <span class="wtp-chip">🗓️ ${esc(month)}</span>
                     ${p.ph && p.ph !== 'unsure' ? `<span class="wtp-chip">pH ${esc(p.phValue || String((OPT && OPT.phLevels && OPT.phLevels[p.ph]) || p.ph).split(' — ')[0].toLowerCase())}</span>` : ''}
+                    ${[].concat(p.soilExtra || []).filter((k) => k && k !== 'unsure').map((k) => `<span class="wtp-chip">🧪 ${esc(String((OPT && OPT.soilExtras && OPT.soilExtras[k]) || k).split(' — ')[0])}</span>`).join('')}
                     ${[].concat(p.waterLook || []).filter((k) => k && k !== 'unsure').map((k) => `<span class="wtp-chip">💧 ${esc(String((OPT && OPT.waterLooks && OPT.waterLooks[k]) || k).split(' — ')[0])}</span>`).join('')}
                     ${p.elevation ? `<span class="wtp-chip">${esc(String((OPT && OPT.elevations && OPT.elevations[p.elevation]) || p.elevation).split(' — ')[0])}</span>` : ''}
                     <span class="wtp-chip">Confidence: ${esc(r.confidence || 'moderate')}</span>

@@ -58,14 +58,9 @@ class CropProtocolController extends Controller
        pair, saline AND alkaline another -- so the answer is a list. The pH
        words (acidic / neutral / alkaline) exclude one another; sodium and
        salt are their own axes and combine with any pH. See soilConditions(). */
-    public const SOIL_CONDITIONS = [
-        'unsure' => 'Not sure / never tested',
-        'acidic' => 'Acidic — low pH (moss, ferns, poor legumes)',
-        'neutral' => 'Around neutral',
-        'alkaline' => 'Alkaline — high pH (pale young leaves, white crust)',
-        'sodic' => 'Sodic — high sodium (crusts, seals, water sits, dispersive)',
-        'saline' => 'Saline — salty (white crust, burnt leaf tips, brackish water)',
-    ];
+    // Shared with every analysis since 2026-09-29 (App\Support\SoilConditions),
+    // which added acid sulfate.
+    public const SOIL_CONDITIONS = \App\Support\SoilConditions::OPTIONS;
 
     public const TEST_LEVELS = [
         'unsure' => 'Unknown',
@@ -214,26 +209,7 @@ class CropProtocolController extends Controller
      */
     public static function soilConditions(mixed $raw): array
     {
-        $keys = is_array($raw) ? $raw : (is_string($raw) && $raw !== '' ? [$raw] : []);
-        $out = [];
-        $ph = null;
-        foreach ($keys as $k) {
-            $k = (string) $k;
-            if ($k === 'unsure' || ! array_key_exists($k, self::SOIL_CONDITIONS)) {
-                continue;
-            }
-            if (in_array($k, ['acidic', 'neutral', 'alkaline'], true)) {
-                $ph = $k;
-                continue;
-            }
-            $out[$k] = true;
-        }
-        $list = array_keys($out);
-        if ($ph) {
-            array_unshift($list, $ph);
-        }
-
-        return array_slice($list, 0, 3);
+        return \App\Support\SoilConditions::normalize($raw);
     }
 
     /** The tier wall: the analyses are Anee's, and Anee comes with Libre + Anee and up. */
@@ -329,7 +305,7 @@ class CropProtocolController extends Controller
             'notes' => 'nullable|string|max:400',
             // The ground, closer — every one optional.
             'soilCondition' => 'nullable|in:' . implode(',', array_keys(self::SOIL_CONDITIONS)),
-            'soilConditions' => 'nullable|array|max:4',
+            'soilConditions' => 'nullable|array|max:7',
             'soilConditions.*' => 'string|in:' . implode(',', array_keys(self::SOIL_CONDITIONS)),
             'testP' => 'nullable|in:' . implode(',', array_keys(self::TEST_LEVELS)),
             'testK' => 'nullable|in:' . implode(',', array_keys(self::TEST_LEVELS)),
@@ -1036,6 +1012,12 @@ class CropProtocolController extends Controller
                     ? collect($list)->map(fn ($k) => self::SOIL_CONDITIONS[$k] ?? $k)->implode('; AND ')
                     : 'not tested / not stated — read it from the troubles and the region';
             })(),
+            // What each condition asks of the protocol: its correction and lead time.
+            'soilGuide' => (function () use ($p) {
+                $g = \App\Support\SoilConditions::guidance(self::soilConditions($p['soilConditions'] ?? ($p['soilCondition'] ?? null)));
+
+                return $g !== '' ? "- What that soil condition asks of the protocol (build its correction, timing and lead time in):\n" . $g : '';
+            })(),
             'testP' => (($p['testP'] ?? 'unsure') !== 'unsure') ? (self::TEST_LEVELS[$p['testP']] ?? $p['testP']) : 'not known',
             'testK' => (($p['testK'] ?? 'unsure') !== 'unsure') ? (self::TEST_LEVELS[$p['testK']] ?? $p['testK']) : 'not known',
             'prevCrop' => (($p['prevCrop'] ?? 'unsure') !== 'unsure') ? (self::PREV_CROPS[$p['prevCrop']] ?? $p['prevCrop']) : 'not stated',
@@ -1129,7 +1111,8 @@ FACTS GIVEN
 - The count this crop is managed by: {$f['counter']} (days after transplanting / sowing / planting). The app's own stage table for it: {$f['stageTable']}
 - Field size: {$f['area']} hectare(s)
 - Soil, as the farmer describes it: {$f['soil']}; water: {$f['water']}
-- Soil condition (pH / sodium / salt), as far as the farmer knows — more than one can be true at once, and a combination (an alkaline sodic soil, a saline alkaline soil) is to be reasoned about AS a combination: {$f['soilCondition']}
+- Soil condition (pH / sodium / salt / acid sulfate), as far as the farmer knows — more than one can be true at once, and a combination (an alkaline sodic soil, a saline alkaline soil) is to be reasoned about AS a combination: {$f['soilCondition']}
+{$f['soilGuide']}
 - Soil test or history, phosphorus: {$f['testP']}; potassium: {$f['testK']}
 - The previous crop: {$f['prevCrop']}; its residue was: {$f['residue']}
 - What the field got last season, in the farmer's words: {$f['fertHistory']}

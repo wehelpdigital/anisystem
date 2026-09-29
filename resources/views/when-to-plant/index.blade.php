@@ -78,6 +78,8 @@
         transition: border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
     .wtp-prob input { accent-color: #4a7c2a; width: 1rem; height: 1rem; flex: none; }
     .wtp-prob.is-on { border-color: var(--color-brand-500); background: var(--color-brand-50); }
+    .wtp-ph { margin-top: .85rem; max-width: 12rem; }
+    .wtp-opt { font-weight: 600; font-size: .72rem; color: var(--color-gray-400); margin-left: .25rem; }
 
     .wtp-nav { display: flex; gap: .6rem; margin-top: 1.1rem; }
 
@@ -539,8 +541,22 @@
                 <p class="wtp-sub">Tick what you have seen — each one moves the window.</p>
                 <div class="wtp-probs" id="wtpProbs"></div>
             </section>
-            {{-- Step 7: the decision --}}
+            {{-- Step 7: the soil's chemistry (the owner, 2026-09-29): acidic,
+                 alkaline, sodic, saline, acid sulfate. Each moves the window
+                 (a correction's lead time before planting, weather that makes
+                 it worse at emergence). More than one can be true; the pH
+                 words exclude one another. A tested pH is optional. --}}
             <section class="wtp-step" data-step="5">
+                <p class="wtp-q">What is the soil like?</p>
+                <p class="wtp-sub">Tick what you know, or leave it if it was never tested. A soil can be more than one of these.</p>
+                <div class="wtp-probs" id="wtpSoil"></div>
+                <div class="wtp-ph">
+                    <label class="form-label" for="wtpPh">Tested pH <span class="wtp-opt">optional</span></label>
+                    <input type="number" id="wtpPh" class="form-input" inputmode="decimal" min="2" max="12" step="0.1" placeholder="e.g. 5.4">
+                </div>
+            </section>
+            {{-- Step 8: the decision --}}
+            <section class="wtp-step" data-step="6">
                 <p class="wtp-q">Ready to run it?</p>
                 <p class="wtp-sub" id="wtpReview"></p>
                 <button type="button" class="wtp-run" id="wtpRun">
@@ -641,7 +657,7 @@
     let OPT = null;
     /* from / to: months as one number (year * 12 + month - 1), null until
        picked; the From and To tags each set their own end. */
-    const state = { from: null, to: null, crop: '', variety: '', location: '', problems: [], country: '' };
+    const state = { from: null, to: null, crop: '', variety: '', location: '', problems: [], soil: [], ph: '', country: '' };
     const MONTHS_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const ym = (n) => ({ year: Math.floor(n / 12), month: (n % 12) + 1 });
     const monthIdx = (year, month) => Number(year) * 12 + Number(month) - 1;
@@ -676,7 +692,7 @@
         return crosses && y ? `${label} ${y}–${String(y + 1).slice(-2)}` : `${label} ${y || ''}`.trim();
     };
     let step = 0;
-    const STEPS = 6;
+    const STEPS = 7;
     // A crop let go because the field's country changed: the step that asks
     // for it again says why.
     let cropDropped = false;
@@ -698,6 +714,9 @@
         paintCrops();
         $id('wtpProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
             <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
+        // "Not sure" is the empty answer, so it is not a box to tick.
+        $id('wtpSoil').innerHTML = Object.entries(OPT.soilConditions || {}).filter(([k]) => k !== 'unsure').map(([k, label]) => `
+            <label class="wtp-prob" data-soil="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
         $id('wtpDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
 
         paintQuote();
@@ -871,6 +890,13 @@
             case 2: return !!state.crop || (toast(cropDropped ? `The crop list is different for ${countryName(state.country)} — pick the crop again.` : 'Pick the crop.', 'error'), false);
             case 3: state.variety = $id('wtpVariety').value.trim(); return true;
             case 4: state.problems = [...document.querySelectorAll('#wtpProbs input:checked')].map((i) => i.value); return true;
+            case 5: {
+                state.soil = [...document.querySelectorAll('#wtpSoil input:checked')].map((i) => i.value);
+                const ph = $id('wtpPh').value.trim();
+                if (ph !== '' && (!(Number(ph) >= 2) || Number(ph) > 12)) { toast('A pH is a number from 2 to 12, e.g. 5.4.', 'error'); return false; }
+                state.ph = ph;
+                return true;
+            }
             default: {
                 // The run itself: every answer still stands for the field's country.
                 state.location = $id('wtpLocation').value.trim();
@@ -889,7 +915,8 @@
         $id('wtpReview').innerHTML = `${esc(crop.icon || '')} <b>${esc(crop.label || '')}</b>`
             + `${state.variety ? ' · ' + esc(state.variety) : ''} · ${esc(whenSaid(rangeParams()))}`
             + ` · ${esc(state.location)}${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(nameOf(state.country)) : ''}`
-            + (state.problems.length ? `<br><span class="text-xs">${state.problems.length} field problem${state.problems.length === 1 ? '' : 's'} considered</span>` : '');
+            + (state.problems.length ? `<br><span class="text-xs">${state.problems.length} field problem${state.problems.length === 1 ? '' : 's'} considered</span>` : '')
+            + ((state.soil.length || state.ph) ? `<br><span class="text-xs">Soil: ${esc([...state.soil.map((k) => ((OPT.soilConditions || {})[k] || k).split(' — ')[0]), state.ph ? 'pH ' + state.ph : ''].filter(Boolean).join(', '))}</span>` : '');
         $id('wtpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
         $id('wtpRunFine').textContent = OPT.canUse
             ? 'Charged to the same AI credits your questions use — it shows in your subscription’s credit log.'
@@ -997,6 +1024,17 @@
         });
     });
 
+    const PH_WORDS = ['acidic', 'neutral', 'alkaline'];
+    $id('wtpSoil').addEventListener('change', (e) => {
+        const l = e.target.closest('.wtp-prob');
+        if (l) l.classList.toggle('is-on', e.target.checked);
+        if (!e.target.checked || !PH_WORDS.includes(e.target.value)) return;
+        PH_WORDS.filter((k) => k !== e.target.value).forEach((k) => {
+            const other = document.querySelector(`#wtpSoil input[value="${k}"]`);
+            if (other && other.checked) { other.checked = false; other.closest('.wtp-prob')?.classList.remove('is-on'); }
+        });
+    });
+
     /* ---------------- the run ---------------- */
     $id('wtpRun').addEventListener('click', async () => {
         if (!stepReady()) return;
@@ -1009,6 +1047,7 @@
             const res = await api(U.generate, { method: 'POST', body: {
                 ...rangeParams(), crop: state.crop,
                 variety: state.variety, location: state.location, problems: state.problems,
+                soilConditions: state.soil, phValue: state.ph === '' ? null : Number(state.ph),
                 country: state.country,
             } });
             let data = res.data;
@@ -1072,11 +1111,12 @@
        the variety and the field's troubles all cleared, back at the first
        step. The field's country stays -- a setting more than an answer. */
     function resetWizard() {
-        Object.assign(state, { from: null, to: null, crop: '', variety: '', location: '', problems: [] });
+        Object.assign(state, { from: null, to: null, crop: '', variety: '', location: '', problems: [], soil: [], ph: '' });
         cropDropped = false;
         $id('wtpLocation').value = '';
         $id('wtpVariety').value = '';
-        document.querySelectorAll('#wtpProbs input:checked').forEach((i) => { i.checked = false; i.closest('.wtp-prob')?.classList.remove('is-on'); });
+        document.querySelectorAll('#wtpProbs input:checked, #wtpSoil input:checked').forEach((i) => { i.checked = false; i.closest('.wtp-prob')?.classList.remove('is-on'); });
+        $id('wtpPh').value = '';
         $id('wtpCropIcon').textContent = '🌱';
         const now = $id('wtpCropNow');
         now.textContent = 'Choose the crop';

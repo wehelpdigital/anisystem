@@ -833,7 +833,7 @@
         $id('cpSoils').innerHTML = Object.entries(OPT.soils).map(([k, label]) => { const [n, s] = split(label); return choice('soil', k, soilIcons[k] || '🟫', n, s); }).join('');
         const waterIcons = { irrigated: '🚰', limited: '🚿', rainfed: '🌧️' };
         $id('cpWaters').innerHTML = Object.entries(OPT.waters).map(([k, label]) => choice('water', k, waterIcons[k] || '💧', label, '')).join('');
-        const condIcons = { unsure: '🤷', acidic: '🍋', neutral: '⚖️', alkaline: '🧂', sodic: '🧱', saline: '🌊' };
+        const condIcons = { unsure: '🤷', acidic: '🍋', neutral: '⚖️', alkaline: '🧂', sodic: '🧱', saline: '🌊', acid_sulfate: '🟠' };
         $id('cpSoilConds').innerHTML = Object.entries(OPT.soilConditions || {}).map(([k, label]) => { const [n, s] = split(label); return choice('soilcond', k, condIcons[k] || '•', n, s); }).join('');
         paintSoilConds();
         const lvlIcons = { unsure: '🤷', low: '🔻', medium: '➖', high: '🔺' };

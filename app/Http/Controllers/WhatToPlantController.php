@@ -64,6 +64,16 @@ class WhatToPlantController extends Controller
         'alkaline' => 'Alkaline — above 7.5 (white crust, yellowing young leaves)',
     ];
 
+    /* The soil's other chemistry (2026-09-29): sodium, salt and acid sulfate
+       ride with any pH, so they are their own pick-many question beside the
+       pH one. Words shared with every analysis (App\Support\SoilConditions). */
+    public const SOIL_EXTRAS = [
+        'unsure' => 'None of these / not sure',
+        'sodic' => \App\Support\SoilConditions::OPTIONS['sodic'],
+        'saline' => \App\Support\SoilConditions::OPTIONS['saline'],
+        'acid_sulfate' => \App\Support\SoilConditions::OPTIONS['acid_sulfate'],
+    ];
+
     public const WATER_LOOKS = [
         'unsure' => 'Not sure / no irrigation water',
         'clear' => 'Clear and clean',
@@ -195,6 +205,7 @@ class WhatToPlantController extends Controller
             'soils' => self::SOILS,
             'phLevels' => self::PH_LEVELS,
             'waterLooks' => self::WATER_LOOKS,
+            'soilExtras' => self::SOIL_EXTRAS,
             'lays' => self::LAYS,
             'elevations' => self::ELEVATIONS,
             'suns' => self::SUNS,
@@ -253,6 +264,8 @@ class WhatToPlantController extends Controller
             'notes' => 'nullable|string|max:400',
             'ph' => 'nullable|in:' . implode(',', array_keys(self::PH_LEVELS)),
             'phValue' => 'nullable|string|max:24',
+            'soilExtra' => 'nullable',
+            'soilExtra.*' => 'string|max:24',
             // The two pick-many answers arrive as lists (an older page may still send one key).
             'waterLook' => 'nullable',
             'waterLook.*' => 'string|max:24',
@@ -510,6 +523,7 @@ class WhatToPlantController extends Controller
             . 'Case: ' . $r->title . "\n"
             . 'Ground: soil ' . (self::SOILS[$params['soil'] ?? ''] ?? '') . '; water ' . (self::WATERS[$params['water'] ?? ''] ?? '')
             . (($params['ph'] ?? 'unsure') !== 'unsure' ? '; pH ' . (self::PH_LEVELS[$params['ph']] ?? '') : '')
+            . (($extras = self::picks(self::SOIL_EXTRAS, $params['soilExtra'] ?? null)) ? '; soil ' . collect($extras)->map(fn ($k) => self::SOIL_EXTRAS[$k])->implode(', ') : '')
             . (($looks = self::picks(self::WATER_LOOKS, $params['waterLook'] ?? null)) ? '; water looks ' . collect($looks)->map(fn ($k) => self::WATER_LOOKS[$k])->implode(', ') : '')
             . (($outlets = self::picks(self::MARKETS, $params['market'] ?? null)) ? '; sells to ' . collect($outlets)->map(fn ($k) => self::MARKETS[$k])->implode(', ') : '')
             . '; aim ' . (self::AIMS[$params['aim'] ?? ''] ?? '') . ($params['area'] ?? null ? '; area ' . $params['area'] : '') . "\n"
@@ -633,6 +647,7 @@ class WhatToPlantController extends Controller
             'ph' => array_key_exists((string) $request->input('ph'), self::PH_LEVELS) ? (string) $request->input('ph') : 'unsure',
             // A tested pH as the farmer wrote it: one reading or a range ("5.5–6.2").
             'phValue' => $request->filled('phValue') ? trim((string) preg_replace('/\s+/', ' ', (string) $request->input('phValue'))) : null,
+            'soilExtra' => self::picks(self::SOIL_EXTRAS, $request->input('soilExtra')),
             'waterLook' => self::picks(self::WATER_LOOKS, $request->input('waterLook')),
             'lay' => array_key_exists((string) $request->input('lay'), self::LAYS) ? (string) $request->input('lay') : null,
             'elevation' => array_key_exists((string) $request->input('elevation'), self::ELEVATIONS) ? (string) $request->input('elevation') : null,
@@ -659,6 +674,11 @@ class WhatToPlantController extends Controller
         $said = fn (array $table, ?string $k) => ($k && $k !== 'unsure' && isset($table[$k])) ? $table[$k] : 'not stated';
         $ph = $said(self::PH_LEVELS, $p['ph'] ?? null) . (($p['phValue'] ?? null) ? ' (tested: pH ' . $p['phValue'] . ')' : '');
         $saidMany = fn (array $table, mixed $v) => collect(self::picks($table, $v))->map(fn ($k) => $table[$k])->implode('; ') ?: 'not stated';
+        $soilExtra = $saidMany(self::SOIL_EXTRAS, $p['soilExtra'] ?? null);
+        // What the soil's chemistry means for the ranking, for what was given.
+        $soilGuide = \App\Support\SoilConditions::guidance(\App\Support\SoilConditions::normalize(
+            array_merge([($p['ph'] ?? 'unsure')], self::picks(self::SOIL_EXTRAS, $p['soilExtra'] ?? null))));
+        $soilBlock = $soilGuide !== '' ? "- What that soil chemistry means (weigh it in every crop's score and why):\n" . $soilGuide . "\n" : '';
         $waterLook = $saidMany(self::WATER_LOOKS, $p['waterLook'] ?? null);
         $lay = $said(self::LAYS, $p['lay'] ?? null);
         $elevation = $said(self::ELEVATIONS, $p['elevation'] ?? null);
@@ -722,7 +742,8 @@ FACTS GIVEN
 - What the harvest is for: {$aim}
 - Land area: {$area}
 - Soil pH, as far as the farmer knows: {$ph}
-- The irrigation water, as it looks (every look the farmer ticked): {$waterLook}
+- Sodium, salt or acid sulfate in the soil: {$soilExtra}
+{$soilBlock}- The irrigation water, as it looks (every look the farmer ticked): {$waterLook}
 - The lay of the land: {$lay}
 - Elevation: {$elevation}
 - Sunlight: {$sun}

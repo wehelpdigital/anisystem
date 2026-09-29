@@ -66,6 +66,9 @@ class VarietyAnalysisController extends Controller
         'salinity' => 'Salty or brackish (near the sea, saline soil)',
         'acidic' => 'Acidic soil (low pH — yellowing, poor growth)',
         'alkaline' => 'Alkaline soil (high pH — white crust, pale leaves)',
+        // The rest of the soil's chemistry (2026-09-29), as every analysis asks it.
+        'sodic' => 'Sodic soil (high sodium — crusts, seals, water sits)',
+        'acid_sulfate' => 'Acid sulfate soil (very sour — yellow mottles, rusty water, old mangrove or swamp)',
         'wind' => 'Strong winds pass through (typhoon corridor)',
         'pests' => 'Pests have been heavy in past seasons',
         'disease' => 'Disease has hit past crops (blast, tungro, wilt, rot…)',
@@ -613,6 +616,11 @@ PROMPT;
         $crop = CropCatalog::CROPS[$p['crop']];
         $soil = self::SOILS[$p['soil']] ?? $p['soil'];
         $problems = collect($p['problems'])->map(fn ($k) => self::PROBLEMS[$k] ?? $k)->implode('; ') ?: 'none reported';
+        // The soil troubles among them, read as every analysis reads them:
+        // which varieties tolerate it, and what a correction costs in time.
+        $soilKeys = array_map(fn ($k) => $k === 'salinity' ? 'saline' : $k, (array) $p['problems']);
+        $soilGuide = \App\Support\SoilConditions::guidance(\App\Support\SoilConditions::normalize($soilKeys));
+        $soilBlock = $soilGuide !== '' ? "- What the soil troubles mean for the choice (weigh each variety's published tolerance to them, and say so):\n" . $soilGuide . "\n" : '';
         $notes = $p['notes'] !== '' ? $p['notes'] : 'none';
         $order = [];
         foreach ($p['priorities'] as $i => $k) {
@@ -648,7 +656,7 @@ FACTS GIVEN
 - The lay of the land: {$land}
 - Soil, as the farmer describes it: {$soil}
 - Field troubles the farmer reports: {$problems}
-- The farmer's priorities, most important first: {$orderText}
+{$soilBlock}- The farmer's priorities, most important first: {$orderText}
 - Varieties: {$given}
 - The farmer's own notes: {$notes}
 - Weather now: {$forecast}

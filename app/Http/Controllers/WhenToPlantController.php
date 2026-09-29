@@ -94,6 +94,8 @@ class WhenToPlantController extends Controller
                 'intl' => ! empty($c['intl']),
             ])->values(),
             'problems' => self::PROBLEMS,
+            // The soil's chemistry (acidic, alkaline, sodic...), asked as every analysis asks it.
+            'soilConditions' => \App\Support\SoilConditions::OPTIONS,
             'seasons' => \App\Support\Region::seasons(),
             // The farmer's own country: the field is there unless they say otherwise.
             'country' => \App\Support\Region::code(),
@@ -159,6 +161,9 @@ class WhenToPlantController extends Controller
             'location' => 'required|string|max:160',
             'problems' => 'nullable|array',
             'problems.*' => 'string|in:' . implode(',', array_keys(self::PROBLEMS)),
+            'soilConditions' => 'nullable|array|max:7',
+            'soilConditions.*' => 'string|in:' . implode(',', array_keys(\App\Support\SoilConditions::OPTIONS)),
+            'phValue' => 'nullable|numeric|min:2|max:12',
         ]);
         if ($v->fails()) {
             return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
@@ -469,6 +474,7 @@ class WhenToPlantController extends Controller
         $text = "\n\n--- ATTACHED: When-to-plant analysis (the farmer generated this earlier; treat it as shared context) ---\n"
             . 'Case: ' . $r->title . "\n"
             . 'Field problems considered: ' . ($problems ?: 'none') . "\n"
+            . (($params['soilConditions'] ?? []) || ($params['phValue'] ?? null) ? 'Soil condition: ' . \App\Support\SoilConditions::words(\App\Support\SoilConditions::normalize($params['soilConditions'] ?? []), \App\Support\SoilConditions::phValue($params['phValue'] ?? null)) . "\n" : '')
             . 'Recommended window: ' . ($bw['label'] ?? '') . ' — ' . ($bw['why'] ?? '') . "\n"
             . (! empty($report['weekRanks']) ? 'Best planting weeks, ranked: ' . collect($report['weekRanks'])->map(fn ($w) => ($w['rank'] ?? '') . ') ' . ($w['label'] ?? '') . ' (score ' . ($w['score'] ?? '') . ') — ' . ($w['why'] ?? ''))->implode(' | ') . "\n" : '')
             . (! empty($report['typhoonOdds']['months']) ? 'Typhoon chance by month (share of years with a cyclone): ' . collect($report['typhoonOdds']['months'])->map(fn ($m) => date('M', mktime(0, 0, 0, (int) $m['month'], 1)) . ' ' . (int) $m['chance'] . '%')->implode(', ') . "\n" : '')
@@ -557,6 +563,8 @@ class WhenToPlantController extends Controller
             'variety' => trim((string) $request->input('variety', '')),
             'location' => trim((string) $request->input('location')),
             'problems' => array_values((array) $request->input('problems', [])),
+            'soilConditions' => \App\Support\SoilConditions::normalize($request->input('soilConditions', [])),
+            'phValue' => \App\Support\SoilConditions::phValue($request->input('phValue')),
             'country' => \App\Support\Region::valid($request->input('country')) ?: \App\Support\Region::code(),
         ];
     }
@@ -637,6 +645,14 @@ PROMPT;
             ->map(fn ($s) => ($s[1] ?? 'stage') . ' from day ' . (int) ($s[0] ?? 0))
             ->implode('; ') ?: 'not tabulated — use typical stages for this crop';
         $problems = collect($p['problems'])->map(fn ($k) => self::PROBLEMS[$k] ?? $k)->implode('; ') ?: 'none reported';
+        // The soil's chemistry, and what each condition means for timing.
+        $soilList = \App\Support\SoilConditions::normalize($p['soilConditions'] ?? []);
+        $soilPh = \App\Support\SoilConditions::phValue($p['phValue'] ?? null);
+        $soil = \App\Support\SoilConditions::words($soilList, $soilPh);
+        $soilGuide = \App\Support\SoilConditions::guidance($soilList);
+        $soilBlock = $soilGuide !== ''
+            ? "- What these soil conditions mean for timing (weigh them):\n" . $soilGuide . "\n"
+            : '';
         $maturity = CropCatalog::maturity($p['crop']);
         $enso = \App\Support\EnsoOutlook::forPrompt();
         $ensoBlock = $enso !== '' ? '- ' . $enso . "\n" : '';
@@ -673,10 +689,12 @@ FACTS GIVEN
 - Stated variety: "{$p['variety']}" — the research notes at the end carry what the web says about it (maturity, season it is bred for, tolerance to drought / flood / heat / cold, pest and disease resistance, who released it). USE those published traits: time the crop by the variety's own days to maturity where the notes give one, and let its tolerances and weaknesses move the windows, the month scores and the threats (a submergence-tolerant variety fears the flood month less; an early-maturing one can dodge it). Where the notes say the variety could not be found, say variety-specific data is unavailable in dataGaps and reason from the crop's typical range. Never invent varietal traits, and never use a trait the notes do not carry.
 - Location as the farmer wrote it: {$p['location']}
 - Field problems the farmer reports: {$problems}
-{$ensoBlock}
+- Soil condition as the farmer knows it: {$soil}
+{$soilBlock}{$ensoBlock}
 GROUND RULES
 - Research notes gathered from the web just now follow at the end of this brief: the place's twenty-year record of storms, droughts, floods and heat, month by month, with its worst years. Rely on them first for riskHistory and for the avoid windows; where they and memory disagree, the notes win; where they are silent, say so in dataGaps.
-- Reason only from established knowledge: {$climateRule}, {$ensoRule}, soil-water behaviour implied by the reported problems, and the crop calendar arithmetic above.
+- Reason only from established knowledge: {$climateRule}, {$ensoRule}, soil-water behaviour implied by the reported problems, the soil condition given, and the crop calendar arithmetic above.
+- The soil condition moves the window too: a correction that must go on before planting (lime for acidic soil, gypsum and leaching for sodic, a salt flush for saline) pushes the earliest good week back by its lead time, and weather that worsens the condition at emergence (salts peaking in the driest weeks, a sodic soil crusting under heavy rain, an acid sulfate soil flushing acid with the first rains after a dry spell) lowers those weeks' scores. Say this in the week reasons and the threats where it applies. If the soil condition is not known, add a soil test to dataGaps.
 - Weigh the WHOLE crop cycle, not just the planting day: a planting month is only as good as the weather the crop meets at its sensitive stages (flowering, grain fill, harvest) in the months after it.
 - Where the given facts cannot answer something (exact distance to river or sea, microclimate, irrigation reliability), name it in dataGaps instead of guessing.
 - Be scientific and neutral: no product recommendations, no marketing tone, no bias toward any input or brand.

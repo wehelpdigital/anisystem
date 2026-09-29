@@ -88,6 +88,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'pbAnalyses' => str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), 'data-tab="analyses"'),
             'boardTrio' => str_contains((string) @file_get_contents(resource_path('views/sm/partials/activities-js.blade.php')), 'the stretch goes with it')
                 && str_contains((string) @file_get_contents(resource_path('views/sm/activities.blade.php')), 'if (wasOpen) setTimeout(land, 300)'),
+            'soilAsked' => class_exists(\App\Support\SoilConditions::class)
+                && str_contains((string) @file_get_contents(resource_path('views/when-to-plant/index.blade.php')), 'id="wtpSoil"'),
             'mirrorHold' => str_contains((string) @file_get_contents(resource_path('views/sm/activities.blade.php')), 'function holdAnchor('),
             'aneeGuide' => str_contains((string) @file_get_contents(resource_path('views/partials/anee-chat-guide.blade.php')), 'data-anee-guide')
                 && str_contains((string) @file_get_contents(app_path('Models/AiSetting.php')), 'No fortune-telling'),
