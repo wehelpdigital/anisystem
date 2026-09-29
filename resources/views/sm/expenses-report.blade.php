@@ -129,9 +129,9 @@
         <span class="rx-about-e">💸</span>
         <div class="rx-about-t">
             <b>What the Expenses Report tells you</b>
-            <p>Every peso the season spent, added up from the activities that were ticked done: the stock they took from the inventory, the services they paid for, and the cash lines on each day.</p>
-            <ul><li><b>Total spent</b> for the slice you choose — every lot or some, every category or some, planned and done or only done, and the whole season, a day-count range or a date range</li><li><b>Where it went</b> — by category (fertilizer, seed, chemicals, services, cash) and by lot, with the biggest lines named</li><li><b>Net of the day-book income</b> the same days brought in</li><li><b>Breakdown</b> — every entry, card by card, with the activity it came from</li></ul>
-            <p class="rx-about-note">Every report you generate is saved on the Saved Reports shelf, where you can rename and describe it.</p>
+            {{-- One short paragraph, no dashes or lists (the owner's ask,
+                 2026-09-29), as the analyses introduce themselves. --}}
+            <p>See every peso the season spent, added up from your activities: the stock they used from the inventory, the services you paid for, and the cash spent each day. Pick the lots, the kinds of cost and the days you want, and you get the total, where the money went by category and by lot, what is left after the income those days brought in, and every entry with the activity it came from. Every report you make is kept on the Saved Reports tab.</p>
         </div>
     </div>
     {{-- The wizard: set the slice, then generate. Results come after, not under. --}}

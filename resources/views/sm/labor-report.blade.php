@@ -287,9 +287,9 @@
         <span class="rx-about-e">🧾</span>
         <div class="rx-about-t">
             <b>What the Labor Report tells you</b>
-            <p>Everything the season paid its people, added up from the worker assignments on your activities — half days, whole days, and each worker's rate.</p>
-            <ul><li><b>Total labor expense</b> for the slice you choose — the whole season, a day-count range, or a date range</li><li><b>Busiest months</b> — where the labor cost and the activity count peak</li><li><b>Total worker earnings</b> and who carried the most work, on a donut of each worker's share</li><li><b>Breakdown</b> by worker and by activity, land preparation apart from main cropping</li></ul>
-            <p class="rx-about-note">Every report you generate is saved on the Saved Reports shelf, where you can rename and describe it.</p>
+            {{-- One short paragraph, no dashes or lists (the owner's ask,
+                 2026-09-29), as the analyses introduce themselves. --}}
+            <p>See everything the season paid its workers, added up from the half days and whole days on your activities at each worker's rate. Pick the whole season, a range of days or a range of dates, and you get the total cost, the busiest months, who did the most work, and a breakdown by worker and by activity. Every report you make is kept on the Saved Reports tab.</p>
         </div>
     </div>
     {{-- The wizard: set the slice, then generate. Results come after, not under. --}}

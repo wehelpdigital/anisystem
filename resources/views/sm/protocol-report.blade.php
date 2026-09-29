@@ -92,9 +92,9 @@
         <span class="rx-about-e">📋</span>
         <div class="rx-about-t">
             <b>What View as Protocol gives you</b>
-            <p>One lot's season, written down as the recipe you actually followed: every activity that was ticked done, in order on the crop's own clock.</p>
-            <ul><li><b>Step by step</b> — the day count, the date, the work, how long it took and how many hands</li><li><b>The materials each step used</b>, as the inventory recorded them</li><li><b>What it produced</b> — the harvest the lot recorded at the end</li><li><b>Reusable</b> — a protocol on the shelf can be compared with another season's, or handed to Anee to read</li></ul>
-            <p class="rx-about-note">Planned work that was never ticked done stays out; this is the record of what happened, not the plan.</p>
+            {{-- One short paragraph, no dashes or lists (the owner's ask,
+                 2026-09-29), as the analyses introduce themselves. --}}
+            <p>See one lot's season written down as the recipe you actually followed. Every activity marked done is listed in order by day count, with the date, the work, how long it took, how many people did it and the materials it used, ending with the harvest. Work that was planned but never marked done is left out, so this is a record of what really happened. Each protocol is kept on the Saved tab, and Compare Reports can set it beside another season's.</p>
         </div>
     </div>
         <div class="card p-4 mb-4 pt-wizard" id="ptWizard">

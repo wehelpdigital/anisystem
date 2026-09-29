@@ -87,9 +87,9 @@
         <span class="rx-about-e">📈</span>
         <div class="rx-about-t">
             <b>What the Profit Report tells you</b>
-            <p>The harvest the season recorded against everything it spent — inventory, services, cash lines and labor — for the whole season and lot by lot. It reads live: the numbers refresh every time this page opens.</p>
-            <ul><li><b>Net profit and margin</b> — money in against money out</li><li><b>Where the money went</b>, by kind of cost</li><li><b>Lot by lot</b> — what each lot earned, spent and cleared, and the cost per unit of harvest</li><li><b>Footnotes</b> — the things the numbers depend on (a harvest not yet recorded, a lot without a size)</li></ul>
-            <p class="rx-about-note">To keep a copy or talk it over, hand it to Anee at the bottom — that files it on the Reports shelf.</p>
+            {{-- One short paragraph, no dashes or lists (the owner's ask,
+                 2026-09-29), as the analyses introduce themselves. --}}
+            <p>See what your harvest earned against everything the season spent on inventory, services, cash and labor, for the whole season and for each lot. You get the net profit and margin, where the money went, and what each lot earned, spent and kept, with a note wherever something is still missing, like a harvest not yet recorded. The numbers update every time you open this page, and to keep a copy you can hand it to {{ \App\Models\AiSetting::current()->assistantName }} at the bottom.</p>
         </div>
     </div>
     {{-- Stays hidden until there is a report to hand over — a blocked

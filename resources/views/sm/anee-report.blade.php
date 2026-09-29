@@ -201,26 +201,15 @@
         <div class="rx-about">
             <span class="rx-about-e"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt=""></span>
             <div class="rx-about-t">
+                {{-- One short paragraph, no dashes or lists (the owner's ask,
+                     2026-09-29), as the analyses introduce themselves. --}}
                 @if ($isSofar)
                     <b>What Analyze So Far tells you</b>
-                    <p>{{ \App\Models\AiSetting::current()->assistantName }} reads the season as it stands today — the work done and still to do, the money so far, the sky's recent records — and writes where the crop is and what comes next.</p>
-                    <ul>
-                        <li><b>Where the crop stands</b> against its own clock, lot by lot or the whole season</li>
-                        <li><b>The risks in front of it</b> — weather, pests, timing — and what to watch</li>
-                        <li><b>What to do next</b>, in order, and what to stop doing</li>
-                        <li><b>How the money is running</b> against the plan</li>
-                    </ul>
+                    <p>{{ $aneeName }} reads your season as it stands today, including the work done and still to do, the money spent so far and the recent weather, and tells you how far along each lot is, the risks ahead, what to do next, and how the money is holding up against the plan. This uses credits, and you see the price before anything runs. Every report is kept on the Saved tab.</p>
                 @else
-                    <b>What the {{ \App\Models\AiSetting::current()->assistantName }} Season Report tells you</b>
-                    <p>{{ \App\Models\AiSetting::current()->assistantName }} reads the whole finished season — every activity, the money, the harvest, your notes and photos, the sky's actual records and ENSO — and writes the season's story.</p>
-                    <ul>
-                        <li><b>What went right</b> and what it was worth</li>
-                        <li><b>What went wrong</b>, when, and what it cost</li>
-                        <li><b>What to change next season</b> — timing, inputs, labor, water</li>
-                        <li><b>A score</b> for the season, with the reasons</li>
-                    </ul>
+                    <b>What the {{ $aneeName }} Season Report tells you</b>
+                    <p>{{ $aneeName }} reads your whole finished season, including every activity, the money, the harvest, your notes and photos, and the actual weather, and writes its story: what went right, what went wrong and what it cost, what to change next season, and a score with the reasons. This uses credits, and you see the price before anything runs. Every report is kept on the Saved tab.</p>
                 @endif
-                <p class="rx-about-note">This is a deep AI read and spends credits; the price is said before anything runs. Every report is saved on the shelf, where you can rename and describe it.</p>
             </div>
         </div>
 

@@ -79,6 +79,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'cxWinShut' => str_contains((string) @file_get_contents(resource_path('views/compare/partials/result.blade.php')), '.cxw[hidden]'),
             'cxwFull' => str_contains((string) @file_get_contents(resource_path('views/compare/partials/result.blade.php')), "className = 'cxw'"),
             'cmpAbout' => str_contains((string) @file_get_contents(resource_path('views/compare/index.blade.php')), 'Each comparison is kept on the Saved tab.'),
+            'reportAbouts' => str_contains((string) @file_get_contents(resource_path('views/sm/anee-report.blade.php')), 'you see the price before anything runs')
+                && str_contains((string) @file_get_contents(resource_path('views/sm/labor-report.blade.php')), 'kept on the Saved Reports tab'),
         ],
         'viewCacheCompiled' => count(glob(storage_path('framework/views/*.php')) ?: []),
         // Whether the deployed environment can reach the mailing list at all
