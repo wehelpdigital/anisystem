@@ -86,6 +86,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'aneeRich' => str_contains((string) @file_get_contents(app_path('Http/Controllers/Manager/FarmReportController.php')), 'private function seasonFacts')
                 && str_contains((string) @file_get_contents(resource_path('views/sm/anee-report.blade.php')), 'function sofarCards'),
             'pbAnalyses' => str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), 'data-tab="analyses"'),
+            'aneeGuide' => str_contains((string) @file_get_contents(resource_path('views/partials/anee-chat-guide.blade.php')), 'data-anee-guide')
+                && str_contains((string) @file_get_contents(app_path('Models/AiSetting.php')), 'No fortune-telling'),
             'pbWindow' => str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), 'function removeAnalysis')
                 && str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), "@section('body-class', 'hide-tabbar')"),
         ],
@@ -682,6 +684,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // the same partial as a tab).
     // "How to use" — one page per module per device, written in the mother app.
     Route::get('/app/help/{module}', [App\Http\Controllers\HelpController::class, 'show'])->name('help.show');
+    Route::get('/app/anee-guide', [App\Http\Controllers\HelpController::class, 'aneeGuide'])->name('anee.guide');
     // Gallery: albums a grower makes and names, and the pictures in them.
     Route::get('/app/sm-activity-advanced', [App\Http\Controllers\Manager\ActivityController::class, 'advanced'])->name('sm.activity.advanced');
     // What this season already has, for any composer asking for an attachment.

@@ -1021,6 +1021,10 @@
     @unless ($isEmbed)
     @include('partials.tutorial-modal')
     @include('partials.tutorial-offer', ['byRoute' => true, 'keys' => [], 'auto' => null])
+    {{-- "How to chat with Anee", full screen, for the link on every chat's how-to-ask card. --}}
+    @auth
+    @include('partials.anee-chat-guide')
+    @endauth
     @endunless
 
     @stack('scripts')

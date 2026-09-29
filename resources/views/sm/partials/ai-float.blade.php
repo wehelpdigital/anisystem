@@ -105,11 +105,12 @@
                         <svg class="aif-howto-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </p>
                     <div class="aif-howto-fold">
-                        <p class="aif-howto-b">Crop and age, what you did, what you see.</p>
+                        <p class="aif-howto-b">Crop, variety and age, problems, observations, what you did, what you see, all detailed. A wrong question can waste your credits, so be as specific as possible.</p>
                         <p class="aif-howto-lbl">For example</p>
                         <p class="aif-howto-eg"><b>Not</b> "my rice is sick"</p>
                         <span class="aif-howto-rule" aria-hidden="true"></span>
                         <p class="aif-howto-eg"><b>Try</b> {{ \App\Support\Region::ph() ? '"RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"' : '"I planted P1197 corn six weeks ago. The lower leaves are yellowing from the edges in, the newest leaves are still green. I side-dressed urea ten days ago and it has rained hard since. What is going on?"' }}</p>
+                        <a href="#" class="anee-guide-link" data-anee-guide>Check this for a complete guide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a>
                     </div>
                 </div>
             </div>

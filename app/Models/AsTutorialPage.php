@@ -64,6 +64,9 @@ class AsTutorialPage extends BaseModel
         'community-saved' => 'Community — Saved',
         'community-messages' => 'Community — Messages',
         'community-profile' => 'Community — Your profile',
+        // Not a module's "?": the full guide the chat's how-to-ask card opens
+        // ("Check this for a complete guide"), in every chat. 2026-09-29.
+        'anee-chat' => 'Chatting with Anee',
     ];
 
     protected $fillable = [

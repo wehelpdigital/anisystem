@@ -40,6 +40,24 @@ class HelpController extends Controller
     }
 
     /**
+     * "How to chat with Anee", for the full-screen window the chat's
+     * how-to-ask card opens (partials/anee-chat-guide). The same page the
+     * mother app's builder writes, drawn by the same TutorialBlocks, for the
+     * device in hand; the starting text if no page is there at all.
+     */
+    public function aneeGuide(Request $request)
+    {
+        $page = $this->pageFor(\App\Support\AneeChatGuide::MODULE, $this->device($request));
+        $blocks = $page && $page->blocks ? $page->blocks : \App\Support\AneeChatGuide::BLOCKS;
+
+        return response()->json(['success' => true, 'data' => [
+            'title' => $page->title ?? \App\Support\AneeChatGuide::TITLE,
+            'summary' => $page ? $page->summary : \App\Support\AneeChatGuide::SUMMARY,
+            'html' => \App\Support\TutorialBlocks::render($blocks),
+        ]]);
+    }
+
+    /**
      * A page written for this device, or the nearest one that exists — a
      * tablet reads the desktop page sooner than it reads nothing, and every
      * device would rather have the mobile page than an empty screen.

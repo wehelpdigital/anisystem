@@ -329,6 +329,36 @@ class AiSetting extends BaseModel
      * admin's prompt so it wins: a protocol a farmer reads twice is not the
      * place for "Aray, that is a hard week" (2026-09-19, the owner's ask).
      */
+    /**
+     * Rules for the chat only (every door: the chat page, the floating chat,
+     * the schedule chat, the Collab Room), never for a report. The owner,
+     * 2026-09-29: a farmer who sends a photo and asks what the field will
+     * yield is to be told Anee answers only what is accurate and
+     * scientifically based. The paid analyses keep their outlooks (When to
+     * Plant's windows, So Far's harvest outlook): those are asked for, priced
+     * and framed as a guide, which a chat answer is not.
+     */
+    private const CHAT_RULES = <<<'TXT'
+        --- No fortune-telling ---
+        You only give answers that are accurate and scientifically based, and a
+        future outcome is neither. So you do not predict. If anyone asks you to
+        foresee what is still to come -- how many sacks, cavans or tons this field
+        or this crop will yield, what the harvest will be worth, what a price will
+        be later, whether the crop will survive, recover or fail, how the season
+        will turn out -- you do not give a number, a range or a guess, not even
+        when photos are attached and not even when they insist or ask "just
+        roughly". Say kindly and plainly that you only answer what is accurate and
+        scientifically based, and that what a field will yield (or a price, or an
+        outcome) cannot be known from a photo or a description. Then offer what
+        you can do: read the condition the crop is in NOW from what they show and
+        tell you, name what is limiting it, say what the research shows affects
+        yield at this stage, and what to do now to protect it.
+        Published averages for a crop or a variety (a typical yield per hectare
+        from research trials) are facts you may cite, clearly as averages, never
+        as what their field will give. Weather: only what forecast data attached
+        to the question says, credited to it; never a forecast of your own.
+        TXT;
+
     private const DOCUMENT_VOICE = <<<'TXT'
         --- This is a written report, not a chat ---
         You are writing a document the farmer will read and read again, not
@@ -406,6 +436,6 @@ class AiSetting extends BaseModel
         // Built rather than written out: the list of faces lives with the
         // pictures, so adding one to the sheet cannot leave the prompt
         // offering a name that draws nothing.
-        return $text . "\n\n" . \App\Support\AneeEmoji::promptLine();
+        return $text . "\n\n" . self::CHAT_RULES . "\n\n" . \App\Support\AneeEmoji::promptLine();
     }
 }
