@@ -2139,17 +2139,12 @@ document.addEventListener('DOMContentLoaded', () => {
         openSheet('cashRangeSheet');
     }
 
-    $id('cashRangeDone')?.addEventListener('click', () => {
-        closeSheet('cashRangeSheet');
-        cashRangeSetMode(false);
-    });
-    $id('cashRangeAgain')?.addEventListener('click', () => {
-        closeSheet('cashRangeSheet');
-        // The mode stays on with both ends let go, so the next tap starts a
-        // fresh stretch rather than editing the one just answered.
-        CASH_RANGE.picks.length = 0;
-        paintCashRange();
-        cashHint('Tap a day to start');
+    $id('cashRangeDone')?.addEventListener('click', () => closeSheet('cashRangeSheet'));
+    /* However the sheet goes (Done, the X, the backdrop, a swipe, Escape),
+     * the stretch goes with it: both ends let go and the mode off. Every
+     * close runs through closeSheet, which says so on the sheet. */
+    $id('cashRangeSheet')?.addEventListener('sheet:close', () => {
+        if (CASH_RANGE.on) cashRangeSetMode(false);
     });
 
     function cashRangeSetMode(on) {

@@ -1627,9 +1627,11 @@
     <div class="sheet-body" style="padding-bottom:1rem">
         <div id="cashRangeBody"></div>
     </div>
+    {{-- One way out, whichever is tapped: Done and the X both let go of the
+         stretch (the owner's ask, 2026-09-29). "Pick another stretch" is gone;
+         tapping Range total again starts a new one. --}}
     <div class="sheet-footer">
-        <button type="button" class="btn btn-white btn-sm" id="cashRangeAgain">Pick another stretch</button>
-        <button type="button" class="btn btn-primary btn-sm" id="cashRangeDone">Done</button>
+        <button type="button" class="btn btn-primary w-full" id="cashRangeDone">Done</button>
     </div>
 </div>
 

@@ -439,7 +439,11 @@
            until it is scrolled to; the intrinsic size keeps the scrollbar
            honest while it is skipped. */
         .mir-body .date-group { margin-bottom: .9rem; animation: none;
-            content-visibility: auto; contain-intrinsic-size: auto 260px; }
+            content-visibility: auto; contain-intrinsic-size: auto 260px;
+            /* A day jumped to ("Today") comes to rest this far below the top
+               edge, with air above its header, not pressed against the search
+               card (the owner's ask, 2026-09-29). */
+            scroll-margin-top: 1rem; }
         /* Same correction as the board: a folded day is a header, and a guess
            four times its real height turns the scrollbar into a fiction that
            has to be paid back the moment anything moves. */
@@ -1187,7 +1191,10 @@
         .ew-chip.is-flash { animation: ewChipFlash .6s cubic-bezier(.22,1,.36,1); }
         @keyframes ewChipIn { from { opacity: 0; transform: scale(.8); } to { opacity: 1; transform: none; } }
         @keyframes ewChipFlash { 0%, 100% { box-shadow: 0 0 0 0 rgb(107 159 61 / 0); } 35% { box-shadow: 0 0 0 4px rgb(107 159 61 / .35); } }
-        .ew-msg { width: 100%; resize: vertical; min-height: 4.5rem; font-size: 16px; }
+        /* .form-input pads the sides only (it is sized for one line); a
+           message box needs air above its first line too, or the placeholder
+           sits on the top border (the owner's ask, 2026-09-29). */
+        .ew-msg { width: 100%; resize: vertical; min-height: 4.5rem; font-size: 16px; padding-top: .7rem; padding-bottom: .7rem; line-height: 1.45; }
         .ew-count { text-align: right; font-size: .68rem; color: var(--color-gray-400, #9ca3af); margin-top: .25rem; font-variant-numeric: tabular-nums; }
         .ew-count.is-near { color: #b45309; font-weight: 700; }
         #emailWhoSheet .ew-foot { justify-content: space-between; }
@@ -5906,6 +5913,17 @@
             if (!target) return;
             target.classList.remove('is-folded');
             syncFoldBtn();
+            /* The search card folds first. Open, it holds the top third of a
+             * phone and the day landed pressed under it; the question has been
+             * asked, so the answer gets the screen, as the card's own head
+             * does. The scroll waits for the fold, which moves the list up. */
+            const findHead = document.getElementById('mirrorFindHead');
+            const wasOpen = !find.classList.contains('is-shut');
+            if (wasOpen) {
+                find.classList.add('is-shut');
+                findHead?.setAttribute('aria-expanded', 'false');
+            }
+            const land = () => {
             /* The browser's own scrolling, not arithmetic of mine.
              *
              * A day card carries content-visibility:auto, so every day still
@@ -5925,16 +5943,19 @@
             const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             target.scrollIntoView({ block: 'start', behavior: smooth ? 'smooth' : 'auto' });
             // One more look once it has come to rest, in case the ground moved.
+            // The day rests its scroll-margin below the top (see .mir-body .date-group).
             setTimeout(() => {
                 const br = body.getBoundingClientRect();
                 const tr = target.getBoundingClientRect();
-                if (Math.abs(tr.top - br.top) > 12) target.scrollIntoView({ block: 'start' });
-                body.scrollTop = Math.max(0, body.scrollTop - 8);
+                const air = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+                if (Math.abs(tr.top - br.top - air) > 12) target.scrollIntoView({ block: 'start' });
                 // A brief rise so the eye knows which one it was brought to.
                 target.classList.remove('mir-sift-in');
                 void target.offsetWidth;
                 target.classList.add('mir-sift-in');
             }, smooth ? 620 : 60);
+            };
+            if (wasOpen) setTimeout(land, 300); else land();
         });
 
         /* The third guard, and the mirror's own hands.

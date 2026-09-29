@@ -86,6 +86,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'aneeRich' => str_contains((string) @file_get_contents(app_path('Http/Controllers/Manager/FarmReportController.php')), 'private function seasonFacts')
                 && str_contains((string) @file_get_contents(resource_path('views/sm/anee-report.blade.php')), 'function sofarCards'),
             'pbAnalyses' => str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), 'data-tab="analyses"'),
+            'boardTrio' => str_contains((string) @file_get_contents(resource_path('views/sm/partials/activities-js.blade.php')), "addEventListener('sheet:close', () => {
+        if (CASH_RANGE.on)")
+                && str_contains((string) @file_get_contents(resource_path('views/sm/activities.blade.php')), 'if (wasOpen) setTimeout(land, 300)'),
             'aneeGuide' => str_contains((string) @file_get_contents(resource_path('views/partials/anee-chat-guide.blade.php')), 'data-anee-guide')
                 && str_contains((string) @file_get_contents(app_path('Models/AiSetting.php')), 'No fortune-telling'),
             'pbWindow' => str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), 'function removeAnalysis')
