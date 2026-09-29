@@ -16,6 +16,8 @@ use App\Models\AsSiteSetting;
  * section is not drawn at all. (The mother's Testimonials module belongs to
  * the AniSenso site and is not read here.)
  *
+ * Wrap words of a headline in *stars* to mark them (LandingPage::marked).
+ *
  * Tokens in any text: {farmers} (the region's word for its farmers),
  * {crops} (how many crops the catalogue keeps for the country), {pay}
  * (how paid plans are paid), {signupWays} (email, and Google when it is on), {libreAnee} and {solo} (their monthly prices),
@@ -33,96 +35,140 @@ class LandingPage
     public const DEFAULTS_KEY = 'landing.defaults';
 
     /** The built-in pictures a pillar may show (files in public/images/site/lp). */
-    public const SHOTS = ['board', 'growth', 'report-top', 'report-money', 'datediff', 'anee-chat-hand'];
+    public const SHOTS = ['board', 'growth', 'weather', 'hub', 'report-top', 'report-money', 'datediff', 'anee-chat-hand'];
 
+    /*
+     * The argument, top to bottom (the owner, 2026-09-29): precision
+     * agriculture; a bigger harvest despite weather nobody can predict and
+     * costs that keep climbing; and every tool a farm needs, in one app.
+     * Wrap words of a headline in *stars* to mark them.
+     */
     public const DEFAULTS = [
         // The browser tab and the link preview; a blank description is the hero's sub.
         'meta' => [
-            'title' => 'Plan your cropping season on your phone',
+            'title' => 'Precision agriculture on your phone',
             'description' => '',
         ],
         'hero' => [
-            'kicker' => 'For {farmers} · Free forever on Libre',
-            'headline' => 'Never miss the right day to spray, fertilize or harvest again.',
-            'sub' => 'anee.io is the cropping schedule app built for {farmers}: your whole season planned day by day, what the crop needs at every stage, and what the season really cost you. All on your phone.',
+            'kicker' => 'Precision agriculture for {farmers}',
+            'headline' => '*Harvest more*, even when the weather and the costs are against you.',
+            'sub' => 'anee.io puts precision agriculture on your phone: every spray, fertilizer and irrigation on the day your crop needs it, planned around your own field\'s forecast, with every peso counted. Less waste, fewer losses, more from every hectare.',
             'cta' => 'Create my free account',
             'note' => 'No credit card. Free forever on Libre. Works on any phone.',
             // An uploaded phone screenshot in place of the board's (blank: the board).
             'image' => '',
-            // The two chips that float beside the phone (they describe its screenshot).
+            // The two chips that float beside the phone.
             'chips' => [
                 ['icon' => '🌿', 'title' => 'Pre-emergence herbicide', 'sub' => 'Sat · DAT 3 · Lot A'],
-                ['icon' => '🌾', 'title' => 'Early tillering', 'sub' => 'What to do now: first nitrogen'],
+                ['icon' => '🌧️', 'title' => 'Rain likely from 1 PM', 'sub' => 'The forecast for Lot A'],
             ],
         ],
         'proof' => [
-            'lead' => 'Made in the Philippines, used on real fields every day',
-            'items' => ['{crops} crops with their own growth calendars', 'DAS, DAT and DAP day counts', 'Weather for your own field', 'Anee answers in Taglish'],
+            'lead' => 'Precision agriculture, made for the {farmers}\' field',
+            'items' => ['{crops} crops, each with its own growth calendar', 'The forecast for your own field', 'Every peso counted, lot by lot', 'Anee, your AI farm technician'],
             // The live line under it ("430+ farm activities planned so far"): show or hide.
             'stats' => 'show',
         ],
         'problem' => [
-            'kicker' => 'Sound familiar?',
-            'headline' => 'Still running the season from a notebook and memory?',
+            'kicker' => 'Farming got harder',
+            'headline' => 'Weather you cannot predict. Costs that keep climbing.',
             // An uploaded photo in place of the farmer among the sacks (blank: that one).
             'image' => '',
             'bullets' => [
-                'A spray goes on a week late because nobody kept the day count.',
-                'Payday comes and no one is sure who worked how many days.',
-                'You only find out at harvest whether the season made money.',
-                'The advice arrives after the damage is already done.',
+                'Rain the day after you spray washes the chemical, and the money, off the field.',
+                'Fertilizer and pesticide cost more every season, so every wasted bag eats the profit.',
+                'A week late, and the pest, the weed or the missed stage has already taken its share of the harvest.',
+                'El Niño dry spells and La Niña floods move the planting window, and habit misses it.',
             ],
-            'solutionKicker' => 'There is a better way',
-            'solutionHeadline' => 'anee.io keeps the season for you, in three steps',
+            'solutionKicker' => 'How it works',
+            'solutionHeadline' => 'Start in two minutes, in three steps',
             'steps' => [
-                ['title' => 'Add your lot and your crop', 'text' => 'Pick from {crops} crops, set the sowing or transplant date. Two minutes.'],
-                ['title' => 'Get the plan, day by day', 'text' => 'Every task on its day, with the day count and the growth stage it falls in.'],
-                ['title' => 'Tick it done, see the money', 'text' => 'What was done, what it cost, and what is due next, on one screen.'],
+                ['title' => 'Add your lot and your crop', 'text' => 'Pick from {crops} crops and set the sowing or transplant date. Two minutes.'],
+                ['title' => 'Follow the plan, day by day', 'text' => 'Every task on its day, with the stage it falls in and the weather for your field.'],
+                ['title' => 'Record it, and see what paid', 'text' => 'Tick the work done; the costs, the harvest and the profit add up by themselves.'],
+            ],
+        ],
+        // What guessing costs a hectare: the home page's own "up to" figures.
+        'losses' => [
+            'headline' => 'What guessing costs a hectare',
+            'items' => [
+                ['n' => 40, 'title' => 'lost to pests and diseases', 'text' => 'When the spray comes late, or never comes at all.'],
+                ['n' => 25, 'title' => 'lost to fertilizer at the wrong time', 'text' => 'The right sack on the wrong week feeds the field a fraction of what it paid for.'],
+                ['n' => 25, 'title' => 'lost to water at the wrong time', 'text' => 'Dry at flowering, flooded at ripening: the stage the water missed never comes back.'],
+                ['n' => 20, 'title' => 'lost to planting outside the window', 'text' => 'A season started on habit instead of the climate\'s calendar pays for it at harvest.'],
+            ],
+            'note' => 'Of a hectare\'s harvest. Ranges drawn from FAO crop-loss and Philippine rice research estimates; your own farm\'s numbers vary. Most of it can be avoided, and that is the point.',
+        ],
+        // The answer, in the four words precision agriculture is built on.
+        'precision' => [
+            'kicker' => 'The answer: precision agriculture',
+            'headline' => 'The right input, the right amount, at the right time, in the right place',
+            'sub' => 'It is how the biggest farms protect their yield and cut their costs. anee.io brings it to yours, with no sensors, no drones and no big budget: just your phone.',
+            'items' => [
+                ['icon' => '⏱️', 'title' => 'The right time', 'text' => 'Each task lands on its day by DAS or DAT and the growth stage, never too early, never too late, and never into the rain.'],
+                ['icon' => '⚖️', 'title' => 'The right amount', 'text' => 'Materials and rates set per activity and per lot, drawn from your inventory, so you buy and apply only what the field needs.'],
+                ['icon' => '🧪', 'title' => 'The right input', 'text' => 'Anee reads a photo of the leaf or the pest and says what it is and what works, before you pay for the wrong product.'],
+                ['icon' => '📍', 'title' => 'The right place', 'text' => 'Every lot keeps its own plan, its own forecast and its own map, with pins where the trouble is.'],
             ],
         ],
         'pillars' => [
             [
-                'kicker' => 'The season board',
-                'title' => 'Every task lands on the right day',
-                'text' => 'Your spray, top-dress and irrigation dates stop living in your head. The board lays the season out day by day, counts DAS and DAT for you, and shows the growth stage on every date.',
-                'bullets' => ['Day counts that switch from DAS to DAT at transplant', 'Tick work done and the board keeps the record', 'Measure the days between any two sprays in one tap'],
-                'image' => 'board', 'plan' => 'Free on Libre',
-                'upload' => '', 'frame' => 'phone',
-            ],
-            [
-                'kicker' => 'Growth stages',
-                'title' => 'Know what the crop needs today',
-                'text' => 'Open any lot and see the stage it is in right now, what to do in this stage, and what to watch for, before the problem shows.',
-                'bullets' => ['What to do now, in plain words', 'The pests and weather that matter at this stage', 'When the next stage begins'],
+                'kicker' => 'Precision timing',
+                'title' => 'Hit every stage on the right day',
+                'text' => 'A harvest is decided at a few critical stages. The board counts DAS and DAT for you and says what the crop needs at each one, so the fertilizer, the spray and the water arrive when they do the most good.',
+                'bullets' => ['Day counts that switch from DAS to DAT at transplant', 'What to do now, and what to watch for, at every stage', 'The days between any two sprays, measured in one tap'],
                 'image' => 'growth', 'plan' => 'Free on Libre',
                 'upload' => '', 'frame' => 'phone',
             ],
             [
-                'kicker' => 'Anee, your farm technician',
-                'title' => 'Send a photo, get an answer in minutes',
-                'text' => 'Snap the leaf, ask in Tagalog, Bisaya, Ilocano or Taglish. Anee reads your crop and your season and answers with what is accurate and scientifically based, not guesses.',
-                'bullets' => ['Reads a photo of the leaf, the pest or the field', 'Knows your crop, variety and stage', 'Deep analyses: when to plant, what to plant, which variety'],
+                'kicker' => 'Weather-smart farming',
+                'title' => 'Plan around the rain, not after it',
+                'text' => 'See the forecast for your own lot, by the day and by the hour, beside your plan. Spray before the rain instead of into it, and let the rain do the irrigating.',
+                'bullets' => ['A forecast for each lot\'s own town', 'The chance of rain hour by hour, and what it means today', 'When to Plant reads the El Niño and La Niña outlook'],
+                'image' => 'weather', 'plan' => 'Today and tomorrow free; the full forecast from {solo} a month',
+                'upload' => '', 'frame' => 'phone',
+            ],
+            [
+                'kicker' => 'Anee, your AI farm technician',
+                'title' => 'Know what is wrong before you spend on it',
+                'text' => 'Snap the leaf, the pest or the field and ask in Tagalog, Bisaya, Ilocano or Taglish. Anee reads your crop, its stage and your season, and answers with what is accurate and scientifically based, so the fix you buy is the right one.',
+                'bullets' => ['Reads a photo of the leaf, the pest or the field', 'Knows your crop, variety, stage and weather', 'Deep analyses: when to plant, what to plant, which variety'],
                 'image' => 'anee-chat-hand', 'plan' => 'Libre + Anee, {libreAnee} a month',
                 'upload' => '', 'frame' => 'phone',
             ],
             [
-                'kicker' => 'Reports',
-                'title' => 'See if the season paid, down to the peso',
-                'text' => 'Wages, materials, services and every extra expense add up by themselves. At the end, see what came in, what went out, and what each lot kept.',
-                'bullets' => ['Labor, expenses and profit reports', 'Cash to prepare for any stretch of days', 'A season report from Anee with what to change next time'],
+                'kicker' => 'Cost control',
+                'title' => 'Cut the costs you can, down to the peso',
+                'text' => 'Wages, fertilizer, chemicals, services and every extra expense add up by themselves, lot by lot. See what each sack cost to grow, where the money went, and what the season kept.',
+                'bullets' => ['Labor, expense and profit reports', 'Inventory: what you bought, used and have left', 'Cash to prepare for any stretch of days'],
                 'image' => 'report-top', 'plan' => 'Full reports from {solo} a month',
                 'upload' => '', 'frame' => 'phone',
             ],
         ],
+        // Every tool, grouped: the whole farm in one app.
         'more' => [
-            'headline' => 'And the rest of the farm, too',
+            'headline' => 'Everything you need to manage your farm, in one app',
+            'sub' => 'From the first plan to the last sack: one app instead of a notebook, a calculator, a group chat and a guess. Some tools come with the paid plans.',
+            // An uploaded phone screenshot in place of the season's modules (blank: those).
+            'image' => '',
             'items' => [
-                ['icon' => '🌦️', 'title' => 'Weather for your field', 'text' => 'The forecast for your lot, day by day.'],
-                ['icon' => '📝', 'title' => 'Notes and photos', 'text' => 'Everything you saw, on the day you saw it.'],
-                ['icon' => '👷', 'title' => 'Workers and pay', 'text' => 'Who worked, how long, and what each one is owed.'],
-                ['icon' => '📦', 'title' => 'Inventory', 'text' => 'Fertilizer and chemicals in, used, and left.'],
-                ['icon' => '🗺️', 'title' => 'Maps of your lots', 'text' => 'Draw each lot and pin where the trouble is.'],
-                ['icon' => '👥', 'title' => 'A farmers community', 'text' => 'Ask other farmers and share what worked.'],
+                ['group' => 'Plan', 'icon' => '📅', 'title' => 'Season board', 'text' => 'Every task on its day, with its DAS or DAT count.'],
+                ['group' => 'Plan', 'icon' => '🌱', 'title' => 'Growth stages', 'text' => 'What the crop needs now, and what comes next.'],
+                ['group' => 'Plan', 'icon' => '📋', 'title' => 'Protocol Builder', 'text' => 'Write your crop program once, use it every season.'],
+                ['group' => 'Plan', 'icon' => '🧭', 'title' => 'When and what to plant', 'text' => 'Analyses of the window, the crop and the variety.'],
+                ['group' => 'Grow', 'icon' => '🌦️', 'title' => 'Weather', 'text' => 'The forecast for each lot, by the day and the hour.'],
+                ['group' => 'Grow', 'icon' => '💬', 'title' => 'Chat Anee', 'text' => 'Photo checks and answers, in your own language.'],
+                ['group' => 'Grow', 'icon' => '🗺️', 'title' => 'Maps and drawing', 'text' => 'Draw each lot and pin where the trouble is.'],
+                ['group' => 'Grow', 'icon' => '📝', 'title' => 'Notes, photos and voice', 'text' => 'Everything you saw, on the day you saw it.'],
+                ['group' => 'Manage', 'icon' => '👷', 'title' => 'Workers and attendance', 'text' => 'Who worked, how long, and what each one is owed.'],
+                ['group' => 'Manage', 'icon' => '📦', 'title' => 'Inventory', 'text' => 'Fertilizer and chemicals in, used, and left.'],
+                ['group' => 'Manage', 'icon' => '💸', 'title' => 'Expenses and income', 'text' => 'Every peso in and out, by the day and by the lot.'],
+                ['group' => 'Manage', 'icon' => '🤝', 'title' => 'Collab Room', 'text' => 'Team chat and a shared whiteboard for the crew.'],
+                ['group' => 'Measure', 'icon' => '📊', 'title' => 'Reports', 'text' => 'Labor, expenses, profit, and the protocol followed.'],
+                ['group' => 'Measure', 'icon' => '✨', 'title' => 'Season report by Anee', 'text' => 'What went right, and what to change next time.'],
+                ['group' => 'Measure', 'icon' => '⚖️', 'title' => 'Compare seasons', 'text' => 'Two seasons side by side, lot by lot.'],
+                ['group' => 'Measure', 'icon' => '📴', 'title' => 'Works without signal', 'text' => 'Keep recording in the field; it syncs when you are back.'],
+                ['group' => 'Measure', 'icon' => '👥', 'title' => 'A farmers community', 'text' => 'Ask other farmers, and share what worked.'],
             ],
         ],
         'testimonials' => [
@@ -136,17 +182,19 @@ class LandingPage
             'headline' => 'Questions before you start',
             'items' => [
                 ['q' => 'Is it really free?', 'a' => 'Yes. Libre is free forever: one active season on one lot, the season board, growth stages, notes and photos, and weather for today and tomorrow. A few ads keep it free.'],
+                ['q' => 'Do I need sensors, drones or special equipment?', 'a' => 'No. Precision agriculture in anee.io runs on what you already have: your phone, your crop\'s growth calendar, the forecast for your field, and your own records.'],
+                ['q' => 'Will it really increase my harvest?', 'a' => 'No app can promise a number, because the weather and the market decide part of it. What anee.io does is take away the losses that come from late, early or wrong applications and from costs nobody tracked, which is where most avoidable losses are.'],
                 ['q' => 'Do I need a credit card?', 'a' => 'No. You sign up with {signupWays}. Paid plans are paid by {pay}, only if and when you choose one.'],
                 ['q' => 'Can I cancel any time?', 'a' => 'Nothing renews by itself. You pay for a month or a year at a time, and if you stop, your season and your records stay safe and readable.'],
                 ['q' => 'Does it work on my phone, even in the field?', 'a' => 'Yes. anee.io runs in the browser of any phone, tablet or computer, and it is built for the phone first. Paid plans also keep working when the signal drops.'],
                 ['q' => 'Which crops does it know?', 'a' => '{crops} crops grown in the Philippines, each with its own growth stages and day count: rice transplanted or direct seeded, corn, vegetables, fruit trees and more.'],
-                ['q' => 'Can my workers use it too?', 'a' => 'Yes, on the Solo Farmer and Owner plans. You invite them, choose what each one may see or do, and they use it free on your plan.'],
+                ['q' => 'Can my workers use it too?', 'a' => 'Yes. On Solo Farmer you keep their days and their pay; on Farm Owner they log in themselves, and you choose what each one may see or do.'],
                 ['q' => 'Is my farm data private?', 'a' => 'Yes. Your seasons, notes and money are yours alone unless you choose to share something with the community.'],
             ],
         ],
         'closer' => [
-            'headline' => 'Plan your next season tonight.',
-            'sub' => 'Set up your first lot in two minutes, and let anee.io keep the days, the stages and the money for you.',
+            'headline' => 'Make this your *most precise season* yet.',
+            'sub' => 'Set up your first lot in two minutes. anee.io keeps the days, the weather and the money, so you can keep your eyes on the harvest.',
             'cta' => 'Create my free account',
             'risk' => 'Free forever on Libre · No credit card · Upgrade only when you want',
             // An uploaded background in place of the farmer in the palay (blank: that one).
@@ -182,6 +230,12 @@ class LandingPage
         } catch (\Throwable $e) {
             // Read-only or missing shelf: the editor waits for the next draw.
         }
+    }
+
+    /** A headline, escaped, with its *starred* words marked. */
+    public static function marked(string $text): string
+    {
+        return preg_replace('/\*([^*]+)\*/u', '<em>$1</em>', e($text));
     }
 
     /** An uploaded picture's address, or the built-in file's when none was uploaded. */

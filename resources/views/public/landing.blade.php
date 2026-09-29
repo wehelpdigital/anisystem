@@ -6,25 +6,37 @@
     /* The ads landing page (2026-09-29). Every word comes from
        App\Support\LandingPage: defaults in code, edits from the mother app
        (AniSystem > Landing page). The ad's tracking tags ride along to the
-       signup, so a campaign can be measured to the account it made. */
+       signup, so a campaign can be measured to the account it made.
+       The argument: precision agriculture; a bigger harvest despite the
+       weather and the costs; every tool the farm needs, in one app. */
     $lp = $lp ?? \App\Support\LandingPage::content();
     $keep = collect(request()->only(['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid']))
         ->filter(fn ($v) => is_string($v) && $v !== '' && strlen($v) <= 200)->all();
     $signup = route('signup') . ($keep ? '?' . http_build_query($keep) : '');
     $shots = [
-        'board' => ['lp/board.webp', 'The anee.io season board: each day with its growth stage, an open herbicide task on its DAT count'],
-        'growth' => ['lp/growth.webp', 'The growth stage of a rice lot, with what to do now and what to watch for'],
-        'report-top' => ['lp/report-top.webp', 'An anee.io season report: net profit, money in and out, harvest per hectare'],
-        'report-money' => ['lp/report-money.webp', 'Where the money went, by category and by month'],
-        'datediff' => ['lp/datediff.webp', 'The days between a herbicide and a fungicide, measured in one tap'],
+        'board' => ['lp/board.webp', 'The anee.io season board: each day with its growth stage, an open herbicide task on its DAT count', 1600],
+        'growth' => ['lp/growth.webp', 'The growth stage of a rice lot, with what to do now and what to watch for', 1600],
+        'weather' => ['lp/weather.webp', 'The forecast for a lot in Muñoz: the chance of rain by the day and by the hour', 1566],
+        'hub' => ['lp/hub.webp', 'A season\'s modules in anee.io: lots, workers, inventory, weather, growth stages, maps, Anee, reports and more', 1566],
+        'report-top' => ['lp/report-top.webp', 'An anee.io season report: net profit, money in and out, harvest per hectare', 1600],
+        'report-money' => ['lp/report-money.webp', 'Where the money went, by category and by month', 1600],
+        'datediff' => ['lp/datediff.webp', 'The days between a herbicide and a fungicide, measured in one tap', 1600],
     ];
-    $photos = ['anee-chat-hand' => ['lp/anee-chat-hand.webp', 'Anee answering a photo of a rice field, on a farmer\'s phone in the field']];
+    $photos = ['anee-chat-hand' => ['lp/anee-chat-hand.webp', 'Anee answering a photo of a rice field, on a farmer\'s phone in the field', 1600]];
     $check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
     $arrow = '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>';
+    $mark = fn (string $t) => \App\Support\LandingPage::marked($t);
+    // The tiles, in their groups, in the order the editor keeps them.
+    $groups = [];
+    foreach ($lp['more']['items'] as $t) {
+        $groups[trim($t['group'] ?? '')][] = $t;
+    }
 @endphp
 
 @section('title', $lp['meta']['title'])
 @section('meta_description', strip_tags($lp['meta']['description'] !== '' ? $lp['meta']['description'] : $lp['hero']['sub']))
+{{-- No top bar here: every way out of the offer is a signup lost. --}}
+@section('noHeader', '1')
 
 @push('head')
 @include('partials.ad-tags')
@@ -35,6 +47,9 @@
                     radial-gradient(900px 480px at -10% 110%, #fdf3c7 0%, transparent 55%), #fbfdf8; }
     .lp-hero::after { content: ''; position: absolute; inset: auto -10% -60px -10%; height: 120px; z-index: -1;
         background: #fff; border-radius: 50% 50% 0 0 / 100% 100% 0 0; }
+    .lp-logo { display: inline-block; }
+    .lp-logo img { display: block; height: 1.9rem; width: auto; }
+    @media (min-width: 768px) { .lp-logo img { height: 2.2rem; } }
     .lp-kicker { display: inline-flex; align-items: center; gap: .45rem; padding: .35rem .85rem; border-radius: 999px;
         font-size: .78rem; font-weight: 800; color: #2d5016; background: #e4efd4; border: 1px solid #c9e0ad; }
     .lp-kicker i { width: .5rem; height: .5rem; border-radius: 999px; background: #6b9f3d; box-shadow: 0 0 0 4px rgb(107 159 61 / .2);
@@ -42,7 +57,8 @@
     @keyframes lpBeat { 0%, 100% { box-shadow: 0 0 0 3px rgb(107 159 61 / .25); } 50% { box-shadow: 0 0 0 7px rgb(107 159 61 / .05); } }
     .lp-h1 { font-family: var(--font-heading); font-weight: 800; color: #14210c; line-height: 1.06; letter-spacing: -.02em;
         font-size: clamp(2.1rem, 5.2vw, 3.6rem); text-wrap: balance; }
-    .lp-h1 em { font-style: normal; background: linear-gradient(transparent 62%, #fadd6d 62%); padding: 0 .1em; }
+    .lp-h1 em, .lp-closer h2 em { font-style: normal; background: linear-gradient(transparent 62%, #fadd6d 62%); padding: 0 .1em; }
+    .lp-closer h2 em { background: linear-gradient(transparent 62%, rgb(250 221 109 / .55) 62%); }
     .lp-sub { color: #3f4a37; font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.65; }
     .lp-form { display: flex; gap: .5rem; padding: .4rem; border-radius: 1.1rem; background: #fff;
         box-shadow: 0 18px 40px -22px rgb(20 33 12 / .45), 0 0 0 1px #dcead0; max-width: 34rem; }
@@ -81,6 +97,32 @@
         background: #fde2dc; color: #b42318; font-size: .9rem; }
     .lp-photo { border-radius: 1.5rem; overflow: hidden; box-shadow: 0 30px 60px -32px rgb(20 33 12 / .55); }
     .lp-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    /* What guessing costs: a dark band of "up to" figures that count up once seen. */
+    .lp-losses { position: relative; isolation: isolate; overflow: hidden; color: #fff;
+        background: radial-gradient(900px 420px at 90% 0%, rgb(180 35 24 / .28), transparent 60%), linear-gradient(180deg, #16210f, #0f170a); }
+    .lp-loss-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+    .lp-loss { padding: 1.3rem 1.2rem 1.25rem; border-radius: 1.25rem; background: rgb(255 255 255 / .05);
+        border: 1px solid rgb(255 255 255 / .1); }
+    .lp-loss .n { display: flex; align-items: baseline; gap: .35rem; }
+    .lp-loss .n small { font-size: .78rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #fca5a5; }
+    .lp-loss .n b { font-family: var(--font-heading); font-size: 2.9rem; line-height: 1; font-weight: 900; color: #fecaca; font-variant-numeric: tabular-nums; }
+    .lp-loss .bar { height: .4rem; border-radius: 999px; margin: .8rem 0 .9rem; background: rgb(255 255 255 / .1); overflow: hidden; }
+    .lp-loss .bar i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, #f97316, #ef4444);
+        transition: width 1.2s cubic-bezier(.22,1,.36,1); }
+    .lp-loss.is-lit .bar i { width: var(--w); }
+    .lp-loss h3 { font-weight: 800; font-size: 1.02rem; line-height: 1.35; }
+    .lp-loss p { margin-top: .35rem; font-size: .88rem; line-height: 1.55; color: rgb(255 255 255 / .72); }
+    .lp-loss-note { margin-top: 1.1rem; font-size: .78rem; color: rgb(255 255 255 / .55); text-align: center; line-height: 1.55; }
+    /* Precision: the four "rights" */
+    .lp-rights { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14.5rem), 1fr)); }
+    .lp-right { position: relative; padding: 1.35rem 1.2rem 1.25rem; border-radius: 1.25rem; background: #fff;
+        border: 1px solid #e3ecd9; box-shadow: 0 14px 30px -26px rgb(20 33 12 / .55); overflow: hidden;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .lp-right::before { content: ''; position: absolute; inset: 0 0 auto; height: 4px; background: linear-gradient(90deg, #6b9f3d, #f5c518); }
+    .lp-right:hover { transform: translateY(-3px); box-shadow: 0 20px 36px -24px rgb(20 33 12 / .55); }
+    .lp-right .e { display: grid; place-items: center; width: 2.9rem; height: 2.9rem; border-radius: 1rem; background: #f0f7e6; font-size: 1.45rem; }
+    .lp-right h3 { margin-top: .85rem; font-family: var(--font-heading); font-weight: 800; font-size: 1.1rem; color: #14210c; }
+    .lp-right p { margin-top: .35rem; color: #4b5563; line-height: 1.6; font-size: .93rem; }
     /* Three steps */
     .lp-steps { display: grid; gap: 1rem; counter-reset: s; }
     @media (min-width: 820px) { .lp-steps { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
@@ -98,15 +140,31 @@
     .lp-plan { display: inline-flex; align-items: center; gap: .35rem; margin-top: 1.1rem; padding: .3rem .75rem; border-radius: 999px;
         font-size: .76rem; font-weight: 800; color: #2d5016; background: #f3f8ec; border: 1px solid #dcead0; }
     .lp-plan.is-paid { color: #7a4b00; background: #fff7df; border-color: #f6e2a4; }
-    /* "And the rest" tiles */
-    .lp-tiles { display: grid; gap: .9rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    @media (min-width: 900px) { .lp-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-    .lp-tile { padding: 1.1rem 1rem; border-radius: 1.1rem; background: #fff; border: 1px solid #e7eee0;
-        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
-    .lp-tile:hover { transform: translateY(-3px); box-shadow: 0 16px 30px -22px rgb(20 33 12 / .45); }
-    .lp-tile .e { font-size: 1.6rem; line-height: 1; }
-    .lp-tile h4 { margin-top: .6rem; font-weight: 800; color: #14210c; font-size: .98rem; }
-    .lp-tile p { margin-top: .25rem; font-size: .86rem; color: #5b6651; line-height: 1.5; }
+    /* Everything in one app: the season's modules beside the tools, grouped. */
+    .lp-all { display: grid; gap: 2.5rem; align-items: start; }
+    @media (min-width: 1024px) { .lp-all { grid-template-columns: 20rem 1fr; gap: 3.5rem; } .lp-all-phone { position: sticky; top: 2rem; } }
+    .lp-all-phone { display: flex; justify-content: center; }
+    .lp-all-phone .ph-frame { width: min(280px, 72vw); }
+    .lp-group + .lp-group { margin-top: 1.6rem; }
+    .lp-group-h { display: flex; align-items: center; gap: .6rem; margin-bottom: .7rem; font-size: .74rem; font-weight: 900;
+        letter-spacing: .1em; text-transform: uppercase; color: #4a7c2a; }
+    .lp-group-h::after { content: ''; flex: 1; height: 1px; background: #dcead0; }
+    /* Two to a row everywhere, so a group of four is a square, never three and
+       an orphan; a group's odd last tile takes the whole row. */
+    .lp-tiles { display: grid; gap: .75rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .lp-tile:last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .lp-tile { display: flex; gap: .75rem; align-items: flex-start; padding: .9rem .95rem; border-radius: 1rem; background: #fff;
+        border: 1px solid #e7eee0; transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .lp-tile:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -22px rgb(20 33 12 / .45); }
+    .lp-tile .e { flex: none; display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: .8rem; background: #f3f8ec;
+        font-size: 1.2rem; line-height: 1; }
+    .lp-tile h4 { font-weight: 800; color: #14210c; font-size: .95rem; line-height: 1.3; }
+    .lp-tile p { margin-top: .15rem; font-size: .84rem; color: #5b6651; line-height: 1.45; }
+    @media (max-width: 559px) {
+        .lp-tile { flex-direction: column; gap: .5rem; padding: .8rem; }
+        .lp-tile h4 { font-size: .9rem; }
+        .lp-tile p { font-size: .8rem; }
+    }
     /* Testimonials */
     .lp-quotes { display: grid; gap: 1.1rem; }
     @media (min-width: 900px) { .lp-quotes { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
@@ -152,7 +210,7 @@
     @media (min-width: 900px) { .lp-bar { display: none; } }
     @media (prefers-reduced-motion: reduce) {
         .lp-float, .lp-kicker i { animation: none; }
-        .lp-bar, .lp-qa .a, .lp-qa button svg, .lp-tile { transition: none; }
+        .lp-bar, .lp-qa .a, .lp-qa button svg, .lp-tile, .lp-right, .lp-loss .bar i { transition: none; }
     }
 </style>
 @endpush
@@ -161,11 +219,13 @@
 
     {{-- ================= 1. HERO ================= --}}
     <section class="lp-hero">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-16 sm:pt-16 sm:pb-24">
-            <div class="grid lg:grid-cols-[1.1fr_1fr] gap-8 lg:gap-12 items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-16 sm:pt-8 sm:pb-24">
+            {{-- The brand, and nothing to click away to. --}}
+            <span class="lp-logo"><img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" width="220" height="44"></span>
+            <div class="grid lg:grid-cols-[1.1fr_1fr] gap-8 lg:gap-12 items-center mt-8 sm:mt-10">
                 <div class="animate-fade-up">
                     <span class="lp-kicker"><i aria-hidden="true"></i>{{ $lp['hero']['kicker'] }}</span>
-                    <h1 class="lp-h1 mt-5">{{ $lp['hero']['headline'] }}</h1>
+                    <h1 class="lp-h1 mt-5">{!! $mark($lp['hero']['headline']) !!}</h1>
                     <p class="lp-sub mt-5 max-w-xl">{{ $lp['hero']['sub'] }}</p>
                     <form class="lp-form mt-7" action="{{ route('signup') }}" method="get" id="lpHeroForm">
                         @foreach ($keep as $k => $v)<input type="hidden" name="{{ $k }}" value="{{ $v }}">@endforeach
@@ -185,7 +245,7 @@
                     {{-- A chip left without a title in the editor is not drawn. --}}
                     @foreach (array_slice(array_values(array_filter($lp['hero']['chips'] ?? [], fn ($c) => trim($c['title'] ?? '') !== '')), 0, 2) as $ci => $chip)
                         <div class="lp-float f{{ $ci + 1 }}" aria-hidden="true">
-                            <span class="dot" style="background:{{ $ci ? '#e4efd4' : '#fff3e6' }}">{{ $chip['icon'] ?? '🌱' }}</span>
+                            <span class="dot" style="background:{{ $ci ? '#e0edfb' : '#fff3e6' }}">{{ $chip['icon'] ?? '🌱' }}</span>
                             <span>{{ $chip['title'] ?? '' }}<small>{{ $chip['sub'] ?? '' }}</small></span>
                         </div>
                     @endforeach
@@ -209,7 +269,7 @@
         </div>
     </section>
 
-    {{-- ================= 3. PROBLEM, THEN THE WAY OUT ================= --}}
+    {{-- ================= 3. THE PROBLEM: weather and costs ================= --}}
     <section class="py-16 sm:py-24">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
@@ -225,6 +285,47 @@
                         @endforeach
                     </ul>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- ================= What guessing costs a hectare ================= --}}
+    @if (! empty($lp['losses']['items']))
+        <section class="lp-losses" id="lpLosses">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+                <h2 class="font-heading font-extrabold text-2xl sm:text-4xl text-center text-balance reveal">{{ $lp['losses']['headline'] }}</h2>
+                <div class="lp-loss-grid mt-9">
+                    @foreach ($lp['losses']['items'] as $i => $l)
+                        @php $n = max(0, min(100, (int) ($l['n'] ?? 0))); @endphp
+                        <div class="lp-loss reveal" style="--w: {{ $n }}%; --reveal-delay: {{ $i * 0.08 }}s">
+                            <div class="n"><small>Up to</small><b data-n="{{ $n }}">{{ $n }}%</b></div>
+                            <div class="bar" aria-hidden="true"><i></i></div>
+                            <h3>{{ $l['title'] ?? '' }}</h3>
+                            @if (trim($l['text'] ?? '') !== '')<p>{{ $l['text'] }}</p>@endif
+                        </div>
+                    @endforeach
+                </div>
+                @if (trim($lp['losses']['note'] ?? '') !== '')<p class="lp-loss-note reveal">{{ $lp['losses']['note'] }}</p>@endif
+            </div>
+        </section>
+    @endif
+
+    {{-- ================= The answer: precision agriculture, then how it works ================= --}}
+    <section class="py-16 sm:py-24">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center reveal">
+                <span class="fx-kicker">{{ $lp['precision']['kicker'] }}</span>
+                <h2 class="fx-h mx-auto max-w-3xl text-balance">{{ $lp['precision']['headline'] }}</h2>
+                @if (trim($lp['precision']['sub']) !== '')<p class="fx-p mx-auto max-w-2xl">{{ $lp['precision']['sub'] }}</p>@endif
+            </div>
+            <div class="lp-rights mt-9">
+                @foreach ($lp['precision']['items'] as $i => $r)
+                    <div class="lp-right reveal" style="--reveal-delay: {{ $i * 0.07 }}s">
+                        <span class="e" aria-hidden="true">{{ $r['icon'] ?: '🌱' }}</span>
+                        <h3>{{ $r['title'] }}</h3>
+                        <p>{{ $r['text'] }}</p>
+                    </div>
+                @endforeach
             </div>
 
             <div class="mt-16 sm:mt-20 text-center reveal">
@@ -256,7 +357,7 @@
                     $key = $p['image'] ?: 'board';
                     $upload = \App\Support\LandingPage::photoUrl($p['upload'] ?? '');
                     $isPhoto = $upload ? ($p['frame'] ?? '') === 'photo' : isset($photos[$key]);
-                    [$src, $alt] = $photos[$key] ?? $shots[$key] ?? $shots['board'];
+                    [$src, $alt, $tall] = $photos[$key] ?? $shots[$key] ?? $shots['board'];
                     $src = $upload ?: asset('images/site/' . $src);
                     $alt = $upload ? $p['title'] : $alt;
                     $paid = ! str_contains(strtolower($p['plan'] ?? ''), 'free');
@@ -269,7 +370,7 @@
                             </div>
                         @else
                             <div class="ph-frame {{ $i % 2 ? 'ph-tilt-l' : 'ph-tilt-r' }}">
-                                <img src="{{ $src }}" alt="{{ $alt }}" width="780" height="1600" loading="lazy">
+                                <img src="{{ $src }}" alt="{{ $alt }}" width="780" height="{{ $tall }}" loading="lazy">
                             </div>
                         @endif
                     </div>
@@ -289,18 +390,34 @@
         </div>
     </section>
 
-    {{-- "And the rest": the modules behind the four, in a glance. --}}
+    {{-- ================= Everything the farm needs, in one app ================= --}}
     <section class="pt-14 pb-16 sm:pt-20 sm:pb-24">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <h2 class="fx-h text-center reveal">{{ $lp['more']['headline'] }}</h2>
-            <div class="lp-tiles mt-8">
-                @foreach ($lp['more']['items'] as $i => $t)
-                    <div class="lp-tile reveal" style="--reveal-delay: {{ ($i % 3) * 0.06 }}s">
-                        <span class="e" aria-hidden="true">{{ $t['icon'] ?? '🌱' }}</span>
-                        <h4>{{ $t['title'] }}</h4>
-                        <p>{{ $t['text'] }}</p>
+            <div class="text-center reveal">
+                <h2 class="fx-h mx-auto max-w-3xl text-balance">{{ $lp['more']['headline'] }}</h2>
+                @if (trim($lp['more']['sub'] ?? '') !== '')<p class="fx-p mx-auto max-w-2xl">{{ $lp['more']['sub'] }}</p>@endif
+            </div>
+            <div class="lp-all mt-10">
+                <div class="lp-all-phone reveal">
+                    <div class="ph-frame ph-tilt-l">
+                        <img src="{{ \App\Support\LandingPage::imageUrl($lp['more']['image'] ?? '', $shots['hub'][0]) }}" alt="{{ $shots['hub'][1] }}" width="780" height="{{ $shots['hub'][2] }}" loading="lazy">
                     </div>
-                @endforeach
+                </div>
+                <div>
+                    @foreach ($groups as $name => $tiles)
+                        <div class="lp-group reveal">
+                            @if ($name !== '')<p class="lp-group-h">{{ $name }}</p>@endif
+                            <div class="lp-tiles">
+                                @foreach ($tiles as $t)
+                                    <div class="lp-tile">
+                                        <span class="e" aria-hidden="true">{{ $t['icon'] ?: '🌱' }}</span>
+                                        <div><h4>{{ $t['title'] }}</h4><p>{{ $t['text'] }}</p></div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </section>
@@ -354,7 +471,7 @@
     <section class="lp-closer" id="lpCloser">
         <img class="bg" src="{{ \App\Support\LandingPage::imageUrl($lp['closer']['image'], 'lp/palay-phone.webp') }}" alt="" width="1400" height="1046" loading="lazy">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center">
-            <h2 class="font-heading font-extrabold text-3xl sm:text-5xl leading-tight text-balance reveal">{{ $lp['closer']['headline'] }}</h2>
+            <h2 class="font-heading font-extrabold text-3xl sm:text-5xl leading-tight text-balance reveal">{!! $mark($lp['closer']['headline']) !!}</h2>
             <p class="mt-4 text-base sm:text-lg text-gray-200 reveal">{{ $lp['closer']['sub'] }}</p>
             <form class="lp-form mt-8 reveal" action="{{ route('signup') }}" method="get">
                 @foreach ($keep as $k => $v)<input type="hidden" name="{{ $k }}" value="{{ $v }}">@endforeach
@@ -385,6 +502,33 @@
         qa.classList.toggle('is-open', open);
         btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
+
+    // What guessing costs: each figure counts up, and its bar fills, the first time it is seen.
+    const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const losses = document.querySelectorAll('#lpLosses .lp-loss');
+    const light = (card) => {
+        card.classList.add('is-lit');
+        const b = card.querySelector('b[data-n]');
+        const to = Number(b.dataset.n) || 0;
+        if (calm) { b.textContent = to + '%'; return; }
+        const t0 = performance.now();
+        const step = (t) => {
+            const k = Math.min(1, (t - t0) / 1100);
+            b.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))) + '%';
+            if (k < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+    };
+    if (losses.length && 'IntersectionObserver' in window) {
+        losses.forEach((c) => { if (!calm) c.querySelector('b[data-n]').textContent = '0%'; });
+        const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+            if (en.isIntersecting) { light(en.target); io.unobserve(en.target); }
+        }), { threshold: .4 });
+        losses.forEach((c) => io.observe(c));
+    } else {
+        losses.forEach(light);
+    }
+
     // The phone's bar: on once the hero's form is out of sight, off again at the closer's own form.
     const bar = document.getElementById('lpBar');
     const hero = document.getElementById('lpHeroForm');

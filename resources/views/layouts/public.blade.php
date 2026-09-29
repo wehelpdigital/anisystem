@@ -73,7 +73,10 @@
     @include('partials.boot-veil')
 
     {{-- Header. The full bar starts at lg: between md and lg the six links
-         and three buttons did not fit and the page scrolled sideways. --}}
+         and three buttons did not fit and the page scrolled sideways. A page
+         that sets @section('noHeader') goes without it: the ads landing
+         page, where every way out of the offer is a lost signup. --}}
+    @sectionMissing('noHeader')
     <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100" x-data="{ open: false }">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="flex items-center justify-between h-16 md:h-20">
@@ -123,6 +126,7 @@
             </div>
         </div>
     </header>
+    @endif
 
     <main class="grow">
         @yield('content')

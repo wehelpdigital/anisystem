@@ -88,6 +88,9 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'pbAnalyses' => str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), 'data-tab="analyses"'),
             'boardTrio' => str_contains((string) @file_get_contents(resource_path('views/sm/partials/activities-js.blade.php')), 'the stretch goes with it')
                 && str_contains((string) @file_get_contents(resource_path('views/sm/activities.blade.php')), 'if (wasOpen) setTimeout(land, 300)'),
+            'landingPrecision' => isset(\App\Support\LandingPage::DEFAULTS['precision'], \App\Support\LandingPage::DEFAULTS['losses'])
+                && is_file(public_path('images/site/lp/weather.webp'))
+                && str_contains((string) @file_get_contents(resource_path('views/layouts/public.blade.php')), "@sectionMissing('noHeader')"),
             'landingPage' => defined(\App\Support\LandingPage::class . '::DEFAULTS_KEY')
                 && class_exists(\App\Support\SignupSource::class)
                 && is_file(public_path('images/site/lp/board.webp'))
