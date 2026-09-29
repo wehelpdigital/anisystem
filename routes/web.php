@@ -176,7 +176,13 @@ Route::prefix('{face}')->where(['face' => 'ph|en'])->group(function () {
 // The root sends a visitor to their face, and its body carries the same
 // verification tags as every public page: Facebook's domain check reads
 // "the home page" at anee.io/ itself.
-Route::get('/', function () {
+Route::get('/', function (Illuminate\Http\Request $request) {
+    // Facebook's own crawler gets the home page itself, not a redirect: its
+    // domain verification would not accept the tag behind a 302 (2026-09-29).
+    // Everyone else is still sent to their face.
+    if (preg_match('/facebookexternalhit|facebot/i', (string) $request->userAgent())) {
+        return app(App\Http\Controllers\PublicController::class)->home($request);
+    }
     $to = route('home');
 
     return response('<!doctype html><html><head><meta charset="utf-8">' . view('partials.site-verification')->render()

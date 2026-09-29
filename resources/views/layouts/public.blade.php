@@ -4,6 +4,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="booting">
 <head>
     <meta charset="utf-8">
+    {{-- First in the head: some verifiers read only the top of a page. --}}
+    @include('partials.site-verification')
     @include('partials.boot-veil-css')
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     {{-- Page pinch-zoom is off app-wide, on the owner's ask: the two places
@@ -35,7 +37,6 @@
     <meta name="description" content="@yield('meta_description', 'anee.io — the cropping schedule manager for ' . \App\Support\Region::t('farmersOf') . '. Plan lots, workers, materials, activities and irrigation in one mobile-friendly web app.')">
     {{-- Indexable only once the mother app's switch says so (App\Support\Seo). --}}
     <meta name="robots" content="{{ \App\Support\Seo::robots() }}">
-    @include('partials.site-verification')
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}?v=anee">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
