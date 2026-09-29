@@ -29,7 +29,10 @@ class NoteLinkReaders
         $response = $next($request);
 
         $ua = (string) $request->userAgent();
-        if ($ua !== '' && preg_match(self::PATTERN, $ua)) {
+        // Facebook's own networks too (AS32934), whatever the visitor calls
+        // itself: the domain verifier may not say facebookexternalhit.
+        $fromFacebook = (bool) preg_match('/^(31\.13|66\.220|69\.63|69\.171|173\.252|157\.240|129\.134|179\.60|185\.60|204\.15|102\.132|163\.70|57\.14[1-4])\./', (string) $request->ip());
+        if (($ua !== '' && preg_match(self::PATTERN, $ua)) || $fromFacebook) {
             try {
                 $body = $response->getContent();
                 $seen = Cache::get(self::KEY, []);
