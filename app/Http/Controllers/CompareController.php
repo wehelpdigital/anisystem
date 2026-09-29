@@ -122,11 +122,19 @@ class CompareController extends BaseScheduleController
             'facts' => [],
         ],
         'season' => [
+            // The money rows come from the report's own graphs (facts, v2);
+            // an older report that never kept them simply leaves them out.
             'metrics' => [
                 'overall' => ['Overall score', 'score', 'higher', 'star', 'Anee\'s score out of 100', false],
+                'profit' => ['Net profit', 'money', 'higher', 'trend', null, false],
+                'revenue' => ['Money in', 'money', 'higher', 'coins', null, false],
+                'cost' => ['Money out', 'money', 'lower', 'scale', null, false],
+                'margin' => ['Margin', 'pct', 'higher', 'percent', 'profit as a share of money in', false],
+                'workerDays' => ['Worker-days', 'num1', null, 'people', 'whole days, plus half days counted as half', false],
             ],
             'groups' => [
                 'scores' => ['The scores, one by one', 'score', 'out of 100', false, true],
+                'cats' => ['Money out, by category', 'money', 'what the season cost', false, true],
             ],
             'facts' => ['headline' => 'Anee\'s headline'],
         ],
@@ -1279,9 +1287,20 @@ class CompareController extends BaseScheduleController
             }
         }
 
+        $facts = is_array($r['facts'] ?? null) ? $r['facts'] : [];
+        $money = is_array($facts['money'] ?? null) ? $facts['money'] : [];
+        $num = fn ($v) => is_numeric($v) ? (float) $v : null;
+
         return [
-            'm' => ['overall' => is_numeric($sc['overall'] ?? null) ? (float) $sc['overall'] : null],
-            'g' => ['scores' => $rows],
+            'm' => [
+                'overall' => is_numeric($sc['overall'] ?? null) ? (float) $sc['overall'] : null,
+                'profit' => $num($money['profit'] ?? null),
+                'revenue' => $num($money['revenue'] ?? null),
+                'cost' => $num($money['cost'] ?? null),
+                'margin' => $num($money['margin'] ?? null),
+                'workerDays' => $num($facts['work']['workerDays'] ?? null),
+            ],
+            'g' => ['scores' => $rows, 'cats' => $money ? $this->costCats((array) ($money['cats'] ?? [])) : []],
             'f' => ['headline' => trim((string) ($r['headline'] ?? '')) ?: null],
         ];
     }

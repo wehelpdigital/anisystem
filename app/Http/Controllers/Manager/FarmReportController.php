@@ -384,7 +384,15 @@ class FarmReportController extends BaseScheduleController
     }
 
     /** The profit arithmetic itself, reusable by the AI reports. */
+    /** profitFacts per schedule, once a request: the season report asks for it three times. */
+    private array $pfMemo = [];
+
     private function profitFacts(\App\Models\AsCroppingSchedule $schedule): array
+    {
+        return $this->pfMemo[$schedule->id] ??= $this->profitFactsFresh($schedule);
+    }
+
+    private function profitFactsFresh(\App\Models\AsCroppingSchedule $schedule): array
     {
         $schedule->load(['activities.items', 'activities.workers', 'activities.lots', 'dayExpenses', 'dayIncomes', 'lots']);
 
@@ -681,7 +689,15 @@ class FarmReportController extends BaseScheduleController
             'deleteStatus' => 1,
         ]);
 
-        $prompt = $this->aneePrompt($schedule, $kind, $lot);
+        // The season report's graphs are the app's arithmetic, worked out
+        // once here: Anee reads them in words and the report keeps them.
+        $facts = null;
+        try {
+            $facts = $kind === 'season' ? $this->seasonFacts($schedule) : $this->sofarFacts($schedule, $lot);
+        } catch (\Throwable $e) {
+            report($e);
+        }
+        $prompt = $this->aneePrompt($schedule, $kind, $lot, $facts);
 
         /* The gateway must not wait on the model — when-to-plant's walk. */
         if (function_exists('fastcgi_finish_request')) {
@@ -691,23 +707,26 @@ class FarmReportController extends BaseScheduleController
                 'pending' => true, 'id' => $row->id,
             ]])->send();
             fastcgi_finish_request();
-            $this->runAneeJob($row->id, (int) $payer->id, $settings, $prompt, $price);
+            $this->runAneeJob($row->id, (int) $payer->id, $settings, $prompt, $price, $facts);
             exit;
         }
 
         @set_time_limit(300);
-        $this->runAneeJob($row->id, (int) $payer->id, $settings, $prompt, $price);
+        $this->runAneeJob($row->id, (int) $payer->id, $settings, $prompt, $price, $facts);
 
         return $this->aneeJob($row->id);
     }
 
     /** The model call and the charge, off the request's clock. */
-    private function runAneeJob(int $id, int $payerId, AiSetting $settings, string $prompt, int $price): void
+    private function runAneeJob(int $id, int $payerId, AiSetting $settings, string $prompt, int $price, ?array $facts = null): void
     {
         $ai = app(AiClient::class);
         $credits = app(AiCreditService::class);
         try {
-            $result = $ai->askForJson($settings, $prompt, 5000, fn (string $t) => $this->parseAneeReport($t));
+            // The season report says more now (a reason per score, the money,
+            // the harvest against a typical farm, the moments, the savings).
+            $maxOut = 8000;
+            $result = $ai->askForJson($settings, $prompt, $maxOut, fn (string $t) => $this->parseAneeReport($t));
             $report = $result['data'];
             if ($report === null) {
                 Log::warning('anee-report: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
@@ -715,7 +734,9 @@ class FarmReportController extends BaseScheduleController
             }
 
             $row = AsFarmReport::find($id);
-            if ($row->kind === 'sofar') {
+            if ($facts !== null) {
+                $report['facts'] = $facts;
+            } elseif ($row->kind === 'sofar') {
                 // The graphs draw the app's own arithmetic, not the model's.
                 try {
                     $sch = \App\Models\AsCroppingSchedule::find($row->croppingScheduleId);
@@ -837,7 +858,19 @@ class FarmReportController extends BaseScheduleController
             return $this->jsonFail('That report is gone.', 404);
         }
         // Throws if the asker has no standing on the report's schedule.
-        $this->schedule($r->croppingScheduleId);
+        $schedule = $this->schedule($r->croppingScheduleId);
+
+        // A season report written before it carried its graphs gets them
+        // the first time it is opened, worked out from the closed season's
+        // records and kept with it from then on.
+        if ($r->kind === 'season' && (int) (($r->report['facts'] ?? [])['v'] ?? 0) < 2) {
+            try {
+                $r->report = array_merge((array) $r->report, ['facts' => $this->seasonFacts($schedule)]);
+                $r->save();
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
 
         return $this->jsonOk('ok', ['data' => [
             'id' => $r->id, 'title' => $r->title, 'report' => $r->report,
@@ -1012,7 +1045,7 @@ class FarmReportController extends BaseScheduleController
 
     /* ----------------------- what Anee reads --------------------------- */
 
-    private function aneePrompt(\App\Models\AsCroppingSchedule $schedule, string $kind, $lot): string
+    private function aneePrompt(\App\Models\AsCroppingSchedule $schedule, string $kind, $lot, ?array $facts = null): string
     {
         $ctx = [];
         // The whole season, in the same words the chat's season snapshot uses.
@@ -1098,15 +1131,8 @@ class FarmReportController extends BaseScheduleController
         }
 
         // Past seasons of the same crop, for the comparison.
-        $crops = $schedule->lots->pluck('crop')->filter()->unique();
-        if ($crops->isNotEmpty() && $kind === 'season') {
-            $past = \App\Models\AsCroppingSchedule::where('anisystemUserId', $schedule->anisystemUserId)
-                ->where('id', '!=', $schedule->id)
-                ->whereIn('status', [\App\Models\AsCroppingSchedule::STATUS_COMPLETED, \App\Models\AsCroppingSchedule::STATUS_ARCHIVED])
-                ->where('deleteStatus', 1)
-                ->whereHas('lots', fn ($q) => $q->whereIn('crop', $crops))
-                ->orderByDesc('id')->limit(3)->get();
-            foreach ($past as $ps) {
+        if ($kind === 'season') {
+            foreach ($this->pastSeasons($schedule) as $ps) {
                 $ppf = $this->profitFacts($ps);
                 $ctx[] = 'A PAST SEASON OF THE SAME CROP — ' . $ps->title . ': revenue ' . \App\Support\Region::symbol() . number_format($ppf['revenue'], 2)
                     . ', cost ' . \App\Support\Region::symbol() . number_format($ppf['cost'], 2) . ', net ' . \App\Support\Region::symbol() . number_format($ppf['profit'], 2)
@@ -1114,13 +1140,22 @@ class FarmReportController extends BaseScheduleController
             }
         }
 
+        // The season report's graphs, said in words, so what Anee writes
+        // agrees with what the farmer sees drawn beside it.
+        if ($kind === 'season' && $facts) {
+            $ctx[] = $this->seasonFactsText($facts);
+        }
+        if ($kind === 'sofar' && $facts) {
+            $ctx[] = $this->sofarFactsText($facts);
+        }
+
         if ($lot) {
             $ctx[] = 'FOCUS: the farmer asked specifically about ' . $lot->lotName . '. Center the analysis there; mention the rest only where it bears on this lot.';
         }
 
         $schema = $kind === 'season'
-            ? '{"headline": string (one warm sentence naming the season\'s verdict), "verdict": string (3-5 sentences, plain and unbiased — the season as it really went), "scores": {"overall": int 0-100, "planning": int, "execution": int, "costControl": int, "timing": int, "recordKeeping": int}, "strengths": [3-6 strings — what genuinely went well, be specific], "wentWrong": [2-6 strings — honest, specific, never cruel], "improvements": [3-6 strings — concrete next-season moves], "protocolChanges": [2-5 of {"change": string, "current": string (what was done, with its date or day-count), "suggested": string (what to do instead), "timing": string (say it in ' . $schedule->dayType . ' day-counts, e.g. "' . $schedule->dayType . ' 25-30"), "why": string}], "lacking": [1-4 strings — records or practices the season was missing], "weatherStory": string (what the sky actually did to this season — rain, dry runs, wind, ENSO — and where it explains a delay or a loss), "delays": string (where the crop ran late or early against its maturity, and the honest reasons — weather, herbicide setbacks, labor), "comparison": string (against the farmer\'s own past seasons if given, else against typical figures for the crop; one short paragraph), "encouragement": string (2-3 warm sentences — genuine, a little jolly, proud of what deserves pride, and certain the next season can be better), "nextSeason": [3-6 short checklist strings]}'
-            : '{"headline": string (at most 10 words on where the season stands — a title, not a sentence), "standing": "on-track" | "watch" | "rescue" (unbiased — say rescue when it is true), "score": int 0-100 (how well the season stands today, all things weighed), "verdict": string (2-4 sentences on the season as it stands today), "scores": {"protocol": int 0-100 (how faithfully the plan has been followed so far), "timing": int 0-100 (how well the work sits on the crop\'s calendar), "weather": int 0-100 (how kindly the sky has treated the crop and what is ahead), "money": int 0-100 (how the spend runs against a sensible budget for this crop), "records": int 0-100 (how complete the records are)}, "good": [2-5 of {"point": string (short), "why": string (one sentence)}], "bad": [1-5 of {"point": string (short), "why": string (one sentence), "fix": string (what to do about it)}], "protocol": {"summary": string (2-3 sentences on the plan so far — done against planned, to today), "followed": [0-5 short strings — what was done as planned], "missed": [0-5 short strings — what was skipped, late or never planned that the crop needed], "drift": string (one sentence: how far the work has drifted from the plan and what it costs)}, "timing": {"summary": string (2-3 sentences on where the crop is on its own clock against the work done), "stage": string (the growth stage it is in now), "daysBehind": int or null (days the work runs behind the crop, 0 when on time, negative when ahead)}, "weather": {"summary": string (2-3 sentences on what the sky has done to the crop so far), "outlook": string (what the next few weeks and ENSO mean here), "risks": [0-4 short strings]}, "money": {"summary": string (2-3 sentences on the spend so far against the crop and the season), "verdict": "lean"|"fair"|"heavy"}, "risks": [2-5 of {"risk": string, "severity": "low"|"moderate"|"high", "why": string}], "whatsNext": [3-7 of {"action": string, "when": string (a date or a ' . $schedule->dayType . ' day-count), "why": string, "urgency": "now"|"soon"|"routine"}], "lacking": [0-4 strings — what the records are missing that would sharpen this read], "encouragement": string (2-3 warm sentences — honest about the hard parts, sure the farmer can land this)}';
+            ? '{"headline": string (one warm sentence naming the season\'s verdict), "verdict": string (3-5 sentences, plain and unbiased — the season as it really went), "scores": {"overall": int 0-100, "planning": int, "execution": int, "costControl": int, "timing": int, "recordKeeping": int}, "strengths": [3-6 strings — what genuinely went well, be specific], "wentWrong": [2-6 strings — honest, specific, never cruel], "improvements": [3-6 strings — concrete next-season moves], "protocolChanges": [2-5 of {"change": string, "current": string (what was done, with its date or day-count), "suggested": string (what to do instead), "timing": string (say it in ' . $schedule->dayType . ' day-counts, e.g. "' . $schedule->dayType . ' 25-30"), "why": string}], "lacking": [1-4 strings — records or practices the season was missing], "weatherStory": string (what the sky actually did to this season — rain, dry runs, wind, ENSO — and where it explains a delay or a loss), "delays": string (where the crop ran late or early against its maturity, and the honest reasons — weather, herbicide setbacks, labor), "comparison": string (against the farmer\'s own past seasons if given, else against typical figures for the crop; one short paragraph), "scoreWhy": {"overall": string, "planning": string, "execution": string, "costControl": string, "timing": string, "recordKeeping": string} (one short plain sentence each: why that score), "moneyStory": string (2-3 short sentences on the money: what came in, where most of it went and what that means for each sack or kilo sold; use the computed figures), "harvest": {"typical": string (a typical yield for this crop, and the variety if you know it, on farms in this part of the country, per hectare and in the farmer\'s own unit where you can, e.g. "80 to 100 sacks per hectare"; say "unknown" if you cannot say), "verdict": "above" | "typical" | "below" | "unknown", "note": string (one or two sentences setting the farm\'s own per-hectare harvest against that)}, "workStory": string (one or two sentences on the work: what took the most effort and money, and whether it paid off), "moments": [4-8 of {"when": string (a short date and its day-count, e.g. "Feb 25 · ' . $schedule->dayType . ' 41"), "what": string (one short sentence), "mood": "good" | "bad" | "neutral"}] (the turning points of the season, in date order), "savings": [2-4 of {"what": string (a cost from the records), "idea": string (how to spend less on it or get more from it next season), "save": string (a rough amount saved per season, e.g. "about ' . \App\Support\Region::symbol() . '3,000")}], "encouragement": string (2-3 warm sentences — genuine, a little jolly, proud of what deserves pride, and certain the next season can be better), "nextSeason": [3-6 short checklist strings]}'
+            : '{"headline": string (at most 10 words on where the season stands — a title, not a sentence), "standing": "on-track" | "watch" | "rescue" (unbiased — say rescue when it is true), "score": int 0-100 (how well the season stands today, all things weighed), "verdict": string (2-4 sentences on the season as it stands today), "scores": {"protocol": int 0-100 (how faithfully the plan has been followed so far), "timing": int 0-100 (how well the work sits on the crop\'s calendar), "weather": int 0-100 (how kindly the sky has treated the crop and what is ahead), "money": int 0-100 (how the spend runs against a sensible budget for this crop), "records": int 0-100 (how complete the records are)}, "good": [2-5 of {"point": string (short), "why": string (one sentence)}], "bad": [1-5 of {"point": string (short), "why": string (one sentence), "fix": string (what to do about it)}], "protocol": {"summary": string (2-3 sentences on the plan so far — done against planned, to today), "followed": [0-5 short strings — what was done as planned], "missed": [0-5 short strings — what was skipped, late or never planned that the crop needed], "drift": string (one sentence: how far the work has drifted from the plan and what it costs)}, "timing": {"summary": string (2-3 sentences on where the crop is on its own clock against the work done), "stage": string (the growth stage it is in now), "daysBehind": int or null (days the work runs behind the crop, 0 when on time, negative when ahead)}, "weather": {"summary": string (2-3 sentences on what the sky has done to the crop so far), "outlook": string (what the next few weeks and ENSO mean here), "risks": [0-4 short strings]}, "money": {"summary": string (2-3 sentences on the spend so far against the crop and the season), "verdict": "lean"|"fair"|"heavy"}, "risks": [2-5 of {"risk": string, "severity": "low"|"moderate"|"high", "why": string}], "whatsNext": [3-7 of {"action": string, "when": string (a date or a ' . $schedule->dayType . ' day-count), "why": string, "urgency": "now"|"soon"|"routine"}], "lacking": [0-4 strings — what the records are missing that would sharpen this read], "scoreWhy": {"protocol": string, "timing": string, "weather": string, "money": string, "records": string} (one short plain sentence each: why that score), "cropNow": [1-4 of {"lot": string (the lot\'s name, or "The whole farm"), "needs": string (what the crop needs in the stage it is in now, one or two short sentences), "watch": string (the pest, disease or weather to watch for at this stage)}], "harvestOutlook": {"when": string (when harvest is likely, a short date range), "expect": string (a fair harvest to expect per hectare if things go on as they are, in the farmer\'s own unit where you can, or "unknown"), "note": string (one or two sentences: what could raise it or lower it from here)}, "encouragement": string (2-3 warm sentences — honest about the hard parts, sure the farmer can land this)}';
 
         return 'You are an agricultural analyst for a smallholder farm in ' . \App\Support\Region::name() . ', writing '
             . ($kind === 'season' ? 'a full season debrief now that the season is closed.' : 'a mid-season read of where things stand and what to do next. Judge the PROTOCOL SO FAR from the activity list: what was planned up to today and what was actually ticked done, what was skipped or late, and what the crop needed that was never planned; judge the TIMING of that work against the crop\'s own stage today; judge the WEATHER\'s part so far and ahead; judge the MONEY so far against what this crop and stage usually cost. Say plainly what is good and what is bad.')
@@ -1133,6 +1168,81 @@ class FarmReportController extends BaseScheduleController
             . "\n\n=== YOUR ANSWER ===\nReturn ONLY a single JSON object, no fences, no commentary, exactly this shape:\n" . $schema;
     }
 
+    /** The so-far report's graphs, said in words for Anee's prompt. */
+    private function sofarFactsText(array $f): string
+    {
+        $sym = \App\Support\Region::symbol();
+        $peso = fn ($n) => $sym . number_format((float) $n, 0);
+        $L = ['THE GRAPHS IN THIS REPORT (computed by the app; your words sit beside them, so use these same figures):'];
+        foreach ((array) ($f['lots'] ?? []) as $l) {
+            $L[] = $l['name'] . ' (' . $l['crop'] . '): ' . ($l['day'] !== null ? $l['counter'] . ' ' . $l['day'] : 'no day zero yet')
+                . ($l['stage'] ? ', in ' . $l['stage'] . ($l['stageNo'] ? ' (stage ' . $l['stageNo'] . ' of ' . $l['stages'] . ')' : '') : '')
+                . (! empty($l['next']) ? ', next ' . $l['next']['label'] . ' in ' . $l['next']['inDays'] . ' days' : '')
+                . ($l['harvestOn'] ? ', harvest due about ' . $l['harvestOn'] . ($l['daysLeft'] !== null ? ' (' . $l['daysLeft'] . ' days from today)' : '') : '') . '.';
+        }
+        $M = (array) ($f['money'] ?? []);
+        if ($M) {
+            $L[] = 'Money actually spent so far (work ticked done, extra expenses and stock buys to today): ' . $peso($M['cost'])
+                . '; still to spend on the work planned but not done: ' . $peso($M['planned']) . '; the whole plan: ' . $peso($M['plan']) . '.'
+                . ((float) ($M['general'] ?? 0) > 0 ? ' Whole-farm costs not counted in this lot: ' . $peso($M['general']) . '.' : '');
+        }
+        $P = (array) ($f['plan'] ?? []);
+        if ($P) {
+            $L[] = 'The plan: ' . $P['done'] . ' of ' . $P['planned'] . ' activities due by today are done, ' . $P['overdue'] . ' overdue, ' . $P['coming'] . ' due in the next 14 days, ' . $P['doneAll'] . ' of ' . $P['total'] . ' done overall.';
+        }
+        if (! empty($f['overdue'])) {
+            $L[] = 'Overdue: ' . implode('; ', array_map(fn ($o) => $o['title'] . ' (due ' . $o['date'] . ', ' . $o['late'] . ' days late' . ($o['lots'] ? ', ' . $o['lots'] : '') . ')', $f['overdue'])) . '.';
+        }
+        if (! empty($f['coming'])) {
+            $L[] = 'Coming up: ' . implode('; ', array_map(fn ($o) => $o['title'] . ' (' . $o['date'] . ($o['lots'] ? ', ' . $o['lots'] : '') . ')', $f['coming'])) . '.';
+        }
+
+        return implode("\n", $L);
+    }
+
+    /** The season report's graphs, said in words for Anee's prompt. */
+    private function seasonFactsText(array $f): string
+    {
+        $sym = \App\Support\Region::symbol();
+        $peso = fn ($n) => $sym . number_format((float) $n, 0);
+        $names = ['materials' => 'materials', 'labor' => 'labor', 'services' => 'services', 'expense' => 'extra expenses', 'purchase' => 'stock buys'];
+        $L = ['THE GRAPHS IN THIS REPORT (computed by the app; your words sit beside them, so use these same figures):'];
+        if (! empty($f['months'])) {
+            $L[] = 'Money out by month: ' . implode(' | ', array_map(function ($m) use ($peso, $names) {
+                $parts = [];
+                foreach ($names as $k => $label) {
+                    if ((float) ($m[$k] ?? 0) > 0) $parts[] = $label . ' ' . $peso($m[$k]);
+                }
+                return $m['label'] . ' ' . $peso($m['total']) . ($parts ? ' (' . implode(', ', $parts) . ')' : '');
+            }, $f['months'])) . '.';
+        }
+        foreach ((array) ($f['lots'] ?? []) as $l) {
+            $bits = [];
+            if ($l['size']) $bits[] = $l['size'];
+            if ($l['yield']) $bits[] = 'harvest ' . implode(', ', $l['yield']);
+            if ($l['perHa'] !== null) $bits[] = $l['perHa'] . ' ' . $l['unit'] . ' per hectare';
+            $bits[] = 'earned ' . $peso($l['revenue']) . ', spent ' . $peso($l['cost']);
+            if ($l['daysRan']) {
+                $bits[] = $l['daysRan'] . ' days from day zero to harvest' . ($l['atHarvest'] ? ' (' . $l['atHarvest'] . ' at harvest)' : '')
+                    . ($l['maturity'] ? ' against a typical ' . $l['maturity'] : '');
+            }
+            $L[] = $l['name'] . ($l['crop'] ? ' (' . $l['crop'] . ($l['variety'] ? ', ' . $l['variety'] : '') . ')' : '') . ': ' . implode('; ', $bits) . '.';
+        }
+        if ((float) ($f['money']['general'] ?? 0) > 0) {
+            $L[] = 'Costs that belong to the whole farm rather than one lot: ' . $peso($f['money']['general']) . '.';
+        }
+        $w = (array) ($f['work'] ?? []);
+        if ($w) {
+            $L[] = 'The work: ' . $w['total'] . ' activities (' . $w['done'] . ' done), ' . $w['workerDays'] . ' worker-days by ' . $w['workerCount'] . ' workers. By kind: '
+                . implode(', ', array_map(fn ($t) => $t['label'] . ' ' . $t['count'] . ' (' . $peso($t['cost']) . ')', (array) $w['types'])) . '.';
+            if (! empty($w['workers'])) {
+                $L[] = 'Workers: ' . implode(', ', array_map(fn ($x) => $x['name'] . ' ' . $x['days'] . ' days (' . $peso($x['pay']) . ')', $w['workers'])) . '.';
+            }
+        }
+
+        return implode("\n", $L);
+    }
+
     /**
      * The season's own daily weather off Open-Meteo's archive, summarized
      * per month so the prompt carries a story, not 120 raw rows. The lot's
@@ -1140,6 +1250,30 @@ class FarmReportController extends BaseScheduleController
      * everything, the report simply says the sky's records were not there.
      */
     private function weatherHistory(\App\Models\AsCroppingSchedule $schedule): string
+    {
+        $w = $this->weatherMonths($schedule);
+        if (! $w) {
+            return '';
+        }
+        $bits = [];
+        foreach ($w['months'] as $v) {
+            $bits[] = $v['ym'] . ': ' . round($v['rain']) . 'mm rain over ' . $v['wet'] . ' wet days, '
+                . $v['dry'] . ' dry days' . ($v['hot'] ? ', ' . $v['hot'] . ' days ≥35°C' : '')
+                . ($v['windy'] ? ', ' . $v['windy'] . ' windy days (≥40 km/h gusts)' : '');
+        }
+
+        return 'THE SKY OVER THE SEASON (Open-Meteo daily archive for the field, ' . $w['from'] . ' → ' . $w['to'] . '): '
+            . implode(' | ', $bits) . '.';
+    }
+
+    /**
+     * The same archive as numbers, month by month, for the season report's
+     * rain chart as well as the prompt. Null when there is no place to ask
+     * about or the archive does not answer (a failure is not cached).
+     *
+     * @return array{from:string,to:string,months:array<int,array>}|null
+     */
+    private function weatherMonths(\App\Models\AsCroppingSchedule $schedule): ?array
     {
         try {
             $lat = null;
@@ -1157,7 +1291,7 @@ class FarmReportController extends BaseScheduleController
                 }
             }
             if ($lat === null) {
-                return '';
+                return null;
             }
 
             $dates = $schedule->activities->pluck('targetDate')->filter();
@@ -1165,10 +1299,10 @@ class FarmReportController extends BaseScheduleController
             $end = min($dates->max()?->format('Y-m-d') ?? now('Asia/Manila')->toDateString(),
                 now('Asia/Manila')->subDays(3)->toDateString());
             if ($start >= $end) {
-                return '';
+                return null;
             }
 
-            $key = 'anee-wx-' . md5($lat . '|' . $lng . '|' . $start . '|' . $end);
+            $key = 'anee-wxm-' . md5($lat . '|' . $lng . '|' . $start . '|' . $end);
 
             return Cache::remember($key, 86400, function () use ($lat, $lng, $start, $end) {
                 $res = Http::timeout(20)->get('https://archive-api.open-meteo.com/v1/archive', [
@@ -1179,7 +1313,7 @@ class FarmReportController extends BaseScheduleController
                 ])->json();
                 $days = $res['daily']['time'] ?? [];
                 if (! $days) {
-                    return '';
+                    return null;
                 }
                 $rain = $res['daily']['precipitation_sum'] ?? [];
                 $tmax = $res['daily']['temperature_2m_max'] ?? [];
@@ -1187,41 +1321,260 @@ class FarmReportController extends BaseScheduleController
                 $m = [];
                 foreach ($days as $i => $d) {
                     $ym = substr($d, 0, 7);
-                    $m[$ym] = $m[$ym] ?? ['rain' => 0.0, 'wet' => 0, 'dry' => 0, 'hot' => 0, 'windy' => 0, 'n' => 0];
+                    $m[$ym] = $m[$ym] ?? ['ym' => $ym, 'rain' => 0.0, 'wet' => 0, 'dry' => 0, 'hot' => 0, 'windy' => 0, 'n' => 0, 'tmax' => 0.0];
                     $r = (float) ($rain[$i] ?? 0);
                     $m[$ym]['rain'] += $r;
                     $m[$ym]['wet'] += $r >= 1 ? 1 : 0;
                     $m[$ym]['dry'] += $r < 1 ? 1 : 0;
                     $m[$ym]['hot'] += ((float) ($tmax[$i] ?? 0)) >= 35 ? 1 : 0;
                     $m[$ym]['windy'] += ((float) ($wind[$i] ?? 0)) >= 40 ? 1 : 0;
+                    $m[$ym]['tmax'] += (float) ($tmax[$i] ?? 0);
                     $m[$ym]['n']++;
                 }
-                $bits = [];
-                foreach ($m as $ym => $v) {
-                    $bits[] = $ym . ': ' . round($v['rain']) . 'mm rain over ' . $v['wet'] . ' wet days, '
-                        . $v['dry'] . ' dry days' . ($v['hot'] ? ', ' . $v['hot'] . ' days ≥35°C' : '')
-                        . ($v['windy'] ? ', ' . $v['windy'] . ' windy days (≥40 km/h gusts)' : '');
+                foreach ($m as &$v) {
+                    $v['rain'] = round($v['rain'], 1);
+                    $v['tmax'] = $v['n'] ? round($v['tmax'] / $v['n'], 1) : null;
                 }
+                unset($v);
 
-                return 'THE SKY OVER THE SEASON (Open-Meteo daily archive for the field, ' . $start . ' → ' . $end . '): '
-                    . implode(' | ', $bits) . '.';
+                return ['from' => $start, 'to' => $end, 'months' => array_values($m)];
             });
         } catch (\Throwable $e) {
-            return '';
+            return null;
         }
     }
 
-    /** Strict-JSON parse: fences stripped, must decode to an object. */
     /**
-     * What the so-far graphs draw: each lot on its own clock, the plan to
-     * today (planned, done, overdue, coming), and the money by category —
-     * all computed here, so the picture is the app's and not the model's.
+     * What the season report's graphs draw, every figure the app's own
+     * arithmetic (the so-far rule: the picture is the app's, the words are
+     * Anee's). The money and when it went, lot by lot with the harvest per
+     * hectare, the work by kind and by worker, each crop's days against its
+     * typical maturity, the sky month by month, and the farmer's past
+     * seasons of the same crop. The money adds up to profitFacts' totals:
+     * the same lines, the same labor formula, only sorted by month.
+     */
+    private function seasonFacts(\App\Models\AsCroppingSchedule $schedule): array
+    {
+        $pf = $this->profitFacts($schedule);
+        $cats = array_keys($pf['costCats']);
+        $blank = array_fill_keys($cats, 0.0);
+
+        /* ---- the money by month, and the work by kind and by worker ---- */
+        $months = [];
+        $undated = 0.0;
+        $addMonth = function (?string $iso, string $cat, float $amt) use (&$months, &$undated, $blank) {
+            if ($amt <= 0) return;
+            if (! $iso) { $undated += $amt; return; }
+            $ym = substr($iso, 0, 7);
+            $months[$ym] = $months[$ym] ?? $blank;
+            $months[$ym][$cat] += $amt;
+        };
+        $types = [];
+        $workers = [];
+        $workerDays = 0.0;
+        $done = 0;
+        foreach ($schedule->activities as $a) {
+            if ($a->isDone) $done++;
+            $iso = $a->targetDate?->format('Y-m-d');
+            $lines = $this->activityLines($a);
+            foreach (['materials', 'services', 'labor'] as $k) {
+                $addMonth($iso, $k, $lines[$k]);
+            }
+            foreach ($lines['workers'] as $w) {
+                $workerDays += $w['days'];
+                $workers[$w['id']] = $workers[$w['id']] ?? ['name' => $w['name'], 'days' => 0.0, 'pay' => 0.0];
+                $workers[$w['id']]['days'] += $w['days'];
+                $workers[$w['id']]['pay'] += $w['pay'];
+            }
+            $cost = $lines['materials'] + $lines['services'] + $lines['labor'];
+            $slug = $a->activityType ?: 'other';
+            $types[$slug] = $types[$slug] ?? [
+                'label' => \App\Models\AsScheduleActivity::ACTIVITY_TYPES[$slug] ?? ucfirst(str_replace('_', ' ', $slug)),
+                'count' => 0, 'cost' => 0.0,
+            ];
+            $types[$slug]['count']++;
+            $types[$slug]['cost'] += $cost;
+        }
+        foreach ($schedule->dayExpenses as $e) {
+            $addMonth($e->expenseDate?->format('Y-m-d'), 'expense', (float) $e->amount);
+        }
+        // Stock bought by hand, the purchase line of profitFacts, by the day it came in.
+        $buys = AsInventoryMove::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)->whereIn('reason', [AsInventoryMove::IN, AsInventoryMove::OPEN])
+            ->whereNull('activityId')->get();
+        $buyItems = AsInventoryItem::whereIn('id', $buys->pluck('itemId')->unique()->all() ?: [0])->get()->keyBy('id');
+        foreach ($buys as $m) {
+            $addMonth($m->happenedOn?->format('Y-m-d') ?: $m->created_at?->format('Y-m-d'), 'purchase', $m->cost($buyItems->get((int) $m->itemId)));
+        }
+        ksort($months);
+        $multiYear = count(array_unique(array_map(fn ($ym) => substr($ym, 0, 4), array_keys($months)))) > 1;
+        $monthRows = [];
+        foreach ($months as $ym => $v) {
+            $c = \Carbon\Carbon::createFromFormat('Y-m-d', $ym . '-01');
+            $monthRows[] = ['ym' => $ym, 'label' => $c->format($multiYear ? 'M y' : 'M')]
+                + array_map(fn ($x) => round($x, 2), $v) + ['total' => round(array_sum($v), 2)];
+        }
+        uasort($types, fn ($x, $y) => [$y['count'], $y['cost']] <=> [$x['count'], $x['cost']]);
+        uasort($workers, fn ($x, $y) => $y['days'] <=> $x['days']);
+
+        /* ---- the harvest, per lot and in all ---- */
+        $yieldRows = \App\Models\AsSchedulePostHarvest::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)->where('yieldAmount', '>', 0)->get();
+        $qty = fn (float $q) => rtrim(rtrim(number_format($q, 2), '0'), '.');
+        $harvest = [];
+        foreach ($yieldRows->groupBy(fn ($h) => $h->yieldUnit ?: 'units') as $unit => $rows) {
+            $harvest[] = $qty((float) $rows->sum('yieldAmount')) . ' ' . $unit;
+        }
+
+        /* ---- lot by lot: money, harvest per hectare, days to harvest ---- */
+        [$dz, $tp] = \App\Support\LotCalendar::effectiveAnchors($schedule);
+        $lastDone = $schedule->activities->filter(fn ($a) => $a->isDone && $a->targetDate)
+            ->max(fn ($a) => $a->targetDate->format('Y-m-d'));
+        $pfLots = collect($pf['lots'])->keyBy('id');
+        $lotRows = [];
+        foreach ($schedule->lots as $L) {
+            $pl = $pfLots->get($L->id) ?? [];
+            $ha = $this->hectares($L);
+            $lotYield = $yieldRows->where('lotId', $L->id);
+            $units = $lotYield->groupBy(fn ($h) => $h->yieldUnit ?: 'units');
+            $one = $units->count() === 1 ? (float) $units->first()->sum('yieldAmount') : null;
+            $unit = $units->count() === 1 ? (string) $units->keys()->first() : null;
+
+            // The crop's run: its day zero to the last harvest done on it (or,
+            // lacking one, its last yield row, or the season's last done work).
+            $harvestDone = $schedule->activities->filter(fn ($a) => $a->isDone && $a->targetDate
+                && array_intersect(['harvest', 'harvesting'], $a->typeSlugs())
+                && ($a->lots->isEmpty() || $a->lots->contains('id', $L->id)))
+                ->max(fn ($a) => $a->targetDate->format('Y-m-d'));
+            $endIso = $harvestDone ?: ($lotYield->max(fn ($h) => $h->observationDate?->format('Y-m-d')) ?: $lastDone);
+            $zero = $dz[$L->id] ?? null;
+            $daysRan = ($zero && $endIso) ? (int) $zero->copy()->startOfDay()->diffInDays(\Carbon\Carbon::parse($endIso)->startOfDay(), false) : null;
+            $atHarvest = null;
+            if ($endIso && $L->crop) {
+                try { $atHarvest = \App\Support\LotCalendar::ageOf($L, \Carbon\Carbon::parse($endIso), $zero, $tp[$L->id] ?? null); } catch (\Throwable $e) { $atHarvest = null; }
+            }
+            $maturity = (int) ($L->daysToMaturity ?: (\App\Support\CropCatalog::CROPS[$L->crop]['maturity'] ?? 0));
+
+            $lotRows[] = [
+                'name' => $L->lotName,
+                'crop' => $L->crop ? (\App\Support\CropStages::label($L->crop) ?: $L->crop) : null,
+                'icon' => $L->crop ? \App\Support\CropStages::icon($L->crop) : '🌱',
+                'variety' => $L->variety ?: null,
+                'size' => $L->lotSize ? $qty((float) $L->lotSize) . ' ' . ($L->lotSizeUnit === 'hectare' ? 'ha' : ($L->lotSizeUnit ?: '')) : null,
+                'hectares' => $ha,
+                'yield' => $units->map(fn ($rows, $u) => $qty((float) $rows->sum('yieldAmount')) . ' ' . $u)->values()->all(),
+                'yieldQty' => $one,
+                'unit' => $unit,
+                'perHa' => ($one && $ha) ? round($one / $ha, 1) : null,
+                'revenue' => (float) ($pl['revenue'] ?? 0),
+                'cost' => (float) ($pl['cost'] ?? 0),
+                'profit' => (float) ($pl['profit'] ?? 0),
+                'margin' => $pl['margin'] ?? null,
+                'costPerUnit' => $pl['costPerUnit'] ?? null,
+                'daysRan' => ($daysRan !== null && $daysRan > 0) ? $daysRan : null,
+                'maturity' => $maturity ?: null,
+                'atHarvest' => $atHarvest && ($atHarvest['counter'] ?? '') !== 'AGE' ? trim($atHarvest['counter'] . ' ' . $atHarvest['day']) : null,
+                'endDate' => $endIso ? \Carbon\Carbon::parse($endIso)->format('M j') : null,
+            ];
+        }
+        $general = $pfLots->get(0);
+
+        /* ---- the farmer's own past seasons of the same crop ---- */
+        $past = [[
+            'title' => $schedule->title, 'this' => true,
+            'revenue' => $pf['revenue'], 'cost' => $pf['cost'], 'profit' => $pf['profit'], 'margin' => $pf['margin'],
+        ]];
+        foreach ($this->pastSeasons($schedule) as $ps) {
+            $ppf = $this->profitFacts($ps);
+            $past[] = ['title' => $ps->title, 'this' => false,
+                'revenue' => $ppf['revenue'], 'cost' => $ppf['cost'], 'profit' => $ppf['profit'], 'margin' => $ppf['margin']];
+        }
+
+        $dates = $schedule->activities->pluck('targetDate')->filter();
+        $from = $dates->min();
+        $to = $dates->max();
+
+        return [
+            'v' => 2,
+            'asOf' => now('Asia/Manila')->format('M j, Y'),
+            'span' => ($from && $to) ? [
+                'from' => $from->format('M j, Y'), 'to' => $to->format('M j, Y'),
+                'days' => (int) $from->diffInDays($to) + 1,
+            ] : null,
+            'money' => [
+                'revenue' => $pf['revenue'], 'cost' => $pf['cost'], 'profit' => $pf['profit'], 'margin' => $pf['margin'],
+                'dayIncome' => $pf['dayIncome'], 'cats' => $pf['costCats'],
+                'general' => $general ? (float) $general['cost'] : 0.0,
+            ],
+            'months' => $monthRows,
+            'undated' => round($undated, 2),
+            'harvest' => $harvest,
+            'lots' => $lotRows,
+            'work' => [
+                'total' => $schedule->activities->count(),
+                'done' => $done,
+                'workerDays' => round($workerDays, 1),
+                'types' => array_values(array_map(fn ($t) => ['label' => $t['label'], 'count' => $t['count'], 'cost' => round($t['cost'], 2)], $types)),
+                'workers' => array_values(array_map(fn ($w) => ['name' => $w['name'], 'days' => round($w['days'], 1), 'pay' => round($w['pay'], 2)], array_slice($workers, 0, 6, true))),
+                'workerCount' => count($workers),
+            ],
+            'weather' => $this->weatherMonths($schedule),
+            'past' => $past,
+        ];
+    }
+
+    /** A lot's size in hectares, or null when it has none or an unknown unit. */
+    private function hectares($lot): ?float
+    {
+        $size = (float) ($lot->lotSize ?? 0);
+        if ($size <= 0) {
+            return null;
+        }
+
+        return match (strtolower((string) $lot->lotSizeUnit)) {
+            'hectare', 'ha', 'hectares', '' => $size,
+            'sqm', 'm2' => $size / 10000,
+            'acre', 'ac', 'acres' => $size * 0.404686,
+            default => null,
+        };
+    }
+
+    /** Up to three closed seasons of the same crop, newest first, for the comparison. */
+    private function pastSeasons(\App\Models\AsCroppingSchedule $schedule)
+    {
+        $crops = $schedule->lots->pluck('crop')->filter()->unique();
+        if ($crops->isEmpty()) {
+            return collect();
+        }
+
+        return \App\Models\AsCroppingSchedule::where('anisystemUserId', $schedule->anisystemUserId)
+            ->where('id', '!=', $schedule->id)
+            ->whereIn('status', [\App\Models\AsCroppingSchedule::STATUS_COMPLETED, \App\Models\AsCroppingSchedule::STATUS_ARCHIVED])
+            ->where('deleteStatus', 1)
+            ->whereHas('lots', fn ($q) => $q->whereIn('crop', $crops))
+            ->orderByDesc('id')->limit(3)->get();
+    }
+
+    /**
+     * What the so-far graphs draw: each lot on its own clock (the stage it
+     * is in, the next one, when harvest should come), the plan to today
+     * with what is overdue and what is coming, the money SPENT so far
+     * against what the rest of the plan will cost, month by month, the
+     * work by kind and by worker, and the sky so far. All of it computed
+     * here, so the picture is the app's and not the model's.
+     *
+     * v2 (2026-09-29): money.cost is what has really been spent to today
+     * (work ticked done, extra expenses and stock buys dated to today);
+     * the first version counted the whole plan there.
      */
     private function sofarFacts(\App\Models\AsCroppingSchedule $schedule, $lot): array
     {
         $today = now('Asia/Manila')->startOfDay();
+        $pf = $this->profitFacts($schedule);   // loads every relation used below
         $lots = $lot ? collect([$lot]) : $schedule->lots;
         [$dz, $tp] = \App\Support\LotCalendar::effectiveAnchors($schedule);
+
+        /* ---- each lot on its own clock ---- */
         $lotRows = [];
         foreach ($lots as $L) {
             if (! $L->crop) continue;
@@ -1231,6 +1584,9 @@ class FarmReportController extends BaseScheduleController
             $day = $age['day'] ?? null;
             $counter = $age['counter'] ?? ($L->dayType ?: 'DAS');
             $stage = ($day !== null && $counter !== 'AGE') ? \App\Support\CropStages::stageFor($L->crop, max(0, (int) $day), $counter, $maturity ?: null) : null;
+            // Harvest is reckoned from day zero, the count maturity is kept in.
+            $zero = $dz[$L->id] ?? null;
+            $harvestOn = ($zero && $maturity && $counter !== 'AGE') ? $zero->copy()->startOfDay()->addDays($maturity) : null;
             $lotRows[] = [
                 'name' => $L->lotName,
                 'crop' => \App\Support\CropStages::label($L->crop) ?: $L->crop,
@@ -1240,30 +1596,185 @@ class FarmReportController extends BaseScheduleController
                 'maturity' => $maturity ?: null,
                 'pct' => ($day !== null && $maturity && $counter !== 'AGE') ? max(0, min(100, (int) round($day / $maturity * 100))) : null,
                 'stage' => $stage['label'] ?? null,
+                'stageNo' => isset($stage['index']) ? $stage['index'] + 1 : null,
+                'stages' => $stage['count'] ?? null,
+                'needs' => $stage['needs'] ?? null,
+                'next' => $stage['next'] ?? null,
+                'harvestOn' => $harvestOn?->format('M j, Y'),
+                'daysLeft' => $harvestOn ? (int) $today->diffInDays($harvestOn, false) : null,
             ];
         }
-        $acts = $schedule->activities()->with('lots:id')->get();
+
+        /* ---- the plan and the money, activity by activity ---- */
+        $acts = $schedule->activities;
         if ($lot) {
             $acts = $acts->filter(fn ($a) => $a->lots->isEmpty() || $a->lots->contains('id', $lot->id));
         }
+        $cats = array_keys($pf['costCats']);
+        $spent = array_fill_keys($cats, 0.0);
+        $planned = 0.0;
+        $months = [];
+        $month = function (?\Carbon\Carbon $d, string $key, float $amt) use (&$months) {
+            if (! $d || $amt <= 0) return;
+            $ym = $d->format('Y-m');
+            $months[$ym] = $months[$ym] ?? ['spent' => 0.0, 'planned' => 0.0];
+            $months[$ym][$key] += $amt;
+        };
         $plan = ['planned' => 0, 'done' => 0, 'overdue' => 0, 'coming' => 0, 'total' => $acts->count(), 'doneAll' => 0];
+        $types = [];
+        $workers = [];
+        $workerDays = 0.0;
+        $overdue = [];
+        $coming = [];
+        $lotNames = fn ($a) => $a->lots->pluck('lotName')->filter()->implode(', ');
         foreach ($acts as $a) {
             $d = $a->targetDate ? \Carbon\Carbon::parse($a->targetDate)->startOfDay() : null;
             $done = (bool) $a->isDone;
             if ($done) $plan['doneAll']++;
             if ($d && $d->lte($today)) { $plan['planned']++; if ($done) $plan['done']++; elseif ($d->lt($today)) $plan['overdue']++; }
             elseif ($d && ! $done && $d->lte($today->copy()->addDays(14))) { $plan['coming']++; }
+
+            if (! $done && $d && $d->lt($today)) {
+                $overdue[] = ['title' => (string) $a->activityTitle, 'date' => $d->format('M j'), 'late' => (int) $d->diffInDays($today), 'lots' => $lotNames($a)];
+            } elseif (! $done && $d && $d->lte($today->copy()->addDays(14))) {
+                $coming[] = ['title' => (string) $a->activityTitle, 'date' => $d->format('M j'), 'in' => (int) $today->diffInDays($d), 'lots' => $lotNames($a)];
+            }
+
+            // A lot's share of an activity, the profit engine's rule: split
+            // evenly across the lots it covers. Whole-farm work is not a lot's.
+            $share = 1.0;
+            if ($lot) {
+                $share = $a->lots->contains('id', $lot->id) ? 1 / max(1, $a->lots->count()) : 0.0;
+            }
+            $lines = $this->activityLines($a);
+            $amt = ($lines['materials'] + $lines['services'] + $lines['labor']) * $share;
+            if ($done) {
+                foreach (['materials', 'services', 'labor'] as $k) $spent[$k] += $lines[$k] * $share;
+                $month($d, 'spent', $amt);
+                foreach ($lines['workers'] as $w) {
+                    $workers[$w['id']] = $workers[$w['id']] ?? ['name' => $w['name'], 'days' => 0.0, 'pay' => 0.0];
+                    $workers[$w['id']]['days'] += $w['days'];
+                    $workers[$w['id']]['pay'] += $w['pay'];
+                    $workerDays += $w['days'];
+                }
+            } else {
+                $planned += $amt;
+                $month($d, 'planned', $amt);
+            }
+
+            $slug = $a->activityType ?: 'other';
+            $types[$slug] = $types[$slug] ?? [
+                'label' => \App\Models\AsScheduleActivity::ACTIVITY_TYPES[$slug] ?? ucfirst(str_replace('_', ' ', $slug)),
+                'done' => 0, 'total' => 0,
+            ];
+            $types[$slug]['total']++;
+            if ($done) $types[$slug]['done']++;
         }
-        $pf = $this->profitFacts($schedule);
+
+        // Extra expenses and stock buys belong to the whole farm: counted
+        // for the whole season, said apart when one lot was asked about.
+        $general = 0.0;
+        foreach ($schedule->dayExpenses as $e) {
+            $d = $e->expenseDate ? \Carbon\Carbon::parse($e->expenseDate)->startOfDay() : null;
+            $amt = (float) $e->amount;
+            if ($lot) { $general += $amt; continue; }
+            if (! $d || $d->lte($today)) { $spent['expense'] += $amt; $month($d, 'spent', $amt); }
+            else { $planned += $amt; $month($d, 'planned', $amt); }
+        }
+        $buys = AsInventoryMove::where('croppingScheduleId', $schedule->id)
+            ->where('deleteStatus', 1)->whereIn('reason', [AsInventoryMove::IN, AsInventoryMove::OPEN])
+            ->whereNull('activityId')->get();
+        $buyItems = AsInventoryItem::whereIn('id', $buys->pluck('itemId')->unique()->all() ?: [0])->get()->keyBy('id');
+        foreach ($buys as $m) {
+            $amt = $m->cost($buyItems->get((int) $m->itemId));
+            if ($amt <= 0) continue;
+            if ($lot) { $general += $amt; continue; }
+            $spent['purchase'] += $amt;
+            $month($m->happenedOn ? \Carbon\Carbon::parse($m->happenedOn) : $m->created_at, 'spent', $amt);
+        }
+
+        ksort($months);
+        $multiYear = count(array_unique(array_map(fn ($ym) => substr($ym, 0, 4), array_keys($months)))) > 1;
+        $monthRows = [];
+        foreach ($months as $ym => $v) {
+            $monthRows[] = [
+                'ym' => $ym,
+                'label' => \Carbon\Carbon::createFromFormat('Y-m-d', $ym . '-01')->format($multiYear ? 'M y' : 'M'),
+                'spent' => round($v['spent'], 2), 'planned' => round($v['planned'], 2),
+                'total' => round($v['spent'] + $v['planned'], 2),
+            ];
+        }
+        uasort($workers, fn ($x, $y) => $y['days'] <=> $x['days']);
+        uasort($types, fn ($x, $y) => [$y['total'], $y['done']] <=> [$x['total'], $x['done']]);
+        usort($overdue, fn ($x, $y) => $y['late'] <=> $x['late']);
+        usort($coming, fn ($x, $y) => $x['in'] <=> $y['in']);
+
+        $spentTotal = round(array_sum($spent), 2);
+        $revenue = $pf['revenue'];
+        if ($lot) {
+            $revenue = (float) (collect($pf['lots'])->firstWhere('id', $lot->id)['revenue'] ?? 0);
+        }
 
         return [
+            'v' => 2,
             'asOf' => $today->format('M j, Y'),
             'lots' => $lotRows,
             'plan' => $plan,
-            'money' => ['cost' => $pf['cost'], 'revenue' => $pf['revenue'], 'profit' => $pf['profit'], 'cats' => $pf['costCats']],
+            'money' => [
+                'cost' => $spentTotal,
+                'revenue' => round($revenue, 2),
+                'profit' => round($revenue - $spentTotal, 2),
+                'cats' => array_map(fn ($v) => round($v, 2), $spent),
+                'planned' => round($planned, 2),
+                'plan' => round($spentTotal + $planned, 2),
+                'general' => round($general, 2),
+            ],
+            'months' => $monthRows,
+            'work' => [
+                'types' => array_values($types),
+                'workers' => array_values(array_map(fn ($w) => ['name' => $w['name'], 'days' => round($w['days'], 1), 'pay' => round($w['pay'], 2)], array_slice($workers, 0, 6, true))),
+                'workerCount' => count($workers),
+                'workerDays' => round($workerDays, 1),
+            ],
+            'overdue' => array_slice($overdue, 0, 6),
+            'coming' => array_slice($coming, 0, 8),
+            'weather' => $this->weatherMonths($schedule),
         ];
     }
 
+    /**
+     * One activity's money, the profit engine's own formula: its materials,
+     * its services (lines and the flat service price), and its labor, with
+     * each worker's days and pay (a whole day is two halves, over every day
+     * the activity spans).
+     */
+    private function activityLines($a): array
+    {
+        $out = ['materials' => 0.0, 'services' => 0.0, 'labor' => 0.0, 'workers' => []];
+        foreach ($a->items as $it) {
+            $amount = round((float) $it->unitPrice * (float) $it->quantity, 2);
+            if ($amount <= 0) continue;
+            $out[$it->itemType === 'service' ? 'services' : 'materials'] += $amount;
+        }
+        if ((float) ($a->servicePrice ?? 0) > 0) {
+            $out['services'] += (float) $a->servicePrice;
+        }
+        $units = match ($a->timeRequired) { 'whole' => 2, 'half' => 1, default => 0 };
+        if ($units > 0 && $a->workers->count()) {
+            $start = $a->targetDate;
+            $end = $a->targetEndDate ?: $a->targetDate;
+            $rangeDays = ($start && $end) ? max(1, (int) $start->diffInDays($end) + 1) : 1;
+            foreach ($a->workers as $w) {
+                $pay = (float) $w->costPerHalfDay * $units * $rangeDays;
+                $out['labor'] += $pay;
+                $out['workers'][] = ['id' => (int) $w->id, 'name' => trim((string) $w->workerName) ?: 'A worker', 'days' => $units / 2 * $rangeDays, 'pay' => $pay];
+            }
+        }
+
+        return $out;
+    }
+
+    /** Strict-JSON parse: fences stripped, must decode to an object. */
     private function parseAneeReport(string $text): ?array
     {
         $t = trim($text);
@@ -1301,6 +1812,45 @@ class FarmReportController extends BaseScheduleController
             if ($sc) {
                 $L[] = 'Scores: ' . collect($sc)->map(fn ($v, $k) => $k . ' ' . $v . '/100')->implode(', ');
             }
+            foreach ((array) ($r['scoreWhy'] ?? []) as $k => $why) {
+                if (is_string($why) && $why !== '') $L[] = ' - ' . $k . ': ' . $why;
+            }
+            // The figures the graphs draw, so a reader of the words has them too.
+            $F = (array) ($r['facts'] ?? []);
+            if (! empty($F['money'])) {
+                $sym = \App\Support\Region::symbol();
+                $M = $F['money'];
+                $L[] = '';
+                $L[] = 'THE NUMBERS';
+                $L[] = 'Earned ' . $sym . number_format((float) $M['revenue'], 2) . ', spent ' . $sym . number_format((float) $M['cost'], 2)
+                    . ', ' . ((float) $M['profit'] >= 0 ? 'net profit ' : 'loss ') . $sym . number_format(abs((float) $M['profit']), 2)
+                    . ($M['margin'] !== null ? ' (margin ' . $M['margin'] . '%)' : '') . '.';
+                if (! empty($F['harvest'])) $L[] = 'Harvest: ' . implode(', ', $F['harvest']) . '.';
+                foreach ((array) ($F['lots'] ?? []) as $l) {
+                    $L[] = ' - ' . $l['name'] . ': earned ' . $sym . number_format((float) $l['revenue'], 2) . ', spent ' . $sym . number_format((float) $l['cost'], 2)
+                        . ($l['yield'] ? ', harvest ' . implode(', ', $l['yield']) : '')
+                        . ($l['perHa'] !== null ? ' (' . $l['perHa'] . ' ' . $l['unit'] . ' per hectare)' : '')
+                        . ($l['daysRan'] ? ', ' . $l['daysRan'] . ' days to harvest' . ($l['maturity'] ? ' against a typical ' . $l['maturity'] : '') : '') . '.';
+                }
+            }
+            if (! empty($r['moneyStory'])) { $L[] = ''; $L[] = 'THE MONEY'; $L[] = $r['moneyStory']; }
+            if (! empty($r['harvest']) && is_array($r['harvest'])) {
+                $L[] = '';
+                $L[] = 'THE HARVEST AGAINST A TYPICAL FARM';
+                if (! empty($r['harvest']['typical'])) $L[] = 'Typical: ' . $r['harvest']['typical'] . (! empty($r['harvest']['verdict']) ? ' (this season: ' . $r['harvest']['verdict'] . ')' : '');
+                if (! empty($r['harvest']['note'])) $L[] = $r['harvest']['note'];
+            }
+            if (! empty($r['workStory'])) { $L[] = ''; $L[] = 'THE WORK'; $L[] = $r['workStory']; }
+            if (! empty($r['moments'])) {
+                $L[] = '';
+                $L[] = 'THE SEASON IN MOMENTS';
+                foreach ((array) $r['moments'] as $m) { $L[] = ' - ' . ($m['when'] ?? '') . ': ' . ($m['what'] ?? '') . (! empty($m['mood']) ? ' [' . $m['mood'] . ']' : ''); }
+            }
+            if (! empty($r['savings'])) {
+                $L[] = '';
+                $L[] = 'WHERE YOU CAN SAVE';
+                foreach ((array) $r['savings'] as $x) { $L[] = ' - ' . ($x['what'] ?? '') . ': ' . ($x['idea'] ?? '') . (! empty($x['save']) ? ' (' . $x['save'] . ')' : ''); }
+            }
             foreach ([['strengths', 'WHAT WENT WELL'], ['wentWrong', 'WHAT WENT WRONG'], ['improvements', 'WHAT TO IMPROVE'], ['lacking', 'WHAT WAS LACKING'], ['nextSeason', 'NEXT SEASON CHECKLIST']] as [$k, $h]) {
                 if (! empty($r[$k])) {
                     $L[] = '';
@@ -1322,6 +1872,42 @@ class FarmReportController extends BaseScheduleController
             $L[] = 'Standing: ' . strtoupper((string) ($r['standing'] ?? '')) . (isset($r['score']) ? ' — ' . (int) $r['score'] . '/100' : '');
             if (! empty($r['scores']) && is_array($r['scores'])) {
                 $L[] = 'Scores: ' . implode(', ', array_map(fn ($k, $v) => $k . ' ' . (int) $v, array_keys($r['scores']), $r['scores']));
+            }
+            foreach ((array) ($r['scoreWhy'] ?? []) as $k => $why) {
+                if (is_string($why) && $why !== '') $L[] = ' - ' . $k . ': ' . $why;
+            }
+            // The figures the graphs draw (facts v2), so the words carry them too.
+            $F = (array) ($r['facts'] ?? []);
+            if ((int) ($F['v'] ?? 0) >= 2) {
+                $sym = \App\Support\Region::symbol();
+                $L[] = '';
+                $L[] = 'THE NUMBERS (as of ' . ($F['asOf'] ?? '') . ')';
+                foreach ((array) ($F['lots'] ?? []) as $l) {
+                    $L[] = ' - ' . $l['name'] . ': ' . ($l['day'] !== null ? $l['counter'] . ' ' . $l['day'] : 'no day zero')
+                        . ($l['stage'] ? ', ' . $l['stage'] : '')
+                        . (! empty($l['next']) ? ', next ' . $l['next']['label'] . ' in ' . $l['next']['inDays'] . ' days' : '')
+                        . ($l['harvestOn'] ? ', harvest about ' . $l['harvestOn'] : '') . '.';
+                }
+                $M = (array) ($F['money'] ?? []);
+                if ($M) {
+                    $L[] = 'Spent so far ' . $sym . number_format((float) $M['cost'], 2) . ', still to spend ' . $sym . number_format((float) ($M['planned'] ?? 0), 2)
+                        . ', the whole plan ' . $sym . number_format((float) ($M['plan'] ?? 0), 2) . '.';
+                }
+                foreach ((array) ($F['overdue'] ?? []) as $o) { $L[] = ' - Overdue: ' . $o['title'] . ' (due ' . $o['date'] . ', ' . $o['late'] . ' days late)'; }
+                foreach ((array) ($F['coming'] ?? []) as $o) { $L[] = ' - Coming: ' . $o['title'] . ' (' . $o['date'] . ')'; }
+            }
+            if (! empty($r['cropNow'])) {
+                $L[] = '';
+                $L[] = 'WHAT THE CROP NEEDS NOW';
+                foreach ((array) $r['cropNow'] as $x) { $L[] = ' - ' . ($x['lot'] ?? '') . ': ' . ($x['needs'] ?? '') . (! empty($x['watch']) ? ' Watch for: ' . $x['watch'] : ''); }
+            }
+            if (! empty($r['harvestOutlook']) && is_array($r['harvestOutlook'])) {
+                $H = $r['harvestOutlook'];
+                $L[] = '';
+                $L[] = 'THE HARVEST AHEAD';
+                if (! empty($H['when'])) $L[] = 'Likely: ' . $H['when'];
+                if (! empty($H['expect'])) $L[] = 'A fair harvest to expect: ' . $H['expect'];
+                if (! empty($H['note'])) $L[] = $H['note'];
             }
             if (! empty($r['good'])) {
                 $L[] = '';

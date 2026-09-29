@@ -83,6 +83,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
                 && str_contains((string) @file_get_contents(resource_path('views/sm/labor-report.blade.php')), 'kept on the Saved Reports tab'),
             'aboutOneLine' => str_contains((string) @file_get_contents(resource_path('views/sm/labor-report.blade.php')), '<b>About Labor</b>')
                 && str_contains((string) @file_get_contents(resource_path('views/sm/hub.blade.php')), 'class="sched-acts"'),
+            'aneeRich' => str_contains((string) @file_get_contents(app_path('Http/Controllers/Manager/FarmReportController.php')), 'private function seasonFacts')
+                && str_contains((string) @file_get_contents(resource_path('views/sm/anee-report.blade.php')), 'function sofarCards'),
         ],
         'viewCacheCompiled' => count(glob(storage_path('framework/views/*.php')) ?: []),
         // Whether the deployed environment can reach the mailing list at all
