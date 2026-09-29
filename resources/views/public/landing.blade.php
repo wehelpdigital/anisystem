@@ -107,6 +107,12 @@
     .lp-fixes { margin-top: 1.4rem; padding: 1rem 1.1rem 1.05rem; border-radius: 1.1rem; background: #f3f8ec; border: 1px solid #dcead0; }
     .lp-fixes-h { font-size: .74rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #3d6823; }
     .lp-fixes .fx-list { margin-top: .55rem; }
+    /* One line each, never two (the owner, 2026-09-30): the words are kept
+       short, and a longer one from the editor ends in an ellipsis. */
+    .lp-fixes .fx-list li { align-items: center; }
+    .lp-fixes .fx-list li span { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lp-fixes .fx-list li svg { margin-top: 0; }
+    @media (max-width: 400px) { .lp-fixes .fx-list li { font-size: .9rem; } }
     /* Problem */
     .lp-pain { display: grid; gap: .7rem; }
     .lp-pain li { display: flex; gap: .75rem; align-items: flex-start; padding: .85rem 1rem; border-radius: 1rem;

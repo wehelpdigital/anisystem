@@ -84,10 +84,11 @@ class LandingPage
                 'El Niño and La Niña move the planting window, and habit misses it.',
             ],
             // What anee.io does about it (a green tick each), under the costs' label.
+            // One short line each, about 36 characters: they never wrap.
             'fixes' => [
-                'The forecast for each lot, by the hour, so you spray before the rain, not into it',
-                'The pests and diseases to watch for at every growth stage',
-                'Anee reads a photo of a sick leaf in minutes, before it spreads',
+                'Hourly forecast for each lot',
+                'Pests to watch at every stage',
+                'Anee checks a sick leaf in minutes',
             ],
             'solutionKicker' => 'How it works',
             'solutionHeadline' => 'Start in two minutes, in three steps',
@@ -107,9 +108,9 @@ class LandingPage
                     'headline' => 'Every trip to the field burns more money than last season',
                     'text' => 'The hand tractor, the water pump, the sprayer and the ride to town all run on fuel, and fuel keeps getting dearer. A job done twice, or on the wrong day, burns it twice.',
                     'fixes' => [
-                        'Each job planned for the day it works, so the tractor and the sprayer go out once',
-                        'Water on the stages that need it, and the forecast rain doing the rest',
-                        'Fuel bought, used and left in the inventory, and every trip\'s cost on its day',
+                        'Each job on the right day, done once',
+                        'Water only where the crop needs it',
+                        'Fuel bought and used, tracked',
                     ],
                     'image' => 'tractor', 'upload' => '',
                 ],
@@ -118,9 +119,9 @@ class LandingPage
                     'headline' => 'A sack costs more every season. Make every sack count.',
                     'text' => 'Urea and complete fertilizer cost more each planting. Put on at the wrong stage, a sack is paid for in full and only partly taken up by the crop.',
                     'fixes' => [
-                        'Each application on the stage the crop takes it up, by DAS or DAT',
-                        'Rates set per lot in your protocol and drawn from the inventory, so no bag is bought twice',
-                        'Anee checks a leaf photo first: is it hunger, a pest or a disease, before you buy another sack',
+                        'Apply at the stage it is taken up',
+                        'Exact rates per lot, from your stock',
+                        'Anee checks a leaf before you buy',
                     ],
                     'image' => 'sacks', 'upload' => '',
                 ],
