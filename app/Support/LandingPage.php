@@ -74,40 +74,15 @@ class LandingPage
                 ['icon' => '🌧️', 'title' => 'Rain likely from 1 PM', 'sub' => 'The forecast for Lot A'],
             ],
         ],
-        // The current reality of Filipino farming, above the problem rows (the
-        // owner, 2026-09-30). Every figure is sourced and dated; shown on the
-        // Philippine page only. Checked 2026-09-30:
-        //  - farmers' poverty incidence 27.0% in 2023, third after Indigenous
-        //    Peoples and fisherfolk (PSA, basic-sector poverty, Mar 2025);
-        //  - average net return from palay PhP 18,476/ha in 2025, from 36,211 in
-        //    2024 (PSA, Production Costs and Returns of Palay);
-        //  - palay yield 4.14 t/ha in 2025 (PSA); Vietnam 6.2 t/ha 2024/25 (USDA);
-        //  - PhP 57.8B production lost to calamities in 2024, 1.4M farmers and
-        //    fisherfolk affected (DA);
-        //  - 19-20 tropical cyclones enter the PAR a year, 8-9 cross (PAGASA);
-        //  - world's top rice importer (USDA); nearly 3.9 MMT imported by Sept
-        //    2026 (Bureau of Plant Industry, via BusinessMirror 2026-09-25).
-        'reality' => [
-            'kicker' => 'The current reality',
-            'headline' => 'Filipino farming today, in numbers',
-            'sub' => 'The people who feed the country are among the poorest in it, and every season the weather and the costs take a bigger share.',
-            'items' => [
-                ['figure' => '27%', 'label' => 'of Filipino farmers live below the poverty line', 'text' => 'The third-poorest sector in the country.', 'source' => 'PSA, 2023'],
-                ['figure' => '₱18,476', 'label' => 'average net return per hectare of palay', 'text' => 'About half of the year before (₱36,211), for a whole season\'s work.', 'source' => 'PSA, 2025'],
-                ['figure' => '4.14 t', 'label' => 'of palay harvested per hectare', 'text' => 'Farmers in Vietnam harvest about 6.2 t from the same hectare.', 'source' => 'PSA, 2025; USDA'],
-                ['figure' => '₱57.8B', 'label' => 'in farm production lost to calamities in 2024', 'text' => 'El Niño, typhoons and pests; 1.4 million farmers and fisherfolk hit.', 'source' => 'Department of Agriculture'],
-                ['figure' => '~20', 'label' => 'typhoons enter the country every year', 'text' => 'About 8 or 9 of them cross the country itself.', 'source' => 'PAGASA'],
-                ['figure' => 'No. 1', 'label' => 'rice importer in the world', 'text' => 'Nearly 3.9 million tonnes brought in by September 2026 alone.', 'source' => 'USDA; Bureau of Plant Industry'],
-            ],
-            'note' => 'Figures from the Philippine Statistics Authority, the Department of Agriculture, PAGASA and the US Department of Agriculture.',
-        ],
         // The first thing no farmer controls: the weather, and the pests and
         // diseases it brings (the owner, 2026-09-30). Photo left, words right.
         'problem' => [
             // The centered title over all three problem rows (weather, fuel,
-            // fertilizer), and the line under it (the owner, 2026-09-30).
-            'sectionTitle' => 'Traditional Method Bankrupts Your Farm Slowly',
-            'sectionSub' => 'Quietly, season after season, in ways you might not be noticing.',
+            // fertilizer): the small green line, the title and the line under it
+            // (the owner, 2026-09-30).
+            'sectionKicker' => 'The current reality',
+            'sectionTitle' => 'Filipino Farming Today Is Slowly Dying',
+            'sectionSub' => 'The people who feed the country are among the poorest in it, and every season the weather, risks, inflation, and slow government policy to increase the price of harvest kill local farmers slowly.',
             'kicker' => 'The weather changed',
             'headline' => 'Unpredictable weather that brings pests, diseases, and lodging',
             // An uploaded photo in place of the paddies under a grey sky (blank: that one).
