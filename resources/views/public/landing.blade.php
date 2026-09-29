@@ -97,6 +97,10 @@
        alternating (is-flip puts it on the right). White, so the hero's arc
        runs straight into it. */
     .lp-problems { background: #fff; }
+    /* The title over the three problem rows. */
+    .lp-problems-h { font-family: var(--font-heading); font-weight: 800; color: #14210c; letter-spacing: -.02em; line-height: 1.15;
+        font-size: clamp(1.9rem, 4.4vw, 3rem); text-wrap: balance; }
+    .lp-problems-sub { margin-top: .85rem; color: #6b4a3a; font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.6; font-style: italic; }
     .lp-row2 { display: grid; gap: 2.25rem; align-items: center; }
     .lp-row2 .lp-photo { aspect-ratio: 4 / 3; }
     /* A grid column may shrink below its longest unbroken line, or a one-line
@@ -289,6 +293,12 @@
         $rowPhoto = fn (?string $upload, string $key) => \App\Support\LandingPage::imageUrl($upload, 'lp/' . (isset($photoAlts[$key]) ? $key : 'storm') . '.webp');
     @endphp
     <section class="lp-problems overflow-x-clip">
+        @if (trim($lp['problem']['sectionTitle'] ?? '') !== '')
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 text-center reveal">
+                <h2 class="lp-problems-h">{{ $lp['problem']['sectionTitle'] }}</h2>
+                @if (trim($lp['problem']['sectionSub'] ?? '') !== '')<p class="lp-problems-sub">{{ $lp['problem']['sectionSub'] }}</p>@endif
+            </div>
+        @endif
         <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-16 sm:pt-14 sm:pb-24 space-y-20 sm:space-y-28">
             <div class="lp-row2">
                 <div class="lp-photo reveal">

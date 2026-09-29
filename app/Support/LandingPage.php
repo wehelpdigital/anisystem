@@ -77,6 +77,10 @@ class LandingPage
         // The first thing no farmer controls: the weather, and the pests and
         // diseases it brings (the owner, 2026-09-30). Photo left, words right.
         'problem' => [
+            // The centered title over all three problem rows (weather, fuel,
+            // fertilizer), and the line under it (the owner, 2026-09-30).
+            'sectionTitle' => 'Traditional Method Bankrupts Your Farm Slowly',
+            'sectionSub' => 'Quietly, season after season, in ways you might not be noticing.',
             'kicker' => 'The weather changed',
             'headline' => 'Unpredictable weather that brings pests, diseases, and lodging',
             // An uploaded photo in place of the paddies under a grey sky (blank: that one).
