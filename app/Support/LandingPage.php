@@ -81,8 +81,8 @@ class LandingPage
             // fertilizer): the small green line, the title and the line under it
             // (the owner, 2026-09-30).
             'sectionKicker' => 'The current reality',
-            'sectionTitle' => 'Filipino Farming Today Is Slowly Dying',
-            'sectionSub' => 'The people who feed the country are among the poorest in it, and every season the weather, risks, inflation, and slow government policy to increase the price of harvest kill local farmers slowly.',
+            'sectionTitle' => 'Filipino Farmers Are Slowly Becoming Bankrupt',
+            'sectionSub' => 'With the skyrocketing cost of everything, unpredictable climate and weather changes, and slow government response, farmers are bound to bankruptcy or unpayable loans.',
             'kicker' => 'The weather changed',
             'headline' => 'Unpredictable weather that brings pests, diseases, and lodging',
             // An uploaded photo in place of the paddies under a grey sky (blank: that one).

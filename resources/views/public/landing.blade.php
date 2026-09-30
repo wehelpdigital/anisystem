@@ -101,7 +101,7 @@
     .lp-problems-h { font-family: var(--font-heading); font-weight: 800; color: #14210c; letter-spacing: -.02em; line-height: 1.15;
         font-size: clamp(1.9rem, 4.4vw, 3rem); text-wrap: balance; }
     .lp-problems .fx-kicker + .lp-problems-h { margin-top: .5rem; }
-    .lp-problems-sub { margin-top: .85rem; color: #6b4a3a; font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.6; font-style: italic; }
+    .lp-problems-sub { margin-top: .85rem; color: #3f4a37; font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.65; }
     .lp-row2 { display: grid; gap: 2.25rem; align-items: center; }
     .lp-row2 .lp-photo { aspect-ratio: 4 / 3; }
     /* A grid column may shrink below its longest unbroken line, or a one-line
