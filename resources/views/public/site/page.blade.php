@@ -124,13 +124,27 @@
         </header>
 
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+            @if (count($toc) > 1)
+                {{-- A phone's table of contents: under the title, folded. --}}
+                <div class="sp-mtoc" x-data="{ o: false }" :class="o && 'is-open'">
+                    <button type="button" class="sp-mtoc-h" @click="o = !o" :aria-expanded="o">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M4 6h16M4 12h10M4 18h13"/></svg>
+                        <span>On this page</span>
+                        <small>{{ count($toc) }} sections</small>
+                        <i aria-hidden="true"></i>
+                    </button>
+                    <div class="sp-mtoc-fold"><nav>
+                        @foreach ($toc as $t)<a href="#{{ $t['id'] }}" @click="o = false">{{ $t['text'] }}</a>@endforeach
+                    </nav></div>
+                </div>
+            @endif
             <div class="sp-wrap">
                 <div class="sp-body" id="spBody">
                     @include('public.site.blocks', ['blocks' => $blocks])
                 </div>
                 <aside class="sp-side">
                     @if (count($toc) > 1)
-                        <div class="sp-card">
+                        <div class="sp-card sp-toc-card">
                             <h4>On this page</h4>
                             <nav class="sp-toc" id="spToc">
                                 @foreach ($toc as $t)<a href="#{{ $t['id'] }}" data-to="{{ $t['id'] }}">{{ $t['text'] }}</a>@endforeach

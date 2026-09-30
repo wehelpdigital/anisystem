@@ -18,6 +18,25 @@
     .sp-meta span { display: inline-flex; align-items: center; gap: .3rem; }
     .sp-meta svg { width: .95rem; height: .95rem; color: #86b556; }
     .sp-figure { margin: 0; }
+    /* "On this page" on a phone: under the title, folded. The side column's
+       copy is the desktop's. */
+    .sp-mtoc { margin: -.5rem 0 1.75rem; border-radius: 1rem; background: #fff; border: 1px solid #e5ebdf; box-shadow: 0 10px 24px -22px rgb(20 33 12 / .5); }
+    .sp-mtoc-h { display: flex; align-items: center; gap: .6rem; width: 100%; padding: .85rem 1rem; text-align: left; font-weight: 800; color: #14210c; }
+    .sp-mtoc-h svg { width: 1.15rem; height: 1.15rem; color: #4d7c2a; flex: none; }
+    .sp-mtoc-h small { font-weight: 600; font-size: .78rem; color: #6b7280; }
+    .sp-mtoc-h i { position: relative; margin-left: auto; width: .85rem; height: .85rem; }
+    .sp-mtoc-h i::before, .sp-mtoc-h i::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; border-radius: 2px; background: #3d6823; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .sp-mtoc-h i::after { transform: rotate(90deg); }
+    .sp-mtoc.is-open .sp-mtoc-h i::after { transform: rotate(0); }
+    .sp-mtoc-fold { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+    .sp-mtoc.is-open .sp-mtoc-fold { grid-template-rows: 1fr; }
+    .sp-mtoc-fold > nav { overflow: hidden; display: grid; padding: 0 .6rem; }
+    .sp-mtoc.is-open .sp-mtoc-fold > nav { padding-bottom: .6rem; }
+    .sp-mtoc-fold a { padding: .55rem .5rem; border-top: 1px solid #f1f5ec; font-size: .92rem; color: #374151; text-decoration: none; }
+    .sp-mtoc-fold a:active { color: #3d6823; }
+    @media (min-width: 1024px) { .sp-mtoc { display: none; } }
+    @media (max-width: 1023.98px) { .sp-toc-card { display: none; } }
+    @media (prefers-reduced-motion: reduce) { .sp-mtoc-fold, .sp-mtoc-h i::before, .sp-mtoc-h i::after { transition: none; } }
     /* A feature page: its icon, and the screen shown in a frame. */
     .sp-hero.is-feature { background: radial-gradient(60rem 22rem at 85% 0%, hsl(var(--h, 100) 70% 92%) 0%, transparent 70%), linear-gradient(180deg, #f6faf1 0%, #fff 100%); }
     .sp-fbadge { display: inline-flex; align-items: center; gap: .6rem; font-size: .8rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: hsl(var(--h, 100) 55% 28%); }

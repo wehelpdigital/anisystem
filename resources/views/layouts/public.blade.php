@@ -79,6 +79,58 @@
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ \App\Support\Ads::adsenseClient() }}" crossorigin="anonymous"></script>
     @endif
     @stack('head')
+    <style>
+        /* The phone menu (layouts/public). */
+        /* Only the root is locked: a locked body would become the scroll box and
+           carry the sticky header away with the page. */
+        html.pm-lock { overflow: hidden; }
+        /* A blurred header would hold the fixed panel inside itself
+           (backdrop-filter makes a containing block), so a phone's is solid. */
+        @media (max-width: 1023.98px) { .pm-host { background: #fff !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; } }
+        .pm-burger { position: relative; width: 2.75rem; height: 2.75rem; margin-right: -.5rem; border-radius: .9rem; display: grid; place-items: center; color: #374151; }
+        .pm-burger span { position: absolute; left: .75rem; right: .75rem; height: 2px; border-radius: 2px; background: currentColor;
+            transition: transform .28s cubic-bezier(.22,1,.36,1), opacity .2s ease, top .28s cubic-bezier(.22,1,.36,1); }
+        .pm-burger span:nth-child(1) { top: .95rem; } .pm-burger span:nth-child(2) { top: 1.34rem; } .pm-burger span:nth-child(3) { top: 1.73rem; }
+        .pm-burger.is-open span:nth-child(1) { top: 1.34rem; transform: rotate(45deg); }
+        .pm-burger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(.3); }
+        .pm-burger.is-open span:nth-child(3) { top: 1.34rem; transform: rotate(-45deg); }
+        .pm { position: fixed; left: 0; right: 0; top: 4rem; bottom: 0; z-index: 39; display: flex; flex-direction: column;
+            background: linear-gradient(180deg, #fff 0%, #f6faf1 100%); border-top: 1px solid #eef2ea; }
+        @media (min-width: 768px) { .pm { top: 5rem; } }
+        .pm-in, .pm-out { transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+        .pm-from { opacity: 0; transform: translateY(-.75rem); }
+        .pm-to { opacity: 1; transform: none; }
+        .pm-scroll { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 1rem 1rem 1.25rem; }
+        .pm-pages { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
+        .pm-page { display: flex; align-items: center; gap: .65rem; padding: .85rem .9rem; border-radius: 1rem; background: #fff; border: 1px solid #edf1e8;
+            font-weight: 700; color: #1f2937; text-decoration: none; animation: pmRow .36s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--i) * 25ms);
+            transition: border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+        .pm-page svg { width: 1.25rem; height: 1.25rem; color: #4d7c2a; flex: none; }
+        .pm-page.is-on { background: #eef6e6; border-color: #cfe3b8; color: #2f5219; }
+        .pm-page:active { background: #f3f8ec; }
+        .pm-label { margin: 1.25rem .25rem .6rem; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #4d7c2a; }
+        .pm-guides { display: grid; gap: .5rem; }
+        .pm-guide { display: flex; align-items: center; gap: .8rem; padding: .8rem .9rem; border-radius: 1rem; background: #fff; border: 1px solid #edf1e8; text-decoration: none;
+            animation: pmRow .36s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--i) * 25ms); }
+        .pm-guide.is-on { border-color: hsl(var(--h) 45% 72%); background: hsl(var(--h) 60% 97%); }
+        .pm-guide b { display: block; font-family: var(--font-heading); font-size: .98rem; color: #14210c; }
+        .pm-guide small { display: block; font-size: .78rem; color: #6b7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .pm-gico { flex: none; width: 2.5rem; height: 2.5rem; border-radius: .8rem; display: grid; place-items: center; color: hsl(var(--h) 60% 30%);
+            background: linear-gradient(145deg, hsl(var(--h) 70% 94%), hsl(var(--h) 60% 86%)); }
+        .pm-gico svg { width: 1.3rem; height: 1.3rem; }
+        .pm-chev { width: 1rem; height: 1rem; margin-left: auto; color: #9ca3af; flex: none; }
+        .pm-face { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.25rem; padding: .7rem .9rem; border-radius: 1rem;
+            background: #fff; border: 1px solid #edf1e8; font-size: .85rem; font-weight: 700; color: #4b5563; }
+        .pm-foot { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; padding: .85rem 1rem calc(.85rem + env(safe-area-inset-bottom, 0px));
+            background: #fff; border-top: 1px solid #eef2ea; box-shadow: 0 -10px 24px -20px rgb(20 33 12 / .45); }
+        .pm-foot .btn { width: 100%; justify-content: center; }
+        .pm-foot .w-full { grid-column: 1 / -1; }
+        @keyframes pmRow { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+        @media (prefers-reduced-motion: reduce) {
+            .pm-burger span, .pm-in, .pm-out { transition: none; }
+            .pm-page, .pm-guide { animation: none; }
+        }
+    </style>
 </head>
 <body class="min-h-screen flex flex-col bg-white">
 
@@ -90,7 +142,8 @@
          that sets @section('noHeader') goes without it: the ads landing
          page, where every way out of the offer is a lost signup. --}}
     @sectionMissing('noHeader')
-    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100" x-data="{ open: false }">
+    <header class="pm-host sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100" x-data="{ open: false }"
+            x-effect="document.documentElement.classList.toggle('pm-lock', open)" @keydown.escape.window="open = false">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="flex items-center justify-between h-16 md:h-20">
                 <a href="{{ route('home') }}" class="flex items-center shrink-0">
@@ -134,32 +187,70 @@
                     @endauth
                 </div>
 
-                <button type="button" class="lg:hidden p-2 -mr-2 text-gray-700" @click="open = !open" aria-label="Menu">
-                    <svg x-show="!open" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
-                    <svg x-show="open" x-cloak class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+                {{-- Three bars that fold into a cross. --}}
+                <button type="button" class="pm-burger lg:hidden" :class="open && 'is-open'" @click="open = !open" :aria-expanded="open" aria-controls="pmPanel" aria-label="Menu">
+                    <span></span><span></span><span></span>
                 </button>
             </div>
         </div>
 
-        {{-- Mobile menu --}}
-        <div x-show="open" x-cloak x-transition.opacity class="lg:hidden border-t border-gray-100 bg-white px-4 pb-5 pt-3 space-y-1">
-            @foreach ([['home','Home'],['features','Features'],['pricing','Pricing'],['about','About'],['tutorial','Tutorial'],['contact','Contact Us']] as [$r, $label])
-                <a href="{{ route($r) }}" class="block rounded-xl px-4 py-3 text-base font-semibold {{ request()->routeIs($r, 'ph.' . $r) ? 'bg-brand-50 text-brand-700' : 'text-gray-700 hover:bg-gray-50' }}">{{ $label }}</a>
-                @if ($r === 'features' && \App\Support\Region::ph())
-                    <div class="grid grid-cols-3 gap-1.5 px-1 py-1">
-                        @foreach ([['crops', 'Crop guides'], ['problems', 'Crop problems'], ['blog', 'Blog']] as [$sec, $lab])
-                            <a href="{{ url('/' . $sec) }}" class="rounded-xl px-2 py-2.5 text-center text-sm font-bold {{ request()->is($sec, $sec . '/*') ? 'bg-brand-600 text-white' : 'bg-brand-50 text-brand-800' }}">{{ $lab }}</a>
+        {{-- The phone menu: a panel under the header, over the page. --}}
+        @php
+            $pmPages = [
+                ['home', 'Home', 'M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10'],
+                ['features', 'Features', 'M4 5h6v6H4zM14 5h6v6h-6zM4 15h6v4H4zM14 15h6v4h-6z'],
+                ['pricing', 'Pricing', 'M7 7h.01M3 12l9-9h8v8l-9 9-8-8z'],
+                ['about', 'About', 'M12 11v6m0-10h.01M12 21a9 9 0 110-18 9 9 0 010 18z'],
+                ['tutorial', 'Tutorial', 'M15 10l4.6-2.3A1 1 0 0121 8.6v6.8a1 1 0 01-1.4.9L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'],
+                ['contact', 'Contact', 'M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'],
+            ];
+            $pmGuides = [
+                ['crops', 'Crop guides', 'Palay, mais, gulay, coconut, banana', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z', 100],
+                ['problems', 'Crop problems', 'Pests, diseases and weeds', 'M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z', 30],
+                ['blog', 'Blog', 'Fertilizer, pesticides, prices, farm words', 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z', 150],
+            ];
+        @endphp
+        <div id="pmPanel" class="pm lg:hidden" x-show="open" x-cloak
+             x-transition:enter="pm-in" x-transition:enter-start="pm-from" x-transition:enter-end="pm-to"
+             x-transition:leave="pm-out" x-transition:leave-start="pm-to" x-transition:leave-end="pm-from">
+            <div class="pm-scroll">
+                <nav class="pm-pages" aria-label="Pages">
+                    @foreach ($pmPages as $i => [$r, $label, $icon])
+                        @php $on = request()->routeIs($r, 'ph.' . $r) || ($r === 'features' && request()->routeIs('site.features.show')); @endphp
+                        <a href="{{ route($r) }}" class="pm-page {{ $on ? 'is-on' : '' }}" style="--i: {{ $i }}">
+                            <svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg>
+                            <span>{{ $label }}</span>
+                        </a>
+                    @endforeach
+                </nav>
+
+                @if (\App\Support\Region::ph())
+                    <p class="pm-label">Free farm guides</p>
+                    <div class="pm-guides">
+                        @foreach ($pmGuides as $i => [$sec, $lab, $sub, $icon, $hue])
+                            <a href="{{ url('/' . $sec) }}" class="pm-guide {{ request()->is($sec, $sec . '/*') ? 'is-on' : '' }}" style="--h: {{ $hue }}; --i: {{ $i + 6 }}">
+                                <span class="pm-gico"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg></span>
+                                <span class="min-w-0">
+                                    <b>{{ $lab }}</b>
+                                    <small>{{ $sub }}</small>
+                                </span>
+                                <svg class="pm-chev" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                            </a>
                         @endforeach
                     </div>
                 @endif
-            @endforeach
-            <div class="pt-3 flex flex-col gap-2">
-                @include('partials.face-switch', ['wide' => true])
+
+                <div class="pm-face">
+                    <span>Site edition</span>
+                    @include('partials.face-switch')
+                </div>
+            </div>
+            <div class="pm-foot">
                 @auth
                     <a href="{{ route('app.dashboard') }}" class="btn btn-accent w-full">Open My App</a>
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-outline w-full">Log In</a>
-                    <a href="{{ route('signup') }}" class="btn btn-accent w-full">Get Started</a>
+                    <a href="{{ route('login') }}" class="btn btn-outline">Log In</a>
+                    <a href="{{ route('signup') }}" class="btn btn-accent">Get Started</a>
                 @endauth
             </div>
         </div>
@@ -181,9 +272,9 @@
     <section class="pf" aria-label="Site links">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-14">
             <div class="pf-grid {{ $footCols ? 'has-guides' : '' }}">
-                <div class="pf-col">
-                    <h4 class="pf-h"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>Quick links</h4>
-                    <ul class="pf-list">
+                <div class="pf-col" x-data="{ o: false }" :class="o && 'is-open'">
+                    <button type="button" class="pf-h" @click="o = !o" :aria-expanded="o"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg><span>Quick links</span><i class="pf-plus" aria-hidden="true"></i></button>
+                    <div class="pf-fold"><ul class="pf-list">
                         <li><a href="{{ route('features') }}">Features</a></li>
                         <li><a href="{{ route('pricing') }}">Pricing</a></li>
                         <li><a href="{{ route('about') }}">About anee.io</a></li>
@@ -191,15 +282,15 @@
                         <li><a href="{{ route('contact') }}">Contact us</a></li>
                         <li><a href="{{ route('signup') }}">Create an account</a></li>
                         <li><a href="{{ route('login') }}">Log in</a></li>
-                    </ul>
+                    </ul></div>
                 </div>
                 @foreach ($footCols as [$sec, $lab, $icon])
-                    <div class="pf-col">
-                        <h4 class="pf-h"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg><a href="{{ url('/' . $sec) }}">{{ $lab }}</a></h4>
-                        <ul class="pf-list">
+                    <div class="pf-col" x-data="{ o: false }" :class="o && 'is-open'">
+                        <button type="button" class="pf-h" @click="o = !o" :aria-expanded="o"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg><span>{{ $lab }}</span><i class="pf-plus" aria-hidden="true"></i></button>
+                        <div class="pf-fold"><ul class="pf-list">
                             @foreach ($footLinks[$sec] as $l)<li><a href="{{ $l['url'] }}">{{ $l['label'] }}</a></li>@endforeach
-                            <li><a href="{{ url('/' . $sec) }}" class="pf-all">See all ›</a></li>
-                        </ul>
+                            <li><a href="{{ url('/' . $sec) }}" class="pf-all">See all {{ strtolower($lab) === 'from the blog' ? 'blog posts' : strtolower($lab) }} ›</a></li>
+                        </ul></div>
                     </div>
                 @endforeach
             </div>
@@ -211,15 +302,31 @@
         .pf-grid:not(.has-guides) { grid-template-columns: minmax(0, 1fr); }
         .pf-grid:not(.has-guides) .pf-list { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; }
         @media (min-width: 1024px) { .pf-grid.has-guides { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.5rem; } }
-        .pf-h { display: flex; align-items: center; gap: .5rem; font-family: var(--font-heading); font-weight: 700; font-size: 1rem; color: #14210c; margin-bottom: .9rem; }
+        .pf-h { display: flex; align-items: center; gap: .5rem; width: 100%; text-align: left; font-family: var(--font-heading); font-weight: 700; font-size: 1rem; color: #14210c; margin-bottom: .9rem; cursor: default; }
+        .pf-plus { display: none; }
+        .pf-fold { display: grid; grid-template-rows: 1fr; }
+        .pf-fold > ul { overflow: hidden; }
+        /* A phone folds each column to its heading; a tap opens it. */
+        @media (max-width: 639.98px) {
+            .pf-grid.has-guides { grid-template-columns: minmax(0, 1fr); gap: 0; }
+            .pf-grid.has-guides .pf-col { border-bottom: 1px solid #dfeccf; }
+            .pf-grid.has-guides .pf-h { margin: 0; padding: .85rem 0; cursor: pointer; }
+            .pf-grid.has-guides .pf-plus { display: block; position: relative; margin-left: auto; width: .9rem; height: .9rem; }
+            .pf-grid.has-guides .pf-plus::before, .pf-grid.has-guides .pf-plus::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; margin-top: -1px; border-radius: 2px; background: #3d6823;
+                transition: transform .28s cubic-bezier(.22,1,.36,1); }
+            .pf-grid.has-guides .pf-plus::after { transform: rotate(90deg); }
+            .pf-grid.has-guides .is-open .pf-plus::after { transform: rotate(0); }
+            .pf-grid.has-guides .pf-fold { grid-template-rows: 0fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+            .pf-grid.has-guides .is-open .pf-fold { grid-template-rows: 1fr; }
+            .pf-grid.has-guides .pf-list { padding-left: 2.4rem; }
+            .pf-grid.has-guides .pf-list li:last-child { margin-bottom: 1rem; }
+        }
         .pf-h svg { width: 1.9rem; height: 1.9rem; padding: .4rem; border-radius: .65rem; background: #fff; color: #3d6823; box-shadow: 0 1px 0 #d9e9c6, 0 6px 14px -10px rgb(20 33 12 / .5); flex: none; }
-        .pf-h a { color: inherit; text-decoration: none; }
-        .pf-h a:hover { color: #3d6823; }
         .pf-list { display: grid; gap: .5rem; font-size: .9rem; }
         .pf-list a { color: #4b5563; text-decoration: none; transition: color .28s cubic-bezier(.22,1,.36,1), padding .28s cubic-bezier(.22,1,.36,1); }
         .pf-list a:hover { color: #3d6823; padding-left: .2rem; }
         .pf-list .pf-all { font-weight: 800; color: #3d6823; }
-        @media (prefers-reduced-motion: reduce) { .pf-list a { transition: none; } }
+        @media (prefers-reduced-motion: reduce) { .pf-list a, .pf-fold, .pf-plus::before, .pf-plus::after { transition: none !important; } }
     </style>
 
     <footer class="bg-gray-900 text-gray-300">
