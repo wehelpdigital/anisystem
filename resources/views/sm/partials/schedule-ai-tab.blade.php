@@ -712,7 +712,8 @@
             $('saiText').value = ''; $('saiText').style.height = 'auto'; $('saiText').style.overflowY = 'hidden';
             showThinking();
             try {
-                const res = await api(U.ask + `?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: {
+                // Answered as a job: the ask is taken at once, the answer waited for.
+                const res = await window.aneeAskWait(await api(U.ask + `?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: {
                     message: text,
                     imagePaths: shots,
                     imageScheduleIds: attachedScheds(),
@@ -721,7 +722,7 @@
                     // not the same as being asked about it.
                     usePlan: $('saiUsePlan')?.getAttribute('aria-pressed') === 'true' ? 1 : 0,
                     forget: $('saiUseMemory')?.getAttribute('aria-pressed') === 'true' ? 0 : 1,
-                } });
+                } }));
                 // Chips leave the moment the send is known good — before any
                 // templating that could throw and strand them in the composer.
                 clearPhotos();

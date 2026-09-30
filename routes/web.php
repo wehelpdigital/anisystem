@@ -920,6 +920,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // --- Agricultural AI Technician + AI Credits ---
     Route::get('/app/ai', [App\Http\Controllers\AiController::class, 'index'])->name('ai.index');
     Route::post('/app/ai-ask', [App\Http\Controllers\AiController::class, 'ask'])->name('ai.ask');
+    // Where a question stands: the page polls this until the answer lands.
+    Route::get('/app/ai-ask-job/{id}', [App\Http\Controllers\AiController::class, 'askJob'])->whereNumber('id')->name('ai.ask.job');
     // What attaching a plan to a question would cost, asked before it is spent.
     Route::get('/app/ai-plan-preview', [App\Http\Controllers\AiController::class, 'planPreview'])->name('ai.plan.preview');
     Route::post('/app/ai-photo', [App\Http\Controllers\AiController::class, 'uploadImage'])->name('ai.photo');

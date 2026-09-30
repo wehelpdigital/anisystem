@@ -294,20 +294,12 @@ class ScheduleAiController extends BaseScheduleController
             // First mention wins on a duplicate — same photo, same rights.
             $wanted[(string) $p] = $wanted[(string) $p] ?? (($scheds[$i] ?? null) ? (int) $scheds[$i] : null);
         }
-        $images = [];
-        $imagePaths = [];
-        foreach ($wanted as $path => $gallerySid) {
-            $loaded = $this->loadImage($askerId, (string) $path, $gallerySid);
-            if ($loaded === null) {
-                return $this->jsonFail('One of the attached photos could not be read. Remove it and try again.', 422);
-            }
-            $images[] = $loaded;
-            $imagePaths[] = (string) $path;
-        }
+        // Read in the job below, not here: fetching and fitting six photos is
+        // seconds this request does not have (AiController::ask, askJob).
+        $imagePaths = array_map('strval', array_keys($wanted));
         // The transcript keeps one picture per turn, so the first stands for
         // the set in the history; all of them go to the model.
         $imagePath = $imagePaths[0] ?? null;
-        $image = $images ?: null;
 
         /* Refuse before spending the owner's pool on something it can't cover.
          *
@@ -318,7 +310,7 @@ class ScheduleAiController extends BaseScheduleController
          * was unlimited on their own account could push the owner's pool
          * into the red from a farm that was not theirs. */
         $balance = $this->credits->balance($ownerId);
-        $estimate = $this->credits->estimate($settings, $prompt, count($images));
+        $estimate = $this->credits->estimate($settings, $prompt, count($imagePaths));
         if ($balance < $estimate && ! $this->credits->unlimited($ownerId)) {
             return response()->json([
                 'success' => false,
@@ -349,6 +341,55 @@ class ScheduleAiController extends BaseScheduleController
             $this->emit($schedule->id, 'ai.session', ['session' => $this->shapeSession($session->load('starter'))]);
         }
 
+        /* The answer is a job, as in the personal chat (AiController::ask):
+         * the question is already in the room, the request ends here, and the
+         * page asks after the answer (ai.ask.job). */
+        $job = \App\Models\AsAiAskJob::create(['userId' => $askerId, 'status' => 'pending']);
+        $work = fn () => $this->answerTurn($request, $schedule, $session, $q, $qShaped, $wanted, $prompt, $settings, $owner, $ownerId, $askerId);
+        if (function_exists('fastcgi_finish_request')) {
+            ignore_user_abort(true);
+            @set_time_limit(300);
+            response()->json(['success' => true, 'message' => 'Anee is thinking…', 'data' => [
+                'pending' => true, 'job' => $job->id, 'poll' => route('ai.ask.job', ['id' => $job->id]), 'question' => $qShaped,
+            ]])->send();
+            fastcgi_finish_request();
+            $this->finishJob($job, $work);
+            exit;
+        }
+        $this->finishJob($job, $work);
+
+        return app(\App\Http\Controllers\AiController::class)->askJob($job->id);
+    }
+
+    /** Runs the answer and writes where it landed onto the job. */
+    private function finishJob(\App\Models\AsAiAskJob $job, \Closure $work): void
+    {
+        try {
+            $out = $work();
+            $job->update($out['ok']
+                ? ['status' => 'ready', 'payload' => json_encode($out['data'])]
+                : ['status' => 'failed', 'error' => mb_substr((string) $out['message'], 0, 500), 'payload' => json_encode($out['data'] ?? [])]);
+        } catch (\Throwable $e) {
+            report($e);
+            $job->update(['status' => 'failed', 'error' => 'Something went wrong while Anee was answering. Nothing was charged. Please ask again.']);
+        }
+    }
+
+    /** The team question's answer: its photos, the thread, the model, the charge. */
+    private function answerTurn(Request $request, $schedule, $session, ScheduleAiMessage $q, array $qShaped, array $wanted, string $prompt, $settings, $owner, int $ownerId, int $askerId): array
+    {
+        $images = [];
+        foreach ($wanted as $path => $gallerySid) {
+            $loaded = $this->loadImage($askerId, (string) $path, $gallerySid);
+            if ($loaded === null) {
+                $this->emit($schedule->id, 'ai.answer', ['error' => true, 'sessionId' => $session->id, 'content' => 'One of the attached photos could not be read. Remove it and try again.']);
+
+                return ['ok' => false, 'message' => 'One of the attached photos could not be read. Remove it and try again.', 'data' => ['question' => $qShaped]];
+            }
+            $images[] = $loaded;
+        }
+        $image = $images ?: null;
+
         /* The rest of this thread, unless a clean read was asked for.
          * Memory inside one thread is what makes it a thread — "and for
          * corn?" has to mean something — but it is one of the two things
@@ -371,7 +412,7 @@ class ScheduleAiController extends BaseScheduleController
         if (! $result['ok']) {
             $this->emit($schedule->id, 'ai.answer', ['error' => true, 'sessionId' => $session->id, 'content' => $result['error'] ?: 'The AI could not answer. Try again.']);
 
-            return $this->jsonFail($result['error'] ?: 'The AI could not answer.', 502, ['question' => $qShaped]);
+            return ['ok' => false, 'message' => $result['error'] ?: 'The AI could not answer.', 'data' => ['question' => $qShaped]];
         }
 
         $charged = $this->credits->priceFor($settings, $result['tokensIn'], $result['tokensOut'], count($images));
@@ -386,9 +427,9 @@ class ScheduleAiController extends BaseScheduleController
         $aShaped['balance'] = $newBalance;
         $this->emit($schedule->id, 'ai.answer', $aShaped);
 
-        return response()->json(['success' => true, 'message' => 'Answered.', 'data' => [
+        return ['ok' => true, 'data' => [
             'question' => $qShaped, 'answer' => $aShaped, 'balance' => $newBalance,
-        ]]);
+        ]];
     }
 
     /**

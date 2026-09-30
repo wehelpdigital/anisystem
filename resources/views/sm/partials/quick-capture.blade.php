@@ -1103,7 +1103,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const photos = items.filter((it) => it.kind === 'image');
         if (!photos.length) throw new Error('The AI Technician reads photos — capture one first.');
         const fd = new FormData();
-        fd.append('image', photos[0].file);
+        // Shrunk before it travels (window.aneeShrinkPhoto, app.js).
+        fd.append('image', window.aneeShrinkPhoto ? await window.aneeShrinkPhoto(photos[0].file) : photos[0].file);
         fd.append('scheduleId', scheduleId);
         let up;
         try {
@@ -1126,8 +1127,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ message, imagePath, scheduleId }),
             });
         } catch (_) { aiNeedsTheLine(); return; }
-        const askData = await ask.json().catch(() => ({}));
+        let askData = await ask.json().catch(() => ({}));
         if (!ask.ok || !askData.success) throw new Error(askData.message || 'The AI Technician could not answer right now.');
+        // Answered as a job: the ask is taken at once, the answer waited for.
+        if (askData.data?.pending && window.aneeAskWait) askData = await window.aneeAskWait(askData);
 
         const reply = askData.data?.answer?.content || 'Answer received.';
         $('qcResult').innerHTML = `<div class="font-semibold text-gray-900 mb-2">AI Technician says:</div>

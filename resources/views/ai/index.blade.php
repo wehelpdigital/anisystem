@@ -1302,7 +1302,8 @@ const __init = () => {
         const thinking = addTurn(false, '<span class="aidots"><i></i><i></i><i></i></span>');
 
         try {
-            const res = await api(URLS.ask, {
+            // Answered as a job: the ask is taken at once, the answer waited for.
+            const res = await window.aneeAskWait(await api(URLS.ask, {
                 method: 'POST',
                 body: {
                     message,
@@ -1318,7 +1319,7 @@ const __init = () => {
                     attachRealignId: attachedRealign ? attachedRealign.id : null,
                     attachProtocolReviewId: attachedReview ? attachedReview.id : null,
                 },
-            });
+            }));
             conversationId = res.data.conversationId;
             // The chips leave the moment the send is known good - before any
             // templating that could throw and strand them in the composer.

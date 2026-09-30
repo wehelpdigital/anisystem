@@ -1158,7 +1158,8 @@ const __init = () => {
         input.value = ''; input.style.height = 'auto'; sayEstimate();
         const thinking = addTurn(false, '<span class="aidots"><i></i><i></i><i></i></span>');
         try {
-            const res = await api(URLS.ask, { method: 'POST', body: {
+            // Answered as a job: the ask is taken at once, the answer waited for.
+            const res = await window.aneeAskWait(await api(URLS.ask, { method: 'POST', body: {
                 message, conversationId, imagePaths: myPaths, imageScheduleIds: myScheds,
                 scheduleId: SCHEDULE_ID,
                 // Asked for, or not sent. scheduleId still travels because it
@@ -1168,7 +1169,7 @@ const __init = () => {
                 // used to send under the same name.
                 attachPlan: byId('aiUsePlan')?.getAttribute('aria-pressed') === 'true' ? 1 : 0,
                 forget: byId('aiUseMemory')?.getAttribute('aria-pressed') === 'true' ? 0 : 1,
-            } });
+            } }));
             conversationId = res.data.conversationId;
             noteSession(res.data);
             // Chips leave the moment the send is known good - before any

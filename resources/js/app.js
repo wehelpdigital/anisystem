@@ -315,6 +315,34 @@ window.aneeShrinkPhoto = async function aneeShrinkPhoto(file, maxSide = 2048) {
 };
 
 /* ------------------------------------------------------------------ */
+/* A chat question's answer, waited for                                  */
+/* ------------------------------------------------------------------ */
+
+/* A question is answered as a job (AiController::ask, 2026-09-30): the ask
+ * comes back at once with { pending, poll }, and the answer is asked after
+ * until it lands. Handed the ask's reply, this returns the answer in the
+ * same shape the ask used to return, or throws what went wrong. A dropped
+ * line or a busy moment while waiting is not an answer: it keeps waiting. */
+window.aneeAskWait = async function aneeAskWait(res, limitMs = 300000) {
+    if (!res || !res.data || !res.data.pending || !res.data.poll) return res;
+    const url = res.data.poll;
+    const until = Date.now() + limitMs;
+    let pause = 1200;
+    while (Date.now() < until) {
+        await new Promise((ok) => setTimeout(ok, pause));
+        pause = Math.min(2500, pause + 150);
+        try {
+            const r = await window.api(url, { method: 'GET' });
+            if (!r.data || !r.data.pending) return r;
+        } catch (err) {
+            if (err.offline || (err.status && err.status >= 502)) continue;
+            throw err;
+        }
+    }
+    throw new Error('Anee is taking longer than usual. Her answer will appear in this chat when it is ready: open it again in a minute.');
+};
+
+/* ------------------------------------------------------------------ */
 /* Toasts                                                               */
 /* ------------------------------------------------------------------ */
 

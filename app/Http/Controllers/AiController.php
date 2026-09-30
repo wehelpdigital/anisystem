@@ -244,18 +244,11 @@ class AiController extends Controller
             // First mention wins on a duplicate — same photo, same rights.
             $wanted[(string) $p] = $wanted[(string) $p] ?? ($scheds[$i] ?? null ? (int) $scheds[$i] : null);
         }
-        $images = [];
-        $imagePaths = [];
-        foreach ($wanted as $path => $gallerySid) {
-            $loaded = $this->loadImage($userId, (string) $path, $gallerySid);
-            if ($loaded === null) {
-                return $this->json(false, 'One of the attached photos could not be read. Remove it and try again.', [], 422);
-            }
-            $images[] = $loaded;
-            $imagePaths[] = (string) $path;
-        }
+        // Read in the job below, not here: fetching and fitting six photos
+        // is seconds this request does not have (see askJob).
+        $imagePaths = array_map('strval', array_keys($wanted));
         $imagePath = $imagePaths[0] ?? null;
-        $image = $images ?: null;
+        $imageCount = count($imagePaths);
 
         // Refuse before spending anything the client does not have.
         $balance = $this->credits->balance($payerId);
@@ -306,7 +299,7 @@ class AiController extends Controller
             $analysisCtx .= $foundP['text'];
             $priced .= $foundP['text'];
         }
-        $estimate = $this->credits->estimate($settings, $priced, count($images));
+        $estimate = $this->credits->estimate($settings, $priced, $imageCount);
         if ($balance < $estimate && ! $this->credits->unlimited($payerId)) {
             $whose = $payerId === (int) Auth::id() ? 'You have' : 'This farm has';
             return $this->json(false, $balance <= 0
@@ -377,6 +370,101 @@ class AiController extends Controller
             'deleteStatus' => 1,
         ]);
 
+        /* THE ANSWER IS A JOB (2026-09-30).
+         *
+         * anee.io's edge gives a request about twenty seconds, and a question
+         * with six photos and a Realign reading takes longer to answer. The
+         * farmer saw a 504 while this went on, answered, and charged for an
+         * answer nobody was shown. So the question is taken, the request ends
+         * here, and the page asks after the answer (askJob) -- the job walk
+         * the analyses and reports already use. Where the server cannot end a
+         * request early (local Apache) it simply answers in line. */
+        $job = \App\Models\AsAiAskJob::create([
+            'userId' => $userId,
+            'conversationId' => $conversation->id,
+            'messageId' => $userMessage->id,
+            'status' => 'pending',
+        ]);
+        $work = fn () => $this->answerTurn($request, $settings, $conversation, $userMessage, $wanted, $context, $prompt, $analysisCtx, $payerId, (int) $userId);
+        if (function_exists('fastcgi_finish_request')) {
+            ignore_user_abort(true);
+            @set_time_limit(300);
+            $this->json(true, 'Anee is thinking…', [
+                'pending' => true,
+                'job' => $job->id,
+                'poll' => route('ai.ask.job', ['id' => $job->id]),
+                'conversationId' => $conversation->id,
+            ])->send();
+            fastcgi_finish_request();
+            $this->finishAskJob($job, $work);
+            exit;
+        }
+        $this->finishAskJob($job, $work);
+
+        return $this->askJob($job->id);
+    }
+
+    /**
+     * Where a question stands: still being answered, answered (the answer,
+     * shaped exactly as ask() used to return it), or refused with why. A
+     * refusal answers 200 with success false, so a page polling this can
+     * tell "no" from a dropped line.
+     */
+    public function askJob(int $id)
+    {
+        $job = \App\Models\AsAiAskJob::where('id', $id)->where('userId', (int) Auth::id())->first();
+        if (! $job) {
+            return $this->json(false, 'That question is gone.', [], 404);
+        }
+        if ($job->status === 'pending') {
+            // A job that has sat for ten minutes died with its worker.
+            if ($job->created_at && $job->created_at->lt(now()->subMinutes(10))) {
+                $job->update(['status' => 'failed', 'error' => 'Anee could not finish that one. Nothing was charged. Please ask again.']);
+            } else {
+                return $this->json(true, 'Anee is thinking…', ['pending' => true, 'job' => $job->id, 'conversationId' => $job->conversationId]);
+            }
+        }
+        $payload = json_decode((string) $job->payload, true) ?: [];
+        if ($job->status === 'failed') {
+            return $this->json(false, $job->error ?: 'Anee could not answer that. Nothing was charged.', $payload + ['jobFailed' => true]);
+        }
+
+        return $this->json(true, 'Answered.', $payload);
+    }
+
+    /** Runs a question's answer and writes where it landed onto its job. */
+    private function finishAskJob(\App\Models\AsAiAskJob $job, \Closure $work): void
+    {
+        try {
+            $out = $work();
+            $job->update($out['ok']
+                ? ['status' => 'ready', 'payload' => json_encode($out['data'])]
+                : ['status' => 'failed', 'error' => mb_substr((string) $out['message'], 0, 500), 'payload' => json_encode($out['data'] ?? [])]);
+        } catch (\Throwable $e) {
+            report($e);
+            AiMessage::where('id', $job->messageId)->update(['deleteStatus' => 0]);
+            $job->update(['status' => 'failed', 'error' => 'Something went wrong while Anee was answering. Nothing was charged. Please ask again.']);
+        }
+    }
+
+    /**
+     * The answer to one question: its photos read, the chat so far, the
+     * model, the charge. Returns ['ok' => bool, 'message' => ..., 'data' => ...].
+     */
+    private function answerTurn(Request $request, AiSetting $settings, AiConversation $conversation, AiMessage $userMessage, array $wanted, string $context, string $prompt, string $analysisCtx, int $payerId, int $userId): array
+    {
+        $images = [];
+        foreach ($wanted as $path => $gallerySid) {
+            $loaded = $this->loadImage($userId, (string) $path, $gallerySid);
+            if ($loaded === null) {
+                $userMessage->update(['deleteStatus' => 0]);
+
+                return ['ok' => false, 'message' => 'One of the attached photos could not be read. Remove it and try again.'];
+            }
+            $images[] = $loaded;
+        }
+        $image = $images ?: null;
+
         /* The rest of this chat, unless the farmer asked for a clean read.
          *
          * Memory inside one chat is what makes a chat a chat — "and for
@@ -415,7 +503,7 @@ class AiController extends Controller
             // Nothing was produced, so nothing is charged.
             $userMessage->update(['deleteStatus' => 0]);
 
-            return $this->json(false, $result['error'], [], 502);
+            return ['ok' => false, 'message' => $result['error']];
         }
 
         $charged = $this->credits->priceFor($settings, $result['tokensIn'], $result['tokensOut'], count($images));
@@ -446,7 +534,7 @@ class AiController extends Controller
         }
         $conversation->touch();
 
-        return $this->json(true, 'Answered.', [
+        return ['ok' => true, 'data' => [
             'conversationId' => $conversation->id,
             'conversationTitle' => $conversation->fresh()->title,
             // First answer in this session: the page adds it to its list of
@@ -460,7 +548,7 @@ class AiController extends Controller
                 'tokensOut' => $result['tokensOut'],
             ],
             'balance' => $newBalance,
-        ]);
+        ]];
     }
 
     public function uploadImage(Request $request)

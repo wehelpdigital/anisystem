@@ -1015,14 +1015,15 @@
             input.value = ''; input.style.height = 'auto'; sayEstimate();
             const thinking = addTurn(false, '<span class="ai-float-dots"><i></i><i></i><i></i></span>');
             try {
-                const res = await api(URLS.ask, { method: 'POST', body: {
+                // Answered as a job: the ask is taken at once, the answer waited for.
+                const res = await window.aneeAskWait(await api(URLS.ask, { method: 'POST', body: {
                     message, conversationId, imagePaths: myPaths,
                     imageScheduleIds: attachedScheds(), scheduleId: SCHEDULE_ID,
                     // Asked for, or not sent. Being opened inside a season is
                     // not the same as being asked about it.
                     usePlan: document.getElementById('aiFloatUsePlan')?.getAttribute('aria-pressed') === 'true' ? 1 : 0,
                     forget: document.getElementById('aiFloatUseMemory')?.getAttribute('aria-pressed') === 'true' ? 0 : 1,
-                } });
+                } }));
                 conversationId = res.data.conversationId;
                 // Chips leave the moment the send is known good.
                 clearPhotos();
