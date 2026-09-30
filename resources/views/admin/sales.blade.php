@@ -1,19 +1,51 @@
 @extends('layouts.admin')
 
 @section('title', 'Sales Analysis')
-@section('subtitle', 'What each ad peso bought')
+@section('subtitle', 'Sales, payments, and what each ad peso bought')
 
 @section('content')
-    {{-- Which analysis room — one for now, worn as the house tag so the
-         next room slides in without redrawing the page. --}}
+    {{-- Which analysis room, worn as the house tag. The Sales Dashboard is
+         the first and the default (2026-09-30): money in, at a glance. The
+         last room chosen is remembered. --}}
     <button type="button" class="ad-navtag" id="saTabBtn" aria-haspopup="dialog" title="Which analysis?">
-        <span>📈</span>
-        <span id="saTabNow">Acquisition Analysis</span>
+        <span id="saTabIcon">💰</span>
+        <span id="saTabNow">Sales Dashboard</span>
         <svg class="ad-navtag-c" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" style="width:1rem;height:1rem"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
     </button>
 
+    {{-- ---------------- Sales Dashboard ---------------- --}}
+    <div class="mt-3 sa-room" data-room="sales">
+        <div class="sd-top">
+            <div class="sd-range" id="sdRange" role="tablist" aria-label="Which period">
+                <button type="button" data-range="7d" role="tab">7 days</button>
+                <button type="button" data-range="30d" role="tab" class="is-on">30 days</button>
+                <button type="button" data-range="90d" role="tab">90 days</button>
+                <button type="button" data-range="12m" role="tab">12 months</button>
+                <button type="button" data-range="all" role="tab">All time</button>
+            </div>
+            <p class="sd-when" id="sdWhen"></p>
+        </div>
+        <div class="sd-kpis" id="sdKpis">
+            @for ($i = 0; $i < 4; $i++)
+                <div class="card sd-kpi"><div class="ad-skel h-3 w-20 mb-2"></div><div class="ad-skel h-6 w-24"></div></div>
+            @endfor
+        </div>
+        <div class="card sd-card">
+            <div class="sd-card-h"><b id="sdChartTitle">Revenue</b><span id="sdChartSub"></span></div>
+            <div class="sd-chart" id="sdChart"><div class="ad-skel w-full h-40"></div></div>
+        </div>
+        <div class="sd-two">
+            <div class="card sd-card"><div class="sd-card-h"><b>By product</b></div><div id="sdByProduct"><div class="ad-skel w-full h-16"></div></div></div>
+            <div class="card sd-card"><div class="sd-card-h"><b>By payment method</b></div><div id="sdByMethod"><div class="ad-skel w-full h-16"></div></div></div>
+        </div>
+        <div class="card sd-card">
+            <div class="sd-card-h"><b>Latest payments</b><a class="sd-link" id="sdOrdersLink" href="{{ route('admin.orders') }}">All orders ›</a></div>
+            <div id="sdRecent"><div class="ad-skel w-full h-24"></div></div>
+        </div>
+    </div>
+
     {{-- ---------------- Acquisition Analysis ---------------- --}}
-    <div class="mt-3">
+    <div class="mt-3 sa-room" data-room="acq" hidden>
         <div class="card p-4 mb-4">
             <p class="font-bold text-gray-900">New analysis</p>
             <p class="text-xs text-gray-500 mt-0.5 mb-3">Name the campaign, mark the window it ran, and say what the ads cost. Everything else is read from the platform's own records.</p>
@@ -69,8 +101,13 @@
         <h3 class="sheet-title">Which analysis?</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
-    <div class="sheet-body dt-rows">
-        <button type="button" class="dt-row is-on" data-sheet-close>
+    <div class="sheet-body dt-rows" id="saRoomList">
+        <button type="button" class="dt-row is-on" data-sa-room="sales" data-icon="💰" data-title="Sales Dashboard">
+            <span class="dt-row-e">💰</span>
+            <span class="dt-row-body"><b>Sales Dashboard</b><i>Money in: revenue over time, payments, what sells and how people pay.</i></span>
+            <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </button>
+        <button type="button" class="dt-row" data-sa-room="acq" data-icon="📈" data-title="Acquisition Analysis">
             <span class="dt-row-e">📈</span>
             <span class="dt-row-body"><b>Acquisition Analysis</b><i>Ad spend against registrations, conversions and revenue.</i></span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
@@ -173,6 +210,89 @@
         color: var(--color-gray-600); padding: .22rem 0; }
     .sa-mix-row b { color: var(--color-gray-900); font-variant-numeric: tabular-nums; }
     @media (prefers-reduced-motion: reduce) { .sa-card, .sa-del, .sa-step .bar i { transition: none; } }
+
+    /* ---- rooms ---- */
+    .sa-room.is-entering { animation: saRoomIn .28s cubic-bezier(.22,1,.36,1); }
+    @keyframes saRoomIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ---- Sales Dashboard ---- */
+    .sd-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; margin-bottom: .75rem; }
+    .sd-range { display: inline-flex; gap: .2rem; padding: .2rem; border-radius: .8rem; background: var(--color-gray-100); max-width: 100%; overflow-x: auto; }
+    .sd-range button { flex: none; padding: .38rem .7rem; border-radius: .6rem; font-size: .76rem; font-weight: 700; color: var(--color-gray-600);
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .sd-range button.is-on { background: var(--color-white); color: var(--color-gray-900); box-shadow: 0 2px 8px -4px rgb(0 0 0 / .35); }
+    .sd-when { font-size: .74rem; color: var(--color-gray-500); }
+    .sd-kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+    @media (min-width: 768px) { .sd-kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    .sd-kpi { padding: .8rem .9rem; min-width: 0; animation: saRoomIn .32s cubic-bezier(.22,1,.36,1) both; }
+    .sd-kpi i { display: block; font-style: normal; font-size: .68rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--color-gray-500); }
+    .sd-kpi b { display: block; font-size: 1.35rem; font-weight: 800; color: var(--color-gray-900); font-variant-numeric: tabular-nums;
+        margin-top: .2rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sd-kpi small { display: block; font-size: .7rem; color: var(--color-gray-500); margin-top: .15rem; }
+    .sd-kpi a { color: inherit; text-decoration: none; }
+    .sd-delta { display: inline-flex; align-items: center; gap: .15rem; font-weight: 800; }
+    .sd-delta.up { color: #2f6b1d; } .sd-delta.down { color: #b42318; } .sd-delta.flat { color: var(--color-gray-500); }
+    html.dark .sd-delta.up { color: #a5d17c; } html.dark .sd-delta.down { color: #fca5a5; }
+    .sd-card { padding: .9rem 1rem; margin-top: .75rem; min-width: 0; }
+    .sd-card-h { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; margin-bottom: .6rem; }
+    .sd-card-h b { font-size: .88rem; font-weight: 800; color: var(--color-gray-900); }
+    .sd-card-h span { font-size: .72rem; color: var(--color-gray-500); }
+    .sd-link { font-size: .74rem; font-weight: 700; color: var(--color-brand-700); text-decoration: none; }
+    .sd-two { display: grid; gap: 0 .75rem; }
+    @media (min-width: 768px) { .sd-two { grid-template-columns: 1fr 1fr; } }
+    /* The chart: one series, one hue, thin bars rising from the baseline. */
+    .sd-chart { position: relative; --sd-bar: #4a7c2a; --sd-grid: #eef1ea; --sd-axis: #6b7280; }
+    html.dark .sd-chart { --sd-bar: #8fbf5f; --sd-grid: rgb(255 255 255 / .07); --sd-axis: #93a684; }
+    .sd-chart svg { display: block; width: 100%; height: 13rem; overflow: visible; }
+    .sd-chart .bar { fill: var(--sd-bar); transform-origin: bottom; transform-box: fill-box; transform: scaleY(0);
+        transition: transform .5s cubic-bezier(.22,1,.36,1), opacity .2s; }
+    .sd-chart.is-grown .bar { transform: scaleY(1); }
+    .sd-chart .hit { fill: transparent; cursor: default; }
+    .sd-chart .hit:hover + .bar, .sd-chart .bar.is-hot { opacity: .78; }
+    .sd-chart .grid { stroke: var(--sd-grid); stroke-width: 1; }
+    .sd-chart .base { stroke: var(--sd-axis); stroke-width: 1; opacity: .5; }
+    .sd-chart text { fill: var(--sd-axis); font-size: 10px; font-variant-numeric: tabular-nums; }
+    .sd-tip { position: absolute; z-index: 3; pointer-events: none; padding: .4rem .55rem; border-radius: .55rem; font-size: .72rem; line-height: 1.35;
+        background: var(--color-gray-900); color: #fff; white-space: nowrap; transform: translate(-50%, calc(-100% - 8px)); opacity: 0;
+        transition: opacity .15s; box-shadow: 0 8px 20px -10px rgb(0 0 0 / .5); }
+    .sd-tip.is-on { opacity: 1; }
+    .sd-tip b { display: block; font-size: .8rem; }
+    html.dark .sd-tip { background: #e8efe1; color: #14210c; }
+    .sd-empty { text-align: center; font-size: .8rem; color: var(--color-gray-500); padding: 1.4rem .5rem; }
+    /* Breakdown rows: a label, a bar in the same hue, the figure in text. */
+    .sd-rows { display: grid; gap: .55rem; }
+    .sd-row { display: grid; gap: .25rem; }
+    .sd-row-top { display: flex; justify-content: space-between; gap: .6rem; font-size: .78rem; color: var(--color-gray-700); }
+    .sd-row-top span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sd-row-top b { color: var(--color-gray-900); font-variant-numeric: tabular-nums; flex: none; }
+    .sd-row-top small { color: var(--color-gray-500); font-weight: 600; }
+    .sd-track { height: .55rem; border-radius: 999px; background: var(--color-gray-100); overflow: hidden; }
+    .sd-track i { display: block; height: 100%; width: 0; border-radius: 999px; background: #4a7c2a; transition: width .6s cubic-bezier(.22,1,.36,1); }
+    html.dark .sd-track { background: rgb(255 255 255 / .07); } html.dark .sd-track i { background: #8fbf5f; }
+    /* Latest payments: a table on a wide screen, stacked rows on a phone. */
+    .sd-table-wrap { overflow-x: auto; }
+    .sd-table { width: 100%; border-collapse: collapse; font-size: .78rem; }
+    .sd-table th { text-align: left; font-size: .66rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--color-gray-500);
+        padding: .35rem .5rem; border-bottom: 1px solid var(--color-gray-200); white-space: nowrap; }
+    .sd-table td { padding: .5rem; border-bottom: 1px solid var(--color-gray-100); color: var(--color-gray-700); vertical-align: top; }
+    .sd-table td.amt { text-align: right; font-weight: 800; color: var(--color-gray-900); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .sd-table tr:last-child td { border-bottom: 0; }
+    .sd-table a { color: var(--color-brand-700); font-weight: 700; text-decoration: none; }
+    .sd-table small { display: block; color: var(--color-gray-500); }
+    @media (max-width: 639px) {
+        .sd-table thead { display: none; }
+        .sd-table tr { display: grid; grid-template-columns: 1fr auto; gap: .1rem .6rem; padding: .55rem 0; border-bottom: 1px solid var(--color-gray-100); }
+        .sd-table td { padding: 0; border: 0; }
+        .sd-table td.when { grid-column: 1 / -1; font-size: .7rem; color: var(--color-gray-500); }
+        .sd-table td.buyer { grid-column: 1; } .sd-table td.amt { grid-column: 2; grid-row: 2 / span 2; align-self: center; }
+        .sd-table td.item { grid-column: 1; } .sd-table td.method { grid-column: 1; font-size: .7rem; }
+    }
+    html.dark .sd-range { background: rgb(255 255 255 / .06); }
+    html.dark .sd-range button.is-on { background: #243019; color: #e8efe1; }
+    @media (prefers-reduced-motion: reduce) {
+        .sa-room.is-entering, .sd-kpi { animation: none; }
+        .sd-chart .bar, .sd-track i { transition: none; }
+    }
 </style>
 @endpush
 
@@ -199,6 +319,187 @@
         return j;
     };
     const say = (m, k) => (window.toast ? toast(m, k) : alert(m));
+
+    /* ---- the rooms ----------------------------------------------------
+       One page, several analyses; the tag says which is showing and the
+       sheet swaps them with a fade. The last one chosen is remembered. */
+    const ROOM_KEY = 'adminSalesRoom';
+    function showRoom(room, animate) {
+        const row = document.querySelector(`[data-sa-room="${room}"]`) || document.querySelector('[data-sa-room="sales"]');
+        room = row.getAttribute('data-sa-room');
+        document.querySelectorAll('.sa-room').forEach((el) => {
+            const on = el.getAttribute('data-room') === room;
+            el.hidden = !on;
+            el.classList.remove('is-entering');
+            if (on && animate) { void el.offsetWidth; el.classList.add('is-entering'); }
+        });
+        document.querySelectorAll('#saRoomList [data-sa-room]').forEach((r) => r.classList.toggle('is-on', r === row));
+        $id('saTabNow').textContent = row.getAttribute('data-title');
+        $id('saTabIcon').textContent = row.getAttribute('data-icon');
+        try { localStorage.setItem(ROOM_KEY, room); } catch (_) {}
+        if (room === 'sales') loadDash();
+    }
+    $id('saRoomList').addEventListener('click', (e) => {
+        const row = e.target.closest('[data-sa-room]');
+        if (!row) return;
+        window.closeSheet && closeSheet('saTabSheet');
+        showRoom(row.getAttribute('data-sa-room'), true);
+    });
+
+    /* ---- the Sales Dashboard ------------------------------------------ */
+    const DASH_URL = '{{ route('admin.data.sales.dashboard') }}';
+    let dashRange = '30d', dashBusy = false, dashFor = null, lastDash = null;
+    const pesoShort = (n) => {
+        n = Number(n || 0);
+        if (n >= 1e6) return '₱' + (Math.round(n / 1e5) / 10) + 'M';
+        if (n >= 1e4) return '₱' + Math.round(n / 1e3) + 'k';
+        if (n >= 1e3) return '₱' + (Math.round(n / 100) / 10) + 'k';
+        return '₱' + Math.round(n);
+    };
+    /** "+12% vs the 30 days before", said plainly; nothing to compare, nothing said. */
+    function delta(now, before, compare) {
+        if (!compare) return '';
+        if (!before && !now) return `<span class="sd-delta flat">No change</span> vs the ${esc(compare.replace(/^last /, ''))} before`;
+        if (!before) return `<span class="sd-delta up">▲ New</span> vs the ${esc(compare.replace(/^last /, ''))} before`;
+        const pct = Math.round(((now - before) / before) * 100);
+        const cls = pct > 0 ? 'up' : (pct < 0 ? 'down' : 'flat');
+        const mark = pct > 0 ? '▲' : (pct < 0 ? '▼' : '');
+        return `<span class="sd-delta ${cls}">${mark} ${Math.abs(pct)}%</span> vs the ${esc(compare.replace(/^last /, ''))} before`;
+    }
+    function paintKpis(d) {
+        const k = d.kpis;
+        const other = Object.entries(k.otherCurrency || {}).map(([c, v]) => `${c} ${Number(v).toLocaleString('en-PH', { minimumFractionDigits: 2 })}`).join(', ');
+        $id('sdKpis').innerHTML = [
+            `<div class="card sd-kpi"><i>Revenue</i><b>${peso(k.revenue)}</b><small>${delta(k.revenue, k.revenuePrev, d.compare) || (other ? 'Plus ' + esc(other) : 'Since the first sale')}</small></div>`,
+            `<div class="card sd-kpi" style="animation-delay:40ms"><i>Payments</i><b>${k.count.toLocaleString()}</b><small>${delta(k.count, k.countPrev, d.compare) || (k.buyers + ' buyer' + (k.buyers === 1 ? '' : 's'))}</small></div>`,
+            `<div class="card sd-kpi" style="animation-delay:80ms"><i>Average payment</i><b>${peso(k.average)}</b><small>${k.buyers} buyer${k.buyers === 1 ? '' : 's'} · today ${peso(k.today)}</small></div>`,
+            `<div class="card sd-kpi" style="animation-delay:120ms"><a href="${esc(d.ordersUrl)}?status=review"><i>Waiting for review</i><b>${k.inReview.count.toLocaleString()}</b><small>${peso(k.inReview.amount)} to check${k.revoked.count ? ' · ' + k.revoked.count + ' revoked' : ''} ›</small></a></div>`,
+        ].join('');
+    }
+    // Hover tooltip, shared by every bar.
+    const tip = document.createElement('div');
+    tip.className = 'sd-tip';
+    function paintChart(d) {
+        const box = $id('sdChart');
+        const s = d.series || [];
+        $id('sdChartTitle').textContent = d.bucket === 'day' ? 'Revenue by day' : 'Revenue by month';
+        $id('sdChartSub').textContent = (d.kpis.plans || d.kpis.credits)
+            ? `Plans ${peso(d.kpis.plans)} · AI credits ${peso(d.kpis.credits)}` : '';
+        if (!s.length || !s.some((b) => b.amount > 0)) {
+            box.innerHTML = '<p class="sd-empty">No payments in this period yet.</p>';
+            return;
+        }
+        const W = Math.max(320, box.clientWidth || 640), H = 208, L = 44, R = 6, T = 10, B = 22;
+        const max = Math.max(...s.map((b) => b.amount));
+        // Round the top of the scale to a friendly number.
+        const mag = Math.pow(10, Math.floor(Math.log10(max)));
+        const top = Math.ceil(max / mag) * mag;
+        const pw = W - L - R, ph = H - T - B;
+        const slot = pw / s.length;
+        const gap = Math.min(2, slot * 0.25);
+        const bw = Math.max(1, slot - gap);
+        const y = (v) => T + ph - (v / top) * ph;
+        const grid = [0, 0.5, 1].map((f) => {
+            const v = top * f, yy = y(v);
+            return `<line class="${f === 0 ? 'base' : 'grid'}" x1="${L}" x2="${W - R}" y1="${yy}" y2="${yy}"/><text x="${L - 6}" y="${yy + 3}" text-anchor="end">${pesoShort(v)}</text>`;
+        }).join('');
+        // Label every nth bucket so the words never collide.
+        const every = Math.max(1, Math.ceil(s.length / Math.max(2, Math.floor(pw / 58))));
+        const bars = s.map((b, i) => {
+            const x = L + i * slot + gap / 2;
+            const h = Math.max(b.amount > 0 ? 2 : 0, ph - (y(b.amount) - T));
+            const r = Math.min(4, bw / 2, h);
+            const yy = T + ph - h;
+            // A bar with a rounded top, flat on the baseline.
+            const path = h > 0
+                ? `M${x},${T + ph} L${x},${yy + r} Q${x},${yy} ${x + r},${yy} L${x + bw - r},${yy} Q${x + bw},${yy} ${x + bw},${yy + r} L${x + bw},${T + ph} Z`
+                : '';
+            const label = i % every === 0 ? `<text x="${x + bw / 2}" y="${H - 6}" text-anchor="middle">${esc(b.label)}</text>` : '';
+            return `<rect class="hit" x="${L + i * slot}" y="${T}" width="${slot}" height="${ph}" data-i="${i}"/>${path ? `<path class="bar" d="${path}" data-i="${i}"/>` : ''}${label}`;
+        }).join('');
+        box.classList.remove('is-grown');
+        box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="${esc($id('sdChartTitle').textContent)}">${grid}${bars}</svg>`;
+        box.appendChild(tip);
+        requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add('is-grown')));
+        const svg = box.querySelector('svg');
+        const hide = () => { tip.classList.remove('is-on'); box.querySelectorAll('.bar.is-hot').forEach((b) => b.classList.remove('is-hot')); };
+        svg.addEventListener('mousemove', (e) => {
+            const hit = e.target.closest('.hit');
+            if (!hit) { hide(); return; }
+            const b = s[+hit.getAttribute('data-i')];
+            box.querySelectorAll('.bar.is-hot').forEach((x) => x.classList.remove('is-hot'));
+            box.querySelector(`.bar[data-i="${hit.getAttribute('data-i')}"]`)?.classList.add('is-hot');
+            tip.innerHTML = `<b>${peso(b.amount)}</b>${esc(b.label)} · ${b.count} payment${b.count === 1 ? '' : 's'}`;
+            const rect = box.getBoundingClientRect(), hr = hit.getBoundingClientRect();
+            const bx = hr.left + hr.width / 2 - rect.left;
+            tip.style.left = Math.min(rect.width - 70, Math.max(70, bx)) + 'px';
+            tip.style.top = Math.max(10, (y(b.amount) / H) * rect.height) + 'px';
+            tip.classList.add('is-on');
+        });
+        svg.addEventListener('mouseleave', hide);
+        // A tap on a phone shows the same answer.
+        svg.addEventListener('click', (e) => { const hit = e.target.closest('.hit'); if (hit) svg.dispatchEvent(new MouseEvent('mousemove', { clientX: e.clientX, clientY: e.clientY, bubbles: true })); });
+    }
+    function paintRows(el, rows, empty) {
+        if (!rows.length) { el.innerHTML = `<p class="sd-empty">${esc(empty)}</p>`; return; }
+        const max = Math.max(...rows.map((r) => r.amount), 1);
+        el.innerHTML = '<div class="sd-rows">' + rows.map((r) => `
+            <div class="sd-row">
+                <div class="sd-row-top"><span>${esc(r.label)} <small>· ${r.count}</small></span><b>${peso(r.amount)}</b></div>
+                <div class="sd-track"><i data-w="${Math.max(2, Math.round((r.amount / max) * 100))}%"></i></div>
+            </div>`).join('') + '</div>';
+        requestAnimationFrame(() => requestAnimationFrame(() => el.querySelectorAll('.sd-track i').forEach((i) => { i.style.width = i.getAttribute('data-w'); })));
+    }
+    function paintRecent(rows) {
+        const el = $id('sdRecent');
+        if (!rows.length) { el.innerHTML = '<p class="sd-empty">No payments in this period yet.</p>'; return; }
+        el.innerHTML = `<div class="sd-table-wrap"><table class="sd-table">
+            <thead><tr><th>When</th><th>Buyer</th><th>Bought</th><th>Paid by</th><th style="text-align:right">Amount</th></tr></thead>
+            <tbody>${rows.map((r) => `<tr>
+                <td class="when">${esc(r.when)}</td>
+                <td class="buyer">${esc(r.buyer)}${r.email && r.email !== r.buyer ? `<small>${esc(r.email)}</small>` : ''}</td>
+                <td class="item">${r.href ? `<a href="${esc(r.href)}">${esc(r.item)}</a>` : esc(r.item)}</td>
+                <td class="method">${esc(r.method)}</td>
+                <td class="amt">${r.currency === 'PHP' ? peso(r.amount) : esc(r.currency) + ' ' + Number(r.amount).toFixed(2)}</td>
+            </tr>`).join('')}</tbody></table></div>`;
+    }
+    async function loadDash(force) {
+        if (dashBusy || (!force && dashFor === dashRange)) return;
+        dashBusy = true;
+        const want = dashRange;
+        document.querySelectorAll('#sdRange [data-range]').forEach((b) => b.classList.toggle('is-on', b.getAttribute('data-range') === want));
+        try {
+            const j = await ask(DASH_URL + '?range=' + encodeURIComponent(want));
+            const d = j.data;
+            dashFor = want;
+            lastDash = d;
+            $id('sdWhen').textContent = d.from + ' – ' + d.to;
+            paintKpis(d);
+            paintChart(d);
+            paintRows($id('sdByProduct'), d.byProduct || [], 'Nothing sold in this period.');
+            paintRows($id('sdByMethod'), d.byMethod || [], 'No payments in this period.');
+            paintRecent(d.recent || []);
+        } catch (err) {
+            say(err.message || 'Could not load the sales.', 'error');
+        } finally {
+            dashBusy = false;
+            if (dashRange !== want) loadDash(true);
+        }
+    }
+    $id('sdRange').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-range]');
+        if (!b || b.getAttribute('data-range') === dashRange) return;
+        dashRange = b.getAttribute('data-range');
+        document.querySelectorAll('#sdRange [data-range]').forEach((x) => x.classList.toggle('is-on', x === b));
+        loadDash(true);
+    });
+    // The chart is drawn to the width it has; a new width redraws it from
+    // what was already read.
+    let resizeT = null;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeT);
+        resizeT = setTimeout(() => { if (lastDash && !$id('sdChart').closest('.sa-room').hidden) paintChart(lastDash); }, 250);
+    });
 
     /* ---- the chooser tags ---- */
     $id('saTabBtn').addEventListener('click', () => window.openSheet && openSheet('saTabSheet'));
@@ -340,6 +641,7 @@
     if (fieldH) $id('saCost').closest('.sa-form').style.setProperty('--sa-field-h', fieldH + 'px');
 
     load();
+    showRoom((() => { try { return new URLSearchParams(location.search).get('room') || localStorage.getItem(ROOM_KEY) || 'sales'; } catch (_) { return 'sales'; } })(), false);
 })();
 </script>
 @endpush

@@ -429,6 +429,8 @@ Route::middleware(['auth', 'admin.panel'])->prefix('admin')->group(function () {
     // Sales Analysis: what a peso of advertising actually bought.
     Route::get('/sales', [App\Http\Controllers\Admin\AdminSalesController::class, 'page'])->name('admin.sales');
     Route::get('/data/sales', [App\Http\Controllers\Admin\AdminSalesController::class, 'list'])->name('admin.data.sales');
+    // The Sales Dashboard room: money in, at a glance.
+    Route::get('/data/sales-dashboard', [App\Http\Controllers\Admin\AdminSalesController::class, 'dashboard'])->name('admin.data.sales.dashboard');
     Route::get('/data/sales/{id}', [App\Http\Controllers\Admin\AdminSalesController::class, 'one'])->whereNumber('id')->name('admin.data.sales.one');
     Route::post('/sales', [App\Http\Controllers\Admin\AdminSalesController::class, 'store'])->name('admin.sales.store');
     Route::delete('/sales/{id}', [App\Http\Controllers\Admin\AdminSalesController::class, 'destroy'])->whereNumber('id')->name('admin.sales.destroy');
