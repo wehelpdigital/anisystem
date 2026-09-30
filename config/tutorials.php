@@ -46,115 +46,115 @@ return [
 
         'dashboard' => [
             'title' => 'Your dashboard',
-            'blurb' => 'Everything happening across your farm today — what is due, what the weather is doing, and where to go next. A short look around before you start.',
+            'blurb' => 'Your home screen. Today\'s tasks, the weather on your farm, and shortcuts to your seasons and tools are all here. Watch this short tour before you start.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'schedules' => [
             'title' => 'Your cropping schedules',
-            'blurb' => 'Every season you farm lives here as a schedule. Open one to reach its modules, or start a new one when the next season comes round.',
+            'blurb' => 'Each season you farm is saved here as a cropping schedule. Tap one to open it, or create a new one when the next planting comes.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'hub' => [
             'title' => 'Inside a schedule',
-            'blurb' => 'One season and every module that works on it — the plan, the lots, the people, the records. Pick a tile to open a module.',
+            'blurb' => 'This is one season and all of its modules. Tap a tile to open the plan, your lots, your workers, your records and the rest.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.activities' => [
             'title' => 'The activities board',
-            'blurb' => 'Your day-by-day plan. Each card is a job on a day: tick it done, move it, price it. The whole season reads from here.',
+            'blurb' => 'This is your daily plan for the season. Each card is a job for that day. Mark it done, move it to another day, or add its cost, and the reports use what you put here.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.settings' => [
             'title' => 'Schedule settings',
-            'blurb' => 'The season’s name, how it counts its days, and who gets the morning email with the day’s work.',
+            'blurb' => 'Change the season\'s name, how it counts the days, and who gets the morning email with the work for the day.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.lots' => [
             'title' => 'Lots',
-            'blurb' => 'The blocks you farm, each with its crop and the day it went in. Every day count on the board starts from a lot.',
+            'blurb' => 'Add the fields or blocks you farm, with the crop and the date it was planted. The day count on your board starts from each lot\'s planting date.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.workers' => [
             'title' => 'Workers',
-            'blurb' => 'Who turns up and what a half day costs. Put people on jobs and each day totals the cash to bring; give someone a login and they see only this farm.',
+            'blurb' => 'List the people who work on your farm and how much you pay them. Put them on jobs and each day shows how much cash to prepare. You can also give a worker a login so they only see this farm.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.inventory' => [
             'title' => 'Inventory',
-            'blurb' => 'What is in the shed and every move in or out. On hand is the sum of the moves, so it never drifts from the truth.',
+            'blurb' => 'Keep track of what is in your storage. Every item that comes in or goes out is recorded, so the count on hand always matches what you really have.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.documentation' => [
             'title' => 'Documentation',
-            'blurb' => 'Certificates, receipts, protocols — anything a buyer or an inspector may ask for, kept with the season it belongs to.',
+            'blurb' => 'Keep your certificates, receipts and other papers with the season they belong to, ready for when a buyer or an inspector asks for them.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.post-harvest' => [
             'title' => 'Observations',
-            'blurb' => 'What the field actually did — yield, quality, what went wrong. Next season is planned from this.',
+            'blurb' => 'Write down what really happened in the field: the yield, the quality, and what went wrong. Look back at it when you plan the next season.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.tags' => [
             'title' => 'Tags',
-            'blurb' => 'Your own words on activities, expenses and notes. Tag something once and find everything wearing that word here.',
+            'blurb' => 'Tags are your own labels for activities, expenses and notes. Tag something once, then open that tag here to see everything that has it.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.notes' => [
             'title' => 'Notes',
-            'blurb' => 'Words, photos, clips and voice memos from the field — and it keeps writing when the signal drops.',
+            'blurb' => 'Save what you see in the field as text, photos, videos or voice notes. It keeps saving even when you lose signal, and sends everything once you are back online.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.weather' => [
             'title' => 'Weather',
-            'blurb' => 'The forecast for this farm, landed on each day of the board — so a spray planned into the rain is obvious before anyone drives out.',
+            'blurb' => 'See the forecast for your farm on each day of your board. If a spray falls on a rainy day, you will notice it before anyone goes out to the field.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.growth' => [
             'title' => 'Growth stages',
-            'blurb' => 'What each lot’s crop is doing at its day count and what it wants there — no table to memorise.',
+            'blurb' => 'See what stage each lot\'s crop is in by its day count, and what it needs at that stage, so there is no table to memorize. Anee can also check your photos and tell you if the crop is ahead or behind.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.gallery' => [
             'title' => 'Gallery',
-            'blurb' => 'Every photo and clip from this season in one place, filed by where it was taken, so nothing has to be hunted for on the board.',
+            'blurb' => 'All the photos and videos from this season, sorted by where they were taken, so you never have to dig through the board to find them.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.maps' => [
             'title' => 'Maps',
-            'blurb' => 'Trace a block, drop a pin, mark where the pump is. A map can attach to a lot so it opens with that block.',
+            'blurb' => 'Draw the outline of your field, drop a pin, or mark where the water pump is. Attach a map to a lot and it opens together with that lot.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.draw' => [
             'title' => 'Draw',
-            'blurb' => 'A sketch is faster than words for some things — a sprayer setup, the corner that flooded. Draw it and tag it to a note.',
+            'blurb' => 'Some things are easier to draw than to explain, like how the sprayer is set up or which corner got flooded. Make a quick sketch and attach it to a note.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.ai' => [
             'title' => 'Chat Anee',
-            'blurb' => 'Ask Anee about this season. She reads the plan, the lots and the weather before she answers.',
+            'blurb' => 'Ask Anee anything about your crops and this season. Send her photos to check, attach a report, or turn on your season plan when you want her to read it.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'module.reports' => [
             'title' => 'Reports',
-            'blurb' => 'Costs, profit and season analysis, computed from what is on the board — every figure to the same peso.',
+            'blurb' => 'See your costs, your profit and Anee\'s reading of the season. Every number comes from what you recorded on the board, so all the reports agree with each other.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
@@ -162,43 +162,43 @@ return [
 
         'report.labor' => [
             'title' => 'Labor Report',
-            'blurb' => 'Every worker day this season and what it cost, person by person. Pick a stretch of dates to see just those.',
+            'blurb' => 'See every workday this season and how much each worker was paid. Choose a date range if you only want to check a certain period.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'report.expenses' => [
             'title' => 'Expenses Report',
-            'blurb' => 'Everything spent this season, gathered from the board and sorted by what it went on. Filter it down and print it for the books.',
+            'blurb' => 'All your spending this season, taken from the board and grouped by what it was for. Filter what you need and print it for your records.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'report.profit' => [
             'title' => 'Profit Report',
-            'blurb' => 'What the harvest brought in against everything the season cost — expenses and labor together — so you see what was really made.',
+            'blurb' => 'See what your harvest earned against everything the season cost, labor included, so you know how much you really made.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'report.anee-season' => [
             'title' => 'Anee Season Report',
-            'blurb' => 'Anee reads your whole finished season and tells you what went wrong, what to change next time, and what you did well.',
+            'blurb' => 'When the season is over, Anee reads everything you recorded and tells you what went well, what went wrong, and what to change next time.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'report.sofar' => [
             'title' => 'Analyze So Far',
-            'blurb' => 'A check-up halfway through: where the crop stands today, the risks ahead, and what to do next.',
+            'blurb' => 'A checkup in the middle of the season. Anee looks at where your crop is today, the risks coming up, and what you should do next.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'report.protocol' => [
             'title' => 'View as Protocol',
-            'blurb' => 'Your season written out as a protocol, stage by stage and day by day — easy to read, easy to share, easy to print.',
+            'blurb' => 'Your whole season written out as a protocol, stage by stage and day by day. Easy to read, easy to share, and easy to print.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'report.compare' => [
             'title' => 'Compare Reports',
-            'blurb' => 'Pick two saved reports of the same kind and Anee reads them side by side, then tells you what changed and why it matters.',
+            'blurb' => 'Choose two saved reports of the same kind and see them side by side. Anee can also read both and explain what changed and why it matters.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
@@ -206,25 +206,25 @@ return [
 
         'analysis.when-to-plant' => [
             'title' => 'When to Plant',
-            'blurb' => 'Tell Anee the crop and the place, and she weighs the climate to find the planting window that gives it the best chance.',
+            'blurb' => 'Tell Anee your crop and where your farm is. She checks the climate and the weather history of your area and gives you the best time to plant.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'analysis.what-to-plant' => [
             'title' => 'What to Plant',
-            'blurb' => 'Describe your ground and your plans, and Anee suggests the crops that suit them — with her reasons for each.',
+            'blurb' => 'Describe your land, your water and your plans, and Anee suggests the crops that will do well there, with her reasons for each one.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'analysis.variety' => [
             'title' => 'Variety Research',
-            'blurb' => 'Anee looks up the varieties of a crop, compares them, and shows which fits your farm best.',
+            'blurb' => 'Anee looks up the varieties of your crop, compares them, and tells you which one fits your farm best.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'analysis.crop-protocol' => [
             'title' => 'Crop Protocol Analysis',
-            'blurb' => 'A guide to growing a crop from start to harvest, stage by stage — what to apply, when, and what to watch for.',
+            'blurb' => 'A full guide for growing your crop from planting to harvest: what to apply, when to apply it, and what to watch out for at every stage.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
@@ -232,43 +232,43 @@ return [
 
         'tool.notes' => [
             'title' => 'Global Notes',
-            'blurb' => 'Every note from every season in one place. Search them, filter them, or start a new one without opening a schedule first.',
+            'blurb' => 'All your notes from every season, together in one list. Search or filter them, or write a new note without opening a schedule first.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'tool.gallery' => [
             'title' => 'Global Gallery',
-            'blurb' => 'Every photo and clip you have taken, from every season, on one shelf — with the albums you made along the way.',
+            'blurb' => 'Every photo and video you have taken across all your seasons, plus the albums you made.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'tool.contacts' => [
             'title' => 'Contact List',
-            'blurb' => 'Your farm’s phonebook: suppliers, buyers, helpers. Tap a name to call or message them straight away.',
+            'blurb' => 'Save the numbers of your workers, suppliers, buyers and helpers. Tap a name to call or message them right away.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'tool.protocols' => [
             'title' => 'Protocol Builder',
-            'blurb' => 'Write down how you grow a crop, task by task, on a day count. Build it once and use it every season after.',
+            'blurb' => 'Write down how you grow a crop, task by task, following a day count. Make it once and use it again every season.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'tool.protocol-editor' => [
             'title' => 'Building a protocol',
-            'blurb' => 'Add the tasks in order, set the day each one falls on, and drag to rearrange. When it is ready, put it on a season.',
+            'blurb' => 'Add your tasks in order, set the day for each one, and drag them to change the order. When it is ready, use it on a season.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'tool.tags' => [
             'title' => 'Tags',
-            'blurb' => 'Every tag you have used, in every season and tool. Tap one to see everything wearing it, or rename it everywhere at once.',
+            'blurb' => 'Every tag you have used in all your seasons and tools. Tap a tag to see everything under it, or rename it and it changes everywhere.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'tool.compare' => [
             'title' => 'Compare Reports',
-            'blurb' => 'Pick two saved reports of the same kind — this season against last, or any two — and Anee lays them side by side and tells you what changed.',
+            'blurb' => 'Choose two saved reports of the same kind, like this season and the last one, and see them side by side. Anee can also tell you what changed.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
@@ -276,19 +276,19 @@ return [
 
         'quick.capture' => [
             'title' => 'Quick Capture',
-            'blurb' => 'Snap a photo, add a line about it, and file it to a season’s notes or gallery — or ask Anee what she sees.',
+            'blurb' => 'Take a photo, add a short note, and save it to a season\'s notes or gallery. You can also ask Anee what she sees in it.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'quick.record' => [
             'title' => 'Quick Record',
-            'blurb' => 'Record a short clip in the field, give it a name, and it lands in the season’s gallery or notes.',
+            'blurb' => 'Record a short video in the field, give it a name, and save it to a season\'s gallery or notes.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
         'quick.voice' => [
             'title' => 'Quick Voice',
-            'blurb' => 'Hands full? Say it instead. Record a voice note and file it to a season in two taps.',
+            'blurb' => 'Hands busy? Just say it. Record a voice note and save it to a season in two taps.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 

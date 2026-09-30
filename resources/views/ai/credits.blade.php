@@ -107,11 +107,8 @@
             </div>
         </div>
         <p class="cr-hero-p">
-            Credits are what Anee runs on. ANEE — the Agricultural Neural Expert Engine — is your smart agricultural technician:
-            every answer and every analysis draws on deep data analysis, your farm's own records and history, the weather and
-            climate forecast for your location, and the official recommendations for your crop and region. Each one spends a
-            few credits; the log below keeps the account.
-            @if ($unlimited) This account runs the platform and is never charged, but every credit Anee would have spent is still written down. @endif
+            Anee uses credits for every answer and analysis she gives you. Each one costs a few credits, and the log below shows where they went.
+            @if ($unlimited) This account is never charged, but every use is still listed. @endif
         </p>
         <div class="cr-hero-acts">
             <a href="{{ route('ai.home') }}" class="btn btn-white">Ask Anee</a>
@@ -189,8 +186,8 @@
                     <div class="min-w-0">
                         <b>Credits are spent with Anee, and Anee comes with {{ $anee['name'] ?? 'Libre + Anee' }}</b>
                         <p>Your <strong>{{ config('tiers.' . $tier . '.name') ?? ucfirst($tier) }}</strong> plan does not include her.
-                            {{ $anee['name'] ?? 'Libre + Anee' }} is your plan exactly as it is, plus the chat, the four analyses, Realign and the credit shop
-                            @if (! $unlimited && $spent > 0) — and the {{ number_format($spent) }} credits already waiting in your account become yours to spend. @else . @endif
+                            {{ $anee['name'] ?? 'Libre + Anee' }} is your plan exactly as it is, plus the chat, the four analyses, Realign and the credit shop.
+                            @if (! $unlimited && $spent > 0) The {{ number_format($spent) }} credits already in your account become yours to spend. @endif
                         </p>
                         <span class="cr-sell-price">{{ \App\Support\Region::priceTag(\App\Support\Region::tierPrice('libreAnee')) }}<small>/ month</small></span>
                         <div class="mt-4 flex flex-wrap gap-2">
