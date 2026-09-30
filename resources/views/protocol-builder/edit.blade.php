@@ -2738,7 +2738,11 @@
             window.reportView.open({
                 title: (VIEW && VIEW.verdict) || "Anee's analysis",
                 node: $id('pbReview'),
-                actions: [{ label: 'Remove this analysis', icon: 'trash', kind: 'danger', onClick: () => removeAnalysis(id, true) }],
+                actions: [
+                    // The review rides into the chat, for the questions it raises.
+                    { label: 'Ask Anee about it', face: @json($options['aneeFace']), kind: 'primary', href: @json(route('ai.index')) + '?pbreview=' + id },
+                    { label: 'Remove this analysis', icon: 'trash', kind: 'danger', onClick: () => removeAnalysis(id, true) },
+                ],
                 onClose: () => { VIEW_ID = null; renderAnalyses(); },
             });
         }

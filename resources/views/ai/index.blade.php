@@ -557,6 +557,22 @@
             <span class="ai-planchip-txt"><b id="aiRptName">Report</b><i id="aiRptSub">Anee reads this first — the estimate below includes it</i></span>
             <button type="button" id="aiRptX" class="ai-planchip-x" aria-label="Remove the report">✕</button>
         </div>
+        {{-- A Realign by Anee reading, for the questions it raises. --}}
+        <div id="aiRgnChip" class="ai-planchip" hidden>
+            <span class="ai-planchip-ic">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z"/></svg>
+            </span>
+            <span class="ai-planchip-txt"><b id="aiRgnName">Realign reading</b><i id="aiRgnSub">Anee reads this first — the estimate below includes it</i></span>
+            <button type="button" id="aiRgnX" class="ai-planchip-x" aria-label="Remove the reading">✕</button>
+        </div>
+        {{-- A Protocol Builder review, the same way. --}}
+        <div id="aiPbrChip" class="ai-planchip" hidden>
+            <span class="ai-planchip-ic">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+            </span>
+            <span class="ai-planchip-txt"><b id="aiPbrName">Protocol review</b><i id="aiPbrSub">Anee reads this first — the estimate below includes it</i></span>
+            <button type="button" id="aiPbrX" class="ai-planchip-x" aria-label="Remove the review">✕</button>
+        </div>
         <div id="aiAttachBusy" class="ai-busyline hidden" role="status"><span class="sp" aria-hidden="true"></span><span class="tx">Attaching photo…</span></div>
         <div class="aichat-box">
             <button type="button" class="ai-cam shrink-0" id="aiAttachBtn" title="Add photos" aria-label="Add photos" aria-haspopup="dialog">
@@ -746,7 +762,7 @@ const __init = () => {
         if (!hint) return;
         const msg = (input?.value || '').trim();
         const shots = chips ? chips.children.length : 0;
-        if (!msg && !shots && !attachedPlan && !attachedAnalysis && !attachedReport) { hint.textContent = hint.dataset.idle || ''; return; }
+        if (!msg && !shots && !attachedPlan && !attachedAnalysis && !attachedReport && !attachedRealign && !attachedReview) { hint.textContent = hint.dataset.idle || ''; return; }
         /* What a question weighs before its own words: the house prompt
            and the persona, measured server-side from the text actually
            sent, plus room for the turns before it. Not a number typed
@@ -755,7 +771,9 @@ const __init = () => {
         const OVERHEAD = @json(\App\Services\AiCreditService::overheadTokens());
         const tin = Math.ceil(msg.length / 4) + OVERHEAD + (attachedPlan ? attachedPlan.tokens : 0)
             + (attachedAnalysis ? attachedAnalysis.tokens : 0)
-            + (attachedReport ? attachedReport.tokens : 0);
+            + (attachedReport ? attachedReport.tokens : 0)
+            + (attachedRealign ? attachedRealign.tokens : 0)
+            + (attachedReview ? attachedReview.tokens : 0);
         const cost = Math.max(.01, Math.round((tin / 1000 * PRICE.inK + PRICE.halfOut / 1000 * PRICE.outK + shots * PRICE.img) * 100) / 100);
         hint.textContent = attachedPlan
             ? `≈ ${cost} credits — your plan is attached`
@@ -763,7 +781,11 @@ const __init = () => {
                 ? `≈ ${cost} credits — your analysis is attached`
                 : (attachedReport
                     ? `≈ ${cost} credits — your report is attached`
-                    : `≈ ${cost} credits for this question`));
+                    : (attachedRealign
+                        ? `≈ ${cost} credits — the realign reading is attached`
+                        : (attachedReview
+                            ? `≈ ${cost} credits — the protocol review is attached`
+                            : `≈ ${cost} credits for this question`))));
     }
 
     const BOT_SVG = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>';
@@ -1137,6 +1159,10 @@ const __init = () => {
 
     /* ---- A frozen farm report as an attachment (?freport=ID). ---- */
     let attachedReport = null;
+    /* ---- A Realign by Anee reading as an attachment (?realign=RUN_ID). ---- */
+    let attachedRealign = null;
+    /* ---- A Protocol Builder review as an attachment (?pbreview=ID). ---- */
+    let attachedReview = null;
     function drawRptChip() {
         const chip = byId('aiRptChip');
         if (!chip) return;
@@ -1158,6 +1184,50 @@ const __init = () => {
     {
         const bootReport = new URLSearchParams(location.search).get('freport');
         if (bootReport) attachReport(bootReport);
+    }
+    function drawRgnChip() {
+        const chip = byId('aiRgnChip');
+        if (!chip) return;
+        if (!attachedRealign) { chip.hidden = true; sayEstimate(); return; }
+        byId('aiRgnName').textContent = attachedRealign.title;
+        chip.hidden = false;
+        sayEstimate();
+    }
+    async function attachRealign(id) {
+        try {
+            const res = await api(@json(url('/app/sm-growth-realign-preview')) + '/' + encodeURIComponent(id), { method: 'GET' });
+            const d = res.data || {};
+            attachedRealign = { id: d.id, title: d.title || 'Realign by Anee', tokens: d.tokens || 0 };
+            drawRgnChip();
+            toast('Reading attached — ask Anee about it.');
+        } catch (err) { toast(err.message || 'That reading could not be attached.', 'error'); }
+    }
+    byId('aiRgnX')?.addEventListener('click', () => { attachedRealign = null; drawRgnChip(); });
+    function drawPbrChip() {
+        const chip = byId('aiPbrChip');
+        if (!chip) return;
+        if (!attachedReview) { chip.hidden = true; sayEstimate(); return; }
+        byId('aiPbrName').textContent = attachedReview.title;
+        chip.hidden = false;
+        sayEstimate();
+    }
+    async function attachReview(id) {
+        try {
+            const res = await api(@json(url('/app/protocol-builder-review-preview')) + '/' + encodeURIComponent(id), { method: 'GET' });
+            const d = res.data || {};
+            attachedReview = { id: d.id, title: d.title || 'Protocol review', tokens: d.tokens || 0 };
+            drawPbrChip();
+            toast('Review attached — ask Anee about it.');
+        } catch (err) { toast(err.message || 'That review could not be attached.', 'error'); }
+    }
+    byId('aiPbrX')?.addEventListener('click', () => { attachedReview = null; drawPbrChip(); });
+    {
+        const bootReview = new URLSearchParams(location.search).get('pbreview');
+        if (bootReview) attachReview(bootReview);
+    }
+    {
+        const bootRealign = new URLSearchParams(location.search).get('realign');
+        if (bootRealign) attachRealign(bootRealign);
     }
 
     /* ---- The attach chooser (house sheet). The picker now travels with
@@ -1237,6 +1307,8 @@ const __init = () => {
                     attachPlan: attachedPlan ? 1 : 0,
                     attachAnalysisId: attachedAnalysis ? attachedAnalysis.id : null,
                     attachReportId: attachedReport ? attachedReport.id : null,
+                    attachRealignId: attachedRealign ? attachedRealign.id : null,
+                    attachProtocolReviewId: attachedReview ? attachedReview.id : null,
                 },
             });
             conversationId = res.data.conversationId;

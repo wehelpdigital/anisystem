@@ -779,6 +779,74 @@ class ProtocolBuilderController extends Controller
         ]);
     }
 
+    /** A kept review as it rides into an Anee chat: its title and weight. */
+    public function analysisPreview(int $aid)
+    {
+        $ctx = self::contextFor($aid, (int) Auth::id());
+        if (! $ctx) {
+            return $this->json(false, 'That analysis is gone.', [], 404);
+        }
+
+        // This controller's json() already wraps its payload in `data`.
+        return $this->json(true, 'ok', [
+            'id' => $aid,
+            'title' => $ctx['title'],
+            'tokens' => (int) ceil(mb_strlen($ctx['text']) / 4),
+        ]);
+    }
+
+    /**
+     * One kept review, with the protocol it read, written out for Anee
+     * before a follow up question (AiController::ask, attachProtocolReviewId).
+     * A protocol is its writer's own, and so is its review.
+     */
+    public static function contextFor(int $aid, int $userId): ?array
+    {
+        $a = AsProtocolAnalysis::where('id', $aid)->where('deleteStatus', 1)->first();
+        $p = $a ? AsProtocol::active()->where('id', $a->protocolId)->where('userId', $userId)->first() : null;
+        if (! $a || ! $p || ! is_array($a->analysis)) {
+            return null;
+        }
+        $r = $a->analysis;
+        $pick = fn ($row, array $keys) => implode(' · ', array_filter(array_map(fn ($k) => trim((string) ($row[$k] ?? '')), $keys)));
+        $list = function (string $head, $rows, array $keys) use ($pick) {
+            $lines = [];
+            foreach (is_array($rows) ? $rows : [] as $row) {
+                $line = is_array($row) ? $pick($row, $keys) : trim((string) $row);
+                if ($line !== '') {
+                    $lines[] = '- ' . $line;
+                }
+            }
+
+            return $lines ? $head . "\n" . implode("\n", $lines) . "\n" : '';
+        };
+        // The protocol itself, briefly: the tasks she judged, by their day.
+        $tasks = [];
+        foreach (array_slice(is_array($p->tasks) ? $p->tasks : [], 0, 120) as $t) {
+            if (! is_array($t) || ($t['kind'] ?? 'task') !== 'task') {
+                continue;
+            }
+            $tasks[] = '- [' . ($t['id'] ?? '') . '] ' . trim(($t['counter'] ?? '') . ' ' . ($t['day'] ?? '')) . ': ' . trim((string) ($t['title'] ?? ''));
+        }
+        $when = $a->created_at ? Carbon::parse($a->created_at)->format('M j, Y') : '';
+
+        $text = "\n\n--- ATTACHED: Protocol Builder review (your own earlier review of a crop protocol this farmer wrote; they want to ask follow up questions about it) ---\n"
+            . 'Protocol: ' . $p->title . ($p->crop ? ' · Crop: ' . (CropStages::label($p->crop) ?: $p->crop) : '') . ($a->versionName ? ' · Version: ' . $a->versionName : '') . "\n"
+            . 'Reviewed on: ' . $when . ' · Score ' . (int) ($r['score'] ?? 0) . '/100 · ' . ($r['verdict'] ?? '') . "\n"
+            . 'Headline: ' . ($r['headline'] ?? '') . "\n"
+            . $list('Strengths:', $r['strengths'] ?? [], ['point', 'why'])
+            . $list('Gaps:', $r['gaps'] ?? [], ['what', 'why', 'fix'])
+            . $list('Risks:', $r['risks'] ?? [], ['risk', 'when', 'action'])
+            . $list('Tasks you flagged:', array_filter($r['tasks'] ?? [], fn ($x) => is_array($x) && ($x['verdict'] ?? '') !== 'good'), ['id', 'verdict', 'note'])
+            . $list('Tasks you suggested adding:', $r['additions'] ?? [], ['counter', 'day', 'title', 'why'])
+            . (trim((string) ($r['sequence'] ?? '')) !== '' ? 'Order and spacing: ' . $r['sequence'] . "\n" : '')
+            . 'Summary: ' . ($r['summary'] ?? '') . "\n"
+            . ($tasks ? "The protocol's tasks as written:\n" . implode("\n", $tasks) . "\n" : '')
+            . "--- END OF ATTACHED REVIEW ---\n";
+
+        return ['title' => 'Protocol review · ' . $p->title . ($when ? ' · ' . $when : ''), 'text' => $text];
+    }
+
     /**
      * Takes one analysis off the tab. When it was the latest, the one before
      * it becomes the protocol's review (the task cards and the list read

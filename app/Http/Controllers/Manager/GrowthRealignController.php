@@ -159,6 +159,77 @@ class GrowthRealignController extends BaseScheduleController
         ]]);
     }
 
+    /**
+     * A reading as it rides into an Anee chat: its title and how many
+     * tokens it adds, so the composer can quote the question honestly.
+     */
+    public function preview(int $id)
+    {
+        $ctx = self::contextFor($id, (int) Auth::id());
+        if (! $ctx) {
+            return $this->jsonFail('That reading is gone.', 404);
+        }
+
+        return $this->jsonOk('ok', ['data' => [
+            'id' => $id,
+            'title' => $ctx['title'],
+            'tokens' => (int) ceil(mb_strlen($ctx['text']) / 4),
+        ]]);
+    }
+
+    /**
+     * One finished reading, written out for Anee to read before a follow up
+     * question (AiController::ask, attachRealignId). Whoever ran it may
+     * attach it, and so may anyone who can see the season it belongs to
+     * (its owner, a worker on it); anybody else gets null.
+     */
+    public static function contextFor(int $id, int $userId): ?array
+    {
+        $row = AsGrowthRealign::where('id', $id)->where('status', 'ready')->where('deleteStatus', 1)->first();
+        if (! $row || ! is_array($row->result)) {
+            return null;
+        }
+        $mine = (int) $row->userId === $userId;
+        $seen = $mine || \App\Models\AsCroppingSchedule::active()
+            ->forClient(\App\Support\WorkerContext::effectiveOwnerId())
+            ->where('as_cropping_schedules.id', (int) $row->croppingScheduleId)
+            ->exists();
+        if (! $seen) {
+            return null;
+        }
+        $r = $row->result;
+        $lot = AsScheduleLot::find($row->lotId);
+        $schedule = \App\Models\AsCroppingSchedule::find($row->croppingScheduleId);
+        $lotName = $lot?->lotName ?: 'the lot';
+        $counter = (string) ($r['counter'] ?? 'Day');
+        $shift = (int) ($r['shiftDays'] ?? 0);
+        $shiftSaid = $shift === 0 ? 'on the calendar' : abs($shift) . ' day' . (abs($shift) === 1 ? '' : 's') . ($shift < 0 ? ' behind the calendar' : ' ahead of the calendar');
+        $when = $row->asOf?->format('M j, Y') ?? '';
+        $list = fn (string $head, $items) => is_array($items) && $items
+            ? $head . "\n" . implode("\n", array_map(fn ($t) => '- ' . $t, $items)) . "\n"
+            : '';
+        $stages = is_array($r['stages'] ?? null) ? $r['stages'] : [];
+
+        $text = "\n\n--- ATTACHED: Realign by Anee reading (your own earlier analysis of where one lot's crop really is; the farmer wants to ask follow up questions about it) ---\n"
+            . 'Season: ' . ($schedule?->title ?: 'this season') . "\n"
+            . 'Lot: ' . $lotName . ($lot ? ' · Crop: ' . CropStages::label($lot->crop) : '') . "\n"
+            . 'Read on: ' . $when . "\n"
+            . 'The calendar counted ' . $counter . ' ' . ($r['calendarDay'] ?? '?') . ' (' . ($r['calendarStageLabel'] ?? 'no stage') . ").\n"
+            . 'Your reading: ' . ($r['stageLabel'] ?? '?') . ', as if it were ' . $counter . ' ' . ($r['physiologicalDay'] ?? '?') . ', ' . $shiftSaid
+            . '. Confidence ' . (int) ($r['confidence'] ?? 0) . " percent.\n"
+            . 'Summary: ' . ($r['summary'] ?? '') . "\n"
+            . $list('Why you read it this way:', $r['reasons'] ?? [])
+            . $list('What to do now:', $r['recommendations'] ?? [])
+            . $list('What to watch for:', $r['watch'] ?? [])
+            . ($stages ? 'The crop\'s stages (' . $counter . '): '
+                . implode('; ', array_map(fn ($s) => ($s['label'] ?? '') . ' from ' . ($s['from'] ?? '?'), $stages)) . "\n" : '')
+            . ($lot && (int) (is_array($lot->growthRealign) ? ($lot->growthRealign['runId'] ?? 0) : 0) !== (int) $row->id
+                ? "Note: this lot has been realigned again since; this attached reading is the older one.\n" : '')
+            . "--- END OF ATTACHED READING ---\n";
+
+        return ['title' => 'Realign by Anee · ' . $lotName . ($when ? ' · ' . $when : ''), 'text' => $text];
+    }
+
     /* ------------------------------------------------------------------ */
 
     /** The model call, the charge, and the answer written onto the lot. */

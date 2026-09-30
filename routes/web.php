@@ -661,6 +661,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/protocol-builder/{id}/job', [App\Http\Controllers\ProtocolBuilderController::class, 'job'])->whereNumber('id')->name('pb.job');
     Route::get('/app/protocol-builder/{id}/analyses', [App\Http\Controllers\ProtocolBuilderController::class, 'analyses'])->whereNumber('id')->name('pb.analyses');
     Route::get('/app/protocol-builder/{id}/analyses/{aid}', [App\Http\Controllers\ProtocolBuilderController::class, 'analysisOne'])->whereNumber(['id', 'aid'])->name('pb.analyses.one');
+    // A kept review, riding into an Anee chat (?pbreview=ID).
+    Route::get('/app/protocol-builder-review-preview/{aid}', [App\Http\Controllers\ProtocolBuilderController::class, 'analysisPreview'])->whereNumber('aid')->name('pb.analyses.preview');
     Route::post('/app/protocol-builder/{id}/analyses/{aid}/delete', [App\Http\Controllers\ProtocolBuilderController::class, 'analysisDestroy'])->whereNumber(['id', 'aid'])->name('pb.analyses.delete');
     Route::get('/app/protocol-builder/lots', [App\Http\Controllers\ProtocolBuilderController::class, 'lots'])->name('pb.lots');
     Route::post('/app/protocol-builder/port', [App\Http\Controllers\ProtocolBuilderController::class, 'port'])->name('pb.port');
@@ -1068,6 +1070,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // The report shelf: frozen copies that can ride into an Anee chat.
     Route::post('/app/sm-report-snapshot', [App\Http\Controllers\Manager\FarmReportController::class, 'snapshot'])->name('sm.report.snapshot');
     Route::get('/app/sm-report-preview/{id}', [App\Http\Controllers\Manager\FarmReportController::class, 'preview'])->whereNumber('id')->name('sm.report.preview');
+    // A Realign by Anee reading, riding into an Anee chat the same way.
+    Route::get('/app/sm-growth-realign-preview/{id}', [App\Http\Controllers\Manager\GrowthRealignController::class, 'preview'])->whereNumber('id')->name('sm.growth.realign.preview');
     Route::get('/app/sm-expenses-report', [App\Http\Controllers\Manager\FarmReportController::class, 'expensesPage'])->name('sm.expenses.report');
     Route::get('/app/sm-expenses-report-data', [App\Http\Controllers\Manager\FarmReportController::class, 'expensesData'])->name('sm.expenses.report.data');
     Route::get('/app/sm-profit-report', [App\Http\Controllers\Manager\FarmReportController::class, 'profitPage'])->name('sm.profit.report');

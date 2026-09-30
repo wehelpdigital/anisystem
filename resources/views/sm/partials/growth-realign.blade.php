@@ -18,6 +18,9 @@
     // Realign is Anee's: a farm whose plan has her (Libre + Anee and up) may run it.
     $grxLocked = ! \App\Support\Tier::scheduleCan($schedule, 'ai');
     $grxPrice = \App\Support\AiPrices::of('realign');
+    // Asking about a reading happens in the Anee chat: a plan with Anee,
+    // and (for a worker) the Chat Anee module.
+    $grxChat = ! $grxLocked && \App\Support\WorkerContext::canUseModule('ai');
 @endphp
 @once
 @include('sm.partials.anee-wait')
@@ -59,8 +62,14 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body" id="grxResultBody"></div>
-    <div class="sheet-footer">
-        <button type="button" class="btn btn-primary w-full" data-sheet-close>Got it</button>
+    <div class="sheet-footer grx-foot">
+        @if ($grxChat)
+            {{-- The reading rides into the chat, for the questions it raises. --}}
+            <a href="{{ route('ai.index') }}" class="btn btn-primary w-full grx-ask" id="grxAsk" hidden>
+                <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="">Ask Anee about this reading
+            </a>
+        @endif
+        <button type="button" class="btn {{ $grxChat ? 'btn-outline' : 'btn-primary' }} w-full" data-sheet-close>Got it</button>
     </div>
 </div>
 
@@ -100,6 +109,14 @@
     .grx-note-head b { color: var(--color-gray-900); font-size: .82rem; }
     .grx-note-when { font-size: .7rem; color: var(--color-gray-400); font-weight: 600; }
     .grx-note-more { margin-top: .35rem; font-size: .78rem; font-weight: 800; color: var(--color-brand-700); background: none; border: 0; padding: 0; cursor: pointer; }
+    .grx-note-acts { display: flex; flex-wrap: wrap; align-items: center; gap: .15rem 1rem; }
+    .grx-note-ask { display: inline-flex; align-items: center; gap: .35rem; margin-top: .35rem; font-size: .78rem; font-weight: 800; color: var(--color-brand-700); text-decoration: none; }
+    .grx-note-ask img { width: 1.15rem; height: 1.15rem; border-radius: 999px; object-fit: cover; }
+    #grRealignResultSheet .sheet-footer.grx-foot { display: grid; grid-template-columns: minmax(0, 1fr); gap: .5rem; }
+    #grRealignResultSheet .grx-foot .btn { width: 100%; }
+    .grx-ask { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; }
+    .grx-ask img { width: 1.6rem; height: 1.6rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px rgb(255 255 255 / .8); }
+    html.dark .grx-note-ask { color: #a8cc7e; }
     .grx-shift { display: inline-flex; align-items: center; gap: .3rem; padding: .15rem .55rem; border-radius: 999px; font-size: .7rem; font-weight: 800; }
     .grx-shift.is-behind { background: #fff1e6; color: #b45309; border: 1px solid #fdd7b0; }
     .grx-shift.is-ahead { background: #e6f5ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
@@ -231,7 +248,9 @@
     const LOCK_SAY = @json(\App\Support\Tier::say(\App\Support\Tier::scheduleUnlocksAt($schedule, 'ai'), "Realign by Anee comes with {plan}. Add Anee and she reads your lot's whole history to say where the crop really is."));
     const PRICE = @json($grxPrice);
     const FACE = @json(\App\Models\AiSetting::current()->faceUrl());
+    const CHAT = @json($grxChat);
     const U = {
+        ai: @json(route('ai.index')),
         quote: @json(route('sm.growth.realign.quote')),
         run: @json(route('sm.growth.realign')),
         job: (id) => @json(route('sm.growth.realign.job', ['id' => '__ID__'])).replace('__ID__', id),
@@ -259,7 +278,10 @@
         const note = realign ? `<div class="grx-note">
                 <div class="grx-note-head"><b>Realigned by Anee</b>${shiftChip(realign.shiftDays)}<span class="grx-note-when">${esc(when(realign.at || realign.asOf))}</span></div>
                 <div>${esc(realign.summary || '')}</div>
-                <button type="button" class="grx-note-more" data-grx-show="${Number(lotId)}">Read her full reading →</button>
+                <div class="grx-note-acts">
+                    <button type="button" class="grx-note-more" data-grx-show="${Number(lotId)}">Read her full reading →</button>
+                    ${CHAT && Number(realign.runId) ? `<a class="grx-note-ask" href="${esc(U.ai)}?realign=${Number(realign.runId)}"><img src="${esc(FACE)}" alt="">Ask Anee about it</a>` : ''}
+                </div>
             </div>` : '';
         return `<div class="grx-block" data-grx-lot="${Number(lotId)}">${btn}${note}</div>`;
     }
@@ -372,6 +394,13 @@
             <p class="grx-applied">Applied to <b>${esc(lotName || 'this lot')}</b>: the board's day headers, the Tools sheet and the Growth Stages module now read this stage. The day count stays the calendar's; only the stage read off it has moved. Ask her again whenever the field tells a different story.</p>`;
         const card = $id('grxResultBody').querySelector('[data-grx-rail]');
         if (card) { card.__realign = r; paintRail(card, r); }
+        // The door into the chat, with this very reading attached.
+        const ask = $id('grxAsk');
+        if (ask) {
+            const run = Number(r.runId) || 0;
+            ask.hidden = !run;
+            if (run) ask.href = U.ai + '?realign=' + run;
+        }
         openSheet('grRealignResultSheet');
         requestAnimationFrame(() => setTimeout(() => { $id('grxResultBody').querySelectorAll('.grx-conf-bar span').forEach((el) => { el.style.width = el.dataset.w + '%'; }); }, 60));
     }

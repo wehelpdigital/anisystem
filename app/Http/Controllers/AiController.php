@@ -219,6 +219,8 @@ class AiController extends Controller
             // A saved when-to-plant analysis, riding as context.
             'attachAnalysisId' => 'nullable|integer',
             'attachReportId' => 'nullable|integer',
+            'attachRealignId' => 'nullable|integer',
+            'attachProtocolReviewId' => 'nullable|integer',
         ]);
         if ($validator->fails()) {
             return $this->json(false, 'Validation failed.', ['errors' => $validator->errors()], 422);
@@ -285,6 +287,24 @@ class AiController extends Controller
             }
             $analysisCtx .= $foundR['text'];
             $priced .= $foundR['text'];
+        }
+        /* And a Realign by Anee reading, for the questions it raises. */
+        if ($request->filled('attachRealignId')) {
+            $foundG = \App\Http\Controllers\Manager\GrowthRealignController::contextFor((int) $request->input('attachRealignId'), (int) $userId);
+            if (! $foundG) {
+                return $this->json(false, 'That reading could not be attached. Remove it and try again.', [], 422);
+            }
+            $analysisCtx .= $foundG['text'];
+            $priced .= $foundG['text'];
+        }
+        /* And a Protocol Builder review. */
+        if ($request->filled('attachProtocolReviewId')) {
+            $foundP = \App\Http\Controllers\ProtocolBuilderController::contextFor((int) $request->input('attachProtocolReviewId'), (int) $userId);
+            if (! $foundP) {
+                return $this->json(false, 'That review could not be attached. Remove it and try again.', [], 422);
+            }
+            $analysisCtx .= $foundP['text'];
+            $priced .= $foundP['text'];
         }
         $estimate = $this->credits->estimate($settings, $priced, count($images));
         if ($balance < $estimate && ! $this->credits->unlimited($payerId)) {
