@@ -273,7 +273,7 @@
                 <span class="qa-ico"><img src="{{ asset('images/location-marker.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
                     <b>Maps</b>
-                    <i>Draw and measure your fields over the real ground, once — then attach the map to any lot, activity or day, in any season.</i>
+                    <i>Draw, measure, and pin your fields. Save and attach it to your lots, activity, or notes.</i>
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
@@ -281,7 +281,7 @@
                 <span class="qa-ico"><img src="{{ asset('images/writting.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
                     <b>Draw</b>
-                    <i>Sketch a layout, a pest you found or a plan — and every drawing made in your seasons, in one place.</i>
+                    <i>Sketch a layout, a plan, a flow, or anything to help you strategize your farm protocol.</i>
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
@@ -291,7 +291,7 @@
                 <span class="qa-ico"><img src="{{ asset('images/list.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
                     <b>Contact List</b>
-                    <i>Your farm's phonebook — workers, tractor rentals, harvesters, buyers, all tagged and one tap from a call.</i>
+                    <i>A basic phonebook where you save all contacts that you have: workers, traders, buyers, everyone related to your farm.</i>
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
