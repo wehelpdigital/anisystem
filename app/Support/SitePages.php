@@ -52,6 +52,17 @@ class SitePages
             'intro' => 'Fertilizer grades and how to compute them, pesticides and the rules on them, palay prices, farm words in Tagalog, and the stories behind the crops we grow.',
             'kicker' => 'From the blog',
         ],
+        // Try and Ask Anee's answers (2026-10-01): one page per question a
+        // visitor asked, at /question/{slug}, listed at /questions.
+        'questions' => [
+            'label' => "Farmers' questions",
+            'crumb' => "Farmers' questions",
+            'hubTitle' => "Farmers' Questions, Answered by Anee",
+            'metaTitle' => 'Farming Questions Answered: Palay, Mais, Pests, Fertilizer',
+            'metaDescription' => 'Real questions from Filipino farmers about palay, mais, vegetables, pests and fertilizer, each answered in full by Anee, the anee.io AI technician.',
+            'intro' => 'Real questions from farmers, each answered in full: what to do, when, and how much. Ask your own and the answer comes to your email.',
+            'kicker' => 'Ask Anee',
+        ],
         'features' => [
             'label' => 'Features',
             'crumb' => 'Features',
@@ -95,6 +106,11 @@ class SitePages
     /** Where a page lives. */
     public static function url(string $section, ?string $slug = null): string
     {
+        // One question lives at /question/{slug}; the list at /questions.
+        if ($section === 'questions') {
+            return url($slug ? '/question/' . $slug : '/questions');
+        }
+
         return url('/' . $section . ($slug ? '/' . $slug : ''));
     }
 

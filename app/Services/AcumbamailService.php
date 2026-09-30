@@ -83,6 +83,43 @@ class AcumbamailService
         return true;
     }
 
+    /**
+     * A lead, not a member: someone who gave an email on the public site (Try
+     * and Ask Anee) without making an account. Lands on the same list with
+     * the plan field stamped "lead" (ACUMBAMAIL_LEAD_VALUE), so a segment can
+     * tell them from the free-users; any extra field the list does not have
+     * is ignored on their side.
+     *
+     * @param  array<string, string>  $extra  merge field name => value
+     */
+    public function addLead(string $email, array $extra = []): bool
+    {
+        if (! $this->configured()) {
+            return false;
+        }
+
+        $f = config('acumbamail.fields');
+        $merge = [$f['email'] => $email] + array_filter($extra, fn ($v) => (string) $v !== '');
+        $planField = (string) config('acumbamail.plan_field');
+        if ($planField !== '') {
+            $merge[$planField] = (string) config('acumbamail.lead_value', 'lead');
+        }
+
+        $res = $this->call('addSubscriber', [
+            'list_id' => (int) config('acumbamail.list_id'),
+            'merge_fields' => $merge,
+            'double_optin' => 0,
+            'update_subscriber' => 1,
+            'complete_json' => 1,
+        ]);
+        if ($res === null) {
+            return false;
+        }
+        Log::info('Acumbamail: added lead '.$email.' to list '.config('acumbamail.list_id'));
+
+        return true;
+    }
+
     /** The lists this token can see — used to check the configured id is real. */
     public function lists(): ?array
     {

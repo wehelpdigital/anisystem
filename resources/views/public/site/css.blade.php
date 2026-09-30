@@ -127,6 +127,14 @@
     .sp-cta b { position: relative; display: block; font-family: var(--font-heading); font-size: 1.3rem; color: #fff; line-height: 1.3; }
     .sp-cta p { position: relative; margin-top: .45rem; color: #d7e6c8; font-size: .98rem; }
     .sp-cta .btn { position: relative; margin-top: 1rem; }
+    .sp-cta-list { position: relative; margin-top: .8rem; display: grid; gap: .45rem; }
+    .sp-cta-list li { display: flex; gap: .55rem; align-items: flex-start; color: #eef5e6; font-size: .95rem; line-height: 1.5; }
+    .sp-cta-list svg { flex: none; width: 1.1rem; height: 1.1rem; margin-top: .15rem; padding: .12rem; border-radius: 999px; background: #f5c518; color: #3b2f00; }
+    .sp-ask { border-radius: 1.1rem; padding: 1.2rem; background: #fff; border: 1px solid #dbe8cc; box-shadow: 0 14px 30px -24px rgb(20 40 10 / .45); }
+    .sp-ask img { width: 2.8rem; height: 2.8rem; border-radius: 999px; object-fit: cover; }
+    .sp-ask b { display: block; margin-top: .6rem; font-family: var(--font-heading); font-size: 1.05rem; color: #14210c; }
+    .sp-ask p { margin-top: .35rem; font-size: .86rem; line-height: 1.55; color: #4b5563; }
+    .sp-ask .btn { margin-top: .9rem; width: 100%; justify-content: center; }
     .sp-links { border-radius: 1.1rem; background: #f9fbf6; border: 1px solid #e5ebdf; padding: 1.1rem 1.2rem; }
     .sp-links b { font-family: var(--font-heading); color: #14210c; }
     .sp-links ul { margin-top: .5rem; display: grid; gap: .4rem; }

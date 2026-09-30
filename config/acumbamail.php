@@ -81,4 +81,7 @@ return [
     'plan_field' => (string) env('ACUMBAMAIL_FIELD_PLAN', 'Plan'),
     'free_plan_value' => (string) env('ACUMBAMAIL_FREE_PLAN_VALUE', 'free-users'),
 
+    // A visitor who left an email on Try and Ask Anee but has no account yet.
+    'lead_value' => (string) env('ACUMBAMAIL_LEAD_VALUE', 'lead'),
+
 ];

@@ -51,6 +51,12 @@ final class Seo
             return $route->getName() !== 'site.preview' && $route->getName() !== 'site.preview.post';
         }
 
+        // Try and Ask Anee: the page and the list of answers are public; the
+        // steps and a visitor's own answer link are not.
+        if ($controller instanceof \App\Http\Controllers\AskAneeController) {
+            return in_array($route->getName(), ['ask.page', 'site.questions'], true);
+        }
+
         return $controller instanceof PublicController || $controller instanceof LegalController;
     }
 
@@ -65,7 +71,7 @@ final class Seo
     /** Behind the login, or a door of its own: closed to every crawler. */
     private const CLOSED = ['/app/', '/admin/', '/account', '/purchase', '/notifications', '/login', '/signup', '/auth/',
         '/forgot-password', '/reset-password', '/verify-email', '/verify-notice', '/pw/', '/s/', '/worker-invite/',
-        '/ads/', '/storage/', '/broadcasting/', '/blog-preview', '/site-preview', '/deploy-check', '/up'];
+        '/ads/', '/storage/', '/broadcasting/', '/blog-preview', '/site-preview', '/deploy-check', '/up', '/ask-anee/answer/'];
 
     /**
      * Facebook's own fetchers. They index nothing: they read a page to draw

@@ -72,7 +72,7 @@ class SitePageController extends Controller
 
     public function sitemap()
     {
-        $static = ['/', '/features', '/pricing', '/about', '/tutorial', '/contact', '/crops', '/problems', '/blog'];
+        $static = ['/', '/features', '/pricing', '/about', '/tutorial', '/contact', '/crops', '/problems', '/blog', '/ask-anee', '/questions'];
         $urls = array_map(fn ($p) => ['loc' => url($p), 'lastmod' => null], $static);
         try {
             foreach (AsSitePage::live()->orderBy('section')->orderBy('sortOrder')->get(['section', 'slug', 'updated_at']) as $p) {

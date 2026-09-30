@@ -87,7 +87,16 @@
         @case('cta')
             <div class="sp-cta">
                 <b>{{ $b['title'] ?? 'Run your farm on anee.io' }}</b>
-                @if (trim((string) ($b['text'] ?? '')) !== '')<p>{!! $S::inline($b['text']) !!}</p>@endif
+                {{-- The first line is the pitch; any line after it is a benefit, ticked. --}}
+                @php($ctaLines = array_values(array_filter(array_map('trim', preg_split('/\R+/', (string) ($b['text'] ?? ''))), fn ($l) => $l !== '')))
+                @if ($ctaLines)<p>{!! $S::inline($ctaLines[0]) !!}</p>@endif
+                @if (count($ctaLines) > 1)
+                    <ul class="sp-cta-list">
+                        @foreach (array_slice($ctaLines, 1) as $l)
+                            <li><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>{!! $S::inline($l) !!}</span></li>
+                        @endforeach
+                    </ul>
+                @endif
                 @php($ctaUrl = trim((string) ($b['url'] ?? '')) ?: '/signup')
                 <a class="btn btn-accent" href="{{ preg_match('#^https?://#', $ctaUrl) ? $ctaUrl : url($ctaUrl) }}">{{ $b['label'] ?? 'Start free' }}</a>
             </div>

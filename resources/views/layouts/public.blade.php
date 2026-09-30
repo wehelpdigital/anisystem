@@ -125,6 +125,21 @@
             background: #fff; border-top: 1px solid #eef2ea; box-shadow: 0 -10px 24px -20px rgb(20 33 12 / .45); }
         .pm-foot .btn { width: 100%; justify-content: center; }
         .pm-foot .w-full { grid-column: 1 / -1; }
+        /* Try and Ask Anee: the one gold door in the bar and at the top of the phone menu. */
+        .ask-pill { display: inline-flex; align-items: center; gap: .45rem; padding: .3rem .8rem .3rem .3rem; border-radius: 999px;
+            background: linear-gradient(135deg, #fff6d6, #fde68a); color: #3b2f00 !important; font-weight: 800; box-shadow: 0 0 0 1px #f3d36b inset;
+            transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); white-space: nowrap; }
+        .ask-pill img { width: 1.6rem; height: 1.6rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px #fff; }
+        .ask-pill:hover, .ask-pill.is-on { transform: translateY(-1px); box-shadow: 0 0 0 1px #e8bf3a inset, 0 8px 18px -10px rgb(180 130 0 / .7); }
+        .pm-ask { display: flex; align-items: center; gap: .8rem; margin-bottom: .75rem; padding: .8rem .9rem; border-radius: 1rem; text-decoration: none;
+            background: linear-gradient(135deg, #fff6d6, #fde68a); box-shadow: 0 0 0 1px #f3d36b inset; }
+        .pm-ask img { flex: none; width: 2.6rem; height: 2.6rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px #fff; }
+        .pm-ask b { display: block; font-family: var(--font-heading); font-size: 1rem; color: #3b2f00; }
+        .pm-ask small { display: block; font-size: .8rem; color: #6b5300; }
+        @media (prefers-reduced-motion: reduce) { .ask-pill { transition: none; } }
+        /* Between lg and xl the bar is short of room: the logo is Home, About
+           and Contact wait in the footer, and the pill says the short name. */
+        @media (max-width: 1279.98px) { .nav-xl { display: none; } .ask-pill .ask-more { display: none; } }
         @keyframes pmRow { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         @media (prefers-reduced-motion: reduce) {
             .pm-burger span, .pm-in, .pm-out { transition: none; }
@@ -151,7 +166,7 @@
                 </a>
 
                 <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700">
-                    <a href="{{ route('home') }}" class="hover:text-brand-600 {{ request()->routeIs('home', 'ph.home') ? 'text-brand-700' : '' }}">Home</a>
+                    <a href="{{ route('home') }}" class="nav-xl hover:text-brand-600 {{ request()->routeIs('home', 'ph.home') ? 'text-brand-700' : '' }}">Home</a>
                     <a href="{{ route('features') }}" class="hover:text-brand-600 {{ request()->routeIs('features', 'ph.features', 'site.features.show') ? 'text-brand-700' : '' }}">Features</a>
                     {{-- The guides, the problems and the blog, behind one word (the /ph face's: they are written for Philippine farms). --}}
                     @if (\App\Support\Region::ph())
@@ -173,8 +188,13 @@
                     </div>
                     @endif
                     <a href="{{ route('pricing') }}" class="hover:text-brand-600 {{ request()->routeIs('pricing', 'ph.pricing') ? 'text-brand-700' : '' }}">Pricing</a>
-                    <a href="{{ route('about') }}" class="hover:text-brand-600 {{ request()->routeIs('about', 'ph.about') ? 'text-brand-700' : '' }}">About</a>
-                    <a href="{{ route('contact') }}" class="hover:text-brand-600 {{ request()->routeIs('contact', 'ph.contact') ? 'text-brand-700' : '' }}">Contact</a>
+                    <a href="{{ route('about') }}" class="nav-xl hover:text-brand-600 {{ request()->routeIs('about', 'ph.about') ? 'text-brand-700' : '' }}">About</a>
+                    <a href="{{ route('contact') }}" class="nav-xl hover:text-brand-600 {{ request()->routeIs('contact', 'ph.contact') ? 'text-brand-700' : '' }}">Contact</a>
+                    {{-- The featured door: one free question for Anee (AskAneeController). --}}
+                    <a href="{{ url('/ask-anee') }}" class="ask-pill {{ request()->routeIs('ask.*') ? 'is-on' : '' }}">
+                        <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" aria-hidden="true">
+                        <span><span class="ask-more">Try and </span>Ask Anee</span>
+                    </a>
                 </nav>
 
                 <div class="hidden lg:flex items-center gap-3">
@@ -214,6 +234,14 @@
              x-transition:enter="pm-in" x-transition:enter-start="pm-from" x-transition:enter-end="pm-to"
              x-transition:leave="pm-out" x-transition:leave-start="pm-to" x-transition:leave-end="pm-from">
             <div class="pm-scroll">
+                <a href="{{ url('/ask-anee') }}" class="pm-ask" style="--i: 0">
+                    <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" aria-hidden="true">
+                    <span class="min-w-0">
+                        <b>Try and Ask Anee</b>
+                        <small>Ask one farming question for free</small>
+                    </span>
+                    <svg class="pm-chev" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </a>
                 <nav class="pm-pages" aria-label="Pages">
                     @foreach ($pmPages as $i => [$r, $label, $icon])
                         @php $on = request()->routeIs($r, 'ph.' . $r) || ($r === 'features' && request()->routeIs('site.features.show')); @endphp
@@ -276,6 +304,8 @@
                     <button type="button" class="pf-h" @click="o = !o" :aria-expanded="o"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg><span>Quick links</span><i class="pf-plus" aria-hidden="true"></i></button>
                     <div class="pf-fold"><ul class="pf-list">
                         <li><a href="{{ route('features') }}">Features</a></li>
+                        <li><a href="{{ url('/ask-anee') }}">Ask Anee for free</a></li>
+                        <li><a href="{{ url('/questions') }}">Farmers' questions</a></li>
                         <li><a href="{{ route('pricing') }}">Pricing</a></li>
                         <li><a href="{{ route('about') }}">About anee.io</a></li>
                         <li><a href="{{ route('tutorial') }}">Tutorial</a></li>

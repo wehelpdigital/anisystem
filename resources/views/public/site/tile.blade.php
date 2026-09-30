@@ -10,6 +10,6 @@
         @if ($p->category)<span class="cat">{{ $p->category }}</span>@endif
         <b>{{ $p->title }}</b>
         <p>{{ \Illuminate\Support\Str::limit($S::plain($p->excerpt), 170) }}</p>
-        <span class="go">{{ $p->lang === 'tl' ? 'Basahin' : 'Read the guide' }} ›</span>
+        <span class="go">{{ $p->section === 'questions' ? ($p->lang === 'tl' ? 'Basahin ang sagot' : 'Read the answer') : ($p->lang === 'tl' ? 'Basahin' : 'Read the guide') }} ›</span>
     </span>
 </a>

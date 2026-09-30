@@ -234,6 +234,18 @@ Route::get('/problems/{slug}', [App\Http\Controllers\SitePageController::class, 
 Route::get('/blog', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'blog')->name('site.blog');
 Route::get('/blog/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'blog')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.blog.show');
 Route::get('/features/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'features')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.features.show');
+// Try and Ask Anee (2026-10-01): one free farming question, answered by
+// email as a page of its own at /question/{slug}. See AskAneeController.
+Route::get('/ask-anee', [App\Http\Controllers\AskAneeController::class, 'page'])->defaults('face', 'ph')->name('ask.page');
+Route::post('/ask-anee/question', [App\Http\Controllers\AskAneeController::class, 'ask'])->name('ask.question');
+Route::get('/ask-anee/question/{token}', [App\Http\Controllers\AskAneeController::class, 'state'])->where('token', '[A-Za-z0-9]{40}')->name('ask.state');
+Route::post('/ask-anee/details', [App\Http\Controllers\AskAneeController::class, 'details'])->name('ask.details');
+Route::post('/ask-anee/email', [App\Http\Controllers\AskAneeController::class, 'email'])->name('ask.email');
+Route::get('/ask-anee/answer/{token}', [App\Http\Controllers\AskAneeController::class, 'answer'])->where('token', '[A-Za-z0-9]{40}')->defaults('face', 'ph')->name('ask.answer');
+Route::post('/ask-anee/answer/{token}/start', [App\Http\Controllers\AskAneeController::class, 'start'])->where('token', '[A-Za-z0-9]{40}')->name('ask.start');
+Route::get('/ask-anee/answer/{token}/job', [App\Http\Controllers\AskAneeController::class, 'job'])->where('token', '[A-Za-z0-9]{40}')->name('ask.job');
+Route::get('/questions', [App\Http\Controllers\AskAneeController::class, 'questions'])->defaults('face', 'ph')->name('site.questions');
+Route::get('/question/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'questions')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.questions.show');
 Route::get('/sitemap.xml', [App\Http\Controllers\SitePageController::class, 'sitemap'])->name('site.sitemap');
 // The mother app's builder preview: signed, never indexed, drafts included.
 Route::get('/site-preview/{id}', [App\Http\Controllers\SitePageController::class, 'preview'])->whereNumber('id')->name('site.preview');

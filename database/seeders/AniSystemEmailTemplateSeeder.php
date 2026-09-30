@@ -510,6 +510,30 @@ class AniSystemEmailTemplateSeeder extends Seeder
                 ),
             ],
 
+            /* Try and Ask Anee: the answer to a visitor's one free question is
+             * behind the button. {{question}} and the farm lines are made safe
+             * by the sender. */
+            'ask_anee_answer' => [
+                'name' => 'Ask Anee — your answer is ready',
+                'subject' => 'Anee answered your question 🌾',
+                'tags' => '{{question}}, {{crop}}, {{farmSize}}, {{location}}, {{answerUrl}}, {{signupUrl}}, {{siteName}}',
+                'body' => S::wrap(
+                    '<p>Hi there,</p>'
+                    . '<p>Thank you for asking me! I looked at your question together with your farm, and your answer is ready.</p>'
+                    . S::label('You asked')
+                    . S::panel('<em>“{{question}}”</em>')
+                    . S::facts(['Crop' => '{{crop}}', 'Farm size' => '{{farmSize}}', 'Location' => '{{location}}'])
+                    . S::button('See my answer', '{{answerUrl}}')
+                    . S::panel('<strong style="display:block;margin-bottom:4px;">Want me on your farm every day?</strong>'
+                        . 'anee.io plans your whole season day by day, shows the growth stage and the weather for every lot, '
+                        . 'and lets you ask me anytime, even with a photo of a sick plant. Free to start.', 'gold')
+                    . S::button('Try anee.io for free', '{{signupUrl}}', false),
+                    'Your answer is ready',
+                    ['face' => 'happy', 'eyebrow' => 'Try and Ask Anee', 'preheader' => 'Tap the button to read the answer Anee wrote for your farm.',
+                     'why' => 'You are getting this because this address was entered on anee.io to receive an answer from Anee.']
+                ),
+            ],
+
             /* An answer from the admin's support desk. {{replyBody}} is the
              * answer itself, already made safe by the sender. */
             'support_reply' => [

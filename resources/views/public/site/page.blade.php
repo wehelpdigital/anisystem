@@ -12,6 +12,7 @@
     $updated = $page->updated_at ?? now();
     $sectionUrl = $page->section === 'features' ? route('features') : $S::url($page->section);
     $isFeature = $page->section === 'features';
+    $isQuestion = $page->section === 'questions';
     $feat = $isFeature ? $S::feature($page) : null;
     // A tall picture on a feature page is a phone screen: it stands in a
     // phone beside the words instead of being cropped into a banner.
@@ -59,6 +60,30 @@
         if ($heroSrc) {
             $ld[0]['image'] = [$heroSrc];
         }
+        // An answered question says so to search engines: the question, and
+        // the answer's opening as the accepted one.
+        if ($isQuestion) {
+            $asked = collect($blocks)->first(fn ($b) => ($b['type'] ?? '') === 'callout');
+            $ld[] = [
+                '@context' => 'https://schema.org',
+                '@type' => 'QAPage',
+                'mainEntity' => [
+                    '@type' => 'Question',
+                    'name' => $page->title,
+                    'text' => $asked ? $S::plain((string) ($asked['text'] ?? '')) : $page->title,
+                    'answerCount' => 1,
+                    'datePublished' => ($page->publishedAt ?? $updated)->toAtomString(),
+                    'author' => ['@type' => 'Person', 'name' => 'A farmer'],
+                    'acceptedAnswer' => [
+                        '@type' => 'Answer',
+                        'text' => $S::plain((string) $page->excerpt),
+                        'url' => $canonical,
+                        'datePublished' => ($page->publishedAt ?? $updated)->toAtomString(),
+                        'author' => ['@type' => 'Organization', 'name' => 'anee.io', 'url' => url('/')],
+                    ],
+                ],
+            ];
+        }
         if ($faq) {
             $ld[] = [
                 '@context' => 'https://schema.org',
@@ -105,7 +130,7 @@
                     <div class="sp-meta mt-4">
                         <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 2"/></svg>{{ $minutes }} min read</span>
                         <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>Updated {{ $updated->timezone('Asia/Manila')->format('F j, Y') }}</span>
-                        <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>By the anee.io agriculture team</span>
+                        <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ $isQuestion ? 'Answered by Anee, the anee.io AI technician' : 'By the anee.io agriculture team' }}</span>
                     </div>
                     @endif
                 </div>
@@ -143,6 +168,15 @@
                     @include('public.site.blocks', ['blocks' => $blocks])
                 </div>
                 <aside class="sp-side">
+                    @if ($isQuestion)
+                        {{-- The door this page came through, held open for the next farmer. --}}
+                        <div class="sp-ask">
+                            <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="Anee">
+                            <b>Have your own farming question?</b>
+                            <p>Ask Anee one question for free. Tell her about your farm and the answer comes to your email.</p>
+                            <a href="{{ url('/ask-anee') }}" class="btn btn-accent">Ask Anee for free</a>
+                        </div>
+                    @endif
                     @if (count($toc) > 1)
                         <div class="sp-card sp-toc-card">
                             <h4>On this page</h4>
@@ -187,8 +221,9 @@
     <section class="bg-[#f9fbf6] border-t border-[#e4efd4]">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
             <div class="flex flex-wrap items-end justify-between gap-3 mb-6">
-                <h2 class="font-heading text-2xl font-bold text-ink">More guides for your farm</h2>
+                <h2 class="font-heading text-2xl font-bold text-ink">{{ $isQuestion ? 'More questions farmers asked' : 'More guides for your farm' }}</h2>
                 <div class="sp-tabs">
+                    <a href="{{ $S::url('questions') }}" class="{{ $isQuestion ? 'is-on' : '' }}">Farmers' questions</a>
                     <a href="{{ $S::url('crops') }}" class="{{ $page->section === 'crops' ? 'is-on' : '' }}">Crop guides</a>
                     <a href="{{ $S::url('problems') }}" class="{{ $page->section === 'problems' ? 'is-on' : '' }}">Crop problems</a>
                     <a href="{{ $S::url('blog') }}" class="{{ $page->section === 'blog' ? 'is-on' : '' }}">Blog</a>
