@@ -11,6 +11,10 @@ use Illuminate\Support\Str;
 /**
  * The Technician's Blog follows the public site (2026-10-01).
  *
+ * Only the blog, and only the posts the mother app says belong here
+ * (as_site_pages.showIn: tech or both; the owner's call the same day). The
+ * crop guides and crop problems stay on the public site.
+ *
  * Every live crop guide, crop problem and blog page on the public site is an
  * article in the community's Tech Blog too: one as_community_blog_posts row
  * per page, tied by sitePageId, its body drawn from the page's blocks. The
@@ -25,12 +29,12 @@ use Illuminate\Support\Str;
  */
 class TechBlog
 {
-    public const SECTIONS = ['crops', 'problems', 'blog'];
+    public const SECTIONS = ['blog'];
 
     public const AUTHOR = 'anee.io Technicians';
 
     /** Bump when the drawing below changes, so every article is drawn again. */
-    private const VERSION = 2;
+    private const VERSION = 3;
 
     private const STAMP = 'tech-blog:synced';
 
@@ -62,7 +66,7 @@ class TechBlog
     private static function signature(): string
     {
         $row = AsSitePage::whereIn('section', self::SECTIONS)
-            ->selectRaw("count(*) as n, max(updated_at) as u, sum(deleteStatus = 1 and status = 'published') as live")
+            ->selectRaw("count(*) as n, max(updated_at) as u, sum(deleteStatus = 1 and status = 'published' and showIn != 'public') as live")
             ->first();
 
         return self::VERSION . '|' . $row->n . '|' . $row->u . '|' . $row->live;
@@ -78,7 +82,18 @@ class TechBlog
         $pages = AsSitePage::whereIn('section', self::SECTIONS)
             ->orderBy('sortOrder')->orderBy('id')->get();
         $posts = AsCommunityBlogPost::whereNotNull('sitePageId')->get()->keyBy('sitePageId');
-        $live = fn (AsSitePage $p) => (int) $p->deleteStatus === 1 && $p->status === 'published';
+        $live = fn (AsSitePage $p) => (int) $p->deleteStatus === 1 && $p->status === 'published'
+            && in_array($p->showIn ?? 'both', ['tech', 'both'], true);
+
+        // Articles of pages no longer in scope (the guides, a post kept to the
+        // public blog) step aside.
+        $inScope = $pages->pluck('id')->all();
+        foreach ($posts as $pid => $post) {
+            if (! in_array((int) $pid, $inScope, true) && (int) $post->deleteStatus === 1) {
+                $post->update(['deleteStatus' => 0]);
+                $counts['hidden']++;
+            }
+        }
 
         // First every live page gets its row, so the links between pages can
         // point at rows when the bodies are drawn.

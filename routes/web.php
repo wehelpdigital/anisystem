@@ -484,6 +484,12 @@ Route::middleware(['auth', 'admin.panel'])->prefix('admin')->group(function () {
 
 // The mother app deciding an order: token-checked in the controller, no
 // session, no CSRF (it is a server calling a server).
+// Write with Anee, for the mother app's page builder: a server calling a
+// server with the shared token (MotherWriterController), no session or CSRF.
+Route::post('/mother-api/writer', [App\Http\Controllers\MotherWriterController::class, 'start'])
+    ->withoutMiddleware([Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class])->name('mother.writer.start');
+Route::get('/mother-api/writer/{id}', [App\Http\Controllers\MotherWriterController::class, 'state'])->whereNumber('id')->name('mother.writer.state');
+Route::get('/mother-api/keywords', [App\Http\Controllers\MotherWriterController::class, 'keywords'])->name('mother.keywords');
 Route::post('/mother-api/orders/{id}/{action}', [App\Http\Controllers\MotherOrdersController::class, 'act'])
     ->whereNumber('id')->where('action', 'approve|reject|revoke|recheck')
     ->withoutMiddleware([Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class])

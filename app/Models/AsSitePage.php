@@ -15,7 +15,7 @@ class AsSitePage extends BaseModel
     protected $fillable = [
         'section', 'slug', 'lang', 'category', 'title', 'metaTitle', 'metaDescription', 'focusKeyword',
         'keywords', 'excerpt', 'heroImage', 'blocks', 'status', 'sortOrder', 'publishedAt', 'editedAt',
-        'editedBy', 'seedHash', 'seedJson', 'deleteStatus',
+        'editedBy', 'seedHash', 'seedJson', 'deleteStatus', 'showIn',
     ];
 
     protected $casts = [
@@ -28,8 +28,14 @@ class AsSitePage extends BaseModel
         'deleteStatus' => 'integer',
     ];
 
+    /**
+     * Live on the public site. A blog post meant only for the members'
+     * Technician's Blog (showIn = tech) is not: App\Support\TechBlog reads
+     * those itself.
+     */
     public function scopeLive($q)
     {
-        return $q->where('deleteStatus', 1)->where('status', 'published');
+        return $q->where('deleteStatus', 1)->where('status', 'published')
+            ->where(fn ($w) => $w->whereNull('showIn')->orWhere('showIn', '!=', 'tech'));
     }
 }
