@@ -7,7 +7,7 @@ class AiMessage extends BaseModel
     protected $table = 'anisystem_ai_messages';
 
     protected $fillable = [
-        'conversationId', 'role', 'content', 'imagePath', 'imagePaths',
+        'conversationId', 'role', 'content', 'imagePath', 'imagePaths', 'attachedContext',
         'tokensIn', 'tokensOut', 'creditsCharged', 'isRefusal', 'deleteStatus',
     ];
 

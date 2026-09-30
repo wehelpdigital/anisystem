@@ -268,6 +268,8 @@
         @keyframes ai-spin { to { transform: rotate(360deg); } }
 
         /* --- Composer dock --- */
+        /* What rode with a question, named under it. */
+        .ai-att-line { margin-top: .35rem; font-size: .78rem; font-weight: 600; opacity: .85; }
         .aichat-composer { flex-shrink: 0; padding: .6rem 0 .1rem; background: linear-gradient(to top, var(--color-gray-50) 70%, transparent); }
         /* The camera and the send button sit level with the writing.
            They were pinned to the bottom of the box, which is right for a
@@ -998,8 +1000,11 @@ const __init = () => {
         if (x) dropChip(x.closest('.ai-chip'));
     });
 
+    // Shrunk before it travels (window.aneeShrinkPhoto, resources/js/app.js).
+    const shrinkPhoto = (file) => (window.aneeShrinkPhoto ? window.aneeShrinkPhoto(file) : Promise.resolve(file));
+
     // Uploads run one call per file; the chip spins until its path lands.
-    function uploadOne(file) {
+    async function uploadOne(file) {
         if (!file || !(file.type || '').startsWith('image/')) return;
         if (!roomForAnother()) return;
         const preview = URL.createObjectURL(file);
@@ -1007,7 +1012,7 @@ const __init = () => {
         chip._blob = preview;
         uploadsBusy++; updateSend();
         const form = new FormData();
-        form.append('image', file);
+        form.append('image', await shrinkPhoto(file));
         api(URLS.photo, { method: 'POST', body: form })
             .then((res) => { chip.dataset.path = res.data.path; chip.classList.remove('is-busy'); })
             .catch((err) => { toast(err.message, 'error'); dropChip(chip); })
@@ -1286,7 +1291,10 @@ const __init = () => {
         setSending(true);
         const myPaths = attachedPaths();
         const myScheds = attachedScheds();
-        addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>', attachedUrls(), null, true);
+        // What rides with this question, named under it in the chat.
+        const riding = [attachedPlan, attachedAnalysis, attachedReport, attachedRealign, attachedReview].filter(Boolean).map((a) => a.title);
+        addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>'
+            + riding.map((t) => `<p class="ai-att-line">📎 ${escapeHtml(t)}</p>`).join(''), attachedUrls(), null, true);
         input.value = '';
         sayEstimate();
         input.style.height = 'auto';
@@ -1314,7 +1322,10 @@ const __init = () => {
             conversationId = res.data.conversationId;
             // The chips leave the moment the send is known good - before any
             // templating that could throw and strand them in the composer.
+            // All of them: the photos and whatever was attached. The chat keeps
+            // what was attached (the server carries it into the next turns).
             clearPhotos();
+            clearAttachments();
             const costLine = UNLIMITED ? '' : `<p class="aibubble-cost">${escapeHtml(String(Math.ceil(Number(res.data.answer.creditsCharged) || 0)))} credits</p>`;
             thinking.querySelector('.aibubble').innerHTML =
                 renderAnswer(res.data.answer.content)
@@ -1344,6 +1355,20 @@ const __init = () => {
         }
     }
     byId('aiSendBtn')?.addEventListener('click', send);
+
+    /* Everything attached, taken off the composer after a question is sent. */
+    function clearAttachments() {
+        attachedAnalysis = null; attachedReport = null; attachedRealign = null; attachedReview = null;
+        if (attachedPlan) { attachedPlan = null; try { drawPlanChip?.(); } catch (_) {} }
+        ['aiWtpChip', 'aiRptChip', 'aiRgnChip', 'aiPbrChip'].forEach((id) => { const c = byId(id); if (c) c.hidden = true; });
+        // The address loses its ?realign= / ?freport= so a reload does not attach it again.
+        try {
+            const u = new URL(location.href);
+            ['analysis', 'freport', 'realign', 'pbreview'].forEach((k) => u.searchParams.delete(k));
+            history.replaceState(history.state, '', u.pathname + (u.search ? u.search : '') + u.hash);
+        } catch (_) {}
+        sayEstimate();
+    }
 
     /* ---- Conversations ---- */
     byId('aiHistoryBtn')?.addEventListener('click', () => openSheet('aiHistorySheet'));

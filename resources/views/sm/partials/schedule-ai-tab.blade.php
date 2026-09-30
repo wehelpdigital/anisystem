@@ -896,14 +896,15 @@
             $('saiSend').disabled = busy || uploadsBusy > 0;
         }
         // Uploads run one call per file; the chip spins until its path lands.
-        function uploadOne(file) {
+        // Shrunk before it travels (window.aneeShrinkPhoto, app.js).
+        async function uploadOne(file) {
             if (!file || !(file.type || '').startsWith('image/')) return;
             if (!roomForAnother()) return;
             const preview = URL.createObjectURL(file);
             const chip = addChip(preview);
             chip._blob = preview;
             uploadsBusy++; sayAttaching();
-            const form = new FormData(); form.append('image', file);
+            const form = new FormData(); form.append('image', window.aneeShrinkPhoto ? await window.aneeShrinkPhoto(file) : file);
             // Which season this photo belongs to, so it lands in that
             // gallery rather than the global one.
             try { form.append('scheduleId', String(SCHEDULE_ID)); } catch (_) {}

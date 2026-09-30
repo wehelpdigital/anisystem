@@ -526,10 +526,8 @@ class ScheduleAiController extends BaseScheduleController
                     return null;
                 }
 
-                return [
-                    'data' => base64_encode($res->body()),
-                    'mime' => $res->header('Content-Type') ?: 'image/jpeg',
-                ];
+                // Fitted for the model: see App\Support\ModelImage.
+                return \App\Support\ModelImage::fit($res->body(), $res->header('Content-Type') ?: 'image/jpeg');
             } catch (\Throwable $e) {
                 return null;
             }
@@ -544,7 +542,7 @@ class ScheduleAiController extends BaseScheduleController
             return null;
         }
 
-        return ['mime' => $mime, 'data' => base64_encode($disk->get($path))];
+        return \App\Support\ModelImage::fit($disk->get($path), $mime);
     }
 
     /** Season-media paths per schedule, built once per request. */

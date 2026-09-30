@@ -272,6 +272,37 @@ window.api = async function api(url, { method = 'GET', body = null, headers = {}
 };
 
 /* ------------------------------------------------------------------ */
+/* A photo, shrunk before it travels                                     */
+/* ------------------------------------------------------------------ */
+
+/* A phone's photo is 4 to 8 MB and more pixels than Anee reads. Redrawn to
+ * 2048 px on its long side as a JPEG it uploads in a moment and never meets
+ * a size limit on the way (the chat's "Request failed", 2026-09-30). A small
+ * photo, or one the browser cannot redraw, goes as it is. */
+window.aneeShrinkPhoto = async function aneeShrinkPhoto(file, maxSide = 2048) {
+    try {
+        if (!file || file.size < 900 * 1024 || !window.createImageBitmap) return file;
+        const bmp = await createImageBitmap(file, { imageOrientation: 'from-image' });
+        const scale = Math.min(1, maxSide / Math.max(bmp.width, bmp.height));
+        const w = Math.max(1, Math.round(bmp.width * scale));
+        const h = Math.max(1, Math.round(bmp.height * scale));
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, w, h);
+        ctx.drawImage(bmp, 0, 0, w, h);
+        if (bmp.close) bmp.close();
+        const blob = await new Promise((ok) => canvas.toBlob(ok, 'image/jpeg', 0.85));
+        if (!blob || blob.size >= file.size) return file;
+        return new File([blob], (file.name || 'photo').replace(/\.[^.]+$/, '') + '.jpg', { type: 'image/jpeg' });
+    } catch {
+        return file;
+    }
+};
+
+/* ------------------------------------------------------------------ */
 /* Toasts                                                               */
 /* ------------------------------------------------------------------ */
 

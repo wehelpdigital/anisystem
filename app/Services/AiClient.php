@@ -269,10 +269,13 @@ class AiClient
             return [];
         }
 
-        return isset($image['mime']) ? [$image] : array_values(array_filter(
+        $list = isset($image['mime']) ? [$image] : array_values(array_filter(
             $image,
             fn ($p) => is_array($p) && isset($p['mime'], $p['data'])
         ));
+
+        // Every picture at a size the model takes (App\Support\ModelImage).
+        return array_map(fn ($p) => \App\Support\ModelImage::fitEncoded($p), $list);
     }
 
     private function askClaude(AiSetting $s, string $key, array $history, string $prompt, array $images, ?int $maxOut = null, bool $search = false): array

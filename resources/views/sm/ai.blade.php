@@ -1067,7 +1067,8 @@ const __init = () => {
     });
 
     // Uploads run one call per file; the chip spins until its path lands.
-    function uploadOne(file) {
+    // A photo is shrunk before it travels (window.aneeShrinkPhoto, app.js).
+    async function uploadOne(file) {
         if (!file || !(file.type || '').startsWith('image/')) return;
         if (!roomForAnother()) return;
         const preview = URL.createObjectURL(file);
@@ -1075,7 +1076,7 @@ const __init = () => {
         chip._blob = preview;
         uploadsBusy++; updateSend();
         const form = new FormData();
-        form.append('image', file);
+        form.append('image', window.aneeShrinkPhoto ? await window.aneeShrinkPhoto(file) : file);
         // Which season this photo belongs to, so it lands in that
         // gallery rather than the global one.
         try { form.append('scheduleId', String(SCHEDULE_ID)); } catch (_) {}

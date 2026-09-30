@@ -369,7 +369,11 @@ class AiController extends Controller
             // every photo still reaches the model either way.
             'imagePath' => $imagePath,
         ] + (\Illuminate\Support\Facades\Schema::hasColumn((new AiMessage)->getTable(), 'imagePaths')
-            ? ['imagePaths' => $imagePaths ?: null] : []) + [
+            ? ['imagePaths' => $imagePaths ?: null] : [])
+            // What was attached, kept with the question: the composer clears its
+            // chips once it is sent, and the questions after it still need it.
+            + ($analysisCtx !== '' && \Illuminate\Support\Facades\Schema::hasColumn((new AiMessage)->getTable(), 'attachedContext')
+            ? ['attachedContext' => $analysisCtx] : []) + [
             'deleteStatus' => 1,
         ]);
 
@@ -390,8 +394,19 @@ class AiController extends Controller
             ->limit(self::HISTORY_TURNS)
             ->get()
             ->reverse()
-            ->map(fn ($m) => ['role' => $m->role, 'text' => (string) $m->content])
-            ->values()
+            ->values();
+        /* The newest thing the farmer attached keeps riding with the chat:
+         * once, on the turn it came with, so a follow up ("I meant the north
+         * lot") is read against it. Only the newest, so a long chat with many
+         * reports does not grow past what she can read. Unless this question
+         * brings its own, which the context already carries. */
+        $history = collect($history);
+        $carryId = $analysisCtx === ''
+            ? $history->filter(fn ($m) => $m->role === 'user' && filled($m->attachedContext ?? null))->last()?->id
+            : null;
+        $history = $history
+            ->map(fn ($m) => ['role' => $m->role, 'text' => (string) $m->content
+                . ($carryId !== null && $m->id === $carryId ? "\n" . $m->attachedContext : '')])
             ->all();
 
         $result = $this->ai->ask($settings, $history, $context . $prompt, $image);
@@ -1294,10 +1309,7 @@ class AiController extends Controller
                     return null;
                 }
 
-                return [
-                    'data' => base64_encode($res->body()),
-                    'mime' => $res->header('Content-Type') ?: 'image/jpeg',
-                ];
+                return \App\Support\ModelImage::fit($res->body(), $res->header('Content-Type') ?: 'image/jpeg');
             } catch (\Throwable $e) {
                 return null;
             }
@@ -1313,7 +1325,7 @@ class AiController extends Controller
             return null;
         }
 
-        return ['mime' => $mime, 'data' => base64_encode($disk->get($path))];
+        return \App\Support\ModelImage::fit($disk->get($path), $mime);
     }
 
     /** Season-media paths per schedule, built once per request. */
