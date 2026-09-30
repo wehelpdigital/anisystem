@@ -408,6 +408,9 @@ class ScheduleAiController extends BaseScheduleController
          * question about a beetle came back about their rice. The season is
          * where the thread LIVES, not a premise it argues from. */
         $context = $request->boolean('usePlan') ? $this->scheduleContext($schedule) : '';
+        // What Anee has already worked out for this season, one line each
+        // (AneeMemory::season): her own words, not the plan.
+        $context = ($request->boolean('forget') ? '' : \App\Support\AneeMemory::season($schedule, $askerId)) . $context;
 
         // This question's photos: looked at, said, and weighed with the rest.
         $result = $this->ai->ask($settings, $history, $context . \App\Support\ModelImage::lookLine(count($images)) . $prompt, $image);

@@ -352,8 +352,6 @@ class AiController extends Controller
             $context = $this->scheduleContext($request->input('scheduleId'), $userId);
         }
         $context = $this->applyLinkContext($context, $conversation);
-        // A season's chat remembers what Anee has said about the season.
-        $context .= $this->realignMemory($request->input('scheduleId'));
         $context .= $analysisCtx;
 
         $userMessage = AiMessage::create([
@@ -429,45 +427,6 @@ class AiController extends Controller
             ->whereHas('messages', fn ($q) => $q->where('deleteStatus', 1))
             ->orderByDesc('updated_at')
             ->first();
-    }
-
-    /**
-     * What Anee has already said about a season's lots: her Realign by Anee
-     * readings, one line each. Her own words, so a season's chat does not
-     * meet "am I really ten days late?" as if she had never looked. Reference
-     * only (the house rules say to use background only when asked about it).
-     */
-    private function realignMemory($scheduleId): string
-    {
-        if (! $scheduleId) {
-            return '';
-        }
-        try {
-            $schedule = AsCroppingSchedule::active()->forClient(\App\Support\WorkerContext::effectiveOwnerId())->where('id', (int) $scheduleId)->first();
-            if (! $schedule) {
-                return '';
-            }
-            $lines = [];
-            foreach ($schedule->lots()->whereNotNull('growthRealignedAt')->get() as $lot) {
-                $r = is_array($lot->growthRealign) ? $lot->growthRealign : null;
-                if (! $r) {
-                    continue;
-                }
-                $shift = (int) ($lot->growthShiftDays ?? 0);
-                $lines[] = '- ' . $lot->lotName . ' (read ' . $lot->growthRealignedAt->format('M j') . '): '
-                    . ($r['stageLabel'] ?? '?') . ', ' . ($shift === 0 ? 'on the calendar' : abs($shift) . ' days ' . ($shift < 0 ? 'behind' : 'ahead of') . ' the calendar')
-                    . ' (the calendar counted ' . ($r['counter'] ?? 'day') . ' ' . ($r['calendarDay'] ?? '?') . '). '
-                    . \Illuminate\Support\Str::limit(trim((string) ($r['summary'] ?? '')), 280);
-            }
-        } catch (\Throwable $e) {
-            return '';
-        }
-
-        return $lines
-            ? "\n\n--- Your own Realign by Anee readings for this season (you read the crop's real stage against the calendar). "
-                . "Reference only: use them when the question is about this crop's stage, timing, delay or harvest, and stand by them unless the farmer shows you otherwise ---\n"
-                . implode("\n", $lines) . "\n--- END ---\n"
-            : '';
     }
 
     /**
@@ -549,24 +508,35 @@ class AiController extends Controller
             ->get()
             ->reverse()
             ->values();
-        /* The newest thing the farmer attached keeps riding with the chat:
-         * once, on the turn it came with, so a follow up ("I meant the north
-         * lot") is read against it. Only the newest, so a long chat with many
-         * reports does not grow past what she can read. Unless this question
-         * brings its own, which the context already carries. */
+        /* Everything the farmer attached in this chat keeps riding with it
+         * (2026-09-30; it was only the newest, and only until a new one
+         * came): a follow up ("and next to the report?") is read against all
+         * of it. On its own turn while that turn is in the window, in a block
+         * once it has scrolled out, and by name when too long to carry again
+         * (AneeMemory::carried). Nothing, for a clean read. */
         $history = collect($history);
-        $carryId = $analysisCtx === ''
-            ? $history->filter(fn ($m) => $m->role === 'user' && filled($m->attachedContext ?? null))->last()?->id
-            : null;
+        $carry = $request->boolean('forget')
+            ? ['turns' => [], 'block' => '']
+            : \App\Support\AneeMemory::carried(
+                $conversation->messages()->where('id', '<', $userMessage->id)->where('role', 'user')
+                    ->whereNotNull('attachedContext')->where('attachedContext', '!=', '')
+                    ->reorder('id', 'desc')->limit(12)->get(['id', 'attachedContext']),
+                $history->map(fn ($m) => (int) $m->id)->all(),
+                $analysisCtx
+            );
         $history = $history
             ->map(fn ($m) => ['role' => $m->role, 'text' => (string) $m->content
                 // An earlier question's photos, remembered as having been seen.
                 . ($m->role === 'user' ? \App\Support\ModelImage::sawLine(count(is_array($m->imagePaths) ? $m->imagePaths : ($m->imagePath ? [$m->imagePath] : []))) : '')
-                . ($carryId !== null && $m->id === $carryId ? "\n" . $m->attachedContext : '')])
+                . (isset($carry['turns'][(int) $m->id]) ? "\n" . $carry['turns'][(int) $m->id] : '')])
             ->all();
 
+        // A season's chat knows what Anee has already worked out for the
+        // season: readings, reports, reviews, analyses (AneeMemory::season).
+        $memory = $request->boolean('forget') ? '' : \App\Support\AneeMemory::seasonById($request->input('scheduleId'), $userId);
+
         // This question's photos: looked at, said, and weighed with the rest.
-        $result = $this->ai->ask($settings, $history, $context . \App\Support\ModelImage::lookLine(count($images)) . $prompt, $image);
+        $result = $this->ai->ask($settings, $history, $memory . $carry['block'] . $context . \App\Support\ModelImage::lookLine(count($images)) . $prompt, $image);
 
         if (! $result['ok']) {
             // Nothing was produced, so nothing is charged.
