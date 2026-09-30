@@ -355,6 +355,12 @@ class SitePages
             }
         }
         self::forgetCaches();
+        // The Tech Blog's articles follow the pages.
+        try {
+            TechBlog::sync();
+        } catch (\Throwable $e) {
+            report($e);
+        }
 
         return $counts;
     }

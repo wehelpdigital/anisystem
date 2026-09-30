@@ -91,6 +91,11 @@
     .article-body table { width:100%; border-collapse:collapse; margin:1.2rem 0; font-size:.9rem; }
     .article-body th, .article-body td { border:1px solid var(--color-gray-200); padding:.45rem .6rem; text-align:left; }
     .article-body th { background:var(--color-gray-50); font-weight:700; }
+    /* A wide table scrolls inside the article instead of pushing the page. */
+    .article-body .a-table { overflow-x:auto; margin:1.2rem 0; -webkit-overflow-scrolling:touch; }
+    .article-body .a-table table { margin:0; min-width:30rem; }
+    .article-body .a-note ul { margin:.3rem 0 0 1.1rem; }
+    .article-body h4 { font-size:1rem; }
 </style>
 @endpush
 

@@ -32,6 +32,9 @@ class CommunityController extends Controller
      */
     public function feed(Request $request)
     {
+        // The feed shows the newest articles, which follow the public site.
+        \App\Support\TechBlog::syncIfStale();
+
         $me = Auth::user();
         $friendIds = \App\Models\CommunityConnection::connectedIds((int) $me->id);
 

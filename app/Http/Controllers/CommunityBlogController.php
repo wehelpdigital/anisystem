@@ -15,6 +15,9 @@ class CommunityBlogController extends Controller
 {
     public function index(\Illuminate\Http\Request $request)
     {
+        // The articles follow the public site's guides and blog.
+        \App\Support\TechBlog::syncIfStale();
+
         /* An article is its title, the line under it, the words in it and
          * whoever wrote it — all four are searched, because a reader looking
          * for "the one about mechanisation" does not know which of them they
@@ -62,6 +65,8 @@ class CommunityBlogController extends Controller
 
     public function show(int $id)
     {
+        \App\Support\TechBlog::syncIfStale();
+
         $post = AsCommunityBlogPost::active()->published()->where('id', $id)->first();
         if (! $post) {
             abort(404);

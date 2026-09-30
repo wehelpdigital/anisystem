@@ -161,6 +161,7 @@ class AppController extends Controller
         $aiPayerId = \App\Support\WorkerContext::effectiveOwnerId();
         $aiBalance = app(\App\Services\AiCreditService::class)->balance($aiPayerId);
 
+        \App\Support\TechBlog::syncIfStale();
         $latestBlog = \App\Models\AsCommunityBlogPost::active()
             ->published()
             ->orderByDesc('publishedAt')

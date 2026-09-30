@@ -9,6 +9,8 @@ class AsCommunityBlogPost extends BaseModel
     protected $fillable = [
         'title', 'slug', 'coverImagePath', 'coverPaths', 'excerpt', 'body',
         'authorName', 'isPublished', 'publishedAt', 'viewCount', 'deleteStatus',
+        // The public site page this article follows (App\Support\TechBlog).
+        'sitePageId',
     ];
 
     protected $casts = [
@@ -50,7 +52,7 @@ class AsCommunityBlogPost extends BaseModel
 
         return array_map(fn ($p) => [
             'url' => \App\Support\MediaStore::url($p),
-            'mother' => ($base !== '' && ! \App\Support\MediaStore::isRemote($p))
+            'mother' => ($base !== '' && ! \App\Support\MediaStore::isRemote($p) && ! \App\Support\MediaStore::isSiteAsset($p))
                 ? $base . '/storage/' . ltrim($p, '/')
                 : null,
         ], $paths);
@@ -74,7 +76,8 @@ class AsCommunityBlogPost extends BaseModel
      */
     public function coverUrlOnMother(): ?string
     {
-        if (blank($this->coverImagePath) || \App\Support\MediaStore::isRemote($this->coverImagePath)) {
+        if (blank($this->coverImagePath) || \App\Support\MediaStore::isRemote($this->coverImagePath)
+            || \App\Support\MediaStore::isSiteAsset($this->coverImagePath)) {
             return null;
         }
 

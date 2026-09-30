@@ -144,6 +144,12 @@ class MediaStore
             return null;
         }
 
+        // A picture that ships with the site (/images/...) or a full
+        // address: the Tech Blog's articles wear the public guides' photos.
+        if (self::isSiteAsset($path)) {
+            return preg_match('#^https?://#i', $path) ? $path : asset(ltrim($path, '/'));
+        }
+
         if (Str::startsWith($path, self::REMOTE_PREFIX)) {
             // The bucket directly when its address is known; the mother's
             // /storage door otherwise (see config/mother.php, media_url).
@@ -196,6 +202,12 @@ class MediaStore
     }
 
     /** True for a path the mother app holds. */
+    /** A site picture (/images/...) or a full address, not a stored upload. */
+    public static function isSiteAsset(?string $path): bool
+    {
+        return $path !== null && (str_starts_with($path, '/') || (bool) preg_match('#^https?://#i', $path));
+    }
+
     public static function isRemote(?string $path): bool
     {
         return $path !== null && Str::startsWith($path, self::REMOTE_PREFIX);
