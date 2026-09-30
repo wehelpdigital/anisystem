@@ -2,7 +2,7 @@
 
 @section('title', 'Choose Your Plan')
 @section('page-title', 'Choose Your Plan')
-@section('page-subtitle', 'Pay via ' . \App\Support\Region::payMethod() . ' — activated after manual verification')
+@section('page-subtitle', 'Pay by ' . \App\Support\Region::payMethod() . '. We turn it on once we check it.')
 
 @section('content')
 <div class="max-w-4xl mx-auto">
@@ -12,16 +12,16 @@
     <div class="text-center mb-6 md:mb-8">
         <h2 class="text-xl md:text-2xl font-bold text-gray-900">Simple plans, full access</h2>
         <p class="text-sm text-gray-500 mt-1 max-w-lg mx-auto">
-            Every plan unlocks the complete cropping schedule manager. Pay with {{ \App\Support\Region::payMethod() }} and our team
-            will verify your payment — usually within the day.
+            Every plan opens the full season planner. Pay with {{ \App\Support\Region::payMethod() }} and our team
+            checks it, usually within the day.
         </p>
     </div>
 
     @if ($plans->isEmpty())
         <div class="card max-w-md mx-auto">
             <div class="card-body text-center py-10">
-                <p class="font-semibold text-gray-800">No plans are available right now.</p>
-                <p class="text-sm text-gray-500 mt-1">Please check back soon or contact support at support@anee.io.</p>
+                <p class="font-semibold text-gray-800">No plans right now.</p>
+                <p class="text-sm text-gray-500 mt-1">Check back soon, or email support@anee.io.</p>
             </div>
         </div>
     @else
@@ -64,8 +64,8 @@
         </div>
 
         <p class="text-center text-xs text-gray-500 mt-6 max-w-md mx-auto">
-            Payments are verified manually by the anee.io team. Your subscription starts the moment
-            your {{ \App\Support\Region::payMethod() }} payment is approved — you'll get an email confirmation.
+            Our team checks each payment by hand. Your plan starts once your
+            {{ \App\Support\Region::payMethod() }} payment is approved. We will email you.
         </p>
     @endif
 </div>

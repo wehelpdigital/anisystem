@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Schedule — {{ $schedule->title }}</title>
+    <title>Schedule: {{ $schedule->title }}</title>
     <style>
         @page { size: A4; margin: 20mm 18mm 22mm; }
         * { box-sizing: border-box; }
@@ -341,7 +341,7 @@
             @if($firstDate)
                 <span><strong>Spans:</strong>
                     {{ \Illuminate\Support\Carbon::parse($firstDate)->format('M j, Y') }}
-                    @if($lastEnd) — {{ \Illuminate\Support\Carbon::parse($lastEnd)->format('M j, Y') }} @endif
+                    @if($lastEnd) to {{ \Illuminate\Support\Carbon::parse($lastEnd)->format('M j, Y') }} @endif
                 </span>
             @endif
             <span><strong>Generated:</strong> {{ $generatedAt->format('M j, Y · g:i A') }}</span>
@@ -413,14 +413,14 @@
         <section class="section">
             <div class="critical-rules-callout">
                 <div class="critical-rules-heading">
-                    ⚑ Critical Rules — Read Every Time
+                    ⚑ Critical Rules: Read Every Time
                 </div>
                 <ol class="critical-rules-print-list">
                     @foreach($schedule->criticalRules as $cRule)
                         <li class="rich-inline">{!! $cRule->ruleText !!}</li>
                     @endforeach
                     @foreach($exRuleEntries as $entry)
-                        <li class="rich-inline">@if($entry->title)<strong>{{ $entry->title }} — </strong>@endif{!! $entry->content !!}</li>
+                        <li class="rich-inline">@if($entry->title)<strong>{{ $entry->title }}: </strong>@endif{!! $entry->content !!}</li>
                     @endforeach
                 </ol>
             </div>
@@ -710,8 +710,8 @@
                     $iPrio = (int) ($i->priority ?? 5);
                     $iIsDateMode = ($i->dayMode === 'date' && $i->startDate && $i->endDate);
                     $iRangeLabel = $iIsDateMode
-                        ? $i->startDate->format('M j, Y') . ' — ' . $i->endDate->format('M j, Y')
-                        : $schedule->dayType . ' ' . $i->startDay . '–' . $i->endDay;
+                        ? $i->startDate->format('M j, Y') . ' to ' . $i->endDate->format('M j, Y')
+                        : $schedule->dayType . ' ' . $i->startDay . ' to ' . $i->endDay;
                     $iPrioColor = ['','#9c1c1c','#d97a4f','#d9a23a','#7a8a99','#c8cdd5'][$iPrio] ?? '#c8cdd5';
                     $iPrioTextColor = $iPrio >= 3 ? '#3a2c0a' : '#fff';
                 @endphp
@@ -777,13 +777,13 @@
                                         <small class="muted">({{ $g->lots->pluck('lotName')->implode(', ') }})</small>
                                     @endif
                                     @if($gStart)
-                                        — {{ $gStart->copy()->addDays((int) $i->startDay)->format('M j, Y') }}
+                                        · {{ $gStart->copy()->addDays((int) $i->startDay)->format('M j, Y') }}
                                         @if($i->endDay !== $i->startDay)
                                             → {{ $gStart->copy()->addDays((int) $i->endDay)->format('M j, Y') }}
                                             ({{ ((int) $i->endDay - (int) $i->startDay) + 1 }}d)
                                         @endif
                                     @else
-                                        <small class="muted">— no group start date set</small>
+                                        <small class="muted">(no start date set)</small>
                                     @endif
                                 </li>
                             @endforeach
@@ -795,7 +795,7 @@
     @endif
 
     <footer class="doc-footer">
-        {{ $schedule->title }} — printed {{ $generatedAt->format('M j, Y · g:i A') }} from anee.io
+        {{ $schedule->title }} · Printed {{ $generatedAt->format('M j, Y · g:i A') }} from anee.io
     </footer>
 </body>
 </html>

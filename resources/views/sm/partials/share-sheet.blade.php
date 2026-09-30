@@ -7,7 +7,7 @@
      ============================================================ --}}
 @php
     $publicUrl = route('share.schedule', $schedule->shareToken);
-    $shareTitle = $schedule->title . ' — cropping plan on anee.io';
+    $shareTitle = $schedule->title . ': cropping plan on anee.io';
 @endphp
 <div class="sheet hidden" id="shareScheduleSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>
@@ -25,12 +25,12 @@
                     style="font-size:.82rem;" onclick="this.select()">
                 <button type="button" id="shareCopyBtn" class="btn btn-white btn-sm shrink-0">Copy</button>
             </div>
-            <p class="form-hint">Anyone with the link can view the plan. People who aren't members yet are invited to register when they open it.</p>
+            <p class="form-hint">Anyone with the link can see the plan. People without an account are asked to sign up.</p>
         </div>
 
         {{-- Social --}}
         <div>
-            <label class="form-label">Post to social</label>
+            <label class="form-label">Post on social media</label>
             <div class="grid grid-cols-2 gap-2">
                 <button type="button" id="shareFbBtn" class="btn btn-white flex items-center justify-center gap-2">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
@@ -105,7 +105,7 @@
             const items = (res.data && res.data.items) || [];
             cofarmersLoaded = true;
             if (!items.length) {
-                box.innerHTML = '<p class="text-sm text-gray-400 px-2 py-3 text-center">No co-farmers yet. Connect with members in the Community.</p>';
+                box.innerHTML = '<p class="text-sm text-gray-400 px-2 py-3 text-center">No co-farmers yet. Find them in the Community.</p>';
                 return;
             }
             box.innerHTML = items.map((u) => {
@@ -136,7 +136,7 @@
                 body: { body: SHARE_TITLE + '\n' + PUBLIC_URL },
             });
             send.textContent = 'Sent ✓';
-            window.toast('Shared with your co-farmer.');
+            window.toast('Sent to your co-farmer.');
         } catch (err) {
             send.disabled = false;
             send.textContent = original;

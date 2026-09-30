@@ -139,7 +139,7 @@
             @endfor
         </div>
         <textarea id="rateReview" class="form-textarea mt-3" rows="2" maxlength="500"
-                  placeholder="Optional — what worked, what you'd change.">{{ $myRating->review ?? '' }}</textarea>
+                  placeholder="Optional. What worked? What would you change?">{{ $myRating->review ?? '' }}</textarea>
         <button type="button" class="btn btn-primary btn-sm mt-3" id="rateSaveBtn">
             {{ $myRating ? 'Update rating' : 'Submit rating' }}
         </button>
@@ -230,7 +230,7 @@
 
     <div class="mt-4" id="commentComposer">
         <textarea id="commentBody" class="form-textarea" rows="3" maxlength="4000"
-                  placeholder="{{ $isOwner ? 'Add a note for readers…' : 'Ask the grower something, or say what you learned…' }}"></textarea>
+                  placeholder="{{ $isOwner ? 'Add a note for readers' : 'Ask the grower or share what you learned' }}"></textarea>
         <div class="flex items-center justify-between gap-3 mt-2">
             <div class="flex items-center gap-2">
                 <button type="button" class="emoji-btn js-emoji-btn" data-target="commentBody" aria-label="Add an emoji" title="Emoji">
@@ -254,7 +254,7 @@
     </div>
 
     <p class="text-sm text-gray-500 text-center py-6 {{ $thread->isEmpty() ? '' : 'hidden' }}" id="commentEmpty">
-        {{ $isOwner ? 'Nobody has asked anything yet.' : 'No questions yet — be the first to ask.' }}
+        {{ $isOwner ? 'No questions yet.' : 'No questions yet. Be the first to ask.' }}
     </p>
 </div>
 @endsection

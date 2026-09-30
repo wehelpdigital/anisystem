@@ -116,7 +116,7 @@
 <div class="card p-8 text-center {{ $observations->isEmpty() ? '' : 'hidden' }}" id="phEmpty">
     <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
     <p class="font-semibold text-gray-700 mt-3">Nothing recorded yet</p>
-    <p class="text-sm text-gray-500 mt-1">After harvest, note what you actually got — yield, moisture, price, what went wrong — so next season is planned from real numbers.</p>
+    <p class="text-sm text-gray-500 mt-1">After harvest, note your yield, moisture, price and any problems. Then you can plan next season from real numbers.</p>
     <button type="button" class="btn btn-primary mt-4" data-ph-add>Record an observation</button>
 </div>
 
@@ -138,8 +138,8 @@
         <input type="hidden" id="phId" value="">
 
         <div class="mb-4">
-            <label class="form-label" for="phTitle">What are you recording? <span class="text-red-500">*</span></label>
-            <input type="text" id="phTitle" class="form-input" maxlength="191" placeholder="e.g. Lot A harvest — 92 sacks">
+            <label class="form-label" for="phTitle">Title <span class="text-red-500">*</span></label>
+            <input type="text" id="phTitle" class="form-input" maxlength="191" placeholder="e.g. Lot A harvest, 92 sacks">
         </div>
         {{-- What kind of observation this is — a tag that opens a chooser
              (the owner's call, 2026-09-05): it decides what the rest of the
@@ -161,14 +161,14 @@
         <div class="mb-4">
             <label class="form-label">Lot</label>
             <select id="phLot" class="hidden" aria-hidden="true" tabindex="-1">
-                <option value="">Whole schedule</option>
+                <option value="">Whole season</option>
                 @foreach ($schedule->lots as $lot)
                     <option value="{{ $lot->id }}">{{ $lot->lotName }}</option>
                 @endforeach
             </select>
             <button type="button" class="crop-tag" id="phLotBtn">
                 <span class="crop-tag-e">🌾</span>
-                <span class="crop-tag-t is-none" id="phLotNow">Whole schedule</span>
+                <span class="crop-tag-t is-none" id="phLotNow">Whole season</span>
                 <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
             </button>
         </div>
@@ -193,7 +193,7 @@
         </div>
 
         <div class="mb-2">
-            <label class="form-label">Photos &amp; clips <span class="text-gray-400 font-normal">(add as many as you like)</span></label>
+            <label class="form-label">Photos and videos <span class="text-gray-400 font-normal">(as many as you like)</span></label>
             @include('sm.partials.attach-bar', [
                 'barId' => 'phAttach',
                 'scheduleId' => $schedule->id,
@@ -204,15 +204,15 @@
                 'videoUrl' => route('sm.post-harvest.image-upload') . '?scheduleId=' . $schedule->id,
                 'kinds' => 'image,video',
                 'label' => 'Attach to this observation',
-                'hint' => 'Snap the harvest, the sacks, or a problem worth remembering — or reuse something the season already has.',
+                'hint' => 'Take a photo of the harvest, the sacks or a problem. Or pick one this season already has.',
             ])
             <div id="phCameraWrap" class="hidden mt-2">
                 <video id="phVideo" autoplay playsinline muted class="ph-video"></video>
                 <div class="flex gap-2 mt-1">
-                    <button type="button" class="btn btn-primary btn-sm" id="phShutter">Capture</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="phShutter">Take photo</button>
                     <button type="button" class="btn btn-ghost btn-sm" id="phCameraCancel">Done</button>
                 </div>
-                <p class="form-hint">Capture as many as you need, then tap Done.</p>
+                <p class="form-hint">Take as many as you need, then tap Done.</p>
             </div>
             <div id="phGallery" class="mt-2 grid grid-cols-3 gap-2"></div>
         </div>
@@ -260,7 +260,7 @@
     <div class="sheet-body dt-rows" id="phLotList">
         <button type="button" class="dt-row is-on" data-ph-lot="">
             <span class="dt-row-e">🗺️</span>
-            <span class="dt-row-body"><b>Whole schedule</b><i>Not tied to one lot</i></span>
+            <span class="dt-row-body"><b>Whole season</b><i>Not for one lot</i></span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </button>
         @foreach ($schedule->lots as $lot)
@@ -476,10 +476,10 @@ const __init = () => {
                 .map((k) => `<option value="${escapeHtml(k)}"${v === k ? ' selected' : ''}>${escapeHtml(f.options[k])}</option>`)
                 .join('');
             const said = (f.options && f.options[v]) ? f.options[v] : '';
-            input = `<select class="hidden" aria-hidden="true" tabindex="-1" data-ph-field="${f.key}"><option value="">—</option>${opts}</select>
+            input = `<select class="hidden" aria-hidden="true" tabindex="-1" data-ph-field="${f.key}"><option value="">Not set</option>${opts}</select>
                 <button type="button" class="crop-tag" data-ph-selbtn="${f.key}">
                     <span class="crop-tag-e">🔹</span>
-                    <span class="crop-tag-t${said ? '' : ' is-none'}">${said ? escapeHtml(said) : 'Choose…'}</span>
+                    <span class="crop-tag-t${said ? '' : ' is-none'}">${said ? escapeHtml(said) : 'Choose'}</span>
                     <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>`;
         } else if (f.type === 'textarea') {
@@ -506,7 +506,7 @@ const __init = () => {
         const keep = source || readFields();
         host.innerHTML = (PH_FIELDS[category] || [])
             .map((f) => fieldHtml(f, keep[f.key]))
-            .join('') || '<p class="form-hint">Nothing else to fill in — write it in the notes below.</p>';
+            .join('') || '<p class="form-hint">Nothing else to fill in. Use the notes below.</p>';
         refreshValueHint();
     }
 
@@ -555,7 +555,7 @@ const __init = () => {
         if (!sel || !now) return;
         const row = document.querySelector(`#phLotList [data-ph-lot="${sel.value}"]`);
         document.querySelectorAll('#phLotList [data-ph-lot]').forEach((r) => r.classList.toggle('is-on', r === row));
-        now.textContent = sel.value ? (row?.querySelector('b')?.textContent || sel.options[sel.selectedIndex]?.text || 'Lot') : 'Whole schedule';
+        now.textContent = sel.value ? (row?.querySelector('b')?.textContent || sel.options[sel.selectedIndex]?.text || 'Lot') : 'Whole season';
         now.classList.toggle('is-none', !sel.value);
     }
     document.getElementById('phLotBtn')?.addEventListener('click', () => openSheet('phLotSheet'));
@@ -581,7 +581,7 @@ const __init = () => {
         fld('phSelList').innerHTML = `
             <button type="button" class="dt-row${cur === '' ? ' is-on' : ''}" data-ph-sel="">
                 <span class="dt-row-e">➖</span>
-                <span class="dt-row-body"><b>Not saying</b></span>
+                <span class="dt-row-body"><b>Not set</b></span>
                 <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>`
             + Object.keys(f.options || {}).map((k) => `
@@ -601,7 +601,7 @@ const __init = () => {
             sel.value = val;
             const btn = document.querySelector(`#phFields [data-ph-selbtn="${phSelKey}"] .crop-tag-t`);
             const said = val ? (sel.options[sel.selectedIndex]?.text || val) : '';
-            if (btn) { btn.textContent = said || 'Choose…'; btn.classList.toggle('is-none', !said); }
+            if (btn) { btn.textContent = said || 'Choose'; btn.classList.toggle('is-none', !said); }
             sel.dispatchEvent(new Event('input', { bubbles: true }));
         }
         closeSheet('phSelSheet');
@@ -655,7 +655,7 @@ const __init = () => {
         await loadQuill();
         if (!quill) {
             quill = new Quill('#phNotesEditor', {
-                theme: 'snow', placeholder: 'What happened, what you would do differently…',
+                theme: 'snow', placeholder: 'What happened, and what you would change',
                 modules: { toolbar: window.SM_RICH_TOOLBAR },
             });
             window.smQuillTouch?.(quill);
@@ -675,7 +675,7 @@ const __init = () => {
         const im = e.detail;
         if (!im || !im.path) return;
         addImage(im);
-        toast(im.type === 'video' ? 'Clip attached.' : 'Photo added.');
+        toast(im.type === 'video' ? 'Video added.' : 'Photo added.');
     });
 
     /* ---- Live-camera capture (getUserMedia on secure origins) --------------
@@ -725,7 +725,7 @@ const __init = () => {
         canvas.toBlob(async (blob) => {
             if (!blob) return;
             // Keep the camera running so several shots can be taken in a row.
-            try { await uploadImageFile(new File([blob], 'observation-' + Date.now() + '.jpg', { type: 'image/jpeg' })); toast('Photo added'); }
+            try { await uploadImageFile(new File([blob], 'observation-' + Date.now() + '.jpg', { type: 'image/jpeg' })); toast('Photo added.'); }
             catch (err) { toast(err.message, 'error'); }
         }, 'image/jpeg', 0.9);
     });
@@ -847,8 +847,8 @@ const __init = () => {
             const name = OBS[id] ? OBS[id].title : 'this observation';
             const ok = await confirmAction({
                 title: 'Delete observation?',
-                message: '"' + name + '" will be removed from this schedule.',
-                detail: 'Season totals are recalculated without it.',
+                message: '"' + name + '" will be removed from this season.',
+                detail: 'Season totals will update without it.',
                 confirmText: 'Delete',
             });
             if (!ok) return;

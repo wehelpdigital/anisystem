@@ -25,12 +25,12 @@
             <div>
                 <label class="form-label" for="recSaveTitle">Title <span class="text-red-500">*</span></label>
                 <input type="text" id="recSaveTitle" class="form-input" maxlength="191"
-                       placeholder="e.g. Walkthrough of the flooded corner" autocomplete="off">
+                       placeholder="e.g. Walk around the flooded corner" autocomplete="off">
             </div>
             <div>
                 <label class="form-label" for="recSaveDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
                 <textarea id="recSaveDesc" class="form-textarea" rows="3" maxlength="2000"
-                          placeholder="What was being shown, and who was there?"></textarea>
+                          placeholder="What does it show? Who was there?"></textarea>
             </div>
             {{-- Only when the caller says which schedule's albums to offer:
                  a clip attached to a note can also sit in the Gallery beside
@@ -40,9 +40,9 @@
                 <select id="recSaveAlbum" class="form-select">
                     <option value="">Not in an album</option>
                 </select>
-                <p class="form-hint">Also file this video in one of this schedule's Gallery albums.</p>
+                <p class="form-hint">Also put this video in a Gallery album.</p>
             </div>
-            <p class="form-hint" id="recSaveHint">Saved to the Team box in the Gallery, where everyone on the schedule can find it.</p>
+            <p class="form-hint" id="recSaveHint">Saves to the Team box in the Gallery. Everyone on the schedule can see it.</p>
         </div>
         <div class="rs-foot">
             <button type="button" class="btn btn-ghost" data-rs-cancel>Discard</button>
@@ -162,7 +162,7 @@
         if (window.confirmAction) {
             window.confirmAction({
                 title: 'Discard this recording?',
-                message: 'It has not been saved anywhere. This cannot be undone.',
+                message: 'It is not saved yet. You cannot get it back.',
                 confirmText: 'Discard', danger: true,
             }).then((ok) => { if (ok) go(); });
         } else if (confirm('Discard this recording?')) go();

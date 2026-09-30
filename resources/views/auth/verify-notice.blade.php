@@ -20,10 +20,10 @@
             <p class="mt-2 text-sm text-gray-600 leading-relaxed">
                 We sent a confirmation link
                 @if ($email) to <span class="font-semibold text-gray-900">{{ $email }}</span>@endif.
-                Tap it and your free account opens right away.
+                Tap it to open your free account.
             </p>
             <p class="mt-3 text-xs text-gray-400">
-                Nothing there after a minute? Look in the spam folder — or send a fresh link below.
+                Nothing after a minute? Check your spam folder, or send a new link below.
             </p>
 
             <form method="POST" action="{{ route('verify.resend') }}" class="mt-6 space-y-3">
@@ -31,7 +31,7 @@
                 @unless ($email)
                     <input name="email" type="email" class="form-input" placeholder="you@example.com" required>
                 @endunless
-                <button type="submit" class="btn btn-outline w-full">Resend the confirmation email</button>
+                <button type="submit" class="btn btn-outline w-full">Resend email</button>
             </form>
         </div>
 

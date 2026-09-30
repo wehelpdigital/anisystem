@@ -137,7 +137,7 @@
         if (!target) {
             // Older than the window the chat is holding: say so rather than
             // doing nothing, which reads as a broken tap.
-            window.toast?.('That message is further back than this chat has loaded.');
+            window.toast?.('That message is not loaded in this chat.');
             return;
         }
         target.scrollIntoView({ behavior: 'smooth', block: 'center' });

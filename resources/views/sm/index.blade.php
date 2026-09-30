@@ -546,8 +546,8 @@
                 <div class="min-w-0">
                     <h1 class="sch-arch-h">Archives</h1>
                     <p class="sch-arch-p">{{ $archivedCount }} archived
-                        {{ \Illuminate\Support\Str::plural('season', $archivedCount) }}. Nothing here is gone —
-                        open one to read it, or send it back to the shelf from its page.</p>
+                        {{ \Illuminate\Support\Str::plural('season', $archivedCount) }}. Nothing here is deleted.
+                        Open one to view it, or restore it from its page.</p>
                 </div>
             </div>
         </div>
@@ -586,12 +586,12 @@
             // closes.
             $__say = now()->format('l, F j');
             if ($summary['schedules'] === 0) {
-                $__say .= ' — nothing planned yet. A schedule is where a season starts.';
+                $__say .= ': nothing planned yet. Create a schedule to start a season.';
             } elseif ($summary['today'] > 0) {
-                $__say .= ' — <b>' . $summary['today'] . ' ' . \Illuminate\Support\Str::plural('activity', $summary['today']) . '</b> on the board today';
+                $__say .= ': <b>' . $summary['today'] . ' ' . \Illuminate\Support\Str::plural('activity', $summary['today']) . '</b> on the board today';
                 $__say .= $summary['active'] ? ', ' . $summary['active'] . ' ' . \Illuminate\Support\Str::plural('season', $summary['active']) . ' running.' : '.';
             } else {
-                $__say .= ' — a quiet day, nothing planned on the boards.';
+                $__say .= ': a quiet day with nothing planned.';
             }
         @endphp
         <div class="sch-hero-left">
@@ -646,7 +646,7 @@
             <div class="relative">
                 <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
                 <input type="text" name="search" id="scheduleSearch" value="{{ request('search') }}" class="form-input pl-11! pr-16! w-full"
-                    placeholder="Search schedules…" aria-label="Search schedules" autocomplete="off" enterkeyhint="search">
+                    placeholder="Search schedules" aria-label="Search schedules" autocomplete="off" enterkeyhint="search">
                 <svg id="scheduleSearchSpin" class="hidden absolute right-9 top-1/2 -translate-y-1/2 w-4 h-4 animate-spin text-brand-600" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
                 <button type="button" id="scheduleSearchClear" class="{{ request('search') ? '' : 'hidden' }} absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-gray-400 hover:bg-gray-100" aria-label="Clear search">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -714,11 +714,11 @@
         </div>
 
         {{-- The orders, asked for once. --}}
-        <div class="sch-modal hidden" id="schFilterModal" role="dialog" aria-modal="true" aria-label="Arrange schedules">
+        <div class="sch-modal hidden" id="schFilterModal" role="dialog" aria-modal="true" aria-label="Sort schedules">
             <div class="sch-modal-back" data-sch-close></div>
             <div class="sch-modal-card">
                 <div class="sch-modal-head">
-                    <p class="font-bold text-gray-900">Arrange schedules</p>
+                    <p class="font-bold text-gray-900">Sort schedules</p>
                     <button type="button" class="btn-ghost rounded-full w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-700" data-sch-close aria-label="Close">✕</button>
                 </div>
                 <div class="sch-modal-body">
@@ -761,11 +761,11 @@
                          somebody to create their first schedule here would be
                          answering a question they did not ask. --}}
                     <h2 class="text-lg font-bold text-gray-900 mb-1">Nothing in the archives</h2>
-                    <p class="text-sm text-gray-500 mb-5">A season goes in here when you close it. Nothing is lost — you can open it from here, and reopening puts it back on the shelf.</p>
+                    <p class="text-sm text-gray-500 mb-5">A season shows here when you archive it. Nothing is lost. You can open it and restore it any time.</p>
                     <a href="{{ route('sm.index') }}" class="btn btn-outline">Back to seasons</a>
                 @elseif (request()->filled('search'))
                     <h2 class="text-lg font-bold text-gray-900 mb-1">No schedules match your search</h2>
-                    <p class="text-sm text-gray-500 mb-5">Try a different search, or clear it to see all your schedules.</p>
+                    <p class="text-sm text-gray-500 mb-5">Try other words, or clear the search to see all.</p>
                     <a href="{{ route('sm.index') }}" class="btn btn-outline">Clear search</a>
                 @else
                     @if ($isWorkerHere)
@@ -776,7 +776,7 @@
                         <p class="text-sm text-gray-500 mb-5">When {{ $workerBossName ?: 'the farm owner' }} gives you a season to work on, it appears here.</p>
                     @else
                         <h2 class="text-lg font-bold text-gray-900 mb-1">No cropping schedules yet</h2>
-                        <p class="text-sm text-gray-500 mb-5">Create your first schedule to start planning lots, workers and day-by-day activities.</p>
+                        <p class="text-sm text-gray-500 mb-5">Create your first schedule to plan your lots, workers and daily activities.</p>
                         <a href="{{ route('sm.create') }}" class="btn btn-primary btn-lg">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
                             New Cropping Schedule
@@ -799,7 +799,7 @@
                          {{-- Its own clock and its own starting point, from its
                               own id: the same tide, out of step. --}}
                          style="--sw-t:{{ 10 + ($s->id % 7) }}s;--sw-d:-{{ $s->id % 11 }}s"
-                         aria-expanded="true" aria-label="Fold or unfold {{ $s->title }}">
+                         aria-expanded="true" aria-label="Show or hide {{ $s->title }}">
                         <span class="se-crops" aria-hidden="true">{{ count($card['icons']) ? implode('', $card['icons']) : '🌱' }}</span>
                         <h2 class="se-title" title="{{ $s->title }}">{{ $s->title }}</h2>
                         {{-- Duplicate and Delete, level with the name they
@@ -903,7 +903,7 @@
                                 @endif
                             </div>
                         @else
-                            <div class="se-read is-quiet">Not counting yet — the season starts at day zero.</div>
+                            <div class="se-read is-quiet">Not counting yet. The season starts at day zero.</div>
                         @endif
 
                         {{-- The season's own span, shown only when no lot has a
@@ -1291,8 +1291,8 @@ document.addEventListener('DOMContentLoaded', () => {
             wrap.innerHTML = `
                 <div class="del-card" role="dialog" aria-modal="true" aria-labelledby="delTitle">
                     <h3 class="del-title" id="delTitle">Delete this schedule?</h3>
-                    <p class="del-text"><strong>${escapeHtml(title)}</strong> and everything filed under it — lots,
-                        workers, activities, notes — disappear from your account.</p>
+                    <p class="del-text"><strong>${escapeHtml(title)}</strong> and all its lots, workers,
+                        activities and notes will be removed from your account.</p>
                     <label class="del-label" for="delWord">Type <b>DELETE</b> to confirm</label>
                     <input type="text" id="delWord" class="form-input" autocomplete="off" spellcheck="false" placeholder="DELETE">
                     <div class="del-actions">
@@ -1337,7 +1337,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const ok = await confirmAction({
             title: 'Duplicate schedule?',
-            message: `A full copy of "${title}" — every module, activity and version — will be created as "Copy of ${title}".`,
+            message: `This makes a full copy of "${title}" with every module, activity and version. It will be named "Copy of ${title}".`,
             confirmText: 'Duplicate',
             confirmClass: 'btn-primary',
         });
@@ -1422,7 +1422,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const meta = (window.WX_SKIES || {})[key];
             const mark = document.getElementById('schHeroMark');
             if (mark && meta && meta.label) {
-                mark.setAttribute('title', meta.label + ' — your seasons, day by day');
+                mark.setAttribute('title', meta.label + ' · your seasons, day by day');
             }
         })
         .catch(() => {});

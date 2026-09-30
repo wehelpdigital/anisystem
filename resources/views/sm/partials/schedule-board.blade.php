@@ -106,7 +106,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-            <p class="sb-modal-hint">Drawings kept when the room emptied. Open one to carry on with it — your changes update that drawing. Anything saved to the notebook lives there instead.</p>
+            <p class="sb-modal-hint">Drawings kept after everyone left the room. Open one to keep working on it. Drawings saved to notes stay in the notebook.</p>
             <div class="sb-drafts" id="sbDraftsList">
                 <p class="sb-drafts-empty">Loading…</p>
             </div>
@@ -117,16 +117,16 @@
     <div class="sb-modal hidden" id="sbSaveModal" aria-hidden="true">
         <div class="sb-modal-card">
             <div class="sb-modal-head">
-                <span class="sb-modal-title">Save whiteboard to notes</span>
+                <span class="sb-modal-title">Save to notes</span>
                 <button type="button" id="sbSaveCancelX" class="sb-modal-x" aria-label="Close">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-            <p class="sb-modal-hint">Saves <span id="sbSavePageCount">the board</span> as an image note in this schedule's notebook, so the team can find it later.</p>
+            <p class="sb-modal-hint">Saves <span id="sbSavePageCount">the board</span> as an image note in this schedule. The team can find it later.</p>
             <label class="sb-modal-label" for="sbSaveTitle">Title</label>
-            <input type="text" id="sbSaveTitle" class="sb-modal-input" maxlength="180" placeholder="e.g. Field layout plan">
-            <label class="sb-modal-label" for="sbSaveDesc">What is this note about?</label>
-            <textarea id="sbSaveDesc" class="sb-modal-textarea" rows="3" maxlength="5000" placeholder="Describe what the drawing shows and why it matters…"></textarea>
+            <input type="text" id="sbSaveTitle" class="sb-modal-input" maxlength="180" placeholder="Example: Field layout plan">
+            <label class="sb-modal-label" for="sbSaveDesc">Description</label>
+            <textarea id="sbSaveDesc" class="sb-modal-textarea" rows="3" maxlength="5000" placeholder="What it shows and why it matters"></textarea>
             <div class="sb-modal-actions">
                 <button type="button" id="sbSaveCancel" class="sb-modal-btn ghost">Cancel</button>
                 <button type="button" id="sbSaveConfirm" class="sb-modal-btn primary">
@@ -593,7 +593,7 @@
 
         document.getElementById('sbClear')?.addEventListener('click', async () => {
             const ok = (typeof confirmAction === 'function')
-                ? await confirmAction({ title: 'Clear the page?', message: 'This clears the current whiteboard page for everyone on the team.', confirmText: 'Clear' })
+                ? await confirmAction({ title: 'Clear the page?', message: 'This page will be cleared for the whole team.', confirmText: 'Clear' })
                 : confirm('Clear the page for everyone?');
             if (!ok) return;
             dropRedo();
@@ -685,7 +685,7 @@
                     // one check this race walks straight past.
                     const was = drawingId(), tok = boardToken;
                     const { images, failed, moved } = await exportAllPages();
-                    if (failed) throw new Error('could not read every page of the board');
+                    if (failed) throw new Error('some pages could not be read');
                     if (moved || drawingId() !== was) continue;   // photograph it again
                     try {
                         r = await api(`${U.saveNotes}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { images, title, description, board: tok } });
@@ -695,8 +695,8 @@
                 }
                 // Both attempts caught the board mid-change. Saying "Saved" here
                 // would be the worst of the three possible answers.
-                if (!r) throw new Error('the board kept changing while it was being saved');
-                if (typeof toast === 'function') toast((r && r.message) || 'Saved to the schedule notebook.', 'success');
+                if (!r) throw new Error('the board kept changing. Try again.');
+                if (typeof toast === 'function') toast((r && r.message) || 'Saved to notes.', 'success');
                 autoAt = Date.now();
                 if (autoDirty) queueAutosave(); else autoSettled();
                 closeSaveModal();
@@ -948,7 +948,7 @@
                 setDraftCount(r.data.draftCount || 0);
                 const a = r.data.archived;
                 if (a && a.isDraft && window.toast) {
-                    toast('Previous drawing kept under Past drawings.', 'success');
+                    toast('The last drawing is saved in Past drawings.', 'success');
                 }
             } catch (_) { /* board still works; it just will not have reset */ }
         }
@@ -996,7 +996,7 @@
                 const drafts = r.data.drafts || [];
                 setDraftCount(drafts.length);
                 if (!drafts.length) {
-                    list.innerHTML = '<p class="sb-drafts-empty">No past drawings yet. When everyone leaves the room, whatever is on the board is kept here.</p>';
+                    list.innerHTML = '<p class="sb-drafts-empty">No past drawings yet. When everyone leaves the room, the board is kept here.</p>';
                     return;
                 }
                 list.innerHTML = '';

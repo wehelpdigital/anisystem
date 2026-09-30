@@ -4,7 +4,7 @@
      aside the way it does for the Collab Room and the Maps module. --}}
 @section('body-class', 'hide-tabbar lotmap-open')
 
-@section('title', 'Map — ' . $lot->lotName)
+@section('title', 'Map: ' . $lot->lotName)
 @section('page-title', $lot->lotName)
 @section('page-subtitle', 'Where this lot is')
 @section('help-key', 'lots')

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'What to Plant')
 @section('page-title', 'What to Plant')
-@section('page-subtitle', 'The right crop, argued from the ground')
+@section('page-subtitle', 'Crops that fit your field')
 
 @section('back', \App\Support\BackTo::url(route('app.dashboard')))
 {{-- Back is the dashboard, or wherever the door that opened this page said
@@ -421,7 +421,7 @@
             <div class="q-body">
                 <div class="q-body-in">
                     <div class="q-card" id="wpQuoteCost"></div>
-                    <div class="q-card">Anee weighs your soil, its pH, how the water looks, the lay and height of the land, the sun, what grew there before, your hands, budget and market, the timing and the region's climate against the crops a farm in <span id="wpQuoteCountry">{{ \App\Support\Region::ph() ? 'the Philippines' : \App\Support\Region::name() }}</span> actually chooses between — grains, vegetables, root crops, legumes and fruit trees — and ranks what fits YOUR ground — in the order of what matters to you, with any crops you have in mind ranked alongside, and for each one when it would be harvested and what the weather usually does then.</div>
+                    <div class="q-card">Anee checks your land, water, budget and market against the crops grown in <span id="wpQuoteCountry">{{ \App\Support\Region::ph() ? 'the Philippines' : \App\Support\Region::name() }}</span>. She ranks the ones that fit your field best, with when each is harvested. Treat it as a guide.</div>
                 </div>
             </div>
         </div>
@@ -435,47 +435,47 @@
                      place, and whose climate, crops and agencies the
                      analysis reads. --}}
                 <div class="wp-loc-country">
-                    <label class="form-label">Country of the field</label>
+                    <label class="form-label">Country</label>
                     @include('partials.country-pick', ['id' => 'wpCountry', 'name' => 'country', 'value' => \App\Support\Region::code()])
                 </div>
-                <p class="wtp-sub" id="wpLocSub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate and the markets differ by region.</p>
+                <p class="wtp-sub" id="wpLocSub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough. Weather and markets differ by area.</p>
                 <input type="text" id="wpLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
             </section>
             {{-- Step 2: when they want to begin --}}
             <section class="wtp-step" data-step="1">
                 <p class="wtp-q">When do you plan to start?</p>
-                <p class="wtp-sub">The month you would prepare and plant — the ranking bends around it.</p>
+                <p class="wtp-sub">The month you would prepare and plant. The list is built around it.</p>
                 <div class="wtp-choices is-two" id="wpMonths"></div>
             </section>
             {{-- Step 3: the soil --}}
             <section class="wtp-step" data-step="2">
                 <p class="wtp-q">What is the soil like?</p>
-                <p class="wtp-sub">As your hands know it — no test needed.</p>
+                <p class="wtp-sub">Go by feel. No test needed.</p>
                 <div class="wtp-choices" id="wpSoils"></div>
             </section>
             {{-- Step 4: the water --}}
             <section class="wtp-step" data-step="3">
                 <p class="wtp-q">What water does the field get?</p>
-                <p class="wtp-sub">Water decides more than anything else here.</p>
+                <p class="wtp-sub">Water matters most here.</p>
                 <div class="wtp-choices" id="wpWaters"></div>
             </section>
             {{-- Step 5: more about the ground -- pH, how the water looks,
                  the lay of the land, elevation, sun. Every one optional and
                  answerable by eye; each one moves the ranking. --}}
             <section class="wtp-step" data-step="4">
-                <p class="wtp-q">A little more about the ground</p>
-                <p class="wtp-sub">Answer what you know — skip the rest. Each one sharpens the ranking.</p>
-                <p class="wp-qh">Soil pH <small>a test kit, or the signs</small></p>
+                <p class="wtp-q">More about the land</p>
+                <p class="wtp-sub">Answer what you know and skip the rest. Each answer makes the list better.</p>
+                <p class="wp-qh">Soil pH <small>from a test kit, or by the signs</small></p>
                 <div class="wtp-choices" id="wpPhs"></div>
                 <div class="wp-ph-in" id="wpPhIn" hidden>
-                    <label class="form-label text-xs" for="wpPhValue">Tested value or range <span class="text-gray-400 font-normal">(optional)</span></label>
-                    <input type="text" id="wpPhValue" class="form-input" maxlength="24" autocomplete="off" placeholder="e.g. 5.8, or a range like 5.5–6.2">
+                    <label class="form-label text-xs" for="wpPhValue">Test result <span class="text-gray-400 font-normal">(optional)</span></label>
+                    <input type="text" id="wpPhValue" class="form-input" maxlength="24" autocomplete="off" placeholder="e.g. 5.8, or 5.5 to 6.2">
                 </div>
                 <p class="wp-qh mt-4">Sodium, salt or acid sulfate? <small>pick all that apply</small></p>
                 <div class="wtp-choices" id="wpSoilExtras"></div>
-                <p class="wp-qh mt-4">How does the irrigation water look? <small>pick all that apply</small></p>
+                <p class="wp-qh mt-4">How does the water look? <small>pick all that apply</small></p>
                 <div class="wtp-choices" id="wpWaterLooks"></div>
-                <p class="wp-qh mt-4">The lay of the land</p>
+                <p class="wp-qh mt-4">Slope of the land</p>
                 <div class="wtp-choices is-two" id="wpLays"></div>
                 <p class="wp-qh mt-4">Elevation</p>
                 <div class="wtp-choices" id="wpElevations"></div>
@@ -484,59 +484,59 @@
             </section>
             {{-- Step 6: more about the farm -- history, hands, money, market. --}}
             <section class="wtp-step" data-step="5">
-                <p class="wtp-q">A little more about the farm</p>
-                <p class="wtp-sub">Optional too — the history and the means decide what is realistic.</p>
+                <p class="wtp-q">More about the farm</p>
+                <p class="wtp-sub">Also optional. Past crops and your means show what is realistic.</p>
                 <label class="form-label" for="wpPrevCrop">What grew there last? <span class="text-gray-400 font-normal">(optional)</span></label>
-                <input type="text" id="wpPrevCrop" class="form-input" maxlength="120" placeholder="e.g. rice, then fallow">
-                <label class="form-label mt-3" for="wpGrewWell">What has grown well there before? <span class="text-gray-400 font-normal">(optional)</span></label>
-                <input type="text" id="wpGrewWell" class="form-input" maxlength="160" placeholder="e.g. onions did well; tomatoes always got blight">
-                <p class="wp-qh mt-4">Labor and machinery</p>
+                <input type="text" id="wpPrevCrop" class="form-input" maxlength="120" placeholder="e.g. rice, then left idle">
+                <label class="form-label mt-3" for="wpGrewWell">What grew well before? <span class="text-gray-400 font-normal">(optional)</span></label>
+                <input type="text" id="wpGrewWell" class="form-input" maxlength="160" placeholder="e.g. onions did well, tomatoes got blight">
+                <p class="wp-qh mt-4">Workers and machines</p>
                 <div class="wtp-choices" id="wpLabors"></div>
                 <p class="wp-qh mt-4">Budget for inputs</p>
                 <div class="wtp-choices" id="wpBudgets"></div>
-                <p class="wp-qh mt-4">Where would the harvest be sold? <small>pick all that apply</small></p>
+                <p class="wp-qh mt-4">Where will you sell? <small>pick all that apply</small></p>
                 <div class="wtp-choices" id="wpMarkets"></div>
             </section>
             {{-- Step 7: the troubles --}}
             <section class="wtp-step" data-step="6">
-                <p class="wtp-q">What does this ground struggle with?</p>
-                <p class="wtp-sub">Tick what you have seen — each one moves the ranking.</p>
+                <p class="wtp-q">What problems does the land have?</p>
+                <p class="wtp-sub">Tick what you have seen. Each one changes the list.</p>
                 <div class="wtp-probs" id="wpProbs"></div>
             </section>
             {{-- Step 8: the aim and the area --}}
             <section class="wtp-step" data-step="7">
                 <p class="wtp-q">What is the harvest for?</p>
-                <p class="wtp-sub">A market crop and a family table pull toward different answers.</p>
+                <p class="wtp-sub">Crops to sell and crops for the family are not the same.</p>
                 <div class="wtp-choices" id="wpAims"></div>
-                <label class="form-label mt-4" for="wpArea">How big is the ground? <span class="text-gray-400 font-normal">(optional)</span></label>
+                <label class="form-label mt-4" for="wpArea">How big is the field? <span class="text-gray-400 font-normal">(optional)</span></label>
                 <input type="text" id="wpArea" class="form-input" maxlength="60" placeholder="e.g. half a hectare, 800 sqm">
-                <label class="form-label mt-3" for="wpNotes">Anything else worth knowing? <span class="text-gray-400 font-normal">(optional)</span></label>
-                <textarea id="wpNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. thinking of ube; the neighbour grows onions well"></textarea>
+                <label class="form-label mt-3" for="wpNotes">Anything else? <span class="text-gray-400 font-normal">(optional)</span></label>
+                <textarea id="wpNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. thinking of ube, and my neighbor grows good onions"></textarea>
             </section>
             {{-- Step 9: what matters most -- a list the farmer reorders --}}
             <section class="wtp-step" data-step="8">
                 <p class="wtp-q">What matters most to you?</p>
-                <p class="wtp-sub">Put them in your order — the top one weighs most. Anee scores every crop against it.</p>
+                <p class="wtp-sub">Put them in your order. The top one counts most.</p>
                 <div class="wp-prio" id="wpPrio"></div>
             </section>
             {{-- Step 10: families the farmer would rather not plant -- never all of them --}}
             <section class="wtp-step" data-step="9">
                 <p class="wtp-q">Anything you'd rather not plant?</p>
-                <p class="wtp-sub">Optional. Leave out whole families and the ranking skips them — at least one must stay in play.</p>
+                <p class="wtp-sub">Optional. Pick crop groups to skip. At least one must stay.</p>
                 <div class="wtp-choices" id="wpExcludes"></div>
             </section>
             {{-- Step 11: crops the farmer has in mind -- optional, each ranked honestly --}}
             <section class="wtp-step" data-step="10">
                 <p class="wtp-q">Any crops you have in mind?</p>
-                <p class="wtp-sub">Optional. Each one is analysed and ranked with Anee's own picks — honestly, even if it fits poorly.</p>
+                <p class="wtp-sub">Optional. Anee ranks each one with her own picks, even if it fits poorly.</p>
                 <button type="button" class="crop-tag" id="wpCropBtn">
                     <span class="crop-tag-e">🌱</span>
-                    <span class="crop-tag-t" id="wpCropNow">Add a crop from the book</span>
+                    <span class="crop-tag-t" id="wpCropNow">Add a crop from the list</span>
                     <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>
                 <div class="wp-asked" id="wpAsked"></div>
-                <label class="form-label mt-3" for="wpCropsOther">Others not in the book <span class="text-gray-400 font-normal">(optional)</span></label>
-                <input type="text" id="wpCropsOther" class="form-input" maxlength="160" placeholder="e.g. ampalaya, ube — separate with commas">
+                <label class="form-label mt-3" for="wpCropsOther">Crops not on the list <span class="text-gray-400 font-normal">(optional)</span></label>
+                <input type="text" id="wpCropsOther" class="form-input" maxlength="160" placeholder="e.g. ampalaya, ube (use commas)">
             </section>
             {{-- Step 12: the decision --}}
             <section class="wtp-step" data-step="11">
@@ -572,7 +572,7 @@
             <div class="wtp-shelf-more" id="wpSavedMore" hidden>Loading more…</div>
             <div id="wpSavedEmpty" class="hidden text-center py-10">
                 <p class="font-bold text-gray-900">Nothing saved yet</p>
-                <p class="text-sm text-gray-400">Every finished analysis lands here by itself.</p>
+                <p class="text-sm text-gray-400">Every finished analysis is saved here.</p>
             </div>
         </div>
         <div class="wtp-report mt-4" id="wpSavedReport" hidden></div>
@@ -591,7 +591,7 @@
 <div class="sheet hidden" id="wpCropSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Crops you have in mind</h3>
+        <h3 class="sheet-title">Choose your crops</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
@@ -600,7 +600,7 @@
             <input type="text" id="wpCropSearch" class="form-input" autocomplete="off" placeholder="{{ \App\Support\Region::t('cropSearch') }}">
         </div>
         <div id="wpCropList"></div>
-        <p class="crop-none hidden" id="wpCropNone">Nothing matches that — type it under “Others not in the book” instead.</p>
+        <p class="crop-none hidden" id="wpCropNone">No match. Type it under “Crops not on the list” instead.</p>
     </div>
 </div>
 
@@ -732,7 +732,7 @@
                 ${list.map((c) => `
                     <button type="button" class="crop-row${state.cropsAsked.includes(c.key) ? ' is-on' : ''}" data-crop="${esc(c.key)}" data-find="${esc((c.label + ' ' + g).toLowerCase())}">
                         <span class="crop-row-e">${esc(c.icon)}</span>
-                        <span class="crop-row-t"><b>${esc(c.label)}</b><small>${c.perennial ? 'Tree crop — years to first harvest' : (c.maturity ? c.maturity + ' days to harvest' : '')}</small></span>
+                        <span class="crop-row-t"><b>${esc(c.label)}</b><small>${c.perennial ? 'Tree crop, years to first harvest' : (c.maturity ? c.maturity + ' days to harvest' : '')}</small></span>
                         <span class="crop-row-k">✓</span>
                     </button>`).join('')}
             </div>`).join('');
@@ -741,7 +741,7 @@
     function paintAsked() {
         const book = OPT.crops || [];
         $id('wpAsked').innerHTML = state.cropsAsked.map((k) => { const c = book.find((x) => x.key === k) || {}; return `<span>${esc(c.icon || '🌱')} ${esc(c.label || k)}<button type="button" data-asked-x="${esc(k)}" aria-label="Remove">✕</button></span>`; }).join('');
-        $id('wpCropNow').textContent = state.cropsAsked.length ? `${state.cropsAsked.length} chosen — add another` : 'Add a crop from the book';
+        $id('wpCropNow').textContent = state.cropsAsked.length ? `${state.cropsAsked.length} chosen. Add another` : 'Add a crop from the list';
     }
     $id('wpCropBtn').addEventListener('click', () => {
         paintCropSheet();
@@ -753,7 +753,7 @@
         if (!row) return;
         const k = row.getAttribute('data-crop');
         if (state.cropsAsked.includes(k)) state.cropsAsked = state.cropsAsked.filter((x) => x !== k);
-        else if (state.cropsAsked.length >= 8) { toast('Eight crops is plenty for one analysis.', 'error'); return; }
+        else if (state.cropsAsked.length >= 8) { toast('Up to eight crops per analysis.', 'error'); return; }
         else state.cropsAsked.push(k);
         row.classList.toggle('is-on', state.cropsAsked.includes(k));
         paintAsked();
@@ -794,7 +794,7 @@
         if (!OPT.quote) { q.hidden = true; return; }
         q.classList.toggle('is-min', quoteMin);
         $id('wpQuoteHead').setAttribute('aria-expanded', quoteMin ? 'false' : 'true');
-        $id('wpQuoteCost').innerHTML = `This deep read spends <b>${OPT.quote} credits</b>, and you have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
+        $id('wpQuoteCost').innerHTML = `One analysis costs <b>${OPT.quote} credits</b>. You have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
         $id('wpQuoteHint').textContent = `${OPT.quote} credits`;
         q.hidden = false;
     }
@@ -821,15 +821,15 @@
     function stepReady() {
         switch (step) {
             case 0: state.location = $id('wpLocation').value.trim();
-                return !!state.location || (toast('Say where the field is.', 'error'), false);
+                return !!state.location || (toast('Type where the field is.', 'error'), false);
             case 1: return !!state.startMonth || (toast('Pick the month you would start.', 'error'), false);
-            case 2: return !!state.soil || (toast('Pick the soil that sounds most like yours.', 'error'), false);
-            case 3: return !!state.water || (toast('Say what water the field gets.', 'error'), false);
+            case 2: return !!state.soil || (toast('Pick the soil closest to yours.', 'error'), false);
+            case 3: return !!state.water || (toast('Pick the water the field gets.', 'error'), false);
             case 4: state.phValue = $id('wpPhValue').value.trim(); return true;
             case 5: state.prevCrop = $id('wpPrevCrop').value.trim(); state.grewWell = $id('wpGrewWell').value.trim(); return true;
             case 6: state.problems = [...document.querySelectorAll('#wpProbs input:checked')].map((i) => i.value); return true;
             case 7: state.area = $id('wpArea').value.trim(); state.notes = $id('wpNotes').value.trim();
-                return !!state.aim || (toast('Say what the harvest is for.', 'error'), false);
+                return !!state.aim || (toast('Pick what the harvest is for.', 'error'), false);
             case 10: state.cropsOther = $id('wpCropsOther').value.trim(); return true;
             default: return true;
         }
@@ -839,14 +839,14 @@
         const month = (OPT.months.find((m) => m.key === state.startMonth) || {}).label || '';
         $id('wpReview').innerHTML = `📍 <b>${esc(state.location)}</b>${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(rulesFor(state.country).name || state.country) : ''} · starting ${esc(month)}`
             + `<br><span class="text-xs">${esc(OPT.soils[state.soil] || '')} · ${esc(OPT.waters[state.water] || '')} · ${esc(OPT.aims[state.aim] || '')}`
-            + (state.problems.length ? ` · ${state.problems.length} trouble${state.problems.length === 1 ? '' : 's'} considered` : '')
-            + (() => { const n = state.cropsAsked.length + (state.cropsOther ? state.cropsOther.split(',').filter((x) => x.trim()).length : 0); return n ? ` · ${n} crop${n === 1 ? '' : 's'} of your own to rank` : ''; })()
-            + (state.priorities.length ? ` · first: ${esc(shortOf((OPT.priorities || {})[state.priorities[0]] || state.priorities[0]).toLowerCase())}` : '')
-            + (state.exclude.length ? ` · leaving out ${esc(state.exclude.map((k) => shortOf((OPT.families || {})[k] || k).toLowerCase()).join(', '))}` : '')
-            + (() => { const n = (state.ph && state.ph !== 'unsure' ? 1 : 0) + (state.soilExtra.length ? 1 : 0) + (state.waterLook.length ? 1 : 0) + (state.market.length ? 1 : 0) + ['lay', 'elevation', 'sun', 'labor', 'budget'].filter((k) => state[k]).length + ['prevCrop', 'grewWell'].filter((k) => state[k]).length; return n ? ` · ${n} extra signal${n === 1 ? '' : 's'}` : ''; })() + '</span>';
+            + (state.problems.length ? ` · ${state.problems.length} problem${state.problems.length === 1 ? '' : 's'}` : '')
+            + (() => { const n = state.cropsAsked.length + (state.cropsOther ? state.cropsOther.split(',').filter((x) => x.trim()).length : 0); return n ? ` · ${n} crop${n === 1 ? '' : 's'} you picked` : ''; })()
+            + (state.priorities.length ? ` · top priority: ${esc(shortOf((OPT.priorities || {})[state.priorities[0]] || state.priorities[0]).toLowerCase())}` : '')
+            + (state.exclude.length ? ` · skipping ${esc(state.exclude.map((k) => shortOf((OPT.families || {})[k] || k).toLowerCase()).join(', '))}` : '')
+            + (() => { const n = (state.ph && state.ph !== 'unsure' ? 1 : 0) + (state.soilExtra.length ? 1 : 0) + (state.waterLook.length ? 1 : 0) + (state.market.length ? 1 : 0) + ['lay', 'elevation', 'sun', 'labor', 'budget'].filter((k) => state[k]).length + ['prevCrop', 'grewWell'].filter((k) => state[k]).length; return n ? ` · ${n} extra answer${n === 1 ? '' : 's'}` : ''; })() + '</span>';
         $id('wpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
         $id('wpRunFine').textContent = OPT.canUse
-            ? 'Charged to the same AI credits your questions use — it shows in your subscription’s credit log.'
+            ? 'Paid from your AI credits. It shows in your credit log.'
             : (OPT.whyNot || '');
         $id('wpRun').disabled = !OPT.canUse;
     }
@@ -858,7 +858,7 @@
         state.country = code;
         const city = (r.address && r.address.city && r.address.city.label) || 'City';
         const region = (r.address && r.address.region && r.address.region.label) || 'State / Region';
-        $id('wpLocSub').textContent = `${code === 'PH' ? 'Town and province' : city + ' and ' + region.toLowerCase()} is enough — the climate and the markets differ by region.`;
+        $id('wpLocSub').textContent = `${code === 'PH' ? 'Town and province' : city + ' and ' + region.toLowerCase()} is enough. Weather and markets differ by area.`;
         $id('wpLocation').placeholder = r.exampleLocation || '';
         const qc = $id('wpQuoteCountry');
         if (qc) qc.textContent = countryName(code);
@@ -912,7 +912,7 @@
         const k = b.getAttribute('data-exclude');
         const all = Object.keys((OPT && OPT.families) || {});
         if (state.exclude.includes(k)) state.exclude = state.exclude.filter((x) => x !== k);
-        else if (state.exclude.length >= all.length - 1) { toast('Keep at least one family in play.', 'error'); return; }
+        else if (state.exclude.length >= all.length - 1) { toast('Keep at least one crop group.', 'error'); return; }
         else state.exclude = [...state.exclude, k];
         document.querySelectorAll('#wpExcludes .wtp-choice').forEach((c) => c.classList.toggle('is-on', state.exclude.includes(c.getAttribute('data-exclude'))));
     });
@@ -928,7 +928,7 @@
         if (!stepReady()) return;
         const wiz = $id('wpWiz');
         wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = 'none');
-        window.aneeWait.show({ title: 'Anee is reading your ground…', lines: ['Soil, water and the region\'s climate…', 'Weighing every crop family a farm in ' + countryName(state.country) + ' grows…', 'Checking when each would be harvested, and what the weather does then…', 'Ranking by what matters to you…'], sub: 'Under a minute, usually.' });
+        window.aneeWait.show({ title: 'Anee is checking your land…', lines: ['Soil, water and local weather…', 'Looking at crops grown in ' + countryName(state.country) + '…', 'Checking harvest dates and the weather then…', 'Ranking by what matters to you…'], sub: 'Usually under a minute.' });
         $id('wpReport').hidden = true;
         let landed = false;
         try {
@@ -950,9 +950,9 @@
             // Full screen first: the tabs and the wizard wait behind it. A
             // slip in drawing must not strand the veil: the result is saved.
             try { openView({ report: data.report, params: data.params, charged: data.charged, savedId: data.savedId }, 'fresh'); }
-            catch (drawErr) { console.error(drawErr); toast('The analysis is saved on the Saved tab, but this page could not draw it.', 'error'); }
-            await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used — saved to the shelf.` });
-            toast(`Done — ${data.charged} credits used. Saved to the shelf.`);
+            catch (drawErr) { console.error(drawErr); toast('Your analysis is in the Saved tab, but it could not be shown here.', 'error'); }
+            await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used. Find it in the Saved tab.` });
+            toast(`Done. ${data.charged} credits used. Find it in the Saved tab.`);
         } catch (err) {
             toast(err.message, 'error');
         } finally {
@@ -969,7 +969,7 @@
         const view = $id('wpView');
         VIEW_MODE = mode;
         const top = ((item.report || {}).topPick || {}).crop;
-        $id('wpViewTitle').textContent = 'What to plant' + (top ? ' — ' + top : '');
+        $id('wpViewTitle').textContent = 'What to plant' + (top ? ': ' + top : '');
         const host = $id('wpViewReport');
         host.classList.remove('is-drawn');
         drawReport(host, item, mode, true);
@@ -1001,7 +1001,7 @@
 
     /* ---------------- the harvest: words for a risk score, the timeline ---------------- */
     const riskBand = (v) => (Number(v) < 30 ? 'low' : (Number(v) < 60 ? 'mid' : 'high'));
-    const riskWord = (v) => ({ low: 'Low', mid: 'Moderate', high: 'High' }[riskBand(v)]);
+    const riskWord = (v) => ({ low: 'Low', mid: 'Medium', high: 'High' }[riskBand(v)]);
     const riskIcon = (kind) => ({ flood: '🌊', storm: '🌀', drought: '☀️', heat: '🔥', frost: '❄️' }[kind] || '🌤️');
     /* From planting to harvest, drawn against the year's typical risks: one
        bar per crop from its planting month to its harvest month, a dot at
@@ -1022,23 +1022,23 @@
         const months = Array.from({ length: 12 }, (_, i) => ((start - 1 + i) % 12) + 1);
         return `
             <div class="wtp-card">
-                <h3>From planting to harvest, against the year's risks</h3>
+                <h3>Planting to harvest, with the year's risks</h3>
                 <div class="wp-tl"><div class="wp-tl-in">
                     <div class="wp-tl-bg">${months.map((m) => { const [k, v] = worst(m); return `<i class="is-${riskBand(v)}" title="${esc(MONTHS[m - 1])}: ${esc(k)} ${v}/100"></i>`; }).join('')}</div>
                     <div class="wp-tl-row is-head"><span class="wp-tl-lbl">Crop<small>plant › harvest</small></span>${months.map((m) => { const [k, v] = worst(m); return `<span class="wp-tl-m"><i>${v >= 30 ? riskIcon(k) : ''}</i>${esc(MONTHS[m - 1])}</span>`; }).join('')}</div>
                     ${rows.map((x) => { const a = col(x.plantMonth); let span = col(x.harvestMonth) - a + 1; const more = span <= 0 || (Number(x.daysToHarvest) || 0) > 365; if (span <= 0) span = 12 - a; const rk = x.harvestRisk || {}; return `
                     <div class="wp-tl-row">
                         <span class="wp-tl-lbl" title="${esc(x.crop || '')}"><i class="wp-tl-n">${x.surprise ? '🎁' : esc(String(x.rank || '')) + '.'}</i><span class="wp-tl-t"><b>${esc(nameOf(x.crop)[0])}</b>${nameOf(x.crop)[1] ? `<small class="wp-tl-alt">${esc(nameOf(x.crop)[1])}</small>` : ''}<small>${x.daysToHarvest ? '~' + esc(String(Math.round(Number(x.daysToHarvest)))) + ' d' : ''}${x.farmerAsked ? ' · you asked' : ''}${x.surprise ? ' · surprise' : ''}</small></span></span>
-                        <span class="wp-tl-bar${x.farmerAsked ? ' is-asked' : ''}${x.surprise ? ' is-surprise' : ''}${more ? ' is-more' : ''}" style="grid-column:${a + 2} / span ${span}" title="${esc(x.crop || '')}: plant ${esc(MONTHS[Number(x.plantMonth) - 1] || '')}, harvest ${esc(MONTHS[Number(x.harvestMonth) - 1] || '')}${rk.note ? ' — ' + esc(rk.note) : ''}">${rk.score != null && !more ? `<i class="wp-tl-dot is-${riskBand(rk.score)}"></i>` : ''}</span>
+                        <span class="wp-tl-bar${x.farmerAsked ? ' is-asked' : ''}${x.surprise ? ' is-surprise' : ''}${more ? ' is-more' : ''}" style="grid-column:${a + 2} / span ${span}" title="${esc(x.crop || '')}: plant ${esc(MONTHS[Number(x.plantMonth) - 1] || '')}, harvest ${esc(MONTHS[Number(x.harvestMonth) - 1] || '')}${rk.note ? '. ' + esc(rk.note) : ''}">${rk.score != null && !more ? `<i class="wp-tl-dot is-${riskBand(rk.score)}"></i>` : ''}</span>
                     </div>`; }).join('')}
                 </div></div>
                 <div class="wp-tl-legend">
                     <span><i class="is-bar"></i> growing</span>
-                    <span><i class="wp-tl-dot is-low" style="position:static;transform:none"></i> harvest, calm</span>
+                    <span><i class="wp-tl-dot is-low" style="position:static;transform:none"></i> calm harvest</span>
                     <span><i class="wp-tl-dot is-mid" style="position:static;transform:none"></i> some risk</span>
                     <span><i class="wp-tl-dot is-high" style="position:static;transform:none"></i> risky harvest</span>
-                    ${(r.surprises || []).some((x) => x.plantMonth && x.harvestMonth) ? `<span><i class="is-surprise"></i> a surprise</span>` : ''}
-                    <span><i class="is-tint"></i> a month the region's storms, floods, drought, heat or frost usually hit</span>
+                    ${(r.surprises || []).some((x) => x.plantMonth && x.harvestMonth) ? `<span><i class="is-surprise"></i> surprise pick</span>` : ''}
+                    <span><i class="is-tint"></i> months with storms, floods, drought, heat or frost</span>
                 </div>
             </div>`;
     }
@@ -1070,11 +1070,11 @@
 
         host.innerHTML = `
             <div class="wtp-hero">
-                <h2>${esc(CAT_E[top.category] || '🌱')} Best for your ground</h2>
+                <h2>${esc(CAT_E[top.category] || '🌱')} Best for your field</h2>
                 <p class="h-win">${esc(top.crop || '')}</p>
-                <p class="h-why">${esc(sweep(top.why))}${top.window ? ' Plant it ' + esc(top.window) + '.' : ''}${top.daysToHarvest ? ' Harvest in about ' + esc(String(Math.round(Number(top.daysToHarvest)))) + ' days' + (top.harvestWindow ? ' (' + esc(top.harvestWindow) + ')' : '') + (top.harvestRisk && top.harvestRisk.note ? ' — ' + esc(sweep(top.harvestRisk.note)) : '.') : ''}</p>
+                <p class="h-why">${esc(sweep(top.why))}${top.window ? ' Plant it ' + esc(top.window) + '.' : ''}${top.daysToHarvest ? ' Harvest in about ' + esc(String(Math.round(Number(top.daysToHarvest)))) + ' days' + (top.harvestWindow ? ' (' + esc(top.harvestWindow) + ')' : '') + (top.harvestRisk && top.harvestRisk.note ? '. ' + esc(sweep(top.harvestRisk.note)) : '.') : ''}</p>
                 <div class="wtp-chips">
-                    ${top.harvestRisk && top.harvestRisk.score != null ? `<span class="wtp-chip">${riskWord(top.harvestRisk.score)} harvest-day risk</span>` : ''}
+                    ${top.harvestRisk && top.harvestRisk.score != null ? `<span class="wtp-chip">${riskWord(top.harvestRisk.score)} risk at harvest</span>` : ''}
                     <span class="wtp-chip">📍 ${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc(rulesFor(p.country).name || p.country) : ''}</span>
                     <span class="wtp-chip">🗓️ ${esc(month)}</span>
                     ${p.ph && p.ph !== 'unsure' ? `<span class="wtp-chip">pH ${esc(p.phValue || String((OPT && OPT.phLevels && OPT.phLevels[p.ph]) || p.ph).split(' — ')[0].toLowerCase())}</span>` : ''}
@@ -1087,9 +1087,9 @@
             </div>
 
             <div class="wtp-card">
-                <h3>The ranking, best first</h3>
-                ${prio.length ? `<p class="wp-prio-line">Scored for what matters to you, most first: ${prio.map((k, i) => `${i ? ' › ' : ''}<b>${PRIO_E[k] || ''} ${esc(shortOf((OPT && OPT.priorities && OPT.priorities[k]) || k))}</b>`).join('')}</p>` : ''}
-                ${Array.isArray(p.exclude) && p.exclude.length ? `<p class="wp-left-out">Left out at your request: ${esc(p.exclude.map((k) => shortOf((OPT && OPT.families && OPT.families[k]) || k)).join(', '))}.</p>` : ''}
+                <h3>Best crops, in order</h3>
+                ${prio.length ? `<p class="wp-prio-line">Scored by what matters to you: ${prio.map((k, i) => `${i ? ' › ' : ''}<b>${PRIO_E[k] || ''} ${esc(shortOf((OPT && OPT.priorities && OPT.priorities[k]) || k))}</b>`).join('')}</p>` : ''}
+                ${Array.isArray(p.exclude) && p.exclude.length ? `<p class="wp-left-out">You left out: ${esc(p.exclude.map((k) => shortOf((OPT && OPT.families && OPT.families[k]) || k)).join(', '))}.</p>` : ''}
                 ${(r.recommendations || []).map((x, i) => `
                     <div class="wp-rec" style="transition-delay:${i * 70}ms">
                         <div class="wp-rec-top">
@@ -1105,7 +1105,7 @@
                         ${x.daysToHarvest || (x.harvestRisk && x.harvestRisk.score != null) ? `
                         <div class="wp-hv">
                             ${x.daysToHarvest ? `<span>⏱ Harvest in ~${esc(String(Math.round(Number(x.daysToHarvest))))} days${x.harvestWindow ? ' · ' + esc(x.harvestWindow) : ''}</span>` : ''}
-                            ${x.harvestRisk && x.harvestRisk.score != null ? `<span class="wp-hr is-${riskBand(x.harvestRisk.score)}">${riskIcon(x.harvestRisk.kind)} ${riskWord(x.harvestRisk.score)} harvest-day risk${x.harvestRisk.kind && x.harvestRisk.kind !== 'none' ? ' · ' + esc(x.harvestRisk.kind) : ''}</span>` : ''}
+                            ${x.harvestRisk && x.harvestRisk.score != null ? `<span class="wp-hr is-${riskBand(x.harvestRisk.score)}">${riskIcon(x.harvestRisk.kind)} ${riskWord(x.harvestRisk.score)} risk at harvest${x.harvestRisk.kind && x.harvestRisk.kind !== 'none' ? ' · ' + esc(x.harvestRisk.kind) : ''}</span>` : ''}
                         </div>
                         ${x.harvestRisk && x.harvestRisk.note ? `<p class="wp-hr-note">${esc(sweep(x.harvestRisk.note))}</p>` : ''}` : ''}
                         ${x.fit && prio.length ? `<div class="wp-fit">${prio.map((k) => `<span class="wp-fit-k" title="${esc(shortOf((OPT && OPT.priorities && OPT.priorities[k]) || k))}: ${esc(String(Math.round(Number(x.fit[k]) || 0)))}/100"><i style="--v:${Math.max(0, Math.min(100, Number(x.fit[k]) || 0))}%"></i><small>${PRIO_E[k] || ''} ${esc(PRIO_SHORT[k] || shortOf((OPT && OPT.priorities && OPT.priorities[k]) || k))}</small><b>${esc(String(Math.round(Number(x.fit[k]) || 0)))}</b></span>`).join('')}</div>` : ''}
@@ -1114,8 +1114,8 @@
 
             ${(r.surprises || []).length ? `
             <div class="wtp-card">
-                <h3>🎁 Surprise me</h3>
-                <p class="wp-prio-line">Not what this place usually plants — but your ground, the climate and what matters to you argue for them.</p>
+                <h3>🎁 Surprise picks</h3>
+                <p class="wp-prio-line">Not common here, but they fit your land, the weather and what matters to you.</p>
                 ${(r.surprises || []).map((x, i) => `
                     <div class="wp-sur" style="transition-delay:${i * 80}ms">
                         <div class="wp-sur-top">
@@ -1127,7 +1127,7 @@
                         ${x.daysToHarvest || (x.harvestRisk && x.harvestRisk.score != null) ? `
                         <div class="wp-hv">
                             ${x.daysToHarvest ? `<span>⏱ Harvest in ~${esc(String(Math.round(Number(x.daysToHarvest))))} days${x.harvestWindow ? ' · ' + esc(x.harvestWindow) : ''}</span>` : ''}
-                            ${x.harvestRisk && x.harvestRisk.score != null ? `<span class="wp-hr is-${riskBand(x.harvestRisk.score)}">${riskIcon(x.harvestRisk.kind)} ${riskWord(x.harvestRisk.score)} harvest-day risk${x.harvestRisk.kind && x.harvestRisk.kind !== 'none' ? ' · ' + esc(x.harvestRisk.kind) : ''}</span>` : ''}
+                            ${x.harvestRisk && x.harvestRisk.score != null ? `<span class="wp-hr is-${riskBand(x.harvestRisk.score)}">${riskIcon(x.harvestRisk.kind)} ${riskWord(x.harvestRisk.score)} risk at harvest${x.harvestRisk.kind && x.harvestRisk.kind !== 'none' ? ' · ' + esc(x.harvestRisk.kind) : ''}</span>` : ''}
                         </div>
                         ${x.harvestRisk && x.harvestRisk.note ? `<p class="wp-hr-note">${esc(sweep(x.harvestRisk.note))}</p>` : ''}` : ''}
                     </div>`).join('')}
@@ -1137,7 +1137,7 @@
 
             ${(r.avoid || []).length ? `
             <div class="wtp-card">
-                <h3>Better avoided on this ground</h3>
+                <h3>Better to avoid here</h3>
                 ${(r.avoid || []).map((a) => `
                     <div class="wtp-win-row is-no"><b>⛔ ${esc(a.crop || '')}:</b><span>${esc(a.why || '')}</span></div>`).join('')}
             </div>` : ''}
@@ -1146,13 +1146,13 @@
                 <h3>In plain words</h3>
                 <p class="wtp-plain">${esc(sweep(r.summary))}</p>
                 ${(r.dataGaps || []).length ? `
-                    <h3 class="mt-4">What this analysis could not know</h3>
+                    <h3 class="mt-4">What Anee could not know</h3>
                     <ul class="wtp-gap">${(r.dataGaps || []).map((g) => `<li>${esc(g)}</li>`).join('')}</ul>` : ''}
             </div>
 
             <div class="wtp-card">
                 <h3>🧭 A guide, not a promise</h3>
-                <p class="wtp-fine">No analysis can see your soil the way a soil test can, or a season the way it actually turns out. What this gives you is a data-grounded shortlist — the crops whose real needs match what you described — which beats planting on habit alone. Its sister tool, When to Plant, sharpens the timing once you have chosen.</p>
+                <p class="wtp-fine">No analysis knows your soil like a soil test, or how the season will turn out. This is a shortlist of crops that match what you told us, which beats planting by habit. Once you choose, When to Plant can help with the timing.</p>
             </div>
 
             <div class="wtp-acts">
@@ -1176,7 +1176,7 @@
         host.querySelector('[data-wp-delete]').addEventListener('click', async () => {
             const delId = item.savedId;
             const ok = window.confirmAction
-                ? await confirmAction({ title: 'Delete this analysis?', message: 'The credits it cost are already spent; only the report goes.', confirmText: 'Delete', danger: true })
+                ? await confirmAction({ title: 'Delete this analysis?', message: 'Only the report is deleted. The credits are not refunded.', confirmText: 'Delete', danger: true })
                 : confirm('Delete this analysis?');
             if (!ok) return;
             try {
@@ -1217,7 +1217,7 @@
             const html = rows.map(rowHtml).join('');
             if (more) $id('wpSavedList').insertAdjacentHTML('beforeend', html); else $id('wpSavedList').innerHTML = html;
             $id('wpSavedEmpty').classList.toggle('hidden', WP_ROWS.length > 0);
-            $id('wpSavedEmpty').querySelector('p.font-bold').textContent = SHELF.q ? 'Nothing matches that' : 'Nothing saved yet';
+            $id('wpSavedEmpty').querySelector('p.font-bold').textContent = SHELF.q ? 'No matches' : 'Nothing saved yet';
             $id('wpSavedMore').hidden = !SHELF.hasMore;
         } finally { SHELF.busy = false; }
     }

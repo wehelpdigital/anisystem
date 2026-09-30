@@ -69,7 +69,7 @@
              one stays a clean list to pick from. --}}
         <button type="button" class="btn btn-primary w-full mb-3" id="tagPickNewBtn">Add a New Tag</button>
         <div class="dt-rows" id="tagPickList"></div>
-        <p id="tagPickEmpty" hidden>No tags yet — the first one starts the list.</p>
+        <p id="tagPickEmpty" hidden>No tags yet. Add your first one.</p>
         {{-- Words from the member's other seasons and tools; a tap brings one here. --}}
         <div class="tp-more" id="tagPickMore" hidden>
             <p class="tp-more-h">From your other seasons and tools</p>
@@ -89,7 +89,7 @@
     <div class="sheet-body">
         <label class="form-label" for="tagPickNew">Tag name</label>
         <input type="text" class="form-input" id="tagPickNew" maxlength="60"
-               placeholder="Tag name — e.g. pest problem" autocomplete="off" enterkeyhint="done">
+               placeholder="Example: pest problem" autocomplete="off" enterkeyhint="done">
         <button type="button" class="btn btn-primary w-full mt-3" id="tagPickAdd">Save tag</button>
     </div>
 </div>
@@ -185,7 +185,7 @@
             if (w.things) bits.push(`on ${w.things} ${w.things === 1 ? 'thing' : 'things'} outside a season`);
             return `<button type="button" class="dt-row" data-tp-word="${i}">
                 <span class="dt-row-e">+</span>
-                <span class="dt-row-body"><b>${esc(w.name)}</b><i>${esc(bits.length ? bits.join(' · ') : 'from your other seasons')} · tap to use it here</i></span>
+                <span class="dt-row-body"><b>${esc(w.name)}</b><i>${esc(bits.length ? bits.join(' · ') : 'from your other seasons')} · tap to add here</i></span>
             </button>`;
         }).join('');
         box.hidden = MOREVIEW.length === 0;
@@ -210,7 +210,7 @@
         list.innerHTML = (ALL || []).map((t) => `
             <button type="button" class="dt-row${chosen.has(t.id) ? ' is-on' : ''}${t.id === FRESH ? ' tp-in' : ''}" data-tp-pick="${t.id}">
                 <span class="dt-row-e">🏷️</span>
-                <span class="dt-row-body"><b>${esc(t.name)}</b>${t.count ? `<i>tied to ${t.count} ${t.count === 1 ? 'thing' : 'things'}</i>` : ''}</span>
+                <span class="dt-row-body"><b>${esc(t.name)}</b>${t.count ? `<i>used on ${t.count} ${t.count === 1 ? 'thing' : 'things'}</i>` : ''}</span>
                 <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>`).join('');
         document.getElementById('tagPickEmpty').hidden = (ALL || []).length > 0;
@@ -326,7 +326,7 @@
     async function createTag() {
         const inp = document.getElementById('tagPickNew');
         const name = (inp.value || '').trim();
-        if (!name) { toast('Give the tag a name first.', 'error'); return; }
+        if (!name) { toast('Type a tag name first.', 'error'); return; }
         const btn = document.getElementById('tagPickAdd');
         btn.disabled = true;
         try {

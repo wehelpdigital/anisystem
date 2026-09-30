@@ -251,7 +251,7 @@
                     <b>About Compare</b>
                     {{-- One short paragraph, no dashes or lists (the owner's ask,
                          2026-09-29), as the analyses introduce themselves. --}}
-                    <p>Pick two saved reports of the same kind, from one season or from two, and see them side by side. Every figure sits next to its match, with the difference and which one did better. You can also ask {{ $aneeName }} to explain what changed and what to keep doing, which uses credits. Each comparison is kept on the Saved tab.</p>
+                    <p>Pick two saved reports of the same kind and see them side by side, with the difference and which did better. The comparison is free. {{ $aneeName }} can also explain what changed for a few credits.</p>
                 </div>
             </div>
 
@@ -270,14 +270,14 @@
                 <div class="rx-empty">
                     <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></span>
                     <p class="rx-empty-t" id="cmpNothingT">Nothing to compare yet</p>
-                    <p class="rx-empty-p" id="cmpNothingP">Save two reports of the same kind first — a Labor, Expenses or Profit report, a protocol, or one of {{ $aneeName }}'s reads — in any of your seasons. Then come back here.</p>
+                    <p class="rx-empty-p" id="cmpNothingP">First save two reports of the same kind in any of your seasons. It can be a Labor, Expenses or Profit report, a protocol, or one of {{ $aneeName }}'s reports.</p>
                     <a href="{{ route('sm.index') }}" class="btn btn-primary mt-4" data-nav-loader>Open my cropping schedules</a>
                 </div>
             </div>
 
             <div class="cmp-card" id="cmpWizard" hidden>
                 <div class="cmp-step" id="cmpStepKind">
-                    <div class="cmp-step-h"><span class="cmp-n">1</span><div><b>What are you comparing?</b><small>Two reports of the same kind — apples with apples.</small></div></div>
+                    <div class="cmp-step-h"><span class="cmp-n">1</span><div><b>What are you comparing?</b><small>Pick two reports of the same kind.</small></div></div>
                     <button type="button" class="crop-tag" id="cmpKindBtn">
                         <span class="crop-tag-e" id="cmpKindE">{!! $icoGrid !!}</span>
                         <span class="crop-tag-t is-none" id="cmpKindNow">Choose the kind of report</span>
@@ -286,7 +286,7 @@
                 </div>
 
                 <div class="cmp-step" id="cmpStepPick">
-                    <div class="cmp-step-h"><span class="cmp-n">2</span><div><b>Pick the two reports</b><small>For each side, the cropping schedule first, then the saved report from its shelf.</small></div></div>
+                    <div class="cmp-step-h"><span class="cmp-n">2</span><div><b>Pick the two reports</b><small>For each side, pick the season, then its saved report.</small></div></div>
                     <div class="cmp-duo">
                         @foreach (['a' => 'A', 'b' => 'B'] as $k => $L)
                             <div class="cmp-side is-{{ $k }}" id="cmpSide{{ $L }}">
@@ -311,13 +311,13 @@
                 </div>
 
                 <div class="cmp-step" id="cmpStepAi" hidden>
-                    <div class="cmp-step-h"><span class="cmp-n">3</span><div><b>{{ $aneeName }}'s read</b><small>Optional — the comparison itself is free.</small></div></div>
+                    <div class="cmp-step-h"><span class="cmp-n">3</span><div><b>{{ $aneeName }}'s read</b><small>Optional. The comparison itself is free.</small></div></div>
                     <label class="cmp-ai" id="cmpAi">
                         <input type="checkbox" class="cmp-switch-in" id="cmpWithAi">
                         <span class="cmp-switch" aria-hidden="true"></span>
                         <span class="cmp-ai-t">
                             <b>Add {{ $aneeName }}'s read · <span id="cmpPrice">30</span> credits</b>
-                            <i>She reads both and tells you what changed, the strengths of each, and what to carry forward.</i>
+                            <i>She reads both and tells you what changed, what each did well and what to keep doing.</i>
                             <i class="cmp-bal" id="cmpBal"></i>
                         </span>
                         <img class="cmp-ai-face" src="{{ $aneeFace }}" alt="">
@@ -337,11 +337,11 @@
 
     <div class="cmp-pane" id="cmpSavedPane" @if ($canWrite) hidden @endif>
         @unless ($canWrite)
-            <p class="cmp-viewonly"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 16v-4.5M12 8h.01"/></svg><span>These are the farm's saved comparisons, for reading. Making a new one is for the owner, or a worker with edit access to Reports.</span></p>
+            <p class="cmp-viewonly"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 16v-4.5M12 8h.01"/></svg><span>You can read the farm's saved comparisons. Only the owner, or a worker who can edit Reports, can make a new one.</span></p>
         @endunless
         <div class="cmp-search" id="cmpSearchWrap" hidden>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-            <input type="search" id="cmpQ" class="form-input" placeholder="Find a comparison…" autocomplete="off" aria-label="Find a comparison">
+            <input type="search" id="cmpQ" class="form-input" placeholder="Search comparisons" autocomplete="off" aria-label="Find a comparison">
         </div>
         <div class="cmp-list">
             <div id="cmpRows"></div>
@@ -351,11 +351,11 @@
             <div class="rx-empty" id="cmpEmpty" hidden>
                 <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg></span>
                 <p class="rx-empty-t">No comparisons yet</p>
-                <p class="rx-empty-p">{{ $canWrite ? 'Compare two saved reports on the Compare tab and it lands here by itself — every one you make, newest first.' : 'When the farm saves a comparison, it will be here to read.' }}</p>
+                <p class="rx-empty-p">{{ $canWrite ? 'Each comparison you make on the Compare tab is saved here, newest first.' : 'When the farm saves a comparison, you can read it here.' }}</p>
             </div>
             <div class="rx-empty" id="cmpNone" hidden>
                 <p class="rx-empty-t">Nothing matches</p>
-                <p class="rx-empty-p">Try another word — the search reads each comparison's name and description.</p>
+                <p class="rx-empty-p">Try another word. The search looks at each name and description.</p>
             </div>
         </div>
         <button type="button" class="cmp-more" id="cmpMore" hidden>Show more</button>
@@ -375,7 +375,7 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
-        <p class="cmp-sheet-sub">Counted across every season you can open. It takes two saved reports of a kind to compare.</p>
+        <p class="cmp-sheet-sub">Counted across all your seasons. You need two saved reports of one kind to compare.</p>
         <div class="dt-rows" id="cmpKindList"></div>
     </div>
 </div>
@@ -540,7 +540,7 @@ const __init = () => {
         if (!any) {
             if (!(S.opts?.seasons || []).length) {
                 $id('cmpNothingT').textContent = 'No seasons to compare from yet';
-                $id('cmpNothingP').textContent = 'Start a cropping schedule, save a report or two from its Reports, and come back to lay them side by side.';
+                $id('cmpNothingP').textContent = 'Start a cropping schedule and save two reports from its Reports page. Then come back to compare them.';
             }
             reveal($id('cmpNothing'));
             return;
@@ -571,7 +571,7 @@ const __init = () => {
         const coinHtml = o.payerIsMe && window.creditCoin ? window.creditCoin(have) : coin(have);
         bal.classList.toggle('is-short', short);
         bal.innerHTML = short
-            ? `${whose} ${coinHtml} — not enough for her read.${o.payerIsMe ? ` <a href="${esc(U.credits)}?tab=buy">Get credits</a>` : ' The farm owner can top up.'}`
+            ? `${whose} ${coinHtml}. That is not enough for her read.${o.payerIsMe ? ` <a href="${esc(U.credits)}?tab=buy">Get credits</a>` : ' The farm owner can top up.'}`
             : `${whose} ${coinHtml}`;
         const box = $id('cmpWithAi');
         box.disabled = short;
@@ -650,7 +650,7 @@ const __init = () => {
         $id('cmpStepPick').classList.toggle('is-done', !!(S.a.report && S.b.report));
         const hint = !S.kind ? 'Choose the kind of report first.'
             : (!S.a.report && !S.b.report ? 'Now pick Report A and Report B.'
-            : (!S.a.report ? 'Now pick Report A.' : (!S.b.report ? 'Now pick Report B.' : (withAi ? 'Saved to the Saved tab the moment she finishes.' : 'Free — saved to the Saved tab.'))));
+            : (!S.a.report ? 'Now pick Report A.' : (!S.b.report ? 'Now pick Report B.' : (withAi ? 'Saved to the Saved tab when she finishes.' : 'Free. Saved to the Saved tab.'))));
         $id('cmpHint').textContent = hint;
     }
 
@@ -672,7 +672,7 @@ const __init = () => {
             const t = totals[k.key] || { n: 0, seasons: 0 };
             const off = t.n < 2;
             const say = t.n === 0 ? 'None saved yet'
-                : `${t.n} saved in ${t.seasons} season${t.seasons === 1 ? '' : 's'}${t.n < 2 ? ' — it takes two to compare' : ''}`;
+                : `${t.n} saved in ${t.seasons} season${t.seasons === 1 ? '' : 's'}${t.n < 2 ? '. You need two to compare' : ''}`;
             return `<button type="button" class="dt-row${S.kind === k.key ? ' is-on' : ''}" data-kind="${esc(k.key)}" style="--i:${n}" ${off ? 'disabled' : ''}>
                 <span class="dt-row-e"><img src="${esc(k.icon)}" alt=""></span>
                 <span class="dt-row-body"><b>${esc(k.label)}</b><i>${esc(say)}</i></span>
@@ -712,8 +712,8 @@ const __init = () => {
         if (!S.kind || !S.opts) return;
         S.picking = side;
         const k = KIND[S.kind];
-        $id('cmpSeasonTitle').textContent = `Report ${side.toUpperCase()} — which season?`;
-        $id('cmpSeasonSub').textContent = `Every cropping schedule you can open, with how many ${k.label}s are saved on it. Closed and archived seasons are here too.`;
+        $id('cmpSeasonTitle').textContent = `Report ${side.toUpperCase()}: which season?`;
+        $id('cmpSeasonSub').textContent = `All your seasons, with how many ${k.label}s each one has saved. Closed and archived seasons are here too.`;
         const seasons = (S.opts.seasons || []).slice().sort((x, y) => (countIn(y.id, S.kind) > 0) - (countIn(x.id, S.kind) > 0));
         const taken = S[other(side)].report;
         $id('cmpSeasonList').innerHTML = seasons.map((s, n) => {
@@ -765,14 +765,14 @@ const __init = () => {
         S.picking = side;
         const k = KIND[S.kind];
         const season = seasonOf(st.season);
-        $id('cmpPickTitle').textContent = `Report ${side.toUpperCase()} — ${k.label}`;
-        $id('cmpPickSub').textContent = `Saved on the shelf of “${season ? season.title : 'this season'}”, newest first.`;
+        $id('cmpPickTitle').textContent = `Report ${side.toUpperCase()}: ${k.label}`;
+        $id('cmpPickSub').textContent = `Saved in “${season ? season.title : 'this season'}”, newest first.`;
         const list = $id('cmpPickList');
         list.innerHTML = `<div class="cmp-bones">${bone(3)}</div>`;
         openSheet('cmpPickSheet');
         let rows;
         try { rows = await shelf(st.season, S.kind); }
-        catch (err) { list.innerHTML = `<p class="text-sm text-gray-500 text-center py-6">${esc(err.message || 'The shelf did not load.')}</p>`; return; }
+        catch (err) { list.innerHTML = `<p class="text-sm text-gray-500 text-center py-6">${esc(err.message || 'The reports did not load.')}</p>`; return; }
         if (S.picking !== side) return;
         const taken = S[other(side)].report;
         list.innerHTML = rows.map((r, n) => {
@@ -783,7 +783,7 @@ const __init = () => {
                 <span class="dt-row-body"><b>${esc(r.title)}</b><i>${esc(dup ? 'Already Report ' + other(side).toUpperCase() : bits)}</i>${r.description ? `<i class="d">${esc(r.description)}</i>` : ''}</span>
                 ${SVG.tick}
             </button>`;
-        }).join('') || `<p class="text-sm text-gray-500 text-center py-6">No saved ${esc(k.label)} on this season's shelf.</p>`;
+        }).join('') || `<p class="text-sm text-gray-500 text-center py-6">No saved ${esc(k.label)} in this season.</p>`;
     }
     document.querySelectorAll('[data-cmp-report]').forEach((b) => b.addEventListener('click', () => openReport(b.dataset.cmpReport)));
     $id('cmpPickList')?.addEventListener('click', (e) => {
@@ -803,15 +803,15 @@ const __init = () => {
         const price = S.opts?.price;
         S.busy = true;
         paintRun();
-        if (withAi) window.aneeWait.show({ title: `${ANEE} is reading both reports…`, lines: ['Lining the two up, figure by figure…', 'Weighing what changed between them…', 'Finding the strengths of each…', 'Writing what to carry forward…'], sub: 'Half a minute, usually.' });
+        if (withAi) window.aneeWait.show({ title: `${ANEE} is reading both reports…`, lines: ['Setting the two side by side…', 'Finding what changed…', 'Finding what each did well…', 'Writing what to keep doing…'], sub: 'This usually takes half a minute.' });
         let landed = false;
         try {
             const res = await api(U.gen, { method: 'POST', body: { aId: S.a.report.id, bId: S.b.report.id, withAi: withAi ? 1 : 0 } });
             let data = res.data || {};
             if (data.pending) data = await window.aneeWait.poll({ id: data.id, job: U.job, phases: window.aneeWait.phases.plain, limit: 200 });
             landed = true;
-            if (withAi) await window.aneeWait.done({ title: 'Done!', line: `${price} credits used — saved to the shelf.` });
-            toast(withAi ? `Done — ${price} credits used. Saved to the shelf.` : 'Comparison saved to the shelf.');
+            if (withAi) await window.aneeWait.done({ title: 'Done!', line: `${price} credits used. Your comparison is saved.` });
+            toast(withAi ? `Done. ${price} credits used. Your comparison is saved.` : 'Comparison saved.');
             S.savedDirty = true;
             await showResult(data, 'fresh');
             if (withAi) refreshWallet();
@@ -879,7 +879,7 @@ const __init = () => {
     async function removeViewing() {
         const v = S.viewing;
         if (!v) return;
-        const ok = await window.confirmAction({ title: 'Delete this comparison?', message: 'It leaves the Saved shelf. The two reports it compared stay where they are.', detail: v.data.credits > 0 ? 'The credits it used are already spent.' : '', confirmText: 'Delete' });
+        const ok = await window.confirmAction({ title: 'Delete this comparison?', message: 'The two reports it compared stay saved.', detail: v.data.credits > 0 ? 'The credits it used are not returned.' : '', confirmText: 'Delete' });
         if (!ok) return;
         try {
             await api(U.del(v.id), { method: 'DELETE' });
@@ -896,24 +896,24 @@ const __init = () => {
         if (!rep.a?.id || !rep.b?.id) return;
         const o = S.opts || {};
         if (!o.unlimited && Number(o.balance) < Number(o.price)) {
-            toast(`${ANEE}’s read costs ${o.price} credits — ${o.payerIsMe ? 'you have' : 'the farm has'} ${Math.floor(Number(o.balance) || 0)}.`, 'error');
+            toast(`${ANEE}’s read costs ${o.price} credits. ${o.payerIsMe ? 'You have' : 'The farm has'} ${Math.floor(Number(o.balance) || 0)}.`, 'error');
             return;
         }
         const ok = await window.confirmAction({
             title: `Add ${ANEE}’s read?`,
-            message: `She reads both reports and writes what changed, the strengths of each, and what to carry forward. It costs ${o.price} credits.`,
+            message: `She reads both reports and tells you what changed, what each did well and what to keep doing. It costs ${o.price} credits.`,
             confirmText: 'Add her read', confirmClass: 'btn-primary',
         });
         if (!ok) return;
         btn.disabled = true;
-        window.aneeWait.show({ title: `${ANEE} is reading both reports…`, lines: ['Lining the two up, figure by figure…', 'Weighing what changed between them…', 'Finding the strengths of each…'], sub: 'Half a minute, usually.' });
+        window.aneeWait.show({ title: `${ANEE} is reading both reports…`, lines: ['Setting the two side by side…', 'Finding what changed…', 'Finding what each did well…'], sub: 'This usually takes half a minute.' });
         let landed = false;
         try {
             const res = await api(U.gen, { method: 'POST', body: { aId: rep.a.id, bId: rep.b.id, withAi: 1, replaces: data.mine && !(data.credits > 0) ? data.id : 0 } });
             let nd = res.data || {};
             if (nd.pending) nd = await window.aneeWait.poll({ id: nd.id, job: U.job, phases: window.aneeWait.phases.plain, limit: 200 });
             landed = true;
-            await window.aneeWait.done({ title: 'Done!', line: `${o.price} credits used — saved to the shelf.` });
+            await window.aneeWait.done({ title: 'Done!', line: `${o.price} credits used. Your comparison is saved.` });
             S.savedDirty = true;
             const mode = S.viewing ? S.viewing.mode : 'saved';
             const host = mode === 'fresh' ? $id('cmpReport') : $id('cmpSavedReport');
@@ -996,7 +996,7 @@ const __init = () => {
         } catch (err) {
             if (token !== L.token) return;
             $id('cmpRowBones').hidden = true;
-            toast(err.message || 'The shelf did not load.', 'error');
+            toast(err.message || 'Your saved comparisons did not load.', 'error');
         }
     }
 

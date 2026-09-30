@@ -75,7 +75,7 @@
         <div class="am-doors" id="amDoors">
             <button type="button" class="am-door" data-am-door="gallery">
                 <span class="am-door-ico"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM8 14l2.5-3 2 2.5L15 10l3 4"/></svg></span>
-                <span><b>From the gallery</b><i id="amDoorGalleryWhy">Something this season already keeps.</i></span>
+                <span><b>From the gallery</b><i id="amDoorGalleryWhy">Already saved in this season.</i></span>
             </button>
             <button type="button" class="am-door" data-am-door="upload">
                 <span class="am-door-ico"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0L8 8m4-4l4 4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg></span>
@@ -95,7 +95,7 @@
             <div class="mt-3">
                 <label class="form-label text-xs! mb-1!" for="amDesc">Description <span class="text-gray-400 font-normal">(optional, applies to all)</span></label>
                 <textarea id="amDesc" rows="2" maxlength="2000" class="form-textarea"
-                          placeholder="What is this showing? — it goes on the Gallery entry too"></textarea>
+                          placeholder="What does it show? This is saved in the Gallery too."></textarea>
             </div>
         </div>
     </div>
@@ -183,8 +183,8 @@
         $('amStage').classList.toggle('hidden', PICKED.length === 0);
         $('amFooter').classList.toggle('hidden', PICKED.length === 0);
         $('amStageSay').textContent = PICKED.length === 1
-            ? 'One file. Give it a name so it can be found again.'
-            : PICKED.length + ' files. Name them so they can be found again.';
+            ? 'One file. Give it a name so you can find it later.'
+            : PICKED.length + ' files. Name them so you can find them later.';
         $('amSend').textContent = 'Upload ' + PICKED.length + (PICKED.length === 1 ? ' file' : ' files');
     }
 
@@ -197,12 +197,12 @@
         const want = CFG.kind === 'video' ? /^video\//: /^image\//;
         for (const f of Array.from(files || [])) {
             if (!want.test(f.type)) {
-                window.toast?.(`"${f.name}" is not ${CFG.kind === 'video' ? 'a clip' : 'an image'} — skipped.`, 'error');
+                window.toast?.(`"${f.name}" is not ${CFG.kind === 'video' ? 'a clip' : 'an image'}. Skipped.`, 'error');
                 continue;
             }
             const small = await shrink(f);
             if (small.size > CAP[CFG.kind]) {
-                window.toast?.(`"${f.name}" is ${MB(small.size)} — the limit is ${MB(CAP[CFG.kind])}.`, 'error');
+                window.toast?.(`"${f.name}" is ${MB(small.size)}. The limit is ${MB(CAP[CFG.kind])}.`, 'error');
                 continue;
             }
             PICKED.push({
@@ -352,8 +352,8 @@
         if (done.length) mine.onDone?.(done);
         if (done.length === queue.length) {
             window.closeSheet?.('amSheet');
-            window.toast?.(done.length === 1 ? 'Uploaded, and filed in the Gallery.'
-                : done.length + ' uploaded, and filed in the Gallery.');
+            window.toast?.(done.length === 1 ? 'Uploaded and saved in the Gallery.'
+                : done.length + ' uploaded and saved in the Gallery.');
             PICKED = [];
             draw();
         } else {
@@ -361,7 +361,7 @@
             // reader can drop them or try again rather than guessing.
             PICKED = queue.filter((q) => !q.row?.classList.contains('is-done')).map((q) => q.item);
             draw();
-            window.toast?.('Some files did not go up. Their reason is on the row.', 'error');
+            window.toast?.('Some files did not upload. The reason is under each one.', 'error');
         }
     });
 
@@ -369,7 +369,7 @@
         // Files still on the wire own this sheet until they land. Swapping it
         // out from under them loses both the progress and the answer.
         if (SENDING) {
-            window.toast?.('Still uploading — one moment.', 'error');
+            window.toast?.('Still uploading. Wait a moment.', 'error');
             return;
         }
         CFG = Object.assign({ kind: 'image' }, cfg || {});
@@ -379,7 +379,7 @@
         $('amDoorCamName').textContent = clip ? 'Record' : 'Camera';
         $('amDoorCamWhy').textContent = clip ? 'Film it now.' : 'Take one now.';
         $('amDoorGalleryWhy').textContent = clip
-            ? 'A clip this season already keeps.' : 'Something this season already keeps.';
+            ? 'A clip already saved in this season.' : 'Already saved in this season.';
         $('amDoorUploadWhy').textContent = clip
             ? 'A clip from this phone or computer.' : 'From this phone or computer.';
         $('amDesc').value = '';

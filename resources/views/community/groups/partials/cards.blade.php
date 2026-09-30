@@ -59,7 +59,7 @@
                         {{-- The room is findable; what is said in it is not.
                              Beside the name, because the name is what the
                              lock is about. --}}
-                        <span class="dc-lock" title="{{ $g->joinMode === \App\Models\CommunityGroup::BY_PASSWORD ? 'Private — asks for a password' : 'Private — the organiser lets people in' }}">
+                        <span class="dc-lock" title="{{ $g->joinMode === \App\Models\CommunityGroup::BY_PASSWORD ? 'Private. Needs a password' : 'Private. Needs approval to join' }}">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
                             <span class="plaza-say">Private discussion</span>
                         </span>

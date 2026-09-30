@@ -24,5 +24,5 @@
     </div>
 @elseif ($paginator->total() > 0)
     {{-- $noun lets any list say what it holds; notes were only the first. --}}
-    <p class="lp-end">That is everything — {{ $paginator->total() }} {{ \Illuminate\Support\Str::plural($noun ?? 'item', $paginator->total()) }}.</p>
+    <p class="lp-end">That is all {{ $paginator->total() }} {{ \Illuminate\Support\Str::plural($noun ?? 'item', $paginator->total()) }}.</p>
 @endif

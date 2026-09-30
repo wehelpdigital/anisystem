@@ -2,7 +2,7 @@
 
 @section('title', 'My Subscription')
 @section('page-title', 'My Subscription')
-@section('page-subtitle', 'Your plan, the plans, and your payments')
+@section('page-subtitle', 'Your plan, all plans and your payments')
 @section('back', route('account.index'))
 
 @php
@@ -19,7 +19,7 @@
 
     $badgeFor = fn (?string $s) => match ($s) {
         'active' => ['badge-green', 'Active'],
-        'pending' => ['badge-yellow', 'Awaiting verification'],
+        'pending' => ['badge-yellow', 'Being checked'],
         'suspended' => ['badge-orange', 'Suspended'],
         'cancelled' => ['badge-gray', 'Cancelled'],
         'rejected' => ['badge-red', 'Payment rejected'],
@@ -94,9 +94,9 @@
             <h2 class="font-bold text-red-800">Your access is locked</h2>
             <p class="text-sm text-red-700 mt-1">
                 @if ($status === 'suspended')
-                    Your subscription has been suspended. Please contact support@anee.io so we can help you restore access.
+                    Your plan was suspended. Email support@anee.io and we will help you get back in.
                 @else
-                    Choose a plan below to unlock the app. Your data is safe and waiting for you.
+                    Pick a plan below to unlock the app. Your data is safe.
                 @endif
             </p>
         </div>
@@ -106,7 +106,7 @@
     @if ($reviewPlan)
         <a href="{{ route('checkout', ['order' => $reviewPlan->orderNumber]) }}" class="sp-note is-wait block">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span><b>Your payment for {{ $reviewPlan->itemName }} is being reviewed.</b> Usually within {{ ManualPay::settings()['reviewHours'] }} hours; it switches on by itself when approved. Tap to see the order.</span>
+            <span><b>We are checking your payment for {{ $reviewPlan->itemName }}.</b> Usually done within {{ ManualPay::settings()['reviewHours'] }} hours. Your plan turns on once approved. Tap to see the order.</span>
         </a>
     @endif
 
@@ -118,7 +118,7 @@
                 @if ($active)<span class="badge badge-green">Active</span>@elseif ($isAdmin)<span class="badge badge-green">Admin</span>@else<span class="badge badge-gray">Free</span>@endif
             </div>
             @if ($isAdmin)
-                <p class="text-sm text-gray-600">This account runs the platform: everything is open, and nothing is ever charged.</p>
+                <p class="text-sm text-gray-600">This account runs the platform. Everything is open and never charged.</p>
             @elseif ($active)
                 @php
                     $totalDays = max(1, (int) ($active->startsAt?->copy()->startOfDay()->diffInDays($active->expiresAt) ?? $active->durationDays));
@@ -134,18 +134,18 @@
                 <div class="h-2.5 rounded-full bg-gray-100 overflow-hidden mt-3">
                     <div class="h-full rounded-full {{ $expiringSoon ? 'bg-orange-500' : 'bg-brand-600' }}" style="width: {{ $pct }}%"></div>
                 </div>
-                <p class="text-xs text-gray-500 mt-2">Until {{ $active->expiresAt?->format('M j, Y') }}.@if ($expiringSoon) <b class="text-orange-600">Renew below so you do not lose access mid-season.</b>@endif</p>
+                <p class="text-xs text-gray-500 mt-2">Until {{ $active->expiresAt?->format('M j, Y') }}.@if ($expiringSoon) <b class="text-orange-600">Renew below so you keep access during the season.</b>@endif</p>
                 @foreach ($upcoming as $next)
                     <div class="mt-3 rounded-xl bg-brand-50 border border-brand-100 px-3 py-2.5 text-sm">
                         <span class="font-semibold text-brand-800">Next: {{ $next->planName }}</span>
-                        <span class="text-gray-600">· {{ $next->startsAt->format('M j') }} – {{ $next->expiresAt->format('M j, Y') }}</span>
+                        <span class="text-gray-600">· {{ $next->startsAt->format('M j') }} to {{ $next->expiresAt->format('M j, Y') }}</span>
                     </div>
                 @endforeach
             @else
                 <p class="text-xl font-bold text-gray-900">Libre</p>
-                <p class="text-sm text-gray-500 mt-0.5">Free forever. Pick a plan below whenever the farm needs more.</p>
+                <p class="text-sm text-gray-500 mt-0.5">Free forever. Pick a plan below when your farm needs more.</p>
                 @if ($status === 'expired' && $subscription?->expiresAt)
-                    <p class="text-xs text-gray-500 mt-2">Your {{ $subscription->planName }} ended {{ $subscription->expiresAt->format('M j, Y') }}. Your data is all still here.</p>
+                    <p class="text-xs text-gray-500 mt-2">Your {{ $subscription->planName }} ended {{ $subscription->expiresAt->format('M j, Y') }}. Your data is still here.</p>
                 @endif
             @endif
 
@@ -157,7 +157,7 @@
             @endphp
             <div class="rounded-xl bg-gray-50 px-3 py-2.5 mt-4 text-sm">
                 <div class="flex items-center justify-between gap-3">
-                    <p class="text-xs text-gray-500">Storage used <span class="text-gray-400">(photos, clips, files — farm and community)</span></p>
+                    <p class="text-xs text-gray-500">Storage used <span class="text-gray-400">(farm and community photos, clips and files)</span></p>
                     <p class="font-semibold text-gray-800 whitespace-nowrap">{{ $storageUsedGb }} GB <span class="text-gray-400 font-medium">/ {{ $storageCapGb === null ? 'unlimited' : $storageCapGb . ' GB' }}</span></p>
                 </div>
                 @if ($storageCapGb !== null)
@@ -217,7 +217,7 @@
                                 $style = $rank >= $rankNow ? 'btn-primary' : 'btn-outline';
                             @endphp
                             @if ($reviewPlan)
-                                <button type="button" class="btn btn-outline" disabled>Payment being reviewed</button>
+                                <button type="button" class="btn btn-outline" disabled>Payment being checked</button>
                             @else
                                 <a href="{{ route('checkout', ['item' => $key . ':month']) }}" class="btn {{ $style }} m">{{ $label }}</a>
                                 <a href="{{ route('checkout', ['item' => $key . ':' . ($year ? 'year' : 'month')]) }}" class="btn {{ $style }} y">{{ $label }}</a>
@@ -231,7 +231,7 @@
                             @endif
                         </div>
                     @elseif ($month && $isWorker)
-                        <div class="sp-buy"><p>You are working on a farm's plan. Plans are bought by the farm's owner.</p></div>
+                        <div class="sp-buy"><p>You work on someone else's farm. Only the owner can buy a plan.</p></div>
                     @endif
                 </div>
             @endforeach
@@ -271,7 +271,7 @@
                             <p class="font-semibold text-gray-900 truncate text-sm">{{ $row->planName }}</p>
                             <p class="text-xs text-gray-500 mt-0.5">
                                 @if ($row->orderNumber) {{ $row->orderNumber }} · @endif
-                                @if ($row->startsAt && $row->expiresAt) {{ $row->startsAt->format('M j, Y') }} – {{ $row->expiresAt->format('M j, Y') }} @else {{ $row->created_at?->format('M j, Y') }} @endif
+                                @if ($row->startsAt && $row->expiresAt) {{ $row->startsAt->format('M j, Y') }} to {{ $row->expiresAt->format('M j, Y') }} @else {{ $row->created_at?->format('M j, Y') }} @endif
                             </p>
                         </div>
                         <div class="text-right shrink-0">

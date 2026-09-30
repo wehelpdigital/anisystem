@@ -8,7 +8,7 @@
         <span class="ccall-dot"></span>
         <span class="ccall-title" id="ccallTitle">Call</span>
         <span class="ccall-count" id="ccallCount">1</span>
-        <button type="button" id="ccallMin" class="ccall-mini" title="Minimize / expand" aria-label="Minimize">
+        <button type="button" id="ccallMin" class="ccall-mini" title="Minimize or expand" aria-label="Minimize">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"/></svg>
         </button>
         {{-- Leaving from the header matters most when minimized: the controls
@@ -20,10 +20,10 @@
     <div class="ccall-body">
         <div class="ccall-tiles" id="ccallTiles"></div>
         <div class="ccall-controls">
-            <button type="button" id="ccallMic" class="ccall-btn" title="Mute / unmute" aria-label="Microphone">
+            <button type="button" id="ccallMic" class="ccall-btn" title="Mute or unmute" aria-label="Microphone">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 003-3V6a3 3 0 00-6 0v6a3 3 0 003 3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 01-14 0v-2M12 19v3"/></svg>
             </button>
-            <button type="button" id="ccallCam" class="ccall-btn" title="Camera on / off" aria-label="Camera">
+            <button type="button" id="ccallCam" class="ccall-btn" title="Camera on or off" aria-label="Camera">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
             </button>
             <button type="button" id="ccallLeave" class="ccall-btn ccall-leave" title="Leave the call" aria-label="Leave">
@@ -220,7 +220,7 @@
                 data = res.data;
             } catch (err) { if (window.toast) toast(err.message || 'Could not start the call.', 'error'); return false; }
             if (joinCancelled) return false;
-            try { LK = LK || await window.loadLivekit(); } catch (_) { if (window.toast) toast('Could not load the call module.', 'error'); return false; }
+            try { LK = LK || await window.loadLivekit(); } catch (_) { if (window.toast) toast('Could not load the call. Try again.', 'error'); return false; }
             if (joinCancelled) return false;
 
             room = new LK.Room({ adaptiveStream: true, dynacast: true });
@@ -243,7 +243,7 @@
                 micOn = true;
             } catch (err) {
                 micOn = false;
-                if (window.toast) toast(secureCtx ? 'Joined — but mic permission was blocked.' : 'Joined — but your mic/camera need HTTPS (open the app over https://).', 'error');
+                if (window.toast) toast(secureCtx ? 'You joined, but mic access was blocked.' : 'You joined, but the mic and camera need HTTPS. Open the app with https://.', 'error');
             }
 
             ensureTile(room.localParticipant, true);
@@ -270,7 +270,7 @@
         async function leave() {
             const others = room ? room.remoteParticipants.size : 0;
             cleanup();
-            if (window.toast) toast(others ? 'You left the call — it carries on without you.' : 'Call ended.');
+            if (window.toast) toast(others ? 'You left. The call goes on without you.' : 'Call ended.');
             if (others > 0) return;
             try { await api(URLS.end, { method: 'POST', body: { scheduleId: SCHEDULE_ID } }); } catch (_) {}
         }
@@ -299,7 +299,7 @@
             const p = room.remoteParticipants.get(identity);
             if (!p) return;
             const pub = micPubOf(p);
-            if (!pub || !pub.trackSid) { if (window.toast) toast('That member has no active microphone.', 'error'); return; }
+            if (!pub || !pub.trackSid) { if (window.toast) toast('This member has no mic on.', 'error'); return; }
             if (btn) btn.disabled = true;
             try {
                 await api(URLS.mute, { method: 'POST', body: { scheduleId: SCHEDULE_ID, room: roomName, identity, trackSid: pub.trackSid, muted: true } });

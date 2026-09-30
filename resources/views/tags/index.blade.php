@@ -2,7 +2,7 @@
 
 @section('title', 'Tags')
 @section('page-title', 'Tags')
-@section('page-subtitle', 'Every tag, in every season and tool')
+@section('page-subtitle', 'All your tags in one place')
 @section('back', \App\Support\BackTo::url(route('app.dashboard')))
 
 @include('partials.tag-sheet-css')
@@ -140,10 +140,10 @@
         <svg class="gt-search-ico" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
         {{-- pl-10!, not pl-10: .form-input's own padding wins the tie otherwise. --}}
         <input type="search" id="gtSearch" class="form-input pl-10! pr-10!" placeholder="Search your tags" autocomplete="off" aria-label="Search your tags">
-        <button type="button" id="gtSearchX" class="gt-search-x hidden" aria-label="Clear the search">✕</button>
+        <button type="button" id="gtSearchX" class="gt-search-x hidden" aria-label="Clear search">✕</button>
     </div>
 
-    <div class="gt-seg" role="tablist" aria-label="Where the tags live">
+    <div class="gt-seg" role="tablist" aria-label="Filter tags">
         <span class="gt-seg-pill" id="gtSegPill" aria-hidden="true"></span>
         <button type="button" class="is-on" data-gt-mode="all" role="tab" aria-selected="true">All</button>
         <button type="button" data-gt-mode="season" role="tab" aria-selected="false">In a season</button>
@@ -162,17 +162,17 @@
     </div>
 
     @if ($inWorker)
-        <p class="gt-note">You are working on another farm right now. These are <b>your own</b> tags — your seasons and your things. To open one of your seasons, switch to your own farm from the 🏡 menu first.</p>
+        <p class="gt-note">You are working on another farm now. These are <b>your own</b> tags. To open your seasons, switch to your own farm from the 🏡 menu.</p>
     @endif
 
-    <p class="gt-says" id="gtSays">Gathering your tags…</p>
+    <p class="gt-says" id="gtSays">Loading your tags…</p>
     <div class="gt-cloud" id="gtCloud"></div>
     <div class="gt-legend" id="gtLegend" hidden>
         <span><i class="s"></i>in a season</span>
         <span><i class="g"></i>outside a season</span>
     </div>
-    <p class="gt-none" id="gtEmpty" hidden>No tags yet. Tag things as you go — a season's activities, notes and lots, or your contacts, protocols and saved analyses — and every word gathers here.</p>
-    <p class="gt-none" id="gtNoMatch" hidden>No tag matches that.</p>
+    <p class="gt-none" id="gtEmpty" hidden>No tags yet. Tag your activities, notes, lots, contacts or protocols. All your tags will show here.</p>
+    <p class="gt-none" id="gtNoMatch" hidden>No tags found.</p>
 
     <div class="gt-shelf" id="gtShelf" aria-live="polite">
         <div class="gt-shelf-in">
@@ -206,13 +206,13 @@
 <div class="sheet hidden" id="gtRenameSheet" style="--sheet-width:24rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Rename the tag</h3>
+        <h3 class="sheet-title">Rename tag</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
         <label class="form-label" for="gtRenameInput">New name</label>
         <input type="text" class="form-input" id="gtRenameInput" maxlength="30" autocomplete="off" enterkeyhint="done">
-        <p class="text-xs text-gray-500 mt-2" id="gtRenameSays">Every season and tool that wears this tag takes the new name.</p>
+        <p class="text-xs text-gray-500 mt-2" id="gtRenameSays">The new name shows everywhere this tag is used.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
@@ -328,7 +328,7 @@ const __init = () => {
             if (reopen && TAGS.some((t) => t.key === reopen)) openShelf(reopen);
             else if (OPEN && !TAGS.some((t) => t.key === OPEN)) closeShelf();
         } catch (err) {
-            $id('gtSays').textContent = 'Could not gather your tags — try again in a moment.';
+            $id('gtSays').textContent = 'Could not load your tags. Try again soon.';
             toast(err.message, 'error');
         }
     }
@@ -358,7 +358,7 @@ const __init = () => {
         $id('gtItems').innerHTML = shown.map((it, i) => {
             const where = it.where === 'season'
                 ? `<span class="gt-where">In <span class="gt-schip">🌾 ${esc(it.place)}</span></span>`
-                : `<span class="gt-where is-out">Not in a cropping schedule — <b>${esc(it.place)}</b></span>`;
+                : `<span class="gt-where is-out">Outside a season: <b>${esc(it.place)}</b></span>`;
             return `<a class="gt-item${animate ? ' gt-in' : ''}" href="${esc(fromTags(it.url))}" data-where="${it.where}"
                     ${animate ? `style="animation-delay:${Math.min(i, 20) * 18}ms"` : ''}>
                 <span class="e">${it.icon || '🏷️'}</span>
@@ -369,18 +369,18 @@ const __init = () => {
         const empty = $id('gtShelfEmpty');
         if (shown.length) { empty.hidden = true; return; }
         empty.textContent = ITEMS.length
-            ? 'Nothing here under this filter — try All.'
+            ? 'Nothing here with this filter. Try All.'
             : (COUNTS && COUNTS.seasonTags
-                ? 'This tag is on your seasons\' tag lists but not tied to anything yet.'
-                : 'This tag is not on anything yet.');
+                ? 'This tag is saved in your seasons but not used yet.'
+                : 'This tag is not used yet.');
         empty.hidden = false;
     }
 
     function paintShelfHead(name) {
         $id('gtShelfName').textContent = '🏷️ ' + name;
-        if (!COUNTS) { $id('gtShelfSays').textContent = 'Gathering what wears it…'; return; }
+        if (!COUNTS) { $id('gtShelfSays').textContent = 'Loading…'; return; }
         const total = COUNTS.season + COUNTS.global;
-        $id('gtShelfSays').textContent = total ? `${plural(total, 'thing')} — ${spread(COUNTS)}` : 'Not on anything yet';
+        $id('gtShelfSays').textContent = total ? `${plural(total, 'thing')}: ${spread(COUNTS)}` : 'Not used yet';
     }
 
     /* The open tag rides on the address (?tag=), so a door out of the shelf
@@ -403,7 +403,7 @@ const __init = () => {
         paintShelfHead(t.name);
         $id('gtRenameBtn').disabled = true;
         $id('gtDeleteBtn').disabled = true;
-        $id('gtItems').innerHTML = '<p class="gt-wait">Gathering what wears it…</p>';
+        $id('gtItems').innerHTML = '<p class="gt-wait">Loading…</p>';
         $id('gtShelfEmpty').hidden = true;
         const shelf = $id('gtShelf');
         const wasOpen = shelf.classList.contains('is-open');
@@ -509,7 +509,7 @@ const __init = () => {
         const a = e.target.closest('.gt-item');
         if (a && IN_WORKER && a.dataset.where === 'season') {
             e.preventDefault();
-            toast('That season is on your own farm — switch to it from the 🏡 menu to open it.');
+            toast('That season is on your own farm. Switch to it from the 🏡 menu.');
         }
     });
 
@@ -521,8 +521,8 @@ const __init = () => {
         inp.value = t.name.slice(0, 30);
         const total = COUNTS.season + COUNTS.global;
         $id('gtRenameSays').textContent = total
-            ? `The new name reaches all ${plural(total, 'thing')} — ${spread(COUNTS)}.`
-            : 'The new name reaches every season and tool that lists this tag.';
+            ? `The new name goes on ${plural(total, 'thing')}: ${spread(COUNTS)}.`
+            : 'The new name shows everywhere this tag is used.';
         openSheet('gtRenameSheet');
         window.smFocus?.(inp, { delay: 250 });
     });
@@ -531,15 +531,15 @@ const __init = () => {
         const t = TAGS.find((x) => x.key === OPEN);
         if (!t || !COUNTS) return;
         const to = $id('gtRenameInput').value.replace(/\s+/g, ' ').trim().slice(0, 30);
-        if (!to) { toast('Give the tag its new name.', 'error'); return; }
+        if (!to) { toast('Type the new name.', 'error'); return; }
         if (to === t.name) { closeSheet('gtRenameSheet'); return; }
         const other = TAGS.find((x) => x.key === keyOf(to) && x.key !== t.key);
         const total = COUNTS.season + COUNTS.global;
-        if (!window.confirmAction) { toast('Could not open the confirmation — try again.', 'error'); return; }
+        if (!window.confirmAction) { toast('Something went wrong. Please try again.', 'error'); return; }
         const ok = await window.confirmAction({
             title: `Rename "${t.name}" to "${to}"?`,
-            message: (total ? `This changes ${plural(total, 'thing')}: ${spread(COUNTS)}.` : 'Nothing wears it yet — only the name in your tag lists changes.')
-                + (other ? ` You already have "${other.name}" — the two become one tag.` : ''),
+            message: (total ? `This changes ${plural(total, 'thing')}: ${spread(COUNTS)}.` : 'Nothing uses it yet. Only the name changes.')
+                + (other ? ` You already have "${other.name}". The two will join as one tag.` : ''),
             confirmText: 'Rename',
             confirmClass: 'btn-primary',
         });
@@ -549,7 +549,7 @@ const __init = () => {
         try {
             const res = await api(U.rename, { method: 'POST', body: { name: t.name, to } });
             closeSheet('gtRenameSheet');
-            toast(`Renamed — ${total ? plural(total, 'thing') + ' now say' : 'it now says'} "${res.data.name}".`);
+            toast(`Renamed. ${total ? plural(total, 'thing') + ' now say' : 'It now says'} "${res.data.name}".`);
             OPEN = null;
             await load(res.data.key);
         } catch (err) { toast(err.message, 'error'); }
@@ -564,12 +564,12 @@ const __init = () => {
         if (!t || !COUNTS) return;
         const total = COUNTS.season + COUNTS.global;
         // The question is not optional: with no sheet the answer is no.
-        if (!window.confirmAction) { toast('Could not open the confirmation — try again.', 'error'); return; }
+        if (!window.confirmAction) { toast('Something went wrong. Please try again.', 'error'); return; }
         const ok = await window.confirmAction({
             title: `Delete "${t.name}" everywhere?`,
             message: total
-                ? `It comes off ${plural(total, 'thing')}: ${spread(COUNTS)}. The things themselves stay exactly where they are.`
-                : 'Nothing wears it yet — it just leaves your tag lists.',
+                ? `It comes off ${plural(total, 'thing')}: ${spread(COUNTS)}. The things are not deleted.`
+                : 'Nothing uses it yet. It just leaves your tag lists.',
             confirmText: 'Delete tag',
         });
         if (!ok) return;

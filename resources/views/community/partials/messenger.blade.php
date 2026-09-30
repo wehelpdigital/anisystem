@@ -21,7 +21,7 @@
              dock could only ever reopen a chat, never start one. --}}
         <div class="msgr-find">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-3.5-3.5"/></svg>
-            <input type="search" id="msgrFind" placeholder="Search for a farmer…" autocomplete="off" aria-label="Search for a farmer">
+            <input type="search" id="msgrFind" placeholder="Search farmers" autocomplete="off" aria-label="Search farmers">
             <button type="button" class="msgr-find-x hidden" id="msgrFindX" aria-label="Clear">✕</button>
         </div>
         <div class="msgr-panel-body" id="msgrThreads">
@@ -577,11 +577,11 @@
         const seen = new Set(mine.map((t) => Number(t.userId)));
         const others = (people || []).filter((u) => !seen.has(Number(u.id)));
         if (!mine.length && !others.length) {
-            box.innerHTML = `<p class="msgr-none">Nobody here matches “${esc(q)}”.</p>`;
+            box.innerHTML = `<p class="msgr-none">No one found for “${esc(q)}”.</p>`;
             return;
         }
         box.innerHTML =
-            (mine.length ? '<p class="msgr-group">Your conversations</p>' + mine.map(threadHtml).join('') : '')
+            (mine.length ? '<p class="msgr-group">Your chats</p>' + mine.map(threadHtml).join('') : '')
             + (others.length ? '<p class="msgr-group">Other farmers</p>' + others.map(strangerHtml).join('') : '');
     }
 
@@ -660,7 +660,7 @@
     const emptyHtml = `<div class="msgr-empty">
                     <svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.29-.94L3 20l1.05-3.15A7.6 7.6 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
                     <p class="msgr-empty-t">No messages yet</p>
-                    <p class="msgr-empty-s">Search for a farmer above, or open a co-farmer's profile and tap Message.</p>
+                    <p class="msgr-empty-s">Search above, or tap Message on a co-farmer's profile.</p>
                 </div>`;
 
     async function loadThreads() {
@@ -680,7 +680,7 @@
             // A dead end that offers the way back — the error never has to
             // stick until the next open.
             box.innerHTML = `<div class="msgr-empty">
-                <p class="msgr-empty-t">Couldn't load your messages.</p>
+                <p class="msgr-empty-t">Could not load your messages.</p>
                 <p class="msgr-empty-s"><button type="button" class="msgr-retry" style="color:var(--color-brand-600);text-decoration:underline;cursor:pointer;background:none;border:0;font:inherit">Try again</button></p>
             </div>`;
             box.querySelector('.msgr-retry')?.addEventListener('click', () => loadThreads());
@@ -758,7 +758,7 @@
             recStream = await navigator.mediaDevices.getUserMedia(voice ? { audio: true } : { audio: true,
                 video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } } });
         } catch (_) {
-            if (window.toast) toast((voice ? 'Microphone' : 'Camera or microphone') + ' blocked. Allow it for this site.', 'error');
+            if (window.toast) toast((voice ? 'Microphone' : 'Camera or microphone') + ' is blocked. Allow it in your browser.', 'error');
             return;
         }
         recWin = win; recChunks = [];
@@ -872,19 +872,19 @@
                 <div class="msgr-recbar hidden"><span class="msgr-recdot"></span><span class="msgr-rec-what">Recording video…</span><button type="button" class="msgr-rec-stop">Stop</button></div>
                 <div class="msgr-window-foot">
                     <div class="msgr-plus-wrap">
-                        <button type="button" class="msgr-icon msgr-plus js-msgr-plus" aria-label="Add a photo or video" aria-expanded="false" title="Add media"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg></button>
+                        <button type="button" class="msgr-icon msgr-plus js-msgr-plus" aria-label="Add a photo or video" aria-expanded="false" title="Add photo or video"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg></button>
                         <div class="msgr-plus-menu" hidden>
                             <button type="button" class="msgr-plus-opt" data-msgr-add="upload"><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>Upload photo or video</button>
                             <button type="button" class="msgr-plus-opt" data-msgr-add="camera"><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>Take a photo</button>
-                            <button type="button" class="msgr-plus-opt" data-msgr-add="record" @unless (\App\Support\Tier::can('communityVideo')) data-tier-lock="{{ \App\Support\Tier::unlocksAt('communityVideo') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::unlocksAt('communityVideo'), 'Sending video in messages comes with {plan}. Photos travel free.') }}" @endunless><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg></span>Record a video{{ \App\Support\Tier::can('communityVideo') ? '' : ' 🔒' }}</button>
-                            <button type="button" class="msgr-plus-opt" data-msgr-add="voice" @unless (\App\Support\Tier::can('communityVoice')) data-tier-lock="{{ \App\Support\Tier::unlocksAt('communityVoice') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::unlocksAt('communityVoice'), 'Voice notes in messages come with {plan}.') }}" @endunless><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 003-3V6a3 3 0 10-6 0v6a3 3 0 003 3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-14 0M12 18v3m-3 0h6"/></svg></span>Record a voice note{{ \App\Support\Tier::can('communityVoice') ? '' : ' 🔒' }}</button>
+                            <button type="button" class="msgr-plus-opt" data-msgr-add="record" @unless (\App\Support\Tier::can('communityVideo')) data-tier-lock="{{ \App\Support\Tier::unlocksAt('communityVideo') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::unlocksAt('communityVideo'), 'Video in messages needs {plan}. Photos are free.') }}" @endunless><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg></span>Record a video{{ \App\Support\Tier::can('communityVideo') ? '' : ' 🔒' }}</button>
+                            <button type="button" class="msgr-plus-opt" data-msgr-add="voice" @unless (\App\Support\Tier::can('communityVoice')) data-tier-lock="{{ \App\Support\Tier::unlocksAt('communityVoice') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::unlocksAt('communityVoice'), 'Voice notes in messages need {plan}.') }}" @endunless><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 003-3V6a3 3 0 10-6 0v6a3 3 0 003 3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 11a7 7 0 01-14 0M12 18v3m-3 0h6"/></svg></span>Record a voice note{{ \App\Support\Tier::can('communityVoice') ? '' : ' 🔒' }}</button>
                             <button type="button" class="msgr-plus-opt" data-msgr-add="gallery"><span class="msgr-plus-ico"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3v13H4V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 13l2.5-2.5L14 14l2-2 2 2"/></svg></span>Share from gallery</button>
                         </div>
                     </div>
                     <input type="file" class="js-msgr-file hidden" accept="image/*,video/*" multiple>
                     <input type="file" class="js-msgr-cam hidden" accept="image/*" capture="environment">
                     <button type="button" class="msgr-icon js-emoji-btn" aria-label="Add an emoji" title="Emoji"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></button>
-                    <input type="text" placeholder="Aa" maxlength="5000">
+                    <input type="text" placeholder="Type a message" maxlength="5000">
                     <button type="button" class="msgr-send" aria-label="Send"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg></button>
                 </div>
             </div>`;
@@ -944,7 +944,7 @@
         // the camera and one recorded all wait together.
         const setAttach = (att, label) => {
             if (win._atts.length >= MAX_ATTS) {
-                if (window.toast) toast(`That is ${MAX_ATTS} already — send these first.`, 'error');
+                if (window.toast) toast(`You can add up to ${MAX_ATTS}. Send these first.`, 'error');
                 freeAtt(att);
                 return;
             }
@@ -957,7 +957,7 @@
             const kind = (f.type || '').startsWith('audio/') ? 'voice'
                 : (f.type || '').startsWith('video/') ? 'video' : 'image';
             if (kind === 'video' && f.size > MAX_VIDEO_BYTES) {
-                if (window.toast) toast('That video is over 300 MB — pick or record a shorter one.', 'error');
+                if (window.toast) toast('That video is over 300 MB. Pick or record a shorter one.', 'error');
                 return;
             }
             setAttach({ file: f, kind, url: URL.createObjectURL(f) }, f.name);
@@ -1056,7 +1056,7 @@
                     const d = await r.json();
                     if (d.success) { finalizePending(bodyEl, pendings[i], { id: d.data.id, body: d.data.body, image: d.data.image, video: d.data.video, voice: d.data.voice, poster: d.data.poster, replyTo: d.data.replyTo }); }
                     else { failPending(pendings[i], d.message); if (q.text && !input.value) input.value = q.text; }
-                } catch (_) { failPending(pendings[i], 'Network error — try again.'); if (q.text && !input.value) input.value = q.text; }
+                } catch (_) { failPending(pendings[i], 'Network error. Try again.'); if (q.text && !input.value) input.value = q.text; }
             }
         };
         win.querySelector('.msgr-send').addEventListener('click', doSend);
@@ -1093,13 +1093,13 @@
                 // Nothing said yet: say who this is instead.
                 if (!(d.data.messages || []).length) bodyEl.appendChild(introCard(d.data.user));
                 if (!d.data.canMessage) {
-                    win.querySelector('.msgr-window-foot-wrap').outerHTML = '<div class="msgr-off">This member has turned off messages.</div>';
+                    win.querySelector('.msgr-window-foot-wrap').outerHTML = '<div class="msgr-off">This member turned off messages.</div>';
                 }
                 (d.data.messages || []).forEach((m) => { if (m.id > lastSeenId) lastSeenId = m.id; });
                 refreshBadge();
             } catch (_) {
                 if (attempt < 4) { setTimeout(() => loadThread(attempt + 1), attempt * 700); return; }
-                bodyEl.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">Couldn\'t load the chat. <button type="button" class="msgr-retry" style="color:var(--color-brand-600);text-decoration:underline;cursor:pointer">Retry</button></p>';
+                bodyEl.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">Could not load the chat. <button type="button" class="msgr-retry" style="color:var(--color-brand-600);text-decoration:underline;cursor:pointer">Retry</button></p>';
                 bodyEl.querySelector('.msgr-retry')?.addEventListener('click', () => { bodyEl.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">Loading…</p>'; loadThread(1); });
             }
         }
@@ -1135,7 +1135,7 @@
             <p class="msgr-intro-name">${esc(u.name || 'Member')}</p>
             <p class="msgr-intro-row">${tie}</p>
             ${bits.length ? `<p class="msgr-intro-bits">${bits.join(' · ')}</p>` : ''}
-            <p class="msgr-intro-hint">Say hello — this is your first message.</p>`;
+            <p class="msgr-intro-hint">Say hello. This is your first message.</p>`;
         return wrap;
     }
 

@@ -35,7 +35,7 @@
                  the reader is already in, and does not need a title. --}}
             <p class="reply-lead">
                 <span class="avatar avatar-sm {{ \App\Support\CommunityAvatar::hue(auth()->user()->full_name ?? '?') }}">{{ auth()->user()->initials ?? '?' }}</span>
-                <span><i>Add a comment — use @ to tag a co-farmer.</i></span>
+                <span><i>Add a comment. Type @ to tag a co-farmer.</i></span>
             </p>
             @include('community.partials.wall-comment-form', ['postId' => ''])
         </div>
@@ -85,7 +85,7 @@
                 </span>
                 <span class="sh-txt">
                     <b>Get a public link</b>
-                    <i>Messenger, Facebook, or anywhere</i>
+                    <i>For Messenger, Facebook and more</i>
                 </span>
                 <svg class="sh-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </button>
@@ -101,7 +101,7 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-3">
-        <textarea id="shareWallBody" class="form-textarea" rows="3" maxlength="5000" placeholder="Say something about this (optional)…"></textarea>
+        <textarea id="shareWallBody" class="form-textarea" rows="3" maxlength="5000" placeholder="Say something (optional)"></textarea>
         <button type="button" id="shareWallGo" class="btn btn-primary w-full">Share</button>
     </div>
 </div>
@@ -296,7 +296,7 @@
             const ok = window.confirmAction
                 ? await window.confirmAction({
                     title: 'Unfollow ' + (btn.dataset.name || 'this member') + '?',
-                    message: 'Their posts will stop being lifted to the top of your wall.',
+                    message: 'Their posts will no longer show first on your wall.',
                     confirmText: 'Unfollow',
                 })
                 : true;
@@ -333,7 +333,7 @@
         const name = btn.dataset.name || 'this discussion';
         const ok = await (window.confirmAction ? window.confirmAction({
             title: 'Join ' + name + '?',
-            message: 'You will see its topics on your wall, and the others there will see you as a member.',
+            message: 'Its topics will show on your wall. Other members will see that you joined.',
             confirmText: 'Join',
             confirmClass: 'btn-primary',
         }) : Promise.resolve(true));
@@ -391,7 +391,7 @@
             const d = j.data || {};
             list.insertAdjacentHTML('beforeend', d.html || '');
             state.hidden = list.children.length > 0;
-            if (!list.children.length) state.textContent = 'No comments yet — be the first.';
+            if (!list.children.length) state.textContent = 'No comments yet. Be the first.';
             cPage = d.nextPage || cPage + 1;
             more.classList.toggle('hidden', !d.hasMore);
             // "3 sagot", the way the room labels its answers.
@@ -405,7 +405,7 @@
             if (n && typeof d.total === 'number') n.textContent = d.total;
         } catch (err) {
             state.hidden = false;
-            state.textContent = 'Could not load the comments.';
+            state.textContent = 'Could not load comments.';
         } finally { cBusy = false; }
     }
 

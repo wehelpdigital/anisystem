@@ -864,7 +864,7 @@
                  becomes that weather. Until then, and forever if no location
                  is set, it stays as it was. --}}
             <h2 class="dash-hero-h"><span id="dashGreetWord">{{ $__greet }}</span>, {{ \Illuminate\Support\Str::title($user->firstName ?: \App\Support\Region::t('friend')) }}</h2>
-            <p class="dash-hero-p">Today, {{ now($__tz)->format('F jS, Y') }} — {{ $scheduleCount === 0 ? 'no active cropping schedules yet.' : 'you have ' . $scheduleCount . ' active cropping ' . \Illuminate\Support\Str::plural('schedule', $scheduleCount) . '.' }}</p>
+            <p class="dash-hero-p">Today is {{ now($__tz)->format('F jS, Y') }}. {{ $scheduleCount === 0 ? 'No active cropping schedules yet.' : 'You have ' . $scheduleCount . ' active cropping ' . \Illuminate\Support\Str::plural('schedule', $scheduleCount) . '.' }}</p>
             @if ($expiringSoon && ! \App\Support\WorkerContext::inWorkerContext())
                 <a href="{{ route('purchase.plans') }}" class="dash-hero-warn">
                     Renew before your subscription expires
@@ -1225,7 +1225,7 @@
                     <img class="dash-anee-face" src="{{ $aiSettings->faceUrl() }}" alt="" width="56" height="56">
                     <div class="min-w-0">
                         <h2 class="dash-anee-h" id="dashAneeH">{{ $aneeName }}</h2>
-                        <p class="dash-anee-p">Your Smart Agricultural Technician. Ask anything about your crops, show a photo, or ask your observations. Anee is available 24/7 vs. paying a technician that you have to wait. You can ask Anee in {{ \App\Support\Region::ph() ? 'English or Tagalog' : 'plain English' }}.{{ $canUseAi ? '' : ' On Boss and Lifetime plans.' }}</p>
+                        <p class="dash-anee-p">Your smart farm technician. Ask about your crops or send a photo. Anee answers 24/7, so you never wait for a technician. Ask in {{ \App\Support\Region::ph() ? 'English or Tagalog' : 'plain English' }}.{{ $canUseAi ? '' : ' On Boss and Lifetime plans.' }}</p>
                     </div>
                 </div>
 
@@ -1424,7 +1424,7 @@
                             <img src="{{ asset('images/speech-bubbles.png') }}" alt="">
                         </span>
                         <h2>Discussion Groups</h2>
-                        <p>Rooms where farmers ask each other things — a pest nobody can name, what a buyer is paying this week, whether to plant now or wait. Join one and your question reaches people who have already grown it.</p>
+                        <p>Rooms where farmers help each other. Ask about a pest, a buyer's price, or when to plant. Farmers who grew it can answer.</p>
                         <a href="{{ route('community.groups.index', ['from' => 'dashboard']) }}" class="btn btn-primary btn-sm">Browse the groups</a>
                     </div>
                 </section>
@@ -1688,12 +1688,12 @@
     });
     function addFile(f) {
         if (!f) return;
-        if (shots.length >= MAX_SHOTS) { toast('That is eight photos — the most a post carries.', 'error'); return; }
+        if (shots.length >= MAX_SHOTS) { toast('A post can have up to 8 photos.', 'error'); return; }
         shots.push({ file: f, url: URL.createObjectURL(f) });
     }
     function addPick(item) {
         if (!item || !item.path) return;
-        if (shots.length >= MAX_SHOTS) { toast('That is eight photos — the most a post carries.', 'error'); return; }
+        if (shots.length >= MAX_SHOTS) { toast('A post can have up to 8 photos.', 'error'); return; }
         if (shots.some((sh) => sh.path === item.path)) return;   // the same picture twice is once
         shots.push({ path: item.path, url: item.url || '' });
     }
@@ -1780,12 +1780,12 @@
     });
     function addClipFile(f) {
         if (!f) return;
-        if (clipTally() >= MAX_CLIPS) { toast('That is three clips — the most a post carries.', 'error'); return; }
+        if (clipTally() >= MAX_CLIPS) { toast('A post can have up to 3 videos.', 'error'); return; }
         clips.push({ file: f, url: '' });
     }
     function addClipPick(item) {
         if (!item || !item.path) return;
-        if (clipTally() >= MAX_CLIPS) { toast('That is three clips — the most a post carries.', 'error'); return; }
+        if (clipTally() >= MAX_CLIPS) { toast('A post can have up to 3 videos.', 'error'); return; }
         if (clips.some((c) => c.path === item.path)) return;
         clips.push({ path: item.path, url: item.posterUrl || item.url || '' });
     }
@@ -1809,7 +1809,7 @@
         window.closeSheet?.('dashVideoSheet');
         if (typeof window.smPickMedia !== 'function') { toast('The gallery is not available here.', 'error'); return; }
         window.smPickMedia({
-            allSchedules: true, kinds: 'video', title: 'A clip from my gallery',
+            allSchedules: true, kinds: 'video', title: 'From your gallery',
             multiple: true,
             max: Math.max(1, MAX_CLIPS - clipTally()),
             onPick: (item) => { addClipPick(item); paintClips(); },
@@ -1831,7 +1831,7 @@
     btn?.addEventListener('click', async () => {
         const text = body.value.trim();
         const vid = window.plazaVideoFile ? window.plazaVideoFile(host) : null;
-        if (!text && !shots.length && !clips.length && !vid) { toast('Write something or add a photo/video.', 'error'); return; }
+        if (!text && !shots.length && !clips.length && !vid) { toast('Write something or add a photo or video.', 'error'); return; }
         const prev = btn.innerHTML;
         btn.disabled = true;
         btn.textContent = (vid || shots.length > 2) ? 'Uploading…' : 'Posting…';
@@ -1865,7 +1865,7 @@
             clearClips();
             window.closeSheet?.('dashComposerSheet');
             toast('Posted to your wall.');
-        } catch (_) { toast('Network error — try again.', 'error'); }
+        } catch (_) { toast('Network error. Please try again.', 'error'); }
         finally { btn.disabled = false; btn.innerHTML = prev; }
     });
 })();
@@ -1921,7 +1921,7 @@
         // date, no forecast. It stands in the row greyed with a lock, and
         // tapping it opens the upgrade sheet — the missing days SELL.
         if (d.locked) {
-            return `<div class="flex-1 min-w-0 text-center rounded-lg px-1 py-1.5 wx-locked-day" data-tier-lock="{{ \App\Support\Tier::unlocksAt('weatherDays') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::unlocksAt('weatherDays'), 'The full 5-day forecast comes with {plan} — your plan reads today and tomorrow.') }}">
+            return `<div class="flex-1 min-w-0 text-center rounded-lg px-1 py-1.5 wx-locked-day" data-tier-lock="{{ \App\Support\Tier::unlocksAt('weatherDays') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::unlocksAt('weatherDays'), 'The full 5 day forecast comes with {plan}. Your plan shows today and tomorrow.') }}">
                 <p class="text-[0.625rem] font-bold text-gray-400 truncate">${esc(d.dow || '')}</p>
                 <div class="dash-wx-art" style="display:flex;align-items:center;justify-content:center;opacity:.55"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:1.1rem;height:1.1rem;color:var(--color-gray-400)"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></div>
                 <p class="text-[0.562rem] font-bold text-gray-400">Locked</p>
@@ -2078,7 +2078,7 @@
                     <p class="text-xs text-gray-400">Posting to your wall</p>
                 </div>
             </div>
-            <textarea id="dashPostBody" data-mentionable data-preview="#dashPreview" rows="4" maxlength="5000" class="form-textarea w-full dash-comp-box" placeholder="Share something with your co-farmers — a question, a photo of the field, what the weather did…"></textarea>
+            <textarea id="dashPostBody" data-mentionable data-preview="#dashPreview" rows="4" maxlength="5000" class="form-textarea w-full dash-comp-box" placeholder="Ask a question or share news from your farm"></textarea>
             <div id="dashPreview" class="cp-preview" style="display:none"><span class="cp-label">Preview</span><div class="cp-body"></div></div>
 
             {{-- What is coming with the post, shown as itself — the wall's
@@ -2138,12 +2138,12 @@
         <div class="plaza-srcs">
             <button type="button" class="plaza-src" id="dashVSrcUpload">
                 <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 17v1.5A2.5 2.5 0 006.5 21h11a2.5 2.5 0 002.5-2.5V17"/></svg></span>
-                <span class="plaza-src-t"><b>Upload from phone</b><small>One clip or several at once — up to a minute each.</small></span>
+                <span class="plaza-src-t"><b>Upload from phone</b><small>One or more clips, up to 1 minute each.</small></span>
                 <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
             </button>
             <button type="button" class="plaza-src" id="dashVSrcGallery">
                 <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M10 10.5v5l4.5-2.5-4.5-2.5z"/></svg></span>
-                <span class="plaza-src-t"><b>From my gallery</b><small>Clips your seasons already keep.</small></span>
+                <span class="plaza-src-t"><b>From my gallery</b><small>Videos saved in your seasons.</small></span>
                 <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
             </button>
         </div>
@@ -2161,7 +2161,7 @@
         <div class="plaza-srcs">
             <button type="button" class="plaza-src" id="dashSrcUpload">
                 <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 17v1.5A2.5 2.5 0 006.5 21h11a2.5 2.5 0 002.5-2.5V17"/></svg></span>
-                <span class="plaza-src-t"><b>Upload from this device</b><small>Pick a photo off this phone or computer.</small></span>
+                <span class="plaza-src-t"><b>Upload from this device</b><small>Pick a photo from this phone or computer.</small></span>
                 <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
             </button>
             <button type="button" class="plaza-src" id="dashSrcCamera">
@@ -2171,7 +2171,7 @@
             </button>
             <button type="button" class="plaza-src" id="dashSrcGallery">
                 <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h4l2 2h6a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M7 15l3-3.5 2.4 2.8L15 11l3 4"/></svg></span>
-                <span class="plaza-src-t"><b>From my gallery</b><small>Photos your seasons already keep.</small></span>
+                <span class="plaza-src-t"><b>From my gallery</b><small>Photos saved in your seasons.</small></span>
                 <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
             </button>
         </div>

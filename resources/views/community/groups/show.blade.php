@@ -622,8 +622,8 @@
             @php
                 $asked = ($myRequest && $myRequest->status === \App\Models\CommunityGroupJoinRequest::PENDING);
                 $doorWord = ! $group->isPrivate() ? 'Join this discussion'
-                    : ($asked ? 'Waiting for the organiser'
-                        : ($group->asksForPassword() ? 'Enter the password' : 'Ask to join'));
+                    : ($asked ? 'Waiting for approval'
+                        : ($group->asksForPassword() ? 'Enter password' : 'Ask to join'));
             @endphp
             <button type="button" id="joinLeaveBtn"
                     class="btn btn-primary btn-sm disc-hero-join {{ ($asked || $wasRemoved) ? 'is-waiting' : '' }}"
@@ -668,7 +668,7 @@
                 <input type="text" id="egName" class="form-input" maxlength="150" value="{{ $group->name }}">
             </div>
             <div>
-                <label class="form-label" for="egDesc">What is this discussion about?</label>
+                <label class="form-label" for="egDesc">Description</label>
                 <textarea id="egDesc" class="form-textarea" rows="3" maxlength="500">{{ $group->description }}</textarea>
             </div>
             <div class="eg-pics">
@@ -678,7 +678,7 @@
                      picture is coming from, the same question the composer,
                      the messenger and creating a discussion all ask. --}}
                 <div class="eg-pic" data-eg-pick="image" role="button" tabindex="0">
-                    <span class="eg-pic-lbl">Badge</span>
+                    <span class="eg-pic-lbl">Photo</span>
                     <span class="eg-pic-box" id="egCoverBox">
                         @if ($group->coverImagePath)
                             <img src="{{ \App\Support\MediaStore::url($group->coverImagePath) }}" alt="">
@@ -700,7 +700,7 @@
                         @endif
                         <span class="eg-drag {{ $group->bannerImagePath ? '' : 'hidden' }}" id="egBannerDrag">
                             <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m0-16l-3 3m3-3l3 3m-3 13l-3-3m3 3l3-3"/></svg>
-                            Drag to choose what shows
+                            Drag to move the photo
                         </span>
                     </span>
                 </div>
@@ -727,15 +727,15 @@
         </div>
         <h3 class="disc-shut-t">This discussion is private</h3>
         @if ($wasRemoved)
-            <p class="disc-shut-s">The organiser removed you from this discussion, so you cannot rejoin it. Message them if you think it was a mistake.</p>
+            <p class="disc-shut-s">You were removed from this discussion and cannot rejoin. Message the owner if this is a mistake.</p>
         @elseif ($myRequest && $myRequest->status === \App\Models\CommunityGroupJoinRequest::PENDING)
-            <p class="disc-shut-s">You asked to join {{ $myRequest->created_at?->diffForHumans() }}. {{ $group->creator->firstName ?? 'The organiser' }} will let you know — you will get a notification either way.</p>
+            <p class="disc-shut-s">You asked to join {{ $myRequest->created_at?->diffForHumans() }}. You will get a notification when {{ $group->creator->firstName ?? 'the owner' }} decides.</p>
         @elseif ($myRequest && $myRequest->status === \App\Models\CommunityGroupJoinRequest::DECLINED)
-            <p class="disc-shut-s">Your last request was turned down. You can ask again if something has changed.</p>
+            <p class="disc-shut-s">Your last request was declined. You can ask again.</p>
         @elseif ($group->asksForPassword())
-            <p class="disc-shut-s">Ask whoever runs it for the password, then type it in to come inside.</p>
+            <p class="disc-shut-s">Ask the owner for the password, then enter it here.</p>
         @else
-            <p class="disc-shut-s">{{ $group->creator->firstName ?? 'The organiser' }} decides who comes in. Ask to join and you will hear back either way.</p>
+            <p class="disc-shut-s">{{ $group->creator->firstName ?? 'The owner' }} decides who can join. Ask and you will get an answer either way.</p>
         @endif
         @unless ($wasRemoved)
             @php
@@ -745,8 +745,8 @@
                     id="shutJoinBtn" data-name="{{ $group->name }}"
                     data-door="{{ $group->joinMode ?: 'approval' }}"
                     @if ($stepAsked) data-asked="1" @endif>{{
-                $stepAsked ? 'Waiting for the organiser'
-                    : ($group->asksForPassword() ? 'Enter the password' : 'Ask to join')
+                $stepAsked ? 'Waiting for approval'
+                    : ($group->asksForPassword() ? 'Enter password' : 'Ask to join')
             }}</button>
         @endunless
         <a class="disc-shut-back" href="{{ route('community.groups.index') }}">Back to discussions</a>
@@ -818,7 +818,7 @@
                      gives it @names — the rich editor could not have them at
                      all, because the mention script binds to fields. --}}
                 <textarea id="postBody" class="form-textarea w-full disc-composer-box" rows="4" maxlength="4000"
-                          data-mentionable placeholder="Magtanong o magbahagi — use @ to tag a co-farmer"></textarea>
+                          data-mentionable placeholder="Magtanong o magbahagi. Use @ to tag a farmer"></textarea>
                 {{-- The wall's "Add to your post" bar, speaking the answer
                      box's script: the photo icon opens its three sources
                      (upload / camera / gallery), the video icon its two
@@ -883,7 +883,7 @@
                 'placeholder' => 'Search topics…',
                 'label' => 'Search this discussion',
             ])
-            <button type="button" class="btn btn-primary w-full" data-sheet-close>Show the topics</button>
+            <button type="button" class="btn btn-primary w-full" data-sheet-close>Show topics</button>
         </div>
     </div>
     @endif
@@ -903,7 +903,7 @@
     <div class="card p-8 text-center" id="topicNone" hidden>
         <div class="empty-tile">🔎</div>
         <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Walang tugma</p>
-        <p class="text-sm text-gray-500 mt-1">No topic here says that — in the question or in the answers under it.</p>
+        <p class="text-sm text-gray-500 mt-1">No topic or answer here matches your search.</p>
     </div>
 
     @if ($posts->isNotEmpty())
@@ -1047,8 +1047,8 @@
     </div>
     <div class="sheet-body space-y-1">
         @foreach ([
-            ['discussion', 'Topics', 'What the room is talking about.', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
-            ['chat', 'Group Chat', 'Everyone at once, full screen.', 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'],
+            ['discussion', 'Topics', 'All topics in this discussion.', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
+            ['chat', 'Group Chat', 'Chat with everyone here.', 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z'],
         ] as [$key, $label, $blurb, $icon])
             <button type="button" class="room-view-row w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50"
                     data-room-view="{{ $key }}">
@@ -1117,13 +1117,13 @@
             <div class="dq-load hidden" id="manageLoad"><i></i><i></i><i></i></div>
 
             <div data-mr-panel="mods" class="{{ $mayGovern ? '' : 'hidden' }}">
-                <p class="mr-say">A moderator can let people in and put people out. They cannot choose other moderators — only you can.</p>
+                <p class="mr-say">Moderators can accept and remove members. Only you can choose moderators.</p>
                 <div id="modsList" class="dq-list"></div>
             </div>
 
             <div data-mr-panel="out" class="{{ $mayGovern ? 'hidden' : '' }}">
                 @if ($group->isPrivate())
-                    <p class="mr-say">Removing somebody takes them out of the room and keeps them out. They are told, and told why.</p>
+                    <p class="mr-say">A removed member cannot rejoin. They will be told why.</p>
                     <div id="outList" class="dq-list"></div>
                 @else
                     {{-- Honest about why the tab is empty rather than hiding
@@ -1132,7 +1132,7 @@
                     <div class="dq-none">
                         <div class="empty-tile" style="width:3.2rem;height:3.2rem;font-size:1.4rem;">🌏</div>
                         <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">This discussion is open</p>
-                        <p class="text-sm text-gray-500 mt-1">Anyone can walk into a public discussion, so removing somebody would not keep them out. Make it private first.</p>
+                        <p class="text-sm text-gray-500 mt-1">Anyone can join a public discussion, so removing someone will not keep them out. Make it private first.</p>
                     </div>
                 @endif
             </div>
@@ -1149,12 +1149,12 @@
             <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
         </div>
         <div class="sheet-body space-y-2.5">
-            <p class="mr-say mr-say-warn">They lose access to this discussion and cannot rejoin it. They will be told, along with the reason you give.</p>
+            <p class="mr-say mr-say-warn">They will lose access and cannot rejoin. We will tell them your reason.</p>
             <div>
-                <label class="form-label" for="removeWhy">Why?</label>
+                <label class="form-label" for="removeWhy">Reason</label>
                 <textarea id="removeWhy" class="form-textarea" rows="3" maxlength="500"
                           placeholder="e.g. Nagpo-post ng hindi kaugnay sa usapan"></textarea>
-                <p class="form-hint">They will read this, so say it the way you would to their face.</p>
+                <p class="form-hint">They will see this, so be kind and clear.</p>
             </div>
         </div>
         <div class="sheet-footer">
@@ -1236,8 +1236,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const ok = window.confirmAction ? await window.confirmAction({
                 title: ROOM_DOOR === 'approval' ? 'Ask to join ' + ROOM_NAME + '?' : 'Join ' + ROOM_NAME + '?',
                 message: ROOM_DOOR === 'approval'
-                    ? 'The organiser will decide, and you will hear back either way.'
-                    : 'You will be able to post and reply here, and the others in the room will see you as a member.',
+                    ? 'The owner will decide. You will get an answer either way.'
+                    : 'You can post and reply here. Others will see you as a member.',
                 confirmText: ROOM_DOOR === 'approval' ? 'Ask to join' : 'Join',
                 confirmClass: 'btn-primary',
             }) : true;
@@ -1314,7 +1314,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const outcome = await goThroughTheDoor();
                 if (outcome === 'waiting') {
-                    btn.textContent = 'Waiting for the organiser';
+                    btn.textContent = 'Waiting for approval';
                     btn.dataset.asked = '1';
                     btn.classList.add('is-waiting');
                 } else if (outcome === 'joined') {
@@ -1323,7 +1323,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.location.reload();
                     return;
                 }
-            } catch (_) { toast('Network error — try again.', 'error'); }
+            } catch (_) { toast('No connection. Try again.', 'error'); }
             finally { if (btn.isConnected) btn.disabled = false; }
             return;
         }
@@ -1339,11 +1339,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const ok = window.confirmAction
             ? await window.confirmAction(joined ? {
                 title: 'Leave ' + name + '?',
-                message: 'You will stop seeing its topics and chat, and you will have to join again to come back.',
+                message: 'You will stop seeing its topics and chat. Join again to come back.',
                 confirmText: 'Leave',
             } : {
                 title: 'Join ' + name + '?',
-                message: 'You will be able to post and reply here, and the others in the room will see you as a member.',
+                message: 'You can post and reply here. Others will see you as a member.',
                 confirmText: 'Join',
                 confirmClass: 'btn-primary',
             })
@@ -1359,7 +1359,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => { window.location.href = @json(route('community.groups.index')); }, 400);
             }
         }
-        catch (_) { toast('Network error — try again.', 'error'); }
+        catch (_) { toast('No connection. Try again.', 'error'); }
         finally {
             // It may have been replaced by the X on the way in.
             if (btn.isConnected) { btn.disabled = false; delete btn.dataset.busy; }
@@ -1374,13 +1374,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const outcome = await goThroughTheDoor();
             if (outcome === 'joined') { window.location.reload(); return; }
             if (outcome === 'waiting') {
-                btn.textContent = 'Waiting for the organiser';
+                btn.textContent = 'Waiting for approval';
                 btn.dataset.asked = '1';
                 btn.classList.add('is-waiting');
                 const say = document.querySelector('.disc-shut-s');
-                if (say) say.textContent = 'Your request is with the organiser. You will get a notification either way.';
+                if (say) say.textContent = 'Request sent. You will get a notification when the owner decides.';
             }
-        } catch (_) { toast('Network error — try again.', 'error'); }
+        } catch (_) { toast('No connection. Try again.', 'error'); }
         finally { if (btn.isConnected) btn.disabled = false; }
     });
 
@@ -1388,7 +1388,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = e.currentTarget;   // null once this awaits
         btn.disabled = true;
         try { await setMembership(true); }
-        catch (_) { toast('Network error — try again.', 'error'); }
+        catch (_) { toast('No connection. Try again.', 'error'); }
         finally { btn.disabled = false; }
     });
     // Joining from the chat tab's gate: the chat itself only arrives on a
@@ -1397,7 +1397,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = e.currentTarget;   // null once this awaits
         btn.disabled = true;
         try { if (await setMembership(true)) window.location.reload(); }
-        catch (_) { toast('Network error — try again.', 'error'); }
+        catch (_) { toast('No connection. Try again.', 'error'); }
         finally { btn.disabled = false; }
     });
 
@@ -1471,7 +1471,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.closeSheet?.('topicComposerSheet');
                 toast(data.message);
             } else toast(data.message || 'Could not post.', 'error');
-        } catch (_) { toast('Network error — try again.', 'error'); }
+        } catch (_) { toast('No connection. Try again.', 'error'); }
         finally { postBtn.disabled = false; }
     });
 
@@ -1549,7 +1549,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     input.focus();
                 }
             } else toast(data.message, 'error');
-        } catch (_) { toast('Network error — try again.', 'error'); }
+        } catch (_) { toast('No connection. Try again.', 'error'); }
         finally { input.disabled = false; window.plazaCommentFx?.stopSending(sendBtn); }
     });
 
@@ -1582,7 +1582,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<form class="post-reply-form wall-reply-form flex flex-wrap items-center gap-2 mt-2 mb-3" data-post-id="${postId}" data-parent-id="${parentId}"${attrs}>
             ${hasMention ? groupMentionPill(mentionName) : ''}
             <span class="reply-shell">
-                <input type="text" placeholder="Sumagot… use @ to tag a co-farmer" maxlength="4000">
+                <input type="text" placeholder="Sumagot ka. Use @ to tag a farmer" maxlength="4000">
                 <button type="button" class="emoji-btn js-comment-photo" aria-label="Attach a photo" title="Photo">${SVG_R_PHOTO}</button>
                 <input type="file" class="js-comment-file hidden" accept="image/jpeg,image/png,image/webp,image/gif" multiple>
                 ${SVG_R_VIDBITS}
@@ -1707,7 +1707,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (reduceMotion) card.remove();
                 toast(data.message);
             } else toast(data.message, 'error');
-        } catch (_) { toast('Network error — try again.', 'error'); }
+        } catch (_) { toast('No connection. Try again.', 'error'); }
     });
 
     /* ---------------- delete own reply → tombstone ---------------- */
@@ -1724,7 +1724,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const holder = btn.closest('.group-reply').querySelector('.flex > .min-w-0');
                 if (holder) holder.innerHTML = '<div class="bg-gray-50 rounded-xl rounded-tl-md px-3 py-2 text-xs text-gray-400 italic group-reply-tombstone tombstone-in">This comment was deleted</div>';
             } else toast(data.message, 'error');
-        } catch (_) { toast('Network error — try again.', 'error'); }
+        } catch (_) { toast('No connection. Try again.', 'error'); }
     });
 
     /* ---------------- older topics: scroll pagination ----------------
@@ -2076,7 +2076,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             chatStarted = true;
             scroll.innerHTML = '';
-            if (!d.data.messages.length) scroll.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">No messages yet — say hello 👋</p>';
+            if (!d.data.messages.length) scroll.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">No messages yet. Say hello 👋</p>';
             appendMessages(d.data.messages, scroll);
             lastId = d.data.maxId || lastId;
             if (!pollTimer) pollTimer = setInterval(pollChat, 5000);
@@ -2138,7 +2138,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelector('#chatScroll p')?.remove();
                 appendMessages([d.data], scroll, true); // animate the new bubble
             } else if (window.toast) toast(d.message || 'Could not send.', 'error');
-        } catch (_) { if (window.toast) toast('Network error.', 'error'); }
+        } catch (_) { if (window.toast) toast('No connection. Try again.', 'error'); }
         finally { sendBtn.disabled = false; sendBtn.innerHTML = prevBtn; }
     }
     document.getElementById('chatSend')?.addEventListener('click', sendChat);
@@ -2388,11 +2388,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 sayHowMany(asks.length);
                 if (!asks.length) { qNone.classList.remove('hidden'); return; }
                 qList.innerHTML = asks.map((p) => row(p, p.place || p.asked, `
-                    <button type="button" class="dq-btn is-yes" data-door-yes>Let in</button>
+                    <button type="button" class="dq-btn is-yes" data-door-yes>Accept</button>
                     <button type="button" class="dq-btn is-no" data-door-no>No</button>
                 `)).join('');
             } catch (_) {
-                qList.innerHTML = '<p class="mr-say">Could not load who is waiting.</p>';
+                qList.innerHTML = '<p class="mr-say">Could not load requests.</p>';
             } finally {
                 qLoad.classList.add('hidden');
             }
@@ -2437,7 +2437,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     rosterStale = true;
                 }
             } catch (_) {
-                toast('Network error — try again.', 'error');
+                toast('No connection. Try again.', 'error');
                 el.querySelectorAll('.dq-btn').forEach((b) => { b.disabled = false; });
             }
         });
@@ -2528,7 +2528,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     : '<button type="button" class="dq-btn is-yes" data-promote>Make moderator</button>';
                 const twin = outList?.querySelector(`.dq-row[data-user="${el.getAttribute('data-user')}"] .dq-sub`);
                 if (twin) twin.textContent = up ? 'Moderator' : 'Member';
-            } catch (_) { toast('Network error — try again.', 'error'); btn.disabled = false; }
+            } catch (_) { toast('No connection. Try again.', 'error'); btn.disabled = false; }
         });
 
         /* ---- showing somebody out ---- */
@@ -2560,7 +2560,7 @@ document.addEventListener('DOMContentLoaded', () => {
                thing somebody carries around for a season. */
             if (reason.length < 3) {
                 whyBox.focus();
-                toast('Say why — they will be told the reason.', 'error');
+                toast('Add a reason. They will see it.', 'error');
                 return;
             }
             /* Held onto before the sheet closes. Closing fires sheet:close,
@@ -2582,7 +2582,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 modsList?.querySelector(`.dq-row[data-user="${userId}"]`)?.remove();
                 const c = document.getElementById('memberCount');
                 if (c) c.textContent = String(Math.max(0, (parseInt(c.textContent || '0', 10) || 0) - 1));
-            } catch (_) { toast('Network error — try again.', 'error'); }
+            } catch (_) { toast('No connection. Try again.', 'error'); }
             finally { whyGo.disabled = false; }
         });
 
@@ -2691,7 +2691,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('egSave')?.addEventListener('click', async (e) => {
             const save = e.currentTarget;
             const name = document.getElementById('egName').value.trim();
-            if (!name) { window.toast?.('A discussion needs a name.', 'error'); return; }
+            if (!name) { window.toast?.('Add a name for your discussion.', 'error'); return; }
             const was = save.textContent;
             save.disabled = true; save.textContent = 'Saving…';
             const fd = new FormData();

@@ -20,7 +20,7 @@
                  photo nobody had asked for yet — the picture is what people
                  actually recognise in a chat list or a call. --}}
             <div class="flex items-center gap-4 mb-5">
-                <button type="button" id="avatarBtn" class="ac-avatar shrink-0" title="Change your profile photo">
+                <button type="button" id="avatarBtn" class="ac-avatar shrink-0" title="Change photo">
                     <span class="ac-avatar-face" id="avatarFace">
                         @if ($user->avatarPath)
                             <img src="{{ \App\Support\MediaStore::url($user->avatarPath) }}" alt="{{ $user->full_name }}">
@@ -55,7 +55,7 @@
                     <div id="accountCoverPreview" class="ac-cover"
                          style="background-position: 50% {{ (int) ($user->coverPos ?? 50) }}%;
                                 @if ($user->coverPath) background-image:url('{{ \App\Support\MediaStore::url($user->coverPath) }}') @endif">
-                        <span id="accountCoverHint" class="{{ $user->coverPath ? 'hidden' : '' }}">No cover yet — a wide landscape photo looks best.</span>
+                        <span id="accountCoverHint" class="{{ $user->coverPath ? 'hidden' : '' }}">No cover yet. A wide photo looks best.</span>
                         {{-- A banner is a wide slot and a phone photo is a tall
                              picture, so centring it is a guess. Drag says which
                              band of the photo the banner should show. --}}
@@ -70,7 +70,7 @@
                         Choose cover photo
                         <input type="file" id="accountCoverInput" name="cover" accept="image/jpeg,image/png,image/webp" class="hidden">
                     </label>
-                    <p class="form-hint">Shown as a banner at the top of your community profile. Shrunk on your phone before it is sent, then compressed again on the way in.</p>
+                    <p class="form-hint">Shown at the top of your community profile. We shrink it before upload.</p>
                     @error('cover') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
 
@@ -107,7 +107,7 @@
                         <span class="ac-country-t">{{ \App\Support\Region::name($acCountry) }}</span>
                         <svg class="ac-country-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
                     </div>
-                    <p class="form-hint">Set when the account was made — it decides the language, the currency and the address fields. Contact support if the farm has moved country.</p>
+                    <p class="form-hint">Set when you signed up. It sets your language, currency and address fields. Contact support if your farm moved country.</p>
                 </div>
 
                 <div>
@@ -121,7 +121,7 @@
                 <div>
                     <label class="form-label">Email address</label>
                     <input type="email" value="{{ $user->email }}" class="form-input bg-gray-50 text-gray-500" disabled>
-                    <p class="form-hint">Your email cannot be changed. Contact support if you need to update it.</p>
+                    <p class="form-hint">You cannot change your email here. Contact support to update it.</p>
                 </div>
 
                 {{-- The address the country asks for: town and province at
@@ -140,7 +140,7 @@
                         <input id="province" name="province" type="text" maxlength="100"
                             value="{{ old('province', $user->province) }}" class="form-input" placeholder="{{ $acAddr['region']['placeholder'] ?? '' }}" {{ $acDiv['mode'] === 'list' ? 'hidden' : '' }}>
                         <select id="provinceList" class="form-select" {{ $acDiv['mode'] === 'list' ? '' : 'hidden' }} aria-label="{{ $acAddr['region']['label'] ?? 'State' }}">
-                            <option value="">— Select —</option>
+                            <option value="">Select</option>
                             @foreach ($acDiv['list'] as $acState)
                                 <option value="{{ $acState }}" {{ old('province', $user->province) === $acState ? 'selected' : '' }}>{{ $acState }}</option>
                             @endforeach
@@ -158,7 +158,7 @@
                             placeholder="{{ \App\Support\Region::ph() ? 'e.g. Rice farmer from Nueva Ecija · 12 years in the field' : 'e.g. Corn farmer from Iowa · 12 years in the field' }}">
                         <span id="headlineCount" class="text-xs text-gray-400 font-medium shrink-0 tabular-nums">0/120</span>
                     </div>
-                    <p class="form-hint">A short line shown under your name on your profile and across the community.</p>
+                    <p class="form-hint">A short line under your name in the community.</p>
                     @error('headline') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
 
@@ -225,8 +225,8 @@
                     <input type="checkbox" name="allowMessages" value="1" class="mt-1 w-5 h-5 rounded border-gray-300 text-brand-600 focus:ring-brand-300"
                         {{ old('allowMessages', $user->allowMessages ?? 1) ? 'checked' : '' }}>
                     <span class="text-sm text-gray-700">
-                        <strong>Allow other members to message me</strong><br>
-                        <span class="text-gray-500">Turn this off and no one can start a chat with you in the community.</span>
+                        <strong>Let members message me</strong><br>
+                        <span class="text-gray-500">When off, no one can start a chat with you.</span>
                     </span>
                 </label>
 
@@ -279,7 +279,7 @@
         <div class="card-body flex items-center justify-between gap-3">
             <div>
                 <h3 class="font-bold text-gray-900">My Subscription</h3>
-                <p class="text-sm text-gray-500">View your plan, status and payment history.</p>
+                <p class="text-sm text-gray-500">Your plan, status and payments.</p>
             </div>
             <svg class="w-6 h-6 text-gray-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </div>

@@ -136,7 +136,7 @@
         // A note pinned to a day on the board — read here, edited there.
         $isDate = $rowKind === 'day';
         $dayDate = ($isDate ? $n->noteDate : $n->noteDate)?->format('M j, Y');
-        $dayTitle = ! $isDate && filled($n->title ?? null) ? $n->title : ('Day note — ' . ($dayDate ?: 'the board'));
+        $dayTitle = ! $isDate && filled($n->title ?? null) ? $n->title : ('Day note · ' . ($dayDate ?: 'no date'));
         $dayBody = $isDate ? $n->noteContent : $n->content;
         $dayMedia = collect(is_array($n->media) ? $n->media : [])->filter(fn ($m) => ! empty($m['path']))->map(fn ($m) => [
             'type' => $m['type'] ?? 'image',
@@ -167,7 +167,7 @@
             <div class="note-lives">
                 <a href="{{ route('sm.activities', ['id' => $schedule->id]) }}" class="note-lives-act">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                    Open where it lives
+                    Open in Activities
                 </a>
             </div>
         </div></div>

@@ -4,7 +4,7 @@
      for one lot when Anee's reading lands, so the card is swapped in place
      instead of the page reloading. Expects $r (a rowsFor() row) and $schedule. --}}
     <div class="gr-card" data-lot="{{ $r['lot']->id }}">
-        <div class="gr-top" title="Tap to fold or open this lot">
+        <div class="gr-top" title="Tap to open or close">
             <svg class="gr-chev" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             <span class="gr-emoji">{{ $r['icon'] }}</span>
             <span class="min-w-0">
@@ -15,7 +15,7 @@
                 <span class="gr-mode">{{ \App\Http\Controllers\Manager\GrowthStageController::counterSays($r['lot']->dayType) }}</span>
                 {{-- The stage, said as a chip in its band's colour — open or
                      folded, the header names where the crop is. --}}
-                <span class="gr-stage-chip">{{ $r['blocked'] ? 'Not readable yet' : ($r['stage']['label'] ?? '') }}</span>
+                <span class="gr-stage-chip">{{ $r['blocked'] ? 'No stage yet' : ($r['stage']['label'] ?? '') }}</span>
             </span>
             @if ($r['age'])
                 {{-- A tree's number is months, not days, and the label has to
@@ -53,9 +53,9 @@
                     @if ($st['next'])
                         · {{ $st['next']['label'] }} in about {{ $st['next']['inDays'] }} {{ \Illuminate\Support\Str::plural($unit, $st['next']['inDays']) }}
                     @elseif ($unit === 'month')
-                        · the last of its stages
+                        · last stage
                     @else
-                        · the harvest window
+                        · harvest window
                     @endif
                 </p>
 
@@ -104,7 +104,7 @@
                      the block here is the one the board's sheet draws. --}}
                 @unless ($r['isTree'])
                     <div data-grx-mount data-lot-id="{{ $r['lot']->id }}" data-lot-name="{{ $r['lot']->lotName }}" data-realign='@json($r['realign'])'
-                         data-calendar="{{ $r['blocked'] ? '' : trim(($r['age']['counter'] ?? '') . ' ' . ($r['age']['day'] ?? '') . ' — ' . ($r['stage']['label'] ?? '')) }}"></div>
+                         data-calendar="{{ $r['blocked'] ? '' : trim(($r['age']['counter'] ?? '') . ' ' . ($r['age']['day'] ?? '') . ': ' . ($r['stage']['label'] ?? '')) }}"></div>
                 @endunless
             @endif
         </div>

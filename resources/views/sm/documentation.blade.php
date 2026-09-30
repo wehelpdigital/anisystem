@@ -22,7 +22,7 @@
     <div class="card p-8 text-center hidden mt-3" id="docEmpty">
         <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         <p class="font-semibold text-gray-700 mt-3">No documents yet</p>
-        <p class="text-sm text-gray-500 mt-1">Add a protocol, introduction, critical rule, miscellaneous note, or any tagged reference — each with rich text and files.</p>
+        <p class="text-sm text-gray-500 mt-1">Add a protocol, rule, note or any reference. Each one can have text and files.</p>
         <button type="button" class="btn btn-primary mt-4" data-doc-add>Add Document</button>
     </div>
 </div>
@@ -82,9 +82,9 @@
             @php $docUpLocked = ! \App\Support\Tier::scheduleCan($schedule, 'docUploads'); $docUpRung = \App\Support\Tier::scheduleUnlocksAt($schedule, 'docUploads'); @endphp
             <label class="form-label">Files <span class="text-gray-400 font-normal">(optional)</span> {{ $docUpLocked ? '🔒' : '' }}</label>
             <input type="file" id="docFiles" multiple accept="image/*,.pdf,.doc,.docx,.txt,.xls,.xlsx"
-                @if ($docUpLocked) data-tier-lock="{{ $docUpRung }}" data-lock-say="{{ \App\Support\Tier::say($docUpRung, 'Attaching files to documentation comes with {plan}. The entry\'s words still save.') }}" @endif
+                @if ($docUpLocked) data-tier-lock="{{ $docUpRung }}" data-lock-say="{{ \App\Support\Tier::say($docUpRung, 'Attaching files comes with {plan}. Your text still saves.') }}" @endif
                 class="flex items-center w-full text-sm text-gray-600 file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:text-brand-700 file:font-semibold file:px-4 file:py-2.5 file:cursor-pointer cursor-pointer {{ $docUpLocked ? 'tl-dim' : '' }}">
-            <p class="form-hint">{{ $docUpLocked ? \App\Support\Tier::say($docUpRung, 'File attachments come with {plan} — tap to see it.') : 'Add any number of files — images, PDF, Word, Excel or TXT. Max 10 MB each.' }}</p>
+            <p class="form-hint">{{ $docUpLocked ? \App\Support\Tier::say($docUpRung, 'File attachments come with {plan}. Tap to see it.') : 'Add images, PDF, Word, Excel or TXT files. Max 10 MB each.' }}</p>
             <div id="docFileList" class="flex flex-wrap gap-2 mt-3"></div>
         </div>
     </div>
@@ -300,7 +300,7 @@
     function typeSays(value) {
         const b = BUILTIN.find((x) => x.value === value);
         if (b) return { face: TYPE_FACE[value] || '📄', label: b.label };
-        if (value === '__new__') return { face: '➕', label: 'New tag…' };
+        if (value === '__new__') return { face: '➕', label: 'New tag' };
         if (value && value.startsWith('custom:')) {
             const t = TAGS.find((x) => 'custom:' + x.id === value);
             if (t) return { face: '🏷️', label: t.name };
@@ -321,7 +321,7 @@
             TAGS.forEach((t) => { html += `<option value="custom:${t.id}">${escapeHtml(t.name)}</option>`; });
             html += '</optgroup>';
         }
-        html += '<option value="__new__">+ Add new tag…</option>';
+        html += '<option value="__new__">+ Add new tag</option>';
         sel.innerHTML = html;
         if (selectedValue) sel.value = selectedValue;
         sayDocType();
@@ -331,7 +331,7 @@
         const rows = [];
         BUILTIN.forEach((b) => rows.push({ v: b.value, face: TYPE_FACE[b.value] || '📄', name: b.label, sub: '' }));
         TAGS.forEach((t) => rows.push({ v: 'custom:' + t.id, face: '🏷️', name: t.name, sub: 'your own tag' }));
-        rows.push({ v: '__new__', face: '➕', name: 'Add new tag…', sub: 'name a new kind and keep it' });
+        rows.push({ v: '__new__', face: '➕', name: 'Add new tag', sub: 'make your own type' });
         fld('docTypeList').innerHTML = rows.map((r) => `
             <button type="button" class="dt-row${r.v === now ? ' is-on' : ''}" data-doc-type="${escapeHtml(r.v)}">
                 <span class="dt-row-e">${r.face}</span>
@@ -402,7 +402,7 @@
 
     fld('docFiles').addEventListener('change', (ev) => {
         for (const f of ev.target.files) {
-            if (f.size > 10 * 1024 * 1024) { toast(`"${f.name}" is over 10 MB — skipped.`, 'error'); continue; }
+            if (f.size > 10 * 1024 * 1024) { toast(`"${f.name}" is over 10 MB and was skipped.`, 'error'); continue; }
             newFiles.push(f);
         }
         ev.target.value = '';   // allow re-picking; we keep our own list
@@ -438,7 +438,7 @@
         renderSheetFiles();
         openSheet('docSheet');
         try {
-            docEditor = await mountEditor('docContentEditor', 'Write the document…');
+            docEditor = await mountEditor('docContentEditor', 'Write here');
             setEditorHtml(docEditor, entry ? (entry.content || '') : '');
         } catch (e) {
             toast(e.message, 'error');

@@ -455,7 +455,7 @@
             </span>
             <div>
                 <h3>{{ $settings->assistantName }} is not switched on yet</h3>
-                <p>It will appear here as soon as it is configured.</p>
+                <p>It will show here once it is set up.</p>
             </div>
         </div>
     @endunless
@@ -548,7 +548,7 @@
             <span class="ai-planchip-ic">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v3m8-3v3M4 8h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zm4 9l2 2 4-4"/></svg>
             </span>
-            <span class="ai-planchip-txt"><b id="aiWtpName">Analysis</b><i id="aiWtpSub">Anee reads this first — the estimate below includes it</i></span>
+            <span class="ai-planchip-txt"><b id="aiWtpName">Analysis</b><i id="aiWtpSub">Anee reads this first. The cost below includes it.</i></span>
             <button type="button" id="aiWtpX" class="ai-planchip-x" aria-label="Remove the analysis">✕</button>
         </div>
         {{-- A frozen farm report, riding the next question the same way. --}}
@@ -556,7 +556,7 @@
             <span class="ai-planchip-ic">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-4m3 4v-6m3 6v-2M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
             </span>
-            <span class="ai-planchip-txt"><b id="aiRptName">Report</b><i id="aiRptSub">Anee reads this first — the estimate below includes it</i></span>
+            <span class="ai-planchip-txt"><b id="aiRptName">Report</b><i id="aiRptSub">Anee reads this first. The cost below includes it.</i></span>
             <button type="button" id="aiRptX" class="ai-planchip-x" aria-label="Remove the report">✕</button>
         </div>
         {{-- A Realign by Anee reading, for the questions it raises. --}}
@@ -564,7 +564,7 @@
             <span class="ai-planchip-ic">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z"/></svg>
             </span>
-            <span class="ai-planchip-txt"><b id="aiRgnName">Realign reading</b><i id="aiRgnSub">Anee reads this first — the estimate below includes it</i></span>
+            <span class="ai-planchip-txt"><b id="aiRgnName">Realign reading</b><i id="aiRgnSub">Anee reads this first. The cost below includes it.</i></span>
             <button type="button" id="aiRgnX" class="ai-planchip-x" aria-label="Remove the reading">✕</button>
         </div>
         {{-- A Protocol Builder review, the same way. --}}
@@ -572,7 +572,7 @@
             <span class="ai-planchip-ic">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
             </span>
-            <span class="ai-planchip-txt"><b id="aiPbrName">Protocol review</b><i id="aiPbrSub">Anee reads this first — the estimate below includes it</i></span>
+            <span class="ai-planchip-txt"><b id="aiPbrName">Protocol review</b><i id="aiPbrSub">Anee reads this first. The cost below includes it.</i></span>
             <button type="button" id="aiPbrX" class="ai-planchip-x" aria-label="Remove the review">✕</button>
         </div>
         <div id="aiAttachBusy" class="ai-busyline hidden" role="status"><span class="sp" aria-hidden="true"></span><span class="tx">Attaching photo…</span></div>
@@ -598,7 +598,7 @@
                      place beside the price and says what it is. An account
                      that rides free shows the sign for it rather than a
                      number that never moves. --}}
-                @if ($aiPayerIsMe)<a href="{{ route('ai.credits') }}" class="ai-bal" data-ai-bal style="margin-top:0" title="{{ $aiPayerIsMe ? 'Current credits — what is left in the wallet this chat spends from' : 'Credits belonging to the farm you are working on — the owner pays for answers here' }}" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) $balance)) }}</b>@endif</a>@else<span class="ai-bal" data-ai-bal style="margin-top:0" title="{{ $aiPayerIsMe ? 'Current credits — what is left in the wallet this chat spends from' : 'Credits belonging to the farm you are working on — the owner pays for answers here' }}" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) $balance)) }}</b>@endif</span>@endif
+                @if ($aiPayerIsMe)<a href="{{ route('ai.credits') }}" class="ai-bal" data-ai-bal style="margin-top:0" title="{{ $aiPayerIsMe ? 'Credits left in your wallet' : 'Credits of the farm you work on. The owner pays for answers here.' }}" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) $balance)) }}</b>@endif</a>@else<span class="ai-bal" data-ai-bal style="margin-top:0" title="{{ $aiPayerIsMe ? 'Credits left in your wallet' : 'Credits of the farm you work on. The owner pays for answers here.' }}" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) $balance)) }}</b>@endif</span>@endif
         </div>
     </div>
 </div>{{-- /.aichat --}}
@@ -618,7 +618,7 @@
     <div class="sheet-body space-y-1">
         <button type="button" class="ai-attach-opt" id="aiAttachUpload">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>
-            <span>Upload photos<span class="sub">Pick one or several from your device</span></span>
+            <span>Upload photos<span class="sub">Pick one or more from your phone</span></span>
         </button>
         <button type="button" class="ai-attach-opt" id="aiAttachCamera">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
@@ -626,7 +626,7 @@
         </button>
         <button type="button" class="ai-attach-opt hidden" id="aiAttachGallery">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3v13H4V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 13l2.5-2.5L14 14l2-2 2 2"/></svg></span>
-            <span>From the gallery<span class="sub">A photo one of your seasons keeps</span></span>
+            <span>From the gallery<span class="sub">A photo from one of your seasons</span></span>
         </button>
     </div>
 </div>
@@ -654,9 +654,9 @@
         </div>
         <div>
             <label class="form-label" for="aiGlobalNoteDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="aiGlobalNoteDesc" class="form-textarea" rows="3" maxlength="2000" placeholder="Why this chat is worth keeping…"></textarea>
+            <textarea id="aiGlobalNoteDesc" class="form-textarea" rows="3" maxlength="2000" placeholder="Why keep this chat?"></textarea>
         </div>
-        <p class="text-xs text-gray-400">The whole conversation is attached underneath.</p>
+        <p class="text-xs text-gray-400">The full chat is saved with it.</p>
         <button type="button" id="aiGlobalNoteSave" class="btn btn-primary w-full">Save to Global Notes</button>
     </div>
 </div>
@@ -680,7 +680,7 @@
              standing in a season — so the sheet asks which one. --}}
         <button type="button" class="ai-attach-opt" id="aiMenuToTask">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></span>
-            <span>Attach to a task<span class="sub">File this chat onto a day, or a task on it</span></span>
+            <span>Attach to a task<span class="sub">Save this chat to a day or task</span></span>
         </button>
         {{-- Keeping it. The season notebooks are not offered here because
              this chat is not in a season — Global Notes is where the things
@@ -694,7 +694,7 @@
         @unless ($aiUnlimited)
             <a href="{{ route('ai.credits') }}" class="ai-attach-opt">
                 <span class="ic"><svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg></span>
-                <span>AI credits<span class="sub"><span id="aiBalance">{{ number_format((int) floor((float) $balance)) }}</span> left — top up here</span></span>
+                <span>AI credits<span class="sub"><span id="aiBalance">{{ number_format((int) floor((float) $balance)) }}</span> left. Top up here.</span></span>
             </a>
         @endunless
     </div>
@@ -778,15 +778,15 @@ const __init = () => {
             + (attachedReview ? attachedReview.tokens : 0);
         const cost = Math.max(.01, Math.round((tin / 1000 * PRICE.inK + PRICE.halfOut / 1000 * PRICE.outK + shots * PRICE.img) * 100) / 100);
         hint.textContent = attachedPlan
-            ? `≈ ${cost} credits — your plan is attached`
+            ? `≈ ${cost} credits, with your plan`
             : (attachedAnalysis
-                ? `≈ ${cost} credits — your analysis is attached`
+                ? `≈ ${cost} credits, with your analysis`
                 : (attachedReport
-                    ? `≈ ${cost} credits — your report is attached`
+                    ? `≈ ${cost} credits, with your report`
                     : (attachedRealign
-                        ? `≈ ${cost} credits — the realign reading is attached`
+                        ? `≈ ${cost} credits, with the Realign reading`
                         : (attachedReview
-                            ? `≈ ${cost} credits — the protocol review is attached`
+                            ? `≈ ${cost} credits, with the protocol review`
                             : `≈ ${cost} credits for this question`))));
     }
 
@@ -974,7 +974,7 @@ const __init = () => {
     }
     function roomForAnother() {
         if (chips.children.length < MAX_PHOTOS) return true;
-        toast('Up to ' + MAX_PHOTOS + ' photos per question — remove one to add another.', 'error');
+        toast('Only ' + MAX_PHOTOS + ' photos per question. Remove one to add another.', 'error');
         return false;
     }
     function addChip(previewUrl) {
@@ -1053,22 +1053,22 @@ const __init = () => {
         if (!attachedPlan) { chip.hidden = true; sayEstimate(); return; }
         byId('aiPlanName').textContent = attachedPlan.title;
         byId('aiPlanSub').textContent = attachedPlan.activities
-            ? `${attachedPlan.activities} ${attachedPlan.activities === 1 ? 'activity' : 'activities'} — the AI reads this first`
-            : 'the AI reads this first';
+            ? `${attachedPlan.activities} ${attachedPlan.activities === 1 ? 'activity' : 'activities'}. Anee reads this first.`
+            : 'Anee reads this first';
         chip.hidden = false;
         sayEstimate();
     }
 
     async function attachPlan(id, title) {
         const busy = byId('aiAttachBusy');
-        if (busy) { busy.querySelector('.tx').textContent = 'Measuring your plan…'; busy.classList.remove('hidden'); }
+        if (busy) { busy.querySelector('.tx').textContent = 'Reading your plan…'; busy.classList.remove('hidden'); }
         try {
             const res = await api(URLS.planPreview + '?scheduleId=' + encodeURIComponent(id), { method: 'GET' });
             const d = res.data || {};
             attachedPlan = { id: d.id, title: d.title || title, activities: d.activities || 0, tokens: d.tokens || 0 };
             drawPlanChip();
         } catch (err) {
-            toast(err.message || 'That plan could not be attached.', 'error');
+            toast(err.message || 'Could not attach that plan.', 'error');
         } finally {
             if (busy) { busy.classList.add('hidden'); busy.querySelector('.tx').textContent = 'Attaching photo…'; }
         }
@@ -1078,20 +1078,20 @@ const __init = () => {
         if (attachedPlan) {
             const off = await (window.confirmAction
                 ? window.confirmAction({
-                    title: 'Take the plan off this question?',
-                    message: 'The answer will be about what you ask, without your season behind it.',
-                    confirmText: 'Take it off',
+                    title: 'Remove the plan?',
+                    message: 'Anee will answer without reading your season.',
+                    confirmText: 'Remove',
                 })
                 : Promise.resolve(true));
             if (off) { attachedPlan = null; drawPlanChip(); }
             return;
         }
-        if (!PLANS.length) { toast('You have no cropping plan to attach yet.', 'error'); return; }
+        if (!PLANS.length) { toast('You have no plan to attach yet.', 'error'); return; }
         if (PLANS.length === 1) {
             const ok = await (window.confirmAction
                 ? window.confirmAction({
                     title: 'Attach "' + PLANS[0].title + '"?',
-                    message: 'The AI reads your plan — the work so far, day by day — before answering. It uses a few more credits, and the estimate below will say how many.',
+                    message: 'Anee reads your plan and the work so far before she answers. It costs a few more credits. The cost shows below.',
                     confirmText: 'Attach it',
                 })
                 : Promise.resolve(true));
@@ -1103,7 +1103,7 @@ const __init = () => {
         list.innerHTML = PLANS.map((p) => `
             <button type="button" class="ai-attach-opt" data-plan="${p.id}">
                 <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></span>
-                <span>${escapeHtml(p.title)}<span class="sub">The AI reads this plan first</span></span>
+                <span>${escapeHtml(p.title)}<span class="sub">Anee reads this plan first</span></span>
             </button>`).join('');
         openSheet('aiPlanSheet');
     });
@@ -1134,8 +1134,8 @@ const __init = () => {
             const d = res.data || {};
             attachedAnalysis = { id: d.id, title: d.title || 'Saved analysis', tokens: d.tokens || 0 };
             drawWtpChip();
-            toast('Analysis attached — ask Anee about it.');
-        } catch (err) { toast(err.message || 'That analysis could not be attached.', 'error'); }
+            toast('Analysis attached. Ask Anee about it.');
+        } catch (err) { toast(err.message || 'Could not attach that analysis.', 'error'); }
     }
     byId('aiWtpX')?.addEventListener('click', () => { attachedAnalysis = null; drawWtpChip(); });
     {
@@ -1157,7 +1157,7 @@ const __init = () => {
             // this file — synchronously they are still in their dead zone.
             setTimeout(() => {
                 attachFromGallery({ path: bootPhotoPath, url: bootPhotoUrl }, null);
-                toast('Photo attached — what would you like to ask about it?');
+                toast('Photo attached. What do you want to ask?');
             }, 0);
         }
     }
@@ -1182,8 +1182,8 @@ const __init = () => {
             const d = res.data || {};
             attachedReport = { id: d.id, title: d.title || 'Farm report', tokens: d.tokens || 0 };
             drawRptChip();
-            toast('Report attached — ask Anee about it.');
-        } catch (err) { toast(err.message || 'That report could not be attached.', 'error'); }
+            toast('Report attached. Ask Anee about it.');
+        } catch (err) { toast(err.message || 'Could not attach that report.', 'error'); }
     }
     byId('aiRptX')?.addEventListener('click', () => { attachedReport = null; drawRptChip(); });
     {
@@ -1204,8 +1204,8 @@ const __init = () => {
             const d = res.data || {};
             attachedRealign = { id: d.id, title: d.title || 'Realign by Anee', tokens: d.tokens || 0 };
             drawRgnChip();
-            toast('Reading attached — ask Anee about it.');
-        } catch (err) { toast(err.message || 'That reading could not be attached.', 'error'); }
+            toast('Reading attached. Ask Anee about it.');
+        } catch (err) { toast(err.message || 'Could not attach that reading.', 'error'); }
     }
     byId('aiRgnX')?.addEventListener('click', () => { attachedRealign = null; drawRgnChip(); });
     function drawPbrChip() {
@@ -1222,8 +1222,8 @@ const __init = () => {
             const d = res.data || {};
             attachedReview = { id: d.id, title: d.title || 'Protocol review', tokens: d.tokens || 0 };
             drawPbrChip();
-            toast('Review attached — ask Anee about it.');
-        } catch (err) { toast(err.message || 'That review could not be attached.', 'error'); }
+            toast('Review attached. Ask Anee about it.');
+        } catch (err) { toast(err.message || 'Could not attach that review.', 'error'); }
     }
     byId('aiPbrX')?.addEventListener('click', () => { attachedReview = null; drawPbrChip(); });
     {
@@ -1265,7 +1265,7 @@ const __init = () => {
         if (!canGallery()) return;
         const sid = galleryScheduleId();
         if (!sid) {
-            toast('Attach the plan first — its gallery is what opens.', 'error');
+            toast('Attach a plan first to open its gallery.', 'error');
             byId('aiPlanBtn')?.focus();
             return;
         }
@@ -1283,7 +1283,7 @@ const __init = () => {
     /* ---- Ask ---- */
     async function send() {
         if (busy) return;
-        if (uploadsBusy > 0) { toast('Wait a moment — a photo is still uploading.', 'error'); return; }
+        if (uploadsBusy > 0) { toast('Please wait. A photo is still uploading.', 'error'); return; }
         const message = input.value.trim();
         if (!message) { toast('Type a question first.', 'error'); return; }
 
@@ -1355,7 +1355,7 @@ const __init = () => {
                 // back, so a retry does not mean picking them all again.
                 window.aneeGiveChipsBack(chips, heldChips);
                 giveAttachmentsBack(heldAtt);
-                if (heldChips.length) toast('Your photos are back in the box, ready for the retry.');
+                if (heldChips.length) toast('Your photos are back. You can try again.');
                 input.value = message;
                 input.dispatchEvent(new Event('input'));
             }
@@ -1415,7 +1415,7 @@ const __init = () => {
        page into the notebook. */
     byId('aiMenuGlobalNote')?.addEventListener('click', () => {
         window.closeSheet?.('aiMenuSheet');
-        if (!conversationId) { window.toast?.('Nothing to keep yet — ask something first, or open an old chat.', 'error'); return; }
+        if (!conversationId) { window.toast?.('Nothing to save yet. Ask a question or open an old chat.', 'error'); return; }
         byId('aiGlobalNoteTitle').value = '';
         byId('aiGlobalNoteDesc').value = '';
         openSheet('aiGlobalNoteSheet');
@@ -1442,7 +1442,7 @@ const __init = () => {
        this page is not standing in one. */
     byId('aiMenuToTask')?.addEventListener('click', () => {
         window.closeSheet?.('aiMenuSheet');
-        if (!conversationId) { window.toast?.('Nothing to keep yet — ask something first, or open an old chat.', 'error'); return; }
+        if (!conversationId) { window.toast?.('Nothing to save yet. Ask a question or open an old chat.', 'error'); return; }
         window.aiAttachOpen?.({
             askSchedule: true,
             save: async (a) => {
@@ -1454,7 +1454,7 @@ const __init = () => {
                     title: a.title,
                     description: a.description,
                 } });
-                window.toast?.(res.message || 'Kept in the notebook.');
+                window.toast?.(res.message || 'Saved to the notebook.');
             },
         });
     });
@@ -1463,7 +1463,7 @@ const __init = () => {
         window.closeSheet?.('aiMenuSheet');
         // This page ties a chat to a plan through the composer's selector —
         // walk the hand there rather than grow a second control for it.
-        toast('Pick the plan below — this chat ties itself to it.');
+        toast('Pick a plan below to link this chat.');
         byId('aiPlanBtn')?.focus();
     });
 
@@ -1488,7 +1488,7 @@ const __init = () => {
                 <span class="t">${escapeHtml(title)}</span>
                 <span class="meta">just now</span>
             </a>
-            <button type="button" class="ai-hact js-del-convo" data-id="${id}" aria-label="Delete conversation">
+            <button type="button" class="ai-hact js-del-convo" data-id="${id}" aria-label="Delete chat">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
             </button>
         </div>`;
@@ -1530,10 +1530,10 @@ const __init = () => {
         const btn = e.target.closest('.js-del-convo');
         if (!btn) return;
         const ok = await confirmAction({
-            title: 'Delete this conversation?',
-            message: 'The questions and answers in it will be removed.',
+            title: 'Delete this chat?',
+            message: 'Its questions and answers will be removed.',
             // Accounts that ride free never hear about credits.
-            detail: UNLIMITED ? '' : 'Credits already spent are not refunded.',
+            detail: UNLIMITED ? '' : 'Spent credits are not refunded.',
             confirmText: 'Delete',
         });
         if (!ok) return;

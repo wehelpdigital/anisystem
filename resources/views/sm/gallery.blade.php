@@ -1,6 +1,6 @@
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Gallery — ' . $schedule->title)
+@section('title', 'Gallery: ' . $schedule->title)
 @section('page-title', 'Gallery')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'gallery')
@@ -43,10 +43,10 @@
         <div class="ga-modal-body" role="tablist">
             @php
                 $shelves = [
-                    ['all', 'All Media', $counts['all'], 'Everything the season produced, wherever it was taken.'],
-                    ['albums', 'Albums', count($albums), 'The ones you put together on purpose.'],
-                    ['videos', 'Videos', $counts['videos'], 'Clips on their own, because you pick a video and scan photos.'],
-                    ['team', 'Team box', $counts['team'], 'What the Collab Room made: recordings, whiteboards, saved maps.'],
+                    ['all', 'All Media', $counts['all'], 'Every photo, drawing and map from this season.'],
+                    ['albums', 'Albums', count($albums), 'Groups of pictures you made.'],
+                    ['videos', 'Videos', $counts['videos'], 'Only the video clips.'],
+                    ['team', 'Team box', $counts['team'], 'Recordings, whiteboards and maps from the Collab Room.'],
                 ];
             @endphp
             @foreach ($shelves as [$key, $label, $n, $why])
@@ -71,7 +71,7 @@
     <div class="ga-tools">
         <label class="ga-search">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-            <input type="search" id="gaFind" placeholder="Search by what it was about…" autocomplete="off">
+            <input type="search" id="gaFind" placeholder="Search pictures" autocomplete="off">
         </label>
         <div class="ga-filters" id="gaFilters">
             <button type="button" class="ga-filter is-on" data-src="">Everything</button>
@@ -84,7 +84,7 @@
         </div>
     </div>
     <div class="ga-all" id="gaAll"></div>
-    <p class="ga-none hidden" id="gaAllNone">Nothing here yet. Anything taken anywhere in this schedule — a note, a day, a drawing, a map — arrives here on its own.</p>
+    <p class="ga-none hidden" id="gaAllNone">Nothing here yet. Pictures from notes, days, drawings and maps in this schedule show up here on their own.</p>
 </div>
 
 {{-- ============================== albums ============================== --}}
@@ -94,7 +94,7 @@
             <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
             <span>New album</span>
         </button>
-        <p class="text-xs text-gray-500">An album is what you chose to keep together — a corner of the field, a problem you are following, the pictures a buyer asked for.</p>
+        <p class="text-xs text-gray-500">An album keeps pictures together. For example: one corner of the field, a pest problem, or photos for a buyer.</p>
     </div>
 
     <div id="gaAlbums"></div>
@@ -102,7 +102,7 @@
     <div class="card p-8 text-center hidden" id="gaEmpty">
         <div class="text-4xl mb-2">🖼️</div>
         <p class="font-bold text-gray-900">No albums yet</p>
-        <p class="text-sm text-gray-500 mt-1">Make one for a corner of the field, a problem you are following, or anything worth keeping together.</p>
+        <p class="text-sm text-gray-500 mt-1">Make one for a corner of the field, a problem you are watching, or anything to keep together.</p>
     </div>
 </div>
 
@@ -110,13 +110,13 @@
 <div class="ga-pane" data-pane="videos" hidden>
     {{-- The same line the other shelves get. A bare grid with no word above
          it reads as a page that has not finished loading. --}}
-    <p class="tb-say">Every clip this season produced, wherever it was taken — a note, a day, the Collab Room, or Quick Record. Tap one to watch it.</p>
+    <p class="tb-say">Every video from this season: from notes, days, the Collab Room and Quick Record. Tap one to watch it.</p>
     <div class="ga-all" id="gaVideos"></div>
 </div>
 
 {{-- ============================= team box ============================= --}}
 <div class="ga-pane" data-pane="team" hidden>
-    <p class="tb-say">Everything the Collab Room made: recordings from a shared camera or a call, the whiteboard drawings, and the maps the team saved. Kept for the schedule, so anyone on it can find them again.</p>
+    <p class="tb-say">Everything made in the Collab Room: call and camera recordings, whiteboard drawings and team maps. Anyone on this schedule can find them here.</p>
 
     <div class="ga-filters tb-filters" id="tbFilters">
         <button type="button" class="ga-filter is-on" data-tb="">Everything</button>
@@ -126,7 +126,7 @@
     </div>
 
     <div class="tb-grid" id="tbGrid"></div>
-    <p class="ga-none hidden" id="tbNone">The Collab Room has not made anything yet. Recordings, whiteboard drawings and saved maps all land here.</p>
+    <p class="ga-none hidden" id="tbNone">Nothing from the Collab Room yet. Recordings, whiteboard drawings and saved maps show up here.</p>
 </div>
 
 {{-- The picking bar, shown once a picture is chosen. --}}
@@ -153,7 +153,7 @@
     <div class="sheet-body">
         <input type="hidden" id="gaAlbumId">
         <label class="form-label" for="gaAlbumTitle">Title <span class="text-red-500">*</span></label>
-        <input type="text" id="gaAlbumTitle" class="form-input" maxlength="191" placeholder="e.g. Flooded corner — August">
+        <input type="text" id="gaAlbumTitle" class="form-input" maxlength="191" placeholder="e.g. Flooded corner, August">
         <label class="form-label mt-3" for="gaAlbumDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
         <textarea id="gaAlbumDesc" class="form-input" rows="3" maxlength="2000" placeholder="What these pictures are about."></textarea>
     </div>
@@ -253,7 +253,7 @@
                 const label = (name || about)
                     ? `<span class="ga-cap">${name ? `<b>${esc(name)}</b>` : ''}${about ? `<i>${esc(about)}</i>` : ''}</span>`
                     : '';
-                const tip = [name, about].filter(Boolean).join(' — ');
+                const tip = [name, about].filter(Boolean).join(': ');
                 return `
                 <div class="ga-cell" data-image="${im.id}" data-lb-type="${im.kind === 'video' ? 'video' : 'image'}" data-lb-url="${esc(im.url)}"${(im.kind === 'video' && !im.posterUrl && im.path) ? ` data-needs-frame="${esc(im.path)}" data-clip-url="${esc(im.url)}" data-frame-replace="video"` : ''}
                      data-lb-image="${im.id}" data-lb-caption="${esc(name)}" data-lb-desc="${esc(about)}"${tip ? ` title="${esc(tip)}"` : ''}>
@@ -284,7 +284,7 @@
                 </div>
                 ${a.images.length
                     ? `<div class="ga-grid">${cells}</div>`
-                    : '<p class="ga-empty">Nothing in here yet — tap + to add pictures.</p>'}
+                    : '<p class="ga-empty">Nothing here yet. Tap + to add pictures.</p>'}
             </div>`;
         }
 
@@ -361,7 +361,7 @@
             const ok = await confirmAction({
                 title: 'Delete “' + album.title + '”?',
                 message: has
-                    ? has + ' ' + (has === 1 ? 'picture is' : 'pictures are') + ' in it. They are deleted with it — move them to another album first if you want to keep them.'
+                    ? has + ' ' + (has === 1 ? 'picture is' : 'pictures are') + ' in it. They will be deleted too. To keep them, move them to another album first.'
                     : 'The album is empty.',
                 confirmText: has ? 'Delete album and pictures' : 'Delete album',
             });
@@ -458,7 +458,7 @@
         $('gaMove').addEventListener('click', () => {
             const list = $('gaMoveList');
             if (ALBUMS.length < 2) {
-                toast('Make another album first — there is nowhere to move them to.', 'error');
+                toast('Make another album first. There is nowhere to move them yet.', 'error');
                 return;
             }
             list.innerHTML = ALBUMS.map((a) => `
@@ -811,7 +811,7 @@
             const ok = window.confirmAction
                 ? await window.confirmAction({
                     title: 'Delete this from the album?',
-                    message: 'It will be removed from the Gallery and the file deleted. This cannot be undone.',
+                    message: 'It will be deleted from the Gallery. This cannot be undone.',
                     confirmText: 'Delete', danger: true,
                 })
                 : confirm('Delete this from the album?');

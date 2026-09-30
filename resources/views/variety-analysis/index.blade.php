@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Variety Research')
 @section('page-title', 'Variety Research')
-@section('page-subtitle', 'The right variety, analyzed and compared')
+@section('page-subtitle', 'Find the best variety for your field')
 
 @section('back', \App\Support\BackTo::url(route('app.dashboard')))
 {{-- Back is the dashboard, or wherever the door that opened this page said
@@ -394,7 +394,7 @@
             <div class="q-body">
                 <div class="q-body-in">
                     <div class="q-card" id="vaQuoteCost"></div>
-                    <div class="q-card">Anee <b>analyzes deeply</b> for this one — the newest {{ \App\Support\Region::ph() ? 'Philippine' : \App\Support\Region::name() }} releases and registrations, hybrids from the top seed companies, trial yields, resistance ratings and days to maturity — then reads every variety against your soil, its troubles and the coming weather, and ranks them by what YOU said matters most.</div>
+                    <div class="q-card">Anee looks up the newest {{ \App\Support\Region::ph() ? 'Philippine' : \App\Support\Region::name() }} varieties, their trial yields and their resistance. She ranks them for your field and the coming weather, by what matters most to you. Treat it as a guide.</div>
                 </div>
             </div>
         </div>
@@ -411,31 +411,31 @@
                     <label class="form-label">Country of the field</label>
                     @include('partials.country-pick', ['id' => 'vaCountry', 'name' => 'country', 'value' => \App\Support\Region::code()])
                 </div>
-                <p class="wtp-sub" id="vaLocSub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate and the trial results differ by region.</p>
+                <p class="wtp-sub" id="vaLocSub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough. Weather and trial results differ by region.</p>
                 <input type="text" id="vaLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
             </section>
             {{-- Step 2: when it will be planted -- the year, and the season
                  with the months it usually spans where the field is. --}}
             <section class="wtp-step" data-step="1">
                 <p class="wtp-q">When will you plant it?</p>
-                <p class="wtp-sub">A variety bred for the wet season is not the dry season's — the research reads the outlook for the season you plan.</p>
-                <p class="wp-qh">The year</p>
+                <p class="wtp-sub">Wet and dry seasons need different varieties. Anee checks the weather outlook for your season.</p>
+                <p class="wp-qh">Year</p>
                 <div class="wtp-choices is-two" id="vaYears"></div>
-                <p class="wp-qh mt-4">The season</p>
+                <p class="wp-qh mt-4">Season</p>
                 <div class="wtp-choices" id="vaSeasons"></div>
             </section>
             {{-- Step 3: the soil, and the lay of the land --}}
             <section class="wtp-step" data-step="2">
                 <p class="wtp-q">What is the soil like?</p>
-                <p class="wtp-sub">As your hands know it — no test needed.</p>
+                <p class="wtp-sub">Pick what it feels like. No soil test needed.</p>
                 <div class="wtp-choices" id="vaSoils"></div>
-                <p class="wp-qh mt-4">And the land? <small>lowland, upland or highland — a variety is bred for one of them</small></p>
+                <p class="wp-qh mt-4">And the land? <small>Lowland, upland or highland. Each variety is bred for one.</small></p>
                 <div class="wtp-choices" id="vaElevations"></div>
             </section>
             {{-- Step 4: the crop --}}
             <section class="wtp-step" data-step="3">
                 <p class="wtp-q">Which crop?</p>
-                <p class="wtp-sub">The same catalogue your lots choose from.</p>
+                <p class="wtp-sub">The same crop list your lots use.</p>
                 <button type="button" class="crop-tag" id="vaCropBtn">
                     <span class="crop-tag-e" id="vaCropIcon">🌱</span>
                     <span class="crop-tag-t is-none" id="vaCropNow">Choose the crop</span>
@@ -444,28 +444,28 @@
             </section>
             {{-- Step 5: the varieties --}}
             <section class="wtp-step" data-step="4">
-                <p class="wtp-q">Which varieties are you weighing?</p>
-                <p class="wtp-sub">Type each as it is sold and add it — up to eight. Leave the list empty and Anee picks the top-yielding ones for your ground herself.</p>
+                <p class="wtp-q">Which varieties are you comparing?</p>
+                <p class="wtp-sub">Type each name as sold and tap Add, up to eight. Leave it empty and Anee picks the top yielding ones.</p>
                 <div class="va-add">
                     <input type="text" id="vaVarietyIn" class="form-input" maxlength="60" placeholder="e.g. {{ \App\Support\Region::ph() ? 'NSIC Rc222, NK6414' : 'Pioneer P1197, DKC64-34' }}" autocomplete="off">
                     <button type="button" class="btn btn-primary" id="vaVarietyAdd">Add</button>
                 </div>
                 <div class="va-chips" id="vaChips"></div>
-                <div class="va-anee" id="vaAneePicks"><span id="vaAneeFaceSlot">🤖</span><span>No varieties yet — <b>Anee will choose the top-yielding released varieties</b> for your crop and ground, and compare those.</span></div>
+                <div class="va-anee" id="vaAneePicks"><span id="vaAneeFaceSlot">🤖</span><span>No varieties yet. <b>Anee will pick the top yielding released varieties</b> for your crop and field, and compare them.</span></div>
             </section>
             {{-- Step 6: the priorities --}}
             <section class="wtp-step" data-step="5">
                 <p class="wtp-q">What matters most to you?</p>
-                <p class="wtp-sub">Put them in order — the first weighs 40% of the ranking, then 30%, 20%, 10%.</p>
+                <p class="wtp-sub">Put them in order. The first counts 40%, then 30%, 20% and 10%.</p>
                 <div class="va-rank" id="vaRank"></div>
             </section>
             {{-- Step 7: the troubles --}}
             <section class="wtp-step" data-step="6">
-                <p class="wtp-q">What does this ground struggle with?</p>
-                <p class="wtp-sub">Tick what you have seen — each one moves the scores.</p>
+                <p class="wtp-q">What problems does this field have?</p>
+                <p class="wtp-sub">Tick what you have seen. Each one changes the scores.</p>
                 <div class="wtp-probs" id="vaProbs"></div>
-                <label class="form-label mt-4" for="vaNotes">Anything else worth knowing? <span class="text-gray-400 font-normal">(optional)</span></label>
-                <textarea id="vaNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. we transplant late; the buyer wants long grain"></textarea>
+                <label class="form-label mt-4" for="vaNotes">Anything else? <span class="text-gray-400 font-normal">(optional)</span></label>
+                <textarea id="vaNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. we transplant late, the buyer wants long grain"></textarea>
             </section>
             {{-- Step 8: the decision --}}
             <section class="wtp-step" data-step="7">
@@ -505,7 +505,7 @@
             <div id="vaSavedList"></div>
             <div id="vaSavedEmpty" class="hidden text-center py-10">
                 <p class="font-bold text-gray-900">Nothing saved yet</p>
-                <p class="text-sm text-gray-400">Every finished research lands here by itself.</p>
+                <p class="text-sm text-gray-400">Each research you run is saved here.</p>
             </div>
         </div>
         <div class="wtp-report mt-4" id="vaSavedReport" hidden></div>
@@ -529,7 +529,7 @@
             <button type="button" class="crop-search-x hidden" id="vaCropSearchX" aria-label="Clear">✕</button>
         </div>
         <div id="vaCropList"></div>
-        <p class="crop-none hidden" id="vaCropNone">Nothing matches that. Try the local name, or pick “Vegetables — mixed”.</p>
+        <p class="crop-none hidden" id="vaCropNone">No match. Try the local name, or pick mixed vegetables (Gulay).</p>
     </div>
 </div>
 
@@ -587,13 +587,13 @@
            field is; the dry season begins at a year's end and runs into
            the next, and the card says so with both years. */
         const seasonSubs = (y) => ({
-            dry: `Early December ${y} to May ${y + 1} in most lowland regions — planting into ${y + 1} is part of it`,
-            wet: `Roughly June to October ${y} in most lowland regions — planting as the rains set in`,
-            third: `After the dry-season harvest, before the rains — roughly March to May ${y}, where water can be assured`,
-            spring: `Roughly March to May ${y} in the northern hemisphere — the research places it for your location`,
-            summer: `Roughly June to August ${y} in the northern hemisphere`,
-            autumn: `Roughly September to November ${y} in the northern hemisphere`,
-            winter: `December ${y} to February ${y + 1} in the northern hemisphere — a cool-season or protected planting`,
+            dry: `Early December ${y} to May ${y + 1} in most lowlands, including planting in ${y + 1}`,
+            wet: `About June to October ${y} in most lowlands, planting as the rains start`,
+            third: `About March to May ${y}, after the dry season harvest. Only where water is sure.`,
+            spring: `About March to May ${y} north of the equator. Anee fits it to your place.`,
+            summer: `About June to August ${y} north of the equator`,
+            autumn: `About September to November ${y} north of the equator`,
+            winter: `December ${y} to February ${y + 1} north of the equator, for cool season or covered planting`,
         });
         const paintSeasons = () => {
             const y = Number(state.year || (OPT.years || [new Date().getFullYear()])[0]);
@@ -619,7 +619,7 @@
                         <span class="crop-row-e">${esc(c.icon)}</span>
                         <span class="crop-row-t">
                             <b>${esc(c.label)}</b>
-                            <small>${c.perennial ? 'Tree crop — read by its age' : (c.maturity ? c.maturity + ' days to harvest' : '')}</small>
+                            <small>${c.perennial ? 'Tree crop, counted by age' : (c.maturity ? c.maturity + ' days to harvest' : '')}</small>
                         </span>
                     </button>`).join('')}
             </div>`).join('');
@@ -649,7 +649,7 @@
         if (!OPT.quote) { q.hidden = true; return; }
         q.classList.toggle('is-min', quoteMin);
         $id('vaQuoteHead').setAttribute('aria-expanded', quoteMin ? 'false' : 'true');
-        $id('vaQuoteCost').innerHTML = `This research spends <b>${OPT.quote} credits</b> (a deep analysis, which is why it costs more than its sisters), and you have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
+        $id('vaQuoteCost').innerHTML = `One research costs <b>${OPT.quote} credits</b>. You have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
         $id('vaQuoteHint').textContent = `${OPT.quote} credits`;
         q.hidden = false;
     }
@@ -679,12 +679,12 @@
     function stepReady() {
         switch (step) {
             case 0: state.location = $id('vaLocation').value.trim();
-                return !!state.location || (toast('Say where the field is.', 'error'), false);
+                return !!state.location || (toast('Type where the field is.', 'error'), false);
             case 1: if (!state.year) { toast('Pick the year first.', 'error'); return false; }
                 if (!state.season || !seasonsFor(state.country)[state.season]) { toast('Pick the season.', 'error'); return false; }
                 return true;
-            case 2: return !!state.soil || (toast('Pick the soil that sounds most like yours.', 'error'), false);
-            case 3: return !!state.crop || (toast('Choose the crop.', 'error'), false);
+            case 2: return !!state.soil || (toast('Pick the soil closest to yours.', 'error'), false);
+            case 3: return !!state.crop || (toast('Choose a crop.', 'error'), false);
             case 4: addVariety(); return true;
             case 6: state.problems = [...document.querySelectorAll('#vaProbs input:checked')].map((i) => i.value);
                 state.notes = $id('vaNotes').value.trim(); return true;
@@ -699,11 +699,11 @@
             + ` · ${esc(seasonSaid(state.season, state.year))}`
             + `<br><span class="text-xs">${esc(OPT.soils[state.soil] || '')}${state.elevation ? ' · ' + esc(String((OPT.elevations || {})[state.elevation] || state.elevation).split(' — ')[0]) : ''}`
             + ` · ${state.varieties.length ? esc(state.varieties.join(', ')) : 'Anee picks the varieties'}`
-            + (state.problems.length ? ` · ${state.problems.length} trouble${state.problems.length === 1 ? '' : 's'} considered` : '') + '</span>'
+            + (state.problems.length ? ` · ${state.problems.length} problem${state.problems.length === 1 ? '' : 's'} checked` : '') + '</span>'
             + `<br><span class="text-xs">${esc(order)}</span>`;
         $id('vaRunSays').textContent = OPT.canUse && OPT.quote ? `Run the research (${OPT.quote} credits)` : 'Run the research';
         $id('vaRunFine').textContent = OPT.canUse
-            ? 'Anee analyzes this one deeply. Charged to the same AI credits your questions use — it shows in your subscription’s credit log.'
+            ? 'Paid from your AI credits. You can see it in your credit log.'
             : (OPT.whyNot || '');
         $id('vaRun').disabled = !OPT.canUse;
     }
@@ -747,7 +747,7 @@
         state.country = code;
         const city = (r.address && r.address.city && r.address.city.label) || 'City';
         const region = (r.address && r.address.region && r.address.region.label) || 'State / Region';
-        $id('vaLocSub').textContent = `${code === 'PH' ? 'Town and province' : city + ' and ' + region.toLowerCase()} is enough — the climate and the trial results differ by region.`;
+        $id('vaLocSub').textContent = `${code === 'PH' ? 'Town and province' : city + ' and ' + region.toLowerCase()} is enough. Weather and trial results differ by region.`;
         $id('vaLocation').placeholder = r.exampleLocation || '';
         // The seasons on offer follow the field's country; a season that is
         // not one of them is dropped and asked for again.
@@ -814,7 +814,7 @@
         const inp = $id('vaVarietyIn');
         const v = inp.value.trim().replace(/\s{2,}/g, ' ');
         if (!v) return false;
-        if (state.varieties.length >= 8) { toast('Eight is plenty for one comparison.', 'error'); return false; }
+        if (state.varieties.length >= 8) { toast('You can add up to eight.', 'error'); return false; }
         if (state.varieties.some((x) => x.toLowerCase() === v.toLowerCase())) { toast('That one is already on the list.', 'error'); inp.value = ''; return false; }
         state.varieties.push(v);
         inp.value = '';
@@ -883,7 +883,7 @@
         if (!stepReady()) return;
         const wiz = $id('vaWiz');
         wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = 'none');
-        window.aneeWait.show({ title: 'Anee is researching…', lines: ['Reading the newest ' + ((window.ANEE_REGION || {}).ph === false ? (window.ANEE_REGION.name + ' ') : 'Philippine ') + 'releases and trials…', 'Checking the hybrids from the top seed companies…', 'Reading resistance, tolerance and days to maturity…', 'Weighing each variety against your soil and the coming weather…', 'Ranking by what you said matters most…'], sub: 'A minute or two — this is a deep analysis.' });
+        window.aneeWait.show({ title: 'Anee is researching…', lines: ['Reading the newest ' + ((window.ANEE_REGION || {}).ph === false ? (window.ANEE_REGION.name + ' ') : 'Philippine ') + 'varieties and trials…', 'Checking hybrids from top seed companies…', 'Checking resistance and days to harvest…', 'Matching each variety to your soil and weather…', 'Ranking by what matters most to you…'], sub: 'This takes a minute or two.' });
         $id('vaReport').hidden = true;
         let landed = false;
         try {
@@ -906,9 +906,9 @@
             // A slip in drawing must not strand the veil: the result is on
             // the shelf either way, and the wait still lifts.
             try { drawReport($id('vaReport'), item, 'fresh', true); openView(item, 'fresh'); }
-            catch (drawErr) { console.error(drawErr); toast('The analysis is saved on the Saved tab, but this page could not draw it.', 'error'); }
-            await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used — saved to the shelf.` });
-            toast(`Done — ${data.charged} credits used. Saved to the shelf.`);
+            catch (drawErr) { console.error(drawErr); toast('It is saved on the Saved tab, but this page could not show it.', 'error'); }
+            await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used. Saved on the Saved tab.` });
+            toast(`Done. ${data.charged} credits used. Saved on the Saved tab.`);
         } catch (err) {
             toast(err.message, 'error');
         } finally {
@@ -926,7 +926,7 @@
         VIEW_MODE = mode || null;
         const view = $id('vaView');
         const crop = (OPT ? OPT.crops.find((c) => c.key === (item.params || {}).crop) : null) || {};
-        $id('vaViewTitle').textContent = (crop.label ? crop.label + ' — ' : '') + 'variety research';
+        $id('vaViewTitle').textContent = crop.label ? crop.label + ' variety research' : 'Variety research';
         const host = $id('vaViewReport');
         host.classList.remove('is-drawn');
         drawReport(host, item, mode, true);
@@ -980,7 +980,7 @@
 
         hostEl.innerHTML = `
             <div class="wtp-hero">
-                <h2>${esc(crop.icon || '🌱')} ${esc(r.headline || ('Best ' + (crop.label || 'variety') + ' for your ground'))}</h2>
+                <h2>${esc(crop.icon || '🌱')} ${esc(r.headline || ('Best ' + (crop.label || 'variety') + ' for your field'))}</h2>
                 <p class="h-win">${esc(top.variety || '')}</p>
                 ${top.by ? `<p class="h-by">${esc(top.by)}</p>` : ''}
                 <p class="h-why">${esc(sweep(top.why))}</p>
@@ -995,7 +995,7 @@
             </div>
 
             <div class="wtp-card">
-                <h3>Ranked by what you said matters</h3>
+                <h3>Ranked by what matters to you</h3>
                 <div class="va-order">${order.map((k, i) => `<span>${i + 1}. ${esc(PR[k]?.label || k)}<i>${weightOf(k)}%</i></span>`).join('')}</div>
             </div>
 
@@ -1008,7 +1008,7 @@
                 const hybrids = all.filter((x) => x.type === 'hybrid');
                 const inbreds = all.filter((x) => x.type !== 'hybrid');
                 const groups = (hybrids.length && inbreds.length)
-                    ? [['Hybrids', 'Seed bought fresh each season — usually the higher yield, at a higher seed cost', hybrids], ['Inbred & open-pollinated', 'Seed you can keep and replant — the public {{ \App\Support\Region::ph() ? 'NSIC-registered' : 'registered' }} varieties', inbreds]]
+                    ? [['Hybrids', 'Buy new seed each season. Usually higher yield, but the seed costs more.', hybrids], ['Inbred and open pollinated', 'Seed you can save and replant. These are the public {{ \App\Support\Region::ph() ? 'NSIC registered' : 'registered' }} varieties.', inbreds]]
                     : [['The comparison, best first', '', all]];
                 let delay = 0;
                 return groups.map(([title, sub, rows]) => `
@@ -1059,7 +1059,7 @@
 
             ${r.conditions ? `
             <div class="wtp-card">
-                <h3>What your ground and the weather ask of a variety</h3>
+                <h3>What your field and weather need</h3>
                 <div class="va-cond">
                     <div class="va-cond-box"><b>Soil</b><p>${esc(sweep(r.conditions.soil))}</p></div>
                     <div class="va-cond-box"><b>Weather</b><p>${esc(sweep(r.conditions.weather))}</p></div>
@@ -1069,7 +1069,7 @@
 
             ${list(r.management).length ? `
             <div class="wtp-card">
-                <h3>Growing the top pick here</h3>
+                <h3>How to grow the top pick</h3>
                 <ul class="va-mgmt">${list(r.management).map((s) => `<li>${esc(sweep(s))}</li>`).join('')}</ul>
             </div>` : ''}
 
@@ -1077,21 +1077,21 @@
                 <h3>In plain words</h3>
                 <p class="wtp-plain">${esc(sweep(r.summary))}</p>
                 ${(r.dataGaps || []).length ? `
-                    <h3 class="mt-4">What this research could not verify</h3>
+                    <h3 class="mt-4">What Anee could not confirm</h3>
                     <ul class="wtp-gap">${(r.dataGaps || []).map((g) => `<li>${esc(g)}</li>`).join('')}</ul>` : ''}
             </div>
 
             <div class="wtp-card">
-                <h3>📚 Other Sources in Analysis</h3>
+                <h3>📚 Sources Anee read</h3>
                 ${(r.webSources || []).length ? `<div class="va-links">${(() => { const seen = new Set(); return (r.webSources || []).map((s) => ({ name: s.title || host(s.url) || 'A published source', host: host(s.url) })).filter((x) => { const k = x.name.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; }).map((x) => `
                     <span class="va-link is-plain"><span class="l-t">${esc(x.name)}</span>${x.host && x.host !== x.name ? `<span class="l-h">${esc(x.host)}</span>` : ''}</span>`).join(''); })()}</div>`
-                    : (r.searched ? '<p class="wtp-fine">The pages she read were not handed back this time.</p>'
-                        : '<p class="va-nosearch">Anee could not reach the web for this run, so this reading comes from her own knowledge and may miss the newest releases. Run it again later for a searched one.</p>')}
+                    : (r.searched ? '<p class="wtp-fine">The list of pages did not come back this time.</p>'
+                        : '<p class="va-nosearch">Anee could not reach the web this time. This answer comes from what she already knows, so it may miss the newest varieties. Try again later.</p>')}
             </div>
 
             <div class="wtp-card">
                 <h3>🧭 A guide, not a promise</h3>
-                <p class="wtp-fine">Trial yields are what a variety did on a trial farm in its year; your field, your season and your hands will differ. What this gives you is a searched, scored shortlist — the varieties whose documented traits match what you described, weighed the way you asked — which beats choosing on the seed shop's word alone. Ask the nearest DA or PhilRice office what seed is actually available near you before you decide.</p>
+                <p class="wtp-fine">Trial yields come from trial farms, and your field will differ. This is a shortlist of varieties that match what you told us. Before you decide, ask the nearest DA or PhilRice office which seed you can get near you.</p>
             </div>
 
             <div class="wtp-acts">
@@ -1117,7 +1117,7 @@
         hostEl.querySelector('[data-va-delete]').addEventListener('click', async () => {
             const delId = item.savedId;
             const ok = window.confirmAction
-                ? await confirmAction({ title: 'Delete this research?', message: 'The credits it cost are already spent; only the report goes.', confirmText: 'Delete', danger: true })
+                ? await confirmAction({ title: 'Delete this research?', message: 'Only the report is deleted. The credits it used are not returned.', confirmText: 'Delete', danger: true })
                 : confirm('Delete this research?');
             if (!ok) return;
             try {

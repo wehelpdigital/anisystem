@@ -16,8 +16,8 @@
 
         <div class="rv-body" id="rvStep1">
             <span class="rv-mark" aria-hidden="true">🌾</span>
-            <h3 class="rv-title" id="rvTitle">How is anee.io treating you?</h3>
-            <p class="rv-sub">A moment of your time helps us build the right things. Tap a star.</p>
+            <h3 class="rv-title" id="rvTitle">How do you like anee.io?</h3>
+            <p class="rv-sub">Your answer helps us make it better. Tap a star.</p>
             <div class="rv-stars" id="rvStars" role="radiogroup" aria-label="Rating">
                 @for ($i = 1; $i <= 5; $i++)
                     <button type="button" class="rv-star" data-rv-star="{{ $i }}" role="radio" aria-checked="false" aria-label="{{ $i }} star{{ $i === 1 ? '' : 's' }}">
@@ -25,7 +25,7 @@
                     </button>
                 @endfor
             </div>
-            <textarea id="rvText" class="rv-text" rows="3" maxlength="1500" placeholder="Anything you would change? (optional)"></textarea>
+            <textarea id="rvText" class="rv-text" rows="3" maxlength="1500" placeholder="What would you change? (optional)"></textarea>
             <div class="rv-acts">
                 <button type="button" class="rv-later" data-rv-close>Not now</button>
                 <button type="button" class="rv-send" id="rvSend" disabled>Send</button>
@@ -35,7 +35,7 @@
         <div class="rv-body rv-done" id="rvStep2" hidden>
             <span class="rv-mark" aria-hidden="true">🙏</span>
             <h3 class="rv-title">Thank you</h3>
-            <p class="rv-sub">That goes straight to the people building this. We will not ask again.</p>
+            <p class="rv-sub">Our team will read it. We will not ask again.</p>
             <div class="rv-acts"><button type="button" class="rv-send" data-rv-close>Close</button></div>
         </div>
     </div>
@@ -169,7 +169,7 @@
                 document.getElementById('rvStep2').hidden = false;
             } catch (err) {
                 btn.disabled = false;
-                window.toast?.('Could not send that just now.', 'error');
+                window.toast?.('Could not send. Please try again.', 'error');
             }
         }
     });

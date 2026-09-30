@@ -106,8 +106,8 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </span>
         <div class="min-w-0 grow">
-            <p class="dr-kept-title" id="drKeptTitle">Kept as a picture.</p>
-            <p class="dr-kept-say" id="drKeptSay">It is not a drawing any more, so it is not on this shelf — you will find it in the Gallery and on its note.</p>
+            <p class="dr-kept-title" id="drKeptTitle">Saved as a picture.</p>
+            <p class="dr-kept-say" id="drKeptSay">This shelf only keeps drawings. Find the picture in the Gallery and on its note.</p>
             <div class="dr-kept-acts">
                 <a class="btn btn-sm btn-white" id="drKeptGallery" href="{{ route('gallery.hub') }}">Open the Gallery</a>
                 <a class="btn btn-sm btn-white hidden" id="drKeptNote" href="#">Open the note</a>
@@ -118,7 +118,7 @@
         </button>
     </div>
     <div class="dr-grid" id="drGrid"></div>
-    <p class="dr-empty hidden" id="drEmpty">Nothing drawn yet. Start one above — save it as a picture, or as a drawing you can come back and change.</p>
+    <p class="dr-empty hidden" id="drEmpty">Nothing drawn yet. Start one above. Save it as a picture, or as a drawing you can change later.</p>
 
     @include('sm.partials.draw-canvas')
     @include('sm.partials.note-lightbox')
@@ -147,7 +147,7 @@
                  field that centres its text, but a textarea sat its first line
                  hard against the top border. form-textarea is the same field
                  with the vertical padding a multi-line box needs. --}}
-            <textarea id="drNote" class="form-input form-textarea" rows="3" maxlength="2000" placeholder="What this shows, and why it was worth drawing."></textarea>
+            <textarea id="drNote" class="form-input form-textarea" rows="3" maxlength="2000" placeholder="What does it show?"></textarea>
             <p class="text-xs text-gray-400 mt-1.5" id="drKind"></p>
             <button type="button" class="btn btn-primary w-full mt-3" id="drConfirm">Save drawing</button>
         </div>
@@ -189,10 +189,10 @@
             function showKept(row) {
                 if (!kept) return;
                 document.getElementById('drKeptTitle').textContent =
-                    '“' + (row.title || 'Drawing') + '” was kept as a picture.';
+                    '“' + (row.title || 'Drawing') + '” was saved as a picture.';
                 document.getElementById('drKeptSay').textContent =
-                    'A picture is not a drawing any more, so it does not sit on this shelf. '
-                    + 'It is in the Gallery, and on the note it was saved to.';
+                    'This shelf only keeps drawings. '
+                    + 'Find the picture in the Gallery and on its note.';
                 const noteLink = document.getElementById('drKeptNote');
                 // Only a notebook (a season's, or your own Global Notes) can
                 // open a note by name. A picture saved onto a board or a day
@@ -306,7 +306,7 @@
 
             /* ---------- opening the pad ---------- */
             function pad(seed) {
-                if (typeof window.openDrawCanvas !== 'function') { toast('Drawing pad unavailable.', 'error'); return; }
+                if (typeof window.openDrawCanvas !== 'function') { toast('The drawing pad did not load. Try again.', 'error'); return; }
                 seed = seed || {};
                 // Closing the drawing a note sent us to returns to that note.
                 if (askedForOne) {
@@ -354,8 +354,8 @@
                     document.getElementById('drKind').textContent = over
                         ? 'Saving over the drawing you opened.'
                         : (objects
-                            ? 'Kept as a drawing — you can reopen and change it later.'
-                            : 'Kept as a picture — it goes to the Gallery and its note, not to this shelf.');
+                            ? 'Saved as a drawing. You can change it later.'
+                            : 'Saved as a picture. It goes to the Gallery and its note, not this shelf.');
                     window.openSheet('drSaveSheet');
                     window.smFocus('drTitle', { delay: 120 });
                 }, seed.url || null, {
@@ -410,7 +410,7 @@
 
                 if (e.target.closest('[data-del]')) {
                     const ok = (typeof confirmAction === 'function')
-                        ? await confirmAction({ title: 'Delete this drawing?', message: 'It goes from the notebook too.', confirmText: 'Delete', danger: true })
+                        ? await confirmAction({ title: 'Delete this drawing?', message: 'It is also removed from its note.', confirmText: 'Delete', danger: true })
                         : confirm('Delete this drawing?');
                     if (!ok) return;
                     cardEl.classList.add('is-going');
@@ -482,7 +482,7 @@
                     // pop races the walk's own push and lands on this shelf.
                     if (returnAfterSave) window.forgetOverlay?.('sheet:drSaveSheet');
                     window.closeSheet('drSaveSheet');
-                    toast(row.editable ? 'Drawing saved.' : 'Kept as a picture — see the Gallery and its note.');
+                    toast(row.editable ? 'Drawing saved.' : 'Saved as a picture. Find it in the Gallery and its note.');
                     // In the shell the walk back is a module switch; standing
                     // alone it is a plain navigation to whoever sent us. Not
                     // history math — the pad and its sheets left abandoned

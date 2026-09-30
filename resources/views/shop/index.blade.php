@@ -62,12 +62,12 @@
         <div class="shop-tile"><span>🧂</span>Fertilizer &amp; inputs<i>Priced per bag</i></div>
         <div class="shop-tile"><span>🛠️</span>Tools &amp; equipment<i>From bolo to pump</i></div>
         <div class="shop-tile"><span>🧤</span>Safety gear<i>For every activity</i></div>
-        <div class="shop-tile"><span>📖</span>Cheat Sheets<i>Short how-tos that pay for themselves</i></div>
+        <div class="shop-tile"><span>📖</span>Cheat Sheets<i>Short, useful farm guides</i></div>
         <div class="shop-tile"><span>👕</span>Fashion<i>Farm wear that works</i></div>
     </div>
 
     <p class="text-center text-xs text-gray-500 mt-6">
-        We will say so here — and in your notices — the day the doors open.
+        We will tell you here and in your notices when the shop opens.
     </p>
 </div>
 @endsection

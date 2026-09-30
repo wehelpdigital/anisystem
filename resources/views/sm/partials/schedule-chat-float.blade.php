@@ -643,7 +643,7 @@
             const picked = Array.from(list || []).filter(Boolean);
             picked.slice(0, Math.max(0, room)).forEach((f) => photoFiles.push(f));
             if (picked.length > room) {
-                toast(`Only ${MAX_SHOTS} photos at a time — send these first.`, 'error');
+                toast(`Only ${MAX_SHOTS} photos at a time. Send these first.`, 'error');
             }
             drawShots();
         }
@@ -765,7 +765,7 @@
         function showClip(file, kind) {
             if (!file) return;
             if (file.size > MAX_BYTES) {
-                toast('That is over 50 MB — too big to send from a field.', 'error');
+                toast('That file is over 50 MB. It is too big to send.', 'error');
                 return;
             }
             clipFile = file; clipKind = kind;
@@ -812,7 +812,7 @@
                     ? { audio: true, video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } } }
                     : { audio: true });
             } catch (_) {
-                toast('Microphone or camera blocked. Allow it for this site.', 'error');
+                toast('Mic or camera is blocked. Allow it for this site.', 'error');
                 return;
             }
             recKind = kind;

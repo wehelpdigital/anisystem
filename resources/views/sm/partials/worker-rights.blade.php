@@ -27,22 +27,22 @@
 @php
     // level rows: [id suffix, mark, label, hint]
     $wrLevels = [
-        ['Access', '🗓️', 'Activities', 'The day to day plan: the activities board, lots and the calendar.'],
-        ['NotesAccess', '📝', 'Notes', 'Day notes, and the photos and videos filed with them.'],
-        ['ReportsAccess', '📊', 'Reports', 'Labour and money reports for this farm.'],
+        ['Access', '🗓️', 'Activities', 'The daily plan: activities board, lots and calendar.'],
+        ['NotesAccess', '📝', 'Notes', 'Day notes and their photos and videos.'],
+        ['ReportsAccess', '📊', 'Reports', 'Labor and money reports for this farm.'],
         ['InventoryAccess', '📦', 'Inventory', 'Items on hand, stock moves and what they cost.'],
-        ['MapsAccess', '🗺️', 'Maps', 'Field maps, lot maps and saved maps — view them, or draw and save too.'],
-        ['DrawAccess', '✏️', 'Draw', 'The drawing module and its saved pictures — view them, or draw new ones.'],
+        ['MapsAccess', '🗺️', 'Maps', 'Field and lot maps. View only, or draw and save too.'],
+        ['DrawAccess', '✏️', 'Draw', 'Drawings and saved pictures. View only, or draw new ones.'],
     ];
     $wrSwitches = [
         // Anee's row wears her face, not a robot: a mark with a '/' in it
         // is an image path, and the loop below knows the difference.
-        ['AiAccess', 'images/anee/avatar-160.jpg', 'Chat Anee', 'Asking Anee questions — every answer is paid for from YOUR credits, not theirs.'],
-        ['CameraAccess', '📷', 'Camera', 'Taking photos and filing them on this farm.'],
-        ['VideoAccess', '🎥', 'Video record', 'Recording clips and attaching them.'],
+        ['AiAccess', 'images/anee/avatar-160.jpg', 'Chat Anee', 'Ask Anee questions. Answers use YOUR credits, not theirs.'],
+        ['CameraAccess', '📷', 'Camera', 'Take photos and save them to this farm.'],
+        ['VideoAccess', '🎥', 'Video record', 'Record clips and attach them.'],
         // Its own switch: speaking a note is what a farmer does with their
         // hands full, and an owner may want that without lending a camera.
-        ['VoiceAccess', '🎙️', 'Voice record', 'Speaking a note instead of typing it.'],
+        ['VoiceAccess', '🎙️', 'Voice record', 'Speak a note instead of typing it.'],
     ];
 @endphp
 <div class="wr-block" data-wr-block>
@@ -97,16 +97,14 @@
          where the switches are rather than discovered on a statement. --}}
     <p class="wr-credits">
         <span class="wr-credits-ico" aria-hidden="true">💳</span>
-        <span><b>These doors spend your credits, not theirs.</b>
-        Anything Anee answers — the chat, the season reads, the planting
-        analyses — is charged to <strong>your</strong> account while they are
-        working on your farm, however many workers ask. Close
+        <span><b>Anee uses your credits, not theirs.</b>
+        When workers use Anee on your farm (chat, season reads, planting
+        analyses), <strong>your</strong> account pays. Turn off
         <strong>Chat Anee</strong>, or set <strong>Reports</strong> to
-        None or View, and they cannot spend any. On their own farm they
-        pay from their own.</span>
+        None or View, to stop this. On their own farm, they pay.</span>
     </p>
 
-    <p class="wr-foot">Every worker can at least <strong>view Activities</strong> — the plan is the farm's common ground. The other doors are yours to open. Changes here save on their own.</p>
+    <p class="wr-foot">Every worker can at least <strong>view Activities</strong>. You choose the rest. Changes save by themselves.</p>
 </div>
 
 @once

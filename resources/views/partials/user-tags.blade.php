@@ -35,11 +35,11 @@
     </div>
     <div class="sheet-body">
         <div class="flex gap-2 mb-3">
-            <input type="text" class="form-input grow" id="utNew" maxlength="30" placeholder="Tag name — e.g. wet season" autocomplete="off" enterkeyhint="done">
+            <input type="text" class="form-input grow" id="utNew" maxlength="30" placeholder="Tag name, like wet season" autocomplete="off" enterkeyhint="done">
             <button type="button" class="btn btn-primary shrink-0" id="utAdd">Add</button>
         </div>
         <div class="dt-rows" id="utList"></div>
-        <p class="text-xs text-gray-400 mt-2" id="utEmpty" hidden>No tags yet — type one above.</p>
+        <p class="text-xs text-gray-400 mt-2" id="utEmpty" hidden>No tags yet. Type one above.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-primary w-full" data-sheet-close>Done</button>
@@ -94,7 +94,7 @@
         if (!OPEN) return;
         const has = (OPEN._tags || []).some((x) => same(x, name));
         OPEN._tags = has ? OPEN._tags.filter((x) => !same(x, name)) : [...(OPEN._tags || []), name].slice(0, 10);
-        if (!has && OPEN._tags.length === 10 && !OPEN._tags.some((x) => same(x, name))) window.toast?.('Up to ten tags on one thing.', 'error');
+        if (!has && OPEN._tags.length === 10 && !OPEN._tags.some((x) => same(x, name))) window.toast?.('You can add up to 10 tags.', 'error');
         paintList(); paintMount(OPEN);
     }
     document.addEventListener('click', (e) => {

@@ -112,7 +112,7 @@
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="edit" data-short="Select">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4l7 16 2-6 6-2z"/></svg>
-                    <span>Select &amp; edit a shape</span>
+                    <span>Select and edit a shape</span>
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="pen" data-short="Pen">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L18 9l-3-3L5 16l-1 4z"/></svg>
@@ -120,27 +120,27 @@
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="line" data-short="Line">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 21L21 3M8.5 15.5l1.8 1.8M12 12l1.8 1.8M15.5 8.5l1.8 1.8"/></svg>
-                    <span>Line — drag, shows distance</span>
+                    <span>Line: drag to measure distance</span>
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="arrow" data-short="Arrow">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20L18 6M18 6h-7M18 6v7"/></svg>
-                    <span>Arrow — drag to point at</span>
+                    <span>Arrow: drag to point</span>
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="path" data-short="Multi-line">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-6 4 3 6-8"/><path stroke-linecap="round" d="M3 17h.01M8 11h.01M12 14h.01M18 6h.01"/></svg>
-                    <span>Multi-line — tap points, tap the 1st to close</span>
+                    <span>Multi-line: tap points, tap the first to close</span>
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="rect" data-short="Box">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg>
-                    <span>Box — drag, sides + area</span>
+                    <span>Box: drag to measure sides and area</span>
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="area" data-short="Area">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l8 6-3 10H7L4 9l8-6z"/></svg>
-                    <span>Area — tap corners, hectares</span>
+                    <span>Area: tap corners to measure hectares</span>
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="pin" data-short="Pin">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-7.5 7-12a7 7 0 10-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>
-                    <span>Pin a place — drag it, tap it for Google Maps</span>
+                    <span>Pin a place: drag to move, tap for Google Maps</span>
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="text" data-short="Text">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 6h14M12 6v13M9 19h6"/></svg>
@@ -342,9 +342,8 @@
                     </button>
                 </div>
                 <p class="cmap-text-hint">
-                    Size is set on the map: the label comes up held, with a round
-                    <b>A</b> beside it — drag that away to make it bigger, back in to
-                    make it smaller.
+                    Set the size on the map. Drag the round <b>A</b> beside the
+                    label out to make it bigger, or in to make it smaller.
                 </p>
                 <button type="button" class="cmap-save-go" id="cmapTextGo"><span id="cmapTextGoTxt">Place label</span></button>
             </div>
@@ -403,7 +402,7 @@
                      for the same reason the shelf's New map does. --}}
                 <button type="button" class="cmap-mrow" data-maction="new">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>
-                    <span>Start a new map<small>Clears the canvas — saved maps stay on the shelf</small></span>
+                    <span>Start a new map<small>Clears the canvas. Saved maps stay on the shelf</small></span>
                 </button>
                 <button type="button" class="cmap-mrow" data-maction="open">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
@@ -411,15 +410,15 @@
                 </button>
                 <button type="button" class="cmap-mrow" data-maction="saveplain">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
-                    <span>Save map<small>Just the map, reopenable from Maps. Nothing goes to Notes</small></span>
+                    <span>Save map<small>Open it again from Maps. Nothing goes to Notes</small></span>
                 </button>
                 <button type="button" class="cmap-mrow" data-maction="savemap">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 3h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z"/><path stroke-linecap="round" d="M9 8h6M9 12h6M9 16h4"/></svg>
-                    <span>Save map to notes<small>Reopenable from Maps, and a picture filed in Notes</small></span>
+                    <span>Save map to notes<small>Open it again from Maps. A picture also goes to Notes</small></span>
                 </button>
                 <button type="button" class="cmap-mrow" data-maction="saveimage">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-4.5-4.5L9 18"/></svg>
-                    <span>Save as image note<small>A picture only, filed in Notes</small></span>
+                    <span>Save as image note<small>Only a picture, saved in Notes</small></span>
                 </button>
             </div>
         </div>
@@ -453,7 +452,7 @@
         <div class="cmap-refused" id="cmapRefused" hidden>
             <svg fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
             <b>The map can't be shown right now</b>
-            <p>Google Maps did not accept this website's address. Your saved maps and every shape on them are safe, and will show again as soon as it does.</p>
+            <p>Google Maps did not accept this website. Your saved maps are safe and will show again once it does.</p>
             <small>For the site admin: add <code>{{ request()->getSchemeAndHttpHost() }}/*</code> to the Google Maps key's allowed websites.</small>
         </div>
         {{-- Three seconds of holding still is a long time to wonder whether
@@ -1256,7 +1255,7 @@
         extending = { id: o.id, index: i, marker, color: o.color || '#f5c518', at: Date.now() };
         marker.setIcon(pinIcon(extending.color, 1.6));
         marker.setZIndex(9999);
-        if (!quiet && window.toast) toast('Drawing from this point — tap the map to add, tap another point to close.');
+        if (!quiet && window.toast) toast('Drawing from this point. Tap the map to add, or tap another point to close.');
     }
     function cancelExtend() {
         if (!extending) return;
@@ -2189,7 +2188,7 @@
             if (say) say.textContent = 'Pinned. Drag it if it is not quite right, and Save when you are done.';
         } catch (e) {
             const say = document.getElementById('cmapErrandSay');
-            if (say) say.textContent = 'The pin is on the map, but the lot did not take it — try dragging it once more.';
+            if (say) say.textContent = 'The pin is on the map, but the lot did not save it. Try dragging it again.';
             // Same news for a host page that draws its own line: without this
             // a failed write is completely silent there.
             window.dispatchEvent(new CustomEvent('anee:lot-pinned', { detail: { ok: false } }));
@@ -2432,7 +2431,7 @@
         if (!cur) { clearSelVertex(); return; }
         const min = cur.kind === 'area' ? 3 : 2;
         if ((cur.points || []).length <= min) {
-            if (window.toast) toast('Too few points left — delete the whole shape instead.', 'error');
+            if (window.toast) toast('Too few points left. Delete the whole shape instead.', 'error');
             return;
         }
         const np = cur.points.filter((_, j) => j !== selVertex.index);
@@ -2790,7 +2789,7 @@
                     // the size handle is ever found: it is standing beside the
                     // words before anyone goes looking for it.
                     beginEdit(obj, parts);
-                    if (window.toast) toast('Label placed — drag the A beside it to size it.');
+                    if (window.toast) toast('Label placed. Drag the A beside it to change the size.');
                 }
             }
             textDraft = null;
@@ -2884,7 +2883,7 @@
                 pushHist({ type: 'swap', added: res.data.object, removed: cur });
                 await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: cur.id } }).catch(() => {});
                 dropObject(cur.id, true);
-                if (window.toast) toast('Point added — the box is now an area you can reshape.');
+                if (window.toast) toast('Point added. The box is now an area you can reshape.');
                 return;
             }
             const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: cur.id, points: ring } });
@@ -2895,7 +2894,7 @@
             }
             dropObject(cur.id);
             renderObject(res.data.object);
-            if (window.toast) toast('Point added — drag it to reshape.');
+            if (window.toast) toast('Point added. Drag it to reshape.');
         } catch (e) { if (window.toast) toast(e.message, 'error'); }
     }
     /* Where the point would land, drawn on the ground it would land on. The
@@ -3201,10 +3200,10 @@
         const m = Math.round(Number(acc) || 0);
         if (!m) { toast('Centred on you.'); return; }
         if (m > 750) {
-            toast(`Centred on you, but only to about ${(m / 1000).toFixed(1)} km — this device is guessing from the network, not GPS.`, 'error');
+            toast(`Centred on you, but only to about ${(m / 1000).toFixed(1)} km. This device is using the network, not GPS.`, 'error');
             return;
         }
-        toast(`Centred on you — accurate to about ${m} m.`);
+        toast(`Centred on you, accurate to about ${m} m.`);
     }
 
     function findMe(btn) {
@@ -3236,7 +3235,7 @@
                 // Loud, not silent. A fix with no numbers in it is a bug, and
                 // the last one hid behind a cheerful message for three rounds.
                 myFix = null;
-                if (window.toast) toast('That position came back empty — try once more.', 'error');
+                if (window.toast) toast('No position found. Try again.', 'error');
                 return;
             }
             // Draw the dot as well as move: a map that jumps somewhere with
@@ -3271,7 +3270,7 @@
                 done();
                 if (!window.toast) return;
                 // Three different problems that all used to say the same thing.
-                if (err && err.code === 1) toast('This app is not allowed to use your location — turn it on for this site in your browser settings.', 'error');
+                if (err && err.code === 1) toast('Location is off for this app. Turn it on for this site in your browser settings.', 'error');
                 else if (err && err.code === 3) toast('Still looking for a signal. Under open sky it comes faster.', 'error');
                 else toast('Could not work out where you are.', 'error');
             },
@@ -3738,9 +3737,9 @@
         saveMode = mode;
         document.getElementById('cmapSaveTitleH').textContent = { plain: 'Save map', map: 'Save map to notes', image: 'Save as image note' }[mode];
         document.getElementById('cmapSaveHint').textContent = {
-            plain: 'Keeps this map reopenable from Maps. Nothing is filed in your notes.',
-            map: 'Keeps this map reopenable from Maps, and files a picture of it in your notes.',
-            image: 'Files a picture of the map, shapes and all, in the notes. No map to reopen.',
+            plain: 'Open it again anytime from Maps. Nothing goes to your notes.',
+            map: 'Open it again from Maps. A picture of it also goes to your notes.',
+            image: 'Saves a picture of the map in your notes. It cannot be opened as a map.',
         }[mode];
         // Opened from a saved map: the common answer is "this one, changed",
         // and until now the only thing on offer was a second copy of it.
@@ -3790,7 +3789,7 @@
         if (autoEpoch !== epoch || (replace && (!target || !LOADED_SAVE || LOADED_SAVE.id !== target.id))) {
             btn.disabled = false;
             label.textContent = was;
-            if (window.toast) toast('The map on screen changed while that was saving — nothing was written. Try again now that you can see what you are saving.', 'error');
+            if (window.toast) toast('The map changed while saving, so nothing was saved. Check the map and try again.', 'error');
             return;
         }
         try {
@@ -3867,7 +3866,7 @@
             : '';
 
         if (!SAVED_MAPS.length) {
-            list.innerHTML = '<p class="cmap-saves-empty">No saved maps yet — draw one, then “Save map”.</p>';
+            list.innerHTML = '<p class="cmap-saves-empty">No saved maps yet. Draw one, then tap “Save map”.</p>';
             return;
         }
         if (!rows.length) {
@@ -4004,7 +4003,7 @@
         if (!silent) {
             const n = objIndex.size;
             const ok = window.confirmAction
-                ? await confirmAction({ title: 'Start a blank map?', message: 'Removes the ' + n + ' shape' + (n === 1 ? '' : 's') + ' on the canvas' + (SID > 0 ? ' for the whole team' : '') + '. Save the current map first if it is worth keeping.', confirmText: 'Start blank' })
+                ? await confirmAction({ title: 'Start a blank map?', message: 'Removes the ' + n + ' shape' + (n === 1 ? '' : 's') + ' on the canvas' + (SID > 0 ? ' for the whole team' : '') + '. Save the current map first if you want to keep it.', confirmText: 'Start blank' })
                 : confirm('Start a blank map? This clears the current shapes for everyone.');
             if (!ok) return;
         }
@@ -4328,7 +4327,7 @@
                         cancelAutosave();
                         if (owed) {
                             sayAutosave('failed');
-                            if (window.toast) toast('Someone opened another map — the last edits to “' + leaving + '” were not saved.', 'error');
+                            if (window.toast) toast('Someone opened another map. The last edits to “' + leaving + '” were not saved.', 'error');
                         }
                         endEdit(); dropAll();
                         histUndo.length = 0; histRedo.length = 0; syncHistBtns();
@@ -4411,7 +4410,7 @@
             loading = false;
             const t = document.querySelector('#cmapVeil .cmap-veil-txt');
             if (t) t.textContent = 'Could not load Google Maps.';
-            if (window.toast) toast('Could not load Google Maps — check the API key.', 'error');
+            if (window.toast) toast('Could not load Google Maps. Check the API key.', 'error');
         };
         document.head.appendChild(s);
     };

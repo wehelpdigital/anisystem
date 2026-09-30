@@ -43,7 +43,7 @@
     @if (! empty($aiHref) && ! \App\Support\WorkerContext::activeGrant())
         {{-- The question the tip would have you ask, written out so the
              technician opens with it already in the box. --}}
-        @php $todAsk = 'About today\'s tip: "' . $tip['text'] . '" — what should I do about this on my farm?'; @endphp
+        @php $todAsk = 'About today\'s tip: "' . $tip['text'] . '". What should I do about this on my farm?'; @endphp
         <a class="tod-ask" href="{{ $aiHref }}" data-ai-ask="{{ $todAsk }}">
             Ask {{ \App\Models\AiSetting::current()->assistantName }} about this
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>

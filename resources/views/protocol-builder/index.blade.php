@@ -113,7 +113,7 @@
         </button>
         <div class="q-body">
             <div class="q-body-in">
-                <div class="q-card"><b>Your season, written by you.</b>A protocol is the plan that you actually follow for your crop from the specific task pinned to when to apply, what to apply, why. Write it based on your experience, Anee's recommendations, or your knowledge of agronomy. You can ask Anee to review it.</div>
+                <div class="q-card"><b>Your season, written by you.</b>A protocol is your crop plan: each task, when to do it, what to apply and why. Write it from your own experience or Anee's advice, then ask Anee to review it.</div>
                 <div class="q-card" id="pbAboutCost"></div>
             </div>
         </div>
@@ -127,7 +127,7 @@
 
     <div class="pb-search hidden" id="pbSearchWrap">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-        <input type="search" id="pbSearch" class="form-input" placeholder="Find a protocol…" autocomplete="off">
+        <input type="search" id="pbSearch" class="form-input" placeholder="Find a protocol" autocomplete="off">
     </div>
 
     <div class="card !p-0 overflow-hidden">
@@ -135,7 +135,7 @@
         <div class="rx-empty hidden" id="pbEmpty">
             <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 7h6m-6 4h4"/></svg></span>
             <p class="rx-empty-t">No protocol yet</p>
-            <p class="rx-empty-p">Start one above: name it, choose the crop and how its days are counted, then add the tasks one by one.</p>
+            <p class="rx-empty-p">Tap New protocol above. Give it a name and a crop, then add tasks.</p>
         </div>
         <div class="rx-empty hidden" id="pbNone">
             <p class="rx-empty-t">Nothing matches</p>
@@ -155,14 +155,14 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
-        <p class="pp-hint mb-3">A new season built from your protocols: one lot per protocol, each from its own start date. Every task lands on the board on its computed day.</p>
+        <p class="pp-hint mb-3">This makes a new season from your protocols. Each lot runs one protocol from its own start date. Every task goes on the board on its day.</p>
         <div>
-            <label class="form-label" for="ppTitle">Name of the cropping schedule</label>
-            <input type="text" id="ppTitle" class="form-input" maxlength="255" placeholder="e.g. Wet season 2026 — Apartado">
+            <label class="form-label" for="ppTitle">Schedule name</label>
+            <input type="text" id="ppTitle" class="form-input" maxlength="255" placeholder="e.g. Wet season 2026, Apartado">
         </div>
         <div class="mt-3">
             <label class="form-label" for="ppDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="ppDesc" class="form-textarea" rows="2" maxlength="5000" placeholder="What this season is about…"></textarea>
+            <textarea id="ppDesc" class="form-textarea" rows="2" maxlength="5000" placeholder="What is this season for?"></textarea>
         </div>
         <div class="mt-4">
             <span class="form-label">Lots</span>
@@ -174,13 +174,13 @@
         <div class="mt-4">
             <label class="form-label" for="ppWorkers">Number of workers</label>
             <input type="number" id="ppWorkers" class="form-input" inputmode="numeric" min="1" max="200" step="1" value="1">
-            <p class="pp-hint mt-1">How many hands work on a day. With the first choice below, no day is given more activities than this.</p>
+            <p class="pp-hint mt-1">How many people work each day. With the first choice below, no day gets more activities than this.</p>
         </div>
         <div class="mt-4">
-            <span class="form-label">When two lots ask for the same day</span>
+            <span class="form-label">When lots share a day</span>
             <div class="dt-rows" id="ppAdjust">
-                <button type="button" class="dt-row is-on" data-pp-adjust="spread"><span class="dt-row-e">🧮</span><span class="dt-row-body"><b>Auto-adjust the conflicts</b><i>One activity per worker per day — the overflow slides to the next free day. Day zero and the transplant stay put.</i></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>
-                <button type="button" class="dt-row" data-pp-adjust="allow"><span class="dt-row-e">🗓️</span><span class="dt-row-body"><b>Several activities on a day is fine</b><i>Every task keeps the day its protocol says.</i></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>
+                <button type="button" class="dt-row is-on" data-pp-adjust="spread"><span class="dt-row-e">🧮</span><span class="dt-row-body"><b>Spread them out</b><i>One activity per worker each day. Extra ones move to the next free day. Day 0 and transplant day do not move.</i></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>
+                <button type="button" class="dt-row" data-pp-adjust="allow"><span class="dt-row-e">🗓️</span><span class="dt-row-body"><b>Allow many on one day</b><i>Every task keeps its protocol day.</i></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>
             </div>
         </div>
     </div>
@@ -246,8 +246,8 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body dt-rows">
-        <button type="button" class="dt-row" data-row-act="open"><span class="dt-row-e">📖</span><span class="dt-row-body"><b>Open</b><i>Add, change and reorder the tasks, or ask Anee.</i></span></button>
-        <button type="button" class="dt-row" data-row-act="copy"><span class="dt-row-e">📑</span><span class="dt-row-body"><b>Duplicate</b><i>A copy to change without touching this one.</i></span></button>
+        <button type="button" class="dt-row" data-row-act="open"><span class="dt-row-e">📖</span><span class="dt-row-body"><b>Open</b><i>Edit the tasks or ask Anee.</i></span></button>
+        <button type="button" class="dt-row" data-row-act="copy"><span class="dt-row-e">📑</span><span class="dt-row-body"><b>Duplicate</b><i>Make a copy you can change freely.</i></span></button>
         <button type="button" class="dt-row" data-row-act="delete"><span class="dt-row-e">🗑️</span><span class="dt-row-body"><b>Delete</b><i>Remove it from your list.</i></span></button>
     </div>
 </div>
@@ -289,9 +289,9 @@
     function paintCost() {
         const o = @json($aboutOpt);
         const cost = $id('pbAboutCost');
-        if (o.aiLocked) { cost.innerHTML = "Building and porting cost nothing. Anee's review comes with <b class=\"is-inline\">" + @json(\App\Support\Tier::planName(\App\Support\Tier::farmUnlocksAt('aiAnalyses'))) + "</b> and every plan above it."; return; }
-        if (!o.canAnalyze) { cost.innerHTML = "Building and porting cost nothing. Anee's review is not available right now."; return; }
-        cost.innerHTML = `Building and porting cost nothing. Anee's review spends <b class="is-inline">${o.quote} credits</b>, and you have ${window.creditCoin(o.unlimited ? '∞' : Number(o.balance).toLocaleString())}. Nothing is charged until you ask for one.`;
+        if (o.aiLocked) { cost.innerHTML = "Building and porting are free. Anee's review comes with <b class=\"is-inline\">" + @json(\App\Support\Tier::planName(\App\Support\Tier::farmUnlocksAt('aiAnalyses'))) + "</b> and every plan above it."; return; }
+        if (!o.canAnalyze) { cost.innerHTML = "Building and porting are free. Anee's review is not available right now."; return; }
+        cost.innerHTML = `Building and porting are free. A review by Anee costs <b class="is-inline">${o.quote} credits</b>. You have ${window.creditCoin(o.unlimited ? '∞' : Number(o.balance).toLocaleString())}. Nothing is charged until you ask for one.`;
     }
 
     function paint() {
@@ -311,7 +311,7 @@
                         <span class="pb-tag">Updated ${esc(r.updated || '')}</span>
                     </span>
                 </span>
-                <span class="pb-row-more" data-more="${r.id}" role="button" tabindex="0" aria-label="More">
+                <span class="pb-row-more" data-more="${r.id}" role="button" tabindex="0" aria-label="More options">
                     <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
                 </span>
             </div>`).join('');
@@ -362,7 +362,7 @@
             return;
         }
         if (act === 'delete') {
-            const ok = await window.confirmAction({ title: 'Delete this protocol?', message: `"${r ? r.title : 'This protocol'}" and its tasks will be removed from your list.`, confirmText: 'Delete', danger: true });
+            const ok = await window.confirmAction({ title: 'Delete this protocol?', message: `"${r ? r.title : 'This protocol'}" and its tasks will be removed.`, confirmText: 'Delete', danger: true });
             if (!ok) return;
             try {
                 const res = await api(U.open(MENU_ID) + '/delete', { method: 'POST', body: {} });
@@ -395,9 +395,9 @@
         const p = protoOf(l.protocolId); if (!p) return;
         PICK_FOR = l;
         $id('ppVerTitle').textContent = 'Which version?';
-        $id('ppVerSay').textContent = `"${p.title}" has ${versionsOf(p).length} versions. Choose the one this lot runs — its tasks and materials go to the board, its rules and files to the season's Notes.`;
+        $id('ppVerSay').textContent = `"${p.title}" has ${versionsOf(p).length} versions. Pick one for this lot. Its tasks and materials go to the board. Its rules and files go to the season's Notes.`;
         $id('ppVerList').innerHTML = versionsOf(p).map((v) => `
-            <button type="button" class="dt-row${l.versionId === v.id ? ' is-on' : ''}" data-pp-pick-ver="${v.id}"><span class="dt-row-e">🗂️</span><span class="dt-row-body"><b>${esc(v.name)}</b><i>${v.count} ${v.count === 1 ? 'task' : 'tasks'} · ${v.materials} ${v.materials === 1 ? 'material' : 'materials'}${v.id === p.versionId ? ' · the one in use' : ''}</i></span>${TICK}</button>`).join('');
+            <button type="button" class="dt-row${l.versionId === v.id ? ' is-on' : ''}" data-pp-pick-ver="${v.id}"><span class="dt-row-e">🗂️</span><span class="dt-row-body"><b>${esc(v.name)}</b><i>${v.count} ${v.count === 1 ? 'task' : 'tasks'} · ${v.materials} ${v.materials === 1 ? 'material' : 'materials'}${v.id === p.versionId ? ' · in use' : ''}</i></span>${TICK}</button>`).join('');
         openSheet('ppVerSheet');
     }
     /* The trees' age, typed as years + months, stamped as the date they were
@@ -431,7 +431,7 @@
                 <div class="pp-lot-h"><b>Lot ${i + 1}</b>${PLOTS.length > 1 ? `<button type="button" class="pp-x" data-pp-x aria-label="Remove this lot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>` : ''}</div>
                 <div>
                     <span class="form-label">From</span>
-                    <button type="button" class="crop-tag" data-pp-src><span class="crop-tag-e">${l.sourceLotId ? '🌾' : '✏️'}</span><span class="crop-tag-t${l.sourceLotId ? '' : ' is-none'}">${l.sourceLotId ? esc(l.sourceSay) : 'A new lot, typed here'}</span><svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+                    <button type="button" class="crop-tag" data-pp-src><span class="crop-tag-e">${l.sourceLotId ? '🌾' : '✏️'}</span><span class="crop-tag-t${l.sourceLotId ? '' : ' is-none'}">${l.sourceLotId ? esc(l.sourceSay) : 'A new lot'}</span><svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
                 </div>
                 <div>
                     <label class="form-label" for="ppName_${l.key}">Lot name</label>
@@ -445,7 +445,7 @@
                             ${[['hectare', 'hectare'], ['sqm', 'sq. m'], ['acre', 'acre']].map(([v, t]) => `<option value="${v}"${(l.unit || 'hectare') === v ? ' selected' : ''}>${t}</option>`).join('')}
                         </select>
                     </div>
-                    <p class="pp-hint mt-1">Left empty, the new lot is 1 hectare; the Lots module can change it later.</p>
+                    <p class="pp-hint mt-1">Leave empty for 1 hectare. You can change it later in Lots.</p>
                 </div>`}
                 <div>
                     <span class="form-label">Protocol</span>
@@ -459,23 +459,23 @@
                 <div>
                     <span class="form-label">${dat ? 'Sowing date (DAS 0)' : (p && p.dayType === 'DAP' ? 'Planting date (DAP 0)' : (tree ? 'Program start (DOS 0)' : 'Start date (day 0)'))}</span>
                     ${DATE_TAG('ppStart_' + l.key, 'Pick the start date')}
-                    ${tree ? '<p class="pp-hint mt-1">The day the program starts on the trees. Every task counts its days from here.</p>' : ''}
+                    ${tree ? '<p class="pp-hint mt-1">The day the tree program starts. All task days count from here.</p>' : ''}
                 </div>
                 ${tree ? (fromLot ? `<div>
-                    <span class="form-label">The trees' age</span>
-                    <p class="pp-hint">${esc(sayAge(l.sourcePlanted))} old — taken from the lot (planted ${esc(l.sourcePlanted)}).</p>
+                    <span class="form-label">Tree age</span>
+                    <p class="pp-hint">${esc(sayAge(l.sourcePlanted))} old, from the lot (planted ${esc(l.sourcePlanted)}).</p>
                 </div>` : `<div>
                     <span class="form-label">How old are the trees?</span>
                     <div class="grid grid-cols-2 gap-2">
                         <label class="block"><span class="pp-hint">Years</span><input type="number" class="form-input" inputmode="numeric" min="0" max="150" step="1" placeholder="e.g. 6" value="${esc(l.treeYears)}" data-pp-years></label>
                         <label class="block"><span class="pp-hint">Months</span><input type="number" class="form-input" inputmode="numeric" min="0" max="11" step="1" placeholder="0" value="${esc(l.treeMonths)}" data-pp-months></label>
                     </div>
-                    <p class="pp-hint mt-1">The lot reads its growth stages by the trees' age, as the Lots module does.</p>
+                    <p class="pp-hint mt-1">Growth stages are based on the trees' age.</p>
                 </div>`) : ''}
                 ${dat ? `<div>
                     <span class="form-label">Transplant date (DAT 0)</span>
                     ${DATE_TAG('ppTrans_' + l.key, 'Pick the transplant date')}
-                    <p class="pp-hint mt-1">The seedbed tasks count from the sowing; everything from the transplant counts from here.</p>
+                    <p class="pp-hint mt-1">Seedbed tasks count from sowing. Tasks after transplant count from this date.</p>
                 </div>` : ''}
             </div>`;
     }
@@ -512,7 +512,7 @@
             PICK_FOR = l;
             $id('ppProtoList').innerHTML = ROWS.length ? ROWS.map((r) => `
                 <button type="button" class="dt-row${l.protocolId === r.id ? ' is-on' : ''}" data-pp-pick-proto="${r.id}"><span class="dt-row-e">${esc(r.cropIcon || '📋')}</span><span class="dt-row-body"><b>${esc(r.title)}</b><i>${esc(r.cropLabel || 'No crop')} · ${esc((DAY_TYPES[r.dayType] || {}).label || r.dayType)} · ${r.count} ${r.count === 1 ? 'task' : 'tasks'}${versionsOf(r).length > 1 ? ` · ${versionsOf(r).length} versions` : ''}</i></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`).join('')
-                : '<p class="text-sm text-gray-400 py-4 text-center">No protocol yet — write one first.</p>';
+                : '<p class="text-sm text-gray-400 py-4 text-center">No protocol yet. Make one first.</p>';
             openSheet('ppProtoSheet');
             return;
         }
@@ -523,7 +523,7 @@
             openSheet('ppLotSheet');
             if (!MYLOTS) { try { MYLOTS = (await api(LOTS_URL, { method: 'GET' })).data.lots || []; } catch (err) { MYLOTS = []; toast(err.message, 'error'); } }
             $id('ppLotList').innerHTML = `
-                <button type="button" class="dt-row${l.sourceLotId ? '' : ' is-on'}" data-pp-pick-lot="0"><span class="dt-row-e">✏️</span><span class="dt-row-body"><b>A new lot, typed here</b><i>Name it above; 1 hectare unless you change it later in the Lots module.</i></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`
+                <button type="button" class="dt-row${l.sourceLotId ? '' : ' is-on'}" data-pp-pick-lot="0"><span class="dt-row-e">✏️</span><span class="dt-row-body"><b>A new lot</b><i>Type its name and size in the form. It starts at 1 hectare if left empty.</i></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`
                 + MYLOTS.map((m) => `
                 <button type="button" class="dt-row${l.sourceLotId === m.id ? ' is-on' : ''}" data-pp-pick-lot="${m.id}"><span class="dt-row-e">${esc(m.cropIcon)}</span><span class="dt-row-body"><b>${esc(m.name)}</b><i>${esc(m.schedule)} · ${esc(m.cropLabel || 'No crop')}${m.variety ? ' · ' + esc(m.variety) : ''} · ${m.size} ${esc(m.unit)}</i></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`).join('');
         }
@@ -558,23 +558,23 @@
     $id('ppLotAdd').addEventListener('click', () => { PLOTS.push(blankLot()); paintLots(); $id('ppLots').lastElementChild?.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); });
     $id('ppAdjust').addEventListener('click', (e) => { const r = e.target.closest('[data-pp-adjust]'); if (!r) return; $id('ppAdjust').querySelectorAll('[data-pp-adjust]').forEach((x) => x.classList.toggle('is-on', x === r)); });
     $id('pbPortOpen').addEventListener('click', () => {
-        if (!ROWS.length) { toast('Write a protocol first — the port builds a season from one.', 'error'); return; }
+        if (!ROWS.length) { toast('Make a protocol first. The season is built from it.', 'error'); return; }
         if (!PLOTS.length) PLOTS = [blankLot()];
         paintLots();
         openSheet('ppSheet');
     });
     $id('ppGo').addEventListener('click', async () => {
         const title = $id('ppTitle').value.trim();
-        if (!title) { toast('Name the cropping schedule.', 'error'); $id('ppTitle').focus(); return; }
+        if (!title) { toast('Give the schedule a name.', 'error'); $id('ppTitle').focus(); return; }
         for (const [i, l] of PLOTS.entries()) {
-            if (!l.name.trim()) { toast(`Name lot ${i + 1}.`, 'error'); $id('ppName_' + l.key)?.focus(); return; }
-            if (!l.protocolId) { toast(`Choose a protocol for lot ${i + 1}.`, 'error'); return; }
-            if (versionsOf(protoOf(l.protocolId)).length > 1 && !versionOf(l)) { toast(`Choose which version lot ${i + 1} runs.`, 'error'); openVersionPick(l); return; }
+            if (!l.name.trim()) { toast(`Give lot ${i + 1} a name.`, 'error'); $id('ppName_' + l.key)?.focus(); return; }
+            if (!l.protocolId) { toast(`Pick a protocol for lot ${i + 1}.`, 'error'); return; }
+            if (versionsOf(protoOf(l.protocolId)).length > 1 && !versionOf(l)) { toast(`Pick a version for lot ${i + 1}.`, 'error'); openVersionPick(l); return; }
             if (!l.start) { toast(`Pick the start date for lot ${i + 1}.`, 'error'); return; }
             if (isDat(l) && !l.transplant) { toast(`Pick the transplant date for lot ${i + 1}.`, 'error'); return; }
-            if (isTree(l) && !treePlantedOf(l)) { toast(`Say how old the trees are on lot ${i + 1}.`, 'error'); return; }
+            if (isTree(l) && !treePlantedOf(l)) { toast(`Enter the tree age for lot ${i + 1}.`, 'error'); return; }
         }
-        const btn = $id('ppGo'); btn.disabled = true; const was = btn.textContent; btn.textContent = 'Porting… this takes a moment';
+        const btn = $id('ppGo'); btn.disabled = true; const was = btn.textContent; btn.textContent = 'Porting… one moment';
         try {
             const res = await api(PORT_URL, { method: 'POST', body: {
                 title, description: $id('ppDesc').value.trim(),

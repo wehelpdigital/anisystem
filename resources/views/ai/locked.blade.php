@@ -47,7 +47,7 @@
             <p class="text-sm text-gray-500 mt-2">
                 The AI Technician is not part of the plan
                 <strong>{{ optional($__lockedGrant->boss)->full_name ?: 'this farm' }}</strong> is on.
-                Only the farm owner can change that — mention it to them if you need it for the work.
+                Only the farm owner can change that. Ask them if you need it for your work.
             </p>
             <div class="mt-6 flex flex-col sm:flex-row gap-2 justify-center">
                 <a href="{{ route('app.dashboard') }}" class="btn btn-white">Back to dashboard</a>
@@ -64,10 +64,10 @@
             <p class="text-sm text-gray-500 mt-2">
                 Your <strong>{{ config('tiers.' . $tier . '.name') ?? ucfirst($tier) }}</strong> plan does not include Anee.
                 @if ($__rung === 'libreAnee')
-                    <strong>{{ $__rungName }}</strong> is your plan exactly as it is, plus the whole of Anee — the chat, the analyses,
-                    Realign and the credit shop{{ $__rungPrice !== null ? ' — for ' . \App\Support\Region::priceTag($__rungPrice) . ' a month' : '' }}.
+                    <strong>{{ $__rungName }}</strong> is your plan as it is, plus all of Anee: the chat, the analyses,
+                    Realign and the credit shop{{ $__rungPrice !== null ? ', for ' . \App\Support\Region::priceTag($__rungPrice) . ' a month' : '' }}.
                 @else
-                    <strong>{{ $__rungName }}</strong> brings the whole of Anee — the chat, the analyses, Realign and the credit shop{{ $__rungPrice !== null ? ' — for ' . \App\Support\Region::priceTag($__rungPrice) . ' a month' : '' }}.
+                    <strong>{{ $__rungName }}</strong> brings all of Anee: the chat, the analyses, Realign and the credit shop{{ $__rungPrice !== null ? ', for ' . \App\Support\Region::priceTag($__rungPrice) . ' a month' : '' }}.
                 @endif
                 Every plan above it has Anee too.
             </p>

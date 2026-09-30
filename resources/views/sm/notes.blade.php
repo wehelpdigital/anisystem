@@ -15,7 +15,7 @@
     $mayNote = \App\Support\WorkerContext::canWriteModule('notes');
 @endphp
 
-@section('title', 'Notes — ' . $schedule->title)
+@section('title', 'Notes: ' . $schedule->title)
 @section('page-title', 'Notes')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'notes')
@@ -194,13 +194,13 @@
 
 <div class="card p-6 text-center hidden" id="notesNoMatch">
     <p class="font-semibold text-gray-700">No note matches that</p>
-    <p class="text-sm text-gray-500 mt-1">Try a shorter word — the search looks at titles and note text.</p>
+    <p class="text-sm text-gray-500 mt-1">Try a shorter word. Search looks at titles and note text.</p>
 </div>
 
 <div class="card p-8 text-center {{ $notes->isEmpty() ? '' : 'hidden' }}" id="notesEmpty">
     <svg class="w-12 h-12 mx-auto text-gray-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
     <p class="font-semibold text-gray-700 mt-3">No notes yet</p>
-    <p class="text-sm text-gray-500 mt-1">Jot down observations, reminders or anything worth remembering — attach a photo too.</p>
+    <p class="text-sm text-gray-500 mt-1">Write down what you see, reminders, or anything to remember. You can add photos too.</p>
     @if ($mayNote)
         <button type="button" class="btn btn-primary mt-4" data-note-add>New note</button>
     @endif
@@ -219,7 +219,7 @@
         <input type="hidden" id="noteImagePath">
         <div class="mb-4">
             <label class="form-label" for="noteTitle">Title <span class="text-red-500">*</span></label>
-            <input type="text" id="noteTitle" class="form-input" maxlength="191" placeholder="e.g. Pest scouting — west corner">
+            <input type="text" id="noteTitle" class="form-input" maxlength="191" placeholder="e.g. Pest check, west corner">
         </div>
         <div class="mb-4">
             <div class="flex items-center justify-between gap-2">
@@ -284,7 +284,7 @@
                 <span class="js-video-chip"></span>
             </div>
             <div class="tp-mount mt-3" id="noteTagsMount" data-tags data-tags-kind="note"></div>
-            <p class="form-hint">Photos and videos are attached to the note, not placed inside the text — they are compressed on the way up, and there is no limit on how many. Drawings are their own thing: make them in the Draw module and they arrive here as an attachment.</p>
+            <p class="form-hint">Photos and videos go with the note, not inside the text. Add as many as you like. For a drawing, use Draw and it arrives here.</p>
         </div>
     </div>
     <div class="sheet-footer">
@@ -352,7 +352,7 @@ const __init = () => {
                 success: true,
                 queued: true,
                 data: optimistic,
-                message: 'Saved on this phone - it will sync when you are back.',
+                message: 'Saved on this phone. It will sync when you are back online.',
             };
         }
     }
@@ -723,7 +723,7 @@ const __init = () => {
                 setTimeout(() => row.remove(), 700);
                 resolve(json);
             });
-            xhr.addEventListener('error', () => fail('Upload failed — check your connection.'));
+            xhr.addEventListener('error', () => fail('Upload failed. Check your connection.'));
             xhr.addEventListener('abort', () => fail('Upload cancelled.'));
             xhr.send(form);
         }).finally(() => { uploadsInFlight--; });
@@ -828,7 +828,7 @@ const __init = () => {
         if (recorded && window.smAskRecording) {
             window.smAskRecording({
                 sizeMB: file.size / 1048576,
-                hint: 'Attached to this note — give it a name the Notes list can show.',
+                hint: 'Attached to this note. Give it a name.',
                 albumsUrl: URLS.albums,
                 scheduleId: SCHEDULE_ID,
                 onSave: ({ title, description, albumId }) =>
@@ -893,7 +893,7 @@ const __init = () => {
         // Saving mid-upload filed the note without its video — the clip had
         // not joined the media list yet, and nobody was told.
         if (uploadsInFlight > 0) {
-            toast('Still uploading an attachment — one moment, then save.', 'error');
+            toast('Still uploading. Wait a moment, then save.', 'error');
             return;
         }
         const id = fld('noteId').value;
@@ -947,7 +947,7 @@ const __init = () => {
              * sync reloads. */
             if (res.queued && !id) {
                 closeSheet('noteSheet');
-                toast('The new note is kept on this phone - it appears once you are back.');
+                toast('Note saved on this phone. It shows here once you are back online.');
                 return;
             }
             const n = { id: res.data.id, title: res.data.title, body: res.data.body, imagePath: res.data.imagePath, imageUrl: res.data.imageUrl, media: res.data.media || [] };

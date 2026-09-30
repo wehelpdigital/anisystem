@@ -154,13 +154,13 @@
             <small>
                 @if ($isPlan && $item)
                     @if ($rankNew > $rankNow && $current !== 'libre')
-                        Starts the moment it is approved: an upgrade from your {{ config('tiers.' . $current . '.name') }} plan.
+                        An upgrade from your {{ config('tiers.' . $current . '.name') }} plan. Starts once approved.
                     @elseif ($rankNew === $rankNow)
                         Adds {{ $item['period'] === 'year' ? 'a year' : '30 days' }} after your current plan ends.
                     @elseif ($rankNew < $rankNow)
                         Starts when your current {{ config('tiers.' . $current . '.name') }} plan ends.
                     @else
-                        Starts the moment it is approved.
+                        Starts once approved.
                     @endif
                     @if (($item['credits'] ?? 0) > 0) Comes with {{ number_format($item['credits']) }} AI credits. @endif
                 @elseif ($item)
@@ -175,7 +175,7 @@
     <section class="co-step" data-step="1">
         <div class="card p-5 mt-4">
             <h2 class="co-h">How will you pay?</h2>
-            <p class="co-sub">{{ $isPh ? 'We do not have card payments yet. Pay by GCash or a bank transfer, then send us the receipt.' : 'Pay by PayPal, then send us the receipt.' }}</p>
+            <p class="co-sub">{{ $isPh ? 'No card payments yet. Pay by GCash or bank transfer, then send us the receipt.' : 'Pay by PayPal, then send us the receipt.' }}</p>
             <div class="co-methods" role="radiogroup" aria-label="How you will pay">
                 @foreach ($methods as $key => $m)
                     <button type="button" class="co-method" role="radio" aria-checked="false" data-method="{{ $key }}" @disabled(! $m['ready'])>
@@ -186,10 +186,10 @@
                                 @if (! $m['ready'])
                                     Not available yet. Please use {{ $isPh ? 'GCash' : 'another way' }} for now.
                                 @elseif ($key === 'gcash')
-                                    @if ($aiPlan) Checked by Anee in about a minute, so your plan can start right away. @else Checked by a person, usually within {{ $pay['reviewHours'] }} hours. @endif
+                                    @if ($aiPlan) Anee checks it in about a minute, so your plan starts right away. @else A person checks it, usually within {{ $pay['reviewHours'] }} hours. @endif
                                     + {{ $money($gcashFee) }} processing fee.
                                 @else
-                                    Checked by a person, usually within {{ $pay['reviewHours'] }} hours.
+                                    A person checks it, usually within {{ $pay['reviewHours'] }} hours.
                                 @endif
                             </small>
                         </span>
@@ -213,13 +213,13 @@
         <div class="card p-5 mt-4">
             <h2 class="co-h" id="coPayTitle">Send your payment</h2>
             <div class="co-amount">
-                <p class="n" id="coPayAmount">—</p>
+                <p class="n" id="coPayAmount"></p>
                 <button type="button" class="co-copy mt-2" data-copy-from="coPayAmountRaw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>Copy amount</button>
                 <span id="coPayAmountRaw" hidden></span>
             </div>
             <div class="co-warn" role="note">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
-                <span><b>Send exactly this amount.</b> A wrong payment is not refunded, so check the amount and the number twice before you send.</span>
+                <span><b>Send exactly this amount.</b> Wrong payments are not refunded. Check the amount and number twice before you send.</span>
             </div>
 
             {{-- GCash --}}
@@ -227,17 +227,17 @@
                 <div class="co-acct">
                     <div class="co-acct-row"><div class="min-w-0"><small>GCash number</small><b>{{ \App\Support\ManualPay::spacedNumber() }}</b></div>
                         <button type="button" class="co-copy" data-copy="{{ preg_replace('/\D/', '', $pay['gcashNumber']) }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>Copy</button></div>
-                    <div class="co-acct-row"><div class="min-w-0"><small>Account name (as GCash shows it)</small><b>{{ $pay['gcashName'] }}</b></div></div>
+                    <div class="co-acct-row"><div class="min-w-0"><small>Account name in GCash</small><b>{{ $pay['gcashName'] }}</b></div></div>
                     <div class="co-qr">
                         <small class="text-xs font-extrabold uppercase tracking-wider text-gray-400">Or scan this QR</small>
                         <img src="{{ $qrUrl }}" alt="GCash QR code for anee.io" id="coQr" width="482" height="641" loading="lazy">
-                        <a href="{{ $qrUrl }}" download="anee-gcash-qr.png" class="co-copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>Save the QR</a>
+                        <a href="{{ $qrUrl }}" download="anee-gcash-qr.png" class="co-copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>Save QR</a>
                     </div>
                 </div>
                 <ol class="co-how">
                     <li><span>Open GCash and tap <b>Send</b> › <b>Express Send</b>, or <b>QR</b> › <b>Upload QR</b> with the saved QR.</span></li>
-                    <li><span>Send exactly <b data-total-text>—</b> to <b>{{ \App\Support\ManualPay::spacedNumber() }}</b>.</span></li>
-                    <li><span>Keep the receipt screen: take a screenshot of it. That is what we check.</span></li>
+                    <li><span>Send exactly <b data-total-text></b> to <b>{{ \App\Support\ManualPay::spacedNumber() }}</b>.</span></li>
+                    <li><span>Screenshot the receipt screen. That is what we check.</span></li>
                 </ol>
             </div>
 
@@ -252,7 +252,7 @@
                 </div>
                 @if (trim($pay['bankNote']) !== '')<p class="co-sub mt-3">{{ $pay['bankNote'] }}</p>@endif
                 <ol class="co-how">
-                    <li><span>Transfer exactly <b data-total-text>—</b> to the account above, from your bank app or at the branch.</span></li>
+                    <li><span>Transfer exactly <b data-total-text></b> to the account above, from your bank app or at the branch.</span></li>
                     <li><span>Keep the receipt or the confirmation screen. That is what we check.</span></li>
                 </ol>
             </div>
@@ -265,14 +265,14 @@
                     @if (filled($paypal['link'] ?? null))<div class="co-acct-row"><div class="min-w-0"><small>Pay link</small><b><a href="{{ $paypal['link'] }}" target="_blank" rel="noopener" class="text-brand-700 underline">{{ $paypal['link'] }}</a></b></div></div>@endif
                 </div>
                 <ol class="co-how">
-                    <li><span>Send exactly <b data-total-text>—</b> by PayPal ("Friends and family" if you can).</span></li>
+                    <li><span>Send exactly <b data-total-text></b> by PayPal ("Friends and family" if you can).</span></li>
                     <li><span>Keep the receipt or the confirmation email. That is what we check.</span></li>
                 </ol>
             </div>
 
-            <p class="co-sub mt-4">Order <b id="coPayNumber">—</b>. You can add it as the message.</p>
+            <p class="co-sub mt-4">Order <b id="coPayNumber"></b>. You can add it as the message.</p>
             <div class="co-actions">
-                <button type="button" class="btn btn-primary btn-lg" data-go="3">I've sent it — next step</button>
+                <button type="button" class="btn btn-primary btn-lg" data-go="3">I have sent it</button>
                 <button type="button" class="btn btn-white" id="coChange">Change how I pay</button>
             </div>
         </div>
@@ -282,7 +282,7 @@
     <section class="co-step" data-step="3">
         <form class="card p-5 mt-4" id="coProof" novalidate>
             <h2 class="co-h">Show us the payment</h2>
-            <p class="co-sub">Send one of these. {{ $aiPlan ? 'A screenshot of the GCash receipt is fastest: Anee checks it in about a minute.' : 'A person checks it, usually within ' . $pay['reviewHours'] . ' hours.' }}</p>
+            <p class="co-sub">Send one of these. {{ $aiPlan ? 'A GCash receipt screenshot is fastest. Anee checks it in about a minute.' : 'A person checks it, usually within ' . $pay['reviewHours'] . ' hours.' }}</p>
             <div class="co-seg" role="tablist">
                 <button type="button" class="is-on" data-proof="image" role="tab" aria-selected="true">Screenshot</button>
                 <button type="button" data-proof="pdf" role="tab" aria-selected="false">PDF receipt</button>
@@ -299,7 +299,7 @@
                 <div class="co-prev" id="coPrev">
                     <img id="coPrevImg" alt="Your receipt" hidden>
                     <div class="pdf" id="coPrevPdf" hidden><span>PDF</span><b id="coPrevName"></b></div>
-                    <button type="button" class="x" id="coPrevX" aria-label="Remove the file"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button>
+                    <button type="button" class="x" id="coPrevX" aria-label="Remove file"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button>
                 </div>
             </div>
             <div class="co-field" data-proof-pane="ref">
@@ -308,7 +308,7 @@
             </div>
             <div class="co-hint" id="coRefOnlyHint" hidden>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span>With only the number, a person matches it by hand, usually within {{ $pay['reviewHours'] }} hours. A screenshot is faster.</span>
+                <span>With just the number, a person checks it by hand, usually within {{ $pay['reviewHours'] }} hours. A screenshot is faster.</span>
             </div>
             <div class="co-field">
                 <label for="coNote">A note for us <span class="font-medium text-gray-400">(optional)</span></label>
@@ -488,7 +488,7 @@
         const f = proofKind === 'ref' ? null : file.files[0];
         const ref = $('#coRef').value.trim();
         if (!f && !ref) {
-            window.toast?.(proofKind === 'ref' ? 'Type the reference number.' : 'Choose the receipt first, or send the reference number instead.', 'error');
+            window.toast?.(proofKind === 'ref' ? 'Type the reference number.' : 'Pick the receipt first, or send the reference number.', 'error');
             return;
         }
         if (order?.method === 'gcash' && proofKind === 'ref' && ref.replace(/\D/g, '').length !== 13) {
@@ -506,7 +506,7 @@
         btn.textContent = 'Sending…';
         if (willCheck && window.aneeWait) {
             window.aneeWait.show({ title: 'Anee is checking your receipt', lines: ['Reading the receipt…', 'Matching the amount…', 'Checking the reference number…', 'Almost there…'], sub: 'This takes about a minute.',
-                stay: 'Please keep this page open. If you leave, your payment is still safe: a person will check it instead.' });
+                stay: 'Please keep this page open. If you leave, your payment is safe and a person will check it.' });
         }
         try {
             const res = await window.api(order.urls.proof, { method: 'POST', body: fd });
@@ -514,7 +514,7 @@
             if (willCheck && window.aneeWait) {
                 await window.aneeWait.done(order.status === 'approved'
                     ? { title: 'Payment confirmed', line: 'Your plan is ready.' }
-                    : { title: 'Received', line: 'A person will take it from here.' });
+                    : { title: 'Received', line: 'A person will check it.' });
             }
             paintOutcome();
             show(4);
@@ -545,28 +545,28 @@
         if (o.status === 'approved') {
             const plan = o.kind === 'plan';
             html = `<div class="co-badge ok">${ICON.ok}</div>
-                <h2>${plan ? (o.queued ? 'Approved — your plan is lined up' : esc(o.itemName) + ' is active') : esc(o.credits.toLocaleString()) + ' credits added'}</h2>
-                <p>${plan ? (o.queued ? 'It starts ' + esc(o.startsAt) + ', right after your current plan ends.' : 'Everything in your plan is open now, until ' + esc(o.expiresAt) + '.') : 'They are in your account now and never expire.'}
+                <h2>${plan ? (o.queued ? 'Approved. Your plan is next in line' : esc(o.itemName) + ' is active') : esc(o.credits.toLocaleString()) + ' credits added'}</h2>
+                <p>${plan ? (o.queued ? 'It starts ' + esc(o.startsAt) + ', right after your current plan ends.' : 'Your plan is open now until ' + esc(o.expiresAt) + '.') : 'They are in your account now and never expire.'}
                 ${o.decidedByAi ? ' Anee checked your receipt.' : ''}</p>
                 ${facts(base.concat(plan ? [['Active until', o.expiresAt]] : []))}
                 <div class="co-actions"><a class="btn btn-primary btn-lg" href="${plan ? LINKS.farm : LINKS.credits}">${plan ? 'Open my farm' : 'See my credits'}</a></div>`;
         } else if (o.status === 'review') {
             html = `<div class="co-badge wait">${ICON.wait}</div>
                 <h2>We are checking your payment</h2>
-                <p>A person is looking at it now, usually within {{ $pay['reviewHours'] }} hours. We will email you and ring the bell the moment it is approved, and it switches on by itself.</p>
+                <p>A person checks it, usually within {{ $pay['reviewHours'] }} hours. We will email and notify you once it is approved. It turns on by itself.</p>
                 ${facts(base.concat([['Sent', o.submittedAt]]))}
                 <div class="co-actions"><a class="btn btn-white btn-lg" href="${o.kind === 'plan' ? LINKS.plans : LINKS.credits}">Done</a></div>`;
             startPoll();
         } else if (o.status === 'rejected' || o.status === 'revoked') {
             html = `<div class="co-badge no">${ICON.no}</div>
-                <h2>${o.status === 'revoked' ? 'This purchase was revoked' : 'We could not verify this payment'}</h2>
-                <p>${o.reason ? esc(o.reason) + ' ' : ''}If you did pay, write to <a class="text-brand-700 underline" href="mailto:support@anee.io">support@anee.io</a> with your receipt and a person will sort it out with you.</p>
+                <h2>${o.status === 'revoked' ? 'This purchase was revoked' : 'We could not confirm this payment'}</h2>
+                <p>${o.reason ? esc(o.reason) + ' ' : ''}If you paid, email <a class="text-brand-700 underline" href="mailto:support@anee.io">support@anee.io</a> with your receipt. A person will help you.</p>
                 ${facts(base)}
                 <div class="co-actions"><a class="btn btn-primary btn-lg" href="${LINKS.again}">Try again</a></div>`;
         } else {
             html = `<div class="co-badge no">${ICON.no}</div>
                 <h2>This order was not paid</h2>
-                <p>It was let go before any payment came in. Start again whenever you are ready.</p>
+                <p>It closed before any payment came in. Start again when you are ready.</p>
                 <div class="co-actions"><a class="btn btn-primary btn-lg" href="${LINKS.again}">Start again</a></div>`;
         }
         box.innerHTML = html;

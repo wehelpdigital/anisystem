@@ -264,8 +264,8 @@
         const cap = kind === 'video' ? MAX_CLIPS : MAX_SHOTS;
         if (countOf(form, kind) >= cap) {
             window.toast?.(kind === 'video'
-                ? 'Three clips is the most one answer carries.'
-                : 'That is eight pictures — the most a comment carries.', 'error');
+                ? 'You can add up to 3 clips.'
+                : 'You can add up to 8 photos.', 'error');
             return false;
         }
         if (shot.path && form.__shots.some((s) => s.path === shot.path)) return false;   // twice is once
@@ -323,9 +323,9 @@
     function videoMenu(form) {
         const already = countOf(form, 'video');
         const rows = [['vupload', already ? 'Add another clip' : 'Upload from phone',
-                       already ? (already + ' attached \u00b7 pick one or more') : 'One clip or several at once']];
+                       already ? (already + ' attached \u00b7 pick more') : 'Pick one or more clips']];
         if (CAN_GALLERY) rows.push(['vseason', already ? 'Add more from my gallery' : 'From my gallery',
-                                    'Clips your seasons already keep']);
+                                    'Clips saved in your seasons']);
         return buildMenu(form, rows, VID_ICON, '.js-comment-video');
     }
 
@@ -396,12 +396,12 @@
          * than leave it to be discovered. */
         const already = (window.plazaCommentShots ? window.plazaCommentShots(form).length : 0);
         const rows = [
-            ['camera', already ? 'Take another photo' : 'Take a photo', 'Use the camera now'],
+            ['camera', already ? 'Take another photo' : 'Take a photo', 'Use your camera'],
             ['upload', already ? 'Add more from phone' : 'Upload from phone',
-             already ? (already + ' attached · pick one or several more') : 'One picture or several at once'],
+             already ? (already + ' attached · pick more') : 'Pick one or more photos'],
         ];
         if (CAN_GALLERY) rows.push(['season', already ? 'Add more from my gallery' : 'From my gallery',
-                                    'Photos your seasons already keep']);
+                                    'Photos saved in your seasons']);
 
         return buildMenu(form, rows, SRC_ICON, '.js-comment-photo');
     }
@@ -518,7 +518,7 @@
 
     function pickExisting(form) {
         if (typeof window.smPickMedia !== 'function') {
-            window.toast?.('The picker is not available on this page.', 'error');
+            window.toast?.('The gallery cannot open on this page.', 'error');
             return;
         }
         const tray = trayOf(form);
@@ -579,7 +579,7 @@
      * the answer points at the clip where it already lies. */
     function pickExistingVideo(form) {
         if (typeof window.smPickMedia !== 'function') {
-            window.toast?.('The picker is not available on this page.', 'error');
+            window.toast?.('The gallery cannot open on this page.', 'error');
             return;
         }
         const tray = trayOf(form);
@@ -587,7 +587,7 @@
         window.smPickMedia({
             allSchedules: true,
             kinds: 'video',
-            title: 'A clip from my gallery',
+            title: 'Videos from my gallery',
             // Tap to collect, one button to bring them all — the same mode the
             // pictures use. A box with no tray still takes one.
             multiple: !!tray,

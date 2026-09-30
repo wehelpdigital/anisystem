@@ -550,13 +550,13 @@
             </div>
             <div class="pb-head-acts">
                 <button type="button" class="pb-anee" id="pbAneeBtn" title="Analyze by Anee" aria-label="Analyze by Anee"
-                    @if ($options['aiLocked']) data-tier-lock="{{ \App\Support\Tier::farmUnlocksAt('aiAnalyses') }}" data-lock-say="Anee's review of your protocol comes with {{ \App\Support\Tier::withPlan(\App\Support\Tier::farmUnlocksAt('aiAnalyses')) }} — she reads every task against the crop's stages and says what is strong, what is missing and what could go wrong." @endif>
+                    @if ($options['aiLocked']) data-tier-lock="{{ \App\Support\Tier::farmUnlocksAt('aiAnalyses') }}" data-lock-say="Anee's review comes with {{ \App\Support\Tier::withPlan(\App\Support\Tier::farmUnlocksAt('aiAnalyses')) }}. She checks every task against the crop's stages and says what is good, what is missing and what could go wrong." @endif>
                     <img src="{{ $options['aneeFace'] }}" alt=""@if ($options['aiLocked']) class="tl-dim"@endif> <span @if ($options['aiLocked']) class="tl-dim" @endif>Analyze by Anee</span>
                     {{-- Locked doors look locked before they are tapped, as the
                          dashboard's tools and the menu do. --}}
                     @if ($options['aiLocked'])<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endif
                 </button>
-                <button type="button" class="pb-pen" id="pbMetaBtn" title="Name, crop, variety, day count" aria-label="Edit the protocol's details">
+                <button type="button" class="pb-pen" id="pbMetaBtn" title="Edit name, crop and day count" aria-label="Edit details">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5m-1.414-9.414a2 2 0 1 1 2.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 </button>
             </div>
@@ -591,10 +591,10 @@
         <button type="button" class="pb-tool is-add" id="pbAddTop" data-for="tasks">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Task
         </button>
-        <button type="button" class="pb-tool" id="pbAddNoteTop" data-for="tasks" title="A note between the tasks">
+        <button type="button" class="pb-tool" id="pbAddNoteTop" data-for="tasks" title="Add a note between tasks">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12l-4 4H4z"/><path d="M16 20v-4h4"/></svg> Note
         </button>
-        <button type="button" class="pb-tool is-div" id="pbAddDivTop" data-for="tasks" title="A phase divider — a named line between the tasks">
+        <button type="button" class="pb-tool is-div" id="pbAddDivTop" data-for="tasks" title="Add a named line between tasks">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3m4 0h4m4 0h3"/><path d="M8 4h8v5l-4-2-4 2z"/></svg> Divider
         </button>
         <button type="button" class="pb-tool is-add" id="pbAddMatTop" data-for="materials">
@@ -609,7 +609,7 @@
     <div class="rx-empty hidden" id="pbEmpty">
         <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 7h6m-6 4h4"/></svg></span>
         <p class="rx-empty-t">No tasks yet</p>
-        <p class="rx-empty-p" id="pbEmptyP">Add the first task: the day of the count it falls on, or how many days before it starts, what is done, and what to apply.</p>
+        <p class="rx-empty-p" id="pbEmptyP">Add your first task. Set its day, what to do and what to apply.</p>
     </div>
     <div class="pb-add-row">
         <button type="button" class="pb-add-bottom" id="pbAddBottom">
@@ -631,7 +631,7 @@
         <div class="rx-empty hidden" id="pbMatEmpty">
             <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg></span>
             <p class="rx-empty-t">No materials yet</p>
-            <p class="rx-empty-p">List what you will use for the whole protocol — the seed, the fertilizers, the sprays — and how much you have. A task's items can then draw from it, and you will see what is left.</p>
+            <p class="rx-empty-p">List what you will use, like seed, fertilizer and sprays, and how much you have. Tasks can take from this list, so you see what is left.</p>
         </div>
         <button type="button" class="pb-add-bottom" id="pbAddMatBottom">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Add a material
@@ -650,7 +650,7 @@
             <div class="rx-empty hidden" id="pbAnEmpty">
                 <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M8.5 11h5M11 8.5v5"/></svg></span>
                 <p class="rx-empty-t">No analyses yet</p>
-                <p class="rx-empty-p">Tap Analyze by Anee at the top of the page and she reads every task against the crop's growth stages. Each analysis is kept here, so you can come back to it or set an older one beside a newer one.</p>
+                <p class="rx-empty-p">Tap Analyze by Anee at the top. She checks every task against the crop's growth stages. Each analysis is saved here to read again or compare.</p>
             </div>
         </div>
         <div id="pbReview" hidden></div>
@@ -660,15 +660,15 @@
     <div class="pb-panel" id="pbPanelRules" data-panel="rules" role="tabpanel" hidden>
         <div class="card pbr-card">
             <div class="pbr-h"><b>Rules &amp; notes</b><span class="pb-save" id="pbRulesState" aria-live="polite"></span></div>
-            <p class="pbh-hint">The rules you keep for this protocol: when not to spray, how to mix, what to watch for, who to call. It saves as you write.</p>
+            <p class="pbh-hint">Your rules for this protocol: when not to spray, how to mix, what to watch for, who to call. It saves as you type.</p>
             <div class="pbr-ed" id="pbRulesEd"></div>
         </div>
         <div class="card pbr-card">
             <div class="pbr-h"><b>Related files</b></div>
-            <p class="pbh-hint">Product labels, a leaflet, a soil test, photos — PDF, pictures or documents, up to 10 MB each.</p>
+            <p class="pbh-hint">Product labels, leaflets, soil tests or photos. PDF, pictures or documents, up to 10 MB each.</p>
             <div class="pbr-files" id="pbFiles"></div>
             <button type="button" class="pbt-add" id="pbFileBtn"
-                @unless ($options['canUpload']) data-tier-lock="libreAnee" data-lock-say="Files beside your protocol — product labels, leaflets, a soil test — come with Libre + Anee. Writing the rules and notes stays free on every plan." @endunless>
+                @unless ($options['canUpload']) data-tier-lock="libreAnee" data-lock-say="Adding files, like labels, leaflets or a soil test, comes with Libre + Anee. Writing rules and notes is free on every plan." @endunless>
                 <svg @unless ($options['canUpload']) class="tl-dim" @endunless viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg> <span @unless ($options['canUpload']) class="tl-dim" @endunless>Upload a file</span>
                 @unless ($options['canUpload'])<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endunless
             </button>
@@ -699,11 +699,11 @@
         </div>
         <div class="mt-4">
             <label class="form-label" for="pbtTitleIn">Title</label>
-            <input type="text" id="pbtTitleIn" class="form-input" maxlength="160" placeholder="e.g. First top-dress">
+            <input type="text" id="pbtTitleIn" class="form-input" maxlength="160" placeholder="e.g. First top dress">
         </div>
         <div class="mt-3">
             <label class="form-label" for="pbtSub">Subtitle <span class="text-gray-400 font-normal">(optional)</span></label>
-            <input type="text" id="pbtSub" class="form-input" maxlength="200" placeholder="e.g. Urea + complete, broadcast after the water is let in">
+            <input type="text" id="pbtSub" class="form-input" maxlength="200" placeholder="e.g. Urea + complete, spread after flooding">
         </div>
         <div class="mt-3">
             <span class="form-label">Activity type</span>
@@ -716,12 +716,12 @@
         <p class="pbt-warn" id="pbtWarn" hidden></p>
         <div class="mt-3">
             <label class="form-label" for="pbtDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="pbtDesc" class="form-textarea" rows="3" maxlength="4000" placeholder="How it is done, what to watch while doing it…"></textarea>
+            <textarea id="pbtDesc" class="form-textarea" rows="3" maxlength="4000" placeholder="How to do it and what to watch for"></textarea>
         </div>
 
         <div class="pbt-sec">
             <div class="pbt-sec-h"><span class="form-label">What to apply</span></div>
-            <p class="pbh-hint pbt-sec-p">Groups of items — per knapsack, per hectare, or a name of your own. An item can draw from your Materials, and what is left shows as you type.</p>
+            <p class="pbh-hint pbt-sec-p">Group items per knapsack, per hectare or by your own name. Items can take from your Materials and show what is left.</p>
             <div id="pbGroups"></div>
             <button type="button" class="pbt-add" id="pbGroupAdd">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Add a group
@@ -730,7 +730,7 @@
 
         <div class="mt-4">
             <label class="form-label" for="pbtNote">Note <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="pbtNote" class="form-textarea" rows="2" maxlength="2000" placeholder="A caution, a reminder, a lesson from last season…"></textarea>
+            <textarea id="pbtNote" class="form-textarea" rows="2" maxlength="2000" placeholder="A warning, reminder or lesson from last season"></textarea>
         </div>
         <div class="mt-4">
             <span class="form-label">Importance</span>
@@ -766,7 +766,7 @@
 <div class="sheet hidden" id="pbPrioSheet" style="--sheet-width:24rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">How much does it matter?</h3>
+        <h3 class="sheet-title">How important?</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body dt-rows" id="pbPrioList"></div>
@@ -816,9 +816,9 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
-        <label class="form-label" for="pbnText">The note</label>
-        <textarea id="pbnText" class="form-textarea" rows="5" maxlength="2000" placeholder="A reminder between the tasks — what to watch for, what last season taught you, who to call…"></textarea>
-        <p class="pbh-hint">It sits where you drag it and follows the task above it. When the protocol is ported, it lands on that day's day book.</p>
+        <label class="form-label" for="pbnText">Note</label>
+        <textarea id="pbnText" class="form-textarea" rows="5" maxlength="2000" placeholder="What to watch for, a lesson from last season, who to call"></textarea>
+        <p class="pbh-hint">Drag it where you want. It stays with the task above it. When ported, it goes to that day's day book.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn text-red-600 bg-red-50 hover:bg-red-100 border border-red-100" id="pbnDelete" hidden>Delete</button>
@@ -835,10 +835,10 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
-        <label class="form-label" for="pbdLabel">Name of the phase</label>
+        <label class="form-label" for="pbdLabel">Phase name</label>
         <input type="text" id="pbdLabel" class="form-input" maxlength="80" placeholder="e.g. Vegetative phase">
         <div class="mt-4">
-            <span class="form-label">It begins</span>
+            <span class="form-label">Starts on</span>
             <div class="pbt-day">
                 <button type="button" class="crop-tag" id="pbdWhenBtn">
                     <span class="crop-tag-e" id="pbdWhenIcon">🗓️</span>
@@ -847,14 +847,14 @@
                 </button>
                 <input type="number" id="pbdDay" class="form-input" inputmode="numeric" step="1" min="0" max="999" placeholder="day" aria-label="Day">
             </div>
-            <p class="pbh-hint">It sits above the first task of that day. Drag it by its grip to move it; it takes the day of the task below it.</p>
+            <p class="pbh-hint">It sits above the first task of that day. Drag it to move it. It takes the day of the task below.</p>
         </div>
         <div class="mt-4">
             <span class="form-label">Colour</span>
             <div class="pbd-colors" id="pbdColors"></div>
         </div>
         <div class="pbd-preview" id="pbdPreview"></div>
-        <p class="pbh-hint">Dividers are not tasks: they are not counted or checked. Anee reads them as your phase headings, and a port writes each one onto that day's day book.</p>
+        <p class="pbh-hint">Dividers are not tasks, so they are not counted or checked. Anee reads them as phase headings. When ported, each one goes to that day's day book.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn text-red-600 bg-red-50 hover:bg-red-100 border border-red-100" id="pbdDelete" hidden>Delete</button>
@@ -871,8 +871,8 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body dt-rows">
-        <button type="button" class="dt-row" data-task-act="edit"><span class="dt-row-e">✏️</span><span class="dt-row-body"><b>Edit</b><i>Day, words, what to apply.</i></span></button>
-        <button type="button" class="dt-row" data-task-act="copy"><span class="dt-row-e">📑</span><span class="dt-row-body"><b>Duplicate</b><i>A copy on the same day, to change.</i></span></button>
+        <button type="button" class="dt-row" data-task-act="edit"><span class="dt-row-e">✏️</span><span class="dt-row-body"><b>Edit</b><i>Change the day, words or items.</i></span></button>
+        <button type="button" class="dt-row" data-task-act="copy"><span class="dt-row-e">📑</span><span class="dt-row-body"><b>Duplicate</b><i>Copy it to the same day.</i></span></button>
         <button type="button" class="dt-row" data-task-act="delete"><span class="dt-row-e">🗑️</span><span class="dt-row-body"><b>Delete</b><i>Remove this task. Undo can bring it back.</i></span></button>
     </div>
 </div>
@@ -887,7 +887,7 @@
     <div class="sheet-body">
         <p class="pbf-say" id="pbFixSay"></p>
         <div class="mt-4">
-            <span class="form-label">Change its day to</span>
+            <span class="form-label">New day</span>
             <div class="pbt-day">
                 <button type="button" class="crop-tag" id="pbFixWhenBtn">
                     <span class="crop-tag-e" id="pbFixWhenIcon">🗓️</span>
@@ -901,7 +901,7 @@
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost" id="pbFixBack">Put it back</button>
-        <button type="button" class="btn btn-primary" id="pbFixGo">Change it</button>
+        <button type="button" class="btn btn-primary" id="pbFixGo">Change day</button>
     </div>
 </div>
 
@@ -931,7 +931,7 @@
     </div>
     <div class="sheet-body space-y-4">
         <div class="pb-quote"><img src="{{ $options['aneeFace'] }}" alt=""><div id="pbAskQuote"></div></div>
-        <p class="text-sm text-gray-600">Anee reads every task against the crop's growth stages and says what is strong, what is missing, what could go wrong, and what she would add. Every analysis is kept on the Analyses tab, the newest first.</p>
+        <p class="text-sm text-gray-600">Anee checks every task against the crop's growth stages. She says what is good, what is missing, what could go wrong and what to add. Each analysis is saved on the Analyses tab.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-primary w-full" id="pbAskGo">Analyze it</button>
@@ -953,16 +953,16 @@
             <button type="button" class="crop-tag" id="pbmKindBtn"></button>
         </div>
         <div class="mt-3">
-            <label class="form-label" for="pbmQty">How much you have for the protocol</label>
+            <label class="form-label" for="pbmQty">How much you have</label>
             <div class="pbt-day">
                 <input type="number" id="pbmQty" class="form-input" inputmode="decimal" min="0" step="any" placeholder="e.g. 10" style="flex:1 1 auto;text-align:left">
                 <button type="button" class="crop-tag" id="pbmUnitBtn" style="flex:0 0 9.5rem"></button>
             </div>
-            <p class="pbh-hint">The total for the whole protocol. What the tasks draw is taken from it, and the rest shows as what is left.</p>
+            <p class="pbh-hint">The total for the whole protocol. Tasks take from it, so you see what is left.</p>
         </div>
         <div class="mt-3">
             <label class="form-label" for="pbmNote">Note <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="pbmNote" class="form-textarea" rows="2" maxlength="500" placeholder="Where it is bought, the brand you trust, how it is kept…"></textarea>
+            <textarea id="pbmNote" class="form-textarea" rows="2" maxlength="500" placeholder="Where to buy, the brand you trust, how to store"></textarea>
         </div>
     </div>
     <div class="sheet-footer">
@@ -976,7 +976,7 @@
 <div class="sheet hidden" id="pbUnitSheet" style="--sheet-width:24rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Counted in</h3>
+        <h3 class="sheet-title">Unit</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
@@ -992,7 +992,7 @@
 <div class="sheet hidden" id="pbMatPickSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">From your materials</h3>
+        <h3 class="sheet-title">Pick a material</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body dt-rows" id="pbMatPickList"></div>
@@ -1007,8 +1007,8 @@
     </div>
     <div class="sheet-body dt-rows">
         <button type="button" class="dt-row" data-mat-act="edit"><span class="dt-row-e">✏️</span><span class="dt-row-body"><b>Edit</b><i>Name, kind, how much you have.</i></span></button>
-        <button type="button" class="dt-row" data-mat-act="copy"><span class="dt-row-e">📑</span><span class="dt-row-body"><b>Duplicate</b><i>A copy to change.</i></span></button>
-        <button type="button" class="dt-row" data-mat-act="delete"><span class="dt-row-e">🗑️</span><span class="dt-row-body"><b>Delete</b><i>Items drawing from it keep their words. Undo can bring it back.</i></span></button>
+        <button type="button" class="dt-row" data-mat-act="copy"><span class="dt-row-e">📑</span><span class="dt-row-body"><b>Duplicate</b><i>Make a copy.</i></span></button>
+        <button type="button" class="dt-row" data-mat-act="delete"><span class="dt-row-e">🗑️</span><span class="dt-row-body"><b>Delete</b><i>Tasks keep the item names. Undo can bring it back.</i></span></button>
     </div>
 </div>
 
@@ -1020,11 +1020,11 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
-        <p class="pbh-hint" style="margin:0 0 .6rem">Each version has its own tasks, materials, rules and files — a wet-season and a dry-season way of running the same crop. Tap one to work on it.</p>
+        <p class="pbh-hint" style="margin:0 0 .6rem">Each version has its own tasks, materials, rules and files. For example, one for wet season and one for dry season. Tap one to work on it.</p>
         <div class="dt-rows" id="pbVerList"></div>
     </div>
     <div class="sheet-footer">
-        <button type="button" class="btn btn-primary w-full" id="pbVerNew">New version — a copy of this one</button>
+        <button type="button" class="btn btn-primary w-full" id="pbVerNew">New version (copy of this one)</button>
     </div>
 </div>
 
@@ -1154,7 +1154,7 @@
     let DIRTY = false, BUSY = false, AGAIN = false, STALE = false, FAILS = 0, saveTimer = null;
     function say(state) {
         const el = $id('pbSaveState');
-        el.textContent = { saving: 'Saving…', saved: '✓ Saved', failed: 'Not saved — retrying', stale: 'Reload to save' }[state] || '';
+        el.textContent = { saving: 'Saving…', saved: '✓ Saved', failed: 'Not saved, retrying', stale: 'Reload to save' }[state] || '';
         el.classList.toggle('is-saved', state === 'saved');
         el.classList.toggle('is-failed', state === 'failed');
         el.classList.toggle('is-stale', state === 'stale');
@@ -1179,7 +1179,7 @@
         } catch (err) {
             if (err.status === 409 || (err.data && err.data.stale)) {
                 STALE = true; say('stale');
-                window.noticeSheet({ title: 'Changed somewhere else', message: 'This protocol was saved from another tab or device. Reload the page to keep working on the latest copy — what you just did here was not saved.', okText: 'OK' });
+                window.noticeSheet({ title: 'Changed somewhere else', message: 'This protocol was saved on another tab or device. Your last change here was not saved. Reload the page to get the latest copy.', okText: 'OK' });
             } else {
                 DIRTY = true; say('failed');
                 if (++FAILS <= 8) saveTimer = setTimeout(runSave, Math.min(30000, 2000 * FAILS));
@@ -1310,7 +1310,7 @@
                 <div class="pb-note-body">${esc(t.text)}</div>
                 <div class="pb-acts">
                     <button type="button" class="pb-grip" aria-label="Drag to reorder" title="Drag to reorder">${GRIP}</button>
-                    <button type="button" class="pb-menu" aria-label="More" title="More">${DOTS}</button>
+                    <button type="button" class="pb-menu" aria-label="More options" title="More options">${DOTS}</button>
                 </div>
             </div>`;
     }
@@ -1322,7 +1322,7 @@
                     <button type="button" class="pb-div-pill" title="Edit the divider">${BOOKMARK}<span>${esc(t.label)}</span><small>from ${esc(sayWhen(t.counter, t.day))}</small></button>
                     <div class="pb-acts">
                         <button type="button" class="pb-grip" aria-label="Drag to move" title="Drag to move">${GRIP}</button>
-                        <button type="button" class="pb-menu" aria-label="More" title="More">${DOTS}</button>
+                        <button type="button" class="pb-menu" aria-label="More options" title="More options">${DOTS}</button>
                     </div>
                 </div>
             </div>`;
@@ -1367,7 +1367,7 @@
                 </div>
                 <div class="pb-acts">
                     <button type="button" class="pb-grip" aria-label="Drag to reorder" title="Drag to reorder">${GRIP}</button>
-                    <button type="button" class="pb-menu" aria-label="More" title="More">${DOTS}</button>
+                    <button type="button" class="pb-menu" aria-label="More options" title="More options">${DOTS}</button>
                 </div>
             </div>`;
     }
@@ -1447,13 +1447,13 @@
                 TASKS.push(c);
                 flash(c.id);
             });
-            toast('Duplicated — the copy sits on the same day.');
+            toast('Duplicated. The copy is on the same day.');
             return;
         }
         if (act === 'delete') {
             const t = TASKS.find((x) => x.id === id);
             commit('Deleted', () => { TASKS = TASKS.filter((x) => x.id !== id); });
-            toast(isNote(t) ? 'Deleted the note — Undo brings it back.' : (isDivider(t) ? `Deleted the divider "${t.label}" — Undo brings it back.` : `Deleted "${t ? t.title : 'the task'}" — Undo brings it back.`));
+            toast(isNote(t) ? 'Note deleted. Undo brings it back.' : (isDivider(t) ? `Divider "${t.label}" deleted. Undo brings it back.` : `"${t ? t.title : 'The task'}" deleted. Undo brings it back.`));
         }
     });
 
@@ -1488,7 +1488,7 @@
         const id = NOTE_ID; if (!id) return;
         closeSheet('pbNoteSheet');
         commit('Deleted', () => { TASKS = TASKS.filter((x) => x.id !== id); });
-        toast('Deleted the note — Undo brings it back.');
+        toast('Note deleted. Undo brings it back.');
     });
     /* ------------------------------------------------------------ phase dividers
      * A named line between the tasks ("Vegetative phase") on the day the
@@ -1501,7 +1501,7 @@
     function paintDivPreview() {
         const v = DIV_DAY ? DIV_DAY.get() : null;
         $id('pbdColors').querySelectorAll('[data-color]').forEach((b) => b.classList.toggle('is-on', b.getAttribute('data-color') === DIV_COLOR));
-        const label = $id('pbdLabel').value.trim() || 'Name of the phase';
+        const label = $id('pbdLabel').value.trim() || 'Phase name';
         $id('pbdPreview').innerHTML = `<div class="pb-div" data-color="${esc(DIV_COLOR)}"><div class="pb-div-line"><span class="pb-div-pill">${BOOKMARK}<span>${esc(label)}</span>${v ? `<small>from ${esc(sayWhen(v.counter, v.day))}</small>` : ''}</span></div></div>`;
     }
     $id('pbdColors').addEventListener('click', (e) => { const b = e.target.closest('[data-color]'); if (!b) return; DIV_COLOR = b.getAttribute('data-color'); paintDivPreview(); });
@@ -1533,7 +1533,7 @@
         const label = $id('pbdLabel').value.trim();
         if (!label) { toast('Name the phase first.', 'error'); $id('pbdLabel').focus(); return; }
         const v = DIV_DAY.get();
-        if (!v) { toast('Which day does the phase begin?', 'error'); $id('pbdDay').focus(); return; }
+        if (!v) { toast('Pick the day the phase starts.', 'error'); $id('pbdDay').focus(); return; }
         const id = DIV_ID, color = DIV_COLOR;
         const day = Math.max(-365, Math.min(999, v.day));
         closeSheet('pbDivSheet');
@@ -1557,7 +1557,7 @@
         const t = TASKS.find((x) => x.id === id);
         closeSheet('pbDivSheet');
         commit('Deleted', () => { TASKS = TASKS.filter((x) => x.id !== id); });
-        toast(`Deleted the divider${t ? ' "' + t.label + '"' : ''} — Undo brings it back.`);
+        toast(`Divider${t ? ' "' + t.label + '"' : ''} deleted. Undo brings it back.`);
     });
 
     let FLASH = null;
@@ -1608,9 +1608,9 @@
         // planting. Land preparation for a transplanted field is seedbed-time
         // work, so it goes on the DAS count.
         const tree = first === 'DOS';
-        rows.push({ when: 'before', c: first, e: '⏮️', b: `Before ${first} 0`, i: tree ? 'Days counted back from DOS 0 — the day the program starts on the trees. Buying the inputs, readying the tools.' : `Days counted back from ${first} 0 — the ${first === 'DAP' ? 'planting' : 'sowing'}. Land preparation, seedbed work, buying the inputs.` });
+        rows.push({ when: 'before', c: first, e: '⏮️', b: `Before ${first} 0`, i: tree ? 'Days before DOS 0, the day the tree program starts. For buying inputs and readying tools.' : `Days before ${first} 0, the ${first === 'DAP' ? 'planting' : 'sowing'} day. For land preparation, seedbed work and buying inputs.` });
         counters().forEach((c) => {
-            rows.push({ when: 'on', c, e: '🗓️', b: whenWord('on', c), i: tree ? 'A day of the DOS count — days from the day the program starts on the standing trees, the count the board keeps for an orchard lot.' : (two ? (c === 'DAS' ? 'A day of the DAS count — from sowing to the transplant. Preparing the main field belongs here too.' : 'A day of the DAT count — from the transplant on.') : `A day of the ${c} count.`) });
+            rows.push({ when: 'on', c, e: '🗓️', b: whenWord('on', c), i: tree ? 'Days counted from the day the tree program starts. The board uses this count for orchards.' : (two ? (c === 'DAS' ? 'Days after sowing, up to transplant. Main field preparation goes here too.' : 'Days after transplant.') : `A day of the ${c} count.`) });
         });
         $id('pbWhenList').innerHTML = rows.map((r) => `
             <button type="button" class="dt-row${r.when === st.when && r.c === st.counter ? ' is-on' : ''}" data-when="${r.when}" data-c="${r.c}">
@@ -1674,13 +1674,13 @@
             const herbNamed = groups.some((g) => gHas(g, ['herbicide']));
             const HELP = ['fertilizer', 'foliar', 'growth', 'bio', 'insecticide', 'fungicide'];
             if (groups.some((g) => (gHas(g, ['herbicide']) || (t.type === 'herbicide' && !herbNamed)) && gHas(g, HELP))) {
-                add(t, 'Herbicide should go out alone — it must not share a tank with anything meant to help the crop, and the knapsack wants rinsing after.');
+                add(t, 'Spray herbicide alone. Do not mix it with anything meant to help the crop. Rinse the knapsack after.');
             }
             const COPPER = /copper|cupr|cuprous|oxychlor/i;
             const copperNamed = groups.some((g) => gName(g, COPPER));
             if (groups.some((g) => (gName(g, COPPER) || (t.type === 'copper_fungicide' && !copperNamed))
                 && (gHas(g, ['foliar', 'bio', 'adjuvant']) || gName(g, /\boil\b|acid/i)))) {
-                add(t, 'Copper burns leaves when it meets oils or acidic partners, and it puts biologicals down. Spray it on its own.');
+                add(t, 'Copper burns leaves when mixed with oils or acids, and it kills biologicals. Spray it alone.');
             }
         });
         for (let i = 0; i < tasks.length; i++) {
@@ -1689,13 +1689,13 @@
                 const d = gap(a, b);
                 if (d === null) continue;
                 const both = (w) => { add(a, w); add(b, w); };
-                if (isHerb(a) && isHerb(b) && d <= 3) both(`Two herbicide sprays ${d === 0 ? 'on the same day' : d + (d === 1 ? ' day' : ' days') + ' apart'} — a double dose injures the crop. Space them a week or more, or make sure they are different products for different weeds.`);
-                if (isFert(a) && isFert(b) && d <= 2 && !(isFoliar(a) && isFoliar(b))) both(`Two fertilizer applications ${d === 0 ? 'on the same day' : d + (d === 1 ? ' day' : ' days') + ' apart'} — usually one is enough; combine them, or space them out.`);
-                if (((isCopper(a) && isFoliar(b)) || (isCopper(b) && isFoliar(a))) && d <= 1) both('Copper and a foliar feed within a day — copper burns leaves with acidic partners. Give it three days.');
-                if (d === 0 && isSpray(a) && isSpray(b) && !(isHerb(a) && isHerb(b))) both('Two sprays on the same day — check the products can share a tank, or plan a rinse between them.');
+                if (isHerb(a) && isHerb(b) && d <= 3) both(`Two herbicide sprays ${d === 0 ? 'on the same day' : d + (d === 1 ? ' day' : ' days') + ' apart'}. A double dose hurts the crop. Space them a week or more apart, or use different products for different weeds.`);
+                if (isFert(a) && isFert(b) && d <= 2 && !(isFoliar(a) && isFoliar(b))) both(`Two fertilizer applications ${d === 0 ? 'on the same day' : d + (d === 1 ? ' day' : ' days') + ' apart'}. One is usually enough. Combine them or space them out.`);
+                if (((isCopper(a) && isFoliar(b)) || (isCopper(b) && isFoliar(a))) && d <= 1) both('Copper and a foliar feed within a day. Copper burns leaves when mixed with acids. Wait three days between them.');
+                if (d === 0 && isSpray(a) && isSpray(b) && !(isHerb(a) && isHerb(b))) both('Two sprays on the same day. Check that they can be mixed, or rinse the tank between them.');
                 const h = isHarvest(a) ? a : (isHarvest(b) ? b : null);
                 const sp = h === a ? b : a;
-                if (h && isPesticide(sp) && h.day - sp.day >= 0 && h.day - sp.day <= 14) add(sp, `A spray ${h.day - sp.day === 0 ? 'on the harvest day' : (h.day - sp.day) + (h.day - sp.day === 1 ? ' day' : ' days') + ' before the harvest'} — check the product's pre-harvest interval.`);
+                if (h && isPesticide(sp) && h.day - sp.day >= 0 && h.day - sp.day <= 14) add(sp, `A spray ${h.day - sp.day === 0 ? 'on the harvest day' : (h.day - sp.day) + (h.day - sp.day === 1 ? ' day' : ' days') + ' before the harvest'}. Check the label for how many days to wait before harvest.`);
             }
         }
         return out;
@@ -1751,8 +1751,8 @@
                     <button type="button" class="pb-mini is-x pbg-x" aria-label="Remove the group">${X}</button>
                 </div>
                 <div class="pbg-loads${g.perKnapsack ? ' is-on' : ''}"><div class="pbg-loads-in">
-                    <label class="pbi-f"><span class="pbi-l">Loads</span><input type="number" class="form-input pbg-loads-n" inputmode="decimal" min="0" step="any" placeholder="How many knapsack loads, e.g. 3" value="${g.loads ?? ''}"></label>
-                    <p class="pbh-hint">How many knapsack loads this mix is made for. What an item draws from the materials is its quantity × the loads.</p>
+                    <label class="pbi-f"><span class="pbi-l">Loads</span><input type="number" class="form-input pbg-loads-n" inputmode="decimal" min="0" step="any" placeholder="e.g. 3" value="${g.loads ?? ''}"></label>
+                    <p class="pbh-hint">How many knapsack loads of this mix. Each item uses its quantity × the loads.</p>
                 </div></div>
                 <div class="pbg-items">${g.items.map(itemHtml).join('')}</div>
                 <button type="button" class="pbg-add pbi-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Add an item</button>
@@ -1776,7 +1776,7 @@
             const k = OPT.kinds[m.kind] || OPT.kinds.other;
             return `
             <div class="pbi is-linked" data-i="${esc(it.id)}">${head}
-                <p class="pbi-mat">${esc(k.icon)} ${esc(k.label)} · name and kind follow the material</p>
+                <p class="pbi-mat">${esc(k.icon)} ${esc(k.label)} · name and kind come from the material</p>
                 <label class="pbi-f"><span class="pbi-l">Quantity${m.unit ? ' (' + esc(m.unit) + ')' : ''}</span><span class="pbi-qrow"><input type="number" class="form-input pbi-qty" inputmode="decimal" min="0" step="any" placeholder="e.g. 50" value="${it.qty ?? ''}">${m.unit ? `<span class="pbt-unit">${esc(m.unit)}</span>` : ''}</span></label>
                 <p class="pbi-left" data-left></p>
             </div>`;
@@ -1808,11 +1808,11 @@
             const has = m.qty !== null && m.qty !== undefined && m.qty !== '';
             let words, cls = '';
             if (use === null) {
-                words = has ? `Say how much. ${fmt(Number(m.qty) - plannedAll)}${unit} left of ${fmt(Number(m.qty))}${unit}.` : 'Say how much.';
+                words = has ? `Enter the amount. ${fmt(Number(m.qty) - plannedAll)}${unit} left of ${fmt(Number(m.qty))}${unit}.` : 'Enter the amount.';
                 cls = 'is-quiet';
             } else {
-                const how = g.perKnapsack ? ` (${fmt(Number(it.qty))} × ${fmt(loads)} ${loads === 1 ? 'load' : 'loads'}${Number(g.loads) > 0 ? '' : ' — say the loads above'})` : '';
-                if (!has) { words = `Uses ${fmt(use)}${unit}${how} · no amount on hand set for this material`; cls = 'is-quiet'; }
+                const how = g.perKnapsack ? ` (${fmt(Number(it.qty))} × ${fmt(loads)} ${loads === 1 ? 'load' : 'loads'}${Number(g.loads) > 0 ? '' : ', set the loads above'})` : '';
+                if (!has) { words = `Uses ${fmt(use)}${unit}${how} · no stock set for this material`; cls = 'is-quiet'; }
                 else {
                     const left = Number(m.qty) - plannedAll;
                     words = `Uses ${fmt(use)}${unit}${how} · ${left < -1e-9 ? `⚠ ${fmt(-left)}${unit} short of the ${fmt(Number(m.qty))}${unit} you have` : `${fmt(left)}${unit} left of ${fmt(Number(m.qty))}${unit}`}`;
@@ -1884,7 +1884,7 @@
         const custom = g.title && !GROUP_PRESETS.some(([n]) => n === g.title);
         $id('pbGroupList').innerHTML = GROUP_PRESETS.map(([n, e]) => `
             <button type="button" class="dt-row${g.title === n ? ' is-on' : ''}" data-gname="${esc(n)}"><span class="dt-row-e">${e}</span><span class="dt-row-body"><b>${esc(n)}</b></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`).join('')
-            + `<button type="button" class="dt-row${custom ? ' is-on' : ''}" data-gname="__other"><span class="dt-row-e">✏️</span><span class="dt-row-body"><b>Others…</b><i>${custom ? esc(g.title) : 'Type a name of your own'}</i></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`;
+            + `<button type="button" class="dt-row${custom ? ' is-on' : ''}" data-gname="__other"><span class="dt-row-e">✏️</span><span class="dt-row-body"><b>Your own name</b><i>${custom ? esc(g.title) : 'Type your own'}</i></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`;
         $id('pbGroupCustomWrap').hidden = !custom;
         $id('pbGroupCustom').value = custom ? g.title : '';
         openSheet('pbGroupSheet');
@@ -1963,7 +1963,7 @@
     $id('pbAddBottom').addEventListener('click', () => openTask(null));
     $id('pbtSave').addEventListener('click', () => {
         const picked = TASK_DAY.get();
-        if (!picked) { toast('Which day of the count is it?', 'error'); $id('pbtDay').focus(); return; }
+        if (!picked) { toast('Enter the day.', 'error'); $id('pbtDay').focus(); return; }
         W.counter = picked.counter;
         W.day = Math.max(-365, Math.min(999, picked.day));
         W.title = $id('pbtTitleIn').value.trim();
@@ -1998,7 +1998,7 @@
         closeSheet('pbTaskSheet');
         const t = TASKS.find((x) => x.id === id);
         commit('Deleted', () => { TASKS = TASKS.filter((x) => x.id !== id); });
-        toast(`Deleted "${t ? t.title : 'the task'}" — Undo brings it back.`);
+        toast(`"${t ? t.title : 'The task'}" deleted. Undo brings it back.`);
     });
 
     /* ------------------------------------------------------------ dragging */
@@ -2104,7 +2104,7 @@
                 order.forEach((oid, i) => { const x = byId(oid); if (x) x.pos = i * 10; });
                 flash(id);
             });
-            if (anchor) toast(`${t.label} now begins ${sayWhen(t.counter, t.day)}.`);
+            if (anchor) toast(`${t.label} now starts ${sayWhen(t.counter, t.day)}.`);
             return;
         }
         if (isNote(t)) {
@@ -2141,8 +2141,8 @@
         return okPrev && okNext;
     }
     function openFix(t, prev, next) {
-        const between = prev && next ? `between <b>${esc(sayKey(prev))}</b> and <b>${esc(sayKey(next))}</b>` : (prev ? `after <b>${esc(sayKey(prev))}</b>` : `ahead of <b>${esc(sayKey(next))}</b>`);
-        $id('pbFixSay').innerHTML = `<b>${esc(t.title)}</b> is on <b>${esc(sayKey(t))}</b>, but you put it ${between}. Change its day to fit there, or put it back where it was.`;
+        const between = prev && next ? `between <b>${esc(sayKey(prev))}</b> and <b>${esc(sayKey(next))}</b>` : (prev ? `after <b>${esc(sayKey(prev))}</b>` : `before <b>${esc(sayKey(next))}</b>`);
+        $id('pbFixSay').innerHTML = `<b>${esc(t.title)}</b> is on <b>${esc(sayKey(t))}</b>, but you moved it ${between}. Change its day to fit, or put it back.`;
         const start = prev || next;
         if (!FIX_DAY) FIX_DAY = whenPicker('pbFix', fixHint);
         FIX_DAY.set(start.counter, start.day);
@@ -2157,7 +2157,7 @@
         const lo = FIX.prev ? sayKey(FIX.prev) : null, hi = FIX.next ? sayKey(FIX.next) : null;
         const range = lo && hi ? `${lo} up to ${hi}` : (lo ? `${lo} or later` : `${hi} or earlier`);
         const ok = !!v && fixRangeOk(v.counter, v.day);
-        h.textContent = ok ? `Fits — ${range}.` : `It has to be ${range}.`;
+        h.textContent = ok ? `Fits: ${range}.` : `It must be ${range}.`;
         h.classList.toggle('is-bad', !ok);
         $id('pbFixGo').disabled = !ok;
     }
@@ -2222,17 +2222,17 @@
                 <div class="pbm-body">
                     <div class="pbm-t"><b>${esc(m.name)}</b><i>${esc(k.label)}${m.note ? ' · ' + esc(m.note) : ''}</i></div>
                     <div class="pbm-nums">
-                        <span>On hand <b>${has ? fmt(m.qty) + esc(unit) : '—'}</b></span>
+                        <span>On hand <b>${has ? fmt(m.qty) + esc(unit) : 'not set'}</b></span>
                         <span>Planned <b>${fmt(used)}${esc(unit)}</b></span>
                         ${has ? `<span class="is-left">${short ? 'Short' : 'Left'} <b>${fmt(Math.abs(left))}${esc(unit)}</b></span>` : ''}
                     </div>
                     ${has ? `<div class="pbm-bar"><span data-w="${pct.toFixed(1)}"></span></div>` : ''}
-                    ${short ? `<p class="pbm-warn">⚠️ ${fmt(-left)}${esc(unit)} short — the tasks plan more than you have. Add to the amount on hand, or lower a task's quantity.</p>` : ''}
-                    ${byTask.length ? `<div class="pbm-uses">${byTask.map(({ t, n }) => `<span class="pb-chip" title="${esc(t.title)}">${esc(sayWhen(t.counter, t.day))} · ${fmt(n)}${esc(unit)}</span>`).join('')}</div>` : '<p class="pbm-none">No task draws from it yet.</p>'}
+                    ${short ? `<p class="pbm-warn">⚠️ ${fmt(-left)}${esc(unit)} short. The tasks need more than you have. Add more on hand or lower a task's amount.</p>` : ''}
+                    ${byTask.length ? `<div class="pbm-uses">${byTask.map(({ t, n }) => `<span class="pb-chip" title="${esc(t.title)}">${esc(sayWhen(t.counter, t.day))} · ${fmt(n)}${esc(unit)}</span>`).join('')}</div>` : '<p class="pbm-none">No task uses it yet.</p>'}
                 </div>
                 <div class="pb-acts">
                     <button type="button" class="pb-grip" aria-label="Drag to reorder" title="Drag to reorder">${GRIP}</button>
-                    <button type="button" class="pb-menu" aria-label="More" title="More">${DOTS}</button>
+                    <button type="button" class="pb-menu" aria-label="More options" title="More options">${DOTS}</button>
                 </div>
             </div>`;
     }
@@ -2251,7 +2251,7 @@
         TASKS.filter(isTask).forEach((t) => (t.groups || []).forEach((g) => (g.items || []).forEach((it) => { if (it.materialId && matOf(it.materialId)) drawnBy.add(t.id); })));
         $id('pbMatSum').innerHTML = MATS.length ? `
             <div><b>${MATS.length}</b><span>${MATS.length === 1 ? 'material' : 'materials'}</span></div>
-            <div><b>${drawnBy.size}</b><span>${drawnBy.size === 1 ? 'task draws' : 'tasks draw'} from them</span></div>
+            <div><b>${drawnBy.size}</b><span>${drawnBy.size === 1 ? 'task uses' : 'tasks use'} them</span></div>
             <div class="${short.length ? 'is-short' : ''}"><b>${short.length || '✓'}</b><span>${short.length ? 'running short' : 'all covered'}</span></div>` : '';
         if (FLASH_MAT) {
             const cEl = list.querySelector(`.pbm-card[data-mid="${CSS.escape(FLASH_MAT)}"]`);
@@ -2286,7 +2286,7 @@
         const units = OPT.units || Object.keys(UNIT_WORDS);
         const custom = MW.unit && !units.includes(MW.unit);
         $id('pbUnitList').innerHTML = units.map((u) => `<button type="button" class="dt-row${MW.unit === u ? ' is-on' : ''}" data-unit="${esc(u)}"><span class="dt-row-e">📏</span><span class="dt-row-body"><b>${esc(UNIT_WORDS[u] || u)}</b></span>${TICKS}</button>`).join('')
-            + `<button type="button" class="dt-row${custom ? ' is-on' : ''}" data-unit="__other"><span class="dt-row-e">✏️</span><span class="dt-row-body"><b>Other…</b><i>${custom ? esc(MW.unit) : 'Type a unit of your own'}</i></span>${TICKS}</button>`;
+            + `<button type="button" class="dt-row${custom ? ' is-on' : ''}" data-unit="__other"><span class="dt-row-e">✏️</span><span class="dt-row-body"><b>Other</b><i>${custom ? esc(MW.unit) : 'Type your own unit'}</i></span>${TICKS}</button>`;
         $id('pbUnitCustomWrap').hidden = !custom;
         $id('pbUnitCustom').value = custom ? MW.unit : '';
         openSheet('pbUnitSheet');
@@ -2302,10 +2302,10 @@
     $id('pbUnitCustom').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); $id('pbUnitCustomGo').click(); } });
     $id('pbmSave').addEventListener('click', () => {
         const name = $id('pbmName').value.trim();
-        if (!name) { toast('Name the material.', 'error'); $id('pbmName').focus(); return; }
+        if (!name) { toast('Give the material a name.', 'error'); $id('pbmName').focus(); return; }
         const q = $id('pbmQty').value.trim();
         const qty = q === '' ? null : Math.max(0, Number(q));
-        if (q !== '' && !Number.isFinite(qty)) { toast('The amount on hand is a number.', 'error'); $id('pbmQty').focus(); return; }
+        if (q !== '' && !Number.isFinite(qty)) { toast('Enter a number for how much you have.', 'error'); $id('pbmQty').focus(); return; }
         const saved = { ...MW, name, qty, note: $id('pbmNote').value.trim() };
         const isNew = MW_ID === null;
         closeSheet('pbMatSheet');
@@ -2320,10 +2320,10 @@
         const n = (USE.w[id] || []).length;
         const go = () => {
             commit('Deleted', () => { MATS = MATS.filter((x) => x.id !== id); });
-            toast(`Deleted "${m.name}"${n ? ' — the items that drew from it keep their words' : ''}. Undo brings it back.`);
+            toast(`"${m.name}" deleted${n ? '. Tasks keep the item names' : ''}. Undo brings it back.`);
         };
         if (!n) { go(); return; }
-        window.confirmAction({ title: 'Delete this material?', message: `${n} ${n === 1 ? 'item draws' : 'items draw'} from "${m.name}". ${n === 1 ? 'It keeps' : 'They keep'} its name and amount as plain words.`, confirmText: 'Delete', danger: true }).then((ok) => { if (ok) go(); });
+        window.confirmAction({ title: 'Delete this material?', message: `${n} ${n === 1 ? 'item uses' : 'items use'} "${m.name}". ${n === 1 ? 'It keeps' : 'They keep'} its name and amount as text.`, confirmText: 'Delete', danger: true }).then((ok) => { if (ok) go(); });
     }
     $id('pbmDelete').addEventListener('click', () => { const id = MW_ID; if (!id) return; closeSheet('pbMatSheet'); deleteMat(id); });
     $id('pbAddMatTop').addEventListener('click', () => openMat(null));
@@ -2354,15 +2354,15 @@
         MPICK = { g, it, row };
         const others = useOf(TASKS.filter((x) => x.id !== W_ID)).u;
         const mine = useOf([W]).u;
-        const rows = [`<button type="button" class="dt-row${it.materialId ? '' : ' is-on'}" data-mpick=""><span class="dt-row-e">✏️</span><span class="dt-row-body"><b>Not from the list</b><i>Type the item's name, kind and amount yourself.</i></span>${TICKS}</button>`];
+        const rows = [`<button type="button" class="dt-row${it.materialId ? '' : ' is-on'}" data-mpick=""><span class="dt-row-e">✏️</span><span class="dt-row-body"><b>Not from the list</b><i>Type the name, kind and amount yourself.</i></span>${TICKS}</button>`];
         MATS.forEach((m) => {
             const k = OPT.kinds[m.kind] || OPT.kinds.other;
             const unit = m.unit ? ' ' + m.unit : '';
             const left = hasQty(m.qty) ? Number(m.qty) - (others[m.id] || 0) - (mine[m.id] || 0) : null;
-            const say = left === null ? `${k.label} · no amount on hand set` : (left < -1e-9 ? `${k.label} · ⚠ ${fmt(-left)}${unit} short` : `${k.label} · ${fmt(left)}${unit} left of ${fmt(m.qty)}${unit}`);
+            const say = left === null ? `${k.label} · no stock set` : (left < -1e-9 ? `${k.label} · ⚠ ${fmt(-left)}${unit} short` : `${k.label} · ${fmt(left)}${unit} left of ${fmt(m.qty)}${unit}`);
             rows.push(`<button type="button" class="dt-row${it.materialId === m.id ? ' is-on' : ''}" data-mpick="${esc(m.id)}"><span class="dt-row-e">${esc(k.icon)}</span><span class="dt-row-body"><b>${esc(m.name)}</b><i>${esc(say)}</i></span>${TICKS}</button>`);
         });
-        if (!MATS.length) rows.push('<p class="pbh-hint" style="padding:.4rem .2rem">No materials yet. List them on the Materials tab — what you will use and how much you have — and an item can draw from them.</p>');
+        if (!MATS.length) rows.push('<p class="pbh-hint" style="padding:.4rem .2rem">No materials yet. Add them on the Materials tab, then items can use them.</p>');
         $id('pbMatPickList').innerHTML = rows.join('');
         openSheet('pbMatPickSheet');
     }
@@ -2412,7 +2412,7 @@
     let RQ = null, R_TOUCHED = false, R_DIRTY = false, R_BUSY = false, R_TIMER = null, R_LAST = RULES, R_FAILS = 0;
     function sayRules(state) {
         const el = $id('pbRulesState');
-        el.textContent = { saving: 'Saving…', saved: '✓ Saved', failed: 'Not saved — retrying' }[state] || '';
+        el.textContent = { saving: 'Saving…', saved: '✓ Saved', failed: 'Not saved, retrying' }[state] || '';
         el.classList.toggle('is-saved', state === 'saved');
         el.classList.toggle('is-failed', state === 'failed');
     }
@@ -2428,7 +2428,7 @@
         if (!window.Quill) { if (!ensureRules.waiting) { ensureRules.waiting = true; window.addEventListener('load', () => { if ($id('pbPage').dataset.tab === 'rules') ensureRules(); }, { once: true }); } return; }
         const host = $id('pbRulesEd');
         host.innerHTML = RULES;
-        RQ = new Quill(host, { theme: 'snow', placeholder: 'Write the rules you keep for this protocol — one idea to a paragraph…', modules: { toolbar: window.SM_RICH_TOOLBAR } });
+        RQ = new Quill(host, { theme: 'snow', placeholder: 'Write your rules here. One idea per paragraph.', modules: { toolbar: window.SM_RICH_TOOLBAR } });
         // Only a person's own writing saves: loading a version's document must not.
         ['input', 'keydown', 'paste', 'cut', 'drop'].forEach((ev) => host.addEventListener(ev, () => { R_TOUCHED = true; }, true));
         host.addEventListener('click', (e) => { if (e.target.closest('.se-toolbar, .se-btn, .se-list-layer')) R_TOUCHED = true; }, true);
@@ -2545,7 +2545,7 @@
         await flushSave();
         await flushRules();
         if (STALE) { toast('Reload the page first.', 'error'); return false; }
-        if (DIRTY || R_DIRTY) { toast('Your last change has not saved yet — try again in a moment.', 'error'); return false; }
+        if (DIRTY || R_DIRTY) { toast('Your last change is not saved yet. Try again in a moment.', 'error'); return false; }
         return true;
     }
     const PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5m-1.414-9.414a2 2 0 1 1 2.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>';
@@ -2568,10 +2568,10 @@
     function askVersionName(mode, id) {
         VNAME = { mode, id };
         const v = VERSIONS.find((x) => x.id === id);
-        $id('pbVerNameTitle').textContent = mode === 'new' ? 'New version' : 'Rename the version';
+        $id('pbVerNameTitle').textContent = mode === 'new' ? 'New version' : 'Rename version';
         $id('pbVerNameIn').value = mode === 'new' ? '' : (v ? v.name : '');
         $id('pbVerNameIn').placeholder = mode === 'new' ? `e.g. Dry season, or Version ${VERSIONS.length + 1}` : 'e.g. Dry season';
-        $id('pbVerNameHint').textContent = mode === 'new' ? `A copy of "${VER.name}" — its tasks, materials, rules and files. You can change it without touching this one.` : '';
+        $id('pbVerNameHint').textContent = mode === 'new' ? `A copy of "${VER.name}" with its tasks, materials, rules and files. Changes to it do not touch this one.` : '';
         openSheet('pbVerNameSheet');
         if (!window.matchMedia('(pointer: coarse)').matches) setTimeout(() => $id('pbVerNameIn').focus(), 280);
     }
@@ -2607,8 +2607,8 @@
         if (del) {
             const id = +del.getAttribute('data-v-del');
             const v = VERSIONS.find((x) => x.id === id); if (!v) return;
-            if (VERSIONS.length <= 1) { toast('A protocol keeps at least one version.', 'error'); return; }
-            const ok = await window.confirmAction({ title: `Delete "${v.name}"?`, message: `Its ${v.count} ${v.count === 1 ? 'task' : 'tasks'}, materials, rules and files go with it. The other versions stay as they are.`, confirmText: 'Delete', danger: true });
+            if (VERSIONS.length <= 1) { toast('A protocol needs at least one version.', 'error'); return; }
+            const ok = await window.confirmAction({ title: `Delete "${v.name}"?`, message: `Its ${v.count} ${v.count === 1 ? 'task' : 'tasks'}, materials, rules and files will be deleted. Other versions stay.`, confirmText: 'Delete', danger: true });
             if (!ok) return;
             if (id === VER.id && !(await settleAll())) return;
             try {
@@ -2664,11 +2664,11 @@
                     const n = pv.moved;
                     const ok = await window.confirmAction({
                         title: 'Count the days as ' + toLabel + '?',
-                        message: n + (n === 1 ? ' task, note or divider is' : ' tasks, notes and dividers are')
-                            + ' counted in a way ' + toLabel + ' does not use, across your versions. '
-                            + (n === 1 ? 'It moves' : 'They move') + ' to ' + (to[0] || 'the new count') + ' and keep their day numbers.',
-                        detail: 'Switch the count back and they return to what they were.',
-                        confirmText: 'Change the count',
+                        message: n + (n === 1 ? ' task, note or divider uses' : ' tasks, notes and dividers use')
+                            + ' a count that ' + toLabel + ' does not have, in all versions. '
+                            + (n === 1 ? 'It moves' : 'They move') + ' to ' + (to[0] || 'the new count') + ' with the same day number.',
+                        detail: 'Switch back and they return to how they were.',
+                        confirmText: 'Change count',
                         confirmClass: 'btn-primary',
                     });
                     if (!ok) return;
@@ -2683,13 +2683,13 @@
             sortTasks(); render();
             closeSheet('pbMetaSheet');
             const moved = res.data.moved || 0, back = res.data.restored || 0;
-            toast(back ? `Saved. ${back} ${back === 1 ? 'entry is' : 'entries are'} back on the count ${back === 1 ? 'it' : 'they'} had.`
-                : (moved ? `Saved. ${moved} ${moved === 1 ? 'entry was' : 'entries were'} relabelled; switching back restores ${moved === 1 ? 'it' : 'them'}.` : 'Saved.'));
+            toast(back ? `Saved. ${back} ${back === 1 ? 'entry is' : 'entries are'} back on the old count.`
+                : (moved ? `Saved. ${moved} ${moved === 1 ? 'entry was' : 'entries were'} relabelled. Switch back to restore ${moved === 1 ? 'it' : 'them'}.` : 'Saved.'));
         } catch (err) { toast(err.message, 'error'); }
         finally { btn.disabled = false; }
     });
     $id('pbMetaDelete').addEventListener('click', async () => {
-        const ok = await window.confirmAction({ title: 'Delete this protocol?', message: `"${P.title}" and its tasks will be removed from your list.`, confirmText: 'Delete' });
+        const ok = await window.confirmAction({ title: 'Delete this protocol?', message: `"${P.title}" and its tasks will be removed.`, confirmText: 'Delete' });
         if (!ok) return;
         try {
             await api(U.base + '/delete', { method: 'POST', body: {} });
@@ -2704,7 +2704,7 @@
     function renderAnalyses() {
         const n = ANALYSES.length;
         $id('pbTabAnN').textContent = n ? n : '';
-        $id('pbAnSay').textContent = n ? `${n} ${n === 1 ? 'analysis' : 'analyses'}, the newest first. Tap one to read it.` : 'Nothing analyzed yet.';
+        $id('pbAnSay').textContent = n ? `${n} ${n === 1 ? 'analysis' : 'analyses'}, newest first. Tap one to read it.` : 'Nothing analyzed yet.';
         $id('pbAnEmpty').classList.toggle('hidden', n > 0);
         const shown = AN_ALL ? ANALYSES : ANALYSES.slice(0, 5);
         $id('pbAnList').innerHTML = shown.map((a, i) => `
@@ -2748,7 +2748,7 @@
         }
     }
     async function removeAnalysis(id, fromView) {
-        const ok = await window.confirmAction({ title: 'Remove this analysis?', message: 'It leaves the Analyses tab. The credits it used are already spent.', confirmText: 'Remove' });
+        const ok = await window.confirmAction({ title: 'Remove this analysis?', message: 'It will be removed from the Analyses tab. Credits used are not returned.', confirmText: 'Remove' });
         if (!ok) return;
         try {
             const d = (await api(U.base + '/analyses/' + id + '/delete', { method: 'POST', body: {} })).data || {};
@@ -2798,14 +2798,14 @@
                     <img class="pb-rv-face" src="${esc(OPT.aneeFace)}" alt="">
                 </div>
                 <div class="pb-rv-body">
-                    ${(r.strengths || []).length ? `<p class="pb-rv-h">What is strong</p><div class="pb-rv-list">${r.strengths.map((s) => row('is-good', s.point, [s.why])).join('')}</div>` : ''}
-                    ${(r.gaps || []).length ? `<p class="pb-rv-h">What is missing or thin</p><div class="pb-rv-list">${r.gaps.map((g) => row('is-gap', g.what, [g.why, g.fix ? 'Fix: ' + g.fix : ''])).join('')}</div>` : ''}
+                    ${(r.strengths || []).length ? `<p class="pb-rv-h">What is good</p><div class="pb-rv-list">${r.strengths.map((s) => row('is-good', s.point, [s.why])).join('')}</div>` : ''}
+                    ${(r.gaps || []).length ? `<p class="pb-rv-h">What is missing or weak</p><div class="pb-rv-list">${r.gaps.map((g) => row('is-gap', g.what, [g.why, g.fix ? 'Fix: ' + g.fix : ''])).join('')}</div>` : ''}
                     ${(r.risks || []).length ? `<p class="pb-rv-h">What could go wrong</p><div class="pb-rv-list">${r.risks.map((k) => row('is-risk', k.risk + (k.when ? ' · ' + k.when : ''), [k.action])).join('')}</div>` : ''}
                     ${(r.additions || []).length ? `<p class="pb-rv-h">Anee would add</p><div class="pb-rv-list">${additions}</div>` : ''}
                     ${r.sequence ? `<p class="pb-rv-h">Order and spacing</p><p class="pb-rv-p">${esc(r.sequence)}</p>` : ''}
                     ${r.summary ? `<p class="pb-rv-h">In short</p><p class="pb-rv-p">${esc(r.summary)}</p>` : ''}
                 </div>
-                ${ANALYSES[0] && VIEW_ID !== ANALYSES[0].id ? '<div class="pb-rv-foot"><span class="pb-rv-fold">An earlier analysis. The latest is at the top of the list.</span></div>' : ''}
+                ${ANALYSES[0] && VIEW_ID !== ANALYSES[0].id ? '<div class="pb-rv-foot"><span class="pb-rv-fold">An older analysis. The latest is at the top of the list.</span></div>' : ''}
             </div>`;
     }
     $id('pbWarn').addEventListener('click', (e) => {
@@ -2822,21 +2822,21 @@
             const counter = counters().includes(a.counter) ? a.counter : counters()[0];
             const t = { ...blankTask(), counter, day: a.day, title: a.title || 'Suggested task', type: OPT.types[a.type] ? a.type : null, note: a.why ? 'Anee: ' + a.why : '' };
             commit('Added', () => { TASKS.push(t); flash(t.id); });
-            toast(`Added "${t.title}" — ${sayWhen(counter, a.day)}.`);
+            toast(`Added "${t.title}" (${sayWhen(counter, a.day)}).`);
         }
     });
     function askAnee() {
         if (OPT.aiLocked) { const b = $id('pbAneeBtn'); window.aneeUpgrade(b?.dataset.lockSay || "Anee's review of your protocol is not on your plan.", b?.dataset.tierLock); return; }
         if (!OPT.canAnalyze) { toast('Anee is not available right now.', 'error'); return; }
-        if (!TASKS.filter(isTask).length) { toast('Add a task or two first — there is nothing to review yet.', 'error'); return; }
+        if (!TASKS.filter(isTask).length) { toast('Add a task first. There is nothing to review yet.', 'error'); return; }
         /* Short of credits is said here, before the tap, with the way to
            top up as the button - not learned from a failed request. */
         const have = Number(OPT.balance) || 0, price = Number(OPT.quote) || 0;
         const short = !OPT.unlimited && have < price;
         const coin = window.creditCoin(OPT.unlimited ? '∞' : have.toLocaleString());
         $id('pbAskQuote').innerHTML = short
-            ? `This review spends <b>${price} credits</b>, and you have ${coin} — <b>${(price - have).toLocaleString()} short</b>. Top up and she is ready when you are.`
-            : `This review spends <b>${price} credits</b>, and you have ${coin}. Nothing is charged until you press <b>Analyze it</b>.`;
+            ? `This review costs <b>${price} credits</b>. You have ${coin}, so you are <b>${(price - have).toLocaleString()} short</b>. Top up to run it.`
+            : `This review costs <b>${price} credits</b>. You have ${coin}. Nothing is charged until you press <b>Analyze it</b>.`;
         const go = $id('pbAskGo');
         go.textContent = short ? 'Top up credits' : 'Analyze it';
         go.dataset.short = short ? '1' : '';
@@ -2848,7 +2848,7 @@
         closeSheet('pbAskSheet');
         await flushSave();
         if (STALE) { toast('Reload the page first.', 'error'); return; }
-        window.aneeWait.show({ title: 'Anee is reading your protocol…', lines: ['Reading every task against the growth stages', 'Checking the days and the order', 'Weighing the products and the rates', 'Looking for what is missing', 'Writing the review'], sub: 'About a minute.' });
+        window.aneeWait.show({ title: 'Anee is reading your protocol…', lines: ['Checking tasks against growth stages', 'Checking the days and order', 'Checking products and rates', 'Looking for what is missing', 'Writing the review'], sub: 'About a minute.' });
         let landed = false;
         try {
             const res = await api(U.base + '/analyze', { method: 'POST', body: {} });
@@ -2861,7 +2861,7 @@
             render();
             showTab('analyses', true);
             renderAnalyses();
-            await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used — kept on the Analyses tab.` });
+            await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used. Saved on the Analyses tab.` });
             await viewAnalysis(ANALYSES[0] ? ANALYSES[0].id : null);
         } catch (err) {
             if (err.data && err.data.outOfCredits) {
@@ -2906,7 +2906,7 @@
                 if (Array.isArray(data.analyses)) ANALYSES = data.analyses;
                 render();
                 renderAnalyses();
-                toast("Anee's analysis is in, on the Analyses tab.");
+                toast("Anee's analysis is ready on the Analyses tab.");
             } catch (_) {}
         })();
     }

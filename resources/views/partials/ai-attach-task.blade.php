@@ -123,7 +123,7 @@
              an unfinished form rather than a choice — this says it is one. --}}
         <p class="aiat-hint" id="aiAtHint" hidden>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 11v5M12 7.6v.9"/></svg>
-            <span>Pick a task to file this onto it. Choose <b>Save a note in this day</b>, or leave the task alone, and it is kept as a note on that day instead.</span>
+            <span>Pick a task to save it there. Or choose <b>Save on this day</b>, or skip it, to keep it as a note on the day.</span>
         </p>
 
         <div>
@@ -132,9 +132,9 @@
         </div>
         <div>
             <label class="form-label" for="aiAtDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="aiAtDesc" class="form-textarea" rows="2" maxlength="2000" placeholder="Why this chat is worth keeping…"></textarea>
+            <textarea id="aiAtDesc" class="form-textarea" rows="2" maxlength="2000" placeholder="Why keep this chat?"></textarea>
         </div>
-        <p class="text-xs text-gray-400">The whole conversation is attached underneath.</p>
+        <p class="text-xs text-gray-400">The full chat is saved with it.</p>
         <button type="button" id="aiAtGo" class="btn w-full sweep-fill sweep-green"
                 style="--sw-t: 11s; --sw-d: -2s; color: #fff; border: 0">Keep this chat</button>
         {{-- The date lives in a real input so the phone opens its own picker,
@@ -188,7 +188,7 @@
         // Optional, and said so: the resting state is a real choice, not an
         // unanswered question.
         setTag('aiAtTask', pick.activityId ? pick.activityName
-            : (pick.activityId === 0 ? 'This day' : 'Optional — keep it on the day'),
+            : (pick.activityId === 0 ? 'This day' : 'Optional: keep it on the day'),
             pick.activityId !== null);
     }
 
@@ -220,7 +220,7 @@
                     <span class="min-w-0">${esc(s.title)}</span>
                  </button>`).join('');
             openPick('Which season?', rows || '<p class="aiat-none">No seasons yet.</p>');
-        } catch (e) { window.toast?.(e.message || 'Could not read your seasons.', 'error'); }
+        } catch (e) { window.toast?.(e.message || 'Could not load your seasons.', 'error'); }
     });
 
     /* ---- day: the phone's own picker ---- */
@@ -249,11 +249,11 @@
                is still a day somebody may want the chat filed under rather
                than onto any one of them. */
             const dayOpt = `<button type="button" class="ai-attach-opt" data-aiat-task="day">
-                    <span class="min-w-0">Save a note in this day<span class="sub">Not on a task — on the day itself</span></span>
+                    <span class="min-w-0">Save on this day<span class="sub">Not on a task, just the day</span></span>
                  </button>`;
-            openPick('What on ' + niceDay(pick.date) + '?',
-                (rows || '<p class="aiat-none">Nothing is scheduled on this day.</p>') + dayOpt);
-        } catch (e) { window.toast?.(e.message || 'Could not read that day.', 'error'); }
+            openPick('Which task on ' + niceDay(pick.date) + '?',
+                (rows || '<p class="aiat-none">No tasks on this day.</p>') + dayOpt);
+        } catch (e) { window.toast?.(e.message || 'Could not load that day.', 'error'); }
     });
 
     byId('aiAtPickBody')?.addEventListener('click', (e) => {
@@ -300,7 +300,7 @@
             });
             window.closeSheet?.('aiAtSheet');
         } catch (err) {
-            window.toast?.(err.message || 'Could not keep that.', 'error');
+            window.toast?.(err.message || 'Could not save this chat.', 'error');
         } finally { btn.disabled = false; }
     });
 

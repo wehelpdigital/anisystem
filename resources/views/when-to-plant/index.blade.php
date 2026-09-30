@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'When to Plant')
 @section('page-title', 'When to Plant')
-@section('page-subtitle', 'The right window, argued from the climate')
+@section('page-subtitle', 'Find the best weeks to plant')
 
 @section('back', \App\Support\BackTo::url(route('app.dashboard')))
 {{-- Back is the dashboard, or wherever the door that opened this page said
@@ -485,7 +485,7 @@
             <div class="q-body">
                 <div class="q-body-in">
                     <div class="q-card" id="wtpQuoteCost"></div>
-                    <div class="q-card" id="wtpQuoteTreat">Treat the result as a guide: the weather always keeps some surprises. Still, a window built from real data is a much better starting point than guessing.</div>
+                    <div class="q-card" id="wtpQuoteTreat">Treat the result as a guide. The weather can still surprise you, but real data beats guessing.</div>
                 </div>
             </div>
         </div>
@@ -499,10 +499,10 @@
             <section class="wtp-step is-on" data-step="0">
                 <p class="wtp-q">Where is the field?</p>
                 <div class="wtp-loc-country">
-                    <label class="form-label">Country of the field</label>
+                    <label class="form-label">Country</label>
                     @include('partials.country-pick', ['id' => 'wtpCountry', 'name' => 'country', 'value' => \App\Support\Region::code()])
                 </div>
-                <p class="wtp-sub" id="wtpLocSub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate patterns differ by region.</p>
+                <p class="wtp-sub" id="wtpLocSub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough. Climate differs by region.</p>
                 <input type="text" id="wtpLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
             </section>
             {{-- Step 2: the MONTHS the farmer is weighing, not a named
@@ -510,8 +510,8 @@
                  calendar any more, so the old wet / dry dates would steer the
                  answer wrong. A start and an end, up to twelve months. --}}
             <section class="wtp-step" data-step="1">
-                <p class="wtp-q">When are you thinking of planting?</p>
-                <p class="wtp-sub">The first and the last month you might plant. The old wet and dry season dates no longer hold, so each week is read on its own — and the months after yours are scored too, in case one of them is safer.</p>
+                <p class="wtp-q">When do you plan to plant?</p>
+                <p class="wtp-sub">Pick the first and last month you might plant. The old wet and dry season dates no longer hold, so we check every week. Later months are scored too, in case one is safer.</p>
                 {{-- Two tags, the lot form's tag-and-sheet: each opens the
                      month sheet for its own end of the range. --}}
                 <div class="wtp-mtags">
@@ -539,7 +539,7 @@
                  holds the searchable catalogue for the field's country. --}}
             <section class="wtp-step" data-step="2">
                 <p class="wtp-q">What will you plant?</p>
-                <p class="wtp-sub">The same catalogue your lots choose from.</p>
+                <p class="wtp-sub">The same crop list your lots use.</p>
                 <button type="button" class="crop-tag" id="wtpCropBtn">
                     <span class="crop-tag-e" id="wtpCropIcon">🌱</span>
                     <span class="crop-tag-t is-none" id="wtpCropNow">Choose the crop</span>
@@ -549,13 +549,13 @@
             {{-- Step 5: the variety --}}
             <section class="wtp-step" data-step="3">
                 <p class="wtp-q">Which variety?</p>
-                <p class="wtp-sub">Type it as it is sold — e.g. <span id="wtpVarEx">{{ \App\Support\Region::ph() ? 'NSIC Rc222' : 'Pioneer P1197' }}</span>. If its data is not published, the analysis will say so rather than guess.</p>
+                <p class="wtp-sub">Type the name on the seed pack, like <span id="wtpVarEx">{{ \App\Support\Region::ph() ? 'NSIC Rc222' : 'Pioneer P1197' }}</span>. If there is no data on it, the report will say so.</p>
                 <input type="text" id="wtpVariety" class="form-input" maxlength="80" placeholder="Variety name (optional)">
             </section>
             {{-- Step 6: the troubles --}}
             <section class="wtp-step" data-step="4">
-                <p class="wtp-q">What does this field struggle with?</p>
-                <p class="wtp-sub">Tick what you have seen — each one moves the window.</p>
+                <p class="wtp-q">What problems does this field have?</p>
+                <p class="wtp-sub">Tick what you have seen. Each one can change the best time.</p>
                 <div class="wtp-probs" id="wtpProbs"></div>
             </section>
             {{-- Step 7: the soil's chemistry (the owner, 2026-09-29): acidic,
@@ -565,11 +565,11 @@
                  words exclude one another. A tested pH is optional. --}}
             <section class="wtp-step" data-step="5">
                 <p class="wtp-q">What is the soil like?</p>
-                <p class="wtp-sub">Tick what you know, or leave it if it was never tested. A soil can be more than one of these.</p>
+                <p class="wtp-sub">Tick what you know. Skip it if the soil was never tested. You can tick more than one.</p>
                 <div class="wtp-probs" id="wtpSoil"></div>
                 <div class="wtp-ph">
                     <label class="form-label" for="wtpPh">Tested pH <span class="wtp-opt">optional</span></label>
-                    <input type="number" id="wtpPh" class="form-input" inputmode="decimal" min="2" max="12" step="0.1" placeholder="e.g. 5.4">
+                    <input type="number" id="wtpPh" class="form-input" inputmode="decimal" min="2" max="12" step="0.1" placeholder="Like 5.4">
                 </div>
             </section>
             {{-- Step 8: the decision --}}
@@ -606,7 +606,7 @@
             <div class="wtp-shelf-more" id="wtpSavedMore" hidden>Loading more…</div>
             <div id="wtpSavedEmpty" class="hidden text-center py-10">
                 <p class="font-bold text-gray-900">Nothing saved yet</p>
-                <p class="text-sm text-gray-400">Run an analysis and keep the ones worth keeping.</p>
+                <p class="text-sm text-gray-400">Every analysis you run is saved here.</p>
             </div>
         </div>
         <div class="wtp-report mt-4" id="wtpSavedReport" hidden></div>
@@ -649,7 +649,7 @@
             <button type="button" class="crop-search-x hidden" id="wtpCropSearchX" aria-label="Clear">✕</button>
         </div>
         <div id="wtpCropList"></div>
-        <p class="crop-none hidden" id="wtpCropNone">Nothing matches that. Try the local name, or pick “Vegetables — mixed”.</p>
+        <p class="crop-none hidden" id="wtpCropNone">Nothing matches. Try the local name, or pick mixed vegetables (Gulay).</p>
     </div>
 </div>
 
@@ -685,7 +685,7 @@
         if (p && p.fromMonth) {
             const a = MONTHS[p.fromMonth - 1] + ' ' + p.fromYear;
             const b = MONTHS[(p.toMonth || p.fromMonth) - 1] + ' ' + (p.toYear || p.fromYear);
-            return a === b ? a : a + ' – ' + b;
+            return a === b ? a : a + ' to ' + b;
         }
         return seasonSaid((p || {}).season, (p || {}).year, (p || {}).country);
     };
@@ -706,7 +706,7 @@
         const y = Number(year) || 0;
         const label = seasonsFor(country || state.country || (OPT && OPT.country))[season] || (OPT && OPT.seasons[season]) || '';
         const crosses = season === 'dry' || season === 'winter';
-        return crosses && y ? `${label} ${y}–${String(y + 1).slice(-2)}` : `${label} ${y || ''}`.trim();
+        return crosses && y ? `${label} ${y} to ${y + 1}` : `${label} ${y || ''}`.trim();
     };
     let step = 0;
     const STEPS = 7;
@@ -796,7 +796,7 @@
         const a = ym(from), b = ym(to);
         const words = n === 1
             ? `<b>${MONTHS_LONG[a.month - 1]} ${a.year}</b> only`
-            : `Between <b>${MONTHS_LONG[a.month - 1]} ${a.year}</b> and <b>${MONTHS_LONG[b.month - 1]} ${b.year}</b> · ${n} months`;
+            : `From <b>${MONTHS_LONG[a.month - 1]} ${a.year}</b> to <b>${MONTHS_LONG[b.month - 1]} ${b.year}</b> · ${n} months`;
         say.innerHTML = `<span>${words}</span><button type="button" data-m-clear>Clear</button>`;
     }
     function openMonthSheet(end) {
@@ -806,7 +806,7 @@
         $id('wtpMonthSheetTitle').textContent = M_END === 'from' ? 'From which month?' : 'To which month?';
         $id('wtpMonthSheetHint').textContent = M_END === 'from'
             ? 'The first month you might plant.'
-            : `The last month you might plant — up to ${MAX_SPAN()} months from ${monthWords(state.from)}.`;
+            : `The last month you might plant. Up to ${MAX_SPAN()} months from ${monthWords(state.from)}.`;
         paintRange();
         openSheet('wtpMonthSheet');
     }
@@ -849,7 +849,7 @@
                         <span class="crop-row-e">${esc(c.icon)}</span>
                         <span class="crop-row-t">
                             <b>${esc(c.label)}</b>
-                            <small>${c.perennial ? 'Tree crop — read by its age' : (c.maturity ? c.maturity + ' days to harvest' : '')}</small>
+                            <small>${c.perennial ? 'Tree crop, counted by age' : (c.maturity ? c.maturity + ' days to harvest' : '')}</small>
                         </span>
                     </button>`).join('')}
             </div>`).join('');
@@ -877,7 +877,7 @@
         if (!OPT.quote) { q.hidden = true; return; }
         q.classList.toggle('is-min', quoteMin);
         $id('wtpQuoteHead').setAttribute('aria-expanded', quoteMin ? 'false' : 'true');
-        $id('wtpQuoteCost').innerHTML = `One analysis spends <b>${OPT.quote} credits</b>, and you have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
+        $id('wtpQuoteCost').innerHTML = `One analysis costs <b>${OPT.quote} credits</b>. You have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
         $id('wtpQuoteTreat').hidden = false;
         // The folded card still says the one number that matters.
         $id('wtpQuoteHint').textContent = `${OPT.quote} credits`;
@@ -907,17 +907,17 @@
     function stepReady() {
         switch (step) {
             case 0: state.location = $id('wtpLocation').value.trim();
-                return !!state.location || (toast('Say where the field is.', 'error'), false);
-            case 1: if (state.from === null) { toast('Pick the months you are thinking of planting in.', 'error'); return false; }
+                return !!state.location || (toast('Type where the field is.', 'error'), false);
+            case 1: if (state.from === null) { toast('Pick the months you might plant.', 'error'); return false; }
                 if (state.to === null) state.to = state.from;
                 return true;
-            case 2: return !!state.crop || (toast(cropDropped ? `The crop list is different for ${countryName(state.country)} — pick the crop again.` : 'Pick the crop.', 'error'), false);
+            case 2: return !!state.crop || (toast(cropDropped ? `The crop list is different for ${countryName(state.country)}. Pick the crop again.` : 'Pick the crop.', 'error'), false);
             case 3: state.variety = $id('wtpVariety').value.trim(); return true;
             case 4: state.problems = [...document.querySelectorAll('#wtpProbs input:checked')].map((i) => i.value); return true;
             case 5: {
                 state.soil = [...document.querySelectorAll('#wtpSoil input:checked')].map((i) => i.value);
                 const ph = $id('wtpPh').value.trim();
-                if (ph !== '' && (!(Number(ph) >= 2) || Number(ph) > 12)) { toast('A pH is a number from 2 to 12, e.g. 5.4.', 'error'); return false; }
+                if (ph !== '' && (!(Number(ph) >= 2) || Number(ph) > 12)) { toast('pH must be a number from 2 to 12, like 5.4.', 'error'); return false; }
                 state.ph = ph;
                 return true;
             }
@@ -927,7 +927,7 @@
                 const gone = state.from !== null && OPT && state.from < FIRST();
                 const back = !state.location ? 0 : (state.from === null || gone) ? 1 : !state.crop ? 2 : -1;
                 if (back < 0) return true;
-                toast(['Say where the field is.', gone ? 'Those months have started going by — pick them again.' : 'Pick the months.', 'Pick the crop again.'][back], 'error');
+                toast(['Type where the field is.', gone ? 'Those months have already started. Pick them again.' : 'Pick the months.', 'Pick the crop again.'][back], 'error');
                 setTimeout(() => show(back, true), 250);
                 return false;
             }
@@ -943,7 +943,7 @@
             + ((state.soil.length || state.ph) ? `<br><span class="text-xs">Soil: ${esc([...state.soil.map((k) => ((OPT.soilConditions || {})[k] || k).split(' — ')[0]), state.ph ? 'pH ' + state.ph : ''].filter(Boolean).join(', '))}</span>` : '');
         $id('wtpRunSays').textContent = OPT.canUse && OPT.quote ? `Run the analysis (${OPT.quote} credits)` : 'Run the analysis';
         $id('wtpRunFine').textContent = OPT.canUse
-            ? 'Charged to the same AI credits your questions use — it shows in your subscription’s credit log.'
+            ? 'Paid from your AI credits. It shows in your credit log.'
             : (OPT.whyNot || '');
         $id('wtpRun').disabled = !OPT.canUse;
     }
@@ -963,7 +963,7 @@
         state.country = code;
         const city = (r.address && r.address.city && r.address.city.label) || 'City';
         const region = (r.address && r.address.region && r.address.region.label) || 'State / Region';
-        $id('wtpLocSub').textContent = `${code === 'PH' ? 'Town and province' : city + ' and ' + region.toLowerCase()} is enough — the climate patterns differ by region.`;
+        $id('wtpLocSub').textContent = `${code === 'PH' ? 'Town and province' : city + ' and ' + region.toLowerCase()} is enough. Climate differs by region.`;
         $id('wtpLocation').placeholder = r.exampleLocation || '';
         const ex = $id('wtpVarEx');
         if (ex) ex.textContent = code === 'PH' ? 'NSIC Rc222' : 'Pioneer P1197';
@@ -1064,7 +1064,7 @@
         if (!stepReady()) return;
         const wiz = $id('wtpWiz');
         wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = 'none');
-        window.aneeWait.show({ title: 'Anee is reading the climate for your field…', lines: ['Reading twenty years of storms, droughts and floods for your region…', state.country === 'PH' ? 'Typhoon seasonality and the wet-dry rhythm…' : 'Frost dates, heat and the rain rhythm of the region…', 'Your crop\'s own calendar against it…', 'Weighing each week of your months, one by one…', 'Ranking the best weeks, and the weeks to avoid…'], sub: 'Half a minute, usually.' });
+        window.aneeWait.show({ title: 'Anee is checking the climate for your field…', lines: ['Reading 20 years of storms, droughts and floods…', state.country === 'PH' ? 'Checking typhoon season and the wet and dry months…' : 'Checking frost, heat and rain in your area…', 'Checking your crop calendar…', 'Scoring each week of your months…', 'Ranking the best weeks and the ones to avoid…'], sub: 'Usually about half a minute.' });
         $id('wtpReport').hidden = true;
         let landed = false;
         try {
@@ -1088,9 +1088,9 @@
             // Full screen first: the tabs and the wizard wait behind it. A
             // slip in drawing must not strand the veil: the result is saved.
             try { openView(LAST, 'fresh'); }
-            catch (drawErr) { console.error(drawErr); toast('The analysis is saved on the Saved tab, but this page could not draw it.', 'error'); }
+            catch (drawErr) { console.error(drawErr); toast('Your analysis is in the Saved tab, but it could not be shown here.', 'error'); }
             await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used.` });
-            toast(`Done — ${data.charged} credits used.`);
+            toast(`Done. ${data.charged} credits used.`);
             loadSavedQuietly();
         } catch (err) {
             toast(err.message, 'error');
@@ -1109,7 +1109,7 @@
         const view = $id('wtpView');
         VIEW_MODE = mode;
         const crop = (OPT ? OPT.crops.find((c) => c.key === (item.params || {}).crop) : null) || {};
-        $id('wtpViewTitle').textContent = (crop.label ? crop.label + ' — ' : '') + whenSaid(item.params || {});
+        $id('wtpViewTitle').textContent = (crop.label ? crop.label + ' · ' : '') + whenSaid(item.params || {});
         const host = $id('wtpViewReport');
         host.classList.remove('is-drawn');
         drawReport(host, item, mode, true);
@@ -1203,23 +1203,23 @@
         const rkUsed = RK.filter(([k]) => rkMonths.some((x) => (Number(x[k]) || 0) > 0));
         const riskCard = rkMonths.length ? `
             <div class="wtp-card">
-                <h3>Twenty years of risk, month by month <small style="display:block;font-size:.72rem;font-weight:500;color:var(--color-gray-500);margin-top:.1rem">${esc(rh.years || 'the past twenty years')} — how often each kind struck, and how hard</small></h3>
+                <h3>20 years of risk, by month <small style="display:block;font-size:.72rem;font-weight:500;color:var(--color-gray-500);margin-top:.1rem">${esc(rh.years || 'The past 20 years')}: how often each one struck, and how hard</small></h3>
                 <div class="wtp-rk">
                     ${rkOrder.map((m) => { const x = rkOf(m); const tot = rkSum(x); return `<div class="wtp-rk-col" title="${esc(x.note || '')}"><div class="wtp-rk-bar" style="height:${Math.max(3, Math.round(tot / rkMax * 100))}%">${RK.map(([k]) => (Number(x[k]) || 0) > 0 ? `<span class="wtp-rk-seg is-${k}" style="flex:${Number(x[k])}" title="${esc(k)}: ${Number(x[k])}"></span>` : '').join('')}</div></div>`; }).join('')}
                 </div>
                 <div class="wtp-rk-lbls">${rkOrder.map((m) => `<span class="wtp-rk-lbl">${MONTHS[(m || 1) - 1]}</span>`).join('')}</div>
                 <div class="wtp-rk-legend">${(rkUsed.length ? rkUsed : RK.slice(0, 4)).map(([k, label]) => `<span><i class="wtp-rk-seg is-${k}"></i>${esc(label)}</span>`).join('')}</div>
                 ${(rh.events || []).length ? `<div class="wtp-rk-ev">${(rh.events || []).slice(0, 8).map((e) => `<div class="${e.impact === 'high' ? 'is-high' : ''}"><b>${esc(e.year || '')}${e.month ? ' ' + MONTHS[(e.month || 1) - 1] : ''}</b><span>${esc(e.what || '')}<small>${esc(e.kind || '')}${e.impact ? ' · ' + esc(e.impact) + ' impact' : ''}</small></span></div>`).join('')}</div>` : ''}
-                <p class="wtp-mnote">${esc(sweep(rh.note || 'Taller is worse. A month\'s bar stacks the kinds of trouble that struck it over the years read, each sized by how often and how badly.'))}</p>
+                <p class="wtp-mnote">${esc(sweep(rh.note || 'Taller is worse. Each bar shows the troubles that hit that month, sized by how often and how bad.'))}</p>
             </div>` : '';
 
         /* The best weeks, ranked — the week-by-week answer (older analyses
            have none, and simply do not show the card). */
         const weeks = Array.isArray(r.weekRanks) ? r.weekRanks : [];
-        const FACT = [['rain', '🌧️ Rain'], ['storms', '🌀 Storms'], ['enso', '🌡️ ENSO'], ['field', '🌾 Your field']];
+        const FACT = [['rain', '🌧️ Rain'], ['storms', '🌀 Storms'], ['enso', '🌡️ El Niño / La Niña'], ['field', '🌾 Your field']];
         const weeksCard = weeks.length ? `
             <div class="wtp-card">
-                <h3>The best weeks to plant, ranked <small style="display:block;font-size:.72rem;font-weight:500;color:var(--color-gray-500);margin-top:.1rem">Each week of your months weighed against the rain, the storm record, ENSO, your field and your crop's calendar</small></h3>
+                <h3>The best weeks to plant, ranked <small style="display:block;font-size:.72rem;font-weight:500;color:var(--color-gray-500);margin-top:.1rem">Each week scored on rain, storms, El Niño or La Niña, your field and your crop</small></h3>
                 <div class="wtp-wks">
                     ${weeks.map((w, i) => `
                         <div class="wtp-wk${i === 0 ? ' is-top' : ''}">
@@ -1247,8 +1247,8 @@
         const mineList = to ? rkOrder.filter(tyMine).map((m) => `${MONTHS[m - 1]} <b>${tyOf(m).chance}%</b>`).join(' · ') : '';
         const typhoonCard = to ? `
             <div class="wtp-card">
-                <h3>${PH_FIELD ? 'Chance of a typhoon, month by month' : 'Chance of a tropical storm, month by month'} <small style="display:block;font-size:.72rem;font-weight:500;color:var(--color-gray-500);margin-top:.1rem">${esc(to.years || 'the past twenty years')} — the share of years in which one affected ${esc(p.location || 'the place')} that month</small></h3>
-                <div class="wtp-ty-axis"><span>100%</span><span>dashed line = 50%</span></div>
+                <h3>${PH_FIELD ? 'Typhoon chance by month' : 'Tropical storm chance by month'} <small style="display:block;font-size:.72rem;font-weight:500;color:var(--color-gray-500);margin-top:.1rem">${esc(to.years || 'The past 20 years')}: how often one hit ${esc(p.location || 'this place')} in each month</small></h3>
+                <div class="wtp-ty-axis"><span>100%</span><span>dashed line is 50%</span></div>
                 <div class="wtp-ty" role="img" aria-label="${esc((PH_FIELD ? 'Typhoon' : 'Tropical storm') + ' chance by month: ' + rkOrder.map((m) => MONTHS[m - 1] + ' ' + tyOf(m).chance + '%').join(', '))}">
                     ${rkOrder.map((m) => { const x = tyOf(m); const c = Number(x.chance) || 0; return `<div class="wtp-ty-col" title="${esc(MONTHS[m - 1] + ': ' + c + '% of years · ' + (x.storms || 0) + ' ' + ((x.storms || 0) === 1 ? 'storm' : 'storms') + (x.note ? ' · ' + x.note : ''))}">
                         ${c > 0 && c === tyPeak ? `<span class="wtp-ty-v" style="bottom:calc(${c}% + 2px)">${c}%</span>` : ''}
@@ -1258,7 +1258,7 @@
                 <div class="wtp-ty-lbls">${rkOrder.map((m) => `<span class="wtp-ty-lbl${tyMine(m) ? ' is-mine' : ''}">${MONTHS[m - 1]}</span>`).join('')}</div>
                 ${mineList ? `<p class="wtp-ty-mine">Your months: ${mineList}</p>` : ''}
                 ${to.peak ? `<p class="wtp-mnote">⚠️ ${esc(sweep(to.peak))}</p>` : ''}
-                <p class="wtp-mnote">${esc(sweep(to.note || 'Counted from the storm record for the place: how many of the years read had one that month.'))}</p>
+                <p class="wtp-mnote">${esc(sweep(to.note || 'From the storm record for this place: how many years had one in that month.'))}</p>
                 <details class="wtp-ty-t"><summary>See the numbers</summary>
                     <table><thead><tr><th>Month</th><th>Chance</th><th>Storms</th><th>Strongest</th></tr></thead><tbody>
                     ${to.months.map((x) => `<tr><td>${MONTHS[x.month - 1]}</td><td>${Number(x.chance) || 0}%</td><td>${Number(x.storms) || 0}</td><td>${esc(x.note || '')}</td></tr>`).join('')}
@@ -1268,7 +1268,7 @@
 
         const windowsCard = `
             <div class="wtp-card">
-                <h3>The calendar, plainly</h3>
+                <h3>Your planting calendar</h3>
                 <div class="wtp-win is-go"><b>🌱 Plant: ${esc(bw.label || '')}</b><span>${esc(sweep(bw.why))}</span></div>
                 ${(r.avoidWindows || []).map((w) => `
                     <div class="wtp-win is-no sev-${esc(w.severity === 'moderate' ? 'moderate' : 'high')}">
@@ -1278,8 +1278,8 @@
 
         host.innerHTML = `
             <div class="wtp-hero">
-                <h2>${esc(crop.icon || '🌱')} ${esc(crop.label || 'Your crop')} — ${esc(whenSaid(p))}</h2>
-                <p class="h-win">${esc(bw.label || (m1 + ' ' + (bw.fromDay || '') + (bw.fromYear ? ', ' + bw.fromYear : '') + ' – ' + m2 + ' ' + (bw.toDay || '') + (bw.toYear ? ', ' + bw.toYear : '')))}</p>
+                <h2>${esc(crop.icon || '🌱')} ${esc(crop.label || 'Your crop')} · ${esc(whenSaid(p))}</h2>
+                <p class="h-win">${esc(bw.label || (m1 + ' ' + (bw.fromDay || '') + (bw.fromYear ? ', ' + bw.fromYear : '') + ' to ' + m2 + ' ' + (bw.toDay || '') + (bw.toYear ? ', ' + bw.toYear : '')))}</p>
                 <p class="h-why">${esc(sweep(bw.why))}</p>
                 <div class="wtp-chips">
                     <span class="wtp-chip">📍 ${esc(p.location || '')}${p.country && p.country !== (OPT && OPT.country) ? ' · ' + esc(nameOf(p.country)) : ''}</span>
@@ -1294,7 +1294,7 @@
             ${windowsCard}
 
             <div class="wtp-card">
-                <h3>How each month scores for planting</h3>
+                <h3>Planting score by month</h3>
                 <div class="wtp-months">
                     ${scores.map((s) => {
                         // The window is deep green; outside it, 60 and up is still green, 25–59 amber, under 25 red.
@@ -1305,7 +1305,7 @@
                         </div>`;
                     }).join('')}
                 </div>
-                <p class="wtp-mnote">Green is the recommended window; lighter green still works, amber is risky, red is asking for trouble.${p.fromMonth ? ' The months you picked carry a dot; the others are scored for comparison.' : ''} Hover a bar for its note.</p>
+                <p class="wtp-mnote">Dark green is the best time, light green still works, amber is risky, red is bad.${p.fromMonth ? ' Your months have a dot, the rest are for comparison.' : ''} Hover a bar for its note.</p>
             </div>
 
             ${typhoonCard}
@@ -1314,7 +1314,7 @@
 
             ${(r.threats || []).length ? `
             <div class="wtp-card">
-                <h3>If you plant outside the window</h3>
+                <h3>If you plant at other times</h3>
                 ${(r.threats || []).map((t, i) => `
                     <div class="wtp-threat sev-${esc(t.severity || 'moderate')}" style="transition-delay:${i * 80}ms">
                         <span>⚠️</span>
@@ -1338,19 +1338,19 @@
                 <h3>In plain words</h3>
                 <p class="wtp-plain">${esc(sweep(r.summary))}</p>
                 ${(r.dataGaps || []).length ? `
-                    <h3 class="mt-4">What this analysis could not know</h3>
+                    <h3 class="mt-4">What this report could not check</h3>
                     <ul class="wtp-gap">${(r.dataGaps || []).map((g) => `<li>${esc(g)}</li>`).join('')}</ul>` : ''}
             </div>
 
             ${(r.webSources || []).length ? `
             <div class="wtp-card">
-                <h3>📚 Additional Sources of Analysis</h3>
+                <h3>📚 Sources used</h3>
                 <div class="va-links">${(() => { const seen = new Set(); return (r.webSources || []).map((s) => ({ name: s.title || hostOf(s.url) || 'A published source', host: hostOf(s.url) })).filter((x) => { const k = x.name.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; }).map((x) => `<span class="va-link is-plain"><span class="l-t">${esc(x.name)}</span>${x.host && x.host !== x.name ? `<span class="l-h">${esc(x.host)}</span>` : ''}</span>`).join(''); })()}</div>
             </div>` : ''}
 
             <div class="wtp-card">
                 <h3>🧭 A guide, not a promise</h3>
-                <p class="wtp-fine">Weather and climate carry real uncertainty, and no analysis can see a particular storm. What this gives you is a data-grounded starting point — the patterns of past seasons weighed against your crop and your field — which beats deciding with nothing to compare against. Check PAGASA advisories as planting approaches.</p>
+                <p class="wtp-fine">No analysis can see a storm coming. This is a starting point built from past seasons, your crop and your field. Check PAGASA advisories as planting day gets close.</p>
             </div>
 
             <div class="wtp-acts">
@@ -1375,7 +1375,7 @@
         host.querySelector('[data-wtp-again]')?.addEventListener('click', () => { VIEW_MODE = null; closeView(); wizardBack(); });
         host.querySelector('[data-wtp-delete]').addEventListener('click', async () => {
             const ok = window.confirmAction
-                ? await confirmAction({ title: 'Delete this analysis?', message: 'The credits it cost are already spent; only the report goes.', confirmText: 'Delete', danger: true })
+                ? await confirmAction({ title: 'Delete this analysis?', message: 'Only the report is deleted. The credits it used are not returned.', confirmText: 'Delete', danger: true })
                 : confirm('Delete this analysis?');
             if (!ok) return;
             try {

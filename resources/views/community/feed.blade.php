@@ -287,7 +287,7 @@
     {{-- The @ and # hint lives in the placeholder, where it is read at the
          moment it applies. --}}
     <textarea id="feedPostBody" class="form-textarea w-full comp-box" rows="4" maxlength="4000" data-mentionable data-preview="#feedPreview"
-        placeholder="{{ \App\Support\Region::ph() ? 'Kamusta ang bukid' : 'How is the farm' }}, {{ auth()->user()->firstName }}? Type @ to mention a co-farmer, # to tag a topic."></textarea>
+        placeholder="{{ \App\Support\Region::ph() ? 'Kamusta ang bukid' : 'How is the farm' }}, {{ auth()->user()->firstName }}? Type @ to tag a farmer, # for a topic."></textarea>
     <div id="feedPreview" class="cp-preview" style="display:none"><span class="cp-label">Preview</span><div class="cp-body"></div></div>
 
     {{-- What is coming with the post, shown as itself: the pictures, not
@@ -345,17 +345,17 @@
         <div class="plaza-srcs">
             <button type="button" class="plaza-src" id="feedSrcUpload">
                 <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 17v1.5A2.5 2.5 0 006.5 21h11a2.5 2.5 0 002.5-2.5V17"/></svg></span>
-                <span class="plaza-src-t"><b>Upload from this device</b><small>Pick one photo or several at once.</small></span>
+                <span class="plaza-src-t"><b>Upload</b><small>Pick one or more photos.</small></span>
                 <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
             </button>
             <button type="button" class="plaza-src" id="feedSrcCamera">
                 <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8a2 2 0 012-2h1.4l1-1.6h7.2l1 1.6H18a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><circle cx="12" cy="13" r="3.4"/></svg></span>
-                <span class="plaza-src-t"><b>Take a photo now</b><small>Open the camera and shoot what you see.</small></span>
+                <span class="plaza-src-t"><b>Take a photo</b><small>Use your camera now.</small></span>
                 <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
             </button>
             <button type="button" class="plaza-src" id="feedSrcGallery">
                 <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h4l2 2h6a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M7 15l3-3.5 2.4 2.8L15 11l3 4"/></svg></span>
-                <span class="plaza-src-t"><b>From my gallery</b><small>Photos your seasons already keep.</small></span>
+                <span class="plaza-src-t"><b>From my gallery</b><small>Photos saved in your seasons.</small></span>
                 <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
             </button>
         </div>
@@ -373,9 +373,9 @@
         @include('community.partials.live-search', [
             'id' => 'wallFind',
             'placeholder' => 'Search posts…',
-            'label' => 'Search the wall — words or who wrote them',
+            'label' => 'Search by words or name',
         ])
-        <button type="button" class="btn btn-primary w-full" data-sheet-close>Show the posts</button>
+        <button type="button" class="btn btn-primary w-full" data-sheet-close>Show posts</button>
     </div>
 </div>
 
@@ -394,12 +394,12 @@
         <div class="plaza-srcs">
             <button type="button" class="plaza-src" id="feedVSrcUpload">
                 <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 17v1.5A2.5 2.5 0 006.5 21h11a2.5 2.5 0 002.5-2.5V17"/></svg></span>
-                <span class="plaza-src-t"><b>Upload from phone</b><small>One clip or several at once — up to a minute each.</small></span>
+                <span class="plaza-src-t"><b>Upload from phone</b><small>One or more clips, up to 1 minute each.</small></span>
                 <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
             </button>
             <button type="button" class="plaza-src" id="feedVSrcGallery">
                 <span class="plaza-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M10 10.5v5l4.5-2.5-4.5-2.5z"/></svg></span>
-                <span class="plaza-src-t"><b>From my gallery</b><small>Clips your seasons already keep.</small></span>
+                <span class="plaza-src-t"><b>From my gallery</b><small>Clips saved in your seasons.</small></span>
                 <svg class="plaza-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
             </button>
         </div>
@@ -648,12 +648,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     function addFile(f) {
         if (!f) return;
-        if (shots.length >= MAX_SHOTS) { toast('That is eight photos — the most a post carries.', 'error'); return; }
+        if (shots.length >= MAX_SHOTS) { toast('A post can have up to 8 photos.', 'error'); return; }
         shots.push({ file: f, url: URL.createObjectURL(f) });
     }
     function addPick(item) {
         if (!item || !item.path) return;
-        if (shots.length >= MAX_SHOTS) { toast('That is eight photos — the most a post carries.', 'error'); return; }
+        if (shots.length >= MAX_SHOTS) { toast('A post can have up to 8 photos.', 'error'); return; }
         if (shots.some((s) => s.path === item.path)) return;   // the same picture twice is once
         shots.push({ path: item.path, url: item.url || '' });
     }
@@ -734,12 +734,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     function addClipFile(f) {
         if (!f) return;
-        if (clipTally() >= MAX_CLIPS) { toast('That is three clips — the most a post carries.', 'error'); return; }
+        if (clipTally() >= MAX_CLIPS) { toast('A post can have up to 3 clips.', 'error'); return; }
         clips.push({ file: f, url: '' });
     }
     function addClipPick(item) {
         if (!item || !item.path) return;
-        if (clipTally() >= MAX_CLIPS) { toast('That is three clips — the most a post carries.', 'error'); return; }
+        if (clipTally() >= MAX_CLIPS) { toast('A post can have up to 3 clips.', 'error'); return; }
         if (clips.some((c) => c.path === item.path)) return;
         clips.push({ path: item.path, url: item.posterUrl || item.url || '' });
     }
@@ -763,7 +763,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.closeSheet?.('wallVideoSheet');
         if (typeof window.smPickMedia !== 'function') { toast('The gallery is not available here.', 'error'); return; }
         window.smPickMedia({
-            allSchedules: true, kinds: 'video', title: 'A clip from my gallery',
+            allSchedules: true, kinds: 'video', title: 'Clips from your gallery',
             multiple: true,
             max: Math.max(1, MAX_CLIPS - clipTally()),
             onPick: (item) => { addClipPick(item); paintClips(); },
@@ -825,7 +825,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 wrap.innerHTML = '<div class="card p-8 text-center" id="wallNone">'
                     + '<div class="empty-tile">\uD83D\uDD0E</div>'
                     + '<p class=\"font-bold text-gray-900\" style=\"font-family:var(--font-heading)\">' + ((window.ANEE_REGION || {}).ph === false ? 'No match' : 'Walang tugma') + '</p>'
-                    + '<p class="text-sm text-gray-500 mt-1">No post here says that \u2014 in the words or in who wrote them.</p></div>';
+                    + '<p class="text-sm text-gray-500 mt-1">No post matches those words or that name.</p></div>';
             }
             done = !(d.hasMore && d.before);
             if (spin) spin.hidden = true;
@@ -850,7 +850,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const host = document.getElementById('feedComposer');
         const body = document.getElementById('feedPostBody').value.trim();
         const vid = window.plazaVideoFile ? window.plazaVideoFile(host) : null;
-        if (!body && !shots.length && !clips.length && !vid) { toast('Write something or add a photo/video.', 'error'); return; }
+        if (!body && !shots.length && !clips.length && !vid) { toast('Write something or add a photo or video.', 'error'); return; }
         const fd = new FormData();
         if (body) fd.append('body', body);
         // Files go up; a picture the app already keeps travels as its path.
@@ -896,7 +896,7 @@ document.addEventListener('DOMContentLoaded', () => {
             clearClips();
             window.closeSheet?.('wallComposerSheet');
             toast((window.ANEE_REGION || {}).ph === false ? 'Shared on your wall! 🌾' : 'Shared sa wall mo! 🌾');
-        } catch (_) { toast('Network error — try again.', 'error'); }
+        } catch (_) { toast('No connection. Try again.', 'error'); }
         finally { btn.disabled = false; btn.textContent = prev; }
     });
 });

@@ -95,7 +95,7 @@
 
 @section('content')
 <div class="nh-top">
-    <p>Every note you have anywhere — the free-standing ones, each schedule's notebook, and the notes pinned to a day. Tap a note to open it.</p>
+    <p>All your notes in one place: your own notes, each schedule's notebook, and notes on a day. Tap a note to open it.</p>
     <button type="button" id="addNoteBtn" class="btn btn-primary btn-sm nh-newbtn shrink-0">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
         New note
@@ -116,7 +116,7 @@
     <div class="card p-8 text-center">
         <div class="empty-tile">🗒️</div>
         <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">No notes yet</p>
-        <p class="text-sm text-gray-500 mt-1">Tap “New note” to write, draw, add photos &amp; videos, or drop an emoji.</p>
+        <p class="text-sm text-gray-500 mt-1">Tap “New note” to write, draw, or add photos and videos.</p>
     </div>
 @endif
 
@@ -143,7 +143,7 @@
     const list = $('nhList');
 
     $('addNoteBtn').addEventListener('click', () => {
-        if (typeof window.openNoteEditor !== 'function') { window.toast && toast('Editor unavailable.', 'error'); return; }
+        if (typeof window.openNoteEditor !== 'function') { window.toast && toast('The editor did not load. Try again.', 'error'); return; }
         window.openNoteEditor({
             title: 'New note',
             bodyHtml: '',
@@ -265,7 +265,7 @@
         if (!del) return;
         e.stopPropagation();
         const ok = (typeof confirmAction === 'function')
-            ? await confirmAction({ title: 'Delete this note?', message: 'The note and everything attached to it will be permanently removed.', confirmText: 'Delete', danger: true })
+            ? await confirmAction({ title: 'Delete this note?', message: 'The note and its attachments will be deleted for good.', confirmText: 'Delete', danger: true })
             : confirm('Delete this note?');
         if (!ok) return;
         try {

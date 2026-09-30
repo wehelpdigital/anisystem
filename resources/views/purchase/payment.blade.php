@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Pay via ' . \App\Support\Region::payMethod())
-@section('page-title', 'Pay via ' . \App\Support\Region::payMethod())
+@section('title', 'Pay by ' . \App\Support\Region::payMethod())
+@section('page-title', 'Pay by ' . \App\Support\Region::payMethod())
 @section('page-subtitle', $plan->planName.' · '.\App\Support\Region::money(\App\Support\Region::planPrice($plan)))
 @section('back', route('purchase.plans'))
 

@@ -49,7 +49,7 @@
     <div class="w-full max-w-md">
         <div class="text-center mb-6">
             <h1 class="text-2xl font-bold text-gray-900">Welcome back</h1>
-            <p class="text-sm text-gray-500 mt-1">Log in to manage your cropping schedules.</p>
+            <p class="text-sm text-gray-500 mt-1">Log in to manage your farm.</p>
         </div>
 
         <div class="card card-body">
@@ -91,7 +91,7 @@
 
         <p class="text-center text-sm text-gray-600 mt-6">
             No account yet?
-            <a href="{{ route('signup') }}" class="font-bold text-brand-700 hover:underline">Create one for free</a>
+            <a href="{{ route('signup') }}" class="font-bold text-brand-700 hover:underline">Sign up free</a>
         </p>
 
         @php

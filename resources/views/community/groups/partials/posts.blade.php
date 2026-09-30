@@ -161,7 +161,7 @@
         </p>
         <form class="post-reply-form flex flex-wrap items-center gap-2 mt-1" data-post-id="{{ $post->id }}">
             <span class="reply-shell">
-                <input type="text" placeholder="Sumagot ka… use @ to tag a co-farmer" maxlength="4000">
+                <input type="text" placeholder="Sumagot ka. Use @ to tag a farmer" maxlength="4000">
                 <button type="button" class="emoji-btn js-comment-photo" aria-label="Attach a photo" title="Photo">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                 </button>

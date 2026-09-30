@@ -174,11 +174,11 @@
      because planning next week's spray means reading next week's stage. --}}
 <form method="GET" action="{{ route('sm.growth') }}" class="gr-date">
     <input type="hidden" name="id" value="{{ $schedule->id }}">
-    <span class="gr-date-lbl">Reading the crop on</span>
-    <label class="gr-date-tag" title="Pick another date to read the crop on">
+    <span class="gr-date-lbl">Crop stage on</span>
+    <label class="gr-date-tag" title="Pick another date">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-        <span>{{ $on->isToday() ? 'Today — ' . $on->format('M j, Y') : $on->format('D, M j, Y') }}</span>
-        <input type="date" name="on" value="{{ $on->toDateString() }}" aria-label="Reading the crop on"
+        <span>{{ $on->isToday() ? 'Today, ' . $on->format('M j, Y') : $on->format('D, M j, Y') }}</span>
+        <input type="date" name="on" value="{{ $on->toDateString() }}" aria-label="Crop stage date"
             onchange="this.form.submit()"
             onclick="try { this.showPicker && this.showPicker(); } catch (_) {}">
     </label>
@@ -196,7 +196,7 @@
 @empty
     <div class="card card-body text-center text-gray-500 py-10">
         <p class="font-bold text-gray-800 mb-1">No lots yet</p>
-        <p class="text-sm">Add a lot, say what is growing on it, and this page will read the crop for you.</p>
+        <p class="text-sm">Add a lot and choose its crop. This page will then show its growth stage.</p>
         <a class="btn btn-primary mt-4 inline-flex" href="{{ route('sm.lots', ['id' => $schedule->id]) }}">Open Lots</a>
     </div>
 @endforelse
@@ -210,7 +210,7 @@
         <span class="gr-note-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 11v5m0-8h.01"/></svg>
         </span>
-        <p>These stages are counted from the calendar, not from the plant. A crop runs late or early with the weather it gets — a cold spell, a drought, flooding, a typhoon, pest damage or a hungry field all shift it, and so do the variety and how it was established. Walk the field and believe what you see there over what this page says.</p>
+        <p>These stages come from the calendar, not the plant. Cold, drought, floods, typhoons, pests, poor soil, the variety and how it was planted can all make a crop early or late. Trust what you see in the field over this page.</p>
     </div>
 @endif
 

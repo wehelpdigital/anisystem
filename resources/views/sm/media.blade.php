@@ -98,9 +98,9 @@
         @if ($rows->isEmpty())
             <p class="mb-empty">
                 @if ($kind === 'video')
-                    No videos yet. Anything recorded in a note or the collab room lands here.
+                    No videos yet. Videos from notes and the Collab Room show up here.
                 @else
-                    No photos yet. Anything attached to a note, an activity, a drawing or a question to the AI lands here.
+                    No photos yet. Photos from notes, activities, drawings and AI chats show up here.
                 @endif
             </p>
         @else
@@ -134,7 +134,7 @@
                                     {{-- The gallery answers "what have we got";
                                          this answers "what was it about", which
                                          is the next question every time. --}}
-                                    <a class="mb-open" href="{{ $m['href'] }}" data-mb-go>Where it lives →</a>
+                                    <a class="mb-open" href="{{ $m['href'] }}" data-mb-go>See where it's from →</a>
                                 @endif
                                 <a class="mb-dl" href="{{ $m['url'] }}" download data-mb-go title="Save to this device" aria-label="Download">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v10m0 0l-3.5-3.5M12 14l3.5-3.5M5 19h14"/></svg>

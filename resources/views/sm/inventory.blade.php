@@ -186,7 +186,7 @@
 
     @unless ($ivMayWrite)
         <p class="card card-body text-sm text-gray-500 mb-3">
-            🔒 You can read this farm's inventory. Adding items and moving stock is for the owner, or a worker with edit access.
+            🔒 You can view this inventory. Only the owner or a worker with edit access can add items or change stock.
         </p>
     @endunless
 
@@ -197,7 +197,7 @@
         @if ($ivMayWrite)
         <button type="button" class="btn btn-primary w-full sm:w-auto shrink-0" data-add-item>
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
-            Add an Inventory Item
+            Add an item
         </button>
         @endif
     </div>
@@ -219,7 +219,7 @@
                     <svg class="w-7 h-7 text-brand-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
                 </div>
                 <h2 class="font-bold text-gray-900 mb-1">Nothing on the shelf yet</h2>
-                <p class="text-sm text-gray-500 mb-4">Add the fertiliser, chemicals and seed this season will spend. Ticking an activity done then takes what it used straight off the count.</p>
+                <p class="text-sm text-gray-500 mb-4">Add the fertiliser, chemicals and seeds for this season. When you mark an activity done, what it used comes off the count.</p>
                 @if ($ivMayWrite)
                 <button type="button" class="btn btn-primary" data-add-item>Add the first item</button>
                 @endif
@@ -233,15 +233,15 @@
          editing the activity; hand entries are corrected from their day
          on the activities board. --}}
     <div class="iv-pane" id="ivPaneLogs">
-        <p class="form-hint mb-2">This logs all the changes you made in your inventory for audit trail. Each line names who made it.</p>
+        <p class="form-hint mb-2">Every change to your stock, newest first. Each line shows who made it.</p>
         <div id="ivLog" class="iv-log"></div>
         <div id="ivLogEmpty" class="card hidden">
             <div class="card-body iv-empty">
                 <div class="mx-auto w-14 h-14 rounded-2xl bg-brand-50 flex items-center justify-center mb-3">
                     <svg class="w-7 h-7 text-brand-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                 </div>
-                <h2 class="font-bold text-gray-900 mb-1">Nothing has moved yet</h2>
-                <p class="text-sm text-gray-500">Every delivery, every use and every activity ticked done writes a line here, with what the stock was before and after.</p>
+                <h2 class="font-bold text-gray-900 mb-1">No changes yet</h2>
+                <p class="text-sm text-gray-500">Each delivery, use or activity marked done adds a line here. It shows the stock before and after.</p>
             </div>
         </div>
     </div>
@@ -259,7 +259,7 @@
          2026-09-16). Per item: the standing price, the average actually
          paid, what is on hand is worth, and the batches beneath. --}}
     <div class="iv-pane" id="ivPanePricing">
-        <p class="form-hint mb-3">Every delivery or opening count is a <b>batch</b>, and each batch remembers what you paid for it — the same fertiliser can cost more one month and less the next. <b>Tap any price to fix it.</b> The day's cash and the expense report count each batch at its own price.</p>
+        <p class="form-hint mb-3">Each delivery or starting count is a <b>batch</b> with its own price, since prices change from month to month. <b>Tap a price to fix it.</b> The day's cash and the expense report use each batch's own price.</p>
         <div id="ivPricing" class="grid gap-3"></div>
         <p id="ivPricingEmpty" class="text-sm text-gray-400 text-center py-6 hidden">Nothing on the shelf yet.</p>
     </div>
@@ -271,13 +271,13 @@
 <div class="sheet hidden" id="ivItemSheet" data-static="true" style="--sheet-width:32rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title" id="ivItemTitle">Add an Inventory Item</h3>
+        <h3 class="sheet-title" id="ivItemTitle">Add an item</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-3.5">
         <input type="hidden" id="ivItemId" value="">
         <div>
-            <label for="ivName" class="form-label">What is it? <span class="text-red-500">*</span></label>
+            <label for="ivName" class="form-label">Item name <span class="text-red-500">*</span></label>
             <input type="text" id="ivName" maxlength="150" class="form-input" placeholder="e.g. Urea 46-0-0">
         </div>
         {{-- The kind and the unit wear the lot form's crop-tag: a tap opens a
@@ -325,7 +325,7 @@
              the shed by being counted. (The low-stock warning that used to
              sit here is gone — a farm's shed is not a store's shelf.) --}}
         <div id="ivOpenQtyWrap">
-            <label for="ivOpenQty" class="form-label">How many do you have now? <span class="text-red-500">*</span></label>
+            <label for="ivOpenQty" class="form-label">How many on hand? <span class="text-red-500">*</span></label>
             <div class="relative">
                 <input type="number" id="ivOpenQty" min="0" step="any" class="form-input" placeholder="0" inputmode="decimal">
                 <span class="iv-qty-u" id="ivOpenQtyUnit"></span>
@@ -338,7 +338,7 @@
                 <input type="number" id="ivPrice" min="0" step="any" class="form-input" placeholder="0.00" inputmode="decimal">
                 <span class="iv-qty-u" id="ivPriceUnit"></span>
             </div>
-            <p class="form-hint">What one costs. The expense report will multiply it by what the moves say was used.</p>
+            <p class="form-hint">Cost of one. The expense report multiplies it by the amount used.</p>
         </div>
 
         {{-- WHEN COUNTING BEGINS — asked here because here is where the name
@@ -352,7 +352,7 @@
                 <span class="crop-tag-t" id="ivItemStartNow">Today</span>
                 <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
             </button>
-            <p class="form-hint">Activities already ticked done that name this item come off its count from this day — even before you record any stock.</p>
+            <p class="form-hint">Activities marked done from this day that used this item come off the count, even before you add stock.</p>
         </div>
 
         {{-- No opening count.
@@ -364,7 +364,7 @@
 
         <div>
             <label for="ivNote" class="form-label">Note <span class="text-gray-400 font-normal">(optional)</span></label>
-            <input type="text" id="ivNote" maxlength="500" class="form-input" placeholder="Where it is kept, the supplier, anything worth remembering">
+            <input type="text" id="ivNote" maxlength="500" class="form-input" placeholder="Where it is kept, the supplier, or other notes">
         </div>
         <div class="tp-mount" id="ivItemTagsMount" data-tags data-tags-kind="item"></div>
     </div>

@@ -2,7 +2,7 @@
 
 @section('title', 'My Credits')
 @section('page-title', 'My Credits')
-@section('page-subtitle', 'What Anee has cost, and how to buy more')
+@section('page-subtitle', 'What you spent and how to buy more')
 @section('back', route('app.dashboard'))
 
 @push('head')
@@ -107,8 +107,8 @@
             </div>
         </div>
         <p class="cr-hero-p">
-            Anee uses credits for every answer and analysis she gives you. Each one costs a few credits, and the log below shows where they went.
-            @if ($unlimited) This account is never charged, but every use is still listed. @endif
+            Anee uses a few credits for each answer and analysis. The log below shows where they went.
+            @if ($unlimited) This account is never charged, but each use is still listed. @endif
         </p>
         <div class="cr-hero-acts">
             <a href="{{ route('ai.home') }}" class="btn btn-white">Ask Anee</a>
@@ -117,10 +117,10 @@
 
     @if ($pending)
         <div class="card p-4 border-l-4 border-accent-500">
-            <p class="font-bold text-gray-900">Order {{ $pending->orderNumber }} is awaiting verification</p>
+            <p class="font-bold text-gray-900">Order {{ $pending->orderNumber }} is being checked</p>
             <p class="text-sm text-gray-500 mt-1">
-                {{ $pending->credits }} credits ({{ $pending->packName }}) will be added once your {{ \App\Support\Region::payMethod() }} payment is confirmed.
-                This is usually within a few hours.
+                We add {{ $pending->credits }} credits ({{ $pending->packName }}) once your {{ \App\Support\Region::payMethod() }} payment is confirmed.
+                This usually takes a few hours.
             </p>
         </div>
     @endif
@@ -145,7 +145,7 @@
                     <svg class="w-7 h-7 text-brand-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                 </div>
                 <h3 class="font-bold text-gray-900 mb-1">Nothing spent yet</h3>
-                <p class="text-sm text-gray-500">Ask Anee a question, or run an analysis, and what it cost will show up here.</p>
+                <p class="text-sm text-gray-500">Ask Anee a question or run an analysis. The cost shows up here.</p>
             </div></div>
         @else
             <div class="card"><div class="card-body !p-0">
@@ -184,10 +184,10 @@
                 <div class="cr-sell">
                     <span class="e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>
                     <div class="min-w-0">
-                        <b>Credits are spent with Anee, and Anee comes with {{ $anee['name'] ?? 'Libre + Anee' }}</b>
+                        <b>Credits are for Anee. Get her with {{ $anee['name'] ?? 'Libre + Anee' }}</b>
                         <p>Your <strong>{{ config('tiers.' . $tier . '.name') ?? ucfirst($tier) }}</strong> plan does not include her.
-                            {{ $anee['name'] ?? 'Libre + Anee' }} is your plan exactly as it is, plus the chat, the four analyses, Realign and the credit shop.
-                            @if (! $unlimited && $spent > 0) The {{ number_format($spent) }} credits already in your account become yours to spend. @endif
+                            {{ $anee['name'] ?? 'Libre + Anee' }} is your plan plus the chat, the four analyses, Realign and the credit shop.
+                            @if (! $unlimited && $spent > 0) You can then spend the {{ number_format($spent) }} credits you already have. @endif
                         </p>
                         <span class="cr-sell-price">{{ \App\Support\Region::priceTag(\App\Support\Region::tierPrice('libreAnee')) }}<small>/ month</small></span>
                         <div class="mt-4 flex flex-wrap gap-2">
@@ -204,7 +204,7 @@
             </div>
         @else
             @if ($settings)
-                <p class="text-xs text-gray-500 px-1">A text question costs about {{ $textCost }} credits; a photo adds about {{ $photoCost }}. The analyses have flat prices, said before anything is spent.</p>
+                <p class="text-xs text-gray-500 px-1">A text question costs about {{ $textCost }} credits. A photo adds about {{ $photoCost }}. Each analysis has a set price, shown before you spend.</p>
             @endif
             @php $best = $packs->sortBy(fn ($p) => $p->credits > 0 ? \App\Support\Region::packPrice($p) / $p->credits : PHP_FLOAT_MAX)->first(); @endphp
             <div class="cr-packs">
@@ -224,7 +224,7 @@
                     </div>
                 @endforeach
             </div>
-            <p class="text-xs text-gray-500 px-1">Paid via {{ \App\Support\Region::payMethod() }} and verified by our team, usually within a few hours. Credits never expire.</p>
+            <p class="text-xs text-gray-500 px-1">Pay by {{ \App\Support\Region::payMethod() }}. Our team checks it, usually within a few hours. Credits never expire.</p>
         @endif
     </div>
 </div>

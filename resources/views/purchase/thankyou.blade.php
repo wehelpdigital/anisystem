@@ -10,7 +10,7 @@
     $isActive = $status === \App\Models\Subscription::STATUS_ACTIVE;
     [$badgeClass, $badgeLabel] = match ($status) {
         'active' => ['badge-green', 'Active'],
-        'pending' => ['badge-yellow', 'Pending verification'],
+        'pending' => ['badge-yellow', 'Being checked'],
         'suspended' => ['badge-orange', 'Suspended'],
         'rejected' => ['badge-red', 'Payment rejected'],
         'cancelled' => ['badge-gray', 'Cancelled'],
@@ -29,8 +29,8 @@
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">You're all set! 🎉</h2>
                 <p class="text-sm text-gray-600 mt-2 max-w-xs mx-auto">
-                    Your payment has been verified and your subscription is now active.
-                    Time to plan your cropping season!
+                    We checked your payment. Your plan is now active.
+                    Time to plan your season!
                 </p>
             @else
                 <div class="mx-auto mb-4 flex items-center justify-center w-20 h-20 rounded-full {{ $status === 'pending' ? 'bg-brand-100 text-brand-600' : 'bg-gray-100 text-gray-400' }}">
@@ -45,11 +45,11 @@
                 </h2>
                 @if ($status === 'pending')
                     <p class="text-sm text-gray-600 mt-2 max-w-xs mx-auto">
-                        Our team verifies {{ \App\Support\Region::payMethod() }} payments manually — you will get an email once approved.
+                        Our team checks {{ \App\Support\Region::payMethod() }} payments by hand. We will email you once it is approved.
                     </p>
                 @elseif ($status === 'rejected')
                     <p class="text-sm text-gray-600 mt-2 max-w-xs mx-auto">
-                        This payment could not be verified. Please subscribe again or contact support@anee.io.
+                        We could not confirm this payment. Try again, or email support@anee.io.
                     </p>
                 @endif
             @endif
@@ -84,7 +84,7 @@
             <div class="flex flex-col gap-3 mt-6">
                 @if ($isActive)
                     <a href="{{ route('app.dashboard') }}" class="btn btn-accent btn-lg w-full">Open My App</a>
-                    <a href="{{ route('account.subscription') }}" class="btn btn-ghost w-full">View my subscription</a>
+                    <a href="{{ route('account.subscription') }}" class="btn btn-ghost w-full">View my plan</a>
                 @else
                     <a href="{{ route('account.subscription') }}" class="btn btn-primary btn-lg w-full">Check Status</a>
                     <a href="{{ route('account.index') }}" class="btn btn-outline w-full">Go to My Account</a>

@@ -14,7 +14,7 @@
              a full-screen page puts them — buried at the end of a wrapping
              toolbar they read as just more tools. --}}
         <div class="draw-head">
-            <button type="button" class="draw-tool" id="drawBack" aria-label="Back" title="Back — discards the drawing">
+            <button type="button" class="draw-tool" id="drawBack" aria-label="Back" title="Back, without saving">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
             <span class="draw-title" id="drawTitleText">Drawing</span>
@@ -108,7 +108,7 @@
                     </span>
                     <span class="min-w-0">
                         <span class="draw-ask-name" id="drawAskNewName">Save as drawing</span>
-                        <span class="draw-ask-hint" id="drawAskNewHint">Reopen it later and keep changing it</span>
+                        <span class="draw-ask-hint" id="drawAskNewHint">You can change it later</span>
                     </span>
                 </button>
                 <button type="button" class="draw-ask-opt" data-save-mode="image">
@@ -117,7 +117,7 @@
                     </span>
                     <span class="min-w-0">
                         <span class="draw-ask-name">Save as image</span>
-                        <span class="draw-ask-hint" id="drawAskImageHint">A flat picture — it can be drawn over, not edited</span>
+                        <span class="draw-ask-hint" id="drawAskImageHint">A flat picture. You can draw over it but not edit it</span>
                     </span>
                 </button>
                 <button type="button" class="btn btn-ghost w-full mt-1" id="drawAskCancel">Cancel</button>
@@ -131,7 +131,7 @@
                 <h4 class="draw-ask-title" id="drawTextAskTitle">Add text</h4>
                 <input type="text" id="drawTextInput" class="draw-text-input" maxlength="200"
                        autocomplete="off" placeholder="What should it say?">
-                <p class="draw-ask-hint">It lands where you tapped, in the colour and size you picked.</p>
+                <p class="draw-ask-hint">It goes where you tapped, in your colour and size.</p>
                 <div class="draw-ask-row">
                     <button type="button" class="btn btn-ghost" id="drawTextCancel">Cancel</button>
                     <button type="button" class="btn btn-primary" id="drawTextOk">Add it</button>
@@ -161,7 +161,7 @@
                     </span>
                     <span class="min-w-0">
                         <span class="draw-ask-name">Upload a picture</span>
-                        <span class="draw-ask-hint">A file already on this device</span>
+                        <span class="draw-ask-hint">A picture on this device</span>
                     </span>
                 </button>
                 <button type="button" class="draw-ask-opt" data-img-from="gallery" id="drawImgAskGallery">
@@ -170,7 +170,7 @@
                     </span>
                     <span class="min-w-0">
                         <span class="draw-ask-name">From the gallery</span>
-                        <span class="draw-ask-hint" id="drawImgAskGalleryHint">A photo this season already keeps</span>
+                        <span class="draw-ask-hint" id="drawImgAskGalleryHint">A photo already in this season</span>
                     </span>
                 </button>
                 <button type="button" class="btn btn-ghost w-full mt-1" id="drawImgAskCancel">Cancel</button>
@@ -198,7 +198,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
         </div>
-        <p class="draw-hint" id="drawHint">Pick a tool, colour and size. Hold <b>Shift</b> for a perfect square/circle. Use <b>Select</b> to move, resize or delete anything you drew — including text and inserted pictures, which also get a rotate knob. The <b>+</b> above adds another page to this drawing.</p>
+        <p class="draw-hint" id="drawHint">Pick a tool, colour and size. Hold <b>Shift</b> for a perfect square or circle. Use <b>Select</b> to move, resize, turn or delete anything, even text and pictures. Tap <b>+</b> above to add a page.</p>
         <input type="file" id="drawImgInput" accept="image/jpeg,image/png,image/webp" class="hidden">
         {{-- `capture` skips the file dialog and opens the camera itself; a
              desktop with no camera quietly falls back to the plain picker,
@@ -779,7 +779,7 @@
     }
     function addPage() {
         if (pages.length >= MAX_PAGES) {
-            window.toast?.('That is as many pages as one drawing keeps.', 'error');
+            window.toast?.('This drawing has the most pages allowed.', 'error');
             return;
         }
         stashPage();
@@ -798,7 +798,7 @@
         if (on) {
             const ok = await padConfirm({
                 title: 'Remove page ' + (pageIndex + 1) + '?',
-                message: 'Everything on it goes with it — ' + on + (on === 1 ? ' thing' : ' things') + ' drawn here.',
+                message: 'The ' + on + (on === 1 ? ' thing' : ' things') + ' drawn on it will be removed too.',
                 detail: 'Undo cannot bring a whole page back.',
                 confirmText: 'Remove page',
             });
@@ -1040,7 +1040,7 @@
         selected = new Set([o.id]);
         setTool('select');
         render();
-        window.toast?.('Picture placed — drag it, take a corner, turn the knob, and draw right over it.');
+        window.toast?.('Picture added. Drag it, resize it, turn it, or draw over it.');
     }
     async function onPickedFile(e) {
         const f = e.target.files && e.target.files[0];
@@ -1067,10 +1067,10 @@
             const g = document.getElementById('drawImgAskGallery');
             const hint = document.getElementById('drawImgAskGalleryHint');
             const why = typeof window.smPickMedia !== 'function'
-                ? 'The gallery picker is not on this page.'
-                : ((scheduleId || galleryAll) ? '' : 'No season to borrow a gallery from here.');
+                ? 'The gallery is not available on this page.'
+                : ((scheduleId || galleryAll) ? '' : 'No season here to take a photo from.');
             if (g) { g.disabled = !!why; g.title = why; }
-            if (hint) hint.textContent = why || (scheduleId ? 'A photo this season already keeps' : 'A photo from any of your seasons');
+            if (hint) hint.textContent = why || (scheduleId ? 'A photo already in this season' : 'A photo from any of your seasons');
         }
         imgAsk.hidden = !on;
         // Back dismisses the question, the way it dismisses any other overlay.
@@ -1133,7 +1133,7 @@
                     if (!res.ok) throw new Error();
                     await insertPicture(await res.blob());
                 } catch (_) {
-                    window.toast?.('That picture could not be fetched from the gallery.', 'error');
+                    window.toast?.('Could not load that picture from the gallery.', 'error');
                 }
             },
         });
@@ -1210,9 +1210,9 @@
             const ok = await padConfirm({
                 title: many ? 'Clear page ' + (pageIndex + 1) + '?' : 'Clear this drawing?',
                 message: many
-                    ? 'This clears the whole sheet — every stroke on page ' + (pageIndex + 1)
-                        + '. The other pages are left alone.'
-                    : 'This clears the whole sheet — every stroke on it goes.',
+                    ? 'Every stroke on page ' + (pageIndex + 1)
+                        + ' will be cleared. Other pages stay.'
+                    : 'Every stroke on this sheet will be cleared.',
                 detail: 'Undo brings it back.',
                 confirmText: 'Clear the sheet',
                 // Nothing to ask with (no dialog helper) is not a reason to
@@ -1369,11 +1369,11 @@
             const kept = document.getElementById('drawAskNewHint');
             const flat = document.getElementById('drawAskImageHint');
             if (kept) kept.textContent = many
-                ? 'All ' + pages.length + ' pages, still editable later'
-                : 'Reopen it later and keep changing it';
+                ? 'All ' + pages.length + ' pages. You can change them later'
+                : 'You can change it later';
             if (flat) flat.textContent = many
-                ? 'All ' + pages.length + ' pages in one tall picture — not editable'
-                : 'A flat picture — it can be drawn over, not edited';
+                ? 'All ' + pages.length + ' pages in one tall picture. Not editable'
+                : 'A flat picture. You can draw over it but not edit it';
         }
         // Back answers the question by dismissing it, the way it dismisses any
         // other overlay, rather than walking out of the pad.
@@ -1385,7 +1385,7 @@
         // over the drawing it was meant to be editing destroys it — which is
         // exactly what "I opened my drawing and the note went blank" was.
         if (backdropFailed && !totalObjects()) {
-            window.toast?.('That drawing could not be loaded — saving now would replace it with a blank one.', 'error');
+            window.toast?.('That drawing did not load. Saving now would replace it with a blank one.', 'error');
             return;
         }
         // A drawing reopened seconds ago may still be decoding its pictures;
@@ -1468,7 +1468,7 @@
             } catch (_) { img.crossOrigin = 'anonymous'; }
             img.onerror = () => {
                 backdropFailed = true;
-                window.toast?.('That drawing could not be loaded. Anything you draw now would replace it, so it is safer to close and reopen.', 'error');
+                window.toast?.('That drawing did not load. Close it and open it again before you draw.', 'error');
             };
             img.onload = () => {
                 // Its own proportions, pinned to the top-left. Stretching it to

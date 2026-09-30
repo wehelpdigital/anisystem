@@ -94,18 +94,18 @@
             <b>About Protocol</b>
             {{-- One short paragraph, no dashes or lists (the owner's ask,
                  2026-09-29), as the analyses introduce themselves. --}}
-            <p>See one lot's season written down as the recipe you actually followed. Every activity marked done is listed in order by day count, with the date, the work, how long it took, how many people did it and the materials it used, ending with the harvest. Work that was planned but never marked done is left out, so this is a record of what really happened. Each protocol is kept on the Saved tab, and Compare Reports can set it beside another season's.</p>
+            <p>See one lot's season written down as the recipe you followed. Only work marked done is listed, in order by day, with the people and materials used. Each protocol is kept on the Saved tab.</p>
         </div>
     </div>
         <div class="card p-4 mb-4 pt-wizard" id="ptWizard">
-            <p class="text-sm font-bold text-gray-900">Which lot's season becomes the recipe?</p>
-            <p class="text-xs text-gray-500 mt-1 mb-3">Only work that was ticked done goes in — this is the record of what you actually did, step by step on the lot's own day count. When a season turns out well, this is the page you keep.</p>
+            <p class="text-sm font-bold text-gray-900">Which lot should it cover?</p>
+            <p class="text-xs text-gray-500 mt-1 mb-3">Only work marked done is listed, step by step by the lot's day count. When a season goes well, keep this page.</p>
             <button type="button" class="crop-tag" id="ptLotBtn">
                 <span class="crop-tag-e">🌾</span>
                 <span class="crop-tag-t is-none" id="ptLotNow">Choose the lot</span>
                 <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
             </button>
-            <button type="button" class="btn btn-primary w-full mt-3" id="ptGenBtn" disabled>Write the protocol</button>
+            <button type="button" class="btn btn-primary w-full mt-3" id="ptGenBtn" disabled>Make the protocol</button>
         </div>
         <div id="ptReport" hidden></div>
     </div>
@@ -116,7 +116,7 @@
             <div id="ptSavedEmpty" class="hidden rx-empty">
                 <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg></span>
                 <p class="rx-empty-t">Nothing saved yet</p>
-                <p class="rx-empty-p">Write a protocol from a lot and it lands here by itself — every one you write, newest first, ready to rename and describe.</p>
+                <p class="rx-empty-p">Each protocol you make is saved here, newest first. You can rename it and add a note.</p>
             </div>
         </div>
         <div id="ptSavedReport" class="mt-4" hidden></div>
@@ -197,10 +197,10 @@ const __init = () => {
             const res = await api(U.gen, { method: 'POST', body: { scheduleId: @json($schedule->id), lotId: LOT_ID } });
             LAST = res.data;
             drawProtocol($id('ptReport'), LAST.report, LAST, 'fresh');
-            toast('Protocol written and saved to the shelf.');
+            toast('Protocol ready and saved.');
             showInView(LAST, $id('ptReport'), 'fresh');
         } catch (err) { toast(err.message, 'error'); }
-        finally { btn.disabled = false; btn.textContent = 'Write the protocol'; }
+        finally { btn.disabled = false; btn.textContent = 'Make the protocol'; }
     });
 
     function drawProtocol(host, r, meta, mode) {
@@ -214,7 +214,7 @@ const __init = () => {
         const steps = (r.steps || []).map((s2) => {
             const cls = s2.day === 0 ? ' is-zero' : (s2.day !== null && s2.day < 0 ? ' is-pre' : '');
             return `<div class="pt-step">
-                <span class="pt-day${cls}">${s2.dayLabel ? esc(s2.dayLabel) : '—'}<small>${esc(s2.date || '')}${s2.endDate ? '→' + esc(s2.endDate) : ''}</small></span>
+                <span class="pt-day${cls}">${s2.dayLabel ? esc(s2.dayLabel) : 'No day'}<small>${esc(s2.date || '')}${s2.endDate ? '→' + esc(s2.endDate) : ''}</small></span>
                 <span class="pt-body">
                     <b>${esc(s2.title)}</b>
                     <span class="pt-meta">
@@ -228,13 +228,13 @@ const __init = () => {
         }).join('');
         host.innerHTML = `
             <div class="pt-hero">
-                <h2>${esc(r.lot || '')} — the protocol</h2>
+                <h2>${r.lot ? 'Protocol for ' + esc(r.lot) : 'The protocol'}</h2>
                 <p class="sub">${esc(r.schedule || '')}${r.zeroDate ? ' · day zero ' + esc(r.zeroDate) : ''}</p>
                 <div class="pt-chips">${chips.map((c) => `<span class="pt-chip">${c}</span>`).join('')}</div>
             </div>
-            <div class="pt-steps">${steps || '<p class="text-sm text-gray-400 py-6 text-center">No ticked work touches this lot yet.</p>'}</div>
-            ${(r.yields || []).length ? `<div class="pt-yield"><b>🌾 What this protocol produced</b>${r.yields.map(esc).join('; ')}</div>` : ''}
-            ${r.skippedPlanned ? `<p class="pt-note">${r.skippedPlanned} planned but never-ticked ${r.skippedPlanned === 1 ? 'activity is' : 'activities are'} left out — this page is what was actually done.</p>` : ''}
+            <div class="pt-steps">${steps || '<p class="text-sm text-gray-400 py-6 text-center">No work on this lot is marked done yet.</p>'}</div>
+            ${(r.yields || []).length ? `<div class="pt-yield"><b>🌾 What this protocol produced</b>${r.yields.map(esc).join(' · ')}</div>` : ''}
+            ${r.skippedPlanned ? `<p class="pt-note">${r.skippedPlanned} planned ${r.skippedPlanned === 1 ? 'activity' : 'activities'} not marked done ${r.skippedPlanned === 1 ? 'is' : 'are'} left out.</p>` : ''}
 `;
         host.querySelector('[data-pt-again]')?.addEventListener('click', () => {
             host.hidden = true;
@@ -251,7 +251,7 @@ const __init = () => {
         host.querySelector('[data-pt-del]')?.addEventListener('click', async (e) => {
             // currentTarget is gone after any await — take the id first.
             const delId = e.currentTarget.getAttribute('data-pt-del');
-            const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this protocol?', message: 'It leaves the shelf.', confirmText: 'Delete' }) : true;
+            const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this protocol?', message: 'Your season records stay. You can make it again any time.', confirmText: 'Delete' }) : true;
             if (!ok) return;
             try {
                 await api(U.del(delId), { method: 'DELETE' });
@@ -272,14 +272,14 @@ const __init = () => {
         if (@json($ptMayGen) && VIEWING.mine) {
             actions.push({ label: 'Name & description', icon: 'pen', onClick: () => openMetaFor(meta.id) });
             actions.push({ label: 'Delete', icon: 'trash', kind: 'danger', onClick: async () => {
-                const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this protocol?', message: 'It leaves the shelf.', confirmText: 'Delete' }) : confirm('Delete this protocol?');
+                const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this protocol?', message: 'Your season records stay. You can make it again any time.', confirmText: 'Delete' }) : confirm('Delete this protocol?');
                 if (!ok) return;
                 try { await api(U.del(meta.id), { method: 'DELETE' }); toast('Protocol removed.'); window.reportView.close(); }
                 catch (err) { toast(err.message, 'error'); }
             } });
         }
         window.reportView.open({
-            title: VIEWING.title || ((meta.report && meta.report.lot ? meta.report.lot + ' — ' : '') + 'the protocol'),
+            title: VIEWING.title || (meta.report && meta.report.lot ? 'Protocol for ' + meta.report.lot : 'The protocol'),
             node: host,
             actions,
             onClose: () => { VIEWING = null; showTab(false); },

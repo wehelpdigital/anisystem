@@ -95,17 +95,17 @@
     <div class="card card-body" data-st-pane="offline" hidden>
         <div class="st-group">
             <h3>Offline Mode</h3>
-            <p class="st-why">For the field, where the signal isn't. Off by default; kept on this device.</p>
+            <p class="st-why">For the field, where there is no signal. Off at first and saved on this device.</p>
 
             @php $offlineLocked = ! \App\Support\Tier::farmCan('offline'); $offlineRung = \App\Support\Tier::farmUnlocksAt('offline'); @endphp
             <button type="button" class="st-switch" id="stOffline" role="switch" aria-checked="false"
-                    @if ($offlineLocked) data-tier-lock="{{ $offlineRung }}" data-lock-say="{{ \App\Support\Tier::say($offlineRung, 'Offline mode comes with {plan} — the farm stays on your phone when the signal drops, and what you do out there syncs itself when it returns.') }}" @endif>
+                    @if ($offlineLocked) data-tier-lock="{{ $offlineRung }}" data-lock-say="{{ \App\Support\Tier::say($offlineRung, 'Offline mode comes with {plan}. Your farm stays on your phone when the signal drops, and your work syncs when it comes back.') }}" @endif>
                 <span class="st-switch-txt {{ $offlineLocked ? 'tl-dim' : '' }}">
                     <b>Keep working without a signal</b>
-                    <span>When on, anee keeps a copy on this phone of every page you visit, so they still
-                    open when the internet drops — and a yellow bar tells you you're in offline mode.</span>
+                    <span>When on, anee saves each page you visit on this phone, so it still opens
+                    with no internet. A yellow bar shows when you are offline.</span>
                     @if ($offlineLocked)
-                        <span class="st-locked-say">🔒 Comes with {{ \App\Support\Tier::withPlan($offlineRung) }}{{ \App\Support\WorkerContext::inWorkerContext() ? ' — on this farm' : '' }}. Tap to see the plans.</span>
+                        <span class="st-locked-say">🔒 Comes with {{ \App\Support\Tier::withPlan($offlineRung) }}{{ \App\Support\WorkerContext::inWorkerContext() ? ' for this farm' : '' }}. Tap to see the plans.</span>
                     @endif
                 </span>
                 @if ($offlineLocked)
@@ -116,17 +116,13 @@
             </button>
 
             <div class="st-offline-say">
-                <p><b>What works offline today.</b> Reading: your main pages — the dashboard, each
-                season's board, the notes hub — are kept ready while this is on, and any other screen
-                you've opened reopens from its copy. Writing: <b>ticking an activity done</b> and the
-                <b>Quick Tools captures</b> — a photo (taken or picked from the phone), a voice note,
-                a video clip. Each one is saved on this phone and uploads itself, automatically, the
-                moment the connection returns; the yellow bar counts what's waiting.</p>
-                <p><b>What's coming.</b> More offline actions ride the same queue next — adding a note,
-                editing an activity — module by module, once each one's sync is proven.</p>
-                <p><b>If something changed while you were away.</b> No merge screens: the last write wins.
-                If the server moved while you were offline, your change still lands and the sync note
-                tells you the farm may have moved — refresh and you'll see everything as it now is.</p>
+                <p><b>What works offline.</b> Your main pages open from a saved copy: the dashboard,
+                each season's board and the notes hub. Any page you opened before opens too. You can
+                <b>tick an activity done</b> and use <b>Quick Tools</b> for a photo, voice note or video.
+                These save on this phone and upload when the signal returns. The yellow bar counts what is waiting.</p>
+                <p><b>Coming soon.</b> More offline actions, like adding a note or editing an activity.</p>
+                <p><b>If something changed while you were away.</b> The last save wins. Your change still
+                goes in, and a note tells you the farm may have changed. Refresh to see the latest.</p>
             </div>
         </div>
     </div>
@@ -134,7 +130,7 @@
     <div class="card card-body" data-st-pane="a11y">
         <div class="st-group">
             <h3>Text size</h3>
-            <p class="st-why">Everything grows together — the board, the notes, the buttons — so nothing is left small next to something big.</p>
+            <p class="st-why">The board, notes and buttons all grow together.</p>
             <div class="st-choices" id="stFont">
                 <button type="button" class="st-choice st-size-sm" data-font="sm"><b>Aa</b><span>Small</span></button>
                 <button type="button" class="st-choice st-size-md" data-font="md"><b>Aa</b><span>Normal</span></button>
@@ -145,12 +141,12 @@
 
         <div class="st-group">
             <h3>Seeing it clearly</h3>
-            <p class="st-why">For bright sunlight, tired eyes, or a screen that has seen a few seasons.</p>
+            <p class="st-why">For bright sun, tired eyes, or an old screen.</p>
 
             <button type="button" class="st-switch" id="stContrast" role="switch" aria-checked="false">
                 <span class="st-switch-txt">
                     <b>Higher contrast</b>
-                    <span>Darker text and edges you can actually see, instead of soft greys.</span>
+                    <span>Darker text and edges, not soft greys.</span>
                 </span>
                 <span class="st-knob" aria-hidden="true"></span>
             </button>
@@ -158,7 +154,7 @@
             <button type="button" class="st-switch" id="stUnderline" role="switch" aria-checked="false">
                 <span class="st-switch-txt">
                     <b>Underline links</b>
-                    <span>Marks every link by its shape, not only by its colour.</span>
+                    <span>Links get a line under them, not just a colour.</span>
                 </span>
                 <span class="st-knob" aria-hidden="true"></span>
             </button>
@@ -166,7 +162,7 @@
             <button type="button" class="st-switch" id="stMotion" role="switch" aria-checked="false">
                 <span class="st-switch-txt">
                     <b>Reduce movement</b>
-                    <span>Panels and sheets appear instead of sliding. Easier on a slow phone, and on anyone movement bothers.</span>
+                    <span>Panels appear without sliding. Easier on slow phones and on the eyes.</span>
                 </span>
                 <span class="st-knob" aria-hidden="true"></span>
             </button>
@@ -174,7 +170,7 @@
 
         <div class="st-preview">
             <h4>The season is looking good</h4>
-            <p>This is how ordinary writing will read — a note about a lot, a warning about the weather, the words under a button.</p>
+            <p>This is how normal text will look, like a note about a lot or a weather warning.</p>
             <div class="st-prow">
                 <span class="badge badge-green">Active</span>
                 <span class="badge badge-gray">DAS 58</span>
@@ -183,7 +179,7 @@
             </div>
         </div>
 
-        <p class="text-xs text-gray-400 mt-4">These are kept on this device, and they take effect straight away — on every page, not just this one.</p>
+        <p class="text-xs text-gray-400 mt-4">Saved on this device. They work right away on every page.</p>
     </div>
 </div>
 @endsection
@@ -246,12 +242,12 @@
             off.setAttribute('aria-checked', v ? 'true' : 'false');
         };
         off.addEventListener('click', () => {
-            if (!window.aneeOffline) { window.toast?.('Offline mode needs the app to finish loading — try again.', 'error'); return; }
+            if (!window.aneeOffline) { window.toast?.('The app is still loading. Try again.', 'error'); return; }
             window.aneeOffline.set(!window.aneeOffline.on());
             paintOff();
             window.toast?.(window.aneeOffline.on()
-                ? 'Offline mode is on — pages you visit are kept on this phone.'
-                : 'Offline mode is off. The kept copies were cleared.');
+                ? 'Offline mode is on. Pages you visit are saved on this phone.'
+                : 'Offline mode is off. Saved copies were cleared.');
         });
         // app.js is a deferred module and may land after this block: paint
         // now with what we can read directly, then again on its signal.

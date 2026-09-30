@@ -12,7 +12,7 @@
 <div class="sheet hidden" id="ivMoveSheet" style="--sheet-width:28rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title" id="ivMoveTitle">Take some out</h3>
+        <h3 class="sheet-title" id="ivMoveTitle">Take stock out</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-3">
@@ -42,7 +42,7 @@
              asks, because it is the same item. --}}
         <div id="ivMoveNewWrap" class="hidden rounded-xl border border-dashed border-gray-300 p-3 space-y-2.5">
             <div>
-                <label for="ivMoveNewName" class="form-label text-xs! mb-1!">What is it? <span class="text-red-500">*</span></label>
+                <label for="ivMoveNewName" class="form-label text-xs! mb-1!">Item name <span class="text-red-500">*</span></label>
                 <input type="text" id="ivMoveNewName" maxlength="150" class="form-input bg-white!" placeholder="e.g. Urea 46-0-0" autocomplete="off">
             </div>
             {{-- One question per row — squeezed side by side, the two
@@ -139,13 +139,13 @@
              the log line says so. Only when ADDING to something that already
              exists; a NEW item's form has its own price box. --}}
         <div id="ivMoveBuyWrap" class="hidden">
-            <label for="ivMoveBuyPrice" class="form-label">Bought at ({{ \App\Support\Region::symbol() }} each) <span class="text-gray-400 font-normal">(optional)</span></label>
+            <label for="ivMoveBuyPrice" class="form-label">Price paid ({{ \App\Support\Region::symbol() }} each) <span class="text-gray-400 font-normal">(optional)</span></label>
             <input type="number" id="ivMoveBuyPrice" min="0" step="any" class="form-input" placeholder="0.00" inputmode="decimal">
         </div>
 
         <div>
             <label for="ivMoveNote" class="form-label">Note <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="ivMoveNote" rows="2" maxlength="500" class="form-textarea" placeholder="What it went on, who delivered it, anything worth remembering"></textarea>
+            <textarea id="ivMoveNote" rows="2" maxlength="500" class="form-textarea" placeholder="What it was used for, who delivered it, or other notes"></textarea>
         </div>
 
         <div class="tp-mount" id="ivMoveTagsMount" data-tags data-tags-kind="move"></div>
@@ -194,7 +194,7 @@
         </div>
         <div>
             <label for="ivMEdNote" class="form-label">Note <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="ivMEdNote" rows="2" maxlength="500" class="form-textarea" placeholder="What it went on, who delivered it"></textarea>
+            <textarea id="ivMEdNote" rows="2" maxlength="500" class="form-textarea" placeholder="What it was used for, or who delivered it"></textarea>
         </div>
         <div class="tp-mount" id="ivMEdTagsMount" data-tags data-tags-kind="move"></div>
     </div>
@@ -211,7 +211,7 @@
     <div class="sheet-header">
         <div class="min-w-0">
             <h3 class="sheet-title" id="ivConvTitle">Amount</h3>
-            <p class="text-xs text-gray-400">The same amount, said in its other units.</p>
+            <p class="text-xs text-gray-400">The same amount in other units.</p>
         </div>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full shrink-0" aria-label="Close">✕</button>
     </div>
@@ -236,19 +236,19 @@
         <div class="dt-rows">
             <button type="button" class="dt-row" data-iv-menu-act="edit">
                 <span class="dt-row-e">✏️</span>
-                <span class="dt-row-body"><b>Edit current</b><i>Name, kind, unit, price, the low-stock warning.</i></span>
+                <span class="dt-row-body"><b>Edit item</b><i>Change its name, kind, unit or note.</i></span>
             </button>
             <button type="button" class="dt-row" data-iv-menu-act="in">
                 <span class="dt-row-e">📥</span>
-                <span class="dt-row-body"><b>Add inventory of this</b><i>A delivery, a purchase, a carry-over, anything that will make the count up for this item.</i></span>
+                <span class="dt-row-body"><b>Add stock</b><i>A delivery, a purchase or leftovers. The count goes up.</i></span>
             </button>
             <button type="button" class="dt-row" data-iv-menu-act="out">
                 <span class="dt-row-e">📤</span>
-                <span class="dt-row-body"><b>Subtract inventory of this</b><i>Used or lost outside an activity, the count goes down for this item.</i></span>
+                <span class="dt-row-body"><b>Take stock out</b><i>Used or lost outside an activity. The count goes down.</i></span>
             </button>
             <button type="button" class="dt-row" data-iv-menu-act="delete">
                 <span class="dt-row-e">🗑️</span>
-                <span class="dt-row-body"><b>Delete this</b><i>Off the shed's list. Its log lines stay.</i></span>
+                <span class="dt-row-body"><b>Delete item</b><i>Removes it from the list. Its log lines stay.</i></span>
             </button>
         </div>
     </div>
@@ -261,7 +261,7 @@
 <div class="sheet hidden" id="ivStartSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">When does counting begin?</h3>
+        <h3 class="sheet-title">When does the count start?</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
@@ -269,8 +269,8 @@
             <button type="button" class="dt-row" data-start="today">
                 <span class="dt-row-e">🗓️</span>
                 <span class="dt-row-body">
-                    <b>Today onward</b>
-                    <i>The count starts now. Activities ticked done before today are not taken from it.</i>
+                    <b>From today</b>
+                    <i>The count starts today. Activities done before today do not take from it.</i>
                 </span>
                 <svg class="dt-row-tick hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>
@@ -278,7 +278,7 @@
                 <span class="dt-row-e">📅</span>
                 <span class="dt-row-body">
                     <b>From a day I pick</b>
-                    <i>Activities ticked done on or after that day come off the count automatically.</i>
+                    <i>Activities done on or after that day come off the count.</i>
                 </span>
                 {{-- The picker itself, reached from the row rather than shown
                      as a field: showPicker() where the browser has it, the
@@ -289,13 +289,13 @@
             <button type="button" class="dt-row" data-start="beginning">
                 <span class="dt-row-e">⏮️</span>
                 <span class="dt-row-body">
-                    <b>From the season's beginning</b>
-                    <i id="ivStartBeginningSays">Everything already ticked done that used this item comes off the count.</i>
+                    <b>From the season start</b>
+                    <i id="ivStartBeginningSays">Every activity marked done that used this item comes off the count.</i>
                 </span>
                 <svg class="dt-row-tick hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>
         </div>
-        <p class="form-hint mt-3">What the season has already used is worked out from the day you choose — the log will show each activity's take as its own line.</p>
+        <p class="form-hint mt-3">What was already used is counted from the day you pick. Each activity shows as its own line in the log.</p>
     </div>
 </div>
 
@@ -306,7 +306,7 @@
 <div class="sheet hidden" id="ivStartEditSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Move the start</h3>
+        <h3 class="sheet-title">Change the start</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-3">
@@ -327,7 +327,7 @@
                 <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
             </button>
         </div>
-        <p class="form-hint">The season is recalculated from the new answer: activities ticked done from that day take from the count, earlier ones do not. Deliveries and uses you typed by hand stay as they are.</p>
+        <p class="form-hint">Activities done from that day take from the count. Earlier ones do not. Stock you added or used by hand stays the same.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" id="ivStartEditGo" class="btn btn-primary w-full">Recalculate</button>
@@ -363,7 +363,7 @@
             </div>
         </div>
         <div>
-            <label for="ivPriceInput" class="form-label">What one costs</label>
+            <label for="ivPriceInput" class="form-label">Price of one</label>
             <div class="relative">
                 <input type="number" id="ivPriceInput" min="0" step="any" class="form-input" placeholder="0.00" inputmode="decimal">
                 <span class="iv-qty-u" id="ivPriceUnit"></span>
@@ -384,7 +384,7 @@
 <div class="sheet hidden" id="ivKindSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">What kind of thing?</h3>
+        <h3 class="sheet-title">What kind of item?</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body dt-rows" id="ivKindList"></div>
@@ -392,7 +392,7 @@
 <div class="sheet hidden" id="ivUnitSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Counted in what?</h3>
+        <h3 class="sheet-title">Choose a unit</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
@@ -404,7 +404,7 @@
 <div class="sheet hidden" id="ivMoveUnitSheet" style="--sheet-width:24rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Measured in what?</h3>
+        <h3 class="sheet-title">Choose a unit</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body dt-rows" id="ivMoveUnitList"></div>

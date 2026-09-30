@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 success: true,
                 queued: true,
                 data: optimistic,
-                message: 'Saved on this phone - it will sync when you are back.',
+                message: 'Saved on this phone. It will sync when you are back online.',
             };
         }
     }
@@ -608,7 +608,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pill.hidden = false;
             pill.innerHTML = `<span class="dhs-emoji">${first.stage.icon || '🌱'}</span><span>${esc(label)}</span>`;
             pill.title = detail;
-            pill.setAttribute('aria-label', 'Growth stage — ' + detail);
+            pill.setAttribute('aria-label', 'Growth stage: ' + detail);
             pill.setAttribute('data-date', dateKey);
             // Remembered so the cost pill, which repaints on its own schedule,
             // can re-fit the line without re-deriving what this one stands for.
@@ -694,7 +694,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${st.progress !== null ? `<div class="gs-bar"><span style="width:${Math.round(st.progress * 100)}%"></span></div>` : ''}
                     <div class="gs-next">${st.next
                         ? `Day ${st.dayInStage + 1} of this stage · ${esc(st.next.label)} in about ${st.next.inDays} day${st.next.inDays === 1 ? '' : 's'}`
-                        : 'The last stage — harvest window.'}</div>
+                        : 'The last stage: time to harvest.'}</div>
                     <div class="gs-steps">${steps}</div>
                     ${(() => {
                         // Realign by Anee: her button, and her note once she has spoken.
@@ -702,16 +702,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         window.growthRealign.known[r.lotId] = r.realign;
                         window.growthRealign.names[r.lotId] = r.lotName;
                         return window.growthRealign.block({ lotId: r.lotId, lotName: r.lotName, realign: r.realign,
-                            calendar: `${r.counter} ${r.day} — ${(r.stage && r.stage.label) || '?'}` });
+                            calendar: `${r.counter} ${r.day}: ${(r.stage && r.stage.label) || '?'}` });
                     })()}
                 </div>
                 </div></div>
             </div>`;
         }).join('') + (quiet.length ? `<div class="gs-quiet"><b>Not readable yet</b>${quiet.map((q) => `
-            <span>${esc(q.name)} — ${q.crop ? 'no day zero yet' : 'no crop set'}</span>`).join('')}</div>` : '')
-        + '<p class="gs-foot">These stages are counted from the calendar, not from the plant. A crop runs late or early with the weather it gets — a cold spell, a drought, flooding, a typhoon, pest damage or a hungry field all shift it, and so do the variety and how it was established. Walk the field and believe what you see there over what this page says.</p>'
-        : `<p class="gs-none">No lot here has a crop set, or the count has not started yet.
-            Set the crop on a lot in the Lots module and give it a day zero.</p>`;
+            <span>${esc(q.name)}: ${q.crop ? 'no day zero yet' : 'no crop set'}</span>`).join('')}</div>` : '')
+        + '<p class="gs-foot">These stages come from the calendar, not the plant. Weather, pests, poor soil, the variety and how it was planted can all make a crop run early or late. Walk the field and trust what you see there.</p>'
+        : `<p class="gs-none">No lot here has a crop, or its count has not started.
+            Set the crop in the Lots module and give it a day zero.</p>`;
 
         gsApplyFolds();
         $id('gsFoldAll')?.classList.toggle('hidden', !rows.length);
@@ -1102,7 +1102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }).join('');
         } else if (a.activityType !== 'worker_payroll') {
             // A payroll day has no lot by nature, so saying so is noise.
-            lotsRow = '<span class="item-tag activity-na-tag" title="Applies generally — not tied to any specific lot">N/A — Not lot-specific</span>';
+            lotsRow = '<span class="item-tag activity-na-tag" title="Not tied to any lot">N/A: No lot</span>';
         }
         // The variety below the title, as a regular neutral tag. The day
         // count that used to sit beside it has gone up to the lot's own chip.
@@ -1148,13 +1148,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // DAP, otherwise DAS 0 (the seeding anchor for DAS/DAT lots).
         const dzMode = (lotIds.length && lotIds.every((id) => lotDayType(id) === 'TREE')) ? 'DOS' : ((lotIds.length && lotIds.every((id) => lotDayType(id) === 'DAP')) ? 'DAP' : 'DAS');
         const dayZeroBadge = isDayZeroFlag
-            ? `<span class="badge day-zero-badge" title="This activity's start date becomes ${dzMode} 0 for every lot it covers">${SVG.star} ${dzMode} 0</span>`
+            ? `<span class="badge day-zero-badge" title="This start date is ${dzMode} 0 for its lots">${SVG.star} ${dzMode} 0</span>`
             : '';
         const transplantBadge = isTransplantFlag
-            ? `<span class="badge transplant-badge" title="Transplant day — starts a fresh DAT counter for every lot it covers">${SVG.star} DAT 0</span>`
+            ? `<span class="badge transplant-badge" title="Transplant day. Starts a new DAT count for its lots.">${SVG.star} DAT 0</span>`
             : '';
         const rangeBadge = isRange
-            ? `<span class="badge badge-gray range-badge" title="Multi-day range">&rarr; ${esc(MONTH_SHORT[endObj.getMonth()] + ' ' + endObj.getDate())} (${rangeDays}d)</span>`
+            ? `<span class="badge badge-gray range-badge" title="Runs for several days">&rarr; ${esc(MONTH_SHORT[endObj.getMonth()] + ' ' + endObj.getDate())} (${rangeDays}d)</span>`
             : '';
         const hiddenTag = `<span class="badge badge-gray hide-activity-tag"${isHiddenFlag ? '' : ' style="display:none;"'}>Hidden</span>`;
 
@@ -1164,7 +1164,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const workerTags = a.activityType === 'worker_payroll' ? '' : workerIds
             .map((id) => `<span class="item-tag worker-tag">${esc(WORKER_NAMES[id] || ('Worker #' + id))}`
                 + (workerOffOn(Number(id), (a.targetDate || '').slice(0, 10))
-                    ? '<span class="w-forced" title="Marked off this day — working anyway">forced</span>' : '')
+                    ? '<span class="w-forced" title="Day off, but working anyway">forced</span>' : '')
                 + '</span>')
             .join('');
 
@@ -1227,8 +1227,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>
             ${typeIco}
-            <button type="button" class="icon-btn star-btn${LOCK_EDIT_CLS}" data-star-btn data-id="${a.id}" data-star="${starOf(a)}"${LOCK_EDIT} title="${esc(editTitle(starOf(a) ? `Marker: ${starName(starOf(a))}` : 'Marker — tap to pick a colour'))}" aria-label="Marker: ${esc(starName(starOf(a)))}">${SVG.star}</button>
-            <button type="button" class="icon-btn dd-act-btn${window.__ddPickedAct === String(a.id) ? ' is-picked' : ''}" data-dd-act="${a.id}" title="Date difference: measure from this activity to another activity or day" aria-label="Date difference from this activity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg></button>
+            <button type="button" class="icon-btn star-btn${LOCK_EDIT_CLS}" data-star-btn data-id="${a.id}" data-star="${starOf(a)}"${LOCK_EDIT} title="${esc(editTitle(starOf(a) ? `Marker: ${starName(starOf(a))}` : 'Marker: tap to pick a colour'))}" aria-label="Marker: ${esc(starName(starOf(a)))}">${SVG.star}</button>
+            <button type="button" class="icon-btn dd-act-btn${window.__ddPickedAct === String(a.id) ? ' is-picked' : ''}" data-dd-act="${a.id}" title="Count the days from this activity to another one" aria-label="Count days from this activity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg></button>
             <button type="button" class="icon-btn card-menu-btn" data-id="${a.id}" data-name="${nameAttr}" title="Actions"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
             <span class="act-fold-chip" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></span>
             ${hasChecklist(a) ? '' : costTag(a.labourTotal, a.workerPay)}
@@ -1256,7 +1256,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="flex items-center shrink-0">
             ${hasChecklist(a) ? '<span class="badge payroll-badge mr-1">Worker checklist</span>' : ''}
             <div class="hidden md:flex items-center gap-0.5 done-hide">
-                <button type="button" class="icon-btn hide-activity-toggle${LOCK_EDIT_CLS}" data-id="${a.id}"${LOCK_EDIT} title="${esc(editTitle('Toggle visibility in presentations and exports'))}" aria-pressed="${isHiddenFlag ? 'true' : 'false'}">${SVG.eye}</button>
+                <button type="button" class="icon-btn hide-activity-toggle${LOCK_EDIT_CLS}" data-id="${a.id}"${LOCK_EDIT} title="${esc(editTitle('Show or hide in presentations and exports'))}" aria-pressed="${isHiddenFlag ? 'true' : 'false'}">${SVG.eye}</button>
                 <button type="button" class="icon-btn edit-activity-btn${LOCK_EDIT_CLS}" data-id="${a.id}"${LOCK_EDIT} title="${esc(editTitle('Edit'))}">${SVG.edit}</button>
                 <button type="button" class="icon-btn tag-activity-btn${LOCK_EDIT_CLS}" data-id="${a.id}" data-name="${nameAttr}"${LOCK_EDIT} title="${esc(editTitle('Tag a drawing, map or note'))}">${SVG.tag}</button>
                 <button type="button" class="icon-btn duplicate-activity-btn${LOCK_EDIT_CLS}" data-id="${a.id}" data-name="${nameAttr}"${LOCK_EDIT} title="${esc(editTitle('Duplicate'))}">${SVG.duplicate}</button>
@@ -1546,7 +1546,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const on = (ref) => TAG_CURRENT.some((t) => t && t.kind === TAG_TAB && String(t.ref) === String(ref));
         if (!rows.length) {
             const word = TAG_TAB === 'drawing' ? 'drawing' : (TAG_TAB === 'map' ? 'map' : 'note');
-            box.innerHTML = `<div class="tg-empty"><span class="e">${TAG_TAB === 'note' ? '📝' : (TAG_TAB === 'map' ? '🗺️' : '✏️')}</span>Nothing to tag yet — make a ${word} first and it will be listed here.</div>`;
+            box.innerHTML = `<div class="tg-empty"><span class="e">${TAG_TAB === 'note' ? '📝' : (TAG_TAB === 'map' ? '🗺️' : '✏️')}</span>Nothing to tag yet. Make a ${word} first and it shows up here.</div>`;
             return;
         }
         // A picture that fails to arrive leaves the stamp's own glyph showing,
@@ -1554,7 +1554,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const shot = (r, kind) => `<span class="tg-shot">${r.thumb ? `<img src="${esc(r.thumb)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')" onerror="this.remove()">` : ''}<span class="tg-ph">${TG_ICON[kind]}</span>${TICK_SVG}</span>`;
         if (TAG_TAB === 'drawing' || TAG_TAB === 'map') {
             box.innerHTML = `<div class="tg-grid">${rows.map((r) => `
-                <button type="button" class="tg-card${on(r.ref) ? ' is-on' : ''}" data-pick="${esc(r.ref)}" title="${on(r.ref) ? 'Already tagged — tap to tag again' : 'Tag this ' + TAG_TAB}">
+                <button type="button" class="tg-card${on(r.ref) ? ' is-on' : ''}" data-pick="${esc(r.ref)}" title="${on(r.ref) ? 'Already tagged. Tap to tag again.' : 'Tag this ' + TAG_TAB}">
                     ${shot(r, TAG_TAB)}
                     <span class="tg-meta"><b>${esc(r.label || 'Untitled')}</b><small>${esc([r.when, r.meta].filter(Boolean).join(' · '))}</small></span>
                 </button>`).join('')}</div>`;
@@ -1608,7 +1608,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const none = r.daysBefore === null || r.daysBefore === undefined;
         return `<div class="adv-lede${none ? ' is-none' : ''}">
             <div class="adv-lede-k">Last ${esc(String(r.label).toLowerCase())} on this ground</div>
-            <div class="adv-lede-a">${none ? 'Never — this is the first' : esc(advGap(r.daysBefore))}</div>
+            <div class="adv-lede-a">${none ? 'Never. This is the first.' : esc(advGap(r.daysBefore))}</div>
             ${none ? '' : `<div class="adv-lede-s">${esc(r.when || '')}${r.title ? ' · ' + esc(r.title) : ''}</div>`}
         </div>`;
     }
@@ -1661,9 +1661,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // All quiet is an answer too — say it, rather than showing a
             // sheet of nothing but the footnote.
             if (!html) {
-                html = '<div class="adv-card"><p class="adv-empty">Nothing has happened on this ground before this task — no earlier work connects to it.</p></div>';
+                html = '<div class="adv-card"><p class="adv-empty">No earlier work on this ground before this task.</p></div>';
             }
-            html += '<p class="adv-foot">Counted from this task’s own date, against the lots it covers. Only work that has actually happened on this ground is listed; drafts are not counted — a draft has not happened.</p>';
+            html += '<p class="adv-foot">Counted from this task’s date, for the lots it covers. Only work that really happened is listed. Drafts do not count.</p>';
             $id('advInfoBody').innerHTML = html;
 
             const more = $id('advMore');
@@ -1848,7 +1848,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     : `${SVG.wallet}<span>&mdash;</span>`;
             }
             const tip = total > 0
-                ? 'Cash to prepare for this day — wages for everyone on it, materials and stock bought, plus any extra expense logged against it'
+                ? 'Cash to prepare for this day: wages, materials, stock bought and extra expenses'
                 : 'Nothing costed on this day';
             if (pill.title !== tip) pill.title = tip;
         } else {
@@ -1903,13 +1903,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (amount <= 0) return;
             goods.push({
                 name: (card.querySelector('.activity-card-title')?.textContent || 'Activity').trim(),
-                detail: 'materials & services on this activity',
+                detail: 'materials and services on this activity',
                 amount,
             });
         });
         _stockBuysFor(dateKey).forEach((r) => {
             goods.push({
-                name: (r.reason === 'open' ? 'Opening stock — ' : 'Stock bought — ') + (r.name || 'item'),
+                name: (r.reason === 'open' ? 'Opening stock: ' : 'Stock bought: ') + (r.name || 'item'),
                 detail: (r.says || '') + (r.note ? ' · ' + r.note : ''),
                 amount: Number(r.amount) || 0,
             });
@@ -1959,8 +1959,8 @@ document.addEventListener('DOMContentLoaded', () => {
             ${section('Materials & stock', 'goods', ICON_GOODS, goods, goodsSum)}
             ${section('Extra expenses', 'extra', ICON_EXTRA, extras, extraSum)}
             <p class="dc-foot">${wages.length
-                ? 'Wages come from each activity: a worker with no half or whole day of their own is paid for as long as the task itself takes.'
-                : 'No wages here yet — nobody is assigned to this day.'}</p>`;
+                ? 'Wages come from each activity. A worker with no half or whole day set is paid for as long as the task takes.'
+                : 'No wages yet. Nobody is assigned to this day.'}</p>`;
         openSheet('dayCashSheet');
     }
     /* ---- What a stretch of days costs ---------------------------------
@@ -2078,10 +2078,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 pill.title = title;
             } else if (picked) {
                 pill.setAttribute('data-range-say', 'Pick the other end');
-                pill.title = 'Now tap the other end of the stretch you want totalled';
+                pill.title = 'Now tap the last day to total';
             } else {
                 pill.removeAttribute('data-range-say');
-                pill.title = 'Tap to total this day together with another';
+                pill.title = 'Tap to total this day with another';
             }
         });
         CASH_RANGE.painted = true;
@@ -2139,7 +2139,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>`).join('')
                     : '<p class="cr-none">Nothing is costed in these days yet.</p>'}</div>
             </div>
-            <p class="dc-foot">Wages for everyone on each day, plus any extra expense logged against it. Tap a day's own figure for its longhand.</p>`;
+            <p class="dc-foot">Wages for each day, plus any extra expenses. Tap a day’s amount to see the details.</p>`;
         openSheet('cashRangeSheet');
     }
 
@@ -2239,7 +2239,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const sub = $id('cashPickDaySub');
         if (sub) {
             sub.textContent = total > 0
-                ? money(total) + ' on this day, in longhand'
+                ? money(total) + ' on this day, line by line'
                 : 'Nothing costed on this day yet';
         }
         openSheet('dayCashChooseSheet');
@@ -2378,7 +2378,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.dateDiff = { cancel: ddCancel, on: () => !!DD.a };
 
     function ddPick(p) {
-        if (!p.date || !/^\d{4}-\d{2}-\d{2}$/.test(p.date)) { toast('This one has no date yet, so there is nothing to measure from.', 'error'); return; }
+        if (!p.date || !/^\d{4}-\d{2}-\d{2}$/.test(p.date)) { toast('This has no date yet, so there is nothing to count from.', 'error'); return; }
         if (!DD.a) {
             // One question at a time: a stretch being totalled is let go.
             if (typeof CASH_RANGE !== 'undefined' && CASH_RANGE.on) cashRangeSetMode(false);
@@ -2443,7 +2443,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
         const html = `
             <div class="dd-hero">
-                <div class="dd-hero-n">${span ? `<b>${span}</b><span>${span === 1 ? 'day' : 'days'} apart</span>` : '<b>0</b><span>days apart: the same day</span>'}</div>
+                <div class="dd-hero-n">${span ? `<b>${span}</b><span>${span === 1 ? 'day' : 'days'} apart</span>` : '<b>0</b><span>days apart, same day</span>'}</div>
                 <p class="dd-hero-when">${esc(ddSay(A.date, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }))}${span ? ` <span>→</span> ${esc(ddSay(B.date, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }))}` : ''}</p>
                 <div class="dd-chips">
                     ${weeks ? `<span class="dd-chip">${weeks} ${weeks === 1 ? 'week' : 'weeks'}${rest ? ' and ' + ddDays(rest) : ''}</span>` : ''}
@@ -2761,7 +2761,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const noteRaw = info.note || '';
         return `<div class="progress-marker" data-marker-id="${esc(String(info.id || ''))}" data-date="${esc(dateKey)}"${MAY_DRAG ? ' draggable="true"' : ''} title="${esc(MAY_DRAG ? 'Drag to move this marker to another day' : WHY_NO_EDIT)}">
             <div class="progress-marker-line">
-                <span class="progress-marker-bookmark">${SVG.bookmarkSolid} Resume here — ${esc(prettyDate(dateKey))}</span>
+                <span class="progress-marker-bookmark">${SVG.bookmarkSolid} Resume here: ${esc(prettyDate(dateKey))}</span>
                 <span class="flex items-center gap-0.5">
                     <button type="button" class="icon-btn progress-marker-edit-btn" data-date="${esc(dateKey)}" title="Edit marker note">${SVG.edit}</button>
                     <button type="button" class="icon-btn icon-btn-danger progress-marker-delete-btn" data-marker-id="${esc(String(info.id || ''))}" data-date="${esc(dateKey)}" title="Remove marker">${SVG.trash}</button>
@@ -2772,8 +2772,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const EMPTY_STATE_HTML = `<div id="activitiesEmpty" class="card card-body text-center text-gray-500 py-10">
-        <p class="font-bold text-gray-800 mb-1">No activities defined yet.</p>
-        <p class="text-sm">Tap <strong>Add Activity</strong> to define your first step.</p>
+        <p class="font-bold text-gray-800 mb-1">No activities yet</p>
+        <p class="text-sm">Tap <strong>Add Activity</strong> to add your first one.</p>
     </div>`;
 
     function buildDateGroupShell(dateKey, colorIdx, cards, noteContent, hasMarker, allHidden, noteMediaJson) {
@@ -2796,7 +2796,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const spanDays = Math.round((latestEndObj - dateObj) / 86400000) + 1;
             const showYear = latestEndObj.getFullYear() !== dateObj.getFullYear();
             const endLabel = `${MONTH_SHORT[latestEndObj.getMonth()]} ${latestEndObj.getDate()}${showYear ? ', ' + latestEndObj.getFullYear() : ''}`;
-            rangeBadge = `<span class="date-header-range" title="At least one activity extends through ${esc(prettyDate(isoFromDate(latestEndObj)))}">&rarr; ${esc(endLabel)} (${spanDays}d)</span>`;
+            rangeBadge = `<span class="date-header-range" title="At least one activity runs until ${esc(prettyDate(isoFromDate(latestEndObj)))}">&rarr; ${esc(endLabel)} (${spanDays}d)</span>`;
         }
 
         // Two spellings of the same date, picked by CSS rather than a resize
@@ -2819,7 +2819,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const headerDate = dateObj
             ? `<span class="date-header-day">${DAY_SHORT[dateObj.getDay()]}</span><span class="date-header-date${rangeShort ? ' has-range' : ''}"><span class="dh-long">${esc(prettyDate(dateKey))}</span><span class="dh-short">${esc(dateShort)}</span>${rangeShort ? `<span class="dh-rangeshort">${esc(rangeShort)}</span>` : ''}</span>${rangeBadge}`
                 // Date Diff: twin of the Blade button (see DATE DIFF below).
-                + `<button type="button" class="dd-btn${window.__ddPicked === dateKey ? ' is-picked' : ''}" data-dd-date="${esc(dateKey)}" title="Date difference: measure from this day to another day or activity" aria-label="Date difference from this day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg></button>`
+                + `<button type="button" class="dd-btn${window.__ddPicked === dateKey ? ' is-picked' : ''}" data-dd-date="${esc(dateKey)}" title="Count the days from this day to another one" aria-label="Count days from this day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg></button>`
             : '<span class="date-header-date">No date</span>';
 
         // A day note can be attachments alone — chips with no words are
@@ -2834,15 +2834,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // stays live too because the sheet behind it holds read-only rows and
         // gates its own actions. Everything else here writes.
         const buttons = isNoDate ? '' : `
-            <button type="button" class="date-header-btn group-add-activity-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Add a new activity to this date'))}">${SVG.plus}</button>
+            <button type="button" class="date-header-btn group-add-activity-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Add an activity to this day'))}">${SVG.plus}</button>
             <span class="hidden items-center gap-0.5">
                 <button type="button" class="date-header-btn date-note-btn${LOCK_NOTE_CLS}" data-date="${esc(dateKey)}"${LOCK_NOTE} title="${esc(noteTitle('Add a note to this day'))}">${SVG.notePlus}</button>
                 <button type="button" class="date-header-btn day-expense-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Add an extra expense for this day'))}">${SVG.coin}</button>
-                <button type="button" class="date-header-btn date-marker-btn${hasMarker ? ' has-marker' : ''}${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle(hasMarker ? 'Edit the resume-here marker' : 'Drop a resume-here marker after this date'))}">${SVG.bookmark}</button>
+                <button type="button" class="date-header-btn date-marker-btn${hasMarker ? ' has-marker' : ''}${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle(hasMarker ? 'Edit the resume here marker' : 'Add a resume here marker after this day'))}">${SVG.bookmark}</button>
                 ${dateObj ? `<button type="button" class="date-header-btn share-day-btn" data-date="${esc(dateKey)}" title="Share this day's schedule (public link)">${SVG.share}</button>` : ''}
-                <button type="button" class="date-header-btn change-group-date-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Change date for all activities in this group'))}">${SVG.calendarEdit}</button>
-                <button type="button" class="date-header-btn move-group-das-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Move this whole day to a specific day number'))}">${SVG.dayNumber}</button>
-                <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Delete every activity in this group'))}">${SVG.trash}</button>
+                <button type="button" class="date-header-btn change-group-date-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Change the date of this whole day'))}">${SVG.calendarEdit}</button>
+                <button type="button" class="date-header-btn move-group-das-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Move this whole day to a day number'))}">${SVG.dayNumber}</button>
+                <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Delete all activities on this day'))}">${SVG.trash}</button>
             </span>
             <button type="button" class="date-header-btn day-menu-btn" data-date="${esc(dateKey)}" title="More actions for this day">${SVG.kebab}</button>`;
 
@@ -2865,7 +2865,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // it is standing in without reading down the dates.
         const isToday = dateKey === TODAY_KEY;
         wrap.innerHTML = `<div class="date-group date-color-${colorIdx}${allHidden ? ' all-hidden' : ''}${isToday ? ' is-today' : ''}${OPEN_DAYS.has(dateKey) ? '' : ' is-folded'}" data-date="${esc(dateKey)}">
-            <div class="date-header" style="--sw-t:${9 + (beat(dateKey) % 7)}s;--sw-d:-${beat(dateKey) % 11}s"${(dateObj && MAY_DRAG) ? ' draggable="true" title="Drag this header to move the whole day to another date"' : ''}>
+            <div class="date-header" style="--sw-t:${9 + (beat(dateKey) % 7)}s;--sw-d:-${beat(dateKey) % 11}s"${(dateObj && MAY_DRAG) ? ' draggable="true" title="Drag to move this whole day to another date"' : ''}>
                 <svg class="date-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 ${headerDate}
                 <span class="date-header-count">${count}<span class="dh-word"> ${count === 1 ? 'activity' : 'activities'}</span></span>
@@ -3035,7 +3035,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const MAY_DRAW = @json(\App\Support\WorkerContext::canWriteModule('draw'));
     function mayDraw() {
         if (MAY_DRAW) return true;
-        toast('The farm owner has not given you a pen for the Drawing module.', 'error');
+        toast('The farm owner has not let you use Drawing.', 'error');
         return false;
     }
     /* And the same for a map pinned to a day. Both of these used to ask the
@@ -3044,7 +3044,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const MAY_MAP = @json(\App\Support\WorkerContext::canWriteModule('maps'));
     function mayMap() {
         if (MAY_MAP) return true;
-        toast('The farm owner has not given you a pen for the Maps module.', 'error');
+        toast('The farm owner has not let you use Maps.', 'error');
         return false;
     }
     /* The camera and the recorder, same rule: a picture or a clip on a day is
@@ -3052,19 +3052,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const MAY_SHOOT = @json(\App\Support\WorkerContext::canWriteModule('camera'));
     function mayShoot() {
         if (MAY_SHOOT) return true;
-        toast('The farm owner has not given you the camera on this farm.', 'error');
+        toast('The farm owner has not let you use the camera.', 'error');
         return false;
     }
     const MAY_FILM = @json(\App\Support\WorkerContext::canWriteModule('video'));
     function mayFilm() {
         if (MAY_FILM) return true;
-        toast('The farm owner has not given you video recording on this farm.', 'error');
+        toast('The farm owner has not let you record video.', 'error');
         return false;
     }
     const MAY_SPEAK = @json(\App\Support\WorkerContext::canWriteModule('voice'));
     function maySpeak() {
         if (MAY_SPEAK) return true;
-        toast('The farm owner has not given you the voice recorder on this farm.', 'error');
+        toast('The farm owner has not let you record voice notes.', 'error');
         return false;
     }
 
@@ -3393,8 +3393,8 @@ document.addEventListener('DOMContentLoaded', () => {
      * cheaper than saying it after the field turns. */
     const TT_SOLO = { copper_fungicide: 'Copper-based products', herbicide: 'Herbicide' };
     const TT_SOLO_WHY = {
-        copper_fungicide: 'Copper burns leaves when it meets oils or acidic partners, and it puts most biologicals down. Spray it on its own.',
-        herbicide: 'A herbicide should not share a tank with anything meant to help the crop — and the knapsack wants rinsing before it is used for anything else.',
+        copper_fungicide: 'Copper burns leaves when mixed with oils or acids, and it kills most biologicals. Spray it on its own.',
+        herbicide: 'Do not mix a herbicide with anything meant to help the crop. Rinse the sprayer well before using it for anything else.',
     };
 
     let TASK_TYPES = [];   // slugs, in the order they were picked
@@ -3425,8 +3425,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const hint = $id('activityTypeHint');
         if (hint) {
             hint.textContent = TASK_TYPES.length > 1
-                ? 'The first one leads: ' + (ACTIVITY_TYPE_LABELS[TASK_TYPES[0]] || TASK_TYPES[0]) + '. Tap it again to drop it.'
-                : 'Pick one, or several if they go in the same tank.';
+                ? 'Main type: ' + (ACTIVITY_TYPE_LABELS[TASK_TYPES[0]] || TASK_TYPES[0]) + '. Tap it again to remove it.'
+                : 'Pick one, or more if they go in the same tank.';
         }
 
         /* The tag on the form is the answer, so it has to say the answer: the
@@ -3606,8 +3606,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     lots: a.lots || [],
                     detail: `"${a.title}" on ${where} puts ${warnChem(solo)} in the same tank as ${others}. `
                         + (solo === 'copper_fungicide'
-                            ? 'Copper burns leaves when it meets oils or acidic partners and knocks most biologicals out. Spray it on its own.'
-                            : 'A herbicide should not share a tank with anything meant to help the crop, and the knapsack wants rinsing before its next job.'),
+                            ? 'Copper burns leaves when mixed with oils or acids, and it kills most biologicals. Spray it on its own.'
+                            : 'Do not mix a herbicide with anything meant to help the crop. Rinse the sprayer well before its next job.'),
                 });
             });
 
@@ -3624,7 +3624,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         ico: '🔁',
                         title: 'Two activities on the same lot today',
                         lots: [lid],
-                        detail: `${warnLotName(lid)} has ${todays.length} activities scheduled today (${todays.map((a) => a.title).join(', ')}). Double-check they don't clash (e.g. spraying while irrigating) or aren't accidental duplicates.`,
+                        detail: `${warnLotName(lid)} has ${todays.length} activities today (${todays.map((a) => a.title).join(', ')}). Check that they do not clash (e.g. spraying while irrigating) and are not duplicates.`,
                     });
                 }
 
@@ -3639,7 +3639,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             ico: '🧪',
                             title: 'Back-to-back chemical sprays',
                             lots: [lid],
-                            detail: `${warnLotName(lid)} was sprayed with ${warnChem(sprayPrev.type)} yesterday, and today you're applying ${warnChem(strongToday.type)}. Strong sprays on consecutive days can overload the crop and cause chemical stress or leaf burn (phytotoxicity). Consider spacing them a few days apart.`,
+                            detail: `${warnLotName(lid)} got ${warnChem(sprayPrev.type)} yesterday, and today you are applying ${warnChem(strongToday.type)}. Strong sprays two days in a row can stress the crop or burn its leaves. Space them a few days apart.`,
                         });
                     }
                     // Rule 3 — granular fertilizer two days running.
@@ -3651,7 +3651,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             ico: '🧂',
                             title: 'Granular fertilizer two days running',
                             lots: [lid],
-                            detail: `Granular fertilizer was applied to ${warnLotName(lid)} yesterday and again today. Back-to-back granular applications risk over-fertilizing — nutrient burn or salt build-up. Confirm the rates are intentional.`,
+                            detail: `${warnLotName(lid)} got granular fertilizer yesterday and again today. Two days in a row can burn the crop or build up salt. Check the rates.`,
                         });
                     }
                 }
@@ -3674,9 +3674,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         push(date, {
                             sig: `herbwindow|${date}|${lid}`,
                             ico: '🌿',
-                            title: 'Herbicide went down ' + (back === 1 ? 'yesterday' : back + ' days ago'),
+                            title: 'Herbicide sprayed ' + (back === 1 ? 'yesterday' : back + ' days ago'),
                             lots: [lid],
-                            detail: `${warnLotName(lid)} had herbicide ("${herbPast.title}") ${back === 1 ? 'yesterday' : back + ' days ago'}, and today you're spraying ${warnChem(chemNow)}. A herbicide pass wants at least ${WARN_HERB_WINDOW_DAYS} clear days before the next spray — the crop is still working the stress off, and a second chemical on top risks leaf burn. Consider moving this one later.`,
+                            detail: `${warnLotName(lid)} had herbicide ("${herbPast.title}") ${back === 1 ? 'yesterday' : back + ' days ago'}, and today you are spraying ${warnChem(chemNow)}. Wait at least ${WARN_HERB_WINDOW_DAYS} clear days after a herbicide. The crop is still stressed, and another chemical can burn its leaves. Move this one later.`,
                         });
                         break;
                     }
@@ -3703,8 +3703,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             lots: [lid],
                             detail: `${d.emoji || '🌧️'} ${d.text || 'Rain'}${d.pop != null ? ` (${d.pop}% chance)` : ''} is forecast for ${warnLotName(lid)} on this day. `
                                 + (chemT === 'herbicide'
-                                    ? 'Herbicide needs rain-free hours to work — rain right after can wash it off before it acts, and carry it into the paddy water and neighbouring lots. Reschedule to a drier day.'
-                                    : `Spraying ${warnChem(chemT)} right before rain can wash it off and waste the application — consider rescheduling to a drier day.`),
+                                    ? 'Herbicide needs dry hours to work. Rain can wash it off and carry it into the paddy water and nearby lots. Move it to a drier day.'
+                                    : `Rain can wash off ${warnChem(chemT)} and waste the spray. Move it to a drier day.`),
                         });
                     });
                 });
@@ -3738,8 +3738,8 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.toggle('has-unread', unread > 0);
             btn.innerHTML = WARN_ICON + (unread > 1 ? `<span class="cnt">${unread}</span>` : '');
             btn.title = unread > 0
-                ? (unread === 1 ? (all.find((w) => !read.has(w.sig)) || {}).title : `${unread} things to double-check on this day`)
-                : 'All reminders reviewed — tap to see them again';
+                ? (unread === 1 ? (all.find((w) => !read.has(w.sig)) || {}).title : `${unread} things to check on this day`)
+                : 'All reminders read. Tap to see them again.';
         });
     }
 
@@ -3776,7 +3776,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="warn-item-detail">${esc(w.detail)}</p>
                     <label class="warn-read-check">
                         <input type="checkbox" data-toggle-read="${esc(w.sig)}"${isRead ? ' checked' : ''}>
-                        <span>Notification is read</span>
+                        <span>Mark as read</span>
                     </label>
                 </div>
             </div>`;
@@ -4137,9 +4137,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!el) return;
         el.classList.toggle('hidden', !show);
         if (show) {
-            el.textContent = 'This activity was saved against ' + names.length + ' lots ('
-                + names.join(', ') + '). An activity covers one lot now — pick the one it is '
-                + 'really about, and saving will keep only that.';
+            el.textContent = 'This activity was saved with ' + names.length + ' lots ('
+                + names.join(', ') + '). An activity now has one lot. Pick one, '
+                + 'and saving keeps only that lot.';
         }
     }
 
@@ -4219,7 +4219,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 tag.remove();
             }
             chip.title = off
-                ? (picked ? 'Marked off this day — working anyway' : 'Marked off this day')
+                ? (picked ? 'Day off, but working anyway' : 'Day off')
                 : '';
         });
     }
@@ -4239,9 +4239,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const name = chip.textContent.trim();
             const when = prettyDateFull(sheetWorkDate()) || 'that day';
             const ok = await confirmAction({
-                title: 'Force ' + name + ' to work?',
-                message: name + ' is marked off on ' + when + '. Add them anyway?',
-                confirmText: 'Force',
+                title: 'Add ' + name + ' anyway?',
+                message: name + ' has a day off on ' + when + '.',
+                confirmText: 'Add anyway',
             });
             if (!ok) return;
         }
@@ -4271,7 +4271,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .map((c) => (c.textContent || '').trim()).filter(Boolean);
         // On a plan without the Workers module the tag names the plan instead.
         const shut = !!$id('activityWorkersBtn')?.dataset.tierLock;
-        t.textContent = !names.length ? (shut ? 'Workers — ' + (window.aneeTierName?.($id('activityWorkersBtn').dataset.tierLock) || 'a higher') + ' plan' : 'Nobody assigned (N/A)')
+        t.textContent = !names.length ? (shut ? 'Workers: ' + (window.aneeTierName?.($id('activityWorkersBtn').dataset.tierLock) || 'a higher') + ' plan' : 'Nobody assigned (N/A)')
             : (names.length <= 2 ? names.join(', ') : names.length + ' workers');
         t.classList.toggle('is-none', !names.length);
     }
@@ -4614,18 +4614,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!selected.length) return null;
         if (trees.length === selected.length) {
             return {
-                title: 'Mark this activity as the Day of Start (DOS)',
-                say: 'These lots are standing trees, so there is no sowing or planting to count from. '
-                    + 'This marks the day the plan starts watching them — DOS 0 — and the growth guidance still '
-                    + 'reads the trees by their age.',
+                title: 'Mark as Day of Start (DOS 0)',
+                say: 'These lots are trees, so there is no sowing date to count from. '
+                    + 'This marks the day the plan starts (DOS 0). Growth tips still '
+                    + 'follow the age of the trees.',
             };
         }
         if (trees.length) {
             return {
-                title: 'Mark this activity as Day 0',
-                say: 'For the field lots this becomes day zero of their count (DAS 0, or DAP 0). '
-                    + 'The tree lots have no day count — for those it marks the Day of Start (DOS 0) only. '
-                    + 'When several anchors conflict, the earliest date wins.',
+                title: 'Mark as Day 0',
+                say: 'Field lots start their day count here (DAS 0 or DAP 0). '
+                    + 'Tree lots have no day count, so for them this is the Day of Start (DOS 0). '
+                    + 'If two dates clash, the earliest one wins.',
             };
         }
         return null;   // all fields: the panel's own written words already fit
@@ -4758,7 +4758,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const s = $id('activityTargetDate').value;
         const e = $id('activityTargetEndDate').value;
         const dates = s
-            ? ` Start = <strong>${esc(prettyDate(s))}</strong>${e ? ` · End = <strong>${esc(prettyDate(e))}</strong>` : ''} — the date is what gets saved.`
+            ? ` Start: <strong>${esc(prettyDate(s))}</strong>${e ? ` · End: <strong>${esc(prettyDate(e))}</strong>` : ''}. The date is what gets saved.`
             : '';
         $id('activityDasAnchorNote').innerHTML =
             `<strong>${esc(dt)} 0</strong> for <strong>${esc(lotName)}</strong> = ${esc(prettyDate(anchor))}.${dates}`;
@@ -4805,8 +4805,8 @@ document.addEventListener('DOMContentLoaded', () => {
             $id('activityStartDas').value = '';
             $id('activityEndDas').value = '';
             $id('activityDasAnchorNote').innerHTML =
-                `<strong>No ${esc(dt)} 0 set yet.</strong> Mark a planting/sowing activity as ${esc(dt)} 0 `
-                + `(or give a lot its Day-0 date in Lots) — then you can plan by ${esc(dt)} number here.`;
+                `<strong>No ${esc(dt)} 0 yet.</strong> Mark a planting or sowing activity as ${esc(dt)} 0, `
+                + `or give a lot its Day 0 date in Lots. Then you can plan by ${esc(dt)} number here.`;
             return;
         }
 
@@ -4949,10 +4949,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const titleEl = $id('activityTitle');
         if (titleEl) titleEl.setAttribute('placeholder',
             reminders ? 'e.g. Errands for the day'
-            : activityMode === 'payroll' ? 'e.g. Weeding crew — Lot B'
+            : activityMode === 'payroll' ? 'e.g. Weeding crew, Lot B'
             : svc ? 'e.g. Land preparation (tractor)'
-            : irr ? 'e.g. Irrigate Lot A — Day 20–35'
-            : 'e.g. Basal Fertilizer Application');
+            : irr ? 'e.g. Irrigate Lot A, Day 20 to 35'
+            : 'e.g. Basal fertilizer');
         if (!task) setActivityImages([]);   // reference images are task-only
         refreshDayZeroToggleVisibility();
         // Animate whichever mode-specific field is now visible.
@@ -5338,7 +5338,7 @@ document.addEventListener('DOMContentLoaded', () => {
             onDone: (items) => {
                 for (const it of items || []) {
                     if (ACTIVITY_IMAGES.length >= cap) {
-                        toast('That is as many files as one activity can hold.', 'error');
+                        toast('An activity can hold up to ' + cap + ' files.', 'error');
                         break;
                     }
                     // The same file twice is a slip, not an intention.
@@ -5409,9 +5409,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const buying = !!newBuy && !!stockId;
         const whence = stockId
             ? (buying
-                ? '🧾 A new purchase — logged into the inventory at this price, and this work uses it up'
-                : '📦 Comes off the inventory when this is ticked done')
-            : (toShed ? '🆕 Joins the inventory with this quantity when this saves — used up when the work is done' : '');
+                ? '🧾 New purchase. Added to inventory at this price, then used by this work'
+                : '📦 Taken from inventory when this is ticked done')
+            : (toShed ? '🆕 Added to inventory when you save. Used up when the work is done' : '');
         const html = `<span class="mline${stockId ? ' is-stock' : ''}${buying || (!stockId && toShed) ? ' is-buy' : ''}"
             data-name="${esc(name)}" data-price="${priceNum != null ? esc(String(priceNum)) : ''}" data-qty="${esc(trimQty(qty || 1))}" data-unit="${esc(unitSafe)}" data-stock="${stockId ? esc(String(stockId)) : ''}" data-toshed="${(!stockId && toShed) ? '1' : ''}" data-newbuy="${buying ? '1' : ''}">
             <span class="mline-t">
@@ -5448,18 +5448,18 @@ document.addEventListener('DOMContentLoaded', () => {
          * there is none. */
         if (waiting && !items.length) {
             wrap.classList.remove('hidden');
-            sel.innerHTML = '<option value="">Reading the shed…</option>';
+            sel.innerHTML = '<option value="">Loading inventory…</option>';
             sel.disabled = true;
             const hint = $id('itemStockHint');
-            if (hint) hint.textContent = 'Fetching what this season has in stock.';
+            if (hint) hint.textContent = 'Checking what this season has in stock.';
             return;
         }
 
         sel.disabled = false;
         // A picker with nothing in it is a question with no answers.
         wrap.classList.toggle('hidden', items.length === 0);
-        sel.innerHTML = '<option value="">No — just list it on this activity</option>'
-            + items.map((i) => `<option value="${i.id}" data-unit="${esc(i.unitLabel || i.unit)}" data-name="${esc(i.name)}">${esc(i.icon + ' ' + i.name)} — ${esc(i.says)}</option>`).join('');
+        sel.innerHTML = '<option value="">No, just list it on this activity</option>'
+            + items.map((i) => `<option value="${i.id}" data-unit="${esc(i.unitLabel || i.unit)}" data-name="${esc(i.name)}">${esc(i.icon + ' ' + i.name)}: ${esc(i.says)}</option>`).join('');
         sayStockPick();
         syncToShedVisibility();
     }
@@ -5470,7 +5470,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!sel || !hint) return;
         const opt = sel.selectedOptions[0];
         if (!sel.value) {
-            hint.textContent = 'A plain line is a note to yourself. It costs nothing off the count.';
+            hint.textContent = 'Just a note on this activity. Nothing comes off your inventory.';
             /* Choosing "No" again must UNDO the shed's takeover: the name box
                and the free-text unit come back, the kin select stands down,
                the tag speaks quietly again and the price asks again. This
@@ -5483,7 +5483,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const tT = $id('itemStockNow');
             if (tE && tT) {
                 tE.textContent = '🎒';
-                tT.textContent = 'No — just list it on this activity';
+                tT.textContent = 'No, just list it on this activity';
                 tT.classList.add('is-none');
             }
             const pl0 = $id('itemPriceLabel');
@@ -5496,7 +5496,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const item = (window.IV_ITEMS || []).find((i) => String(i.id) === sel.value);
         hint.textContent = item
-            ? `${item.says} on hand. Nothing moves until this activity is ticked done — then the quantity comes off, converted if the unit differs.`
+            ? `${item.says} on hand. It comes off when you tick this activity done. Other units are converted.`
             : '';
         /* The shelf already named it. The name box hides rather than
            prefills — a visible second name box is an invitation to type a
@@ -5509,7 +5509,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tagT = $id('itemStockNow');
         if (tagE && tagT) {
             tagE.textContent = item ? item.icon : '🎒';
-            tagT.textContent = item ? `${item.name} — ${item.says}` : 'No — just list it on this activity';
+            tagT.textContent = item ? `${item.name}: ${item.says}` : 'No, just list it on this activity';
             tagT.classList.toggle('is-none', !item);
         }
         /* The price against a shed item is a DECLARATION: empty spends the
@@ -5518,7 +5518,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const pi = $id('itemPriceInput');
         if (item && pi) pi.value = '';
         const pl = $id('itemPriceLabel');
-        if (pl) pl.textContent = item ? 'Price ({{ \App\Support\Region::symbol() }}) — new purchase only' : 'Price ({{ \App\Support\Region::symbol() }})';
+        if (pl) pl.textContent = item ? 'Price ({{ \App\Support\Region::symbol() }}), new purchase only' : 'Price ({{ \App\Support\Region::symbol() }})';
         $id('itemBuyHint')?.classList.toggle('hidden', !item);
         // A shed line stacks the money row: quantity first, price below
         // behind its rule — the layout is the sentence.
@@ -5536,8 +5536,8 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('itemStockList').innerHTML = `
             <button type="button" class="dt-row${nowId === '' ? ' is-on' : ''}" data-stock-row="">
                 <span class="dt-row-e">🏷️</span>
-                <span class="dt-row-body"><b>No — just list it on this activity</b>
-                    <i>A plain line is a note to yourself. It costs nothing off the count.</i></span>
+                <span class="dt-row-body"><b>No, just list it on this activity</b>
+                    <i>Just a note on this activity. Nothing comes off your inventory.</i></span>
             </button>`
             + items.map((i) => `
             <button type="button" class="dt-row${nowId === String(i.id) ? ' is-on' : ''}" data-stock-row="${i.id}">
@@ -5668,7 +5668,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (need > avail + 0.0005) {
                 short = true;
                 const left = Math.max(0, Math.round(avail * 1000) / 1000);
-                warn.textContent = `Not enough in the inventory — only ${left} ${item.unitLabel || item.unit} ${left === 1 ? 'is' : 'are'} free once other planned work takes its share. Add a price to make this a new purchase instead.`;
+                warn.textContent = `Not enough in inventory. Only ${left} ${item.unitLabel || item.unit} ${left === 1 ? 'is' : 'are'} free after other planned work. Add a price to make this a new purchase.`;
             }
         }
         warn.classList.toggle('hidden', !short);
@@ -5762,14 +5762,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const mat = $id('qalMaturity');
         if (mat && !isTree) {
             const days = opt.getAttribute('data-maturity');
-            mat.placeholder = days ? days + ' is usual for this crop' : '';
+            mat.placeholder = days ? 'Usually ' + days + ' for this crop' : '';
             if (!mat.value && days) mat.value = days;
         }
 
         const hint = $id('qalDayTypeHint');
         if (hint) {
             hint.textContent = isTree
-                ? 'A standing crop has no day count — the plan reads it by the age above.'
+                ? 'Trees have no day count. The plan uses the age above.'
                 : (allow.length === 1 ? 'This crop is only counted one way.' : '');
         }
     }
@@ -5846,7 +5846,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 b.setAttribute('data-value', id);
                 return b;
             }, filterHost?.querySelector('[data-value="__na__"]'));
-        if (filt) filt.title = 'Hide ' + lot.lotName + ' — cards covering another visible lot stay put';
+        if (filt) filt.title = 'Hide ' + lot.lotName + '. Cards that also cover a shown lot stay.';
 
         // Its day zero and counter may be new facts for the cards already on
         // the board, and its stage for the day headers.
@@ -6031,7 +6031,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $id('addItemBtn')?.addEventListener('click', () => {
         const name = ($id('itemNameInput').value || '').trim();
-        if (!name) { toast('Enter an item name', 'error'); $id('itemNameInput').focus(); return; }
+        if (!name) { toast('Enter an item name.', 'error'); $id('itemNameInput').focus(); return; }
         const stockPre = $id('itemStockPick')?.value || '';
         const stockItem = stockPre ? (window.IV_ITEMS || []).find((i) => String(i.id) === stockPre) : null;
         const qty = parseFloat($id('itemQtyInput').value) || 1;
@@ -6040,7 +6040,7 @@ document.addEventListener('DOMContentLoaded', () => {
            "2 of them" reads three ways in a report. The sheet opens so the
            refusal is also the way to comply. */
         if (!stockPre && !unit) {
-            toast('Pick a unit for this line.', 'error');
+            toast('Pick a unit for this item.', 'error');
             openSheet('itemUnitAllSheet');
             return;
         }
@@ -6053,12 +6053,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (stockItem && !newBuy) {
             const need = qty * unitToItemFactor(stockItem, unit);
             if (need > shelfAvailable(stockItem) + 0.0005) {
-                toast('Not enough in the inventory for that quantity — add a price to make it a new purchase.', 'error');
+                toast('Not enough in inventory. Add a price to make it a new purchase.', 'error');
                 return;
             }
         }
         if ($qs(`#itemsContainer span[data-name="${cssEsc(name)}"]`)) {
-            toast('That item is already added — remove it first to change it.', 'info');
+            toast('That item is already added. Remove it first to change it.', 'info');
             return;
         }
         const stockId = $id('itemStockPick')?.value || '';
@@ -6248,7 +6248,7 @@ document.addEventListener('DOMContentLoaded', () => {
              * a signal, because the worker kept that answer on the shelf. */
             if (err.offline && window.aneeOffline?.isDown?.()) {
                 window.aneeOffline.sayLocked('Editing this activity',
-                    'Opening the editor needs the whole activity from the server, and a half-loaded form would save over the parts it could not read. Activities you have opened before are still editable out here. Ticking done, moving a day and writing notes all still work.');
+                    'You need a signal to open this activity for editing. Activities you opened before still work offline. You can still tick done, move a day and write notes.');
 
                 return;
             }
@@ -6313,7 +6313,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const startDateVal = ($id('activityTargetDate').value || '').trim();
         const endDateVal = ($id('activityTargetEndDate').value || '').trim();
         if (endDateVal && startDateVal && endDateVal < startDateVal) {
-            toast('End date must be on or after the start date.', 'error');
+            toast('The end date cannot be before the start date.', 'error');
             return;
         }
         const items = $qsa('#itemsContainer > span').map((tag) => ({
@@ -6371,11 +6371,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         if (!payload.activityTitle) {
-            toast('Activity title is required', 'error');
+            toast('Give the activity a title.', 'error');
             return;
         }
         if (!payload.targetDate) {
-            toast('Pick a start date', 'error');
+            toast('Pick a start date.', 'error');
             return;
         }
 
@@ -6411,7 +6411,7 @@ document.addEventListener('DOMContentLoaded', () => {
              * inventing one would let a later edit post to a row that does not
              * exist. It is kept and appears on the sync. */
             if (res.queued && !id) {
-                toast('The new activity is kept on this phone and appears once you are back in signal.');
+                toast('Saved on this phone. It shows up when you are back online.');
                 resetActivitySheet();
 
                 return;
@@ -6498,7 +6498,7 @@ document.addEventListener('DOMContentLoaded', () => {
            Refused plainly rather than left to fail on a fetch. */
         if (window.aneeOffline?.isDown?.()) {
             window.aneeOffline.sayLocked('Duplicating an activity',
-                'A copy needs a new number from the server, and there is no way to reach it. Everything else on this menu still works - come back to this one when you have a signal.');
+                'You need a signal to make a copy. Everything else on this menu still works.');
 
             return;
         }
@@ -6529,9 +6529,9 @@ document.addEventListener('DOMContentLoaded', () => {
     async function deleteActivity(id, name) {
         const ok = await confirmAction({
             title: 'Delete activity',
-            message: `Delete activity "${name}"?`,
-            detail: 'You can immediately undo this (Ctrl+Z) — the activity is soft-deleted and can be restored.',
-            confirmText: 'Delete Activity',
+            message: `Delete "${name}"?`,
+            detail: 'You can undo this right away (Ctrl+Z).',
+            confirmText: 'Delete',
         });
         if (!ok) return;
         try {
@@ -6546,7 +6546,7 @@ document.addEventListener('DOMContentLoaded', () => {
              * the next visit. A move can be taken back offline because taking
              * it back is another move; a delete cannot, so it says so. */
             if (res.queued) {
-                toast('Deleted on this phone - it syncs when you are back. No undo until then.');
+                toast('Deleted on this phone. It syncs when you are back online. No undo until then.');
                 return;
             }
             toast(res.message);
@@ -6571,7 +6571,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // A finished activity stays on its day: said as a notice, not a toast,
         // whichever button asked (the card's own, the menu's, the mirror's).
         if ($qs(`#activitiesList .activity-card[data-id="${id}"]`)?.getAttribute('data-is-done') === '1') {
-            window.noticeSheet?.({ title: 'This activity is done', message: 'A finished activity stays on its day — it cannot be moved to drafts. Untick Done first if you really mean to.' });
+            window.noticeSheet?.({ title: 'This activity is done', message: 'A done activity stays on its day and cannot go to drafts. Untick Done first.' });
             return;
         }
         try {
@@ -6678,7 +6678,7 @@ document.addEventListener('DOMContentLoaded', () => {
             $qsa(`[data-star-btn][data-id="${id}"]`).forEach((b) => {
                 b.setAttribute('data-star', String(v));
                 b.setAttribute('aria-label', `Marker: ${starName(v)}`);
-                b.setAttribute('title', v ? `Marker: ${starName(v)}` : 'Marker — tap to pick a colour');
+                b.setAttribute('title', v ? `Marker: ${starName(v)}` : 'Marker: tap to pick a colour');
                 b.classList.remove('is-turning');
                 void b.offsetWidth;                 // restart the pop
                 b.classList.add('is-turning');
@@ -6881,7 +6881,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => window.ivOpenMove?.({
                 direction: dir,
                 date,
-                title: dir === 'in' ? 'Add new inventory' : 'Expense an inventory',
+                title: dir === 'in' ? 'Add to inventory' : 'Use from inventory',
             }), 260);
             return;
         }
@@ -6962,11 +6962,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Nothing answered. Keep the whole errand instead of losing it.
                 if (await keepCaptureForLater(dateKey, file, kind, suggested)) {
                     done.close();
-                    toast('Saved on this phone - it will land on ' + prettyDateFull(dateKey) + ' when you are back.');
+                    toast('Saved on this phone. It goes on ' + prettyDateFull(dateKey) + ' when you are back.');
 
                     return;
                 }
-                throw new Error('The connection dropped mid-upload - try again.');
+                throw new Error('The connection dropped. Try again.');
             }
             const json = await res.json().catch(() => ({}));
             if (!json.success || !json.data?.path) throw new Error(json.message || 'Upload failed.');
@@ -7042,7 +7042,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const pill = document.createElement('button');
         pill.type = 'button';
         pill.id = 'dayVoicePill';
-        pill.innerHTML = '<span class="dv-dot"></span><span id="dayVoiceTime">0:00</span>&nbsp;· recording — tap to stop';
+        pill.innerHTML = '<span class="dv-dot"></span><span id="dayVoiceTime">0:00</span>&nbsp;· recording, tap to stop';
         document.body.appendChild(pill);
         const t0 = Date.now();
         const timer = setInterval(() => {
@@ -7077,7 +7077,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // camera takes. See keepCaptureForLater.
                     if (err.offline && await keepCaptureForLater(dateKey, file, 'audio', 'Voice note')) {
                         done.close();
-                        toast('Saved on this phone - it will land on ' + prettyDateFull(dateKey) + ' when you are back.');
+                        toast('Saved on this phone. It goes on ' + prettyDateFull(dateKey) + ' when you are back.');
 
                         return;
                     }
@@ -7142,7 +7142,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="block text-xs text-gray-400">${esc(s.by || '')} · ${esc(s.when || '')}</span>
                         </span>
                     </button>`).join('')
-                : '<p class="text-sm text-gray-400 py-2">No saved maps yet. Draw one in Maps (Global and Quick Tools) and save it, then it can be attached here.</p>';
+                : '<p class="text-sm text-gray-400 py-2">No saved maps yet. Draw and save one in Maps (Global and Quick Tools) to attach it here.</p>';
             list.querySelectorAll('[data-map]').forEach((btn) => {
                 btn.addEventListener('click', () => {
                     const save = saves.find((s) => String(s.id) === btn.getAttribute('data-map'));
@@ -7384,7 +7384,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const body = $id('savedWeatherBody');
         const title = $id('savedWeatherTitle');
         if (!body) return;
-        if (title) title.textContent = 'Saved weather — ' + prettyDateFull(date);
+        if (title) title.textContent = 'Saved weather: ' + prettyDateFull(date);
         body.innerHTML = '<p class="text-sm text-gray-500 text-center py-6">Loading…</p>';
         openSheet('savedWeatherSheet');
         try {
@@ -7406,7 +7406,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="wx-hour-temp">${h.temp != null ? h.temp + '&deg;' : '&ndash;'}</div>
                             <div class="wx-hour-pop ${(h.pop || 0) < 20 ? 'is-dry' : ''}">&#128167;${h.pop != null ? h.pop + '%' : '&mdash;'}</div>
                         </div>`).join('')}</div>`
-                    : '<p class="wx-legend mt-2">No hour-by-hour was saved for this day.</p>';
+                    : '<p class="wx-legend mt-2">No hourly weather was saved for this day.</p>';
                 return `<div class="card mb-3"><div class="card-body">
                     <div class="flex items-start justify-between gap-2">
                         <div class="min-w-0">
@@ -7907,8 +7907,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.noticeSheet?.({
                     title: 'This activity is done',
                     message: action === 'draft'
-                        ? 'A finished activity stays on its day — it cannot be moved to drafts. Untick Done first if you really mean to.'
-                        : 'A finished activity is locked so it cannot be changed by accident. Untick Done first, then edit or move it.',
+                        ? 'A done activity stays on its day and cannot go to drafts. Untick Done first.'
+                        : 'A done activity is locked so it is not changed by mistake. Untick Done first, then edit or move it.',
                 });
                 return;
             }
@@ -8198,8 +8198,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 list.innerHTML = '<div class="ew-empty"><span class="ew-empty-ico" aria-hidden="true">👷</span><span>'
                     + '<b>' + (one ? 'Nobody is on this job yet' : 'This season has no workers yet') + '</b>'
                     + '<i>' + (one
-                        ? 'Type an address below to send it anyway, or add someone to the activity first.'
-                        : 'Type an address below to send it anyway, or add workers in the Workers module.')
+                        ? 'Type an email below, or add a worker to the activity first.'
+                        : 'Type an email below, or add workers in the Workers module.')
                     + '</i></span></div>';
                 ewTally();
                 return;
@@ -8219,7 +8219,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const off = rows.filter((w) => !w.reachable).length;
             note.textContent = off
-                ? off + (off === 1 ? ' worker has' : ' workers have') + ' no email address — add one in the Workers module and they can be sent to.'
+                ? off + (off === 1 ? ' worker has' : ' workers have') + ' no email yet. Add one in the Workers module to send to them.'
                 : '';
             ewTally();
         } catch (_) {
@@ -8330,14 +8330,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const anchor = moveAnchorFor(lotId, MOVE_COUNTER);
         const note = $id('moveDasNote');
         if (!anchor) {
-            note.innerHTML = 'That lot has no ' + esc(MOVE_COUNTER) + ' 0 yet, so it cannot be counted from.';
+            note.innerHTML = 'That lot has no ' + esc(MOVE_COUNTER) + ' 0 yet, so there is nothing to count from.';
             return;
         }
         const n = $id('moveDasDay').value;
         const dateStr = n === '' ? '' : _dasToDateStr(n, anchor);
         note.innerHTML = `<strong>${esc(MOVE_COUNTER)} 0</strong> for <strong>${esc(LOT_NAMES[lotId] || ('Lot #' + lotId))}</strong>`
             + ` = ${esc(prettyDate(anchor))}.`
-            + (dateStr ? ` ${esc(MOVE_COUNTER)} ${esc(String(n))} is <strong>${esc(prettyDate(dateStr))}</strong> — that is the date that gets saved.` : '');
+            + (dateStr ? ` ${esc(MOVE_COUNTER)} ${esc(String(n))} is <strong>${esc(prettyDate(dateStr))}</strong>. That date is what gets saved.` : '');
     }
 
     function setMoveMode(mode) {
@@ -8487,7 +8487,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('dayShareTitle').textContent = 'Share ' + pretty;
         $id('dayShareLink').value = url;
         const enc = encodeURIComponent(url);
-        const text = encodeURIComponent((S.title || 'Cropping plan') + ' — ' + pretty);
+        const text = encodeURIComponent((S.title || 'Cropping plan') + ': ' + pretty);
         $id('dayShareFb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + enc;
         $id('dayShareWa').href = 'https://wa.me/?text=' + text + '%20' + enc;
         $id('dayShareEmail').href = 'mailto:?subject=' + text + '&body=' + enc;
@@ -8621,7 +8621,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (_) {
             send.disabled = false; send.textContent = orig;
-            toast('Network error — try again.', 'error');
+            toast('Network error. Try again.', 'error');
         }
     });
 
@@ -8695,7 +8695,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const target = _dasToDateStr(n, anchor);
         const same = target === MOVE_DAS_DATE;
         hint.innerHTML = `<strong>${esc(dt)} ${n}</strong> = <strong>${esc(prettyDate(target))}</strong>`
-            + (same ? ' — that is where this day already sits.' : '');
+            + (same ? '. This day is already there.' : '');
     }
 
     function openMoveGroupDasSheet(dateKey) {
@@ -8706,7 +8706,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Only lots with a day 0 can anchor a day number.
         const lotIds = Object.keys(LOT_DAY_ZERO_DATES).filter((id) => LOT_DAY_ZERO_DATES[id]);
         if (lotIds.length === 0) {
-            toast(`No lot has a ${dayType()} 0 yet. Mark an activity as day zero, or set a lot's day-0 date, first.`, 'error');
+            toast(`No lot has a ${dayType()} 0 yet. First mark an activity as day zero, or set a lot's Day 0 date.`, 'error');
             return;
         }
 
@@ -8782,7 +8782,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return false;
         }
         if (cards.length === 0) {
-            toast('Every activity on this day is marked done — they stay locked in place.', 'info');
+            toast('All activities on this day are done, so they stay in place.', 'info');
             return false;
         }
 
@@ -8843,7 +8843,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!dateKey || dateKey === '__no-date__') return;
         const cards = $qsa(`#activitiesList .date-group[data-date="${dateKey}"] .activity-card[data-id]`);
         if (cards.length === 0) {
-            toast('No activities to delete in this group.', 'error');
+            toast('No activities to delete on this day.', 'error');
             return;
         }
         const targets = cards.map((card) => ({
@@ -8851,9 +8851,9 @@ document.addEventListener('DOMContentLoaded', () => {
             name: ($qs('h3', card)?.textContent || '').trim() || ('Activity #' + card.getAttribute('data-id')),
         }));
         const ok = await confirmAction({
-            title: 'Delete entire date group',
+            title: 'Delete this whole day',
             message: `Delete all ${targets.length} ${targets.length === 1 ? 'activity' : 'activities'} on ${prettyDateFull(dateKey)}?`,
-            detail: 'You can immediately undo this (Ctrl+Z) — every activity is soft-deleted and can be restored together.',
+            detail: 'You can undo this right away (Ctrl+Z). All of them come back together.',
             confirmText: targets.length === 1 ? 'Delete 1 Activity' : `Delete ${targets.length} Activities`,
         });
         if (!ok) return;
@@ -8872,7 +8872,7 @@ document.addEventListener('DOMContentLoaded', () => {
         recomputeLotDayZero();
 
         if (succeeded.length > 0) toast(`Deleted ${succeeded.length} ${succeeded.length === 1 ? 'activity' : 'activities'} on ${prettyDateWords(dateKey)}`);
-        if (failed.length > 0) toast(`${failed.length} could not be deleted — refresh and try again.`, 'error');
+        if (failed.length > 0) toast(`${failed.length} could not be deleted. Refresh and try again.`, 'error');
 
         if (succeeded.length > 0) {
             const ids = succeeded.map((r) => r.id);
@@ -9520,8 +9520,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ivnMenuCtx = ivnCtxFrom(rowEl);
         const r = ivnRowData(ivnMenuCtx.id, ivnMenuCtx.date);
         $id('ivnMenuWhat').innerHTML = (r
-            ? `<span class="dxm-amt">${r.isIn ? 'Added' : 'Expensed'} ${esc(r.says)}</span>`
-              + `<span class="dxm-note">${esc(r.icon)} ${esc(r.name)}${r.note ? ' — ' + esc(r.note) : ''}</span>`
+            ? `<span class="dxm-amt">${r.isIn ? 'Added' : 'Used'} ${esc(r.says)}</span>`
+              + `<span class="dxm-note">${esc(r.icon)} ${esc(r.name)}${r.note ? ' · ' + esc(r.note) : ''}</span>`
             : '')
             + `<span class="dxm-day">${esc(prettyDateFull(ivnMenuCtx.date))}</span>`;
         openSheet('ivnMenuSheet');
@@ -9532,7 +9532,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ivnMoveCtx = ivnMenuCtx;
         dxMenuCtx = null;   // the day list is shared; one asker at a time
         const { date } = ivnMoveCtx;
-        $id('dxMoveSubtitle').textContent = 'Inventory entry currently on ' + prettyDateFull(date);
+        $id('dxMoveSubtitle').textContent = 'Inventory entry, now on ' + prettyDateFull(date);
         const body = $id('dxMoveBody');
         body.innerHTML = boardDays().map((d) => {
             const cur = d === date;
@@ -10033,7 +10033,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const { date } = dxMenuCtx;
         const body = $id('dxMoveBody');
         $id('dxMoveSubtitle').textContent = (dxMenuCtx.kind === 'income' ? 'Income' : 'Expense')
-            + ' currently on ' + prettyDateFull(date);
+            + ', now on ' + prettyDateFull(date);
         const days = boardDays();
         body.innerHTML = days.map((d) => {
             const cur = d === date;
@@ -10491,14 +10491,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!info) {
             if (btn) {
                 btn.classList.remove('has-marker');
-                btn.title = 'Drop a resume-here marker after this date';
+                btn.title = 'Add a resume here marker after this day';
             }
             row?.remove();
             return;
         }
         if (btn) {
             btn.classList.add('has-marker');
-            btn.title = 'Edit the resume-here marker';
+            btn.title = 'Edit the resume here marker';
         }
         const html = buildMarkerHtml(dateKey, info);
         if (row) {
@@ -10519,7 +10519,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('progressMarkerId').value = info ? info.id : '';
         $id('markerSheetDate').textContent = prettyDateFull(dateKey);
         $id('progressMarkerNote').value = info ? info.note : '';
-        $id('markerSheetTitle').textContent = info ? 'Edit resume-here marker' : 'Drop resume-here marker';
+        $id('markerSheetTitle').textContent = info ? 'Edit resume here marker' : 'Drop resume here marker';
         $id('progressMarkerClearBtn').classList.toggle('hidden', !info);
         openSheet('markerSheet');
         window.smFocus($id('progressMarkerNote'), { delay: 250 });
@@ -10543,9 +10543,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const dateKey = (delBtn.getAttribute('data-date') || '').trim();
             if (!markerId) return;
             const ok = await confirmAction({
-                title: 'Remove resume-here marker',
+                title: 'Remove resume here marker',
                 message: `Remove the marker on ${prettyDateFull(dateKey)}?`,
-                detail: 'The note attached to it (if any) will be cleared too.',
+                detail: 'Its note, if any, is removed too.',
                 confirmText: 'Remove Marker',
             });
             if (!ok) return;
@@ -12027,7 +12027,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     pushUndo(label, () => restoreBoardSnapshot(snapshot));
                 }
             })
-            .catch((err) => toast(err.message + ' — refresh to see saved order.', 'error'));
+            .catch((err) => toast(err.message + ' (refresh to see the saved order)', 'error'));
     }
 
     function handleDropOntoRestDay(rest) {
@@ -12088,7 +12088,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     pushUndo('Move activity to ' + newDate, () => restoreBoardSnapshot(snapshot));
                 }
             })
-            .catch((err) => toast(err.message + ' — refresh to see saved order.', 'error'));
+            .catch((err) => toast(err.message + ' (refresh to see the saved order)', 'error'));
     }
 
     /* ================================================================
@@ -12682,9 +12682,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const id = deleteBtn.getAttribute('data-id');
             const name = deleteBtn.getAttribute('data-name') || 'draft';
             const ok = await confirmAction({
-                title: 'Delete drafted activity',
-                message: `Permanently delete drafted activity "${name}"?`,
-                detail: 'You can immediately undo this (Ctrl+Z) — the draft is soft-deleted and can be restored back into the drafts list.',
+                title: 'Delete draft',
+                message: `Delete the draft "${name}"?`,
+                detail: 'You can undo this right away (Ctrl+Z). It goes back to your drafts.',
                 confirmText: 'Delete Draft',
             });
             if (!ok) return;
@@ -12695,7 +12695,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Same rule as deleting a live activity above: the step back
                 // is a restore, and a restore needs the server.
                 if (res && res.queued) {
-                    toast('Deleted on this phone - it syncs when you are back. No undo until then.');
+                    toast('Deleted on this phone. It syncs when you are back online. No undo until then.');
                     return;
                 }
                 toast(`Draft "${name}" deleted`);
@@ -12790,7 +12790,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const name = chip.getAttribute('data-version-name') || 'version';
         const ok = await confirmAction({
             title: 'Switch version?',
-            message: `Make "${name}" the active version? The whole timeline (plus exports, presentations and labor) will follow it.`,
+            message: `Use "${name}" as the active version? The board, exports, presentations and labor will all follow it.`,
             confirmText: 'Switch',
             confirmClass: 'btn-primary',
         });
@@ -12923,15 +12923,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const active = activeVersionChip();
         if (!active) return;
         if (active.getAttribute('data-is-original') === '1') {
-            toast('The Original version is the baseline and cannot be deleted.', 'error');
+            toast('The Original version cannot be deleted.', 'error');
             return;
         }
         const id = active.getAttribute('data-version-id');
         const name = active.getAttribute('data-version-name') || 'version';
         const ok = await confirmAction({
             title: 'Delete version',
-            message: `Delete the entire "${name}" version?`,
-            detail: 'Every activity inside this version will be soft-deleted with it. The Original version will become active again. This cannot be undone from the activity-level Undo stack.',
+            message: `Delete the whole "${name}" version?`,
+            detail: 'All its activities are deleted with it, and the Original version becomes active again. The Undo button cannot bring it back.',
             confirmText: 'Delete Version',
         });
         if (!ok) return;
@@ -12960,7 +12960,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.smOpenActivity = (id) => {
         const card = $qs(`#activitiesList .activity-card[data-id="${id}"]`);
         if (card && card.getAttribute('data-is-done') === '1') {
-            toast('This activity is marked done and locked — untick it first.');
+            toast('This activity is done and locked. Untick it first.');
             return Promise.resolve();
         }
         return openEditActivitySheet(id);
@@ -13212,7 +13212,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     case 'toggle-hidden': { const c = cardOf(d.id); if (c) { c.classList.toggle('is-hidden', !!d.isHidden); refreshHiddenActivityCount(); } break; }
                     // Somebody else moved the star. It is a mark on a shared
                     // board, so it changes colour under everyone at once.
-                    case 'marker': { const v = Number(d.markerColor ?? 0) || 0; $qsa(`[data-star-btn][data-id="${d.id}"]`).forEach((b) => { b.setAttribute('data-star', String(v)); b.setAttribute('aria-label', `Marker: ${starName(v)}`); b.setAttribute('title', v ? `Marker: ${starName(v)}` : 'Marker — tap to pick a colour'); }); break; }
+                    case 'marker': { const v = Number(d.markerColor ?? 0) || 0; $qsa(`[data-star-btn][data-id="${d.id}"]`).forEach((b) => { b.setAttribute('data-star', String(v)); b.setAttribute('aria-label', `Marker: ${starName(v)}`); b.setAttribute('title', v ? `Marker: ${starName(v)}` : 'Marker: tap to pick a colour'); }); break; }
                     case 'set-date': { const c = cardOf(d.id); if (c) { c.setAttribute('data-target-date', d.targetDate); reorderAndRenumberActivities(true); } break; }
                     case 'reordered': applyReorder(d.items); break;
                     // Async, so the switch's own try/catch cannot see it fail:
@@ -13266,7 +13266,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         function paint() {
             btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-            btn.title = on ? 'Show the days where every activity is done' : 'Hide the days where every activity is already done';
+            btn.title = on ? 'Show days where all work is done' : 'Hide days where all work is done';
             const label = on ? 'Show done days' : 'Hide done days';
             const lbl = $id('toggleDoneDaysLabel');
             if (lbl) lbl.textContent = label;
@@ -13337,8 +13337,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const sub = $id('vfDayZeroSub');
             if (sub) {
                 sub.textContent = dzOnly
-                    ? (shown === 1 ? '1 anchor on the board' : shown + ' anchors on the board')
-                    : 'The DAS 0 / DAP 0 / DAT 0 anchors';
+                    ? (shown === 1 ? '1 day zero on the board' : shown + ' day zeros on the board')
+                    : 'The DAS 0, DAP 0 and DAT 0 days';
             }
             const empty = $id('dayZeroNone');
             if (empty) empty.classList.toggle('hidden', !dzOnly || shown > 0);
@@ -13365,7 +13365,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const toCalendar = ($id('viewToggleLabel')?.textContent || '').includes('Calendar');
                 vName.textContent = toCalendar ? 'Calendar view' : 'List view';
                 const vSub = $id('vfViewSub');
-                if (vSub) vSub.textContent = toCalendar ? 'See the days on a month grid' : 'Back to the running list';
+                if (vSub) vSub.textContent = toCalendar ? 'See the days on a month grid' : 'Back to the list';
             }
             btn.classList.toggle('is-filtering', emptyHidden || doneHidden || dzOnly);
             applyDayZero();

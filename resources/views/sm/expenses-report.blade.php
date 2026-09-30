@@ -131,13 +131,13 @@
             <b>About Expenses</b>
             {{-- One short paragraph, no dashes or lists (the owner's ask,
                  2026-09-29), as the analyses introduce themselves. --}}
-            <p>See every peso the season spent, added up from your activities: the stock they used from the inventory, the services you paid for, and the cash spent each day. Pick the lots, the kinds of cost and the days you want, and you get the total, where the money went by category and by lot, what is left after the income those days brought in, and every entry with the activity it came from. Every report you make is kept on the Saved Reports tab.</p>
+            <p>See every peso the season spent on stock, services and cash, added up from your activities. Pick the lots, costs and days you want, and see the total and where the money went. Every report is kept on the Saved Reports tab.</p>
         </div>
     </div>
     {{-- The wizard: set the slice, then generate. Results come after, not under. --}}
     <div class="card p-4 mb-4 xr-filters" id="xrWizard">
         <p class="text-sm font-bold text-gray-900">What should the report cover?</p>
-        <p class="text-xs text-gray-500 mt-1 mb-3">Every filter is optional — left alone, the report adds up the whole season. The finished report lands on the Saved shelf by itself.</p>
+        <p class="text-xs text-gray-500 mt-1 mb-3">All filters are optional. Leave them empty to add up the whole season. Each report is saved for you.</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-2">
             <div>
                 <span class="form-label text-xs! mb-1!">Lots</span>
@@ -211,7 +211,7 @@
         </div>
         <p id="xrHint" class="text-xs text-gray-500 mt-2"></p>
         <div class="grid grid-cols-1 sm:grid-cols-[2fr_1fr] gap-2 mt-3">
-            <button type="button" id="xrGenerateBtn" class="btn btn-primary w-full">Generate the report</button>
+            <button type="button" id="xrGenerateBtn" class="btn btn-primary w-full">Make the report</button>
             <button type="button" id="xrResetBtn" class="btn btn-white w-full">Reset</button>
         </div>
     </div>
@@ -224,7 +224,7 @@
             <div id="xrSavedEmpty" class="hidden rx-empty">
                 <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg></span>
                 <p class="rx-empty-t">Nothing saved yet</p>
-                <p class="rx-empty-p">Generate an expenses report and it lands here by itself — every one you make, newest first, ready to rename and describe.</p>
+                <p class="rx-empty-p">Each expenses report you make is saved here, newest first. You can rename it and add a note.</p>
             </div>
         </div>
     </div>
@@ -248,12 +248,12 @@
 
         <div class="xr-card">
             <h3>Month by month</h3>
-            <p class="sub">Green is money out; gold underneath is money in.</p>
+            <p class="sub">Green is money out. Gold below it is money in.</p>
             <div class="xr-months" id="xrMonths"></div>
         </div>
 
         <div class="xr-card">
-            <h3>The ledger</h3>
+            <h3>All entries</h3>
             <p class="sub" id="xrLedgerSub"></p>
             <div id="xrLedger"></div>
         </div>
@@ -270,7 +270,7 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
-        <p class="text-xs text-gray-500 mb-2">Costs on an activity that touches several lots are shared between them. Nothing chosen = every lot, plus general costs.</p>
+        <p class="text-xs text-gray-500 mb-2">An activity on several lots splits its cost between them. Choose none to get every lot plus general costs.</p>
         <div class="dt-rows" id="xrLotsList">
             @foreach ($schedule->lots as $lot)
                 @php $xrCounter = ($lotCounters ?? [])[$lot->id] ?? ($schedule->dayType ?: 'DAS'); @endphp
@@ -306,18 +306,18 @@
     <div class="sheet-body dt-rows" id="xrKindList">
         <button type="button" class="dt-row is-on" data-xr-kind="">
             <span class="dt-row-e">📦</span>
-            <span class="dt-row-body"><b>Any kind</b><i>The whole report, unfiltered</i></span>
+            <span class="dt-row-body"><b>Any kind</b><i>Every kind, no filter</i></span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </button>
         <button type="button" class="dt-row" data-xr-kind="__none">
             <span class="dt-row-e">🚫</span>
-            <span class="dt-row-body"><b>No inventory</b><i>Leave the shed's stock out — material lines drawn from the inventory and stock buys. Hand-typed materials, services, labor and extra expenses stay.</i></span>
+            <span class="dt-row-body"><b>No inventory</b><i>Leave out materials taken from stock and stock buys. Typed materials, services, labor and extra costs stay.</i></span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </button>
         @foreach (\App\Models\AsInventoryItem::KINDS as $key => $k)
             <button type="button" class="dt-row" data-xr-kind="{{ $key }}">
                 <span class="dt-row-e">{{ $k['icon'] }}</span>
-                <span class="dt-row-body"><b>{{ $k['label'] }}</b><i>Material lines and stock buys of this kind only</i></span>
+                <span class="dt-row-body"><b>{{ $k['label'] }}</b><i>Only materials and stock buys of this kind</i></span>
                 <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </button>
         @endforeach
@@ -333,17 +333,17 @@
     <div class="sheet-body dt-rows" id="xrStatusList">
         <button type="button" class="dt-row is-on" data-xr-status="all">
             <span class="dt-row-e">🗓️</span>
-            <span class="dt-row-body"><b>Planned + done</b><i>The whole plan's money, spent or still ahead</i></span>
+            <span class="dt-row-body"><b>Planned + done</b><i>All costs, spent or still to come</i></span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </button>
         <button type="button" class="dt-row" data-xr-status="done">
             <span class="dt-row-e">✅</span>
-            <span class="dt-row-body"><b>Done only</b><i>Money the ticked work has actually spent</i></span>
+            <span class="dt-row-body"><b>Done only</b><i>Only work marked done</i></span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </button>
         <button type="button" class="dt-row" data-xr-status="pending">
             <span class="dt-row-e">⏳</span>
-            <span class="dt-row-body"><b>Still ahead</b><i>What the unticked plan is going to cost</i></span>
+            <span class="dt-row-body"><b>Still ahead</b><i>What the work not done yet will cost</i></span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </button>
     </div>
@@ -388,12 +388,12 @@ const __init = () => {
     const fmtPeso0 = (n) => ((window.ANEE_REGION || {}).symbol || '₱') + Math.round(Number(n || 0)).toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'));
     const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const CATS = {
-        materials: { label: 'Materials', e: '🧂', color: '#15803d', hint: 'What the activities used — from the shed or typed by hand' },
-        labor:     { label: 'Labor', e: '👷', color: '#d97706', hint: 'Wages for the hands on the activities' },
-        services:  { label: 'Services', e: '🚜', color: '#2563eb', hint: 'Service lines and service activities' },
-        expense:   { label: 'Extra expenses', e: '💸', color: '#b91c1c', hint: "The extra expenses logged on the board's days" },
-        purchase:  { label: 'Stock buys', e: '📦', color: '#7c3aed', hint: 'Stock bought or opened in the inventory, outside any activity' },
-        income:    { label: 'Income', e: '💰', color: '#a16207', hint: "The day book's income lines" },
+        materials: { label: 'Materials', e: '🧂', color: '#15803d', hint: 'What the activities used, from stock or typed in' },
+        labor:     { label: 'Labor', e: '👷', color: '#d97706', hint: 'Wages for the workers on activities' },
+        services:  { label: 'Services', e: '🚜', color: '#2563eb', hint: 'Service costs and service activities' },
+        expense:   { label: 'Extra expenses', e: '💸', color: '#b91c1c', hint: 'Extra costs you logged by day' },
+        purchase:  { label: 'Stock buys', e: '📦', color: '#7c3aed', hint: 'Stock bought or added in Inventory, not in an activity' },
+        income:    { label: 'Income', e: '💰', color: '#a16207', hint: 'Income you logged by day' },
     };
     const LOT_NAMES = @json($schedule->lots->pluck('lotName', 'id'));
     const SCHEDULE_TITLE = @json($schedule->title);
@@ -432,7 +432,7 @@ const __init = () => {
         const unit = $id('xrDayUnit');
         if (unit) unit.textContent = w === 'AGE'
             ? 'Counted in months since the trees were planted.'
-            : (w === 'Day' ? 'The chosen lots keep different counts; each row is read on its own lot\'s count.' : `Counted in days, ${w} 0 being each lot's own day zero${w === 'DAT' ? ' (its transplant)' : ''}.`);
+            : (w === 'Day' ? 'These lots count days differently. Each entry uses its own lot\'s count.' : `Counted in days. ${w} 0 is each lot's day zero${w === 'DAT' ? ' (transplant day)' : ''}.`);
     }
     // What the report area is showing: a fresh generate, or a shelf row.
     let MODE = 'fresh';
@@ -452,9 +452,9 @@ const __init = () => {
         }
         if (p.dayMin != null || p.dayMax != null) {
             const w = p.dayWord || dayWord();
-            bits.push(`${daySaid(w)} ${p.dayMin ?? 'start'}–${p.dayMax ?? 'end'}${w === 'AGE' ? ' months' : ''}`);
+            bits.push(`${daySaid(w)} ${p.dayMin ?? 'start'} to ${p.dayMax ?? 'end'}${w === 'AGE' ? ' months' : ''}`);
         }
-        if (p.from || p.to) bits.push(`${prettyD(p.from) || '…'} – ${prettyD(p.to) || '…'}`);
+        if (p.from || p.to) bits.push(`${prettyD(p.from) || 'start'} to ${prettyD(p.to) || 'end'}`);
         if ((p.cats || []).length) bits.push(p.cats.map((k) => (CATS[k] || {}).label || k).join(', '));
         if (p.invKind) bits.push('inventory: ' + p.invKind);
         if (p.status && p.status !== 'all') bits.push(p.status === 'done' ? 'done only' : 'still ahead');
@@ -512,7 +512,7 @@ const __init = () => {
         if (dayOn) bits.push(`${daySaid()} ${sl.dayMin ?? '−∞'} to ${sl.dayMax ?? '+∞'}${dayWord() === 'AGE' ? ' months' : ''}`);
         if (sl.from || sl.to) bits.push(`${sl.from || '…'} to ${sl.to || '…'}`);
         const line = bits.length ? `Covers: ${bits.join(' · ')}` : 'Covers the whole season, every lot and every category.';
-        return dayOn ? line + '. Lines with no lot (the day book, stock buys) have no day count, so a day-count range leaves them out.' : line;
+        return dayOn ? line + '. Entries with no lot, like day book lines and stock buys, have no day count, so they are left out.' : line;
     }
 
     /* A pane opens and shuts by its height, so what is under it slides
@@ -627,7 +627,7 @@ const __init = () => {
             render();
             const filtered = LOT_SEL.size || CAT_SEL.size || KIND || STATUS !== 'all' || Object.keys(sl).length;
             // Named, not "(filtered)": the slice is what the report is.
-            const titled = ('Expenses Report — ' + SCHEDULE_TITLE + (filtered ? ' (' + sliceWordsOf(params) + ')' : '')).slice(0, 190);
+            const titled = ('Expenses Report · ' + SCHEDULE_TITLE + (filtered ? ' (' + sliceWordsOf(params) + ')' : '')).slice(0, 190);
             let savedNote = '';
             try {
                 const snap = await api(U.snapshot, { method: 'POST', body: {
@@ -639,13 +639,13 @@ const __init = () => {
                     report: DATA,
                 } });
                 SAVED = { id: snap.data.id, mine: true, title: titled, description: '' };
-                savedNote = ' It is saved on the Saved Reports shelf.';
+                savedNote = ' It is saved in Saved Reports.';
             } catch (err) {
                 SAVED = { id: null, mine: true };
                 toast(err.message, 'error');
             }
             showReport('fresh');
-            toast('Expenses report generated.' + savedNote);
+            toast('Expenses report ready.' + savedNote);
         } catch (err) { toast(err.message, 'error'); }
         finally { loader.hide(); }
     }
@@ -662,7 +662,7 @@ const __init = () => {
         if (SAVED.id && SAVED.mine && MAY_GEN) actions.push({ label: 'Name & description', icon: 'pen', onClick: () => openMetaFor(SAVED) });
         if (SAVED.id && SAVED.mine && MAY_GEN) actions.push({ label: 'Delete', icon: 'trash', kind: 'danger', onClick: deleteShown });
         window.reportView.open({
-            title: SAVED.title || ('Expenses Report — ' + SCHEDULE_TITLE),
+            title: SAVED.title || ('Expenses Report · ' + SCHEDULE_TITLE),
             node: $id('xrBody'),
             actions,
             onClose: () => { showTab(false); },
@@ -678,7 +678,7 @@ const __init = () => {
     }
     async function deleteShown() {
         if (!SAVED.id) return;
-        const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this saved report?', message: 'It leaves the shelf. The season\'s numbers stay — a new report can always be generated.', confirmText: 'Delete' }) : confirm('Delete this report?');
+        const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this saved report?', message: 'Your season records stay. You can make a new report any time.', confirmText: 'Delete' }) : confirm('Delete this report?');
         if (!ok) return;
         try {
             await api(U.del(SAVED.id), { method: 'DELETE' });
@@ -729,7 +729,7 @@ const __init = () => {
             groups.get(ym).push(r);
         });
         $id('xrLedgerSub').textContent = d.rowCount > (d.rows || []).length
-            ? `Showing the latest ${(d.rows || []).length} of ${d.rowCount} entries — tighten the filters to see the rest.`
+            ? `Showing the latest ${(d.rows || []).length} of ${d.rowCount} entries. Narrow the filters to see the rest.`
             : `${d.rowCount} ${d.rowCount === 1 ? 'entry' : 'entries'}, newest first.`;
         $id('xrLedger').innerHTML = [...groups.entries()].map(([ym, rows]) => {
             const label = ym === '—' ? 'No date' : `${MONTHS[Number(ym.slice(5, 7)) - 1]} ${ym.slice(0, 4)}`;

@@ -158,16 +158,16 @@
             const item = editing ? itemById($id('ivItemId').value) : null;
             const say = $id('ivUnitSheetSay');
             if (say) {
-                say.textContent = item ? `Counted in ${unitWords(item.unit)} today, ${item.says} on hand. Kin units convert the whole book; the others keep the figures and change only the word.` : '';
+                say.textContent = item ? `Now counted in ${unitWords(item.unit)}, with ${item.says} on hand. Units of the same type convert every number. Others only change the name.` : '';
                 say.classList.toggle('hidden', !item);
             }
             $id('ivUnitList').innerHTML = keys.map((k) => {
                 let note = UNITS[k] && UNITS[k].long ? UNITS[k].long : '';
                 if (item && k !== item.unit) {
                     const conv = convert(Number(item.onHand) || 0, item.unit, k);
-                    note = conv !== null ? `→ ${trim(conv)} ${unitSays(k, Math.abs(conv) === 1)} — converts the whole book` : 'Cannot convert from ' + unitSays(item.unit, false) + ' — figures keep their numbers';
+                    note = conv !== null ? `→ ${trim(conv)} ${unitSays(k, Math.abs(conv) === 1)}, every number converts` : 'Cannot convert from ' + unitSays(item.unit, false) + '. Only the name changes';
                 } else if (item) {
-                    note = 'As it is now';
+                    note = 'Current unit';
                 }
                 return `<button type="button" class="dt-row${k === now ? ' is-on' : ''}" data-iv-unit="${esc(k)}">
                     <span class="dt-row-e">⚖️</span>
@@ -238,15 +238,15 @@
                         ? `Set a price${locked ? LOCK : PEN}`
                         : `${esc(pesoShort(b.price))}${locked ? LOCK : PEN}`;
                     const foot = b.price == null
-                        ? '<span class="ivp-bc-none">No price yet — the day\'s cash and the expense report count this batch as ' + ((window.ANEE_REGION || {}).symbol || '₱') + '0 until it has one.</span>'
+                        ? '<span class="ivp-bc-none">No price yet. It counts as ' + ((window.ANEE_REGION || {}).symbol || '₱') + '0 in the day\'s cash and the expense report until you set one.</span>'
                         : `<b>${esc(pesoShort(b.amount))}</b> in all · ${esc(pesoShort(b.price))} per ${esc(one)}`;
                     const why = b.activityId
-                        ? `<span class="ivp-bc-why">Bought on an activity — fix the price on that activity</span>`
+                        ? `<span class="ivp-bc-why">Bought on an activity. Fix the price there.</span>`
                         : (b.note ? `<span class="ivp-bc-note">${esc(b.note)}</span>` : '');
                     return `<div class="ivp-bc">
                         <div class="ivp-bc-top">
                             <span class="ivp-bc-qty"><b>${esc(b.says)}</b><i>${esc(b.reasonLabel)} · ${esc(b.onSays || '')}${b.typedSays ? ' · typed as ' + esc(b.typedSays) : ''}</i></span>
-                            <button type="button" class="ivp-pill ${pillCls}" ${locked ? 'disabled' : `data-iv-price-batch="${b.id}"`} title="${locked ? '' : 'Tap to fix this batch\'s price'}">${pill}</button>
+                            <button type="button" class="ivp-pill ${pillCls}" ${locked ? 'disabled' : `data-iv-price-batch="${b.id}"`} title="${locked ? '' : 'Tap to change this price'}">${pill}</button>
                         </div>
                         ${why}
                         <div class="ivp-bc-foot">${foot}</div>
@@ -284,14 +284,14 @@
             $id('ivPriceItem').textContent = item.name;
             $id('ivPriceLine').textContent = mode === 'batch'
                 ? `${batch.reasonLabel} · ${batch.says} · ${batch.onSays || ''}`
-                : `${item.says} on hand · what one costs when a batch has no price of its own`;
+                : `${item.says} on hand · used when a batch has no price`;
             $id('ivPriceUnit').textContent = ((window.ANEE_REGION || {}).symbol || '₱') + ' per ' + unitSays(item.unit, true);
             $id('ivPriceInput').value = mode === 'batch'
                 ? (batch.ownPrice != null ? batch.ownPrice : '')
                 : (item.unitPrice != null ? item.unitPrice : '');
             $id('ivPriceHint').textContent = mode === 'batch'
-                ? `What you paid for one ${unitSays(item.unit, true)} in this batch. The day's cash and the expense report count the batch at this price.`
-                : 'What one costs when a batch has no price of its own.';
+                ? `What you paid for one ${unitSays(item.unit, true)} in this batch. The day's cash and the expense report use this price.`
+                : 'Used when a batch has no price.';
             // No "clear" on a batch: a batch without a price counts as ₱0, which nobody means.
             $id('ivPriceClear').hidden = mode === 'batch' || item.unitPrice == null;
             sayPriceTotal();
@@ -315,7 +315,7 @@
             const ref = $id('ivPriceRef').value;
             const raw = $id('ivPriceInput').value;
             const price = clear ? null : (raw === '' ? null : Number(raw));
-            if (!clear && raw !== '' && !(price >= 0)) { toast('That is not a price.', 'error'); return; }
+            if (!clear && raw !== '' && !(price >= 0)) { toast('Enter a valid price.', 'error'); return; }
             btn.disabled = true;
             try {
                 let res;
@@ -339,7 +339,7 @@
            offering buttons that could only ever answer no. */
         const IV_RO = !!window.IV_READONLY;
         const kebabHtml = (i) => IV_RO ? '' : `
-                            <button type="button" class="iv-kebab" data-iv-menu="${i.id}" title="Edit, add stock, take stock, delete" aria-label="Actions for ${esc(i.name)}">
+                            <button type="button" class="iv-kebab" data-iv-menu="${i.id}" title="Edit, add, take out, delete" aria-label="Actions for ${esc(i.name)}">
                                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
                             </button>`;
 
@@ -358,7 +358,7 @@
                                  item wearing "None left" reads as an accusation
                                  about stock nobody ever recorded. --}}
                             <div class="iv-have ${i.isLow || i.onHand < 0 ? 'is-low' : (i.onHand === 0 ? 'is-none' : '')}">
-                                ${i.onHand !== 0 ? convable(i.onHand, i.unit) : (i.hasMoves ? 'None left' : 'No stock recorded yet')}
+                                ${i.onHand !== 0 ? convable(i.onHand, i.unit) : (i.hasMoves ? 'None left' : 'No stock yet')}
                                 ${i.isLow && i.onHand > 0 ? '<span class="iv-low">low</span>' : ''}
                             </div>
                             ${i.unitPrice != null ? `<div class="iv-note">\u20b1${trim(i.unitPrice)} per ${esc(unitSays(i.unit, true))}</div>` : ''}
@@ -514,12 +514,12 @@
             if (hint) {
                 const k = $id('ivUnit')?.value;
                 if (!item || !k || k === item.unit) {
-                    hint.textContent = item ? 'Change this and the whole book is re-counted in the new unit — every line, the price, and what the activities take off the shelf.' : '';
+                    hint.textContent = item ? 'If you change this, every line, price and activity amount switches to the new unit.' : '';
                 } else {
                     const conv = convert(Number(item.onHand) || 0, item.unit, k);
                     hint.textContent = conv !== null
-                        ? `On Save the book converts: ${item.says} becomes ${trim(conv)} ${unitSays(k, Math.abs(conv) === 1)}, every line and price with it, and activities that use it are read in ${unitSays(k, false)} from now on.`
-                        : `${unitSays(item.unit, false)} and ${unitSays(k, false)} cannot be converted — the figures keep their numbers and only the word changes.`;
+                        ? `When you save, ${item.says} becomes ${trim(conv)} ${unitSays(k, Math.abs(conv) === 1)}. Every line and price converts too, and activities will use ${unitSays(k, false)}.`
+                        : `${unitSays(item.unit, false)} and ${unitSays(k, false)} cannot be converted. The numbers stay and only the unit name changes.`;
                 }
                 hint.classList.toggle('hidden', !item);
             }
@@ -527,7 +527,7 @@
 
 
         function openItemSheet(item = null) {
-            $id('ivItemTitle').textContent = item ? 'Edit item' : 'Add an Inventory Item';
+            $id('ivItemTitle').textContent = item ? 'Edit item' : 'Add an item';
             $id('ivItemId').value = item ? item.id : '';
             if (item) window.smTags?.load($id('ivItemTagsMount'), 'item', item.id);
             else window.smTags?.clear($id('ivItemTagsMount'));
@@ -564,7 +564,7 @@
             const name = $id('ivName').value.trim();
             if (!name) { toast('Give the item a name.', 'error'); $id('ivName').focus(); return; }
             if (!id && !(Number($id('ivOpenQty').value) > 0)) {
-                toast('How many do you have now? A thing joins the shed by being counted.', 'error');
+                toast('Enter how many you have now.', 'error');
                 $id('ivOpenQty').focus();
                 return;
             }
@@ -651,11 +651,11 @@
             const now = $id(START_IDS[which][1]);
             if (!now) return;
             if (st.mode === 'today') { icon.textContent = '\ud83d\uddd3\ufe0f'; now.textContent = 'Today \u00b7 ' + sayDate(todayISO()); }
-            else if (st.mode === 'beginning') { icon.textContent = '\u23ee\ufe0f'; now.textContent = 'The beginning \u00b7 ' + sayDate(CTX.first || todayISO()); }
+            else if (st.mode === 'beginning') { icon.textContent = '\u23ee\ufe0f'; now.textContent = 'Season start \u00b7 ' + sayDate(CTX.first || todayISO()); }
             else { icon.textContent = '\ud83d\udcc5'; now.textContent = sayDate(st.date || todayISO()); }
             const hint = $id('ivStartHint');
             if (which === 'move' && hint) {
-                hint.textContent = 'Activities already ticked done from this day take from the count automatically.';
+                hint.textContent = 'Activities marked done from this day take from the count.';
             }
         }
 
@@ -670,8 +670,8 @@
             const say = $id('ivStartBeginningSays');
             if (say) {
                 say.textContent = CTX.first
-                    ? `The season's first activity is ${sayDate(CTX.first)}. Everything ticked done that used this item comes off the count.`
-                    : 'Everything already ticked done that used this item comes off the count.';
+                    ? `The first activity is on ${sayDate(CTX.first)}. Every activity marked done that used this item comes off the count.`
+                    : 'Every activity marked done that used this item comes off the count.';
             }
             openSheet('ivStartSheet');
         }
@@ -757,7 +757,7 @@
             const rows = ITEMS.map((i) => `<option value="${i.id}">${esc(i.icon + ' ' + i.name)}</option>`);
             /* Stock arriving can be stock of something the shed has never held.
                Stock leaving cannot: there is nothing to take it from. */
-            if (dir === 'in') rows.unshift('<option value="__new">➕ Something not on the shelf yet</option>');
+            if (dir === 'in') rows.unshift('<option value="__new">➕ A new item</option>');
             sel.innerHTML = rows.length ? rows.join('') : '<option value="">Nothing on the shelf yet</option>';
             // An empty shed answers its own question: the only thing that can
             // happen is a first item.
@@ -777,7 +777,7 @@
             if (dir === 'in') {
                 rows.push(`<button type="button" class="dt-row${now === '__new' ? ' is-on' : ''}" data-mv-item="__new">
                     <span class="dt-row-e">➕</span>
-                    <span class="dt-row-body"><b>Something not on the shelf yet</b><i>A first delivery of a brand-new item</i></span>
+                    <span class="dt-row-body"><b>A new item</b><i>First delivery of something not in the list</i></span>
                 </button>`);
             }
             ITEMS.forEach((i) => rows.push(`<button type="button" class="dt-row${now === String(i.id) ? ' is-on' : ''}" data-mv-item="${i.id}">
@@ -825,7 +825,7 @@
             const mtE = $id('ivMoveItemIcon');
             const mtT = $id('ivMoveItemNow');
             if (mtE && mtT) {
-                if (isNew) { mtE.textContent = '➕'; mtT.textContent = 'Something not on the shelf yet'; }
+                if (isNew) { mtE.textContent = '➕'; mtT.textContent = 'A new item'; }
                 else if (item) { mtE.textContent = item.icon; mtT.textContent = item.name; }
                 else { mtE.textContent = '🎒'; mtT.textContent = 'Nothing on the shelf yet'; }
             }
@@ -867,10 +867,10 @@
                 !(!isNew && item && $id('ivMoveDir')?.value === 'in'));
             if (have) {
                 have.textContent = isNew
-                    ? 'New to the shed. What you type below becomes its opening count.'
+                    ? 'New item. The amount below becomes its starting count.'
                     : (item
                         ? (item.onHand > 0 ? `${say(item, item.onHand)} on hand.` : 'None on hand.')
-                        : 'Nothing on the shelf yet — use Add new inventory first.');
+                        : 'Nothing on the shelf yet. Add an item first.');
             }
             sayMoveQty();
         }
@@ -919,9 +919,9 @@
                 if (short) {
                     warn.textContent = inItem > item.onHand
                         ? `That is more than the ${say(item, item.onHand)} on record. `
-                            + `It will be saved and the count will go below zero — worth checking the shed, or adding what came in first.`
-                        : `The shed holds ${say(item, item.onHand)}, but activities not yet done already claim ${say(item, spoken)} of it — `
-                            + `this leaves them short. It will still be saved; worth checking the plan.`;
+                            + `It will still save, but the count goes below zero. Check the shed, or add what came in first.`
+                        : `The shed holds ${say(item, item.onHand)}, but planned activities need ${say(item, spoken)} of it. `
+                            + `This leaves them short. It will still save. Check your plan.`;
                 }
             }
         }
@@ -941,7 +941,7 @@
                shed's pen, but this is the desk they all arrive at, and a
                window.* function is reachable from anywhere. */
             if (IV_RO) {
-                window.toast?.('You have view-only access to the Inventory on this farm.', 'error');
+                window.toast?.('You can only view the Inventory on this farm.', 'error');
 
                 return;
             }
@@ -952,7 +952,7 @@
                 try { await load(); } catch (_) { /* said below */ }
             }
             $id('ivMoveDir').value = dir;
-            $id('ivMoveTitle').textContent = o.title || (dir === 'in' ? 'Add to the inventory' : 'Expense an inventory item');
+            $id('ivMoveTitle').textContent = o.title || (dir === 'in' ? 'Add stock' : 'Take stock out');
             $id('ivMoveGo').textContent = dir === 'in' ? 'Add it' : 'Take it out';
             $id('ivMoveQty').value = '';
             $id('ivMoveNote').value = '';
@@ -987,9 +987,9 @@
             const isNew = itemId === '__new';
             const qty = Number($id('ivMoveQty').value || 0);
             const newName = isNew ? $id('ivMoveNewName').value.trim() : '';
-            if (!isNew && !itemId) { toast('Nothing on the shelf yet — add a new item first.', 'error'); return; }
-            if (isNew && !newName) { toast('What is it?', 'error'); $id('ivMoveNewName').focus(); return; }
-            if (!(qty > 0)) { toast('How much?', 'error'); $id('ivMoveQty').focus(); return; }
+            if (!isNew && !itemId) { toast('Nothing on the shelf yet. Add an item first.', 'error'); return; }
+            if (isNew && !newName) { toast('Enter the item name.', 'error'); $id('ivMoveNewName').focus(); return; }
+            if (!(qty > 0)) { toast('Enter an amount.', 'error'); $id('ivMoveQty').focus(); return; }
             btn.disabled = true;
             try {
                 /* Two errands, one button. A new item is created WITH what
@@ -1050,7 +1050,7 @@
             const item = itemById(itemId);
             if (!item) { toast('That item is gone.', 'error'); return; }
             $id('ivStartEditItem').value = String(item.id);
-            $id('ivStartEditWhat').textContent = `${item.icon} ${item.name} — the book currently starts ${on ? 'on ' + sayDate(on) : 'today'} with ${say(item, Number(qty) || 0)}.`;
+            $id('ivStartEditWhat').textContent = `${item.icon} ${item.name}. The count now starts ${on ? 'on ' + sayDate(on) : 'today'} with ${say(item, Number(qty) || 0)}.`;
             $id('ivStartEditQty').value = qty || '';
             $id('ivStartEditUnit').textContent = unitSays(item.unit, false);
             START.edit = { mode: 'date', date: on || todayISO() };
@@ -1063,7 +1063,7 @@
             const qty = Number($id('ivStartEditQty').value || 0);
             // Zero is an answer: a book can open with nothing on the shelf,
             // and the season's takes then run it honestly negative.
-            if (qty < 0) { toast('Started with how much?', 'error'); $id('ivStartEditQty').focus(); return; }
+            if (qty < 0) { toast('Enter the starting amount.', 'error'); $id('ivStartEditQty').focus(); return; }
             btn.disabled = true;
             try {
                 const res = await api(U.restart, {
@@ -1119,7 +1119,7 @@
         async function moveEditGo(btn) {
             const id = Number($id('ivMEdId').value);
             const qty = Number($id('ivMEdQty').value || 0);
-            if (!(qty > 0)) { toast('How much?', 'error'); $id('ivMEdQty').focus(); return; }
+            if (!(qty > 0)) { toast('Enter an amount.', 'error'); $id('ivMEdQty').focus(); return; }
             btn.disabled = true;
             try {
                 const sel = $id('ivMEdUnitSel');
@@ -1157,7 +1157,7 @@
         async function delMove(id) {
             const ok = window.confirmAction ? await window.confirmAction({
                 title: 'Remove this entry?',
-                message: 'The stock goes back to what it was before this line. The lines after it keep the readings they were written with.',
+                message: 'The stock goes back to what it was before this line. Later lines keep their old numbers.',
                 confirmText: 'Remove',
             }) : true;
             if (!ok) return;
@@ -1182,7 +1182,7 @@
             $id('ivMenuTitle').textContent = item.icon + ' ' + item.name;
             $id('ivMenuSays').textContent = item.onHand !== 0
                 ? say(item, item.onHand) + ' on hand'
-                : (item.hasMoves ? 'None on hand' : 'No stock recorded yet');
+                : (item.hasMoves ? 'None on hand' : 'No stock yet');
             $id('ivMenuSheet').dataset.item = String(item.id);
             openSheet('ivMenuSheet');
         }
@@ -1202,7 +1202,7 @@
             const item = itemById(id);
             const ok = window.confirmAction ? await window.confirmAction({
                 title: 'Delete ' + (item ? item.name : 'this item') + '?',
-                message: 'It comes off the shed\u2019s list. Its log lines stay, and activities that used it keep their record.',
+                message: 'It leaves the list. Its log lines stay, and activities that used it keep their record.',
                 confirmText: 'Delete',
             }) : true;
             if (!ok) return;

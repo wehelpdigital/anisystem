@@ -12,7 +12,7 @@
         <div class="text-center mb-6">
             <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-9 w-auto mx-auto mb-4">
             <h1 class="text-2xl font-bold text-gray-900">Create your free account</h1>
-            <p class="text-sm text-gray-500 mt-1">The Libre plan is free forever — no card, no trial clock.</p>
+            <p class="text-sm text-gray-500 mt-1">The Libre plan is free forever. No card, no trial.</p>
         </div>
 
         <div class="card card-body">
@@ -45,7 +45,7 @@
                 <div>
                     <label class="form-label">Country</label>
                     @include('partials.country-pick', ['id' => 'signupCountry', 'name' => 'country', 'value' => $suCountry])
-                    <p class="form-hint">Sets the language, the currency and the local advice Anee gives.</p>
+                    <p class="form-hint">Sets your language, currency and Anee's local advice.</p>
                     @error('country') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
 
@@ -79,7 +79,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-accent btn-lg w-full">Create Free Account</button>
-                <p class="text-center text-xs text-gray-400">We'll email you a confirmation link before your first login.</p>
+                <p class="text-center text-xs text-gray-400">We will email you a link to confirm your account.</p>
             </form>
         </div>
 

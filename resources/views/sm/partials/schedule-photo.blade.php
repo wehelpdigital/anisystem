@@ -49,7 +49,7 @@
                     <button type="button" class="cph-tool" data-cph-tool="rect" title="Box"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg></button>
                     <button type="button" class="cph-tool" data-cph-tool="circle" title="Circle"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg></button>
                     <button type="button" class="cph-tool" data-cph-tool="text" title="Text"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 6h14M12 6v13"/></svg></button>
-                    <button type="button" class="cph-tool" data-cph-tool="eraser" title="Eraser (strokes only — the photo is safe)"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20h10M6.5 14.5l8-8a2 2 0 012.8 0l2.2 2.2a2 2 0 010 2.8l-8 8H8l-3.5-3.5a1.5 1.5 0 010-2.1l2-2z"/></svg></button>
+                    <button type="button" class="cph-tool" data-cph-tool="eraser" title="Eraser (lines only, the photo stays)"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20h10M6.5 14.5l8-8a2 2 0 012.8 0l2.2 2.2a2 2 0 010 2.8l-8 8H8l-3.5-3.5a1.5 1.5 0 010-2.1l2-2z"/></svg></button>
                     <button type="button" class="cph-tool" data-cph-tool="move" title="Move and zoom the photo"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v20M2 12h20M12 2l-3 3m3-3l3 3M12 22l-3-3m3 3l3-3M2 12l3-3m-3 3l3 3M22 12l-3-3m3 3l-3 3"/></svg></button>
                 </div>
             </div>
@@ -63,17 +63,17 @@
                     <button type="button" class="cph-tool" id="cphSize" title="Line thickness"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="1" d="M4 6h16"/><path stroke-linecap="round" stroke-width="2.5" d="M4 12h16"/><path stroke-linecap="round" stroke-width="4.5" d="M4 18.5h16"/></svg></button>
                 </div>
                 <div class="cph-group">
-                    <button type="button" class="cph-tool" id="cphUndo" title="Take back my last stroke"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg></button>
-                    <button type="button" class="cph-tool" id="cphRedo" title="Put it back" disabled><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg></button>
+                    <button type="button" class="cph-tool" id="cphUndo" title="Undo my last line"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h10a5 5 0 015 5v1m-15-6l4-4m-4 4l4 4"/></svg></button>
+                    <button type="button" class="cph-tool" id="cphRedo" title="Redo" disabled><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 10H11a5 5 0 00-5 5v1m15-6l-4-4m4 4l-4 4"/></svg></button>
                 </div>
-                <button type="button" class="cph-tool cph-danger" id="cphClear" title="Clear all strokes for the team"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg></button>
-                <button type="button" class="cph-tool cph-saveic" id="cphSaveBtn" title="Keep this image" aria-label="Keep this image"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg><span>Save</span></button>
+                <button type="button" class="cph-tool cph-danger" id="cphClear" title="Clear all lines for the team"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg></button>
+                <button type="button" class="cph-tool cph-saveic" id="cphSaveBtn" title="Save this image" aria-label="Save this image"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg><span>Save</span></button>
             </div>
         </div>
         <div class="cph-box" id="cphBox">
             <div class="cph-none" id="cphNone">
                 <svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="9" r="1.2"/></svg>
-                <span>No photo up yet — tap <b>Add photo</b>, and the whole team draws on it together.</span>
+                <span>No photo yet. Tap <b>Add photo</b> and the team can draw on it together.</span>
             </div>
             <img id="cphImg" alt="" draggable="false" hidden>
             <canvas id="cphCanvas" style="visibility:hidden"></canvas>
@@ -100,7 +100,7 @@
         <div class="cph-srcs">
             <button type="button" class="cph-src" id="cphPickBtn">
                 <span class="cph-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h4l2 2h6a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M7 15l3-3.5 2.4 2.8L15 11l3 4"/></svg></span>
-                <span class="cph-src-t"><b>From the gallery</b><small>A picture this schedule already keeps.</small></span>
+                <span class="cph-src-t"><b>From the gallery</b><small>A photo already saved in this schedule.</small></span>
                 <svg class="cph-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
             </button>
             <button type="button" class="cph-src" id="cphUploadBtn">
@@ -111,7 +111,7 @@
             @if (\App\Support\WorkerContext::canUseModule('camera'))
             <button type="button" class="cph-src" id="cphCameraBtn">
                 <span class="cph-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8a2 2 0 012-2h1.4l1-1.6h7.2l1 1.6H18a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><circle cx="12" cy="13" r="3.4"/></svg></span>
-                <span class="cph-src-t"><b>Take a photo now</b><small>Open the camera and put up what you see.</small></span>
+                <span class="cph-src-t"><b>Take a photo now</b><small>Open the camera and take one.</small></span>
                 <svg class="cph-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
             </button>
             @endif
@@ -150,15 +150,15 @@
     <div class="sheet-header"><h3 class="sheet-title">Write on the photo</h3>
         <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button></div>
     <div class="sheet-body space-y-3" style="padding-bottom:1.1rem">
-        <input type="text" id="cphTextInput" class="form-input" maxlength="500" placeholder="The words to put there">
-        <button type="button" id="cphTextGo" class="btn btn-primary w-full">Place it</button>
+        <input type="text" id="cphTextInput" class="form-input" maxlength="500" placeholder="Type your text">
+        <button type="button" id="cphTextGo" class="btn btn-primary w-full">Add text</button>
     </div>
 </div>
 
 {{-- Where the drawn-over photo goes. --}}
 <div class="sheet hidden" id="cphSaveSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
-    <div class="sheet-header"><h3 class="sheet-title">Keep this image</h3>
+    <div class="sheet-header"><h3 class="sheet-title">Save this image</h3>
         <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button></div>
     <div class="sheet-body space-y-3" style="padding-bottom:1.1rem">
         <div>
@@ -167,7 +167,7 @@
         </div>
         <div>
             <label class="form-label" for="cphSaveDesc">Description</label>
-            <textarea id="cphSaveDesc" class="form-input form-textarea" rows="2" maxlength="2000" placeholder="Anything worth remembering about it"></textarea>
+            <textarea id="cphSaveDesc" class="form-input form-textarea" rows="2" maxlength="2000" placeholder="Notes about this photo (optional)"></textarea>
         </div>
         <div class="cph-dests" id="cphDests">
             <label class="cph-dest"><input type="radio" name="cphDest" value="note" checked><span><b>A new note</b><small>In the schedule's notebook</small></span></label>
@@ -175,7 +175,7 @@
             <label class="cph-dest"><input type="radio" name="cphDest" value="album"><span><b>An album</b><small>One the schedule already has</small></span></label>
         </div>
         <select id="cphAlbumSel" class="form-input hidden"></select>
-        <p class="cph-teamnote">Saved as a team image — it was drawn together, and it says so.</p>
+        <p class="cph-teamnote">It will be saved as a team image.</p>
         <button type="button" id="cphSaveGo" class="btn btn-primary w-full">Save</button>
     </div>
 </div>
@@ -507,7 +507,7 @@
         // sit there as a broken glyph pretending to be the team's photo.
         im.onerror = () => {
             showStage(false);
-            if (window.toast) toast('That photo could not be loaded — pick another.', 'error');
+            if (window.toast) toast('That photo could not load. Pick another.', 'error');
         };
         im.src = url;
     }
@@ -717,7 +717,7 @@
             try {
                 const r = await api(`${U.undo}?scheduleId=${SID}`, { method: 'POST', body: last && last.uid ? { uid: last.uid } : {} });
                 const ids = (r?.data?.ids) || [];
-                if (!ids.length && !last) { if (window.toast) toast('Nothing of yours to take back.'); return; }
+                if (!ids.length && !last) { if (window.toast) toast('Nothing of yours to undo.'); return; }
                 // Everything with that uid is one gesture; it leaves together.
                 const uidGone = last ? last.uid : null;
                 const taken = uidGone ? myOrder.filter((s) => s.uid === uidGone) : [];
@@ -754,8 +754,8 @@
         $id('cphClear').addEventListener('click', async () => {
             if (!strokes.length) { if (window.toast) toast('Nothing drawn yet.'); return; }
             const ok = window.confirmAction
-                ? await confirmAction({ title: 'Clear the strokes?', message: 'Every pen mark on this photo goes, for the whole team. The photo itself stays.', confirmText: 'Clear' })
-                : confirm('Clear all strokes for the team?');
+                ? await confirmAction({ title: 'Clear all lines?', message: 'This removes every mark for the whole team. The photo stays.', confirmText: 'Clear' })
+                : confirm('Clear all lines for the team?');
             if (!ok) return;
             applyClear();
             api(`${U.push}?scheduleId=${SID}`, { method: 'POST', body: { type: 'clear' } }).catch(() => {});
@@ -767,9 +767,9 @@
         $id('cphAddBtn').addEventListener('click', () => window.openSheet?.('cphSourceSheet'));
         $id('cphPickBtn').addEventListener('click', () => {
             window.closeSheet?.('cphSourceSheet');
-            if (typeof window.smPickMedia !== 'function') { if (window.toast) toast('The gallery picker is not available here.', 'error'); return; }
+            if (typeof window.smPickMedia !== 'function') { if (window.toast) toast('The gallery cannot open here.', 'error'); return; }
             window.smPickMedia({
-                scheduleId: SID, kinds: 'image', title: 'Choose the photo to draw on',
+                scheduleId: SID, kinds: 'image', title: 'Pick a photo to draw on',
                 onPick: (item) => {
                     if (!item || !item.path) return;
                     setPhoto({ path: item.path });
@@ -794,7 +794,7 @@
         });
     }
     async function setPhoto(src) {
-        const busy = window.smBusy ? smBusy('Putting the photo up…') : null;
+        const busy = window.smBusy ? smBusy('Adding the photo…') : null;
         try {
             let r;
             if (src.file) {
@@ -865,12 +865,12 @@
         }));
         $id('cphSaveGo').addEventListener('click', async () => {
             const title = $id('cphSaveTitle').value.trim();
-            if (!title) { if (window.toast) toast('Give the image a name first.', 'error'); window.smFocus?.($id('cphSaveTitle')); return; }
+            if (!title) { if (window.toast) toast('Add a name first.', 'error'); window.smFocus?.($id('cphSaveTitle')); return; }
             const dest = document.querySelector('input[name="cphDest"]:checked')?.value || 'note';
             const albumId = dest === 'album' ? parseInt($id('cphAlbumSel').value, 10) : null;
             if (dest === 'album' && !albumId) { if (window.toast) toast('Pick the album.', 'error'); return; }
             const image = composeImage();
-            if (!image) { if (window.toast) toast('Could not read the photo back — try re-opening the tab.', 'error'); return; }
+            if (!image) { if (window.toast) toast('Could not read the photo. Open the Photo tab again.', 'error'); return; }
             const btn = $id('cphSaveGo');
             btn.disabled = true;
             try {

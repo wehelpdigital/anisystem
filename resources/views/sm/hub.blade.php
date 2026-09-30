@@ -133,7 +133,7 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     </button>
                 </div>
-                <p class="sched-desc" id="schedDescText">{{ $schedule->description ?: 'No description yet — tap the pencil to add one.' }}</p>
+                <p class="sched-desc" id="schedDescText">{{ $schedule->description ?: 'No description yet. Tap the pencil to add one.' }}</p>
             </div>
             <span class="sched-state sched-state-{{ $schedule->status }}">{{ ucfirst($schedule->status) }}</span>
         </div>
@@ -187,7 +187,7 @@
                 <button type="button" id="archiveToggleBtn"
                         data-archived="{{ $schedule->status === \App\Models\AsCroppingSchedule::STATUS_ARCHIVED ? 1 : 0 }}"
                         class="btn btn-sm btn-white">
-                    {{ $schedule->status === \App\Models\AsCroppingSchedule::STATUS_ARCHIVED ? 'Back to the shelf' : 'Archive this Schedule' }}
+                    {{ $schedule->status === \App\Models\AsCroppingSchedule::STATUS_ARCHIVED ? 'Restore from Archives' : 'Archive this Schedule' }}
                 </button>
                 <button type="button" id="statusToggleBtn" data-locked="{{ $schedule->isLocked() ? 1 : 0 }}"
                         class="btn btn-sm {{ $schedule->isLocked() ? 'btn-white' : 'btn-accent sweep-fill sweep-green' }}"
@@ -429,7 +429,7 @@
                     <span class="cta-title text-lg font-bold leading-tight">Activities</span>
                     <span class="badge badge-yellow">{{ $schedule->activities_count }}</span>
                 </span>
-                <span class="cta-sub block text-sm leading-snug mt-0.5">The heart of your cropping plan, the day by day goals and milestones.</span>
+                <span class="cta-sub block text-sm leading-snug mt-0.5">Your day by day plan, goals and milestones.</span>
             </span>
             <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
@@ -444,7 +444,7 @@
             </span>
             <span class="min-w-0 grow">
                 <span class="cta-title block text-lg font-bold leading-tight">Quick Capture</span>
-                <span class="cta-sub block text-sm leading-snug mt-0.5">Snap a photo, file it in seconds.</span>
+                <span class="cta-sub block text-sm leading-snug mt-0.5">Take a photo and save it fast.</span>
             </span>
             <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
@@ -463,13 +463,13 @@
         @if ($may('video'))
         <button type="button" id="quickRecordBtn"
             class="cta-tile qr-cta rounded-2xl p-5 flex items-center gap-4 text-left"
-            @if ($hubVidLocked) data-tier-lock="{{ $hubVidRung }}" data-lock-say="{{ \App\Support\Tier::say($hubVidRung, 'Video recording comes with {plan}. Photos and voice notes stay yours on every plan.') }}" @endif>
+            @if ($hubVidLocked) data-tier-lock="{{ $hubVidRung }}" data-lock-say="{{ \App\Support\Tier::say($hubVidRung, 'Video recording comes with {plan}. Photos and voice notes work on every plan.') }}" @endif>
             <span class="cta-chip w-12 h-12 rounded-xl flex items-center justify-center shrink-0 {{ $hubVidLocked ? 'tl-dim' : '' }}">
                 <img src="{{ asset('images/video-camera-b.png') }}" alt="" style="width:1.75rem;height:1.75rem;object-fit:contain">
             </span>
             <span class="min-w-0 grow {{ $hubVidLocked ? 'tl-dim' : '' }}">
                 <span class="cta-title block text-lg font-bold leading-tight">Quick Record</span>
-                <span class="cta-sub block text-sm leading-snug mt-0.5">Film it when a picture will not do.</span>
+                <span class="cta-sub block text-sm leading-snug mt-0.5">Record a short video.</span>
             </span>
             @if ($hubVidLocked)
                 <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
@@ -493,7 +493,7 @@
             </span>
             <span class="min-w-0 grow">
                 <span class="cta-title block text-lg font-bold leading-tight">Quick Voice</span>
-                <span class="cta-sub block text-sm leading-snug mt-0.5">Say it, and it files itself as a note.</span>
+                <span class="cta-sub block text-sm leading-snug mt-0.5">Speak and it saves as a note.</span>
             </span>
             <svg class="cta-arrow w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </button>
@@ -516,7 +516,7 @@
                 $tileRung = $tileLocked ? \App\Support\Tier::scheduleUnlocksAt($schedule, $moduleKey) : '';
             @endphp
             <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => $moduleKey]) }}" @unless ($tileLocked) data-nav-loader @endunless class="card card-hover block"
-               @if ($tileLocked) data-tier-lock="{{ $tileRung }}" data-lock-say="{{ \App\Support\Tier::say($tileRung, $moduleKey === 'workers' ? 'Workers come with {plan} — the crew, their days and their pay, on every activity.' : 'The Inventory comes with {plan} — the shed, its stock, and what each activity takes from it.') }}" @endif>
+               @if ($tileLocked) data-tier-lock="{{ $tileRung }}" data-lock-say="{{ \App\Support\Tier::say($tileRung, $moduleKey === 'workers' ? 'Workers come with {plan}. Track your crew, their days and their pay.' : 'Inventory comes with {plan}. Track your stock and what each activity uses.') }}" @endif>
                 <div class="p-4 flex flex-col gap-3">
                     <div class="flex items-start justify-between">
                         <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center {{ $tileLocked ? 'tl-dim' : '' }}">
@@ -548,7 +548,7 @@
         @endphp
         @if ($collabLocked)
             <a href="{{ route('sm.collab', ['id' => $schedule->id]) }}" class="card card-hover block"
-               data-tier-lock="{{ $collabRung }}" data-lock-say="{{ \App\Support\Tier::say($collabRung, 'The Collab Room — team chat, whiteboard and calls — comes with {plan}.') }}">
+               data-tier-lock="{{ $collabRung }}" data-lock-say="{{ \App\Support\Tier::say($collabRung, 'The Collab Room comes with {plan}. It has team chat, a whiteboard and calls.') }}">
                 <div class="p-4 flex flex-col gap-3">
                     <div class="flex items-start justify-between">
                         <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center tl-dim">
@@ -602,7 +602,7 @@
     <div class="card border-red-100 danger-head">
         <div class="card-body">
             <h3 class="font-bold text-red-700 mb-1">Danger zone</h3>
-            <p class="text-sm text-gray-500 mb-4">Delete this schedule and all its modules from your account. Deleted plans cannot be restored.</p>
+            <p class="text-sm text-gray-500 mb-4">Delete this schedule and all its modules. This cannot be undone.</p>
             <button type="button" id="deleteScheduleBtn" class="btn btn-danger-outline">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
                 Delete schedule
@@ -645,7 +645,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ok = await confirmAction({
             title: 'Delete schedule?',
             message: @json('"' . $schedule->title . '" and its modules will be hidden from your account.'),
-            detail: 'Lots, workers and activities tied to it are preserved but no longer visible.',
+            detail: 'Its lots, workers and activities are kept but hidden.',
             confirmText: 'Delete',
         });
         if (!ok) return;
@@ -668,7 +668,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = e.currentTarget;
         const title = document.getElementById('schedTitleInput').value.trim();
         const description = document.getElementById('schedDescInput').value.trim();
-        if (!title) { toast('Give the schedule a title.', 'error'); return; }
+        if (!title) { toast('Please add a title.', 'error'); return; }
         btn.disabled = true;
         try {
             // The endpoint reads the schedule from the query, not the body.
@@ -679,12 +679,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // No reload: the two places the name shows are right here.
             document.getElementById('schedTitleText').textContent = title;
             document.getElementById('schedDescText').textContent =
-                description || 'No description yet — tap the pencil to add one.';
+                description || 'No description yet. Tap the pencil to add one.';
             document.querySelectorAll('[data-page-subtitle]').forEach((el) => { el.textContent = title; });
             closeSheet('schedRenameSheet');
             toast(res.message || 'Saved.');
         } catch (err) {
-            toast(err.message || 'Could not save that.', 'error');
+            toast(err.message || 'Could not save.', 'error');
         } finally { btn.disabled = false; }
     });
 
@@ -696,7 +696,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!archived) {
             const ok = await confirmAction({
                 title: 'Move this season to the Archives?',
-                message: 'It leaves the seasons list and the home screen, but nothing is deleted — open it from Archives any time, and its reports keep working.',
+                message: 'It leaves your season list and home screen. Nothing is deleted. Open it and its reports from Archives any time.',
                 confirmText: 'Archive this Schedule',
                 confirmClass: 'btn-primary',
             });
@@ -717,7 +717,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!locked) {
             const ok = await confirmAction({
                 title: 'Close this season?',
-                message: 'It becomes read-only — nothing can be added or changed until you reopen it. Everything is kept.',
+                message: 'It becomes read only. Nothing can be added or changed until you reopen it. Everything is kept.',
                 confirmText: 'Close the season',
             });
             if (!ok) return;

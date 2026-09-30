@@ -18,7 +18,7 @@
         @csrf
         <div>
             <label class="form-label" for="subject">Subject <span class="text-red-500">*</span></label>
-            <input type="text" id="subject" name="subject" class="form-input" maxlength="200" value="{{ old('subject') }}" placeholder="Short summary of your issue">
+            <input type="text" id="subject" name="subject" class="form-input" maxlength="200" value="{{ old('subject') }}" placeholder="What is the problem?">
             @error('subject') <p class="form-error">{{ $message }}</p> @enderror
         </div>
         <div>
@@ -31,11 +31,11 @@
         </div>
         <div>
             <label class="form-label" for="body">Describe the issue <span class="text-red-500">*</span></label>
-            <textarea id="body" name="body" rows="4" class="form-textarea" maxlength="8000" placeholder="Tell us what's happening — steps, error messages, screenshots links…">{{ old('body') }}</textarea>
+            <textarea id="body" name="body" rows="4" class="form-textarea" maxlength="8000" placeholder="What you did, what you saw, and any error message">{{ old('body') }}</textarea>
             @error('body') <p class="form-error">{{ $message }}</p> @enderror
         </div>
         <div class="flex justify-end">
-            <button type="submit" class="btn btn-primary">Submit ticket</button>
+            <button type="submit" class="btn btn-primary">Send ticket</button>
         </div>
     </form>
 </div>
@@ -60,7 +60,7 @@
     <div class="card p-8 text-center">
         <div class="text-4xl mb-2">🎫</div>
         <p class="font-bold text-gray-900">No tickets yet</p>
-        <p class="text-sm text-gray-500 mt-1">Have an issue or a question? Tap <strong>New ticket</strong> and our team will help.</p>
+        <p class="text-sm text-gray-500 mt-1">Need help? Tap <strong>New ticket</strong> and our team will answer.</p>
     </div>
 @endforelse
 @endsection

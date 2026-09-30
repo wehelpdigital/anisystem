@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Collab Room — ' . $schedule->title)
+@section('title', 'Collab Room: ' . $schedule->title)
 @section('page-title', 'Collab Room')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'collab')

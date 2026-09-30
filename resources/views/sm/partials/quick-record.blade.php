@@ -74,7 +74,7 @@
                         <input type="radio" name="qrTarget" value="note" checked>
                         <span>
                             <span class="block font-semibold text-gray-900">Save to notes</span>
-                            <span class="block text-xs text-gray-500">Keep it in this schedule's notebook.</span>
+                            <span class="block text-xs text-gray-500">Keep it in this schedule's notes.</span>
                         </span>
                     </label>
                     @endif
@@ -82,7 +82,7 @@
                         <input type="radio" name="qrTarget" value="gallery" @checked(! $qrMayNote)>
                         <span>
                             <span class="block font-semibold text-gray-900">Save to an album</span>
-                            <span class="block text-xs text-gray-500">Put it in the Gallery, beside the photos.</span>
+                            <span class="block text-xs text-gray-500">Put it in the Gallery with the photos.</span>
                         </span>
                     </label>
                 </div>
@@ -333,14 +333,14 @@
              * that errors reached nobody - that is the test. */
             const keepIt = () => {
                 if (!window.aneeOffline?.on()) {
-                    reject(new Error('The connection dropped mid-upload. Nothing may have arrived - try again.'));
+                    reject(new Error('The connection dropped. It may not have saved. Try again.'));
 
                     return;
                 }
                 window.aneeOffline.markDown?.();
                 window.aneeOffline.enqueueForm(url, fd)
-                    .then(() => resolve({ success: true, offline: true, message: 'Saved on this phone - the clip will upload when the signal returns.' }))
-                    .catch(() => reject(new Error('Could not keep the clip on this phone.')));
+                    .then(() => resolve({ success: true, offline: true, message: 'Saved on this phone. It will upload when the signal is back.' }))
+                    .catch(() => reject(new Error('Could not save the clip on this phone.')));
             };
             x.onerror = keepIt;
             x.send(fd);

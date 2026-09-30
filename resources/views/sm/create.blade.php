@@ -2,7 +2,7 @@
 
 @section('title', 'New Cropping Schedule')
 @section('page-title', 'New Cropping Schedule')
-@section('page-subtitle', 'Set up your season, step by step')
+@section('page-subtitle', 'Set up your season')
 @section('back', route('sm.index'))
 
 @php
@@ -20,10 +20,10 @@
         // their age instead. Put last, because it is the one that turns the
         // question off rather than answering it.
         'dayTypes' => [
-            ['value' => 'DAT', 'label' => 'DAS → DAT — sown, then transplanted'],
-            ['value' => 'DAS', 'label' => 'DAS only — direct seeded (DSR)'],
-            ['value' => 'DAP', 'label' => 'DAP — days after planting'],
-            ['value' => 'TREE', 'label' => 'Mature trees — no day count, read by age'],
+            ['value' => 'DAT', 'label' => 'DAS → DAT: seeded, then transplanted'],
+            ['value' => 'DAS', 'label' => 'DAS only: direct seeded (DSR)'],
+            ['value' => 'DAP', 'label' => 'DAP: days after planting'],
+            ['value' => 'TREE', 'label' => 'Mature trees: counted by tree age'],
         ],
     ];
 @endphp
@@ -71,7 +71,7 @@
                      x-transition:enter-start="opacity-0 translate-x-8"
                      x-transition:enter-end="opacity-100 translate-x-0">
                     <h2 class="text-lg font-bold text-gray-900">Basic details</h2>
-                    <p class="text-sm text-gray-500 mt-1 mb-5">Give your cropping schedule a name. Everything else is optional and can be changed anytime.</p>
+                    <p class="text-sm text-gray-500 mt-1 mb-5">Name your schedule. Everything else is optional and you can change it later.</p>
 
                     <div class="space-y-4">
                         <div>
@@ -80,12 +80,12 @@
                                    @keydown.enter.prevent="canNext && next()"
                                    {{-- No autofocus: on a phone it summoned the keypad over a form
                                         the farmer had not read yet. Tapping the field still focuses it. --}}
-                                   class="form-input" placeholder="e.g. {{ \App\Support\Region::ph() ? 'Wet Season 2026 — Rice Cropping' : 'Spring 2026 — Corn' }}">
+                                   class="form-input" placeholder="e.g. {{ \App\Support\Region::ph() ? 'Wet Season 2026 Rice' : 'Spring 2026 Corn' }}">
                         </div>
                         <div>
                             <label class="form-label">Description <span class="text-gray-400 font-normal">(optional)</span></label>
                             <textarea x-model="form.description" rows="4" maxlength="5000"
-                                      class="form-textarea" placeholder="Notes about this season, the field, the plan…"></textarea>
+                                      class="form-textarea" placeholder="Notes about this season or field"></textarea>
                         </div>
                         {{-- The one thing the board cannot be drawn without,
                              and the one thing no later screen asks for. --}}
@@ -105,7 +105,7 @@
                                  frame of its own. --}}
                             <div class="mt-2 flex items-start gap-2 rounded-xl border border-brand-200 bg-brand-50 p-3 text-xs text-brand-800">
                                 <svg class="w-4 h-4 shrink-0 mt-px" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                <span>Each lot can override this later.</span>
+                                <span>Each lot can change this later.</span>
                             </div>
                         </div>
                     </div>
@@ -120,9 +120,8 @@
                     <div class="mt-5 rounded-xl border border-brand-200 bg-brand-50 p-4">
                         <p class="text-sm font-bold text-brand-900">What happens next</p>
                         <p class="text-sm text-brand-800/90 mt-1 leading-relaxed">
-                            Your schedule opens as soon as it is created. Lots, workers, materials and
-                            the crop on each lot are added from inside it — the board keeps a list of
-                            what is still missing and takes you to each one.
+                            Your schedule opens right after you create it. Add lots, workers, materials
+                            and crops from inside. A checklist shows what is still missing.
                         </p>
                     </div>
                 </div>
@@ -192,7 +191,7 @@
             },
             next() {
                 if (this.step === 1 && !this.canNext) {
-                    toast('Please give your schedule a title.', 'error');
+                    toast('Please add a title.', 'error');
                     return;
                 }
                 if (this.step < this.steps.length) {
@@ -211,7 +210,7 @@
             async submit() {
                 if (!this.form.title.trim()) {
                     this.step = 1;
-                    toast('Please give your schedule a title.', 'error');
+                    toast('Please add a title.', 'error');
                     return;
                 }
                 this.saving = true;

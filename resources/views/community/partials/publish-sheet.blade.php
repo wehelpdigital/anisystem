@@ -8,19 +8,19 @@
     <div class="sheet-body space-y-4">
         <input type="hidden" id="publishScheduleId">
         <p class="text-sm text-gray-600">
-            <strong class="text-gray-900" id="publishScheduleTitle"></strong> will be readable by every member.
-            Workers, costs and observations are not shared.
+            All members can read <strong class="text-gray-900" id="publishScheduleTitle"></strong>.
+            Workers, costs and notes stay private.
         </p>
         <div>
-            <label class="form-label" for="publishSummary">What should people know about it?</label>
+            <label class="form-label" for="publishSummary">Short summary</label>
             <textarea id="publishSummary" class="form-textarea" rows="3" maxlength="500"
-                placeholder="e.g. Wet-season inbred rice, 1.2 ha, direct seeded, low-input."></textarea>
-            <p class="form-hint">Optional — shown on the browse card.</p>
+                placeholder="e.g. Wet season inbred rice, 1.2 ha, direct seeded, low input."></textarea>
+            <p class="form-hint">Optional. Shown on the plan card.</p>
         </div>
         <div>
-            <label class="form-label" for="publishRegion">Where was it grown?</label>
+            <label class="form-label" for="publishRegion">Where it was grown</label>
             <input type="text" id="publishRegion" class="form-input" maxlength="120" placeholder="{{ \App\Support\Region::address()['region']['placeholder'] ?? 'e.g. Illinois' }}">
-            <p class="form-hint">Optional — helps people find plans for similar conditions.</p>
+            <p class="form-hint">Optional. Helps others find plans like yours.</p>
         </div>
     </div>
     <div class="sheet-footer">

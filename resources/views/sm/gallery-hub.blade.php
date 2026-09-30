@@ -50,10 +50,10 @@
 @php
     $shelves = [
         ['all', 'All Media', $counts['all'], 'Every picture your seasons have kept, newest first.'],
-        ['albums', 'Albums', $counts['albums'], 'The ones you put together on purpose, from every season.'],
-        ['videos', 'Videos', $counts['videos'], 'Clips on their own, because you pick a video and scan photos.'],
-        ['voice', 'Voice', $counts['voice'] ?? 0, 'Every voice recording you have kept — quick voice notes included — played right here.'],
-        ['team', 'Team box', $counts['team'], 'What the Collab Rooms made: recordings, whiteboards, saved maps.'],
+        ['albums', 'Albums', $counts['albums'], 'Groups of pictures you made, from every season.'],
+        ['videos', 'Videos', $counts['videos'], 'Only the video clips.'],
+        ['voice', 'Voice', $counts['voice'] ?? 0, 'Every voice recording, Quick Voice notes too. Play them here.'],
+        ['team', 'Team box', $counts['team'], 'Recordings, whiteboards and maps from the Collab Rooms.'],
     ];
     $now = collect($shelves)->firstWhere(0, $tab) ?: $shelves[0];
 @endphp
@@ -104,7 +104,7 @@
         @if (\App\Support\BackTo::key())<input type="hidden" name="from" value="{{ \App\Support\BackTo::key() }}">@endif
         <label class="ga-search">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-            <input type="search" name="q" value="{{ $q }}" placeholder="Search by what it was about…" autocomplete="off">
+            <input type="search" name="q" value="{{ $q }}" placeholder="Search pictures" autocomplete="off">
         </label>
         <button type="submit" class="btn btn-primary btn-sm shrink-0">Search</button>
         @if ($q !== '')
@@ -114,12 +114,11 @@
 
     @if ($tab === 'albums')
         <p class="tb-say">
-            Albums from every season, each with what is in it. One is made inside
-            the season it belongs to — here they are only read, so a picture
-            never loses which season it came from.
+            Albums from every season. To make or change an album, open its
+            season's Gallery.
         </p>
         @if (empty($albums))
-            <p class="ga-none">{{ $q !== '' ? 'No album matches that.' : 'No albums yet. Make one inside a season\u2019s Gallery — a corner of the field, a problem you are following, the pictures a buyer asked for.' }}</p>
+            <p class="ga-none">{{ $q !== '' ? 'No album matches that.' : 'No albums yet. Open a season and make one in its Gallery.' }}</p>
         @else
             @foreach ($albums as $a)
                 {{-- The season Gallery's own album section: a heading, then the
@@ -175,15 +174,15 @@
                             @endforeach
                         </div>
                     @else
-                        <p class="ga-empty">Nothing in here yet — add pictures in the season it belongs to.</p>
+                        <p class="ga-empty">Nothing here yet. Add pictures in its season.</p>
                     @endif
                 </div>
             @endforeach
         @endif
     @elseif ($tab === 'team')
-        <p class="tb-say">What every Collab Room made — recordings, whiteboards and saved maps, newest first.</p>
+        <p class="tb-say">Recordings, whiteboards and saved maps from every Collab Room, newest first.</p>
         @if (empty($team))
-            <p class="ga-none">{{ $q !== '' ? 'Nothing in the Team boxes matches that.' : 'Nothing yet. Recordings, whiteboards and saved maps from a Collab Room gather here.' }}</p>
+            <p class="ga-none">{{ $q !== '' ? 'Nothing in the Team boxes matches that.' : 'Nothing yet. Recordings, whiteboards and saved maps from a Collab Room show up here.' }}</p>
         @else
             <div class="tb-grid">
                 @foreach ($team as $row)
@@ -237,8 +236,8 @@
                 {{ $q !== ''
                     ? 'Nothing in any season matches that.'
                     : ($tab === 'voice'
-                        ? 'No recordings yet. Quick Voice files them here on its own — tap the mic on the schedules page and just talk.'
-                        : 'Nothing here yet. Photos you take, drawings you make and maps you save all gather here on their own.') }}
+                        ? 'No recordings yet. Tap the mic on the schedules page and talk. Quick Voice saves them here.'
+                        : 'Nothing here yet. Your photos, drawings and saved maps show up here on their own.') }}
             </p>
         @else
             <div class="ga-all" id="ghGrid">

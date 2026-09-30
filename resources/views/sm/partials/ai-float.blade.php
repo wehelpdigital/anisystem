@@ -37,7 +37,7 @@
 @if ($aiFloatSettings && $aiFloatSettings->isUsable() && \App\Support\WorkerContext::canUseModule('ai'))
 <div id="aiFloat" class="ai-float{{ request('module') === 'ai' ? ' ai-float-off' : '' }}">
     <button type="button" id="aiFloatFab" class="ai-float-fab{{ $aiFloatLocked ? ' is-locked' : '' }}" aria-label="Ask {{ $aiFloatSettings->assistantName }}" title="Ask {{ $aiFloatSettings->assistantName }}"
-        @if ($aiFloatLocked) data-tier-lock="{{ \App\Support\Tier::farmUnlocksAt('ai') }}" data-lock-say="{{ $aiFloatSettings->assistantName }} comes with {{ \App\Support\Tier::withPlan(\App\Support\Tier::farmUnlocksAt('ai')) }} — the chat, the analyses, Realign and the credit shop, on top of everything your plan already has." @endif>
+        @if ($aiFloatLocked) data-tier-lock="{{ \App\Support\Tier::farmUnlocksAt('ai') }}" data-lock-say="{{ $aiFloatSettings->assistantName }} comes with {{ \App\Support\Tier::withPlan(\App\Support\Tier::farmUnlocksAt('ai')) }}. You get the chat, the analyses, Realign and the credit shop, on top of your plan." @endif>
         <img data-ai-face src="{{ $aiFloatAvatar }}" alt="">
         @if ($aiFloatLocked)<span class="ai-float-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endif
     </button>
@@ -105,17 +105,17 @@
                 @include('partials.anee-hello-video')
                 {{-- How to ask. Not decoration: a vague question costs the
                      same as a good one and comes back needing three more. --}}
-                <div class="aif-howto" onclick="this.classList.toggle('is-open')" role="button" tabindex="0" aria-label="How to ask — tap to expand">
+                <div class="aif-howto" onclick="this.classList.toggle('is-open')" role="button" tabindex="0" aria-label="How to ask. Tap to open.">
                     <p class="aif-howto-h" style="display:flex;align-items:center;gap:.35rem">The more you tell me, the better I answer
                         <svg class="aif-howto-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </p>
                     <div class="aif-howto-fold">
-                        <p class="aif-howto-b">Crop, variety and age, problems, observations, what you did, what you see, all detailed. A wrong question can waste your credits, so be as specific as possible.</p>
+                        <p class="aif-howto-b">Tell me the crop, variety and age, what you see, and what you did. A vague question can waste your credits, so give details.</p>
                         <p class="aif-howto-lbl">For example</p>
                         <p class="aif-howto-eg"><b>Not</b> "my rice is sick"</p>
                         <span class="aif-howto-rule" aria-hidden="true"></span>
                         <p class="aif-howto-eg"><b>Try</b> {{ \App\Support\Region::ph() ? '"RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"' : '"I planted P1197 corn six weeks ago. The lower leaves are yellowing from the edges in, the newest leaves are still green. I side-dressed urea ten days ago and it has rained hard since. What is going on?"' }}</p>
-                        <a href="#" class="anee-guide-link" data-anee-guide>Check this for a complete guide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a>
+                        <a href="#" class="anee-guide-link" data-anee-guide>Read the full guide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a>
                     </div>
                 </div>
             </div>
@@ -128,8 +128,8 @@
             </span>
             <div>
                 <p class="text-sm font-semibold text-gray-900">You're out of AI credits</p>
-                <p class="text-xs text-gray-500 mt-0.5">Purchase AI chat credits to keep asking.</p>
-                <a href="{{ route('ai.credits') }}" class="btn btn-accent btn-sm mt-2">Purchase AI credits</a>
+                <p class="text-xs text-gray-500 mt-0.5">Buy AI credits to keep asking.</p>
+                <a href="{{ route('ai.credits') }}" class="btn btn-accent btn-sm mt-2">Get AI Credits</a>
             </div>
         </div>
         @endunless
@@ -165,7 +165,7 @@
                     <input type="file" id="aiFloatPhotoFiles" accept="image/*" multiple class="hidden">
                     <input type="file" id="aiFloatPhotoCam" accept="image/*" capture="environment" class="hidden">
                 </div>
-                <textarea id="aiFloatText" rows="1" maxlength="4000" placeholder="Ask about your crop…"></textarea>
+                <textarea id="aiFloatText" rows="1" maxlength="4000" placeholder="Ask about your crop"></textarea>
                 <button type="button" id="aiFloatSend" class="ai-float-send" aria-label="Send">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
                 </button>
@@ -186,7 +186,7 @@
                      decides what the next answer costs. An account that
                      rides free shows the sign for it rather than a number
                      that never moves. --}}
-                <span class="ai-bal ai-bal-chip" data-ai-bal title="Current credits — what is left in the wallet this chat spends from" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiFloatUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) ($aiFloatBalance ?? 0))) }}</b>@endif</span>
+                <span class="ai-bal ai-bal-chip" data-ai-bal title="Credits left in your wallet" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiFloatUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) ($aiFloatBalance ?? 0))) }}</b>@endif</span>
             </div>
         </div>
     </div>
@@ -213,9 +213,9 @@
         </div>
         <div>
             <label class="form-label" for="aiFloatNoteDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="aiFloatNoteDesc" class="form-textarea" rows="3" maxlength="2000" placeholder="Why this chat is worth keeping…"></textarea>
+            <textarea id="aiFloatNoteDesc" class="form-textarea" rows="3" maxlength="2000" placeholder="Why keep this chat?"></textarea>
         </div>
-        <p class="text-xs text-gray-400">The whole conversation is attached underneath.</p>
+        <p class="text-xs text-gray-400">The full chat is saved with it.</p>
         <button type="button" id="aiFloatNoteSave" class="btn btn-primary w-full">Save to the notebook</button>
     </div>
 </div>
@@ -617,7 +617,7 @@
             t.classList.toggle('is-on', on);
             if (window.toast) {
                 if (t.id === 'aiFloatUsePlan') {
-                    toast(on ? 'Anee will include in your question the current history of your cropping schedule - ' + @json($schedule->title) + '. This will add credit usage.'
+                    toast(on ? 'Anee will read your season, ' + @json($schedule->title) + ', with your question. This uses more credits.'
                              : 'She will answer without your plan.');
                 } else {
                     toast(on ? 'She will read the rest of this chat.'
@@ -626,7 +626,7 @@
             }
         });
 
-        const buyCard = (msg) => `<div class="ai-buyc"><span class="ico">${COIN}</span><div><h3>You're out of AI Credits</h3><p>${escapeHtml(msg)}</p><a class="btn btn-accent btn-sm mt-2" href="${escapeHtml(URLS.credits)}">Purchase AI credits</a></div></div>`;
+        const buyCard = (msg) => `<div class="ai-buyc"><span class="ico">${COIN}</span><div><h3>You're out of AI Credits</h3><p>${escapeHtml(msg)}</p><a class="btn btn-accent btn-sm mt-2" href="${escapeHtml(URLS.credits)}">Get AI Credits</a></div></div>`;
         let conversationId = null, busy = false, uploadsBusy = 0;
         const sayBusy = () => {
             const line = $('aiFloatBusy');
@@ -760,7 +760,7 @@
         const chipCount = () => chips.children.length;
         const roomForAnother = () => {
             if (chipCount() < MAX_SHOTS) return true;
-            toast(`Up to ${MAX_SHOTS} photos per question.`, 'error');
+            toast(`Only ${MAX_SHOTS} photos per question.`, 'error');
             return false;
         };
         const syncChips = () => chips.classList.toggle('hidden', chipCount() === 0);
@@ -845,7 +845,7 @@
         }
         $('aiFloatNewChat')?.addEventListener('click', () => {
             closeSessMenus();
-            startFresh('Fresh session — ask away.');
+            startFresh('New chat started. Ask away.');
         });
 
         $('aiFloatOldChats')?.addEventListener('click', async () => {
@@ -855,7 +855,7 @@
                 const res = await api(URLS.convos);
                 const rows = (res.data && res.data.conversations) || [];
                 if (!rows.length) { thread.innerHTML = WELCOME_HTML; toast('No past chats yet.'); return; }
-                thread.innerHTML = '<p class="text-xs font-bold text-gray-400 mb-2" style="text-transform:uppercase;letter-spacing:.04em">Old chats — pick one to continue</p>'
+                thread.innerHTML = '<p class="text-xs font-bold text-gray-400 mb-2" style="text-transform:uppercase;letter-spacing:.04em">Old chats. Pick one to continue.</p>'
                     + rows.map((c) => `<button type="button" class="ai-float-convo" data-convo="${c.id}"><span class="t">${escapeHtml(c.title)}</span><span class="w">${escapeHtml(c.when || '')}</span></button>`).join('');
             } catch (err) { thread.innerHTML = WELCOME_HTML; toast(err.message, 'error'); }
         });
@@ -887,7 +887,7 @@
 
         let pendingTaskId = null;
         function fileAway(activityId) {
-            if (!conversationId) { toast('Nothing to save yet — ask something first, or open an old chat.', 'error'); return; }
+            if (!conversationId) { toast('Nothing to save yet. Ask a question or open an old chat.', 'error'); return; }
             pendingTaskId = activityId || null;
             const head = $('aiFloatNoteHeading');
             if (head) head.textContent = pendingTaskId ? 'Attach this chat to the task' : 'Save this chat as a note';
@@ -926,7 +926,7 @@
         $('aiFloatToTask')?.addEventListener('click', (e) => {
             e.stopPropagation();
             closeSessMenus();
-            if (!conversationId) { toast('Nothing to save yet — ask something first, or open an old chat.', 'error'); return; }
+            if (!conversationId) { toast('Nothing to save yet. Ask a question or open an old chat.', 'error'); return; }
             window.aiAttachOpen?.({
                 askSchedule: false,
                 scheduleId: SCHEDULE_ID,
@@ -943,7 +943,7 @@
                         title: a.title,
                         description: a.description,
                     } });
-                    toast(res.message || 'Kept in the notebook.');
+                    toast(res.message || 'Saved to the notebook.');
                 },
             });
         });
@@ -987,7 +987,7 @@
             chip.classList.remove('is-busy');
             openPanel(true);
             window.smFocus?.($('aiFloatText'), { delay: 160 });
-            window.toast?.('Photo attached — what would you like to ask about it?');
+            window.toast?.('Photo attached. What do you want to ask?');
         };
 
         /* "Ask the technician about this", from something the page is already
@@ -1021,7 +1021,7 @@
 
         async function send() {
             if (busy) return;
-            if (uploadsBusy > 0) { toast('Wait a moment — a photo is still uploading.', 'error'); return; }
+            if (uploadsBusy > 0) { toast('Please wait. A photo is still uploading.', 'error'); return; }
             const message = (input.value || '').trim();
             if (!message) { toast('Type a question first.', 'error'); return; }
             busy = true; turnsSent++;
@@ -1063,7 +1063,7 @@
                 else {
                     // Not taken: the photos and the words come back for the retry.
                     window.aneeGiveChipsBack(chips, heldChips); syncChips(); sayEstimate();
-                    if (heldChips.length) toast('Your photos are back in the box, ready for the retry.');
+                    if (heldChips.length) toast('Your photos are back. You can try again.');
                     input.value = message; input.dispatchEvent(new Event('input'));
                 }
             } finally { busy = false; sendBtn.disabled = false; sendBtn.setAttribute('aria-label', 'Send'); input.focus(); }

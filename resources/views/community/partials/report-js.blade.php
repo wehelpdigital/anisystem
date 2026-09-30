@@ -12,15 +12,15 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
-        <p class="rp-lead">What is wrong with it? The team sees this — the person who posted it does not.</p>
+        <p class="rp-lead">What is wrong with it? Only our team sees your report. The poster does not.</p>
         <div class="rp-reasons" id="rpReasons">
             @foreach (\App\Models\CommunityReport::reasons() as $key => $label)
                 <button type="button" class="rp-reason" data-reason="{{ $key }}">{{ $label }}</button>
             @endforeach
         </div>
         <label class="rp-more">
-            <span>Anything else the team should know? <i>(optional)</i></span>
-            <textarea id="rpDetails" rows="2" maxlength="1000" class="form-textarea" placeholder="Say a little more…"></textarea>
+            <span>More details <i>(optional)</i></span>
+            <textarea id="rpDetails" rows="2" maxlength="1000" class="form-textarea" placeholder="Tell us more"></textarea>
         </label>
     </div>
     <div class="sheet-footer">
@@ -117,7 +117,7 @@
             window.toast?.(data.message, data.success ? 'success' : 'error');
             if (data.success) window.closeSheet?.('reportSheet');
         } catch (_) {
-            window.toast?.('Could not send that — try again.', 'error');
+            window.toast?.('Could not send. Try again.', 'error');
         } finally {
             btn.disabled = false;
             btn.textContent = 'Send report';

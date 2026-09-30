@@ -73,7 +73,7 @@
     </div>
 
     <div class="tg-cloud" id="tgCloud"></div>
-    <p class="tg-none" id="tgEmpty" hidden>No tags yet. Add one from any form in Activities — the picker sits at the bottom, marked optional.</p>
+    <p class="tg-none" id="tgEmpty" hidden>No tags yet. Add one from any form in Activities. The tag box is at the bottom.</p>
 
     <div id="tgShelf" hidden>
         <div class="tg-head">
@@ -81,7 +81,7 @@
             <button type="button" class="btn btn-white btn-sm" id="tgDeleteBtn">Delete tag</button>
         </div>
         <div class="tg-items" id="tgItems"></div>
-        <p class="tg-none" id="tgShelfEmpty" hidden>This tag is not tied to anything yet.</p>
+        <p class="tg-none" id="tgShelfEmpty" hidden>Nothing has this tag yet.</p>
     </div>
 </div>
 @endsection
@@ -127,7 +127,7 @@ const __init = () => {
         try {
             const res = await api(U.items + '&tagId=' + id);
             const items = res.data.items || [];
-            $id('tgShelfSays').textContent = '🏷️ ' + res.data.tag.name + ' — ' + items.length + (items.length === 1 ? ' thing' : ' things');
+            $id('tgShelfSays').textContent = '🏷️ ' + res.data.tag.name + ' · ' + items.length + (items.length === 1 ? ' thing' : ' things');
             $id('tgItems').innerHTML = items.map((it) => `
                 <a class="tg-item" href="${esc(it.url)}">
                     <span class="e">${it.icon}</span>
@@ -145,16 +145,16 @@ const __init = () => {
         const delId = OPEN;
         // The question is not optional: with the sheet unavailable the
         // answer is no, never a silent yes.
-        if (!window.confirmAction) { toast('Could not open the confirmation — try again.', 'error'); return; }
+        if (!window.confirmAction) { toast('Something went wrong. Please try again.', 'error'); return; }
         const ok = await window.confirmAction({
             title: `Delete the tag "${t ? t.name : ''}"?`,
-            message: `Every item wearing "${t ? t.name : 'this tag'}" loses the tag — the items themselves stay exactly where they are.`,
+            message: `The tag comes off every item that has it. The items are not deleted.`,
             confirmText: 'Delete tag',
         });
         if (!ok) return;
         try {
             await api(U.del(delId), { method: 'DELETE' });
-            toast('Tag removed.');
+            toast('Tag deleted.');
             OPEN = null;
             $id('tgShelf').hidden = true;
             window.smTags?.invalidate?.();

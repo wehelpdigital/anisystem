@@ -19,7 +19,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
             <span id="camShareLabel">Share my camera</span>
         </button>
-        <button type="button" id="camFlip" class="btn btn-white btn-sm hidden" title="Front / back camera">
+        <button type="button" id="camFlip" class="btn btn-white btn-sm hidden" title="Switch camera">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M20 9A8 8 0 006.34 5.34M4 15a8 8 0 0013.66 3.66"/></svg>
             Flip
         </button>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="cam-grid" id="camGrid">
-        <p class="cam-empty" id="camEmpty">Nobody is sharing a camera yet. Tap <b>Share my camera</b> and everyone in the room will see what you see.</p>
+        <p class="cam-empty" id="camEmpty">No one is sharing a camera yet. Tap <b>Share my camera</b> so the room sees what you see.</p>
     </div>
 
     {{-- The spotlight: one feed at full size, with the rest still running
@@ -43,7 +43,7 @@
     <div class="cam-spot hidden" id="camSpot">
         <div class="cam-spot-head">
             <span class="cam-spot-name" id="camSpotName"></span>
-            <button type="button" class="cam-spot-x" id="camSpotClose" aria-label="Back to the grid">
+            <button type="button" class="cam-spot-x" id="camSpotClose" aria-label="Back to all cameras">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9l6 6m0-6l-6 6"/></svg>
             </button>
         </div>
@@ -144,8 +144,8 @@
         const feeds = videoTracksInRoom();
 
         if (!feeds.length) {
-            grid.innerHTML = '<p class="cam-empty" id="camEmpty">Nobody is sharing a camera yet. '
-                + 'Tap <b>Share my camera</b> and everyone in the room will see what you see.</p>';
+            grid.innerHTML = '<p class="cam-empty" id="camEmpty">No one is sharing a camera yet. '
+                + 'Tap <b>Share my camera</b> so the room sees what you see.</p>';
             closeSpot();
             return;
         }
@@ -242,8 +242,8 @@
         } catch (err) {
             sharing = !sharing;
             window.toast?.(window.isSecureContext
-                ? 'Camera permission was blocked.'
-                : 'Sharing a camera needs HTTPS — open the app over https://.', 'error');
+                ? 'Camera access was blocked.'
+                : 'Camera sharing needs HTTPS. Open the app with https://.', 'error');
         }
         paintShare();
         paint();
@@ -392,7 +392,7 @@
     }
 
     async function startRec() {
-        if (!window.MediaRecorder) { window.toast?.('Recording is not supported on this device.', 'error'); return; }
+        if (!window.MediaRecorder) { window.toast?.('This device cannot record.', 'error'); return; }
         if (!videoTracksInRoom().length) { window.toast?.('There is nothing to record yet.', 'error'); return; }
 
         const canvas = document.createElement('canvas');
@@ -425,7 +425,7 @@
         }, 500);
         $('camRecTime').classList.remove('hidden');
         $('camRecLabel').textContent = 'Stop';
-        window.toast?.('Recording — everyone in the room can see this.');
+        window.toast?.('Recording. Everyone in the room can see this.');
     }
 
     function stopDrawing() {

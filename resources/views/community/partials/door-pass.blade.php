@@ -17,13 +17,13 @@
         <div class="dp-lock" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
         </div>
-        <p class="dp-say" id="doorPassSay">This discussion asks for a password.</p>
+        <p class="dp-say" id="doorPassSay">This discussion needs a password.</p>
         <div>
             <label class="form-label" for="doorPassInput">Password</label>
             <input type="text" id="doorPassInput" class="form-input" maxlength="60"
                    autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"
                    placeholder="Type it exactly">
-            <p class="form-hint">Ask whoever runs the discussion for it.</p>
+            <p class="form-hint">Ask the discussion owner for it.</p>
         </div>
     </div>
     <div class="sheet-footer">
@@ -74,8 +74,8 @@
                 settle = resolve;
                 input.value = '';
                 say.textContent = roomName
-                    ? roomName + ' asks for a password.'
-                    : 'This discussion asks for a password.';
+                    ? roomName + ' needs a password.'
+                    : 'This discussion needs a password.';
                 window.openSheet('doorPassSheet');
                 setTimeout(() => input.focus(), 280);
             });

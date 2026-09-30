@@ -75,7 +75,7 @@
 
     {{-- Text carries more choices than a mark, so it gets its own row. --}}
     <div class="pe-panel hidden" id="pePanelText">
-        <input type="text" id="peTextInput" class="form-input" maxlength="120" placeholder="Type something…">
+        <input type="text" id="peTextInput" class="form-input" maxlength="120" placeholder="Type your text">
         <div class="pe-textrow">
             <select id="peFont" class="form-select" aria-label="Font">
                 <option value="'Nunito Sans', system-ui, sans-serif">Sans</option>
@@ -94,14 +94,14 @@
             <div class="pe-swatches" id="peTextColors"></div>
         </div>
         <div class="pe-textrow">
-            <span class="pe-lbl">Behind</span>
+            <span class="pe-lbl">Background</span>
             <div class="pe-swatches" id="peBgColors"></div>
         </div>
         <label class="pe-check">
-            <input type="checkbox" id="peTextBorder"> Outline the letters
+            <input type="checkbox" id="peTextBorder"> Outline letters
         </label>
-        <button type="button" class="btn btn-primary btn-sm w-full" id="peAddText">Place the text</button>
-        <p class="pe-hint">Then drag it where you want it.</p>
+        <button type="button" class="btn btn-primary btn-sm w-full" id="peAddText">Add text</button>
+        <p class="pe-hint">Then drag it into place.</p>
     </div>
 </div>
 

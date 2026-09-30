@@ -79,7 +79,7 @@
             + '<path stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14"/></svg>Save</a>'
             + '<button type="button" class="plaza-lightbox-x" aria-label="Close">✕</button>'
             + '</div><img alt="">'
-            + '<p class="plaza-lightbox-hint">Pinch or double-tap to zoom · drag to move</p>';
+            + '<p class="plaza-lightbox-hint">Pinch or tap twice to zoom. Drag to move.</p>';
         document.body.appendChild(box);
         box.addEventListener('click', (e) => {
             if (e.target === box || e.target.closest('.plaza-lightbox-x')) close();

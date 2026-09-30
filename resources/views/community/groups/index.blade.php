@@ -352,9 +352,9 @@
             'id' => 'discFind',
             'value' => $q ?? '',
             'placeholder' => 'Search discussions…',
-            'label' => 'Search discussions — name or what it is about',
+            'label' => 'Search by name or topic',
         ])
-        <button type="button" class="btn btn-primary w-full" data-sheet-close>Show the discussions</button>
+        <button type="button" class="btn btn-primary w-full" data-sheet-close>Show discussions</button>
     </div>
 </div>
 
@@ -372,14 +372,14 @@
         <div>
             <label class="form-label">Cover photo <span class="gb-req">required</span></label>
             <button type="button" class="gb-well" id="groupBannerPreview" data-pic="banner">
-                <i>Add a wide photo for the top of the discussion</i>
+                <i>Add a wide photo for the top</i>
                 {{-- A banner is a wide slot and a phone photo is a tall
                      picture, so centring it is a guess — a field with sky
                      above it comes out as sky. Drag says which band shows,
                      exactly as an account's own cover is framed. --}}
                 <span class="gb-drag hidden" id="groupBannerDrag">
                     <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m0-16l-3 3m3-3l3 3m-3 13l-3-3m3 3l3-3"/></svg>
-                    Drag to choose what shows
+                    Drag to move the photo
                 </span>
             </button>
         </div>
@@ -392,13 +392,13 @@
             </button>
             <div class="min-w-0">
                 <p class="gb-face-lbl">Discussion photo <span class="gb-req">required</span></p>
-                <p class="gb-face-sub">The room's face, wherever it is listed.</p>
+                <p class="gb-face-sub">Shown wherever the discussion is listed.</p>
             </div>
         </div>
         <div>
             <label class="form-label" for="groupName">Discussion name</label>
             <input type="text" id="groupName" class="form-input" maxlength="150" placeholder="e.g. {{ \App\Support\Region::ph() ? 'Rice Growers of Central Luzon' : 'Corn Growers of Iowa' }}">
-            <p class="form-hint gb-tip">{{ \App\Support\Region::ph() ? 'Tip: pangalanan mo per crop o per lugar — "Palay — Nueva Ecija".' : 'Tip: name it by crop or by place — "Corn — Story County".' }}</p>
+            <p class="form-hint gb-tip">{{ \App\Support\Region::ph() ? 'Tip: pangalanan mo per crop o per lugar, gaya ng "Palay, Nueva Ecija".' : 'Tip: name it by crop or place, like "Corn, Story County".' }}</p>
         </div>
         <div>
             <label class="form-label" for="groupDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
@@ -433,17 +433,17 @@
             </div>
 
             <div class="gb-how hidden" id="gbHow">
-                <span class="form-label">How do they get in?</span>
+                <span class="form-label">How do people join?</span>
                 <div class="gb-pick gb-pick-2">
                     <label class="gb-opt is-on">
                         <input type="radio" name="gbMode" value="approval" checked>
                         <span class="gb-opt-t">You approve</span>
-                        <span class="gb-opt-s">Each one asks, you say yes or no</span>
+                        <span class="gb-opt-s">They ask, you say yes or no</span>
                     </label>
                     <label class="gb-opt">
                         <input type="radio" name="gbMode" value="password">
                         <span class="gb-opt-t">Password</span>
-                        <span class="gb-opt-s">You share it with whoever you want</span>
+                        <span class="gb-opt-s">Share it with anyone you choose</span>
                     </label>
                 </div>
                 <div class="hidden" id="gbPassWrap">
@@ -453,7 +453,7 @@
                     {{-- Shown, not dotted: the organiser is writing a secret
                          they intend to read out to other people, not one
                          they are trying to keep from the room. --}}
-                    <p class="form-hint">At least 4 characters. You can see it again later, so you can pass it on.</p>
+                    <p class="form-hint">At least 4 characters. You can view it later to share it.</p>
                 </div>
             </div>
         </div>
@@ -483,11 +483,11 @@
         </button>
         <button type="button" class="gb-src" data-src="file">
             <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>
-            <span>From this phone<span class="sub">Pick a picture you already have</span></span>
+            <span>From this phone<span class="sub">Pick a saved photo</span></span>
         </button>
         <button type="button" class="gb-src" data-src="gallery">
             <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3v13H4V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 13l2.5-2.5L14 14l2-2 2 2"/></svg></span>
-            <span>From the anee.io gallery<span class="sub">A photo your seasons already keep</span></span>
+            <span>From my gallery<span class="sub">Photos saved in your seasons</span></span>
         </button>
     </div>
 </div>
@@ -602,7 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (well.dataset.justDragged) { delete well.dataset.justDragged; return; }
             picking = well.getAttribute('data-pic');
             const title = document.getElementById('groupPicTitle');
-            if (title) title.textContent = picking === 'banner' ? 'Add a cover photo' : 'Add the discussion photo';
+            if (title) title.textContent = picking === 'banner' ? 'Add a cover photo' : 'Add a discussion photo';
             openSheet('groupPicSheet');
         });
     });
@@ -706,7 +706,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const saveBtn = e.currentTarget;
         const name = document.getElementById('groupName').value.trim();
         const description = document.getElementById('groupDesc').value.trim();
-        if (!name) { toast('Give your discussion a name.', 'error'); return; }
+        if (!name) { toast('Add a name for your discussion.', 'error'); return; }
         /* Both pictures, and said plainly: the room is going to be listed
            beside rooms that have them. */
         const missing = ['image', 'banner'].filter((k) => !pics[k]);
@@ -724,7 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // the two photos have finished uploading.
         if (privacy === 'private' && joinMode === 'password' && joinPassword.length < 4) {
             document.getElementById('groupPass')?.focus();
-            toast('Give the password at least 4 characters.', 'error');
+            toast('Password needs at least 4 characters.', 'error');
             return;
         }
         const fd = new FormData();
@@ -748,7 +748,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json();
             if (data.success) { toast(data.message); window.location = data.data.url; }
             else toast(data.message || 'Could not create discussion.', 'error');
-        } catch (_) { toast('Network error — try again.', 'error'); }
+        } catch (_) { toast('No connection. Try again.', 'error'); }
         finally { saveBtn.disabled = false; }
     });
 
@@ -780,8 +780,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const ok = await (window.confirmAction ? window.confirmAction({
                 title: door === 'approval' ? 'Ask to join ' + name + '?' : 'Join ' + name + '?',
                 message: door === 'approval'
-                    ? 'The organiser will decide, and you will hear back either way.'
-                    : 'You will see its topics on your wall, and the others there will see you as a member.',
+                    ? 'The owner will decide. You will get an answer either way.'
+                    : 'Its topics will show on your wall. Others will see you as a member.',
                 confirmText: door === 'approval' ? 'Ask to join' : 'Join',
                 confirmClass: 'btn-primary',
             }) : Promise.resolve(true));
@@ -854,7 +854,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.aneeUpgrade?.(data.message, data.tier);
                 btn.style.opacity = '';
             } else { toast(data.message, 'error'); btn.style.opacity = ''; }
-        } catch (_) { toast('Network error — try again.', 'error'); btn.style.opacity = ''; }
+        } catch (_) { toast('No connection. Try again.', 'error'); btn.style.opacity = ''; }
         finally { delete btn.dataset.busy; }
     });
 

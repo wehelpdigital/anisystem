@@ -233,14 +233,14 @@
             @endphp
             <button type="button" class="icon-btn star-btn{{ $lockCls }}" data-star-btn data-id="{{ $a->id }}"
                     data-star="{{ $starInk }}" @disabled(! $mayEdit)
-                    title="{{ $editTitle($starInk ? 'Marker: ' . $starInkName : 'Marker — tap to pick a colour') }}"
+                    title="{{ $editTitle($starInk ? 'Marker: ' . $starInkName : 'Marker: tap to pick a colour') }}"
                     aria-label="Marker: {{ $starInkName }}">
                 <svg viewBox="0 0 24 24" stroke-linejoin="round"><path d="m12 3.4 2.63 5.33 5.88.86-4.25 4.15 1 5.86L12 16.85l-5.26 2.75 1-5.86-4.25-4.15 5.88-.86z"/></svg>
             </button>
             {{-- Date difference from this activity (2026-09-29): tap here, then on
                  another activity or a day's arrows. Twin of the JS card's;
                  wired in activities-js (DATE DIFF). --}}
-            <button type="button" class="icon-btn dd-act-btn" data-dd-act="{{ $a->id }}" title="Date difference: measure from this activity to another activity or day" aria-label="Date difference from this activity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg></button>
+            <button type="button" class="icon-btn dd-act-btn" data-dd-act="{{ $a->id }}" title="Count the days from this activity to another one" aria-label="Count days from this activity"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg></button>
             <button type="button" class="icon-btn card-menu-btn" data-id="{{ $a->id }}" data-name="{{ $a->activityTitle }}" title="Actions">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
@@ -271,7 +271,7 @@
                 @elseif ($a->activityType !== 'worker_payroll')
                     {{-- A payroll day is about who turned up, not which field,
                          so "no lot" is its normal state rather than a gap. --}}
-                    <span class="item-tag activity-na-tag" title="Applies generally — not tied to any specific lot">N/A — Not lot-specific</span>
+                    <span class="item-tag activity-na-tag" title="Not tied to any lot">N/A: No lot</span>
                 @endif
             </div>
             <div class="act-title-line">
@@ -314,19 +314,19 @@
                 @endif
                 @if($a->isDayZero)
                     @php $dzMode = ($cardLots->count() && $cardLots->every(fn ($l) => $l->dayType === 'DAP')) ? 'DAP' : 'DAS'; @endphp
-                    <span class="badge day-zero-badge" title="This activity's start date becomes {{ $dzMode }} 0 for every lot it covers">
+                    <span class="badge day-zero-badge" title="This start date is {{ $dzMode }} 0 for its lots">
                         <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                         {{ $dzMode }} 0
                     </span>
                 @endif
                 @if($a->isTransplant)
-                    <span class="badge transplant-badge" title="Transplant day — starts a fresh DAT counter for every lot it covers">
+                    <span class="badge transplant-badge" title="Transplant day. Starts a new DAT count for its lots.">
                         <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                         DAT 0
                     </span>
                 @endif
                 @if($isRange)
-                    <span class="badge badge-gray range-badge" title="Multi-day range">&rarr; {{ $endC->format('M j') }} ({{ $rangeDays }}d)</span>
+                    <span class="badge badge-gray range-badge" title="Runs for several days">&rarr; {{ $endC->format('M j') }} ({{ $rangeDays }}d)</span>
                 @endif
                 <span class="badge badge-gray hide-activity-tag" @if(!$a->isHidden) style="display:none;" @endif>Hidden</span>
             </div>
@@ -352,7 +352,7 @@
                 <span class="badge payroll-badge mr-1">Worker checklist</span>
             @endif
             <div class="hidden md:flex items-center gap-0.5 done-hide">
-                <button type="button" class="icon-btn hide-activity-toggle{{ $lockCls }}" data-id="{{ $a->id }}" @disabled(! $mayEdit) title="{{ $editTitle('Toggle visibility in presentations and exports') }}" aria-pressed="{{ $a->isHidden ? 'true' : 'false' }}">
+                <button type="button" class="icon-btn hide-activity-toggle{{ $lockCls }}" data-id="{{ $a->id }}" @disabled(! $mayEdit) title="{{ $editTitle('Show or hide in presentations and exports') }}" aria-pressed="{{ $a->isHidden ? 'true' : 'false' }}">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                 </button>
                 <button type="button" class="icon-btn edit-activity-btn{{ $lockCls }}" data-id="{{ $a->id }}" @disabled(! $mayEdit) title="{{ $editTitle('Edit') }}">

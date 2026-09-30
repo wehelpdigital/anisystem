@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Ticket — Support')
+@section('title', 'Support Ticket')
 @section('page-title', 'Support')
 @section('page-subtitle', $ticket->subject)
 @section('back', \App\Support\BackTo::url(route('support.index')))
@@ -53,6 +53,6 @@
         </div>
     </form>
 @else
-    <div class="card p-4 text-center text-sm text-gray-500">This ticket is closed. Open a new ticket if you need more help.</div>
+    <div class="card p-4 text-center text-sm text-gray-500">This ticket is closed. Open a new one if you need more help.</div>
 @endif
 @endsection

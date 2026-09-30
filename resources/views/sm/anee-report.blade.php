@@ -318,10 +318,10 @@
                      2026-09-29), as the analyses introduce themselves. --}}
                 @if ($isSofar)
                     <b>About So Far</b>
-                    <p>{{ $aneeName }} reads your season as it stands today, including the work done and still to do, the money spent so far and the recent weather, and tells you how far along each lot is, the risks ahead, what to do next, and how the money is holding up against the plan. This uses credits, and you see the price before anything runs. Every report is kept on the Saved tab.</p>
+                    <p>{{ $aneeName }} reads your season as it is today: the work, the money and the recent weather. She tells you how each lot is doing, the risks ahead and what to do next. Every report is kept on the Saved tab.</p>
                 @else
                     <b>About this report</b>
-                    <p>{{ $aneeName }} reads your whole finished season, including every activity, the money, the harvest, your notes and photos, and the actual weather, and writes its story: what went right, what went wrong and what it cost, what to change next season, and a score with the reasons. This uses credits, and you see the price before anything runs. Every report is kept on the Saved tab.</p>
+                    <p>{{ $aneeName }} reads your whole finished season: the work, the money, the harvest, your notes and the weather. She tells you what went right, what went wrong and what to change next time, with a score. Every report is kept on the Saved tab.</p>
                 @endif
             </div>
         </div>
@@ -335,12 +335,12 @@
             </button>
             <div class="arq-body" id="arQuoteBody">
                 <div class="arq-card">
-                    This is a <b>deep AI analysis</b> — one report spends <b>{{ $price }} credits</b>, and you have @if (\App\Support\WorkerContext::inWorkerContext())<span class="credit-coin">@else<a class="credit-coin" href="{{ route('ai.credits') }}" title="My Credits — the log, and credits to buy">@endif<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg><b id="arBalance">…</b>@if (\App\Support\WorkerContext::inWorkerContext())</span>@else</a>@endif. Nothing is charged until you press Run{{ $isSofar ? '' : ', and the finished report saves itself to the shelf' }}.
+                    One report costs <b>{{ $price }} credits</b>. You have @if (\App\Support\WorkerContext::inWorkerContext())<span class="credit-coin">@else<a class="credit-coin" href="{{ route('ai.credits') }}" title="My Credits: your log and credits to buy">@endif<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg><b id="arBalance">…</b>@if (\App\Support\WorkerContext::inWorkerContext())</span>@else</a>@endif. Nothing is charged until you press Run.
                 </div>
                 <div class="arq-card">
                     {{ $isSofar
-                        ? 'Anee reads the season as it stands — the work, the money, the sky\'s recent records — and says where it is, what is at risk, and what to do next. Treat it as a guide with an honest tongue: it will say "rescue" when that is the truth.'
-                        : 'Anee reads the whole finished season — every activity, the money, the harvest, your notes and photos, the sky\'s actual records and ENSO — and writes the debrief: what went well, what went wrong, what to change and when. A guide, not a verdict.' }}
+                        ? 'Treat it as a guide. Anee is honest, so she will tell you when a lot needs rescue.'
+                        : 'Treat it as a guide, not a final verdict. It is honest about what went wrong.' }}
                 </div>
             </div>
         </div>
@@ -374,7 +374,7 @@
             <div id="arSavedEmpty" class="hidden rx-empty">
                 <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg></span>
                 <p class="rx-empty-t">Nothing saved yet</p>
-                <p class="rx-empty-p">Run a report and it lands here by itself — every one you make, newest first, ready to rename and describe.</p>
+                <p class="rx-empty-p">Each report you run is saved here, newest first. You can rename it and add a note.</p>
             </div>
         </div>
         <div class="ar-report mt-4" id="arSavedReport" hidden></div>
@@ -396,7 +396,7 @@
     <div class="sheet-body dt-rows" id="arLotList">
         <button type="button" class="dt-row is-on" data-ar-lot="0">
             <span class="dt-row-e">🗺️</span>
-            <span class="dt-row-body"><b>The whole season</b><i>Every lot, weighed together</i></span>
+            <span class="dt-row-body"><b>The whole season</b><i>All lots together</i></span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </button>
         @foreach ($schedule->lots as $lot)
@@ -465,7 +465,7 @@ const __init = () => {
             (STATUS.warnings || []).forEach((t) => checks.push(`<div class="ar-check is-warn">⚠️ ${esc(t)}</div>`));
             $id('arChecks').innerHTML = checks.join('');
             $id('arReadyTitle').textContent = STATUS.ready
-                ? (checks.length ? 'Ready — with footnotes' : 'The season is ready for its read')
+                ? (checks.length ? 'Ready, with a few notes' : 'The season is ready')
                 : 'Not ready yet';
             $id('arRunBtn').disabled = !STATUS.ready;
         } catch (err) { toast(err.message, 'error'); }
@@ -486,15 +486,15 @@ const __init = () => {
 
     /* ---------------- the veil's rotating lines ---------------- */
     const LINES = KIND === 'sofar'
-        ? ['Reading the season as it stands…', 'Weighing the work against the crop\'s clock…', 'Checking the sky\'s recent records…', 'Sizing up the risks…', 'Writing the what\'s-next list…']
-        : ['Reading the whole season…', 'Adding up the money…', 'Checking the sky\'s records and ENSO…', 'Reading your notes and photos…', 'Comparing with your past seasons…', 'Writing it up, the honest way…'];
+        ? ['Reading the season as it is now…', 'Checking the work against the crop\'s age…', 'Checking the recent weather…', 'Looking at the risks…', 'Writing what to do next…']
+        : ['Reading the whole season…', 'Adding up the money…', 'Checking the weather and El Niño…', 'Reading your notes and photos…', 'Comparing with your past seasons…', 'Writing it up honestly…'];
     /* ---------------- generate + poll ---------------- */
     $id('arRunBtn').addEventListener('click', async () => {
         if (!STATUS || !STATUS.ready) return;
         window.aneeWait.show({
             title: KIND === 'sofar' ? 'Anee is reading the season so far…' : 'Anee is reading the whole season…',
             lines: LINES,
-            sub: 'This is a deep read — a few minutes is normal.',
+            sub: 'This takes a few minutes. That is normal.',
         });
         let landed = false;
         try {
@@ -507,14 +507,14 @@ const __init = () => {
                     if (st.data && st.data.status === 'ready') { data = st.data; break; }
                 }
                 if (!data || data.status !== 'ready') {
-                    throw new Error('Still working — give it a minute, then look on the Saved tab.');
+                    throw new Error('Still working. Wait a minute, then check the Saved tab.');
                 }
             }
             drawReport($id('arReport'), data.report, data, 'fresh');
             landed = true;
             // Her face lights up over the finished report; the veil lifts after.
-            await window.aneeWait.done({ title: 'Done!', line: `${data.credits} credits used — saved to the shelf.` });
-            toast(`Done — ${data.credits} credits used. Saved to the shelf.`);
+            await window.aneeWait.done({ title: 'Done!', line: `${data.credits} credits used. Your report is saved.` });
+            toast(`Done. ${data.credits} credits used. Your report is saved.`);
             showInView(data, $id('arReport'), 'fresh');
         } catch (err) {
             toast(err.message, 'error');
@@ -604,7 +604,7 @@ const __init = () => {
             const hi = oneUnit ? Math.max(...perHa.map((l) => Number(l.perHa))) : 0;
             if ((F.harvest || []).length) tiles.push(['', 'Harvest', F.harvest.join(' + '), oneUnit ? `${lo === hi ? nf(lo) : nf(lo) + ' to ' + nf(hi)} ${perHa[0].unit} per hectare` : (perHa.length ? 'per hectare, lot by lot below' : '')]);
             if (ran.length) tiles.push(['', 'Days to harvest', Math.min(...ran) === Math.max(...ran) ? `${ran[0]} days` : `${Math.min(...ran)} to ${Math.max(...ran)} days`, 'from day zero to harvest']);
-            if (F.work) tiles.push(['', 'Work done', `${F.work.done} ${Number(F.work.done) === 1 ? 'job' : 'jobs'}`, `${nf(F.work.workerDays)} worker-days`]);
+            if (F.work) tiles.push(['', 'Work done', `${F.work.done} ${Number(F.work.done) === 1 ? 'job' : 'jobs'}`, `${nf(F.work.workerDays)} worker days`]);
             parts.push(cardOf('✨ At a glance', `<div class="ar-figs">${tiles.map(([cls, k, v, sub]) => `<div class="ar-fig ${cls}"><small>${esc(k)}</small><b>${esc(v)}</b>${sub ? `<span>${esc(sub)}</span>` : ''}</div>`).join('')}</div>`));
         }
 
@@ -703,7 +703,7 @@ const __init = () => {
                 <div class="ar-prog">${T.map((t) => barRow(t.label, '', `${t.count} ${Number(t.count) === 1 ? 'job' : 'jobs'}${Number(t.cost) > 0 ? ' · ' + peso(t.cost) : ''}`, pct(t.count, maxC), '')).join('')}</div>
                 ${W.length ? `<p class="ar-sub">Who did it</p>
                     <div class="ar-prog">${W.map((w) => barRow(w.name, '', `${nf(w.days)} ${Number(w.days) === 1 ? 'day' : 'days'} · ${peso(w.pay)}`, pct(w.days, maxD), 'k-labor')).join('')}</div>` : ''}
-                ${capOf(`${F.work.done} of ${F.work.total} jobs were ticked done. ${nf(F.work.workerDays)} worker-days in all, a half day counted as half.`
+                ${capOf(`${F.work.done} of ${F.work.total} jobs were marked done. ${nf(F.work.workerDays)} worker days in all, with a half day counted as half.`
                     + (Number(F.work.workerCount) > W.length ? ` The ${W.length} busiest workers are shown.` : ''))}
                 ${proseOf(r.workStory)}`));
         }
@@ -781,7 +781,7 @@ const __init = () => {
                 body = `<div class="ar-prog">${P.map((p) => barRow(p.this ? 'This season' : p.title, p.this ? p.title : '',
                     `${Number(p.profit) < 0 ? 'Loss ' : ''}${peso(Math.abs(Number(p.profit)))}`, pct(Math.abs(Number(p.profit)), max),
                     Number(p.profit) < 0 ? 'k-loss' : (p.this ? 'k-this' : 'k-past'))).join('')}</div>`
-                    + capOf('Net profit of each of your seasons of the same crop. Longer is better; red is a loss.');
+                    + capOf('Net profit of each of your seasons of the same crop. Longer is better. Red is a loss.');
             }
             parts.push(cardOf('📊 Against your past seasons', body + proseOf(r.comparison, !!body)));
         }
@@ -809,12 +809,12 @@ const __init = () => {
             const due = lots.filter((l) => l.daysLeft !== null && l.daysLeft !== undefined).sort((a, b) => a.daysLeft - b.daysLeft);
             const soon = due.find((l) => l.daysLeft >= 0) || due[due.length - 1] || null;
             const tiles = [];
-            if (M) tiles.push(['', 'Spent so far', peso(M.cost), Number(M.plan) > 0 ? `of about ${peso(M.plan)} for the whole plan` : 'work ticked done and expenses to today']);
+            if (M) tiles.push(['', 'Spent so far', peso(M.cost), Number(M.plan) > 0 ? `of about ${peso(M.plan)} for the whole plan` : 'work marked done and costs up to today']);
             if (P && P.planned) tiles.push([P.overdue ? 'is-bad' : 'is-good', 'Work due by today', `${P.done} of ${P.planned} done`, P.overdue ? `${P.overdue} overdue` : 'nothing overdue']);
             if (soon) tiles.push(['', 'Next harvest', soon.daysLeft > 0 ? `in ${soon.daysLeft} ${soon.daysLeft === 1 ? 'day' : 'days'}` : 'due now', `${soon.name} · about ${soon.harvestOn}`]);
             if (P) tiles.push(['', 'Coming up', `${P.coming} ${Number(P.coming) === 1 ? 'job' : 'jobs'}`, 'in the next 14 days']);
             if (WX) tiles.push(['', 'Rain so far', `${nf(wxSum('rain'), 0)} mm`, `${wxSum('wet')} wet days, ${wxSum('dry')} dry`]);
-            if (F.work && Number(F.work.workerDays) > 0) tiles.push(['', 'Worker-days', nf(F.work.workerDays), `by ${F.work.workerCount} ${Number(F.work.workerCount) === 1 ? 'worker' : 'workers'} so far`]);
+            if (F.work && Number(F.work.workerDays) > 0) tiles.push(['', 'Worker days', nf(F.work.workerDays), `by ${F.work.workerCount} ${Number(F.work.workerCount) === 1 ? 'worker' : 'workers'} so far`]);
             if (tiles.length) parts.push(cardOf('✨ At a glance', `<div class="ar-figs">${tiles.map(([cls, k, v, sub]) => `<div class="ar-fig ${cls}"><small>${esc(k)}</small><b>${esc(v)}</b>${sub ? `<span>${esc(sub)}</span>` : ''}</div>`).join('')}</div>`));
         }
 
@@ -859,7 +859,7 @@ const __init = () => {
             parts.push(`<div class="ar-card"><h3>🧭 What's next</h3>${r.whatsNext.map((x, i) => `
                 <div class="ar-next"><span class="n">${i + 1}</span><span class="t"><b>${esc(x.action || '')}
                     ${x.urgency === 'now' ? '<span class="badge badge-sev-high">now</span>' : (x.urgency === 'soon' ? '<span class="badge badge-sev-moderate">soon</span>' : '')}</b>
-                    <small>${esc(x.when || '')}${x.why ? ' — ' + esc(x.why) : ''}</small></span></div>`).join('')}</div>`);
+                    <small>${esc(x.when || '')}${x.why ? ' · ' + esc(x.why) : ''}</small></span></div>`).join('')}</div>`);
         }
         if (P && P.total) {
             const pc = P.planned ? Math.round(P.done / P.planned * 100) : 0;
@@ -867,7 +867,7 @@ const __init = () => {
             const late = V2 ? (F.overdue || []) : [];
             const next = V2 ? (F.coming || []) : [];
             parts.push(`<div class="ar-card"><h3>📋 The plan to today</h3>
-                <div class="ar-prog"><div class="ar-prog-row"><div class="ar-prog-h"><span><b>${P.done}</b> of ${P.planned} planned to date ticked done</span><small>${pc}%</small></div><span class="track"><span class="fill is-plan" data-w="${pc}"></span></span></div></div>
+                <div class="ar-prog"><div class="ar-prog-row"><div class="ar-prog-h"><span><b>${P.done}</b> of ${P.planned} due by today are done</span><small>${pc}%</small></div><span class="track"><span class="fill is-plan" data-w="${pc}"></span></span></div></div>
                 <div class="ar-kv"><span class="${P.overdue ? 'is-bad' : ''}"><b>${P.overdue}</b> overdue</span><span><b>${P.coming}</b> in the next 14 days</span><span><b>${P.doneAll}</b> of ${P.total} done overall</span></div>
                 ${late.length ? `<p class="ar-sub">Overdue</p><div class="ar-dues is-late">${listOf(late, (o) => `${o.late} ${o.late === 1 ? 'day' : 'days'} late`)}</div>` : ''}
                 ${next.length ? `<p class="ar-sub">Coming up</p><div class="ar-dues">${listOf(next, (o) => (o.in === 0 ? 'today' : (o.in === 1 ? 'tomorrow' : `in ${o.in} days`)))}</div>` : ''}
@@ -896,7 +896,7 @@ const __init = () => {
                 body += `<p class="ar-sub">Month by month</p>` + colChart(cols, pesoK, 'Tap a month to see what it cost.')
                     + `<div class="ar-legend mt-2"><span><i class="k-in"></i>Spent</span>${F.months.some((m) => Number(m.planned) > 0) ? '<span><i class="k-planned"></i>Planned, not done yet</span>' : ''}</div>`;
             }
-            body += capOf(V2 ? 'Spent means work ticked done, plus extra expenses and stock bought, to today.' + (Number(M.general) > 0 ? ` ${peso(M.general)} of whole-farm costs are not counted in this lot.` : '') : '');
+            body += capOf(V2 ? 'Spent means work marked done, plus extra costs and stock bought, up to today.' + (Number(M.general) > 0 ? ` ${peso(M.general)} of whole farm costs are not counted in this lot.` : '') : '');
             if (r.money && r.money.summary) body += proseOf(r.money.summary);
             parts.push(cardOf('💸 The money so far', body));
         } else if (r.money && r.money.summary) {
@@ -917,7 +917,7 @@ const __init = () => {
                 <p class="ar-sub">Done, by kind of work</p>
                 <div class="ar-prog">${T.map((t) => barRow(t.label, '', `${t.done} of ${t.total} done`, pct(t.done, t.total), '')).join('')}</div>
                 ${W.length ? `<p class="ar-sub">Who has done it</p><div class="ar-prog">${W.map((w) => barRow(w.name, '', `${nf(w.days)} ${Number(w.days) === 1 ? 'day' : 'days'}${Number(w.pay) > 0 ? ' · ' + peso(w.pay) : ''}`, pct(w.days, maxD), 'k-labor')).join('')}</div>` : ''}
-                ${capOf('A full bar means every job of that kind is done. Worker-days count a half day as half.')}`));
+                ${capOf('A full bar means every job of that kind is done. Worker days count a half day as half.')}`));
         }
 
         // The weather so far, and ahead.
@@ -1044,7 +1044,7 @@ const __init = () => {
         });
         host.querySelector('[data-ar-del]')?.addEventListener('click', async (e) => {
             const id = e.currentTarget.getAttribute('data-ar-del');
-            const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this report?', message: 'It leaves the shelf. The credits it used are already spent.', confirmText: 'Delete' }) : true;
+            const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this report?', message: 'The credits it used are not returned.', confirmText: 'Delete' }) : true;
             if (!ok) return;
             try {
                 await api(U.del(id), { method: 'DELETE' });
@@ -1070,7 +1070,7 @@ const __init = () => {
         if (@json($arMayGen) && VIEWING.mine) {
             actions.push({ label: 'Name & description', icon: 'pen', onClick: () => openReportMeta(meta.id) });
             actions.push({ label: 'Delete', icon: 'trash', kind: 'danger', onClick: async () => {
-                const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this report?', message: 'It leaves the shelf. The credits it used are already spent.', confirmText: 'Delete' }) : confirm('Delete this report?');
+                const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this report?', message: 'The credits it used are not returned.', confirmText: 'Delete' }) : confirm('Delete this report?');
                 if (!ok) return;
                 try { await api(U.del(meta.id), { method: 'DELETE' }); toast('Report removed.'); window.reportView.close(); }
                 catch (err) { toast(err.message, 'error'); }

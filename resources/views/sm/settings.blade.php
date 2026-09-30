@@ -99,7 +99,7 @@
 
         @if ($setWorker)
             <p class="card card-body text-sm text-gray-500">
-                👁️ These are the farm owner's settings. You can read them here; changing them is theirs to do.
+                👁️ These are the farm owner's settings. You can view them, but only the owner can change them.
             </p>
         @endif
 
@@ -119,7 +119,7 @@
             <div class="card-body space-y-4">
                 <div>
                     <h2 class="font-bold text-gray-900">Basic Info</h2>
-                    <p class="text-sm text-gray-500">Title, description and how day numbers are labeled.</p>
+                    <p class="text-sm text-gray-500">Title, description and how days are counted.</p>
                 </div>
 
                 <div>
@@ -146,16 +146,16 @@
                 <div>
                     <label for="settingsDayType" class="form-label">How days are counted</label>
                     <select id="settingsDayType" class="form-select" @disabled($setWorker)>
-                        <option value="DAT" @selected(($schedule->dayType ?: 'DAS') === 'DAT')>DAS → DAT — sown, then transplanted</option>
-                        <option value="DAS" @selected(($schedule->dayType ?: 'DAS') === 'DAS')>DAS only — direct seeded (DSR)</option>
-                        <option value="DAP" @selected($schedule->dayType === 'DAP')>DAP — days after planting</option>
-                        <option value="TREE" @selected($schedule->dayType === 'TREE')>Mature trees — no day count, read by age</option>
+                        <option value="DAT" @selected(($schedule->dayType ?: 'DAS') === 'DAT')>DAS → DAT: seeded, then transplanted</option>
+                        <option value="DAS" @selected(($schedule->dayType ?: 'DAS') === 'DAS')>DAS only: direct seeded (DSR)</option>
+                        <option value="DAP" @selected($schedule->dayType === 'DAP')>DAP: days after planting</option>
+                        <option value="TREE" @selected($schedule->dayType === 'TREE')>Mature trees: counted by tree age</option>
                     </select>
                     <p class="form-hint" id="settingsDayTypeHint"></p>
                     {{-- The same card the create form wears for this promise. --}}
                     <div class="mt-2 flex items-start gap-2 rounded-xl border border-brand-200 bg-brand-50 p-3 text-xs text-brand-800">
                         <svg class="w-4 h-4 shrink-0 mt-px" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        <span>This is the season's default. A lot can still be set differently in <a href="{{ route('sm.lots', ['id' => $schedule->id]) }}" class="text-brand-700 font-semibold underline decoration-dotted underline-offset-2">Lots</a>.</span>
+                        <span>This is the season default. Each lot can have its own in <a href="{{ route('sm.lots', ['id' => $schedule->id]) }}" class="text-brand-700 font-semibold underline decoration-dotted underline-offset-2">Lots</a>.</span>
                     </div>
                 </div>
 
@@ -181,8 +181,7 @@
                         </span>
                         <div class="min-w-0">
                             <h2 class="nt-head-h">Daily schedule email</h2>
-                            <p class="nt-head-p">One message each morning with what is on today and what is
-                                coming tomorrow, so nobody has to open the app to find out where to be.
+                            <p class="nt-head-p">One email each morning with the work for today and tomorrow.
                                 It goes out at 6:00 AM {{ \App\Support\Region::ph() ? 'Philippine time' : 'Manila time (UTC+8)' }}.</p>
                         </div>
                     </div>
@@ -195,8 +194,7 @@
                             <input type="checkbox" id="notifyWorkersDaily" @disabled($setWorker) @checked($schedule->notifyWorkersDaily)>
                             <span class="nt-pick-body">
                                 <b>Email the workers</b>
-                                <i>Each worker gets only the activities they are actually on. Anyone with
-                                   no address on file is skipped.</i>
+                                <i>Each worker gets only their own tasks. Workers with no email are skipped.</i>
                             </span>
                         </label>
 
@@ -204,8 +202,7 @@
                             <input type="checkbox" id="notifyOwnerDaily" @disabled($setWorker) @checked($schedule->notifyOwnerDaily)>
                             <span class="nt-pick-body">
                                 <b>Email everyone in the team</b>
-                                <i>Everyone with an email address gets the schedule for the current day
-                                   and tomorrow, the whole day in one message.</i>
+                                <i>Everyone with an email gets the full plan for today and tomorrow.</i>
                             </span>
                         </label>
                     </div>
@@ -232,8 +229,8 @@
                         </span>
                         <div class="min-w-0">
                             <h2 class="nt-head-h">Logs</h2>
-                            <p class="nt-head-p">Everything done in this schedule's modules, newest first,
-                                with the name of whoever did it. Tap a line for the particulars.</p>
+                            <p class="nt-head-p">Every change in this schedule, newest first, with who made it.
+                                Tap a line for details.</p>
                         </div>
                     </div>
 
@@ -241,11 +238,11 @@
                     <div class="set-log-tools mt-3">
                         <label class="set-log-find">
                             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-                            <input type="search" id="setLogsFind" placeholder="Search the logs…" autocomplete="off">
+                            <input type="search" id="setLogsFind" placeholder="Search logs" autocomplete="off">
                         </label>
                         {{-- Whose hand — the house tag button, not a native
                              dropdown; the choices arrive with the first page. --}}
-                        <button type="button" class="crop-tag set-log-actor" id="setLogsActorBtn" aria-label="Whose hand">
+                        <button type="button" class="crop-tag set-log-actor" id="setLogsActorBtn" aria-label="Filter by person">
                             <span class="crop-tag-e">👥</span>
                             <span class="crop-tag-t" id="setLogsActorNow">Everyone</span>
                             <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
@@ -256,10 +253,10 @@
                     </div>
 
                     <div id="setLogsList" class="mt-2"></div>
-                    <p id="setLogsEmpty" class="text-sm text-gray-400 text-center py-6" hidden>Nothing here matches. From now on, every change made in this schedule lands in these logs.</p>
+                    <p id="setLogsEmpty" class="text-sm text-gray-400 text-center py-6" hidden>Nothing found. New changes in this schedule will show here.</p>
                     {{-- The endless scroll's foothold: watched, not clicked. --}}
                     <div id="setLogsMore" class="set-log-more" hidden>
-                        <span class="set-log-spin"></span> Loading older lines…
+                        <span class="set-log-spin"></span> Loading older logs…
                     </div>
                 </div>
             </div>
@@ -361,7 +358,7 @@ const __init = () => {
         timeRequired: 'Time needed', isDone: 'Done', isHidden: 'Hidden', isDraft: 'Draft',
         lotName: 'Lot name', lotSize: 'Size', lotSizeUnit: 'Size unit', variety: 'Variety',
         workerName: 'Worker name', email: 'Email', phone: 'Phone', costPerHalfDay: 'Cost per half day',
-        name: 'Name', kind: 'Kind', unit: 'Unit', lowAt: 'Low-stock mark', unitPrice: 'Unit price',
+        name: 'Name', kind: 'Kind', unit: 'Unit', lowAt: 'Low stock level', unitPrice: 'Unit price',
         title: 'Title', type: 'Type', category: 'Category', observationDate: 'Observed on',
         yieldAmount: 'Yield', yieldUnit: 'Yield unit', pricePerUnit: 'Price per unit', buyer: 'Buyer',
     };
@@ -376,24 +373,24 @@ const __init = () => {
         // never an HTTP verb. "Ticked an activity" said by the middleware
         // becomes "John ticked an activity — Water the corn".
         const deed = l.label ? l.label.charAt(0).toLowerCase() + l.label.slice(1) : 'did something';
-        let card = `<p class="who">${escapeHtml(l.by)} ${escapeHtml(deed)}${entity ? ` — <span class="set-log-entity">${escapeHtml(entity)}</span>` : ''} · ${escapeHtml(l.whenFull || '')}</p>`;
+        let card = `<p class="who">${escapeHtml(l.by)} ${escapeHtml(deed)}${entity ? `: <span class="set-log-entity">${escapeHtml(entity)}</span>` : ''} · ${escapeHtml(l.whenFull || '')}</p>`;
         if (changes && Object.keys(changes).length) {
             card += Object.entries(changes).map(([f, c]) => `
                 <span class="set-log-change"><span class="f">${escapeHtml(logSay(f))}:</span>
-                    from <span class="from">${escapeHtml(String(c.from ?? '—'))}</span>
+                    from <span class="from">${escapeHtml(String(c.from ?? 'none'))}</span>
                     <span class="arrow">→</span>
-                    to <span class="to">${escapeHtml(String(c.to ?? '—'))}</span></span>`).join('');
+                    to <span class="to">${escapeHtml(String(c.to ?? 'none'))}</span></span>`).join('');
         } else if (input && Object.keys(input).length) {
             card += Object.entries(input).slice(0, 12).map(([f, v]) => `
                 <span class="set-log-change"><span class="f">${escapeHtml(logSay(f))}:</span>
                     <span class="to">${escapeHtml(String(v))}</span></span>`).join('');
         } else if (!entity) {
-            card += '<p style="opacity:.7">No further details were recorded for this line (it was logged before details shipped).</p>';
+            card += '<p style="opacity:.7">No details were saved for this older line.</p>';
         }
         return `
             <button type="button" class="set-log" data-log-row="${l.id}">
                 <svg class="set-log-chev" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-                <span class="min-w-0"><b>${escapeHtml(l.by)}</b> ${escapeHtml(deed)}${entity ? ` <i>— ${escapeHtml(entity)}</i>` : ''}</span>
+                <span class="min-w-0"><b>${escapeHtml(l.by)}</b> ${escapeHtml(deed)}${entity ? `: <i>${escapeHtml(entity)}</i>` : ''}</span>
                 <span class="set-log-fam">${escapeHtml(l.family || '')}</span>
                 <time>${escapeHtml(l.when || '')}</time>
             </button>
@@ -424,7 +421,7 @@ const __init = () => {
         if (fresh) {
             LOG_STATE.nextBeforeId = null;
             LOG_STATE.lastDay = null;
-            list.innerHTML = '<p class="text-sm text-gray-400 text-center py-4">Reading the diary…</p>';
+            list.innerHTML = '<p class="text-sm text-gray-400 text-center py-4">Loading…</p>';
         }
         more.hidden = false;
         try {
@@ -558,9 +555,9 @@ const __init = () => {
        difference between them is a whole calendar. */
     const DAY_TYPE_SAYS = {
         DAT: 'Counts DAS from sowing, then restarts as DAT on the transplant date.',
-        DAS: 'One count from sowing, all season. Direct-seeded rice never becomes DAT.',
+        DAS: 'One count from sowing, all season. Direct seeded rice never becomes DAT.',
         DAP: 'One count from the day it went in the ground.',
-        TREE: 'No day count at all. The trees are read by their age, which each lot gives in Lots.',
+        TREE: 'No day count. Trees are tracked by age, which you set for each lot in Lots.',
     };
     const sayDayType = () => {
         const sel = document.getElementById('settingsDayType');
@@ -647,9 +644,9 @@ const __init = () => {
              of the pane (the capture-phase handler wins the click). --}}
         @php $setLogsLocked = ! \App\Support\Tier::scheduleCan($schedule, 'auditLogs'); @endphp
         <button type="button" class="dt-row" data-set-tab-row="logs"
-                @if ($setLogsLocked) data-tier-lock="{{ \App\Support\Tier::scheduleUnlocksAt($schedule, 'auditLogs') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::scheduleUnlocksAt($schedule, 'auditLogs'), 'The activity Logs come with {plan} — every change in the schedule, and by whose hand.') }}" @endif>
+                @if ($setLogsLocked) data-tier-lock="{{ \App\Support\Tier::scheduleUnlocksAt($schedule, 'auditLogs') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::scheduleUnlocksAt($schedule, 'auditLogs'), 'Logs come with {plan}. See every change and who made it.') }}" @endif>
             <span class="dt-row-e {{ $setLogsLocked ? 'tl-dim' : '' }}">🕒</span>
-            <span class="dt-row-body {{ $setLogsLocked ? 'tl-dim' : '' }}"><b>Logs</b><i>Everything done in this schedule, and by whose hand.</i></span>
+            <span class="dt-row-body {{ $setLogsLocked ? 'tl-dim' : '' }}"><b>Logs</b><i>Every change and who made it.</i></span>
             @if ($setLogsLocked)
                 <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
             @else
@@ -664,7 +661,7 @@ const __init = () => {
 <div class="sheet hidden" id="setLogsActorSheet" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Whose hand?</h3>
+        <h3 class="sheet-title">Filter by person</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body dt-rows" id="setLogsActorRows">

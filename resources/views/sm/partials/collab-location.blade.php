@@ -18,7 +18,7 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
             <span id="locShareLabel">Share my location</span>
         </button>
-        <button type="button" id="locRecenter" class="btn btn-white btn-sm" title="Fit everyone on screen">
+        <button type="button" id="locRecenter" class="btn btn-white btn-sm" title="Show everyone on the map">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5"/></svg>
             Fit all
         </button>
@@ -110,7 +110,7 @@
     async function ensureMap() {
         if (map) return map;
         try { await loadMaps(); } catch (_) {
-            $('locMap').innerHTML = '<p class="loc-empty">The map could not load — the list below still shows who is sharing.</p>';
+            $('locMap').innerHTML = '<p class="loc-empty">The map could not load. The list below still shows who is sharing.</p>';
             return null;
         }
         map = new google.maps.Map($('locMap'), {
@@ -158,7 +158,7 @@
                 + '<span class="loc-name">' + esc(p.name) + (Number(p.id) === ME ? ' (you)' : '') + '</span>'
                 + '<span class="loc-when">' + (isStale(p) ? 'last seen ' + ago(p.at) : 'live') + '</span>'
                 + '</div>').join('')
-            : '<p class="loc-empty">Nobody is sharing a location. Tap <b>Share my location</b> and your dot appears here for the team.</p>';
+            : '<p class="loc-empty">No one is sharing yet. Tap <b>Share my location</b> to show your dot to the team.</p>';
 
         const m = await ensureMap();
         if (!m) return;
@@ -238,9 +238,9 @@
     }
 
     async function startSharing() {
-        if (!navigator.geolocation) { window.toast?.('This device cannot report a location.', 'error'); return; }
+        if (!navigator.geolocation) { window.toast?.('This device cannot share its location.', 'error'); return; }
         if (!window.isSecureContext && !/^(localhost|127\.)/.test(location.hostname)) {
-            window.toast?.('Sharing a location needs HTTPS — open the app over https://.', 'error');
+            window.toast?.('Location sharing needs HTTPS. Open the app with https://.', 'error');
             return;
         }
         // Remembered so only a join this tab caused goes quiet — somebody
@@ -263,7 +263,7 @@
                 send({ t: 'loc', ...mine });
                 paint();
             },
-            () => { window.toast?.('Location permission was denied.', 'error'); stopSharing(); },
+            () => { window.toast?.('Location access was blocked.', 'error'); stopSharing(); },
             { enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 }
         );
         sharing = true;

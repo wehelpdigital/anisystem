@@ -80,7 +80,7 @@
             ${list.map((c) => `
                 <button type="button" class="crop-row" data-crop="${esc(c.value)}" data-find="${esc((c.label + ' ' + g).toLowerCase())}">
                     <span class="crop-row-e">${esc(c.icon)}</span>
-                    <span class="crop-row-t"><b>${esc(c.label)}</b><small>${c.perennial ? 'Tree crop — read by its age' : (c.maturity ? c.maturity + ' days to harvest' : '')}</small></span>
+                    <span class="crop-row-t"><b>${esc(c.label)}</b><small>${c.perennial ? 'Tree crop, counted by age' : (c.maturity ? c.maturity + ' days to harvest' : '')}</small></span>
                 </button>`).join('')}
         </div>`).join('');
     const sift = () => {
@@ -113,8 +113,8 @@
     const whyNot = (key, crop) => {
         const c = crop ? FLAT[crop] : null;
         const name = c ? c.label : '';
-        if (key === 'TREE') return c ? `Only for tree crops — ${name} is harvested within the season.` : 'Only for tree crops — choose one first.';
-        if (c && c.perennial) return `${name} is a standing tree — it is read by its age.`;
+        if (key === 'TREE') return c ? `Only for tree crops. ${name} is harvested within the season.` : 'Only for tree crops. Choose one first.';
+        if (c && c.perennial) return `${name} is a tree. It is counted by age.`;
         if (key === 'DAT') return `${name} is not raised in a seedbed and transplanted.`;
         if (key === 'DAS') return `${name} is not sown straight into the field.`;
         if (key === 'DAP') return `${name} is sown, not planted from seedlings or cuttings.`;
@@ -193,8 +193,8 @@
             }).join('');
             const c = state.crop ? FLAT[state.crop] : null;
             $id('pbDayTypeNote').textContent = !c
-                ? 'No crop chosen yet, so the three field counts are open. Mature trees come with a tree crop.'
-                : (allow.length <= 1 ? `${c.label} has only one honest way of being counted.` : `Greyed answers do not fit ${c.label}.`);
+                ? 'No crop chosen yet, so all three field counts are open. Mature trees need a tree crop.'
+                : (allow.length <= 1 ? `${c.label} can only be counted one way.` : `Grey options do not fit ${c.label}.`);
             openSheet('pbDayTypeSheet');
         });
         paintDay();
@@ -233,8 +233,8 @@
 
 <div class="space-y-4">
     <div>
-        <label class="form-label" for="{{ $pfx }}Title">Name of the protocol</label>
-        <input type="text" id="{{ $pfx }}Title" class="form-input" maxlength="190" placeholder="e.g. Rice — my 110-day program">
+        <label class="form-label" for="{{ $pfx }}Title">Protocol name</label>
+        <input type="text" id="{{ $pfx }}Title" class="form-input" maxlength="190" placeholder="e.g. My 110 day rice plan">
     </div>
     <div>
         <span class="form-label">Crop</span>
@@ -263,6 +263,6 @@
     </div>
     <div>
         <label class="form-label" for="{{ $pfx }}Desc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
-        <textarea id="{{ $pfx }}Desc" class="form-textarea" rows="3" maxlength="2000" placeholder="What this protocol is for, where it was proven, what it assumes…"></textarea>
+        <textarea id="{{ $pfx }}Desc" class="form-textarea" rows="3" maxlength="2000" placeholder="What it is for and where it worked"></textarea>
     </div>
 </div>

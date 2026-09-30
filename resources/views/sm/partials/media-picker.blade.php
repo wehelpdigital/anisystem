@@ -32,7 +32,7 @@
     </div>
     <div class="sheet-body">
         <input type="search" id="smMediaPickerSearch" class="form-input mb-3"
-               placeholder="Search by name, or where it came from…" autocomplete="off">
+               placeholder="Search by name or where it came from" autocomplete="off">
         <div id="smMediaPickerGrid" class="smp-grid" role="listbox" aria-label="Season media"></div>
         <p class="smp-state" id="smMediaPickerState">Loading…</p>
         {{-- The scroll asks for the next page when this edges into view. --}}
@@ -417,8 +417,8 @@
         state.textContent = ($('smMediaPickerSearch').value || '').trim()
             ? 'Nothing matches that.'
             : (clips
-                ? 'No videos kept for this season yet — record one or upload one instead.'
-                : 'No photos kept for this season yet — take one or upload one instead.');
+                ? 'No videos in this season yet. Record or upload one instead.'
+                : 'No photos in this season yet. Take or upload one instead.');
     }
 
     async function loadPage() {

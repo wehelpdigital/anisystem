@@ -40,12 +40,12 @@
                 <p class="grx-cal" id="grxCalendar">The calendar says…</p>
             </div>
         </div>
-        <p class="grx-what">Anee reads everything this lot has been through since day zero — every activity and what was applied, your notes and tags, the observations, the weather the field had — and says which stage the crop is <b>actually</b> in today, and how many days it runs ahead of or behind the calendar. A herbicide that set it back, a heatwave that stunted it, a hungry field: she weighs all of it.</p>
-        <p class="grx-what">Her answer becomes this lot's growth stage everywhere — the board's day headers, the Tools sheet, the Growth Stages module — until you ask her again.</p>
+        <p class="grx-what">Anee reads this lot's whole history: the work, what was applied, your notes and the weather. She tells you which stage the crop is <b>really</b> in today, and how many days it is ahead of or behind the calendar.</p>
+        <p class="grx-what">Her answer sets this lot's growth stage everywhere in the app until you ask again.</p>
         <div class="grx-prev" id="grxPrev" hidden></div>
         <div class="grx-price">
             <span class="grx-coins" aria-hidden="true">🪙</span>
-            <span class="grow"><b>{{ $grxPrice }} credits, flat</b> — one price however long the season, said before anything is spent<span id="grxBalance"></span></span>
+            <span class="grow"><b>{{ $grxPrice }} credits</b>, one price for any season.<span id="grxBalance"></span> Nothing is charged until you tap Realign.</span>
         </div>
         <p class="grx-blocked" id="grxBlocked" hidden></p>
     </div>
@@ -279,7 +279,7 @@
                 <div class="grx-note-head"><b>Realigned by Anee</b>${shiftChip(realign.shiftDays)}<span class="grx-note-when">${esc(when(realign.at || realign.asOf))}</span></div>
                 <div>${esc(realign.summary || '')}</div>
                 <div class="grx-note-acts">
-                    <button type="button" class="grx-note-more" data-grx-show="${Number(lotId)}">Read her full reading →</button>
+                    <button type="button" class="grx-note-more" data-grx-show="${Number(lotId)}">See her full reading →</button>
                     ${CHAT && Number(realign.runId) ? `<a class="grx-note-ask" href="${esc(U.ai)}?realign=${Number(realign.runId)}"><img src="${esc(FACE)}" alt="">Ask Anee about it</a>` : ''}
                 </div>
             </div>` : '';
@@ -303,12 +303,12 @@
         const end = Math.max(Number(r.maturity) || 0, last + Math.max(10, Math.round(last * 0.15)), calDay + 1, aneeDay + 1);
         const pct = (d) => Math.max(0, Math.min(100, (d / end) * 100));
         const shift = Number(r.shiftDays) || 0;
-        const segs = stages.map((s, i) => { const until = i + 1 < stages.length ? stages[i + 1].from : end; return `<button type="button" class="grx-rail-seg" data-grx-stage="${i}" style="flex-basis:${Math.max(2, ((until - s.from) / end) * 100)}%" title="${esc(s.label)} · ${esc(counter)} ${s.from}${i + 1 < stages.length ? '–' + (until - 1) : '+'}" aria-label="${esc(s.label)}"></button>`; }).join('');
+        const segs = stages.map((s, i) => { const until = i + 1 < stages.length ? stages[i + 1].from : end; return `<button type="button" class="grx-rail-seg" data-grx-stage="${i}" style="flex-basis:${Math.max(2, ((until - s.from) / end) * 100)}%" title="${esc(s.label)} · ${esc(counter)} ${s.from}${i + 1 < stages.length ? ' to ' + (until - 1) : '+'}" aria-label="${esc(s.label)}"></button>`; }).join('');
         const lo = Math.min(calDay, aneeDay), hi = Math.max(calDay, aneeDay);
         return `
             <div class="grx-rail-card" data-grx-rail data-view="anee" data-sel="${stageAt(stages, aneeDay)}">
                 <div class="grx-rail-head">
-                    <h4>📍 Where the crop is on its clock</h4>
+                    <h4>📍 Where the crop is now</h4>
                     <div class="grx-seg" role="group" aria-label="Whose reading to show">
                         <button type="button" class="is-on" data-grx-view="anee">Anee</button>
                         <button type="button" data-grx-view="calendar">Calendar</button>
@@ -351,7 +351,7 @@
             const rel = (at, who) => at === sel ? `${who} is here` : (at > sel ? `${who}: ${at - sel} stage${at - sel === 1 ? '' : 's'} past this` : `${who}: ${sel - at} stage${sel - at === 1 ? '' : 's'} before this`);
             cap.classList.add('is-swap');
             setTimeout(() => {
-                cap.innerHTML = `<div class="grx-rail-cap-t"><b>${esc(s.label)}</b><small>${esc(counter)} ${s.from}${until !== null ? '–' + until : '+'}</small></div>${s.what ? `<div>${esc(s.what)}</div>` : ''}<div class="grx-rail-cap-who"><span class="is-anee">${esc(rel(aneeAt, 'Anee'))}</span><span class="is-cal">${esc(rel(calAt, 'Calendar'))}</span></div>`;
+                cap.innerHTML = `<div class="grx-rail-cap-t"><b>${esc(s.label)}</b><small>${esc(counter)} ${s.from}${until !== null ? ' to ' + until : '+'}</small></div>${s.what ? `<div>${esc(s.what)}</div>` : ''}<div class="grx-rail-cap-who"><span class="is-anee">${esc(rel(aneeAt, 'Anee'))}</span><span class="is-cal">${esc(rel(calAt, 'Calendar'))}</span></div>`;
                 cap.classList.remove('is-swap');
             }, cap.innerHTML ? 140 : 0);
         }
@@ -373,25 +373,25 @@
         const li = (e, t) => `<li><span class="e">${e}</span><span>${esc(t)}</span></li>`;
         const listCard = (cls, title, arr, e) => (arr || []).length ? `<div class="grx-card ${cls}"><h4>${title}</h4><ul>${arr.map((t) => li(e, t)).join('')}</ul></div>` : '';
         const counter = r.counter || 'Day';
-        $id('grxResultTitle').textContent = `Anee's reading — ${lotName || ''}`;
+        $id('grxResultTitle').textContent = `Anee's reading${lotName ? ': ' + lotName : ''}`;
         $id('grxResultBody').innerHTML = `
             <div class="grx-hero">
                 <div class="grx-hero-k">The crop is in</div>
                 <div class="grx-hero-stage">${esc(r.stageLabel || '')}</div>
-                <div class="grx-hero-line">as if it were ${esc(counter)} ${esc(String(r.physiologicalDay ?? ''))} — the calendar counts ${esc(counter)} ${esc(String(r.calendarDay ?? ''))}</div>
+                <div class="grx-hero-line">It acts like ${esc(counter)} ${esc(String(r.physiologicalDay ?? ''))}. The calendar says ${esc(counter)} ${esc(String(r.calendarDay ?? ''))}.</div>
                 ${shiftChip(r.shiftDays)}
             </div>
             <div class="grx-two">
-                <div class="grx-cell"><i>The calendar said</i><b>${esc(r.calendarStageLabel || '—')}</b><span>${esc(counter)} ${esc(String(r.calendarDay ?? ''))}</span></div>
+                <div class="grx-cell"><i>The calendar said</i><b>${esc(r.calendarStageLabel || 'Unknown')}</b><span>${esc(counter)} ${esc(String(r.calendarDay ?? ''))}</span></div>
                 <div class="grx-cell is-anee"><i>Anee says</i><b>${esc(r.stageLabel || '')}</b><span>${esc(shiftWords(r.shiftDays))}</span></div>
             </div>
             ${rail(r)}
             <div class="grx-conf"><span>Confidence</span><span class="grx-conf-bar"><span data-w="${conf}"></span></span><b>${conf}%</b></div>
             <p class="grx-sum">${esc(r.summary || '')}</p>
-            ${listCard('', '🔎 Why she reads it this way', r.reasons, '•')}
+            ${listCard('', '🔎 Why she thinks so', r.reasons, '•')}
             ${listCard('is-do', '✅ What to do now', r.recommendations, '👉')}
             ${listCard('is-watch', '👀 What to watch for this week', r.watch, '⚠️')}
-            <p class="grx-applied">Applied to <b>${esc(lotName || 'this lot')}</b>: the board's day headers, the Tools sheet and the Growth Stages module now read this stage. The day count stays the calendar's; only the stage read off it has moved. Ask her again whenever the field tells a different story.</p>`;
+            <p class="grx-applied">Applied to <b>${esc(lotName || 'this lot')}</b>. The board's day headers, the Tools sheet and Growth Stages now show this stage. The day count does not change, only the stage does. Ask her again when the field looks different.</p>`;
         const card = $id('grxResultBody').querySelector('[data-grx-rail]');
         if (card) { card.__realign = r; paintRail(card, r); }
         // The door into the chat, with this very reading attached.
@@ -424,10 +424,10 @@
             }
             if (d.realign) {
                 const p = $id('grxPrev');
-                p.innerHTML = `<b>Her last reading</b> (${esc(when(p.dataset.at = d.realign.at || d.realign.asOf))}): ${esc(shiftWords(d.realign.shiftDays))} — ${esc(d.realign.summary || '')}`;
+                p.innerHTML = `<b>Her last reading</b> (${esc(when(p.dataset.at = d.realign.at || d.realign.asOf))}): ${esc(shiftWords(d.realign.shiftDays))}. ${esc(d.realign.summary || '')}`;
                 p.hidden = false;
             }
-            $id('grxBalance').innerHTML = ' · you have ' + creditCoin(d.unlimited ? '∞' : Number(d.balance).toLocaleString());
+            $id('grxBalance').innerHTML = ' You have ' + creditCoin(d.unlimited ? '∞' : Number(d.balance).toLocaleString()) + '.';
             if (d.blocked) { $id('grxBlocked').textContent = d.blocked; $id('grxBlocked').hidden = false; return; }
             if (!d.aiUsable) { $id('grxBlocked').textContent = 'The AI Technician is not available right now.'; $id('grxBlocked').hidden = false; return; }
             if (!d.unlimited && Number(d.balance) < Number(d.price)) {
@@ -448,8 +448,8 @@
         closeSheet('grRealignSheet');
         window.aneeWait.show({
             title: `Anee is reading ${lotName || 'the lot'}…`,
-            lines: ['Reading every activity since day zero…', 'Weighing what was applied, and when…', 'Reading your notes, tags and observations…', 'Checking the sky the field had…', 'Placing the crop on its own clock…'],
-            sub: 'A deep read of one lot — about a minute.',
+            lines: ['Reading every activity since day zero…', 'Checking what was applied and when…', 'Reading your notes, tags and observations…', 'Checking the weather on your field…', 'Finding the true stage of the crop…'],
+            sub: 'This takes about a minute.',
         });
         let landed = false;
         try {
@@ -463,7 +463,7 @@
             landed = true;
             const realign = data.realign || data.result;
             try { window.growthRealign.onApplied?.(lotId, realign); } catch (_) {}
-            await window.aneeWait.done({ title: 'Done!', line: `${data.credits} credits used — ${lotName || 'the lot'} is realigned.` });
+            await window.aneeWait.done({ title: 'Done!', line: `${data.credits} credits used. ${lotName || 'The lot'} is realigned.` });
             draw(realign, lotName);
         } catch (err) {
             toast(err.message, 'error');

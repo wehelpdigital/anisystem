@@ -175,7 +175,7 @@
              bar that must be legible in BOTH modes cannot let either mode
              repaint it. Amber stays amber at midnight. --}}
         <div style="position:sticky;top:0;z-index:120;background:#fbbf24;color:#451a03;" class="text-[13px] font-bold px-3 py-2 flex items-center justify-between gap-3 shadow">
-            <span class="truncate">👁 Viewing as {{ auth()->user()->full_name ?? auth()->user()->email }} — their account, your eyes.</span>
+            <span class="truncate">👁 Viewing as {{ auth()->user()->full_name ?? auth()->user()->email }}. This is their account.</span>
             <form method="POST" action="{{ route('admin.return') }}" class="shrink-0">
                 @csrf
                 <button type="submit" style="background:#451a03;color:#fde68a;" class="rounded-lg px-3 py-1 text-xs font-bold">Back to admin</button>
@@ -425,7 +425,7 @@
                             <a href="{{ route('account.index') }}" class="block rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">My Account</a>
                             @php $__menuAnee = auth()->user()->canUseAi(); @endphp
                             <a href="{{ route('ai.credits') }}" class="flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
-                               @unless ($__menuAnee) data-tier-lock="{{ \App\Support\Tier::unlocksAt('ai') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::unlocksAt('ai'), 'Anee\'s credits come with {plan} — the chat, the analyses and the credit shop, on top of everything your plan already has.') }}" @endunless>
+                               @unless ($__menuAnee) data-tier-lock="{{ \App\Support\Tier::unlocksAt('ai') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::unlocksAt('ai'), 'Anee\'s credits come with {plan}. You get her chat, analyses and credit shop.') }}" @endunless>
                                 <span class="{{ $__menuAnee ? '' : 'tl-dim' }}">My Credits</span>
                                 @unless ($__menuAnee)<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endunless
                             </a>
@@ -459,8 +459,8 @@
                             @php $offlineLocked = ! \App\Support\Tier::farmCan('offline'); @endphp
                             <button type="button" id="offlineModeToggle"
                                 class="w-full flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
-                                role="switch" aria-checked="false" title="Keep pages on this phone for when the signal drops"
-                                @if ($offlineLocked) data-tier-lock="{{ \App\Support\Tier::farmUnlocksAt('offline') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::farmUnlocksAt('offline'), 'Offline mode comes with {plan} — the farm stays on your phone when the signal drops, and what you do out there syncs itself when it returns.') }}" @endif>
+                                role="switch" aria-checked="false" title="Use your farm with no signal"
+                                @if ($offlineLocked) data-tier-lock="{{ \App\Support\Tier::farmUnlocksAt('offline') }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::farmUnlocksAt('offline'), 'Offline mode comes with {plan}. Your farm stays on your phone with no signal, and your work syncs when the signal returns.') }}" @endif>
                                 <span class="flex items-center gap-2 {{ $offlineLocked ? 'tl-dim' : '' }}">
                                     <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2 8.82A15 15 0 0112 5a15 15 0 0110 3.82M5.5 12.05A10 10 0 0112 9.5c2.44 0 4.68.87 6.42 2.32M8.8 15.3A5.5 5.5 0 0112 14c1.18 0 2.28.37 3.18 1M12 19h.01"/></svg>
                                     <span>Offline mode</span>
@@ -546,7 +546,7 @@
                                         </span>
                                         <span class="dt-row-body">
                                             <b>My own farm</b>
-                                            <i>You are the <strong>owner</strong> here — {{ \App\Support\WorkerContext::ownsSchedules() ? 'your own schedules and land' : 'your own free account, ready for its first schedule' }}.</i>
+                                            <i>You are the <strong>owner</strong> here. {{ \App\Support\WorkerContext::ownsSchedules() ? 'Your own schedules and land' : 'Your free account, ready for a first schedule' }}.</i>
                                         </span>
                                         <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                                     </button>
@@ -566,7 +566,7 @@
                                             </span>
                                             <span class="dt-row-body">
                                                 <b>{{ optional($__g->boss)->full_name ?: 'Farm' }}</b>
-                                                <i>You are a <strong>worker</strong> on this farm — {{ $__g->scheduleAccess === 'edit' ? 'you can edit the plan' : 'view only' }}.</i>
+                                                <i>You are a <strong>worker</strong> here. {{ $__g->scheduleAccess === 'edit' ? 'You can edit the plan' : 'View only' }}.</i>
                                             </span>
                                             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                                         </button>

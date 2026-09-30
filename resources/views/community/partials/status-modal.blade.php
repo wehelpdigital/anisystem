@@ -8,7 +8,7 @@
     <div class="plaza-modal-backdrop" data-close-status></div>
     <div class="plaza-modal-card" style="max-width:24rem">
         <div class="plaza-modal-head">
-            <p class="font-bold text-gray-900">What are you thinking now?</p>
+            <p class="font-bold text-gray-900">What's on your mind?</p>
             <button type="button" class="btn-ghost rounded-full w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-700" data-close-status aria-label="Close">✕</button>
         </div>
         <div class="plaza-modal-body">
@@ -25,7 +25,7 @@
                 </button>
                 <span id="statusCount" class="st-count tabular-nums">0/60</span>
             </div>
-            <p class="text-xs text-gray-400 mt-1.5">Floats as a thought bubble over your photo. Leave blank and Clear to remove it.</p>
+            <p class="text-xs text-gray-400 mt-1.5">Shows as a bubble over your photo. Tap Clear status to remove it.</p>
         </div>
         <div class="plaza-modal-foot flex items-center justify-between">
             <button type="button" id="statusClear" class="btn btn-ghost btn-sm text-red-500 hover:bg-red-50">Clear status</button>
@@ -148,7 +148,7 @@
             close();
             window.toast?.(data.message);
         } catch (err) {
-            window.toast?.(err.message || 'Network error — try again.', 'error');
+            window.toast?.(err.message || 'No connection. Try again.', 'error');
         }
     }
 

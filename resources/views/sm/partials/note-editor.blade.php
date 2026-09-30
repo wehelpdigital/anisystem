@@ -34,7 +34,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                 <span>Camera</span>
             </button>
-            <button type="button" class="ne-tool" id="noteEditorPhoto" title="Choose a photo already on this device" aria-label="Upload a photo">
+            <button type="button" class="ne-tool" id="noteEditorPhoto" title="Pick a photo from this device" aria-label="Upload a photo">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="8.5" r="1.3"/></svg>
                 <span>Upload</span>
             </button>
@@ -51,7 +51,7 @@
                     ? \App\Support\Tier::scheduleUnlocksAt($schedule, 'videoRecording')
                     : \App\Support\Tier::farmUnlocksAt('videoRecording');
                 $neVidLockAttrs = $neVidLocked
-                    ? 'data-tier-lock=' . $neVidRung . ' data-lock-say="' . e(\App\Support\Tier::say($neVidRung, 'Video on notes comes with {plan}. Photos, drawings and voice stay yours on every plan.')) . '"'
+                    ? 'data-tier-lock=' . $neVidRung . ' data-lock-say="' . e(\App\Support\Tier::say($neVidRung, 'Video on notes comes with {plan}. Photos, drawings and voice work on every plan.')) . '"'
                     : '';
             @endphp
             <span class="ne-vid @if (! $neMayFilm) hidden @endif" data-video-host>
@@ -93,7 +93,7 @@
              a name. --}}
         <div id="noteEditorTitleWrap" class="mb-3" hidden>
             <label class="form-label" for="noteEditorTitleInput">Title <span class="text-red-500">*</span></label>
-            <input type="text" id="noteEditorTitleInput" class="form-input" maxlength="191" placeholder="e.g. Pump repair — west line">
+            <input type="text" id="noteEditorTitleInput" class="form-input" maxlength="191" placeholder="e.g. Pump repair, west line">
         </div>
         {{-- What the note is about, chosen by tapping. Typing "Apartado 1"
              into the words makes a sentence; tapping the lot makes a fact the
@@ -112,7 +112,7 @@
         <div class="ne-quill"><div id="noteEditorBody"></div></div>
         <div id="noteEditorUploads" class="ne-ups mt-3"></div>
         <div id="noteEditorMedia" class="ne-thumbs mt-3"></div>
-        <p class="form-hint">Photos &amp; videos are auto-compressed. A drawing already attached can still be tapped to edit it.</p>
+        <p class="form-hint">Photos and videos are made smaller on upload. Tap a drawing to edit it.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" id="noteEditorDelete" class="btn btn-danger-outline mr-auto hidden">Delete</button>
@@ -332,7 +332,7 @@
                 setTimeout(() => row.remove(), 700);
                 resolve(json.data);
             });
-            xhr.addEventListener('error', () => fail('Upload failed — check your connection.'));
+            xhr.addEventListener('error', () => fail('Upload failed. Check your connection.'));
             xhr.addEventListener('abort', () => fail('Upload cancelled.'));
             xhr.send(form);
         }).finally(() => { uploadsInFlight--; });
@@ -438,7 +438,7 @@
         if (recorded && window.smAskRecording) {
             window.smAskRecording({
                 sizeMB: file.size / 1048576,
-                hint: 'Attached to this note — give the clip a name.',
+                hint: 'Attached to this note. Give the clip a name.',
                 onSave: ({ title, description }) => attachVideo(file, { title, description }),
             });
             return;
@@ -469,7 +469,7 @@
             if (index != null && media[index]) media[index] = entry;
             else media.push(entry);
             renderThumbs();
-            window.toast?.(entry.type === 'drawing' ? 'Drawing saved — tap it to edit again.' : 'Drawing added.');
+            window.toast?.(entry.type === 'drawing' ? 'Drawing saved. Tap it to edit.' : 'Drawing added.');
         } catch (err) { window.toast?.(err.message || 'Could not add drawing.', 'error'); }
     }
 
@@ -517,7 +517,7 @@
         // Saving mid-upload filed the note without its video — the clip had
         // not joined the media list yet, and nobody was told.
         if (uploadsInFlight > 0) {
-            window.toast?.('Still uploading an attachment — one moment, then save.', 'error');
+            window.toast?.('Still uploading. Wait a moment, then save.', 'error');
             return;
         }
         const raw = quill ? quill.root.innerHTML : '';

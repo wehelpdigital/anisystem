@@ -3,7 +3,7 @@
      layouts.app reads this — the in-shell partial keeps its pane). --}}
 @section('body-class', 'hide-tabbar')
 
-@section('title', $settings->assistantName . ' — ' . $schedule->title)
+@section('title', $settings->assistantName . ' · ' . $schedule->title)
 {{-- Her name AND what she is for. Every other screen in this app names the
      thing you are looking at; this one is a person, and a person who has just
      been introduced is worth introducing properly. The name is read from the
@@ -448,7 +448,7 @@
                 'active' => $conversation && $conversation->id === $c->id,
             ])
         @empty
-            <p class="text-xs text-gray-400 px-1 py-2" data-sessions-empty>No chats yet — ask your first question and it names itself.</p>
+            <p class="text-xs text-gray-400 px-1 py-2" data-sessions-empty>No chats yet. Ask your first question.</p>
         @endforelse
         {{-- The row the page clones when an answer starts a new chat. Same
              partial as the rows above, so the two can never drift. --}}
@@ -481,7 +481,7 @@
             <span id="aiLinkChipText">{{ $conversation?->link_label }}</span>
             <button type="button" id="aiLinkChipClear" class="text-brand-500 hover:text-red-600 font-bold" aria-label="Remove link">✕</button>
         </span>
-        <span class="text-xs text-gray-400">This chat is focused here.</span>
+        <span class="text-xs text-gray-400">This chat is linked here.</span>
     </div>
 
     @unless ($settings->isUsable())
@@ -491,7 +491,7 @@
             </span>
             <div>
                 <h3>{{ $settings->assistantName }} is not switched on yet</h3>
-                <p>It will appear here as soon as it is configured.</p>
+                <p>It will show here once it is set up.</p>
             </div>
         </div>
     @endunless
@@ -576,21 +576,21 @@
                      instruction you have to scroll to finish is an
                      instruction nobody reads. The example does most of the
                      teaching, so it is what the space goes to. --}}
-                <div class="ai-howto" onclick="this.classList.toggle('is-open')" role="button" tabindex="0" aria-label="How to ask — tap to expand">
+                <div class="ai-howto" onclick="this.classList.toggle('is-open')" role="button" tabindex="0" aria-label="How to ask. Tap to open.">
                     <p class="ai-howto-h">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
                         The more you tell me, the better I answer
                         <svg class="ai-howto-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </p>
                     <div class="ai-howto-fold">
-                        <p class="ai-howto-b">Crop, variety and age, problems, observations, what you did, what you see, all detailed. A wrong question can waste your credits, so be as specific as possible.</p>
+                        <p class="ai-howto-b">Tell me the crop, variety and age, what you see, and what you did. A vague question can waste your credits, so give details.</p>
                         {{-- Labelled, because "Not / Try" on its own reads as a
                              rule until you have understood it is a worked pair. --}}
                         <p class="ai-howto-lbl">For example</p>
                         <p class="ai-howto-eg"><b>Not</b> "my rice is sick"</p>
                         <span class="ai-howto-rule" aria-hidden="true"></span>
                         <p class="ai-howto-eg"><b>Try</b> {{ \App\Support\Region::ph() ? '"RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"' : '"I planted P1197 corn six weeks ago. The lower leaves are yellowing from the edges in, the newest leaves are still green. I side-dressed urea ten days ago and it has rained hard since. What is going on?"' }}</p>
-                        <a href="#" class="anee-guide-link" data-anee-guide>Check this for a complete guide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a>
+                        <a href="#" class="anee-guide-link" data-anee-guide>Read the full guide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a>
                     </div>
                 </div>
             </div>
@@ -614,7 +614,7 @@
             @endphp
             <button type="button" class="ai-see" id="aiUsePlan" aria-pressed="false"
                     data-plan-tokens="{{ (int) ($planTokens ?? 0) }}"
-                    title="Sends this whole season in front of the question — where each lot stands today, the work done so far, the notes, the team and the store">
+                    title="Sends this whole season with your question: each lot today, the work done, notes, team and store">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.4 1.8 1.8-5.4M9 20l11-11a2.83 2.83 0 10-4-4L5 16l4 4z"/></svg>
                 This season's plan
                 {{-- The price is on the switch, not in a footnote. Turning
@@ -630,7 +630,7 @@
             </button>
             {{-- What the wallet holds, at the end of the row that decides
                  what the next answer costs. --}}
-            @if ($aiPayerIsMe)<a href="{{ route('ai.credits') }}" class="ai-bal ai-bal-chip" data-ai-bal title="{{ $aiPayerIsMe ? 'Current credits — what is left in the wallet this chat spends from' : 'Credits belonging to the farm you are working on — the owner pays for answers here' }}" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) $balance)) }}</b>@endif</a>@else<span class="ai-bal ai-bal-chip" data-ai-bal title="{{ $aiPayerIsMe ? 'Current credits — what is left in the wallet this chat spends from' : 'Credits belonging to the farm you are working on — the owner pays for answers here' }}" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) $balance)) }}</b>@endif</span>@endif
+            @if ($aiPayerIsMe)<a href="{{ route('ai.credits') }}" class="ai-bal ai-bal-chip" data-ai-bal title="{{ $aiPayerIsMe ? 'Credits left in your wallet' : 'Credits of the farm you work on. The owner pays for answers here.' }}" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) $balance)) }}</b>@endif</a>@else<span class="ai-bal ai-bal-chip" data-ai-bal title="{{ $aiPayerIsMe ? 'Credits left in your wallet' : 'Credits of the farm you work on. The owner pays for answers here.' }}" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) $balance)) }}</b>@endif</span>@endif
         </div>
         <div class="aichat-box">
             <button type="button" class="ai-cam shrink-0" id="aiAttachBtn" title="Add photos" aria-label="Add photos" aria-haspopup="dialog">
@@ -639,7 +639,7 @@
             <input type="file" id="aiPhotoFiles" accept="image/*" multiple class="hidden">
             <input type="file" id="aiPhotoCam" accept="image/*" capture="environment" class="hidden">
             <textarea id="aiText" rows="1" class="form-textarea border-0! shadow-none! focus:ring-0! p-2 grow bg-transparent!"
-                      maxlength="4000" placeholder="Ask about your crop…" {{ $settings->isUsable() ? '' : 'disabled' }}></textarea>
+                      maxlength="4000" placeholder="Ask about your crop" {{ $settings->isUsable() ? '' : 'disabled' }}></textarea>
             <button type="button" class="rounded-full text-white flex items-center justify-center shrink-0 disabled:opacity-40" id="aiSendBtn" {{ $settings->isUsable() ? '' : 'disabled' }} aria-label="Send">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
             </button>
@@ -682,7 +682,7 @@
     <div class="sheet-body space-y-1">
         <button type="button" class="ai-attach-opt" id="aiAttachUpload">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>
-            <span>Upload photos<span class="sub">Pick one or several from your device</span></span>
+            <span>Upload photos<span class="sub">Pick one or more from your phone</span></span>
         </button>
         <button type="button" class="ai-attach-opt" id="aiAttachCamera">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
@@ -690,7 +690,7 @@
         </button>
         <button type="button" class="ai-attach-opt hidden" id="aiAttachGallery">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3v13H4V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 13l2.5-2.5L14 14l2-2 2 2"/></svg></span>
-            <span>From the gallery<span class="sub">A photo this season already keeps</span></span>
+            <span>From the gallery<span class="sub">A photo already in this season</span></span>
         </button>
     </div>
 </div>
@@ -702,12 +702,12 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-4">
-        <p class="text-sm text-gray-600">Pin this conversation to a day or a specific activity of <strong>{{ $schedule->title }}</strong>. The AI keeps that in focus when it answers.</p>
+        <p class="text-sm text-gray-600">Pin this chat to a day or an activity in <strong>{{ $schedule->title }}</strong>. Anee keeps it in mind when she answers.</p>
         <div>
-            <label class="form-label" for="aiLinkDate">A day</label>
+            <label class="form-label" for="aiLinkDate">Day</label>
             <div class="flex gap-2">
                 <select id="aiLinkDate" class="form-select grow">
-                    <option value="">Choose a day…</option>
+                    <option value="">Choose a day</option>
                     @foreach ($aiDays as $d)
                         <option value="{{ $d }}">{{ AiCarbon::parse($d)->format('D, M j, Y') }}</option>
                     @endforeach
@@ -716,19 +716,19 @@
             </div>
         </div>
         <div>
-            <label class="form-label" for="aiLinkActivity">An activity</label>
+            <label class="form-label" for="aiLinkActivity">Activity</label>
             <div class="flex gap-2">
                 <select id="aiLinkActivity" class="form-select grow">
-                    <option value="">Choose an activity…</option>
+                    <option value="">Choose an activity</option>
                     @foreach ($aiActs as $a)
-                        <option value="{{ $a['id'] }}">{{ $a['date'] }} — {{ \Illuminate\Support\Str::limit($a['title'], 44) }}</option>
+                        <option value="{{ $a['id'] }}">{{ $a['date'] }} · {{ \Illuminate\Support\Str::limit($a['title'], 44) }}</option>
                     @endforeach
                 </select>
                 <button type="button" id="aiLinkActBtn" class="btn btn-primary shrink-0">Pin activity</button>
             </div>
         </div>
         @if ($aiDays->isEmpty())
-            <p class="text-sm text-gray-400">This plan has no dated activities yet.</p>
+            <p class="text-sm text-gray-400">This plan has no activities with dates yet.</p>
         @endif
     </div>
     <div class="sheet-footer">
@@ -790,20 +790,20 @@
         </button>
         <button type="button" class="ai-attach-opt" id="aiLinkBtn">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.83 10.17a4 4 0 010 5.66l-3 3a4 4 0 11-5.66-5.66l1.5-1.5m6.33-1.83a4 4 0 000-5.66l-1.5-1.5"/></svg></span>
-            <span>Link<span class="sub">Tie this chat to a day or activity</span></span>
+            <span>Link<span class="sub">Link this chat to a day or activity</span></span>
         </button>
         <button type="button" class="ai-attach-opt" id="aiMenuToTask">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></span>
-            <span>Attach to a task<span class="sub">File this chat onto a task, in the notebook</span></span>
+            <span>Attach to a task<span class="sub">Save this chat to a task in the notebook</span></span>
         </button>
         <button type="button" class="ai-attach-opt" id="aiMenuToNote">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.4-9.4a2 2 0 112.8 2.8L11 15l-4 1 1-4 8.6-8.4z"/></svg></span>
-            <span>Save as a new note<span class="sub">The whole conversation, into the notebook</span></span>
+            <span>Save as a new note<span class="sub">Save the full chat to the notebook</span></span>
         </button>
         @unless ($aiUnlimited)
             <a href="{{ route('ai.credits') }}" class="ai-attach-opt">
                 <span class="ic"><svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg></span>
-                <span>AI credits<span class="sub"><span id="aiBalance">{{ number_format((int) floor((float) $balance)) }}</span> left — top up here</span></span>
+                <span>AI credits<span class="sub"><span id="aiBalance">{{ number_format((int) floor((float) $balance)) }}</span> left. Top up here.</span></span>
             </a>
         @endunless
     </div>
@@ -826,9 +826,9 @@
         </div>
         <div>
             <label class="form-label" for="aiNoteDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="aiNoteDesc" class="form-textarea" rows="3" maxlength="2000" placeholder="Why this chat is worth keeping…"></textarea>
+            <textarea id="aiNoteDesc" class="form-textarea" rows="3" maxlength="2000" placeholder="Why keep this chat?"></textarea>
         </div>
-        <p class="text-xs text-gray-400">The whole conversation is attached underneath.</p>
+        <p class="text-xs text-gray-400">The full chat is saved with it.</p>
         <button type="button" id="aiNoteSave" class="btn btn-primary w-full">Save to the notebook</button>
     </div>
 </div>
@@ -873,7 +873,7 @@ const __init = () => {
         link: @json(route('ai.conversation.link')),
     };
     const COIN = '<svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>';
-    const buyCard = (msg) => `<div class="ai-buyc"><span class="ico">${COIN}</span><div><h3>You're out of AI Credits</h3><p>${escapeHtml(msg)}</p><a class="btn btn-accent btn-sm mt-2" href="${escapeHtml(URLS.credits)}">Purchase AI credits</a></div></div>`;
+    const buyCard = (msg) => `<div class="ai-buyc"><span class="ico">${COIN}</span><div><h3>You're out of AI Credits</h3><p>${escapeHtml(msg)}</p><a class="btn btn-accent btn-sm mt-2" href="${escapeHtml(URLS.credits)}">Get AI Credits</a></div></div>`;
     const AVATAR = @json($settings->faceUrl());
     const MY_FACE = @json(\App\Support\ChatFace::mine());
     const BOT = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>';
@@ -908,7 +908,7 @@ const __init = () => {
         const tin = Math.ceil(msg.length / 4) + OVERHEAD + planTin;
         const cost = Math.max(.01, Math.round((tin / 1000 * PRICE.inK + PRICE.halfOut / 1000 * PRICE.outK + shots * PRICE.img) * 100) / 100);
         hint.textContent = planOn
-            ? `≈ ${cost} credits — the season is attached`
+            ? `≈ ${cost} credits, with the season`
             : `≈ ${cost} credits for this question`;
     }
 
@@ -1042,7 +1042,7 @@ const __init = () => {
     }
     function roomForAnother() {
         if (chips.children.length < MAX_PHOTOS) return true;
-        toast('Up to ' + MAX_PHOTOS + ' photos per question — remove one to add another.', 'error');
+        toast('Only ' + MAX_PHOTOS + ' photos per question. Remove one to add another.', 'error');
         return false;
     }
     function addChip(previewUrl) {
@@ -1138,7 +1138,7 @@ const __init = () => {
         t.classList.toggle('is-on', on);
         if (t.id === 'aiUsePlan') {
             sayEstimate();
-            toast(on ? 'Anee will include in your question the current history of your cropping schedule - ' + @json($schedule->title) + '. This will add credit usage.'
+            toast(on ? 'Anee will read your season, ' + @json($schedule->title) + ', with your question. This uses more credits.'
                      : 'She will answer without your plan.');
         } else {
             toast(on ? 'She will read the rest of this chat.'
@@ -1148,7 +1148,7 @@ const __init = () => {
 
     async function send() {
         if (busy) return;
-        if (uploadsBusy > 0) { toast('Wait a moment — a photo is still uploading.', 'error'); return; }
+        if (uploadsBusy > 0) { toast('Please wait. A photo is still uploading.', 'error'); return; }
         const message = input.value.trim();
         if (!message) { toast('Type a question first.', 'error'); return; }
         busy = true; setSending(true);
@@ -1191,7 +1191,7 @@ const __init = () => {
             else {
                 // Not taken: the photos and the words come back for the retry.
                 window.aneeGiveChipsBack(chips, heldChips); sayEstimate();
-                if (heldChips.length) toast('Your photos are back in the box, ready for the retry.');
+                if (heldChips.length) toast('Your photos are back. You can try again.');
                 input.value = message; input.dispatchEvent(new Event('input'));
             }
         } finally { busy = false; setSending(false); input.focus(); }
@@ -1296,7 +1296,7 @@ const __init = () => {
     /* Filing this chat into the notebook — plain, or onto a task. */
     let aiPendingTaskId = null;
     function aiFileAway(activityId) {
-        if (!conversationId) { toast('Nothing to save yet — ask something first, or open an old chat.', 'error'); return; }
+        if (!conversationId) { toast('Nothing to save yet. Ask a question or open an old chat.', 'error'); return; }
         aiPendingTaskId = activityId || null;
         const head = byId('aiNoteHeading');
         if (head) head.textContent = aiPendingTaskId ? 'Attach this chat to the task' : 'Save this chat as a note';
@@ -1314,7 +1314,7 @@ const __init = () => {
      * not asked at all because this page is standing in one. */
     byId('aiMenuToTask')?.addEventListener('click', () => {
         window.closeSheet?.('aiMenuSheet');
-        if (!conversationId) { toast('Nothing to save yet — ask something first, or open an old chat.', 'error'); return; }
+        if (!conversationId) { toast('Nothing to save yet. Ask a question or open an old chat.', 'error'); return; }
         window.aiAttachOpen?.({
             askSchedule: false,
             scheduleId: SCHEDULE_ID,
@@ -1331,7 +1331,7 @@ const __init = () => {
                     title: a.title,
                     description: a.description,
                 } });
-                toast(res.message || 'Kept in the notebook.');
+                toast(res.message || 'Saved to the notebook.');
             },
         });
     });
@@ -1431,7 +1431,7 @@ const __init = () => {
         const del = e.target.closest('.js-ai-del');
         if (del) {
             e.preventDefault();
-            const ok = await confirmAction({ title: 'Delete this conversation?', message: 'Its questions and answers are removed.', detail: UNLIMITED ? '' : 'Credits already spent are not refunded.', confirmText: 'Delete' });
+            const ok = await confirmAction({ title: 'Delete this chat?', message: 'Its questions and answers will be removed.', detail: UNLIMITED ? '' : 'Spent credits are not refunded.', confirmText: 'Delete' });
             if (!ok) return;
             try { await api(URLS.delConvo(del.dataset.id), { method: 'DELETE' }); del.closest('.ai-session-row, .flex').remove(); if (String(del.dataset.id) === String(conversationId)) location.href = URLS.page + '&new=1'; }
             catch (err) { toast(err.message, 'error'); }

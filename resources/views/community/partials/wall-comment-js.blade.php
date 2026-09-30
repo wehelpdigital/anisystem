@@ -29,7 +29,7 @@
     // A "replying to @Name" chip — clean, visible proof the reply will tag them.
     // The actual @[Name](id) token is prepended on send (see submit handler).
     function replyMentionPill(name) {
-        return `<span class="reply-mention-pill inline-flex items-center gap-1 text-[0.688rem] font-semibold text-brand-700 bg-brand-50 border border-brand-100 rounded-full pl-2 pr-1 py-0.5 shrink-0" title="This reply notifies @${escHtml(name)}">@${escHtml(name)}<button type="button" class="js-reply-mention-x w-4 h-4 flex items-center justify-center rounded-full text-brand-400 hover:text-red-500 hover:bg-white leading-none" aria-label="Remove mention">×</button></span>`;
+        return `<span class="reply-mention-pill inline-flex items-center gap-1 text-[0.688rem] font-semibold text-brand-700 bg-brand-50 border border-brand-100 rounded-full pl-2 pr-1 py-0.5 shrink-0" title="@${escHtml(name)} will get a notice">@${escHtml(name)}<button type="button" class="js-reply-mention-x w-4 h-4 flex items-center justify-center rounded-full text-brand-400 hover:text-red-500 hover:bg-white leading-none" aria-label="Remove tag">×</button></span>`;
     }
     function replyFormHtml(postId, parentId, mentionId, mentionName) {
         const hasMention = mentionId && mentionName;
@@ -42,7 +42,7 @@
         return `<form class="wall-comment-form wall-reply-form flex flex-wrap items-center gap-2 mt-2 mb-3" data-post-id="${postId}" data-parent-id="${parentId}"${attrs}>
             ${hasMention ? replyMentionPill(mentionName) : ''}
             <span class="reply-shell">
-                <input type="text" placeholder="Reply…" maxlength="2000">
+                <input type="text" placeholder="Write a reply" maxlength="2000">
                 <button type="button" class="emoji-btn js-comment-photo" aria-label="Attach a photo" title="Photo">${SVG_PHOTO}</button>
                 <input type="file" class="js-comment-file hidden" accept="image/jpeg,image/png,image/webp" multiple>
                 <button type="button" class="emoji-btn js-comment-video" aria-label="Attach a video" title="Video">${SVG_VIDEO}</button>
@@ -387,7 +387,7 @@
                     if (window.plazaClearVideo) window.plazaClearVideo(form);
                 }
             } else say(data.message, 'error');
-        } catch (_) { say('Network error — try again.', 'error'); }
+        } catch (_) { say('Network error. Try again.', 'error'); }
         finally { input.disabled = false; stopSending(sendBtn); }
     });
 
@@ -469,7 +469,7 @@
     document.addEventListener('click', async (e) => {
         const btn = e.target.closest('.wall-delete-btn');
         if (!btn) return;
-        const ok = await confirmAction({ title: 'Delete post?', message: 'This removes the post and its comments.', confirmText: 'Delete' });
+        const ok = await confirmAction({ title: 'Delete post?', message: 'The post and its comments will be removed.', confirmText: 'Delete' });
         if (!ok) return;
         try {
             const res = await fetch(`/app/community/wall/${btn.getAttribute('data-post-id')}`, { method: 'DELETE', headers: jsonHeaders() });
@@ -498,7 +498,7 @@
                 say(data.message);
             }
             else say(data.message, 'error');
-        } catch (_) { say('Network error — try again.', 'error'); }
+        } catch (_) { say('Network error. Try again.', 'error'); }
     });
 
     // Delete own comment/reply → tombstone.
@@ -514,7 +514,7 @@
                 const holder = btn.closest('.wall-comment').querySelector('.flex > .min-w-0');
                 if (holder) holder.innerHTML = '<div class="bg-gray-50 rounded-lg px-2.5 py-1.5 text-xs text-gray-400 italic wall-comment-tombstone tombstone-in">This comment was deleted</div>';
             } else say(data.message, 'error');
-        } catch (_) { say('Network error — try again.', 'error'); }
+        } catch (_) { say('Network error. Try again.', 'error'); }
     });
 
     // "View all comments" → expand the thread inline (accordion, no modal),

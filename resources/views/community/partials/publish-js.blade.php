@@ -6,7 +6,7 @@ const __init = () => {
 
     function openPublishSheet(id, title, summary = '', region = '') {
         fld('publishScheduleId').value = id;
-        fld('publishScheduleTitle').textContent = title || 'This plan';
+        fld('publishScheduleTitle').textContent = title || 'this plan';
         fld('publishSummary').value = summary || '';
         fld('publishRegion').value = region || '';
         openSheet('publishSheet');
@@ -52,8 +52,8 @@ const __init = () => {
         if (!btn) return;
         const ok = await confirmAction({
             title: 'Remove from the Community?',
-            message: '"' + (btn.dataset.title || 'This plan') + '" will no longer be readable by other members.',
-            detail: 'Comments and ratings are kept in case you share it again.',
+            message: 'Other members will no longer see "' + (btn.dataset.title || 'this plan') + '".',
+            detail: 'Comments and ratings are kept if you share it again.',
             confirmText: 'Remove',
         });
         if (!ok) return;

@@ -118,7 +118,7 @@
                 @endif
             </div>
             <p class="ch-name">Welcome back, {{ $user->firstName ?: 'there' }}.</p>
-            <p class="ch-sub">This account is more than one thing. How are you working today?</p>
+            <p class="ch-sub">You have more than one role. How are you working today?</p>
         </div>
 
         <div class="ch-list">
@@ -150,7 +150,7 @@
                  rather than a choice against the farms above. --}}
             <a class="ch-admin-door" href="{{ $adminUrl }}" target="_blank" rel="noopener">
                 <svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 12l1.8 1.8L15 10"/></svg>
-                <span>You also administer the site — <b>open the admin site</b> in a new tab. Your own farm stays as you left it.</span>
+                <span>You also run the admin site. <b>Open it</b> in a new tab. Your farm stays as you left it.</span>
             </a>
         @endif
 
@@ -161,7 +161,7 @@
                 Sign out
             </button>
         </form>
-        <p class="ch-foot">You can change this any time from the account menu.</p>
+        <p class="ch-foot">You can switch any time from the account menu.</p>
     </div>
 </div>
 @endsection

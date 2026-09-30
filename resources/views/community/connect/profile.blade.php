@@ -45,7 +45,7 @@
                 <span class="pf-request-ico" aria-hidden="true">🤝</span>
                 <div class="pf-request-txt">
                     <b>{{ $member->firstName }} wants to be your co-farmer</b>
-                    <span>{{ $member->full_name }} sent you a co-farmer request. Accepting connects your farms — you will see each other's news and can reach each other any time.</span>
+                    <span>{{ $member->full_name }} sent you a co-farmer request. Accept to see each other's news and chat any time.</span>
                 </div>
             </div>
             <span class="conn-action pf-request-acts" data-member-id="{{ $member->id }}" data-status="pending_in">
@@ -232,8 +232,8 @@
                 </dl>
             @else
                 <p class="pf-about-empty">
-                    Nothing here yet — what you grow and how long you have farmed
-                    helps other farmers know whether to ask you.
+                    Nothing here yet. Add what you grow and how long you have farmed
+                    so other farmers know when to ask you.
                     <a href="{{ route('account.index') }}">Fill it in</a>.
                 </p>
             @endif
@@ -302,7 +302,7 @@
             @include('partials.list-pager', ['noun' => 'photo', 'paginator' => $photos,
                 'rowsUrl' => route('community.connect.profile', ['userId' => $member->id]) . '?rows=1&tab=photos'])
             <p class="text-sm text-gray-400 py-6 text-center {{ $photos->isNotEmpty() ? 'hidden' : '' }}" id="profilePhotosEmpty">
-                {{ $isSelf ? 'Add photos of your farm, harvest, or yourself — tap “Add photos”.' : $member->firstName . ' has not added any photos yet.' }}
+                {{ $isSelf ? 'Tap Add photos to show your farm, harvest or yourself.' : $member->firstName . ' has not added any photos yet.' }}
             </p>
         </div>
     </div>
@@ -322,7 +322,7 @@
             @if ($isSelf)
                 <div class="profile-video-uploading hidden" id="profileVideoUploading">
                     <span class="profile-video-spin" aria-hidden="true"></span>
-                    <span>Uploading &amp; compressing your video… this can take a moment for longer clips.</span>
+                    <span>Uploading your video. Long clips take a while.</span>
                 </div>
             @endif
             <div class="profile-videos-grid {{ $videos->isEmpty() ? 'hidden' : '' }}" id="profileVideosGrid">
@@ -333,7 +333,7 @@
             @include('partials.list-pager', ['noun' => 'video', 'paginator' => $videos,
                 'rowsUrl' => route('community.connect.profile', ['userId' => $member->id]) . '?rows=1&tab=videos'])
             <p class="text-sm text-gray-400 py-6 text-center {{ $videos->isNotEmpty() ? 'hidden' : '' }}" id="profileVideosEmpty">
-                {{ $isSelf ? 'Share a short clip of your farm or harvest — tap “Add video”. It’s compressed automatically.' : $member->firstName . ' has not added any videos yet.' }}
+                {{ $isSelf ? 'Tap Add video to share a short clip of your farm or harvest.' : $member->firstName . ' has not added any videos yet.' }}
             </p>
         </div>
     </div>
@@ -633,7 +633,7 @@
         const id = btn.getAttribute(isPhoto ? 'data-photo-id' : 'data-video-id');
         if (!id) return;
         const ok = window.confirmAction
-            ? await confirmAction({ title: isPhoto ? 'Delete this photo?' : 'Delete this video?', message: 'It comes off your profile for everyone.', confirmText: 'Delete' })
+            ? await confirmAction({ title: isPhoto ? 'Delete this photo?' : 'Delete this video?', message: 'It will be removed from your profile.', confirmText: 'Delete' })
             : confirm('Delete?');
         if (!ok) return;
         try {
@@ -690,7 +690,7 @@
             const label = veil.querySelector('span:last-child');
             // 100% of the bytes up is not saved — the server is still
             // compressing, which is the slow half for a long clip.
-            if (label) label.textContent = pct < 100 ? 'Uploading your video… ' + pct + '%' : 'Compressing… this can take a moment for longer clips.';
+            if (label) label.textContent = pct < 100 ? 'Uploading your video… ' + pct + '%' : 'Compressing your video. Long clips take a while.';
         };
         x.onload = () => {
             veil?.classList.add('hidden');
@@ -703,7 +703,7 @@
                 say(data.message || 'Video added.');
             } else { say(data.message || 'Could not upload the video.', 'error'); }
         };
-        x.onerror = () => { veil?.classList.add('hidden'); say('The connection dropped mid-upload — try again.', 'error'); };
+        x.onerror = () => { veil?.classList.add('hidden'); say('Upload stopped. Check your connection and try again.', 'error'); };
         x.send(fd);
     });
 })();

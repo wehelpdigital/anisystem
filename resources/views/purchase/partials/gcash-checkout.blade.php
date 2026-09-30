@@ -59,8 +59,8 @@
                     @endif
                 @else
                     <div class="rounded-xl bg-gray-50 border border-gray-200 px-4 py-4 text-sm text-gray-600 text-center">
-                        PayPal payment details will be provided by support. Please contact
-                        <span class="font-semibold">support@anee.io</span> to complete your payment in {{ \App\Support\Region::currencyName() }}.
+                        Support will send you the PayPal details. Email
+                        <span class="font-semibold">support@anee.io</span> to pay in {{ \App\Support\Region::currencyName() }}.
                     </div>
                 @endif
             @elseif ($gcash && ($gcash->gcashNumber ?? null))
@@ -88,8 +88,8 @@
                 @endif
             @else
                 <div class="rounded-xl bg-gray-50 border border-gray-200 px-4 py-4 text-sm text-gray-600 text-center">
-                    GCash payment details will be provided by support. Please contact
-                    <span class="font-semibold">support@anee.io</span> to complete your payment.
+                    Support will send you the GCash details. Email
+                    <span class="font-semibold">support@anee.io</span> to pay.
                 </div>
             @endif
 
@@ -97,8 +97,8 @@
             <ol class="mt-5 space-y-3">
                 @foreach ([
                     'Send '.\App\Support\Region::money($price).' to the '.($payPH ? 'GCash number' : 'PayPal account').' above.',
-                    'Take a screenshot of the receipt, or copy the '.($payPH ? 'reference number' : 'transaction ID').'.',
-                    'Submit your proof of payment using the form below.',
+                    'Screenshot the receipt, or copy the '.($payPH ? 'reference number' : 'transaction ID').'.',
+                    'Send us your proof with the form below.',
                 ] as $i => $step)
                     <li class="flex items-start gap-3">
                         <span class="flex items-center justify-center w-7 h-7 rounded-full bg-brand-600 text-white text-sm font-bold shrink-0">{{ $i + 1 }}</span>
@@ -112,14 +112,14 @@
     {{-- Proof of payment form --}}
     <div class="card">
         <div class="card-body">
-            <h2 class="text-lg font-bold text-gray-900 mb-1">Submit proof of payment</h2>
-            <p class="text-sm text-gray-500 mb-4">Provide the {{ $payPH ? 'GCash reference number' : 'PayPal transaction ID' }}, a screenshot, or both.</p>
+            <h2 class="text-lg font-bold text-gray-900 mb-1">Proof of payment</h2>
+            <p class="text-sm text-gray-500 mb-4">Give the {{ $payPH ? 'GCash reference number' : 'PayPal transaction ID' }}, a screenshot, or both.</p>
 
             <form method="POST" action="{{ $submitUrl }}" enctype="multipart/form-data" class="space-y-4" novalidate>
                 @csrf
 
                 <div>
-                    <label for="payerName" class="form-label">Name of the {{ $payMethod }} sender</label>
+                    <label for="payerName" class="form-label">Sender's name</label>
                     <input id="payerName" name="payerName" type="text"
                         value="{{ old('payerName', $user->full_name) }}" class="form-input" required>
                     @error('payerName') <p class="form-error">{{ $message }}</p> @enderror
@@ -144,7 +144,7 @@
                     <label for="referenceNumber" class="form-label">{{ $payPH ? 'GCash reference number' : 'PayPal transaction ID' }}</label>
                     <input id="referenceNumber" name="referenceNumber" type="text"
                         value="{{ old('referenceNumber') }}" class="form-input" placeholder="{{ $payPH ? 'e.g. 1234 567 8901' : 'e.g. 8AB12345CD678901E' }}">
-                    <p class="form-hint">Required if you don't upload a screenshot.</p>
+                    <p class="form-hint">Needed if you skip the screenshot.</p>
                     @error('referenceNumber') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
 
@@ -165,20 +165,20 @@
                             <button type="button" class="btn btn-ghost btn-sm mt-1 text-red-600" onclick="clearScreenshot(event)">Remove</button>
                         </div>
                     </div>
-                    <p class="form-hint">Required if you don't provide a reference number.</p>
+                    <p class="form-hint">Needed if you skip the reference number.</p>
                     @error('screenshot') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
                     <label for="notes" class="form-label">Notes <span class="font-normal text-gray-400">(optional)</span></label>
                     <textarea id="notes" name="notes" rows="2" class="form-textarea"
-                        placeholder="Anything we should know about your payment">{{ old('notes') }}</textarea>
+                        placeholder="Anything we should know">{{ old('notes') }}</textarea>
                     @error('notes') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
 
-                <button type="submit" class="btn btn-accent btn-lg w-full">Submit Payment Proof</button>
+                <button type="submit" class="btn btn-accent btn-lg w-full">Send Proof</button>
                 <p class="text-center text-xs text-gray-500">
-                    Our team verifies {{ $payMethod }} payments manually. You will receive an email once your payment is approved.
+                    Our team checks {{ $payMethod }} payments by hand. We will email you once it is approved.
                 </p>
             </form>
         </div>

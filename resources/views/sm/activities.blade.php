@@ -4048,7 +4048,7 @@
              then put back; this answers it without touching the board at
              all. --}}
         <button type="button" id="mirrorBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
-                title="Mirror — read the whole plan" aria-label="Mirror: read the whole plan">
+                title="Mirror: read the whole plan" aria-label="Mirror: read the whole plan">
             {{-- A compact mirror: the ring, the glass inside it, the little
                  loop you hold it by, and a shine across the top-left corner
                  of the glass. Drawn rather than dropped in as a picture — a
@@ -4081,7 +4081,7 @@
              the browser's own reload; this puts it where the hand already is,
              next to the Mirror. --}}
         <button type="button" id="boardRefreshBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
-                title="Refresh — rebuild this board" aria-label="Refresh: rebuild this board">
+                title="Refresh the board" aria-label="Refresh the board">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M20 9A8 8 0 006.34 6.34M4 15a8 8 0 0013.66 2.66"/></svg>
             <span class="hidden sm:inline">Refresh</span>
         </button>
@@ -4255,7 +4255,7 @@
         $activeVersion = $schedule->versions->firstWhere('isActive', 1) ?? $schedule->versions->first();
     @endphp
     <button type="button" id="versionsSheetBtn" class="btn btn-white btn-sm shrink-0 md:hidden"
-            title="{{ $activeVersion?->versionName ? 'Version: ' . $activeVersion->versionName . ' — switch, add or edit' : 'Switch or add a plan version' }}">
+            title="{{ $activeVersion?->versionName ? 'Version: ' . $activeVersion->versionName . '. Tap to switch, add or edit.' : 'Switch or add a plan version' }}">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>
         <span id="versionsSheetLabel">{{ $activeVersion?->versionName ?: 'Versions' }}</span>
         <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
@@ -4296,7 +4296,7 @@
          Search have moved up to the toolbar row, into the place Undo and Redo
          used to hold. --}}
     <button type="button" id="toggleEmptyDatesBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
-            title="Show or hide the empty &quot;no activities&quot; dates">
+            title="Show or hide days with no activities">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
         <span id="toggleEmptyDatesLabel" class="hidden sm:inline">Hide empty dates</span>
     </button>
@@ -4307,7 +4307,7 @@
     {{-- Stays visible on phones too (no toolbar-desktop-action), sitting
          right before Add Activity as the one-tap done-days toggle. --}}
     <button type="button" id="toggleDoneDaysBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
-            title="Hide the days where every activity is already done" aria-pressed="false">
+            title="Hide days where all work is done" aria-pressed="false">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         <span id="toggleDoneDaysLabel" class="hidden sm:inline">Hide done days</span>
     </button>
@@ -4386,12 +4386,12 @@
                 <div class="flex flex-wrap gap-1.5 mt-1.5" id="lotFilterChips" data-chip-group>
                     @foreach ($schedule->lots as $lot)
                         <button type="button" class="chip min-h-9! py-1! text-xs" data-value="{{ $lot->id }}"
-                            title="Hide {{ $lot->lotName }} — cards covering another visible lot stay put">
+                            title="Hide {{ $lot->lotName }}. Cards that also cover a shown lot stay.">
                             {{ $lot->lotName }}@if(!empty($lot->variety)) · {{ $lot->variety }}@endif
                         </button>
                     @endforeach
                     <button type="button" class="chip chip-dashed min-h-9! py-1! text-xs" data-value="__na__"
-                        title="Hide activities not tied to any specific lot">N/A</button>
+                        title="Hide activities with no lot">N/A</button>
                 </div>
             </div>
         @endif
@@ -4431,7 +4431,7 @@
 
     <div class="card p-8 text-center hidden" id="calEmpty">
         <p class="font-semibold text-gray-700">Nothing scheduled here</p>
-        <p class="text-sm text-gray-500 mt-1" id="calEmptyHint">Use the arrows to find the months with work in them.</p>
+        <p class="text-sm text-gray-500 mt-1" id="calEmptyHint">Use the arrows to find months with work.</p>
     </div>
 </div>
 
@@ -4439,15 +4439,15 @@
 {{-- Only ever seen with "day-zero only" on and nothing to show for it:
      without this the board would just look broken. --}}
 <div id="dayZeroNone" class="card card-body text-center text-gray-500 py-8 hidden">
-    <p class="font-bold text-gray-800 mb-1">No day-zero activity yet</p>
-    <p class="text-sm">Nothing on this plan is marked as the DAS 0 / DAP 0 / DAT 0 anchor. Tick “this is day zero” on the activity that starts the count.</p>
+    <p class="font-bold text-gray-800 mb-1">No day zero yet</p>
+    <p class="text-sm">No activity is marked as day zero (DAS 0, DAP 0 or DAT 0). Tick “this is day zero” on the activity that starts the count.</p>
 </div>
 
 <div id="activitiesList" class="activity-timeline">
     @if ($sortedActivities->count() === 0)
         <div id="activitiesEmpty" class="card card-body text-center text-gray-500 py-10">
-            <p class="font-bold text-gray-800 mb-1">No activities defined yet.</p>
-            <p class="text-sm">Tap <strong>Add Activity</strong> to define your first step.</p>
+            <p class="font-bold text-gray-800 mb-1">No activities yet</p>
+            <p class="text-sm">Tap <strong>Add Activity</strong> to add your first one.</p>
         </div>
     @else
         @foreach ($timeline as $item)
@@ -4469,7 +4469,7 @@
                     <div class="progress-marker-line">
                         <span class="progress-marker-bookmark">
                             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                            Resume here — {{ $item['carbon']->format('M j, Y') }}
+                            Resume here: {{ $item['carbon']->format('M j, Y') }}
                         </span>
                         <span class="flex items-center gap-0.5">
                             <button type="button" class="icon-btn progress-marker-edit-btn" data-date="{{ $item['date'] }}" title="Edit marker note">
@@ -4529,7 +4529,7 @@
                         // share it.
                         $dhBeat = crc32((string) $dateKey);
                     @endphp
-                    <div class="date-header" style="--sw-t:{{ 9 + ($dhBeat % 7) }}s;--sw-d:-{{ $dhBeat % 11 }}s"@if ($dateCarbon && $boardMayDrag) draggable="true" title="Drag this header to move the whole day to another date"@endif>
+                    <div class="date-header" style="--sw-t:{{ 9 + ($dhBeat % 7) }}s;--sw-d:-{{ $dhBeat % 11 }}s"@if ($dateCarbon && $boardMayDrag) draggable="true" title="Drag to move this whole day to another date"@endif>
                         <svg class="date-chevron" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                         @if ($dateCarbon)
                             <span class="date-header-day">{{ $dateCarbon->format('D') }}</span>
@@ -4549,7 +4549,7 @@
                             @endphp
                             <span class="date-header-date{{ $rangeShort ? ' has-range' : '' }}"><span class="dh-long">{{ $dateCarbon->format('M j, Y') }}</span><span class="dh-short">{{ $dateCarbon->format('M j, y') }}</span>@if($rangeShort)<span class="dh-rangeshort">{{ $rangeShort }}</span>@endif</span>
                             @if ($latestEndCarbon)
-                                <span class="date-header-range" title="At least one activity extends through {{ $latestEndCarbon->format('M j, Y') }}">
+                                <span class="date-header-range" title="At least one activity runs until {{ $latestEndCarbon->format('M j, Y') }}">
                                     &rarr; {{ $latestEndCarbon->format('M j') }}@if($latestEndCarbon->year !== $dateCarbon->year), {{ $latestEndCarbon->year }}@endif ({{ $groupSpanDays }}d)
                                 </span>
                             @endif
@@ -4557,7 +4557,7 @@
                                  another day, and the stretch between opens in a
                                  sheet. Twin of the JS renderer's; wired in
                                  activities-js (DATE DIFF). --}}
-                            <button type="button" class="dd-btn" data-dd-date="{{ $dateKey }}" title="Date difference: measure from this day to another day or activity" aria-label="Date difference from this day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg></button>
+                            <button type="button" class="dd-btn" data-dd-date="{{ $dateKey }}" title="Count the days from this day to another one" aria-label="Count days from this day"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg></button>
                         @else
                             <span class="date-header-date">No date</span>
                         @endif
@@ -4571,7 +4571,7 @@
                         <span class="date-header-stage" hidden title="What the crop is doing on this day"></span>
                         <span class="date-header-cash" hidden></span>
                         @if ($dateKey !== '__no-date__')
-                            <button type="button" class="date-header-btn group-add-activity-btn" data-date="{{ $dateKey }}" title="Add a new activity to this date">
+                            <button type="button" class="date-header-btn group-add-activity-btn" data-date="{{ $dateKey }}" title="Add an activity to this day">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
                             </button>
                             {{-- Secondary day actions: inline on desktop, overflow sheet on phones. --}}
@@ -4595,19 +4595,19 @@
                                 <button type="button" class="date-header-btn day-expense-btn" data-date="{{ $dateKey }}" title="Add an extra expense for this day">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v10M14.4 9.4a2.3 2.3 0 00-2.4-1.3c-1.3.1-2.3.8-2.3 1.9s1 1.7 2.5 1.9 2.6.8 2.6 2-1.1 1.9-2.5 1.9a2.4 2.4 0 01-2.4-1.3"/></svg>
                                 </button>
-                                <button type="button" class="date-header-btn date-marker-btn {{ $existingMarker ? 'has-marker' : '' }}" data-date="{{ $dateKey }}" title="{{ $existingMarker ? 'Edit the resume-here marker' : 'Drop a resume-here marker after this date' }}">
+                                <button type="button" class="date-header-btn date-marker-btn {{ $existingMarker ? 'has-marker' : '' }}" data-date="{{ $dateKey }}" title="{{ $existingMarker ? 'Edit the resume here marker' : 'Add a resume here marker after this day' }}">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
                                 </button>
                                 <button type="button" class="date-header-btn share-day-btn" data-date="{{ $dateKey }}" title="Share this day's schedule (public link)">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg>
                                 </button>
-                                <button type="button" class="date-header-btn change-group-date-btn" data-date="{{ $dateKey }}" title="Change date for all activities in this group">
+                                <button type="button" class="date-header-btn change-group-date-btn" data-date="{{ $dateKey }}" title="Change the date of this whole day">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                 </button>
-                                <button type="button" class="date-header-btn move-group-das-btn" data-date="{{ $dateKey }}" title="Move this whole day to a specific day number">
+                                <button type="button" class="date-header-btn move-group-das-btn" data-date="{{ $dateKey }}" title="Move this whole day to a day number">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 </button>
-                                <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn" data-date="{{ $dateKey }}" title="Delete every activity in this group">
+                                <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn" data-date="{{ $dateKey }}" title="Delete all activities on this day">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
                                 </button>
                             </span>
@@ -4721,7 +4721,7 @@
         <div class="min-w-0">
             <h3 class="sheet-title flex items-center gap-2">
                 <svg class="w-5 h-5 text-amber-500 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
-                Things to double-check
+                Things to check
             </h3>
             <p class="text-xs text-gray-500 mt-0.5" id="dayWarnSubtitle"></p>
         </div>
@@ -5192,7 +5192,7 @@
                    is a room that was never put on the shelf. Say which, so
                    the next warm can be trusted to have fixed it. */
                 if (!err.quiet) toast(window.aneeOffline?.isDown?.()
-                    ? (MODULES[key].label || 'That module') + ' is not on this phone yet — open it once with a signal and it will be here next time.'
+                    ? (MODULES[key].label || 'That module') + ' is not saved on this phone yet. Open it once online and it will work offline next time.'
                     : (err.message || 'Could not load that module.'), 'error');
                 activitiesRoot.classList.remove('module-hidden');
                 key = 'activities';
@@ -5514,7 +5514,7 @@
                 p.className = 'mir-none';
                 p.textContent = which === 'lots'
                     ? 'This plan has no lots on it yet.'
-                    : 'Nothing on this plan says what type of activity it is.';
+                    : 'No activity on this plan has a type yet.';
                 pickBody.appendChild(p);
             }
             pick.hidden = false;
@@ -5595,7 +5595,7 @@
                     d.type = 'button';
                     d.className = 'mir-diff';
                     d.dataset.date = key;
-                    d.title = 'Measure the days between this one and another';
+                    d.title = 'Count the days between this one and another';
                     d.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">'
                         + '<path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg>'
                         + '<span class="mir-diff-t">Date Diff</span>';
@@ -5968,7 +5968,7 @@
                 range.classList.toggle('hidden', mode !== 'date');
                 if (mode === 'all') { qInput.value = ''; fromInput.value = ''; toInput.value = ''; sayDates(); }
                 if (mode === 'text') qInput.placeholder = 'Search activities, lots or items…';
-                if (mode === 'day') qInput.placeholder = 'Day number — 12, DAS+12, DAT-3…';
+                if (mode === 'day') qInput.placeholder = 'Day number, e.g. 12, DAS+12, DAT-3';
                 sift();
                 if (mode === 'text' || mode === 'day') window.smFocus?.(qInput, { delay: 60 });
             });
@@ -6457,8 +6457,8 @@
         clear.classList.toggle('hidden', n > 0);
         intro.classList.toggle('hidden', n === 0);
         intro.textContent = blocking > 0
-            ? 'The first few stop the plan from working properly — the rest are worth doing when you get a chance.'
-            : 'None of these stop the plan from working, but they will make it more useful.';
+            ? 'The red ones stop the plan from working. Do the rest when you can.'
+            : 'The plan works without these, but they make it more useful.';
 
         list.innerHTML = (READINESS.items || []).map((it) => `
             <button type="button" class="readiness-row w-full text-left hover:bg-gray-50 rounded-lg ${it.severity === 'blocking' ? 'is-blocking' : ''}"
@@ -6478,7 +6478,7 @@
             muteBar.classList.toggle('hidden', n === 0);
             muteBar.classList.toggle('flex', n > 0);
             muteHint.textContent = muted
-                ? 'Reminder paused — the Notice stays, but won’t blink.'
+                ? 'Reminder paused. The Notice stays but won’t blink.'
                 : 'The Notice keeps blinking until these are set up.';
             muteBtn.textContent = muted ? 'Turn reminder back on' : 'Stop the blinking';
         }

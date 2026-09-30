@@ -33,7 +33,7 @@
         <div id="lotFilterRow" class="mb-2" hidden>
             <span class="inline-flex items-center gap-2 text-xs font-extrabold text-brand-700 bg-brand-50 border border-brand-100 rounded-full py-1.5 pl-3 pr-1.5">
                 <span id="lotFilterSay"></span>
-                <button type="button" id="lotFilterClear" class="w-5 h-5 rounded-full inline-flex items-center justify-center hover:bg-brand-100" aria-label="Clear the search">
+                <button type="button" id="lotFilterClear" class="w-5 h-5 rounded-full inline-flex items-center justify-center hover:bg-brand-100" aria-label="Clear search">
                     <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
                 </button>
             </span>
@@ -50,9 +50,9 @@
                 </div>
                 <h2 class="font-bold text-gray-900 mb-1">No lots yet</h2>
                 @if (\App\Support\WorkerContext::inWorkerContext())
-                    <p class="text-sm text-gray-500">Lots are the field areas this schedule covers. The farm owner adds them.</p>
+                    <p class="text-sm text-gray-500">Lots are the fields in this schedule. The farm owner adds them.</p>
                 @else
-                    <p class="text-sm text-gray-500 mb-4">Lots are the field areas this schedule covers. Activities attach to them.</p>
+                    <p class="text-sm text-gray-500 mb-4">Lots are the fields in this schedule. You link activities to them.</p>
                     <button type="button" class="btn btn-primary" data-add-lot>Add your first lot</button>
                 @endif
             </div>
@@ -86,11 +86,11 @@
             </span>
             <span class="lmp-new-txt">
                 <b>Draw a new map</b>
-                <i>Pin where this lot is and draw its boundary — it saves itself as you go.</i>
+                <i>Pin the lot and draw its edges. It saves as you go.</i>
             </span>
             <svg class="lmp-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
-        <div class="lmp-or"><span>or use one you already have</span></div>
+        <div class="lmp-or"><span>or pick a saved map</span></div>
         <div class="relative lmp-searchwrap" id="lotMapPickSearchWrap" hidden>
             <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
             <input type="search" id="lotMapPickSearch" class="form-input pl-10!" placeholder="Search your maps" autocomplete="off">
@@ -115,7 +115,7 @@
                  magnifier sits on the placeholder's first letter. --}}
             <input type="search" id="lotSearchInput" class="form-input pl-10!" placeholder="Name, crop, variety, {{ strtolower(\App\Support\Region::lot()['barangay']['label'] ?? 'area') }}…" autocomplete="off">
         </div>
-        <p class="form-hint">The list behind updates as you type.</p>
+        <p class="form-hint">The list updates as you type.</p>
     </div>
 </div>
 
@@ -130,7 +130,7 @@
 
         <div>
             <label for="lotName" class="form-label">Lot Name <span class="text-red-500">*</span></label>
-            <input type="text" id="lotName" maxlength="255" class="form-input" placeholder="e.g. Lot A — riverside">
+            <input type="text" id="lotName" maxlength="255" class="form-input" placeholder="e.g. Lot A by the river">
         </div>
 
         <div class="grid grid-cols-2 gap-3">
@@ -165,7 +165,7 @@
                 <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
             </button>
             <input type="hidden" id="lotCrop" value="">
-            <p class="form-hint">Sets the growth stages this lot is read against.</p>
+            <p class="form-hint">This sets the growth stages for this lot.</p>
         </div>
 
         {{-- Said here rather than discovered later.
@@ -174,7 +174,7 @@
              looking. This is the moment it is worth knowing. --}}
         <p class="lot-once" id="lotOnceNote">
             <span class="lot-once-e">🔒</span>
-            <span>The crop and its day counter are set now — neither can be changed once this lot is saved.</span>
+            <span>Choose the crop and day counter with care. You cannot change them after you save.</span>
         </p>
 
         {{-- HOW LONG, or HOW OLD — never both.
@@ -190,7 +190,7 @@
         </div>
 
         <div id="lotTreeWrap" class="hidden">
-            <label class="form-label">How old are the trees?</label>
+            <label class="form-label">Tree age</label>
             <div class="tree-age">
                 <div>
                     <input type="number" id="lotTreeYears" min="0" max="120" class="form-input" placeholder="0">
@@ -237,10 +237,10 @@
                 <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
             </button>
             <select id="lotDayType" class="form-select hidden" aria-hidden="true" tabindex="-1">
-                <option value="DAT">DAS → DAT — sown, then transplanted</option>
-                <option value="DAS">DAS only — direct seeded (DSR)</option>
-                <option value="DAP">DAP — days after planting</option>
-                <option value="TREE">Mature trees — no day count, read by age</option>
+                <option value="DAT">DAS → DAT: sown, then transplanted</option>
+                <option value="DAS">DAS only: direct seeded (DSR)</option>
+                <option value="DAP">DAP: days after planting</option>
+                <option value="TREE">Mature trees: counted by age</option>
             </select>
             <p class="form-hint" id="lotDayTypeHint"></p>
             {{-- The paragraph that compared the counters lived here. Each one
@@ -273,7 +273,7 @@
                     @if ($lotDiv['mode'] === 'free')
                         <input type="text" id="lotProvince" maxlength="120" class="form-input" placeholder="{{ $lotL['province']['placeholder'] ?? '' }}">
                     @else
-                        <select id="lotProvince" class="form-select"><option value="">— Select —</option></select>
+                        <select id="lotProvince" class="form-select"><option value="">Select</option></select>
                     @endif
                 </div>
                 <div>
@@ -285,7 +285,7 @@
                     @endif
                 </div>
             </div>
-            <p class="form-hint">Add the {{ strtolower($lotL['town']['label'] ?? 'city') }} &amp; {{ strtolower($lotL['province']['label'] ?? 'state') }} to see this lot's 5-day weather on your dashboard.</p>
+            <p class="form-hint">Add the {{ strtolower($lotL['town']['label'] ?? 'city') }} and {{ strtolower($lotL['province']['label'] ?? 'state') }} to see 5 days of weather for this lot on your dashboard.</p>
         </div>
 
         {{-- Day 0 (DAS) and transplant (DAT) anchors are set on the activities
@@ -294,7 +294,7 @@
 
         <div>
             <label for="lotNotes" class="form-label">Notes</label>
-            <textarea id="lotNotes" rows="3" maxlength="2000" class="form-textarea" placeholder="Anything worth remembering about this lot…"></textarea>
+            <textarea id="lotNotes" rows="3" maxlength="2000" class="form-textarea" placeholder="Anything to remember about this lot"></textarea>
         </div>
 
         <div>
@@ -323,20 +323,20 @@
 <div class="sheet hidden" id="dayTypePickSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">How are this lot's days counted?</h3>
+        <h3 class="sheet-title">How to count days</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
         <div class="dt-rows" id="dayTypeRows">
             @foreach ([
                 ['DAT', '🌾', 'Sown, then transplanted', 'DAS → DAT',
-                 'Counts DAS from day zero, then restarts as DAT on the transplant date. Stages read against the transplanted calendar once it does.'],
+                 'Counts days from sowing (DAS). On transplant day it starts over as DAT. Stages then follow the transplant calendar.'],
                 ['DAS', '🌱', 'Direct seeded', 'DAS only',
-                 'One count from sowing, all season. Stages read against the direct-seeded calendar — a transplant date is ignored.'],
+                 'Counts days from sowing all season. Stages follow the direct seeded calendar. A transplant date is ignored.'],
                 ['DAP', '🌿', 'Planted', 'DAP',
-                 'One count from planting, all season.'],
+                 'Counts days from planting all season.'],
                 ['TREE', '🌳', 'Mature trees', 'No day count',
-                 'No day count at all. The stages are read against how old the trees are.'],
+                 'No day count. Stages follow the age of the trees.'],
             ] as [$dtKey, $dtIcon, $dtName, $dtShort, $dtSays])
                 <button type="button" class="dt-row" data-daytype="{{ $dtKey }}">
                     <span class="dt-row-e">{{ $dtIcon }}</span>
@@ -370,7 +370,7 @@
              yet, and taking that away would leave no way back to it. --}}
         <button type="button" class="crop-row is-none" data-crop="">
             <span class="crop-row-e">🌱</span>
-            <span class="crop-row-t"><b>Not set</b><small>No growth-stage guidance for this lot</small></span>
+            <span class="crop-row-t"><b>Not set</b><small>No growth stages for this lot</small></span>
         </button>
 
         <div id="cropPickList">
@@ -384,7 +384,7 @@
                             // it is the six characters "@else" printed out.
                             $years = $c['bearingAt'] ? rtrim(rtrim(number_format($c['bearingAt'] / 12, 1), '0'), '.') : null;
                             $says = $c['perennial']
-                                ? ($years ? 'Tree — bears at about ' . $years . ' years old' : 'Tree — read by its age')
+                                ? ($years ? 'Tree · bears at about ' . $years . ' years old' : 'Tree · counted by age')
                                 : trim(($c['maturity'] ? $c['maturity'] . ' days to harvest' : '') . ' · counted in ' . $c['counter'], ' ·');
                         @endphp
                         <button type="button" class="crop-row" data-crop="{{ $c['value'] }}"
@@ -410,7 +410,7 @@
                 </div>
             @endforeach
         </div>
-        <p class="crop-none hidden" id="cropPickNone">Nothing matches that. Try the local name, or pick “Vegetables — mixed”.</p>
+        <p class="crop-none hidden" id="cropPickNone">No match. Try the local name, or type “gulay” for mixed vegetables.</p>
     </div>
 </div>
 @endpush
@@ -738,7 +738,7 @@ const __init = () => {
     };
     const optionList = (values, selected) => {
         let has = false;
-        let html = '<option value="">— Select —</option>';
+        let html = '<option value="">Select</option>';
         values.forEach((v) => { if (v === selected) has = true; html += `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`; });
         // Preserve a saved value (e.g. older free-text) that isn't in the list.
         if (selected && !has) html += `<option value="${escapeHtml(selected)}">${escapeHtml(selected)}</option>`;
@@ -856,7 +856,7 @@ const __init = () => {
         empty.hidden = rows.length > 0;
         empty.textContent = mapChoices.length
             ? 'No map matches that.'
-            : 'You have no saved maps yet. Draw a new one above — it will be here for every lot after that.';
+            : 'No saved maps yet. Draw one above and you can use it on any lot.';
     }
 
     async function openMapPick(lot) {
@@ -964,7 +964,7 @@ const __init = () => {
                     if (MAY_EDIT_LOTS) btns.push(`<button type="button" class="btn btn-white btn-sm" data-edit-lot="${lot.id}">Edit</button>`);
                     const mayAttach = MAPS_ACCESS === 'edit' && MAY_EDIT_BOARD;
                     if (lot.mapSaveId && MAPS_ACCESS !== 'none') {
-                        btns.push(`<a class="btn btn-white btn-sm" href="${MAP_URL}&lot=${lot.id}">Open the map</a>`);
+                        btns.push(`<a class="btn btn-white btn-sm" href="${MAP_URL}&lot=${lot.id}">Open map</a>`);
                     } else if (!lot.mapSaveId && mayAttach) {
                         // New, or one of the maps you already have: asked in a sheet.
                         btns.push(`<button type="button" class="btn btn-white btn-sm" data-attach-map="${lot.id}">Attach a map</button>`);
@@ -1017,7 +1017,7 @@ const __init = () => {
             pillRow.hidden = VIEW.q === '';
             if (VIEW.q !== '') {
                 document.getElementById('lotFilterSay').textContent =
-                    'Searching: "' + VIEW.q + '" — ' + rows.length + ' ' + (rows.length === 1 ? 'lot' : 'lots');
+                    'Search "' + VIEW.q + '": ' + rows.length + ' ' + (rows.length === 1 ? 'lot' : 'lots');
             }
         }
         const countEl = document.getElementById('lotCount');
@@ -1177,8 +1177,8 @@ const __init = () => {
             const lot = LOTS.find((l) => String(l.id) === detachBtn.getAttribute('data-detach-map'));
             if (!lot) return;
             const ok = await confirmAction({
-                title: 'Detach the map from ' + (lot.lotName || 'this lot') + '?',
-                message: 'The lot forgets this map. The map itself stays in your Maps, and on any other lot or season that uses it.',
+                title: 'Detach map from ' + (lot.lotName || 'this lot') + '?',
+                message: 'The map stays in your Maps and on any other lot or season that uses it.',
                 confirmText: 'Detach',
             });
             if (!ok) return;
@@ -1202,7 +1202,7 @@ const __init = () => {
             const ok = await confirmAction({
                 title: 'Delete lot?',
                 message: `"${lot?.lotName || 'This lot'}" will be removed from the schedule.`,
-                detail: 'Existing data tied to it is preserved.',
+                detail: 'Records linked to it are kept.',
                 confirmText: 'Delete',
             });
             if (!ok) return;
@@ -1220,10 +1220,10 @@ const __init = () => {
 
     /** Say in words what the chosen counter will do, so it is not a guess. */
     const DAY_TYPE_SAYS = {
-        DAT: 'Counts DAS from day zero, then restarts as DAT on the transplant date. Stages read against the transplanted calendar once it does.',
-        DAS: 'One count from sowing, all season. Stages read against the direct-seeded calendar — a transplant date is ignored.',
-        DAP: 'One count from planting, all season.',
-        TREE: 'No day count at all. The stages are read against how old the trees are, which is the field above.',
+        DAT: 'Counts days from sowing (DAS). On transplant day it starts over as DAT. Stages then follow the transplant calendar.',
+        DAS: 'Counts days from sowing all season. Stages follow the direct seeded calendar. A transplant date is ignored.',
+        DAP: 'Counts days from planting all season.',
+        TREE: 'No day count. Stages follow the tree age you enter above.',
     };
     /* What the tag says when a counter is chosen. Short, because the whole
        sentence is a line below it and again in the sheet. */
@@ -1231,7 +1231,7 @@ const __init = () => {
         DAT: ['🌾', 'Sown, then transplanted'],
         DAS: ['🌱', 'Direct seeded'],
         DAP: ['🌿', 'Planted'],
-        TREE: ['🌳', 'Mature trees — read by age'],
+        TREE: ['🌳', 'Mature trees (by age)'],
     };
 
     function sayDayType() {
@@ -1240,7 +1240,7 @@ const __init = () => {
         if (!sel) return;
         if (hint) hint.textContent = DAY_TYPE_SAYS[sel.value] || '';
 
-        const [icon, name] = DAY_TYPE_TAG[sel.value] || ['🗓️', 'Choose how days are counted'];
+        const [icon, name] = DAY_TYPE_TAG[sel.value] || ['🗓️', 'Choose a day counter'];
         const iconEl = document.getElementById('lotDayTypeIcon');
         const nameEl = document.getElementById('lotDayTypeNow');
         if (iconEl) iconEl.textContent = icon;
@@ -1276,8 +1276,8 @@ const __init = () => {
         const note = document.getElementById('dayTypeSheetNote');
         if (note) {
             note.textContent = open <= 1
-                ? 'This crop has only one honest way of being counted.'
-                : 'Greyed answers do not apply to the crop this lot is set to.';
+                ? 'This crop has only one way to count days.'
+                : 'Grey options do not fit this crop.';
         }
     }
     document.getElementById('lotDayType')?.addEventListener('change', sayDayType);
@@ -1405,15 +1405,15 @@ const __init = () => {
 
         if (row && !isTree) {
             const box = document.getElementById('lotMaturity');
-            box.placeholder = maturity ? `${maturity} — the usual for this crop` : '';
+            box.placeholder = maturity ? `${maturity} (usual for this crop)` : '';
             document.getElementById('lotMaturityHint').textContent = maturity
-                ? `Leave it empty and ${maturity} days is assumed. Varieties are sold by their duration — put yours in and every growth stage moves with it.`
-                : 'Put in your variety’s duration and every growth stage moves with it.';
+                ? `Leave empty to use ${maturity} days. Enter your variety’s days and every stage moves with it.`
+                : 'Enter your variety’s days to harvest and every stage moves with it.';
         }
         if (isTree) {
             document.getElementById('lotTreeHint').textContent = bearing
-                ? `This one usually starts bearing at about ${(bearing / 12).toFixed(1).replace(/\.0$/, '')} years old.`
-                : 'Its age is what the growth-stage guidance is read against.';
+                ? `This crop usually starts bearing at about ${(bearing / 12).toFixed(1).replace(/\.0$/, '')} years old.`
+                : 'Growth stages follow the age of the trees.';
         }
         // Clearing the one that no longer applies, so nothing stale is sent.
         if (isTree) document.getElementById('lotMaturity').value = '';
@@ -1528,7 +1528,7 @@ const __init = () => {
         };
 
         if (!body.lotName) {
-            toast('Lot name is required.', 'error');
+            toast('Please enter a lot name.', 'error');
             document.getElementById('lotName').focus();
             return;
         }

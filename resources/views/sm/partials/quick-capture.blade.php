@@ -171,7 +171,7 @@
         {{-- STEP 1 — capture --}}
         <div data-qc-step="capture">
             <div class="qc-body">
-                <p class="text-sm text-gray-600 mb-3">Snap your crop, a pest, the soil — anything worth remembering. Add as many as you like; Upload takes video clips too.</p>
+                <p class="text-sm text-gray-600 mb-3">Snap your crop, a pest, or the soil. Add as many as you like. Upload also takes video clips.</p>
                 <div class="qc-grid" id="qcPreviews">
                     <button type="button" class="qc-add" id="qcAddPhoto">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -240,7 +240,7 @@
                         @endif
                     </div>
                     <p class="qc-tabhint" id="qcTabHint"></p>
-                    <p id="qcClipHint" class="hidden text-xs text-gray-500 mt-1">A clip can only go to an album — notes and the AI Technician read photos.</p>
+                    <p id="qcClipHint" class="hidden text-xs text-gray-500 mt-1">Clips can only go to an album. Notes and the AI Technician take photos only.</p>
                 </div>
                 {{-- A note deserves a name of its own. The Gallery does not ask
                      these two: the album has its own name, and every photo gets
@@ -868,14 +868,14 @@ document.addEventListener('DOMContentLoaded', () => {
              * in. Status 0 is the same failure arriving through onload. */
             const keepIt = () => {
                 if (!window.aneeOffline?.on()) {
-                    reject(new Error('The connection dropped mid-save. Nothing may have arrived - try again.'));
+                    reject(new Error('The connection dropped. It may not have saved. Try again.'));
 
                     return;
                 }
                 window.aneeOffline.markDown?.();
                 window.aneeOffline.enqueueForm(url, fd)
-                    .then(() => resolve({ success: true, offline: true, message: 'Saved on this phone - it will upload when the signal returns.' }))
-                    .catch(() => reject(new Error('Could not keep it on this phone.')));
+                    .then(() => resolve({ success: true, offline: true, message: 'Saved on this phone. It will upload when the signal is back.' }))
+                    .catch(() => reject(new Error('Could not save it on this phone.')));
             };
             x.onerror = keepIt;
             x.send(fd);
@@ -892,9 +892,9 @@ document.addEventListener('DOMContentLoaded', () => {
         $('qcAlbumWrap').classList.toggle('hidden', !gallery);
         $('qcItemsWrap').classList.toggle('hidden', !gallery);
         const hints = {
-            note: "Keep the photos in this schedule's notebook.",
-            gallery: 'An album of their own - name each photo below.',
-            ai: 'Get advice on the first photo (uses AI Credits).',
+            note: "Keep the photos in this schedule's notes.",
+            gallery: 'Put them in an album. Name each photo below.',
+            ai: 'Get advice on the first photo. Uses AI Credits.',
         };
         const hint = $('qcTabHint');
         if (hint) hint.textContent = hints[t] || '';
@@ -943,7 +943,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const title = document.createElement('input');
             title.type = 'text'; title.className = 'form-input'; title.maxLength = 191;
             title.autocomplete = 'off';
-            title.placeholder = noun + ' ' + (i + 1) + ' — name it';
+            title.placeholder = 'Name ' + noun.toLowerCase() + ' ' + (i + 1);
             title.setAttribute('aria-label', noun + ' ' + (i + 1) + ' title');
             title.value = item.title;
             title.addEventListener('input', () => { item.title = title.value; if (title.value.trim()) row.classList.remove('is-missing'); });
@@ -1004,9 +1004,9 @@ document.addEventListener('DOMContentLoaded', () => {
         $('qcResult').innerHTML = `<div class="flex items-start gap-2 text-amber-700 font-semibold mb-1">
             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <span>${escapeHtml(message)}</span></div>
-            <p class="text-gray-500 text-sm">The yellow bar keeps the count of changes waiting to sync.</p>`;
+            <p class="text-gray-500 text-sm">The yellow bar shows how many changes are waiting to sync.</p>`;
         $('qcResultLink').classList.add('hidden');
-        $('qcTitle').textContent = 'Kept for later';
+        $('qcTitle').textContent = 'Saved for later';
         showStep('result');
         toast(message);
     }
@@ -1048,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $('qcResult').innerHTML = `<div class="flex items-start gap-2 ${partial ? 'text-amber-700' : 'text-brand-700'} font-semibold mb-1">
             ${mark}
             <span>${escapeHtml(data.message)}</span></div><p class="text-gray-500 text-sm">${partial
-                ? 'What did not save is still on your device — try that one on its own.'
+                ? 'What did not save is still on your device. Try it again on its own.'
                 : 'You can move or rename them anytime in the Gallery.'}</p>`;
         const link = $('qcResultLink');
         link.href = data.galleryUrl; link.classList.remove('hidden'); link.textContent = 'Open gallery';
@@ -1072,7 +1072,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.offline) { paintOfflineResult(data.message); return; }
         $('qcResult').innerHTML = `<div class="flex items-center gap-2 text-brand-700 font-semibold mb-1">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            ${escapeHtml(data.message)}</div><p class="text-gray-500 text-sm">Find it anytime in this schedule's Notes module.</p>`;
+            ${escapeHtml(data.message)}</div><p class="text-gray-500 text-sm">Find it anytime in this schedule's Notes.</p>`;
         const link = $('qcResultLink');
         link.href = data.notesUrl; link.classList.remove('hidden'); link.textContent = 'Open notes';
         $('qcTitle').textContent = 'Saved';
@@ -1090,9 +1090,9 @@ document.addEventListener('DOMContentLoaded', () => {
         window.aneeOffline?.markDown?.();
         if (window.aneeOffline?.sayLocked) {
             window.aneeOffline.sayLocked('Asking the AI Technician',
-                'The Technician has to read your photo and write back, and that needs a connection. Keep the photo in the notebook or the gallery for now - it uploads itself - and ask once you are back in signal.');
+                'The AI Technician needs signal to read your photo. Save it to Notes or the Gallery for now and it will upload by itself. Ask again when you have signal.');
         } else {
-            toast('The AI Technician needs a connection. Keep the photo in the notebook for now.', 'error');
+            toast('The AI Technician needs a connection. Save the photo to Notes for now.', 'error');
         }
 
         return true;
@@ -1101,7 +1101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function askAi(scheduleId) {
         // Upload the first photo, then ask the AI about it.
         const photos = items.filter((it) => it.kind === 'image');
-        if (!photos.length) throw new Error('The AI Technician reads photos — capture one first.');
+        if (!photos.length) throw new Error('The AI Technician reads photos. Take one first.');
         const fd = new FormData();
         // Shrunk before it travels (window.aneeShrinkPhoto, app.js).
         fd.append('image', window.aneeShrinkPhoto ? await window.aneeShrinkPhoto(photos[0].file) : photos[0].file);

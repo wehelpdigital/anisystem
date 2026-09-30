@@ -134,7 +134,7 @@
              @apply px-4, which lands later than the plain utility and wins
              the tie — the magnifier would sit on the placeholder's first letter. --}}
         <input type="search" id="ctSearch" class="form-input pl-10! pr-10!" placeholder="Search for contacts" autocomplete="off" aria-label="Search contacts">
-        <button type="button" id="ctSearchX" class="ct-search-x hidden" aria-label="Clear the search">✕</button>
+        <button type="button" id="ctSearchX" class="ct-search-x hidden" aria-label="Clear search">✕</button>
     </div>
     <div class="mb-3">
         <button type="button" id="ctAddBtn" class="btn btn-primary w-full justify-center">Add a New Contact</button>
@@ -144,7 +144,7 @@
     <div id="ctFilterRow" class="mb-2" hidden>
         <span class="ct-filterpill">
             <span id="ctFilterSay"></span>
-            <button type="button" id="ctFilterClear" aria-label="Clear the search">
+            <button type="button" id="ctFilterClear" aria-label="Clear search">
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
             </button>
         </span>
@@ -162,8 +162,8 @@
             <img src="{{ asset('images/list.png') }}" alt="" class="w-12 h-12 mx-auto mb-3 opacity-70">
             <p class="font-bold text-gray-800">No contacts yet</p>
             <p class="text-sm text-gray-500 mt-1 max-w-sm mx-auto">
-                Save the people your farm runs on — workers, tractor rentals, harvesters,
-                suppliers, buyers — tagged, searchable, and one tap from a call.
+                Save the people your farm needs: workers, tractor rentals, harvesters,
+                suppliers and buyers. Tag them, find them fast, and call in one tap.
             </p>
             <button type="button" class="btn btn-primary mt-4" data-ct-add>Add your first contact</button>
         </div>
@@ -206,7 +206,7 @@
         <div>
             <label class="form-label" for="ctfCompany">Business / role</label>
             <textarea id="ctfCompany" class="form-input" rows="2" style="padding-top:.7rem;padding-bottom:.7rem"
-                      placeholder="Tractor rental, harvester crew — what they do for the farm" maxlength="500"></textarea>
+                      placeholder="What they do, like tractor rental or harvest crew" maxlength="500"></textarea>
         </div>
         {{-- Where they are, in the order a farmer actually knows it: the
              street and the sitio in their own words, then the province and
@@ -220,7 +220,7 @@
         <div>
             <label class="form-label" for="ctfAddress2">Address line 2 <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="ctfAddress2" class="form-input" rows="2" style="padding-top:.7rem;padding-bottom:.7rem"
-                      placeholder="{{ \App\Support\Region::ph() ? 'Barangay, landmark, anything that helps you find it again' : 'Neighbourhood, landmark, anything that helps you find it again' }}" maxlength="255"></textarea>
+                      placeholder="{{ \App\Support\Region::ph() ? 'Barangay or landmark' : 'Area or landmark' }}" maxlength="255"></textarea>
         </div>
         <div>
             @php $ctAddr = \App\Support\Region::address(); @endphp
@@ -257,7 +257,7 @@
         <div>
             <label class="form-label" for="ctfNotes">Notes <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="ctfNotes" class="form-input" rows="4" style="padding-top:.7rem;padding-bottom:.7rem"
-                      placeholder="Rates, landmarks, who referred them…" maxlength="2000"></textarea>
+                      placeholder="Rates, landmarks, who referred them" maxlength="2000"></textarea>
         </div>
         <button type="button" id="ctfDelete" class="btn w-full text-red-600 bg-red-50 hover:bg-red-100 border border-red-100" hidden>Remove this contact</button>
     </div>
@@ -278,7 +278,7 @@
     <div class="sheet-body">
         <div class="flex gap-2 mb-3">
             <input type="text" class="form-input grow" id="ctTagNew" maxlength="30"
-                   placeholder="Tag name — e.g. pest problem" autocomplete="off" enterkeyhint="done">
+                   placeholder="Tag name, e.g. rice buyer" autocomplete="off" enterkeyhint="done">
             <button type="button" class="btn btn-primary shrink-0" id="ctTagAdd">Add</button>
         </div>
         <div class="dt-rows" id="ctTagList"></div>
@@ -295,7 +295,7 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
-        <input type="search" class="form-input mb-3" id="ctPlaceFilter" placeholder="Type to narrow the list…" autocomplete="off">
+        <input type="search" class="form-input mb-3" id="ctPlaceFilter" placeholder="Type a name" autocomplete="off">
         <div class="dt-rows ct-placelist" id="ctPlaceList"></div>
         <p class="form-hint" id="ctPlaceNone" hidden>Nothing by that name.</p>
     </div>
@@ -648,7 +648,7 @@
 
     $('ctfSave').addEventListener('click', async () => {
         const name = $('ctfName').value.trim();
-        if (!name) { window.toast?.('A contact needs at least a name.', 'error'); $('ctfName').focus(); return; }
+        if (!name) { window.toast?.('Please add a name.', 'error'); $('ctfName').focus(); return; }
         const body = {
             name,
             phones: readLines('phone'),
@@ -678,7 +678,7 @@
         if (!state.editing) return;
         const sure = await window.confirmAction?.({
             title: 'Remove ' + state.editing.name + '?',
-            message: 'They leave the phonebook. You can always add them again.',
+            message: 'They will leave your list. You can add them again later.',
             confirmText: 'Remove',
         });
         if (!sure) return;

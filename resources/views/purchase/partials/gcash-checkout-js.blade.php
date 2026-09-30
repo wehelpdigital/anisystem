@@ -4,7 +4,7 @@
         if (!number) return;
         navigator.clipboard?.writeText(number).then(
             () => toast(((window.ANEE_REGION || {}).ph === false ? 'PayPal email' : 'GCash number') + ' copied.'),
-            () => toast('Could not copy — please copy it manually.', 'error')
+            () => toast('Could not copy. Please copy it by hand.', 'error')
         );
     }
 
@@ -13,7 +13,7 @@
         const file = screenshotInput.files?.[0];
         if (!file) return;
         if (file.size > 5 * 1024 * 1024) {
-            toast('That image is larger than 5MB. Please choose a smaller screenshot.', 'error');
+            toast('That image is over 5MB. Pick a smaller one.', 'error');
             screenshotInput.value = '';
             return;
         }

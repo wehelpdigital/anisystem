@@ -12,12 +12,12 @@
 <div class="ce-modal hidden" id="collabEnterModal" aria-hidden="true">
     <div class="ce-card">
         <div class="ce-head">
-            <span class="ce-title">Who's joining the Collab Room?</span>
+            <span class="ce-title">Who is joining?</span>
             <button type="button" class="ce-x" data-ce-close aria-label="Close">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
-        <p class="ce-hint">Everyone's included by default — uncheck anyone who shouldn't be in this room, then open it.</p>
+        <p class="ce-hint">Everyone is ticked. Untick anyone who should not join.</p>
         <div class="ce-tools">
             <button type="button" class="ce-tool" data-ce-all>Select all</button>
             <button type="button" class="ce-tool" data-ce-none>Clear all</button>

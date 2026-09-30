@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Pay via ' . \App\Support\Region::payMethod())
-@section('page-title', 'Pay via ' . \App\Support\Region::payMethod())
+@section('title', 'Pay by ' . \App\Support\Region::payMethod())
+@section('page-title', 'Pay by ' . \App\Support\Region::payMethod())
 @section('page-subtitle', $pack->packName.' · '.\App\Support\Region::money(\App\Support\Region::packPrice($pack)))
 @section('back', route('ai.credits'))
 

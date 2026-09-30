@@ -42,7 +42,7 @@
                     <svg class="w-7 h-7 text-brand-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
                 </div>
                 <h2 class="font-bold text-gray-900 mb-1">No workers yet</h2>
-                <p class="text-sm text-gray-500 mb-4">Add the people who will work this schedule. Their cost, skills and off days feed labor costs and assignments.</p>
+                <p class="text-sm text-gray-500 mb-4">Add the people who work on this schedule. Their pay, skills and days off help plan tasks and labor cost.</p>
                 <button type="button" class="btn btn-primary" data-add-worker>Add your first worker</button>
             </div>
         </div>
@@ -77,7 +77,7 @@
         </div>
 
         <div id="workerAccountPane" class="wa-pane space-y-4" hidden>
-            <p class="text-sm text-gray-500">Somebody who already logs in to anee.io joins as one of your workers with the name and email their account carries.</p>
+            <p class="text-sm text-gray-500">Already on anee.io? They join as your worker with the name and email on their account.</p>
             <div>
                 <label for="waEmail" class="form-label">Their account email <span class="text-red-500">*</span></label>
                 {{-- No Find button: the answer arrives as the address is
@@ -87,7 +87,7 @@
                     <input type="email" id="waEmail" maxlength="191" class="form-input" placeholder="e.g. juan@email.com" autocomplete="off" inputmode="email">
                     <span class="wa-spin" id="waSpin" hidden aria-hidden="true"></span>
                 </div>
-                <p class="form-hint">The exact email they sign in with — it is looked up as you type.</p>
+                <p class="form-hint">The email they sign in with. We look it up as you type.</p>
             </div>
             {{-- What the search found: a face and a name, or a plain no. --}}
             <div id="waResult" hidden></div>
@@ -115,7 +115,7 @@
              another of your seasons (their facts, one tap to reuse), or an
              anee.io account (the other door links their login). --}}
         <div id="wlEmailSay" class="wl-email-say" hidden></div>
-        <p class="form-hint -mt-2">Email is used to send this worker today's or tomorrow's plan from Quick Share.</p>
+        <p class="form-hint -mt-2">Used to send them today's or tomorrow's plan from Quick Share.</p>
 
         {{-- A new face the phonebook has not met.
              Offered, never assumed: the row unrolls only once the typed
@@ -128,12 +128,12 @@
             </span>
             <span class="wl-tocontact-say">
                 <b>Add to my Contact List too</b>
-                <i>This email is not in your phonebook yet. Saved with a <em>Worker</em> tag, so next season you can find them.</i>
+                <i>This email is not in your contacts yet. It saves with a <em>Worker</em> tag so you can find them next season.</i>
             </span>
         </label>
 
         <div>
-            <label for="workerCost" class="form-label">Cost / Half Day</label>
+            <label for="workerCost" class="form-label">Pay per half day</label>
             <div class="relative">
                 <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-semibold pointer-events-none">{{ \App\Support\Region::symbol() }}</span>
                 <input type="number" id="workerCost" min="0" step="0.01" class="form-input pl-9!" placeholder="0.00">
@@ -151,7 +151,7 @@
 
         <div>
             <label for="workerNotes" class="form-label">Notes</label>
-            <textarea id="workerNotes" rows="3" maxlength="2000" class="form-textarea" placeholder="Anything worth remembering about this worker…"></textarea>
+            <textarea id="workerNotes" rows="3" maxlength="2000" class="form-textarea" placeholder="Anything to remember about this worker"></textarea>
         </div>
 
         <div>
@@ -176,7 +176,7 @@
                          the act. --}}
                     <button type="button" id="wlRevoke"
                             class="hidden shrink-0 w-9 h-9 rounded-full text-red-500 hover:bg-red-50"
-                            title="Revoke access" aria-label="Revoke this worker's login access">
+                            title="Remove login" aria-label="Remove this worker's login">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H9m4 8H7a2 2 0 01-2-2V6a2 2 0 012-2h6"/></svg>
                     </button>
                 </div>
@@ -196,8 +196,8 @@
                     @include('sm.partials.worker-rights', ['p' => 'wl'])
                 </div>
                 <p id="wlNoLoginSay" class="text-xs text-gray-500 leading-relaxed">
-                    Send a registration link or set a password below. Once this worker
-                    can log in, you choose what they are allowed to open.
+                    Send a registration link or set a password below. Once they
+                    can log in, you choose what they can open.
                 </p>
 
 {{-- Community access is a row in the rights panel above. --}}
@@ -226,17 +226,17 @@
                                 <p class="text-xs mt-1 font-semibold text-gray-400" id="wlPwSay">At least 8 characters.</p>
                             </div>
                             <div>
-                                <label class="form-label" for="wlPassword2">Repeat the password</label>
-                                <input type="password" id="wlPassword2" class="form-input" placeholder="The same password again" autocomplete="new-password">
-                                <p class="form-error hidden" id="wlPwMatchSay">The two passwords don't match yet.</p>
+                                <label class="form-label" for="wlPassword2">Repeat password</label>
+                                <input type="password" id="wlPassword2" class="form-input" placeholder="Type it again" autocomplete="new-password">
+                                <p class="form-error hidden" id="wlPwMatchSay">Passwords do not match yet.</p>
                             </div>
                             <button type="button" id="wlCreateLogin" class="btn btn-primary w-full">Create login</button>
-                            <p class="form-hint">Share the email above + this password so they can sign in.</p>
+                            <p class="form-hint">Give them the email above and this password to sign in.</p>
                         </div>
                     </div>
                 </div>
 
-                <p class="form-hint mt-0!">Uses the worker's <strong>email</strong> above. Add one if it's blank.</p>
+                <p class="form-hint mt-0!">Uses the worker's <strong>email</strong> above. Add one if it is blank.</p>
             </div>
         </div>
         @endif
@@ -263,7 +263,7 @@
 
         <div>
             <span class="form-label">Weekly off days</span>
-            <p class="form-hint mt-0! mb-2">Tap the days this worker is NOT available.</p>
+            <p class="form-hint mt-0! mb-2">Tap the days this worker is off.</p>
             <div id="rulesDayGroup" data-chip-group class="flex flex-wrap gap-2">
                 @foreach (['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as $i => $day)
                     <button type="button" class="chip px-3!" data-value="{{ $i }}" data-day="{{ $i }}">{{ $day }}</button>
@@ -272,13 +272,13 @@
         </div>
 
         <div>
-            <span class="form-label">Specific off dates</span>
+            <span class="form-label">Other days off</span>
             <div class="flex gap-2 mb-3">
                 @include('partials.date-tag', ['id' => 'rulesDateInput', 'empty' => 'Pick a date'])
                 <button type="button" id="rulesAddDateBtn" class="btn btn-white shrink-0">Add</button>
             </div>
             <div id="offDatesList" class="flex flex-wrap gap-2"></div>
-            <p id="offDatesEmpty" class="text-sm text-gray-400">No off dates added.</p>
+            <p id="offDatesEmpty" class="text-sm text-gray-400">No days off added.</p>
         </div>
     </div>
     <div class="sheet-footer">
@@ -597,7 +597,7 @@ const __init = () => {
     // this never has to leave for the community to say hello.
     function openWorkerPm(userId, name) {
         if (typeof window.scheduleTeamPm === 'function') window.scheduleTeamPm(userId, name);
-        else toast('Chat opens once this schedule has a team: a worker with their own login.', 'info');
+        else toast('Chat opens once a worker here has their own login.', 'info');
     }
 
     const fmtDate = (iso) => new Date(`${iso}T00:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -768,13 +768,13 @@ const __init = () => {
     function waPaint(d) {
         const out = document.getElementById('waResult');
         if (d.self) {
-            out.innerHTML = `<p class="wa-say is-stop">That is your own account — you are the owner here, not a worker.</p>`;
+            out.innerHTML = `<p class="wa-say is-stop">That is your own account. You are the owner here, not a worker.</p>`;
             out.hidden = false;
             return;
         }
         if (!d.found) {
-            out.innerHTML = `<div class="wa-none">No anee.io account signs in with that email.
-                <button type="button" class="btn btn-white btn-sm" id="waAsNew">Add them as a new worker instead</button></div>`;
+            out.innerHTML = `<div class="wa-none">No anee.io account uses that email.
+                <button type="button" class="btn btn-white btn-sm" id="waAsNew">Add as a new worker instead</button></div>`;
             out.hidden = false;
             document.getElementById('waAsNew').addEventListener('click', () => {
                 // Their email carries over, so it is not typed twice.
@@ -789,9 +789,9 @@ const __init = () => {
         const face = a.avatar ? `<img src="${escapeHtml(a.avatar)}" alt="">` : escapeHtml(a.initials || '·');
         let say, stop = false;
         if (d.onRoster) { say = `${escapeHtml(a.name)} is already a worker on this schedule.`; stop = true; }
-        else if (d.login === 'active') say = 'Already has access to your farm — they are added as a worker with the rights you gave them.';
-        else if (CAN_LOGINS) say = 'Added as a worker, and their account can open this farm with view access. Change what they may open from their card afterwards.';
-        else say = 'Added as a worker with this name and email. Worker logins come with the Boss plan.';
+        else if (d.login === 'active') say = 'They already have access to your farm. They join as a worker with the rights you gave them.';
+        else if (CAN_LOGINS) say = 'They join as a worker and can view this farm. You can change what they open from their card later.';
+        else say = 'They join as a worker with this name and email. Worker logins come with the Boss plan.';
         out.innerHTML = `<div class="wa-card">
                 <span class="wa-face">${face}</span>
                 <span class="wa-who"><b>${escapeHtml(a.name)}</b><span>${escapeHtml(a.email)}</span>${a.since ? `<span>On anee.io since ${escapeHtml(a.since)}</span>` : ''}</span>
@@ -874,9 +874,9 @@ const __init = () => {
                 <button type="button" class="btn btn-white btn-sm" data-wl-open="${d.onRoster}">Open their card</button>`;
         } else if (d.self) {
             tone = 'is-note';
-            html = `<span>That is your own email. A card for yourself needs no email — the plan is already yours.</span>`;
+            html = `<span>That is your own email. You do not need it on your own card.</span>`;
         } else if (d.found && !editing) {
-            html = `<span><b>${escapeHtml(d.account.name)}</b> signs in to anee.io with that email. Add them from the account tab and their login links to this farm.</span>
+            html = `<span><b>${escapeHtml(d.account.name)}</b> uses this email on anee.io. Add them from the account tab to link their login.</span>
                 <button type="button" class="btn btn-primary btn-sm" data-wl-account>Use their account</button>`;
         } else if (d.found && editing) {
             tone = 'is-note';
@@ -1110,7 +1110,7 @@ const __init = () => {
         }
         const s = pwScore(pw);
         const looks = [
-            ['12%', '#ef4444', 'Too short — 8 characters minimum.'],
+            ['12%', '#ef4444', 'Too short. Use at least 8 characters.'],
             ['30%', '#ef4444', 'Weak. Longer is stronger.'],
             ['55%', '#f59e0b', 'Okay. Mix in capitals or numbers.'],
             ['80%', '#84cc16', 'Strong.'],
@@ -1209,7 +1209,7 @@ const __init = () => {
         const name = (editingWorker && editingWorker.workerName) || 'this worker';
         const ok = window.confirmAction ? await window.confirmAction({
             title: 'Send a password change link?',
-            message: name + ' gets an email with a link to pick a new password. Their current one keeps working until they do.',
+            message: name + ' gets an email to pick a new password. The old one works until they change it.',
             confirmText: 'Send the link',
             confirmClass: 'btn-primary',
         }) : true;
@@ -1237,7 +1237,7 @@ const __init = () => {
         const pw = document.getElementById('wlPassword').value;
         if (pw.length < 8) { toast('Password must be at least 8 characters.', 'error'); return; }
         if (pw !== document.getElementById('wlPassword2').value) {
-            toast('The two passwords don\'t match — repeat the same one below.', 'error');
+            toast('Passwords do not match. Type the same one again below.', 'error');
             document.getElementById('wlPassword2').focus();
             return;
         }
@@ -1262,7 +1262,7 @@ const __init = () => {
         // revoking anything.
         const btn = e.currentTarget;
         if (!editingWorker || !editingWorker.login || !editingWorker.login.id) return;
-        const ok = await confirmAction({ title: 'Revoke access?', message: 'This worker will no longer be able to log in.', confirmText: 'Revoke' });
+        const ok = await confirmAction({ title: 'Remove login?', message: 'This worker will no longer be able to log in.', confirmText: 'Remove' });
         if (!ok) return;
         btn.disabled = true;
         try {
@@ -1287,12 +1287,12 @@ const __init = () => {
         };
 
         if (!body.workerName) {
-            toast('Worker name is required.', 'error');
+            toast('Please enter a worker name.', 'error');
             document.getElementById('workerName').focus();
             return;
         }
         if (wlEmailBlocked) {
-            toast('Somebody on this schedule already has that email — open their card instead.', 'error');
+            toast('A worker here already has that email. Open their card instead.', 'error');
             document.getElementById('workerEmail').focus();
             return;
         }
@@ -1509,7 +1509,7 @@ const __init = () => {
             const ok = await confirmAction({
                 title: 'Delete worker?',
                 message: `"${w?.workerName || 'This worker'}" will be removed from the schedule.`,
-                detail: 'Existing assignments tied to them are preserved.',
+                detail: 'Their past work records are kept.',
                 confirmText: 'Delete',
             });
             if (!ok) return;

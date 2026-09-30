@@ -638,8 +638,7 @@
             <div class="q-body">
                 <div class="q-body-in">
                     <div class="q-card" id="cpQuoteCost"></div>
-                    <div class="q-card"><b>A guide, not the protocol itself.</b> What Anee writes here is a starting point built from the records and the science. Your own protocol is still yours to write — by hand, in the Protocol Builder — from your field's experience, with this new knowledge folded in where it fits. No analysis knows your paddy the way you do.</div>
-                    <div class="q-card">Anee <b>analyzes deeply</b> for this one — your variety's real traits, the official nutrient and pest recommendations for your crop and region, the seasonal outlook and the ENSO state — and writes a <b>season protocol by growth stage</b>: the bags of fertilizer and when, the sprays and foliars to have ready, how to run the water, what to watch for. Hung on the crop's stages, never on a day count.</div>
+                    <div class="q-card">Anee writes a <b>season plan by growth stage</b>: fertilizer, sprays, water and what to watch for. Treat it as a guide, then write your own in the Protocol Builder.</div>
                 </div>
             </div>
         </div>
@@ -667,13 +666,13 @@
             {{-- 0: the place --}}
             <section class="wtp-step is-on" data-step="0">
                 <p class="wtp-q">Where is the field?</p>
-                <p class="wtp-sub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough — the climate, the outlook and the recommendations differ by region.</p>
+                <p class="wtp-sub">{{ \App\Support\Region::ph() ? 'Town and province' : ((\App\Support\Region::address()['city']['label'] ?? 'City') . ' and ' . strtolower(\App\Support\Region::address()['region']['label'] ?? 'state')) }} is enough. Weather and advice change by region.</p>
                 <input type="text" id="cpLocation" class="form-input" maxlength="160" placeholder="{{ \App\Support\Region::get('exampleLocation') }}">
             </section>
             {{-- 1: the crop --}}
             <section class="wtp-step" data-step="1">
                 <p class="wtp-q">Which crop?</p>
-                <p class="wtp-sub">The same catalogue your lots choose from.</p>
+                <p class="wtp-sub">The same crop list your lots use.</p>
                 <button type="button" class="crop-tag" id="cpCropBtn">
                     <span class="crop-tag-e" id="cpCropIcon">🌱</span>
                     <span class="crop-tag-t is-none" id="cpCropNow">Choose the crop</span>
@@ -683,78 +682,78 @@
             {{-- 2: the variety --}}
             <section class="wtp-step" data-step="2">
                 <p class="wtp-q">Which variety?</p>
-                <p class="wtp-sub">Type it as it is sold — e.g. {{ \App\Support\Region::ph() ? 'NSIC Rc222, SL-8H' : 'Pioneer P1197, DKC64-34' }}. Leave it empty and Anee assumes a widely grown one and says which.</p>
+                <p class="wtp-sub">Type the name on the seed bag, e.g. {{ \App\Support\Region::ph() ? 'NSIC Rc222, SL-8H' : 'Pioneer P1197, DKC64-34' }}. Leave it blank and Anee picks a common one and tells you.</p>
                 <input type="text" id="cpVariety" class="form-input" maxlength="80" placeholder="Variety name (optional)">
             </section>
             {{-- 3: when --}}
             <section class="wtp-step" data-step="3">
                 <p class="wtp-q">When will you plant?</p>
-                <p class="wtp-sub">The month decides the season, the outlook and the weather the crop will meet.</p>
+                <p class="wtp-sub">The month sets the season and the weather your crop will face.</p>
                 <div class="wtp-choices is-two" id="cpMonths"></div>
             </section>
             {{-- 4: the method --}}
             <section class="wtp-step" data-step="4">
                 <p class="wtp-q">How will you plant it?</p>
-                <p class="wtp-sub" id="cpMethodSub">The method changes the stages, the water and the first fertilizer.</p>
+                <p class="wtp-sub" id="cpMethodSub">This changes the stages, the water and the first fertilizer.</p>
                 <div class="wtp-choices" id="cpMethods"></div>
             </section>
             {{-- 5: the aim and the target --}}
             <section class="wtp-step" data-step="5">
-                <p class="wtp-q">What are you after this season?</p>
-                <p class="wtp-sub">The aim bends the rates — fuller for yield, leaner for cost.</p>
+                <p class="wtp-q">What is your goal this season?</p>
+                <p class="wtp-sub">Your goal sets the rates: more for yield, less for cost.</p>
                 <div class="wtp-choices" id="cpPriorities"></div>
                 <label class="form-label mt-4" for="cpTarget">Target yield <span class="text-gray-400 font-normal">(optional, per hectare)</span></label>
                 <div class="cp-yield">
                     <input type="number" id="cpTarget" class="form-input" min="0" step="any" inputmode="decimal" placeholder="e.g. 120">
                     <div class="cp-units" role="radiogroup" aria-label="Unit" id="cpUnits"></div>
                 </div>
-                <p class="form-hint">Anee will say whether it is realistic for this variety, place and season.</p>
+                <p class="form-hint">Anee checks if it is realistic for your variety, place and season.</p>
             </section>
             {{-- 6: the field --}}
             <section class="wtp-step" data-step="6">
                 <p class="wtp-q">How big is the field?</p>
-                <p class="wtp-sub">The bags and the shopping list are worked out for the whole field.</p>
+                <p class="wtp-sub">The bags and the shopping list are for the whole field.</p>
                 <div class="cp-area">
                     <input type="number" id="cpArea" class="form-input" min="0.01" step="any" inputmode="decimal" placeholder="e.g. 1.5">
                     <span class="cp-area-u">hectares</span>
                 </div>
                 <p class="wtp-q mt-5">What is the soil like?</p>
-                <p class="wtp-sub">As your hands know it — no test needed.</p>
+                <p class="wtp-sub">Go by feel. No soil test needed.</p>
                 <div class="wtp-choices" id="cpSoils"></div>
-                <p class="wtp-q mt-5">What water does the field get?</p>
+                <p class="wtp-q mt-5">How does the field get water?</p>
                 <div class="wtp-choices" id="cpWaters"></div>
             </section>
             {{-- 7: the troubles --}}
             <section class="wtp-step" data-step="7">
-                <p class="wtp-q">What does this ground struggle with?</p>
-                <p class="wtp-sub">Tick what you have seen — each one changes the protocol.</p>
+                <p class="wtp-q">What problems does this field have?</p>
+                <p class="wtp-sub">Tick what you have seen. Each one changes the protocol.</p>
                 <div class="wtp-probs" id="cpProbs"></div>
-                <label class="form-label mt-4" for="cpNotes">Anything else worth knowing? <span class="text-gray-400 font-normal">(optional)</span></label>
-                <textarea id="cpNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. last season tungro hit us; we have a pump but diesel is dear"></textarea>
+                <label class="form-label mt-4" for="cpNotes">Other notes <span class="text-gray-400 font-normal">(optional)</span></label>
+                <textarea id="cpNotes" class="form-textarea" rows="2" maxlength="400" placeholder="e.g. tungro hit us last season, we have a pump but diesel is costly"></textarea>
             </section>
             {{-- 8: the ground, closer -- what decides WHICH granular and WHEN --}}
             <section class="wtp-step" data-step="8">
-                <p class="wtp-q">The ground, a little closer</p>
-                <p class="wtp-sub">Optional, but each answer changes which bag goes on and when. Skip what you do not know.</p>
-                <p class="wp-qh">Soil condition <small>pH, sodium, salt — as far as you know; pick more than one where the ground is both (alkaline and sodic, say)</small></p>
+                <p class="wtp-q">A closer look at the soil</p>
+                <p class="wtp-sub">Optional. Each answer changes which fertilizer to use and when. Skip what you do not know.</p>
+                <p class="wp-qh">Soil condition <small>pH, sodium or salt. You can pick more than one.</small></p>
                 <div class="wtp-choices" id="cpSoilConds"></div>
-                <p class="wp-qh mt-4">Phosphorus in the soil <small>from a soil test, or how the last crops went</small></p>
+                <p class="wp-qh mt-4">Phosphorus in the soil <small>From a soil test or your last crops</small></p>
                 <div class="wtp-choices is-four" id="cpTestP"></div>
                 <p class="wp-qh mt-4">Potassium in the soil</p>
                 <div class="wtp-choices is-four" id="cpTestK"></div>
             </section>
             {{-- 9: the history and what can be bought --}}
             <section class="wtp-step" data-step="9">
-                <p class="wtp-q">What came before, and what you can buy</p>
-                <p class="wtp-sub">A legume leaves nitrogen behind; burned straw gives back potash and not nitrogen; the program is built from the bags you can actually get.</p>
-                <p class="wp-qh">The previous crop</p>
+                <p class="wtp-q">Last crop and what you can buy</p>
+                <p class="wtp-sub">Beans and peanuts leave nitrogen in the soil. Burned straw gives back potash, not nitrogen. The plan only uses fertilizer you can buy.</p>
+                <p class="wp-qh">Last crop</p>
                 <div class="wtp-choices" id="cpPrevCrops"></div>
-                <p class="wp-qh mt-4">Its residue was</p>
+                <p class="wp-qh mt-4">Its leftovers were</p>
                 <div class="wtp-choices is-two" id="cpResidues"></div>
-                <label class="form-label mt-4" for="cpFertHistory">What did the field get last season? <span class="text-gray-400 font-normal">(optional)</span></label>
+                <label class="form-label mt-4" for="cpFertHistory">Fertilizer used last season <span class="text-gray-400 font-normal">(optional)</span></label>
                 <input type="text" id="cpFertHistory" class="form-input" maxlength="200" placeholder="e.g. 4 bags complete at planting, 2 bags urea later">
-                <p class="wp-qh mt-4">Granulars you can buy locally <small>pick all that apply — the programs are built from these</small></p>
-                <div class="wtp-choices is-pills" id="cpGranulars" role="group" aria-label="Granulars you can buy"></div>
+                <p class="wp-qh mt-4">Fertilizer sold near you <small>Pick all that apply. The plans use these.</small></p>
+                <div class="wtp-choices is-pills" id="cpGranulars" role="group" aria-label="Fertilizer sold near you"></div>
             </section>
             {{-- 10: the decision --}}
             <section class="wtp-step" data-step="10">
@@ -792,7 +791,7 @@
             <div id="cpSavedList"></div>
             <div id="cpSavedEmpty" class="hidden text-center py-10">
                 <p class="font-bold text-gray-900">Nothing saved yet</p>
-                <p class="text-sm text-gray-400">Every finished protocol lands here by itself.</p>
+                <p class="text-sm text-gray-400">Finished protocols are saved here.</p>
             </div>
         </div>
     </div>
@@ -848,7 +847,7 @@
                 ${list.map((c) => `
                     <button type="button" class="crop-row" data-crop="${esc(c.key)}" data-find="${esc((c.label + ' ' + g).toLowerCase())}">
                         <span class="crop-row-e">${esc(c.icon)}</span>
-                        <span class="crop-row-t"><b>${esc(c.label)}</b><small>${c.perennial ? 'Tree crop — read by its age' : (c.maturity ? c.maturity + ' days to harvest' : '')}</small></span>
+                        <span class="crop-row-t"><b>${esc(c.label)}</b><small>${c.perennial ? 'Tree crop, counted by age' : (c.maturity ? c.maturity + ' days to harvest' : '')}</small></span>
                     </button>`).join('')}
             </div>`).join('');
         $id('cpMonths').innerHTML = OPT.months.map((m, i) => choice('month', m.key, '🗓️', m.label, i === 0 ? 'This month' : '')).join('');
@@ -890,8 +889,8 @@
         $id('cpMethods').innerHTML = keys.map((k) => { const m = OPT.methods[k]; return m ? choice('method', k, m.icon, m.label, m.sub) : ''; }).join('');
         document.querySelectorAll('#cpMethods .wtp-choice').forEach((b) => b.classList.toggle('is-on', b.getAttribute('data-method') === state.method));
         $id('cpMethodSub').textContent = keys.length === 1
-            ? `${c ? c.label : 'This crop'} goes in one way — tap it or just press Next.`
-            : `The options follow the crop — ${c ? c.label : 'this one'} is planted in ${keys.length} ways.`;
+            ? `${c ? c.label : 'This crop'} is planted only one way. Tap it or press Next.`
+            : `${c ? c.label : 'This crop'} can be planted ${keys.length} ways.`;
     }
 
     const QUOTE_MIN_KEY = 'anee-proto-quote-min';
@@ -910,7 +909,7 @@
         if (!OPT.quote) { q.hidden = true; return; }
         q.classList.toggle('is-min', quoteMin);
         $id('cpQuoteHead').setAttribute('aria-expanded', quoteMin ? 'false' : 'true');
-        $id('cpQuoteCost').innerHTML = `This protocol spends <b>${OPT.quote} credits</b> (the deepest of the analyses, which is why it costs the most), and you have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
+        $id('cpQuoteCost').innerHTML = `One protocol costs <b>${OPT.quote} credits</b>. You have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
         $id('cpQuoteHint').textContent = `${OPT.quote} credits`;
         q.hidden = false;
     }
@@ -941,17 +940,17 @@
     function stepReady() {
         switch (step) {
             case 0: state.location = $id('cpLocation').value.trim();
-                return !!state.location || (toast('Say where the field is.', 'error'), false);
+                return !!state.location || (toast('Type where the field is.', 'error'), false);
             case 1: return !!state.crop || (toast('Choose the crop.', 'error'), false);
             case 2: state.variety = $id('cpVariety').value.trim(); return true;
-            case 3: return !!state.month || (toast('Pick the month you will plant.', 'error'), false);
-            case 4: return !!state.method || (toast('Say how you will plant it.', 'error'), false);
+            case 3: return !!state.month || (toast('Pick your planting month.', 'error'), false);
+            case 4: return !!state.method || (toast('Pick how you will plant.', 'error'), false);
             case 5: state.targetYield = $id('cpTarget').value.trim();
-                return !!state.priority || (toast('Say what you are after this season.', 'error'), false);
+                return !!state.priority || (toast('Pick your goal for this season.', 'error'), false);
             case 6: state.area = $id('cpArea').value.trim();
-                if (!(Number(state.area) > 0)) { toast('How big is the field, in hectares?', 'error'); if (!phone()) $id('cpArea').focus(); return false; }
-                if (!state.soil) { toast('Pick the soil that sounds most like yours.', 'error'); return false; }
-                if (!state.water) { toast('Say what water the field gets.', 'error'); return false; }
+                if (!(Number(state.area) > 0)) { toast('Type the field size in hectares.', 'error'); if (!phone()) $id('cpArea').focus(); return false; }
+                if (!state.soil) { toast('Pick the soil closest to yours.', 'error'); return false; }
+                if (!state.water) { toast('Pick how the field gets water.', 'error'); return false; }
                 return true;
             case 7: state.problems = [...document.querySelectorAll('#cpProbs input:checked')].map((i) => i.value);
                 state.notes = $id('cpNotes').value.trim();
@@ -972,12 +971,12 @@
         const target = state.targetYield ? `${state.targetYield} ${state.yieldUnit}/ha` : 'no target';
         $id('cpReview').innerHTML = `${esc(crop.icon || '🌱')} <b>${esc(crop.label || '')}</b>${state.variety ? ' · ' + esc(state.variety) : ''} · 📍 ${esc(state.location)}`
             + `<br><span class="text-xs">${esc(month)} · ${esc(OPT.methods[state.method]?.label || '')} · ${esc(OPT.priorities[state.priority]?.label || '')} · ${esc(target)}</span>`
-            + `<br><span class="text-xs">${esc(state.area)} ha · ${esc(split(OPT.soils[state.soil] || '')[0])} · ${esc(OPT.waters[state.water] || '')}${state.problems.length ? ' · ' + state.problems.length + ' trouble' + (state.problems.length === 1 ? '' : 's') : ''}</span>`;
+            + `<br><span class="text-xs">${esc(state.area)} ha · ${esc(split(OPT.soils[state.soil] || '')[0])} · ${esc(OPT.waters[state.water] || '')}${state.problems.length ? ' · ' + state.problems.length + ' problem' + (state.problems.length === 1 ? '' : 's') : ''}</span>`;
         const closer = ['testP', 'testK', 'prevCrop', 'residue'].filter((k) => state[k] && state[k] !== 'unsure').length + (state.soilConditions.length ? 1 : 0) + (state.fertHistory ? 1 : 0) + (state.granulars.length ? 1 : 0);
-        if (closer) $id('cpReview').innerHTML += `<br><span class="text-xs">${state.soilConditions.length ? esc(state.soilConditions.map((k) => split((OPT.soilConditions || {})[k] || k)[0].toLowerCase()).join(', ')) + ' soil · ' : ''}${closer} closer answer${closer === 1 ? '' : 's'}${state.granulars.length ? ' · ' + state.granulars.length + ' granulars you can buy' : ''}</span>`;
+        if (closer) $id('cpReview').innerHTML += `<br><span class="text-xs">${state.soilConditions.length ? esc(state.soilConditions.map((k) => split((OPT.soilConditions || {})[k] || k)[0].toLowerCase()).join(', ')) + ' soil · ' : ''}${closer} extra answer${closer === 1 ? '' : 's'}${state.granulars.length ? ' · ' + state.granulars.length + ' fertilizer' + (state.granulars.length === 1 ? '' : 's') + ' you can buy' : ''}</span>`;
         $id('cpRunSays').textContent = OPT.canUse && OPT.quote ? `Write the protocol (${OPT.quote} credits)` : 'Write the protocol';
         $id('cpRunFine').textContent = OPT.canUse
-            ? 'Anee analyzes this one deeply — a few minutes. Charged to the same AI credits your questions use.'
+            ? 'This deep check takes a few minutes. It uses the same AI credits as your questions.'
             : (OPT.whyNot || '');
         $id('cpRun').disabled = !OPT.canUse;
     }
@@ -1083,7 +1082,7 @@
         if (!stepReady()) return;
         const wiz = $id('cpWiz');
         wiz.querySelectorAll('.wtp-step, .wtp-nav, .wtp-dots').forEach((el) => el.style.display = 'none');
-        window.aneeWait.show({ title: 'Anee is writing your protocol…', lines: ['Reading up on the variety\'s real traits…', 'Reading the official nutrient and pest guidance for your region…', 'Checking the seasonal outlook and the ENSO state…', 'Working out the bags, the water and the watch-list, stage by stage…', 'Adding up what to prepare for the whole field…'], sub: 'A few minutes — this is the deepest of the analyses.' });
+        window.aneeWait.show({ title: 'Anee is writing your protocol…', lines: ['Looking up your variety…', 'Reading official fertilizer and pest advice for your region…', 'Checking the weather outlook and El Niño or La Niña…', 'Planning fertilizer, water and pests stage by stage…', 'Adding up what the whole field needs…'], sub: 'This takes a few minutes. It is our deepest analysis.' });
         $id('cpReport').hidden = true;
         let landed = false;
         try {
@@ -1104,8 +1103,8 @@
             const item = { report: data.report, params: data.params, charged: data.charged, savedId: data.savedId };
             drawReport($id('cpReport'), item, 'fresh', true);
             openView(item, 'fresh');
-            await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used — saved to the shelf.` });
-            toast(`Done — ${data.charged} credits used. Saved to the shelf.`);
+            await window.aneeWait.done({ title: 'Done!', line: `${data.charged} credits used. Find it under Saved.` });
+            toast(`Done. ${data.charged} credits used. Find it under Saved.`);
         } catch (err) {
             toast(err.message, 'error');
         } finally {
@@ -1120,7 +1119,7 @@
     function openView(item, mode) {
         const view = $id('cpView');
         const crop = (OPT ? OPT.crops.find((c) => c.key === (item.params || {}).crop) : null) || {};
-        $id('cpViewTitle').textContent = (crop.label ? crop.label + ' — ' : '') + 'crop protocol analysis';
+        $id('cpViewTitle').textContent = crop.label ? crop.label + ' crop protocol' : 'Crop protocol analysis';
         const host = $id('cpViewReport');
         host.classList.remove('is-drawn');
         drawReport(host, item, mode, true);
@@ -1204,11 +1203,11 @@
 
             ${guideHtml()}
 
-            <div class="cp-clock"><span class="e">👁️</span><span><b>The crop is the clock, not the calendar.</b> Every step below is hung on a growth stage and the signs you can see in the field. The "about N weeks" hints are only hints — go by the stage you actually see, look every few days, and act on what the plants and the pests are doing. That is precision farming.</span></div>
+            <div class="cp-clock"><span class="e">👁️</span><span><b>Go by the crop, not the calendar.</b> Each step below follows a growth stage you can see in the field. The week counts are only a guide. Check every few days and act on what the plants and pests show.</span></div>
 
             ${(r.stages || []).length ? `
             <div class="wtp-card">
-                <h3>The season, stage by stage <small>what to do when the crop gets there</small></h3>
+                <h3>Stage by stage <small>what to do at each stage</small></h3>
                 <div class="cp-stages">
                     ${(r.stages || []).map((s, i) => `
                     <div class="cp-stage" style="transition-delay:${i * 60}ms">
@@ -1224,7 +1223,7 @@
             </div>` : ''}
 
             <div class="wtp-card">
-                <h3>Fertilizer <small>50-kg bags for the whole field (${esc(trimN(p.area))} ha) — ${esc(trimN(fert.totalBags || 0))} bags in all</small></h3>
+                <h3>Fertilizer <small>50 kg bags for the whole field (${esc(trimN(p.area))} ha), ${esc(trimN(fert.totalBags || 0))} bags in all</small></h3>
                 ${prog.length ? `
                 <div class="cp-chart">
                     ${prog.map((s) => `<div class="cp-col"><span class="cp-col-val">${esc(trimN(s.bags))}</span><div class="cp-bar" style="height:${Math.max(4, Math.round(((Number(s.bags) || 0) / maxBags) * 100))}%">${(s.products || []).map((x) => `<span class="cp-seg" style="flex:${Math.max(0.01, Number(x.totalBags) || 0)};background:${colour(x.name || 'Fertilizer')}" title="${esc(x.name)} · ${esc(trimN(x.totalBags))} bags"></span>`).join('')}</div></div>`).join('')}
@@ -1235,7 +1234,7 @@
                     ${prog.map((s) => `
                     <div class="cp-fert-row">
                         <span class="st"><b>${esc(s.stage || '')}</b><i>${esc(s.timing || '')}</i></span>
-                        <span class="pr">${(s.products || []).map((x) => `<div><b>${esc(trimN(x.totalBags))} ${Number(x.totalBags) === 1 ? 'bag' : 'bags'} ${esc(x.name || '')}</b> <small>(${esc(trimN(x.bagsPerHa))}/ha)</small>${x.why ? ' — ' + esc(sweep(x.why)) : ''}</div>`).join('')}${s.note ? `<div><small>${esc(sweep(s.note))}</small></div>` : ''}</span>
+                        <span class="pr">${(s.products || []).map((x) => `<div><b>${esc(trimN(x.totalBags))} ${Number(x.totalBags) === 1 ? 'bag' : 'bags'} ${esc(x.name || '')}</b> <small>(${esc(trimN(x.bagsPerHa))}/ha)</small>${x.why ? '. ' + esc(sweep(x.why)) : ''}</div>`).join('')}${s.note ? `<div><small>${esc(sweep(s.note))}</small></div>` : ''}</span>
                     </div>`).join('')}
                 </div>
                 <div class="cp-totals">${(fert.totals || []).map((t) => `<span class="cp-total">${esc(trimN(t.bags))} bags <i>${esc(t.name)}</i></span>`).join('')}</div>
@@ -1244,7 +1243,7 @@
 
             ${((prot.insects || []).length || (prot.diseases || []).length || (prot.weeds || []).length) ? `
             <div class="wtp-card">
-                <h3>Crop protection <small>scout first, spray only past the threshold — and keep these on hand</small></h3>
+                <h3>Crop protection <small>check first, spray only when needed, and keep these ready</small></h3>
                 <div class="cp-prot">
                     ${(prot.insects || []).map((x) => `<div class="cp-pc is-insect"><span class="tag">Insect · ${esc(x.stage || '')}</span><b>${esc(x.pest || '')}</b>${x.watchFor ? `<p><em>Look for:</em> ${esc(sweep(x.watchFor))}</p>` : ''}${x.threshold ? `<p><em>Act when:</em> ${esc(sweep(x.threshold))}</p>` : ''}${x.action ? `<p><em>Do:</em> ${esc(sweep(x.action))}</p>` : ''}${x.prepare ? `<p><em>Prepare:</em> ${esc(sweep(x.prepare))}</p>` : ''}</div>`).join('')}
                     ${(prot.diseases || []).map((x) => `<div class="cp-pc is-disease"><span class="tag">Disease · ${esc(x.stage || '')}</span><b>${esc(x.disease || '')}</b>${x.watchFor ? `<p><em>Look for:</em> ${esc(sweep(x.watchFor))}</p>` : ''}${x.action ? `<p><em>Do:</em> ${esc(sweep(x.action))}</p>` : ''}${x.prepare ? `<p><em>Prepare:</em> ${esc(sweep(x.prepare))}</p>` : ''}</div>`).join('')}
@@ -1254,7 +1253,7 @@
 
             ${(r.foliar || []).length ? `
             <div class="wtp-card">
-                <h3>Foliars & extras <small>the little top-ups, and whether they pay</small></h3>
+                <h3>Foliar sprays and extras <small>small top ups, and if they pay off</small></h3>
                 ${(r.foliar || []).map((f) => `<div class="wtp-win-row is-note"><b>${esc(f.product || '')}${f.stage ? ' · ' + esc(f.stage) : ''}${f.optional ? ' · optional' : ''}:</b> <span>${esc(sweep(f.why))}</span></div>`).join('')}
             </div>` : ''}
 
@@ -1262,20 +1261,20 @@
             <div class="wtp-card">
                 <h3>Water <small>with ${esc((OPT?.waters?.[p.water] || '').toLowerCase())}</small></h3>
                 <div class="cp-water">
-                    ${(r.irrigation || []).map((w) => `<div class="cp-wrow"><span class="e">💧</span><span class="t"><b>${esc(w.stage || '')}</b>${esc(sweep(w.need || ''))}${w.how ? ' — ' + esc(sweep(w.how)) : ''}${w.ifDry ? `<i>If it turns dry: ${esc(sweep(w.ifDry))}</i>` : ''}${w.ifWet ? `<i>If it turns wet: ${esc(sweep(w.ifWet))}</i>` : ''}</span></div>`).join('')}
+                    ${(r.irrigation || []).map((w) => `<div class="cp-wrow"><span class="e">💧</span><span class="t"><b>${esc(w.stage || '')}</b>${esc(sweep(w.need || ''))}${w.how ? '. ' + esc(sweep(w.how)) : ''}${w.ifDry ? `<i>If dry: ${esc(sweep(w.ifDry))}</i>` : ''}${w.ifWet ? `<i>If wet: ${esc(sweep(w.ifWet))}</i>` : ''}</span></div>`).join('')}
                 </div>
             </div>` : ''}
 
             ${r.weather ? `
             <div class="wtp-card">
-                <h3>The sky this season</h3>
+                <h3>Weather this season</h3>
                 <p class="wtp-plain">${esc(sweep(r.weather.outlook || ''))}</p>
-                ${r.weather.enso ? `<p class="wtp-plain mt-2"><b>ENSO:</b> ${esc(sweep(r.weather.enso))}</p>` : ''}
+                ${r.weather.enso ? `<p class="wtp-plain mt-2"><b>El Niño or La Niña:</b> ${esc(sweep(r.weather.enso))}</p>` : ''}
                 ${list(r.weather.risks).length ? `<div class="mt-3">${list(r.weather.risks).map((x) => `<div class="wtp-win-row is-no"><b>⚠️</b> <span>${esc(x)}</span></div>`).join('')}</div>` : ''}
             </div>` : ''}
 
             <div class="wtp-card">
-                <h3>Yield <small>your target against what this variety realistically gives here</small></h3>
+                <h3>Yield <small>your target and what this variety really gives here</small></h3>
                 <div class="cp-yo">
                     ${tN ? `<div class="cp-yo-row"><small>Target</small><div class="tr"><span class="is-target" style="width:${Math.round((tN / yMax) * 100)}%"></span></div><b>${esc(yo.target || '')}</b></div>` : ''}
                     ${rN ? `<div class="cp-yo-row"><small>Realistic</small><div class="tr"><span style="width:${Math.round((rN / yMax) * 100)}%"></span></div><b>${esc(yo.realistic || '')}</b></div>` : ''}
@@ -1286,28 +1285,28 @@
 
             ${(r.prepare || []).length ? `
             <div class="wtp-card">
-                <h3>What to prepare <small>for the whole field, and when it is needed</small></h3>
+                <h3>What to prepare <small>for the whole field, and when you need it</small></h3>
                 <div class="cp-shop">
                     ${(r.prepare || []).map((x) => `<div class="cp-item"><span class="n">${esc(x.item || '')}<small>${esc(x.whenNeeded || '')}</small></span><span class="q">${esc(x.qty != null ? trimN(x.qty) : '')} ${esc(x.unit || '')}${x.estCost ? `<small>${esc(x.estCost)}</small>` : ''}</span></div>`).join('')}
                 </div>
-                ${r.prepareCost ? `<p class="cp-note"><b>${esc(r.prepareCost.sum)}</b> for the ${r.prepareCost.known === r.prepareCost.of ? 'whole list' : r.prepareCost.known + ' of ' + r.prepareCost.of + ' items with a price'} — rough shop prices Anee found; yours will differ.</p>` : ''}
+                ${r.prepareCost ? `<p class="cp-note"><b>${esc(r.prepareCost.sum)}</b> for the ${r.prepareCost.known === r.prepareCost.of ? 'whole list' : r.prepareCost.known + ' of ' + r.prepareCost.of + ' items with a price'}. These are rough shop prices, so yours will differ.</p>` : ''}
             </div>` : ''}
 
             ${list(r.watch).length ? `
             <div class="wtp-card">
-                <h3>Keep an eye on <small>the things that go wrong here, and the sign to act on</small></h3>
+                <h3>Watch out for <small>what often goes wrong here, and when to act</small></h3>
                 <ul class="cp-watch">${list(r.watch).map((x) => `<li>${esc(sweep(x))}</li>`).join('')}</ul>
             </div>` : ''}
 
             <div class="wtp-card">
                 <h3>In plain words</h3>
                 <p class="wtp-plain">${esc(sweep(r.summary))}</p>
-                ${(r.dataGaps || []).length ? `<h3 class="mt-4">What this protocol could not verify</h3><ul class="wtp-gap">${(r.dataGaps || []).map((g) => `<li>${esc(g)}</li>`).join('')}</ul>` : ''}
+                ${(r.dataGaps || []).length ? `<h3 class="mt-4">What Anee could not check</h3><ul class="wtp-gap">${(r.dataGaps || []).map((g) => `<li>${esc(g)}</li>`).join('')}</ul>` : ''}
             </div>
 
             ${(r.webSources || []).length ? `
             <div class="wtp-card">
-                <h3>📚 Other Sources in Analysis</h3>
+                <h3>📚 Other sources used</h3>
                 <div class="va-links">${(() => { const seen = new Set(); return (r.webSources || []).map((x) => ({ name: x.title || host(x.url) || 'A published source', h: host(x.url) })).filter((x) => { const k = x.name.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; }).map((x) => `<span class="va-link is-plain"><span class="l-t">${esc(x.name)}</span>${x.h && x.h !== x.name ? `<span class="l-h">${esc(x.h)}</span>` : ''}</span>`).join(''); })()}</div>
             </div>` : ''}
 
@@ -1328,7 +1327,7 @@
             </div>`;
     const sourcesHtml = (r) => (r.webSources || []).length ? `
             <div class="wtp-card">
-                <h3>📚 Other Sources in Analysis</h3>
+                <h3>📚 Other sources used</h3>
                 <div class="va-links">${(() => { const seen = new Set(); return (r.webSources || []).map((x) => ({ name: x.title || host(x.url) || 'A published source', h: host(x.url) })).filter((x) => { const k = x.name.toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true; }).map((x) => `<span class="va-link is-plain"><span class="l-t">${esc(x.name)}</span>${x.h && x.h !== x.name ? `<span class="l-h">${esc(x.h)}</span>` : ''}</span>`).join(''); })()}</div>
             </div>` : '';
 
@@ -1350,7 +1349,7 @@
                 <span class="cp2-guide-e">🧭</span>
                 <div class="cp2-guide-t">
                     <b>Remember: this is just a guide.</b>
-                    <p>Anee wrote this based on analyzing your crop, its strengths and weaknesses, the weather and climate forecast for your location, the soil and irrigation situation, and your target goal. However, as you know, Anee has not yet walked your field — that is why this protocol is just a guide. You are free to update it based on your own experience and knowledge of your farm.</p>
+                    <p>Anee built this from your crop, the weather forecast, your soil and water, and your goal. She has not walked your field, so change it to fit what you know.</p>
                     <div class="cp2-guide-tags"><span>🕒 your timing</span><span>💧 your water</span><span>👩‍🌾 your labor &amp; tools</span><span>🛒 your market</span><span>🌱 what the field shows</span></div>
                 </div>
             </div>`;
@@ -1410,7 +1409,7 @@
                 <div class="cp2-bg-row"><span class="cp2-bg-e">🌤️</span><div><b>The weather ahead</b><p>${esc(sweep(wx.outlook))}</p>${wx.enso ? `<p class="cp2-dim">${esc(sweep(wx.enso))}</p>` : ''}
                     ${list(wx.risks).length ? `<div class="cp2-pills">${list(wx.risks).map((x) => `<span class="cp2-pill is-risk">⚠️ ${esc(sweep(x))}</span>`).join('')}</div>` : ''}</div></div>
                 <div class="cp2-bg-row"><span class="cp2-bg-e">🧬</span><div><b>${esc(v.name || p.variety || 'The variety')}${v.by ? ` <small>by ${esc(v.by)}${v.released ? ', ' + esc(v.released) : ''}</small>` : ''}</b>
-                    ${v.found === false ? `<p class="cp2-dim">Not found online as published — the numbers below assume this variety.</p>` : ''}
+                    ${v.found === false ? `<p class="cp2-dim">Not found online. The numbers below are Anee's best guess for it.</p>` : ''}
                     <div class="cp2-pills">
                         ${Number(v.maturityDays) > 0 ? `<span class="cp2-pill">⏱ ${esc(String(Math.round(Number(v.maturityDays))))} days to maturity</span>` : ''}
                         ${v.yieldPotential ? `<span class="cp2-pill">🌾 ${esc(v.yieldPotential)}</span>` : ''}
@@ -1426,14 +1425,14 @@
 
             ${rec.intro ? `<div class="wtp-card"><p class="wtp-plain">${esc(sweep(rec.intro))}</p></div>` : ''}
 
-            <div class="cp-clock"><span class="e">👁️</span><span><b>The crop is the clock, not the calendar.</b> Tap a stage below to see what goes on then, and why.</span></div>
+            <div class="cp-clock"><span class="e">👁️</span><span><b>Go by the crop, not the calendar.</b> Tap a stage below to see what to apply and why.</span></div>
 
             ${(gran.soilLogic || gran.timingLogic) ? `
             <div class="wtp-card cp3-gran">
-                <h3>Why these granulars <small>which bag, and when — thought through for this ground</small></h3>
+                <h3>Why these fertilizers <small>which bag and when, chosen for this soil</small></h3>
                 ${gran.soilLogic ? `<div class="cp3-gran-row"><span class="e">🧪</span><div><b>The soil decides the bag</b><p>${esc(sweep(gran.soilLogic))}</p></div></div>` : ''}
-                ${gran.timingLogic ? `<div class="cp3-gran-row"><span class="e">⏱️</span><div><b>The stage decides the size</b><p>${esc(sweep(gran.timingLogic))}</p></div></div>` : ''}
-                ${(gran.rejected || []).filter((r) => r && r.what).length ? `<div class="cp3-gran-row"><span class="e">🚫</span><div><b>Considered, and set aside</b>
+                ${gran.timingLogic ? `<div class="cp3-gran-row"><span class="e">⏱️</span><div><b>The stage decides the amount</b><p>${esc(sweep(gran.timingLogic))}</p></div></div>` : ''}
+                ${(gran.rejected || []).filter((r) => r && r.what).length ? `<div class="cp3-gran-row"><span class="e">🚫</span><div><b>Considered but not used</b>
                     <div class="cp3-no">${(gran.rejected || []).filter((r) => r && r.what).map((r) => `<div class="cp3-no-row"><b>${esc(sweep(r.what))}</b>${r.why ? `<p>${esc(sweep(r.why))}</p>` : ''}</div>`).join('')}</div></div></div>` : ''}
                 ${list(gran.cautions).length ? `<div class="cp2-pills">${list(gran.cautions).map((x) => `<span class="cp2-pill is-risk">⚠️ ${esc(sweep(x))}</span>`).join('')}</div>` : ''}
             </div>` : ''}
@@ -1443,7 +1442,7 @@
             ${'' /* the fertilizer and totals cards are painted below, per program */}
             ${(rec.deficiencies || []).length ? `
             <div class="wtp-card">
-                <h3>Deficiencies this soil invites <small>${esc(String((OPT && OPT.soils && OPT.soils[p.soil]) || '').split(' — ')[0].toLowerCase() || 'this ground')} — what to watch for, and why</small></h3>
+                <h3>Nutrients this soil may lack <small>${esc(String((OPT && OPT.soils && OPT.soils[p.soil]) || '').split(' — ')[0].toLowerCase() || 'this soil')}: what to watch for, and why</small></h3>
                 <div class="cp2-defs">
                     ${(rec.deficiencies || []).map((d, i) => `<div class="cp2-def" style="transition-delay:${i * 60}ms"><div class="cp2-def-h"><b>${esc(d.nutrient || '')}</b>${d.when ? `<span class="tag">${esc(d.when)}</span>` : ''}</div>${d.why ? `<p>${esc(sweep(d.why))}</p>` : ''}${d.signs ? `<p><em>Signs:</em> ${esc(sweep(d.signs))}</p>` : ''}${d.action ? `<p><em>What to do:</em> ${esc(sweep(d.action))}</p>` : ''}</div>`).join('')}
                 </div>
@@ -1451,7 +1450,7 @@
 
             ${(rec.threats || []).length ? `
             <div class="wtp-card">
-                <h3>Threats to check <small>the sign to act on, and the action</small></h3>
+                <h3>Threats to check <small>what to look for and what to do</small></h3>
                 <div class="cp2-threats">
                     ${(rec.threats || []).map((t) => `<div class="cp2-threat"><span class="tag">${esc(t.stage || '')}</span><b>${esc(t.threat || '')}</b>${t.sign ? `<p><em>Look for:</em> ${esc(sweep(t.sign))}</p>` : ''}${t.action ? `<p><em>Then:</em> ${esc(sweep(t.action))}</p>` : ''}${t.product ? `<p class="is-prod"><em>Use:</em> ${esc(sweep(t.product))}</p>` : ''}</div>`).join('')}
                 </div>
@@ -1459,7 +1458,7 @@
 
             ${(rec.foliars || []).length ? `
             <div class="wtp-card">
-                <h3>Foliar sprays <small>only where they pay on this ground</small></h3>
+                <h3>Foliar sprays <small>only where they pay off on this soil</small></h3>
                 <div class="cp2-foliars">
                     ${(rec.foliars || []).map((f) => `<div class="cp2-foliar"><span class="e">🍃</span><div><small>${esc(f.stage || '')}</small><b>${esc(foliarName(f.product))}</b>${f.why ? `<p>${esc(sweep(f.why))}</p>` : ''}</div></div>`).join('')}
                 </div>
@@ -1474,7 +1473,7 @@
 
             ${(tN || rN || yo.note) ? `
             <div class="wtp-card">
-                <h3>Yield <small>your target against what this variety realistically gives here</small></h3>
+                <h3>Yield <small>your target and what this variety really gives here</small></h3>
                 <div class="cp-yo">
                     ${tN ? `<div class="cp-yo-row"><small>Target</small><div class="tr"><span class="is-target" style="width:${Math.round((tN / yMax) * 100)}%"></span></div><b>${esc(yo.target || '')}</b></div>` : ''}
                     ${rN ? `<div class="cp-yo-row"><small>Realistic</small><div class="tr"><span style="width:${Math.round((rN / yMax) * 100)}%"></span></div><b>${esc(yo.realistic || '')}</b></div>` : ''}
@@ -1485,7 +1484,7 @@
             <div class="wtp-card">
                 <h3>In plain words</h3>
                 <p class="wtp-plain">${esc(sweep(r.summary))}</p>
-                ${(r.dataGaps || []).length ? `<h3 class="mt-4">What this protocol could not verify</h3><ul class="wtp-gap">${(r.dataGaps || []).map((g) => `<li>${esc(g)}</li>`).join('')}</ul>` : ''}
+                ${(r.dataGaps || []).length ? `<h3 class="mt-4">What Anee could not check</h3><ul class="wtp-gap">${(r.dataGaps || []).map((g) => `<li>${esc(g)}</li>`).join('')}</ul>` : ''}
             </div>
 
             ${sourcesHtml(r)}
@@ -1510,8 +1509,8 @@
             ${stages.length ? `
             <div class="wtp-card" data-cp2-stages data-sel="${SEL}">
                 ${programs.length > 1 ? `<div class="cp3-tabs" role="tablist" aria-label="Fertilizer programs">${programs.map((pg, i) => `<button type="button" class="cp3-tab${i === PROG ? ' is-on' : ''}" role="tab" aria-selected="${i === PROG}" data-cp3-prog="${i}"><b>${esc(pg.name || ('Option ' + (i + 1)))}</b><small>${esc(trimN(pg.totalBags || 0))} bags${verdictWord(pg.check)}</small></button>`).join('')}</div>
-                ${g.for ? `<p class="cp3-for">${i0(PROG) ? '⭐ Recommended — ' : ''}${esc(sweep(g.for))}</p>` : ''}` : ''}
-                <h3>Fertilizer by growth stage <small>50-kg bags for the whole field (${esc(trimN(p.area))} ha) — ${esc(trimN(g.totalBags || 0))} bags in all</small></h3>
+                ${g.for ? `<p class="cp3-for">${i0(PROG) ? '⭐ Recommended: ' : ''}${esc(sweep(g.for))}</p>` : ''}` : ''}
+                <h3>Fertilizer by growth stage <small>50 kg bags for the whole field (${esc(trimN(p.area))} ha), ${esc(trimN(g.totalBags || 0))} bags in all</small></h3>
                 <div class="cp-chart cp2-chart">
                     ${stages.map((st, i) => `<button type="button" class="cp-col cp2-col" data-cp2-stage="${i}" aria-label="${esc(st.stage || '')}"><span class="cp-col-val">${Number(stageBags[i]) > 0 ? esc(trimN(stageBags[i])) : '·'}</span><div class="cp-bar" style="height:${Math.max(3, Math.round(((Number(stageBags[i]) || 0) / maxBags) * 100))}%">${(byStage[i] || []).map((x) => `<span class="cp-seg" style="height:${Math.max(0, ((Number(x.totalBags) || 0) / Math.max(0.1, Number(stageBags[i]) || 0)) * 100)}%;background:${colour(x.product || 'Fertilizer')}"></span>`).join('')}</div></button>`).join('')}
                 </div>
@@ -1522,30 +1521,30 @@
                     ${stages.map((st, i) => `
                     <button type="button" class="cp2-row" data-cp2-stage="${i}">
                         <span class="cp2-row-n">${i + 1}</span>
-                        <span class="cp2-row-t"><b>${esc(st.stage || '')}</b><small>${st.days ? `<em class="cp2-days">${esc(st.days)}</em>` : ''}${(byStage[i] || []).length ? (byStage[i] || []).map((x) => esc(trimN(x.totalBags)) + ' ' + esc(x.product || '')).join(' · ') : (st.observe ? 'watch' : 'no inputs')}</small></span>
+                        <span class="cp2-row-t"><b>${esc(st.stage || '')}</b><small>${st.days ? `<em class="cp2-days">${esc(st.days)}</em>` : ''}${(byStage[i] || []).length ? (byStage[i] || []).map((x) => esc(trimN(x.totalBags)) + ' ' + esc(x.product || '')).join(' · ') : (st.observe ? 'watch only' : 'nothing to apply')}</small></span>
                         <span class="cp2-row-b">${Number(stageBags[i]) > 0 ? esc(trimN(stageBags[i])) + ' bags' : ''}</span>
                     </button>`).join('')}
-                    ${(g.orphans || []).length ? `<div class="cp3-orphans"><b>Other applications this program names</b>${(g.orphans || []).map((x) => `<div>${esc(trimN(x.totalBags))} bags ${esc(x.product || '')} · ${esc(x.stage || '')}${x.purpose ? ` <small>— ${esc(sweep(x.purpose))}</small>` : ''}</div>`).join('')}</div>` : ''}
+                    ${(g.orphans || []).length ? `<div class="cp3-orphans"><b>Also in this program</b>${(g.orphans || []).map((x) => `<div>${esc(trimN(x.totalBags))} bags ${esc(x.product || '')} · ${esc(x.stage || '')}${x.purpose ? `. <small>${esc(sweep(x.purpose))}</small>` : ''}</div>`).join('')}</div>` : ''}
                 </div>
             </div>` : ''}
 
             ${(totals.length || check.length) ? `
             <div class="wtp-card">
-                <h3>Totals to use <small>for the whole field — quantities only${programs.length > 1 ? ' · ' + esc(g.name || '') : ''}</small></h3>
+                <h3>Totals to use <small>for the whole field, amounts only${programs.length > 1 ? ' · ' + esc(g.name || '') : ''}</small></h3>
                 ${totals.length ? `<div class="cp2-tot">
                     ${totals.map((t) => `<div class="cp2-tot-row"><span class="n"><i style="background:${colour(t.product)}"></i>${esc(t.product)}</span><div class="tr"><span style="width:${Math.max(2, Math.round((Number(t.bags) / maxTotal) * 100))}%;background:${colour(t.product)}"></span></div><b>${esc(trimN(t.bags))} bags</b><small>${esc(trimN(t.bagsPerHa))}/ha</small></div>`).join('')}
                 </div>` : ''}
                 ${check.length ? `
                 <div class="cp2-nut">
-                    <div class="cp2-nut-h"><b>Nutrients for the season</b><small>what this program delivers, against what the target needs — kg per hectare${Number(p.area) && Number(p.area) !== 1 ? ' (the field in brackets)' : ''}</small></div>
+                    <div class="cp2-nut-h"><b>Nutrients for the season</b><small>what this program gives and what the target needs, in kg per hectare${Number(p.area) && Number(p.area) !== 1 ? ' (whole field in brackets)' : ''}</small></div>
                     ${check.map((c) => { const top = Math.max(1, Number(c.have) || 0, Number(c.need) || 0); return `
                     <div class="cp2-nut-row is-${esc(c.verdict || 'unchecked')}">
                         <span class="l">${esc(c.label)}</span>
                         <div class="tr"><span class="have" style="width:${Math.max(2, Math.round(((Number(c.have) || 0) / top) * 100))}%"></span>${c.need !== null && c.need !== undefined ? `<i class="need" style="left:${Math.min(100, Math.round(((Number(c.need) || 0) / top) * 100))}%"></i>` : ''}</div>
                         <span class="v"><b>${esc(trimN(c.have))}</b>${c.need !== null && c.need !== undefined ? ` / ${esc(trimN(c.need))}` : ''}${Number(p.area) && Number(p.area) !== 1 ? `<small>(${esc(trimN(c.haveField))}${c.needField !== null && c.needField !== undefined ? ' / ' + esc(trimN(c.needField)) : ''})</small>` : ''}</span>
-                        <span class="vd">${c.verdict === 'ok' ? '✅ on target' : (c.verdict === 'short' ? `⚠️ short by ${esc(trimN(Math.abs(c.gap)))}` : (c.verdict === 'over' ? `↑ over by ${esc(trimN(c.gap))}` : '—'))}</span>
+                        <span class="vd">${c.verdict === 'ok' ? '✅ on target' : (c.verdict === 'short' ? `⚠️ short by ${esc(trimN(Math.abs(c.gap)))}` : (c.verdict === 'over' ? `↑ over by ${esc(trimN(c.gap))}` : 'not checked'))}</span>
                     </div>`; }).join('')}
-                    ${(g.unknownProducts || []).length ? `<p class="cp-note">Not counted (analysis unknown): ${esc((g.unknownProducts || []).join(', '))}.</p>` : ''}
+                    ${(g.unknownProducts || []).length ? `<p class="cp-note">Not counted (nutrient content unknown): ${esc((g.unknownProducts || []).join(', '))}.</p>` : ''}
                 </div>${npk.note ? `<p class="cp-note">${esc(sweep(npk.note))}</p>` : ''}` : ''}
             </div>` : ''}`;
             wireStages();
@@ -1580,9 +1579,9 @@
                             <span class="cp2-d-nav"><button type="button" data-cp2-prev ${i === 0 ? 'disabled' : ''} aria-label="Previous stage">‹</button><button type="button" data-cp2-next ${i === stages.length - 1 ? 'disabled' : ''} aria-label="Next stage">›</button></span></div>
                         ${st.signs ? `<p class="cp2-d-signs">👁️ ${esc(sweep(st.signs))}</p>` : ''}
                         ${(st.fertilizer || []).length ? `<div class="cp2-d-fert">${(st.fertilizer || []).map((x) => `<div class="cp2-d-app"><i style="background:${colour(x.product || 'Fertilizer')}"></i><span><b>${esc(trimN(x.totalBags))} ${Number(x.totalBags) === 1 ? 'bag' : 'bags'} ${esc(x.product || '')}</b> <small>(${esc(trimN(x.bagsPerHa))}/ha)</small>${x.purpose ? `<em>${esc(sweep(x.purpose))}</em>` : ''}</span></div>`).join('')}</div>` : `<p class="cp2-dim">No fertilizer at this stage.</p>`}
-                        ${st.observe ? `<div class="cp2-d-obs"><span class="is-obs">🔎 Observe</span><p>${esc(sweep(st.observe))}</p></div>` : ''}
-                        ${st.intervene ? `<div class="cp2-d-obs"><span class="is-act">🛠️ Intervene</span><p>${esc(sweep(st.intervene))}</p></div>` : ''}
-                        ${(rec.foliars || []).filter((f) => sameStage(f.stage, st.stage)).map((f) => `<div class="cp2-d-fol"><span>🍃 Foliar</span><p><b>${esc(foliarName(f.product))}</b>${f.why ? ' — ' + esc(sweep(f.why)) : ''}</p></div>`).join('')}`;
+                        ${st.observe ? `<div class="cp2-d-obs"><span class="is-obs">🔎 Look for</span><p>${esc(sweep(st.observe))}</p></div>` : ''}
+                        ${st.intervene ? `<div class="cp2-d-obs"><span class="is-act">🛠️ What to do</span><p>${esc(sweep(st.intervene))}</p></div>` : ''}
+                        ${(rec.foliars || []).filter((f) => sameStage(f.stage, st.stage)).map((f) => `<div class="cp2-d-fol"><span>🍃 Foliar spray</span><p><b>${esc(foliarName(f.product))}</b>${f.why ? '. ' + esc(sweep(f.why)) : ''}</p></div>`).join('')}`;
                     d.classList.remove('is-swap');
                 }, d.innerHTML ? 140 : 0);
             };
@@ -1613,7 +1612,7 @@
         hostEl.querySelector('[data-cp-again]')?.addEventListener('click', () => { closeView(); wizardBack(); });
         hostEl.querySelector('[data-cp-delete]').addEventListener('click', async () => {
             const ok = window.confirmAction
-                ? await confirmAction({ title: 'Delete this protocol?', message: 'The credits it cost are already spent; only the report goes.', confirmText: 'Delete', danger: true })
+                ? await confirmAction({ title: 'Delete this protocol?', message: 'Only the report is deleted. Credits already used are not returned.', confirmText: 'Delete', danger: true })
                 : confirm('Delete this protocol?');
             if (!ok) return;
             try {

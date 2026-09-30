@@ -2660,7 +2660,7 @@ window.creditCoin = function creditCoin(text) {
     const body = svg + '<b>' + String(text).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])) + '</b>';
     return window.AU_IS_WORKER
         ? '<span class="credit-coin">' + body + '</span>'
-        : '<a class="credit-coin" href="/app/ai-credits" title="My Credits — the log, and credits to buy">' + body + '</a>';
+        : '<a class="credit-coin" href="/app/ai-credits" title="My Credits: your log and credits to buy">' + body + '</a>';
 };
 
 /* The cards, one per paid rung in config/tiers.php (names and points

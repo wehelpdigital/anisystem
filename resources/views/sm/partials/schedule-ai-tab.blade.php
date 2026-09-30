@@ -58,7 +58,7 @@
                      the leftover of when she had neither. --}}
                 <span class="sai-title">{{ \App\Models\AiSetting::current()->assistantName }}, Your Smart Agritech <span class="sai-sub">· shared with your team</span></span>
                 <span class="sai-spacer"></span>
-                <button type="button" id="saiSaveSession" class="sai-save" title="Keep this session — as a note, or on a task" aria-haspopup="dialog">
+                <button type="button" id="saiSaveSession" class="sai-save" title="Save this session as a note or on a task" aria-haspopup="dialog">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a1 1 0 011-1h9l4 4v10a1 1 0 01-1 1H6a1 1 0 01-1-1V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 4v4h6M8 19v-5h8v5"/></svg>
                     <span class="hidden sm:inline">Save</span>
                 </button>
@@ -90,7 +90,7 @@
                     </button>
                     <input type="file" id="saiPhotoFiles" accept="image/*" multiple class="hidden">
                     <input type="file" id="saiPhotoCam" accept="image/*" capture="environment" class="hidden">
-                    <textarea id="saiText" rows="1" maxlength="4000" placeholder="Ask {{ \App\Models\AiSetting::current()->assistantName }} — the whole team sees the reply…"></textarea>
+                    <textarea id="saiText" rows="1" maxlength="4000" placeholder="Ask {{ \App\Models\AiSetting::current()->assistantName }}. Your team sees the reply."></textarea>
                     <button type="button" id="saiSend" class="sai-send" aria-label="Send">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
                     </button>
@@ -115,7 +115,7 @@
                     </button>
                     {{-- The owner's pool, which is what this room spends, at
                          the end of the row that decides what it spends. --}}
-                    <span class="ai-bal ai-bal-chip" data-ai-bal title="Current credits — what is left in the wallet this chat spends from" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($saiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>…</b>@endif</span>
+                    <span class="ai-bal ai-bal-chip" data-ai-bal title="Credits left for this chat" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($saiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>…</b>@endif</span>
                 </div>
                 <p class="sai-estimate" id="saiEstimate" data-idle="{{ $saiHintIdle }}">{{ $saiHintIdle }}</p>
             </div>
@@ -134,7 +134,7 @@
     <div class="sheet-body space-y-1">
         <button type="button" class="sai-opt" id="saiAttachUpload">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></span>
-            <span>Upload photos<span class="sub">Pick one or several from your phone</span></span>
+            <span>Upload photos<span class="sub">Pick one or more from your phone</span></span>
         </button>
         <button type="button" class="sai-opt" id="saiAttachCamera">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
@@ -142,7 +142,7 @@
         </button>
         <button type="button" class="sai-opt hidden" id="saiAttachGallery">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h3l2-3h6l2 3h3v13H4V7z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 13l2.5-2.5L14 14l2-2 2 2"/></svg></span>
-            <span>From the gallery<span class="sub">A photo this season already keeps</span></span>
+            <span>From the gallery<span class="sub">A photo already in this season</span></span>
         </button>
     </div>
 </div>
@@ -155,17 +155,17 @@
 <div class="sheet hidden" id="saiSaveSheet" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Keep this session</h3>
+        <h3 class="sheet-title">Save this session</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-1">
         <button type="button" class="sai-opt" id="saiSaveToNote">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.4-9.4a2 2 0 112.8 2.8L11 15l-4 1 1-4 8.6-8.4z"/></svg></span>
-            <span>Save as a new note<span class="sub">The whole session, into the notebook</span></span>
+            <span>Save as a new note<span class="sub">Save the full session to the notebook</span></span>
         </button>
         <button type="button" class="sai-opt" id="saiSaveToTask">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></span>
-            <span>Attach to a task<span class="sub">File this session onto a task, in the notebook</span></span>
+            <span>Attach to a task<span class="sub">Save this session to a task in the notebook</span></span>
         </button>
     </div>
 </div>
@@ -184,9 +184,9 @@
         </div>
         <div>
             <label class="form-label" for="saiNoteDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="saiNoteDesc" class="form-textarea" rows="3" maxlength="2000" placeholder="Why this session is worth keeping…"></textarea>
+            <textarea id="saiNoteDesc" class="form-textarea" rows="3" maxlength="2000" placeholder="Why keep this session?"></textarea>
         </div>
-        <p class="text-xs text-gray-400">The whole session is attached underneath.</p>
+        <p class="text-xs text-gray-400">The full session is saved with it.</p>
         <button type="button" id="saiNoteSave" class="btn btn-primary w-full">Save to the notebook</button>
     </div>
 </div>
@@ -498,7 +498,7 @@
         t.classList.toggle('is-on', on);
         if (window.toast) {
             if (t.id === 'saiUsePlan') {
-                toast(on ? 'Anee will include in your question the current history of your cropping schedule - ' + @json($schedule->title) + '. This will add credit usage.'
+                toast(on ? 'Anee will read your season, ' + @json($schedule->title) + ', with your question. This uses more credits.'
                          : 'She will answer without the plan.');
             } else {
                 toast(on ? 'She will read the rest of this thread.'
@@ -531,18 +531,18 @@
                 ${AI_FACE}
                 <h4>Hi team, I'm ${AI_NAME}</h4>
                 ${AI_HELLO}
-                <p>Everyone on the team sees the questions and answers, and you can save a whole session to your schedule notes.</p>
-                <div class="sai-howto" onclick="this.classList.toggle('is-open')" role="button" tabindex="0" aria-label="How to ask — tap to expand">
+                <p>Your whole team sees the questions and answers. You can save a session to your notes.</p>
+                <div class="sai-howto" onclick="this.classList.toggle('is-open')" role="button" tabindex="0" aria-label="How to ask. Tap to open.">
                     <p class="sai-howto-h" style="display:flex;align-items:center;gap:.35rem">The more you tell me, the better I answer
                         <svg class="sai-howto-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                     </p>
                     <div class="sai-howto-fold">
-                        <p class="sai-howto-b">Crop, variety and age, problems, observations, what you did, what you see, all detailed. A wrong question can waste your credits, so be as specific as possible.</p>
+                        <p class="sai-howto-b">Tell me the crop, variety and age, what you see, and what you did. A vague question can waste your credits, so give details.</p>
                         <p class="sai-howto-lbl">For example</p>
                         <p class="sai-howto-eg"><b>Not</b> "the rice is sick"</p>
                         <span class="sai-howto-rule" aria-hidden="true"></span>
                         <p class="sai-howto-eg"><b>Try</b> {{ \App\Support\Region::ph() ? '"RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"' : '"I planted P1197 corn six weeks ago. The lower leaves are yellowing from the edges in, the newest leaves are still green. I side-dressed urea ten days ago and it has rained hard since. What is going on?"' }}</p>
-                        <a href="#" class="anee-guide-link" data-anee-guide>Check this for a complete guide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a>
+                        <a href="#" class="anee-guide-link" data-anee-guide>Read the full guide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a>
                     </div>
                 </div>`;
             /* The three suggestion chips are gone. They were pills in the
@@ -660,7 +660,7 @@
          * to before the transcript starts. */
         let pendingTaskId = null;
         function fileAway(activityId) {
-            if (!currentSession) { window.toast?.('Nothing to keep yet — ask something first.', 'error'); return; }
+            if (!currentSession) { window.toast?.('Nothing to save yet. Ask a question first.', 'error'); return; }
             pendingTaskId = activityId || null;
             const head = $('saiNoteHeading');
             if (head) head.textContent = pendingTaskId ? 'Attach this session to the task' : 'Save this session as a note';
@@ -674,7 +674,7 @@
             // a sheet outlives the door that opened it — a stale one still on
             // screen must never POST a null sessionId at the notebook.
             if (!currentSession) {
-                window.toast?.('Nothing to keep yet — ask something first.', 'error');
+                window.toast?.('Nothing to save yet. Ask a question first.', 'error');
                 window.closeSheet?.('saiNoteSheet');
                 return;
             }
@@ -702,7 +702,7 @@
         /* ---------- ask / realtime ---------- */
         async function send() {
             if (busy) return;
-            if (uploadsBusy > 0) { window.toast?.('Wait a moment — a photo is still uploading.', 'error'); return; }
+            if (uploadsBusy > 0) { window.toast?.('Please wait. A photo is still uploading.', 'error'); return; }
             const text = ($('saiText').value || '').trim();
             const shots = attachedPaths();
             if (!text && !shots.length) return;
@@ -743,7 +743,7 @@
                 else {
                     // Not taken: the photos and the words come back for the retry.
                     window.aneeGiveChipsBack(chips, heldChips);
-                    if (heldChips.length) window.toast?.('Your photos are back in the box, ready for the retry.');
+                    if (heldChips.length) window.toast?.('Your photos are back. You can try again.');
                     if (!$('saiText').value) { $('saiText').value = text; $('saiText').dispatchEvent(new Event('input')); }
                 }
             } finally { busy = false; $('saiSend').disabled = false; $('saiText').focus(); sayEstimate(); }
@@ -829,7 +829,7 @@
            other two chats ask, minus the season, which this room is in. */
         $('saiSaveToTask').addEventListener('click', () => {
             window.closeSheet?.('saiSaveSheet');
-            if (!currentSession) { window.toast?.('Nothing to keep yet — ask something first.', 'error'); return; }
+            if (!currentSession) { window.toast?.('Nothing to save yet. Ask a question first.', 'error'); return; }
             window.aiAttachOpen?.({
                 askSchedule: false,
                 scheduleId: SCHEDULE_ID,
@@ -871,7 +871,7 @@
         function attachedScheds() { return attachedChips().map((c) => (c.dataset.sched ? parseInt(c.dataset.sched, 10) : null)); }
         function roomForAnother() {
             if (chips.children.length < MAX_PHOTOS) return true;
-            window.toast?.('Four photos is as many as one question can carry.', 'error');
+            window.toast?.('Only 4 photos per question. Remove one to add another.', 'error');
             return false;
         }
         function addChip(previewUrl) {
@@ -976,7 +976,7 @@
             // Bring the composer into view and let them type the question.
             window.smShowAiTab?.();
             window.smFocus?.($('saiText'), { delay: 120 });
-            window.toast?.('Photo attached — what would you like to ask about it?');
+            window.toast?.('Photo attached. What do you want to ask?');
         };
 
         /* The bill, quoted before it is run up: the server's own pre-flight

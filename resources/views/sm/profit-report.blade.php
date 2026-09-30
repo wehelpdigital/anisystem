@@ -89,7 +89,7 @@
             <b>About Profit</b>
             {{-- One short paragraph, no dashes or lists (the owner's ask,
                  2026-09-29), as the analyses introduce themselves. --}}
-            <p>See what your harvest earned against everything the season spent on inventory, services, cash and labor, for the whole season and for each lot. You get the net profit and margin, where the money went, and what each lot earned, spent and kept, with a note wherever something is still missing, like a harvest not yet recorded. The numbers update every time you open this page, and to keep a copy you can hand it to {{ \App\Models\AiSetting::current()->assistantName }} at the bottom.</p>
+            <p>See what your harvest earned against everything the season spent, for the whole season and for each lot. The numbers update each time you open this page. To keep a copy, hand it to {{ \App\Models\AiSetting::current()->assistantName }} at the bottom.</p>
         </div>
     </div>
     {{-- Stays hidden until there is a report to hand over — a blocked
@@ -124,7 +124,7 @@
 
         <div class="pr-card" id="prWarnCard" hidden>
             <h3>Worth knowing</h3>
-            <p class="sub">The numbers below carry these footnotes.</p>
+            <p class="sub">Keep these in mind when you read the numbers.</p>
             <div class="mt-3" id="prWarnings"></div>
         </div>
 
@@ -137,7 +137,7 @@
 
         <div class="pr-card">
             <h3>Lot by lot</h3>
-            <p class="sub">Activity costs are shared across the lots they touch; season-wide costs and the day book sit under General.</p>
+            <p class="sub">An activity on several lots splits its cost between them. Whole season costs and day book entries go under General.</p>
             <div class="pr-lots" id="prLots"></div>
         </div>
     </div>
@@ -184,7 +184,7 @@ const __init = () => {
         $id('prHero').classList.toggle('is-loss', !up);
         $id('prProfit').textContent = (up ? '' : '−') + fmtPeso(Math.abs(d.profit));
         $id('prVerdict').textContent = up
-            ? `The season is ahead${d.margin !== null ? ` — a ${d.margin}% margin on what it earned` : ''}.`
+            ? `The season made a profit${d.margin !== null ? `, a ${d.margin}% margin on what it earned` : ''}.`
             : `The season spent more than it earned so far${d.margin !== null ? ` (${d.margin}% margin)` : ''}.`;
         $id('prRevenue').textContent = fmtPeso(d.revenue);
         $id('prCost').textContent = fmtPeso(d.cost);
@@ -200,7 +200,7 @@ const __init = () => {
 
         // Cost anatomy
         const total = Math.max(0.01, d.cost);
-        $id('prAnatomySub').textContent = `Every peso of the ${fmtPeso0(d.cost)} spent, by kind.`;
+        $id('prAnatomySub').textContent = `All ${fmtPeso0(d.cost)} spent, by kind.`;
         $id('prStack').innerHTML = CATS.filter(([k]) => d.costCats[k] > 0)
             .map(([k, , c]) => `<span style="background:${c};flex:${d.costCats[k]} ${d.costCats[k]} 0"></span>`).join('');
         $id('prAnatomy').innerHTML = CATS.filter(([k]) => d.costCats[k] > 0)
@@ -267,7 +267,7 @@ const __init = () => {
             const res = await api(@json(route('sm.report.snapshot')), { method: 'POST', body: {
                 scheduleId: @json($schedule->id),
                 kind: 'profit',
-                title: @json('Profit Report — ' . $schedule->title),
+                title: @json('Profit Report · ' . $schedule->title),
                 body: buildText(),
             } });
             window.location.href = @json(route('ai.index')) + '?freport=' + res.data.id;

@@ -289,13 +289,13 @@
             <b>About Labor</b>
             {{-- One short paragraph, no dashes or lists (the owner's ask,
                  2026-09-29), as the analyses introduce themselves. --}}
-            <p>See everything the season paid its workers, added up from the half days and whole days on your activities at each worker's rate. Pick the whole season, a range of days or a range of dates, and you get the total cost, the busiest months, who did the most work, and a breakdown by worker and by activity. Every report you make is kept on the Saved Reports tab.</p>
+            <p>See what the season paid its workers, from the days on your activities at each worker's rate. Pick the dates you want, and see the total, the busiest months and who worked the most. Every report is kept on the Saved Reports tab.</p>
         </div>
     </div>
     {{-- The wizard: set the slice, then generate. Results come after, not under. --}}
     <div class="card p-4 mb-4 lr-filters" id="lrWizard">
         <p class="text-sm font-bold text-gray-900">What should the report cover?</p>
-        <p class="text-xs text-gray-500 mt-1 mb-3">Every filter is optional — left alone, the report covers the whole season's labor. The finished report lands on the Saved shelf by itself.</p>
+        <p class="text-xs text-gray-500 mt-1 mb-3">All filters are optional. Leave them empty to cover the whole season. Each report is saved for you.</p>
         @if ($schedule->workers->count())
             <div class="mb-2">
                 <span class="form-label text-xs! mb-1!">Workers</span>
@@ -351,7 +351,7 @@
         <p id="laborFilterHint" class="text-xs text-gray-500 mt-2"></p>
         {{-- Full-width actions: whole buttons, no thumb-hunting. --}}
         <div class="grid grid-cols-1 sm:grid-cols-[2fr_1fr] gap-2 mt-3">
-            <button type="button" id="laborGenerateBtn" class="btn btn-primary w-full">Generate the report</button>
+            <button type="button" id="laborGenerateBtn" class="btn btn-primary w-full">Make the report</button>
             <button type="button" id="laborResetFiltersBtn" class="btn btn-white w-full">Reset</button>
         </div>
     </div>
@@ -364,7 +364,7 @@
             <div id="lrSavedEmpty" class="hidden rx-empty">
                 <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2z"/></svg></span>
                 <p class="rx-empty-t">Nothing saved yet</p>
-                <p class="rx-empty-p">Generate a labor report and it lands here by itself — every one you make, newest first, ready to rename and describe.</p>
+                <p class="rx-empty-p">Each labor report you make is saved here, newest first. You can rename it and add a note.</p>
             </div>
         </div>
     </div>
@@ -421,7 +421,7 @@
                     <div class="lr-legend mt-4">
                         <span><i style="background:#d97706"></i>Land Preparation</span>
                         <span><i style="background:#15803d"></i>Main Cropping</span>
-                        <span id="lrLegendUna" class="hidden"><i style="background:#2563eb"></i>Unanchored</span>
+                        <span id="lrLegendUna" class="hidden"><i style="background:#2563eb"></i>No start day</span>
                     </div>
                     <div class="lr-rows" id="lrWorkersChart"></div>
                 </div>
@@ -447,7 +447,7 @@
         <div class="flex items-center gap-3 mb-2">
             <button type="button" id="lrLotsAll" class="text-xs font-bold text-brand-700">Select all</button>
             <span class="text-gray-300">·</span>
-            <button type="button" id="lrLotsNone" class="text-xs font-bold text-brand-700">None (= every lot)</button>
+            <button type="button" id="lrLotsNone" class="text-xs font-bold text-brand-700">None (all lots)</button>
         </div>
         <div class="dt-rows" id="lrLotsList">
             @foreach ($schedule->lots as $lot)
@@ -474,7 +474,7 @@
         <div class="flex items-center gap-3 mb-2">
             <button type="button" id="lrWorkersAll" class="text-xs font-bold text-brand-700">Select all</button>
             <span class="text-gray-300">·</span>
-            <button type="button" id="lrWorkersNone" class="text-xs font-bold text-brand-700">None (= everyone)</button>
+            <button type="button" id="lrWorkersNone" class="text-xs font-bold text-brand-700">None (all workers)</button>
         </div>
         <div class="dt-rows" id="lrWorkersList">
             @foreach ($schedule->workers as $w)
@@ -509,7 +509,7 @@
         </button>
         <button type="button" class="dt-row" data-lr-pane="lrPaneBreakdown" data-icon="🧾">
             <span class="dt-row-e">🧾</span>
-            <span class="dt-row-body"><b>Breakdown</b><i>Every worker and every activity, card by card</i></span>
+            <span class="dt-row-body"><b>Breakdown</b><i>Each worker and each activity</i></span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </button>
     </div>
@@ -752,19 +752,19 @@ const __init = () => {
                 const snap = await api(U.snapshot, { method: 'POST', body: {
                     scheduleId: @json($schedule->id),
                     kind: 'labor',
-                    title: 'Labor Report — ' + SCHEDULE_TITLE + (Object.keys(filters).length ? ' (filtered)' : ''),
+                    title: 'Labor Report · ' + SCHEDULE_TITLE + (Object.keys(filters).length ? ' (filtered)' : ''),
                     body: buildText(),
                     params: filters,
                     report: DATA,
                 } });
-                SAVED = { id: snap.data.id, mine: true, title: 'Labor Report — ' + SCHEDULE_TITLE + (Object.keys(filters).length ? ' (filtered)' : ''), description: '' };
-                savedNote = ' It is saved on the Saved Reports shelf.';
+                SAVED = { id: snap.data.id, mine: true, title: 'Labor Report · ' + SCHEDULE_TITLE + (Object.keys(filters).length ? ' (filtered)' : ''), description: '' };
+                savedNote = ' It is saved in Saved Reports.';
             } catch (err) {
                 SAVED = { id: null, mine: true };
                 toast(err.message, 'error');
             }
             showReport('fresh');
-            toast('Labor report generated.' + savedNote);
+            toast('Labor report ready.' + savedNote);
         } catch (err) {
             toast(err.message, 'error');
         } finally {
@@ -784,7 +784,7 @@ const __init = () => {
         if (SAVED.id && SAVED.mine && MAY_GEN) actions.push({ label: 'Name & description', icon: 'pen', onClick: () => openMetaFor(SAVED) });
         if (SAVED.id && SAVED.mine && MAY_GEN) actions.push({ label: 'Delete', icon: 'trash', kind: 'danger', onClick: deleteShown });
         window.reportView.open({
-            title: SAVED.title || ('Labor Report — ' + SCHEDULE_TITLE),
+            title: SAVED.title || ('Labor Report · ' + SCHEDULE_TITLE),
             node: $id('lrBody'),
             actions,
             onClose: () => { showTab(false); },
@@ -801,7 +801,7 @@ const __init = () => {
     }
     async function deleteShown() {
         if (!SAVED.id) return;
-        const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this saved report?', message: 'It leaves the shelf. The season\'s numbers stay — a new report can always be generated.', confirmText: 'Delete' }) : confirm('Delete this report?');
+        const ok = window.confirmAction ? await window.confirmAction({ title: 'Delete this saved report?', message: 'Your season records stay. You can make a new report any time.', confirmText: 'Delete' }) : confirm('Delete this report?');
         if (!ok) return;
         try {
             await api(U.del(SAVED.id), { method: 'DELETE' });
@@ -849,7 +849,7 @@ const __init = () => {
             ['Land Preparation', `${DAY_TYPE} < 0`, ph.preDayZero, PHASE.pre],
             ['Main Cropping', `${DAY_TYPE} 0 onwards`, ph.cropping, PHASE.crop],
         ];
-        if ((ph.unanchored || {}).count > 0) tiles.push(['Unanchored', `no ${DAY_TYPE} 0`, ph.unanchored, PHASE.una]);
+        if ((ph.unanchored || {}).count > 0) tiles.push(['No start day', `no ${DAY_TYPE} 0`, ph.unanchored, PHASE.una]);
         $id('lrTiles').innerHTML = tiles.map(([label, sub, p, color]) => {
             p = p || { count: 0, cost: 0 };
             const pct = d.grandTotal > 0 ? Math.round((p.cost / d.grandTotal) * 100) : 0;
@@ -904,7 +904,7 @@ const __init = () => {
         const busiest = series.reduce((a, b) => (val(b) > val(a) ? b : a), series[0]);
         $id('lrMonthsSub').textContent = max > 0
             ? `${busiest.full} is the busiest month ${METRIC === 'cost' ? `at ${fmtPeso0(busiest.cost)} of labor` : `with ${busiest.count} activities`}.`
-            : 'Nothing scheduled in this slice.';
+            : 'Nothing planned in this range.';
 
         const ticks = [0, .25, .5, .75, 1].map((f) => f * top);
         const fmtTick = (v) => METRIC === 'cost' ? ((window.ANEE_REGION || {}).symbol || '₱') + (v >= 1000 ? (v / 1000).toLocaleString() + 'k' : v.toLocaleString()) : String(v);
@@ -966,14 +966,14 @@ const __init = () => {
         const units = (w) => (w.halfDays || 0) + 2 * (w.wholeDays || 0);
         const busiest = workers.reduce((a, b) => (units(b) > units(a) ? b : a), workers[0]);
         $id('lrWorkersSub').textContent = (workers[0].total || 0) > 0
-            ? `${workers[0].name} earns the most at ${fmtPeso0(workers[0].total)}` + (units(busiest) > 0 ? `; ${busiest.name} carries the most work, ${units(busiest)} half-day${units(busiest) === 1 ? '' : 's'} of it.` : '.')
-            : 'No paid assignments in this slice.';
+            ? `${workers[0].name} earns the most, ${fmtPeso0(workers[0].total)}.` + (units(busiest) > 0 ? ` ${busiest.name} did the most work: ${units(busiest)} half day${units(busiest) === 1 ? '' : 's'}.` : '')
+            : 'No paid work in this range.';
         renderDonut(workers, units);
         host.innerHTML = workers.map((w, i) => {
             const segs = [
                 [PHASE.pre, w.preDayZeroTotal || 0, 'Land Preparation'],
                 [PHASE.crop, w.croppingTotal || 0, 'Main Cropping'],
-                [PHASE.una, w.unanchoredTotal || 0, 'Unanchored'],
+                [PHASE.una, w.unanchoredTotal || 0, 'No start day'],
             ].filter(([, v]) => v > 0);
             const width = ((w.total || 0) / max) * 100;
             return `<div class="lr-row" data-i="${i}">
@@ -991,7 +991,7 @@ const __init = () => {
                     [PHASE.pre, fmtPeso(w.preDayZeroTotal || 0), 'Land Preparation'],
                     [PHASE.crop, fmtPeso(w.croppingTotal || 0), 'Main Cropping'],
                 ];
-                if ((w.unanchoredTotal || 0) > 0) rows.push([PHASE.una, fmtPeso(w.unanchoredTotal), 'Unanchored']);
+                if ((w.unanchoredTotal || 0) > 0) rows.push([PHASE.una, fmtPeso(w.unanchoredTotal), 'No start day']);
                 rows.push([null, `${w.halfDays}H / ${w.wholeDays}W${w.naCount ? ` / ${w.naCount}N` : ''}`, 'assignments']);
                 showTip(e.clientX, e.clientY, w.name, rows);
             });
@@ -1034,13 +1034,13 @@ const __init = () => {
             <div class="lr-bcard">
                 <div class="lr-bcard-top"><b>${esc(w.name)}</b><span class="lr-bcard-amt">${fmtPeso(w.total)}</span></div>
                 <div class="lr-bcard-meta">
-                    <span class="badge badge-gray">${fmtPeso(w.costPerHalfDay)} / half-day</span>
+                    <span class="badge badge-gray">${fmtPeso(w.costPerHalfDay)} / half day</span>
                     <span class="badge badge-gray">${w.halfDays}H / ${w.wholeDays}W${w.naCount > 0 ? ` / ${w.naCount}N` : ''}</span>
                 </div>
                 <div class="lr-bphase">
                     <span><i style="background:${PHASE.pre}"></i>Land Prep ${fmtPeso(w.preDayZeroTotal || 0)}</span>
                     <span><i style="background:${PHASE.crop}"></i>Cropping ${fmtPeso(w.croppingTotal || 0)}</span>
-                    ${showUna ? `<span><i style="background:${PHASE.una}"></i>Unanchored ${fmtPeso(w.unanchoredTotal || 0)}</span>` : ''}
+                    ${showUna ? `<span><i style="background:${PHASE.una}"></i>No start day ${fmtPeso(w.unanchoredTotal || 0)}</span>` : ''}
                 </div>
             </div>`).join('')
             || '<p class="text-sm text-gray-400 py-4 text-center">No workers assigned yet.</p>';
@@ -1049,7 +1049,7 @@ const __init = () => {
         const TYPE_COLOR = { equipment_prep: '#6b7280', land_prep: '#b45309', seed_treatment: '#7c3aed', planting: '#15803d', irrigation: '#2563eb', service: '#0f766e', fertilizer: '#a16207', foliar_spray: '#0891b2', herbicide: '#65a30d', pesticide: '#dc2626', copper_fungicide: '#ea580c', fungicide: '#9333ea', microbial: '#0d9488', harvest: '#ca8a04', monitoring: '#4f46e5', worker_payroll: '#475569', reminder_checklist: '#059669', other: '#64748b' };
         const typeKey = (a) => a.activityType || '__none';
         const typeWord = (a) => a.typeLabel || 'No type';
-        const phaseWord = { preDayZero: 'Land Preparation', cropping: 'Main Cropping', unanchored: 'Unanchored' };
+        const phaseWord = { preDayZero: 'Land Preparation', cropping: 'Main Cropping', unanchored: 'No start day' };
         const phaseColor = { preDayZero: PHASE.pre, cropping: PHASE.crop, unanchored: PHASE.una };
         const dasWord = (das) => (das === null || das === undefined) ? null : `${DAY_TYPE}${das >= 0 ? '+' : ''}${das}`;
         const prettyRange = (a) => {
@@ -1077,13 +1077,13 @@ const __init = () => {
                 </div>
                 <div class="lr-act-more"><div class="lr-act-more-in"><div class="lr-act-more-pad">
                     <p class="lr-k">Who did it</p>
-                    ${hands.length ? `<div class="lr-hands">${hands.map((h) => `<div class="lr-hand${BREAK_WORKER !== null && String(h.id) === BREAK_WORKER ? ' is-me' : ''}"><b>${esc(h.name)}<small>${fmtPeso0(h.rate)} / half-day</small></b><span>${fmtPeso(h.pay)}</span></div>`).join('')}</div>` : '<p class="text-xs text-gray-400 mb-2">No worker assigned.</p>'}
+                    ${hands.length ? `<div class="lr-hands">${hands.map((h) => `<div class="lr-hand${BREAK_WORKER !== null && String(h.id) === BREAK_WORKER ? ' is-me' : ''}"><b>${esc(h.name)}<small>${fmtPeso0(h.rate)} / half day</small></b><span>${fmtPeso(h.pay)}</span></div>`).join('')}</div>` : '<p class="text-xs text-gray-400 mb-2">No worker assigned.</p>'}
                     <p class="lr-k">The day</p>
                     <div class="lr-facts">
                         <span class="badge badge-gray">${esc(prettyRange(a))}</span>
                         ${dasWord(a.das) ? `<span class="badge badge-gray">${esc(dasWord(a.das))}</span>` : ''}
                         <span class="badge badge-gray" style="color:${phaseColor[a.phase] || '#64748b'}">${esc(phaseWord[a.phase] || '')}</span>
-                        ${(a.lots || []).map((l) => `<span class="badge badge-gray">🌾 ${esc(l)}</span>`).join('') || '<span class="badge badge-gray">Not lot-specific</span>'}
+                        ${(a.lots || []).map((l) => `<span class="badge badge-gray">🌾 ${esc(l)}</span>`).join('') || '<span class="badge badge-gray">Not tied to a lot</span>'}
                     </div>
                 </div></div></div>
             </div>`;
@@ -1131,7 +1131,7 @@ const __init = () => {
             <div class="lr-filter-row">
                 <button type="button" class="crop-tag${active.length ? ' is-active' : ''}" id="lrActBtn" aria-haspopup="dialog">
                     <span class="crop-tag-e lr-filter-e">${FUNNEL}</span>
-                    <span class="crop-tag-t${active.length ? '' : ' is-none'}" id="lrActNow">${active.length ? esc(active.join(' · ')) : 'Filter · every type, every worker'}</span>
+                    <span class="crop-tag-t${active.length ? '' : ' is-none'}" id="lrActNow">${active.length ? esc(active.join(' · ')) : 'Filter · all types and workers'}</span>
                     ${active.length ? `<span class="lr-filter-n">${active.length}</span>` : ''}
                     <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>
@@ -1139,7 +1139,7 @@ const __init = () => {
             </div>
             <p class="lr-type-sum"><span>${shown.length} ${shown.length === 1 ? 'activity' : 'activities'} on ${dateKeys.length} ${dateKeys.length === 1 ? 'day' : 'days'}${workerName ? ` · ${esc(workerName)}'s pay` : ''}</span><strong>${fmtPeso(shownCost)}</strong></p>
             <div class="lr-days${fresh ? ' is-fresh' : ''}">${dayGroups}</div>
-            ${!shown.length ? '<p class="text-sm text-gray-400 py-4 text-center">Nothing matches that filter in this slice.</p>' : ''}`;
+            ${!shown.length ? '<p class="text-sm text-gray-400 py-4 text-center">Nothing matches this filter.</p>' : ''}`;
         // The sheet's rows. Each list counts under the OTHER pick, so the
         // numbers say what a tap would show.
         const list = $id('lrActList');

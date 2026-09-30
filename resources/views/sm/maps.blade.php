@@ -212,7 +212,7 @@
          paragraph was one more thing between a farmer and their maps. --}}
     <div id="smapHome" @if ($openSaveQ) class="hidden" @endif>
         <div class="mp-grid" id="mpGrid"></div>
-        <p class="mp-empty hidden" id="mpEmpty">No maps yet. Start one above — draw your fields over the real ground, measure them, and save the plan with a name. Every season can use it: attach it to a lot, an activity or a day.</p>
+        <p class="mp-empty hidden" id="mpEmpty">No maps yet. Start one above: draw your fields, measure them, and save with a name. Then attach it to a lot, an activity or a day.</p>
     </div>
 
     <div id="smapStageWrap" @unless ($openSaveQ) class="hidden" @endunless>
@@ -293,7 +293,7 @@
                     <div class="mp-meta">
                         <span class="mp-name">The canvas</span>
                         <div class="mp-tags"><span class="badge badge-green">${liveCount} shape${liveCount === 1 ? '' : 's'}</span></div>
-                        <span class="mp-when">Continue where the map was left</span>
+                        <span class="mp-when">Pick up where you left off</span>
                     </div>
                 </div>`;
             }
@@ -317,7 +317,7 @@
                             <span class="badge ${sv.mine === false ? 'badge-blue' : 'badge-green'}">${sv.mine === false ? 'Farm map' : 'My map'}</span>
                             ${sv.season ? `<span class="badge badge-gray" title="The season it was first drawn in">${esc(sv.season)}</span>` : ''}
                             <span class="badge badge-gray">${sv.count} shape${sv.count === 1 ? '' : 's'}</span>
-                            ${sv.noteHref ? `<a class="badge badge-gray mp-innote" href="${esc(sv.noteHref)}" title="Open the note this map filed its picture in">`
+                            ${sv.noteHref ? `<a class="badge badge-gray mp-innote" href="${esc(sv.noteHref)}" title="Open the note that holds this map">`
                                 + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:.7rem;height:.7rem"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.6L19 9.4V19a2 2 0 01-2 2z"/></svg>'
                                 + 'In a note</a>' : ''}
                         </div>
@@ -511,7 +511,7 @@
                 const del = e.target.closest('#mpMetaDelete');
                 if (del && metaSave) {
                     const ok = window.confirmAction
-                        ? await confirmAction({ title: 'Delete this map?', message: '“' + (metaSave.title || 'Map') + '” goes from your Maps, and from every lot and season that uses it.', confirmText: 'Delete map', danger: true })
+                        ? await confirmAction({ title: 'Delete this map?', message: '“' + (metaSave.title || 'Map') + '” will be removed from your Maps and from every lot and season that uses it.', confirmText: 'Delete map', danger: true })
                         : confirm('Delete this map?');
                     if (!ok) return;
                     del.disabled = true;
@@ -685,7 +685,7 @@
         <div>
             <label class="form-label" for="mpMetaDesc">What is this map about? <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="mpMetaDesc" class="form-textarea" rows="3" maxlength="2000"></textarea>
-            <p class="form-hint">Also updates the note this map filed its picture in.</p>
+            <p class="form-hint">This also updates the note that holds this map.</p>
         </div>
     </div>
     <div class="sheet-footer">

@@ -8,7 +8,7 @@
         <div class="text-center mb-6">
             <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-12 w-auto mx-auto mb-4">
             <h1 class="text-2xl font-bold text-gray-900">Forgot your password?</h1>
-            <p class="text-sm text-gray-500 mt-1">Enter your email and we will send you a link to reset it.</p>
+            <p class="text-sm text-gray-500 mt-1">Enter your email. We will send a link to reset it.</p>
         </div>
 
         <div class="card card-body">

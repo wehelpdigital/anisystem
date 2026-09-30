@@ -49,11 +49,11 @@
      data-video-field="{{ $videoField ?? 'video' }}"
      data-kinds="{{ $kinds ?? 'image,video' }}">
     <div class="ab-row" role="group" aria-label="{{ $label ?? 'Attach something' }}">
-        <button type="button" class="ab-btn" data-ab="gallery" title="Choose something already saved for this season">
+        <button type="button" class="ab-btn" data-ab="gallery" title="Pick from this season's gallery">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l4-4 4 4 3-3 5 5"/><circle cx="9" cy="8.5" r="1.3"/></svg>
             <span>Gallery</span>
         </button>
-        <button type="button" class="ab-btn" data-ab="upload" title="Choose a file already on this device">
+        <button type="button" class="ab-btn" data-ab="upload" title="Pick a file from this device">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0-12l-4 4m4-4l4 4"/></svg>
             <span>Upload</span>
         </button>
@@ -69,7 +69,7 @@
                     : \App\Support\Tier::farmUnlocksAt('videoRecording');
             @endphp
             <button type="button" class="ab-btn js-video-record {{ $abVidLocked ? 'tl-dim' : '' }}" title="Record a video"
-                    @if ($abVidLocked) data-tier-lock="{{ $abVidRung }}" data-lock-say="{{ \App\Support\Tier::say($abVidRung, 'Video recording comes with {plan}. Photos and voice stay yours on every plan.') }}" @endif>
+                    @if ($abVidLocked) data-tier-lock="{{ $abVidRung }}" data-lock-say="{{ \App\Support\Tier::say($abVidRung, 'Video recording comes with {plan}. Photos and voice notes work on every plan.') }}" @endif>
                 <svg viewBox="0 0 24 24" fill="currentColor" class="text-red-500"><circle cx="12" cy="12" r="7"/></svg>
                 <span>Record {{ $abVidLocked ? '🔒' : '' }}</span>
             </button>
@@ -201,7 +201,7 @@
                 setTimeout(() => row.remove(), 700);
                 resolve(json.data || {});
             });
-            xhr.addEventListener('error', () => fail('Upload failed — check your connection.'));
+            xhr.addEventListener('error', () => fail('Upload failed. Check your connection.'));
             xhr.addEventListener('abort', () => fail('Upload cancelled.'));
             xhr.send(form);
         });
@@ -212,8 +212,8 @@
         const video = isVideo(file);
         const url = video ? bar.dataset.videoUrl : bar.dataset.imageUrl;
         if (!url) {
-            say(video ? 'This only takes photos — a clip has nowhere to go here.'
-                : 'There is nowhere to put a photo here.', 'error');
+            say(video ? 'Only photos can be added here.'
+                : 'Photos cannot be added here.', 'error');
             return;
         }
         const field = video ? (bar.dataset.videoField || 'video') : (bar.dataset.imageField || 'image');

@@ -68,13 +68,13 @@
 <div class="sheet hidden" id="{{ $cpId }}Sheet" style="--sheet-width:26rem" role="dialog" aria-label="Choose your country">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Which country is the farm in?</h3>
+        <h3 class="sheet-title">Pick your country</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
         <div class="country-search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-            <input type="text" id="{{ $cpId }}Search" class="form-input" autocomplete="off" placeholder="Search for a country">
+            <input type="text" id="{{ $cpId }}Search" class="form-input" autocomplete="off" placeholder="Search countries">
         </div>
         <div id="{{ $cpId }}List">
             @foreach (\App\Support\Region::countries() as $code => $cname)
@@ -85,7 +85,7 @@
                 </button>
             @endforeach
         </div>
-        <p class="country-none hidden" id="{{ $cpId }}None">No country matches that.</p>
+        <p class="country-none hidden" id="{{ $cpId }}None">No country found.</p>
     </div>
 </div>
 

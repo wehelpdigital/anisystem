@@ -64,7 +64,7 @@ document.addEventListener('click', async (e) => {
             toast(reason, 'error');
         }
     } catch (_) {
-        toast('Network error — try again.', 'error');
+        toast('Network error. Please try again.', 'error');
     } finally {
         btn.classList.remove('is-busy');
     }

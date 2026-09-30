@@ -192,8 +192,8 @@ const __init = () => {
 
         byId('calEmpty').classList.toggle('hidden', total === 0 || monthCount > 0);
         byId('calEmptyHint').textContent = total === 0
-            ? 'Add an activity, or clear your filters if you have any set.'
-            : 'Use the arrows to find the months with work in them.';
+            ? 'Add an activity, or clear your filters.'
+            : 'Use the arrows to find months with work.';
     }
 
     /* ---------------------------------------------------------------- *

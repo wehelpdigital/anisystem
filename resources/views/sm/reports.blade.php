@@ -21,7 +21,7 @@
         $reports = [
             [
                 'label' => 'Labor Report',
-                'desc' => 'Worker days and labor cost across the schedule.',
+                'desc' => 'Worker days and labor cost for the season.',
                 'url' => route('sm.labor.report', ['id' => $schedule->id]),
                 'img' => asset('images/icons/tea.png'),
                 'badge' => null,
@@ -36,28 +36,28 @@
             ],
             [
                 'label' => 'Profit Report',
-                'desc' => 'Your harvest profit and income vs your whole spend, expenses, and labor cost.',
+                'desc' => 'What your harvest earned against all you spent.',
                 'url' => route('sm.profit.report', ['id' => $schedule->id]),
                 'img' => asset('images/icons/profit.png'),
                 'badge' => null,
             ],
             [
                 'label' => 'Anee Season Report',
-                'desc' => 'Anee reads your whole finished season, deeply analyzes it, and shows you what went wrong, what to improve, and what you did great.',
+                'desc' => 'Anee reads your finished season and shows what went well, what went wrong and what to improve.',
                 'url' => route('sm.anee.season', ['id' => $schedule->id]),
                 'img' => asset('images/anee/emoji/thinking.png'),
                 'badge' => null,
             ],
             [
                 'label' => 'Analyze So Far',
-                'desc' => 'Analyze your current cropping schedule, where the crop stands, the potential risks, and what to do next.',
+                'desc' => 'Where your crop stands now, the risks ahead and what to do next.',
                 'url' => route('sm.anee.sofar', ['id' => $schedule->id]),
                 'img' => asset('images/icons/calendar.png'),
                 'badge' => null,
             ],
             [
                 'label' => 'View as Protocol',
-                'desc' => 'View your cropping schedule into an easy to read protocol for your better analysis.',
+                'desc' => 'One lot\'s finished work as a step by step recipe.',
                 'url' => route('sm.protocol.report', ['id' => $schedule->id]),
                 'img' => asset('images/icons/checklist.png'),
                 'badge' => null,
@@ -73,7 +73,7 @@
     @foreach ($reports as $r)
         @php $rLocked = ! $shelfOpen && empty($r['free']); $rRung = $rLocked ? \App\Support\Tier::scheduleUnlocksAt($schedule, 'reportsAll') : ''; @endphp
         <a href="{{ $r['url'] }}" class="card card-hover block"
-           @if ($rLocked) data-tier-lock="{{ $rRung }}" data-lock-say="The {{ $r['label'] }} comes with {{ \App\Support\Tier::withPlan($rRung) }} — every plan includes the Labor report." @endif>
+           @if ($rLocked) data-tier-lock="{{ $rRung }}" data-lock-say="The {{ $r['label'] }} comes with {{ \App\Support\Tier::withPlan($rRung) }}. Every plan has the Labor Report." @endif>
             <div class="p-4 flex items-start gap-3">
                 <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center shrink-0 {{ $rLocked ? 'tl-dim' : '' }}">
                     <img src="{{ $r['img'] }}" alt="" class="w-7 h-7" style="object-fit:contain" loading="lazy">
