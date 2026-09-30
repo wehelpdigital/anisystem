@@ -230,7 +230,7 @@
                     <span class="qa-ico"><img src="{{ asset('images/icons/ab-testing.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                     <span class="qa-txt {{ $qCmpLocked ? 'tl-dim' : '' }}">
                         <b>Compare Reports</b>
-                        <i>Hold two saved reports side by side — this season against the last, one field against another — and see what changed.</i>
+                        <i>Compare different reports of the same type, see the difference, and let Anee analyze it.</i>
                     </span>
                     @if ($qCmpLocked)
                         <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>

@@ -45,6 +45,23 @@
         line-height: 1.5; background: rgb(255 255 255 / .6); border: 1px solid rgb(207 227 184 / .8); }
 
     .wtp-wiz { position: relative; overflow: hidden; }
+    /* Held until the options and the price card above are painted, then
+       shown in one fade: before, the first step showed, and a moment later
+       the price card landed on top of it and shoved it down the screen, so
+       the step seemed to arrive twice. Gives up and shows itself after six
+       seconds, so a page whose options never come is still usable. */
+    .an-wait { visibility: hidden; position: relative; min-height: 14rem;
+        animation: anWaitGiveUp 0s 6s forwards; }
+    .an-wait::before { content: ''; visibility: visible; position: absolute; left: 50%; top: 5rem;
+        width: 1.6rem; height: 1.6rem; margin-left: -.8rem; border-radius: 999px;
+        border: 3px solid var(--color-brand-100, #dcebc9); border-top-color: var(--color-brand-600, #4e7a2a);
+        animation: anWaitSpin .8s linear infinite, anWaitGone 0s 6s forwards; }
+    @keyframes anWaitSpin { to { transform: rotate(360deg); } }
+    @keyframes anWaitGone { to { opacity: 0; } }
+    @keyframes anWaitGiveUp { to { visibility: visible; } }
+    .an-in { animation: anIn .28s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes anIn { from { opacity: 0; } to { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .an-in { animation: none; } .an-wait::before { animation: none; } }
     .wtp-step { display: none; }
     .wtp-step.is-on { display: block; animation: wtpIn .32s cubic-bezier(.22,1,.36,1) both; }
     @keyframes wtpIn { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
@@ -610,7 +627,7 @@
         <button type="button" class="wtp-tab" id="cpTabSaved">Saved</button>
     </div>
 
-    <div id="cpGen">
+    <div id="cpGen" class="an-wait">
         <div class="wtp-quote" id="cpQuote" hidden>
             <button type="button" class="q-head" id="cpQuoteHead" aria-expanded="true">
                 <span class="q-ico">📋</span>
@@ -809,6 +826,13 @@
             OPT = res.data;
             paintOptions();
         } catch (err) { toast(err.message, 'error'); }
+        // Painted: the price card and the wizard arrive together, once.
+        const gen = $id('cpGen');
+        if (gen && gen.classList.contains('an-wait')) {
+            gen.classList.remove('an-wait');
+            gen.classList.add('an-in');
+            setTimeout(() => gen.classList.remove('an-in'), 400);
+        }
     }
 
     /* A label with " — " in it is a name and its words: the words go small under the name. */
