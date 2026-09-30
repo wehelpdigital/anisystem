@@ -19,7 +19,7 @@
     "when fertilization occurs",
     "corn seed grow a garden roblox"
   ],
-  "excerpt": "The corn seeds you buy set the ceiling on your harvest before the first rain falls. This guide covers the kinds of seed sold in the Philippines. It shows how to pick a variety of corn for your field and your buyer. It also gives the seeding rate and spacing from the DA, and the care that turns seed into an even stand of corn seedlings.",
+  "excerpt": "The corn seeds you plant limit how well the crop can do, whatever you spend on fertilizer later. This guide covers the kinds of seed sold in the Philippines. It shows how to pick a variety of corn for your field and your buyer. It also gives the seeding rate and spacing from the DA, and the care that turns seed into an even stand of corn seedlings.",
   "heroImage": {
     "src": "/images/site/corn-rows.jpg",
     "alt": "Even rows of young corn plants grown from corn seeds in a freshly weeded field",
@@ -60,7 +60,7 @@
     },
     {
       "type": "text",
-      "text": "The Philippines approved genetically modified corn for planting in 2002, the first country in Asia to allow Bt corn. Two traits matter in the field. Bt protects the plant from the Asiatic corn borer, while herbicide tolerance lets you control weeds with one broad spectrum herbicide.\n\nGM corn covered about 709,000 hectares by February 2024, based on the USDA 2024 biotechnology report. That is around 85 percent of the country's corn area. Nearly all of it carries both traits stacked. The Bureau of Plant Industry keeps the official list of GM corn events approved for planting."
+      "text": "The Philippines approved genetically modified corn for planting in 2002, the first country in Asia to approve a GM crop for food and feed. Two traits matter in the field. Bt protects the plant from the Asiatic corn borer, while herbicide tolerance lets you control weeds with one broad spectrum herbicide.\n\nGM corn covered about 709,000 hectares by February 2024, based on the USDA 2024 biotechnology report. That is around 85 percent of the country's corn area. Nearly all of it carries both traits stacked. The Bureau of Plant Industry keeps the official list of GM corn events approved for planting."
     },
     {
       "type": "heading",
@@ -75,12 +75,12 @@
         "**Match the season.** Corn matures in about 95 to 120 days after planting, depending on variety, season and location. A shorter maturing variety fits a tight dry season window better.",
         "**Read the resistance.** Seed tags and DA variety lists rate resistance to corn borer, earworm and leaf diseases. Pick resistance to the problems your area already has.",
         "**Buy certified seed.** The DA guide recommends certified seeds. Buy sealed bags from an accredited dealer or through your municipal agriculture office, and check the variety name and lot number on the tag.",
-        "**Ask what worked next door.** A corn breed that did well on your neighbor's soil, in your weather, is a safer bet than a new name you have never seen grow."
+        "**Ask what worked next door.** Farmers often say corn breed when they mean variety. One that did well on your neighbor's soil, in your weather, is a safer bet than a new name you have never seen grow."
       ]
     },
     {
       "type": "text",
-      "text": "anee.io also has Variety Research and Comparison, plus [When to Plant Analysis](/features/when-to-plant-analysis) for your town. So you can test a variety of corn and a planting window against local weather before you spend on seed."
+      "text": "With the Anee plans, anee.io also has Variety Research and Comparison, plus [When to Plant Analysis](/features/when-to-plant-analysis) for your town. So you can test a variety of corn and a planting window against local weather before you spend on seed."
     },
     {
       "type": "heading",
@@ -120,7 +120,7 @@
     },
     {
       "type": "text",
-      "text": "Plant one seed per hill after setting the furrows, and cover it with about 3.5 cm of soil. If you grow green corn and want bigger ears, the same guide suggests a wider 30 by 75 cm spacing.\n\nAlso try to plant at the same time as the farms around you. Synchronous planting is the first defense the DA lists against the corn borer."
+      "text": "Plant one seed per hill after setting the furrows, and cover it with about 3.5 cm of soil. If you grow green corn and want bigger ears, the same guide suggests a wider 30 by 75 cm spacing.\n\nAlso try to plant at the same time as the farms around you. Synchronous planting is the first control the DA lists against the corn borer."
     },
     {
       "type": "heading",
@@ -129,7 +129,7 @@
     },
     {
       "type": "text",
-      "text": "In warm, moist soil a corn seedling can break the surface in as little as four days after planting, according to Purdue University. Crusted, cloddy or compacted soil slows or stops emergence, so prepare a fine, even seedbed before you plant.\n\nAbout a week after planting, walk the rows and count missing hills. Then replant the gaps quickly so the whole stand grows and ripens together."
+      "text": "In warm soil a corn seedling can break the surface in as little as four days after planting, according to Purdue University. Crusted, cloddy or compacted soil slows or stops emergence, so prepare a fine, even seedbed before you plant.\n\nAbout a week after planting, walk the rows and count missing hills. Then replant the gaps quickly so the whole stand grows and ripens together."
     },
     {
       "type": "list",
@@ -148,7 +148,7 @@
     {
       "type": "cta",
       "title": "Plan your corn season before you buy seed",
-      "text": "Create a free anee.io cropping schedule, add your lots and planting date, and every task from basal fertilizer to harvest lands on the calendar. Inventory keeps track of your seed and fertilizer as you use them.",
+      "text": "Create a free anee.io cropping schedule, add your lots and planting date, and every task from basal fertilizer to harvest lands on the calendar. On Solo Farmer and Farm Owner, Inventory also tracks your seed and fertilizer as you use them.",
       "label": "Create a free account",
       "url": "/signup"
     },

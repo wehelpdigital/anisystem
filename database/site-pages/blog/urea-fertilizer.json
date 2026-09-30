@@ -23,7 +23,7 @@
     "top dressing fertilizer",
     "fertilizer for rice"
   ],
-  "excerpt": "Urea fertilizer is the white abono sold in 50 kg bags marked 46 0 0. It carries 46 percent nitrogen, the most of any common solid fertilizer. That makes it the main nitrogen source for palay and mais in the Philippines. Here is what it does, when to apply it, how to stop losses, and what a bag costs.",
+  "excerpt": "Urea fertilizer is the white abono sold in 50 kg bags marked 46 0 0. It carries 46 percent nitrogen, the most of any common solid fertilizer. That makes it the main nitrogen source for palay and mais in the Philippines. Below, you will see what it does, when to apply it, how to stop losses and what a bag costs.",
   "heroImage": {
     "src": "/images/site/guides/blog-urea-fertilizer.webp",
     "alt": "Urea fertilizer beads in a small glass jar",
@@ -32,7 +32,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Fertilizer in Tagalog is abono or pataba, and most farmers simply call this one urea. The agri supply sells two kinds. Prilled urea comes as small round beads, and granular urea as bigger, harder grains. Both are 46 0 0 fertilizer, and the Fertilizer and Pesticide Authority (FPA) tracks the price of each weekly. Our list of [farm words in Tagalog](/blog/farm-words-in-tagalog) covers the other names you will hear.\n\nUrea is cheap per kilo of nitrogen, but it is easy to waste. Put on at the wrong stage or left on wet ground, part of it never reaches the plant."
+      "text": "Fertilizer in Tagalog is abono or pataba, and most farmers simply call this one urea. The agri supply sells two kinds. Prilled urea comes as small round beads, and granular urea as bigger, harder grains. Both are 46 0 0 fertilizer, and the Fertilizer and Pesticide Authority (FPA) tracks the price of each weekly. Our list of [farm words in Tagalog](/blog/farm-words-in-tagalog) covers the other names you will hear.\n\nUrea is cheap per kilo of nitrogen, but it is easy to waste. If it goes on at the wrong stage or sits on wet ground, part of it never reaches the plant."
     },
     {
       "type": "heading",
@@ -147,7 +147,7 @@
     },
     {
       "type": "text",
-      "text": "Prices move every week, so check before you buy. The FPA dealer survey for September 14 to 18, 2026 gives the national weighted averages. Prilled urea stood at **PHP 2,320.69** per 50 kg bag and granular urea at **PHP 2,322.28**. By region, prilled urea ran from PHP 2,156.05 in the Cordillera to PHP 2,677.79 in Region IX.\n\nIn the week of January 5 to 9, 2026, prilled urea averaged PHP 1,694.25. That is about PHP 626 more per bag in eight months. The PSA also publishes a monthly update on fertilizer prices."
+      "text": "Prices move every week, so check before you buy. The FPA dealer survey for September 14 to 18, 2026 gives the national weighted averages. Prilled urea stood at **PHP 2,320.69** per 50 kg bag and granular urea at **PHP 2,322.28**. By region, prilled urea ran from PHP 2,156.05 in the Cordillera to PHP 2,677.79 in Region X.\n\nIn the week of January 5 to 9, 2026, prilled urea averaged PHP 1,694.25. That is about PHP 626 more per bag in eight months. The PSA also publishes a monthly update on fertilizer prices."
     },
     {
       "type": "table",
@@ -216,7 +216,7 @@
       "items": [
         {
           "title": "Know your nitrogen target",
-          "text": "Start from a soil test, the Rice Crop Manager, MOET or your technician. As a general guide, PhilRice lists 97 kg of nitrogen per hectare for irrigated lowland rice in the wet season. For the dry season it lists 139 kg."
+          "text": "Start from a soil test, the Rice Crop Manager, MOET or your technician. As a general guide only, the modified general recommendation of PhilRice lists 97 kg of nitrogen per hectare for irrigated lowland rice in the wet season and 139 kg in the dry season. Your own target may differ."
         },
         {
           "title": "Subtract the nitrogen from other fertilizers",

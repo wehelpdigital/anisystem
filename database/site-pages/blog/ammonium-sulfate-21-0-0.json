@@ -16,7 +16,7 @@
     "fertilizer nitrogen",
     "ammonia nitrate fertilizer"
   ],
-  "excerpt": "Ammonium sulfate fertilizer is the 21 0 0 abono that farmers call ammosul. It gives 21 percent nitrogen plus 24 percent sulfur, so it feeds two nutrients at once. Here is how to use it on palay, how it differs from urea, what it does to your soil over time, and why ammonium nitrate is a different story in the Philippines.",
+  "excerpt": "Ammonium sulfate fertilizer is the 21 0 0 abono that farmers call ammosul. It gives 21 percent nitrogen plus 24 percent sulfur, so it feeds two nutrients at once. This guide covers how to use it on palay, how it differs from urea, what it does to your soil over time, and why ammonium nitrate is a different story in the Philippines.",
   "heroImage": {
     "src": "/images/site/guides/blog-ammonium-sulfate-21-0-0.webp",
     "alt": "Clear crystals of ammonium sulfate, the salt sold as ammonium sulfate fertilizer",
@@ -126,7 +126,7 @@
     },
     {
       "type": "text",
-      "text": "Say your plan calls for 1 bag of urea at active tillering. That is 23 kg of nitrogen. To get the same from 21 0 0 fertilizer, divide 23 by 10.5 to get about 2.2 bags. At the September 2026 averages, that costs about PHP 2,658 against PHP 2,320.69 for the urea. For the extra PHP 338 or so, you also get about 26 kg of sulfur. Our [fertilizer calculation](/blog/fertilizer-calculation) guide shows the same math for other grades."
+      "text": "Say your plan calls for 1 bag of urea at active tillering. That is 23 kg of nitrogen. To get the same from 21 0 0 fertilizer, divide 23 by 10.5 to get about 2.19 bags, or 2.2 in round numbers. At the September 2026 averages, 2.19 bags cost about PHP 2,658 against PHP 2,320.69 for the urea. For the extra PHP 338 or so, you also get about 26 kg of sulfur. Our [fertilizer calculation](/blog/fertilizer-calculation) guide shows the same math for other grades."
     },
     {
       "type": "heading",
@@ -135,7 +135,7 @@
     },
     {
       "type": "text",
-      "text": "Many people search for 'ammonia nitrate fertilizer', but the product is ammonium nitrate. It carries about 34 percent nitrogen, half as nitrate and half as ammonium. It is a common fertilizer in some countries, but not here.\n\nIn 2002 the FPA issued Memorandum Circular No. 3, series of 2002. It cancelled the registration of solid ammonium nitrate as a fertilizer and banned its importation for farm use. The circular cites national security. The PNP had found the chemical among the ingredients of explosives used in bombing incidents. Before the ban, farmers used the agricultural grade for mango flower induction.\n\nAmmonium nitrate also falls under Republic Act 9516, the 2008 law on explosives, which covers nitrates. Anyone who imports, sells or possesses such chemicals needs a license from the PNP. If you want a nitrate source for your crop, the FPA list does include other products, like calcium ammonium nitrate. Our page on the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) explains how to check a registration."
+      "text": "Many people search for 'ammonia nitrate fertilizer', but the product is ammonium nitrate. It carries about 34 percent nitrogen, half as nitrate and half as ammonium. It is a common fertilizer in some countries, but not here.\n\nIn 2002 the FPA issued Memorandum Circular No. 3, series of 2002. It cancelled the registration of solid ammonium nitrate as a fertilizer and banned its importation for farm use. Agriculture officials gave national security as the reason and pointed to bombings in Bali and in Zamboanga del Norte, according to a Philstar report at the time. Before the ban, some farmers used it on mango.\n\nRepublic Act 9516 of 2008, the law on explosives, also covers nitrates and other chemicals that can be used to make explosives, and importing them takes a PNP license. The 2016 rules on controlled chemicals list ammonium nitrate as high risk, so making, trading or buying it needs a PNP license too. For mango growers, officials named potassium nitrate and calcium nitrate as replacements. Our page on the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) explains how to check a registration."
     },
     {
       "type": "heading",
@@ -179,7 +179,7 @@
         },
         {
           "q": "Can I buy ammonium nitrate fertilizer in the Philippines?",
-          "a": "Not as a registered farm fertilizer. The FPA cancelled its registration in solid form and banned its import for farm use in 2002. It is also a controlled chemical under Republic Act 9516."
+          "a": "Not as a registered farm fertilizer. The FPA cancelled its registration in solid form and banned its import for farm use in 2002. The 2016 rules on controlled chemicals also list it as high risk."
         }
       ]
     },
@@ -259,6 +259,14 @@
         {
           "label": "Wikipedia: Ammonium nitrate",
           "url": "https://en.wikipedia.org/wiki/Ammonium_nitrate"
+        },
+        {
+          "label": "Philstar (2002): Government bans imports of ammonium nitrate",
+          "url": "https://www.philstar.com/headlines/2002/11/27/185621/government-bans-imports-ammonium-nitrate"
+        },
+        {
+          "label": "Enviliance ASIA: Philippines publishes rules regulating chemicals that can be used as explosive ingredients",
+          "url": "https://enviliance.com/regions/southeast-asia/ph/report_4471"
         }
       ]
     }

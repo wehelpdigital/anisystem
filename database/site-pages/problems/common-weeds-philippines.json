@@ -33,7 +33,7 @@
     },
     {
       "type": "text",
-      "text": "Weeds take the sunlight, nutrients and water that should go to the palay, as PhilRice puts it. IRRI notes that weeds attract insects and rats, host diseases and clog irrigation canals. For example, Ischaemum rugosum is an alternate host of the tungro virus.\n\nTiming decides the damage. PhilRice advises keeping the rice field free of weeds from planting or sowing up to about 40 days, the critical age when young palay competes poorly. In corn, the Department of Agriculture's Cagayan Valley corn guide puts the most destructive period in the first 30 days."
+      "text": "Weeds take the sunlight, nutrients and water that should go to the palay, as PhilRice puts it. PhilRice adds that weeds shelter insects, rats and diseases. For example, Ischaemum rugosum is an alternate host of the tungro virus.\n\nTiming decides the damage. PhilRice advises keeping the rice field free of weeds from planting or sowing up to about 40 days, the critical age when young palay competes poorly. In corn, the Department of Agriculture's Cagayan Valley corn guide puts the most destructive period in the first 30 days."
     },
     {
       "type": "text",
@@ -61,11 +61,11 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Barnyard grass, Echinochloa crus galli.** A tall grass whose seed head rises above the rice. A PhilRice handout shows this kind of grass under the names bayakibok or telebisyon. In Iloilo and Nueva Ecija, some populations already resist butachlor and propanil, with cross resistance to pretilachlor.",
+        "**Barnyard grass, Echinochloa crus galli.** A tall grass whose seed head rises above the rice. PhilRice's weed guide gives the local names telebisyon, antena and bayakibok. In Iloilo and Nueva Ecija, some populations already resist butachlor and propanil, with cross resistance to pretilachlor.",
         "**Chinese sprangletop, Leptochloa chinensis.** Called pawa, palay maya or ikog kuring. It is a growing problem in wet seeded rice, it contaminates rice seed, and PhilRice notes that Nominee (bispyribac sodium) does not control it.",
         "**Ischaemum rugosum.** Called bulo bulo, limba limba or aguingay sa basak. It is aggressive in wet direct seeded rice, tolerates shade, and is one of the commonest seed contaminants.",
         "**Weedy rice, or damong palay.** A wild type of rice that looks like the crop but shatters its grain early. PhilRice recommends the stale seedbed technique against it.",
-        "**Itchgrass or aguingay, Rottboellia cochinchinensis.** A main grass weed of corn. The DA corn guide controls it with recommended pre emergence herbicides."
+        "**Itchgrass or aguingay, Rottboellia cochinchinensis.** A main grass weed of corn. The DA corn guide controls it with recommended pre emergence herbicides. Do not confuse it with aguingay sa basak, the name PhilRice gives to Ischaemum rugosum in wet rice."
       ]
     },
     {
@@ -82,8 +82,8 @@
       "ordered": false,
       "items": [
         "**Purple nutsedge, Cyperus rotundus.** Called mutha, sudsud or onod onod. It spreads by underground tubers. PhilRice warns that it has adapted from dry uplands to flooded lowlands, so flooding alone no longer controls it.",
-        "**Smallflower umbrella sedge, Cyperus difformis.** The PhilRice handout shows an umbrella sedge with round seed heads under the names payong payong or gumi. It grows thick in wet rice fields.",
-        "**Globe fringerush, Fimbristylis miliacea.** Another sedge weed of wet rice fields, with fine, grasslike leaves."
+        "**Smallflower umbrella sedge, Cyperus difformis.** PhilRice's weed guide gives the local names payong payong and siraw siraw. It grows thick in wet rice fields.",
+        "**Globe fringerush, Fimbristylis miliacea.** Called gumi or bungot bungot. Another sedge weed of wet rice fields, with fine, grasslike leaves."
       ]
     },
     {
@@ -104,8 +104,8 @@
       "ordered": false,
       "items": [
         "**Monochoria vaginalis.** Called gabi gabi, bilagut or lapalapa. It has shiny, heart shaped leaves like a small gabi and purple blue flowers.",
-        "**Gooseweed, Sphenoclea zeylanica.** Called mais maisan or sili silihan. It grows upright with narrow, pointed leaves and a short spike of flowers at the tip.",
-        "**Water primrose, Ludwigia species.** Upright plants with yellow flowers that grow in wet paddies and along levees.",
+        "**Gooseweed, Sphenoclea zeylanica.** PhilRice's weed guide lists mais mais and silisilihan. It grows upright with narrow, pointed leaves and a short spike of flowers at the tip.",
+        "**Water primrose, Ludwigia species.** Several species with yellow flowers, some upright, that grow in wet paddies and along levees.",
         "**Corn broadleaves.** The DA corn guide names mara kamote (Ipomoea triloba) and kalunay or kulitis (Amaranthus), which grow fast in the wet season."
       ]
     },
@@ -152,7 +152,7 @@
         [
           "Sedge",
           "Cyperus difformis",
-          "payong payong, gumi",
+          "payong payong, siraw siraw",
           "Rice"
         ],
         [
@@ -164,7 +164,7 @@
         [
           "Broadleaf",
           "Sphenoclea zeylanica",
-          "mais maisan, sili silihan",
+          "mais mais, silisilihan",
           "Rice"
         ],
         [
@@ -182,7 +182,7 @@
     },
     {
       "type": "text",
-      "text": "No single method works alone. PhilRice and IRRI both recommend combining clean seed, good land preparation, water, hand weeding and herbicides. Here is the order that works in most lowland fields:"
+      "text": "No single method works alone. PhilRice and IRRI both recommend combining clean seed, good land preparation, water, hand weeding and herbicides. In most lowland fields, this order works:"
     },
     {
       "type": "steps",

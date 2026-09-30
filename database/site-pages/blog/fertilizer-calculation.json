@@ -87,7 +87,7 @@
     },
     {
       "type": "text",
-      "text": "Say your recommendation for one hectare of irrigated palay reads 90 30 30. This is an example to learn the math, not a rate for your field. For reference, the PhilRice general recommendation for irrigated lowland is 97 kg of nitrogen per hectare in the wet season. In the dry season it is 139 kg."
+      "text": "Say your recommendation for one hectare of irrigated palay reads 90 30 30. This is an example to learn the math, not a rate for your field. For reference, the modified general recommendation of PhilRice for irrigated lowland is 97 kg of nitrogen per hectare in the wet season and 139 kg in the dry season."
     },
     {
       "type": "heading",
@@ -168,7 +168,7 @@
     },
     {
       "type": "text",
-      "text": "The FPA publishes dealer prices every week. Its report for September 14 to 18, 2026 put the fertilizer urea price at PHP 2,320.69 per bag. That is the national average for 50 kg of prilled urea, while granular averaged PHP 2,322.28. Regional averages for prilled urea ran from about PHP 2,156 in CAR to PHP 2,678 in Region IX. So your local price matters.\n\nTo compare sources, divide the bag price by the kilos of nutrient inside. Urea works out to about PHP 101 per kg of nitrogen, and ammonium sulfate to about PHP 116. PhilRice found that fertilizer made up about 8 percent of rice farmers' total production cost in 2020. Prices kept climbing after 2021. So a few minutes of fertilizer computation before you buy pays for itself."
+      "text": "The FPA publishes dealer prices every week. Its report for September 14 to 18, 2026 put the fertilizer urea price at PHP 2,320.69 per bag. That is the national average for 50 kg of prilled urea, while granular averaged PHP 2,322.28. Regional averages for prilled urea ran from about PHP 2,156 in CAR to PHP 2,678 in Region X. So your local price matters.\n\nTo compare sources, divide the bag price by the kilos of nutrient inside. Urea works out to about PHP 101 per kg of nitrogen, and ammonium sulfate to about PHP 116. PhilRice found that fertilizer made up about 8 percent of rice farmers' total production cost in 2020. PhilRice notes that fertilizer prices rose sharply from 2021. So a few minutes of fertilizer computation before you buy pays for itself."
     },
     {
       "type": "heading",

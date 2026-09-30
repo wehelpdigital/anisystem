@@ -12,10 +12,10 @@
     "alamat ng mais",
     "alamat ng palay"
   ],
-  "excerpt": "Ang alamat ng mais ay kuwentong bayan na nagpapaliwanag kung bakit may buhok ang mais at kung bakit parang mga hiyas ang butil nito. Dalawang bersiyon ang madalas ikuwento: ang tungkol kay Maita, ang dalagang may gintong buhok, at ang tungkol sa magkasintahang nagnakaw ng alahas. Narito ang dalawa, ang buod, ang banghay, ang aral, at ang totoong pinagmulan ng mais.",
+  "excerpt": "Ang alamat ng mais ay kuwentong bayan na nagpapaliwanag kung bakit may buhok ang mais at kung bakit parang mga hiyas ang butil nito. Marami ang bersiyon, at dalawa ang madalas ikuwento: ang tungkol kay Maita, ang dalagang may gintong buhok, at ang tungkol sa magkasintahang nagnakaw ng alahas. Narito ang dalawa, ang buod, ang banghay, ang aral, at ang totoong pinagmulan ng mais.",
   "heroImage": {
     "src": "/images/site/corn-rows.jpg",
-    "alt": "Mga hanay ng mais sa bukid, ang halamang pinagmulan ng alamat ng mais",
+    "alt": "Mga hanay ng batang mais sa bukid",
     "credit": ""
   },
   "blocks": [
@@ -116,7 +116,7 @@
     },
     {
       "type": "text",
-      "text": "Sa [alamat ng palay](/blog/alamat-ng-palay), regalo ng diyos o ng mga engkantada ang palay, at may kasamang ritwal ng pasasalamat bago umani. Sa alamat ng mais, galing ang halaman sa isang taong nawala, at ang aral ay tungkol sa ugali at tungkulin.\n\nPareho silang paraan ng ating mga ninuno para ipaliwanag ang pagkaing nasa hapag bawat araw. At pareho silang nagtuturo na ang ani ay hindi basta dumarating. May kasama itong pangangalaga, pagtupad sa pangako, at pasasalamat."
+      "text": "Sa ilang bersiyon ng [alamat ng palay](/blog/alamat-ng-palay), regalo ng diyos o ng mga engkantada ang palay, at may kasamang ritwal ng pasasalamat bago umani. Sa kuwento ni Maita naman, galing ang mais sa isang dalagang nawala, at ang aral ay tungkol sa ugali at tungkulin.\n\nPareho silang paraan ng pagpapaliwanag kung saan galing ang pagkaing nasa hapag bawat araw. At pareho silang nagtuturo na ang ani ay hindi basta dumarating. May kasama itong pangangalaga, pagtupad sa pangako, at pasasalamat."
     },
     {
       "type": "heading",
@@ -125,7 +125,7 @@
     },
     {
       "type": "text",
-      "text": "Magandang malaman ng mga estudyante na hindi katutubo sa Pilipinas ang mais. Ayon sa mga siyentipiko, pinaamo ito ng mga katutubo sa timog Mexico mga 9,000 taon na ang nakalipas mula sa isang ligaw na damong tinatawag na teosinte. Dinala ito sa Pilipinas noong panahon ng mga Espanyol, malamang sa Cebu, at ang pinakaunang tala ng taniman ng mais sa Cebu ay mula pa noong 1700s.\n\nNgayon, ang puting mais ang pangalawang pangunahing pagkain sa maraming lugar sa Visayas at Mindanao, kasunod ng bigas. Kaya may tinatawag tayong [mais rice](/crops/mais-rice), ang giniling na mais na isinasaing gaya ng kanin. Ang alamat ay kuwento ng aral, at ang kasaysayang ito ang totoong pinagmulan."
+      "text": "Magandang malaman ng mga estudyante na hindi katutubo sa Pilipinas ang mais. Ayon sa mga siyentipiko, pinaamo ito ng mga katutubo sa timog Mexico mga 9,000 taon na ang nakalipas mula sa isang ligaw na damong tinatawag na teosinte. Dinala ito sa Pilipinas noong panahon ng mga Espanyol, at sa Cebu unang nakilala ang taniman ng puting mais.\n\nNgayon, pangunahing pagkain pa rin ang puting mais sa maraming lugar sa Visayas at Mindanao, kasama o kapalit ng bigas. Kaya may tinatawag tayong [mais rice](/crops/mais-rice), ang giniling na mais na isinasaing gaya ng kanin. Ang alamat ay kuwento ng aral, at ang kasaysayang ito ang totoong pinagmulan."
     },
     {
       "type": "heading",
@@ -140,7 +140,7 @@
       "type": "callout",
       "tone": "tip",
       "title": "Para sa estudyante",
-      "text": "Kapag sinabi ng guro na alamat ng mais, itanong kung aling bersiyon. Kung walang binanggit, ang kuwento ni Maita ang pinakakaraniwan. Isulat din kung saan mo nabasa ang kuwento, dahil nagbabago ang pangalan ng mga tauhan sa bawat pinagkunan."
+      "text": "Kapag sinabi ng guro na alamat ng mais, itanong kung aling bersiyon. Kung walang binanggit, kadalasang kuwento ni Maita ang hinahanap. Isulat din kung saan mo nabasa ang kuwento, dahil nagbabago ang pangalan ng mga tauhan sa bawat pinagkunan."
     },
     {
       "type": "cta",
@@ -159,7 +159,7 @@
       "items": [
         {
           "q": "Sino ang pangunahing tauhan sa alamat ng mais?",
-          "a": "Sa pinakakilalang bersiyon, si Maita, isang dalagang may mahabang gintong buhok. Sa isa pang bersiyon, ang magkasintahang sina Minong at Celia."
+          "a": "Sa isang kilalang bersiyon, si Maita, isang dalagang may mahabang gintong buhok. Sa isa pang bersiyon, ang magkasintahang sina Minong at Celia."
         },
         {
           "q": "Ano ang aral ng alamat ng mais?",

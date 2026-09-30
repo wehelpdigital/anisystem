@@ -36,7 +36,7 @@
   "excerpt": "The NSIC has approved a long list of rice varieties in the Philippines, but most farms plant only a handful. This guide compares the popular NSIC inbreds, the main hybrids, special rice like Jasponica and the store brands you see at the market. Maturity and yield figures come from PhilRice and the seed companies.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
-    "alt": "A palay field in the Philippines planted to one rice variety",
+    "alt": "Palay heads filling out in a green rice field",
     "credit": ""
   },
   "blocks": [
@@ -64,7 +64,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice also gives its inbreds local names by environment. For example, Tubigan varieties suit irrigated lowland, while Sahod Ulan varieties suit rainfed lowland. Its free Binhing Palay app lets you search registered varieties and their traits, so it works as a Philippine rice variety list in your pocket."
+      "text": "PhilRice also gives its inbreds local names by environment. For example, Tubigan varieties suit irrigated lowland, while Sahod Ulan varieties suit rainfed lowland. Its Binhing Palay app lets you search registered varieties and their traits, so it works as a Philippine rice variety list in your pocket."
     },
     {
       "type": "heading",
@@ -132,7 +132,7 @@
     },
     {
       "type": "text",
-      "text": "Rc 222 matures in 114 days transplanted and 106 days direct seeded. It averaged 6.1 t/ha transplanted, up to 10.0 t/ha. PhilRice notes a yield edge in the wet season and good adaptation to both irrigated and rainfed fields. That is why PalayCheck recommends it for both seasons in Central Luzon."
+      "text": "Rc 222 was bred by IRRI and is now one of the most planted inbreds. It matures in 114 days transplanted and 106 days direct seeded. It averaged 6.1 t/ha transplanted, up to 10.0 t/ha. PhilRice notes a yield edge in the wet season and good adaptation to both irrigated and rainfed fields. That is why PalayCheck recommends it for both seasons in Central Luzon."
     },
     {
       "type": "heading",
@@ -159,7 +159,7 @@
     },
     {
       "type": "text",
-      "text": "SL Agritech Corporation (SLAC) is a private company that breeds, produces and sells hybrid rice seed and premium rice. Its best known hybrid is SL 8H. The company lists 7 to 17 t/ha, 105 to 115 days to maturity, 118 cm plant height and 12 to 28 productive tillers. SLAC also says SL 8H shatters little, so you can harvest it up to 90 percent grain maturity. Its other hybrids include SL 12H at 100 to 110 days and SL 18H at 110 to 115 days."
+      "text": "SL Agritech Corporation (SLAC) is a private company that breeds, produces and sells hybrid rice seed and premium rice. Its best known hybrid is SL 8H. For SL 8H the company lists 7 to 17 t/ha, 105 to 115 days to maturity, 118 cm plant height and 12 to 28 productive tillers. SLAC also says SL 8H shatters little, so you can harvest it up to 90 percent grain maturity. Those are company claims, so test them on your own lot."
     },
     {
       "type": "heading",
@@ -168,13 +168,13 @@
     },
     {
       "type": "text",
-      "text": "Jackpot 102, registered as NSIC Rc 666H, comes from Leads Agri, which says it introduced the hybrid in 2019. We could not find an official figure for the Jackpot rice variety maturity on the company website. The hybrids at the DA Bicol field day, Jackpot 102 among them, fell in the 104 to 118 day range. So read the days to maturity on the seed bag, or ask your dealer, before you date your season.\n\nOther hybrids at the same field day included Bigante Plus and Habilis Plus from Bayer and TH82 from SeedWorks. There were also NK 5017 from Syngenta, LP 2096 from LongPing and Mestizo 30 from Allied Botanical."
+      "text": "Jackpot 102, registered as NSIC Rc 666H, comes from Leads Agri Ventures, which calls it its first hybrid seed, introduced in 2019. We found no official figure for the Jackpot rice variety maturity. The DA Bicol report gives one range, 104 to 118 days after sowing, for all the hybrids shown at the field day, so it is not a number for Jackpot alone. Read the days to maturity on the seed bag, or ask your dealer, before you date your season.\n\nOther hybrids at the same field day included Bigante Plus and Habilis Plus from Bayer and TH82 from SeedWorks. There were also NK 5017 from Syngenta, LP 2096 from LongPing and Mestizo 30 from Allied Botanical."
     },
     {
       "type": "callout",
       "tone": "info",
       "title": "Brochure yields versus farm averages",
-      "text": "Seed company yields come from their best plots. For scale, the PSA put the national average palay yield at 4.14 tonnes per hectare in 2025. So compare any new variety with your own last seasons, not with a brochure."
+      "text": "Seed company yields usually describe best case fields. For scale, the PSA put the national average palay yield at 4.14 tonnes per hectare in 2025. So compare any new variety with your own last seasons, not with a brochure."
     },
     {
       "type": "heading",
@@ -183,7 +183,7 @@
     },
     {
       "type": "text",
-      "text": "Jasponica rice is a premium rice that SL Agritech sells under its Doña Maria brand, named after the mother of its chairman, Henry Lim. The company describes it as joining the aroma of jasmine rice with the eating quality of Japanese rice. When cooked it is soft, sticky and chewy, as a 2011 Philstar report put it. In stores it sells as packed milled rice.\n\nFor a true japonica, PhilRice released NSIC Rc 414, named Japonica 4, in 2016. Aromatic and glutinous types, like the malagkit used for kakanin, also belong to special rice."
+      "text": "Jasponica rice comes from SL Agritech, which describes it as a cross of Thai jasmine rice and Japanese rice. It is sold as premium milled rice under the Doña Maria brand, named after the mother of chairman Henry Lim. A 2011 Philstar report described the cooked grain as soft, sticky and chewy, with an aroma. Treat that as the company's description, since we found no PhilRice trial data for it.\n\nFor a true japonica, PhilRice announced NSIC Rc 414, named Japonica 4, in 2016. Aromatic and glutinous types, like the malagkit used for kakanin, also belong to special rice."
     },
     {
       "type": "heading",
@@ -208,7 +208,7 @@
       "ordered": true,
       "items": [
         "It suits your environment and season: irrigated or rainfed, dry or wet season.",
-        "It answers your local problem. In typhoon areas, pick a maturity that escapes the worst months. For example, PSB Rc 10 matures early, at 106 days.",
+        "It answers your local problem. In typhoon areas, pick a maturity that lets the crop escape the worst months.",
         "It did well in at least two seasons of adaptability trials by PhilRice or your DA office.",
         "Your buyer or miller wants it.",
         "Rotate varieties every 2 to 4 croppings, which PalayCheck advises as part of pest management."
@@ -221,7 +221,7 @@
     {
       "type": "cta",
       "title": "Track every variety you plant",
-      "text": "anee.io keeps each lot's variety, day count and yield, so you can compare one season with the next in the reports. You can also ask Anee in Tagalog or English which variety fits your town.",
+      "text": "anee.io keeps each lot's variety, day count and yield, so you can compare one season with the next in the reports on the paid plans. You can also ask Anee in Tagalog or English which variety fits your town.",
       "label": "Try anee.io free",
       "url": "/signup"
     },
@@ -243,7 +243,7 @@
         },
         {
           "q": "How many days is Jackpot 102?",
-          "a": "We found no official maturity figure from Leads Agri online. Hybrids shown at a 2023 DA Bicol field day, Jackpot 102 among them, matured in 104 to 118 days after sowing. Check the seed bag or ask your dealer."
+          "a": "We found no official maturity figure for Jackpot 102. A DA Bicol report on the 2023 field day gave one range, 104 to 118 days after sowing, for all the hybrids shown, Jackpot 102 among them. Check the seed bag or ask your dealer."
         },
         {
           "q": "Can I save seed from a hybrid crop?",
@@ -251,7 +251,7 @@
         },
         {
           "q": "Is Jasponica a rice variety?",
-          "a": "Jasponica is a premium rice that SL Agritech sells under its Doña Maria brand. The company says it joins jasmine aroma with the eating quality of Japanese rice."
+          "a": "Jasponica is SL Agritech's own rice, sold as premium milled rice under its Doña Maria brand. The company describes it as a cross of Thai jasmine rice and Japanese rice."
         }
       ]
     },

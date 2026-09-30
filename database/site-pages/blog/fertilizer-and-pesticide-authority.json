@@ -24,7 +24,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Fertilizer and pesticide are two of the biggest costs in a cropping season, often right after labor. A fake bag of complete fertilizer or a diluted bottle of insecticide does double damage. You lose the money, and you lose the yield the product was supposed to protect. So knowing how the FPA works is not paperwork. It protects your harvest."
+      "text": "Fertilizer and pesticide are among the biggest costs in a cropping season. A fake bag of complete fertilizer or a diluted bottle of insecticide does double damage. You lose the money, and you lose the yield the product was supposed to protect. So knowing how the FPA works is not paperwork. It protects your harvest."
     },
     {
       "type": "heading",
@@ -33,7 +33,7 @@
     },
     {
       "type": "text",
-      "text": "President Ferdinand Marcos Sr. created the FPA through Presidential Decree 1144, signed on May 30, 1977. It replaced the Fertilizer Industry Authority, which had been set up in 1973 during a fertilizer shortage and the oil crisis. The new agency took on pesticides too, because both inputs share the same buyers, stores and field technicians.\n\nThe FPA is attached to the Department of Agriculture. It moved to the office of the Presidential Assistant for Food Security in 2014 and came back to the DA in 2018. In Filipino its name is Pangasiwaan sa Pataba at Pestisidyo."
+      "text": "President Ferdinand Marcos Sr. created the FPA through Presidential Decree 1144, signed on May 30, 1977. It replaced the Fertilizer Industry Authority, which had been created in 1973. The new agency took on pesticides too, because both inputs share the same buyers, stores and field technicians.\n\nThe FPA is attached to the Department of Agriculture. It moved to the office of the Presidential Assistant for Food Security in 2014 and came back to the DA in 2018. In Filipino its name is Pangasiwaan sa Pataba at Pestisidyo."
     },
     {
       "type": "text",
@@ -91,7 +91,7 @@
         },
         {
           "title": "Search the product name",
-          "text": "Match the company, the product name and the registration number on your bag or bottle. Check that the expiry date of the registration has not passed."
+          "text": "Match the company, the product name and the registration number on your bag or bottle. Read the expiry date of the registration and make sure it has not passed, because a product can stay on a list after its registration lapses."
         },
         {
           "title": "Check the contents",

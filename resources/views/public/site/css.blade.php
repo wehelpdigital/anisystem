@@ -18,6 +18,22 @@
     .sp-meta span { display: inline-flex; align-items: center; gap: .3rem; }
     .sp-meta svg { width: .95rem; height: .95rem; color: #86b556; }
     .sp-figure { margin: 0; }
+    /* A feature page: its icon, and the screen shown in a frame. */
+    .sp-hero.is-feature { background: radial-gradient(60rem 22rem at 85% 0%, hsl(var(--h, 100) 70% 92%) 0%, transparent 70%), linear-gradient(180deg, #f6faf1 0%, #fff 100%); }
+    .sp-fbadge { display: inline-flex; align-items: center; gap: .6rem; font-size: .8rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: hsl(var(--h, 100) 55% 28%); }
+    .sp-fico { width: 2.6rem; height: 2.6rem; border-radius: .85rem; display: grid; place-items: center; color: hsl(var(--h, 100) 60% 30%);
+        background: linear-gradient(145deg, hsl(var(--h, 100) 70% 94%), hsl(var(--h, 100) 60% 85%)); box-shadow: inset 0 0 0 1px hsl(var(--h, 100) 50% 78%), 0 10px 22px -16px hsl(var(--h, 100) 40% 20% / .6); }
+    .sp-fico svg { width: 1.35rem; height: 1.35rem; }
+    .sp-figure.is-product { padding: .6rem; border-radius: 1.5rem; background: linear-gradient(160deg, #fff, #eef5e6); border: 1px solid #e1edd3; box-shadow: 0 30px 60px -40px rgb(20 33 12 / .55); }
+    .sp-fhero { display: grid; gap: 2rem; align-items: center; }
+    @media (min-width: 1024px) { .sp-fhero { grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 3.5rem; } }
+    .sp-phone { margin: 0 auto; width: min(100%, 17.5rem); padding: .55rem; border-radius: 2.3rem; background: linear-gradient(160deg, #22321a, #0f1a0a);
+        box-shadow: 0 0 0 1px rgb(255 255 255 / .08) inset, 0 40px 70px -40px rgb(20 33 12 / .7), 0 0 0 10px hsl(var(--h, 100) 60% 90% / .6); transform: rotate(2deg);
+        transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .sp-phone:hover { transform: rotate(0); }
+    .sp-phone img { display: block; width: 100%; max-height: 32rem; object-fit: cover; object-position: top; border-radius: 1.8rem; }
+    @media (prefers-reduced-motion: reduce) { .sp-phone { transform: none; transition: none; } }
+    .sp-figure.is-product img { aspect-ratio: 16 / 8.5; border-radius: 1.05rem; box-shadow: none; object-position: top center; }
     .sp-figure img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; border-radius: 1.25rem; box-shadow: 0 24px 48px -30px rgb(20 33 12 / .5); }
     .sp-figure figcaption { margin-top: .5rem; font-size: .75rem; color: #9ca3af; }
 

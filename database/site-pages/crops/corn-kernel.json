@@ -42,7 +42,7 @@
     },
     {
       "type": "text",
-      "text": "If you searched for corns in Tagalog, the word is mais, and a field planted to corn is a maisan. A single grain is a butil ng mais. Every corn kernel is a complete seed, so the grain you sell and the seed you plant are the same thing, only handled differently.\n\nThe corn scientific name is Zea mays L. Corn belongs to the grass family, Poaceae, the same family as [palay](/crops/palay) and sugarcane. That is also why a few pests, such as the fall armyworm, feed on both corn and rice.\n\nInside, a corn kernel has three main parts. The hull, or pericarp, is the thin outer skin. Most of the grain is endosperm, the starch that feeds the young plant. Near the narrow end lies the germ, or embryo, which grows into the new seedling. That narrow end, the tip cap, is where the kernel joined the cob."
+      "text": "If you searched for corns in Tagalog, the word is mais, and a field planted to corn is a maisan. A single grain is a butil ng mais. Every corn kernel is a complete seed, so the grain you sell and the seed you plant are the same thing, only handled differently.\n\nThe corn scientific name is Zea mays L. Corn belongs to the grass family, Poaceae, the same family as [palay](/crops/palay) and sugarcane. That is also why a few pests, such as the fall armyworm, can feed on both corn and rice.\n\nInside, a corn kernel has three main parts. The hull, or pericarp, is the thin outer skin. Most of the grain is endosperm, the starch that feeds the young plant. Near the narrow end lies the germ, or embryo, which grows into the new seedling. That narrow end, the tip cap, is where the kernel joined the cob."
     },
     {
       "type": "heading",
@@ -115,7 +115,7 @@
     },
     {
       "type": "text",
-      "text": "Corn flowers only once, and those few days decide how full each cob will be. Fertilization occurs when a grain of pollen from the tassel lands on a fresh silk. The pollen grows a tube down the silk to its ovule, and fertilization follows within about 24 hours, based on Iowa State University extension.\n\nEvery ovule on the ear has its own silk. So one silk that catches pollen gives one corn kernel, while a silk that misses leaves a gap on the cob. Silks stay receptive for about ten days, and a whole field sheds pollen over roughly 10 to 14 days.\n\nDrought or poor nutrition at this stage delays silking more than pollen shed, so the ear ends up with poor seed set. That is why the DA guide names the reproductive stage as the time to give supplemental water. On anee.io, the [growth stages](/features/growth-stages-and-weather) view shows which lots are near tasseling and silking on any date you pick, along with the week's weather for each lot."
+      "text": "Corn flowers only once, and those few days decide how full each cob will be. Fertilization occurs when a grain of pollen from the tassel lands on a fresh silk. The pollen grows a tube down the silk to its ovule, and fertilization follows within about 24 hours, based on Iowa State University extension.\n\nEvery ovule on the ear has its own silk. So one silk that catches pollen gives one corn kernel, while a silk that misses leaves a gap on the cob. Silks stay receptive for about ten days, and a whole field sheds pollen over roughly 10 to 14 days.\n\nDrought or poor nutrition at this stage delays silking more than pollen shed, so the ear ends up with poor seed set. That is why the DA guide names the reproductive stage as the time to give supplemental water. On anee.io, the [growth stages](/features/growth-stages-and-weather) view shows which lots are near tasseling and silking on any date you pick, along with the weather forecast for each lot."
     },
     {
       "type": "heading",
@@ -148,7 +148,7 @@
         [
           "Glutinous corn (lagkitan)",
           "White kernels that turn sticky when cooked",
-          "Boiled or roasted green corn, soups, cornick"
+          "Boiled or roasted green corn, soups, sticky snacks"
         ],
         [
           "Sweet corn",
@@ -193,11 +193,11 @@
     },
     {
       "type": "text",
-      "text": "Buyers quote corn per kilo of shelled grain, and the price moves with the season. Below are the latest national farmgate averages from the Philippine Statistics Authority (PSA). June 2026 is the most recent month the PSA has published for corn, and June 2025 is there for comparison."
+      "text": "Buyers quote corn per kilo of shelled grain, and the price moves with the season. Below are national farmgate averages from the Philippine Statistics Authority (PSA) OpenSTAT table. June 2026 was the latest month listed when we checked, and June 2025 sits beside it for comparison. Open the table for newer months."
     },
     {
       "type": "table",
-      "caption": "National average farmgate prices, PSA OpenSTAT cereals table (updated September 2026)",
+      "caption": "National average farmgate prices, PSA OpenSTAT cereals table, June 2025 and June 2026",
       "rows": [
         [
           "Commodity",
@@ -223,7 +223,7 @@
     },
     {
       "type": "text",
-      "text": "Your own corn kernel price can sit far from these averages. Buyers pay less for wet grain, broken kernels, dirt and moldy corn. The DA guide recommends drying grain to 14 percent moisture or lower for safe storage. It also sets aflatoxin limits of 20 ppb for food corn and 50 ppb for feeds. Distance to the buyer matters too, and prices often dip when every maisan in the area harvests at once.\n\nIf you record every sale in anee.io, the [farm reports](/features/farm-reports) keep each buyer, price and yield per season, so next year you can compare. For rice prices, see our [palay price guide](/blog/palay-price-philippines)."
+      "text": "Your own corn kernel price can sit far from these averages. Buyers pay less for wet grain, broken kernels, dirt and moldy corn. The DA guide recommends drying grain to 14 percent moisture or lower for safe storage. It also gives aflatoxin limits of 20 ppb for food corn and 50 ppb for feeds. Distance to the buyer matters too, and prices often dip when every maisan in the area harvests at once.\n\nOn the paid plans of anee.io, the [farm reports](/features/farm-reports) keep each buyer, price and yield per season, so next year you can compare. For rice prices, see our [palay price guide](/blog/palay-price-philippines)."
     },
     {
       "type": "callout",
@@ -234,7 +234,7 @@
     {
       "type": "cta",
       "title": "Run your maisan season on anee.io",
-      "text": "Set your planting date and anee.io dates every task by days after planting, shows each lot's growth stage and weather, and lets you ask Anee, the AI technician, in Tagalog or English. Anee can also look at a photo of a damaged ear and suggest what to check.",
+      "text": "Set your planting date and anee.io dates every task by days after planting. It also shows each lot's growth stage and weather, and lets you ask Anee, the AI technician, in Tagalog or English. Anee can look at a photo of a damaged ear and suggest what to check.",
       "label": "Sign up free",
       "url": "/signup"
     },
@@ -245,7 +245,7 @@
     },
     {
       "type": "text",
-      "text": "Watch for these pests from the whorl stage to harvest. The [asiatic corn borer](/problems/asian-corn-borer) bores into stalks, tassels and ear shanks, and in bad cases it damages the cob until the ears drop. The [fall armyworm](/problems/fall-armyworm) feeds in the whorl and can later bore into the ears. Corn earworms also cut the silks, which leaves unfilled kernels at the tip."
+      "text": "Watch for these pests from the whorl stage to harvest. The [asiatic corn borer](/problems/asian-corn-borer) bores into stalks, tassels and ear shanks, and in bad attacks the ears break and drop. The [fall armyworm](/problems/fall-armyworm) feeds in the whorl and can later bore into the ears. Corn earworms also cut the silks, which leaves unfilled kernels at the tip."
     },
     {
       "type": "heading",

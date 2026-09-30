@@ -19,7 +19,7 @@
   "excerpt": "Mais rice, also called corn rice or corn grits, is white corn milled into small grits and cooked like rice. It is a daily staple in many corn growing towns, and some families now mix it with rice for fiber and savings. Here is what mais rice is, how millers make it, what studies say about its benefits, and how it compares with the kinds of rice in the Philippines.",
   "heroImage": {
     "src": "/images/site/guides/crops-mais-rice.webp",
-    "alt": "A plate of cooked mais rice made from white corn grits, served in the Philippines",
+    "alt": "A white plate of cooked mais rice, the crumbly cooked white corn grits",
     "credit": "Obsidian Soul, CC0, via Wikimedia Commons"
   },
   "blocks": [
@@ -30,7 +30,7 @@
     },
     {
       "type": "text",
-      "text": "Mais rice is not rice at all. It is the hard, starchy part of white corn kernels, cracked into pieces close to the size of rice grains. Cooks steam or boil it like rice and serve it with ulam.\n\nMarkets sell it under several names: mais rice, corn rice, corn grits, bigas mais, and bugas mais in Cebuano. PSA price monitoring lists white corn grits in numbered sizes such as number 10, 12 and 14, so the grind can run from coarse to fine.\n\nWhite corn is a staple in parts of the Visayas and Mindanao. The DA Cagayan Valley corn guide also names northern Isabela and southern Cagayan as places where white corn is the daily food."
+      "text": "Mais rice is not rice at all. It is the hard, starchy part of white corn kernels, cracked into pieces close to the size of rice grains. Cooks steam or boil it like rice and serve it with ulam.\n\nMarkets sell it under several names: mais rice, corn rice, corn grits, bigas mais, and bugas mais in Cebuano. Sellers sort the grits by size, so the grind can run from coarse to fine.\n\nWhite corn is a staple in parts of the Visayas and Mindanao. The DA Cagayan Valley corn guide also names northern Isabela and southern Cagayan as places where white corn is the daily food."
     },
     {
       "type": "heading",
@@ -83,7 +83,7 @@
         "**Lower blood sugar response.** The same study measured a glycemic index of about 80 for pure QPM grits, 93 for a rice and grits mix, and 120 for milled rice, with white bread set at 100. It was a small study of ten healthy women, so treat it as a good sign, not a cure.",
         "**Better protein quality.** IPB Var 6, the white QPM variety UPLB promotes for grits, has more lysine and tryptophan than regular white corn.",
         "**Gluten free.** Corn grits contain no gluten, as the National Nutrition Council points out.",
-        "**Cheaper than rice in the UPLB example.** In 2018, UPLB put good rice at about PHP 60 a kilo and pure corn grits at about PHP 33. So a blend of 70 parts rice to 30 parts grits cost about PHP 47."
+        "**Cheaper than rice, by how much depends on the source.** In 2018, UPLB put good rice at about PHP 60 a kilo, pure corn grits at about PHP 33 and its 70 to 30 blend at about PHP 47. PhilRice reported a much smaller saving, about PHP 2 a kilo in some regions. Prices have moved since, so check your own market."
       ]
     },
     {
@@ -126,7 +126,7 @@
         ],
         [
           "Special and premium rice",
-          "Fancy or aromatic grains such as dinorado and jasmine types",
+          "Premium allows at most 5 percent broken kernels. Special covers named types such as aromatic rice",
           "Higher price"
         ],
         [
@@ -173,14 +173,14 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Start with a blend.** UPLB promotes a rice and corn blend called RiCo, with 70 parts rice to 30 parts corn grits. A PhilRice report also mentions 50 to 50 blends.",
+        "**Start with a blend.** UPLB promotes a rice and corn blend called RiCo, with 70 parts rice to 30 parts corn grits. A PhilRice report also mentions 50 to 50 blends in a cooking demonstration.",
         "**Cook them together.** Rinse the grits, mix them with the rice and cook them in the same pot.",
         "**Store it dry.** Keep the grits sealed and dry so they do not turn moldy or weevily."
       ]
     },
     {
       "type": "text",
-      "text": "If you grow white corn for grits, anee.io keeps your season on one [cropping calendar](/features/cropping-calendar), dated from each lot's planting day. After harvest, the [farm reports](/features/farm-reports) record your buyers and prices so you can compare seasons."
+      "text": "If you grow white corn for grits, anee.io keeps your season on one [cropping calendar](/features/cropping-calendar), dated from each lot's planting day. After harvest, the [farm reports](/features/farm-reports) on the paid plans record your buyers and prices so you can compare seasons."
     },
     {
       "type": "cta",

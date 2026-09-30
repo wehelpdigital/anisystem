@@ -6,7 +6,7 @@
   "category": "Crop pests",
   "title": "Hanip Insect: Mites, Aphids and How to Control Them",
   "metaTitle": "Hanip Insect: Mites and Aphids on Crops and Their Control",
-  "metaDescription": "Hanip insect is farm talk for tiny pests like mites. Learn the Tagalog words, the aphids scientific name, the damage they do and safe ways to control them.",
+  "metaDescription": "Hanip insect is farm talk for tiny pests such as planthoppers and mites. Learn the Tagalog words, the aphids scientific name, the damage and safe control.",
   "focusKeyword": "hanip insect",
   "keywords": [
     "hanip insect",
@@ -15,7 +15,7 @@
     "mite in tagalog",
     "thrips"
   ],
-  "excerpt": "In Tagalog, hanip is the tiny louse or flea of chickens, but farmers use the word for tiny crop pests too, like the white mites that Bulacan sampaguita growers call hanip na puti. So when someone reports a hanip insect problem on a crop, check for three suspects: mites, aphids and thrips. This page shows how to tell them apart and how to control them without wiping out their natural enemies or your budget.",
+  "excerpt": "In Tagalog dictionaries, hanip is the chicken louse or flea. In the field the word stretches to tiny crop pests. PhilRice uses kayumangging hanip for the brown planthopper of rice, and a UPLB survey in Bulacan recorded hanip na puti, white mites, on sampaguita. So when someone reports a hanip insect problem on a crop, look for mites, aphids and thrips, and for planthoppers if the crop is rice. This page shows how to tell them apart and how to control them without wiping out their natural enemies or your budget.",
   "heroImage": {
     "src": "/images/site/guides/problems-hanip-mites-and-aphids.webp",
     "alt": "Hanip insect pests: a colony of yellow cotton aphids, Aphis gossypii, feeding under a leaf",
@@ -24,7 +24,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Mites and aphids are small enough to miss and breed fast enough that a few this week can be a colony by the next. In warm weather a newborn aphid can start giving birth within about a week, all without mating. A single spider mite colony under a leaf can hold hundreds.\n\nNone of them is hard to kill with the right product. The hard part is finding them early, and not making them worse with the wrong spray."
+      "text": "Mites and aphids are small enough to miss and breed fast enough that a few this week can be a colony by the next. In warm weather a newborn aphid can start giving birth within about a week, all without mating. A single spider mite colony under a leaf can hold hundreds.\n\nThe right product can knock them back. The hard part is finding them early, and not making them worse with the wrong spray."
     },
     {
       "type": "heading",
@@ -33,7 +33,7 @@
     },
     {
       "type": "text",
-      "text": "Tagalog dictionaries define hanip as the chicken louse or chicken flea, the tiny pest that crawls in the feathers of backyard hens. A close cousin is tungaw, the tiny red itch mite that bites fowls in the skin folds. Both words name something small that crawls and bites or sucks.\n\nFarmers carry the word into the field. In a UPLB survey of sampaguita growers in San Miguel, Bulacan, farmers named 'hanip na puti', or white mites, among their common pests, next to green worms and small grasshoppers. So on a crop, hanip points first to mites."
+      "text": "Tagalog dictionaries define hanip as the chicken louse or chicken flea, the tiny pest that crawls in the feathers of backyard hens. Tungaw is a related word for the tiny red itch mite that bites fowls in the skin folds. Both words name something small that crawls and bites or sucks.\n\nFarmers carry the word into the field, and its meaning shifts with the crop. On rice, PhilRice lists kayumangging hanip as a Tagalog name of the brown planthopper, and the DA office in CALABARZON writes hanip sa palay. Our page on the [brown planthopper](/problems/brown-planthopper) covers that pest. On sampaguita, a UPLB survey in San Miguel, Bulacan recorded 'hanip na puti', or white mites, among the growers' pests, next to green worms and small grasshoppers. That is one survey, so do not treat hanip as the fixed name of one pest."
     },
     {
       "type": "heading",
@@ -42,7 +42,7 @@
     },
     {
       "type": "text",
-      "text": "Ask for mites in Tagalog and you get a few answers, because no single word has the dictionaries' full agreement. One online dictionary files the mite under 'araknido', the general word for spiders, ticks and their kin. In farm talk, hanip is the closest fit for the mite in Tagalog, while tungaw stays with the biting mites of chickens. For more terms like these, see our list of [farm words in Tagalog](/blog/farm-words-in-tagalog)."
+      "text": "Ask for mites in Tagalog and you get a few answers, because dictionaries and farmers do not agree on one word. In farm talk, hanip is the closest fit for a plant mite. Tungaw, according to Wiktionary, is the tiny mite that bites chickens. For more terms like these, see our list of [farm words in Tagalog](/blog/farm-words-in-tagalog)."
     },
     {
       "type": "heading",
@@ -217,11 +217,11 @@
       "items": [
         {
           "q": "What is hanip in English?",
-          "a": "Dictionaries give chicken louse or chicken flea. On crops, farmers also use hanip for tiny pests such as mites."
+          "a": "Dictionaries give chicken louse or chicken flea. On crops, farmers also use hanip for tiny pests, such as white mites on sampaguita or the brown planthopper on rice."
         },
         {
           "q": "What is mite in Tagalog?",
-          "a": "No single word covers it. Hanip is the closest in farm talk, tungaw is the biting red mite of chickens, and at least one dictionary uses araknido for mites, spiders and ticks."
+          "a": "No single word covers it. Hanip is the closest in farm talk, and tungaw is the biting red mite of chickens."
         },
         {
           "q": "What is the scientific name of aphids?",
@@ -244,6 +244,10 @@
         {
           "label": "Thrips on rice, onion, chili and mango",
           "url": "/problems/thrips"
+        },
+        {
+          "label": "Brown planthopper",
+          "url": "/problems/brown-planthopper"
         },
         {
           "label": "Farm words in Tagalog",
@@ -293,6 +297,10 @@
         {
           "label": "Pacific Pests, Pathogens and Weeds, Capsicum broad mite fact sheet",
           "url": "https://apps.lucidcentral.org/pppw_v10/text/web_full/entities/capsicum_broad_mite_049.htm"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: Brown Planthopper",
+          "url": "https://www.pinoyrice.com/brown-planthopper/"
         }
       ]
     }

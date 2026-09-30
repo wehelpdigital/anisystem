@@ -19,7 +19,7 @@
   "excerpt": "An agricultural engineer designs the irrigation, machines, buildings and processing systems that farms run on. In the Philippines the profession is now called agricultural and biosystems engineering, and it has its own law, board exam and license. This guide covers the course, the exam, the jobs and the pay. It also covers the technician roles that work beside the engineers.",
   "heroImage": {
     "src": "/images/site/lp/tractor.webp",
-    "alt": "A tractor working a field, the kind of farm machinery an agricultural engineer designs and manages",
+    "alt": "A tractor working in a farm field",
     "credit": ""
   },
   "blocks": [
@@ -30,7 +30,7 @@
     },
     {
       "type": "text",
-      "text": "Republic Act 10915 lists the work in detail. An agricultural and biosystems engineer designs, builds and supervises irrigation and drainage, soil and water conservation, farm power and machinery, and farm buildings. The same scope covers post harvest and processing facilities, renewable energy and farm electrification, and farm waste management. It even includes weather systems for farms, automation and farm information systems.\n\nIn plain terms, if water, a machine, a dryer or a warehouse is involved, an engineer signs off on it. For example, a small farm reservoir, a combine harvester and a rice mill layout all fall under the profession."
+      "text": "Republic Act 10915 lists the work in detail. An agricultural and biosystems engineer designs, builds and supervises irrigation and drainage, soil and water conservation, farm power and machinery, and farm buildings. The same scope covers post harvest and processing facilities, renewable energy and farm electrification, and farm waste management. It even includes weather systems for farms, automation and farm information systems.\n\nIn plain terms, if water, a machine, a dryer or a warehouse is involved, an engineer is likely part of the job. For example, a small farm reservoir, a combine harvester and a rice mill layout all fall under the profession."
     },
     {
       "type": "heading",
@@ -149,7 +149,7 @@
     },
     {
       "type": "text",
-      "text": "Pay depends a lot on the employer, the region and your experience, and public data is thin. PayScale's 2026 page for agricultural engineers in the Philippines shows an average base salary of PHP 457,800 a year. That is about PHP 38,150 a month. Its middle range runs from about PHP 250,000 to PHP 1,000,000 a year. But the figure rests on only 11 salary profiles, last updated in December 2024, so treat it as a rough guide.\n\nIn government, pay follows the salary grade of each position under the Salary Standardization Law. Executive Order 64 of 2024 set the current salary schedule for civilian government workers. Since the grade differs from one engineer post to another, check the salary grade printed on each job posting before you apply."
+      "text": "Pay depends a lot on the employer, the region and your experience, and public data is thin. PayScale's 2026 page for agricultural engineers in the Philippines shows an average base salary of PHP 457,800 a year, or about PHP 38,150 a month. Its middle range runs from about PHP 250,000 to PHP 1,000,000 a year. But this is a small sample, just 11 salary profiles last updated in December 2024, so read it as a rough guide and not as what you will earn.\n\nIn government, pay follows the salary grade of each position under the Salary Standardization Law. Executive Order 64 of 2024 set the current salary schedule for civilian government workers. Since the grade differs from one engineer post to another, check the salary grade printed on each job posting before you apply."
     },
     {
       "type": "heading",
@@ -167,7 +167,7 @@
     },
     {
       "type": "text",
-      "text": "Engineers and technicians spend much of their day answering the same field questions. So anee.io gives every farm [Anee, an AI agricultural technician](/features/ai-agricultural-technician). Anee answers in Tagalog or English and reads the farm's cropping schedule, each lot's growth stage and the weather first. It can look at a photo of a pest or a sick plant, and it can write a full season report.\n\nFor the team itself, anee.io keeps the plan and the people in one place. The [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero. The [workers and payroll](/features/farm-workers-and-payroll) module assigns hands to activities and sends a 6 AM email of the day's plan. Each worker also gets a login with view or edit rights. Meanwhile, [farm maps](/features/farm-maps) let you draw and measure fields over satellite imagery."
+      "text": "Field teams get the same kinds of questions again and again. That is where [Anee, the AI agricultural technician](/features/ai-agricultural-technician), can help, from the Libre plus Anee plan up. Anee answers in Tagalog or English and reads the farm's cropping schedule, each lot's growth stage and the weather first. She can look at a photo of a pest or a sick plant.\n\nFor the team itself, anee.io keeps the plan and the people in one place. The [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero. The [workers and payroll](/features/farm-workers-and-payroll) module assigns hands to activities. It comes with the Solo Farmer plan, and the Farm Owner plan adds worker logins with access levels. Meanwhile, [farm maps](/features/farm-maps) let you draw and measure fields over satellite imagery."
     },
     {
       "type": "callout",

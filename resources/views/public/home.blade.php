@@ -2,8 +2,10 @@
 
 @include('public.partials.site-css')
 
-@section('title', 'Cropping Schedule Manager for ' . \App\Support\Region::t('farmersOfTitle'))
-@section('meta_description', 'anee.io — plan every cropping season like a pro. Manage lots, activities, workers and costs, ask the built-in AI Technician, and learn from a community of ' . \App\Support\Region::t('farmersOf') . 's — all in one mobile-friendly web app. Start free.')
+@section('title', \App\Support\Region::ph() ? 'Cropping Calendar App for Palay, Mais and Gulay' : 'Cropping Schedule Manager for ' . \App\Support\Region::t('farmersOfTitle'))
+@section('meta_description', \App\Support\Region::ph()
+    ? 'anee.io is the farm app for Filipino farmers: plan pagtatanim ng palay and mais by day count, track fertilizer and workers, and ask Anee, the AI technician.'
+    : 'anee.io — plan every cropping season like a pro. Manage lots, activities, workers and costs, ask the built-in AI Technician, and learn from a community of ' . \App\Support\Region::t('farmersOf') . 's — all in one mobile-friendly web app. Start free.')
 
 @section('content')
 
@@ -977,6 +979,68 @@
     </section>
     @endif
 
+    {{-- ================= EVERY CROP YOU GROW (the /ph face) ================= --}}
+    @if (\App\Support\Region::ph())
+    @php
+        $crops = [
+            ['Palay', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z', 100,
+                'Plan pagtatanim ng palay from the rice seeds and the punla to the ani. Urea and complete fertilizer 14 14 14 go on their day after transplanting, and a reminder to scout for the rice bug waits on the board before the milk stage.',
+                [['/crops/palay', 'Palay guide'], ['/problems/rice-bug', 'Rice bug']]],
+            ['Mais', 'M12 3c-2.5 2-4 5-4 9s1.5 7 4 9c2.5-2 4-5 4-9s-1.5-7-4-9zm0 4v10M9.5 9.5L12 11l2.5-1.5M9.5 13.5L12 15l2.5-1.5', 45,
+                'Yellow or white corn, counted by days after planting: corn seeds and spacing, fertilizer days, fall armyworm checks, and the corn kernel at harvest.',
+                [['/crops/corn-seeds', 'Corn seeds'], ['/problems/fall-armyworm', 'Fall armyworm']]],
+            ['Gulay', 'M12 21c-4.4 0-8-3.1-8-7 0-3.3 2.6-6 6-6.8V4h4v3.2c3.4.8 6 3.5 6 6.8 0 3.9-3.6 7-8 7z', 150,
+                'Pechay, tomato, eggplant and ampalaya on one calendar, bed by bed, with foliar fertilizer days and thrips and anthracnose checks for each.',
+                [['/crops/vegetables-philippines', 'Vegetables guide'], ['/problems/thrips', 'Thrips']]],
+            ['Niyog, saging at puno', 'M12 21v-8m0 0c-3 0-6-2-7-5 3 0 5 1 7 3m0 2c3 0 6-2 7-5-3 0-5 1-7 3m0-3V3', 30,
+                'Coconut, banana and fruit trees count their age in months, with fertilizer plans that follow the PCA and DA guides.',
+                [['/crops/coconut-fertilizer', 'Coconut fertilizer'], ['/crops/banana-farming-philippines', 'Banana farming']]],
+        ];
+    @endphp
+    <section class="py-16 sm:py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="max-w-2xl mx-auto text-center reveal">
+                <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Palay, mais, gulay and more</p>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">One Cropping Calendar for Every Crop You Grow</h2>
+                <p class="mt-4 text-gray-600">anee.io knows 85 Philippine crops. Set the day you sow, transplant or plant, and every task after it gets its day count, lot by lot.</p>
+            </div>
+            <div class="mt-12 grid gap-5 sm:grid-cols-2">
+                @foreach ($crops as $i => [$name, $icon, $hue, $text, $links])
+                    <div class="hc-card reveal" style="--h: {{ $hue }}; --reveal-delay: {{ ($i % 2) * 0.06 }}s">
+                        <span class="hc-ico"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg></span>
+                        <div class="min-w-0">
+                            <h3 class="font-heading text-xl font-bold text-ink">{{ $name }}</h3>
+                            <p class="mt-2 text-sm sm:text-[15px] text-gray-600 leading-relaxed">{{ $text }}</p>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                @foreach ($links as [$href, $label])
+                                    <a href="{{ url($href) }}" class="hc-link">{{ $label }} ›</a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @push('head')
+    <style>
+        .hc-card { display: flex; gap: 1rem; align-items: flex-start; padding: 1.4rem; border-radius: 1.25rem; background: #fff; border: 1px solid #e5ebdf;
+            transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+        .hc-card:hover { transform: translateY(-3px); border-color: hsl(var(--h) 45% 75%); box-shadow: 0 20px 40px -30px hsl(var(--h) 40% 20% / .55); }
+        .hc-ico { flex: none; width: 3.1rem; height: 3.1rem; border-radius: 1rem; display: grid; place-items: center; color: hsl(var(--h) 60% 30%);
+            background: linear-gradient(145deg, hsl(var(--h) 70% 94%), hsl(var(--h) 60% 85%)); box-shadow: inset 0 0 0 1px hsl(var(--h) 50% 80%); }
+        .hc-ico svg { width: 1.55rem; height: 1.55rem; }
+        .hc-link { font-size: .8rem; font-weight: 800; color: hsl(var(--h) 55% 28%); background: hsl(var(--h) 60% 95%); border-radius: 999px; padding: .3rem .75rem; text-decoration: none;
+            transition: background .28s cubic-bezier(.22,1,.36,1); }
+        .hc-link:hover { background: hsl(var(--h) 60% 89%); }
+        .hq-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+        .hq-body.is-open { grid-template-rows: 1fr; }
+        .hq-body > div { overflow: hidden; }
+        @media (prefers-reduced-motion: reduce) { .hc-card, .hc-link, .hq-body { transition: none; } }
+    </style>
+    @endpush
+    @endif
+
     {{-- ================= GUIDES (the /ph face) ================= --}}
     @if (! empty($guides))
     @include('public.site.css')
@@ -1016,6 +1080,62 @@
         .hg-all:hover { text-decoration: underline; }
         @media (prefers-reduced-motion: reduce) { .hg-list a { transition: none; } }
     </style>
+    @endpush
+    @endif
+
+    {{-- ================= QUESTIONS (the /ph face) ================= --}}
+    @if (\App\Support\Region::ph())
+    @php
+        $anee = \App\Support\Region::priceTag(\App\Support\Region::tierPrice('libreAnee', 'month'));
+        $faqs = [
+            ['What is anee.io?',
+             'anee.io is a farm app for Filipino farmers. It keeps your cropping calendar, lots, workers, fertilizer and costs for the whole season in one place, and Anee, the AI agricultural technician, answers questions about your crop.'],
+            ['Can I plan pagtatanim ng palay in anee.io?',
+             'Yes. Set the day you sow or transplant and every task gets its day count: basal fertilizer, urea top dressing, weeding, water and harvest. Each lot keeps its own day zero, so a lot planted a week late keeps its own timing.'],
+            ['Does it work for mais, gulay and fruit trees?',
+             'Yes. anee.io knows 85 Philippine crops, from palay and mais to vegetables, coconut, banana and fruit trees. Trees and other perennials count their age in months.'],
+            ['Can Anee answer in Tagalog?',
+             'Yes. Anee answers in Tagalog or English. She reads your schedule, growth stages and weather first, and she can look at a photo of a pest or a sick leaf. She comes with the Libre + Anee plan and up.'],
+            ['Is anee.io free?',
+             'Yes. The Libre plan is free forever with one active cropping schedule. Libre + Anee adds the AI technician for ' . $anee . ' a month, and the Solo Farmer and Farm Owner plans add workers, inventory, all reports and offline mode.'],
+            ['Where can I read about fertilizer and pests?',
+             'Our free guides cover fertilizer urea, complete fertilizer 14 14 14 and 16 20 0, the rice bug, thrips, fall armyworm and more. Start from the crop guides, the crop problems or the blog.'],
+        ];
+    @endphp
+    <section class="py-16 sm:py-24 bg-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6">
+            <div class="text-center reveal">
+                <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Questions</p>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">What Farmers Ask About anee.io</h2>
+            </div>
+            <div class="mt-10 space-y-3" x-data="{ open: 0 }">
+                @foreach ($faqs as $i => [$q, $a])
+                    <div class="rounded-2xl ring-1 ring-gray-200 bg-white overflow-hidden reveal" style="--reveal-delay: {{ $i * 0.04 }}s">
+                        <button type="button" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left font-heading font-bold text-ink"
+                                @click="open = open === {{ $i }} ? -1 : {{ $i }}" :aria-expanded="open === {{ $i }}">
+                            <span>{{ $q }}</span>
+                            <svg class="w-5 h-5 shrink-0 text-brand-600 transition-transform duration-300" :class="open === {{ $i }} && 'rotate-45'" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
+                        </button>
+                        {{-- Always in the page (search engines read it), folded by height. --}}
+                        <div class="hq-body" :class="{ 'is-open': open === {{ $i }} }">
+                            <div><p class="px-5 pb-5 text-gray-600 leading-relaxed">{{ $a }}</p></div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            <div class="mt-6 flex flex-wrap justify-center gap-2 text-sm">
+                <a href="{{ url('/crops') }}" class="hc-link" style="--h: 100">Crop guides ›</a>
+                <a href="{{ url('/problems') }}" class="hc-link" style="--h: 30">Crop problems ›</a>
+                <a href="{{ url('/blog') }}" class="hc-link" style="--h: 150">The blog ›</a>
+            </div>
+        </div>
+    </section>
+    @push('head')
+    <script type="application/ld+json">{!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'FAQPage',
+        'mainEntity' => array_map(fn ($f) => ['@type' => 'Question', 'name' => $f[0], 'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]]], $faqs),
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
     @endpush
     @endif
 

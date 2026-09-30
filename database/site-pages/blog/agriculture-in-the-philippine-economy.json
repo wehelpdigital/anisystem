@@ -16,7 +16,7 @@
   "excerpt": "Agriculture in the economy of the Philippines is small in pesos but huge in people. It makes less than a tenth of the country's output, yet it employs about one in five working Filipinos. Here are the latest PSA numbers, the crops that carry the sector, the problems that hold farms back, and what a farmer can control on the ground.",
   "heroImage": {
     "src": "/images/site/fields-aerial.jpg",
-    "alt": "Aerial view of Philippine farm fields, the base of agriculture in the economy",
+    "alt": "Aerial view of farm fields laid out in patches of green and brown",
     "credit": ""
   },
   "blocks": [
@@ -27,11 +27,11 @@
     },
     {
       "type": "text",
-      "text": "The PSA counts farming, forestry and fishing together as one industry, AFF for short. In 2025, AFF produced about PHP 2.41 trillion out of a PHP 28.01 trillion economy at current prices. That is about 8.6 percent of GDP, down from about 9.1 percent in 2024.\n\nThe share keeps sliding mainly because the rest of the economy grows faster, not because farms produce less. At constant 2018 prices, farm output grew about 3.1 percent in 2025, while the whole economy grew about 4.4 percent. In the second quarter of 2026, for example, AFF still grew 2.7 percent year on year. Even so, it made up only 7.5 percent of GDP in that quarter, the smallest of the three major industries."
+      "text": "The PSA counts farming, forestry and fishing together as one industry, AFF for short. In 2025, AFF produced about PHP 2.41 trillion out of a PHP 28.01 trillion economy at current prices. By our own sum of PSA's four quarterly figures, that is about 8.6 percent of GDP, down from about 9.1 percent in 2024.\n\nThe share keeps sliding partly because the rest of the economy grows faster, not because farms produce less. At constant 2018 prices, farm output grew about 3.1 percent in 2025, while the whole economy grew about 4.4 percent. In the second quarter of 2026, for example, AFF still grew 2.7 percent year on year. Even so, at constant 2018 prices it made up only 7.5 percent of GDP in that quarter, the smallest of the three major industries. That figure uses constant prices, so do not set it beside the 8.6 percent at current prices."
     },
     {
       "type": "text",
-      "text": "Jobs tell a different story. In the July 2026 Labor Force Survey, agriculture employed 19.7 percent of the 49.21 million working Filipinos, or roughly 9.7 million people. Agriculture and forestry alone was the second biggest employer among all sub sectors, next only to wholesale and retail trade.\n\nSo about a fifth of workers produce less than a tenth of the output. That means output per farm worker sits well below the national average. It also means that every peso of extra yield or saved cost on a farm reaches a large share of Filipino households."
+      "text": "Jobs tell a different story. In the July 2026 Labor Force Survey, agriculture employed 19.7 percent of the 49.21 million working Filipinos, or roughly 9.7 million people.\n\nSo about a fifth of workers produce less than a tenth of the output. That means output per farm worker sits well below the national average. It also means that every peso of extra yield or saved cost on a farm reaches a large share of Filipino households."
     },
     {
       "type": "table",
@@ -99,7 +99,7 @@
     },
     {
       "type": "text",
-      "text": "Fertilizer in agriculture does one job: it puts back the nitrogen, phosphorus and potassium that each harvest takes away. Without it, yields fall. But too much is money thrown into the mud, because the crop cannot use more than it needs and the rest washes away.\n\nSo the best savings come from the right rate at the right stage. First, test your soil or use the recommendation for your area. Next, split nitrogen into two or three doses timed to the crop's growth. Then record what you actually applied, lot by lot. Our guides to [fertilizer for rice](/blog/fertilizer-for-rice), [urea fertilizer](/blog/urea-fertilizer) and [fertilizer calculation](/blog/fertilizer-calculation) walk through each step."
+      "text": "Fertilizer in agriculture does one job: it puts back the nitrogen, phosphorus and potassium that each harvest takes away. Without enough of it, yields usually fall. But too much is money thrown into the mud, because the crop cannot use more than it needs and the rest washes away.\n\nSo the best savings come from the right rate at the right stage. First, test your soil or use the recommendation for your area. Next, split nitrogen into two or three doses timed to the crop's growth. Then record what you actually applied, lot by lot. Our guides to [fertilizer for rice](/blog/fertilizer-for-rice), [urea fertilizer](/blog/urea-fertilizer) and [fertilizer calculation](/blog/fertilizer-calculation) walk through each step."
     },
     {
       "type": "heading",
@@ -126,13 +126,13 @@
     },
     {
       "type": "text",
-      "text": "A farmer cannot stop a typhoon or set the farmgate price. Still, most of the other levers sit on the farm: timing, input rates, labor and records. That is where a simple app helps.\n\nIn anee.io, the [cropping calendar](/features/cropping-calendar) dates every task from each lot's own planting day, so fertilizer and spraying happen on time. The [inventory and expenses](/features/farm-inventory-and-expenses) module tracks every sack of fertilizer and what each activity used. At harvest, the [farm reports](/features/farm-reports) show labor, expenses, profit and yield, and you can compare one season against another. Anee, the AI technician, answers questions in Tagalog or English and checks your crop stage and the weather first."
+      "text": "A farmer cannot stop a typhoon or set the farmgate price. Still, most of the other levers sit on the farm: timing, input rates, labor and records. That is where a simple app helps.\n\nIn anee.io, the [cropping calendar](/features/cropping-calendar) dates every task from each lot's own planting day, so fertilizer and spraying happen on time. The [inventory and expenses](/features/farm-inventory-and-expenses) module tracks every sack of fertilizer and what each activity used. At harvest, the [farm reports](/features/farm-reports) show labor, expenses, profit and yield, and you can compare one season against another. Most reports and the inventory come with the Solo Farmer and Farm Owner plans. Anee, the AI technician, answers questions in Tagalog or English and checks your crop stage and the weather first. She comes with the Libre plus Anee plan and above."
     },
     {
       "type": "callout",
       "tone": "info",
       "title": "Where these numbers come from",
-      "text": "The GDP shares come from the PSA national accounts. The 2024 and 2025 figures add up the four quarters at current prices. Job figures come from the PSA Labor Force Survey, and yields from the PSA palay and corn estimates. PSA revises its figures, so check the latest release before you quote them."
+      "text": "The GDP shares come from the PSA national accounts. The 2024 and 2025 shares are our own sums of the four quarters at current prices, so they may differ a little from PSA's annual release. Job figures come from the PSA Labor Force Survey, and yields from the PSA palay and corn estimates. PSA revises its figures, so check the latest release before you quote them."
     },
     {
       "type": "cta",

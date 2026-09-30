@@ -20,10 +20,10 @@
     "ant bait",
     "termiticides"
   ],
-  "excerpt": "Karate insecticide, Cymbush and Selecron are old names in Filipino farming, and many farmers buy them out of habit. All three come from Syngenta Philippines, but they are not interchangeable. Two are pyrethroids and one is an organophosphate, and only two of them carry a rice listing. Here is what each one contains, what its label covers and how to use it without hurting yourself, your bees or your field.",
+  "excerpt": "Karate insecticide, Cymbush and Selecron are long familiar names in Filipino farming, and many farmers buy them out of habit. All three come from Syngenta Philippines, but they are not interchangeable. Two are pyrethroids and one is an organophosphate, and only two of them carry a rice listing. Below you will find what each one contains, what its FPA listing covers and how to use it without hurting yourself, your bees or your field.",
   "heroImage": {
     "src": "/images/site/guides/blog-karate-cymbush-selecron-insecticides.webp",
-    "alt": "Vegetable farmer in the highlands spraying his crop with a knapsack sprayer",
+    "alt": "Farmer in a green hat and gloves spraying a cabbage field with a spray lance on a hillside",
     "credit": "Doyanmoto, CC BY SA 4.0, via Wikimedia Commons"
   },
   "blocks": [
@@ -38,7 +38,7 @@
     },
     {
       "type": "table",
-      "caption": "Sources: Syngenta Philippines product pages and the FPA list of registered agricultural pesticides as of August 31, 2026. The label on your own bottle always comes first.",
+      "caption": "Sources: Syngenta Philippines product pages and the FPA list of registered agricultural pesticides as of August 31, 2026. A listing here does not mean a product is registered today. Registrations expire and are renewed, so check the expiry date on the current FPA list. The label on your own bottle always comes first.",
       "rows": [
         [
           "Product",
@@ -76,7 +76,7 @@
     },
     {
       "type": "text",
-      "text": "The toxicity category runs from 1 to 4, and a lower number means a more hazardous product. The Fertilizer and Pesticide Authority says red label pesticides, the most dangerous band, are already banned in the Philippines. So what you find in stores carries a yellow, blue or green band at the bottom of the label."
+      "text": "The FPA list gives every product a toxicity category from 1 to 4, and a lower number means a more hazardous product. The color band at the bottom of the label follows that category, as the FPA explains in its dealer training on safe handling. Check the category and the band on your own bottle."
     },
     {
       "type": "heading",
@@ -85,7 +85,7 @@
     },
     {
       "type": "text",
-      "text": "Karate 2.5 EC contains lambda cyhalothrin, a pyrethroid. Pyrethroids are man made chemicals modeled on the pyrethrins found in chrysanthemum flowers. They upset the insect's nerves, which leads to quick paralysis and death. The Karate brand goes back a long way, since the first United States registration of lambda cyhalothrin in 1988 was for Karate.\n\nSyngenta lists Karate insecticide for rice, corn, mango, tomato, onion, mungbean, watermelon, tobacco, cotton and cacao. On rice, the FPA list names green leafhopper, armyworm, rice bug, leaffolder and black bug. The pre harvest interval on rice is 3 days, and workers may go back in once the spray has dried.\n\nFarmers who type insecticide Karate into a search bar usually mean this product. Lambda cyhalothrin also sits inside Alika 247 ZC, paired with thiamethoxam, which our page on [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) explains."
+      "text": "Karate 2.5 EC contains lambda cyhalothrin, a pyrethroid. Pyrethroids are man made chemicals modeled on the pyrethrins found in chrysanthemum flowers. They upset the insect's nerves, which leads to quick paralysis and death.\n\nSyngenta lists Karate insecticide for rice, corn, mango, tomato, onion, mungbean, watermelon, tobacco, cotton and cacao. On rice, the FPA list names green leafhopper, armyworm, rice bug, leaffolder and black bug. The FPA list gives a pre harvest interval on rice of 3 days. Follow the reentry time printed on your label before anyone walks back into the field.\n\nFarmers who type insecticide Karate into a search bar usually mean this product. Lambda cyhalothrin also sits inside Alika 247 ZC, paired with thiamethoxam, which our page on [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) explains."
     },
     {
       "type": "heading",
@@ -94,7 +94,7 @@
     },
     {
       "type": "text",
-      "text": "Cymbush 5 EC contains cypermethrin, another pyrethroid in the same IRAC group 3A as lambda cyhalothrin. Its FPA list covers rice, corn, cabbage, beans, tomato, onion, watermelon, banana, mango, cotton and tobacco. On rice it names green leafhopper, brown and white backed planthoppers, leaffolder, stem borer, armyworm and rice bug.\n\nCymbush insecticide carries a 7 day pre harvest interval on every crop in its FPA listing, and reentry is allowed once the spray dries. It sits in toxicity category 4, the lowest band, but low toxicity to people is not the same as low toxicity to fish or bees."
+      "text": "Cymbush 5 EC contains cypermethrin, another pyrethroid in the same IRAC group 3A as lambda cyhalothrin. Its FPA list covers rice, corn, cabbage, beans, tomato, onion, watermelon, banana, mango, cotton and tobacco. On rice it names green leafhopper, brown and white backed planthoppers, leaffolder, stem borer, armyworm and rice bug.\n\nCymbush insecticide carries a 7 day pre harvest interval on every crop in its FPA listing. The list shows it in toxicity category 4, the lowest hazard band, but a lower hazard to people is not the same as a lower hazard to fish or bees."
     },
     {
       "type": "heading",
@@ -162,7 +162,7 @@
     },
     {
       "type": "text",
-      "text": "Buy only from a store licensed by the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and check the product on the FPA registered list if the label looks off. Then keep a record. In anee.io, you can photograph the pest and ask Anee, the [AI agricultural technician](/features/ai-agricultural-technician), what it is before you buy. Each spray goes on the [cropping calendar](/features/cropping-calendar) with its date, and the bottle goes into the [farm inventory](/features/farm-inventory-and-expenses) with its price."
+      "text": "Buy only from a store licensed by the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and check the product on the FPA registered list, including the expiry date of its registration. Then keep a record. In anee.io, you can photograph the pest and ask Anee, the [AI agricultural technician](/features/ai-agricultural-technician), what it is before you buy. Each spray goes on the [cropping calendar](/features/cropping-calendar) with its date, and the bottle goes into the [farm inventory](/features/farm-inventory-and-expenses) with its price."
     },
     {
       "type": "cta",

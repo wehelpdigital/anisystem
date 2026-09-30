@@ -15,10 +15,10 @@
     "fusarium wilt",
     "fertilizer for coconut"
   ],
-  "excerpt": "Banana farming in the Philippines runs from export Cavendish plantations in Davao to a few mats of saba behind the house. Bananas fruit all year and sell fresh, cooked or as chips. But the crop also carries one of the worst plant diseases anywhere, Fusarium wilt TR4. Here is how to choose a variety, plant it, feed it and protect it, based on DA, BPI, PCA and PCAARRD guidance.",
+  "excerpt": "Banana farming in the Philippines runs from export Cavendish plantations in Davao to a few mats of saba behind the house. Bananas fruit all year and sell fresh, cooked or as chips. But the crop also faces one of the most damaging banana diseases, Fusarium wilt TR4. Here is how to choose a variety, plant it, feed it and protect it, based on DA, BPI, PCA and PCAARRD guidance.",
   "heroImage": {
     "src": "/images/site/guides/crops-banana-farming-philippines.webp",
-    "alt": "Rows of banana plants with bagged bunches along a farm road in Panabo City, a center of banana farming in the Philippines",
+    "alt": "Banana plants with bagged bunches on both sides of a farm road in Panabo City, with two men cycling down it",
     "credit": "Shubert Ciencia, CC BY 2.0, via Wikimedia Commons"
   },
   "blocks": [
@@ -69,7 +69,7 @@
     },
     {
       "type": "text",
-      "text": "Choose by market. Cavendish needs packing houses and buyers who export, so it suits contract growers. Lakatan sells at the best price in local markets. Saba is the hardy one. The DA manual notes it resists the major leaf diseases, but it is prone to bugtok."
+      "text": "Choose by market. Cavendish needs packing houses and buyers who export, so it suits contract growers. Lakatan is the premium dessert banana in local markets. Saba is the hardy one. The DA manual notes it resists the major leaf diseases, but it is prone to bugtok."
     },
     {
       "type": "heading",
@@ -78,7 +78,7 @@
     },
     {
       "type": "text",
-      "text": "Start clean, because most banana diseases arrive with the planting material. The DA recommends disease free tissue culture plantlets or sword leaf suckers. For saba, the BPI guide uses suckers 3 to 4 feet tall from healthy clumps. Their roots should be free of nematode knots and borer damage.\n\nDig holes 50 to 60 cm across and 60 to 80 cm deep. Plant at the start of the rainy season if your area has a distinct dry season. The DA also suggests east to west rows so every row gets even sunlight. Avoid spots hit often by strong winds, because winds of 48 to 56 km per hour already twist the crown."
+      "text": "Start clean, because most banana diseases arrive with the planting material. The DA recommends disease free tissue culture plantlets or sword leaf suckers. For saba, the BPI guide uses suckers 3 to 4 feet tall from healthy clumps. Their roots should be free of nematode knots and borer damage.\n\nDig holes 50 to 60 cm across and 60 to 80 cm deep. Plant at the start of the rainy season if your area has a distinct dry season. The DA also suggests east to west rows so every row gets even sunlight. Avoid spots hit often by strong winds, because banana plants are sensitive to them and need windbreaks where storms are common."
     },
     {
       "type": "table",
@@ -113,7 +113,7 @@
     },
     {
       "type": "text",
-      "text": "After the first harvest, keep only two suckers per mat and remove the rest. That keeps the plant population right and stops the mother and her suckers from fighting for water and food."
+      "text": "After the first harvest, remove the excess suckers, as the DA advises. That keeps the plant population right and stops the mother and her suckers from fighting for water and food."
     },
     {
       "type": "heading",
@@ -122,7 +122,7 @@
     },
     {
       "type": "text",
-      "text": "Bananas take out far more potassium than any other nutrient. According to the DA manual, a field that yields 30 tons per hectare removes 175 to 225 kg of potassium (as K2O), but only 50 to 75 kg of nitrogen and 15 to 20 kg of phosphorus. That is why the key input is a fertilizer with high potassium.\n\nThe usual choice is muriate of potash, 0 0 60, the most common potash fertilizer in farm stores. Without a soil test, the DA general rate is 90 30 120 of nitrogen, phosphorus and potassium, a 2 to 1 to 3 ratio. Monthly application works best. Apply on moist soil, and on the uphill side of the plant in rolling areas."
+      "text": "Bananas take out far more potassium than any other nutrient. According to the DA manual, a field that yields 30 tons per hectare removes 175 to 225 kg of potassium (as K2O), but only 50 to 75 kg of nitrogen and 15 to 20 kg of phosphorus. That is why the key input is a fertilizer with high potassium.\n\nThe usual choice is muriate of potash, 0 0 60, the most common potash fertilizer in farm stores. Without a soil test, the DA general rate is 90 30 120 of nitrogen, phosphorus and potassium, so potassium gets the biggest share. The DA says monthly application gives the crop steady nutrition. Apply on moist soil, and on the uphill side of the plant in rolling areas."
     },
     {
       "type": "callout",
@@ -137,7 +137,7 @@
     },
     {
       "type": "text",
-      "text": "PCA promotes bananas as an intercrop under coconuts one to three years old, and under old palms of 25 years and above. Its guide spaces lakatan and latundan at 3 by 3 meters and saba at 5 by 5 meters. The fertilizer for coconut goes on its own schedule of ammonium sulfate and salt, separate from the bananas. See our [coconut fertilizer guide](/crops/coconut-fertilizer) for those rates."
+      "text": "PCA promotes bananas as an intercrop under coconuts one to three years old, and under old palms of 25 years and above. Its guide spaces lakatan and latundan at 3 by 3 meters and saba at 5 by 5 meters. The coconut palms get their own fertilizer for coconut, ammonium sulfate and salt, on a schedule separate from the bananas. See our [coconut fertilizer guide](/crops/coconut-fertilizer) for those rates."
     },
     {
       "type": "heading",
@@ -180,7 +180,7 @@
     },
     {
       "type": "text",
-      "text": "Sigatoka (Mycosphaerella musicola) and the stronger black leaf streak (Mycosphaerella fijiensis) start as small streaks on the third or fourth leaf. Later they kill whole leaves. The DA advises removing diseased leaves, draining waterlogged spots and feeding the plant well. When needed, spray a contact or systemic [fungicide](/blog/fungicides) on the candle leaf and open leaves every 10 to 15 days. Keep 8 to 15 working leaves per plant."
+      "text": "Sigatoka (Mycosphaerella musicola) and the stronger black leaf streak (Mycosphaerella fijiensis) start as small streaks on the third or fourth leaf. Later they kill whole leaves. The DA advises removing diseased leaves, draining waterlogged spots and feeding the plant well. When needed, the DA manual sprays a contact or systemic [fungicide](/blog/fungicides) on the candle leaf and open leaves every 10 to 15 days. Use only a product registered with the FPA for banana, and follow its label for rate and interval. The manual also says to keep 8 to 15 working leaves per plant."
     },
     {
       "type": "heading",
@@ -212,13 +212,13 @@
     {
       "type": "cta",
       "title": "Run your banana farm on one calendar",
-      "text": "Banana is one of the 85 crops in anee.io, so banana farming in the Philippines fits right in. Log each block as a lot and schedule the monthly fertilizer and Sigatoka sprays. Then pay the harvest crew by day and record buyers and prices in your reports.",
+      "text": "Banana is one of the 85 crops in anee.io, so banana farming in the Philippines fits right in. Log each block as a lot and schedule the monthly fertilizer and Sigatoka sprays. On the paid plans, you can also pay the harvest crew by day and record buyers and prices in your reports.",
       "label": "See the cropping calendar",
       "url": "/features/cropping-calendar"
     },
     {
       "type": "text",
-      "text": "Not sure if the yellow leaves are Sigatoka, wilt or hunger? Send a photo to Anee, the [anee.io AI technician](/features/ai-agricultural-technician). Anee answers in Tagalog or English after reading your lot's stage and the weather. For labor and sales, the [farm reports](/features/farm-reports) show profit per season."
+      "text": "Not sure if the yellow leaves are Sigatoka, wilt or hunger? Send a photo to Anee, the [anee.io AI technician](/features/ai-agricultural-technician). Anee answers in Tagalog or English after reading your lot's stage and the weather. On the paid plans, the [farm reports](/features/farm-reports) cover labor and sales and show profit per season."
     },
     {
       "type": "faq",

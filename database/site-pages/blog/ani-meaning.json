@@ -112,7 +112,7 @@
     },
     {
       "type": "text",
-      "text": "anee.io takes its name from ani, the harvest. Every tool in the app points at the same goal: a bigger ani at a lower cost per kilo.\n\nFor instance, the [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero, so fertilizer and water go in on time. Then the [farm reports](/features/farm-reports) track labor, expenses, profit and yield per lot, and Compare Reports sets one season against another. When something looks wrong in the field, Anee, the AI technician, answers in Tagalog or English and can read a photo of a pest or a sick plant."
+      "text": "anee.io takes its name from ani, the harvest. The app is built around one aim, a bigger ani at a lower cost per kilo.\n\nFor instance, the [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero, so fertilizer and water go in on time. Then the [farm reports](/features/farm-reports) track labor, expenses, profit and yield per lot, and Compare Reports sets one season against another. The free Libre plan has the labor report only, and the other reports come with Solo Farmer and Farm Owner. When something looks wrong in the field, Anee, the AI technician, answers in Tagalog or English and can read a photo of a pest or a sick plant. She comes with the Libre plus Anee plan and above, and every new account starts with 20 AI credits."
     },
     {
       "type": "heading",
@@ -128,12 +128,12 @@
       "ordered": true,
       "items": [
         "**Start with certified seed.** High quality seed can raise yield by 10 percent or more, PalayCheck says.",
-        "**Level the field well.** A poorly prepared field can yield 5 percent less.",
+        "**Level the field well.** A poorly leveled field holds water unevenly and gives an uneven stand.",
         "**Rest the field, then plant together.** A 30 day rest and synchronous planting break pest cycles.",
         "**Feed the crop on time.** Use the Leaf Color Chart or MOET to time nitrogen, and see our guide to [fertilizer for rice](/blog/fertilizer-for-rice).",
-        "**Keep water steady.** Hold 3 to 5 cm of water, and 5 to 7 cm at flowering.",
+        "**Keep water steady.** Hold about 3 to 5 cm of water through most of the season, and check PalayCheck for the depth at flowering.",
         "**Control weeds early.** The first 45 days after planting matter most.",
-        "**Harvest on time.** Cut when 85 to 90 percent of the grains are golden if you harvest by hand.",
+        "**Harvest on time.** Cut when about 85 percent of the grains are golden if you harvest by hand.",
         "**Dry fast.** Dry within 12 to 24 hours of threshing, down to 12 to 14 percent moisture."
       ]
     },
@@ -153,7 +153,7 @@
     {
       "type": "cta",
       "title": "Track your ani lot by lot",
-      "text": "anee.io records each lot's yield, expenses and buyers, and Compare Reports sets one season against the next. Start on the free Libre plan.",
+      "text": "anee.io records each lot's yield, expenses and buyers, and on the paid plans Compare Reports sets one season against the next. Start on the free Libre plan.",
       "label": "Start free",
       "url": "/signup"
     },

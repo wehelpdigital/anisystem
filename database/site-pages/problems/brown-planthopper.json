@@ -52,7 +52,7 @@
     },
     {
       "type": "text",
-      "text": "Hopperburn looks a lot like the bugburn caused by the [rice black bug](/problems/rice-black-bug). The difference is the sooty mold. Planthoppers leave it, black bugs do not."
+      "text": "Hopperburn looks a lot like the bugburn caused by the [rice black bug](/problems/rice-black-bug). The check IRRI gives is the sooty mold at the base of the plant, which planthopper attacks leave."
     },
     {
       "type": "heading",
@@ -172,7 +172,7 @@
     },
     {
       "type": "text",
-      "text": "Use insecticide only as a last resort, and choose a selective one if the infestation is very high. For seedbeds, IRRI allows a spray only when all three conditions hold: more than one planthopper per stem on average, more hoppers than natural enemies, and no way to flood the seedbed.\n\nPymetrozine is a common choice. It belongs to IRAC Group 9B and stops the hoppers from feeding. Chess insecticide (Chess 50 WG) from Syngenta contains pymetrozine, and its Philippine product page lists brown plant hopper on rice. Syngenta describes it as selective for beneficial insects. DA CALABARZON also mentions insect growth regulators against the nymphs.\n\nTreat these as examples. Follow the label and the FPA registration, and never add a broad spectrum insecticide to the tank just to be sure. Our guide to [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) compares these products."
+      "text": "Use insecticide only as a last resort, and choose a selective one if the infestation is very high. For seedbeds, IRRI allows a spray only when all three conditions hold: more than one planthopper per stem on average, more hoppers than natural enemies, and no way to flood the seedbed.\n\nPymetrozine is a common choice. It belongs to IRAC Group 9B, and it stops the hoppers from feeding. Chess insecticide (Chess 50 WG) from Syngenta contains pymetrozine, and its Philippine product page lists brown plant hopper on rice. Syngenta calls it highly selective for beneficial insects. DA CALABARZON also mentions insect growth regulators against the nymphs.\n\nTreat these as examples. Follow the label and the FPA registration, and never add a broad spectrum insecticide to the tank just to be sure. Our guide to [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) compares these products."
     },
     {
       "type": "cta",
@@ -207,7 +207,7 @@
         },
         {
           "q": "Is the planthopper the same as the green leafhopper?",
-          "a": "No. Leafhoppers feed higher, on the leaves and upper parts of the plant, while planthoppers feed at the base."
+          "a": "No. Leafhoppers usually feed on the leaves, higher up, while planthoppers feed near the base of the tillers. Tap the hill to see which one you have."
         }
       ]
     },

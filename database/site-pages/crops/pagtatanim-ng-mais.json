@@ -114,7 +114,7 @@
     },
     {
       "type": "text",
-      "text": "Isang buto bawat butas, at tabunan ng mga 3.5 cm na lupa. Kung gulay na mais ang target at gusto ninyo ng mas malaking bunga, gamitin ang mas maluwag na 30 x 75 cm. Kung iba ang nakasulat sa sako ng seed company, sundin ang sako para sa hybrid na iyon.\n\nMakisabay sa mga kapitbahay sa pagtatanim. Ayon sa DA, ang sabay na pagtatanim o synchronous planting ang unang depensa laban sa corn borer. Mga isang linggo pagkatanim, lakarin ang mga hilera at bilangin ang mga butas na hindi tumubo, saka tamnan agad ang mga bakante."
+      "text": "Isang buto bawat butas, at tabunan ng mga 3.5 cm na lupa. Kung gulay na mais ang target at gusto ninyo ng mas malaking bunga, gamitin ang mas maluwag na 30 x 75 cm. Kung iba ang nakasulat sa sako ng seed company, sundin ang sako para sa hybrid na iyon.\n\nMakisabay sa mga kapitbahay sa pagtatanim. Ayon sa DA, ang sabay na pagtatanim o synchronous planting ang unang nakalistang panlaban sa corn borer. Mga isang linggo pagkatanim, lakarin ang mga hilera at bilangin ang mga butas na hindi tumubo, saka tamnan agad ang mga bakante."
     },
     {
       "type": "heading",
@@ -140,7 +140,7 @@
     },
     {
       "type": "text",
-      "text": "Sa dry season, ilagay na ang lahat ng abono habang may basa pa ang lupa sa pagtatanim. Kung manilaw ang dahon dahil kulang sa nitrogen at may basa pa ang lupa, puwedeng magdagdag ng isa hanggang dalawang sako ng urea.\n\nSa anee.io, nakatala sa Inventory ang bawat sako ng abono na nagamit sa bawat gawain, kaya alam mo ang gastos kada lote."
+      "text": "Sa dry season, ilagay na ang lahat ng abono habang may basa pa ang lupa sa pagtatanim. Kung manilaw ang dahon dahil kulang sa nitrogen at may basa pa ang lupa, puwedeng magdagdag ng isa hanggang dalawang sako ng urea, ayon sa DA.\n\nSa Solo Farmer at Farm Owner plan ng anee.io, nakatala sa Inventory ang bawat sako ng abono na nagamit sa bawat gawain, kaya alam mo ang gastos kada lote."
     },
     {
       "type": "heading",
@@ -157,7 +157,7 @@
       "items": [
         "**Grasses.** Halimbawa ang aguingay (Rottboellia cochinchinensis), na mabilis kumalat sa maisan. Ayon sa DA, nakokontrol ito ng tamang pre emergence herbicide.",
         "**Broadleaves.** Halimbawa ang mara kamote (Ipomoea triloba) at kulitis (Amaranthus), na mabilis lumaki tuwing wet season.",
-        "**Sedges.** Halimbawa ang mutha (Cyperus rotundus). Mas marami pa sa aming gabay sa [karaniwang damo sa Pilipinas](/problems/common-weeds-philippines)."
+        "**Sedges.** Halimbawa ang mutha (Cyperus rotundus). Mas marami sa aming gabay sa [karaniwang damo sa Pilipinas](/problems/common-weeds-philippines)."
       ]
     },
     {
@@ -177,7 +177,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Fall armyworm.** Kumakain sa ubod ng batang mais at may iniiwang dumi na parang kusot. Hanapin ang baligtad na Y sa ulo ng uod at apat na itim na tuldok na parisukat malapit sa buntot. Basahin ang buong gabay sa [fall armyworm](/problems/fall-armyworm).",
+        "**Fall armyworm.** Kumakain sa ubod ng batang mais at may iniiwang dumi na parang pinong sawdust. Hanapin ang baligtad na Y sa ulo ng uod at apat na itim na tuldok na parisukat malapit sa buntot. Basahin ang buong gabay sa [fall armyworm](/problems/fall-armyworm).",
         "**Asian corn borer.** Maliliit na butas sa dahon, butas sa tangkay na may dumi sa bunganga, at nababaling puno. Ayon sa DA, tanggalin ang tassel ng 75 percent ng mga puno bago mag pollen shed, isang hilerang may tassel sa bawat tatlong hilerang tinanggalan. Nasa gabay ng [Asian corn borer](/problems/asian-corn-borer) ang Trichogramma at Bt corn.",
         "**Cutworm.** Pinuputol ang punla sa may lupa tuwing gabi. Tingnan ang gabay sa [cutworm](/problems/cutworm)."
       ]
@@ -218,7 +218,7 @@
     {
       "type": "cta",
       "title": "Simulan ang maisan season sa anee.io",
-      "text": "Libre ang Libre plan. Gumawa ng cropping schedule, idagdag ang mga lote, at hayaang paalalahanan ka ng anee.io sa bawat gawain sa pagtatanim ng mais.",
+      "text": "May libreng plan, ang Libre. Gumawa ng cropping schedule, idagdag ang mga lote, at hayaang paalalahanan ka ng anee.io sa bawat gawain sa pagtatanim ng mais.",
       "label": "Gumawa ng libreng account",
       "url": "/signup"
     },
@@ -244,7 +244,7 @@
         },
         {
           "q": "Ano ang gamot sa fall armyworm?",
-          "a": "Walang iisang gamot. Pagsamahin ang lingguhang scouting, pagdurog ng itlog, earwig at Trichogramma, at insecticide na rehistrado sa FPA para sa fall armyworm sa mais kapag lampas 10 percent na ang tinamaan. Sundin palagi ang label."
+          "a": "Walang iisang gamot. Pagsamahin ang lingguhang scouting, pagdurog ng itlog, earwig at Trichogramma, at insecticide na rehistrado sa FPA para sa fall armyworm sa mais kapag lampas 10 percent na ang tinamaan, ayon sa IPM protocol ng DA Cagayan Valley. Sundin palagi ang label."
         }
       ]
     },

@@ -19,7 +19,7 @@
   "excerpt": "A crop protocol is the season written in advance: what to do, with what, at what rate and on which day of the count. The Protocol Builder in anee.io lets you write it once, keep versions, have Anee review it, and import it as a new cropping schedule when you plant.",
   "heroImage": {
     "src": "/images/site/photos/palay-phone.jpg",
-    "alt": "An older farmer crouches among ripening palay, reading his crop protocol on a phone",
+    "alt": "An older farmer crouches among ripening palay and smiles at his phone",
     "credit": ""
   },
   "blocks": [
@@ -80,7 +80,7 @@
     },
     {
       "type": "text",
-      "text": "When planting day comes, port the protocol to a new cropping schedule. Name the lots and give each its start date, plus the transplanting date for transplanted rice. The builder then lays every task on the [cropping calendar](/features/cropping-calendar), dated from each lot's day zero. Tell it how many workers you have, and it spreads the tasks so no day carries more than they can handle.\n\nNot sure where to start? The Crop Protocol Analysis on the [when to plant analysis](/features/when-to-plant-analysis) page can write a first draft by growth stage for your crop and month. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) also lists the usual application timings."
+      "text": "When planting day comes, port the protocol to a new cropping schedule. Name the lots and give each its start date, plus the transplanting date for transplanted rice. The builder then lays every task on the [cropping calendar](/features/cropping-calendar), dated from each lot's day zero. Tell it how many workers you have, and it can slide the overflow to the next free day, so no worker has two activities on one day. Day zero and the transplant stay put.\n\nNot sure where to start? The Crop Protocol Analysis on the [when to plant analysis](/features/when-to-plant-analysis) page can write a first draft by growth stage for your crop and month. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) also lists the usual application timings."
     },
     {
       "type": "callout",

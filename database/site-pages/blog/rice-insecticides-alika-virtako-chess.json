@@ -18,7 +18,7 @@
     "plant hopper",
     "telluride insecticide"
   ],
-  "excerpt": "Alika insecticide, Virtako and Chess sit side by side on almost every agrivet shelf, and all three come from Syngenta Philippines. But they are not three names for one thing. Each carries different active ingredients, targets different rice pests and asks you to wait a different number of days before harvest. This guide lays out what the product pages and the official registration list say, so you pay for the right bottle.",
+  "excerpt": "Alika insecticide, Virtako and Chess are often stocked side by side at the agrivet, and all three come from Syngenta Philippines. But they are not three names for one thing. Each carries different active ingredients, targets different rice pests and asks you to wait a different number of days before harvest. This guide lays out what the product pages and the official FPA list say, so you pay for the right bottle.",
   "heroImage": {
     "src": "/images/site/guides/blog-rice-insecticides-alika-virtako-chess.webp",
     "alt": "Farmer with a knapsack sprayer spraying an insecticide on a green rice paddy",
@@ -36,7 +36,7 @@
     },
     {
       "type": "table",
-      "caption": "Sources: Syngenta Philippines product pages and the FPA list of registered agricultural pesticides as of August 31, 2026. Always read the label on your own bottle, because registrations change.",
+      "caption": "Sources: Syngenta Philippines product pages and the FPA list of registered agricultural pesticides as of August 31, 2026. A listing here does not mean a product is registered today. Registrations expire and are renewed, so check the expiry date on the current FPA list and read the label on your own bottle.",
       "rows": [
         [
           "Product",
@@ -70,7 +70,7 @@
     },
     {
       "type": "text",
-      "text": "The last column is the pre harvest interval, the days you must wait between the last spray and harvest. Notice how far apart they are. Chess needs more than a month, so it belongs early in the season. Alika insecticide has the shortest wait of the three on rice."
+      "text": "The last column is the pre harvest interval, the days you must wait between the last spray and harvest. The gap between them is wide. Chess needs more than a month, so it belongs early in the season, while Alika insecticide has the shortest wait of the three on rice."
     },
     {
       "type": "heading",
@@ -79,7 +79,7 @@
     },
     {
       "type": "text",
-      "text": "Alika 247 ZC mixes lambda cyhalothrin, a pyrethroid in IRAC group 3A, with thiamethoxam, a neonicotinoid in group 4A. The pyrethroid knocks insects down on contact. Thiamethoxam moves inside the plant, so insects that suck sap take it in as they feed. The ZC formulation holds both, one in tiny capsules and one as a suspension.\n\nSyngenta Philippines lists rice among the crops for Alika insecticide, with stem borer, leafhoppers and rice bug as the rice targets. The company says it protects for up to 14 days. On the FPA list, Alika sits in toxicity category 2, and workers should stay out of a treated field for at least one day after spraying.\n\nFor [rice bug](/problems/rice-bug), timing is everything. IRRI advises scouting from just before flowering until the hard dough stage, counting bugs early in the morning or late in the afternoon. Direct control may be needed if you find more than 10 rice bugs in 20 hills. Below that, natural enemies such as wasps and spiders often keep the bugs in check."
+      "text": "Alika 247 ZC mixes lambda cyhalothrin, a pyrethroid in IRAC group 3A, with thiamethoxam, a neonicotinoid in group 4A. The pyrethroid knocks insects down on contact. Thiamethoxam moves inside the plant, so insects that suck sap take it in as they feed. The ZC formulation holds both, one in tiny capsules and one as a suspension.\n\nSyngenta Philippines lists rice among the crops for Alika insecticide, with stem borer, leafhoppers and rice bug as the rice targets. The company says it protects for up to 14 days. The FPA label also gives the safety and reentry instructions, so read those before anyone walks back into a sprayed field.\n\nFor [rice bug](/problems/rice-bug), timing is everything. IRRI advises scouting from just before flowering until the hard dough stage, counting bugs early in the morning or late in the afternoon. Direct control may be needed if you find more than 10 rice bugs in 20 hills. Below that, natural enemies such as wasps and spiders often keep the bugs in check."
     },
     {
       "type": "heading",
@@ -145,7 +145,7 @@
     },
     {
       "type": "text",
-      "text": "Under the law that created the Fertilizer and Pesticide Authority, no pesticide may be sold or used in the country unless the FPA has registered it. The agency posts its list of registered products online, and anyone can check a brand there. Buy from a store with an FPA license and keep your receipt. Our guide to the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) shows how to check a product and where to report fakes."
+      "text": "Under the law that created the Fertilizer and Pesticide Authority, no pesticide may be sold or used in the country unless the FPA has registered it. The agency posts its list of registered products online, and anyone can check a brand there, including the expiry date of its registration. A product whose registration has lapsed may still sit on a shelf, so ask the dealer before you buy. Buy from a store with an FPA license and keep your receipt. Our guide to the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) shows how to check a product and where to report fakes."
     },
     {
       "type": "callout",
@@ -174,7 +174,7 @@
       "items": [
         {
           "q": "Is Alika insecticide good for rice bug?",
-          "a": "Rice bug is one of the three rice pests on the Alika label, along with stem borer and leafhopper. Scout first. IRRI suggests direct control only when you count more than 10 rice bugs in 20 hills."
+          "a": "Rice bug is one of the three rice pests named for Alika on the FPA list, along with stem borer and leafhopper. Check the expiry date of its registration first. Scout first. IRRI suggests direct control only when you count more than 10 rice bugs in 20 hills."
         },
         {
           "q": "What is the difference between Virtako and Alika?",

@@ -36,7 +36,7 @@
     },
     {
       "type": "text",
-      "text": "This is the classic soil cutworm. The larva is dark gray to black and grows to about 5 cm. It hides under the soil surface by day and feeds after dark, and it curls into a tight C when you dig it up.\n\nSmall larvae feed on leaves first. Larger ones cut seedlings off near the soil line, based on UMass Extension. In the Philippines, a De La Salle University study recorded it among the potato pests of La Trinidad, Benguet."
+      "text": "This is the classic soil cutworm. The larva is dark gray to black and grows to about 5 cm. It hides under the soil surface by day and feeds after dark, and it curls into a tight C when you dig it up.\n\nSmall larvae feed on leaves first. Larger ones cut seedlings off near the soil line, based on UMass Extension. Philippine product labels list cutworm on cabbage, eggplant, tomato, onion, beans and tobacco, which shows how many crops it can hurt."
     },
     {
       "type": "heading",
@@ -103,7 +103,7 @@
     },
     {
       "type": "text",
-      "text": "Walk the field every few days in the first weeks after emergence, early in the morning. UMass Extension suggests checking at least 100 plants, with extra attention near field edges, for cut stems and leaf feeding. Dig around each fresh cut to find and kill the larva.\n\nThe same United States guide suggests spot treatment once about 5 percent of plants are cut. Use that as a rough guide, and weigh it against the cost of replanting."
+      "text": "Walk the field every few days in the first weeks after emergence, early in the morning. UMass Extension suggests checking at least 100 plants, with extra attention near field edges, for cut stems and leaf feeding. Dig around each fresh cut to find and kill the larva.\n\nThe same guide, from UMass Extension in the United States, suggests spot treatment once about 5 percent of plants are cut. That figure comes from US farms, not from Philippine trials. Use it only as a rough guide, and weigh it against the cost of replanting."
     },
     {
       "type": "text",
@@ -116,7 +116,7 @@
     },
     {
       "type": "text",
-      "text": "Ground beetles, parasitic flies and wasps all attack the larvae, so skip broad sprays you do not need. For Spodoptera litura, NPV has a strong local record. In the PhilRice study in Nueva Ecija onion fields, NPV sprays timed by pheromone trap catches worked about as well as three to four insecticide sprays."
+      "text": "Ground beetles, parasitic flies and wasps all attack the larvae, so skip broad sprays you do not need. For Spodoptera litura, NPV has been tested in Philippine onion fields. In a study on farms in Sto. Domingo and Guimba, Nueva Ecija, NPV sprays timed by pheromone trap catches kept leaf damage as low as the farmers' three to four insecticide sprays."
     },
     {
       "type": "heading",
@@ -162,7 +162,7 @@
         },
         {
           "q": "Do cutworms attack vegetables?",
-          "a": "Yes. Black cutworm feeds on most vegetables, and Philippine product labels list cutworm on cabbage, eggplant, tomato and onion. See our guide to [vegetables in the Philippines](/crops/vegetables-philippines)."
+          "a": "Yes. Black cutworm feeds on many vegetables, and Philippine product labels list cutworm on cabbage, eggplant, tomato and onion. See our guide to [vegetables in the Philippines](/crops/vegetables-philippines)."
         }
       ]
     },
@@ -206,10 +206,6 @@
         {
           "label": "Punzal and others (2013): Management of the common cutworm in onion with sex pheromones and NPV",
           "url": "https://www.ukdr.uplb.edu.ph/journal-articles/4792/"
-        },
-        {
-          "label": "De La Salle University: Potato insect pests and natural enemies in La Trinidad, Benguet",
-          "url": "https://animorepository.dlsu.edu.ph/etdm_bio/24/"
         },
         {
           "label": "Syngenta Philippines: Cymbush 5 EC label",

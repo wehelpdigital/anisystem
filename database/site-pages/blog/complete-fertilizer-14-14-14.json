@@ -22,16 +22,16 @@
     "yara winner fertilizer",
     "fertilizer picture"
   ],
-  "excerpt": "Complete fertilizer 14 14 14 is a common basal abono for palay and mais in the Philippines. Farmers call it triple 14. It holds equal parts nitrogen, phosphate and potash, so one bag feeds all three main nutrients at planting. Here is what the numbers mean, how it compares with 16 16 16 and 20 20 20, and when to apply it.",
+  "excerpt": "Complete fertilizer 14 14 14 is a common basal abono for palay and mais in the Philippines. Farmers call it triple 14. It holds equal parts nitrogen, phosphate and potash, so one bag feeds all three main nutrients at planting. Below, we explain the numbers, compare it with 16 16 16 and 20 20 20, and show when to apply it.",
   "heroImage": {
     "src": "/images/site/guides/blog-complete-fertilizer-14-14-14.webp",
-    "alt": "Three kinds of fertilizer side by side in an open sack, the nitrogen, phosphorus and potassium that complete fertilizer 14 14 14 combines",
+    "alt": "Three kinds of fertilizer granules, brown, white and grey, lying side by side in an open plastic sack, the mix that complete fertilizer 14 14 14 puts in one bag",
     "credit": "Mahsa 110, CC BY 4.0, via Wikimedia Commons"
   },
   "blocks": [
     {
       "type": "text",
-      "text": "At the agri supply, many farmers just ask for 'complete'. The word means the bag carries all three major nutrients: nitrogen, phosphorus and potassium. It does not mean the bag has everything a crop needs. Zinc, for one, only comes in if the label says so.\n\nThe fertilizer picture at the top of this page shows three kinds of fertilizer poured side by side in one sack. A complete fertilizer saves you that mixing. It puts all three nutrients into one bag at a fixed grade, so every handful carries the same balance."
+      "text": "At the agri supply, many farmers just ask for 'complete'. The word means the bag carries all three major nutrients: nitrogen, phosphorus and potassium. It does not mean the bag has everything a crop needs. Zinc, for one, only comes in if the label says so.\n\nThe fertilizer picture at the top of this page shows three kinds of fertilizer granules lying side by side in one sack. A complete fertilizer saves you that mixing. It puts all three nutrients into one bag at a fixed grade, so every handful carries the same balance."
     },
     {
       "type": "heading",
@@ -40,7 +40,7 @@
     },
     {
       "type": "text",
-      "text": "The three numbers are the grade. They give the percent of nitrogen (N), phosphate (P2O5) and potash (K2O), always in that order. So 14 14 14 fertilizer is 14 percent of each.\n\nIn a 50 kg bag, that means 7 kg of nitrogen, 7 kg of phosphate and 7 kg of potash. The other 29 kg is the material that carries them, plus any extra nutrients on the label. Many brands on the FPA list of registered fertilizers also declare sulfur, often 8 or 11 percent. PhilRice notes that the sulfur in a 14 14 14 with sulfur is enough to correct the usual sulfur deficiency in rice."
+      "text": "The three numbers are the grade. They give the percent of nitrogen (N), phosphate (P2O5) and potash (K2O), always in that order. So 14 14 14 fertilizer is 14 percent of each.\n\nIn a 50 kg bag, that means 7 kg of nitrogen, 7 kg of phosphate and 7 kg of potash. The other 29 kg is the material that carries them, plus any extra nutrients on the label. Many brands on the FPA list of registered fertilizers also declare sulfur, often 8 or 11 percent. PalayCheck of PhilRice notes that a 14 14 14 with 12 percent sulfur normally gives rice enough sulfur."
     },
     {
       "type": "callout",
@@ -69,7 +69,7 @@
     },
     {
       "type": "text",
-      "text": "The Abonong Swak guide of PhilRice uses complete fertilizer as the basal dose in every plan. For a target of 3 to 4 tons per hectare, it calls for 1 bag of 14 14 14 per hectare at 0 to 14 DAT, or 10 to 14 DAS. For 5 to 8 tons, it calls for 2 bags in the same window. Urea and muriate of potash follow later, timed to the maturity of the variety.\n\nThose plans also add rice straw and 10 bags of chicken manure or compost. Treat the numbers as a guide and adjust them to a soil test. Our [fertilizer for rice](/blog/fertilizer-for-rice) page lays out the whole season."
+      "text": "The Abonong Swak guide of PhilRice uses complete fertilizer as the basal dose in every plan. For a target of 3 to 4 tons per hectare, it calls for 1 bag of 14 14 14 per hectare at 0 to 14 DAT, or 10 to 14 DAS. For 5 to 6 tons and for 7 to 8 tons, it calls for 2 bags in the same window. Urea and muriate of potash follow later, timed to the maturity of the variety.\n\nThose plans also add rice straw and 10 bags of chicken manure or compost. Treat the numbers as a guide and adjust them to a soil test. Our [fertilizer for rice](/blog/fertilizer-for-rice) page lays out the whole season."
     },
     {
       "type": "heading",

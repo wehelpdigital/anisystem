@@ -14,7 +14,7 @@
     "fungicide",
     "ortiva top fungicide"
   ],
-  "excerpt": "Anthracnose is the fungal disease behind black, sunken spots on ripening mango, rotting sili pods, and the twisted onion leaves known locally as kulot. Colletotrichum fungi cause it and rain spreads it. Even a mango that looks clean at harvest can break out in spots once it ripens. This guide shows you how to spot anthracnose early, cut its sources, and use a fungicide only where it pays.",
+  "excerpt": "Anthracnose is the fungal disease behind black, sunken spots on ripening mango and rotting sili pods. It also causes the twisted onion leaves known locally as kulot. Colletotrichum fungi cause it and rain spreads it. Even a mango that looks clean at harvest can break out in spots once it ripens. This guide shows you how to spot anthracnose early, cut its sources, and use a fungicide only where it pays.",
   "heroImage": {
     "src": "/images/site/guides/problems-anthracnose.webp",
     "alt": "Mango flower cluster with blackened, dried flowers from anthracnose blossom blight",
@@ -23,7 +23,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Anthracnose is common wherever Filipino farmers grow fruit and vegetables. A 2025 checklist of Philippine records counted 55 Colletotrichum species on 106 host plants. Pepper, mango, banana and beans had the most reports, and onion, papaya, tomato and corn were on the list too. So a mango grower, a sili grower and an onion grower can all be fighting the same family of fungi.\n\nThe disease goes after the part you sell: the flowers that should set fruit, the pods, the bulbs and the ripe fruit. For onion, PCAARRD reports that the anthracnose twister complex can destroy up to 80 percent of a harvest in Nueva Ecija. With mango, much of the loss shows up after harvest, when the fruit ripens in the crate."
+      "text": "Anthracnose is common wherever Filipino farmers grow fruit and vegetables. A 2025 checklist of Philippine records counted 55 named Colletotrichum species on 106 host plants. Anthracnose was the main disease. So a mango grower, a sili grower and an onion grower can all be fighting the same family of fungi.\n\nThe disease goes after the part you sell: the flowers that should set fruit, the pods, the bulbs and the ripe fruit. For onion, PCAARRD reports that the anthracnose twister complex can destroy up to 80 percent of a harvest in Nueva Ecija. With mango, much of the loss shows up after harvest, when the fruit ripens in the crate."
     },
     {
       "type": "heading",
@@ -112,7 +112,7 @@
         },
         {
           "title": "Bag the fruit",
-          "text": "In a Philippine trial on Carabao mango, paper bags on the fruit plus a 10 minute dip in water at 53 degrees Celsius after harvest gave the least disease. In that same trial, every unbagged, untreated fruit from the rainy season crop developed anthracnose."
+          "text": "In a Philippine trial on Carabao mango, paper bags on the fruit gave the least disease when the fruit also got a 10 minute dip in water at 53 degrees Celsius after harvest. In that same trial, every unbagged, untreated fruit from the rainy season crop developed anthracnose. Bagging plus the hot water dip cut it by 83 percent."
         },
         {
           "title": "Start clean in vegetables",
@@ -176,7 +176,7 @@
     },
     {
       "type": "text",
-      "text": "One product you will see at agri supply stores is Ortiva Top fungicide from Syngenta. It combines azoxystrobin from group 11 and difenoconazole from group 3. Its Philippine label lists anthracnose on mango and on onion, along with scab and stem end rot on mango and other diseases on rice, corn and vegetables. Use it only on the crops named on the label, at the label rate and interval, and rotate it with a product from another group."
+      "text": "One product you will see at agri supply stores is Ortiva Top fungicide from Syngenta. It combines azoxystrobin from group 11 and difenoconazole from group 3. Its Philippine label lists anthracnose on mango and on onion, along with scab and stem end rot on mango and other diseases on rice, corn and vegetables. Use it only on the crops named on the label, at the label rate and interval. Rotate it with a product from another group."
     },
     {
       "type": "callout",

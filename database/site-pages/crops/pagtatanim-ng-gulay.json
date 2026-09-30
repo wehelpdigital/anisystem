@@ -32,7 +32,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Iisa ang simula ng lahat ng pagtatanim ng halaman: malusog na lupa, tamang binhi at tamang oras. Sa pagtatanim ng gulay, maikli ang siklo kaya mabilis mong makikita kung tama ang ginagawa mo. Puwede ang bakanteng lupa sa likod ng bahay o parte ng bukid na pahinga sa palay.\n\nAng mga dami dito ay galing sa mga gabay ng DA at ATI para sa lupang walang soil test. Kung kaya, ipasuri ang lupa sa soils laboratory ng probinsya."
+      "text": "Iisa ang simula ng lahat ng pagtatanim ng halaman: malusog na lupa, tamang binhi at tamang oras. Sa pagtatanim ng gulay, maikli ang siklo kaya mabilis mong makikita kung tama ang ginagawa mo. Puwede ang bakanteng lupa sa likod ng bahay o parte ng bukid na pahinga sa palay.\n\nAng mga dami dito ay galing sa mga gabay ng DA at ATI para sa lupang walang soil test. Kaya kung maaari, ipasuri ang lupa sa soils laboratory ng probinsya."
     },
     {
       "type": "heading",
@@ -117,7 +117,7 @@
     },
     {
       "type": "text",
-      "text": "**Fish amino acid fertilizer (FAA).** Mayaman ito sa nitrogen. Sa resipe ng ATI Cordillera, tadtarin ang 1 kilong isda kasama ang buto, hasang at lamang loob, at ilagay sa banga. Lagyan ng 1 kilong molasses o muscovado, takpan, at itabi sa malilim. Kunin ang katas pagkalipas ng 10 hanggang 15 araw at ilagay sa bote na may isang katlong puwang. Gamitin ang 2 kutsara bawat litro ng tubig at iispray tuwing 7 araw mula sa bagong tanim hanggang mamunga.\n\n**Eggshell as fertilizer.** Pinagkukunan ng calcium ang balat ng itlog para sa pamumulaklak at pamumunga. Sa resipe ng ATI Cordillera, durugin at isangag ang 2 kilong balat ng itlog hanggang mamula, palamigin, at ibabad sa 5 galon ng suka ng niyog o tubo. Takpan at hayaang mag ferment nang 20 araw, saka salain. Gamitin ang 2 kutsara bawat litro ng tubig tuwing 3 hanggang 7 araw habang namumunga."
+      "text": "**Fish amino acid fertilizer (FAA).** Mayaman ito sa nitrogen. Sa resipe ng ATI Cordillera, tadtarin ang 1 kilong isda kasama ang buto, hasang at lamang loob, at ilagay sa banga. Lagyan ng 1 kilong molasses o muscovado, takpan, at itabi sa malilim. Kunin ang katas pagkalipas ng 10 hanggang 15 araw at ilagay sa bote na may isang katlong puwang. Gamitin ang 2 kutsara bawat litro ng tubig at iispray tuwing 7 araw mula sa bagong tanim hanggang mamunga.\n\n**Eggshell as fertilizer.** Pinagkukunan ng calcium ang balat ng itlog para sa pamumulaklak at pamumunga. Sa resipe ng ATI Cordillera, durugin nang pino ang balat ng itlog at isangag hanggang mamula mulang kayumanggi, saka palamigin. Ilagay ang 2 hanggang 3 kutsara nito sa 1 litrong suka ng niyog o tubo, hintaying mawala ang maliliit na bula, takpan, at hayaang mag ferment nang 30 araw sa malamig at madilim na lugar. Salain, at gamitin ang 2 kutsara bawat litro ng tubig, tuwing 3 hanggang 7 araw habang namumunga."
     },
     {
       "type": "heading",
@@ -159,8 +159,8 @@
         ],
         [
           "Petsay",
-          "1 sakong dumi ng manok at 1 kilong 14 14 14 bawat kamang 20 metro",
-          "Wala nang kailangan kung maayos ang basal"
+          "1 sakong dumi ng manok, 1 kilong 14 14 14 at 4 na kilong urea bawat kamang 20 metro",
+          "Ilagay lahat bilang basal at tabunan ng lupa, ayon sa ATI Central Visayas"
         ]
       ]
     },
@@ -180,12 +180,12 @@
         "**Basal:** ihalo sa lupa bago magtanim o ilagay sa butas, saka tabunan ng kaunting compost o lupa para hindi dumikit sa ugat.",
         "**Side dress:** ibaon ang abono nang 1 pulgada ang lalim, 3 hanggang 4 na pulgada mula sa puno ng halaman, gaya ng turo ng ATI Cordillera.",
         "**Foliar:** iispray sa dahon, gaya ng FAA na 2 kutsara bawat litro. Pandagdag lang ito sa abono sa lupa.",
-        "**Drench:** ibuhos ang timpla sa paanan ng halaman, halimbawa ang timpla ng urea at tubig para sa punla."
+        "**Drench:** ibuhos ang timpla sa paanan ng halaman, halimbawa ang urea na tinunaw sa tubig, na 150 ml bawat butas sa gabay ng ATI para sa petsay."
       ]
     },
     {
       "type": "text",
-      "text": "Mas mahaba ang paliwanag sa [fertilizer application methods](/blog/fertilizer-application-methods). Sa anee.io, ang bawat abono ay nagiging gawain na may petsa sa [cropping calendar](/features/cropping-calendar), bilang mula sa araw ng paglipat tanim, at ang [inventory](/features/farm-inventory-and-expenses) ang nagbabawas ng sako sa stock tuwing gagamitin."
+      "text": "Mas mahaba ang paliwanag sa [fertilizer application methods](/blog/fertilizer-application-methods). Sa anee.io, ang bawat abono ay nagiging gawain na may petsa sa [cropping calendar](/features/cropping-calendar), bilang mula sa araw ng paglipat tanim, at sa Solo Farmer at Farm Owner plan, ang [inventory](/features/farm-inventory-and-expenses) ang nagbabawas ng sako sa stock tuwing gagamitin."
     },
     {
       "type": "heading",
@@ -261,7 +261,7 @@
     },
     {
       "type": "text",
-      "text": "Sa anee.io, gawin mong cropping schedule ang pagtatanim ng gulay. May [growth stages](/features/growth-stages-and-weather) ang app para sa 85 pananim sa Pilipinas, kasama ang kamatis, petsay, talong, ampalaya at okra, kaya makikita mo kung nasaan na ang bawat lote at ano ang dapat bantayan. Kasama rin ang taya ng panahon ngayong linggo para sa bawat lote."
+      "text": "Sa anee.io, gawin mong cropping schedule ang pagtatanim ng gulay. May [growth stages](/features/growth-stages-and-weather) ang app para sa 85 pananim sa Pilipinas, kasama ang kamatis, petsay, talong, ampalaya at okra, kaya makikita mo kung nasaan na ang bawat lote at ano ang dapat bantayan. Kasama rin ang taya ng panahon para sa bawat lote."
     },
     {
       "type": "cta",

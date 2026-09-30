@@ -6,7 +6,7 @@
   "category": "Corn pests",
   "title": "Fall Armyworm in Corn: How to Spot, Scout and Manage It",
   "metaTitle": "Fall Armyworm: Signs, Scouting and Control in Corn",
-  "metaDescription": "Fall armyworm reached the Philippines in 2019 and now attacks corn across the country. Learn to spot it early, scout the whorl and manage it with IPM.",
+  "metaDescription": "Fall armyworm reached the Philippines in 2019 and has spread to many regions. Learn to spot it early, scout the whorl and manage it with IPM.",
   "focusKeyword": "fall armyworm",
   "keywords": [
     "fall armyworm",
@@ -53,7 +53,7 @@
     },
     {
       "type": "text",
-      "text": "Damage builds fastest at the whorl stage. The larvae hide deep in the funnel of young leaves and eat them before they open. On seedlings, they can also cut the plant at the base.\n\nAfter that, they move to the tassels and bore into the ears. As a result, grain quality and yield drop, according to the USDA 2024 report on the Philippines.\n\nGood control pays. In a DA Cagayan Valley IPM demonstration reported in May 2025, the IPM plot yielded 7,781 kg per hectare in the dry season. The usual farmer practice next to it yielded 2,417 kg."
+      "text": "Damage builds fastest at the whorl stage. The larvae hide deep in the funnel of young leaves and eat them before they open. On seedlings, they can also cut the plant at the base.\n\nAfter that, they move to the tassels and bore into the ears. The USDA 2024 report on the Philippines says fall armyworm has severely hurt corn through stunting and damage to tassels and kernels, which cuts grain quality and yield.\n\nGood control pays. In a DA Cagayan Valley IPM demonstration reported in May 2025, the IPM plot yielded 7,781 kg per hectare in the dry season. The usual farmer practice next to it yielded 2,417 kg."
     },
     {
       "type": "heading",
@@ -138,8 +138,8 @@
         ],
         [
           "Chlorantraniliprole (28)",
-          "Several brands",
-          "Used in the DA Cagayan Valley IPM protocol"
+          "Virtako 40 WG, Prevathon 5SC",
+          "Labels list fall armyworm on corn. Also used in the DA Cagayan Valley IPM protocol"
         ],
         [
           "Spinetoram (5)",
@@ -170,7 +170,7 @@
     },
     {
       "type": "text",
-      "text": "Note the last two rows. The insecticide Karate and the pyrethroid in Cymbush are familiar names at the agrivet store. But their Syngenta Philippines labels do not list fall armyworm on corn, and a Pacific pests fact sheet warns that pyrethroids are unlikely to work well against it because of resistance.\n\nSo choose a product whose FPA registered label names this pest on corn, and follow its rate and harvest interval. Read more in our guide to [Karate, Cymbush and Selecron](/blog/karate-cymbush-selecron-insecticides)."
+      "text": "Note the last two rows. The insecticide Karate and the pyrethroid in Cymbush are familiar names at the agrivet store. But their Syngenta Philippines labels do not list fall armyworm on corn, and the Pacific pests fact sheet notes that the moth reached Africa already resistant to pyrethroids, among other insecticides. Ask your technician whether resistance is a problem in your area.\n\nSo choose a product whose FPA registered label names this pest on corn, and follow its rate and harvest interval. Read more in our guide to [Karate, Cymbush and Selecron](/blog/karate-cymbush-selecron-insecticides)."
     },
     {
       "type": "callout",
@@ -216,7 +216,7 @@
         },
         {
           "q": "Does fall armyworm attack rice too?",
-          "a": "Yes. Farmers and the DA have reported it on rice in the Philippines. See our guide to [rice insects](/problems/rice-insects)."
+          "a": "It can. The Pacific pests fact sheet lists rice among its hosts, and one strain prefers rice and pasture grasses. Watch for it and see our guide to [rice insects](/problems/rice-insects)."
         }
       ]
     },

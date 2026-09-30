@@ -34,7 +34,17 @@
         });
     </script>
     {{-- A page that writes its whole title (the guides: "... | anee.io") says so. --}}
-    <title>@hasSection('title_full')@yield('title_full')@else@yield('title', 'anee.io') — anee.io @endif</title>
+    @php
+        // A page that writes its whole title (the guides) says so; every other
+        // page gives its name and the brand follows. Sections are escaped
+        // when they are set, so they are printed as they are.
+        $pageTitle = trim($__env->yieldContent('title_full'));
+        if ($pageTitle === '') {
+            $pageTitle = trim($__env->yieldContent('title', 'anee.io'));
+            $pageTitle = $pageTitle === 'anee.io' ? $pageTitle : $pageTitle . ' | anee.io';
+        }
+    @endphp
+    <title>{!! $pageTitle !!}</title>
     <meta name="description" content="@yield('meta_description', 'anee.io — the cropping schedule manager for ' . \App\Support\Region::t('farmersOf') . '. Plan lots, workers, materials, activities and irrigation in one mobile-friendly web app.')">
     {{-- Indexable only once the mother app's switch says so (App\Support\Seo). --}}
     <meta name="robots" content="{{ \App\Support\Seo::robots() }}">
@@ -161,43 +171,72 @@
     </main>
 
     {{-- Footer --}}
+    {{-- The pre footer: every door on the site in one light band, so the
+         dark footer under it only has to say who we are. The guide columns
+         are the /ph face's (they are written for Philippine farms). --}}
+    @php
+        $footLinks = \App\Support\Region::ph() ? \App\Support\SitePages::footerLinks() : [];
+        $footCols = array_filter([['crops', 'Crop guides', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z'], ['problems', 'Crop problems', 'M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z'], ['blog', 'From the blog', 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z']], fn ($c) => ! empty($footLinks[$c[0]]));
+    @endphp
+    <section class="pf" aria-label="Site links">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-14">
+            <div class="pf-grid {{ $footCols ? 'has-guides' : '' }}">
+                <div class="pf-col">
+                    <h4 class="pf-h"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>Quick links</h4>
+                    <ul class="pf-list">
+                        <li><a href="{{ route('features') }}">Features</a></li>
+                        <li><a href="{{ route('pricing') }}">Pricing</a></li>
+                        <li><a href="{{ route('about') }}">About anee.io</a></li>
+                        <li><a href="{{ route('tutorial') }}">Tutorial</a></li>
+                        <li><a href="{{ route('contact') }}">Contact us</a></li>
+                        <li><a href="{{ route('signup') }}">Create an account</a></li>
+                        <li><a href="{{ route('login') }}">Log in</a></li>
+                    </ul>
+                </div>
+                @foreach ($footCols as [$sec, $lab, $icon])
+                    <div class="pf-col">
+                        <h4 class="pf-h"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg><a href="{{ url('/' . $sec) }}">{{ $lab }}</a></h4>
+                        <ul class="pf-list">
+                            @foreach ($footLinks[$sec] as $l)<li><a href="{{ $l['url'] }}">{{ $l['label'] }}</a></li>@endforeach
+                            <li><a href="{{ url('/' . $sec) }}" class="pf-all">See all ›</a></li>
+                        </ul>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    <style>
+        .pf { background: linear-gradient(180deg, #f6faf1 0%, #eef6e6 100%); border-top: 1px solid #e1edd3; }
+        .pf-grid { display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .pf-grid:not(.has-guides) { grid-template-columns: minmax(0, 1fr); }
+        .pf-grid:not(.has-guides) .pf-list { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; }
+        @media (min-width: 1024px) { .pf-grid.has-guides { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.5rem; } }
+        .pf-h { display: flex; align-items: center; gap: .5rem; font-family: var(--font-heading); font-weight: 700; font-size: 1rem; color: #14210c; margin-bottom: .9rem; }
+        .pf-h svg { width: 1.9rem; height: 1.9rem; padding: .4rem; border-radius: .65rem; background: #fff; color: #3d6823; box-shadow: 0 1px 0 #d9e9c6, 0 6px 14px -10px rgb(20 33 12 / .5); flex: none; }
+        .pf-h a { color: inherit; text-decoration: none; }
+        .pf-h a:hover { color: #3d6823; }
+        .pf-list { display: grid; gap: .5rem; font-size: .9rem; }
+        .pf-list a { color: #4b5563; text-decoration: none; transition: color .28s cubic-bezier(.22,1,.36,1), padding .28s cubic-bezier(.22,1,.36,1); }
+        .pf-list a:hover { color: #3d6823; padding-left: .2rem; }
+        .pf-list .pf-all { font-weight: 800; color: #3d6823; }
+        @media (prefers-reduced-motion: reduce) { .pf-list a { transition: none; } }
+    </style>
+
     <footer class="bg-gray-900 text-gray-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 grid gap-10 md:grid-cols-3 {{ \App\Support\Region::ph() ? 'lg:grid-cols-6' : '' }}">
-            <div class="lg:col-span-1">
-                <img src="{{ asset('images/site/logo-white.png') }}?v=anee" alt="anee.io" class="h-8 w-auto mb-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid gap-8 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] items-start">
+            <div class="max-w-xl">
+                {{-- Its own shape at any width: a squeezed column used to
+                     stretch the wordmark sideways. --}}
+                <img src="{{ asset('images/site/logo-white.png') }}?v=anee" alt="anee.io" class="block h-8 w-auto max-w-full object-contain object-left mb-4">
                 <p class="text-sm leading-relaxed text-gray-400">
                     anee.io is the cropping schedule manager empowering {{ \App\Support\Region::t('farmersOf') }} with
                     education, technology, and quality products for a sustainable agricultural future.
                 </p>
             </div>
-            <div>
-                <h4 class="text-white font-bold mb-4">Quick Links</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="{{ route('features') }}" class="hover:text-accent-500">Features</a></li>
-                    <li><a href="{{ route('pricing') }}" class="hover:text-accent-500">Pricing</a></li>
-                    <li><a href="{{ route('about') }}" class="hover:text-accent-500">About anee.io</a></li>
-                    <li><a href="{{ route('tutorial') }}" class="hover:text-accent-500">Tutorial</a></li>
-                    <li><a href="{{ route('contact') }}" class="hover:text-accent-500">Contact Us</a></li>
-                    <li><a href="{{ route('signup') }}" class="hover:text-accent-500">Create an Account</a></li>
-                    <li><a href="{{ route('login') }}" class="hover:text-accent-500">Log In</a></li>
-                </ul>
-            </div>
-            {{-- The guides, a door away from every public page. --}}
-            @php($footLinks = \App\Support\Region::ph() ? \App\Support\SitePages::footerLinks() : [])
-            @foreach ([['crops', 'Crop guides'], ['problems', 'Crop problems'], ['blog', 'From the blog']] as [$sec, $lab])
-                @if (! empty($footLinks[$sec]))
-                    <div>
-                        <h4 class="text-white font-bold mb-4"><a href="{{ url('/' . $sec) }}" class="hover:text-accent-500">{{ $lab }}</a></h4>
-                        <ul class="space-y-2 text-sm">
-                            @foreach ($footLinks[$sec] as $l)<li><a href="{{ $l['url'] }}" class="hover:text-accent-500">{{ $l['label'] }}</a></li>@endforeach
-                        </ul>
-                    </div>
-                @endif
-            @endforeach
-            <div>
-                <h4 class="text-white font-bold mb-4">Contact</h4>
+            <div class="md:justify-self-end">
+                <h4 class="text-white font-bold mb-3">Contact</h4>
                 <ul class="space-y-2 text-sm text-gray-400">
-                    <li>support@anee.io</li>
+                    <li><a href="mailto:support@anee.io" class="hover:text-accent-500">support@anee.io</a></li>
                     <li>Philippines</li>
                 </ul>
             </div>
@@ -207,7 +246,10 @@
                 {{-- The legal pages, reachable before anyone signs up (inside the app
                      they sit in the app footer instead). --}}
                 <span>© {{ date('Y') }} anee.io · <a href="{{ route('legal.show', ['slug' => 'privacy']) }}" class="hover:text-accent-500">Privacy</a> · <a href="{{ route('legal.show', ['slug' => 'terms']) }}" class="hover:text-accent-500">Terms</a> · <a href="{{ route('legal.show', ['slug' => 'cookies']) }}" class="hover:text-accent-500">Cookies</a> · <a href="{{ route('landing') }}" class="hover:text-accent-500">Start free</a></span>
-                <span>Helping {{ \App\Support\Region::t('farmersOf') }} reach maximum yield and income</span>
+                <span class="inline-flex items-center gap-1.5">
+                    Helping {{ \App\Support\Region::t('farmersOf') }} reach maximum yield and income
+                    <svg class="w-3.5 h-3.5 text-brand-500 footer-heart" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.9-9.6-9A5.6 5.6 0 0 1 12 6.3a5.6 5.6 0 0 1 9.6 5.7C19.5 16.1 12 21 12 21z"/></svg>
+                </span>
             </div>
         </div>
     </footer>

@@ -15,7 +15,7 @@
     "black bug insect",
     "rice bug"
   ],
-  "excerpt": "The rice black bug, Scotinophara coarctata, is a dark stink bug that hides at the base of the rice hill by day and sucks sap from the stems. PhilRice calls it itim na atangya, and many farmers say alitangya. A heavy attack burns whole patches of palay reddish brown, so it pays to catch it early.",
+  "excerpt": "The rice black bug, Scotinophara coarctata, is a dark stink bug that hides at the base of the rice hill by day and sucks sap from the stems. PhilRice calls it itim na atangya, and Tagalog dictionaries give alitangya. A heavy attack burns whole patches of palay reddish brown, so it pays to catch it early.",
   "heroImage": {
     "src": "/images/site/guides/problems-rice-black-bug.webp",
     "alt": "A rice black bug, Scotinophara coarctata, resting on a green leaf",
@@ -38,7 +38,7 @@
     },
     {
       "type": "text",
-      "text": "A female lays about 200 eggs in her life, in masses of 40 to 60 on the lower leaves or the base of the plant near the water. She stands guard over them until they hatch. The eggs start greenish and turn pink as they mature, and they hatch in about a week or less. Nymphs pass through five stages and become adults in about six weeks.\n\nRice is its main host, but it also lives on corn, gabi, grasses, sedges and broadleaf weeds. The adult flies weakly. Even so, boats and vehicles have carried it over long distances."
+      "text": "A female lays about 200 eggs in her life, in masses of 40 to 60 on the lower leaves or the base of the plant near the water. She stands guard over them until they hatch. The eggs start greenish and turn pink as they mature, and they hatch in about a week or less. Nymphs molt four or five times and reach adulthood in roughly a month to six weeks, depending on the PhilRice source.\n\nRice is its main host, but it also lives on corn, gabi, grasses, sedges and broadleaf weeds. The adult is a weak flier, yet ships and other transport have carried it over long distances."
     },
     {
       "type": "heading",
@@ -47,7 +47,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice records the first attack in Bonobono, Bataraza, in southern Palawan in September 1979. A major outbreak followed from March to June 1982 and spread to central and northern Palawan, covering 4,500 hectares. A provincial Task Force Black Bug sprayed heavily, but the bugs kept spreading. PhilRice suggests that the spraying wiped out the native natural enemies.\n\nIn 1989 a PhilRice task force finally slowed it with the tolerant variety IR1314, releases of parasitic wasps and strict quarantine. Mindanao, the Visayas and later Luzon followed."
+      "text": "PhilRice records the first attack in Bonobono, Bataraza, in southern Palawan in September 1979. A major outbreak followed from March to June 1982 and spread to central and northern Palawan, covering 4,500 hectares. A provincial Task Force Black Bug sprayed heavily, but the bugs kept spreading. PhilRice thinks the spraying may have wiped out the native natural enemies, and that the bug survived on plants other than rice.\n\nIn 1989 an interagency task force led by PhilRice slowed it with the tolerant variety IR1314, releases of parasitic wasps and strict quarantine. Mindanao followed in 1992, then the Visayas."
     },
     {
       "type": "table",
@@ -89,7 +89,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice has since warned of black bug attacks in Central Luzon. The lesson from Palawan and Mindanao still holds. According to PhilRice, numbers only started to fall in the mid 1990s in areas where farmers planted at the same time."
+      "text": "In 2013 PhilRice also warned of black bug attacks in some Central Luzon fields. The lesson from Palawan and Mindanao still holds. According to PhilRice, numbers in Mindanao only started to fall in the mid 1990s, in areas where farmers planted at the same time."
     },
     {
       "type": "heading",
@@ -102,13 +102,13 @@
       "items": [
         "**Deadheart** at tillering: the center leaves of a tiller turn brown and die.",
         "**Whiteheads and empty panicles** at booting: panicles come out partly or not at all, and the grains stay unfilled.",
-        "**Bugburn** from maximum tillering to harvest: leaves turn reddish brown and whole patches dry up.",
+        "**Bugburn** in heavy attacks: leaves turn reddish brown and whole patches dry up.",
         "**Stunting and fewer tillers**, with yellowing or reddish brown leaves."
       ]
     },
     {
       "type": "text",
-      "text": "Two checks help you name the culprit. Stem borers also cause deadhearts, but a stem borer deadheart pulls out easily while a black bug deadheart stays firm at the base. Bugburn also looks like hopperburn from the [brown planthopper](/problems/brown-planthopper). Yet bugburn leaves no honeydew or sooty mold at the base of the plant.\n\nIRRI and PhilRice say ten adults per hill can cut yield by up to 35 percent. During outbreaks, PhilRice recorded losses of 60 to 80 percent. Heavy damage usually shows only after heading, so do not wait for bugburn before you act."
+      "text": "Two checks help you name the culprit. Stem borers also cause deadhearts, but a stem borer deadheart usually pulls out easily and shows a tunnel with a caterpillar inside. With black bugs you find the dark bugs at the base of the plant instead. Bugburn also looks like hopperburn from the [brown planthopper](/problems/brown-planthopper). Yet IRRI says to confirm hopperburn by the sooty mold at the base of the plant, and bugburn does not bring it.\n\nA PhilRice news item says that 10 adult black bugs per hill can cause losses of up to 35 percent. PhilRice's own bulletin gives 15 to 23 percent at 10 bugs per hill. In outbreaks, its 1995 primer reports losses of 60 to 80 percent. Severe damage usually shows only after heading, so do not wait for bugburn before you act."
     },
     {
       "type": "heading",
@@ -121,14 +121,14 @@
       "items": [
         "Rice after rice in irrigated areas, and poorly drained fields",
         "Staggered planting, so a young crop is always nearby",
-        "Dense planting and too much nitrogen",
+        "Too much nitrogen fertilizer",
         "Weeds and other hosts that feed the bugs between crops",
-        "Dry season crops, where IRRI sees damage more often"
+        "Dry season crops, which PhilRice says suffer more than wet season crops"
       ]
     },
     {
       "type": "text",
-      "text": "The moon matters too. Black bug flight follows the lunar cycle, and on full moon nights large swarms fly to lights. That is why swarms sometimes gather around lamp posts and houses near rice areas."
+      "text": "The moon matters too. PhilRice says the full moon cycle affects black bug flight, and more adults fly to lights around the full moon. That is why the bugs sometimes gather around lamp posts and houses near rice areas."
     },
     {
       "type": "heading",
@@ -160,7 +160,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Count at the base.** Pick 20 hills at random across the field and count the eggs, nymphs and adults at the base of the plants. It is slow work, but it shows what is really in your field.",
+        "**Count at the base.** Pick 20 hills at random across the field and count the eggs, nymphs and adults at the base of the plants. PhilRice's bulletin says to act when you find five or more nymphs or adults per hill. It is slow work, but it shows what is really in your field.",
         "**Raise the water.** PhilRice advises raising the water to 8 to 10 centimeters for one to two days to stop eggs from hatching. Eggs kept under water for 24 hours do not hatch.",
         "**Check the eggs first.** Put about 5 egg masses in a container covered with nylon mesh and wait a week. If wasps come out, the eggs are parasitized, and flooding would kill those helpful wasps too.",
         "**Let ducks in.** Ducks eat black bugs. Herd them into insecticide free fields with standing water from about a month after transplanting up to heading.",
@@ -174,7 +174,7 @@
     },
     {
       "type": "text",
-      "text": "Black bugs fly strongly to bright light. PhilRice advises light trapping every night from five days before to five days after the full moon, from 8 PM to midnight. During outbreaks they suggest lamps of 2,000 to 3,000 watts. Bury the bugs you catch in a pit. After harvest, keep the lights on for a few nights, because the adults leave harvested fields in search of food.\n\nKeep the limits in mind. Light traps catch mostly females that have already laid their eggs. So a big catch tells you the bugs are flying in your barangay, not how many sit in your own field. Use the trap as a community warning and the 20 hill count to decide.\n\nIn anee.io you can add the light trap nights around each full moon as tasks on your [cropping calendar](/features/cropping-calendar), so the whole team sees them. Anee, the [AI technician](/features/ai-agricultural-technician), can also look at a photo of the bugs at the base of your hills and answer in Tagalog or English."
+      "text": "Black bugs are strongly attracted to bright light. PhilRice's bulletin says to run light traps from two days before to three days after the full moon, where the population is not yet alarming. A PhilRice news item says five days before and after, so it is safer to start early. During outbreaks, PhilRice says to set the lights every night, using 2,000 to 3,000 watt lamps, and calls 8 PM to midnight the effective time. Bury the bugs you catch. Set a strong light on the newly harvested field the night after harvest too, because the adults leave harvested fields in search of food.\n\nKeep the limits in mind. Light traps catch mostly females that have already laid their eggs. So a big catch tells you the bugs are flying in your barangay, not how many sit in your own field. Use the trap as a community warning and the 20 hill count to decide.\n\nIn anee.io you can add the light trap nights around each full moon as tasks on your [cropping calendar](/features/cropping-calendar), so the whole team sees them. Anee, the [AI technician](/features/ai-agricultural-technician), can also look at a photo of the bugs at the base of your hills and answer in Tagalog or English."
     },
     {
       "type": "heading",
@@ -183,7 +183,7 @@
     },
     {
       "type": "text",
-      "text": "Cut the plants down to the base, then plow and flood the field right away. This kills the adults, nymphs and eggs that hide in the stubble."
+      "text": "Plow the field right away and keep the stubble under water until it rots. This buries the adults, nymphs and eggs that hide in the stubble."
     },
     {
       "type": "heading",
@@ -217,15 +217,15 @@
       "items": [
         {
           "q": "What is the rice black bug called in Tagalog?",
-          "a": "PhilRice uses itim na atangya. Many dictionaries and news reports use alitangya. Plain atangya usually means the slender rice bug, so check the insect itself."
+          "a": "PhilRice uses itim na atangya. Tagalog dictionaries give alitangya. PhilRice keeps plain atangya for the slender rice bug, so check the insect itself."
         },
         {
           "q": "Why do black bugs swarm around lights at full moon?",
-          "a": "Their flight follows the lunar cycle. On full moon nights large numbers of adults fly to light sources, which is why PhilRice times light traps from five days before to five days after the full moon."
+          "a": "PhilRice says the full moon cycle affects their flight, and more adults fly to light around the full moon. So PhilRice times light traps around it, from two days before to three days after in its bulletin."
         },
         {
           "q": "How do I tell bugburn from hopperburn?",
-          "a": "Look at the base of the plants. Hopperburn from planthoppers comes with honeydew and sooty mold. Bugburn from black bugs does not, and you will find the dark bugs themselves at the base."
+          "a": "Look at the base of the plants. Hopperburn from planthoppers comes with honeydew and sooty mold, says IRRI. Bugburn from black bugs does not, and you will find the dark bugs themselves at the base."
         },
         {
           "q": "Can I control rice black bugs without insecticide?",
@@ -233,7 +233,7 @@
         },
         {
           "q": "Is there a resistant variety?",
-          "a": "PhilRice lists tolerant lines such as IR1314 and IR44526 that recover by making new tillers. Ask your Municipal Agriculture Office which varieties suit your area."
+          "a": "PhilRice lists tolerant varieties, not resistant ones. IR1314 and IR44526 recover by making new tillers. Ask your Municipal Agriculture Office which varieties suit your area."
         }
       ]
     },

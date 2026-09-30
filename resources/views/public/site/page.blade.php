@@ -11,6 +11,15 @@
     $seoTitle = trim((string) ($page->metaTitle ?: $page->title));
     $updated = $page->updated_at ?? now();
     $sectionUrl = $page->section === 'features' ? route('features') : $S::url($page->section);
+    $isFeature = $page->section === 'features';
+    $feat = $isFeature ? $S::feature($page) : null;
+    // A tall picture on a feature page is a phone screen: it stands in a
+    // phone beside the words instead of being cropped into a banner.
+    $portrait = false;
+    if ($isFeature && $heroSrc && ! preg_match('#^https?://#i', (string) ($hero['src'] ?? ''))) {
+        $size = @getimagesize(public_path(ltrim((string) $hero['src'], '/')));
+        $portrait = $size && $size[1] > $size[0] * 1.15;
+    }
 @endphp
 
 @section('title_full', $seoTitle . ' | anee.io')
@@ -65,7 +74,7 @@
 
 @section('content')
     <article>
-        <header class="sp-hero">
+        <header class="sp-hero {{ $isFeature ? 'is-feature' : '' }}" @if ($feat) style="--h: {{ $feat['hue'] }}" @endif>
             <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-8 sm:pt-10 pb-8">
                 <nav class="sp-crumbs" aria-label="Breadcrumb">
                     <a href="{{ url('/') }}">Home</a>
@@ -74,22 +83,43 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                     <span class="truncate max-w-[14rem] sm:max-w-none">{{ $S::shortTitle($page) }}</span>
                 </nav>
+                <div class="{{ $portrait ? 'sp-fhero' : '' }}">
                 <div class="mt-5 max-w-3xl">
-                    @if ($page->category)<span class="sp-chip">{{ $page->category }}</span>@endif
+                    @if ($feat)
+                        <div class="sp-fbadge">
+                            <span class="sp-fico"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $feat['icon'] }}"/></svg></span>
+                            <span>{{ $feat['name'] }}</span>
+                        </div>
+                    @elseif ($page->category)
+                        <span class="sp-chip">{{ $page->category }}</span>
+                    @endif
                     <h1 class="sp-h1 mt-3">{{ $page->title }}</h1>
                     @if ($page->excerpt)<p class="sp-lead mt-4">{!! $S::inline($page->excerpt) !!}</p>@endif
+                    @if ($isFeature)
+                        <div class="mt-6 flex flex-wrap items-center gap-3">
+                            <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start free</a>
+                            <a href="{{ route('pricing') }}" class="btn btn-outline btn-lg">See plans</a>
+                            <span class="text-sm text-gray-500">Free forever on Libre. No card needed.</span>
+                        </div>
+                    @else
                     <div class="sp-meta mt-4">
                         <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 2"/></svg>{{ $minutes }} min read</span>
                         <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>Updated {{ $updated->timezone('Asia/Manila')->format('F j, Y') }}</span>
                         <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>By the anee.io agriculture team</span>
                     </div>
+                    @endif
                 </div>
-                @if ($heroSrc)
-                    <figure class="sp-figure mt-7">
+                @if ($heroSrc && $portrait)
+                    <figure class="sp-phone">
+                        <img src="{{ $heroSrc }}" alt="{{ $hero['alt'] ?? $page->title }}" fetchpriority="high">
+                    </figure>
+                @elseif ($heroSrc)
+                    <figure class="sp-figure mt-7 {{ $isFeature ? 'is-product' : '' }}">
                         <img src="{{ $heroSrc }}" alt="{{ $hero['alt'] ?? $page->title }}" fetchpriority="high">
                         @if (trim((string) ($hero['credit'] ?? '')) !== '')<figcaption>Photo: {{ $hero['credit'] }}</figcaption>@endif
                     </figure>
                 @endif
+                </div>
             </div>
         </header>
 
@@ -127,6 +157,18 @@
         </div>
     </article>
 
+    @if ($isFeature)
+    {{-- The rest of the product, one card each. --}}
+    <section class="bg-[#f9fbf6] border-t border-[#e4efd4]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+            <div class="flex flex-wrap items-end justify-between gap-3 mb-6">
+                <h2 class="font-heading text-2xl font-bold text-ink">More of what anee.io does</h2>
+                <a href="{{ route('features') }}" class="text-sm font-extrabold text-brand-700 hover:text-brand-800">The full feature tour ›</a>
+            </div>
+            @include('public.site.feature-grid', ['pages' => \App\Support\SitePages::inSection('features'), 'except' => $page->slug])
+        </div>
+    </section>
+    @else
     {{-- Every section, a door away: guides feed each other. --}}
     <section class="bg-[#f9fbf6] border-t border-[#e4efd4]">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
@@ -146,6 +188,7 @@
             </div>
         </div>
     </section>
+    @endif
 @endsection
 
 @push('scripts')

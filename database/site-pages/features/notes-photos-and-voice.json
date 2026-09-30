@@ -16,10 +16,10 @@
     "gallery",
     "contact list"
   ],
-  "excerpt": "The fastest farm notes are the ones you can make while standing in the mud. In anee.io you snap a photo, film a clip or simply speak, and it files itself as a note on the right season. Later you find it again by search, by tag or in the gallery.",
+  "excerpt": "The fastest farm notes are the ones you can make while standing in the mud. In anee.io you snap a photo, film a clip or simply speak, and it becomes a note. Later you find it again by search, by tag or in the gallery.",
   "heroImage": {
     "src": "/images/site/app/notes.png",
-    "alt": "The anee.io farm notes screen with a voice record, a team whiteboard, a day note and a team map note",
+    "alt": "The anee.io farm notes list on a phone, with a voice record note, a team whiteboard, a day note and a team map note",
     "credit": ""
   },
   "blocks": [
@@ -43,7 +43,7 @@
       "items": [
         "**Quick Capture**: take one or more photos and they become one note, or send them to a gallery album instead",
         "**Quick Record**: film a short video when a picture will not do, like water running through a broken bund",
-        "**Quick Voice**: say it, and it files itself as a note, handy when your hands are muddy"
+        "**Quick Voice**: say it and it files itself as a Global Note, handy when your hands are muddy"
       ]
     },
     {

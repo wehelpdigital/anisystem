@@ -26,7 +26,7 @@
   "excerpt": "The palay price you get depends on the month, your province, the variety and how dry your grain is. Here is the latest PSA farmgate average and the NFA buying price. You will also see what those mean per cavan, and how to check a buyer's offer before you sell.",
   "heroImage": {
     "src": "/images/site/photos/sacks.jpg",
-    "alt": "Sacks of dried palay ready for sale, the unit behind every palay price",
+    "alt": "A farmer checking his notebook beside tall stacks of sacks in a farm shed",
     "credit": ""
   },
   "blocks": [
@@ -41,7 +41,7 @@
     },
     {
       "type": "text",
-      "text": "The Philippine Statistics Authority (PSA) tracks the farmgate price of dry palay every month. For August 2026, the latest month out when we wrote this, the national average was P22.16 per kilogram. That was 29.9 percent higher than in August 2025, but 1 percent lower than in July 2026. In June 2026 the average stood at P21.78.\n\nThe gap between places was wide. Central Visayas averaged P28.07 per kilo, while the Bangsamoro region stood at P20.61. Cavite also posted the biggest monthly drop of any province, down 16.4 percent to P17.16."
+      "text": "The Philippine Statistics Authority (PSA) tracks the farmgate price of dry palay every month. For August 2026, the latest month out when we wrote this, the national average was P22.16 per kilogram. That was 29.9 percent higher than in August 2025, but 1 percent lower than in July 2026. In June 2026 the average stood at P21.78.\n\nThe gap between places was wide. Central Visayas averaged P28.07 per kilo, while the Bangsamoro region stood at P20.61. Cavite posted the biggest monthly drop of any province, down 16.4 percent to P17.16, though that is still 47.9 percent above a year earlier."
     },
     {
       "type": "table",
@@ -163,7 +163,7 @@
     },
     {
       "type": "text",
-      "text": "Variety counts too. In Nueva Ecija, PSA data for 2024 averaged P24.69 per kilo for dry fancy palay and P23.33 for other dry palay, PCIJ reported. So see our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) before you pick seed.\n\nClean grain sells better as well. PalayCheck advises removing chaff, straw and empty grains, because they hold moisture and cause hot spots in the sack. Some traders even ask for a palay picture before they quote, so photograph a handful of clean grain in daylight. Finally, PCIJ found that agents in Nueva Ecija often add about 20 centavos per kilo to outbid each other. That is why it pays to ask more than one buyer."
+      "text": "Variety counts too. In Nueva Ecija, PSA data for 2024 averaged P24.69 per kilo for dry fancy palay and P23.33 for other dry palay, PCIJ reported. So see our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) before you pick seed.\n\nClean grain sells better as well. PalayCheck advises removing chaff, straw and empty grains, because they hold moisture and cause hot spots in the sack. If a buyer is far away, a palay picture of a clean handful, taken in daylight, helps him judge your grain before he quotes. Finally, PCIJ found that agents in Nueva Ecija often add about 20 centavos per kilo to outbid each other. That is why it pays to ask more than one buyer."
     },
     {
       "type": "callout",
@@ -178,7 +178,7 @@
     },
     {
       "type": "text",
-      "text": "Palay to rice conversion explains the gap between the two prices. At the PSA milling recovery rate of 63 percent, one kilo of milled rice needs about 1.59 kg of palay. At the August 2026 average of P22.16, that palay alone costs about P35 per kilo of rice. Drying, hauling, milling, packing and store margins come on top.\n\nPremium palay rice also ends up in packed rice brands in the Philippines. Jasponica rice, for instance, is a premium rice that SL Agritech Corporation sells under its Doña Maria brand. So when you follow the rice and palay price in the Philippines, remember they track different products at different steps."
+      "text": "Palay to rice conversion explains the gap between the two prices. At the PSA milling recovery rate of 63 percent, one kilo of milled rice needs about 1.59 kg of palay. At the August 2026 average of P22.16, that palay alone costs about P35 per kilo of rice. Drying, hauling, milling, packing and store margins come on top.\n\nSome palay ends up in packed rice brands in the Philippines. Jasponica rice, for instance, is a premium rice that SL Agritech Corporation sells under its Doña Maria brand. So when you follow the rice and palay price in the Philippines, remember they track different products at different steps."
     },
     {
       "type": "heading",
@@ -187,16 +187,16 @@
     },
     {
       "type": "text",
-      "text": "Prices usually dip at peak harvest, when everyone sells at once. Imports matter as well. For example, imports surged after the 2019 Rice Tariffication Law. Then at the October 2019 harvest peak, farmgate prices fell to P14.40 per kilo, the lowest since 2011, a PhilRice brief noted.\n\nIn 2026 the trend ran the other way, with monthly averages close to 30 percent above 2025. So plan your sale, not just your harvest. Our [palay guide](/crops/palay) shows how proper drying keeps your grain sound while you wait. Also, our [pagtatanim ng palay guide](/crops/pagtatanim-ng-palay) covers the harvest timing that protects milling quality."
+      "text": "Prices usually dip at peak harvest, when everyone sells at once. Imports matter as well. For example, imports surged after the 2019 Rice Tariffication Law. Farmgate prices then fell sharply at the harvest peak of late 2019.\n\nIn 2026 the trend ran the other way, with monthly averages close to 30 percent above 2025. So plan your sale, not just your harvest. Our [palay guide](/crops/palay) shows how proper drying keeps your grain sound while you wait. Also, our [pagtatanim ng palay guide](/crops/pagtatanim-ng-palay) covers the harvest timing that protects milling quality."
     },
     {
       "type": "text",
-      "text": "anee.io helps on the selling side too. Its [farm reports](/features/farm-reports) track every expense and your yield per lot. You can also log post harvest observations like buyers and prices, so next season you can compare who paid best."
+      "text": "anee.io helps on the selling side too. On the Solo Farmer and Farm Owner plans, its [farm reports](/features/farm-reports) track every expense and your yield per lot. You can also log post harvest observations like buyers and prices, so next season you can compare who paid best."
     },
     {
       "type": "cta",
       "title": "Know your cost per kilo before you sell",
-      "text": "anee.io records each lot's expenses, yield and buyers, and the reports show your profit per season. Then you know the lowest palay price that still pays.",
+      "text": "anee.io records each lot's expenses, yield and buyers, and the reports on the paid plans show your profit per season. Then you know the lowest palay price that still pays.",
       "label": "Start free",
       "url": "/signup"
     },

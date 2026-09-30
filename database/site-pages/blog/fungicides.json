@@ -21,13 +21,13 @@
   "excerpt": "A fungicide protects a crop from fungal disease. It stops spores from sprouting or slows a fungus already inside the leaf, but it cannot bring dead tissue back to life. This guide explains the two main kinds, how FRAC group numbers help you rotate, and what two common Syngenta products, Armure and Ortiva Top, are registered for in the Philippines.",
   "heroImage": {
     "src": "/images/site/palay.jpg",
-    "alt": "Palay panicles filling grain in a green rice field, the crop a fungicide protects from sheath blight",
+    "alt": "Green and yellowing palay panicles bending with grain in a rice field",
     "credit": ""
   },
   "blocks": [
     {
       "type": "text",
-      "text": "Fungal diseases love what the wet season brings: warm nights, dew that stays until mid morning, and thick canopies that never dry. By the time you see lesions from the pilapil, the paddy dike, the fungus has often been growing for days. That is why timing matters more with a fungicide than with almost any other farm chemical.\n\nFirst, make sure the problem really is a fungus. Bacterial leaf blight, viral tungro and plain nutrient shortage can all look like disease, and no fungicide will fix them. When in doubt, ask your municipal agriculturist or send a clear photo to someone who can read it."
+      "text": "Fungal diseases love what the wet season brings: warm nights, dew that stays until mid morning, and thick canopies that never dry. By the time you can see lesions from the pilapil, the paddy dike, the fungus has often been growing for days. That is why timing matters more with a fungicide than with almost any other farm chemical.\n\nFirst, make sure the problem really is a fungus. Bacterial leaf blight, viral tungro and plain nutrient shortage can all look like disease, and no fungicide will fix them. When in doubt, ask your municipal agriculturist or send a clear photo to someone who can read it."
     },
     {
       "type": "heading",
@@ -108,7 +108,7 @@
     },
     {
       "type": "text",
-      "text": "Armure 300 EC from Syngenta Philippines contains difenoconazole and propiconazole, two triazoles. Both sit in FRAC group 3, so Armure is one mode of action in a double dose, not two. Syngenta sells Armure fungicide for sheath blight in rice and says it gives preventive, systemic and curative action.\n\nOn the FPA list, Armure sits in toxicity category 3. Besides rice sheath blight, it also carries a corn listing for banded leaf and sheath blight, ear rot, leaf blight and rust, with a 45 day pre harvest interval on corn."
+      "text": "Armure 300 EC from Syngenta Philippines contains difenoconazole and propiconazole, two triazoles. Both sit in FRAC group 3, so Armure is one mode of action in a double dose, not two. Syngenta sells Armure fungicide for sheath blight in rice and says it gives preventive, systemic and curative action. Before you buy, look up its registration on the current FPA list and read the expiry date.\n\nBesides rice sheath blight, Armure also carries a corn listing for banded leaf and sheath blight, ear rot, leaf blight and rust, with a 45 day pre harvest interval on corn."
     },
     {
       "type": "heading",
@@ -117,11 +117,11 @@
     },
     {
       "type": "text",
-      "text": "Ortiva Top 325 SC mixes azoxystrobin, FRAC group 11, with difenoconazole, FRAC group 3. It pairs group 11 with a partner from another group, which is one of the ways FRAC suggests using group 11. Syngenta Philippines describes the Ortiva Top fungicide as broad spectrum, with preventive, systemic and curative activity."
+      "text": "Ortiva Top 325 SC mixes azoxystrobin, FRAC group 11, with difenoconazole, FRAC group 3. Group 11 is paired here with a partner from another group, a common way to protect a high risk group. Syngenta Philippines describes the Ortiva Top fungicide as broad spectrum, with preventive, systemic and curative activity."
     },
     {
       "type": "table",
-      "caption": "Source: FPA list of registered agricultural pesticides as of August 31, 2026. Toxicity category 3.",
+      "caption": "Source: FPA list of registered agricultural pesticides as of August 31, 2026. A listing does not mean the product is registered today, so check its expiry date on the current FPA list.",
       "rows": [
         [
           "Crop",
@@ -200,7 +200,7 @@
       "type": "callout",
       "tone": "warn",
       "title": "Safety and waiting days",
-      "text": "Wear long sleeves, long pants, boots, gloves and a mask. Keep people out of the field until the spray has dried, as the Ortiva Top listing requires. Count the pre harvest interval before you harvest, and never spray just before rain."
+      "text": "Wear long sleeves, long pants, boots, gloves and a mask. Keep people out of the field for the reentry time printed on the label. Count the pre harvest interval before you harvest, and never spray just before rain."
     },
     {
       "type": "heading",

@@ -20,7 +20,7 @@
   "excerpt": "The farm inventory in anee.io keeps count of what sits in your shed: fertilizer, seeds, chemicals, fuel and tools. When you tick a task done on the board, it takes its materials out of stock, and every purchase, extra expense and sale lands in your reports to the peso.",
   "heroImage": {
     "src": "/images/site/photos/sacks-shed.jpg",
-    "alt": "A farmer checks a handwritten farm inventory list beside stacked fertilizer sacks in a wooden shed",
+    "alt": "A farmer scratches his head over a handwritten farm inventory list among stacked fertilizer sacks in a wooden shed",
     "credit": ""
   },
   "blocks": [

@@ -31,10 +31,10 @@
     "hanip insect",
     "alibangbang insect"
   ],
-  "excerpt": "Weeds in Tagalog is damo, the same word Filipinos use for grass. So when a farmer says the field is full of damo, they mean the unwanted plants, not a lawn. This glossary gives the Tagalog farm words that matter in the field, each one checked against a dictionary, plus the local names of the bugs that attack palay.",
+  "excerpt": "Weeds in Tagalog is damo, the same word Filipinos use for grass. So when a farmer says the field is full of damo, they mean the unwanted plants, not a lawn. This glossary gives the Tagalog farm words that matter in the field, checked against Tagalog.com, Wiktionary and PhilRice handouts, plus the local names of the bugs that attack palay.",
   "heroImage": {
     "src": "/images/site/photos/inspect.jpg",
-    "alt": "A farmer inspecting a crop for weeds and pests, the field words this Tagalog glossary covers",
+    "alt": "A smiling woman in a headscarf holding a phone while standing in a green rice field, seen from above",
     "credit": ""
   },
   "blocks": [
@@ -335,7 +335,7 @@
     },
     {
       "type": "text",
-      "text": "Farm talk mixes both languages, and so does anee.io. [Anee, the AI technician](/features/ai-agricultural-technician), answers in Tagalog or English. So you can type may uod sa mais ko or there are worms in my corn and get the same help. Before answering, Anee reads your cropping schedule, the growth stage of each lot and the weather. It can also look at a photo of the pest or the sick leaf."
+      "text": "Farm talk mixes both languages, and so does anee.io. [Anee, the AI technician](/features/ai-agricultural-technician), answers in Tagalog or English. So you can type may uod sa mais ko or there are worms in my corn, and she answers in the language you used. Before answering, Anee reads your cropping schedule, the growth stage of each lot and the weather. It can also look at a photo of the pest or the sick leaf."
     },
     {
       "type": "callout",

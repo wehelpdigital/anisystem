@@ -20,7 +20,7 @@
     "lambda cyhalothrin",
     "rice insects"
   ],
-  "excerpt": "The rice bug, Leptocorisa oratorius, is the slender, foul smelling insect that Tagalog farmers call atangya. It sucks the grains of palay (rice still in the husk) while they are still milky, and a heavy attack leaves panicles full of empty, spotted grains. Here is how to identify it, when to count it, and how to control it without wasting a spray.",
+  "excerpt": "The rice bug, Leptocorisa oratorius, is the slender, foul smelling insect that Tagalog farmers call atangya. It sucks the grains of palay (rice still in the husk) while they are still milky, and a heavy attack leaves panicles full of empty, spotted grains. This guide shows how to tell it from the black bug, when to count it, and when a spray really pays.",
   "heroImage": {
     "src": "/images/site/guides/problems-rice-bug.webp",
     "alt": "A rice bug, Leptocorisa oratorius, clings to a green rice panicle in the field",
@@ -43,7 +43,7 @@
     },
     {
       "type": "text",
-      "text": "In English you will read about the rice bug, the rice ear bug or the rice earhead bug. PhilRice lists atangya as its Tagalog name and dangaw as its Ilocano name. Farmers in Camarines Sur say tayangaw. The general words for insects and bugs in Tagalog are kulisap and insekto, and our list of [farm words in Tagalog](/blog/farm-words-in-tagalog) has more.\n\nBe careful with alitangya. Tagalog dictionaries and several news reports use alitangya for the rice black bug, the round, dark stink bug that PhilRice calls itim na atangya. Since the names overlap from town to town, trust the shape of the insect more than the name. A slender, long legged bug on the panicle is the rice bug. A broad, oval black bug at the base of the hill is the [rice black bug](/problems/rice-black-bug)."
+      "text": "In English you will read about the rice bug, the rice ear bug or the rice earhead bug. PhilRice lists atangya as its Tagalog name and dangaw as its Ilocano name. One source from Camarines Sur gives tayangaw. We found no second source for it, so treat it as a local word. The general words for insects and bugs in Tagalog are kulisap and insekto, and our list of [farm words in Tagalog](/blog/farm-words-in-tagalog) has more.\n\nBe careful with alitangya. Tagalog dictionaries, Wiktionary among them, give alitangya as the name of the rice black bug, the round, dark stink bug that PhilRice calls itim na atangya. PhilRice keeps plain atangya for the rice bug. Because the names overlap, trust the shape of the insect more than the name. A slender, long legged bug on the panicle is the rice bug. A broad, oval black bug at the base of the hill is the [rice black bug](/problems/rice-black-bug)."
     },
     {
       "type": "heading",
@@ -52,7 +52,7 @@
     },
     {
       "type": "text",
-      "text": "Both nymphs and adults push their mouthparts into the developing grain and suck out its contents. They feed from just before flowering up to the soft dough stage, and every soft, milky grain is at risk. PhilRice notes that the nymphs do more damage than the adults. Before the grains form, the bugs feed on young shoots and leaves, but the serious damage comes at the milky stage. IRRI reports that rice bugs can cut yield by as much as 30 percent."
+      "text": "Both nymphs and adults push their mouthparts into the developing grain and suck out its contents. They feed from just before flowering up to the soft dough stage, and every soft, milky grain is at risk. PhilRice notes that the nymphs do more damage than the adults. Before the grains form, the bugs feed on young shoots and leaves, but the serious damage comes at the milky stage. IRRI says rice bugs can sometimes cut yield by as much as 30 percent."
     },
     {
       "type": "heading",
@@ -114,13 +114,13 @@
         },
         {
           "title": "Compare with the threshold",
-          "text": "Consider a spray only when the count passes the action threshold in the table below. If it stays under, keep counting instead of spraying."
+          "text": "Consider a spray only when the count passes a threshold in the table below. The two sources count differently, since IRRI uses 20 hills and PhilRice uses a square meter. If your count stays under, keep counting instead of spraying."
         }
       ]
     },
     {
       "type": "table",
-      "caption": "Action thresholds for atangya",
+      "caption": "Action thresholds for atangya, as IRRI and PhilRice state them",
       "rows": [
         [
           "Source",
@@ -179,7 +179,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice advises using a pesticide only when the count calls for it and asking an agricultural extension worker first. If your counts pass the threshold, choose a product whose FPA registered label lists this pest on rice.\n\nTwo familiar examples come from Syngenta. Karate insecticide (Karate 2.5 EC) contains lambda cyhalothrin, a pyrethroid in IRAC Group 3A. Its Philippine product page names this pest along with leaffolder, black bugs, armyworms and green leafhopper on rice. Alika insecticide (Alika 247 ZC) mixes lambda cyhalothrin with thiamethoxam, a Group 4A neonicotinoid, and lists rice bug, stem borer and leafhoppers on rice.\n\nBoth are broad spectrum products, so they can also kill spiders and other friendly insects. Read the whole label before you mix: the rate per tank, the number of sprays, the pre harvest interval and the protective gear. These bugs strike close to harvest, so the pre harvest interval matters more here than with most pests. Our guides to [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) and to [Karate, Cymbush and Selecron](/blog/karate-cymbush-selecron-insecticides) compare these products, and the [FPA guide](/blog/fertilizer-and-pesticide-authority) explains how to check a registration."
+      "text": "PhilRice advises using a pesticide only when the count calls for it and asking an agricultural extension worker first. If your counts pass the threshold, choose a product whose FPA registered label lists this pest on rice.\n\nTwo familiar examples come from Syngenta. The Karate insecticide (Karate 2.5 EC) contains lambda cyhalothrin, a pyrethroid in IRAC Group 3A. Its Philippine product page names rice bug on rice, along with leaffolder, black bugs, armyworms and green leafhopper. The Alika insecticide (Alika 247 ZC) mixes lambda cyhalothrin with thiamethoxam, a Group 4A neonicotinoid, and its page lists rice bug, stem borer and leafhoppers on rice.\n\nBoth are broad spectrum products, so they can also kill spiders and other friendly insects. Read the whole label before you mix: the rate per tank, the number of sprays, the pre harvest interval and the protective gear. Rice bugs feed until the grain hardens, close to harvest, so the pre harvest interval deserves extra care. Our guides to [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) and to [Karate, Cymbush and Selecron](/blog/karate-cymbush-selecron-insecticides) compare these products, and the [FPA guide](/blog/fertilizer-and-pesticide-authority) explains how to check a registration."
     },
     {
       "type": "text",
@@ -202,7 +202,7 @@
       "items": [
         {
           "q": "What is the rice bug called in Tagalog?",
-          "a": "PhilRice gives atangya as the Tagalog name and dangaw as the Ilocano name. In Camarines Sur farmers say tayangaw. Many dictionaries use alitangya for the rice black bug instead, so look at the insect before you decide."
+          "a": "PhilRice gives atangya as the Tagalog name and dangaw as the Ilocano name. One Camarines Sur source gives tayangaw. Tagalog dictionaries use alitangya for the rice black bug, so look at the insect before you decide."
         },
         {
           "q": "When does atangya attack palay?",
@@ -214,11 +214,11 @@
         },
         {
           "q": "Should I spray every season?",
-          "a": "No. Count first. IRRI suggests control only when you find more than 10 bugs in 20 hills, and PhilRice uses 5 per square meter at the milky stage."
+          "a": "No. Count first. IRRI says direct control may be needed when you find more than 10 bugs in 20 hills. PhilRice says not to let the count pass 5 nymphs and adults per square meter at the milky stage."
         },
         {
           "q": "Which insecticide works on rice bugs?",
-          "a": "Products with lambda cyhalothrin, such as Karate and Alika, list this pest on their Philippine product pages. Treat them as examples, use only FPA registered products and follow the label."
+          "a": "Karate and Alika, both with lambda cyhalothrin, list rice bug on rice on their Philippine product pages. Treat them as examples, use only FPA registered products and follow the label."
         }
       ]
     },

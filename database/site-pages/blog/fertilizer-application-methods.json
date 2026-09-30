@@ -24,10 +24,10 @@
     "fertilizer drawing",
     "fertilizer picture"
   ],
-  "excerpt": "Fertilizer application methods decide how much of what you paid for actually reaches the roots. The same sack of urea can feed the crop or wash away, depending on where and when it lands. Here are the methods Filipino farmers use, from broadcasting and basal incorporation to side dressing, foliar sprays, fertigation and urea deep placement, with the tools and timing for each.",
+  "excerpt": "Fertilizer application methods decide how much of what you paid for actually reaches the roots. The same sack of urea can feed the crop or wash away, depending on where and when it lands. This guide covers the methods Filipino farmers use, from broadcasting and basal incorporation to side dressing, foliar sprays, fertigation and urea deep placement, with the tools and timing for each.",
   "heroImage": {
     "src": "/images/site/guides/blog-fertilizer-application-methods.webp",
-    "alt": "A tractor with a spinner spreader applying fertilizer across a green rice field",
+    "alt": "A tractor with a spinner spreader applying fertilizer across a wide green field",
     "credit": "Miquel Pujol Palol, CC BY SA 3.0, via Wikimedia Commons"
   },
   "blocks": [
@@ -107,7 +107,7 @@
     },
     {
       "type": "text",
-      "text": "Broadcasting is the oldest method of fertilizer application and the one most palay farmers know. You walk the field and throw granules in wide, even arcs, or you use a spreader. It is fast, but an uneven hand leaves streaks of dark green and pale yellow. For a more even spread, split the fertilizer into two halves and cover the field twice, crossing your first path on the second pass.\n\nBasal incorporation means spreading fertilizer before or at planting and mixing it into the soil, often during the last harrowing or in the furrow. It suits phosphorus and potash, which move slowly in soil and do the most good near young roots. For palay, the PhilRice general recommendation puts all the phosphorus and 70 percent of the potash at 7 to 14 days after transplanting. For mais and vegetables, complete fertilizer usually goes into the furrow at planting."
+      "text": "Broadcasting is the oldest method of fertilizer application and the one most palay farmers know. You walk the field and throw granules in wide, even arcs, or you use a spreader. It is fast, but an uneven hand leaves streaks of dark green and pale yellow. For a more even spread, split the fertilizer into two halves and cover the field twice, crossing your first path on the second pass.\n\nBasal incorporation means spreading fertilizer before or at planting and mixing it into the soil, often during the last harrowing or in the furrow. It suits phosphorus and potash, which move slowly in soil and do the most good near young roots. For palay, the first application comes in the first two weeks after transplanting, and PhilRice puts all the phosphorus and 70 percent of the potash there. For mais and vegetables, complete fertilizer usually goes into the furrow at planting."
     },
     {
       "type": "heading",
@@ -167,7 +167,7 @@
     },
     {
       "type": "text",
-      "text": "Urea deep placement (UDP) uses urea pressed into large briquettes. After transplanting, each briquette goes into the mud between rice hills, by hand or with a push applicator. There the nitrogen stays in the root zone instead of the floodwater, and one placement takes the place of the split urea top dressings. IFDC, which has promoted the method widely in Bangladesh, reports that UDP there cut fertilizer use by 40 percent while raising yields by 20 percent. The catch is the extra labor, or the cost of briquettes and an applicator."
+      "text": "Urea deep placement (UDP) uses urea pressed into large briquettes. After transplanting, each briquette goes into the mud between rice hills, by hand or with a push applicator. There the nitrogen stays in the root zone instead of the floodwater, and one placement takes the place of the split urea top dressings. IFDC, which has promoted the method widely in Bangladesh, says UDP there reduces fertilizer use by 40 percent and raises yields by 20 percent. That is an IFDC claim about Bangladesh, so Philippine results may differ. The catch is the extra labor, or the cost of briquettes and an applicator."
     },
     {
       "type": "heading",

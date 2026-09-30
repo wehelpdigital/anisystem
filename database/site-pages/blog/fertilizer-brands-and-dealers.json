@@ -18,7 +18,7 @@
     "commercial fertilizer",
     "fertilizer pesticide authority"
   ],
-  "excerpt": "Your fertilizer dealer is often your first source of farm advice and your lender in a tight season. It is also where most of your input money goes. A good one sells registered products at a fair price and gives a receipt. This guide covers the license every fertilizer dealer needs and two brands you see in almost every store. It also shows a simple way to tell which bag is really cheaper.",
+  "excerpt": "Your fertilizer dealer is often your first source of farm advice and your lender in a tight season. It is also where a big share of your input money goes. A good one sells registered products at a fair price and gives a receipt. This guide covers the license every fertilizer dealer needs and two brands, Yara and Atlas, that you may see on the shelf. It also shows a simple way to tell which bag is really cheaper.",
   "heroImage": {
     "src": "/images/site/photos/sacks.jpg",
     "alt": "Farmer checking his notebook beside stacks of Atlas Super Gro 16 20 0 fertilizer bags in a farm shed",
@@ -74,11 +74,11 @@
     },
     {
       "type": "text",
-      "text": "Atlas Fertilizer Corporation was incorporated on October 10, 1957, and calls itself the oldest operating fertilizer company in the country. It says it was also the first to make a complete line of mixed grades, the NP, NPK and NK fertilizers farmers know. Its plant stands in Daanlungsod, Toledo City, Cebu, and its head office is in Makati. The Japanese trading company Sojitz Corporation owns and runs it.\n\nOn the FPA list, Atlas fertilizer products include Atlas Urea, Atlas Ammosul 21 0 0 and Atlas Super Gro 16 20 0. The list also shows Atlas Perfect Gro 14 14 14, diammonium phosphate 18 46 0 and muriate of potash. Atlas also offers a phone app, Atlas Fertilizer Expert, that gives fertilizer recommendations for rice and corn."
+      "text": "Atlas Fertilizer Corporation was incorporated on October 10, 1957, and calls itself the oldest operating fertilizer company in the country. It says it was also the first to make a complete line of mixed grades, the NP, NPK and NK fertilizers farmers know. Its plant stands in Daanlungsod, Toledo City, Cebu, and its head office is in Makati. The Japanese trading company Sojitz Corporation owns it.\n\nOn the FPA list, Atlas fertilizer products include Atlas Urea, Atlas Ammosul 21 0 0 and Atlas Super Gro 16 20 0. The list also shows Atlas Perfect Gro 14 14 14, diammonium phosphate 18 46 0 and muriate of potash. Atlas also offers a phone app, Atlas Fertilizer Expert, that gives fertilizer recommendations for rice and corn."
     },
     {
       "type": "text",
-      "text": "Both companies sell good products, and so do many others. What matters more is the grade, the price per kilogram of nutrient, and a licensed store."
+      "text": "Yara and Atlas are two names among many on the FPA list, and this page does not rank them. What matters more is the grade, the price per kilogram of nutrient, and a licensed store."
     },
     {
       "type": "heading",
@@ -100,7 +100,7 @@
     },
     {
       "type": "table",
-      "caption": "Source: FPA national weighted average retail prices, September 14 to 18, 2026. Price per kg is the bag price divided by the total N, P2O5 and K2O in a 50 kg bag.",
+      "caption": "Source: FPA national weighted average retail prices, September 14 to 18, 2026. Price per kg is the bag price divided by the kilograms of N, P2O5 and K2O in a 50 kg bag, our own arithmetic from those prices.",
       "rows": [
         [
           "Fertilizer",
@@ -148,13 +148,13 @@
     },
     {
       "type": "text",
-      "text": "So on nitrogen alone, urea costs less per kilogram than ammosul that week. But ammosul also carries about 24 percent sulfur, which some soils need. Compare like with like: nitrogen sources against nitrogen sources, and mixed grades against the mix of nutrients your crop needs. Our [fertilizer calculation](/blog/fertilizer-calculation) guide shows how to turn a recommendation into bags per hectare."
+      "text": "So on nitrogen alone, urea costs less per kilogram than ammosul that week. But ammosul also carries about 24 percent sulfur, which some soils need. Compare like with like. The complete and ammophos rows add several nutrients together, so their price per kilogram cannot be set against urea's nitrogen price. Match each grade to the nutrients your crop needs. Our [fertilizer calculation](/blog/fertilizer-calculation) guide shows how to turn a recommendation into bags per hectare."
     },
     {
       "type": "callout",
       "tone": "tip",
       "title": "Quick formula",
-      "text": "Kilograms of nutrient in a bag equals the bag weight times the grade number, divided by 100. Then divide the bag price by that number. Do it for every bag you are offered, and the cheapest nutrient becomes obvious."
+      "text": "Kilograms of nutrient in a bag equals the bag weight times the grade number, divided by 100. Then divide the bag price by that number. Do it for every bag you are offered and compare bags that give the same nutrient."
     },
     {
       "type": "heading",
@@ -163,7 +163,7 @@
     },
     {
       "type": "text",
-      "text": "The FPA warns buyers about products that are unregistered, smuggled, underweight, expired or below standard, including those sold online. A bag that sells far below the weekly average for your province deserves a hard look. So do resewn bags, faded print and a grade that does not match the FPA list. If in doubt, email the FPA at focu@fpa.da.gov.ph. You can also visit the nearest regional field unit with the bag and your receipt."
+      "text": "The FPA warns buyers about products that are unregistered, smuggled, underweight, expired or below standard, including those sold online. A bag that sells far below the weekly average for your province deserves a hard look. So do resewn bags, faded print and a grade that does not match the FPA list. If in doubt, email the FPA at focu@fpa.da.gov.ph, the address it lists for complaints. You can also visit the nearest regional field unit with the bag and your receipt."
     },
     {
       "type": "heading",

@@ -63,6 +63,35 @@ class SitePages
         ],
     ];
 
+    /**
+     * How each feature page shows up as a product card: a short name, an
+     * icon (a 24px stroke path), one line on what it does, and a hue for its
+     * badge. Keyed by slug; a page without an entry gets a plain one.
+     */
+    public const FEATURES = [
+        'cropping-calendar' => ['Cropping Calendar', 'M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zm4 10l2 2 4-4', 'Plan the whole season by DAS, DAT or DAP, from land preparation to harvest. Every lot keeps its own day zero.', 100],
+        'ai-agricultural-technician' => ['Anee, the AI Technician', 'M8 10h8M8 14h5m8-2a8 8 0 01-11.6 7.1L4 20l1-4.2A8 8 0 1121 12z', 'Ask about pests, fertilizer or a sick plant in Tagalog or English, and show her a photo of it.', 150],
+        'growth-stages-and-weather' => ['Growth Stages and Weather', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z', 'See the crop growth stage of every lot on any date, with the weather forecast for your farm.', 88],
+        'farm-workers-and-payroll' => ['Workers and Payroll', 'M17 20h5v-2a4 4 0 00-5-3.9M9 20H2v-2a4 4 0 015-3.9m6-4.1a4 4 0 11-8 0 4 4 0 018 0zm6 2a3 3 0 11-6 0 3 3 0 016 0z', 'Keep your workers, their daily rates and attendance, and let the labor cost add itself up.', 32],
+        'farm-inventory-and-expenses' => ['Inventory and Expenses', 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4', 'Know what fertilizer, seeds and chemicals sit in the shed, and what each bag really cost you.', 24],
+        'farm-reports' => ['Farm Reports', 'M9 19V13a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z', 'Labor, expenses, profit and your ani per hectare, added up from the records you already keep.', 200],
+        'notes-photos-and-voice' => ['Notes, Photos and Voice', 'M19 11a7 7 0 01-14 0m7 7v3m-4 0h8m-4-6a3 3 0 003-3V6a3 3 0 00-6 0v6a3 3 0 003 3z', 'Write down what you see in the field with photos, video clips and voice notes, dated to the day.', 330],
+        'farm-maps' => ['Farm Maps', 'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2', 'Trace your fields over a satellite view and measure their area, boundaries and distances.', 175],
+        'when-to-plant-analysis' => ['When to Plant', 'M3 15a4 4 0 004 4h9a5 5 0 10-.1-10A5 5 0 007.2 10.1 4 4 0 003 15z', 'Anee reads the rainfall and typhoon record of your town and ranks the best planting weeks.', 205],
+        'protocol-builder' => ['Protocol Builder', 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4', 'Write your crop protocol once, on a day count, and bring it into every new cropping schedule.', 270],
+        'farmer-community' => ['Farmer Community', 'M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2v-1m8-10H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l4-4h4a2 2 0 002-2V6a2 2 0 00-2-2z', 'Share wins and warnings with farmers across the Philippines, and climb a ladder of 100 levels.', 350],
+    ];
+
+    /** A feature page as a product card: name, icon path, blurb, hue. */
+    public static function feature(AsSitePage $p): array
+    {
+        [$name, $icon, $blurb, $hue] = self::FEATURES[$p->slug] ?? [
+            self::shortTitle($p), 'M5 13l4 4L19 7', Str::limit(self::plain($p->excerpt), 110), 100,
+        ];
+
+        return ['name' => $name, 'icon' => $icon, 'blurb' => $blurb, 'hue' => $hue];
+    }
+
     /** Where a page lives. */
     public static function url(string $section, ?string $slug = null): string
     {

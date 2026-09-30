@@ -44,7 +44,7 @@
     },
     {
       "type": "text",
-      "text": "Every harvest carries nutrients out of your field. IRRI counts what the crop takes up for each ton of grain. That is about 16 kg of nitrogen, 6.4 kg of phosphate and 19 kg of potash. So a 5 ton harvest takes up about 80 kg of nitrogen, 32 kg of phosphate and 95 kg of potash. Fertilizer fills the gap between that need and what the soil, water and straw supply.\n\nMany farmers leave part of that gap open. A PhilRice survey of irrigated farms in 2016 and 2017 found far less phosphorus and potassium than recommended. Short feeding means slow growth, fewer tillers and panicles, and lighter grain. Too much nitrogen is also bad, because it invites lodging and pests."
+      "text": "Every harvest carries nutrients out of your field. IRRI counts what the crop takes up for each ton of grain. That is about 16 kg of nitrogen and 19 kg of potash. So a 5 ton harvest takes up about 80 kg of nitrogen and 95 kg of potash, most of the potash staying in the straw. Fertilizer fills the gap between that need and what the soil, water and straw supply.\n\nMany farmers leave part of that gap open. A PhilRice survey of irrigated farms in 2016 and 2017 found far less phosphorus and potassium than recommended. Short feeding means slow growth, fewer tillers and panicles, and lighter grain. Too much nitrogen is also bad, because it invites lodging and pests."
     },
     {
       "type": "heading",
@@ -62,12 +62,12 @@
         "**Soil analysis** at a soils laboratory. Ask your municipal agriculturist where to send samples.",
         "**MOET**, the Minus One Element Technique: rice grown in pots of your own soil, each pot missing one nutrient. An app turns the result into fertilizer amounts.",
         "**Leaf color chart**, a four color ruler that shows when the crop needs nitrogen.",
-        "**Rice Crop Manager**, an online tool from IRRI and the DA that gives a fertilizer guideline for your field."
+        "**Rice Crop Manager**, an online tool that IRRI developed with PhilRice, now run by the DA and PhilRice, which gives a fertilizer guideline for your field."
       ]
     },
     {
       "type": "text",
-      "text": "No tool at hand? Use the PhilRice general recommendation as a guide. For irrigated lowland rice, it lists 97 kg of nitrogen per hectare in the wet season. In the dry season it lists 139 kg. A quarter of the nitrogen goes on at 7 to 14 days after transplanting (DAT). Another quarter goes at mid tillering, and half at maximum tillering or early panicle initiation. All the phosphorus goes on first. Potassium goes 70 percent at 7 to 14 DAT and 30 percent around panicle initiation."
+      "text": "No tool at hand? Use the modified general recommendation of PhilRice as a guide. For irrigated lowland rice, it lists 97 kg of nitrogen per hectare in the wet season and 139 kg in the dry season. A quarter of the nitrogen goes on at 7 to 14 days after transplanting (DAT). Another quarter goes at mid tillering, and half at maximum tillering or early panicle initiation. All the phosphorus goes on first. Potassium goes 70 percent at 7 to 14 DAT and 30 percent around panicle initiation."
     },
     {
       "type": "heading",
@@ -110,7 +110,7 @@
     },
     {
       "type": "text",
-      "text": "The plan also works organic matter into the field. It uses 5 to 6 tons of rice straw. At 14 DAT, it adds 10 bags of decomposed chicken manure, commercial organic fertilizer or vermicompost. In the seedbed, it adds a little zinc sulfate and 14 14 14.\n\nFor a 3 to 4 ton target, PhilRice uses 1 bag of 14 14 14 at basal. Later comes 1 bag of urea with half a bag of 0 0 60. For 7 to 8 tons, it doubles the urea to 2 bags at each top dressing. Our guides to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) and [palay](/crops/palay) cover the rest of the crop."
+      "text": "The plan also works organic matter into the field. It uses 5 to 6 tons of rice straw. At 14 DAT, it adds 10 bags of decomposed chicken manure, commercial organic fertilizer or vermicompost.\n\nFor a 3 to 4 ton target, PhilRice uses 1 bag of 14 14 14 at basal. Later comes 1 bag of urea with half a bag of 0 0 60. For 7 to 8 tons, it doubles the urea to 2 bags at each top dressing. Our guides to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) and [palay](/crops/palay) cover the rest of the crop."
     },
     {
       "type": "heading",
@@ -140,7 +140,7 @@
     },
     {
       "type": "text",
-      "text": "Irrigated fields yield more in the dry season, and the PhilRice general recommendation feeds them more. It gives 139 kg of nitrogen in the dry season against 97 kg in the wet. Where the sun is strong, like Nueva Ecija, Bicol and Isabela, PhilRice also adds muriate of potash around panicle initiation. That raises grain size and weight.\n\nRainfed fields go through the same stages on a different rhythm. Fertilizer needs moisture to reach the roots, so time each dose to a wet field, not a fixed date. IRRI says broadcast direct seeded rice can take its basal 10 to 14 days after establishment. There must be water in the field. If your field usually gives 3 to 4 tons, follow the lighter PhilRice plan."
+      "text": "Irrigated fields yield more in the dry season, and the PhilRice modified general recommendation feeds them more. It gives 139 kg of nitrogen in the dry season against 97 kg in the wet. Where the sun is strong, like Nueva Ecija, Bicol and Isabela, PhilRice also adds muriate of potash around panicle initiation. That raises grain size and weight.\n\nRainfed fields go through the same stages on a different rhythm. Fertilizer needs moisture to reach the roots, so time each dose to a wet field, not a fixed date. IRRI says broadcast direct seeded rice can take its basal 10 to 14 days after establishment. There must be water in the field. If your field usually gives 3 to 4 tons, follow the lighter PhilRice plan."
     },
     {
       "type": "heading",
@@ -168,13 +168,13 @@
         },
         {
           "title": "Scale it to your lot",
-          "text": "For a 0.6 hectare lot, multiply every amount by 0.6. That is 1.2 bags of complete, 1.2 bags of urea and 15 kg of potash. The cost comes to about PHP 5,568.76."
+          "text": "For a 0.6 hectare lot, multiply every amount by 0.6. That is 1.2 bags of complete, 1.2 bags of urea and 15 kg of muriate of potash. The cost comes to about PHP 5,568.76."
         }
       ]
     },
     {
       "type": "text",
-      "text": "For a nutrient target, the fertilizer calculation formula is to divide the kilos of nutrient you need by the percent in the grade. Our guide to [fertilizer calculation](/blog/fertilizer-calculation) shows each step.\n\nThis plan gives less nitrogen from the bag than the general recommendation. It counts on the straw and manure for part of the rest. PhilRice says 5 tons of straw, once decomposed, can give about 30 kg of nitrogen."
+      "text": "For a nutrient target, the fertilizer calculation formula is to divide the kilos of nutrient you need by the percent in the grade. Our guide to [fertilizer calculation](/blog/fertilizer-calculation) shows each step.\n\nThis plan gives less nitrogen from the bag than the general recommendation. It counts on the straw and manure for part of the rest. Straw and manure also return some nutrients as they decompose."
     },
     {
       "type": "heading",

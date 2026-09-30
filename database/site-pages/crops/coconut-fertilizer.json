@@ -17,7 +17,7 @@
     "fertilizer with potassium",
     "pagtatanim ng puno"
   ],
-  "excerpt": "The most useful fertilizer for coconut tree farms in the Philippines is also one of the cheapest: common salt. The Philippine Coconut Authority (PCA) found chlorine deficiency across inland coconut areas. So its advice centers on salt, ammonium sulfate and potash. Here are the PCA rates for seedlings, young palms and bearing trees, and how to apply them.",
+  "excerpt": "The fertilizer for coconut tree farms in the Philippines that costs least is common salt. The Philippine Coconut Authority (PCA) found chlorine deficiency across inland coconut areas. So its advice centers on salt, ammonium sulfate and potash. Here are the PCA rates for seedlings, young palms and bearing trees, and how to apply them.",
   "heroImage": {
     "src": "/images/site/guides/crops-coconut-fertilizer.webp",
     "alt": "Tall coconut palms over a grassy field in Sipocot, Camarines Sur, the kind of farm that needs the right fertilizer for coconut tree growth",
@@ -26,7 +26,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "It is easy to skip fertilizer on coconut because the palms keep bearing. But PCA reports that unfertilized palms tend to yield less from year to year. In its trials in South Cotabato, Zamboanga, Albay and Cagayan, nut count and copra weight rose once the palms got nitrogen and chlorine.\n\nThe good news is that coconut does not need expensive blends. It mainly needs nitrogen, chlorine and, on some soils, potassium. All three come in cheap, common fertilizers."
+      "text": "It is easy to skip fertilizer on coconut because the palms keep bearing. But in PCA trials, unfertilized palms yielded less than fertilized ones. In those trials in South Cotabato, Zamboanga, Albay and Cagayan, nut count and copra weight rose once the palms got nitrogen and chlorine.\n\nThe good news is that coconut does not need expensive blends. It mainly needs nitrogen, chlorine and, on some soils, potassium. All three come in cheap, common fertilizers."
     },
     {
       "type": "heading",
@@ -100,7 +100,7 @@
     },
     {
       "type": "text",
-      "text": "For faster growth, PCA adds ammonium sulfate to the salt. The schedule below comes from the PCA guide on growing bananas under coconut, which gives the palms their own program. It works as fertilizer for coconut plants from field planting up to full bearing."
+      "text": "For faster growth, PCA adds ammonium sulfate to the salt. The schedule below comes from the PCA guide on growing bananas under coconut, which gives the palms their own program. It covers fertilizer for coconut plants from field planting up to full bearing. Other PCA sheets give slightly different numbers, so ask your PCA office which one fits your area."
     },
     {
       "type": "table",
@@ -168,7 +168,7 @@
     },
     {
       "type": "text",
-      "text": "Potassium chloride, sold as muriate of potash or 0 0 60, is the common potash fertilizer. For coconut it is a fertilizer with potassium and chlorine in one bag. PCA advice is simple. If a leaf analysis shows the palm short of both nutrients, use potassium chloride. If only chlorine is low, use salt instead, because it is much cheaper.\n\nSo do not buy potash by habit. Ask your PCA office for a leaf or soil analysis, or watch how your palms respond. Our guide to [potash fertilizer](/blog/potash-fertilizer) explains the grades, and the one on [ammonium sulfate](/blog/ammonium-sulfate-21-0-0) covers the nitrogen side."
+      "text": "Potassium chloride, sold as muriate of potash or 0 0 60, is the common potash fertilizer. For coconut it is a fertilizer with potassium and chlorine in one bag. As a rule, if a leaf analysis shows the palm short of both nutrients, use potassium chloride. If only chlorine is low, use salt instead, because it is much cheaper.\n\nSo do not buy potash by habit. Ask your PCA office for a leaf or soil analysis, or watch how your palms respond. Our guide to [potash fertilizer](/blog/potash-fertilizer) explains the grades, and the one on [ammonium sulfate](/blog/ammonium-sulfate-21-0-0) covers the nitrogen side."
     },
     {
       "type": "callout",
@@ -224,7 +224,7 @@
     {
       "type": "cta",
       "title": "Put every coconut fertilizer run on a calendar",
-      "text": "Coconut is one of the 85 crops in the anee.io growth stages. Log each block of palms as a lot and date every fertilizer run on the cropping calendar. Then track the sacks in your inventory.",
+      "text": "Coconut is one of the 85 crops in the anee.io growth stages. Log a block of palms as a lot and date every fertilizer run on the cropping calendar. On Solo Farmer and Farm Owner, you can also track the sacks in your inventory.",
       "label": "See the cropping calendar",
       "url": "/features/cropping-calendar"
     },
@@ -245,7 +245,7 @@
         },
         {
           "q": "What is the best fertilizer for coconut tree in the Philippines?",
-          "a": "For most farms, ammonium sulfate plus salt at PCA rates. Where a leaf analysis shows low potassium too, potassium chloride replaces the salt."
+          "a": "There is no single best. PCA's usual program is salt, or salt with ammonium sulfate. Where a leaf analysis shows low potassium too, potassium chloride can replace the salt."
         },
         {
           "q": "When should I apply fertilizer to coconut?",

@@ -50,13 +50,13 @@
   "excerpt": "Palay is rice that still wears its husk. It is the grain you harvest, dry and sell before any mill touches it. This guide explains what palay means in English and names the parts of the grain. It also follows the plant from seed to harvest and shows how the grain turns into the rice on your table.",
   "heroImage": {
     "src": "/images/site/photos/palay-heads.jpg",
-    "alt": "Ripe palay heads bending over in a rice field",
+    "alt": "Palay heads turning golden and bending over in a rice field",
     "credit": ""
   },
   "blocks": [
     {
       "type": "text",
-      "text": "In the field we use three words for one grain. Palay is the crop and the unmilled grain, bigas is milled rice, and kanin is cooked rice. The price changes at each step, so a farmer who knows palay well, from seed class to moisture, sells better and loses less."
+      "text": "In the field, three words name the same grain at different steps. Palay is the crop and the unmilled grain, bigas is milled rice, and kanin is cooked rice. The price changes at each step, so a farmer who knows seed class and moisture sells better and loses less."
     },
     {
       "type": "heading",
@@ -65,7 +65,7 @@
     },
     {
       "type": "text",
-      "text": "Palay in English is paddy, rough rice or unhusked rice. So if someone asks for the English ng palay, any of the three works. PhilRice and the PSA write it as palay (unhusked rice) in their reports. In daily talk, though, the palay meaning goes wider. Farmers say palay for the growing plant, the ripe heads and the sacks of dried grain.\n\nA related word is palayan, the rice field itself. The widest palayan areas lie in Central Luzon. Nueva Ecija even took the word for its capital, as our story on [Palayan, Nueva Ecija](/blog/palayan-nueva-ecija) explains.\n\nMany farm towns also celebrate the crop. For example, Narra in Palawan, known as the rice granary of that province, holds a Palay Festival every mid or late October. The old stories live on too. Our page on the [alamat ng palay](/blog/alamat-ng-palay) retells the legend and gives a short buod and banghay for students."
+      "text": "Palay in English is paddy, rough rice or unhusked rice. So if someone asks for the English ng palay, any of the three works. PhilRice and the PSA write it as palay (unhusked rice) in their reports. In daily talk, though, the palay meaning goes wider. Farmers say palay for the growing plant, the ripe heads and the sacks of dried grain.\n\nA related word is palayan, the rice field itself. Central Luzon has some of the widest palayan in the country. Nueva Ecija even named its capital after the word, as our story on [Palayan, Nueva Ecija](/blog/palayan-nueva-ecija) explains.\n\nMany farm towns also celebrate the crop. For example, Narra in Palawan, known as the rice granary of that province, holds a Palay Festival, usually in October. The old stories live on too. Our page on the [alamat ng palay](/blog/alamat-ng-palay) retells the legend and gives a short buod and banghay for students."
     },
     {
       "type": "heading",
@@ -74,7 +74,7 @@
     },
     {
       "type": "text",
-      "text": "Open one grain with your thumbnail and you will see why milling matters. Each grain of palay rice has four parts."
+      "text": "Open one grain with your thumbnail and you will see why milling matters. Each grain has four parts."
     },
     {
       "type": "list",
@@ -97,7 +97,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI splits the life of the rice plant into three phases. In the tropics the reproductive phase takes about 35 days and ripening about 30 days. So the vegetative phase decides if a variety is early or late. For example, IR64 matures in 110 days with a 45 day vegetative phase, while IR8 needs 130 days with a 65 day vegetative phase."
+      "text": "IRRI splits the life of the rice plant into three phases. In the tropics the reproductive phase takes about 35 days and ripening about 30 days. So the vegetative phase decides whether a variety is early or late. For example, IR64 matures in 110 days with a 45 day vegetative phase, while IR8 needs 130 days with a 65 day vegetative phase."
     },
     {
       "type": "heading",
@@ -106,7 +106,7 @@
     },
     {
       "type": "text",
-      "text": "This phase runs from germination to panicle initiation. First the seed swells and sends out a root and a shoot. Then the palay seedlings grow leaves and, after transplanting, send out tillers. These side shoots later carry the heads, so most of your fertilizer and weeding work happens here."
+      "text": "This phase runs from germination to panicle initiation. First the seed swells and sends out a root and a shoot. Then the seedlings grow leaves and, after transplanting, send out tillers. These side shoots later carry the heads, so most of your fertilizer and weeding work happens here."
     },
     {
       "type": "heading",
@@ -133,7 +133,7 @@
     },
     {
       "type": "text",
-      "text": "Palay to rice takes three steps: drying, hulling and polishing. First dry the grain to 12 to 14 percent moisture within 12 to 24 hours after threshing, as PalayCheck advises. Wet grain left in a pile heats up, turns yellow and mills badly.\n\nThen the mill removes the hull, and a polisher strips off the bran. The share of milled rice you get back is the milling recovery. Since November 2024 the PSA uses 63.0 percent as its official rate. Before that it used 65.4 percent."
+      "text": "Palay to rice takes three steps: drying, hulling and polishing. First dry the grain to 12 to 14 percent moisture within 12 to 24 hours after threshing, as PalayCheck advises. Wet grain left in a pile heats up, turns yellow and mills badly.\n\nThen the mill removes the hull, and a polisher strips off the bran. The share of milled rice you get back is the milling recovery. In November 2024 the PSA Board approved 63.0 percent as the official rate, effective from 2025. Before that, the rate was 65.4 percent."
     },
     {
       "type": "table",
@@ -159,7 +159,7 @@
     },
     {
       "type": "text",
-      "text": "So one cavan of palay, about 50 kg, gives about 31.5 kg of milled rice at that rate. Timing counts as well. PalayCheck notes that harvesting too early can drop milling recovery to as low as 53 percent.\n\nFor the palay price today and the palay price per kilo today by region, read our [palay price guide](/blog/palay-price-philippines). It also compares rice and palay price levels in the Philippines, so you can check a buyer's offer before you sell."
+      "text": "So one cavan, about 50 kg of palay, gives about 31.5 kg of milled rice at that rate. Timing counts as well. PalayCheck notes that harvesting too early can drop milling recovery to as low as 53 percent.\n\nFor the palay price today and the palay price per kilo today, read our [palay price guide](/blog/palay-price-philippines). It gives the latest PSA farmgate average and the NFA buying price. It also explains why rice costs more, so you can compare the palay price with the rice price in the Philippines before you accept an offer."
     },
     {
       "type": "heading",
@@ -168,7 +168,7 @@
     },
     {
       "type": "text",
-      "text": "Good rice seeds are the cheapest yield booster you can buy. According to PalayCheck, high quality seed with at least 85 percent germination can raise yield by 10 percent or more. In the Philippines the Bureau of Plant Industry's National Seed Quality Control Services (BPI NSQCS) tests seed lots and tags them. The tag color tells you the class."
+      "text": "Seed is one of the cheapest ways to protect your yield. According to PalayCheck, high quality seed with at least 85 percent germination can raise yield by 10 percent or more. In the Philippines the Bureau of Plant Industry's National Seed Quality Control Services (BPI NSQCS) tests seed lots and tags them. The tag color tells you the class."
     },
     {
       "type": "table",
@@ -203,7 +203,7 @@
     },
     {
       "type": "text",
-      "text": "Buy certified palay seeds from accredited seed growers and check that the tag is valid. If you keep your own seed from last season's rice crop, run a germination test before sowing, as PalayCheck recommends.\n\nEach new rice variety in the Philippines, or rice breed as some people say, gets a code from the National Seed Industry Council, such as NSIC Rc 222. PhilRice's free Binhing Palay app lists registered varieties and their traits. For the Philippine rice variety list, with inbred and rice hybrid picks side by side, see our [rice varieties guide](/crops/rice-varieties-philippines). It also covers Jackpot rice variety maturity and the rice variety characteristics of NSIC Rc 402, two things farmers often ask about."
+      "text": "Buy certified seed from accredited seed growers and check that the tag is valid. If you keep your own seed from last season's crop, run a germination test before sowing, as PalayCheck recommends.\n\nEach new rice variety in the Philippines, or rice breed as some people say, gets a code from the National Seed Industry Council, such as NSIC Rc 222. PhilRice's Binhing Palay app lists registered varieties and their traits. For the Philippine rice variety list, with inbred and rice hybrid picks side by side, see our [rice varieties guide](/crops/rice-varieties-philippines). It also covers Jackpot rice variety maturity and the rice variety characteristics of NSIC Rc 402, two questions farmers often ask."
     },
     {
       "type": "heading",
@@ -212,7 +212,7 @@
     },
     {
       "type": "text",
-      "text": "Many people look for a palay image for school, a report or a seed label. Here is what each growth stage looks like, so you can tell which one a photo shows."
+      "text": "Many people look for a palay image for school, a report or a seed label. Each growth stage looks different, so you can tell which one a photo shows."
     },
     {
       "type": "list",
@@ -227,7 +227,7 @@
     },
     {
       "type": "text",
-      "text": "If you need to draw one instead, a palayan drawing usually shows these paddies with dikes, a carabao, a small hut and mountains behind. Our [Palayan, Nueva Ecija page](/blog/palayan-nueva-ecija) gives a simple plan you can follow."
+      "text": "If you need to draw one instead, a palayan drawing usually shows these paddies with dikes, a carabao, a small hut and mountains behind. Our [Palayan, Nueva Ecija page](/blog/palayan-nueva-ecija) has a simple palayan drawing guide you can follow."
     },
     {
       "type": "callout",
@@ -242,14 +242,19 @@
     },
     {
       "type": "text",
-      "text": "Our Filipino guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) walks through every step, from punla to pag aani ng palay. It covers the seedbed, direct seeding with tools like the palatak palay seeder, water, abono timing and the treser ng palay at harvest.\n\nWeeds and pests take the rest of your yield if you let them. PalayCheck says to control weeds in the first 45 days, so watch for grasses, broadleaves and any sedge weed such as Cyperus iria. After that, watch for the [rice insects](/problems/rice-insects) that come with each stage. For nutrients, start with our guide to [fertilizer for rice](/blog/fertilizer-for-rice)."
+      "text": "Our Filipino guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) walks through every step, from punla to pag aani ng palay. It covers the seedbed, direct seeding with tools like the palatak palay seeder, water, abono timing and the treser ng palay at harvest.\n\nWeeds and pests can eat into your yield if you let them. PalayCheck says to control weeds in the first 45 days, so watch for grasses, broadleaves and any sedge weed such as Cyperus iria. After that, watch for the [rice insects](/problems/rice-insects) that come with each stage. For nutrients, start with our guide to [fertilizer for rice](/blog/fertilizer-for-rice)."
     },
     {
       "type": "cta",
       "title": "Plan your palay season in anee.io",
-      "text": "Set each lot's day zero and anee.io dates every task, from seedbed to harvest. When something looks wrong, ask Anee, the AI technician, in Tagalog or English, and send a photo of the pest or the sick plant.",
+      "text": "Set each lot's day zero and anee.io dates every task, from seedbed to harvest. Anee starts you with 20 free AI credits. When something looks wrong, ask Anee, the AI technician, in Tagalog or English, and send a photo of the pest or the sick plant.",
       "label": "Start free",
       "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Palay questions farmers ask"
     },
     {
       "type": "faq",

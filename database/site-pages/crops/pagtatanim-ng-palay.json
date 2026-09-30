@@ -31,13 +31,13 @@
   "excerpt": "Ang pagtatanim ng palay ay hindi lang pagbaon ng punla sa putik. Sunod sunod na desisyon ito mula sa binhi hanggang sa pag aani, at bawat mali ay bawas sa ani. Heto ang buong proseso, hakbang hakbang, batay sa PalayCheck System ng PhilRice.",
   "heroImage": {
     "src": "/images/site/photos/transplant.jpg",
-    "alt": "Pagtatanim ng palay: mga magsasakang naglilipat ng punla sa putikang bukid",
+    "alt": "Pagtatanim ng palay: isang magsasakang may hawak na cellphone sa binahang bukid, kung saan naglilipat ng punla ang ibang manggagawa",
     "credit": ""
   },
   "blocks": [
     {
       "type": "text",
-      "text": "Galing sa PalayCheck 2022 revised edition ng PhilRice at sa IRRI ang mga numero dito. Iba iba ang lupa at tubig sa bawat bayan, kaya gawin itong gabay sa pagtatanim ng palay at itanong pa rin sa inyong municipal agriculturist ang bagay sa inyong lugar."
+      "text": "Galing sa PalayCheck 2022 revised edition ng PhilRice at sa IRRI ang mga numero dito. Iba iba ang lupa at tubig sa bawat bayan, kaya gamitin ito bilang gabay sa pagtatanim ng palay, pero itanong pa rin sa inyong municipal agriculturist kung ano ang bagay sa lugar ninyo."
     },
     {
       "type": "heading",
@@ -184,7 +184,7 @@
     },
     {
       "type": "text",
-      "text": "Tatlong grupo ang sedges, grasses at broadleaves na weeds sa palayan. Sa listahan ng IRRI ng 12 pinakamahirap na damo ng palay sa Asya, kasama ang Echinochloa colona, Cyperus iria at Fimbristylis miliacea. Ayon sa PalayCheck, kontrolin ang damo sa unang 45 araw. Unahin ang maayos na paghahanda ng lupa, malinis na binhi at tamang tubig, saka ang pagbubunot. Herbicide ang huling opsyon.\n\nHalimbawa ng pre emergent herbicide ang Sofit 300 EC ng Syngenta, na may pretilachlor (Group K3). Ayon sa label, inilalagay ito 0 hanggang 4 na araw pagkatapos maghasik o maglipat. Sundin ang rate sa label at bumili lang ng produktong rehistrado sa FPA. Para makilala ang common weeds in the Philippines, tingnan ang aming [gabay sa damo](/problems/common-weeds-philippines)."
+      "text": "Tatlong grupo ng weeds ang karaniwan sa palayan: sedges, grasses at broadleaves. Sa listahan ng IRRI ng 12 pinakamahirap na damo ng palay sa Asya, kabilang ang Echinochloa colona, Cyperus iria at Fimbristylis miliacea. Ayon sa PalayCheck, kontrolin ang damo sa unang 45 araw. Unahin ang maayos na paghahanda ng lupa, malinis na binhi at tamang tubig, saka ang pagbubunot. Herbicide ang huling opsyon.\n\nHalimbawa ng pre emergent herbicide ang Sofit 300 EC ng Syngenta, na may pretilachlor (Group K3). Ayon sa label, inilalagay ito 0 hanggang 4 na araw pagkatapos maghasik o maglipat. Sundin ang rate sa label at bumili lang ng produktong rehistrado sa FPA. Para makilala ang common weeds in the Philippines, tingnan ang aming [gabay sa damo](/problems/common-weeds-philippines)."
     },
     {
       "type": "heading",
@@ -217,7 +217,7 @@
     },
     {
       "type": "text",
-      "text": "Kapag kamay ang gumapas, igiik ang palay sa loob ng isang araw sa wet season, o dalawang araw sa dry season. Huwag itong itambak nang matagal sa bukid dahil iinit ito at bababa ang kalidad ng bigas.\n\nSa treser ng palay, sundin ang bilis ng drum na mga 800 rpm para sa karamihan ng thresher na may makina. Mas mabilis, mas malaki ang sayang sa blower. Huwag ding igiik ang palay na tumutulo pa sa basa."
+      "text": "Kapag kamay ang gumapas, igiik ang palay sa loob ng isang araw sa wet season, o dalawang araw sa dry season. Huwag itong itambak nang matagal sa bukid dahil iinit ito at bababa ang kalidad ng bigas.\n\nSa treser ng palay, sundin ang bilis ng drum na mga 800 rpm para sa karamihan ng thresher na may makina. Huwag ding igiik ang palay na tumutulo pa sa basa."
     },
     {
       "type": "heading",
@@ -254,7 +254,7 @@
     },
     {
       "type": "text",
-      "text": "Sa bawat season, itala ang ginawa mo at kung naabot ang bawat Key Check. Makikita mo agad kung saan ka nabawasan ng ani.\n\nDito tumutulong ang anee.io. Sa [cropping calendar](/features/cropping-calendar), ilagay ang araw ng lipat tanim o paghahasik ng bawat lot, at kusang nakadate ang abono, patubig, spray at ani batay sa DAT o DAS. Puwede mo ring tanungin si Anee, ang [AI technician](/features/ai-agricultural-technician), sa Tagalog at padalhan ng litrato ng peste o may sakit na dahon."
+      "text": "Sa bawat season, itala ang ginawa mo at kung naabot ang bawat Key Check. Makikita mo agad kung saan ka nabawasan ng ani.\n\nDito tumutulong ang anee.io. Sa [cropping calendar](/features/cropping-calendar), ilagay ang araw ng lipat tanim o paghahasik ng bawat lot, at kusang nakadate ang abono, patubig, spray at ani batay sa DAT o DAS. Puwede mo ring tanungin si Anee, ang [AI technician](/features/ai-agricultural-technician), sa Tagalog, at padalhan siya ng litrato ng peste o may sakit na dahon."
     },
     {
       "type": "cta",
