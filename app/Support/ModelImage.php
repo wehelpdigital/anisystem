@@ -168,6 +168,43 @@ class ModelImage
         };
     }
 
+    /**
+     * Said to the model with a question that carries photos: look at every
+     * one, say what is in them, and weigh them with anything attached. A
+     * question with a report or a Realign reading attached was being
+     * answered from the report alone.
+     */
+    public static function lookLine(int $count): string
+    {
+        if ($count < 1) {
+            return '';
+        }
+        $n = $count === 1 ? 'a photo' : $count . ' photos';
+
+        return '[The farmer attached ' . $n . ' to this question. Look closely at every one of them. '
+            . 'Begin by saying briefly what you actually see (the crop and its stage, the grain and leaf color, '
+            . 'any pest, disease, damage or problem), then answer, weighing what the photos show together with '
+            . 'anything attached above. If a photo and the attached material disagree, say so and trust the photo '
+            . 'for what the field looks like now. Never say you cannot see photos that are attached.]' . "\n\n";
+    }
+
+    /**
+     * Said inside the history about an earlier question that carried photos:
+     * the history is words only, and without this the next turn has no idea
+     * the photos were ever seen (she denied seeing them when asked).
+     */
+    public static function sawLine(int $count): string
+    {
+        if ($count < 1) {
+            return '';
+        }
+
+        return "\n[This message came with " . ($count === 1 ? 'a photo' : $count . ' photos')
+            . '. You looked at them when you answered it, and your answer says what you saw. '
+            . 'They are not re-sent with later questions: if asked about them again, rely on what you said you saw, '
+            . 'and if you need to look again, ask the farmer to attach them again.]';
+    }
+
     /** Whether an encoded picture is wider than a model reads, judged from its header alone. */
     private static function tooWide(string $data): bool
     {

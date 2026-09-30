@@ -711,6 +711,9 @@
             addMsg({ id: null, role: 'user', mine: true, content: text, image: attachedUrls()[0] || null });
             $('saiText').value = ''; $('saiText').style.height = 'auto'; $('saiText').style.overflowY = 'hidden';
             showThinking();
+            // The composer empties the moment the question is sent; the
+            // photos come back only if it was not taken.
+            const heldChips = window.aneeTakeChips(chips); sayEstimate();
             try {
                 // Answered as a job: the ask is taken at once, the answer waited for.
                 const res = await window.aneeAskWait(await api(U.ask + `?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: {
@@ -723,9 +726,7 @@
                     usePlan: $('saiUsePlan')?.getAttribute('aria-pressed') === 'true' ? 1 : 0,
                     forget: $('saiUseMemory')?.getAttribute('aria-pressed') === 'true' ? 0 : 1,
                 } }));
-                // Chips leave the moment the send is known good — before any
-                // templating that could throw and strand them in the composer.
-                clearPhotos();
+                window.aneeDropChips(heldChips);
                 if (res.data.question && res.data.question.id) { rendered.add(res.data.question.id); lastId = Math.max(lastId, res.data.question.id); }
                 // The first question of a blank thread is what creates it, so
                 // this is where the page learns which thread it is now in.
@@ -738,9 +739,13 @@
                 clearThinking();
                 addMsg({ role: 'assistant', content: err.message || 'The AI could not answer.' });
                 if (err.data && err.data.outOfCredits) setBalance(err.data.balance);
-                // Kept on purpose — a retry should not re-pick its photos. Said
-                // out loud, so a failed send never reads as "sent but cleared".
-                if (chips.children.length) window.toast?.('Your photos are still attached, ready for the retry.');
+                if (err.stillWorking) { window.aneeDropChips(heldChips); }
+                else {
+                    // Not taken: the photos and the words come back for the retry.
+                    window.aneeGiveChipsBack(chips, heldChips);
+                    if (heldChips.length) window.toast?.('Your photos are back in the box, ready for the retry.');
+                    if (!$('saiText').value) { $('saiText').value = text; $('saiText').dispatchEvent(new Event('input')); }
+                }
             } finally { busy = false; $('saiSend').disabled = false; $('saiText').focus(); sayEstimate(); }
         }
 

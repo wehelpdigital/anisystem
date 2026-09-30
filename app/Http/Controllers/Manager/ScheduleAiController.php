@@ -397,7 +397,9 @@ class ScheduleAiController extends BaseScheduleController
         $history = $request->boolean('forget') ? [] : ScheduleAiMessage::active()
             ->where('sessionId', $session->id)->where('id', '<', $q->id)
             ->orderByDesc('id')->limit(self::HISTORY)->get()
-            ->reverse()->map(fn ($m) => ['role' => $m->role, 'text' => (string) $m->content])->values()->all();
+            ->reverse()->map(fn ($m) => ['role' => $m->role, 'text' => (string) $m->content
+                // An earlier question's photo, remembered as having been seen.
+                . ($m->role === 'user' && $m->imagePath ? \App\Support\ModelImage::sawLine(1) : '')])->values()->all();
 
         /* And the season, only when somebody said to send it.
          * This tab lives inside a schedule, so it used to hand that
@@ -407,7 +409,8 @@ class ScheduleAiController extends BaseScheduleController
          * where the thread LIVES, not a premise it argues from. */
         $context = $request->boolean('usePlan') ? $this->scheduleContext($schedule) : '';
 
-        $result = $this->ai->ask($settings, $history, $context . $prompt, $image);
+        // This question's photos: looked at, said, and weighed with the rest.
+        $result = $this->ai->ask($settings, $history, $context . \App\Support\ModelImage::lookLine(count($images)) . $prompt, $image);
 
         if (! $result['ok']) {
             $this->emit($schedule->id, 'ai.answer', ['error' => true, 'sessionId' => $session->id, 'content' => $result['error'] ?: 'The AI could not answer. Try again.']);

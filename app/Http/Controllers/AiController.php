@@ -494,10 +494,13 @@ class AiController extends Controller
             : null;
         $history = $history
             ->map(fn ($m) => ['role' => $m->role, 'text' => (string) $m->content
+                // An earlier question's photos, remembered as having been seen.
+                . ($m->role === 'user' ? \App\Support\ModelImage::sawLine(count(is_array($m->imagePaths) ? $m->imagePaths : ($m->imagePath ? [$m->imagePath] : []))) : '')
                 . ($carryId !== null && $m->id === $carryId ? "\n" . $m->attachedContext : '')])
             ->all();
 
-        $result = $this->ai->ask($settings, $history, $context . $prompt, $image);
+        // This question's photos: looked at, said, and weighed with the rest.
+        $result = $this->ai->ask($settings, $history, $context . \App\Support\ModelImage::lookLine(count($images)) . $prompt, $image);
 
         if (! $result['ok']) {
             // Nothing was produced, so nothing is charged.

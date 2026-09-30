@@ -1157,6 +1157,9 @@ const __init = () => {
         addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>', attachedUrls(), null, true);
         input.value = ''; input.style.height = 'auto'; sayEstimate();
         const thinking = addTurn(false, '<span class="aidots"><i></i><i></i><i></i></span>');
+        // The composer empties the moment the question is sent; the photos
+        // come back only if it was not taken.
+        const heldChips = window.aneeTakeChips(chips); sayEstimate();
         try {
             // Answered as a job: the ask is taken at once, the answer waited for.
             const res = await window.aneeAskWait(await api(URLS.ask, { method: 'POST', body: {
@@ -1172,9 +1175,7 @@ const __init = () => {
             } }));
             conversationId = res.data.conversationId;
             noteSession(res.data);
-            // Chips leave the moment the send is known good - before any
-            // templating that could throw and strand them in the composer.
-            clearPhotos();
+            window.aneeDropChips(heldChips);
             const costLine = UNLIMITED ? '' : `<p class="aibubble-cost">${escapeHtml(String(Math.ceil(Number(res.data.answer.creditsCharged) || 0)))} credits</p>`;
             thinking.querySelector('.aibubble').innerHTML = render(res.data.answer.content) + costLine + `<time class="ai-when">${escapeHtml(nowStamp())}</time>`;
             setBalance(res.data.balance); scrollDown();
@@ -1184,10 +1185,13 @@ const __init = () => {
                 setBalance(err.data.balance || 0);
                 addTurn(false, buyCard(err.message)).querySelector('.aibubble').classList.add('is-buy');
             } else { addTurn(false, '<p>' + escapeHtml(err.message) + '</p>'); }
-            // Kept on purpose - a retry should not re-pick its photos. Said
-            // out loud, so a failed send never reads as "sent but not cleared".
-            if (chips.children.length) toast('Your photos are still attached, ready for the retry.');
-            input.value = message; input.dispatchEvent(new Event('input'));
+            if (err.stillWorking) { window.aneeDropChips(heldChips); }
+            else {
+                // Not taken: the photos and the words come back for the retry.
+                window.aneeGiveChipsBack(chips, heldChips); sayEstimate();
+                if (heldChips.length) toast('Your photos are back in the box, ready for the retry.');
+                input.value = message; input.dispatchEvent(new Event('input'));
+            }
         } finally { busy = false; setSending(false); input.focus(); }
     }
     byId('aiSendBtn')?.addEventListener('click', send);

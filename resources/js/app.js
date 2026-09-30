@@ -339,7 +339,24 @@ window.aneeAskWait = async function aneeAskWait(res, limitMs = 300000) {
             throw err;
         }
     }
-    throw new Error('Anee is taking longer than usual. Her answer will appear in this chat when it is ready: open it again in a minute.');
+    const late = new Error('Anee is taking longer than usual. Her answer will appear in this chat when it is ready: open it again in a minute.');
+    // The question was taken and is still being answered: not a retry.
+    late.stillWorking = true;
+    throw late;
+};
+
+/* The photo chips of a composer, taken off the moment a question is sent
+ * and handed back only if it was not taken. Shared by every composer. */
+window.aneeTakeChips = function aneeTakeChips(box) {
+    const held = box ? [...box.children] : [];
+    held.forEach((el) => el.remove());
+    return held;
+};
+window.aneeGiveChipsBack = function aneeGiveChipsBack(box, held) {
+    (held || []).forEach((el) => box && box.appendChild(el));
+};
+window.aneeDropChips = function aneeDropChips(held) {
+    (held || []).forEach((el) => { if (el._blob) { try { URL.revokeObjectURL(el._blob); } catch (_) { /* gone */ } } });
 };
 
 /* ------------------------------------------------------------------ */

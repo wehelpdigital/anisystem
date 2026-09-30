@@ -1301,32 +1301,34 @@ const __init = () => {
 
         const thinking = addTurn(false, '<span class="aidots"><i></i><i></i><i></i></span>');
 
+        const body = {
+            message,
+            conversationId,
+            imagePaths: myPaths,
+            imageScheduleIds: myScheds,
+            // Sent only when the farmer attached it; the flag is what
+            // turns a label into the plan being read.
+            scheduleId: attachedPlan ? attachedPlan.id : null,
+            attachPlan: attachedPlan ? 1 : 0,
+            attachAnalysisId: attachedAnalysis ? attachedAnalysis.id : null,
+            attachReportId: attachedReport ? attachedReport.id : null,
+            attachRealignId: attachedRealign ? attachedRealign.id : null,
+            attachProtocolReviewId: attachedReview ? attachedReview.id : null,
+        };
+        // The composer empties the moment the question is sent: its photos
+        // are in the bubble above, its attachments named under it. They come
+        // back only if the question was not taken, ready for the retry. The
+        // chat keeps what was attached (the server carries it into the next turns).
+        const heldChips = window.aneeTakeChips(chips);
+        const heldAtt = takeAttachments();
+        sayEstimate();
+
         try {
             // Answered as a job: the ask is taken at once, the answer waited for.
-            const res = await window.aneeAskWait(await api(URLS.ask, {
-                method: 'POST',
-                body: {
-                    message,
-                    conversationId,
-                    imagePaths: myPaths,
-                    imageScheduleIds: myScheds,
-                    // Sent only when the farmer attached it; the flag is what
-                    // turns a label into the plan being read.
-                    scheduleId: attachedPlan ? attachedPlan.id : null,
-                    attachPlan: attachedPlan ? 1 : 0,
-                    attachAnalysisId: attachedAnalysis ? attachedAnalysis.id : null,
-                    attachReportId: attachedReport ? attachedReport.id : null,
-                    attachRealignId: attachedRealign ? attachedRealign.id : null,
-                    attachProtocolReviewId: attachedReview ? attachedReview.id : null,
-                },
-            }));
+            const res = await window.aneeAskWait(await api(URLS.ask, { method: 'POST', body }));
             conversationId = res.data.conversationId;
-            // The chips leave the moment the send is known good - before any
-            // templating that could throw and strand them in the composer.
-            // All of them: the photos and whatever was attached. The chat keeps
-            // what was attached (the server carries it into the next turns).
-            clearPhotos();
-            clearAttachments();
+            window.aneeDropChips(heldChips);
+            forgetAttachmentAddress();
             const costLine = UNLIMITED ? '' : `<p class="aibubble-cost">${escapeHtml(String(Math.ceil(Number(res.data.answer.creditsCharged) || 0)))} credits</p>`;
             thinking.querySelector('.aibubble').innerHTML =
                 renderAnswer(res.data.answer.content)
@@ -1343,12 +1345,19 @@ const __init = () => {
             } else {
                 addTurn(false, '<p>' + escapeHtml(err.message) + '</p>');
             }
-            // Kept on purpose - a retry should not re-pick its photos. Said
-            // out loud, so a failed send never reads as "sent but not cleared".
-            if (chips.children.length) toast('Your photos are still attached, ready for the retry.');
-            // Give the question back so it is not lost.
-            input.value = message;
-            input.dispatchEvent(new Event('input'));
+            if (err.stillWorking) {
+                // Taken and still being answered: nothing to retry.
+                window.aneeDropChips(heldChips);
+                forgetAttachmentAddress();
+            } else {
+                // Not taken: the photos, the attachments and the words come
+                // back, so a retry does not mean picking them all again.
+                window.aneeGiveChipsBack(chips, heldChips);
+                giveAttachmentsBack(heldAtt);
+                if (heldChips.length) toast('Your photos are back in the box, ready for the retry.');
+                input.value = message;
+                input.dispatchEvent(new Event('input'));
+            }
         } finally {
             busy = false;
             setSending(false);
@@ -1357,18 +1366,30 @@ const __init = () => {
     }
     byId('aiSendBtn')?.addEventListener('click', send);
 
-    /* Everything attached, taken off the composer after a question is sent. */
-    function clearAttachments() {
-        attachedAnalysis = null; attachedReport = null; attachedRealign = null; attachedReview = null;
-        if (attachedPlan) { attachedPlan = null; try { drawPlanChip?.(); } catch (_) {} }
-        ['aiWtpChip', 'aiRptChip', 'aiRgnChip', 'aiPbrChip'].forEach((id) => { const c = byId(id); if (c) c.hidden = true; });
-        // The address loses its ?realign= / ?freport= so a reload does not attach it again.
+    /* Everything attached, taken off the composer as a question is sent,
+       and given back if it was not taken. */
+    function redrawAttachments() {
+        [drawPlanChip, drawWtpChip, drawRptChip, drawRgnChip, drawPbrChip].forEach((draw) => { try { draw(); } catch (_) { /* dormant */ } });
+    }
+    function takeAttachments() {
+        const held = { plan: attachedPlan, analysis: attachedAnalysis, report: attachedReport, realign: attachedRealign, review: attachedReview };
+        attachedPlan = null; attachedAnalysis = null; attachedReport = null; attachedRealign = null; attachedReview = null;
+        redrawAttachments();
+        return held;
+    }
+    function giveAttachmentsBack(held) {
+        if (!held) return;
+        attachedPlan = held.plan; attachedAnalysis = held.analysis; attachedReport = held.report;
+        attachedRealign = held.realign; attachedReview = held.review;
+        redrawAttachments();
+    }
+    // The address loses its ?realign= / ?freport= so a reload does not attach it again.
+    function forgetAttachmentAddress() {
         try {
             const u = new URL(location.href);
             ['analysis', 'freport', 'realign', 'pbreview'].forEach((k) => u.searchParams.delete(k));
             history.replaceState(history.state, '', u.pathname + (u.search ? u.search : '') + u.hash);
-        } catch (_) {}
-        sayEstimate();
+        } catch (_) { /* an address that will not change is harmless */ }
     }
 
     /* ---- Conversations ---- */

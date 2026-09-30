@@ -1014,6 +1014,9 @@
             addTurn(true, '<p>' + escapeHtml(message).replace(/\r?\n/g, '<br>') + '</p>', attachedUrls(), null, true);
             input.value = ''; input.style.height = 'auto'; sayEstimate();
             const thinking = addTurn(false, '<span class="ai-float-dots"><i></i><i></i><i></i></span>');
+            // The composer empties the moment the question is sent; the
+            // photos come back only if it was not taken.
+            const heldChips = window.aneeTakeChips(chips); syncChips(); sayEstimate();
             try {
                 // Answered as a job: the ask is taken at once, the answer waited for.
                 const res = await window.aneeAskWait(await api(URLS.ask, { method: 'POST', body: {
@@ -1025,8 +1028,7 @@
                     forget: document.getElementById('aiFloatUseMemory')?.getAttribute('aria-pressed') === 'true' ? 0 : 1,
                 } }));
                 conversationId = res.data.conversationId;
-                // Chips leave the moment the send is known good.
-                clearPhotos();
+                window.aneeDropChips(heldChips);
                 const costLine = UNLIMITED ? '' : `<p class="cost">${escapeHtml(String(Math.ceil(Number(res.data.answer.creditsCharged) || 0)))} credits</p>`;
                 thinking.querySelector('.b').innerHTML = render(res.data.answer.content) + costLine + `<time class="when">${escapeHtml(nowStamp())}</time>`;
                 setBalance(res.data.balance); scrollDown();
@@ -1038,10 +1040,13 @@
                     addTurn(false, buyCard(err.message)).querySelector('.b').classList.add('is-buy');
                     setBalance(err.data.balance || 0);
                 } else { addTurn(false, '<p>' + escapeHtml(err.message) + '</p>'); }
-                // Kept on purpose - said out loud so a failed send never reads
-                // as "sent but not cleared".
-                if (chipCount()) toast('Your photos are still attached, ready for the retry.');
-                input.value = message; input.dispatchEvent(new Event('input'));
+                if (err.stillWorking) { window.aneeDropChips(heldChips); }
+                else {
+                    // Not taken: the photos and the words come back for the retry.
+                    window.aneeGiveChipsBack(chips, heldChips); syncChips(); sayEstimate();
+                    if (heldChips.length) toast('Your photos are back in the box, ready for the retry.');
+                    input.value = message; input.dispatchEvent(new Event('input'));
+                }
             } finally { busy = false; sendBtn.disabled = false; sendBtn.setAttribute('aria-label', 'Send'); input.focus(); }
         }
         $('aiFloatSend')?.addEventListener('click', send);
