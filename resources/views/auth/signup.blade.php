@@ -28,7 +28,7 @@
                     <div>
                         <label for="firstName" class="form-label">First name</label>
                         <input id="firstName" name="firstName" type="text" value="{{ old('firstName') }}"
-                            class="form-input" placeholder="{{ \App\Support\Region::t('firstNameExample') }}" required autofocus autocomplete="given-name">
+                            class="form-input" placeholder="{{ \App\Support\Region::t('firstNameExample') }}" required data-desktop-focus autocomplete="given-name">
                         @error('firstName') <p class="form-error">{{ $message }}</p> @enderror
                     </div>
                     <div>

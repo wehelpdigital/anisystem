@@ -64,8 +64,12 @@ class ScheduleDrawController extends BaseScheduleController
                     'pages' => DrawStrokes::pageCount($m['strokes'] ?? null),
                     'team' => $team,
                     'url' => \App\Support\MediaStore::url($path),
-                    // The stamp where one was made at save time; the picture itself before that.
-                    'thumb' => \App\Support\MediaStore::url($m['thumb'] ?? $path),
+                    // Always answerable (see thumb()): the stamp or the picture
+                    // while its file lives, else the drawing redrawn from its
+                    // strokes. A team whiteboard has no strokes; its file is it.
+                    'thumb' => $team
+                        ? \App\Support\MediaStore::url($m['thumb'] ?? $path)
+                        : route('sm.draw.thumb', ['scheduleId' => $scheduleId, 'source' => $source, 'noteId' => (int) $holder->id, 'index' => (int) $i, 'v' => $holder->updated_at?->timestamp]),
                     'when' => $holder->updated_at?->timezone('Asia/Manila')->format('M j, Y'),
                     'sortKey' => $holder->updated_at?->timestamp ?? 0,
                     // Every drawing lives in a note; this is the way back to
@@ -120,6 +124,80 @@ class ScheduleDrawController extends BaseScheduleController
     public function legacyPage(Request $request)
     {
         return redirect()->route('draw.page', array_filter(['open' => (string) $request->query('open')]));
+    }
+
+    /**
+     * A drawing's picture for its tile, always.
+     *
+     * The stamp (or the picture) while its file still answers. When the file
+     * is gone -- some did not survive the moves between hosts -- and the
+     * drawing kept its strokes, it is painted again from them
+     * (App\Support\DrawThumb) and the note is mended with the new files, so
+     * the Gallery and every chip get it back too.
+     */
+    public function thumb(Request $request)
+    {
+        $note = $this->holderFor($request, false);
+        $i = (int) $request->query('index');
+        $media = $note ? $this->mediaOf($note) : [];
+        $m = $media[$i] ?? null;
+        if (! $m) {
+            return $this->jsonFail('That drawing is no longer here.', 404);
+        }
+
+        foreach (array_filter([$m['thumb'] ?? null, $m['path'] ?? null]) as $p) {
+            if (\App\Support\MediaStore::exists($p)) {
+                return redirect()->away(\App\Support\MediaStore::url($p))->header('Cache-Control', 'private, max-age=3600');
+            }
+        }
+
+        $png = \App\Support\DrawThumb::png($m['strokes'] ?? null, 480, 360);
+        if (! $png) {
+            return $this->jsonFail('That drawing has no picture and nothing to redraw it from.', 404);
+        }
+        $this->mend($note, $i);
+
+        return response($png, 200, ['Content-Type' => 'image/png', 'Cache-Control' => 'private, max-age=3600']);
+    }
+
+    /**
+     * Give a drawing whose files were lost new ones, painted from its strokes.
+     * Best effort: a storage wall or a failed upload leaves the note as it was.
+     */
+    private function mend($note, int $i): void
+    {
+        try {
+            $media = $this->mediaOf($note);
+            $m = $media[$i] ?? null;
+            if (! $m || empty($m['strokes'])) {
+                return;
+            }
+            $scope = (int) ($note->croppingScheduleId ?? 0) ?: 'u' . (int) ($note->userId ?? 0);
+            $changed = false;
+            if (! \App\Support\MediaStore::exists($m['path'] ?? null)) {
+                $full = \App\Support\DrawThumb::png($m['strokes'], 1600, 1200);
+                $path = $full ? \App\Support\MediaStore::putBinary($full, 'drawings', 'png', $scope) : null;
+                if ($path) {
+                    $m['path'] = $path;
+                    $changed = true;
+                }
+            }
+            if (! \App\Support\MediaStore::exists($m['thumb'] ?? null)) {
+                $small = \App\Support\DrawThumb::png($m['strokes'], 480, 360);
+                $thumb = $small ? \App\Support\MediaStore::putBinary($small, 'drawings', 'png', $scope, 'thumb-') : null;
+                if ($thumb) {
+                    $m['thumb'] = $thumb;
+                    $changed = true;
+                }
+            }
+            if ($changed) {
+                $media[$i] = $m;
+                $note->media = array_values($media);
+                $note->save();
+            }
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::info('Could not mend a drawing: ' . $e->getMessage());
+        }
     }
 
     /** The strokes behind one drawing, fetched when it is opened to be edited. */

@@ -398,16 +398,14 @@ class ScheduleMapController extends BaseScheduleController
             return $this->jsonFail('That saved map no longer exists.', 404);
         }
 
-        // The filed picture first. A remote file is durable; a local one is
-        // only trusted while the disk actually still has it.
-        $path = $save->noteId ? MapAccess::picturePath(AsScheduleNote::active()->find($save->noteId)) : null;
-        if ($path !== null) {
-            if (\App\Support\MediaStore::isRemote($path)) {
-                return redirect()->away(\App\Support\MediaStore::url($path));
-            }
-            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($path)) {
-                return redirect(\App\Support\MediaStore::url($path));
-            }
+        // The filed picture first, while its file still answers: some did
+        // not survive the moves between hosts. Those are redrawn from the
+        // shapes below, and the note gets a fresh picture so the Gallery and
+        // every chip have it again.
+        $note = $save->noteId ? AsScheduleNote::active()->find($save->noteId) : null;
+        $path = MapAccess::picturePath($note);
+        if ($path !== null && \App\Support\MediaStore::exists($path)) {
+            return redirect()->away(\App\Support\MediaStore::url($path));
         }
 
         $objects = collect(json_decode((string) $save->objects, true) ?: [])
@@ -459,12 +457,48 @@ class ScheduleMapController extends BaseScheduleController
             } catch (\Throwable $e) {
                 // fine — the browser's own cache still helps
             }
+            if ($note && $path !== null) {
+                $this->mendMapPicture($note, $path, $objects);
+            }
         }
 
         return response($binary, 200, [
             'Content-Type' => 'image/png',
             'Cache-Control' => 'private, max-age=3600',
         ]);
+    }
+
+    /**
+     * A map's filed picture was lost: take a fresh one (Static Maps, with the
+     * shapes drawn on) and put it where the old one was on the note. Best
+     * effort -- the shelf already has its redrawn card either way.
+     */
+    private function mendMapPicture(AsScheduleNote $note, string $lost, array $objects): void
+    {
+        try {
+            $url = $this->staticMapUrl($objects, null, null, null, 'hybrid');
+            $res = $url ? \Illuminate\Support\Facades\Http::timeout(20)->get($url) : null;
+            if (! $res || ! $res->ok() || ! str_starts_with((string) $res->header('Content-Type'), 'image/')) {
+                return;
+            }
+            $scope = (int) $note->croppingScheduleId ?: 'u' . (int) $note->userId;
+            $fresh = \App\Support\MediaStore::putBinary($res->body(), 'maps', 'png', $scope, 'map-');
+            if (! $fresh) {
+                return;
+            }
+            $media = is_array($note->media) ? $note->media : [];
+            foreach ($media as &$m) {
+                if (($m['path'] ?? null) === $lost) {
+                    $m['path'] = $fresh;
+                    $m['type'] = 'map';
+                }
+            }
+            unset($m);
+            $note->media = array_values($media);
+            $note->save();
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::info('Could not mend a map picture: ' . $e->getMessage());
+        }
     }
 
     /**

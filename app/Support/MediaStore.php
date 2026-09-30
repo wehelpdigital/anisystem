@@ -155,6 +155,46 @@ class MediaStore
         return Storage::disk('public')->url($path);
     }
 
+    /**
+     * Whether the file behind a path still answers.
+     *
+     * A remote path was trusted blindly, and some did not survive the moves
+     * between hosts: the picture 404s at the bucket and the tile says
+     * "Picture missing". Asked with a HEAD (redirects followed), and the
+     * answer kept for a while -- a yes for six hours, a no for ten minutes,
+     * so a file that comes back is seen again soon.
+     */
+    public static function exists(?string $path): bool
+    {
+        if (blank($path)) {
+            return false;
+        }
+        if (! self::isRemote($path)) {
+            return Storage::disk('public')->exists($path);
+        }
+        $key = 'media:exists:' . sha1($path);
+        try {
+            $known = \Illuminate\Support\Facades\Cache::get($key);
+            if (is_bool($known)) {
+                return $known;
+            }
+        } catch (\Throwable $e) {
+            // no cache -- ask every time
+        }
+        try {
+            $ok = Http::timeout(8)->withHeaders(['User-Agent' => 'anee.io media check'])->head((string) self::url($path))->successful();
+        } catch (\Throwable $e) {
+            return true;   // cannot tell: do not throw a picture away over a hiccup
+        }
+        try {
+            \Illuminate\Support\Facades\Cache::put($key, $ok, $ok ? now()->addHours(6) : now()->addMinutes(10));
+        } catch (\Throwable $e) {
+            // fine
+        }
+
+        return $ok;
+    }
+
     /** True for a path the mother app holds. */
     public static function isRemote(?string $path): bool
     {

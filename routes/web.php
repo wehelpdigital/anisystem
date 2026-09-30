@@ -142,6 +142,21 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
         'probe' => $probe,
         // Facebook's crawler visits the app saw, newest first (NoteLinkReaders).
         'linkReaders' => rescue(fn () => Illuminate\Support\Facades\Cache::get(App\Http\Middleware\NoteLinkReaders::KEY, []), [], false),
+        // Whether Google accepts the maps key from this site's own address
+        // (its allowed websites): asked as a page here would ask, with the
+        // site as the Referer. Cached ten minutes; ?fresh=1 asks again.
+        'mapsKey' => rescue(function () use ($request) {
+            $key = (string) config('services.google_maps.key');
+            if ($key === '') {
+                return 'no key';
+            }
+            $site = $request->getSchemeAndHttpHost();
+            $ask = fn () => Illuminate\Support\Facades\Http::timeout(8)->withHeaders(['Referer' => $site . '/app/maps'])
+                ->get('https://maps.googleapis.com/maps/api/staticmap', ['center' => '14.1,121.3', 'zoom' => 10, 'size' => '32x32', 'key' => $key])->status();
+            $code = $request->boolean('fresh') ? $ask() : Illuminate\Support\Facades\Cache::remember('dc:mapsKey:' . $site, 600, $ask);
+
+            return ['site' => $site, 'accepted' => $code === 200, 'status' => $code];
+        }, 'unknown', false),
     ]);
 })->name('deploy.check');
 
@@ -794,6 +809,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // The season modules' old addresses land on the global pages.
     Route::get('/app/sm-draw', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'legacyPage'])->name('sm.draw');
     Route::get('/app/sm-draw-one', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'one'])->name('sm.draw.one');
+    // A drawing's tile picture, redrawn from its strokes when its file is gone.
+    Route::get('/app/sm-draw-thumb', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'thumb'])->name('sm.draw.thumb');
     Route::post('/app/sm-draw-save', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'save'])->name('sm.draw.save');
     Route::delete('/app/sm-draw-delete', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'remove'])->name('sm.draw.destroy');
     Route::get('/app/sm-maps', [App\Http\Controllers\Manager\ScheduleMapController::class, 'legacyPage'])->name('sm.maps');

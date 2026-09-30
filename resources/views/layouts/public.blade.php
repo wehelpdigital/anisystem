@@ -175,6 +175,15 @@
     </footer>
 
     @stack('scripts')
+    {{-- A form's first field is focused for a keyboard and a mouse only. On a
+         phone, focusing it throws the keypad up over the page before anybody
+         has read it (2026-09-30), so a touch screen waits to be tapped. --}}
+    <script>
+        (() => {
+            const el = document.querySelector('[data-desktop-focus]');
+            if (el && window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches) el.focus({ preventScroll: true });
+        })();
+    </script>
     <script>
         {{-- window.toast lives in the Vite module bundle, which runs after
              inline scripts parse — so flashes wait for DOMContentLoaded. --}}

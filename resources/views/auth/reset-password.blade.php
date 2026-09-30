@@ -26,7 +26,7 @@
                 <div>
                     <label for="password" class="form-label">New password</label>
                     <input id="password" name="password" type="password"
-                        class="form-input" placeholder="At least 8 characters" required autofocus autocomplete="new-password">
+                        class="form-input" placeholder="At least 8 characters" required data-desktop-focus autocomplete="new-password">
                     @error('password') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
 

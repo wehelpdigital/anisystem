@@ -96,7 +96,13 @@ class ReceiptCheck
             $status === '' || $status === 'unknown' ? 'No status could be read.' : 'It says: ' . $status . '.');
 
         // 2. No sign of editing, and she is sure.
-        $signs = array_values(array_filter(array_map('strval', (array) ($read['editingSigns'] ?? []))));
+        //    A model's own idea of "today" can be a year or two behind, and it
+        //    once called a receipt dated 2026 "in the future" -- in 2026. When
+        //    a payment happened is this code's question (check 7, Philippine
+        //    time), never hers, so a sign that is only about the date being
+        //    in the future or the past is set aside.
+        $signs = array_values(array_filter(array_map('strval', (array) ($read['editingSigns'] ?? [])),
+            fn ($s) => trim($s) !== '' && ! self::onlyAboutWhen($s)));
         $add('edits', 'No sign of editing', $signs ? false : true, $signs ? implode('; ', $signs) : 'Nothing looked altered.');
         $score = max(0, min(100, (int) ($read['authenticity'] ?? 0)));
         $add('sure', 'Anee is sure it is genuine', $score >= self::SURE ? true : null, 'She rates it ' . $score . ' out of 100 (needs ' . self::SURE . ').', false);
@@ -157,9 +163,31 @@ class ReceiptCheck
         ]);
     }
 
+    /**
+     * Whether an "editing sign" is only her doubt about WHEN (a date or year
+     * she thinks is in the future or too old) rather than something she can
+     * point at on the picture.
+     */
+    public static function onlyAboutWhen(string $sign): bool
+    {
+        $s = mb_strtolower($sign);
+        $aboutWhen = (bool) preg_match('/\b(future|not yet (happened|occurred)|has(n\'t| not) happened|upcoming|too old|outdated|in the past)\b/u', $s);
+        $aboutLooks = (bool) preg_match('/\b(font|bold|align|misalign|blur|smudg|pixel|cropp|colou?r|spacing|kerning|edited|photoshop|overlay|mismatch)/u', $s);
+
+        return $aboutWhen && ! $aboutLooks;
+    }
+
     private function prompt(): string
     {
-        return GcashReceipt::guide() . <<<'TXT'
+        // Today, in the Philippines, said in so many words: the model's own
+        // sense of the date is its training's, not the calendar's.
+        $now = \Illuminate\Support\Carbon::now('Asia/Manila');
+        $today = "\n\nTODAY\nIt is " . $now->format('l, F j, Y, g:i A') . ' in the Philippines (Asia/Manila, UTC+8). '
+            . 'Your own sense of the current date may be out of date: trust this one. Read the receipt\'s date and time exactly as printed. '
+            . 'Whether that date is right for this payment is checked by our system, so never list a date or a year as a sign of editing '
+            . 'because it seems to be in the future or the past, and do not lower your authenticity score for it.';
+
+        return GcashReceipt::guide() . $today . <<<'TXT'
 
 
 THE TASK

@@ -24,7 +24,7 @@
                 <div>
                     <label for="email" class="form-label">Email address</label>
                     <input id="email" name="email" type="email" value="{{ old('email') }}"
-                        class="form-input" placeholder="you@example.com" required autofocus autocomplete="email">
+                        class="form-input" placeholder="you@example.com" required data-desktop-focus autocomplete="email">
                     @error('email') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
 

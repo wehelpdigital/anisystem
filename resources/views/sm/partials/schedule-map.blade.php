@@ -443,6 +443,15 @@
             @include('sm.partials.wait-card')
             <span class="cmap-veil-txt">Finding your ground…</span>
         </div>
+        {{-- Google turned the site away (the key's allowed websites do not
+             include this address). Said in our words rather than Google's
+             grey "Oops", and with what is still true: nothing is lost. --}}
+        <div class="cmap-refused" id="cmapRefused" hidden>
+            <svg fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+            <b>The map can't be shown right now</b>
+            <p>Google Maps did not accept this website's address. Your saved maps and every shape on them are safe, and will show again as soon as it does.</p>
+            <small>For the site admin: add <code>{{ request()->getSchemeAndHttpHost() }}/*</code> to the Google Maps key's allowed websites.</small>
+        </div>
         {{-- Three seconds of holding still is a long time to wonder whether
              anything is happening. This is the answer: a ring that closes on
              the exact spot the new point would land, and is gone the instant
@@ -478,6 +487,20 @@
 <style>
     .cmap-wrap { display: flex; flex-direction: column; height: 100%; min-height: 0; }
     .cmap-nokey { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .4rem; padding: 2rem; text-align: center; color: var(--color-gray-400); }
+    .cmap-refused { position: absolute; inset: 0; z-index: 6; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        gap: .45rem; padding: 1.5rem; text-align: center; background: var(--color-gray-50); color: var(--color-gray-600);
+        animation: cmapRefusedIn .28s cubic-bezier(.22,1,.36,1); }
+    .cmap-refused[hidden] { display: none; }
+    .cmap-refused svg { width: 2.4rem; height: 2.4rem; color: var(--color-gray-400); }
+    .cmap-refused b { font-size: .95rem; color: var(--color-gray-900); }
+    .cmap-refused p { font-size: .82rem; max-width: 22rem; line-height: 1.45; margin: 0; }
+    .cmap-refused small { font-size: .7rem; color: var(--color-gray-400); max-width: 24rem; }
+    .cmap-refused code { font-size: .68rem; background: var(--color-gray-100); border-radius: .3rem; padding: 0 .25rem; }
+    html.dark .cmap-refused { background: #11160e; color: #a9b99c; }
+    html.dark .cmap-refused b { color: #e8efe1; }
+    html.dark .cmap-refused code { background: #1f2a18; }
+    @keyframes cmapRefusedIn { from { opacity: 0; } to { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .cmap-refused { animation: none; } }
     /* Two rows: the icons, then the tools menu under them.
        One sideways scroller held both, and the menu is the widest control on
        the bar — so on a phone half the icons lived off the right-hand edge,
@@ -4347,6 +4370,21 @@
         if (!ATTACH || ATTACH.pinned) return;
         setTool('pin');
     }
+
+    /* Google calls this when it refuses the key for this page's address
+       (RefererNotAllowedMapError and friends). Its own answer is a grey
+       "Oops" over the map; ours says what happened and that nothing is lost.
+       Kept after any handler the page already had. */
+    (function watchRefusal() {
+        const before = window.gm_authFailure;
+        window.gm_authFailure = function () {
+            try { if (typeof before === 'function') before(); } catch (_) {}
+            const box = document.getElementById('cmapRefused');
+            if (box) box.hidden = false;
+            const v = document.getElementById('cmapVeil');
+            if (v) v.style.display = 'none';
+        };
+    })();
 
     window.initCollabMap = function () {
         seedHist();   // the kept way back, before the first press can want it

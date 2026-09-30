@@ -32,10 +32,14 @@
     .co-sum small { display: block; color: #6b7280; font-size: .8rem; margin-top: .1rem; }
     .co-sum .amt { margin-left: auto; text-align: right; font-weight: 900; color: #14210c; white-space: nowrap; }
     .co-step { display: none; }
-    .co-step.is-on { display: block; animation: coIn .32s cubic-bezier(.22,1,.36,1); }
-    .co-step.is-on.is-back { animation-name: coBack; }
-    @keyframes coIn { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
-    @keyframes coBack { from { opacity: 0; transform: translateX(-18px); } to { opacity: 1; transform: none; } }
+    /* One motion only: the next step fades in where it stands. It used to
+       slide in sideways while the page scrolled up to it, two movements at
+       once, which on a phone read as the screen lurching left then up. The
+       page now jumps to the top while the step is still invisible (see
+       show()), so all anybody sees is the step appearing. */
+    .co-step.is-on { display: block; animation: coIn .26s cubic-bezier(.22,1,.36,1); }
+    @keyframes coIn { from { opacity: 0; } to { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .co-step.is-on { animation: none; } }
     .co-h { font-family: var(--font-heading); font-weight: 800; font-size: 1.2rem; color: #14210c; }
     .co-sub { color: #6b7280; font-size: .9rem; margin-top: .2rem; }
     /* The ways to pay */
@@ -360,7 +364,9 @@
         step = n;
         $$('.co-step').forEach((s) => { const on = +s.dataset.step === n; s.classList.toggle('is-on', on); s.classList.toggle('is-back', on && back); });
         $$('.co-dots i').forEach((d, i) => { d.classList.toggle('is-on', i === n - 1); d.classList.toggle('is-done', i < n - 1); });
-        window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+        // Straight to the top, not a smooth scroll: the new step starts
+        // invisible, so the jump is never seen and its fade is the only move.
+        if (window.scrollY > 0) window.scrollTo({ top: 0, behavior: 'auto' });
     }
     $$('[data-go]').forEach((b) => b.addEventListener('click', () => show(+b.dataset.go, b.hasAttribute('data-back'))));
 
