@@ -255,9 +255,21 @@ window.api = async function api(url, { method = 'GET', body = null, headers = {}
         throw new Error(json.message || 'Subscription required.');
     }
     if (!res.ok || (json && json.success === false)) {
+        // A page with no JSON is the host speaking, not the app: a request
+        // too big, too slow, or a server that fell over. Said as such, so
+        // "Request failed (504)" is never all anyone is told.
+        const hostSays = {
+            413: 'That was too large to send. Try fewer or smaller photos.',
+            429: 'Too many tries at once. Wait a moment and try again.',
+            500: 'Something went wrong on our side. Please try again.',
+            502: 'The server did not answer in time. Please try again.',
+            503: 'anee.io is busy for a moment. Please try again.',
+            504: 'That took too long to answer. Please try again.',
+        };
         const msg =
             json?.message ||
             (json?.errors ? Object.values(json.errors).flat()[0] : null) ||
+            hostSays[res.status] ||
             `Request failed (${res.status})`;
         const err = new Error(msg);
         err.status = res.status;

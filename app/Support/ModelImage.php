@@ -56,6 +56,9 @@ class ModelImage
         if (! $size || (strlen($binary) <= self::MAX_BYTES && max($size[0], $size[1]) <= self::MAX_SIDE)) {
             return $as;
         }
+        if (! self::roomFor((int) $size[0], (int) $size[1])) {
+            return $as;
+        }
         $src = @imagecreatefromstring($binary);
         if (! $src) {
             return $as;
@@ -75,6 +78,94 @@ class ModelImage
         imagedestroy($dst);
 
         return $out !== '' ? ['mime' => 'image/jpeg', 'data' => base64_encode($out)] : $as;
+    }
+
+    /**
+     * A phone photo shrunk as it arrives: at most $maxSide px, JPEG. The
+     * browser does this before uploading; a page loaded before it learned
+     * to (or a browser that cannot) still sends full size, and six of those
+     * are what made a question fail. Anything unreadable is kept as sent.
+     */
+    public static function shrinkUpload(\Illuminate\Http\UploadedFile $file, int $maxSide = 2048): \Illuminate\Http\UploadedFile
+    {
+        try {
+            $size = @getimagesize($file->getRealPath());
+            if (! $size || ! function_exists('imagecreatefromstring')
+                || ($file->getSize() <= self::MAX_BYTES && max($size[0], $size[1]) <= $maxSide)
+                || ! self::roomFor((int) $size[0], (int) $size[1])) {
+                return $file;
+            }
+            $src = @imagecreatefromstring((string) file_get_contents($file->getRealPath()));
+            if (! $src) {
+                return $file;
+            }
+            // A phone writes its photo sideways and says so in EXIF; drawn
+            // upright here, since the redrawn copy carries no EXIF.
+            $o = function_exists('exif_read_data') ? (int) (@exif_read_data($file->getRealPath())['Orientation'] ?? 1) : 1;
+            if ($o === 3) { $src = imagerotate($src, 180, 0); }
+            if ($o === 6) { $src = imagerotate($src, -90, 0); }
+            if ($o === 8) { $src = imagerotate($src, 90, 0); }
+            [$w, $h] = [imagesx($src), imagesy($src)];
+            $scale = min(1, $maxSide / max($w, $h));
+            $dst = imagecreatetruecolor(max(1, (int) round($w * $scale)), max(1, (int) round($h * $scale)));
+            imagefill($dst, 0, 0, imagecolorallocate($dst, 255, 255, 255));
+            imagecopyresampled($dst, $src, 0, 0, 0, 0, imagesx($dst), imagesy($dst), $w, $h);
+            imagedestroy($src);
+            $tmp = tempnam(sys_get_temp_dir(), 'shr') . '.jpg';
+            imagejpeg($dst, $tmp, 85);
+            imagedestroy($dst);
+            if (! is_file($tmp) || filesize($tmp) === 0 || filesize($tmp) >= $file->getSize()) {
+                @unlink($tmp);
+
+                return $file;
+            }
+            $name = preg_replace('/\.[^.]+$/', '', (string) $file->getClientOriginalName()) ?: 'photo';
+
+            return new \Illuminate\Http\UploadedFile($tmp, $name . '.jpg', 'image/jpeg', null, true);
+        } catch (\Throwable $e) {
+            return $file;
+        }
+    }
+
+    /**
+     * Whether a picture of these sides can be decoded without the request
+     * running out of memory: GD holds about five bytes a pixel, and a 50 MP
+     * phone photo is a quarter of a gigabyte. The limit is raised for the
+     * decode when it has to be (never past 2 GB); a picture too big even
+     * for that is left as it is rather than taking the request down.
+     */
+    private static function roomFor(int $w, int $h): bool
+    {
+        $need = $w * $h * 5 + 32 * 1024 * 1024;
+        $limit = self::bytes((string) ini_get('memory_limit'));
+        if ($limit < 0) {
+            return true;   // no limit
+        }
+        $want = memory_get_usage(true) + $need * 2;   // the source and the copy
+        if ($want <= $limit) {
+            return true;
+        }
+        if ($want > 2048 * 1024 * 1024) {
+            return false;
+        }
+
+        return @ini_set('memory_limit', (string) (int) ceil($want / 1048576) . 'M') !== false;
+    }
+
+    private static function bytes(string $v): int
+    {
+        $v = trim($v);
+        if ($v === '' || $v === '-1') {
+            return -1;
+        }
+        $n = (int) $v;
+
+        return match (strtolower(substr($v, -1))) {
+            'g' => $n * 1024 * 1024 * 1024,
+            'm' => $n * 1024 * 1024,
+            'k' => $n * 1024,
+            default => $n,
+        };
     }
 
     /** Whether an encoded picture is wider than a model reads, judged from its header alone. */

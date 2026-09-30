@@ -476,7 +476,8 @@ class AiController extends Controller
             return $this->json(false, 'Validation failed.', ['errors' => $validator->errors()], 422);
         }
 
-        $file = $request->file('image');
+        // Shrunk on arrival as well as in the browser: see ModelImage::shrinkUpload.
+        $file = \App\Support\ModelImage::shrinkUpload($request->file('image'));
         $ext = UploadHelper::safeExtension($file, ['jpg', 'jpeg', 'png', 'webp']);
         $stem = Str::uuid()->toString();
         // Namespaced per client, which is also what stops one client reading
