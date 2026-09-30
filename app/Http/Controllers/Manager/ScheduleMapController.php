@@ -502,8 +502,9 @@ class ScheduleMapController extends BaseScheduleController
     }
 
     /**
-     * Save the whole map. mode=map keeps a reopenable snapshot AND files its
-     * picture in a note; mode=image files only the picture. The picture comes
+     * Save the whole map. mode=plain keeps a reopenable snapshot and nothing
+     * else; mode=map keeps it AND files its picture in a note; mode=image
+     * files only the picture. The picture comes
      * from the canvas the client composed, else the Static Maps API with
      * every shape drawn on it — the live WebGL map cannot be screenshotted.
      *
@@ -531,7 +532,7 @@ class ScheduleMapController extends BaseScheduleController
         }
 
         $validator = Validator::make($request->all(), [
-            'mode' => 'required|in:map,image',
+            'mode' => 'required|in:plain,map,image',
             // Which saved map to write into. Absent means a new one.
             'saveId' => 'nullable|integer',
             // An autosave rather than someone pressing Save: it writes into
@@ -563,6 +564,12 @@ class ScheduleMapController extends BaseScheduleController
 
         $mode = $request->input('mode');
         $quiet = $request->boolean('quiet');
+        // Both write a map file; only "map" also files a picture note.
+        $writesMap = $mode !== 'image';
+        // An autosave, and a plain "Save map", keep the note a map already has
+        // current but never file a new one: a map saved as just a map stays
+        // out of the notebook through every edit that follows.
+        $noNewNote = $quiet || $mode === 'plain';
         $title = trim((string) $request->input('title')) ?: 'Map';
         $source = $request->input('source') === 'team' ? 'team' : 'solo';
         $description = trim((string) $request->input('description'));
@@ -571,7 +578,7 @@ class ScheduleMapController extends BaseScheduleController
         // at the end, because an autosave has to know whether it already owns
         // a note before it goes and makes one.
         $existing = null;
-        if ($mode === 'map' && $request->filled('saveId')) {
+        if ($writesMap && $request->filled('saveId')) {
             $existing = ScheduleMapSave::active()->find((int) $request->input('saveId'));
             if ($existing && ! MapAccess::canEdit($existing)) {
                 return $this->jsonFail('You can open this map but not change it. Save it as a new map of your own instead.', 403);
@@ -593,6 +600,13 @@ class ScheduleMapController extends BaseScheduleController
 
         // Best-effort picture; the reopenable snapshot never depends on it.
         $media = [];
+        // The note this save writes back into, when it keeps one (see above).
+        $keptNote = ($noNewNote && $existing?->noteId)
+            ? AsScheduleNote::active()->find($existing->noteId)
+            : null;
+        // A picture only goes somewhere as a note. With none to file or to
+        // keep current it would be a file nothing points at.
+        $wantsPicture = ! $noNewNote || $keptNote !== null;
 
         // "Save as image note" means exactly that: a picture to look at, which
         // notes render as a picture. Only the reopenable snapshot is typed as a
@@ -605,7 +619,7 @@ class ScheduleMapController extends BaseScheduleController
         // Preferred: the canvas the client composed, which carries the points
         // and measurement labels. Static Maps can draw the shapes but cannot
         // write their sizes, so that path is the fallback, not the goal.
-        $binary = $this->decodeDataUrlImage((string) $request->input('image'));
+        $binary = $wantsPicture ? $this->decodeDataUrlImage((string) $request->input('image')) : null;
         if ($binary !== null) {
             $path = \App\Support\MediaStore::putBinary($binary, 'maps', 'png', $bucket ?: 'u' . $ownerId, $namePrefix);
             if ($path !== null) {
@@ -613,7 +627,7 @@ class ScheduleMapController extends BaseScheduleController
             }
         }
 
-        $url = $media ? null : $this->staticMapUrl(
+        $url = ($media || ! $wantsPicture) ? null : $this->staticMapUrl(
             $objects,
             $request->input('lat'),
             $request->input('lng'),
@@ -646,9 +660,7 @@ class ScheduleMapController extends BaseScheduleController
         // A map that saves itself as it is edited writes back into the note it
         // already has. Minting one per autosave would bury an afternoon's
         // notebook under forty pictures of the same field.
-        $note = ($quiet && $existing?->noteId)
-            ? AsScheduleNote::active()->find($existing->noteId)
-            : null;
+        $note = $keptNote;
         if ($note) {
             $was = is_array($note->media) ? $note->media : [];
             // Only the map's own picture is replaced. Anything a person hung on
@@ -671,7 +683,7 @@ class ScheduleMapController extends BaseScheduleController
                     }
                 }
             }
-        } else {
+        } elseif (! $noNewNote) {
             $note = AsScheduleNote::create([
                 'croppingScheduleId' => $bucket,
                 'userId' => $bucket ? $meId : $ownerId,
@@ -685,7 +697,7 @@ class ScheduleMapController extends BaseScheduleController
         }
 
         $saveId = null;
-        if ($mode === 'map') {
+        if ($writesMap) {
             // Whatever is not written here is not in the file, and so is gone
             // the next time the map is opened — which is how a saved map came
             // back with every label reset to the default face.
@@ -700,11 +712,12 @@ class ScheduleMapController extends BaseScheduleController
             // history, rather than ending up with three copies of one plan
             // and no way to tell which is current.
             if ($existing) {
-                $existing->update([
+                // A save that filed no note leaves the map's own note where it is.
+                $existing->update(array_filter([
                     'title' => mb_substr($title, 0, 180),
                     'objects' => $shapes,
-                    'noteId' => $note->id,
-                ]);
+                    'noteId' => $note?->id,
+                ], fn ($v) => $v !== null));
                 $saveId = $existing->id;
             } else {
                 $saveId = ScheduleMapSave::create([
@@ -714,7 +727,7 @@ class ScheduleMapController extends BaseScheduleController
                     'title' => mb_substr($title, 0, 180),
                     'source' => $source,
                     'objects' => $shapes,
-                    'noteId' => $note->id,
+                    'noteId' => $note?->id,
                     'deleteStatus' => 1,
                 ])->id;
             }
@@ -743,11 +756,13 @@ class ScheduleMapController extends BaseScheduleController
             'data' => ['saveId' => $saveId, 'title' => mb_substr($title, 0, 180)],
             'message' => $quiet
                 ? 'Saved.'
-                : ($mode === 'map'
+                : ($writesMap
                 ? (($saveId && $request->filled('saveId'))
                     ? 'Saved over “' . mb_substr($title, 0, 60) . '”.'
                     : 'Map saved to your Maps — reopen it any time from Global and Quick Tools'
-                    . (empty($media) ? ' (no picture: Static Maps API unavailable).' : '.'))
+                    . ($mode === 'plain'
+                        ? '.'
+                        : (empty($media) ? ' (no picture: Static Maps API unavailable).' : ', and its picture is in your Notes.')))
                 : 'Saved to Notes as an image note.'),
         ]);
     }

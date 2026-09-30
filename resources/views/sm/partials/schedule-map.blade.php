@@ -409,9 +409,13 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
                     <span>Open a saved map</span>
                 </button>
+                <button type="button" class="cmap-mrow" data-maction="saveplain">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
+                    <span>Save map<small>Just the map, reopenable from Maps. Nothing goes to Notes</small></span>
+                </button>
                 <button type="button" class="cmap-mrow" data-maction="savemap">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 3h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z"/><path stroke-linecap="round" d="M9 8h6M9 12h6M9 16h4"/></svg>
-                    <span>Save map to notes<small>Reopenable later, picture filed in Notes</small></span>
+                    <span>Save map to notes<small>Reopenable from Maps, and a picture filed in Notes</small></span>
                 </button>
                 <button type="button" class="cmap-mrow" data-maction="saveimage">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 15l-4.5-4.5L9 18"/></svg>
@@ -3569,7 +3573,9 @@
             // such file. This call is the one that MAKES the file, so it is
             // an ordinary save wearing the lot's name.
             const r = await api(`${URLS.save}?scheduleId=${SID}`, { method: 'POST', body: {
-                mode: 'map', source: 'solo',
+                // Just the map: a lot's own map lives on the lot and in Maps,
+                // not as a picture note in Global Notes.
+                mode: 'plain', source: 'solo',
                 title: ATTACH.name,
                 description: 'The map for ' + ATTACH.name + '.',
                 image,
@@ -3730,15 +3736,17 @@
 
     function openSaveSheet(mode) {
         saveMode = mode;
-        document.getElementById('cmapSaveTitleH').textContent = mode === 'map' ? 'Save map to notes' : 'Save as image note';
-        document.getElementById('cmapSaveHint').textContent = mode === 'map'
-            ? 'Keeps this map reopenable from the tools, and files a picture of it in the schedule notebook.'
-            : 'Files a picture of the map, shapes and all, in the schedule notebook.';
+        document.getElementById('cmapSaveTitleH').textContent = { plain: 'Save map', map: 'Save map to notes', image: 'Save as image note' }[mode];
+        document.getElementById('cmapSaveHint').textContent = {
+            plain: 'Keeps this map reopenable from Maps. Nothing is filed in your notes.',
+            map: 'Keeps this map reopenable from Maps, and files a picture of it in your notes.',
+            image: 'Files a picture of the map, shapes and all, in the notes. No map to reopen.',
+        }[mode];
         // Opened from a saved map: the common answer is "this one, changed",
         // and until now the only thing on offer was a second copy of it.
         const over = document.getElementById('cmapSaveOver');
         const overLbl = document.getElementById('cmapSaveOverLabel');
-        const showOver = mode === 'map' && !!LOADED_SAVE;
+        const showOver = mode !== 'image' && !!LOADED_SAVE;
         if (over) over.hidden = !showOver;
         if (showOver && overLbl) overLbl.textContent = 'Save over “' + LOADED_SAVE.title + '”';
         const name = document.getElementById('cmapSaveName');
@@ -3762,7 +3770,7 @@
         // the map you are standing on is not touched. Dropping the queued
         // write there threw away its last few minutes and put nothing in their
         // place — exporting a picture is not a reason to lose the map.
-        if (saveMode === 'map') cancelAutosave();
+        if (saveMode !== 'image') cancelAutosave();
         // Which file "Save over" means was settled when the button was drawn.
         const target = replace ? LOADED_SAVE : null;
         // And what the room was looking at when it was pressed. Read after the
@@ -3859,7 +3867,7 @@
             : '';
 
         if (!SAVED_MAPS.length) {
-            list.innerHTML = '<p class="cmap-saves-empty">No saved maps yet — draw one, then “Save map to notes”.</p>';
+            list.innerHTML = '<p class="cmap-saves-empty">No saved maps yet — draw one, then “Save map”.</p>';
             return;
         }
         if (!rows.length) {
@@ -4125,7 +4133,7 @@
             window.closeSheet?.('cmapSaveMenuSheet');
             if (b.dataset.maction === 'new') window.cmapStartBlank({ silent: true });
             else if (b.dataset.maction === 'open') openSaves();
-            else openSaveSheet(b.dataset.maction === 'savemap' ? 'map' : 'image');
+            else openSaveSheet({ saveplain: 'plain', savemap: 'map', saveimage: 'image' }[b.dataset.maction] || 'plain');
         }));
 
         /* ---- how thick the pen draws ---- */
