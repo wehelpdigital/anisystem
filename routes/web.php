@@ -88,6 +88,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'pbAnalyses' => str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), 'data-tab="analyses"'),
             'boardTrio' => str_contains((string) @file_get_contents(resource_path('views/sm/partials/activities-js.blade.php')), 'the stretch goes with it')
                 && str_contains((string) @file_get_contents(resource_path('views/sm/activities.blade.php')), 'if (wasOpen) setTimeout(land, 300)'),
+            'manualOrders' => class_exists(\App\Services\OrderService::class) && class_exists(\App\Services\ReceiptCheck::class)
+                && is_file(resource_path('views/checkout/index.blade.php')) && is_file(resource_path('views/admin/orders.blade.php')),
             'phAtRoot' => Illuminate\Support\Facades\Route::has('ph.home') && url('/ph/pricing') === url('/pricing'),
             'landingPrecision' => isset(\App\Support\LandingPage::DEFAULTS['precision'], \App\Support\LandingPage::DEFAULTS['losses'])
                 && is_file(public_path('images/site/lp/weather.webp'))
@@ -263,6 +265,13 @@ Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logou
 */
 
 Route::middleware('auth')->group(function () {
+    // Orders paid by hand (2026-09-30): one page from choosing how to pay to
+    // the outcome. Signed-in only (never the subscription gate: Libre buys here).
+    Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'page'])->name('checkout');
+    Route::post('/checkout/start', [App\Http\Controllers\CheckoutController::class, 'start'])->name('checkout.start');
+    Route::post('/checkout/{id}/proof', [App\Http\Controllers\CheckoutController::class, 'proof'])->whereNumber('id')->name('checkout.proof');
+    Route::post('/checkout/{id}/cancel', [App\Http\Controllers\CheckoutController::class, 'cancel'])->whereNumber('id')->name('checkout.cancel');
+    Route::get('/checkout/{id}/status', [App\Http\Controllers\CheckoutController::class, 'status'])->whereNumber('id')->name('checkout.status');
     Route::get('/purchase', [App\Http\Controllers\PurchaseController::class, 'plans'])->name('purchase.plans');
     Route::get('/purchase/thank-you/{subscription}', [App\Http\Controllers\PurchaseController::class, 'thankYou'])->name('purchase.thankyou');
     Route::get('/purchase/{planKey}', [App\Http\Controllers\PurchaseController::class, 'payment'])->name('purchase.payment');
@@ -397,7 +406,23 @@ Route::middleware(['auth', 'admin.panel'])->prefix('admin')->group(function () {
     Route::get('/data/sales/{id}', [App\Http\Controllers\Admin\AdminSalesController::class, 'one'])->whereNumber('id')->name('admin.data.sales.one');
     Route::post('/sales', [App\Http\Controllers\Admin\AdminSalesController::class, 'store'])->name('admin.sales.store');
     Route::delete('/sales/{id}', [App\Http\Controllers\Admin\AdminSalesController::class, 'destroy'])->whereNumber('id')->name('admin.sales.destroy');
+    // Orders paid by hand: the proof, Anee's reading, approve / reject / revoke.
+    Route::get('/orders', [App\Http\Controllers\Admin\AdminOrdersController::class, 'page'])->name('admin.orders');
+    Route::get('/data/orders', [App\Http\Controllers\Admin\AdminOrdersController::class, 'list'])->name('admin.data.orders');
+    Route::get('/data/orders/{id}', [App\Http\Controllers\Admin\AdminOrdersController::class, 'one'])->whereNumber('id')->name('admin.data.orders.one');
+    Route::get('/orders/{id}/file', [App\Http\Controllers\Admin\AdminOrdersController::class, 'file'])->whereNumber('id')->name('admin.orders.file');
+    Route::post('/orders/{id}/approve', [App\Http\Controllers\Admin\AdminOrdersController::class, 'approve'])->whereNumber('id')->name('admin.orders.approve');
+    Route::post('/orders/{id}/reject', [App\Http\Controllers\Admin\AdminOrdersController::class, 'reject'])->whereNumber('id')->name('admin.orders.reject');
+    Route::post('/orders/{id}/revoke', [App\Http\Controllers\Admin\AdminOrdersController::class, 'revoke'])->whereNumber('id')->name('admin.orders.revoke');
+    Route::post('/orders/{id}/recheck', [App\Http\Controllers\Admin\AdminOrdersController::class, 'recheck'])->whereNumber('id')->name('admin.orders.recheck');
 });
+
+// The mother app deciding an order: token-checked in the controller, no
+// session, no CSRF (it is a server calling a server).
+Route::post('/mother-api/orders/{id}/{action}', [App\Http\Controllers\MotherOrdersController::class, 'act'])
+    ->whereNumber('id')->where('action', 'approve|reject|revoke|recheck')
+    ->withoutMiddleware([Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class])
+    ->name('mother.orders.act');
 
 // The way back from looking through a client's eyes. Auth only: the signed-in
 // user is the CLIENT right now, and the session key is the credential.

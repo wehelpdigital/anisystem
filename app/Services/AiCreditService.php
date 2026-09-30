@@ -95,6 +95,20 @@ class AiCreditService
     }
 
     /** Deduct without refusing — used to true-up after a call already happened. */
+    /**
+     * Take back credits a revoked order had granted. The balance may go
+     * below zero: credits already spent were spent on a payment that did
+     * not stand, and the account owes them.
+     */
+    public function takeBack(int $userId, float $credits, string $reason, ?int $adminUserId = null): float
+    {
+        if ($credits <= 0) {
+            return $this->balance($userId);
+        }
+
+        return $this->write($userId, -1 * round($credits, 2), $reason, 'refund', null, $adminUserId);
+    }
+
     public function chargeAllowingNegative(int $userId, float $credits, string $reason, ?int $messageId = null): float
     {
         // Unlimited accounts write their spend too (see charge()).

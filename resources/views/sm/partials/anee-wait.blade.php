@@ -301,6 +301,12 @@
             checkEl.textContent = '';
             title.textContent = opts.title || 'Anee is thinking…';
             sub.textContent = opts.sub || 'A deep read takes a minute or two.';
+            // The warning line is the caller's to say when the run spends no credits.
+            const stayEl = document.getElementById('aneeWaitStay');
+            if (stayEl) {
+                stayEl.dataset.said ??= stayEl.textContent;
+                stayEl.textContent = opts.stay || stayEl.dataset.said;
+            }
             rotate(opts.lines || []);
             done.classList.remove('is-on');
             think.classList.add('is-on');

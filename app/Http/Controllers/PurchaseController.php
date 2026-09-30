@@ -18,7 +18,30 @@ class PurchaseController extends Controller
     ) {
     }
 
+    /**
+     * The plans page is gone (2026-09-30): the plans and their buttons live
+     * on My Subscription, and paying is the checkout. Old links land there,
+     * and a link naming Libre + Anee goes straight to buying it.
+     */
     public function plans(Request $request)
+    {
+        return $this->toCheckout($request->query('plan'));
+    }
+
+    private function toCheckout(?string $planKey)
+    {
+        if (in_array((string) $planKey, ['libre-anee', 'libreAnee'], true)) {
+            return redirect()->route('checkout', ['item' => 'libreAnee:month']);
+        }
+        if (preg_match('/^(solo|owner)(?:[-:](month|year))?$/', (string) $planKey, $m)) {
+            return redirect()->route('checkout', ['item' => $m[1] . ':' . ($m[2] ?? 'month')]);
+        }
+
+        return redirect()->route('account.subscription');
+    }
+
+    /** The old plans page, kept for the record (no route leads here now). */
+    public function legacyPlans(Request $request)
     {
         if ($pending = $this->pendingSubscription($request)) {
             return redirect()->route('purchase.thankyou', $pending)
@@ -33,6 +56,12 @@ class PurchaseController extends Controller
     }
 
     public function payment(Request $request, string $planKey)
+    {
+        return $this->toCheckout($planKey);
+    }
+
+    /** The old payment page, kept for the record (no route leads here now). */
+    public function legacyPayment(Request $request, string $planKey)
     {
         if ($pending = $this->pendingSubscription($request)) {
             return redirect()->route('purchase.thankyou', $pending)

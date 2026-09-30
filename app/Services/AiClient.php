@@ -57,6 +57,9 @@ class AiClient
      */
     private const GEMINI_THINKING_BUDGET = 2048;
 
+    /** The system prompt of the ask in hand, when the caller brought one. */
+    private ?string $system = null;
+
     /**
      * @param  array<int, array{mime:string,data:string}>|array{mime:string,data:string}|null  $image
      *   One picture or several. A single one is still accepted as it always
@@ -79,6 +82,9 @@ class AiClient
 
         $search = (bool) ($opts['search'] ?? false);
         $this->timeout = max(30, min(600, (int) ($opts['timeout'] ?? self::TIMEOUT)));
+        // A job that is not Anee talking (a receipt read for the payments
+        // desk) brings its own system prompt: no persona, no farm rules.
+        $this->system = isset($opts['system']) && trim((string) $opts['system']) !== '' ? (string) $opts['system'] : null;
 
         /* The settings row's cap is sized for a chat answer. A caller whose
          * answer is a document — the when-to-plant JSON — says so here, or
@@ -279,7 +285,8 @@ class AiClient
         $content = [];
         foreach ($images as $image) {
             $content[] = [
-                'type' => 'image',
+                // A PDF (a receipt sent as a document) is a document block, not an image.
+                'type' => $image['mime'] === 'application/pdf' ? 'document' : 'image',
                 'source' => ['type' => 'base64', 'media_type' => $image['mime'], 'data' => $image['data']],
             ];
         }
@@ -290,7 +297,7 @@ class AiClient
             'model' => $s->effectiveModel(),
             'max_tokens' => (int) ($maxOut ?? $s->maxOutputTokens),
             'temperature' => (float) $s->temperature,
-            'system' => $s->instructions(),
+            'system' => $this->system ?? $s->instructions(),
             'messages' => $messages,
         ];
         if ($search) {
@@ -336,17 +343,16 @@ class AiClient
     /** @param  array<int, array{mime:string,data:string}>  $images */
     private function askOpenAi(AiSetting $s, string $key, array $history, string $prompt, array $images, ?int $maxOut = null, bool $search = false): array
     {
-        $messages = [['role' => 'system', 'content' => $s->instructions()]];
+        $messages = [['role' => 'system', 'content' => $this->system ?? $s->instructions()]];
         foreach ($history as $turn) {
             $messages[] = ['role' => $turn['role'], 'content' => $turn['text']];
         }
 
         $content = [['type' => 'text', 'text' => $prompt]];
         foreach ($images as $image) {
-            $content[] = [
-                'type' => 'image_url',
-                'image_url' => ['url' => 'data:' . $image['mime'] . ';base64,' . $image['data']],
-            ];
+            $content[] = $image['mime'] === 'application/pdf'
+                ? ['type' => 'file', 'file' => ['filename' => 'document.pdf', 'file_data' => 'data:application/pdf;base64,' . $image['data']]]
+                : ['type' => 'image_url', 'image_url' => ['url' => 'data:' . $image['mime'] . ';base64,' . $image['data']]];
         }
         $messages[] = ['role' => 'user', 'content' => $content];
 
@@ -419,7 +425,7 @@ class AiClient
             . rawurlencode($s->effectiveModel()) . ':generateContent';
 
         $body = [
-            'systemInstruction' => ['parts' => [['text' => $s->instructions()]]],
+            'systemInstruction' => ['parts' => [['text' => $this->system ?? $s->instructions()]]],
             'contents' => $contents,
         ];
         if ($search) {

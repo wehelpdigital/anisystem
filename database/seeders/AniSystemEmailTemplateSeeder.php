@@ -351,6 +351,72 @@ class AniSystemEmailTemplateSeeder extends Seeder
                 ),
             ],
 
+            /* Orders paid by hand (2026-09-30): GCash, bank or PayPal, with
+               the proof sent in the app. payment_approved above still says a
+               plan is on; these cover the rest. */
+            'order_received' => [
+                'name' => 'Order — payment received, being reviewed',
+                'subject' => 'We received your payment — Order {{orderNumber}}',
+                'tags' => '{{firstName}}, {{orderNumber}}, {{itemName}}, {{price}}, {{currency}}, {{method}}, {{reviewHours}}, {{orderUrl}}, {{siteName}}',
+                'body' => S::wrap(
+                    '<p>Hi {{firstName}},</p>'
+                    . '<p>Thank you! Your {{method}} payment details reached us, and a person is checking them now.</p>'
+                    . S::facts(['Order' => '{{orderNumber}}', 'For' => '{{itemName}}', 'Amount' => '{{currency}}{{price}}', 'Paid by' => '{{method}}'])
+                    . '<p>This usually takes less than {{reviewHours}} hours. The moment it is approved, you will get another email and it is switched on by itself.</p>'
+                    . S::button('See my order', '{{orderUrl}}', false)
+                    . S::note($contact),
+                    'We have your payment',
+                    ['face' => 'thumbsup', 'eyebrow' => 'Payment received', 'preheader' => 'Order {{orderNumber}} is being reviewed.']
+                ),
+            ],
+
+            'credits_approved' => [
+                'name' => 'Order — credits added',
+                'subject' => '{{credits}} AI credits are in your account',
+                'tags' => '{{firstName}}, {{orderNumber}}, {{itemName}}, {{credits}}, {{price}}, {{currency}}, {{siteName}}, {{loginUrl}}',
+                'body' => S::wrap(
+                    '<p>Hi {{firstName}},</p>'
+                    . '<p>Your payment is verified and your credits are in. Anee is ready when you are.</p>'
+                    . S::facts(['Credits added' => '{{credits}}', 'Order' => '{{orderNumber}}', 'Amount' => '{{currency}}{{price}}'])
+                    . '<p>Credits never expire. Ask her anything about your crops, or run an analysis.</p>'
+                    . S::button('Ask Anee', '{{loginUrl}}', false)
+                    . S::note($contact),
+                    'Your credits are in',
+                    ['face' => 'cheer', 'eyebrow' => 'Payment approved', 'preheader' => '{{credits}} AI credits are waiting in your account.']
+                ),
+            ],
+
+            'order_rejected' => [
+                'name' => 'Order — payment not approved',
+                'subject' => 'We could not verify your payment — Order {{orderNumber}}',
+                'tags' => '{{firstName}}, {{orderNumber}}, {{itemName}}, {{price}}, {{currency}}, {{method}}, {{reason}}, {{orderUrl}}, {{siteName}}',
+                'body' => S::wrap(
+                    '<p>Hi {{firstName}},</p>'
+                    . '<p>We are sorry — we could not verify the payment for this order, so nothing was switched on.</p>'
+                    . S::facts(['Order' => '{{orderNumber}}', 'For' => '{{itemName}}', 'Amount' => '{{currency}}{{price}}', 'Why' => '{{reason}}'], 'alert')
+                    . '<p>If you did pay, reply to this email with your receipt and we will sort it out together.</p>'
+                    . S::button('See my order', '{{orderUrl}}', false)
+                    . S::note($contact),
+                    'We could not verify your payment',
+                    ['face' => 'concerned', 'eyebrow' => 'Payment issue', 'preheader' => 'Order {{orderNumber}} was not approved.']
+                ),
+            ],
+
+            'order_revoked' => [
+                'name' => 'Order — purchase revoked',
+                'subject' => 'Your purchase was revoked — Order {{orderNumber}}',
+                'tags' => '{{firstName}}, {{orderNumber}}, {{itemName}}, {{price}}, {{currency}}, {{reason}}, {{orderUrl}}, {{siteName}}',
+                'body' => S::wrap(
+                    '<p>Hi {{firstName}},</p>'
+                    . '<p>A closer check found a problem with the payment for this order, so what it switched on has been taken back.</p>'
+                    . S::facts(['Order' => '{{orderNumber}}', 'For' => '{{itemName}}', 'Amount' => '{{currency}}{{price}}', 'Why' => '{{reason}}'], 'alert')
+                    . '<p>If you believe this is a mistake, reply with your receipt and a person will look at it with you.</p>'
+                    . S::note($contact),
+                    'Your purchase was revoked',
+                    ['face' => 'serious', 'eyebrow' => 'Order revoked', 'preheader' => 'Order {{orderNumber}} was revoked.']
+                ),
+            ],
+
             'subscription_expiring' => [
                 'name' => 'Plan — ending soon',
                 'subject' => 'Your {{siteName}} subscription expires on {{expiresAt}}',

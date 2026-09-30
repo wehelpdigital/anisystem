@@ -238,14 +238,19 @@ class AccountController extends Controller
 
         $subscription = $user->currentSubscription();
         $history = $user->subscriptions()->get();
+        $now = \Carbon\Carbon::now('Asia/Manila');
+        app(\App\Services\OrderService::class)->expireStale($user);
 
         return view('account.subscription', [
             'user' => $user,
             'subscription' => $subscription,
+            // The plan in force, and any lined up after it (2026-09-30).
+            'active' => $user->activeSubscription(),
+            'upcoming' => $history->filter(fn ($s) => $s->status === 'active' && $s->startsAt && $s->startsAt->gt($now) && $s->expiresAt?->gt($now))->sortBy('startsAt')->values(),
             'history' => $history,
+            'orders' => \App\Models\AsOrder::where('userId', $user->id)->where('status', '!=', \App\Models\AsOrder::CANCELLED)->latest('id')->limit(10)->get(),
+            'reviewPlan' => app(\App\Services\OrderService::class)->inReview($user, 'plan'),
             'locked' => (bool) session('locked'),
-            'creditBalance' => app(\App\Services\AiCreditService::class)->balance($user->id),
-            'creditsUnlimited' => app(\App\Services\AiCreditService::class)->unlimited($user->id),
         ]);
     }
 

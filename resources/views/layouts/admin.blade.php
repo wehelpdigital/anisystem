@@ -282,7 +282,8 @@
         $adminHere = request()->routeIs('admin.clients') ? 'Clients'
             : (request()->routeIs('admin.support') ? 'Support'
             : (request()->routeIs('admin.reports') ? 'Reports'
-            : (request()->routeIs('admin.sales') ? 'Sales Analysis' : 'Dashboard')));
+            : (request()->routeIs('admin.sales') ? 'Sales Analysis'
+            : (request()->routeIs('admin.orders') ? 'Orders' : 'Dashboard'))));
     @endphp
     <header class="ad-top">
         <div class="ad-top-in">
@@ -335,6 +336,10 @@
             <a class="ad-nav-row {{ request()->routeIs('admin.reports') ? 'is-on' : '' }}" href="{{ route('admin.reports') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21V4m0 1l9-2 9 4-9 2-9-4zm0 8l9-2 9 4-9 2-9-4z"/></svg>
                 <span class="min-w-0"><b>Reports</b><i>What the community flagged</i></span>
+            </a>
+            <a class="ad-nav-row {{ request()->routeIs('admin.orders') ? 'is-on' : '' }}" href="{{ route('admin.orders') }}">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h2m4 0h4M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/></svg>
+                <span class="min-w-0"><b>Orders</b><i>Payments to approve, and every purchase since</i></span>
             </a>
             <a class="ad-nav-row {{ request()->routeIs('admin.sales') ? 'is-on' : '' }}" href="{{ route('admin.sales') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8m0 0v5m0-5h-5"/></svg>

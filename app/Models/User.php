@@ -151,9 +151,16 @@ class User extends Authenticatable
      */
     public function activeSubscription(): ?Subscription
     {
+        $now = Carbon::now('Asia/Manila');
+
+        // A row that starts later (a renewal queued behind the current plan,
+        // or a lower plan waiting for a higher one to end) is not the plan in
+        // force yet. Before 2026-09-30 it was, being the newest row, so a
+        // renewal ran early and an upgrade seemed to stack on the old end.
         return $this->subscriptions()
             ->where('status', 'active')
-            ->where('expiresAt', '>', Carbon::now('Asia/Manila'))
+            ->where('expiresAt', '>', $now)
+            ->where(fn ($q) => $q->whereNull('startsAt')->orWhere('startsAt', '<=', $now))
             ->first();
     }
 
@@ -200,7 +207,13 @@ class User extends Authenticatable
             return 'libre';
         }
 
-        $hay = mb_strtolower(($sub->planKey ?? '') . ' ' . ($sub->planName ?? ''));
+        return self::tierForPlan($sub->planKey, $sub->planName);
+    }
+
+    /** Which tier a subscription row stands for, read off its key and name. */
+    public static function tierForPlan(?string $planKey, ?string $planName): string
+    {
+        $hay = mb_strtolower(($planKey ?? '') . ' ' . ($planName ?? ''));
         foreach (config('tiers', []) as $tier => $cfg) {
             foreach (($cfg['match'] ?? []) as $needle) {
                 if ($needle !== '' && str_contains($hay, $needle)) {

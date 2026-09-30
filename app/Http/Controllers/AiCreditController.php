@@ -57,7 +57,18 @@ class AiCreditController extends Controller
         ]);
     }
 
+    /** A pack is bought at the checkout now (2026-09-30). */
     public function payment(Request $request, string $packKey)
+    {
+        if (! $request->user()->canUseAi()) {
+            return redirect()->route('ai.credits', ['tab' => 'buy']);
+        }
+
+        return redirect()->route('checkout', ['item' => 'pack:' . $packKey]);
+    }
+
+    /** The old pack payment page, kept for the record (no route leads here now). */
+    public function legacyPayment(Request $request, string $packKey)
     {
         $user = $request->user();
         if (! $user->canUseAi()) {
