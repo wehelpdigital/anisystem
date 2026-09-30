@@ -130,11 +130,14 @@ class AiController extends Controller
         $payerId = (int) $this->aiPayer()->id;
         $settings = AiSetting::current();
 
-        // A fresh chat unless one was named. Opening this page used to resume
-        // the newest thread, which reads as a clean start and is not one --
-        // the module page inside a season already starts clean, and the old
-        // chats are one tap away under "Recent chats".
-        $conversation = $request->filled('c') ? $this->resolveConversation($request, $userId) : null;
+        // The chat named, or the one still going on (see liveConversation);
+        // an older one waits under "Recent chats" and ?new=1 starts clean. So
+        // does a door that brings something to ask about ("Ask Anee about
+        // this reading"): the thing brought is the new topic.
+        $fresh = $request->boolean('new') || $request->hasAny(['analysis', 'freport', 'realign', 'pbreview']);
+        $conversation = $request->filled('c')
+            ? $this->resolveConversation($request, $userId)
+            : ($fresh ? null : self::liveConversation((int) $userId, null));
 
         return view('ai.index', [
             'settings' => $settings,
@@ -349,6 +352,8 @@ class AiController extends Controller
             $context = $this->scheduleContext($request->input('scheduleId'), $userId);
         }
         $context = $this->applyLinkContext($context, $conversation);
+        // A season's chat remembers what Anee has said about the season.
+        $context .= $this->realignMemory($request->input('scheduleId'));
         $context .= $analysisCtx;
 
         $userMessage = AiMessage::create([
@@ -402,6 +407,67 @@ class AiController extends Controller
         $this->finishAskJob($job, $work);
 
         return $this->askJob($job->id);
+    }
+
+    /**
+     * The conversation still going on, to be picked up where it was left.
+     *
+     * Opening the chat used to start a clean one every time (the owner's
+     * clean desk). A chat in the middle of a question is not a desk: asked
+     * about his Realign reading, told to look at photos, the owner came back
+     * a minute later to a stranger who remembered nothing (2026-09-30). So a
+     * conversation with a turn in the last three hours is picked up; older
+     * ones wait in the list, and the "New chat" button (?new=1) starts clean.
+     * $scheduleId null means the personal page, which picks up any.
+     */
+    public static function liveConversation(int $userId, ?int $scheduleId): ?AiConversation
+    {
+        return AiConversation::active()
+            ->where('userId', $userId)
+            ->when($scheduleId, fn ($q) => $q->where('croppingScheduleId', $scheduleId))
+            ->where('updated_at', '>=', now()->subHours(3))
+            ->whereHas('messages', fn ($q) => $q->where('deleteStatus', 1))
+            ->orderByDesc('updated_at')
+            ->first();
+    }
+
+    /**
+     * What Anee has already said about a season's lots: her Realign by Anee
+     * readings, one line each. Her own words, so a season's chat does not
+     * meet "am I really ten days late?" as if she had never looked. Reference
+     * only (the house rules say to use background only when asked about it).
+     */
+    private function realignMemory($scheduleId): string
+    {
+        if (! $scheduleId) {
+            return '';
+        }
+        try {
+            $schedule = AsCroppingSchedule::active()->forClient(\App\Support\WorkerContext::effectiveOwnerId())->where('id', (int) $scheduleId)->first();
+            if (! $schedule) {
+                return '';
+            }
+            $lines = [];
+            foreach ($schedule->lots()->whereNotNull('growthRealignedAt')->get() as $lot) {
+                $r = is_array($lot->growthRealign) ? $lot->growthRealign : null;
+                if (! $r) {
+                    continue;
+                }
+                $shift = (int) ($lot->growthShiftDays ?? 0);
+                $lines[] = '- ' . $lot->lotName . ' (read ' . $lot->growthRealignedAt->format('M j') . '): '
+                    . ($r['stageLabel'] ?? '?') . ', ' . ($shift === 0 ? 'on the calendar' : abs($shift) . ' days ' . ($shift < 0 ? 'behind' : 'ahead of') . ' the calendar')
+                    . ' (the calendar counted ' . ($r['counter'] ?? 'day') . ' ' . ($r['calendarDay'] ?? '?') . '). '
+                    . \Illuminate\Support\Str::limit(trim((string) ($r['summary'] ?? '')), 280);
+            }
+        } catch (\Throwable $e) {
+            return '';
+        }
+
+        return $lines
+            ? "\n\n--- Your own Realign by Anee readings for this season (you read the crop's real stage against the calendar). "
+                . "Reference only: use them when the question is about this crop's stage, timing, delay or harvest, and stand by them unless the farmer shows you otherwise ---\n"
+                . implode("\n", $lines) . "\n--- END ---\n"
+            : '';
     }
 
     /**
@@ -1129,7 +1195,12 @@ class AiController extends Controller
             ->when($scheduleId, fn ($q) => $q->where('croppingScheduleId', $scheduleId));
 
         if ($id) {
-            $found = $base()->where('id', $id)->first();
+            $found = $base()->where('id', $id)->first()
+                // A chat from the personal page that has a season's plan
+                // attached partway: still the same chat. The scope filter
+                // missed it, and the question began a new one with no memory
+                // of the turns before it.
+                ?? ($scheduleId ? AiConversation::active()->where('userId', $userId)->where('id', $id)->whereNull('croppingScheduleId')->first() : null);
             if ($found) {
                 return $found;
             }
@@ -1191,7 +1262,7 @@ class AiController extends Controller
                 $request->merge(['scheduleId' => $schedule->id]),
                 $userId
             )
-            : null;
+            : ($request->boolean('new') ? null : self::liveConversation((int) $userId, (int) $schedule->id));
         $conversation?->loadMissing('linkedActivity');
 
         /* Where Back goes: a named origin (?from=dashboard, the tip of the

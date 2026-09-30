@@ -1174,6 +1174,8 @@ const __init = () => {
                 forget: byId('aiUseMemory')?.getAttribute('aria-pressed') === 'true' ? 0 : 1,
             } }));
             conversationId = res.data.conversationId;
+            // The address names the chat (?c=), so a reload stays in it.
+            try { const u = new URL(location.href); u.searchParams.delete('new'); u.searchParams.set('c', conversationId); history.replaceState(history.state, '', u.pathname + u.search + u.hash); } catch (_) {}
             noteSession(res.data);
             window.aneeDropChips(heldChips);
             const costLine = UNLIMITED ? '' : `<p class="aibubble-cost">${escapeHtml(String(Math.ceil(Number(res.data.answer.creditsCharged) || 0)))} credits</p>`;
@@ -1431,7 +1433,7 @@ const __init = () => {
             e.preventDefault();
             const ok = await confirmAction({ title: 'Delete this conversation?', message: 'Its questions and answers are removed.', detail: UNLIMITED ? '' : 'Credits already spent are not refunded.', confirmText: 'Delete' });
             if (!ok) return;
-            try { await api(URLS.delConvo(del.dataset.id), { method: 'DELETE' }); del.closest('.ai-session-row, .flex').remove(); if (String(del.dataset.id) === String(conversationId)) location.href = URLS.page; }
+            try { await api(URLS.delConvo(del.dataset.id), { method: 'DELETE' }); del.closest('.ai-session-row, .flex').remove(); if (String(del.dataset.id) === String(conversationId)) location.href = URLS.page + '&new=1'; }
             catch (err) { toast(err.message, 'error'); }
         }
     });

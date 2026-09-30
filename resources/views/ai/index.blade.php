@@ -1327,6 +1327,7 @@ const __init = () => {
             // Answered as a job: the ask is taken at once, the answer waited for.
             const res = await window.aneeAskWait(await api(URLS.ask, { method: 'POST', body }));
             conversationId = res.data.conversationId;
+            keepChatInAddress(conversationId);
             window.aneeDropChips(heldChips);
             forgetAttachmentAddress();
             const costLine = UNLIMITED ? '' : `<p class="aibubble-cost">${escapeHtml(String(Math.ceil(Number(res.data.answer.creditsCharged) || 0)))} credits</p>`;
@@ -1382,6 +1383,15 @@ const __init = () => {
         attachedPlan = held.plan; attachedAnalysis = held.analysis; attachedReport = held.report;
         attachedRealign = held.realign; attachedReview = held.review;
         redrawAttachments();
+    }
+    // The address names the chat (?c=), so a reload stays in it.
+    function keepChatInAddress(id) {
+        try {
+            const u = new URL(location.href);
+            u.searchParams.delete('new');
+            if (id) u.searchParams.set('c', id);
+            history.replaceState(history.state, '', u.pathname + u.search + u.hash);
+        } catch (_) { /* an address that will not change is harmless */ }
     }
     // The address loses its ?realign= / ?freport= so a reload does not attach it again.
     function forgetAttachmentAddress() {
@@ -1529,7 +1539,7 @@ const __init = () => {
         if (!ok) return;
         try {
             await api(URLS.delConvo(btn.dataset.id), { method: 'DELETE' });
-            window.location.href = '{{ route('ai.index') }}';
+            window.location.href = '{{ route('ai.index', ['new' => 1]) }}';
         } catch (err) {
             toast(err.message, 'error');
         }

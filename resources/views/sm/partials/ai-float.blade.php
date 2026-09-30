@@ -9,6 +9,11 @@
 --}}
 @php
     $aiFloatSettings = \App\Models\AiSetting::current();
+    // The season's conversation still going on, picked up on first open
+    // (AiController::liveConversation).
+    $aiFloatLive = auth()->check()
+        ? \App\Http\Controllers\AiController::liveConversation((int) auth()->id(), (int) $schedule->id)?->id
+        : null;
     // The farm's purse, not the visitor's: a worker with the Chat Anee right
     // spends their boss's credits, so that is the balance worth showing.
     $aiFloatPayer = \App\Support\WorkerContext::effectiveOwnerId();
@@ -693,9 +698,14 @@
         }
 
         let closeTimer = null;
+        // The season's live conversation, replayed the first time the chat opens.
+        let liveId = @json($aiFloatLive);
         const openPanel = (open) => {
             const root = $('aiFloat');
             clearTimeout(closeTimer);
+            // Asked from the moment it opens: a question sent while the
+            // replay loads still lands in this conversation.
+            if (open && liveId && !conversationId) { conversationId = liveId; liveId = null; openConvo(conversationId); }
             if (open) {
                 root?.classList.remove('is-closing');
                 panel.classList.remove('hidden');
@@ -853,9 +863,16 @@
         thread.addEventListener('click', async (e) => {
             const row = e.target.closest('.ai-float-convo');
             if (!row) return;
+            openConvo(row.dataset.convo);
+        });
+        let turnsSent = 0;
+        async function openConvo(id) {
+            const sentBefore = turnsSent;
             thread.innerHTML = '<span class="ai-float-dots" style="margin:1rem auto"><i></i><i></i><i></i></span>';
             try {
-                const res = await api(URLS.transcript + '?conversationId=' + row.dataset.convo);
+                const res = await api(URLS.transcript + '?conversationId=' + id);
+                // A question asked while this loaded owns the thread now.
+                if (turnsSent !== sentBefore) return;
                 conversationId = res.data.conversationId;
                 thread.innerHTML = '';
                 // Replayed history arrives settled — entrances are for news.
@@ -866,7 +883,7 @@
                 thread.classList.remove('is-replay');
                 scrollDown();
             } catch (err) { thread.innerHTML = WELCOME_HTML; toast(err.message, 'error'); }
-        });
+        }
 
         let pendingTaskId = null;
         function fileAway(activityId) {
@@ -1007,7 +1024,9 @@
             if (uploadsBusy > 0) { toast('Wait a moment — a photo is still uploading.', 'error'); return; }
             const message = (input.value || '').trim();
             if (!message) { toast('Type a question first.', 'error'); return; }
-            busy = true;
+            busy = true; turnsSent++;
+            // A replay still loading gives way to the question.
+            thread.querySelector(':scope > .ai-float-dots')?.remove();
             const sendBtn = $('aiFloatSend');
             sendBtn.disabled = true; sendBtn.setAttribute('aria-label', 'Sending');
             const myPaths = attachedPaths();
