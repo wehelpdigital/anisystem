@@ -1,0 +1,307 @@
+{
+  "section": "blog",
+  "slug": "fungicides",
+  "sortOrder": 180,
+  "lang": "en",
+  "category": "Pesticides",
+  "title": "Fungicide Guide for Filipino Farmers: Contact, Systemic, Armure and Ortiva Top",
+  "metaTitle": "Fungicide Guide: Contact vs Systemic, Armure, Ortiva Top",
+  "metaDescription": "How a fungicide works, contact vs systemic, FRAC groups, and what Armure and Ortiva Top are for, from sheath blight in rice to anthracnose in mango.",
+  "focusKeyword": "fungicide",
+  "keywords": [
+    "fungicide",
+    "armure fungicide",
+    "ortiva top fungicide",
+    "syngenta philippines",
+    "sheath blight",
+    "sheath blight disease",
+    "anthracnose",
+    "mildew in tagalog"
+  ],
+  "excerpt": "A fungicide protects a crop from fungal disease. It stops spores from sprouting or slows a fungus already inside the leaf, but it cannot bring dead tissue back to life. This guide explains the two main kinds, how FRAC group numbers help you rotate, and what two common Syngenta products, Armure and Ortiva Top, are registered for in the Philippines.",
+  "heroImage": {
+    "src": "/images/site/palay.jpg",
+    "alt": "Palay panicles filling grain in a green rice field, the crop a fungicide protects from sheath blight",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Fungal diseases love what the wet season brings: warm nights, dew that stays until mid morning, and thick canopies that never dry. By the time you see lesions from the pilapil, the paddy dike, the fungus has often been growing for days. That is why timing matters more with a fungicide than with almost any other farm chemical.\n\nFirst, make sure the problem really is a fungus. Bacterial leaf blight, viral tungro and plain nutrient shortage can all look like disease, and no fungicide will fix them. When in doubt, ask your municipal agriculturist or send a clear photo to someone who can read it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What a fungicide does, and what it cannot do"
+    },
+    {
+      "type": "text",
+      "text": "Fungi spread by spores or, in the case of sheath blight, by threads of fungus running from plant to plant. A fungicide works in one of two ways. It either sits on the surface and kills spores before they get in, or it enters the plant and slows the fungus inside.\n\nSo a fungicide is strongest before infection or in its first days. Once a leaf sheath has rotted or a mango fruit has sunk and blackened, that tissue is gone. The spray only protects what is still healthy."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Contact fungicides"
+    },
+    {
+      "type": "text",
+      "text": "Contact or protectant fungicides stay on the outside of the leaf. They must cover the plant before the spores land, and rain washes them off, so they need repeat sprays in the wet season. Copper products and mancozeb belong here. FRAC puts them in the multi site groups, marked with an M, because they hit many targets in the fungus at once. For that reason FRAC calls the M groups a low risk for resistance."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Systemic fungicides"
+    },
+    {
+      "type": "text",
+      "text": "Systemic fungicides soak into the leaf and move inside the plant. They resist rain better once absorbed, and many can stop an infection in its early days. But most of them hit only one target in the fungus, so a single change in the fungus can make them fail. Triazoles and strobilurins, the two groups inside Armure and Ortiva Top, are both systemic."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "FRAC groups: the number that matters for rotation"
+    },
+    {
+      "type": "text",
+      "text": "FRAC, the Fungicide Resistance Action Committee, sorts every fungicide by how it works. The group code is printed on many labels and product pages. When you rotate, change the group, not only the brand."
+    },
+    {
+      "type": "table",
+      "caption": "Source: FRAC Code List 2025. Examples only, not a buying list.",
+      "rows": [
+        [
+          "FRAC group",
+          "Type",
+          "Examples",
+          "Resistance risk"
+        ],
+        [
+          "M01",
+          "copper, multi site contact",
+          "copper hydroxide, copper oxychloride",
+          "low"
+        ],
+        [
+          "M03",
+          "dithiocarbamates, multi site contact",
+          "mancozeb",
+          "low"
+        ],
+        [
+          "3",
+          "DMI, systemic triazoles",
+          "difenoconazole, propiconazole, hexaconazole",
+          "medium"
+        ],
+        [
+          "11",
+          "QoI, systemic strobilurins",
+          "azoxystrobin",
+          "high"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Armure fungicide for sheath blight in rice"
+    },
+    {
+      "type": "text",
+      "text": "Armure 300 EC from Syngenta Philippines contains difenoconazole and propiconazole, two triazoles. Both sit in FRAC group 3, so Armure is one mode of action in a double dose, not two. Syngenta sells Armure fungicide for sheath blight in rice and says it gives preventive, systemic and curative action.\n\nOn the FPA list, Armure sits in toxicity category 3. Besides rice sheath blight, it also carries a corn listing for banded leaf and sheath blight, ear rot, leaf blight and rust, with a 45 day pre harvest interval on corn."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ortiva Top fungicide for rice, mango and vegetables"
+    },
+    {
+      "type": "text",
+      "text": "Ortiva Top 325 SC mixes azoxystrobin, FRAC group 11, with difenoconazole, FRAC group 3. It pairs group 11 with a partner from another group, which is one of the ways FRAC suggests using group 11. Syngenta Philippines describes the Ortiva Top fungicide as broad spectrum, with preventive, systemic and curative activity."
+    },
+    {
+      "type": "table",
+      "caption": "Source: FPA list of registered agricultural pesticides as of August 31, 2026. Toxicity category 3.",
+      "rows": [
+        [
+          "Crop",
+          "Diseases on the FPA list",
+          "Days before harvest"
+        ],
+        [
+          "Rice",
+          "rice blast, sheath blight, dirty panicle",
+          "30"
+        ],
+        [
+          "Mango",
+          "anthracnose, scab, stem end rot",
+          "14"
+        ],
+        [
+          "Onion",
+          "anthracnose",
+          "12"
+        ],
+        [
+          "Potato",
+          "late blight",
+          "14"
+        ],
+        [
+          "Cabbage",
+          "leaf spots",
+          "14"
+        ],
+        [
+          "Corn",
+          "northern corn leaf blight, white spot, gray leaf spot, brown spot",
+          "28"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Notice that Armure and Ortiva Top share difenoconazole. Spraying one after the other keeps group 3 on the crop the whole time. So if you use both in a season, count group 3 as used twice."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Sheath blight disease: fix the field first"
+    },
+    {
+      "type": "text",
+      "text": "Sheath blight is caused by the fungus Rhizoctonia solani. IRRI describes the first signs as oval, greenish gray lesions about 1 to 3 cm long on the leaf sheath, just above the water line. They later turn grayish white with brown edges and climb to the leaves and to the next hills.\n\nThe disease thrives at 28 to 32 degrees Celsius, with heavy nitrogen and a canopy humidity of 85 to 100 percent. IRRI notes there is no resistant variety available yet. So the first line of defense is in how you grow the crop, and the fungicide comes second."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Use a moderate amount of nitrogen fitted to the season. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) covers the split.",
+        "Avoid very high seeding rates and very close spacing, so air moves through the canopy.",
+        "Keep weeds down, especially on the levees.",
+        "Drain the field fairly early in the season if you can, which IRRI says reduces epidemics."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Read the full symptoms and scouting steps on our [sheath blight](/problems/sheath-blight) page before you decide to spray."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Anthracnose and mildew"
+    },
+    {
+      "type": "text",
+      "text": "Anthracnose is a family of diseases caused by Colletotrichum fungi. On mango it shows as black spots on flowers, leaves and fruit, and it often shows up again after harvest as the fruit ripens. On onion it twists and rots the leaves. See our [anthracnose](/problems/anthracnose) guide for field signs and cultural control.\n\nMildew in Tagalog is amag, the same word farmers use for mold on bread or on damp clothes. Do not confuse it with agiw, which means cobwebs, not a plant disease. Powdery mildew leaves a white, floury coat on leaves. Downy mildew shows pale patches on top of the leaf and a gray or purplish fuzz underneath. Neither Armure nor Ortiva Top lists mildew on its Philippine registration, so look for a product whose label names your crop and that exact disease."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Safety and waiting days",
+      "text": "Wear long sleeves, long pants, boots, gloves and a mask. Keep people out of the field until the spray has dried, as the Ortiva Top listing requires. Count the pre harvest interval before you harvest, and never spray just before rain."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Time your fungicide with anee.io"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, you can photograph a lesion and ask Anee, the [AI agricultural technician](/features/ai-agricultural-technician), whether it looks like sheath blight, blast or something else. The [growth stages and weather](/features/growth-stages-and-weather) screen shows each lot's stage and the week's forecast, so you can see a wet spell coming at booting. Then date the fungicide on the [cropping calendar](/features/cropping-calendar) and log the bottle in the inventory with its cost."
+    },
+    {
+      "type": "cta",
+      "title": "See the disease before it spreads",
+      "text": "Send Anee a photo of a sick plant, check each lot's growth stage and forecast, and put every fungicide spray on your calendar.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions farmers ask"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the difference between contact and systemic fungicide?",
+          "a": "A contact fungicide stays on the leaf surface and must be there before spores land. A systemic fungicide enters the plant, resists rain better and can stop an infection in its early days."
+        },
+        {
+          "q": "What is Armure fungicide used for?",
+          "a": "Syngenta sells Armure 300 EC for sheath blight in rice. Its two active ingredients, difenoconazole and propiconazole, are both FRAC group 3 triazoles."
+        },
+        {
+          "q": "Is Ortiva Top good for anthracnose?",
+          "a": "Its FPA listing names anthracnose on mango and onion, along with rice blast, sheath blight and dirty panicle on rice. The waiting time before harvest is 14 days on mango."
+        },
+        {
+          "q": "What is mildew in Tagalog?",
+          "a": "Amag. The same word covers mold on food and walls. Agiw means cobwebs."
+        },
+        {
+          "q": "Can a fungicide cure a plant that is already rotting?",
+          "a": "No. It protects healthy tissue and slows early infections, but rotted sheaths or blackened fruit will not recover."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Sheath blight",
+          "url": "/problems/sheath-blight"
+        },
+        {
+          "label": "Anthracnose",
+          "url": "/problems/anthracnose"
+        },
+        {
+          "label": "Fusarium wilt",
+          "url": "/problems/fusarium-wilt"
+        },
+        {
+          "label": "Alika, Virtako and Chess for rice",
+          "url": "/blog/rice-insecticides-alika-virtako-chess"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Syngenta Philippines: Armure 300 EC",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/armure-300-ec"
+        },
+        {
+          "label": "Syngenta Philippines: Ortiva Top 325 SC",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/ortiva-top-325-sc"
+        },
+        {
+          "label": "FPA: Registered products (pesticide list as of August 31, 2026)",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        },
+        {
+          "label": "FRAC Code List 2025",
+          "url": "https://www.frac.info/media/ljsi3qrv/frac-code-list-2025.pdf"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Sheath blight",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/sheath-blight"
+        },
+        {
+          "label": "Tagalog.com dictionary: amag",
+          "url": "https://www.tagalog.com/dictionary/amag"
+        }
+      ]
+    }
+  ]
+}

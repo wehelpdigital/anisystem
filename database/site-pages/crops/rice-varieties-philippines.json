@@ -1,0 +1,330 @@
+{
+  "section": "crops",
+  "slug": "rice-varieties-philippines",
+  "sortOrder": 30,
+  "lang": "en",
+  "category": "Palay",
+  "title": "Rice Varieties in the Philippines: Inbreds, Hybrids and Special Rice",
+  "metaTitle": "Rice Varieties in the Philippines: NSIC List and Hybrids",
+  "metaDescription": "Compare rice varieties in the Philippines: NSIC Rc 216, Rc 222 and Rc 402, hybrids like SL 8H and Jackpot 102, Jasponica rice and the store brands.",
+  "focusKeyword": "rice varieties in the Philippines",
+  "keywords": [
+    "rice varieties philippines",
+    "rice variety philippines",
+    "rice variety in the philippines",
+    "variety of rice in the philippines",
+    "philippine rice variety",
+    "philippine rice variety list",
+    "kinds of rice in the philippines",
+    "rice variety",
+    "rice variety rice",
+    "rice breed",
+    "rice variety 216",
+    "rice variety 222",
+    "402 rice variety characteristics",
+    "rice hybrid",
+    "sl agritech corporation",
+    "jackpot rice variety maturity",
+    "jasponica rice",
+    "rice brands in the philippines",
+    "rice seed",
+    "rice seeds",
+    "seeds rice",
+    "palay seeds",
+    "palay"
+  ],
+  "excerpt": "The NSIC has approved a long list of rice varieties in the Philippines, but most farms plant only a handful. This guide compares the popular NSIC inbreds, the main hybrids, special rice like Jasponica and the store brands you see at the market. Maturity and yield figures come from PhilRice and the seed companies.",
+  "heroImage": {
+    "src": "/images/site/palay.jpg",
+    "alt": "A palay field in the Philippines planted to one rice variety",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A rice variety, or rice breed as some farmers call it, is a line of rice with fixed traits. It sets how tall the plant grows, how many days it needs, how the rice tastes and which pests it tolerates. The right choice can add sacks per hectare. But the wrong one can lose a season to a typhoon or a planthopper outbreak. That is why no single variety of rice in the Philippines wins in every town."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Kinds of rice in the Philippines"
+    },
+    {
+      "type": "text",
+      "text": "Most seed you can buy falls into three groups."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Inbred rice.** Varieties such as NSIC Rc 216 and Rc 222. If the crop is pure, you can save seed for next season after a germination test.",
+        "**Hybrid rice.** First generation (F1) seed from two parent lines, such as SL 8H or Jackpot 102. A rice hybrid has higher yield potential, but saved grain does not grow true to type, so you buy new seed every season.",
+        "**Special rice.** Aromatic, glutinous (malagkit), japonica and pigmented rice, grown for taste and a higher price."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "PhilRice also gives its inbreds local names by environment. For example, Tubigan varieties suit irrigated lowland, while Sahod Ulan varieties suit rainfed lowland. Its free Binhing Palay app lets you search registered varieties and their traits, so it works as a Philippine rice variety list in your pocket."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Popular rice varieties in the Philippines: the inbreds"
+    },
+    {
+      "type": "text",
+      "text": "These are the inbreds farmers ask about most. The figures come from PhilRice trials across many sites, so your own field may do better or worse."
+    },
+    {
+      "type": "table",
+      "caption": "Popular NSIC inbreds from PhilRice data (t/ha means tonnes per hectare)",
+      "rows": [
+        [
+          "Variety",
+          "Local name",
+          "Maturity, transplanted",
+          "Average yield, transplanted",
+          "Direct seeded"
+        ],
+        [
+          "NSIC Rc 216",
+          "Tubigan 17",
+          "112 days after sowing",
+          "6.0 t/ha",
+          "104 days, 5.7 t/ha"
+        ],
+        [
+          "NSIC Rc 222",
+          "Tubigan 18",
+          "114 days after sowing",
+          "6.1 t/ha",
+          "106 days, 5.7 t/ha"
+        ],
+        [
+          "NSIC Rc 300",
+          "Tubigan 24",
+          "115 days after sowing",
+          "5.7 t/ha",
+          "105 days, 5.3 t/ha"
+        ],
+        [
+          "NSIC Rc 402",
+          "Tubigan 36",
+          "114 days after sowing",
+          "5.5 t/ha",
+          "107 days"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice variety 216 (NSIC Rc 216, Tubigan 17)"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice calls Rc 216 early maturing, at 112 days transplanted and 104 days direct seeded. In PhilRice trials it averaged 6.0 t/ha transplanted, with a top yield of 9.7 t/ha. It is moderately resistant to brown planthopper, green leafhopper and yellow stem borer. Still, PhilRice rates it susceptible to blast, so scout for blast closely."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice variety 222 (NSIC Rc 222, Tubigan 18)"
+    },
+    {
+      "type": "text",
+      "text": "Rc 222 matures in 114 days transplanted and 106 days direct seeded. It averaged 6.1 t/ha transplanted, up to 10.0 t/ha. PhilRice notes a yield edge in the wet season and good adaptation to both irrigated and rainfed fields. That is why PalayCheck recommends it for both seasons in Central Luzon."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "NSIC Rc 402: rice variety characteristics"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice released Rc 402 in 2015 and recommends it for direct seeding in Luzon. It averages 5.5 t/ha and matures in 107 days direct seeded, or 114 days transplanted. The plant stands about 95 cm tall. Its grain is medium, milling recovery reached 69.3 percent in trials, and the cooked rice is moderately soft."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rice hybrid varieties"
+    },
+    {
+      "type": "text",
+      "text": "A rice hybrid costs more per kilo of seed, but you plant less of it. PalayCheck even advises a lower seeding rate for hybrids in mechanical transplanting because the seed is expensive.\n\nAt a 2023 DA Bicol field day, nine seed companies showed their hybrids to farmers. With good weather, management and fertilizer, they said, these can reach up to 14 tonnes per hectare. Maturity ranged from 104 to 118 days after sowing. Those are best case numbers, so compare them with your own records."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "SL Agritech Corporation and SL 8H"
+    },
+    {
+      "type": "text",
+      "text": "SL Agritech Corporation (SLAC) is a private company that breeds, produces and sells hybrid rice seed and premium rice. Its best known hybrid is SL 8H. The company lists 7 to 17 t/ha, 105 to 115 days to maturity, 118 cm plant height and 12 to 28 productive tillers. SLAC also says SL 8H shatters little, so you can harvest it up to 90 percent grain maturity. Its other hybrids include SL 12H at 100 to 110 days and SL 18H at 110 to 115 days."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Jackpot 102 and other hybrids"
+    },
+    {
+      "type": "text",
+      "text": "Jackpot 102, registered as NSIC Rc 666H, comes from Leads Agri, which says it introduced the hybrid in 2019. We could not find an official figure for the Jackpot rice variety maturity on the company website. The hybrids at the DA Bicol field day, Jackpot 102 among them, fell in the 104 to 118 day range. So read the days to maturity on the seed bag, or ask your dealer, before you date your season.\n\nOther hybrids at the same field day included Bigante Plus and Habilis Plus from Bayer and TH82 from SeedWorks. There were also NK 5017 from Syngenta, LP 2096 from LongPing and Mestizo 30 from Allied Botanical."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Brochure yields versus farm averages",
+      "text": "Seed company yields come from their best plots. For scale, the PSA put the national average palay yield at 4.14 tonnes per hectare in 2025. So compare any new variety with your own last seasons, not with a brochure."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Special rice: Jasponica rice and japonica"
+    },
+    {
+      "type": "text",
+      "text": "Jasponica rice is a premium rice that SL Agritech sells under its Doña Maria brand, named after the mother of its chairman, Henry Lim. The company describes it as joining the aroma of jasmine rice with the eating quality of Japanese rice. When cooked it is soft, sticky and chewy, as a 2011 Philstar report put it. In stores it sells as packed milled rice.\n\nFor a true japonica, PhilRice released NSIC Rc 414, named Japonica 4, in 2016. Aromatic and glutinous types, like the malagkit used for kakanin, also belong to special rice."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rice brands in the Philippines are not varieties"
+    },
+    {
+      "type": "text",
+      "text": "Walk into any public market and you will see names like Sinandomeng or Dinorado on the rice box. PhilRice calls these popular rice brands. In 2018 the NFA limited local rice labels to four classes: regular milled, well milled, premium and special rice. The rule replaced brand names like Sinandomeng and Dinorado, although a 2021 PhilRice brief found some retailers still use them.\n\nCompany brands, such as Doña Maria from SL Agritech Corporation, are a different thing. They tell you who packed the rice. But the seed you plant should carry an NSIC name on a certified tag, so when a buyer asks what you planted, answer with the variety."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to choose the right rice variety"
+    },
+    {
+      "type": "text",
+      "text": "PalayCheck gives four tests for choosing a rice variety in the Philippines, plus one habit."
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "It suits your environment and season: irrigated or rainfed, dry or wet season.",
+        "It answers your local problem. In typhoon areas, pick a maturity that escapes the worst months. For example, PSB Rc 10 matures early, at 106 days.",
+        "It did well in at least two seasons of adaptability trials by PhilRice or your DA office.",
+        "Your buyer or miller wants it.",
+        "Rotate varieties every 2 to 4 croppings, which PalayCheck advises as part of pest management."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Then buy certified rice seeds with a valid blue tag, because every figure above assumes clean palay seeds. Our [palay guide](/crops/palay) explains the seed classes, and our [pagtatanim ng palay guide](/crops/pagtatanim-ng-palay) gives seeding rates for transplanting and direct seeding.\n\nIn anee.io, each lot keeps its own variety and day count. So a 104 day hybrid and a 114 day inbred on the same farm each get their own dated tasks in the [cropping calendar](/features/cropping-calendar). You can also check the [planting analysis tools](/features/when-to-plant-analysis) for your town before you buy seed. Once you harvest, our [palay price guide](/blog/palay-price-philippines) shows what buyers pay."
+    },
+    {
+      "type": "cta",
+      "title": "Track every variety you plant",
+      "text": "anee.io keeps each lot's variety, day count and yield, so you can compare one season with the next in the reports. You can also ask Anee in Tagalog or English which variety fits your town.",
+      "label": "Try anee.io free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about rice varieties in the Philippines"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the best rice variety in the Philippines?",
+          "a": "There is no single best one. PalayCheck advises a variety that suits your environment and season, answers your local problem, did well in two seasons of local trials and sells well. In Central Luzon, for example, PalayCheck recommends NSIC Rc 222 for both seasons."
+        },
+        {
+          "q": "How many days is NSIC Rc 216?",
+          "a": "PhilRice lists 112 days after sowing when transplanted and 104 days when direct seeded. It averaged 6.0 t/ha transplanted in PhilRice trials."
+        },
+        {
+          "q": "How many days is Jackpot 102?",
+          "a": "We found no official maturity figure from Leads Agri online. Hybrids shown at a 2023 DA Bicol field day, Jackpot 102 among them, matured in 104 to 118 days after sowing. Check the seed bag or ask your dealer."
+        },
+        {
+          "q": "Can I save seed from a hybrid crop?",
+          "a": "No. Hybrid seed is first generation, and grain saved from it does not grow true to type. So buy new certified hybrid seed every season. You can save seed from a pure inbred crop if it passes a germination test."
+        },
+        {
+          "q": "Is Jasponica a rice variety?",
+          "a": "Jasponica is a premium rice that SL Agritech sells under its Doña Maria brand. The company says it joins jasmine aroma with the eating quality of Japanese rice."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Palay: meaning, growth stages and palay to rice",
+          "url": "/crops/palay"
+        },
+        {
+          "label": "Pagtatanim ng palay: step by step",
+          "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Palay price today",
+          "url": "/blog/palay-price-philippines"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "Brown planthopper",
+          "url": "/problems/brown-planthopper"
+        },
+        {
+          "label": "When to Plant Analysis in anee.io",
+          "url": "/features/when-to-plant-analysis"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: All season rice varieties for transplanting and direct wet seeding (2009 to 2015)",
+          "url": "https://dbmp.philrice.gov.ph/dms_records/docs/PhilRice_Issuances/13082CES.pdf"
+        },
+        {
+          "label": "PhilRice: Top popular rice varieties",
+          "url": "https://www.philrice.gov.ph/top-5-popular-rice-varieties/"
+        },
+        {
+          "label": "PhilRice: NSIC releases nine new PhilRice bred varieties (2016)",
+          "url": "https://www.philrice.gov.ph/nsic-releases-nine-new-philrice-bred-varieties/"
+        },
+        {
+          "label": "Pinoy Rice Knowledge Bank: NSIC Rc 402 profile",
+          "url": "https://www.pinoyrice.com/wp-content/uploads/NSIC-Rc402.pdf"
+        },
+        {
+          "label": "SL Agritech: Hybrid rice seeds",
+          "url": "http://sl-agritech.com/hybridriceseedssl/"
+        },
+        {
+          "label": "DA Bicol: New hybrid rice varieties showcased at the 2023 field day",
+          "url": "https://bicol.da.gov.ph/new-hybrid-rice-varieties-showcased-in-da-bicols-hybrid-rice-techno-demo-field-day-in-baao-and-tigaon-camsur/"
+        },
+        {
+          "label": "Philstar: Jasponica holds own vs imported rice varieties (2011)",
+          "url": "https://www.philstar.com/business/agriculture/2011/09/04/723102/jasponica-holds-own-vs-imported-rice-varieties"
+        },
+        {
+          "label": "PhilRice: Truthful labelling of rice (2021)",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2021/03/RS4DM_TruthfulLabelling_V2.pdf"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        }
+      ]
+    }
+  ]
+}

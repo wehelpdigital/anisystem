@@ -1,0 +1,242 @@
+{
+  "section": "blog",
+  "slug": "ani-meaning",
+  "sortOrder": 40,
+  "lang": "en",
+  "category": "Farm culture",
+  "title": "Ani Meaning: Harvest, Crop Yield and How to Raise Your Ani",
+  "metaTitle": "Ani Meaning: Harvest in Filipino and How to Raise Yield",
+  "metaDescription": "Ani means harvest in Filipino. Learn what crop yield means, how to compute yield per hectare, and simple field habits that raise your ani each season.",
+  "focusKeyword": "ani",
+  "keywords": [
+    "ani",
+    "crop yields meaning",
+    "palay meaning",
+    "agriculture in economy"
+  ],
+  "excerpt": "Ani is the Filipino word for harvest: the crop you gather and the act of gathering it. This page explains the ani meaning and what crop yield means. It also shows how to compute your yield per hectare, and the habits that raise it season after season.",
+  "heroImage": {
+    "src": "/images/site/photos/team-thumbs.jpg",
+    "alt": "Two Filipino farmers giving a thumbs up beside their rice field",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ani meaning in Filipino"
+    },
+    {
+      "type": "text",
+      "text": "As a noun, ani means a harvest or a crop, the yield you gather, and most often the rice harvest. As a verb it means to harvest. So you will hear umani (to harvest), inani (harvested), aanihin (will harvest) and anihan (harvest time). Farmers also use the word loosely, to mean reaping the reward of hard work.\n\nThe word is old. Wiktionary traces it to Proto Malayo Polynesian qanih, which also meant harvest. In English, then, ani is harvest or yield.\n\nThe palay meaning works the same way. Palay is rice still in its husk, so ani ng palay is the rice harvest before milling. Our [palay guide](/crops/palay) explains the grain, its growth stages and how it becomes rice."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Crop yields meaning: what yield really measures"
+    },
+    {
+      "type": "text",
+      "text": "Crop yield means how much harvest you get from a given area. For rice in the Philippines, we usually count it in tonnes or cavans of palay per hectare. But yield is not the same as production. Production is your total harvest, while yield divides that harvest by the area.\n\nThat is why yield is the fair way to compare farms. For example, a 3 hectare farm will outproduce a 1 hectare farm, but it may still have the lower yield. For scale, the PSA put the national average palay yield at 4.14 tonnes per hectare in 2025, up from 4.11 in 2024."
+    },
+    {
+      "type": "table",
+      "caption": "Words you will meet on a harvest record",
+      "rows": [
+        [
+          "Term",
+          "What it means"
+        ],
+        [
+          "Ani",
+          "The harvest, or the act of harvesting"
+        ],
+        [
+          "Production",
+          "Total harvest from the whole farm or lot"
+        ],
+        [
+          "Yield",
+          "Harvest per unit of area, such as tonnes per hectare"
+        ],
+        [
+          "Cavan",
+          "A sack of about 50 kg, the usual unit for palay"
+        ],
+        [
+          "Moisture content",
+          "The share of the grain's weight that is water"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to compute yield per hectare"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Weigh the harvest",
+          "text": "Add up the weight of every sack from the lot, in kilograms. Weigh a few sacks if you cannot weigh them all, then multiply the average by the number of sacks."
+        },
+        {
+          "title": "Measure the area",
+          "text": "Use the true planted area in hectares. One hectare is 10,000 square meters, so a 90 by 80 meter lot is 0.72 hectare."
+        },
+        {
+          "title": "Divide",
+          "text": "Yield per hectare equals total kilograms divided by hectares."
+        },
+        {
+          "title": "Adjust for moisture",
+          "text": "Fresh palay holds more water, so compare yields at 14 percent moisture. Multiply the weight by 100 minus the moisture reading, then divide by 86."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Here is a worked example. A 0.8 hectare lot gives 90 sacks of 50 kg of fresh palay at 22 percent moisture. That comes to 4,500 kg. At 14 percent moisture it becomes 4,500 times 78, divided by 86, or about 4,081 kg. So the yield is about 5,100 kg per hectare, or 5.1 tonnes, which is about 102 cavans per hectare."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Record every ani",
+      "text": "Write down the weight, the moisture and the area of every harvest, lot by lot. After three seasons, those records will tell you more than any brochure."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why anee.io takes its name from ani"
+    },
+    {
+      "type": "text",
+      "text": "anee.io takes its name from ani, the harvest. Every tool in the app points at the same goal: a bigger ani at a lower cost per kilo.\n\nFor instance, the [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero, so fertilizer and water go in on time. Then the [farm reports](/features/farm-reports) track labor, expenses, profit and yield per lot, and Compare Reports sets one season against another. When something looks wrong in the field, Anee, the AI technician, answers in Tagalog or English and can read a photo of a pest or a sick plant."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to raise your ani"
+    },
+    {
+      "type": "text",
+      "text": "Most of the gains come from habits that cost little. These come from PhilRice's PalayCheck System."
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "**Start with certified seed.** High quality seed can raise yield by 10 percent or more, PalayCheck says.",
+        "**Level the field well.** A poorly prepared field can yield 5 percent less.",
+        "**Rest the field, then plant together.** A 30 day rest and synchronous planting break pest cycles.",
+        "**Feed the crop on time.** Use the Leaf Color Chart or MOET to time nitrogen, and see our guide to [fertilizer for rice](/blog/fertilizer-for-rice).",
+        "**Keep water steady.** Hold 3 to 5 cm of water, and 5 to 7 cm at flowering.",
+        "**Control weeds early.** The first 45 days after planting matter most.",
+        "**Harvest on time.** Cut when 85 to 90 percent of the grains are golden if you harvest by hand.",
+        "**Dry fast.** Dry within 12 to 24 hours of threshing, down to 12 to 14 percent moisture."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Each habit closes part of the gap between your yield and your variety's potential. For example, NSIC Rc 222 averaged 6.1 tonnes per hectare in PhilRice trials, well above the national average. Our Filipino guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) walks through every step in order."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ani and agriculture in the economy"
+    },
+    {
+      "type": "text",
+      "text": "Every ani also feeds a bigger picture. Rice is the staple food of the country, so the size of each harvest touches food prices and farm incomes alike. For the wider role of agriculture in the economy, read our page on [agriculture in the Philippine economy](/blog/agriculture-in-the-philippine-economy).\n\nAt home, though, the numbers that matter are your own. So before you sell, check the [palay price today](/blog/palay-price-philippines) and your cost per kilo."
+    },
+    {
+      "type": "cta",
+      "title": "Track your ani lot by lot",
+      "text": "anee.io records each lot's yield, expenses and buyers, and Compare Reports sets one season against the next. Start on the free Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about ani and crop yield"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What does ani mean in English?",
+          "a": "Ani means harvest. It can mean the crop you gather or the act of gathering it, and umani means to harvest."
+        },
+        {
+          "q": "What does crop yield mean?",
+          "a": "Crop yield is the harvest you get per unit of land, such as tonnes or cavans of palay per hectare."
+        },
+        {
+          "q": "How do I compute yield per hectare?",
+          "a": "Divide the total weight of your harvest in kilograms by the planted area in hectares. For palay, adjust the weight to 14 percent moisture first so seasons compare fairly."
+        },
+        {
+          "q": "What is the average palay yield in the Philippines?",
+          "a": "The PSA put it at 4.14 tonnes per hectare for 2025, up from 4.11 tonnes in 2024."
+        },
+        {
+          "q": "Where does the name anee.io come from?",
+          "a": "anee.io takes its name from ani, the harvest. The app helps Filipino farmers plan a cropping season and track what each lot yields."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Palay: meaning, growth stages and palay to rice",
+          "url": "/crops/palay"
+        },
+        {
+          "label": "Pagtatanim ng palay: step by step",
+          "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Palay price today",
+          "url": "/blog/palay-price-philippines"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "Agriculture in the Philippine economy",
+          "url": "/blog/agriculture-in-the-philippine-economy"
+        },
+        {
+          "label": "Farm reports in anee.io",
+          "url": "/features/farm-reports"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Wiktionary: ani (Tagalog)",
+          "url": "https://en.wiktionary.org/wiki/ani"
+        },
+        {
+          "label": "PSA: Palay situation report, January to December 2025",
+          "url": "https://psa.gov.ph/content/palay-situation-report-october-december-2025-and-january-december-2025"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: All season rice varieties for transplanting and direct wet seeding",
+          "url": "https://dbmp.philrice.gov.ph/dms_records/docs/PhilRice_Issuances/13082CES.pdf"
+        }
+      ]
+    }
+  ]
+}

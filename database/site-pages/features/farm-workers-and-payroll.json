@@ -1,0 +1,170 @@
+{
+  "section": "features",
+  "slug": "farm-workers-and-payroll",
+  "sortOrder": 40,
+  "lang": "en",
+  "category": "Workers",
+  "title": "Farm Payroll and Workers: Rates, Attendance and Labor Cost",
+  "metaTitle": "Farm Payroll App: Workers, Daily Rates and Attendance",
+  "metaDescription": "Run farm payroll from the field: a worker roster with rates, whole and half days, attendance and labor cost counted live on anee.io. Start free today.",
+  "focusKeyword": "farm payroll",
+  "keywords": [
+    "farm payroll",
+    "farm workers",
+    "labor cost",
+    "daily rate",
+    "attendance",
+    "worker login",
+    "labor report"
+  ],
+  "excerpt": "Farm payroll in anee.io lives on the same board as the work. Keep a roster with each worker's rate, put the right hands on each activity, tick who came, and the labor cost adds itself up in pesos as the season runs. No more adding up a notebook on Saturday.",
+  "heroImage": {
+    "src": "/images/site/photos/hero-planting.jpg",
+    "alt": "A farm owner checks the farm payroll on his phone while a worker in a straw hat transplants palay seedlings",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Your worker roster"
+    },
+    {
+      "type": "text",
+      "text": "Each worker has a card with a name, contact details, a rate per half day and the skills they bring. A whole day counts as two halves, so one rate covers both. Skills like spraying, broadcasting granulars, operating a machine or harrowing (pagsusuyod) help you pick the right person. You can also mark each worker's days off.\n\nThe Workers module comes with the Solo Farmer and Farm Owner plans."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Assign workers and count labor cost live"
+    },
+    {
+      "type": "text",
+      "text": "Open an activity on the [cropping calendar](/features/cropping-calendar) and add the workers who will do it, marked whole day or half day. The form shows what the task will cost before you save, and the day card shows what the whole day comes to. Change a worker or switch a half day to a whole day, and the figure moves with it. You know the cash to prepare before a single peso leaves your pocket."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Payroll days and attendance"
+    },
+    {
+      "type": "text",
+      "text": "A payroll day is a card on the board with its own roster. On the day itself, tick who came to work. The ones who did not turn up stay on the list, but their pay comes out of the day's total, so the figure matches what you owe. If you allow it on a task, workers can tick their own attendance from their phones."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Why a rate per half day",
+      "text": "Short jobs, like a morning of spraying, often take only half a day. One rate per half day prices both the short job and the full day, with no second rate to keep up to date."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Worker logins and permissions"
+    },
+    {
+      "type": "text",
+      "text": "On the Farm Owner plan, a worker can have a login of their own. You decide, module by module, what each one may do: none, view or edit. A foreman might edit the board and the inventory, while a new hand only views the day's tasks. Someone who can only view still sees who else is down for the day."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The 6 AM morning email"
+    },
+    {
+      "type": "text",
+      "text": "Switch on the morning email and, at 6 AM Manila time, each worker and the owner get what is on the board today and tomorrow. Nobody needs to text the whole crew the night before."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "A logs diary of who changed what"
+    },
+    {
+      "type": "text",
+      "text": "The Farm Owner plan also keeps a logs diary. It records every change to the season with the name of the person who made it and the time, and for many edits the old and new values too. When a date moved and nobody remembers why, the diary tells you."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Farm payroll you can check against your reports"
+    },
+    {
+      "type": "text",
+      "text": "At any point in the season, open the labor report. It totals wages by activity type, by lot and by date range, down to each worker's pay. It also agrees to the peso with the expenses and profit reports, because all three read the same records.\n\nSee [farm reports](/features/farm-reports) for the rest of the money side, and [farm inventory and expenses](/features/farm-inventory-and-expenses) for what your inputs cost. If the crew works in a Collab Room, the [farmer community](/features/farmer-community) page shows how the team chat and whiteboard work."
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Add your workers and their half day rates",
+        "Assign them to activities, whole day or half day",
+        "Tick attendance on each payroll day",
+        "Open the labor report when it is time to pay"
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Put your crew on the board",
+      "text": "Sign up free, then add workers on the Solo Farmer plan, or give them logins on Farm Owner.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm payroll"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How does anee.io count a worker's pay?",
+          "a": "Each worker has a rate per half day. A half day task counts one unit and a whole day counts two, so the pay is the rate times the units worked. Absent workers on a payroll day drop out of the total."
+        },
+        {
+          "q": "Can workers see their schedule?",
+          "a": "Yes, on the Farm Owner plan. Give a worker a login and choose none, view or edit for each module. The morning email also tells them what is on today and tomorrow."
+        },
+        {
+          "q": "Do workers need a smartphone?",
+          "a": "For a login, they need a phone or any device with a browser. Without one, you can still keep them on the roster and tick their attendance yourself."
+        },
+        {
+          "q": "Can I see who changed a date?",
+          "a": "The logs diary on the Farm Owner plan lists every change, who made it and when."
+        },
+        {
+          "q": "Which plan do I need for workers?",
+          "a": "Solo Farmer includes the worker roster, payroll days and labor cost. Worker logins, the logs diary and the Collab Room come with Farm Owner."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "Farm inventory and expenses",
+          "url": "/features/farm-inventory-and-expenses"
+        },
+        {
+          "label": "Farm reports",
+          "url": "/features/farm-reports"
+        },
+        {
+          "label": "Farmer community",
+          "url": "/features/farmer-community"
+        },
+        {
+          "label": "Plans and pricing",
+          "url": "/pricing"
+        }
+      ]
+    }
+  ]
+}

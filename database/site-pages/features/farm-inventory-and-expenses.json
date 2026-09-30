@@ -1,0 +1,169 @@
+{
+  "section": "features",
+  "slug": "farm-inventory-and-expenses",
+  "sortOrder": 50,
+  "lang": "en",
+  "category": "Money",
+  "title": "Farm Inventory and Expenses: Know What Is in the Shed and What It Cost",
+  "metaTitle": "Farm Inventory App: Fertilizer, Seeds and Farm Expenses",
+  "metaDescription": "Track farm inventory of fertilizer, seeds, chemicals and fuel on anee.io. Each activity spends its own stock, and every peso lands in your reports.",
+  "focusKeyword": "farm inventory",
+  "keywords": [
+    "farm inventory",
+    "farm expenses",
+    "fertilizer stock",
+    "stock moves",
+    "audit trail",
+    "urea fertilizer",
+    "complete fertilizer 14 14 14"
+  ],
+  "excerpt": "The farm inventory in anee.io keeps count of what sits in your shed: fertilizer, seeds, chemicals, fuel and tools. When you tick a task done on the board, it takes its materials out of stock, and every purchase, extra expense and sale lands in your reports to the peso.",
+  "heroImage": {
+    "src": "/images/site/photos/sacks-shed.jpg",
+    "alt": "A farmer checks a handwritten farm inventory list beside stacked fertilizer sacks in a wooden shed",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What you keep in the farm inventory"
+    },
+    {
+      "type": "text",
+      "text": "Each item has a kind, a unit and a price. The units follow how you buy: bags of 50 kg for granular fertilizer, liter bottles or sachets for foliar feed and chemicals, drums for fuel. The count stays in that unit, so the shelf reads '12 bags (50 kg)' and not a number you have to convert in your head."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Granular fertilizer, like [urea](/blog/urea-fertilizer) or [complete fertilizer 14 14 14](/blog/complete-fertilizer-14-14-14)",
+        "Foliar and liquid feeds",
+        "Pesticides, herbicides, fungicides and molluscicides",
+        "Seeds, by the bag, kilo or piece",
+        "Fuel, by the liter or the drum",
+        "Tools and supplies"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Stock moves: every sack has a story"
+    },
+    {
+      "type": "text",
+      "text": "No item in the shed is a bare number. Every change is a move with a date, a reason, a note and the count before and after: the opening count, a delivery, a bag used, a correction. On hand stock is the sum of those moves, so it cannot drift away from the record.\n\nMost stock leaves the shed by itself. When an activity on the [cropping calendar](/features/cropping-calendar) lists its materials and you tick it done, the app spends those materials from stock. Untick it and the move comes off again, so a double tap never spends twice."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Log it from the day it happened"
+    },
+    {
+      "type": "text",
+      "text": "The day menu on the board has doors for the rest. Expense an inventory covers the bag opened without a task, and Add new inventory covers the delivery that came on Tuesday. Logging from the day means the date is already right, which is the part people get wrong when they come back to it on Friday."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Start counting in the middle of a season",
+      "text": "Already halfway through the season? Tell the app when counting begins. It picks up the tasks done since that date and spends their materials, so your count starts honest."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Farm expenses and income, day by day"
+    },
+    {
+      "type": "text",
+      "text": "Not every peso goes through the shed. The same day menu lets you add an extra expense, like the fare to the agri supply or a pump repair, and add income, like a sale of extra seedlings. Hired services and labor already carry their costs on the board.\n\nThe expenses report then sorts the season into materials, labor, services, extra expenses, stock buys and income. It agrees with the labor and profit reports to the peso, because they all read the same records. The [farm reports](/features/farm-reports) page covers each one, and [farm workers and payroll](/features/farm-workers-and-payroll) explains how wages reach the total."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/lp/report-money.webp",
+      "alt": "Season report in anee.io showing money in, money out and where the money went: materials, labor, services, extra expenses and stock buys",
+      "caption": "The same inventory and expense records feed every money report."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "An audit trail for the shed"
+    },
+    {
+      "type": "text",
+      "text": "Each move keeps who made it and when. If a count looks wrong, open the item's log and read it line by line. A correction adds a new line instead of rewriting last month's reading, so the history stays honest.\n\nOn the Farm Owner plan, the logs diary also records every change across the season with the person's name. If two people share the shed, you will always know whose hand moved the count."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Buy the right amount"
+    },
+    {
+      "type": "text",
+      "text": "A good farm inventory also helps before the season. Work out the bags your lots need with our guide to [fertilizer calculation](/blog/fertilizer-calculation), compare that with what is on the shelf, and buy only the difference."
+    },
+    {
+      "type": "cta",
+      "title": "Know what is in your shed",
+      "text": "Sign up free, then open the farm inventory on the Solo Farmer or Farm Owner plan.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm inventory"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How does anee.io know how much fertilizer is left?",
+          "a": "On hand stock is the sum of every move: the opening count, deliveries, bags used by activities and corrections. Tick a fertilizer task done and its bags come out of stock."
+        },
+        {
+          "q": "Can I track fuel and tools too?",
+          "a": "Yes. Fuel counts in liters or drums, and tools and supplies count by piece, box, roll or sack."
+        },
+        {
+          "q": "What if I make a mistake in the count?",
+          "a": "Add a correction. The log keeps the old reading and the fix, so you can always see what happened."
+        },
+        {
+          "q": "Where do expenses that are not stock go?",
+          "a": "Add them as extra expenses from the day menu. Income, like a sale of seedlings, goes in the same way, and both show up in the expenses and profit reports."
+        },
+        {
+          "q": "Which plan includes inventory?",
+          "a": "The farm inventory comes with the Solo Farmer and Farm Owner plans."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "Farm reports",
+          "url": "/features/farm-reports"
+        },
+        {
+          "label": "Farm workers and payroll",
+          "url": "/features/farm-workers-and-payroll"
+        },
+        {
+          "label": "Urea fertilizer",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "Fertilizer calculation",
+          "url": "/blog/fertilizer-calculation"
+        }
+      ]
+    }
+  ]
+}

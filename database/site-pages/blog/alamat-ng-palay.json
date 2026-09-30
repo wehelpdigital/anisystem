@@ -1,0 +1,279 @@
+{
+  "section": "blog",
+  "slug": "alamat-ng-palay",
+  "sortOrder": 70,
+  "lang": "tl",
+  "category": "Farm culture",
+  "title": "Alamat ng Palay: Buod, Banghay, Aral at mga Bersiyon",
+  "metaTitle": "Alamat ng Palay: Buod, Banghay at Aral ng Kuwento",
+  "metaDescription": "Basahin ang alamat ng palay nina Dackbongan at Kabunian, ang buod, banghay at aral nito, ang bersiyon ng Ifugao at Tagalog, at ang Palay Festival ng Narra.",
+  "focusKeyword": "alamat ng palay",
+  "keywords": [
+    "alamat ng palay",
+    "alamat ng palay buod",
+    "banghay ng alamat ng palay",
+    "palay festival",
+    "palay image",
+    "pagtatanim ng palay",
+    "alamat ng mais"
+  ],
+  "excerpt": "Ang alamat ng palay ay kuwentong bayan na nagpapaliwanag kung paano natutong magtanim ng palay ang ating mga ninuno. Hindi iisa ang kuwento. May bersiyon ang mga Ibaloi ng Benguet, ang mga Ifugao, at ang mga Tagalog. Narito ang bersiyong nasa aralin ng Filipino 4, ang buod, ang banghay, ang aral, at ang mga pista ng ani na nagpapatuloy sa pasasalamat na iyon.",
+  "heroImage": {
+    "src": "/images/site/hero-terraces.jpg",
+    "alt": "Luntiang rice terraces, ang uri ng palayan na pinagmulan ng alamat ng palay sa Cordillera",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ang alamat ng palay ayon sa mga Ibaloi"
+    },
+    {
+      "type": "text",
+      "text": "Ang bersiyong ito ay kuwento ng mga Ibaloi ng Benguet. Nalathala ito sa pahayagang Baguio Midland Courier noong Enero 1, 1950, at isinalin sa Filipino. Ito ang kuwentong ginagamit ngayon sa mga aralin sa Filipino 4.\n\nNoong unang panahon, walang palay ang mga tao. Karne ng hayop at mga halamang ugat ang kanilang kinakain. May isang mabait na mambubunong, isang pari at manggagamot ng kanilang pamayanan, na ang pangalan ay Dackbongan. Isang araw, inanyayahan siya sa Langit para sa isang malaking ritwal na idaraos para kay Kabunian, ang lumikha.\n\nSa tahanan ni Kabunian at ng kanyang magandang asawang si Bugan, nakakita si Dackbongan ng isang malaking kubo. Doon siya unang nakakain ng kanin, at nagustuhan niya ito nang labis. Humingi siya ng binhi para sa kanyang mga kababayan. Pumayag si Kabunian at tinuruan niya si Dackbongan kung paano patubigan ang bukid, kung paano pasibulin ang binhi, at kung paano itanim at alagaan ang palay hanggang magkauhay.\n\nMay isang mahigpit na bilin si Kabunian. Bago umani, dapat gawin ang Kosday kanyaw sa bawat bahay. Sa ritwal na ito, lilikha ng apoy ang mambubunong sa pamamagitan ng pagkiskis, isasalaysay niya ang mga kuwento ng mga diyos, iaalay ang isang baboy, at papahiran ng dugo nito ang mukha ng bawat kasapi ng pamilya. Pagkatapos ng Kosday kanyaw, may man piju, limang araw ng pahinga.\n\nSinunod ni Dackbongan ang lahat, at umunlad ang palayan. Pero sa paglipas ng panahon, nakalimutan niya ang ritwal. Nagalit si Kabunian at lumikha siya ng mga daga na kumain sa palay. Nang makita ni Kabunian na nagsisisi na si Dackbongan, lumikha naman siya ng mga pusa para hulihin ang mga daga. Mula noon, ginagawa na ng mga tao ang Kosday kanyaw bago umani ng palay, at magkasama na sa mundo ang daga at ang pusa."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Alamat ng palay buod: ang maikling bersiyon"
+    },
+    {
+      "type": "text",
+      "text": "Kung kailangan mo ng maikling buod para sa klase, ito na.\n\nWalang palay ang mga unang tao. Inanyayahan si Dackbongan, isang mabait na mambubunong, sa Langit para sa ritwal para kay Kabunian. Doon siya unang nakakain ng kanin, kaya humingi siya ng binhi. Tinuruan siya ni Kabunian na magpatubig, magpasibol, magtanim at mangalaga ng palay, sa kondisyong gagawin ang Kosday kanyaw bago ang anihan. Nang makalimutan ni Dackbongan ang ritwal, nagpadala si Kabunian ng mga daga. Nang magsisi siya, nilikha ang mga pusa. Kaya hanggang ngayon, ginagawa ang Kosday kanyaw bago umani."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Banghay ng alamat ng palay"
+    },
+    {
+      "type": "text",
+      "text": "Ang banghay ay ang ayos ng mga pangyayari sa kuwento. Karaniwang hinihingi sa klase ang simula, kasukdulan at wakas. Kung limang bahagi ang hinihingi ng guro, gamitin ang buong talahanayan sa ibaba."
+    },
+    {
+      "type": "table",
+      "caption": "Banghay ng alamat ng palay, bersiyong Ibaloi",
+      "rows": [
+        [
+          "Bahagi",
+          "Nangyari sa kuwento"
+        ],
+        [
+          "Tauhan",
+          "Si Dackbongan na mambubunong, si Kabunian na lumikha, si Bugan na asawa ni Kabunian, at ang mga tao sa lupa"
+        ],
+        [
+          "Tagpuan",
+          "Ang lupa ng mga tao at ang Langit, ang tahanan ni Kabunian"
+        ],
+        [
+          "Simula",
+          "Walang palay ang mga tao. Inanyayahan si Dackbongan sa Langit para sa ritwal para kay Kabunian."
+        ],
+        [
+          "Saglit na kasiglahan",
+          "Nakakain si Dackbongan ng kanin, humingi ng binhi, at tinuruang magtanim sa kondisyong gagawin ang Kosday kanyaw."
+        ],
+        [
+          "Kasukdulan",
+          "Nakalimutan ni Dackbongan ang ritwal. Nagalit si Kabunian at lumikha ng mga daga na kumain sa palay."
+        ],
+        [
+          "Kakalasan",
+          "Nagsisi si Dackbongan, kaya lumikha si Kabunian ng mga pusa para hulihin ang mga daga."
+        ],
+        [
+          "Wakas",
+          "Mula noon, ginagawa na ng mga tao ang Kosday kanyaw bago umani ng palay."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Iba pang bersiyon ng alamat ng palay"
+    },
+    {
+      "type": "text",
+      "text": "Dahil halos bawat rehiyon sa bansa ay nagtatanim ng palay, marami ring kuwento kung saan ito nagmula. Ito ang tatlong madalas mabasa ng mga estudyante."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Ifugao: ang palay mula sa Skyworld"
+    },
+    {
+      "type": "text",
+      "text": "Sa kuwentong ibinahagi ng isang pamilyang magsasaka sa Ifugao sa magasing Rice Today ng IRRI noong 2014, nangaso ang magkapatid na Wigan at Kabigat ng Kiyangan hanggang makarating sila sa Kabunyan, ang Skyworld. Hilaw noon kumain ang mga tao roon. Niluto ng magkapatid ang baboy na kanilang hinuli at ibinahagi ito.\n\nBilang kapalit ng apoy, ibinigay ni Liddum, isang diyos ng Kabunyan, ang mabango at malaking butil na palay ng Skyworld. Tumatagal daw ito ng isang buong taon, hindi tulad ng palay nila sa bundok na ubos sa loob ng dalawang buwan. Nangako ang magkapatid na gagawin ang mga ritwal mula sa pagpupunla hanggang matapos ang anihan. Ayon sa kuwento, ito ang palay na tinatawag ngayong tinawon, dahil minsan lang sa isang taon kung itanim."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Tagalog: sina Banag at Danas"
+    },
+    {
+      "type": "text",
+      "text": "Sa aklat pambata ni Virgilio S. Almario na inilathala ng Adarna House, sina Banag at Danas ay magkabiyak na nakatira malapit sa dagat. Lumipat sila sa paanan ng bundok para magkaroon ng permanenteng tahanan at hindi na kailangang lumipat tuwing nauubos ang pagkain.\n\nNang dumating ang matinding tagtuyot, may natuklasang kakaibang damo si Danas. Itinuro ng mga butil nito kung paano ito aanihin, lulutuin at kakainin, at kinabukasan, kung paano ito itatanim at aalagaan. Ibinahagi nila ito sa iba, at mula noon hindi na kailangang gumala ng mga tao para maghanap ng pagkain."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Ang reyna ng mga engkantada"
+    },
+    {
+      "type": "text",
+      "text": "Sa bersiyong madalas makita sa mga koleksiyon ng alamat, mga mangangaso ang bida. Nang maubos ang hayop at bunga sa gubat, may magagandang engkantadang nagdala sa kanila sa isang kuweba. Doon, may reyna at may handaan, at unang nakita ng mga mangangaso ang pagkaing kulay puti. Binigyan sila ng reyna ng butil na itatanim sa panahon ng ulan, at itinuro kung paano ito aanihin, lilinisin at lulutuin. Ayon sa kuwento, iyon ang unang kanin.\n\nBaka may nabasa ka ring kuwento na napakalaki raw ng butil ng palay noong una at kusa itong gumugulong papunta sa kamalig. Mas kilala ang kuwentong iyon sa ibang bansa sa Asya, at wala kaming nakitang maaasahang tala na galing ito sa isang pangkat sa Pilipinas. Sa bersiyong Ifugao lang may binabanggit na malaking butil, ang palay na bigay ni Liddum."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Aral ng alamat ng palay"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Tuparin ang pangako. Nang makalimutan ni Dackbongan ang Kosday kanyaw, nagkaroon ng daga ang palayan.",
+        "Magpasalamat sa biyaya. Ang ritwal bago umani ay pagkilala na hindi lang sa sipag galing ang magandang ani.",
+        "May kapalit ang bawat biyaya. Sa kuwento ng Ifugao, apoy ang ibinigay ng tao kapalit ng palay.",
+        "Ibahagi ang natutunan. Tinuruan nina Banag at Danas ang kanilang kapwa, kaya natutong manirahan sa iisang lugar ang mga tao.",
+        "Hindi natatapos sa pagtatanim ang trabaho. Kailangang bantayan ang bukid laban sa peste gaya ng daga."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Palay festival at mga pista ng ani"
+    },
+    {
+      "type": "text",
+      "text": "Buhay pa rin ang pasasalamat sa ani sa mga pista natin ngayon. Ang Palay Festival ng Narra, Palawan ay ipinagdiriwang tuwing kalagitnaan o huling bahagi ng Oktubre. Anihan Festival ang dati nitong pangalan, at kilala ang Narra bilang Rice Granary ng Palawan dahil ito ang pangunahing bayang nagtatanim ng palay sa lalawigan.\n\nAyon sa Katala Foundation, ang pista ay pasasalamat ng mga Narranian sa magandang ani at pagpupugay sa mga magsasaka, na may parada, paligsahan ng float, trade fair at rice exhibit. Noong 2024, ginanap ang ikalabingwalong Palay Festival kasama ang Pasiklaban streetdancing competition.\n\nSa Lucban, Quezon naman, ang Pahiyas Festival tuwing Mayo 15 ay pasasalamat sa ani para kay San Isidro Labrador, ang patron ng mga magsasaka. Pinapalamutian ang mga bahay ng kiping, makukulay at manipis na pagkaing gawa sa bigas na hugis dahon, kasama ang mga gulay at prutas."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/photos/palay-heads.jpg",
+      "alt": "Mga hinog na uhay ng palay na handa nang anihin",
+      "caption": "Mga hinog na uhay ng palay bago ang anihan."
+    },
+    {
+      "type": "text",
+      "text": "Kung naghahanap ka ng palay image para sa proyekto sa paaralan, piliin ang larawang malinaw ang uhay o ang buong palayan, at isulat kung saan mo ito kinuha."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Mula sa alamat hanggang sa bukid"
+    },
+    {
+      "type": "text",
+      "text": "Ang palay sa alamat ay may kasamang bilin: tamang panahon, tamang ritwal, at pagbabantay sa peste. Ganoon din sa totoong bukid. Kung gusto mong malaman kung paano ito ginagawa ngayon, basahin ang aming gabay sa [pagtatanim ng palay](/crops/pagtatanim-ng-palay) at ang paliwanag kung ano ang [palay](/crops/palay). Para sa kapatid na kuwento, basahin ang [alamat ng mais](/blog/alamat-ng-mais).\n\nSa anee.io, may petsa ang bawat gawain sa bukid, mula punla hanggang anihan, dahil binibilang ito mula sa araw ng pagtatanim ng bawat lote sa [cropping calendar](/features/cropping-calendar). Kapag may nakita kang peste o bakas ng daga sa palayan, kunan ito ng litrato at itanong kay [Anee, ang AI technician](/features/ai-agricultural-technician) na sumasagot sa Tagalog o English."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Para sa guro at estudyante",
+      "text": "Kapag tinanong kung saan galing ang alamat, banggitin ang pangkat: Ibaloi para kina Dackbongan at Kabunian, Ifugao para kina Wigan at Kabigat, at Tagalog para kina Banag at Danas. Magkakaiba ang tauhan dahil magkakaiba ang pinagmulan ng kuwento."
+    },
+    {
+      "type": "cta",
+      "title": "Magtanim nang may plano",
+      "text": "Gumawa ng libreng cropping schedule sa anee.io at makita ang bawat gawain mula punla hanggang anihan, pati ang yugto ng palay sa bawat lote.",
+      "label": "Magsimula nang libre",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Mga tanong tungkol sa alamat ng palay"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Sino ang mga tauhan sa alamat ng palay?",
+          "a": "Sa bersiyong Ibaloi na nasa aralin ng Filipino 4, ang mga tauhan ay si Dackbongan na isang mabait na mambubunong, si Kabunian na lumikha, si Bugan na asawa ni Kabunian, at ang mga tao sa lupa."
+        },
+        {
+          "q": "Ano ang aral ng alamat ng palay?",
+          "a": "Tuparin ang pangako at magpasalamat sa biyaya. Nang makalimutan ni Dackbongan ang ritwal na ipinangako niya, nagpadala si Kabunian ng mga daga sa palayan."
+        },
+        {
+          "q": "Ano ang Kosday kanyaw?",
+          "a": "Ritwal ng pasasalamat bago umani sa kuwento ng mga Ibaloi. May paglikha ng apoy, pagsasalaysay ng kuwento ng mga diyos, at handog na baboy, at sinusundan ito ng limang araw na pahinga."
+        },
+        {
+          "q": "Saan ginaganap ang Palay Festival?",
+          "a": "Sa Narra, Palawan, tuwing kalagitnaan o huling bahagi ng Oktubre. Kilala ang Narra bilang Rice Granary ng Palawan."
+        },
+        {
+          "q": "Ilan ang bersiyon ng alamat ng palay?",
+          "a": "Marami. Ang pinakakilala ay ang bersiyon ng Ibaloi, ng Ifugao, ng Tagalog, at ang kuwento ng mga mangangaso at ng reyna ng mga engkantada."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Basahin din",
+      "items": [
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Palay: ano ito at paano palaguin",
+          "url": "/crops/palay"
+        },
+        {
+          "label": "Alamat ng mais",
+          "url": "/blog/alamat-ng-mais"
+        },
+        {
+          "label": "Ano ang ibig sabihin ng ani",
+          "url": "/blog/ani-meaning"
+        },
+        {
+          "label": "Mga salitang pambukid sa Tagalog at English",
+          "url": "/blog/farm-words-in-tagalog"
+        },
+        {
+          "label": "Mga barayti ng palay sa Pilipinas",
+          "url": "/crops/rice-varieties-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Ang Alamat ng Palay, buong teksto ng bersiyong Ibaloi (Baguio Midland Courier, 1950)",
+          "url": "https://www.slideshare.net/slideshow/02-ang-alamat-ng-palay-bjuong-teksto-pdf/275018747"
+        },
+        {
+          "label": "IRRI Rice Today: Fire for rice, the origin of Ifugao tinawon (2014)",
+          "url": "https://ricetoday.irri.org/fire-for-rice-the-origin-of-ifugao-tinawon/"
+        },
+        {
+          "label": "PBBY: pagsusuri sa Ang Alamat ng Palay ni Virgilio S. Almario, Adarna House",
+          "url": "https://www.pbby.org.ph/blog/a-blast-from-the-pasta-colorful-retelling-of-ang-alamat-ng-palay"
+        },
+        {
+          "label": "Pinoy Edition: Alamat ng Palay, unang bersiyon",
+          "url": "https://www.pinoyedition.com/mga-alamat/alamat-ng-palay-1st-version/"
+        },
+        {
+          "label": "Katala Foundation: Palay Festival ng Narra, Palawan (2008)",
+          "url": "https://www.philippinecockatoo.org/images/Publications%20and%20articles/Press%20Releases/Palay%20Festival.pdf"
+        },
+        {
+          "label": "Palawan Daily News: 18th Palay Festival sa Narra",
+          "url": "https://palawandailynews.com/provincial-news/18th-palay-festival-pasiklaban-streetdancing-competition-rocks-narra/"
+        },
+        {
+          "label": "Department of Tourism: Pahiyas Festival",
+          "url": "https://www.tourism.gov.ph/explore/pahiyas-festival/"
+        }
+      ]
+    }
+  ]
+}

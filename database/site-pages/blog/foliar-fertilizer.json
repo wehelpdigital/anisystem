@@ -1,0 +1,301 @@
+{
+  "section": "blog",
+  "slug": "foliar-fertilizer",
+  "sortOrder": 90,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "Foliar Fertilizer: When Leaf Feeding Works and When It Does Not",
+  "metaTitle": "Foliar Fertilizer: Spray Timing, Liquid Types and Limits",
+  "metaDescription": "Foliar fertilizer feeds a crop through its leaves. Learn when a foliar spray helps, why it cannot replace soil fertilizer, and how to mix and time it.",
+  "focusKeyword": "foliar fertilizer",
+  "keywords": [
+    "foliar fertilizer",
+    "foliar fertilizer spray",
+    "foliar application fertilizer",
+    "liquid fertilizer",
+    "fertilizer liquid",
+    "fertilizer 20 20 20",
+    "biostimulants",
+    "fish emulsion fertilizer",
+    "fertilizer for tomato plants"
+  ],
+  "excerpt": "Foliar fertilizer is plant food you spray on the leaves instead of putting it in the soil. It acts fast on small needs, like a zinc or boron shortage, but leaves cannot take in the large amounts of nitrogen, phosphorus and potassium a crop uses in a season. Here is how foliar feeding works, which liquid fertilizer to buy, and how to mix and time each spray.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-foliar-fertilizer.webp",
+    "alt": "A vegetable farmer spraying a cabbage field with a knapsack sprayer on a hillside farm",
+    "credit": "Doyanmoto, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Farmers call it foliar, or simply abono sa dahon, fertilizer for the leaves. The agri supply sells it as bottles of liquid, sachets of soluble powder, and organic brews such as fish amino acid. Many labels promise bigger harvests from a few sprays. The truth is narrower.\n\nThis guide sits beside our pages on [fertilizer application methods](/blog/fertilizer-application-methods) and [complete fertilizer 14 14 14](/blog/complete-fertilizer-14-14-14), because a foliar spray only works on top of a sound soil program."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How foliar fertilizer gets into a leaf"
+    },
+    {
+      "type": "text",
+      "text": "A waxy skin called the cuticle covers every leaf. Nutrients pass through tiny pores in that skin and, to a smaller degree, through the stomata, the breathing pores of the leaf. According to the University of Missouri, positively charged nutrients such as calcium, magnesium, potassium and ammonium get in more easily. Phosphorus and nitrate nitrogen have a harder time.\n\nOnly part of each spray gets in. The same Missouri review puts leaf uptake at about 15 to 20 percent of the nutrients applied. The rest dries on the surface or washes off. So foliar feeding is a small, quick dose, not a full meal."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why a foliar fertilizer spray cannot replace soil fertilizer"
+    },
+    {
+      "type": "text",
+      "text": "A crop needs nitrogen, phosphorus and potassium by the tens of kilos per hectare. For example, the PhilRice general recommendation for irrigated palay in the wet season is 97 kg of nitrogen per hectare. Leaves simply cannot absorb that much.\n\nDo the math on a typical spray. Say you mix 20 grams of a 20 20 20 powder in each 16 liter knapsack load and spray 10 loads on a hectare. That is 200 grams of product and only 40 grams of nitrogen, a tiny share of the 97 kg the crop needs. Your label gives the real rate, so treat these numbers only as a sense of scale.\n\nA Washington State University extension horticulturist makes the same point. Plants need macronutrients in large amounts, leaves cannot take up enough to supply the whole plant, and strong sprays burn leaves because the water dries and the salts stay behind. The University of Missouri calls foliar feeding a supplement to a sound soil fertility program, not a substitute for it."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When foliar application of fertilizer does make sense"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Correcting a shortage of a micronutrient such as zinc, boron, iron or manganese, when the soil holds that nutrient back and the plant needs only grams of it",
+        "Giving a quick lift while the soil fertilizer you already applied starts to work",
+        "Feeding fruit and young leaves directly, since a spray mostly stays in the tissue it lands on",
+        "High value vegetables, fruit trees and nurseries, where the cost of extra sprays pays back"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Liquid fertilizer and soluble powders you can buy"
+    },
+    {
+      "type": "text",
+      "text": "Foliar products come in three forms. Ready liquid fertilizer is a concentrate you dilute in the tank. Soluble powders, such as a 20 20 20 fertilizer, dissolve fully in water and serve both foliar feeding and drip lines. Organic liquids, such as fish amino acid and fish emulsion fertilizer, come from fermented or processed fish.\n\nWhatever the form, buy only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority). The Philippine National Standard for organic soil amendments and plant supplements, PNS/BAFS 183:2023, lists fish amino acid, fish emulsion, seaweed extracts, fermented plant juice, vermi tea and compost tea as organic plant supplements. Their total nitrogen, phosphate and potash content runs from only 0.5 to 10 percent."
+    },
+    {
+      "type": "table",
+      "caption": "Common foliar fertilizer types and what each is good for",
+      "rows": [
+        [
+          "Type",
+          "What it carries",
+          "Good for",
+          "Watch out"
+        ],
+        [
+          "20 20 20 soluble powder",
+          "Nitrogen, phosphate and potash, 20 percent each",
+          "Vegetables, nursery plants, drip lines",
+          "Burns leaves if mixed too strong"
+        ],
+        [
+          "Micronutrient foliar",
+          "Zinc, boron, iron, manganese or a mix",
+          "A shortage you have confirmed",
+          "Wasted if the soil already has enough"
+        ],
+        [
+          "Calcium or potassium foliar",
+          "Calcium or potassium salts",
+          "Fruiting vegetables and fruit trees",
+          "Cannot make up for dry or uneven watering"
+        ],
+        [
+          "Fish amino acid (FAA)",
+          "Mostly nitrogen and amino acids",
+          "Leafy vegetables, soil drench",
+          "Strong smell, dilute about 1 to 1,000"
+        ],
+        [
+          "Fish emulsion fertilizer",
+          "Mostly nitrogen, a little phosphorus and potassium",
+          "Liquid feeding of vegetables and pots",
+          "Can clog nozzles, so strain it first"
+        ],
+        [
+          "Seaweed extract",
+          "Small amounts of nutrients plus biostimulant compounds",
+          "Trials during heat or drought stress",
+          "Not a real source of NPK"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Biostimulants: what seaweed and amino acids can and cannot do"
+    },
+    {
+      "type": "text",
+      "text": "Biostimulants are products that help a plant use nutrients better or cope with stress, rather than feeding it directly. The common kinds include seaweed extracts, amino acids from protein, humic substances and beneficial microbes. Many foliar products now blend a little NPK with one of these.\n\nThere is real evidence behind some of them. In PhilRice trials over three to four seasons, biofertilizers or biostimulants used together with inorganic fertilizer gave high yields at a lower fertilizer cost per kilo of palay. All but one of the products cut inorganic fertilizer use by 25 to 50 percent. PhilRice also put the cost of these products at PHP 900 to 6,900 per hectare, depending on the number of applications.\n\nStill, keep these limits in mind:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "A biostimulant does not replace urea, complete fertilizer or potash. The crop still needs its kilos of NPK.",
+        "It will not cure a disease or kill a pest. Treat those with the right product at the label rate.",
+        "It cannot fix waterlogged, very acid or compacted soil.",
+        "Results vary by product and crop, so try it on one lot first and compare the harvest."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to mix and spray foliar fertilizer the right way"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Read the label first",
+          "text": "Follow the rate, the interval and the crops listed on the label. Check the FPA registration number on the bottle or sachet."
+        },
+        {
+          "title": "Measure, do not guess",
+          "text": "Use a measuring cup or a kitchen scale. A stronger mix does not feed faster. It burns leaves."
+        },
+        {
+          "title": "Test before tank mixing",
+          "text": "If you plan to mix foliar fertilizer with an insecticide or fungicide, both labels must allow it. Mix a small amount in a clear jar first and look for clumps or layers."
+        },
+        {
+          "title": "Spray when it is cool",
+          "text": "Spray early in the morning or late in the afternoon. The University of Missouri advises spraying while the air is relatively cool, so the droplets stay wet longer and do less harm."
+        },
+        {
+          "title": "Mist, do not drench",
+          "text": "Cover both sides of the leaves with a fine mist and stop before droplets form and run off. Dripping leaves waste product and invite leaf burn."
+        },
+        {
+          "title": "Watch the sky",
+          "text": "Skip the spray if rain is coming, because rain washes the mix off the leaves. Weaker sprays given more often are safer than one strong dose."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Example: fertilizer for tomato plants"
+    },
+    {
+      "type": "text",
+      "text": "The fertilizer for tomato plants comes mostly from the soil: compost or well rotted manure in the beds, a basal dose of complete fertilizer at transplanting, then side dressing as the plants flower and fruit. Our guide to [vegetables in the Philippines](/crops/vegetables-philippines) covers the rest.\n\nFoliar sprays come in at the edges. A micronutrient spray helps only when the plant shows a real shortage. Calcium sprays get the most attention because of blossom end rot, the dark, sunken patch at the bottom of the fruit.\n\nThe University of Maryland Extension explains that blossom end rot comes from a shortage of calcium in the enlarging fruit. Low soil pH, uneven or shallow watering, drought and too much nitrogen all make it worse. A calcium chloride spray may give some temporary relief. The lasting fix is regular, deep watering, mulch, gypsum or lime when a soil test calls for it, and less nitrogen."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Leaf burn is the most common foliar mistake",
+      "text": "When a spray dries, the water leaves but the fertilizer salts stay on the leaf. A mix that is too strong, sprayed at noon, scorches the leaf edges and tips. Stay at or below the label rate, spray in the cool hours, and try it on a few plants before the whole lot."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plan foliar sprays with anee.io"
+    },
+    {
+      "type": "text",
+      "text": "Foliar sprays pay only when they land at the right stage. The [anee.io cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero, so a spray you planned for day 20 after transplanting shows up on the right morning. Each lot also gets the week's weather for its location, which helps you pick a dry, calm day. The inventory records every bottle and sachet you use, with its cost, so you can see what foliar feeding really adds to your expenses.\n\nIf leaves turn yellow or spotted, send a photo to Anee, the AI technician. Anee answers in Tagalog or English, checks your crop's growth stage and weather first, and tells you whether it looks like a nutrient shortage, a pest or a disease."
+    },
+    {
+      "type": "cta",
+      "title": "Put every spray on your calendar",
+      "text": "Date each foliar spray from your lot's day zero, track what you used, and ask Anee when leaves look wrong.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Foliar fertilizer questions farmers ask"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can foliar fertilizer replace urea or complete fertilizer?",
+          "a": "No. Leaves take in only a small share of what you spray, and a crop needs tens of kilos of nitrogen, phosphorus and potassium per hectare. Use foliar fertilizer on top of your soil program, mainly for micronutrients or a quick lift. See our [examples of inorganic fertilizer](/blog/inorganic-fertilizer-examples) for the soil grades."
+        },
+        {
+          "q": "What time of day is best for a foliar fertilizer spray?",
+          "a": "Early morning or late afternoon, when the air is cool and there is little wind. Midday heat dries the droplets fast and leaves salts that burn the leaves."
+        },
+        {
+          "q": "Can I mix foliar fertilizer with insecticide?",
+          "a": "Only if both labels allow the mix. Do a jar test first with small amounts, and never combine products the label says to keep apart."
+        },
+        {
+          "q": "Is fish emulsion fertilizer good for a foliar spray?",
+          "a": "It can be, if you dilute it well and strain it so it does not clog the nozzle. It carries mostly nitrogen, so it suits leafy vegetables. Read more in our list of [organic fertilizer examples](/blog/organic-fertilizer-examples)."
+        },
+        {
+          "q": "How often should I spray liquid fertilizer?",
+          "a": "Follow the label interval. Spray only when the crop stage or a real shortage calls for it, since every extra round costs labor."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Fertilizer application methods",
+          "url": "/blog/fertilizer-application-methods"
+        },
+        {
+          "label": "Examples of organic fertilizer",
+          "url": "/blog/organic-fertilizer-examples"
+        },
+        {
+          "label": "Fertilizer for plants",
+          "url": "/blog/fertilizer-for-plants"
+        },
+        {
+          "label": "Complete fertilizer 14 14 14",
+          "url": "/blog/complete-fertilizer-14-14-14"
+        },
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "University of Missouri IPM: Foliar Feeding Revisited",
+          "url": "https://ipm.missouri.edu/MPG/2019/4/foliarFeeding/"
+        },
+        {
+          "label": "Washington State University Extension: The Myth of Foliar Feeding",
+          "url": "https://wpcdn.web.wsu.edu/wp-puyallup/uploads/sites/403/2015/03/foliar-feeding.pdf"
+        },
+        {
+          "label": "PhilRice: Balanced use of chemical and bio fertilizers, stimulants trim costs, yields higher",
+          "url": "https://www.philrice.gov.ph/balanced-use-of-chemical-and-bio-fertilizers-stimulants-trim-costs-yields-higher/"
+        },
+        {
+          "label": "PhilRice policy brief: Reinforcing right element, amount and timing for improved fertilizer application",
+          "url": "https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application/"
+        },
+        {
+          "label": "University of Maryland Extension: Blossom end rot of vegetables",
+          "url": "https://extension.umd.edu/resource/blossom-end-rot-vegetables"
+        },
+        {
+          "label": "BAFS: PNS/BAFS 183:2023 Organic soil amendments and plant supplements",
+          "url": "https://philippines.controlunion.com/wp-content/uploads/sites/55/2026/04/FL_20251210021315_PNSBAFS_183-2023_OSAPS_Product_Standard_Specifications.pdf"
+        },
+        {
+          "label": "University of Hawaii CTAHR: Natural Farming, Fish Amino Acid",
+          "url": "https://www.ctahr.hawaii.edu/oc/freepubs/pdf/sa-12.pdf"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,263 @@
+{
+  "section": "blog",
+  "slug": "ant-bait-and-termiticides",
+  "sortOrder": 230,
+  "lang": "en",
+  "category": "Pesticides",
+  "title": "Ant Bait and Termiticides: Controlling Ants and Termites on the Farm",
+  "metaTitle": "Ant Bait and Termiticides for Farms, Nurseries and Homes",
+  "metaDescription": "How an ant bait works, gel vs granular, the active ingredients inside, and how to deal with termites in coconut, fruit trees and farm buildings safely.",
+  "focusKeyword": "ant bait",
+  "keywords": [
+    "ant bait",
+    "termiticides"
+  ],
+  "excerpt": "An ant bait is food mixed with a slow acting insecticide. Worker ants carry it home and share it, so the poison reaches the queen and the brood that you never see. Termites need a different approach, with termiticides and good housekeeping around wood. This guide covers both, for the farm, the nursery and the house, and it tells you which agency regulates which product.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-ant-bait-and-termiticides.webp",
+    "alt": "Ants guarding gray pineapple mealybugs on a soursop fruit, the kind of colony an ant bait is meant to reach",
+    "credit": "Scot Nelson, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Most ants do little direct harm to crops. The trouble is what they protect. Ants guard mealybugs, aphids and scale insects for the sweet honeydew they give off, and they chase away the ladybugs and wasps that would eat them. So a mango branch or a pineapple row full of ants often hides a sucking pest problem. Our guide to [hanip, mites and aphids](/problems/hanip-mites-and-aphids) covers the sap suckers themselves.\n\nAnts also carry off seeds from seedbeds, move into pots in the nursery and bite the hands of workers. But not every langgam is an enemy. Red weaver ants, the big biting hantik that sew leaves into nests, hunt many pests in mango, citrus and cacao. Research programs in the Philippines study them as biological control, so think twice before you poison a hantik tree."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How an ant bait works"
+    },
+    {
+      "type": "text",
+      "text": "An ant bait has two parts: a food the ants want and an insecticide that kills slowly. The slowness is the point. UC IPM explains that the poison must act slowly so the workers get back to the nest before they die. There the bait passes from mouth to mouth to other workers, larvae and queens.\n\nA spray works the other way around. It kills the foragers you see and leaves the nest alive, and the queen keeps laying. That is why UC IPM advises against using insecticide sprays while you are baiting."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Types of ant bait"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Gel baits** come in a tube or syringe. You put small dots in cracks and along trails, which suits kitchens, stores and bodegas.",
+        "**Granular baits** look like fine grits or corn meal. You scatter them near nests and trails outdoors, and some are registered for field use in pineapple.",
+        "**Liquid baits** are sugar water with a slow poison, usually in a refillable station. Sweet loving ants that tend mealybugs often take them readily.",
+        "**Bait stations** are small closed boxes or stakes that hold gel, liquid or granules. They keep the bait away from children, pets and chickens."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is inside the bait"
+    },
+    {
+      "type": "table",
+      "caption": "Sources: UC IPM Pest Notes on ants, IRAC mode of action classification and the FPA list of registered agricultural pesticides as of August 31, 2026.",
+      "rows": [
+        [
+          "Active ingredient",
+          "IRAC group",
+          "Where farmers meet it"
+        ],
+        [
+          "Hydramethylnon",
+          "20A",
+          "granular ant bait registered with the FPA for ants in pineapple"
+        ],
+        [
+          "Fipronil",
+          "2B",
+          "household gel baits, and corn seed treatments that list ants among their targets"
+        ],
+        [
+          "Boric acid and other borates",
+          "8D",
+          "household liquid and gel baits"
+        ],
+        [
+          "Abamectin",
+          "6",
+          "some household ant baits"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Hydramethylnon is a good example of why slow matters. It blocks how the insect's cells make energy instead of attacking its nerves, and ants must eat it to be affected. Several hydramethylnon ant bait products appear on the FPA list for pineapple, all in toxicity category 4, the lowest band."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Using ant baits on farms, nurseries and homes"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Follow the trail",
+          "text": "Watch where the ants walk in the early morning or late afternoon. Put the bait on or right beside the trail, as close to the nest as you can."
+        },
+        {
+          "title": "Keep it off the crop",
+          "text": "Place baits on the ground or in stations, not on leaves or fruit. On a farm, use only an ant bait whose label names your crop."
+        },
+        {
+          "title": "Stop spraying nearby",
+          "text": "Do not spray Karate, Cymbush or any other insecticide on the same trail while you bait, or the ants will die before they share it."
+        },
+        {
+          "title": "Give it days, not hours",
+          "text": "Refill the bait when it runs out. Colonies shrink over several days, and a big nest may need more than one round."
+        },
+        {
+          "title": "Check the sucking pests",
+          "text": "Once the ants go, look again at the mealybugs or aphids they were guarding. Their natural enemies can now reach them."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "For the house and the sari sari store, remember that household ant baits are not an FPA matter. The FPA says a 2007 Supreme Court ruling placed pesticides for urban and household use under the Food and Drug Administration. So a household ant bait should carry an FDA registration, which you can check on the FDA verification portal."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Termites and termiticides on the farm"
+    },
+    {
+      "type": "text",
+      "text": "Anay, or termites, eat wood and anything else made of cellulose. Some species attack living plants too. The Asian subterranean termite, also called the Philippine milk termite, prefers living trees such as mango, citrus, coconut and cassava. Young seedlings and newly transplanted trees suffer most, because termites can hollow out the roots and the base of the stem.\n\nWatch for thin mud tubes running up trunks and posts, wood that sounds hollow when tapped, and young trees that wilt for no clear reason. Then remove old stumps, buried lumber and dead roots near the nursery, since these feed and shelter colonies. Also keep mulch and wood chips a hand's width away from the base of young trees."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Termiticides for coconut and fruit trees"
+    },
+    {
+      "type": "text",
+      "text": "Check the label before you buy termiticides for crops. When we searched the FPA list of registered agricultural pesticides as of August 31, 2026, the termite listings we found were imidacloprid products for sugarcane. We did not find a termite listing for coconut, mango or other fruit trees. So ask your municipal agriculturist or the Philippine Coconut Authority first, and use only a product whose label names your crop and termites. See our guides to [fertilizing coconut](/crops/coconut-fertilizer) and [growing fruit trees](/crops/pagtatanim-ng-puno) for the rest of tree care."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Termiticides for farm buildings"
+    },
+    {
+      "type": "text",
+      "text": "Termite work on houses, bodegas and farm sheds falls under household and urban pest control, which the FDA regulates. Under a 2022 FDA circular, a pest control company needs an FDA license to operate and may use only FDA registered household pesticides. So hire a licensed operator and ask to see the license. You can also help by keeping lumber off bare soil, fixing roof and pipe leaks, and using treated wood for posts."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Keep baits and termiticides safe",
+      "text": "Keep every bait out of reach of children, pets, chickens and pigs. Never put baits near wells, water jars or food. Wear gloves when you handle termiticides, and follow the label on dose, placement and disposal. If a child eats bait, bring the label to the nearest health center right away."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Track it in anee.io"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, you can send a photo of ants on a plant to Anee, the [AI agricultural technician](/features/ai-agricultural-technician), and ask what pest they are guarding. The [farm inventory](/features/farm-inventory-and-expenses) keeps count of your baits and termiticides and what each one cost. And a reminder on the [cropping calendar](/features/cropping-calendar) tells you when to check and refill the bait stations."
+    },
+    {
+      "type": "cta",
+      "title": "Find the pest behind the ants",
+      "text": "Ask Anee about a photo in Tagalog or English, keep your baits in the inventory, and set reminders for every bait check.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions farmers ask"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the best ant bait?",
+          "a": "There is no single best one. Different ants prefer different foods, so try a small amount first. If they ignore it after a day, switch to a bait with a different food base or active ingredient."
+        },
+        {
+          "q": "Can I just spray Karate on the ants?",
+          "a": "A pyrethroid spray kills the foragers you see but not the queen, and the nest recovers. Baits reach the colony. See our page on [Karate, Cymbush and Selecron](/blog/karate-cymbush-selecron-insecticides) for what those sprays are for."
+        },
+        {
+          "q": "Who regulates ant baits and termiticides for homes?",
+          "a": "The Food and Drug Administration regulates household and urban pesticides. The FPA covers agricultural pesticides."
+        },
+        {
+          "q": "Are all ants bad for the farm?",
+          "a": "No. Red weaver ants, or hantik, hunt many pests in mango, citrus and cacao. The ants to worry about are the ones guarding mealybugs, aphids and scale insects."
+        },
+        {
+          "q": "How do I know termites are in my trees?",
+          "a": "Look for mud tubes on the trunk, hollow sounding wood, and young trees that wilt suddenly. Dig gently at the base to check the roots."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Hanip, mites and aphids",
+          "url": "/problems/hanip-mites-and-aphids"
+        },
+        {
+          "label": "Karate, Cymbush and Selecron",
+          "url": "/blog/karate-cymbush-selecron-insecticides"
+        },
+        {
+          "label": "Coconut fertilizer",
+          "url": "/crops/coconut-fertilizer"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "UC IPM Pest Notes: Ants",
+          "url": "https://ipm.ucanr.edu/PMG/PESTNOTES/pn7411.html"
+        },
+        {
+          "label": "NPIC: Hydramethylnon general fact sheet",
+          "url": "https://npic.orst.edu/factsheets/hydragen.pdf"
+        },
+        {
+          "label": "IRAC: Mode of action classification",
+          "url": "https://irac-online.org/mode-of-action/classification-online/"
+        },
+        {
+          "label": "FPA: Registered products (pesticide list as of August 31, 2026)",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        },
+        {
+          "label": "FPA: Frequently asked questions",
+          "url": "https://fpa.da.gov.ph/faqs/"
+        },
+        {
+          "label": "FDA: 2022 circular on licensing household and urban pest control operators",
+          "url": "https://www.fda.gov.ph/fda-circular-no-2022-010-implementing-guidelines-of-department-of-health-doh-administrative-order-ao-no-2019-0010-on-the-issuance-of-license-to-operate-as-household-urban-pest-control-operator/"
+        },
+        {
+          "label": "Pacific Pests, Pathogens and Weeds: Asian subterranean termite",
+          "url": "https://apps.lucidcentral.org/pppw_v12/text/web_mini/entities/asian_subterranean_termite_384.htm"
+        },
+        {
+          "label": "DOST PCAARRD: Red weaver ant and lynx spider for cacao pests",
+          "url": "https://ispweb.pcaarrd.dost.gov.ph/mass-rearing-augmentation-and-conservation-of-the-biological-control-agents-bcas-lynx-spider-oxyopes-javanus-and-red-weaver-ant-oecophylla-smaragdina-for-the-management-of-insect-pests-of-caca/"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "section": "features",
+  "slug": "protocol-builder",
+  "sortOrder": 100,
+  "lang": "en",
+  "category": "Planning",
+  "title": "Crop Protocol Builder: Plan the Whole Season Before Day Zero",
+  "metaTitle": "Crop Protocol Builder: Plan Your Season Ahead",
+  "metaDescription": "Build a crop protocol before the season: tasks on a DAS, DAT or DAP count, materials with rates, rules and versions. Then import it as a new schedule.",
+  "focusKeyword": "crop protocol",
+  "keywords": [
+    "crop protocol",
+    "protocol builder",
+    "crop protocol analysis",
+    "days after sowing",
+    "DAS DAT DAP",
+    "fertilizer for rice"
+  ],
+  "excerpt": "A crop protocol is the season written in advance: what to do, with what, at what rate and on which day of the count. The Protocol Builder in anee.io lets you write it once, keep versions, have Anee review it, and import it as a new cropping schedule when you plant.",
+  "heroImage": {
+    "src": "/images/site/photos/palay-phone.jpg",
+    "alt": "An older farmer crouches among ripening palay, reading his crop protocol on a phone",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Write your crop protocol on a day count"
+    },
+    {
+      "type": "text",
+      "text": "Pick the crop and the count it runs on. Use DAS, days after sowing, for direct seeded crops. Transplanted rice runs on DAT, days after transplanting, with its seedbed days before it. Corn and most vegetables use DAP, days after planting. Tree crops use DOS, the days since the program started. Then add tasks, each on its day. A task can even sit before day zero, like land preparation 14 days before sowing."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "The day on the count, or the days before it starts",
+        "The kind of work and how important it is",
+        "What to apply, in groups, with each material and its rate",
+        "A note for whoever does it, and the workers it needs"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Notes sit among the tasks for anything you want to remember on a day. Dividers mark the phases, like vegetative or reproductive. Drag tasks to reorder them, and the builder warns you if a drop breaks the day order."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Materials and rules"
+    },
+    {
+      "type": "text",
+      "text": "The Materials tab lists the inputs the protocol calls for, so you know what to buy before the season starts. The Rules tab keeps the standing rules of your plan, like no spraying when rain is near, written once and kept with it."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Warnings while you write"
+    },
+    {
+      "type": "text",
+      "text": "As you go, the builder checks your plan. It flags two herbicides within three days, two fertilizer applications within two days and two sprays on the same day. It also catches copper mixed with a foliar feed or oil, a sprayer tank shared with herbicide, and any spray within 14 days of harvest. You decide what to change."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Save versions and let Anee review"
+    },
+    {
+      "type": "text",
+      "text": "Save a version before you try a new idea, like a split fertilizer schedule, and switch between versions to compare. Each version keeps its own tasks, materials and rules.\n\nWhen the plan is ready, tap Analyze by Anee. She reads the whole protocol and gives it a score out of 100, with its strengths, its gaps and its risks. Each task gets a mark of good, check or concern with a short note. She may also suggest tasks you left out, and you can add one with a single tap. Every review stays in the Analyses tab. The review runs on credits, like everything [Anee, the AI technician](/features/ai-agricultural-technician) does."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Import the protocol as a new cropping schedule"
+    },
+    {
+      "type": "text",
+      "text": "When planting day comes, port the protocol to a new cropping schedule. Name the lots and give each its start date, plus the transplanting date for transplanted rice. The builder then lays every task on the [cropping calendar](/features/cropping-calendar), dated from each lot's day zero. Tell it how many workers you have, and it spreads the tasks so no day carries more than they can handle.\n\nNot sure where to start? The Crop Protocol Analysis on the [when to plant analysis](/features/when-to-plant-analysis) page can write a first draft by growth stage for your crop and month. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) also lists the usual application timings."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "One protocol, many seasons",
+      "text": "Keep your best protocol and port it again next season. Each lot keeps its own day zero, so the same plan fits a lot planted two weeks later. Once it runs, [growth stages and weather](/features/growth-stages-and-weather) show how each lot is keeping up."
+    },
+    {
+      "type": "cta",
+      "title": "Write your next season today",
+      "text": "The Protocol Builder is on every plan, including the free Libre plan. Sign up and start writing.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the crop protocol builder"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is a crop protocol?",
+          "a": "It is the full plan for one crop: every task, material and rate, set on a day count from sowing, transplanting or planting."
+        },
+        {
+          "q": "Is the Protocol Builder free?",
+          "a": "Yes. Every plan can build protocols. Anee's review uses credits and needs a plan with Anee."
+        },
+        {
+          "q": "Can I use one protocol on several lots?",
+          "a": "Yes. When you port it, add as many lots as your plan allows, each with its own start date."
+        },
+        {
+          "q": "What does Anee check in a review?",
+          "a": "She looks at the timing and order of the tasks, the materials and rates, and what is missing. You get a score, strengths, gaps, risks and a note on each task."
+        },
+        {
+          "q": "Can I keep an old version?",
+          "a": "Save versions and switch between them any time. Each one keeps its own tasks, materials and rules."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "When to plant analysis",
+          "url": "/features/when-to-plant-analysis"
+        },
+        {
+          "label": "Growth stages and weather",
+          "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        }
+      ]
+    }
+  ]
+}

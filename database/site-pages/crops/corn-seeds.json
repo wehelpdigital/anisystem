@@ -1,0 +1,246 @@
+{
+  "section": "crops",
+  "slug": "corn-seeds",
+  "sortOrder": 50,
+  "lang": "en",
+  "category": "Mais",
+  "title": "Corn Seeds: How to Choose, Plant and Grow an Even Stand",
+  "metaTitle": "Corn Seeds: Choosing Varieties, Seeding Rate and Spacing",
+  "metaDescription": "Choose corn seeds that fit your field and buyer: hybrid, OPV or GM, yellow or white. Get DA seeding rates, spacing and tips for strong corn seedlings.",
+  "focusKeyword": "corn seeds",
+  "keywords": [
+    "corn seeds",
+    "corn seedling",
+    "seeds corn",
+    "variety of corn",
+    "corn breed",
+    "corn kernel",
+    "corn scientific name",
+    "when fertilization occurs",
+    "corn seed grow a garden roblox"
+  ],
+  "excerpt": "The corn seeds you buy set the ceiling on your harvest before the first rain falls. This guide covers the kinds of seed sold in the Philippines. It shows how to pick a variety of corn for your field and your buyer. It also gives the seeding rate and spacing from the DA, and the care that turns seed into an even stand of corn seedlings.",
+  "heroImage": {
+    "src": "/images/site/corn-rows.jpg",
+    "alt": "Even rows of young corn plants grown from corn seeds in a freshly weeded field",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Kinds of corn seeds in the Philippines"
+    },
+    {
+      "type": "text",
+      "text": "Corn farmers in the Philippines choose among three groups of seeds. Knowing the group tells you what yield to expect, what the crop needs from you, and whether you can save seed for next season."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Hybrid seeds"
+    },
+    {
+      "type": "text",
+      "text": "Most yellow corn planted for feeds is hybrid. Hybrids come as single cross or three way cross seed, and they pay back good soil, fertilizer and water with higher yields. The DA Cagayan Valley techno guide lists hybrids with yield potentials of about 5 to 13 tons per hectare. Its open pollinated varieties range from about 4 to 6 tons.\n\nThe catch is that you must buy new seed every season. Seed saved from a hybrid does not breed true, so the next crop comes out uneven and yields less."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Open pollinated varieties (OPV)"
+    },
+    {
+      "type": "text",
+      "text": "OPVs are the usual choice for white corn, glutinous corn and many upland farms. Yields are lower, but seed costs less and you can keep your own seed if you select good ears and plant away from other corn. One example is IPB Var 6, a white quality protein maize from the Institute of Plant Breeding at UPLB. It has more lysine and tryptophan than regular white corn, and UPLB promotes it for grits."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "GM corn"
+    },
+    {
+      "type": "text",
+      "text": "The Philippines approved genetically modified corn for planting in 2002, the first country in Asia to allow Bt corn. Two traits matter in the field. Bt protects the plant from the Asiatic corn borer, while herbicide tolerance lets you control weeds with one broad spectrum herbicide.\n\nGM corn covered about 709,000 hectares by February 2024, based on the USDA 2024 biotechnology report. That is around 85 percent of the country's corn area. Nearly all of it carries both traits stacked. The Bureau of Plant Industry keeps the official list of GM corn events approved for planting."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to choose a variety of corn"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Start with your buyer.** Feed mills and traders want yellow corn. Grits millers want white flint corn. Green corn buyers want sweet or glutinous ears, so plant what someone near you will buy.",
+        "**Match the season.** Corn matures in about 95 to 120 days after planting, depending on variety, season and location. A shorter maturing variety fits a tight dry season window better.",
+        "**Read the resistance.** Seed tags and DA variety lists rate resistance to corn borer, earworm and leaf diseases. Pick resistance to the problems your area already has.",
+        "**Buy certified seed.** The DA guide recommends certified seeds. Buy sealed bags from an accredited dealer or through your municipal agriculture office, and check the variety name and lot number on the tag.",
+        "**Ask what worked next door.** A corn breed that did well on your neighbor's soil, in your weather, is a safer bet than a new name you have never seen grow."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "anee.io also has Variety Research and Comparison, plus [When to Plant Analysis](/features/when-to-plant-analysis) for your town. So you can test a variety of corn and a planting window against local weather before you spend on seed."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Corn seeds per hectare and spacing"
+    },
+    {
+      "type": "text",
+      "text": "The seeding rate depends on the seed type and the plant population you want. These figures come from the DA Regional Field Office 2 corn techno guide. If the seed company gives different numbers on the bag, follow the bag for that hybrid."
+    },
+    {
+      "type": "table",
+      "caption": "Seeding rate and spacing from the DA Cagayan Valley corn techno guide (revised 2012)",
+      "rows": [
+        [
+          "Seed type",
+          "Seed per hectare",
+          "Row spacing",
+          "Hill spacing",
+          "Target plants per hectare"
+        ],
+        [
+          "Hybrid",
+          "22 to 24 kg",
+          "70 cm",
+          "18 to 20 cm",
+          "At least 75,000"
+        ],
+        [
+          "OPV, white or glutinous",
+          "20 kg",
+          "75 cm",
+          "25 cm",
+          "At least 50,000"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Plant one seed per hill after setting the furrows, and cover it with about 3.5 cm of soil. If you grow green corn and want bigger ears, the same guide suggests a wider 30 by 75 cm spacing.\n\nAlso try to plant at the same time as the farms around you. Synchronous planting is the first defense the DA lists against the corn borer."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Corn seedling emergence and early care"
+    },
+    {
+      "type": "text",
+      "text": "In warm, moist soil a corn seedling can break the surface in as little as four days after planting, according to Purdue University. Crusted, cloddy or compacted soil slows or stops emergence, so prepare a fine, even seedbed before you plant.\n\nAbout a week after planting, walk the rows and count missing hills. Then replant the gaps quickly so the whole stand grows and ripens together."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Weeds.** The first 30 days are the most critical for weed competition. If weeds build up, off bar at 15 to 20 days after planting.",
+        "**Basal fertilizer.** At planting, apply all the phosphorus and potassium and half the nitrogen, plus at least ten bags of organic fertilizer per hectare. Base the rate on a soil test, and see our [fertilizer calculation](/blog/fertilizer-calculation) guide.",
+        "**Hilling up and nitrogen.** Hill up at 21 to 30 days after planting, at the same time you side dress the second half of the nitrogen, usually as [urea fertilizer](/blog/urea-fertilizer).",
+        "**Pests.** [Cutworms](/problems/cutworm) cut seedlings at the soil line at night, and field crickets cut them too. The [fall armyworm](/problems/fall-armyworm) feeds in the young whorl, even in Bt fields, so scout every week."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "anee.io puts these dates on the [cropping calendar](/features/cropping-calendar) for each lot, counted from its own planting day. It then reminds you when off barring, side dressing or scouting falls due."
+    },
+    {
+      "type": "cta",
+      "title": "Plan your corn season before you buy seed",
+      "text": "Create a free anee.io cropping schedule, add your lots and planting date, and every task from basal fertilizer to harvest lands on the calendar. Inventory keeps track of your seed and fertilizer as you use them.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "From seed to kernel: when fertilization occurs"
+    },
+    {
+      "type": "text",
+      "text": "Whatever the brand on the bag, every seed is Zea mays, the corn scientific name. Each one follows the same path to grain. At flowering, fertilization occurs when pollen from the tassel lands on a silk, and each fertilized silk becomes one corn kernel. Drought or poor nutrition at silking leaves gaps on the cob, so even the best seed needs water at the right time. Read more in our guide to the [corn kernel](/crops/corn-kernel)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Corn seeds FAQ"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How many kilos of corn seeds do I need per hectare?",
+          "a": "The DA Cagayan Valley guide lists 22 to 24 kg of hybrid seed or about 20 kg of OPV seed per hectare. Also check the seed bag, because companies set spacing for their own hybrids."
+        },
+        {
+          "q": "Can I plant seeds from my hybrid corn harvest?",
+          "a": "You can, but expect an uneven crop and a lower yield, because hybrid seed does not breed true. You can save OPV seed, such as white or glutinous varieties, if you select good ears."
+        },
+        {
+          "q": "Which variety of corn is best for mais rice?",
+          "a": "Hard white flint corn. UPLB promotes IPB Var 6, a white quality protein maize, for grits. See our [mais rice](/crops/mais-rice) page."
+        },
+        {
+          "q": "Is this about the corn seed in Grow a Garden on Roblox?",
+          "a": "No, this page is about real corn seeds for real fields. If you came here from the Grow a Garden game, welcome anyway. The real crop takes about 95 to 120 days from planting to harvest."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More corn guides",
+      "items": [
+        {
+          "label": "Corn kernel: parts, kinds and price",
+          "url": "/crops/corn-kernel"
+        },
+        {
+          "label": "Pagtatanim ng mais",
+          "url": "/crops/pagtatanim-ng-mais"
+        },
+        {
+          "label": "Cutworm",
+          "url": "/problems/cutworm"
+        },
+        {
+          "label": "Fall armyworm",
+          "url": "/problems/fall-armyworm"
+        },
+        {
+          "label": "Asian corn borer",
+          "url": "/problems/asian-corn-borer"
+        },
+        {
+          "label": "Cropping calendar on anee.io",
+          "url": "/features/cropping-calendar"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DA Regional Field Office 2: Corn Production Techno Guide (revised 2012)",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
+        },
+        {
+          "label": "USDA FAS: Philippines Agricultural Biotechnology Annual 2024",
+          "url": "https://apps.fas.usda.gov/newgainapi/api/Report/DownloadReportByFileName?fileName=Agricultural+Biotechnology+Annual_Manila_Philippines_RP2024-0039.pdf"
+        },
+        {
+          "label": "Purdue University: The emergence process in corn",
+          "url": "https://www.agry.purdue.edu/ext/corn/news/timeless/emergence.html"
+        },
+        {
+          "label": "UPLB Horizon: Achieving rice sufficiency with rice corn blend",
+          "url": "https://horizon.uplb.edu.ph/horizon-magazine-2018/achieving-rice-sufficiency-with-rice-corn-blend/"
+        },
+        {
+          "label": "Iowa State University Extension: The birds and bees of corn pollination",
+          "url": "https://crops.extension.iastate.edu/post/birds-and-bees-corn-pollination"
+        }
+      ]
+    }
+  ]
+}

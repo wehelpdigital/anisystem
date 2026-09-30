@@ -1,0 +1,1650 @@
+{
+ "palay": {
+  "volume": 12100,
+  "pages": [
+   "crops/palay",
+   "crops/pagtatanim-ng-palay",
+   "blog/palay-price-philippines",
+   "crops/rice-varieties-philippines"
+  ]
+ },
+ "palayan nueva ecija": {
+  "volume": 12100,
+  "pages": [
+   "blog/palayan-nueva-ecija",
+   "crops/palay"
+  ]
+ },
+ "ani": {
+  "volume": 9900,
+  "pages": [
+   "blog/ani-meaning",
+   "crops/pagtatanim-ng-palay",
+   "features/farm-reports"
+  ]
+ },
+ "corn kernel": {
+  "volume": 8100,
+  "pages": [
+   "crops/corn-kernel",
+   "crops/mais-rice",
+   "crops/corn-seeds"
+  ]
+ },
+ "alamat ng palay": {
+  "volume": 6600,
+  "pages": [
+   "blog/alamat-ng-palay",
+   "blog/alamat-ng-mais",
+   "crops/palay"
+  ]
+ },
+ "palayan": {
+  "volume": 6600,
+  "pages": [
+   "blog/palayan-nueva-ecija",
+   "crops/palay",
+   "blog/farm-words-in-tagalog"
+  ]
+ },
+ "palay in english": {
+  "volume": 5400,
+  "pages": [
+   "crops/palay",
+   "blog/farm-words-in-tagalog"
+  ]
+ },
+ "palaya natural farm": {
+  "volume": 5400,
+  "pages": [
+   "blog/organic-fertilizer-examples",
+   "crops/vegetables-philippines"
+  ]
+ },
+ "fertilizer urea": {
+  "volume": 5400,
+  "pages": [
+   "blog/urea-fertilizer",
+   "blog/fertilizer-for-rice",
+   "blog/fertilizer-calculation"
+  ]
+ },
+ "corn flakes": {
+  "volume": 4400,
+  "pages": [
+   "crops/corn-kernel",
+   "crops/mais-rice"
+  ]
+ },
+ "corn husk": {
+  "volume": 3600,
+  "pages": [
+   "crops/corn-kernel",
+   "crops/pagtatanim-ng-mais"
+  ]
+ },
+ "fertilizer plants": {
+  "volume": 3600,
+  "pages": [
+   "blog/fertilizer-for-plants",
+   "blog/organic-fertilizer-examples"
+  ]
+ },
+ "weeds in tagalog": {
+  "volume": 2900,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "problems/common-weeds-philippines"
+  ]
+ },
+ "thrips insect": {
+  "volume": 2900,
+  "pages": [
+   "problems/thrips",
+   "problems/rice-insects"
+  ]
+ },
+ "pagtatanim": {
+  "volume": 2900,
+  "pages": [
+   "crops/pagtatanim-ng-palay",
+   "crops/pagtatanim-ng-gulay",
+   "crops/pagtatanim-ng-puno"
+  ]
+ },
+ "diseased in tagalog": {
+  "volume": 2900,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "problems/anthracnose"
+  ]
+ },
+ "thrips": {
+  "volume": 2900,
+  "pages": [
+   "problems/thrips",
+   "crops/vegetables-philippines",
+   "problems/hanip-mites-and-aphids"
+  ]
+ },
+ "foliar fertilizer": {
+  "volume": 2900,
+  "pages": [
+   "blog/foliar-fertilizer",
+   "blog/fertilizer-application-methods",
+   "crops/vegetables-philippines"
+  ]
+ },
+ "alitangya": {
+  "volume": 2400,
+  "pages": [
+   "problems/rice-bug",
+   "blog/farm-words-in-tagalog"
+  ]
+ },
+ "pagtatanim ng puno": {
+  "volume": 2400,
+  "pages": [
+   "crops/pagtatanim-ng-puno",
+   "crops/coconut-fertilizer"
+  ]
+ },
+ "corn scientific name": {
+  "volume": 2400,
+  "pages": [
+   "crops/corn-kernel",
+   "crops/corn-seeds"
+  ]
+ },
+ "fertilizer pesticide authority": {
+  "volume": 2400,
+  "pages": [
+   "blog/fertilizer-and-pesticide-authority",
+   "blog/fertilizer-brands-and-dealers"
+  ]
+ },
+ "fertilizer and pesticide authority": {
+  "volume": 2400,
+  "pages": [
+   "blog/fertilizer-and-pesticide-authority",
+   "blog/rice-insecticides-alika-virtako-chess",
+   "blog/karate-cymbush-selecron-insecticides"
+  ]
+ },
+ "bugs in tagalog": {
+  "volume": 2400,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "problems/rice-bug"
+  ]
+ },
+ "fertilizer 14 14 14": {
+  "volume": 2400,
+  "pages": [
+   "blog/complete-fertilizer-14-14-14",
+   "blog/fertilizer-for-rice",
+   "crops/vegetables-philippines"
+  ]
+ },
+ "fertilizer dealer supply": {
+  "volume": 1900,
+  "pages": [
+   "blog/fertilizer-brands-and-dealers",
+   "blog/fertilizer-and-pesticide-authority"
+  ]
+ },
+ "14 14 14 fertilizer": {
+  "volume": 1900,
+  "pages": [
+   "blog/complete-fertilizer-14-14-14",
+   "blog/fertilizer-calculation"
+  ]
+ },
+ "rice seed": {
+  "volume": 1900,
+  "pages": [
+   "crops/palay",
+   "crops/rice-varieties-philippines",
+   "crops/pagtatanim-ng-palay"
+  ]
+ },
+ "rice seeds": {
+  "volume": 1900,
+  "pages": [
+   "crops/rice-varieties-philippines",
+   "crops/palay"
+  ]
+ },
+ "rice bug": {
+  "volume": 1900,
+  "pages": [
+   "problems/rice-bug",
+   "problems/rice-insects",
+   "problems/rice-black-bug"
+  ]
+ },
+ "rice palay price philippines": {
+  "volume": 1900,
+  "pages": [
+   "blog/palay-price-philippines",
+   "crops/palay"
+  ]
+ },
+ "seeds rice": {
+  "volume": 1900,
+  "pages": [
+   "crops/palay",
+   "crops/rice-varieties-philippines"
+  ]
+ },
+ "rice bugs": {
+  "volume": 1900,
+  "pages": [
+   "problems/rice-bug",
+   "problems/rice-insects"
+  ]
+ },
+ "16 20 0 fertilizer": {
+  "volume": 1600,
+  "pages": [
+   "blog/16-20-0-fertilizer",
+   "blog/fertilizer-for-rice",
+   "blog/fertilizer-calculation"
+  ]
+ },
+ "corn seeds": {
+  "volume": 1600,
+  "pages": [
+   "crops/corn-seeds",
+   "crops/pagtatanim-ng-mais",
+   "crops/corn-kernel"
+  ]
+ },
+ "fungicide": {
+  "volume": 1600,
+  "pages": [
+   "blog/fungicides",
+   "problems/anthracnose",
+   "problems/sheath-blight",
+   "problems/fusarium-wilt"
+  ]
+ },
+ "corn seedling": {
+  "volume": 1600,
+  "pages": [
+   "crops/corn-seeds",
+   "problems/cutworm"
+  ]
+ },
+ "fertilizer complete": {
+  "volume": 1600,
+  "pages": [
+   "blog/complete-fertilizer-14-14-14",
+   "blog/inorganic-fertilizer-examples"
+  ]
+ },
+ "complete fertilizer": {
+  "volume": 1600,
+  "pages": [
+   "blog/complete-fertilizer-14-14-14",
+   "blog/fertilizer-application-methods",
+   "crops/pagtatanim-ng-gulay"
+  ]
+ },
+ "mite in tagalog": {
+  "volume": 1300,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "problems/hanip-mites-and-aphids"
+  ]
+ },
+ "agriculture in economy": {
+  "volume": 1300,
+  "pages": [
+   "blog/agriculture-in-the-philippine-economy",
+   "blog/ani-meaning"
+  ]
+ },
+ "ant bait": {
+  "volume": 1300,
+  "pages": [
+   "blog/ant-bait-and-termiticides",
+   "blog/karate-cymbush-selecron-insecticides"
+  ]
+ },
+ "maggots in tagalog": {
+  "volume": 1300,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "blog/organic-fertilizer-examples"
+  ]
+ },
+ "mites in tagalog": {
+  "volume": 1300,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "problems/hanip-mites-and-aphids"
+  ]
+ },
+ "21 0 0 fertilizer": {
+  "volume": 1300,
+  "pages": [
+   "blog/ammonium-sulfate-21-0-0",
+   "blog/fertilizer-for-rice",
+   "blog/urea-fertilizer"
+  ]
+ },
+ "palayan drawing": {
+  "volume": 1300,
+  "pages": [
+   "blog/palayan-nueva-ecija",
+   "crops/palay"
+  ]
+ },
+ "anthracnose": {
+  "volume": 1300,
+  "pages": [
+   "problems/anthracnose",
+   "blog/fungicides",
+   "crops/vegetables-philippines"
+  ]
+ },
+ "corns in tagalog": {
+  "volume": 1300,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "crops/corn-kernel"
+  ]
+ },
+ "palayan in english": {
+  "volume": 1300,
+  "pages": [
+   "blog/palayan-nueva-ecija",
+   "blog/farm-words-in-tagalog"
+  ]
+ },
+ "vegetables in the philippines": {
+  "volume": 1300,
+  "pages": [
+   "crops/vegetables-philippines",
+   "crops/pagtatanim-ng-gulay"
+  ]
+ },
+ "fall armyworm": {
+  "volume": 1000,
+  "pages": [
+   "problems/fall-armyworm",
+   "problems/asian-corn-borer",
+   "crops/pagtatanim-ng-mais"
+  ]
+ },
+ "ammonium sulfate fertilizer": {
+  "volume": 1000,
+  "pages": [
+   "blog/ammonium-sulfate-21-0-0",
+   "blog/inorganic-fertilizer-examples"
+  ]
+ },
+ "cutworm": {
+  "volume": 1000,
+  "pages": [
+   "problems/cutworm",
+   "crops/pagtatanim-ng-gulay"
+  ]
+ },
+ "mais rice": {
+  "volume": 1000,
+  "pages": [
+   "crops/mais-rice",
+   "crops/corn-kernel"
+  ]
+ },
+ "syngenta philippines": {
+  "volume": 1000,
+  "pages": [
+   "blog/rice-insecticides-alika-virtako-chess",
+   "blog/fungicides"
+  ]
+ },
+ "fertilizer yara": {
+  "volume": 1000,
+  "pages": [
+   "blog/fertilizer-brands-and-dealers",
+   "blog/complete-fertilizer-14-14-14"
+  ]
+ },
+ "atlas fertilizer": {
+  "volume": 1000,
+  "pages": [
+   "blog/fertilizer-brands-and-dealers",
+   "blog/16-20-0-fertilizer"
+  ]
+ },
+ "alika insecticide": {
+  "volume": 1000,
+  "pages": [
+   "blog/rice-insecticides-alika-virtako-chess",
+   "problems/rice-bug"
+  ]
+ },
+ "rice black bug": {
+  "volume": 1000,
+  "pages": [
+   "problems/rice-black-bug",
+   "problems/rice-insects"
+  ]
+ },
+ "pagtatanim ng palay": {
+  "volume": 880,
+  "pages": [
+   "crops/pagtatanim-ng-palay",
+   "crops/palay",
+   "blog/alamat-ng-palay"
+  ]
+ },
+ "rice variety philippines": {
+  "volume": 880,
+  "pages": [
+   "crops/rice-varieties-philippines",
+   "crops/palay"
+  ]
+ },
+ "virtako insecticide": {
+  "volume": 880,
+  "pages": [
+   "blog/rice-insecticides-alika-virtako-chess",
+   "problems/rice-leaffolder"
+  ]
+ },
+ "urea fertilizer price": {
+  "volume": 880,
+  "pages": [
+   "blog/urea-fertilizer",
+   "blog/fertilizer-brands-and-dealers"
+  ]
+ },
+ "philippine rice variety": {
+  "volume": 880,
+  "pages": [
+   "crops/rice-varieties-philippines",
+   "blog/palayan-nueva-ecija"
+  ]
+ },
+ "palay image": {
+  "volume": 880,
+  "pages": [
+   "crops/palay",
+   "blog/alamat-ng-palay"
+  ]
+ },
+ "potash fertilizer": {
+  "volume": 880,
+  "pages": [
+   "blog/potash-fertilizer",
+   "crops/banana-farming-philippines",
+   "crops/coconut-fertilizer"
+  ]
+ },
+ "fusarium wilt": {
+  "volume": 880,
+  "pages": [
+   "problems/fusarium-wilt",
+   "crops/banana-farming-philippines"
+  ]
+ },
+ "variety of rice in the philippines": {
+  "volume": 880,
+  "pages": [
+   "crops/rice-varieties-philippines",
+   "crops/pagtatanim-ng-palay"
+  ]
+ },
+ "examples of organic fertilizer": {
+  "volume": 880,
+  "pages": [
+   "blog/organic-fertilizer-examples",
+   "blog/fertilizer-for-plants"
+  ]
+ },
+ "example of organic fertilizer": {
+  "volume": 880,
+  "pages": [
+   "blog/organic-fertilizer-examples",
+   "crops/pagtatanim-ng-gulay"
+  ]
+ },
+ "philippine rice variety list": {
+  "volume": 880,
+  "pages": [
+   "crops/rice-varieties-philippines",
+   "crops/palay"
+  ]
+ },
+ "fertilizer 21 0 0": {
+  "volume": 880,
+  "pages": [
+   "blog/ammonium-sulfate-21-0-0",
+   "blog/fertilizer-application-methods"
+  ]
+ },
+ "broadleaves": {
+  "volume": 880,
+  "pages": [
+   "problems/common-weeds-philippines",
+   "crops/pagtatanim-ng-palay"
+  ]
+ },
+ "philippines insects": {
+  "volume": 880,
+  "pages": [
+   "problems/rice-insects",
+   "problems/thrips"
+  ]
+ },
+ "palay picture": {
+  "volume": 880,
+  "pages": [
+   "crops/palay",
+   "blog/palay-price-philippines"
+  ]
+ },
+ "triple 14 fertilizer": {
+  "volume": 880,
+  "pages": [
+   "blog/complete-fertilizer-14-14-14",
+   "crops/vegetables-philippines"
+  ]
+ },
+ "planthopper": {
+  "volume": 880,
+  "pages": [
+   "problems/brown-planthopper",
+   "problems/rice-insects"
+  ]
+ },
+ "plant hopper": {
+  "volume": 880,
+  "pages": [
+   "problems/brown-planthopper",
+   "blog/rice-insecticides-alika-virtako-chess"
+  ]
+ },
+ "cymbush insecticide": {
+  "volume": 880,
+  "pages": [
+   "blog/karate-cymbush-selecron-insecticides",
+   "problems/cutworm"
+  ]
+ },
+ "broadleaves weeds": {
+  "volume": 880,
+  "pages": [
+   "problems/common-weeds-philippines",
+   "crops/pagtatanim-ng-mais"
+  ]
+ },
+ "rice varieties philippines": {
+  "volume": 880,
+  "pages": [
+   "crops/rice-varieties-philippines",
+   "blog/palay-price-philippines"
+  ]
+ },
+ "karate insecticide": {
+  "volume": 720,
+  "pages": [
+   "blog/karate-cymbush-selecron-insecticides",
+   "problems/rice-bug"
+  ]
+ },
+ "rice variety in the philippines": {
+  "volume": 720,
+  "pages": [
+   "crops/rice-varieties-philippines",
+   "crops/palay"
+  ]
+ },
+ "brown planthopper": {
+  "volume": 720,
+  "pages": [
+   "problems/brown-planthopper",
+   "blog/rice-insecticides-alika-virtako-chess",
+   "problems/rice-insects"
+  ]
+ },
+ "brown plant hopper symptoms": {
+  "volume": 720,
+  "pages": [
+   "problems/brown-planthopper",
+   "problems/rice-insects"
+  ]
+ },
+ "grass in tagalog": {
+  "volume": 720,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "problems/common-weeds-philippines"
+  ]
+ },
+ "sedges weeds": {
+  "volume": 720,
+  "pages": [
+   "problems/common-weeds-philippines",
+   "crops/pagtatanim-ng-palay"
+  ]
+ },
+ "kinds of rice in the philippines": {
+  "volume": 720,
+  "pages": [
+   "crops/rice-varieties-philippines",
+   "crops/mais-rice"
+  ]
+ },
+ "gulay na mais": {
+  "volume": 720,
+  "pages": [
+   "crops/corn-kernel",
+   "crops/pagtatanim-ng-mais"
+  ]
+ },
+ "best fertilizer for vegetables": {
+  "volume": 720,
+  "pages": [
+   "crops/vegetables-philippines",
+   "blog/fertilizer-for-plants",
+   "blog/organic-fertilizer-examples"
+  ]
+ },
+ "rice variety": {
+  "volume": 720,
+  "pages": [
+   "crops/rice-varieties-philippines",
+   "crops/pagtatanim-ng-palay"
+  ]
+ },
+ "sedge weed": {
+  "volume": 720,
+  "pages": [
+   "problems/common-weeds-philippines",
+   "crops/palay"
+  ]
+ },
+ "rice black bugs": {
+  "volume": 720,
+  "pages": [
+   "problems/rice-black-bug",
+   "problems/rice-insects"
+  ]
+ },
+ "fertilizer nitrogen": {
+  "volume": 720,
+  "pages": [
+   "blog/urea-fertilizer",
+   "blog/ammonium-sulfate-21-0-0"
+  ]
+ },
+ "black rice bug": {
+  "volume": 720,
+  "pages": [
+   "problems/rice-black-bug",
+   "blog/farm-words-in-tagalog"
+  ]
+ },
+ "natural fertilizer for plants": {
+  "volume": 720,
+  "pages": [
+   "blog/organic-fertilizer-examples",
+   "crops/pagtatanim-ng-puno"
+  ]
+ },
+ "nitrogen fertilizer": {
+  "volume": 720,
+  "pages": [
+   "blog/urea-fertilizer",
+   "blog/fertilizer-for-rice"
+  ]
+ },
+ "rice variety rice": {
+  "volume": 720,
+  "pages": [
+   "crops/rice-varieties-philippines",
+   "crops/palay"
+  ]
+ },
+ "insecticide karate": {
+  "volume": 720,
+  "pages": [
+   "blog/karate-cymbush-selecron-insecticides",
+   "problems/fall-armyworm"
+  ]
+ },
+ "hanip insect": {
+  "volume": 590,
+  "pages": [
+   "problems/hanip-mites-and-aphids",
+   "blog/farm-words-in-tagalog"
+  ]
+ },
+ "asian corn borer": {
+  "volume": 590,
+  "pages": [
+   "problems/asian-corn-borer",
+   "crops/pagtatanim-ng-mais",
+   "problems/fall-armyworm"
+  ]
+ },
+ "fertilizer urea price": {
+  "volume": 590,
+  "pages": [
+   "blog/urea-fertilizer",
+   "blog/fertilizer-calculation"
+  ]
+ },
+ "asiatic corn borer": {
+  "volume": 590,
+  "pages": [
+   "problems/asian-corn-borer",
+   "crops/corn-kernel"
+  ]
+ },
+ "fertilizer application": {
+  "volume": 590,
+  "pages": [
+   "blog/fertilizer-application-methods",
+   "blog/fertilizer-for-rice",
+   "blog/fertilizer-calculation"
+  ]
+ },
+ "fertilizer with potassium": {
+  "volume": 590,
+  "pages": [
+   "blog/potash-fertilizer",
+   "crops/coconut-fertilizer"
+  ]
+ },
+ "palay price today": {
+  "volume": 590,
+  "pages": [
+   "blog/palay-price-philippines",
+   "crops/palay"
+  ]
+ },
+ "eggshell as fertilizer": {
+  "volume": 590,
+  "pages": [
+   "blog/organic-fertilizer-examples",
+   "crops/pagtatanim-ng-gulay"
+  ]
+ },
+ "fertilizer with phosphorus": {
+  "volume": 590,
+  "pages": [
+   "blog/16-20-0-fertilizer",
+   "blog/fertilizer-for-plants"
+  ]
+ },
+ "fertilizer 46 0 0": {
+  "volume": 590,
+  "pages": [
+   "blog/urea-fertilizer",
+   "blog/fertilizer-calculation"
+  ]
+ },
+ "fertilizer liquid": {
+  "volume": 590,
+  "pages": [
+   "blog/foliar-fertilizer",
+   "blog/fertilizer-for-plants"
+  ]
+ },
+ "fertilizer chemical": {
+  "volume": 590,
+  "pages": [
+   "blog/inorganic-fertilizer-examples",
+   "blog/fertilizer-and-pesticide-authority"
+  ]
+ },
+ "rice insect": {
+  "volume": 590,
+  "pages": [
+   "problems/rice-insects",
+   "problems/rice-leaffolder"
+  ]
+ },
+ "foliar fertilizer spray": {
+  "volume": 590,
+  "pages": [
+   "blog/foliar-fertilizer",
+   "crops/vegetables-philippines"
+  ]
+ },
+ "liquid fertilizer": {
+  "volume": 590,
+  "pages": [
+   "blog/foliar-fertilizer",
+   "blog/organic-fertilizer-examples"
+  ]
+ },
+ "jasponica rice": {
+  "volume": 590,
+  "pages": [
+   "crops/rice-varieties-philippines",
+   "blog/palay-price-philippines"
+  ]
+ },
+ "corn kernel price": {
+  "volume": 590,
+  "pages": [
+   "crops/corn-kernel",
+   "crops/pagtatanim-ng-mais"
+  ]
+ },
+ "egg shell fertilizer": {
+  "volume": 590,
+  "pages": [
+   "blog/organic-fertilizer-examples",
+   "blog/fertilizer-for-plants"
+  ]
+ },
+ "fertilizer for coconut plants": {
+  "volume": 590,
+  "pages": [
+   "crops/coconut-fertilizer",
+   "blog/potash-fertilizer"
+  ]
+ },
+ "rice insects": {
+  "volume": 590,
+  "pages": [
+   "problems/rice-insects",
+   "problems/rice-bug"
+  ]
+ },
+ "fertilizer for coconut tree": {
+  "volume": 590,
+  "pages": [
+   "crops/coconut-fertilizer",
+   "crops/pagtatanim-ng-puno"
+  ]
+ },
+ "fertilizer calculation": {
+  "volume": 590,
+  "pages": [
+   "blog/fertilizer-calculation",
+   "blog/fertilizer-for-rice",
+   "blog/urea-fertilizer"
+  ]
+ },
+ "46 0 0 fertilizer": {
+  "volume": 590,
+  "pages": [
+   "blog/urea-fertilizer",
+   "blog/complete-fertilizer-14-14-14"
+  ]
+ },
+ "selecron insecticide": {
+  "volume": 480,
+  "pages": [
+   "blog/karate-cymbush-selecron-insecticides",
+   "problems/thrips"
+  ]
+ },
+ "armure fungicide": {
+  "volume": 480,
+  "pages": [
+   "blog/fungicides",
+   "problems/sheath-blight"
+  ]
+ },
+ "yara winner fertilizer": {
+  "volume": 480,
+  "pages": [
+   "blog/fertilizer-brands-and-dealers",
+   "blog/complete-fertilizer-14-14-14"
+  ]
+ },
+ "fertilizer for tomato plants": {
+  "volume": 480,
+  "pages": [
+   "crops/vegetables-philippines",
+   "blog/foliar-fertilizer"
+  ]
+ },
+ "fertilizer drawing": {
+  "volume": 480,
+  "pages": [
+   "blog/fertilizer-application-methods",
+   "blog/inorganic-fertilizer-examples"
+  ]
+ },
+ "maisan": {
+  "volume": 480,
+  "pages": [
+   "crops/pagtatanim-ng-mais",
+   "crops/corn-kernel"
+  ]
+ },
+ "osmocote fertilizer": {
+  "volume": 480,
+  "pages": [
+   "blog/fertilizer-for-plants",
+   "blog/inorganic-fertilizer-examples"
+  ]
+ },
+ "common weeds in the philippines": {
+  "volume": 480,
+  "pages": [
+   "problems/common-weeds-philippines",
+   "crops/pagtatanim-ng-palay"
+  ]
+ },
+ "ortiva top fungicide": {
+  "volume": 480,
+  "pages": [
+   "blog/fungicides",
+   "problems/anthracnose"
+  ]
+ },
+ "fertilizer for coconut": {
+  "volume": 480,
+  "pages": [
+   "crops/coconut-fertilizer",
+   "crops/banana-farming-philippines"
+  ]
+ },
+ "corn bran": {
+  "volume": 480,
+  "pages": [
+   "crops/corn-kernel",
+   "crops/mais-rice"
+  ]
+ },
+ "chicken dung as fertilizer": {
+  "volume": 480,
+  "pages": [
+   "blog/organic-fertilizer-examples",
+   "crops/vegetables-philippines"
+  ]
+ },
+ "seeds corn": {
+  "volume": 480,
+  "pages": [
+   "crops/corn-seeds",
+   "crops/pagtatanim-ng-mais"
+  ]
+ },
+ "cymbush": {
+  "volume": 480,
+  "pages": [
+   "blog/karate-cymbush-selecron-insecticides",
+   "problems/fall-armyworm"
+  ]
+ },
+ "complete fertilizer 14 14 14": {
+  "volume": 480,
+  "pages": [
+   "blog/complete-fertilizer-14-14-14",
+   "crops/pagtatanim-ng-gulay"
+  ]
+ },
+ "variety of corn": {
+  "volume": 480,
+  "pages": [
+   "crops/corn-seeds",
+   "crops/corn-kernel"
+  ]
+ },
+ "synthetic fertilizer": {
+  "volume": 480,
+  "pages": [
+   "blog/inorganic-fertilizer-examples",
+   "blog/organic-fertilizer-examples"
+  ]
+ },
+ "fertilizer applicator": {
+  "volume": 480,
+  "pages": [
+   "blog/fertilizer-application-methods",
+   "blog/fertilizer-for-rice"
+  ]
+ },
+ "sl agritech corporation": {
+  "volume": 480,
+  "pages": [
+   "crops/rice-varieties-philippines",
+   "blog/palay-price-philippines"
+  ]
+ },
+ "alibangbang insect": {
+  "volume": 480,
+  "pages": [
+   "problems/rice-insects",
+   "blog/farm-words-in-tagalog"
+  ]
+ },
+ "mildew in tagalog": {
+  "volume": 480,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "blog/fungicides"
+  ]
+ },
+ "chess insecticide": {
+  "volume": 480,
+  "pages": [
+   "blog/rice-insecticides-alika-virtako-chess",
+   "problems/brown-planthopper"
+  ]
+ },
+ "agricultural technician": {
+  "volume": 480,
+  "pages": [
+   "features/ai-agricultural-technician",
+   "blog/agricultural-engineer-career"
+  ]
+ },
+ "fertilizer spreader": {
+  "volume": 480,
+  "pages": [
+   "blog/fertilizer-application-methods",
+   "blog/fertilizer-for-rice"
+  ]
+ },
+ "tayangaw": {
+  "volume": 480,
+  "pages": [
+   "problems/rice-bug",
+   "blog/farm-words-in-tagalog"
+  ]
+ },
+ "pagtatanim ng halaman": {
+  "volume": 480,
+  "pages": [
+   "crops/pagtatanim-ng-puno",
+   "crops/pagtatanim-ng-gulay"
+  ]
+ },
+ "palatak palay seeder": {
+  "volume": 480,
+  "pages": [
+   "crops/pagtatanim-ng-palay",
+   "crops/palay"
+  ]
+ },
+ "telluride insecticide": {
+  "volume": 480,
+  "pages": [
+   "blog/karate-cymbush-selecron-insecticides",
+   "blog/rice-insecticides-alika-virtako-chess"
+  ]
+ },
+ "agricultural equipment technician": {
+  "volume": 480,
+  "pages": [
+   "blog/agricultural-engineer-career",
+   "features/ai-agricultural-technician"
+  ]
+ },
+ "alamat ng palay buod": {
+  "volume": 480,
+  "pages": [
+   "blog/alamat-ng-palay"
+  ]
+ },
+ "agricultural engineer hiring": {
+  "volume": 480,
+  "pages": [
+   "blog/agricultural-engineer-career",
+   "blog/agriculture-in-the-philippine-economy"
+  ]
+ },
+ "aphids scientific name": {
+  "volume": 390,
+  "pages": [
+   "problems/hanip-mites-and-aphids",
+   "crops/vegetables-philippines"
+  ]
+ },
+ "rice leaffolder": {
+  "volume": 390,
+  "pages": [
+   "problems/rice-leaffolder",
+   "problems/rice-insects"
+  ]
+ },
+ "rice brands in the philippines": {
+  "volume": 390,
+  "pages": [
+   "crops/rice-varieties-philippines",
+   "blog/palay-price-philippines"
+  ]
+ },
+ "fertilizer in tagalog": {
+  "volume": 390,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "blog/urea-fertilizer"
+  ]
+ },
+ "lambda cyhalothrin": {
+  "volume": 390,
+  "pages": [
+   "blog/karate-cymbush-selecron-insecticides",
+   "problems/rice-bug"
+  ]
+ },
+ "agricultural engineer course": {
+  "volume": 390,
+  "pages": [
+   "blog/agricultural-engineer-career"
+  ]
+ },
+ "banghay ng alamat ng palay": {
+  "volume": 390,
+  "pages": [
+   "blog/alamat-ng-palay"
+  ]
+ },
+ "fertilizer for flowering plants": {
+  "volume": 390,
+  "pages": [
+   "blog/fertilizer-for-plants",
+   "blog/potash-fertilizer"
+  ]
+ },
+ "ammonia nitrate fertilizer": {
+  "volume": 390,
+  "pages": [
+   "blog/ammonium-sulfate-21-0-0",
+   "blog/inorganic-fertilizer-examples"
+  ]
+ },
+ "banana farming philippines": {
+  "volume": 390,
+  "pages": [
+   "crops/banana-farming-philippines",
+   "problems/fusarium-wilt"
+  ]
+ },
+ "top dressing fertilizer": {
+  "volume": 390,
+  "pages": [
+   "blog/fertilizer-application-methods",
+   "blog/urea-fertilizer"
+  ]
+ },
+ "pagtatanim ng gulay": {
+  "volume": 390,
+  "pages": [
+   "crops/pagtatanim-ng-gulay",
+   "crops/vegetables-philippines"
+  ]
+ },
+ "biostimulants": {
+  "volume": 390,
+  "pages": [
+   "blog/foliar-fertilizer",
+   "blog/organic-fertilizer-examples"
+  ]
+ },
+ "termiticides": {
+  "volume": 390,
+  "pages": [
+   "blog/ant-bait-and-termiticides",
+   "blog/karate-cymbush-selecron-insecticides"
+  ]
+ },
+ "fertilizer computation": {
+  "volume": 390,
+  "pages": [
+   "blog/fertilizer-calculation",
+   "blog/fertilizer-for-rice"
+  ]
+ },
+ "sofit": {
+  "volume": 390,
+  "pages": [
+   "problems/common-weeds-philippines",
+   "crops/pagtatanim-ng-palay"
+  ]
+ },
+ "example of inorganic fertilizer": {
+  "volume": 390,
+  "pages": [
+   "blog/inorganic-fertilizer-examples",
+   "blog/organic-fertilizer-examples"
+  ]
+ },
+ "examples of inorganic fertilizer": {
+  "volume": 390,
+  "pages": [
+   "blog/inorganic-fertilizer-examples",
+   "blog/fertilizer-for-plants"
+  ]
+ },
+ "pesticide in tagalog": {
+  "volume": 390,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "blog/fertilizer-and-pesticide-authority"
+  ]
+ },
+ "agricultural engineer pay": {
+  "volume": 390,
+  "pages": [
+   "blog/agricultural-engineer-career"
+  ]
+ },
+ "treser ng palay": {
+  "volume": 390,
+  "pages": [
+   "crops/pagtatanim-ng-palay",
+   "crops/palay"
+  ]
+ },
+ "cavan rice": {
+  "volume": 390,
+  "pages": [
+   "blog/palay-price-philippines",
+   "crops/palay"
+  ]
+ },
+ "black bug insect": {
+  "volume": 390,
+  "pages": [
+   "problems/rice-black-bug",
+   "problems/rice-insects"
+  ]
+ },
+ "fertilizer for plants and flowers": {
+  "volume": 390,
+  "pages": [
+   "blog/fertilizer-for-plants",
+   "blog/organic-fertilizer-examples"
+  ]
+ },
+ "fertilizer for top dressing": {
+  "volume": 390,
+  "pages": [
+   "blog/fertilizer-application-methods",
+   "blog/fertilizer-for-rice"
+  ]
+ },
+ "pest in tagalog": {
+  "volume": 390,
+  "pages": [
+   "blog/farm-words-in-tagalog",
+   "problems/rice-insects"
+  ]
+ },
+ "fish amino acid fertilizer": {
+  "volume": 390,
+  "pages": [
+   "blog/organic-fertilizer-examples",
+   "crops/pagtatanim-ng-gulay"
+  ]
+ },
+ "grasses weeds": {
+  "volume": 390,
+  "pages": [
+   "problems/common-weeds-philippines",
+   "crops/pagtatanim-ng-mais"
+  ]
+ },
+ "palay price per kilo today": {
+  "volume": 390,
+  "pages": [
+   "blog/palay-price-philippines",
+   "crops/palay"
+  ]
+ },
+ "foliar application fertilizer": {
+  "volume": 390,
+  "pages": [
+   "blog/foliar-fertilizer",
+   "blog/fertilizer-application-methods"
+  ]
+ },
+ "organic fertilizer benefits": {
+  "volume": 320,
+  "pages": [
+   "blog/organic-fertilizer-examples",
+   "blog/fertilizer-for-plants"
+  ]
+ },
+ "rice hybrid": {
+  "volume": 320,
+  "pages": [
+   "crops/rice-varieties-philippines",
+   "crops/palay"
+  ]
+ },
+ "fertilizer example": {
+  "volume": 320,
+  "pages": [
+   "blog/inorganic-fertilizer-examples",
+   "blog/fertilizer-for-plants"
+  ]
+ },
+ "fertilizer picture": {
+  "volume": 320,
+  "pages": [
+   "blog/fertilizer-application-methods",
+   "blog/complete-fertilizer-14-14-14"
+  ]
+ },
+ "fertilizer for vegetables": {
+  "volume": 320,
+  "pages": [
+   "crops/vegetables-philippines",
+   "crops/pagtatanim-ng-gulay"
+  ]
+ },
+ "method of fertilizer application": {
+  "volume": 320,
+  "pages": [
+   "blog/fertilizer-application-methods",
+   "blog/fertilizer-for-rice"
+  ]
+ },
+ "english ng palay": {
+  "volume": 320,
+  "pages": [
+   "crops/palay",
+   "blog/farm-words-in-tagalog"
+  ]
+ },
+ "16 20 fertilizer": {
+  "volume": 320,
+  "pages": [
+   "blog/16-20-0-fertilizer",
+   "crops/vegetables-philippines"
+  ]
+ },
+ "rice variety 216": {
+  "volume": 320,
+  "pages": [
+   "crops/rice-varieties-philippines",
+   "crops/pagtatanim-ng-palay"
+  ]
+ },
+ "fertilizer eggs": {
+  "volume": 320,
+  "pages": [
+   "blog/organic-fertilizer-examples"
+  ]
+ },
+ "rice ear bug": {
+  "volume": 320,
+  "pages": [
+   "problems/rice-bug",
+   "problems/rice-insects"
+  ]
+ },
+ "sheath blight disease": {
+  "volume": 320,
+  "pages": [
+   "problems/sheath-blight",
+   "blog/fungicides"
+  ]
+ },
+ "palay festival": {
+  "volume": 320,
+  "pages": [
+   "blog/alamat-ng-palay",
+   "crops/palay"
+  ]
+ },
+ "sheath blight": {
+  "volume": 320,
+  "pages": [
+   "problems/sheath-blight",
+   "blog/fungicides",
+   "problems/rice-insects"
+  ]
+ },
+ "humus fertilizer": {
+  "volume": 320,
+  "pages": [
+   "blog/organic-fertilizer-examples",
+   "crops/pagtatanim-ng-puno"
+  ]
+ },
+ "fertilizer 16 16 16": {
+  "volume": 320,
+  "pages": [
+   "blog/complete-fertilizer-14-14-14",
+   "crops/vegetables-philippines"
+  ]
+ },
+ "fertilizer in agriculture": {
+  "volume": 260,
+  "pages": [
+   "blog/fertilizer-for-plants",
+   "blog/agriculture-in-the-philippine-economy"
+  ]
+ },
+ "fertilizer 20 20 20": {
+  "volume": 260,
+  "pages": [
+   "blog/complete-fertilizer-14-14-14",
+   "blog/foliar-fertilizer"
+  ]
+ },
+ "commercial fertilizer": {
+  "volume": 260,
+  "pages": [
+   "blog/inorganic-fertilizer-examples",
+   "blog/fertilizer-brands-and-dealers"
+  ]
+ },
+ "fertilizer for rice": {
+  "volume": 260,
+  "pages": [
+   "blog/fertilizer-for-rice",
+   "crops/pagtatanim-ng-palay",
+   "blog/urea-fertilizer"
+  ]
+ },
+ "fish emulsion fertilizer": {
+  "volume": 260,
+  "pages": [
+   "blog/organic-fertilizer-examples",
+   "blog/foliar-fertilizer"
+  ]
+ },
+ "fertilizer granules": {
+  "volume": 260,
+  "pages": [
+   "blog/inorganic-fertilizer-examples",
+   "blog/fertilizer-application-methods"
+  ]
+ },
+ "fertilizer application methods": {
+  "volume": 210,
+  "pages": [
+   "blog/fertilizer-application-methods",
+   "crops/pagtatanim-ng-gulay"
+  ]
+ },
+ "palay check system": {
+  "volume": 210,
+  "pages": [
+   "crops/pagtatanim-ng-palay",
+   "blog/fertilizer-for-rice"
+  ]
+ },
+ "palay rice": {
+  "volume": 210,
+  "pages": [
+   "crops/palay",
+   "blog/palay-price-philippines"
+  ]
+ },
+ "fertilizer calculation formula": {
+  "volume": 210,
+  "pages": [
+   "blog/fertilizer-calculation"
+  ]
+ },
+ "fertilizer examples": {
+  "volume": 210,
+  "pages": [
+   "blog/inorganic-fertilizer-examples",
+   "blog/organic-fertilizer-examples"
+  ]
+ },
+ "palay to rice": {
+  "volume": 210,
+  "pages": [
+   "crops/palay",
+   "blog/palay-price-philippines"
+  ]
+ },
+ "pag aani ng palay": {
+  "volume": 210,
+  "pages": [
+   "crops/pagtatanim-ng-palay",
+   "crops/palay"
+  ]
+ },
+ "palay meaning": {
+  "volume": 210,
+  "pages": [
+   "crops/palay",
+   "blog/ani-meaning"
+  ]
+ },
+ "mais na gulay": {
+  "volume": 170,
+  "pages": [
+   "crops/corn-kernel",
+   "crops/pagtatanim-ng-gulay"
+  ]
+ },
+ "mais rice benefits": {
+  "volume": 170,
+  "pages": [
+   "crops/mais-rice"
+  ]
+ },
+ "jackpot rice variety maturity": {
+  "volume": 170,
+  "pages": [
+   "crops/rice-varieties-philippines"
+  ]
+ },
+ "palay seedlings": {
+  "volume": 140,
+  "pages": [
+   "crops/pagtatanim-ng-palay",
+   "crops/palay"
+  ]
+ },
+ "pagtatanim ng mais": {
+  "volume": 140,
+  "pages": [
+   "crops/pagtatanim-ng-mais",
+   "crops/corn-kernel"
+  ]
+ },
+ "corn seed grow a garden roblox": {
+  "volume": 140,
+  "pages": [
+   "crops/corn-seeds"
+  ]
+ },
+ "palay seeds": {
+  "volume": 140,
+  "pages": [
+   "crops/palay",
+   "crops/rice-varieties-philippines"
+  ]
+ },
+ "fertilizer high in phosphorus": {
+  "volume": 140,
+  "pages": [
+   "blog/16-20-0-fertilizer",
+   "blog/fertilizer-for-plants"
+  ]
+ },
+ "when fertilization occurs": {
+  "volume": 140,
+  "pages": [
+   "crops/corn-kernel",
+   "crops/corn-seeds"
+  ]
+ },
+ "fertilizer names list": {
+  "volume": 140,
+  "pages": [
+   "blog/inorganic-fertilizer-examples",
+   "blog/fertilizer-for-plants"
+  ]
+ },
+ "402 rice variety characteristics": {
+  "volume": 140,
+  "pages": [
+   "crops/rice-varieties-philippines"
+  ]
+ },
+ "alamat ng mais": {
+  "volume": 140,
+  "pages": [
+   "blog/alamat-ng-mais",
+   "blog/alamat-ng-palay"
+  ]
+ },
+ "rice variety 222": {
+  "volume": 110,
+  "pages": [
+   "crops/rice-varieties-philippines"
+  ]
+ },
+ "crop yields meaning": {
+  "volume": 90,
+  "pages": [
+   "blog/ani-meaning",
+   "features/farm-reports"
+  ]
+ },
+ "fertilizer for coconut tree in philippines": {
+  "volume": 70,
+  "pages": [
+   "crops/coconut-fertilizer"
+  ]
+ },
+ "rice breed": {
+  "volume": 70,
+  "pages": [
+   "crops/rice-varieties-philippines"
+  ]
+ },
+ "fertilizer with high potassium": {
+  "volume": 50,
+  "pages": [
+   "blog/potash-fertilizer",
+   "crops/banana-farming-philippines"
+  ]
+ },
+ "why fertilizer is important": {
+  "volume": 50,
+  "pages": [
+   "blog/fertilizer-for-plants",
+   "blog/fertilizer-for-rice"
+  ]
+ },
+ "what fertilizer for plants": {
+  "volume": 50,
+  "pages": [
+   "blog/fertilizer-for-plants"
+  ]
+ },
+ "corn breed": {
+  "volume": 30,
+  "pages": [
+   "crops/corn-seeds",
+   "crops/corn-kernel"
+  ]
+ }
+}

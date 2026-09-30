@@ -1,0 +1,319 @@
+{
+  "section": "problems",
+  "slug": "rice-insects",
+  "sortOrder": 40,
+  "lang": "en",
+  "category": "Rice pests",
+  "title": "Rice Insects in the Philippines: A Field Guide to the Main Pests",
+  "metaTitle": "Rice Insects in the Philippines: Pests and Friendly Bugs",
+  "metaDescription": "A field guide to rice insects in the Philippines: stem borers, rice bug, black bug, planthopper, leaffolder and more, plus the friendly insects that help.",
+  "focusKeyword": "rice insects",
+  "keywords": [
+    "rice insects",
+    "rice insect",
+    "philippines insects",
+    "pest in tagalog",
+    "alibangbang insect",
+    "thrips insect",
+    "rice bug",
+    "rice bugs",
+    "rice ear bug",
+    "rice black bug",
+    "rice black bugs",
+    "black bug insect",
+    "planthopper",
+    "brown planthopper",
+    "brown plant hopper symptoms",
+    "rice leaffolder",
+    "sheath blight"
+  ],
+  "excerpt": "Rice insects in the Philippines range from stem borers that kill tillers to rice bugs that empty the grain. Most fields also hold spiders, wasps and beetles that eat those pests for free. This guide names the main pests by crop stage, shows the damage to look for, and links to a full page on each one.",
+  "heroImage": {
+    "src": "/images/site/photos/inspect.jpg",
+    "alt": "A farmer stands in a green rice field with her phone, checking the crop for rice insects",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pest in Tagalog, and the insects that are not pests"
+    },
+    {
+      "type": "text",
+      "text": "The word for pest in Tagalog is peste, borrowed from Spanish. Farmers use it for insects, rats and other vermin that hurt the crop. The general word for insect is kulisap or insekto. Technicians also talk about kaibigang kulisap, the friendly insects that eat pests, and the DA warns that early spraying kills them.\n\nNot every insect in a Philippine rice field is a pest. Spiders, lady beetles, damselflies, dragonflies, mirid bugs and tiny wasps feed on the pests or lay their eggs inside them. A field sprayed too early loses these helpers first, and that is how many outbreaks begin."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The main rice insects by crop stage"
+    },
+    {
+      "type": "table",
+      "caption": "Main rice insect pests in the Philippines and when they strike",
+      "rows": [
+        [
+          "Pest",
+          "Crop stage most at risk",
+          "Main damage"
+        ],
+        [
+          "Rice whorl maggot",
+          "Early vegetative, from transplanting",
+          "Pinholes and white or yellow patches on young leaves"
+        ],
+        [
+          "Thrips",
+          "Seedling, especially in dry spells",
+          "Curled leaves with silvery streaks"
+        ],
+        [
+          "Stem borers",
+          "Seedling to maturity",
+          "Deadhearts at tillering, whiteheads at heading"
+        ],
+        [
+          "Rice leaffolder",
+          "Tillering to flowering",
+          "Folded leaves with white streaks"
+        ],
+        [
+          "Armyworms and cutworms",
+          "All stages",
+          "Leaves eaten, seedlings and panicles cut"
+        ],
+        [
+          "Brown planthopper",
+          "Early tillering to flowering",
+          "Yellowing, sooty mold, hopperburn"
+        ],
+        [
+          "Rice black bug",
+          "Maximum tillering to ripening",
+          "Deadheart, whiteheads, bugburn"
+        ],
+        [
+          "Rice bug",
+          "Flowering to soft dough",
+          "Empty, spotted grains"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Which pest hits you depends on the season, the stage of your crop and what your neighbors plant. That is why the stage of each lot matters as much as the name of the insect."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Early pests: stem borers, whorl maggot and thrips"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Stem borers"
+    },
+    {
+      "type": "text",
+      "text": "IRRI lists six stem borer species on rice, among them the yellow, white and striped stem borers. The caterpillars bore into the stem. At tillering the center leaf dies, which farmers call deadheart. At heading the panicle comes out white and empty, called whitehead. A stem borer deadheart pulls out easily, and that separates it from black bug damage.\n\nIRRI reports yellow stem borer losses of about 20 percent in early planted crops and up to 80 percent in late planted ones. So planting at the same time as your neighbors pays. Handpick egg masses in the seedbed, cut leaf tips before transplanting to remove eggs, harvest low and plow the stubble under."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice whorl maggot"
+    },
+    {
+      "type": "text",
+      "text": "The larva of a small fly, Hydrellia philippina, rasps the young leaves inside the whorl. You see pinholes and white or yellow patches when the leaf opens. IRRI does not recommend insecticide for it, because the plant makes up for the damage and the marks usually fade by maximum tillering."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The thrips insect"
+    },
+    {
+      "type": "text",
+      "text": "The thrips insect, Stenchaetothrips biformis, is tiny and loves dry weather and fields with no standing water. Leaves curl in from the edges and show silvery streaks, and badly hit tips wither. IRRI suggests flooding the field for two days. See our page on [thrips](/problems/thrips) for more."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Leaf eaters: leaffolder, armyworms and caterpillars"
+    },
+    {
+      "type": "text",
+      "text": "The [rice leaffolder](/problems/rice-leaffolder) caterpillar folds a leaf around itself with silk and scrapes out the green tissue, leaving white streaks. Rice often recovers from this during the vegetative stage, so the flag leaf matters most.\n\nArmyworms cut leaves, seedlings and even panicles, and in outbreaks they march from field to field. According to IRRI, flooding the seedbed is the best defense. The fall armyworm, better known as a corn pest, has its own page on [fall armyworm](/problems/fall-armyworm), and the [cutworm](/problems/cutworm) page covers its cousin."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Is the alibangbang insect a rice pest?"
+    },
+    {
+      "type": "text",
+      "text": "In Tagalog, alibangbang is a small, yellow winged butterfly often seen along roadsides. In Cebuano, Hiligaynon and Waray the word simply means butterfly. It is also the name of the Malabar orchid tree, whose leaves look like a butterfly's wings. The more common Tagalog word for butterfly is paruparo.\n\nButterflies and moths belong to the same insect order, Lepidoptera, and both start life as caterpillars. The adult butterfly sips nectar and does not harm rice, while the caterpillar is the stage that eats. Most caterpillar pests of rice, such as the leaffolder, stem borers and armyworms, turn into moths, not butterflies. A few butterfly caterpillars, like the green horned caterpillar, eat rice leaves. Still, IRRI calls them minor pests that natural enemies usually control. So a yellow alibangbang over your paddy is no reason to spray."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Sap suckers: planthopper, black bug and rice bug"
+    },
+    {
+      "type": "text",
+      "text": "The [brown planthopper](/problems/brown-planthopper) sits at the base of the tillers. Brown plant hopper symptoms begin with yellowing, honeydew and sooty mold, and end in hopperburn, round patches of dried plants. Outbreaks usually follow careless insecticide use that kills the natural enemies of the planthopper.\n\nThe [rice black bug](/problems/rice-black-bug) is a dark stink bug that also feeds low on the plant. It causes deadheart, whiteheads and bugburn. Rice black bugs swarm to lights on full moon nights, which is why light traps work against them. This black bug insect first turned up in Palawan in 1979, then spread to Mindanao, the Visayas and Luzon.\n\nThe [rice bug](/problems/rice-bug), also called the rice ear bug or atangya, comes last. Rice bugs suck the milky grains between flowering and soft dough and leave them empty or spotted."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rice insect or disease? Check before you spray"
+    },
+    {
+      "type": "text",
+      "text": "Some damage that looks like insect work is a disease. [Sheath blight](/problems/sheath-blight), for example, makes greenish gray spots on the lower leaf sheaths, and no insecticide touches it. Stem borer whiteheads can look like neck blast, and rice bug damage can look like nutrient deficiency. Find the insect, its eggs or its droppings before you buy a spray.\n\nThis is where anee.io helps. Take a clear photo of the insect or the damaged plant and send it to Anee, the [AI technician](/features/ai-agricultural-technician). She answers in Tagalog or English. Before she replies, she reads the growth stage of your lot, so she knows which rice insect is likely at that point of the season. The [growth stages](/features/growth-stages-and-weather) view also lists what to watch for on any date you pick."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Protect the friendly insects"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Spiders** such as wolf, lynx and long jawed spiders hunt planthoppers, black bugs and other pests.",
+        "**Mirid bugs and water striders** feed on planthoppers, and mirid bugs also eat their eggs.",
+        "**Tiny wasps** lay their eggs inside pest eggs, as Telenomus triptus does with black bug eggs.",
+        "**Lady beetles, damselflies and dragonflies** catch moving nymphs and adults.",
+        "**Fungi** such as Metarhizium anisopliae and Beauveria bassiana infect bugs and hoppers.",
+        "**Ducks and toads** eat pests in the paddy."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "To keep them working, skip insecticides in the first 30 days after transplanting or 40 days after direct seeding, as PhilRice advises. After that, use selective products only when your counts pass the threshold."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Count first, then decide",
+      "text": "Spraying on a fixed schedule kills friendly insects and wastes money. Count the pest on 20 hills, compare it with its threshold, and spray only if it pays. The pest pages linked here explain how to count each one."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Insecticides and the label"
+    },
+    {
+      "type": "text",
+      "text": "When your counts justify a spray, match the product to the pest. Chlorantraniliprole products such as Virtako and Prevathon list stem borer on rice. Pymetrozine in Chess targets the brown planthopper, while lambda cyhalothrin in Karate and Alika covers a broad range that includes the rice bug. Always follow the label and the FPA registration. Our guides to [rice insecticides](/blog/rice-insecticides-alika-virtako-chess) and to the [FPA](/blog/fertilizer-and-pesticide-authority) explain more."
+    },
+    {
+      "type": "cta",
+      "title": "Know which pest to expect this week",
+      "text": "anee.io dates every lot from its own day zero, shows the growth stage and what to watch for, and lets Anee read a photo of the insect you found.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about rice insects"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What are the most common rice insects in the Philippines?",
+          "a": "Stem borers, the rice bug or atangya, the rice black bug, the brown planthopper, the rice leaffolder, the whorl maggot, armyworms and thrips."
+        },
+        {
+          "q": "What is pest in Tagalog?",
+          "a": "Peste. The general word for insect is kulisap or insekto, and kaibigang kulisap means the friendly insects that eat pests."
+        },
+        {
+          "q": "Is the alibangbang insect harmful to rice?",
+          "a": "No. Alibangbang is a butterfly. Most caterpillar pests of rice grow into moths, and the few butterfly caterpillars that eat rice leaves are minor pests."
+        },
+        {
+          "q": "Why do pests come back after I spray?",
+          "a": "Broad spectrum insecticides also kill spiders, wasps and other natural enemies. With the predators gone, pests like the brown planthopper build up again quickly."
+        },
+        {
+          "q": "Does sheath blight come from an insect?",
+          "a": "No. Sheath blight is a fungal disease caused by Rhizoctonia solani. It calls for cultural control or a fungicide, not an insecticide."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Pest pages",
+      "items": [
+        {
+          "label": "Rice bug (atangya)",
+          "url": "/problems/rice-bug"
+        },
+        {
+          "label": "Rice black bug",
+          "url": "/problems/rice-black-bug"
+        },
+        {
+          "label": "Brown planthopper",
+          "url": "/problems/brown-planthopper"
+        },
+        {
+          "label": "Rice leaffolder",
+          "url": "/problems/rice-leaffolder"
+        },
+        {
+          "label": "Thrips",
+          "url": "/problems/thrips"
+        },
+        {
+          "label": "Sheath blight",
+          "url": "/problems/sheath-blight"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Insect fact sheets",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Stem borer",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/stem-borer"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Rice whorl maggot",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-whorl-maggot"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Rice thrips",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-thrips"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Armyworm",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/armyworms"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Greenhorned caterpillar",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/greenhorned-caterpillar"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: Brown Planthopper",
+          "url": "https://www.pinoyrice.com/brown-planthopper/"
+        },
+        {
+          "label": "Wiktionary: alibangbang",
+          "url": "https://en.wiktionary.org/wiki/alibangbang"
+        },
+        {
+          "label": "Wiktionary: peste (Tagalog)",
+          "url": "https://en.wiktionary.org/wiki/peste"
+        }
+      ]
+    }
+  ]
+}

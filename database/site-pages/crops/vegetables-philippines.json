@@ -1,0 +1,374 @@
+{
+  "section": "crops",
+  "slug": "vegetables-philippines",
+  "sortOrder": 60,
+  "lang": "en",
+  "category": "Vegetables",
+  "title": "Vegetables in the Philippines: What to Grow, When, and How to Feed Them",
+  "metaTitle": "Vegetables in the Philippines: Crops, Fertilizer, Pests",
+  "metaDescription": "Vegetables in the Philippines: what grows in the lowlands and in Benguet, the best fertilizer for vegetables, tomato feeding, and the pests to watch for.",
+  "focusKeyword": "vegetables in the Philippines",
+  "keywords": [
+    "vegetables in the philippines",
+    "best fertilizer for vegetables",
+    "fertilizer for vegetables",
+    "fertilizer for tomato plants",
+    "fertilizer 14 14 14",
+    "triple 14 fertilizer",
+    "fertilizer 16 16 16",
+    "16 20 fertilizer",
+    "foliar fertilizer",
+    "foliar fertilizer spray",
+    "chicken dung as fertilizer",
+    "palaya natural farm",
+    "thrips",
+    "aphids scientific name",
+    "anthracnose",
+    "pagtatanim ng gulay"
+  ],
+  "excerpt": "Vegetables in the Philippines come from two very different farms. In the lowlands it is the gulayan of ampalaya, sitaw, talong, okra, kalabasa, pechay, kangkong and tomato. Up in Benguet it is the cool terraces that send cabbage, carrots and potatoes to Manila. This guide covers what to plant, when to plant it, how to feed each crop, and which pests take the most harvest.",
+  "heroImage": {
+    "src": "/images/site/guides/crops-vegetables-philippines.webp",
+    "alt": "Vegetable terraces and plastic tunnels on the slopes of Mankayan, Benguet, where many vegetables in the Philippines are grown",
+    "credit": "Patrickroque01, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Many farmers grow gulay (vegetables) on a small lot next to their palay or mais, because pechay can be sold five to seven weeks after sowing. But vegetables also punish mistakes quickly. A week of rain on ripening tomatoes can cost half the harvest.\n\nThe rates below come from Department of Agriculture (DA) and Agricultural Training Institute (ATI) guides for fields without a soil test. So when you can, have your soil analyzed at the provincial soils laboratory."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The main vegetables in the Philippines"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Lowland vegetables"
+    },
+    {
+      "type": "text",
+      "text": "In the lowlands the common crops are the pinakbet and sinigang vegetables: ampalaya (bitter gourd), sitaw (string beans), talong (eggplant), okra, kalabasa (squash), pechay, kangkong and tomato. Most want full sun and well drained loam rich in organic matter."
+    },
+    {
+      "type": "table",
+      "caption": "When common lowland vegetables give their first harvest, from DA and ATI guides",
+      "rows": [
+        [
+          "Vegetable",
+          "Part harvested",
+          "First harvest"
+        ],
+        [
+          "Pechay",
+          "Whole plant",
+          "3 to 4 weeks after transplanting"
+        ],
+        [
+          "Kangkong",
+          "Leaves and tops",
+          "30 to 90 days after planting, then regrowth"
+        ],
+        [
+          "Okra",
+          "Young pods",
+          "Flowers 40 to 75 days after planting, pods 4 to 6 days after flowering"
+        ],
+        [
+          "Ampalaya",
+          "Young fruit",
+          "18 to 20 days after flowering"
+        ],
+        [
+          "Tomato",
+          "Fruit",
+          "55 to 65 days after transplanting"
+        ],
+        [
+          "Kalabasa",
+          "Young green fruit",
+          "30 to 40 days after pollination"
+        ],
+        [
+          "Talong and sitaw",
+          "Fruit and pods",
+          "Varies by variety, so check the seed pack"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Highland vegetables of Benguet"
+    },
+    {
+      "type": "text",
+      "text": "In the Cordillera the cool air lets farmers grow crops that struggle in lowland heat. Benguet is the top producer of cabbage, carrots and potatoes in the country, according to the Philippine Statistics Authority. Most of that harvest moves through the trading posts of La Trinidad.\n\nA Benguet State University survey of about 100 farmers per crop put average yields at 22 tons of cabbage, 20 tons of carrots and 16 tons of potatoes per hectare. It also found that fertilizer and soil amendments make up 23 percent of the cost of growing cabbage."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When to plant"
+    },
+    {
+      "type": "text",
+      "text": "The calendar follows the rain. The DA tomato guide for Cagayan Valley plants tomatoes from November to February in the lowlands and from September to January in hilly areas. Ampalaya can go in any time, but it does best from October to February.\n\nOff season planting, May to September for tomato, pays more because prices climb when supply drops. But wet season fields need raised ground and good drainage. Typhoons are the other risk, so stagger your plantings instead of betting one lot on one month.\n\nFor your own town, the anee.io [When to Plant Analysis](/features/when-to-plant-analysis) reads the local weather first, and the week's forecast for each lot tells you when to hold a spray."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Best fertilizer for vegetables"
+    },
+    {
+      "type": "text",
+      "text": "There is no single best fertilizer for vegetables. The pattern in DA guides is the same for most crops. First, build the soil with organic matter. Next, give a complete fertilizer at planting. Then side dress with nitrogen and potash while the crop grows."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Organic base: compost and chicken dung"
+    },
+    {
+      "type": "text",
+      "text": "The DA vegetable guides start with organic fertilizer. The ampalaya guide asks for 10 to 20 tons of compost or decomposed manure per hectare before field preparation. In the Cordillera, the DA organic guide uses 2 to 4 kilograms of compost per square meter of plot.\n\nChicken dung as fertilizer is popular because it is cheap and rich. The DA pechay guide for Central Visayas puts one sack of chicken dung plus one kilo of complete fertilizer on every 20 meter plot. For talong, eggplant guides use 0.5 kilograms of decomposed chicken manure with 0.4 kilograms of 16 20 0 per 10 meters of furrow.\n\nUse only well rotted dung. The DA Bicol organic guide explains that raw organic matter releases acids and ties up nitrogen while it decays, so young plants turn yellow. Some farms go fully natural: Palaya Natural Farm in Tanay, Rizal, known for its dragon fruit, also grows vegetables without synthetic chemicals. For more options, see our [organic fertilizer examples](/blog/organic-fertilizer-examples)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Complete fertilizer: triple 14 and 16 16 16"
+    },
+    {
+      "type": "text",
+      "text": "Fertilizer 14 14 14, which many farmers call triple 14 fertilizer, carries 14 percent each of nitrogen, phosphorus and potassium. It is the standard basal fertilizer for vegetables in DA guides. For example, ampalaya gets 20 grams, about two tablespoons, per hill, while tomato gets one tablespoon per plant.\n\nSome dealers also stock fertilizer 16 16 16. It does the same job with a little more of each nutrient per bag, so use slightly less. Our guide to [complete fertilizer 14 14 14](/blog/complete-fertilizer-14-14-14) shows the bag math.\n\nThe 16 20 fertilizer, sold as 16 20 0 ammonium phosphate, has no potash but more phosphorus for young roots. It is a common basal choice for talong when a soil test shows enough potassium. See our [16 20 0 fertilizer](/blog/16-20-0-fertilizer) guide."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Side dress with urea and potash"
+    },
+    {
+      "type": "text",
+      "text": "After planting, vegetables need nitrogen for leaves and potassium for fruit. The DA ampalaya guide side dresses 10 grams of urea, about one tablespoon, per hill three to four weeks after planting. After that it repeats the dose every two weeks for two or three more rounds. Cover each dose with fine soil so the urea does not escape into the air."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Foliar fertilizer spray"
+    },
+    {
+      "type": "text",
+      "text": "A foliar fertilizer spray feeds the plant through its leaves. Treat it as a supplement to soil feeding, because leaves take in only small amounts at a time. Organic growers often use fish amino acid: ATI Cordillera mixes 2 tablespoons in 1 liter of water and sprays every 7 days, from new seedlings until fruiting.\n\nFor a commercial foliar fertilizer, follow the label. More in our [foliar fertilizer](/blog/foliar-fertilizer) guide."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fertilizer for tomato plants"
+    },
+    {
+      "type": "text",
+      "text": "Here is a simple tomato program for fields without a soil test, combining the DA and ATI guides."
+    },
+    {
+      "type": "table",
+      "caption": "Fertilizer for tomato plants without a soil test, from the DA Cagayan Valley and ATI Cordillera tomato guides",
+      "rows": [
+        [
+          "When",
+          "What to apply",
+          "How much"
+        ],
+        [
+          "Before land preparation",
+          "Decomposed animal manure or commercial organic fertilizer",
+          "20 bags per hectare"
+        ],
+        [
+          "At transplanting",
+          "Complete fertilizer 14 14 14 in the hole, covered with compost",
+          "1 tablespoon per plant"
+        ],
+        [
+          "2 weeks after transplanting",
+          "Urea (46 0 0) and muriate of potash (0 0 60), buried 1 inch deep and 3 to 4 inches from the stem",
+          "1 tablespoon of each per plant"
+        ],
+        [
+          "30 days after transplanting",
+          "Urea and muriate of potash, same method",
+          "1 tablespoon of each per plant"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "During flowering and fruit set, ATI also suggests calcium sprays made from eggshells. Water only to keep the root zone moist, because tomato is very sensitive to flooding and excess moisture brings blight.\n\nIn anee.io, each dose becomes a dated task on the [cropping calendar](/features/cropping-calendar), counted from each lot's transplanting day. The [inventory](/features/farm-inventory-and-expenses) then takes the urea and potash off your stock as each activity uses them."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common pests and diseases"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Thrips"
+    },
+    {
+      "type": "text",
+      "text": "Thrips are tiny insects that rasp leaves and suck the sap, leaving silvery scars that turn brown. Melon thrips (Thrips palmi) attack ampalaya, melons, talong and tomato. Check the undersides of young leaves and the flowers, then see our page on [thrips](/problems/thrips)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Aphids"
+    },
+    {
+      "type": "text",
+      "text": "Aphids are soft green or black insects that cluster on shoots and under leaves, curling them and spreading viruses. Two aphids do most of the damage, and their scientific names help when you read DA bulletins and pesticide labels. The cotton or melon aphid, Aphis gossypii, feeds on talong, okra, sili and gourds. The green peach aphid, Myzus persicae, prefers pechay, cabbage and potato. See our page on [mites and aphids](/problems/hanip-mites-and-aphids)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Cutworms"
+    },
+    {
+      "type": "text",
+      "text": "Cutworms are moth larvae that hide in the soil by day and feed at night, often cutting seedlings at the soil line. The common cutworm, Spodoptera litura, also strips pechay and cabbage leaves. The DA Bicol guide says to handpick them, spray botanicals and net the seedlings. More on our [cutworm](/problems/cutworm) page."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Anthracnose"
+    },
+    {
+      "type": "text",
+      "text": "Anthracnose is a fungal disease caused by Colletotrichum. It makes sunken, dark spots on fruit and leaves, and it spreads fastest in warm, wet weather. The DA lists it among the prevalent diseases of tomato, and it also hits sili and ampalaya. Plant tolerant varieties where you can, remove infected fruit, and read our [anthracnose](/problems/anthracnose) page for the fungicide groups used against it."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray only what the label allows",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) for your crop. Follow the label rate and the waiting days before harvest, which matter most on leafy vegetables."
+    },
+    {
+      "type": "cta",
+      "title": "Not sure what is eating your vegetables?",
+      "text": "Send a photo of the curled leaf or spotted fruit to Anee, the anee.io AI technician. Anee checks your crop's stage and the weather first, then answers in Tagalog or English.",
+      "label": "Meet Anee",
+      "url": "/features/ai-agricultural-technician"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Growing vegetables in the Philippines with anee.io"
+    },
+    {
+      "type": "text",
+      "text": "anee.io has [growth stages](/features/growth-stages-and-weather) for 85 Philippine crops, including tomato, pechay, ampalaya, talong, okra, kalabasa, cabbage, carrots and potato. Pick a date and you see each lot's stage, what to do, and what to watch for.\n\nFor the planting steps in Tagalog, read our guide to [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What are the most common vegetables in the Philippines?",
+          "a": "In the lowlands: ampalaya, sitaw, talong, okra, kalabasa, pechay, kangkong and tomato. In the highlands, Benguet leads in cabbage, carrots and potatoes."
+        },
+        {
+          "q": "What is the best fertilizer for vegetables?",
+          "a": "Decomposed compost or chicken dung before planting, complete fertilizer 14 14 14 at planting, then urea and muriate of potash as side dress."
+        },
+        {
+          "q": "Is fertilizer 16 16 16 better than 14 14 14?",
+          "a": "Not better, just a little stronger per bag. Both carry equal nitrogen, phosphorus and potassium, so use slightly less 16 16 16."
+        },
+        {
+          "q": "How often should I spray foliar fertilizer?",
+          "a": "Follow the label for a commercial product. For homemade fish amino acid, ATI Cordillera uses 2 tablespoons per liter of water once a week."
+        }
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next vegetable season",
+      "text": "Set up a cropping schedule on anee.io and every fertilizer, spray and harvest gets a date from each lot's own day zero.",
+      "label": "Sign up free",
+      "url": "/signup"
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Pagtatanim ng gulay: step by step in Tagalog",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Fertilizer for plants",
+          "url": "/blog/fertilizer-for-plants"
+        },
+        {
+          "label": "Organic fertilizer examples",
+          "url": "/blog/organic-fertilizer-examples"
+        },
+        {
+          "label": "Foliar fertilizer",
+          "url": "/blog/foliar-fertilizer"
+        },
+        {
+          "label": "Thrips",
+          "url": "/problems/thrips"
+        },
+        {
+          "label": "Anthracnose",
+          "url": "/problems/anthracnose"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DA Regional Field Office 2, Tomato Production Guide",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Tomato.pdf"
+        },
+        {
+          "label": "DA Regional Field Office 2, Ampalaya Production Guide",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/Ampalaya.pdf"
+        },
+        {
+          "label": "ATI Central Visayas, Pechay Production Guide",
+          "url": "https://ati2.da.gov.ph/ati-7/content/sites/default/files/users/user16/PECHAY%20final_2.pdf"
+        },
+        {
+          "label": "ATI Cordillera, Tomato Production for Urban and Home Gardening",
+          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/tomato_production_guide_leaflet.pdf"
+        },
+        {
+          "label": "ATI Cordillera, Organic Concoctions (fish amino acid)",
+          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2023-01/MOTHER%20NATURES-ORGANIC%20CONCOCTIONS.pdf"
+        },
+        {
+          "label": "DA Cordillera, Technoguide on Organic Highland Vegetables",
+          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-PRODUCTION-_-MANAGEMENT-OF-ORGANIC-HIGHLAND-VEGETABLES.pdf"
+        },
+        {
+          "label": "DA Bicol, Organikong Pagtatanim ng Gulay",
+          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/ORGANIKONG-PAGTATANIM-NG-GULAY-AT-PAGAALAGA-NG-BABOY_02102020_V1.pdf"
+        },
+        {
+          "label": "Benguet State University, Cost Structures of Benguet Highland Vegetables",
+          "url": "https://bsu.edu.ph/wp-content/uploads/IPP/2022-6.1-Production-and-Marketing-Cost-Structure-of-Benguet-Highland-Vegetables_-Guide-to-Prioritizing-Interventions.pdf"
+        },
+        {
+          "label": "PSA Cordillera, Crop Production: Cabbage, Carrot and Potato",
+          "url": "https://rssocar.psa.gov.ph/content/2016-crop-production-cabbage-carrot-and-potato"
+        },
+        {
+          "label": "CABI Compendium, Thrips palmi (melon thrips)",
+          "url": "https://www.cabidigitallibrary.org/doi/10.1079/cabicompendium.53745"
+        }
+      ]
+    }
+  ]
+}

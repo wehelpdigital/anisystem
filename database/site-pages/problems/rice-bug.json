@@ -1,0 +1,285 @@
+{
+  "section": "problems",
+  "slug": "rice-bug",
+  "sortOrder": 10,
+  "lang": "en",
+  "category": "Rice pests",
+  "title": "Rice Bug (Atangya): Damage, Thresholds and Control",
+  "metaTitle": "Rice Bug: How to Spot and Control Atangya in Palay",
+  "metaDescription": "The rice bug sucks milky grains and leaves palay empty and spotted. Learn its local names, when to count it, and when a spray is really worth it.",
+  "focusKeyword": "rice bug",
+  "keywords": [
+    "rice bug",
+    "rice bugs",
+    "rice ear bug",
+    "alitangya",
+    "tayangaw",
+    "bugs in tagalog",
+    "alika insecticide",
+    "karate insecticide",
+    "lambda cyhalothrin",
+    "rice insects"
+  ],
+  "excerpt": "The rice bug, Leptocorisa oratorius, is the slender, foul smelling insect that Tagalog farmers call atangya. It sucks the grains of palay (rice still in the husk) while they are still milky, and a heavy attack leaves panicles full of empty, spotted grains. Here is how to identify it, when to count it, and how to control it without wasting a spray.",
+  "heroImage": {
+    "src": "/images/site/guides/problems-rice-bug.webp",
+    "alt": "A rice bug, Leptocorisa oratorius, clings to a green rice panicle in the field",
+    "credit": "Maulidya Fachra, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the rice bug looks like"
+    },
+    {
+      "type": "text",
+      "text": "Most [rice insects](/problems/rice-insects) attack the leaves, the stems or the roots. This one waits for the grain. Adults are long and thin, with long legs and long antennae, and their color is greenish brown. The nymphs, or young bugs, have green bodies that blend with the leaves, so many farmers miss them.\n\nEggs sit in small batches along the midrib of the leaf. They are oval, shiny and reddish brown. Pick up an adult and you will know it at once, because it gives off a strong, bad smell. Adults feed in the early morning and late afternoon. Under bright sun they hide in grassy areas. When you disturb a hill, the nymphs drop to the lower part of the plant while the adults fly a short distance away."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice ear bug, atangya, tayangaw and alitangya"
+    },
+    {
+      "type": "text",
+      "text": "In English you will read about the rice bug, the rice ear bug or the rice earhead bug. PhilRice lists atangya as its Tagalog name and dangaw as its Ilocano name. Farmers in Camarines Sur say tayangaw. The general words for insects and bugs in Tagalog are kulisap and insekto, and our list of [farm words in Tagalog](/blog/farm-words-in-tagalog) has more.\n\nBe careful with alitangya. Tagalog dictionaries and several news reports use alitangya for the rice black bug, the round, dark stink bug that PhilRice calls itim na atangya. Since the names overlap from town to town, trust the shape of the insect more than the name. A slender, long legged bug on the panicle is the rice bug. A broad, oval black bug at the base of the hill is the [rice black bug](/problems/rice-black-bug)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How rice bugs damage palay"
+    },
+    {
+      "type": "text",
+      "text": "Both nymphs and adults push their mouthparts into the developing grain and suck out its contents. They feed from just before flowering up to the soft dough stage, and every soft, milky grain is at risk. PhilRice notes that the nymphs do more damage than the adults. Before the grains form, the bugs feed on young shoots and leaves, but the serious damage comes at the milky stage. IRRI reports that rice bugs can cut yield by as much as 30 percent."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Signs of rice bug damage"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Empty or unfilled grains, and small or shriveled ones",
+        "Deformed grains with brown or dark spots where the bugs fed",
+        "Panicles that stay erect in heavily infested fields, since light grains do not bend them",
+        "A bad smell in the raw and cooked rice, and straw that cattle refuse to eat"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Nutrient deficiency and flower [thrips](/problems/thrips) can leave similar grains. So before you act, confirm the cause by finding the bugs, their eggs or their smell."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When rice bugs build up"
+    },
+    {
+      "type": "text",
+      "text": "The bug lives in every rice environment, but it is more common in rainfed and upland rice. Between crops it lives on wild grasses, then it moves into rice fields when the crop flowers. It is less active during the dry season. Watch your field closely when:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Woodlands, weedy areas or wild grasses along canals sit next to your field",
+        "Farms around you plant at different times, so flowering fields follow one another for weeks",
+        "The monsoon rains begin, or the weather stays warm with overcast skies and frequent drizzles",
+        "The rainy season is ending, since IRRI says numbers rise at that time"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to count rice bugs and when to act"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Start before flowering",
+          "text": "Begin scouting just before the panicles come out and keep going every day until the hard dough stage. PhilRice puts the risky window at about 30 days, from flowering to soft dough."
+        },
+        {
+          "title": "Walk the field early or late",
+          "text": "Go out in the early morning or late afternoon, when the bugs sit on the panicles. Walk diagonally across the field and check 20 hills."
+        },
+        {
+          "title": "Count every nymph and adult",
+          "text": "Adults often fly off before you reach the hill, so your count may show mostly nymphs. Write the number down with the date and the lot."
+        },
+        {
+          "title": "Compare with the threshold",
+          "text": "Consider a spray only when the count passes the action threshold in the table below. If it stays under, keep counting instead of spraying."
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "caption": "Action thresholds for atangya",
+      "rows": [
+        [
+          "Source",
+          "Crop stage",
+          "Consider control when you find"
+        ],
+        [
+          "IRRI Rice Knowledge Bank",
+          "Flowering to hard dough",
+          "More than 10 bugs in 20 hills"
+        ],
+        [
+          "PhilRice",
+          "Milky stage",
+          "More than 5 nymphs and adults per square meter"
+        ],
+        [
+          "PhilRice",
+          "Grain filling",
+          "More than 10 nymphs and adults per square meter"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "anee.io makes this easier. Each lot on your [cropping calendar](/features/cropping-calendar) counts its own days after transplanting, and the [growth stages](/features/growth-stages-and-weather) view tells you when that lot reaches flowering and the milky stage. Put a daily scouting reminder on the board for those weeks, then log each count in a note with a photo."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Cultural and natural control of atangya"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Clean the surroundings.** Cut grassy weeds in the field, on the pilapil (levees) and along canals, so the bugs have fewer places to breed between crops.",
+        "**Plant together.** PhilRice advises planting at the same time across the community after at least a month of fallow, so bugs cannot move from early fields to late ones.",
+        "**Keep the crop even.** A level field with even fertilizer and water grows at one pace, so the whole lot passes the milky stage together.",
+        "**Net them.** Sweeping with a net in the early morning or late afternoon works when numbers are low, though it takes labor.",
+        "**Bait them.** PhilRice lists rotting meat, fish or snails as baits that draw the bugs to one spot, where you can collect and destroy them.",
+        "**Grow awned varieties where you can.** PhilRice notes that awned varieties resist the bug, and panicles that stay longer inside the leaf sheath get some protection too.",
+        "**Protect natural enemies.** Small wasps such as Gryon nixoni and long horned grasshoppers kill the eggs. Spiders, crickets and lady beetles eat nymphs and adults, and the fungus Beauveria bassiana infects them."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spraying too much brings pests back",
+      "text": "IRRI warns that careless insecticide use kills the wasps and spiders that hold pests down, and then the pests return in bigger numbers. The [brown planthopper](/problems/brown-planthopper) is the classic example in rice."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Chemical control: Alika, Karate and lambda cyhalothrin"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice advises using a pesticide only when the count calls for it and asking an agricultural extension worker first. If your counts pass the threshold, choose a product whose FPA registered label lists this pest on rice.\n\nTwo familiar examples come from Syngenta. Karate insecticide (Karate 2.5 EC) contains lambda cyhalothrin, a pyrethroid in IRAC Group 3A. Its Philippine product page names this pest along with leaffolder, black bugs, armyworms and green leafhopper on rice. Alika insecticide (Alika 247 ZC) mixes lambda cyhalothrin with thiamethoxam, a Group 4A neonicotinoid, and lists rice bug, stem borer and leafhoppers on rice.\n\nBoth are broad spectrum products, so they can also kill spiders and other friendly insects. Read the whole label before you mix: the rate per tank, the number of sprays, the pre harvest interval and the protective gear. These bugs strike close to harvest, so the pre harvest interval matters more here than with most pests. Our guides to [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) and to [Karate, Cymbush and Selecron](/blog/karate-cymbush-selecron-insecticides) compare these products, and the [FPA guide](/blog/fertilizer-and-pesticide-authority) explains how to check a registration."
+    },
+    {
+      "type": "text",
+      "text": "Not sure whether the insect on your panicle is a rice bug or a black bug? Send a photo to Anee, the [AI technician](/features/ai-agricultural-technician) inside anee.io. She answers in Tagalog or English, and she checks the growth stage of your lot before she replies."
+    },
+    {
+      "type": "cta",
+      "title": "See the milky stage coming",
+      "text": "anee.io dates every lot from its own day zero, shows its growth stage on any date, and lets you ask Anee about a photo of the bug you found.",
+      "label": "Start free on anee.io",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rice bug questions farmers ask"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the rice bug called in Tagalog?",
+          "a": "PhilRice gives atangya as the Tagalog name and dangaw as the Ilocano name. In Camarines Sur farmers say tayangaw. Many dictionaries use alitangya for the rice black bug instead, so look at the insect before you decide."
+        },
+        {
+          "q": "When does atangya attack palay?",
+          "a": "From just before flowering to the soft dough stage, while the grains hold milky sap. PhilRice puts that window at about 30 days."
+        },
+        {
+          "q": "Are rice bugs and rice black bugs the same?",
+          "a": "No. The rice bug is slender and feeds on milky grains in the panicle. The rice black bug is a round, dark stink bug that sucks sap at the base of the plant and can cause deadhearts and bugburn."
+        },
+        {
+          "q": "Should I spray every season?",
+          "a": "No. Count first. IRRI suggests control only when you find more than 10 bugs in 20 hills, and PhilRice uses 5 per square meter at the milky stage."
+        },
+        {
+          "q": "Which insecticide works on rice bugs?",
+          "a": "Products with lambda cyhalothrin, such as Karate and Alika, list this pest on their Philippine product pages. Treat them as examples, use only FPA registered products and follow the label."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Rice black bug",
+          "url": "/problems/rice-black-bug"
+        },
+        {
+          "label": "Rice insects in the Philippines",
+          "url": "/problems/rice-insects"
+        },
+        {
+          "label": "Brown planthopper",
+          "url": "/problems/brown-planthopper"
+        },
+        {
+          "label": "Thrips",
+          "url": "/problems/thrips"
+        },
+        {
+          "label": "Alika, Virtako and Chess",
+          "url": "/blog/rice-insecticides-alika-virtako-chess"
+        },
+        {
+          "label": "Growth stages and weather",
+          "url": "/features/growth-stages-and-weather"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Rice bug",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-bug"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: Pamamahala ng rice bug o atangya",
+          "url": "https://www.pinoyrice.com/pamamahala-ng-rice-bug-o-atangya/"
+        },
+        {
+          "label": "PhilRice: Rice bug handout, Leptocorisa oratorius",
+          "url": "https://www.pinoyrice.com/wp-content/uploads/rice-bug.pdf"
+        },
+        {
+          "label": "Syngenta Philippines: Karate 2.5 EC",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/karate-25-ec"
+        },
+        {
+          "label": "Syngenta Philippines: Alika 247 ZC",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/alika-247-zc"
+        },
+        {
+          "label": "Wiktionary: alitangya (Tagalog)",
+          "url": "https://en.wiktionary.org/wiki/alitangya"
+        }
+      ]
+    }
+  ]
+}

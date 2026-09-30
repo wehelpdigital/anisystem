@@ -1,0 +1,270 @@
+{
+  "section": "blog",
+  "slug": "potash-fertilizer",
+  "sortOrder": 240,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "Potash Fertilizer: Muriate of Potash 0 0 60 for Rice, Banana and Coconut",
+  "metaTitle": "Potash Fertilizer 0 0 60: What Potassium Does and When",
+  "metaDescription": "Potash fertilizer, or muriate of potash 0 0 60, helps grain filling, stiff stems and disease tolerance. See when to apply it on rice, banana and coconut.",
+  "focusKeyword": "potash fertilizer",
+  "keywords": [
+    "potash fertilizer",
+    "fertilizer with potassium",
+    "fertilizer with high potassium",
+    "fertilizer for coconut plants",
+    "fertilizer for flowering plants"
+  ],
+  "excerpt": "Potash fertilizer in the Philippines usually means muriate of potash, the 0 0 60 sold in 50 kg bags. It carries 60 percent potash (K2O), and IRRI calls it the most common fertilizer with potassium. Here is what potassium does, when to apply it on palay, banana and coconut, and how to tell if your crop needs it.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-potash-fertilizer.webp",
+    "alt": "Compacted muriate of potash granules, the potash fertilizer farmers broadcast on rice and banana",
+    "credit": "Abbas cucaniensis, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Muriate is an old word for chloride, so muriate of potash is simply potassium chloride. Farmers call it MOP or just potash. The Fertilizer and Pesticide Authority (FPA) tracks its price every week, along with urea and complete.\n\nPotassium is easy to forget, because its signs show late. By the time the leaf edges turn brown, the grains may already be light. So it pays to plan potash from the start."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is in potash fertilizer 0 0 60"
+    },
+    {
+      "type": "text",
+      "text": "The grade 0 0 60 means no nitrogen, no phosphate and 60 percent potash, written as K2O. So a 50 kg bag holds 30 kg of K2O. IRRI puts it the other way around: 30 kg of K2O equals 50 kg of muriate of potash. Counted as pure potassium, MOP is about 50 percent K.\n\nBrands of muriate of potash on the FPA list of registered fertilizers declare 60 percent K2O. The grade is the same across brands, so compare the price per bag and buy from a registered dealer."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What potassium does for your crop"
+    },
+    {
+      "type": "text",
+      "text": "IRRI calls potassium often the most limiting nutrient after nitrogen in high yielding rice. The PalayCheck guide of PhilRice lists what it does in the rice plant:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Speeds up root growth and boosts plant vigor",
+        "Helps the plant take up other nutrients faster",
+        "Improves tolerance of pests, diseases, drought and lodging",
+        "Increases grain size and weight, and the share of filled grains"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "That is why potash matters most for grain filling and for stems that stay standing in a typhoon month. IRRI adds that potassium helps prevent lodging and raises resistance to pests and diseases."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Signs of potassium deficiency in rice"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Dark green plants with yellowish brown leaf edges",
+        "Dark brown dead spots that start at the tips of older leaves",
+        "Yellowing in an upside down V shape that moves down the leaf",
+        "Unhealthy or black roots, more lodging, and more unfilled, lighter grains"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "IRRI warns that these leaf signs can look like tungro. But tungro shows in patches, while potassium deficiency covers the whole field. Signs often appear only in the later growth stages, so do not wait for them."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When to apply potash fertilizer on rice"
+    },
+    {
+      "type": "table",
+      "caption": "Potassium timing for palay from PhilRice and IRRI. Adjust the amount to a soil test.",
+      "rows": [
+        [
+          "Source",
+          "When to apply"
+        ],
+        [
+          "PhilRice PalayCheck",
+          "First dose at 0 to 14 DAT, or 7 to 10 DAS. Second dose 5 to 7 days before or after panicle initiation."
+        ],
+        [
+          "PhilRice general recommendation",
+          "70 percent at 7 to 14 DAT and 30 percent 5 to 7 days before or after panicle initiation"
+        ],
+        [
+          "PhilRice Abonong Swak plans",
+          "Half a bag of 0 0 60 per hectare with the last urea, at 28 to 40 DAT depending on variety maturity"
+        ],
+        [
+          "IRRI",
+          "All at basal if the rate is small. Above 30 kg K2O per hectare, half at basal and half at early panicle initiation."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "DAT means days after transplanting, and DAS means days after sowing. PhilRice recommends the extra muriate of potash around panicle initiation, especially where the sun is strong, like Nueva Ecija, Bicol and Isabela. There it raises grain size and weight. IRRI also advises splitting potassium into at least two doses on sandy soils that leach.\n\nIf you use [complete fertilizer 14 14 14](/blog/complete-fertilizer-14-14-14) at basal, it already gives 7 kg of K2O per bag. With [16 20 0](/blog/16-20-0-fertilizer), you get none, so the potash has to come from MOP. Our [fertilizer for rice](/blog/fertilizer-for-rice) page puts it all in one season plan."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Your straw is a potash fertilizer",
+      "text": "IRRI counts about 16.8 kg of K2O in the straw for every ton of grain, against only 2.2 kg in the grain. Burn or haul away the straw and most of that potassium leaves the field. Work it back into the soil and much of it stays."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Potash fertilizer for banana and coconut"
+    },
+    {
+      "type": "text",
+      "text": "Banana is a heavy potassium crop. Yara Philippines says potassium has a large effect on banana yield, with peak demand around flowering. Potassium deficiency in banana shows first on older leaves, as yellow to orange zones from the tips that later turn brown. Too much is not good either. Yara warns that overuse of potassium can bring on calcium and magnesium deficiencies. Our guide to [banana farming in the Philippines](/crops/banana-farming-philippines) covers the full program.\n\nMuriate of potash also suits coconut. Since it is potassium chloride, it brings chloride along with the potassium, and coconut needs chlorine. A technology guide of the Philippine Coconut Authority found chlorine deficiency widespread in inland coconut areas. Our guide to fertilizer for coconut plants, [coconut fertilizer](/crops/coconut-fertilizer), explains the full plan, salt included."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A fertilizer with high potassium for flowers and fruit"
+    },
+    {
+      "type": "text",
+      "text": "Potassium demand rises when a plant flowers and sets fruit. Yara, for example, sells YaraMila Winner, a 15 9 20 with extra nutrients, for vegetables in the flowering and fruiting stage. Its last number, the potash, is the highest of the three.\n\nThat is the rule to remember when you shop for a fertilizer for flowering plants. Look for a grade where the third number is highest, then follow the label rate. Straight 0 0 60 works too, but it carries no nitrogen or phosphorus, so pair it with a balanced feed. Our guide to [fertilizer for plants](/blog/fertilizer-for-plants) covers garden and potted crops."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Potash price and how much to buy"
+    },
+    {
+      "type": "text",
+      "text": "The FPA dealer survey for September 14 to 18, 2026 put the national average for muriate of potash at **PHP 1,668.08** per 50 kg bag. In the week of January 5 to 9, 2026 it was PHP 1,731.94. Of the six grades on the FPA list, only potash got cheaper between those two weeks. Prices change every week, so check the FPA list for your province.\n\nAt the September average, a kilo of K2O from MOP costs about PHP 55.60. The PhilRice plan of half a bag per hectare gives 15 kg of K2O for about PHP 834.04. If your soil test calls for 30 kg of K2O, buy one full bag per hectare. The [fertilizer calculation](/blog/fertilizer-calculation) guide shows the steps."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep potash on the plan with anee.io"
+    },
+    {
+      "type": "text",
+      "text": "The late potash dose is easy to forget, since it comes weeks after the basal. In anee.io, the [cropping calendar](/features/cropping-calendar) dates it from each lot's own day zero, right beside the last urea. The [farm inventory](/features/farm-inventory-and-expenses) counts your MOP in 50 kg bags, and the cost of each bag used goes to your expense report.\n\nThe [growth stages](/features/growth-stages-and-weather) feature covers 85 Philippine crops, fruit trees and perennials included. Pick a date and see each lot's stage and what to do. Ask Anee, the [AI agricultural technician](/features/ai-agricultural-technician), to work out a potash plan in Tagalog or English."
+    },
+    {
+      "type": "cta",
+      "title": "Do not skip the late potash again",
+      "text": "Sign up free and let anee.io date every fertilizer task and count every bag in your shed.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about potash fertilizer"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is potash fertilizer?",
+          "a": "In the Philippines it usually means muriate of potash, or potassium chloride. Its grade is 0 0 60, so a 50 kg bag gives 30 kg of K2O."
+        },
+        {
+          "q": "What does potash do for rice?",
+          "a": "It helps fill the grain, makes grains bigger and heavier, keeps stems from lodging, and improves tolerance of pests, diseases and drought."
+        },
+        {
+          "q": "When should I apply 0 0 60 on palay?",
+          "a": "PalayCheck puts the first dose at 0 to 14 DAT and the second 5 to 7 days before or after panicle initiation. The PhilRice Abonong Swak plans add half a bag per hectare with the last urea."
+        },
+        {
+          "q": "Is muriate of potash good for coconut?",
+          "a": "Yes. It gives potassium and chloride together, and the Philippine Coconut Authority has found chlorine deficiency in many inland coconut areas."
+        },
+        {
+          "q": "Can too much potash hurt my crop?",
+          "a": "Yes. Yara warns that overuse of potassium in banana can cause calcium and magnesium deficiencies. Apply what a soil test or your technician recommends."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Coconut fertilizer",
+          "url": "/crops/coconut-fertilizer"
+        },
+        {
+          "label": "Banana farming in the Philippines",
+          "url": "/crops/banana-farming-philippines"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "Complete fertilizer 14 14 14",
+          "url": "/blog/complete-fertilizer-14-14-14"
+        },
+        {
+          "label": "Fertilizer for plants",
+          "url": "/blog/fertilizer-for-plants"
+        },
+        {
+          "label": "Fertilizer calculation",
+          "url": "/blog/fertilizer-calculation"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Potassium",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/potassium-k"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: PalayCheck Key Check 5, Nutrient Management",
+          "url": "https://www.pinoyrice.com/palaycheck/nutrient-management/"
+        },
+        {
+          "label": "PhilRice: Rice Science for Decision Makers Vol. 11, Reinforcing Right EAT",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2022/07/RS4DM-Volume-11-June-29-2022-CGD.pdf"
+        },
+        {
+          "label": "PhilRice: Balanced fertilization cuts fertilizer costs (Abonong Swak recommendations)",
+          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
+        },
+        {
+          "label": "Yara Philippines: How to increase banana yield",
+          "url": "https://www.yara.ph/crop-nutrition/banana/how-to-increase-banana-yield/"
+        },
+        {
+          "label": "Yara Philippines: Potassium deficiency in banana",
+          "url": "https://www.yara.ph/crop-nutrition/banana/nutrient-deficiencies-banana/potassium-deficiency-banana/"
+        },
+        {
+          "label": "Yara Philippines: YaraMila Winner",
+          "url": "https://www.yara.ph/crop-nutrition/fertilizers/yaramila/yaramila-winner/"
+        },
+        {
+          "label": "FPA: Fertilizer product listing as of May 3, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/05/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-MAY-03-2026.pdf"
+        },
+        {
+          "label": "FPA: Prices of 6 major fertilizer grades, September 14 to 18, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/WFP-WK38-2026.sgd_.pdf"
+        },
+        {
+          "label": "FPA: Prices of 6 major fertilizer grades, January 5 to 9, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/04/WEEK2-WFP-JAN-5-9202620260121_14533156_Optimized.pdf"
+        }
+      ]
+    }
+  ]
+}

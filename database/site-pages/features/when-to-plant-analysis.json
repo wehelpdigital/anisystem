@@ -1,0 +1,158 @@
+{
+  "section": "features",
+  "slug": "when-to-plant-analysis",
+  "sortOrder": 90,
+  "lang": "en",
+  "category": "Planning",
+  "title": "When to Plant: Anee's Planting Window Analysis for Your Town",
+  "metaTitle": "When to Plant: Planting Window Analysis for Your Town",
+  "metaDescription": "Not sure when to plant? Anee reads your town's weather history, the season outlook and your crop's maturity to name the safest planting window.",
+  "focusKeyword": "when to plant",
+  "keywords": [
+    "when to plant",
+    "planting window",
+    "what to plant",
+    "variety research",
+    "crop protocol analysis",
+    "El Niño",
+    "rice varieties in the Philippines"
+  ],
+  "excerpt": "Knowing when to plant decides half the season. The When to Plant Analysis in anee.io reads your town's weather record, the outlook for the coming months and your crop's maturity, then names the planting window with the least risk. It is one of four planning analyses that Anee, the AI technician, runs for you.",
+  "heroImage": {
+    "src": "/images/site/photos/transplant.jpg",
+    "alt": "A farmer checks his phone at the edge of a newly transplanted rice field while workers plant behind him",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How the analysis finds when to plant"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Tell Anee where and what",
+          "text": "Pick your town, the crop and, if you know it, the variety. Then choose the season you have in mind."
+        },
+        {
+          "title": "She reads the record",
+          "text": "Anee looks at the weather history of your area, with the storms, floods, droughts and heat of past years. She also reads the El Niño or La Niña outlook for the coming months."
+        },
+        {
+          "title": "She times it by the crop",
+          "text": "The window has to fit the crop's whole life, from sowing to harvest. If you name a variety, she uses its own maturity, so an early variety and a late one get different answers."
+        },
+        {
+          "title": "You get a window and the reasons",
+          "text": "Each month gets a score and the best window stands out. A risk chart shows which months carry storm, flood or drought risk in your area."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Take the window to your board. Set your lot's day zero inside it, and the [cropping calendar](/features/cropping-calendar) dates the rest of the season from there. Once the crop is in, [growth stages and weather](/features/growth-stages-and-weather) follow each lot day by day."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What to Plant Analysis"
+    },
+    {
+      "type": "text",
+      "text": "Sometimes the question is not when but what. The What to Plant Analysis asks about your field: soil pH if you have a test, how your irrigation water looks, the lay of the land, elevation and sun. It also asks about the previous crop, your labor, your budget and your market. Skip what you do not know.\n\nNext, tell her what matters most to you, like profit, low risk, ease or a fast harvest. Anee ranks crops that really grow in your area and explains the fit of each one. For every crop she gives a planting month and when you would harvest. You can also name crops you already have in mind, and she weighs them too."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Variety Research and Comparison"
+    },
+    {
+      "type": "text",
+      "text": "Once the crop is set, the next question is which variety. Variety Research looks up current varieties of your crop, hybrids from the main seed companies included, and compares them for your season. You set the order of what matters and she ranks them by it. For rice, our list of [rice varieties in the Philippines](/crops/rice-varieties-philippines) is a good place to start reading."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Crop Protocol Analysis"
+    },
+    {
+      "type": "text",
+      "text": "The last tool writes the season itself. Give it your location, crop, variety, planting month and method, like transplanting or direct seeding. Anee then writes a protocol by growth stage: the fertilizer and when, the sprays to have ready, the water, and the pests and weeds to watch.\n\nBuild on it in the [Protocol Builder](/features/protocol-builder), or hold it up against the plan you already use. For corn growers, our guide to [pagtatanim ng mais](/crops/pagtatanim-ng-mais) pairs well with it."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Runs on credits",
+      "text": "Anee runs all four analyses on credits, and each one shows its price and your balance before you start. They come with the Libre plus Anee, Solo Farmer and Farm Owner plans. Every result stays on its shelf, where you can search it and open it again."
+    },
+    {
+      "type": "cta",
+      "title": "Find your planting window",
+      "text": "Sign up free, add Anee, and run your first When to Plant Analysis for your own town.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about when to plant"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "When is the best time to plant rice in the Philippines?",
+          "a": "Most lowland rice areas plant twice: a wet season crop from about June and a dry season crop from about November or December. But the safe window differs by town and by year, and that is what the analysis reads for you."
+        },
+        {
+          "q": "What does the analysis look at?",
+          "a": "Your area's weather history of storms, floods, drought and heat, the El Niño and La Niña outlook, and the maturity of your crop and variety."
+        },
+        {
+          "q": "Does it work for corn and vegetables?",
+          "a": "Yes. It works for the crops in the catalogue, from palay and mais to vegetables and fruit trees."
+        },
+        {
+          "q": "Which plans include the analyses?",
+          "a": "You need Anee, which comes with Libre plus Anee, Solo Farmer and Farm Owner. Each run uses credits."
+        },
+        {
+          "q": "Can I keep the results?",
+          "a": "Yes. Every analysis stays on its shelf, where you can search it and open it again."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Growth stages and weather",
+          "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "Protocol Builder",
+          "url": "/features/protocol-builder"
+        },
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "Rice varieties in the Philippines",
+          "url": "/crops/rice-varieties-philippines"
+        },
+        {
+          "label": "Pagtatanim ng mais",
+          "url": "/crops/pagtatanim-ng-mais"
+        }
+      ]
+    }
+  ]
+}

@@ -977,6 +977,48 @@
     </section>
     @endif
 
+    {{-- ================= GUIDES (the /ph face) ================= --}}
+    @if (! empty($guides))
+    @include('public.site.css')
+    <section class="py-16 sm:py-24 bg-gray-50 bg-drift">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="max-w-2xl mx-auto text-center reveal">
+                <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Free farm guides</p>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">Guides for Filipino Farmers</h2>
+                <p class="mt-4 text-gray-600">How to plant palay and mais, what to do about the rice bug and the black bug, and how much fertilizer a hectare really needs. Written for the Philippine field and free to read.</p>
+            </div>
+            <div class="mt-12 grid gap-8 lg:grid-cols-3">
+                @foreach ($guides as $sec => $pages)
+                    @php $SP = \App\Support\SitePages::class; @endphp
+                    <div class="hg-col reveal" style="--reveal-delay: {{ $loop->index * 0.07 }}s">
+                        <p class="hg-kick">{{ $SP::SECTIONS[$sec]['label'] }}</p>
+                        @include('public.site.tile', ['p' => $pages->first()])
+                        <ul class="hg-list">
+                            @foreach ($pages->slice(1) as $p)
+                                <li><a href="{{ $SP::pageUrl($p) }}">{{ $SP::shortTitle($p) }}</a></li>
+                            @endforeach
+                        </ul>
+                        <a href="{{ $SP::url($sec) }}" class="hg-all">{{ ['crops' => 'All crop guides', 'problems' => 'All crop problems', 'blog' => 'The whole blog'][$sec] }} ›</a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @push('head')
+    <style>
+        .hg-col { display: flex; flex-direction: column; gap: .8rem; min-width: 0; }
+        .hg-kick { font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #3d6823; }
+        .hg-list { display: grid; gap: .1rem; border-top: 1px solid #e5ebdf; padding-top: .4rem; }
+        .hg-list a { display: block; padding: .5rem .2rem; font-size: .92rem; font-weight: 600; color: #14210c; text-decoration: none; border-bottom: 1px dashed #e5ebdf;
+            transition: color .28s cubic-bezier(.22,1,.36,1), padding .28s cubic-bezier(.22,1,.36,1); }
+        .hg-list a:hover { color: #3d6823; padding-left: .45rem; }
+        .hg-all { font-size: .88rem; font-weight: 800; color: #3d6823; text-decoration: none; }
+        .hg-all:hover { text-decoration: underline; }
+        @media (prefers-reduced-motion: reduce) { .hg-list a { transition: none; } }
+    </style>
+    @endpush
+    @endif
+
     {{-- ================= FINAL CTA ================= --}}
     <section class="relative isolate overflow-hidden">
         <img src="{{ asset('images/site/photos/team-thumbs.jpg') }}" alt="Two farmers giving a thumbs up beside their rice field"

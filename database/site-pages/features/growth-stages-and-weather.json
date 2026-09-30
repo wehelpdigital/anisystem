@@ -1,0 +1,138 @@
+{
+  "section": "features",
+  "slug": "growth-stages-and-weather",
+  "sortOrder": 30,
+  "lang": "en",
+  "category": "Agronomy",
+  "title": "Crop Growth Stages and Weather for Every Lot on Your Farm",
+  "metaTitle": "Crop Growth Stages and Weather Forecast per Lot",
+  "metaDescription": "See crop growth stages for 85 Philippine crops on any date, with what to do, what to watch for and the forecast for each lot. Try it free on anee.io.",
+  "focusKeyword": "crop growth stages",
+  "keywords": [
+    "crop growth stages",
+    "growth stages of rice",
+    "weather forecast per lot",
+    "Philippine crops",
+    "delay counter",
+    "pagtatanim ng palay"
+  ],
+  "excerpt": "anee.io reads the crop growth stages of every lot on any date you pick. Choose a day and each lot shows its stage, what to do now and what to watch for, with the forecast for that lot's location beside it. It covers 85 Philippine crops, from palay and mais (corn) to vegetables and fruit trees.",
+  "heroImage": {
+    "src": "/images/site/app/growth.png",
+    "alt": "Crop growth stages in anee.io showing a rice lot at 82 DAS in flowering, with what to do now and what to watch for",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pick a date, read every lot"
+    },
+    {
+      "type": "text",
+      "text": "Open Growth Stages, pick a date and the page reads each lot on that day. You see the crop, its day count, the stage name and how far into the stage it is. Below that come two short lists written for the stage: what to do now, and what to watch for.\n\nTake rice at flowering. The list tells you to hold 3 to 5 cm of water and to avoid anything that stresses the crop. If you must spray, do it late in the afternoon. The watch list warns that a hot, dry spell during flowering can leave empty grains. You can read any date ahead, so the week's work is clear before Monday.\n\nThe same stage shows on each day card of the [cropping calendar](/features/cropping-calendar), so you plan tasks with the crop in view."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "85 Philippine crops, annuals and perennials"
+    },
+    {
+      "type": "text",
+      "text": "The catalogue holds 85 crops grown in the Philippines. It covers palay, yellow, sweet and white corn, sugarcane and banana, vegetables like ampalaya, talong and pechay, root crops, legumes and fruit trees. Annual crops count days from their day zero. Perennials like mango, coconut or cacao count months of age instead. A tree lot shows its stage by how old the trees are.\n\nEach lot can also carry its own days to maturity, because an early variety and a late one do not ripen together."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The week's weather for each lot"
+    },
+    {
+      "type": "text",
+      "text": "Weather in anee.io follows the lot, not the province. Pin a lot on the [farm map](/features/farm-maps) and its forecast comes from that spot. You get the days ahead with highs, lows and the chance of rain. Then come the hours of today, so you can see when the rain will likely start. A short line says what the day means for field work, like coming in when you hear thunder.\n\nOn the free Libre plan you see today and tomorrow. Solo Farmer and Farm Owner show the full forecast and the weather right now."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/lp/weather.webp",
+      "alt": "anee.io weather screen for a lot in Muñoz showing the week's forecast, hourly rain chances and what the day means for field work",
+      "caption": "The forecast follows each lot's own pin."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When a lot runs behind its crop growth stages"
+    },
+    {
+      "type": "text",
+      "text": "Crops do not always keep the calendar's pace. Cold nights hold one lot back, heat pushes another ahead, and a typhoon can set a field back a week. When you see a lot running late, set its delay counter to the days it is behind. Every task on the board then shows the delayed count beside the calendar's count.\n\nFor a closer reading, ask for Realign by Anee. She reads the lot's records, its notes and the weather it went through, then names the stage the crop is really in. After that, the lot's stages shift to match, while the calendar's own count stays as it was. Realign runs on credits, like everything [Anee, the AI technician](/features/ai-agricultural-technician) does."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Plan the week on Sunday",
+      "text": "Pick next Monday's date on Growth Stages, read each lot's to do list and watch list, then check the forecast. Move any spray that lands on a rainy day before the week starts."
+    },
+    {
+      "type": "cta",
+      "title": "Know where every lot stands",
+      "text": "Sign up free. Growth stages and the weather for today and tomorrow are on the free Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about crop growth stages"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What are the growth stages of rice?",
+          "a": "Rice passes through germination and seedling growth, tillering, panicle initiation, booting, heading and flowering, then grain filling and ripening. The app shows which one each lot is in on any date. For the whole season, see [pagtatanim ng palay](/crops/pagtatanim-ng-palay)."
+        },
+        {
+          "q": "Which crops does anee.io cover?",
+          "a": "It covers 85 crops grown in the Philippines, including palay, corn, vegetables, root crops, legumes, fruit trees and plantation crops like coconut, coffee and cacao."
+        },
+        {
+          "q": "Is the forecast for my own farm?",
+          "a": "It follows each lot's location. Pin your lots on the map for the closest reading."
+        },
+        {
+          "q": "What if my crop is ahead or behind?",
+          "a": "Set the lot's delay counter, or run Realign by Anee to shift the stage reading to where the crop really is."
+        },
+        {
+          "q": "Do fruit trees work too?",
+          "a": "Yes. Fruit trees and plantation crops count months of age instead of days, so the stage follows how old the trees are. Our guide to [pagtatanim ng puno](/crops/pagtatanim-ng-puno) covers planting them."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "When to plant analysis",
+          "url": "/features/when-to-plant-analysis"
+        },
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Farm maps",
+          "url": "/features/farm-maps"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        }
+      ]
+    }
+  ]
+}

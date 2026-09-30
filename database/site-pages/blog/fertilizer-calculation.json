@@ -1,0 +1,284 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-calculation",
+  "sortOrder": 200,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "Fertilizer Calculation: A Simple Formula with Worked Examples",
+  "metaTitle": "Fertilizer Calculation: Formula, Bags per Hectare and Cost",
+  "metaDescription": "Fertilizer calculation made simple: one formula, worked examples for a hectare of palay and a small vegetable plot, 50 kg bags, and cost per hectare.",
+  "focusKeyword": "fertilizer calculation",
+  "keywords": [
+    "fertilizer calculation",
+    "fertilizer calculation formula",
+    "fertilizer computation",
+    "fertilizer urea",
+    "fertilizer 46 0 0",
+    "14 14 14 fertilizer",
+    "16 20 0 fertilizer",
+    "fertilizer urea price",
+    "fertilizer application"
+  ],
+  "excerpt": "Fertilizer calculation comes down to one line. Kilos of product equal kilos of nutrient needed, divided by that nutrient's share in the bag. With this fertilizer calculation formula you can turn any recommendation into bags of urea, 14 14 14 or 16 20 0. You can also price the whole season before you buy, as the worked examples for a hectare of palay and a small vegetable plot show.",
+  "heroImage": {
+    "src": "/images/site/photos/palay-phone.jpg",
+    "alt": "A smiling farmer crouched in a ripening palay field, reading his phone",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Every fertilizer recommendation comes as kilos of nutrient per hectare, written as three numbers such as 90 30 30. That means 90 kg of nitrogen (N), 30 kg of phosphate (P2O5) and 30 kg of potash (K2O). The bags at the store carry grades instead. The math connects the two.\n\nYour numbers should come from your own field. A soil test from the regional soils laboratory can give them. So can the Minus One Element Technique (MOET) kit, the Rice Crop Manager or your municipal agriculturist. PALAI, the AI helper of PhilRice, now also suggests which fertilizer to use, how much per hectare and when."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The fertilizer calculation formula"
+    },
+    {
+      "type": "text",
+      "text": "There is only one formula to remember:\n\n**Kilos of product = kilos of nutrient needed, divided by the grade number over 100**\n\nThe grade number is the percent of that nutrient in the bag. Urea is 46 0 0, so its nitrogen share is 0.46. Complete fertilizer is 14 14 14, so each share is 0.14. You can also work backward to see what a bag gives. Kilos of nutrient equal kilos of product times the share."
+    },
+    {
+      "type": "table",
+      "caption": "Fertilizer calculation formula summary",
+      "rows": [
+        [
+          "What you want",
+          "Formula",
+          "Example"
+        ],
+        [
+          "Kilos of product",
+          "Nutrient needed divided by the nutrient share",
+          "60 kg N divided by 0.46 is 130 kg of urea"
+        ],
+        [
+          "Number of 50 kg bags",
+          "Kilos of product divided by 50",
+          "130 kg divided by 50 is 2.6 bags"
+        ],
+        [
+          "Nutrient in one bag",
+          "50 times the nutrient share",
+          "50 times 0.14 is 7 kg N in a bag of 14 14 14"
+        ],
+        [
+          "Amount for a small area",
+          "Rate per hectare times square meters, divided by 10,000",
+          "90 kg N on 2,500 square meters is 22.5 kg N"
+        ],
+        [
+          "Cost",
+          "Bags times price per bag",
+          "2.6 bags times PHP 2,321 is about PHP 6,035"
+        ],
+        [
+          "Cost per kilo of nutrient",
+          "Price per bag divided by kilos of nutrient per bag",
+          "PHP 2,321 divided by 23 is about PHP 101 per kg N"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Worked example 1: fertilizer computation for one hectare of palay"
+    },
+    {
+      "type": "text",
+      "text": "Say your recommendation for one hectare of irrigated palay reads 90 30 30. This is an example to learn the math, not a rate for your field. For reference, the PhilRice general recommendation for irrigated lowland is 97 kg of nitrogen per hectare in the wet season. In the dry season it is 139 kg."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Plan A: 14 14 14 fertilizer plus urea"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Cover phosphate and potash first",
+          "text": "Both need 30 kg, and complete fertilizer carries 14 percent of each. So 30 divided by 0.14 is 214 kg, about 4.3 bags of 14 14 14 fertilizer."
+        },
+        {
+          "title": "Count the nitrogen you already have",
+          "text": "Those 214 kg also carry 30 kg of nitrogen, since 214 times 0.14 is 30. Skipping this step means paying for nitrogen twice."
+        },
+        {
+          "title": "Fill the rest with urea",
+          "text": "You still need 90 minus 30, or 60 kg of nitrogen. With fertilizer 46 0 0, that is 60 divided by 0.46, or 130 kg. You need about 2.6 bags of urea."
+        },
+        {
+          "title": "Price it",
+          "text": "The FPA national averages for September 14 to 18, 2026 were PHP 1,902.92 per bag of complete. Prilled urea averaged PHP 2,320.69 per bag. So 214 kg of complete costs PHP 8,155, and 130 kg of urea PHP 6,054. That is about PHP 14,209 per hectare."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Plan B: 16 20 0 fertilizer, muriate of potash and urea"
+    },
+    {
+      "type": "text",
+      "text": "Phosphate comes first again. Here 30 divided by 0.20 is 150 kg, or exactly 3 bags of 16 20 0 fertilizer. Those bags also carry 24 kg of nitrogen. Potash comes from muriate of potash (0 0 60): 30 divided by 0.60 is 50 kg, one bag. The nitrogen left is 90 minus 24, or 66 kg. So you need 66 divided by 0.46, or 143.5 kg of urea.\n\nAt the same September 2026 prices, 3 bags of ammophos cost about PHP 5,261 and one bag of potash PHP 1,668. The 143.5 kg of urea adds about PHP 6,659. The total is about PHP 13,589, some PHP 620 less than Plan A for the same 90 30 30. Prices differ by province, so run both plans with your own dealer's prices."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Then split the fertilizer application"
+    },
+    {
+      "type": "text",
+      "text": "Buying the right amount is only half the job. The PhilRice general recommendation for irrigated lowland rice splits the season's fertilizer like this:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "All the phosphorus at the first application",
+        "Nitrogen: 25 percent at 7 to 14 days after transplanting, 25 percent at mid tillering, and 50 percent at maximum tillering or early panicle initiation",
+        "Potash: 70 percent at 7 to 14 days after transplanting, and 30 percent from 5 to 7 days before or after panicle initiation"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Our guides to [fertilizer for rice](/blog/fertilizer-for-rice) and [fertilizer application methods](/blog/fertilizer-application-methods) explain how to put each split on."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Worked example 2: a small vegetable plot"
+    },
+    {
+      "type": "text",
+      "text": "Small plots use the same formula, only scaled down. Say you have a 200 square meter plot, 10 by 20 meters. The recommendation for your crop is 120 60 60 per hectare. Again, this is only an example.\n\nFirst scale it: 200 divided by 10,000 is 0.02 hectare. So you need 120 times 0.02, or 2.4 kg of nitrogen. You also need 1.2 kg each of phosphate and potash.\n\nNext, 1.2 kg of phosphate divided by 0.14 is 8.6 kg of 14 14 14 fertilizer. That also brings 1.2 kg of nitrogen. The remaining 1.2 kg of nitrogen divided by 0.46 is 2.6 kg of urea. If the plot holds 400 plants, each gets about 21 grams of complete at planting. Later, each gets about 6.5 grams of urea. Weigh one cupful on a kitchen scale once, so you know how many grams your cup holds."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Watch the units",
+      "text": "Some recommendations give phosphorus and potassium as the element (P and K), not as P2O5 and K2O. Bag grades always use the oxide form. To convert, multiply P by 2.29 to get P2O5, and K by 1.2 to get K2O. Also remember that one hectare is 10,000 square meters."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fertilizer urea price and cost per hectare"
+    },
+    {
+      "type": "text",
+      "text": "The FPA publishes dealer prices every week. Its report for September 14 to 18, 2026 put the fertilizer urea price at PHP 2,320.69 per bag. That is the national average for 50 kg of prilled urea, while granular averaged PHP 2,322.28. Regional averages for prilled urea ran from about PHP 2,156 in CAR to PHP 2,678 in Region IX. So your local price matters.\n\nTo compare sources, divide the bag price by the kilos of nutrient inside. Urea works out to about PHP 101 per kg of nitrogen, and ammonium sulfate to about PHP 116. PhilRice found that fertilizer made up about 8 percent of rice farmers' total production cost in 2020. Prices kept climbing after 2021. So a few minutes of fertilizer computation before you buy pays for itself."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common mistakes in fertilizer computation"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Treating the grade number as kilos. A bag of 14 14 14 holds 7 kg of each nutrient, not 14.",
+        "Forgetting the nitrogen that comes with 14 14 14 or 16 20 0, then adding too much urea.",
+        "Mixing up P with P2O5, or K with K2O.",
+        "Guessing the lot size instead of measuring it.",
+        "Rounding bags too early. Round only at the end, then buy whole bags.",
+        "Putting everything on at once instead of splitting it by crop stage."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Let anee.io keep the numbers"
+    },
+    {
+      "type": "text",
+      "text": "Once you have the math, anee.io keeps it working all season. In the [Protocol Builder](/features/protocol-builder) you plan every fertilizer task, material and rate ahead of time. You can save versions and import the plan as a new cropping schedule. [Farm maps](/features/farm-maps) measure each lot over satellite imagery, so the area in your formula is real. The inventory tracks every bag and its cost, and the expenses report adds up what the season's fertilizer cost. If you get stuck, ask Anee in Tagalog or English to walk through the computation with you."
+    },
+    {
+      "type": "cta",
+      "title": "Plan your fertilizer before you buy",
+      "text": "Build the season's fertilizer plan in the Protocol Builder, measure your lots, and track every bag. Start free.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fertilizer calculation questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How many bags of urea do I need per hectare of rice?",
+          "a": "It depends on your recommendation and how much nitrogen comes from other fertilizers. If all 97 kg of nitrogen in the PhilRice wet season recommendation came from urea alone, you would need about 211 kg. That is 97 divided by 0.46, a little over 4 bags. If part comes from complete or 16 20 0, you need less urea."
+        },
+        {
+          "q": "What does 14 14 14 mean in kilos?",
+          "a": "Each 50 kg bag holds 7 kg of nitrogen, 7 kg of phosphate (P2O5) and 7 kg of potash (K2O). That is 50 times 0.14 for each nutrient."
+        },
+        {
+          "q": "How do I compute fertilizer for a small garden?",
+          "a": "Multiply the per hectare rate by your area in square meters, then divide by 10,000. Then use the same formula: nutrient needed divided by the grade share. A 100 square meter bed needs one hundredth of the hectare rate."
+        },
+        {
+          "q": "Can I mix two fertilizers in one application?",
+          "a": "Yes. Farmers often mix complete and urea, or 16 20 0 and potash, just before applying. Compute each one separately, weigh them and mix well. Use the mix the same day, since some mixtures turn damp and cake if stored."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Urea fertilizer",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "Complete fertilizer 14 14 14",
+          "url": "/blog/complete-fertilizer-14-14-14"
+        },
+        {
+          "label": "16 20 0 fertilizer",
+          "url": "/blog/16-20-0-fertilizer"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "Fertilizer application methods",
+          "url": "/blog/fertilizer-application-methods"
+        },
+        {
+          "label": "Examples of inorganic fertilizer",
+          "url": "/blog/inorganic-fertilizer-examples"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FPA: Weekly fertilizer prices, September 14 to 18, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/WFP-WK38-2026.sgd_.pdf"
+        },
+        {
+          "label": "FPA: Weekly prices archive",
+          "url": "https://fpa.da.gov.ph/weekly-prices/"
+        },
+        {
+          "label": "PhilRice policy brief: Reinforcing right element, amount and timing for improved fertilizer application",
+          "url": "https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application/"
+        },
+        {
+          "label": "PhilRice: AI upgrades sharpen fertilizer advice",
+          "url": "https://www.philrice.gov.ph/ai-upgrades-sharpen-fertilizer-advice/"
+        }
+      ]
+    }
+  ]
+}

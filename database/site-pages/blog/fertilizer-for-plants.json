@@ -1,0 +1,347 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-for-plants",
+  "sortOrder": 80,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "Fertilizer for Plants: What to Use for Leaves, Fruit and Flowers",
+  "metaTitle": "Fertilizer for Plants: Choosing for Leaves, Fruit, Flowers",
+  "metaDescription": "Fertilizer for plants made simple: why fertilizer is important, what to use on leafy crops, fruiting vegetables and flowers, and organic or inorganic picks.",
+  "focusKeyword": "fertilizer for plants",
+  "keywords": [
+    "fertilizer for plants",
+    "fertilizer plants",
+    "what fertilizer for plants",
+    "why fertilizer is important",
+    "fertilizer in agriculture",
+    "fertilizer for flowering plants",
+    "fertilizer for plants and flowers",
+    "fertilizer with phosphorus",
+    "fertilizer high in phosphorus",
+    "osmocote fertilizer",
+    "fertilizer liquid",
+    "egg shell fertilizer",
+    "examples of organic fertilizer",
+    "organic fertilizer benefits",
+    "examples of inorganic fertilizer",
+    "fertilizer names list",
+    "fertilizer example",
+    "best fertilizer for vegetables"
+  ],
+  "excerpt": "Fertilizer for plants puts back the nitrogen, phosphorus and potassium that each harvest carries away. Pick the wrong mix and you get leafy plants with no fruit, or weak plants that never fill. This guide explains why fertilizer is important, what fertilizer for plants to choose for leafy, fruiting and flowering crops, and how to use organic and inorganic kinds at home or on the farm.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-for-plants.webp",
+    "alt": "A farmer with watering cans tending rows of leafy vegetables in Pulilan, Bulacan",
+    "credit": "JFVelasquez Floro, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why fertilizer is important"
+    },
+    {
+      "type": "text",
+      "text": "Plants need 17 essential elements. Carbon, hydrogen and oxygen come from air and water, and the other 14 come from the soil. Every harvest hauls some of those soil nutrients away in the sacks. If nothing goes back, the soil runs down and yields slide, season after season.\n\nThat is the job of fertilizer in agriculture: to put back what the crop takes and what the soil lacks. PhilRice notes that nitrogen, phosphorus, potassium, zinc and sulfur are now short in many rice soils. It also found that farmers in irrigated lowlands apply less fertilizer than the general recommendation, and that fertilizer took about 8 percent of total rice production cost in 2020. So the question is rarely whether to fertilize, but what, how much and when."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What each nutrient does"
+    },
+    {
+      "type": "table",
+      "caption": "Main plant nutrients and what they do",
+      "rows": [
+        [
+          "Nutrient",
+          "What it does",
+          "Signs of shortage",
+          "Common source"
+        ],
+        [
+          "Nitrogen (N)",
+          "Leaf and stem growth, green color",
+          "Pale yellow older leaves, slow growth",
+          "Urea, ammonium sulfate, compost, FAA"
+        ],
+        [
+          "Phosphorus (P)",
+          "Roots, early growth, flowering, seed",
+          "Stunted plants, dark or purplish leaves",
+          "16 20 0, 18 46 0, 14 14 14"
+        ],
+        [
+          "Potassium (K)",
+          "Fruit fill, grain weight, strong stems",
+          "Scorched leaf edges, weak stalks",
+          "Muriate of potash, 14 14 14"
+        ],
+        [
+          "Calcium (Ca)",
+          "Cell walls, sound fruit",
+          "Blossom end rot in tomato",
+          "Lime, gypsum, ground eggshell"
+        ],
+        [
+          "Sulfur (S)",
+          "Protein, green color",
+          "Yellow young leaves",
+          "Ammonium sulfate"
+        ],
+        [
+          "Zinc (Zn)",
+          "Growth of young leaves and tillers",
+          "Stunted, bronzed or spotted leaves",
+          "Zinc sulfate, micronutrient foliar"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What fertilizer for plants should you choose?"
+    },
+    {
+      "type": "text",
+      "text": "Start with the part of the plant you harvest. Leaves want nitrogen, fruit and grain want potassium, and every young root wants phosphorus. Then let a soil test or your municipal agriculturist fine tune the rates."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Leafy vegetables"
+    },
+    {
+      "type": "text",
+      "text": "Pechay, mustasa, kangkong and lettuce are all leaf. They respond best to nitrogen: compost or composted manure in the bed, then light side dressings of urea or ammonium sulfate, or regular sprays of fish amino acid. Too much nitrogen late in the crop, though, gives soft leaves that pests love."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Fruiting vegetables"
+    },
+    {
+      "type": "text",
+      "text": "Tomato, eggplant, ampalaya, okra and sili need a balanced start and more potassium later. A common plan is complete fertilizer (14 14 14) at transplanting, then side dressings that add potash once flowers and fruit appear. Our page on [vegetables in the Philippines](/crops/vegetables-philippines) covers the best fertilizer for vegetables crop by crop, and [potash fertilizer](/blog/potash-fertilizer) explains the potassium sources."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Fertilizer for flowering plants"
+    },
+    {
+      "type": "text",
+      "text": "Many gardeners reach for a fertilizer high in phosphorus to get more blooms. Phosphorus does support flowering, rooting and seed, and a fertilizer with phosphorus such as [16 20 0](/blog/16-20-0-fertilizer) at planting helps where the soil tests low.\n\nMore is not better, though. A Washington State University extension horticulturist warns that too much phosphorus competes with the uptake of iron and manganese, which can yellow the leaves. It also harms the root fungi that help plants feed. Flowers need enough nitrogen and potassium too, plus plenty of sun."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fertilizer for plants and flowers at home"
+    },
+    {
+      "type": "text",
+      "text": "Pots are different from fields. Every watering flushes nutrients out the bottom, and the small soil volume holds little. So potted plants do best with small, steady feeding. Here are three good options:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Controlled release granules.** Osmocote fertilizer is the best known. Its resin coated granules release nutrients over months, faster in warm weather, so one dose at potting lasts a long time. Follow the label rate for your pot size.",
+        "**Fertilizer liquid feeds.** A water soluble grade such as 20 20 20, or fish emulsion, mixed at the label rate and poured on moist soil. It acts quickly, but you must repeat it.",
+        "**Organic mix.** Vermicast or compost in the potting mix, plus egg shell fertilizer for calcium. Grind the shells to powder, because large pieces take a year or more to break down."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Organic or inorganic: examples of each"
+    },
+    {
+      "type": "text",
+      "text": "Both kinds feed plants. They differ in speed, strength and what they do for the soil.\n\nThe organic fertilizer benefits are slow release, better soil structure, more water held in sandy soil, and livelier soil life. Common examples of organic fertilizer are compost, vermicast, composted chicken dung, fish amino acid and ground eggshells. Our list of [organic fertilizer examples](/blog/organic-fertilizer-examples) covers how to make and use each.\n\nInorganic fertilizers are strong, fast and cheap per kilo of nutrient. The main examples of inorganic fertilizer are urea, complete, ammophos, ammosul and muriate of potash, all explained in our [inorganic fertilizer examples](/blog/inorganic-fertilizer-examples) guide. Many farms use both: organic matter for the soil, plus a measured dose of inorganic fertilizer for the crop."
+    },
+    {
+      "type": "table",
+      "caption": "Fertilizer names list: common choices for plants",
+      "rows": [
+        [
+          "Name",
+          "Type",
+          "Main nutrients",
+          "A good fertilizer example for"
+        ],
+        [
+          "Urea (46 0 0)",
+          "Inorganic",
+          "Nitrogen",
+          "Leafy crops, top dressing palay and mais"
+        ],
+        [
+          "Complete (14 14 14)",
+          "Inorganic",
+          "Equal N, P and K",
+          "Basal dose for most crops"
+        ],
+        [
+          "Ammophos (16 20 0)",
+          "Inorganic",
+          "Nitrogen and phosphorus",
+          "Planting time, flowering crops on low phosphorus soil"
+        ],
+        [
+          "Muriate of potash (0 0 60)",
+          "Inorganic",
+          "Potassium",
+          "Fruiting vegetables, banana, palay near panicle initiation"
+        ],
+        [
+          "Osmocote",
+          "Controlled release",
+          "Depends on the grade",
+          "Pots and nurseries"
+        ],
+        [
+          "Compost or vermicast",
+          "Organic",
+          "Organic matter, some NPK",
+          "Every bed and pot"
+        ],
+        [
+          "Fish amino acid",
+          "Organic liquid",
+          "Mostly nitrogen",
+          "Leafy vegetables"
+        ],
+        [
+          "Ground eggshell",
+          "Organic",
+          "Calcium",
+          "Potting mixes and compost"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How much fertilizer for plants, and how often"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Start from a soil test or a local recommendation, then use our [fertilizer calculation](/blog/fertilizer-calculation) guide to turn it into kilos.",
+        "Split nitrogen into two or three doses instead of one big one.",
+        "Keep granules off leaves and stems, and water them in if the soil is dry.",
+        "Place fertilizer where the roots are. Our [fertilizer application methods](/blog/fertilizer-application-methods) page shows each option.",
+        "Cut back nitrogen once fruiting starts, or growth goes to leaves instead of harvest."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Watch for fertilizer burn",
+      "text": "Too much fertilizer, or granules resting against roots and stems, draws water out of plant tissue and scorches it. Look for brown leaf tips and edges, or wilting in moist soil. If it happens, water deeply to flush the salts and skip the next dose."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Let anee.io and Anee guide your feeding"
+    },
+    {
+      "type": "text",
+      "text": "The anee.io app tracks growth stages for 85 Philippine crops, from palay and mais to vegetables and fruit trees. Pick a date and you see each lot's stage, what to do and what to watch for, so fertilizer lands when the plant can use it. The [growth stages and weather](/features/growth-stages-and-weather) view adds the week's forecast for each lot.\n\nIf leaves turn pale or spotted, snap a photo for [Anee, the AI technician](/features/ai-agricultural-technician). Ask in Tagalog or English, such as \"anong abono ang para sa kamatis?\", and Anee checks your crop's stage and weather before it answers."
+    },
+    {
+      "type": "cta",
+      "title": "Feed each crop at the right stage",
+      "text": "See every lot's growth stage, plan fertilizer on the calendar, and ask Anee in Tagalog or English. Start on the free Libre plan.",
+      "label": "Sign up free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about fertilizer for plants"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the best fertilizer for plants?",
+          "a": "There is no single best one. Leafy plants want nitrogen, fruiting plants want more potassium later on, and all young plants need phosphorus near the roots. Complete fertilizer (14 14 14) plus compost is a safe start for most crops, adjusted by a soil test."
+        },
+        {
+          "q": "What fertilizer makes plants flower?",
+          "a": "A balanced fertilizer with enough phosphorus and potassium, plus good sun and steady water. Extra phosphorus beyond what the plant needs does not add flowers and can cause yellow leaves."
+        },
+        {
+          "q": "Is Osmocote good for vegetables?",
+          "a": "Yes, for vegetables in pots, grow bags and seedling nurseries, where one dose feeds for months. For open fields, ordinary granules and compost cost less."
+        },
+        {
+          "q": "Is liquid fertilizer better than granules?",
+          "a": "Liquid acts faster but does not last, so you repeat it often. Granules last longer and cost less per kilo of nutrient. Many growers use granules as the base and liquid as a boost."
+        },
+        {
+          "q": "Are eggshells a good fertilizer?",
+          "a": "They add calcium, not nitrogen, and only when ground to a fine powder. Large pieces take a year or more to break down."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Examples of organic fertilizer",
+          "url": "/blog/organic-fertilizer-examples"
+        },
+        {
+          "label": "Examples of inorganic fertilizer",
+          "url": "/blog/inorganic-fertilizer-examples"
+        },
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "16 20 0 fertilizer",
+          "url": "/blog/16-20-0-fertilizer"
+        },
+        {
+          "label": "Potash fertilizer",
+          "url": "/blog/potash-fertilizer"
+        },
+        {
+          "label": "Foliar fertilizer",
+          "url": "/blog/foliar-fertilizer"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice policy brief: Reinforcing right element, amount and timing for improved fertilizer application",
+          "url": "https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application/"
+        },
+        {
+          "label": "Washington State University Extension: The Myth of Phosphate Fertilizer",
+          "url": "https://wpcdn.web.wsu.edu/wp-puyallup/uploads/sites/403/2015/03/phosphate.pdf"
+        },
+        {
+          "label": "University of Florida IFAS: Controlled release and slow release fertilizers as nutrient management tools",
+          "url": "https://ask.ifas.ufl.edu/publication/HS1255"
+        },
+        {
+          "label": "University of Illinois Extension: Using eggshells in the garden and compost",
+          "url": "https://extension.illinois.edu/blogs/good-growing/2018-03-28-using-eggshells-garden-and-compost"
+        },
+        {
+          "label": "University of Maryland Extension: Blossom end rot of vegetables",
+          "url": "https://extension.umd.edu/resource/blossom-end-rot-vegetables"
+        }
+      ]
+    }
+  ]
+}

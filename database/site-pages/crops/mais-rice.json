@@ -1,0 +1,270 @@
+{
+  "section": "crops",
+  "slug": "mais-rice",
+  "sortOrder": 80,
+  "lang": "en",
+  "category": "Mais",
+  "title": "Mais Rice: What Corn Rice Is, Its Benefits and How It Is Made",
+  "metaTitle": "Mais Rice: Benefits, Nutrition and How Corn Grits Are Made",
+  "metaDescription": "Mais rice is white corn milled into grits and cooked like rice. See what Philippine studies say about its fiber and blood sugar, and how it compares.",
+  "focusKeyword": "mais rice",
+  "keywords": [
+    "mais rice",
+    "mais rice benefits",
+    "kinds of rice in the philippines",
+    "corn bran",
+    "corn flakes",
+    "corn kernel"
+  ],
+  "excerpt": "Mais rice, also called corn rice or corn grits, is white corn milled into small grits and cooked like rice. It is a daily staple in many corn growing towns, and some families now mix it with rice for fiber and savings. Here is what mais rice is, how millers make it, what studies say about its benefits, and how it compares with the kinds of rice in the Philippines.",
+  "heroImage": {
+    "src": "/images/site/guides/crops-mais-rice.webp",
+    "alt": "A plate of cooked mais rice made from white corn grits, served in the Philippines",
+    "credit": "Obsidian Soul, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What mais rice is"
+    },
+    {
+      "type": "text",
+      "text": "Mais rice is not rice at all. It is the hard, starchy part of white corn kernels, cracked into pieces close to the size of rice grains. Cooks steam or boil it like rice and serve it with ulam.\n\nMarkets sell it under several names: mais rice, corn rice, corn grits, bigas mais, and bugas mais in Cebuano. PSA price monitoring lists white corn grits in numbered sizes such as number 10, 12 and 14, so the grind can run from coarse to fine.\n\nWhite corn is a staple in parts of the Visayas and Mindanao. The DA Cagayan Valley corn guide also names northern Isabela and southern Cagayan as places where white corn is the daily food."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How mais rice is made from white corn"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Grow white flint corn",
+          "text": "Millers want hard white kernels. Farmers plant white open pollinated varieties such as IPB Var 6, or white hybrids. See our guide to [corn seeds](/crops/corn-seeds)."
+        },
+        {
+          "title": "Harvest and dry",
+          "text": "Harvest at maturity and dry the ears to 18 to 20 percent moisture before shelling. Then dry the grain to 14 percent or lower for safe storage, as the DA guide advises."
+        },
+        {
+          "title": "Clean the grain",
+          "text": "Remove stones, dirt, broken and moldy kernels. Moldy corn can carry aflatoxin, and the DA guide sets 20 ppb as the limit for food corn."
+        },
+        {
+          "title": "Mill",
+          "text": "A corn mill strips off the hull and most of the germ, then cracks the hard endosperm into grits. The hull and germ come out as corn bran, which goes to animal feeds."
+        },
+        {
+          "title": "Sift and pack",
+          "text": "Screens sort the grits by size. After that, the grits go into sacks for the market."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "UPLB runs a small version of this chain. In 2018, the Cereals Section of its Institute of Plant Breeding supplied about six tons of corn grits a month to institutions. Farmer cooperators in Quezon and Mindoro grew the white corn for it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Mais rice benefits"
+    },
+    {
+      "type": "text",
+      "text": "Claims about corn rice vary a lot online. These are the points that Philippine sources back up."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**More fiber.** In a Philippine study published in the Journal of Nutrition and Metabolism in 2010, pure quality protein maize (QPM) grits had 6.0 percent dietary fiber. Milled rice had 0.54 percent.",
+        "**Lower blood sugar response.** The same study measured a glycemic index of about 80 for pure QPM grits, 93 for a rice and grits mix, and 120 for milled rice, with white bread set at 100. It was a small study of ten healthy women, so treat it as a good sign, not a cure.",
+        "**Better protein quality.** IPB Var 6, the white QPM variety UPLB promotes for grits, has more lysine and tryptophan than regular white corn.",
+        "**Gluten free.** Corn grits contain no gluten, as the National Nutrition Council points out.",
+        "**Cheaper than rice in the UPLB example.** In 2018, UPLB put good rice at about PHP 60 a kilo and pure corn grits at about PHP 33. So a blend of 70 parts rice to 30 parts grits cost about PHP 47."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Portion still matters. The NNC reminds readers that eating too much of any staple, rice or corn, can lead to weight gain. If you have diabetes, ask your doctor or a registered nutritionist dietitian before you change your staple."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Not all corn grits are the same",
+      "text": "The fiber and glycemic figures above come from QPM grits. Grits from other white corn varieties, or grits milled very fine, may behave differently. Treat the study as a guide, not a promise."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Kinds of rice in the Philippines, and where mais rice fits"
+    },
+    {
+      "type": "text",
+      "text": "Here is how corn grits sit beside the kinds of rice in the Philippines that you see in the market."
+    },
+    {
+      "type": "table",
+      "caption": "Common kinds of rice in the Philippines compared with mais rice",
+      "rows": [
+        [
+          "Kind",
+          "What it is",
+          "Good to know"
+        ],
+        [
+          "Regular milled rice",
+          "Rice with part of the bran left on",
+          "Usually the cheaper grade in public markets"
+        ],
+        [
+          "Well milled rice",
+          "Rice polished to remove more bran",
+          "Whiter grain, common in public markets"
+        ],
+        [
+          "Special and premium rice",
+          "Fancy or aromatic grains such as dinorado and jasmine types",
+          "Higher price"
+        ],
+        [
+          "Brown rice (pinawa)",
+          "Only the hull removed, bran kept",
+          "More fiber than white rice"
+        ],
+        [
+          "Red and black rice",
+          "Heirloom rices with colored bran",
+          "Grown on upland and Cordillera farms"
+        ],
+        [
+          "Glutinous rice (malagkit)",
+          "Sticky rice",
+          "For kakanin such as suman and biko"
+        ],
+        [
+          "Mais rice",
+          "White corn grits",
+          "Cooked like rice, often mixed with it"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "For the rice side of the table, see our guides to [rice varieties in the Philippines](/crops/rice-varieties-philippines) and [palay](/crops/palay)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Corn bran and corn flakes: other foods from the kernel"
+    },
+    {
+      "type": "text",
+      "text": "Milling white corn into grits leaves corn bran, the hull and germ pieces that go into hog and poultry feeds. Some food makers also add corn bran to breads and cereals for fiber.\n\nCorn flakes come from the same grain but take a different road. Factories cook milled corn with flavoring, press it into thin flakes and toast them. So mais rice, corn bran and corn flakes all start as the same corn kernel, which our [corn kernel](/crops/corn-kernel) guide explains part by part."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to start eating corn rice"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Start with a blend.** UPLB promotes a rice and corn blend called RiCo, with 70 parts rice to 30 parts corn grits. A PhilRice report also mentions 50 to 50 blends.",
+        "**Cook them together.** Rinse the grits, mix them with the rice and cook them in the same pot.",
+        "**Store it dry.** Keep the grits sealed and dry so they do not turn moldy or weevily."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "If you grow white corn for grits, anee.io keeps your season on one [cropping calendar](/features/cropping-calendar), dated from each lot's planting day. After harvest, the [farm reports](/features/farm-reports) record your buyers and prices so you can compare seasons."
+    },
+    {
+      "type": "cta",
+      "title": "Grow white corn with a plan",
+      "text": "anee.io dates every task from land preparation to harvest, shows each lot's growth stage and weather, and lets you ask Anee, the AI technician, in Tagalog or English.",
+      "label": "Start free on anee.io",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Mais rice questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is mais rice the same as corn grits?",
+          "a": "Yes. Mais rice, corn rice, bigas mais and bugas mais all mean white corn grits cooked like rice."
+        },
+        {
+          "q": "Is mais rice good for people with diabetes?",
+          "a": "A small Philippine study found a lower glycemic response for pure QPM corn grits than for milled rice. That is promising, but portions still count, so ask your doctor before you change your diet."
+        },
+        {
+          "q": "Can I mix corn grits with white rice?",
+          "a": "Yes. UPLB's RiCo blend uses 70 parts rice to 30 parts corn grits."
+        },
+        {
+          "q": "Which corn makes the best grits?",
+          "a": "Hard white flint corn. IPB Var 6 is one variety that UPLB promotes for grits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Corn kernel: parts, kinds and price",
+          "url": "/crops/corn-kernel"
+        },
+        {
+          "label": "Corn seeds",
+          "url": "/crops/corn-seeds"
+        },
+        {
+          "label": "Pagtatanim ng mais",
+          "url": "/crops/pagtatanim-ng-mais"
+        },
+        {
+          "label": "Rice varieties in the Philippines",
+          "url": "/crops/rice-varieties-philippines"
+        },
+        {
+          "label": "Farm reports on anee.io",
+          "url": "/features/farm-reports"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Panlasigui and others (2010): Glycaemic response to quality protein maize grits, Journal of Nutrition and Metabolism",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2938446/"
+        },
+        {
+          "label": "UPLB Horizon: Achieving rice sufficiency with rice corn blend",
+          "url": "https://horizon.uplb.edu.ph/horizon-magazine-2018/achieving-rice-sufficiency-with-rice-corn-blend/"
+        },
+        {
+          "label": "DA PhilRice: Rice corn grits could be option for better health",
+          "url": "https://www.philrice.gov.ph/rice-corn-grits-could-be-option-for-better-health/"
+        },
+        {
+          "label": "National Nutrition Council: Are corn grits healthier than white rice?",
+          "url": "https://nnc.gov.ph/mindanao-region/are-corn-grits-healthier-than-white-rice/"
+        },
+        {
+          "label": "DA Regional Field Office 2: Corn Production Techno Guide (revised 2012)",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
+        }
+      ]
+    }
+  ]
+}

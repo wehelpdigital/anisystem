@@ -1,0 +1,169 @@
+{
+  "section": "features",
+  "slug": "farm-reports",
+  "sortOrder": 60,
+  "lang": "en",
+  "category": "Money",
+  "title": "Farm Reports: Labor, Expenses, Profit and Your Season's Ani",
+  "metaTitle": "Farm Reports App: Labor, Expenses, Profit and Yield",
+  "metaDescription": "Farm reports that add themselves up: labor, expenses and profit from your season plan, yield per hectare, and Anee's season report. Start free on anee.io.",
+  "focusKeyword": "farm reports",
+  "keywords": [
+    "farm reports",
+    "ani",
+    "crop yields meaning",
+    "yield per hectare",
+    "profit report",
+    "season report"
+  ],
+  "excerpt": "The farm reports in anee.io add themselves up from the records you already keep on the board. Labor, expenses and profit come out of the season plan, and the harvest comes from your observations. Anee can then read all of it and tell you what to change next season.",
+  "heroImage": {
+    "src": "/images/site/lp/report-top.webp",
+    "alt": "Anee's season report in anee.io, one of the farm reports, showing a score, net profit, money in, money out and harvest in sacks per hectare",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Three money reports computed from the plan"
+    },
+    {
+      "type": "text",
+      "text": "You do not type a report. Each one reads the tasks, workers, materials, services and day book of the season, so the numbers match what really happened on the board."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Labor report**: wages by activity type, by lot and by date range, down to each worker's pay",
+        "**Expenses report**: materials, labor, services, extra expenses, stock buys and income, by category and by lot",
+        "**Profit report**: harvest income against everything the season spent, lot by lot"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The three agree to the peso because they share one engine. If the labor report says your wages came to a certain figure, the labor line of the expenses report says the same. Costs come from your [farm inventory and expenses](/features/farm-inventory-and-expenses) and from the wages in [farm workers and payroll](/features/farm-workers-and-payroll).\n\nEvery plan has the labor report, including the free Libre plan. The expenses and profit reports come with Solo Farmer and Farm Owner."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Yield, buyers and prices in Observations"
+    },
+    {
+      "type": "text",
+      "text": "After harvest, record what came off each lot in the Observations module: the yield, who bought it and at what price. Add anything else you noticed after harvest while it is still fresh. The profit report needs at least one yield entry. Without one, it tells you so instead of showing a made up number."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What crop yields mean"
+    },
+    {
+      "type": "text",
+      "text": "In Filipino we call the harvest ani. So what is the meaning of crop yields? It is the harvest you get from a given area. Farmers usually write it per hectare, in cavans or kilograms of palay per hectare. Yield per hectare lets you compare two lots of different sizes, or this season against the last, on fair terms. Our page on [ani meaning](/blog/ani-meaning) goes deeper into the word. To judge the price a buyer offers, see [palay price in the Philippines](/blog/palay-price-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Anee's season report"
+    },
+    {
+      "type": "text",
+      "text": "When the season closes, ask Anee for a season report. She reads the whole season: every activity, the money and your harvest records. She also looks at the weather your lots went through and your past seasons of the same crop. Then she writes the story of it, with a score, what went well, what went wrong and what to change next time.\n\nMid season, Analyze So Far does the same for one lot. It tells you if the lot is on track, needs watching or needs rescue. Both run on credits, like everything [Anee, the AI technician](/features/ai-agricultural-technician) does."
+    },
+    {
+      "type": "image",
+      "src": "/images/site/lp/report-money.webp",
+      "alt": "The money section of an Anee season report with money in, money out, margin and a bar of where the money went",
+      "caption": "Where the money went, from one season's own records."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Compare Reports, season against season"
+    },
+    {
+      "type": "text",
+      "text": "Pick two saved reports of the same kind, like the profit of this dry season and the last. Compare Reports lays one above the other. If you want, Anee reads the pair and points out the differences that matter, for a few credits."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Saved farm reports stay on the shelf"
+    },
+    {
+      "type": "text",
+      "text": "Every report you generate stays on the season's shelf. Rename it, add a description and tags, and open it again any time. You can also attach a saved report to a chat with Anee and ask about it directly.\n\nView as Protocol turns a finished lot's done tasks into a clean list on its day count. It is useful when you sit down to write next season's plan."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Reports only know what you record",
+      "text": "A report is as good as the board behind it. Tick tasks done on the day, log purchases when they arrive and enter every harvest, and the numbers will match your wallet."
+    },
+    {
+      "type": "cta",
+      "title": "See your season in numbers",
+      "text": "Sign up free and start keeping the records your farm reports will read.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm reports"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What do farm reports in anee.io show?",
+          "a": "Labor, expenses and profit computed from your season plan, plus the yields, buyers and prices you record after harvest."
+        },
+        {
+          "q": "How do I compare yields between lots?",
+          "a": "Use yield per hectare. Divide each lot's harvest by its area in hectares, so a half hectare lot that gave 50 cavans yields 100 cavans per hectare."
+        },
+        {
+          "q": "Does the season report cost credits?",
+          "a": "Yes. Anee's season report runs on credits, and the app shows the price before you confirm. The labor, expenses and profit reports cost no credits."
+        },
+        {
+          "q": "Can I compare two seasons?",
+          "a": "Yes. Compare Reports places two saved reports of the same kind one above the other, and Anee can read the difference for you."
+        },
+        {
+          "q": "Which plans include reports?",
+          "a": "The labor report is on every plan. Expenses, profit and the other reports come with Solo Farmer and Farm Owner, and Anee's reports also use credits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Farm inventory and expenses",
+          "url": "/features/farm-inventory-and-expenses"
+        },
+        {
+          "label": "Farm workers and payroll",
+          "url": "/features/farm-workers-and-payroll"
+        },
+        {
+          "label": "Ani meaning",
+          "url": "/blog/ani-meaning"
+        },
+        {
+          "label": "Palay price in the Philippines",
+          "url": "/blog/palay-price-philippines"
+        }
+      ]
+    }
+  ]
+}

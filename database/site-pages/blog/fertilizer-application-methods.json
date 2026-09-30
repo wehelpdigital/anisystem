@@ -1,0 +1,349 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-application-methods",
+  "sortOrder": 140,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "Fertilizer Application Methods: A Field Guide for Filipino Farmers",
+  "metaTitle": "Fertilizer Application Methods: Broadcast, Band, Foliar",
+  "metaDescription": "Fertilizer application methods for palay, mais and vegetables: broadcasting, basal, band, side dress, top dressing, foliar, fertigation and deep placement.",
+  "focusKeyword": "fertilizer application methods",
+  "keywords": [
+    "fertilizer application methods",
+    "method of fertilizer application",
+    "fertilizer application",
+    "top dressing fertilizer",
+    "fertilizer for top dressing",
+    "fertilizer 21 0 0",
+    "complete fertilizer",
+    "foliar fertilizer",
+    "foliar application fertilizer",
+    "fertilizer granules",
+    "fertilizer applicator",
+    "fertilizer spreader",
+    "fertilizer drawing",
+    "fertilizer picture"
+  ],
+  "excerpt": "Fertilizer application methods decide how much of what you paid for actually reaches the roots. The same sack of urea can feed the crop or wash away, depending on where and when it lands. Here are the methods Filipino farmers use, from broadcasting and basal incorporation to side dressing, foliar sprays, fertigation and urea deep placement, with the tools and timing for each.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-application-methods.webp",
+    "alt": "A tractor with a spinner spreader applying fertilizer across a green rice field",
+    "credit": "Miquel Pujol Palol, CC BY SA 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "PhilRice sums up good fertilizer use as the right element, the right amount and the right timing. The method of fertilizer application adds one more question: where the fertilizer goes. Granules left on a hot, dry surface lose nitrogen to the air. In flowing paddy water they leave with the water. Placed where roots can reach them, they get used.\n\nIf you still need to work out how much to buy, start with our [fertilizer calculation](/blog/fertilizer-calculation) guide. This page covers the fertilizer application methods themselves: how to put it on."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The main fertilizer application methods in one table"
+    },
+    {
+      "type": "table",
+      "caption": "Fertilizer application methods compared",
+      "rows": [
+        [
+          "Method",
+          "How it works",
+          "Best for",
+          "Watch out"
+        ],
+        [
+          "Broadcasting",
+          "Fertilizer granules scattered evenly over the whole field",
+          "Palay and other closely planted crops",
+          "Uneven throws, losses if water drains out"
+        ],
+        [
+          "Basal incorporation",
+          "Spread, then mixed into the soil at or before planting",
+          "Complete fertilizer and phosphate",
+          "Must fit the land preparation schedule"
+        ],
+        [
+          "Band placement",
+          "A strip of fertilizer beside and below the seed row",
+          "Mais and vegetables in rows",
+          "Keep it from touching the seed"
+        ],
+        [
+          "Side dressing",
+          "Placed beside growing plants, then covered",
+          "Mais and vegetables",
+          "Do it before the rows close"
+        ],
+        [
+          "Top dressing",
+          "Spread on the surface of a standing crop",
+          "Urea or 21 0 0 on palay",
+          "Timing by crop stage"
+        ],
+        [
+          "Foliar application",
+          "Sprayed on the leaves",
+          "Micronutrients, quick lifts",
+          "Small amounts only"
+        ],
+        [
+          "Fertigation",
+          "Dissolved and fed through drip lines",
+          "High value vegetables and fruit",
+          "Needs soluble grades and clean filters"
+        ],
+        [
+          "Deep placement",
+          "Urea briquettes pushed into the mud near the roots",
+          "Transplanted palay",
+          "Extra labor or a special applicator"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Broadcasting and basal incorporation"
+    },
+    {
+      "type": "text",
+      "text": "Broadcasting is the oldest method of fertilizer application and the one most palay farmers know. You walk the field and throw granules in wide, even arcs, or you use a spreader. It is fast, but an uneven hand leaves streaks of dark green and pale yellow. For a more even spread, split the fertilizer into two halves and cover the field twice, crossing your first path on the second pass.\n\nBasal incorporation means spreading fertilizer before or at planting and mixing it into the soil, often during the last harrowing or in the furrow. It suits phosphorus and potash, which move slowly in soil and do the most good near young roots. For palay, the PhilRice general recommendation puts all the phosphorus and 70 percent of the potash at 7 to 14 days after transplanting. For mais and vegetables, complete fertilizer usually goes into the furrow at planting."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Band placement and side dressing"
+    },
+    {
+      "type": "text",
+      "text": "Band placement puts fertilizer in a strip a few centimeters to the side of and below the seed. Never let it touch the seed, since fertilizer salts can burn a germinating seed. Corn planters with a fertilizer box do this in one pass. By hand, open a shallow furrow beside the row, drop the fertilizer, and cover it.\n\nSide dressing is band placement later in the season. For mais, farmers apply urea beside the rows and then hill up, pulling soil over the fertilizer and around the stalks. Vegetables get the same treatment as they start to flower and fruit. Our guide to [pagtatanim ng mais](/crops/pagtatanim-ng-mais) has the full corn schedule."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Top dressing fertilizer on palay and mais"
+    },
+    {
+      "type": "text",
+      "text": "Top dressing means spreading fertilizer on the surface of a crop that is already growing. Most of a crop's nitrogen goes on this way, because young plants cannot use it all at once and early extra nitrogen tends to get lost.\n\nThe usual fertilizer for top dressing is [urea](/blog/urea-fertilizer), or the [fertilizer 21 0 0](/blog/ammonium-sulfate-21-0-0) called ammonium sulfate, which also adds sulfur. For palay, PhilRice splits nitrogen into 25 percent at 7 to 14 days after transplanting, 25 percent at mid tillering, and 50 percent at maximum tillering or early panicle initiation. Where solar radiation is high, PhilRice also suggests muriate of potash near panicle initiation for heavier grain. A leaf color chart helps you decide if the plants really need the next dose."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Close the paddy inlets and outlets after top dressing so the water does not carry the fertilizer away.",
+        "Spread evenly between the rows, and keep granules off wet leaves, where they can scorch.",
+        "Check the forecast first. A heavy downpour right after top dressing washes fertilizer off the field.",
+        "Read more on timing in our guide to [fertilizer for rice](/blog/fertilizer-for-rice)."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Foliar application, fertigation and deep placement"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Foliar application of fertilizer"
+    },
+    {
+      "type": "text",
+      "text": "Foliar fertilizer goes on the leaves as a fine spray. Leaves take in only a small share, so it cannot carry a crop's main feeding. It works best for micronutrients such as zinc or boron, and for quick corrections. Our [foliar fertilizer](/blog/foliar-fertilizer) guide covers mixing and timing."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Fertigation"
+    },
+    {
+      "type": "text",
+      "text": "Fertigation feeds dissolved fertilizer through drip lines, a little at a time, right at the roots. It saves fertilizer and labor on high value vegetables, melons and fruit under drip irrigation. But it needs fully soluble grades, a clean filter, and an injector or a simple tank on a raised stand."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Urea deep placement"
+    },
+    {
+      "type": "text",
+      "text": "Urea deep placement (UDP) uses urea pressed into large briquettes. After transplanting, each briquette goes into the mud between rice hills, by hand or with a push applicator. There the nitrogen stays in the root zone instead of the floodwater, and one placement takes the place of the split urea top dressings. IFDC, which has promoted the method widely in Bangladesh, reports that UDP there cut fertilizer use by 40 percent while raising yields by 20 percent. The catch is the extra labor, or the cost of briquettes and an applicator."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fertilizer applicator and fertilizer spreader types"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Bare hand or a scoop.** The fertilizer applicator most small farms start with. Wear gloves and use the same scoop every time so each throw is the same.",
+        "**Chest or hand crank spreader.** A bag on the chest over a spinning disc you turn by hand. It throws wider and more evenly than bare hands.",
+        "**Push spreader.** A hopper on wheels for dry, level ground such as upland corn and vegetable fields.",
+        "**Motorized knapsack mist blower.** Some models can blow granules as well as sprays, covering a paddy quickly.",
+        "**Tractor mounted spinner spreader.** Twin discs throw fertilizer granules across a wide strip on large fields.",
+        "**UDP applicator.** A push tool that presses urea briquettes into the mud as you walk.",
+        "**Drip injector.** A venturi or small pump that feeds dissolved fertilizer into drip lines."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Whatever the tool, calibrate it. Spread one known weight of fertilizer over a measured strip and check how far it went. Then set your walking pace or the spreader opening to match the rate you computed."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A simple fertilizer drawing of each method"
+    },
+    {
+      "type": "text",
+      "text": "If you train workers or sketch it in a notebook, this fertilizer picture in words shows where each method puts the fertilizer. Imagine a side view of the soil with the plant in the middle."
+    },
+    {
+      "type": "table",
+      "caption": "Fertilizer drawing: where each method places the fertilizer",
+      "rows": [
+        [
+          "Method",
+          "What the drawing shows"
+        ],
+        [
+          "Broadcast",
+          "Dots scattered across the whole soil surface, between and around the plants"
+        ],
+        [
+          "Basal incorporated",
+          "Dots mixed through the top layer of soil before the seedling appears"
+        ],
+        [
+          "Band",
+          "A short line of dots beside and a little below the seed, not touching it"
+        ],
+        [
+          "Side dress",
+          "A line of dots along the row of growing plants, with soil pulled over it"
+        ],
+        [
+          "Top dress",
+          "Dots on the soil or water surface around standing plants"
+        ],
+        [
+          "Foliar",
+          "Fine droplets on the upper and lower sides of the leaves"
+        ],
+        [
+          "Fertigation",
+          "A drip line on the soil with a drop falling at the base of each plant"
+        ],
+        [
+          "Deep placement",
+          "One large tablet buried in the mud between rice hills"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Match the method to the nutrient",
+      "text": "Phosphorus and potash belong near the roots early, so work them in as basal. Nitrogen moves and gets lost, so split it into top dressings or place it deep. Micronutrients, needed only in small amounts, are where foliar sprays make sense."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Schedule every fertilizer application with anee.io"
+    },
+    {
+      "type": "text",
+      "text": "A method only works on the right day. The [anee.io cropping calendar](/features/cropping-calendar) dates each basal dose and top dressing from the lot's own day zero, so day 10 after transplanting lands on the right date for every lot. You can assign workers to the fertilizing, record their pay, and log the sacks each activity used from your inventory. The week's forecast for each lot's location helps you avoid a downpour. And Anee, the AI technician, can tell you in Tagalog or English which method suits your crop and its stage."
+    },
+    {
+      "type": "cta",
+      "title": "Never miss a top dressing",
+      "text": "Date every fertilizer application from each lot's day zero, assign workers, and track every sack used. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about fertilizer application"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the best method of fertilizer application for rice?",
+          "a": "Most palay gets its phosphorus and potash early, worked in or broadcast, and its nitrogen as split top dressings with the paddy water held in. Urea deep placement is another option for transplanted rice. The best choice depends on your labor, tools and water control."
+        },
+        {
+          "q": "What is the difference between basal and top dressing?",
+          "a": "Basal fertilizer goes on before or at planting, and you work it into the soil. Top dressing goes on the surface of a crop that is already growing, usually as nitrogen in two or three splits."
+        },
+        {
+          "q": "Which fertilizer for top dressing palay is best?",
+          "a": "Urea is the usual choice because it is the cheapest per kilo of nitrogen. Ammonium sulfate (21 0 0) costs more per kilo of nitrogen but adds sulfur. Muriate of potash can go on near panicle initiation where potash is short."
+        },
+        {
+          "q": "Do small farms need a fertilizer spreader?",
+          "a": "Not always. A steady hand with a measured scoop works on small lots if you calibrate it. A hand crank spreader pays off when you fertilize several hectares or want a more even spread."
+        },
+        {
+          "q": "Is foliar fertilizer enough on its own?",
+          "a": "No. Use it on top of soil applied complete fertilizer and urea, mainly for micronutrients or quick corrections."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Fertilizer calculation",
+          "url": "/blog/fertilizer-calculation"
+        },
+        {
+          "label": "Foliar fertilizer",
+          "url": "/blog/foliar-fertilizer"
+        },
+        {
+          "label": "Urea fertilizer",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "Ammonium sulfate 21 0 0",
+          "url": "/blog/ammonium-sulfate-21-0-0"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "Pagtatanim ng mais",
+          "url": "/crops/pagtatanim-ng-mais"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice policy brief: Reinforcing right element, amount and timing for improved fertilizer application",
+          "url": "https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application/"
+        },
+        {
+          "label": "IFDC: Use Guti urea, save money, get more yield",
+          "url": "https://ifdc.org/2011/06/27/use-guti-urea-save-money-get-more-yield/"
+        },
+        {
+          "label": "University of Missouri IPM: Foliar Feeding Revisited",
+          "url": "https://ipm.missouri.edu/MPG/2019/4/foliarFeeding/"
+        },
+        {
+          "label": "FPA: Weekly fertilizer prices",
+          "url": "https://fpa.da.gov.ph/weekly-prices/"
+        }
+      ]
+    }
+  ]
+}

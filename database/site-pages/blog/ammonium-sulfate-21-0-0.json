@@ -1,0 +1,266 @@
+{
+  "section": "blog",
+  "slug": "ammonium-sulfate-21-0-0",
+  "sortOrder": 160,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "Ammonium Sulfate Fertilizer (21 0 0): Uses on Rice and How It Differs from Urea",
+  "metaTitle": "Ammonium Sulfate Fertilizer 21 0 0: Uses, Price and Tips",
+  "metaDescription": "Ammonium sulfate fertilizer, or ammosul 21 0 0, gives nitrogen plus sulfur. Learn how to use it on rice, how it differs from urea, and what a bag costs.",
+  "focusKeyword": "ammonium sulfate fertilizer",
+  "keywords": [
+    "ammonium sulfate fertilizer",
+    "21 0 0 fertilizer",
+    "fertilizer 21 0 0",
+    "nitrogen fertilizer",
+    "fertilizer nitrogen",
+    "ammonia nitrate fertilizer"
+  ],
+  "excerpt": "Ammonium sulfate fertilizer is the 21 0 0 abono that farmers call ammosul. It gives 21 percent nitrogen plus 24 percent sulfur, so it feeds two nutrients at once. Here is how to use it on palay, how it differs from urea, what it does to your soil over time, and why ammonium nitrate is a different story in the Philippines.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-ammonium-sulfate-21-0-0.webp",
+    "alt": "Clear crystals of ammonium sulfate, the salt sold as ammonium sulfate fertilizer",
+    "credit": "Runcyclexcski, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Ammosul comes as small white or beige crystals that dissolve fast in water. The Fertilizer and Pesticide Authority (FPA) tracks its price every week, right beside urea and complete.\n\nIt is a nitrogen fertilizer first. But the sulfur it carries is the reason to pick it over urea on some farms, so it pays to know when that sulfur matters."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is in 21 0 0 fertilizer"
+    },
+    {
+      "type": "text",
+      "text": "The grade 21 0 0 means 21 percent nitrogen and no phosphate or potash. Many brands on the FPA list of registered fertilizers also declare 24 percent sulfur, the same figures IRRI gives. So a 50 kg bag of fertilizer 21 0 0 holds 10.5 kg of nitrogen and 12 kg of sulfur.\n\nAll of its nitrogen comes in the ammonium form. That matters in a flooded paddy, as you will see below."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why the sulfur matters"
+    },
+    {
+      "type": "text",
+      "text": "The PalayCheck guide of PhilRice says sulfur helps rice grow and mature evenly. It also speeds up chlorophyll and protein making. A crop short of sulfur shows yellow young leaves, fewer tillers, fewer and shorter panicles, and late maturity. Since the young leaves yellow first, sulfur deficiency looks different from nitrogen deficiency, which starts on the older leaves."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How ammonium sulfate fertilizer differs from urea"
+    },
+    {
+      "type": "table",
+      "caption": "Ammonium sulfate and urea side by side. Prices are FPA national averages for September 14 to 18, 2026 and change every week.",
+      "rows": [
+        [
+          "",
+          "Ammonium sulfate 21 0 0",
+          "Urea 46 0 0"
+        ],
+        [
+          "Nitrogen per 50 kg bag",
+          "10.5 kg",
+          "23 kg"
+        ],
+        [
+          "Sulfur per 50 kg bag",
+          "12 kg",
+          "None"
+        ],
+        [
+          "Form of nitrogen",
+          "Ammonium",
+          "Urea, which turns into ammonium in the soil"
+        ],
+        [
+          "Average price per bag",
+          "PHP 1,213.63",
+          "PHP 2,320.69 (prilled)"
+        ],
+        [
+          "Price per kg of nitrogen",
+          "About PHP 115.58",
+          "About PHP 100.90"
+        ],
+        [
+          "Bags for 23 kg of nitrogen",
+          "About 2.2",
+          "1"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Urea carries more than twice the nitrogen per bag, so it usually costs less per kilo of nitrogen. Mosaic, a fertilizer maker, notes that more concentrated sources often make the better choice when a field needs nitrogen alone. Ammonium sulfate earns its place when the soil also lacks sulfur.\n\nThe two also lose nitrogen differently. [Urea fertilizer](/blog/urea-fertilizer) first has to turn into ammonium in the soil, and that step can release ammonia gas. Ammonium sulfate skips that step. Even so, its ammonium can still escape as gas if it sits on the surface of an alkaline soil. So work it into the soil, or apply it just before irrigation or rain, as you would with urea."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The acidifying effect of ammonium sulfate"
+    },
+    {
+      "type": "text",
+      "text": "In warm soil, microbes turn ammonium into nitrate. That process releases acid, and after repeated use it lowers the soil pH. Mosaic explains that the acid comes from this change, not from the sulfate. It also says ammonium sulfate makes more acid than the same nitrogen from ammonium nitrate, because all of its nitrogen goes through that change.\n\nOn soils that are already acidic, keep an eye on pH. The corn guide of DA Regional Field Office 2 sets pH 5.4 as the critical level for corn and advises lime below it. It also says a soil analysis stays valid for up to three years. A soil test every few seasons tells you when to lime before the pH drops too far."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Do not switch without the math",
+      "text": "Ammonium sulfate has less than half the nitrogen of urea. If you swap one bag of urea for one bag of ammosul, your crop gets less than half the nitrogen you planned."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to use ammonium sulfate fertilizer on rice"
+    },
+    {
+      "type": "text",
+      "text": "Because its nitrogen is already ammonium, rice farmers often apply it to flooded fields, Mosaic notes. Nitrate fertilizers lose nitrogen to the air in waterlogged soil, so they suit paddies poorly. Ammonium sulfate can fill any nitrogen split that PhilRice recommends: early, at mid tillering, or near panicle initiation.\n\nIt makes the most sense early. PalayCheck times sulfur at 0 to 14 days after transplanting (DAT), or 7 to 10 days after sowing (DAS). So on soils short of sulfur, ammosul in the first dose covers both nutrients at once. The full timing is on our [fertilizer for rice](/blog/fertilizer-for-rice) page."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Swapping urea for ammosul"
+    },
+    {
+      "type": "text",
+      "text": "Say your plan calls for 1 bag of urea at active tillering. That is 23 kg of nitrogen. To get the same from 21 0 0 fertilizer, divide 23 by 10.5 to get about 2.2 bags. At the September 2026 averages, that costs about PHP 2,658 against PHP 2,320.69 for the urea. For the extra PHP 338 or so, you also get about 26 kg of sulfur. Our [fertilizer calculation](/blog/fertilizer-calculation) guide shows the same math for other grades."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What about ammonia nitrate fertilizer?"
+    },
+    {
+      "type": "text",
+      "text": "Many people search for 'ammonia nitrate fertilizer', but the product is ammonium nitrate. It carries about 34 percent nitrogen, half as nitrate and half as ammonium. It is a common fertilizer in some countries, but not here.\n\nIn 2002 the FPA issued Memorandum Circular No. 3, series of 2002. It cancelled the registration of solid ammonium nitrate as a fertilizer and banned its importation for farm use. The circular cites national security. The PNP had found the chemical among the ingredients of explosives used in bombing incidents. Before the ban, farmers used the agricultural grade for mango flower induction.\n\nAmmonium nitrate also falls under Republic Act 9516, the 2008 law on explosives, which covers nitrates. Anyone who imports, sells or possesses such chemicals needs a license from the PNP. If you want a nitrate source for your crop, the FPA list does include other products, like calcium ammonium nitrate. Our page on the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) explains how to check a registration."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep your nitrogen plan straight in anee.io"
+    },
+    {
+      "type": "text",
+      "text": "Mixing urea and ammosul in one season makes the math easy to lose. In anee.io, the [farm inventory](/features/farm-inventory-and-expenses) keeps each fertilizer as its own item in 50 kg bags, with its own price. The [cropping calendar](/features/cropping-calendar) dates each dose from the lot's own day zero, so you see which bag goes on which day.\n\nAsk Anee, the [AI agricultural technician](/features/ai-agricultural-technician), to convert a urea plan into ammosul for your lot. She answers in Tagalog or English and shows the bags and the cost."
+    },
+    {
+      "type": "cta",
+      "title": "Every bag, every dose, one board",
+      "text": "Sign up free and let anee.io date your fertilizer tasks and count the bags you use.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about ammonium sulfate fertilizer"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is ammosul the same as 21 0 0?",
+          "a": "Yes. Ammosul is the common name for ammonium sulfate, grade 21 0 0: 21 percent nitrogen and no phosphate or potash, with about 24 percent sulfur."
+        },
+        {
+          "q": "Is ammonium sulfate better than urea for rice?",
+          "a": "Both work in a paddy. Urea usually costs less per kilo of nitrogen. Ammonium sulfate is worth it when your soil also lacks sulfur."
+        },
+        {
+          "q": "Does ammonium sulfate make soil acidic?",
+          "a": "Yes, with repeated use. Soil microbes turn its ammonium into nitrate and release acid. Test your soil and lime when the pH drops too low."
+        },
+        {
+          "q": "How much is ammonium sulfate per bag?",
+          "a": "The FPA national average for September 14 to 18, 2026 was PHP 1,213.63 per 50 kg bag, up from PHP 841.47 in early January 2026. Check the FPA list for your province."
+        },
+        {
+          "q": "Can I buy ammonium nitrate fertilizer in the Philippines?",
+          "a": "Not as a registered farm fertilizer. The FPA cancelled its registration in solid form and banned its import for farm use in 2002. It is also a controlled chemical under Republic Act 9516."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related fertilizer guides",
+      "items": [
+        {
+          "label": "Urea fertilizer 46 0 0",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "Complete fertilizer 14 14 14",
+          "url": "/blog/complete-fertilizer-14-14-14"
+        },
+        {
+          "label": "Inorganic fertilizer examples",
+          "url": "/blog/inorganic-fertilizer-examples"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        },
+        {
+          "label": "Fertilizer calculation",
+          "url": "/blog/fertilizer-calculation"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Nitrogen (sources of N)",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen"
+        },
+        {
+          "label": "Mosaic Crop Nutrition: Ammonium Sulfate",
+          "url": "https://www.cropnutrition.com/resource-library/ammonium-sulfate/"
+        },
+        {
+          "label": "Mosaic Crop Nutrition: Ammonium Nitrate",
+          "url": "https://www.cropnutrition.com/resource-library/ammonium-nitrate/"
+        },
+        {
+          "label": "FPA Memorandum Circular No. 3, series of 2002: Cancellation of registration of ammonium nitrate in solid form as fertilizer",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2024/09/2002-MC-3.pdf"
+        },
+        {
+          "label": "Republic Act No. 9516 (2008)",
+          "url": "https://www.lawphil.net/statutes/repacts/ra2008/ra_9516_2008.html"
+        },
+        {
+          "label": "FPA: Fertilizer product listing as of May 3, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/05/FOR-POSTING_FERTILIZER_PRODUCT_LISTING-AS-OF-MAY-03-2026.pdf"
+        },
+        {
+          "label": "FPA: Prices of 6 major fertilizer grades, September 14 to 18, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/WFP-WK38-2026.sgd_.pdf"
+        },
+        {
+          "label": "FPA: Prices of 6 major fertilizer grades, January 5 to 9, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/04/WEEK2-WFP-JAN-5-9202620260121_14533156_Optimized.pdf"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: PalayCheck Key Check 5, Nutrient Management",
+          "url": "https://www.pinoyrice.com/palaycheck/nutrient-management/"
+        },
+        {
+          "label": "DA Regional Field Office 2: Corn production techno guide",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
+        },
+        {
+          "label": "Wikipedia: Ammonium nitrate",
+          "url": "https://en.wikipedia.org/wiki/Ammonium_nitrate"
+        }
+      ]
+    }
+  ]
+}

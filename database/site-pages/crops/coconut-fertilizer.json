@@ -1,0 +1,316 @@
+{
+  "section": "crops",
+  "slug": "coconut-fertilizer",
+  "sortOrder": 90,
+  "lang": "en",
+  "category": "Fruit and tree crops",
+  "title": "Fertilizer for Coconut Tree: PCA Rates by Age for Salt, Ammonium Sulfate and Potash",
+  "metaTitle": "Fertilizer for Coconut Tree: PCA Rates, Salt and Potash",
+  "metaDescription": "Fertilizer for coconut tree farms: PCA rates of salt, ammonium sulfate and potash for seedlings, young palms and bearing trees, and how to apply them.",
+  "focusKeyword": "fertilizer for coconut tree",
+  "keywords": [
+    "fertilizer for coconut tree",
+    "fertilizer for coconut tree in philippines",
+    "fertilizer for coconut plants",
+    "fertilizer for coconut",
+    "potash fertilizer",
+    "fertilizer with potassium",
+    "pagtatanim ng puno"
+  ],
+  "excerpt": "The most useful fertilizer for coconut tree farms in the Philippines is also one of the cheapest: common salt. The Philippine Coconut Authority (PCA) found chlorine deficiency across inland coconut areas. So its advice centers on salt, ammonium sulfate and potash. Here are the PCA rates for seedlings, young palms and bearing trees, and how to apply them.",
+  "heroImage": {
+    "src": "/images/site/guides/crops-coconut-fertilizer.webp",
+    "alt": "Tall coconut palms over a grassy field in Sipocot, Camarines Sur, the kind of farm that needs the right fertilizer for coconut tree growth",
+    "credit": "Biag arnel, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "It is easy to skip fertilizer on coconut because the palms keep bearing. But PCA reports that unfertilized palms tend to yield less from year to year. In its trials in South Cotabato, Zamboanga, Albay and Cagayan, nut count and copra weight rose once the palms got nitrogen and chlorine.\n\nThe good news is that coconut does not need expensive blends. It mainly needs nitrogen, chlorine and, on some soils, potassium. All three come in cheap, common fertilizers."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why coconut needs chlorine and nitrogen"
+    },
+    {
+      "type": "text",
+      "text": "Most crops need only a trace of chlorine, but coconut uses a lot of it. A nationwide PCA survey found at least 40 coconut producing provinces severely deficient in chlorine. The problem is worst in inland areas. That is why PCA calls salt the cheapest and best source of chlorine to raise copra yield.\n\nThe PCA guide on salt says sodium chloride speeds up the growth of young palms. It also adds copra weight and nuts, and it reduces leaf spot damage. Nitrogen comes next. PCA pairs salt with ammonium sulfate (21 0 0), which carries 21 percent nitrogen and 24 percent sulfur."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "PCA fertilizer for coconut tree by age"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Salt alone"
+    },
+    {
+      "type": "text",
+      "text": "If you can buy only one input, start with salt. These are the PCA rates reproduced by the DA Agricultural Training Institute in Cagayan Valley."
+    },
+    {
+      "type": "table",
+      "caption": "PCA rates of common salt (sodium chloride) per coconut tree per year",
+      "rows": [
+        [
+          "Age or stage of the palm",
+          "Salt per tree per year"
+        ],
+        [
+          "Nursery seedling",
+          "50 grams"
+        ],
+        [
+          "At field planting",
+          "100 grams"
+        ],
+        [
+          "Six months after planting",
+          "150 grams"
+        ],
+        [
+          "One year after planting",
+          "500 grams"
+        ],
+        [
+          "Two years after planting",
+          "750 grams"
+        ],
+        [
+          "Three years after planting",
+          "1.10 kilograms"
+        ],
+        [
+          "Four years after planting",
+          "1.30 kilograms"
+        ],
+        [
+          "Five years and older",
+          "1.50 kilograms"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Ammonium sulfate plus salt"
+    },
+    {
+      "type": "text",
+      "text": "For faster growth, PCA adds ammonium sulfate to the salt. The schedule below comes from the PCA guide on growing bananas under coconut, which gives the palms their own program. It works as fertilizer for coconut plants from field planting up to full bearing."
+    },
+    {
+      "type": "table",
+      "caption": "Ammonium sulfate and salt per coconut tree per year, from the PCA intercropping guide",
+      "rows": [
+        [
+          "Age of the palm",
+          "Ammonium sulfate",
+          "Salt"
+        ],
+        [
+          "At field planting",
+          "150 grams",
+          "160 grams"
+        ],
+        [
+          "Six months",
+          "200 grams",
+          "200 grams"
+        ],
+        [
+          "One year",
+          "500 grams",
+          "480 grams"
+        ],
+        [
+          "Two years",
+          "750 grams",
+          "720 grams"
+        ],
+        [
+          "Three years",
+          "1,000 grams",
+          "1,250 grams"
+        ],
+        [
+          "Four years",
+          "1,250 grams",
+          "1,350 grams"
+        ],
+        [
+          "Five years and older",
+          "1,500 grams",
+          "1,700 grams"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "For palms one to four years old, PCA splits each year's dose into two applications. That way less fertilizer is lost to leaching and runoff while the root system is still small."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Bearing palms: what PCA trials used"
+    },
+    {
+      "type": "text",
+      "text": "PCA researchers ran eight year fertilizer trials on hybrid coconuts in four regions. In South Cotabato they recommended 1.0 kilogram of ammonium sulfate plus 1.8 kilograms of salt per palm per year. In Albay, Zamboanga City and Cagayan, the rate was 1.5 kilograms of ammonium sulfate plus 1.3 to 1.5 kilograms of potassium chloride.\n\nThe lower fertilizer level was the most profitable. Doubling the dose did not pay back. So more is not better with coconut."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Potash fertilizer and coconut"
+    },
+    {
+      "type": "text",
+      "text": "Potassium chloride, sold as muriate of potash or 0 0 60, is the common potash fertilizer. For coconut it is a fertilizer with potassium and chlorine in one bag. PCA advice is simple. If a leaf analysis shows the palm short of both nutrients, use potassium chloride. If only chlorine is low, use salt instead, because it is much cheaper.\n\nSo do not buy potash by habit. Ask your PCA office for a leaf or soil analysis, or watch how your palms respond. Our guide to [potash fertilizer](/blog/potash-fertilizer) explains the grades, and the one on [ammonium sulfate](/blog/ammonium-sulfate-21-0-0) covers the nitrogen side."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Organic works best with a chlorine source",
+      "text": "In the PCA trials, 10 kilograms of cow manure or corn cobs per palm replaced ammonium sulfate well. But it only worked when salt or potassium chloride went with it. Farm wastes you get for free make the cheapest nitrogen. See more [organic fertilizer examples](/blog/organic-fertilizer-examples)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to apply fertilizer for coconut"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Ring weed the base",
+          "text": "Clear the weeds in a circle around the trunk. PCA uses about 1 meter of radius, less for young palms."
+        },
+        {
+          "title": "Broadcast on flat ground",
+          "text": "On flat to gently sloping land, spread the fertilizer evenly over the weeded circle."
+        },
+        {
+          "title": "Fork it in",
+          "text": "Work it 2 to 3 inches into the soil with a fork. This matters most when you mix salt with a nitrogen fertilizer."
+        },
+        {
+          "title": "Use holes on slopes",
+          "text": "On hilly land, dig 8 to 10 small holes, 3 to 5 inches deep, around the base. Divide the fertilizer among them so rain does not wash it away."
+        },
+        {
+          "title": "Time it to the rain",
+          "text": "Where rain falls fairly evenly all year, fertilize bearing palms once a year. Where there are distinct wet and dry seasons, or on sandy soil, apply every six months."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Keep the salt inside the coconut ring",
+      "text": "Coconut tolerates salt, but most intercrops do not. Keep salt away from vegetables, bananas and young fruit trees between your palms. Also use agricultural grade salt, the kind PCA distributes. Follow the [fertilizer application methods](/blog/fertilizer-application-methods) for your other crops."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fertilizer for coconut tree in the Philippines: where to get help"
+    },
+    {
+      "type": "text",
+      "text": "PCA runs a coconut fertilization program that hands out agricultural grade salt fertilizer. Some of that salt comes from the Pangasinan salt center. If you are in the National Coconut Farmers Registry System, ask your PCA provincial office whether your area is covered.\n\nIf you intercrop, the fertilizer for coconut stays on its own schedule. Our [banana farming guide](/crops/banana-farming-philippines) shows how PCA spaces bananas under coconut. Planting new seedlings? Read our Tagalog guide to [pagtatanim ng puno](/crops/pagtatanim-ng-puno) for digging and early care."
+    },
+    {
+      "type": "cta",
+      "title": "Put every coconut fertilizer run on a calendar",
+      "text": "Coconut is one of the 85 crops in the anee.io growth stages. Log each block of palms as a lot and date every fertilizer run on the cropping calendar. Then track the sacks in your inventory.",
+      "label": "See the cropping calendar",
+      "url": "/features/cropping-calendar"
+    },
+    {
+      "type": "text",
+      "text": "Yellowing fronds or few nuts? Send a photo to Anee, the [anee.io AI technician](/features/ai-agricultural-technician). Anee checks your lot's stage and weather first, then answers in Tagalog or English."
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How much salt should I give a coconut tree?",
+          "a": "PCA recommends 1.5 kilograms of common salt per tree per year for palms five years and older. Younger palms get less, starting at 100 grams at field planting."
+        },
+        {
+          "q": "Is salt really a fertilizer for coconut?",
+          "a": "Yes. Coconut needs a lot of chlorine, and PCA found many inland provinces deficient in it. Salt is the cheapest chlorine source and raises copra weight and nut count."
+        },
+        {
+          "q": "What is the best fertilizer for coconut tree in the Philippines?",
+          "a": "For most farms, ammonium sulfate plus salt at PCA rates. Where a leaf analysis shows low potassium too, potassium chloride replaces the salt."
+        },
+        {
+          "q": "When should I apply fertilizer to coconut?",
+          "a": "Once a year for bearing palms where rain is spread through the year. Where wet and dry seasons are distinct, or the soil is sandy, apply every six months."
+        },
+        {
+          "q": "Can I use organic fertilizer on coconut?",
+          "a": "Yes, but add a chlorine source. PCA trials used 10 kilograms of cow manure or corn cobs per palm with salt or potassium chloride."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Pagtatanim ng puno",
+          "url": "/crops/pagtatanim-ng-puno"
+        },
+        {
+          "label": "Banana farming in the Philippines",
+          "url": "/crops/banana-farming-philippines"
+        },
+        {
+          "label": "Potash fertilizer",
+          "url": "/blog/potash-fertilizer"
+        },
+        {
+          "label": "Ammonium sulfate 21 0 0",
+          "url": "/blog/ammonium-sulfate-21-0-0"
+        },
+        {
+          "label": "Fertilizer application methods",
+          "url": "/blog/fertilizer-application-methods"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PCA Davao Research Center and ATI Cagayan Valley, Common Salt Fertilization on Coconut",
+          "url": "https://ati2.da.gov.ph/ati-2/content/sites/default/files/2023-07/Common%20Salt%20Fertlization%20on%20Coconuts%20FINAL.pdf"
+        },
+        {
+          "label": "PCA, Common Salt Fertilization on Coconuts (Techno Guide)",
+          "url": "https://www.pca.gov.ph/pdf/cocoTech/fertilization/commonSaltFetilizationOnCocounuts.pdf"
+        },
+        {
+          "label": "PCA, Coconut and Banana Intercropping",
+          "url": "https://www.pca.gov.ph/pdf/cocoTech/intercropping/CoconutBananaIntercropping.pdf"
+        },
+        {
+          "label": "Margate and others, Integrated Soil Fertility Management of Hybrid Coconut in the Philippines (CORD journal)",
+          "url": "https://journal.coconutcommunity.org/index.php/journalicc/article/download/306/269"
+        },
+        {
+          "label": "Margate and others, Computerized Fertilizer Recommendations for Coconut Based on Foliar Analysis (CORD journal)",
+          "url": "https://journal.coconutcommunity.org/index.php/journalicc/article/download/256/219"
+        },
+        {
+          "label": "Province of Pangasinan, Agricultural Grade Salt Fertilizer for the PCA Coconut Fertilization Program",
+          "url": "https://www.pangasinan.gov.ph/pangasinan-to-supply-agricultural-grade-salt-fertilizer-agsf-for-pcas-coconut-fertilization-program/"
+        }
+      ]
+    }
+  ]
+}

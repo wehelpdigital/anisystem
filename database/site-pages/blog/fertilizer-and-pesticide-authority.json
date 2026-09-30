@@ -1,0 +1,297 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-and-pesticide-authority",
+  "sortOrder": 100,
+  "lang": "en",
+  "category": "Farm inputs",
+  "title": "Fertilizer and Pesticide Authority: What the FPA Does and How to Check a Product",
+  "metaTitle": "Fertilizer and Pesticide Authority: Check Any Product",
+  "metaDescription": "What the Fertilizer and Pesticide Authority does, how to check if a fertilizer or pesticide is registered, how to read the label, and where to report fakes.",
+  "focusKeyword": "Fertilizer and Pesticide Authority",
+  "keywords": [
+    "fertilizer and pesticide authority",
+    "fertilizer pesticide authority",
+    "fertilizer dealer supply",
+    "fertilizer chemical",
+    "pesticide in tagalog"
+  ],
+  "excerpt": "The Fertilizer and Pesticide Authority, or FPA, is the government agency that decides which fertilizers and pesticides may be sold in the Philippines and who may sell them. Every bag of urea and every bottle of insecticide in a legal store has passed through its registration. This guide explains what the FPA does, how you can check a product yourself in a few minutes, and where to report fakes.",
+  "heroImage": {
+    "src": "/images/site/photos/sacks-shed.jpg",
+    "alt": "Farmer reading a paper list beside stacks of fertilizer sacks in a farm shed",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Fertilizer and pesticide are two of the biggest costs in a cropping season, often right after labor. A fake bag of complete fertilizer or a diluted bottle of insecticide does double damage. You lose the money, and you lose the yield the product was supposed to protect. So knowing how the FPA works is not paperwork. It protects your harvest."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the Fertilizer and Pesticide Authority is"
+    },
+    {
+      "type": "text",
+      "text": "President Ferdinand Marcos Sr. created the FPA through Presidential Decree 1144, signed on May 30, 1977. It replaced the Fertilizer Industry Authority, which had been set up in 1973 during a fertilizer shortage and the oil crisis. The new agency took on pesticides too, because both inputs share the same buyers, stores and field technicians.\n\nThe FPA is attached to the Department of Agriculture. It moved to the office of the Presidential Assistant for Food Security in 2014 and came back to the DA in 2018. In Filipino its name is Pangasiwaan sa Pataba at Pestisidyo."
+    },
+    {
+      "type": "text",
+      "text": "Its mandate, in the agency's own words, has four parts. First, it assures farmers of adequate supplies of fertilizer and pesticide at reasonable prices. Second, it rationalizes the making and marketing of fertilizer. Third, it protects the public from the risks of pesticides. Finally, it teaches the farm sector how to use these inputs."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the FPA does"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Registers products.** Under PD 1144, no fertilizer, pesticide or other agricultural chemical may be imported, made, stored, sold or used unless the FPA has registered it.",
+        "**Licenses handlers.** Importers, manufacturers, formulators, repackers, distributors, dealers and even warehouses need an FPA license before they can deal in these inputs.",
+        "**Controls pesticide imports.** The Bureau of Customs releases a pesticide shipment only if the FPA has issued a permit for it.",
+        "**Trains people.** Dealers and pesticide applicators go through FPA training, and the agency runs sessions on the safe and careful use of inputs.",
+        "**Watches the market.** Regional teams inspect stores for unregistered, fake and off spec products, and the FPA posts weekly fertilizer prices by province."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What the FPA does not cover"
+    },
+    {
+      "type": "text",
+      "text": "The FPA cannot set fertilizer prices. It lost that power in 1986, when the government removed import limits on fertilizer. Pesticides for household and urban use, such as house ant baits and termite treatments, went to the Food and Drug Administration after a 2007 Supreme Court ruling. And organic fertilizers and organic pesticides now fall under the Bureau of Agriculture and Fisheries Standards, following the Organic Agriculture Act."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Every fertilizer dealer and supply store needs a license"
+    },
+    {
+      "type": "text",
+      "text": "A fertilizer dealer or farm supply store must hold a valid FPA license to sell to you. Before the license, a dealer attends the FPA training for accredited safety dispensers, which covers safe handling, first aid for poisoning and the rules on selling farm chemicals. At one such training in Cagayan Valley, an FPA officer put it plainly: always buy from licensed FPA handlers, and contact the FPA when you doubt a product.\n\nYou can ask to see the license, and you can look up the store in the FPA list of licensed handlers. Our guide to [fertilizer brands and dealers](/blog/fertilizer-brands-and-dealers) covers what to ask a dealer before you buy."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to check if a product is registered"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Open the FPA website",
+          "text": "Go to fpa.da.gov.ph, then Resources, Reports and Registered Products."
+        },
+        {
+          "title": "Pick the right list",
+          "text": "Choose Fertilizer, Pesticide or Pesticide for Drone Use. Each list shows the date it was last updated and can be downloaded as a spreadsheet or PDF."
+        },
+        {
+          "title": "Search the product name",
+          "text": "Match the company, the product name and the registration number on your bag or bottle. Check that the expiry date of the registration has not passed."
+        },
+        {
+          "title": "Check the contents",
+          "text": "For fertilizer, compare the guaranteed analysis, such as 46 0 0 for urea. For pesticide, compare the active ingredient and its concentration."
+        },
+        {
+          "title": "Check the crop",
+          "text": "The pesticide list also shows the crops and pests each product is registered for, plus the waiting days before harvest. Use a product only on a crop it lists."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to read a fertilizer or chemical label"
+    },
+    {
+      "type": "table",
+      "caption": "What to look for on the label before you pay",
+      "rows": [
+        [
+          "Look for",
+          "On a fertilizer bag",
+          "On a pesticide bottle"
+        ],
+        [
+          "Who made it",
+          "company and brand name",
+          "company and brand name"
+        ],
+        [
+          "Registration",
+          "FPA registration number",
+          "FPA registration number"
+        ],
+        [
+          "What is inside",
+          "guaranteed analysis, such as 14 14 14",
+          "active ingredient and concentration, such as lambda cyhalothrin"
+        ],
+        [
+          "Where to use it",
+          "target crops",
+          "crops, pests and rates"
+        ],
+        [
+          "Safety",
+          "storage and handling notes",
+          "color band, first aid and antidote notes"
+        ],
+        [
+          "Timing",
+          "your own fertilizer program",
+          "pre harvest interval and reentry time"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The color band at the bottom of a pesticide label shows how toxic the product is to people and animals. The FPA describes four bands: red for dangerous, yellow for harmful, blue for caution and green for the least toxic. Red label pesticides are already banned in the Philippines. For the numbers on a fertilizer bag, see our guide to [urea fertilizer](/blog/urea-fertilizer) and [complete fertilizer 14 14 14](/blog/complete-fertilizer-14-14-14)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pesticide in Tagalog, and other label words"
+    },
+    {
+      "type": "text",
+      "text": "Pesticide in Tagalog is pestisidyo, and fertilizer is pataba, though most farmers simply say abono. A pesticide is any product that kills or controls pests, so the word covers insecticides for insects, fungicides for fungi and herbicides for weeds. Our list of [farm words in Tagalog](/blog/farm-words-in-tagalog) covers more of the terms you see in stores and on labels."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fake, smuggled and underweight products"
+    },
+    {
+      "type": "text",
+      "text": "The FPA warns that unregistered products can harm health and the environment and cause money losses. It asks the public to avoid sellers of products that are unregistered, smuggled, underweight, expired or below standard. Online sellers must also follow a 2022 joint order on online businesses from the DA and other agencies."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "No FPA registration number, or a number that does not match the FPA list",
+        "A price far below what every other store charges",
+        "Labels with spelling errors, blurry print or missing first aid instructions",
+        "Torn seals, resewn bags or bottles that look refilled",
+        "A seller who will not give a receipt"
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Where to report",
+      "text": "Email the FPA at focu@fpa.da.gov.ph, message the FPA official Facebook page, or call (02) 8927 3647. You can also walk into the nearest FPA regional field unit. Bring the product, the receipt and a photo of the store if you can."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep your own records in anee.io"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, every bag and bottle you buy can go into the [farm inventory](/features/farm-inventory-and-expenses) with its price and the activity that used it. Keep a photo of the label and the receipt in your notes. When a pest shows up, send a photo to Anee, the [AI agricultural technician](/features/ai-agricultural-technician), before you buy a chemical, and date every spray on the [cropping calendar](/features/cropping-calendar)."
+    },
+    {
+      "type": "cta",
+      "title": "Know what you bought and where it went",
+      "text": "Track fertilizer and chemicals per lot, keep label photos in your notes, and ask Anee before you spray.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions farmers ask"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What does FPA stand for?",
+          "a": "FPA stands for the Fertilizer and Pesticide Authority, the agency attached to the Department of Agriculture that registers fertilizers and pesticides and licenses the businesses that handle them."
+        },
+        {
+          "q": "How do I check if a fertilizer is registered?",
+          "a": "Open the Registered Products page on fpa.da.gov.ph, download the fertilizer list, and match the company, product name, registration number and guaranteed analysis on your bag."
+        },
+        {
+          "q": "Can the FPA lower fertilizer prices?",
+          "a": "No. The FPA lost its price setting power in 1986. It still monitors and posts weekly fertilizer prices by province."
+        },
+        {
+          "q": "What is pesticide in Tagalog?",
+          "a": "Pestisidyo. The FPA itself is the Pangasiwaan sa Pataba at Pestisidyo in Filipino."
+        },
+        {
+          "q": "Does the FPA regulate household insect sprays?",
+          "a": "No. Household and urban pesticides are under the Food and Drug Administration."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Fertilizer brands and dealers",
+          "url": "/blog/fertilizer-brands-and-dealers"
+        },
+        {
+          "label": "Alika, Virtako and Chess for rice",
+          "url": "/blog/rice-insecticides-alika-virtako-chess"
+        },
+        {
+          "label": "Karate, Cymbush and Selecron",
+          "url": "/blog/karate-cymbush-selecron-insecticides"
+        },
+        {
+          "label": "Fungicides",
+          "url": "/blog/fungicides"
+        },
+        {
+          "label": "Urea fertilizer",
+          "url": "/blog/urea-fertilizer"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FPA: History, mandate and functions",
+          "url": "https://fpa.da.gov.ph/about-us/history/"
+        },
+        {
+          "label": "FPA: Frequently asked questions",
+          "url": "https://fpa.da.gov.ph/faqs/"
+        },
+        {
+          "label": "FPA: Registered products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        },
+        {
+          "label": "FPA: Licensed handlers",
+          "url": "https://fpa.da.gov.ph/resources/reports/licensed-handlers/"
+        },
+        {
+          "label": "FPA: Cagayan Valley trains dealers on safe handling",
+          "url": "https://fpa.da.gov.ph/fpa-cagayan-valley-trains-dealers-on-safe-handling-of-fertilizers-and-pesticides/"
+        },
+        {
+          "label": "Official Gazette: Presidential Decree No. 1144, s. 1977",
+          "url": "https://mirror.officialgazette.gov.ph/1977/05/30/presidential-decree-no-1144-s-1977/"
+        },
+        {
+          "label": "Tagalog.com dictionary: pestisidyo",
+          "url": "https://www.tagalog.com/dictionary/pestisidyo"
+        }
+      ]
+    }
+  ]
+}

@@ -46,6 +46,11 @@ final class Seo
             return false;
         }
 
+        // The guides are public; their builder preview is not.
+        if ($controller instanceof \App\Http\Controllers\SitePageController) {
+            return $route->getName() !== 'site.preview' && $route->getName() !== 'site.preview.post';
+        }
+
         return $controller instanceof PublicController || $controller instanceof LegalController;
     }
 
@@ -60,7 +65,7 @@ final class Seo
     /** Behind the login, or a door of its own: closed to every crawler. */
     private const CLOSED = ['/app/', '/admin/', '/account', '/purchase', '/notifications', '/login', '/signup', '/auth/',
         '/forgot-password', '/reset-password', '/verify-email', '/verify-notice', '/pw/', '/s/', '/worker-invite/',
-        '/ads/', '/storage/', '/broadcasting/', '/blog-preview', '/deploy-check', '/up'];
+        '/ads/', '/storage/', '/broadcasting/', '/blog-preview', '/site-preview', '/deploy-check', '/up'];
 
     /**
      * Facebook's own fetchers. They index nothing: they read a page to draw
@@ -91,6 +96,10 @@ final class Seo
         // A crawler follows the group that names it, never the * group too.
         $groups = array_map(fn ($agent) => $group($agent, true), self::LINK_READERS);
         $groups[] = $group('*', self::publicIndexable());
+        // Where every public page is listed, once the site may be indexed.
+        if (self::publicIndexable()) {
+            $groups[] = 'Sitemap: ' . url('/sitemap.xml');
+        }
 
         return implode("\n\n", $groups) . "\n";
     }

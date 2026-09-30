@@ -1,0 +1,272 @@
+{
+  "section": "blog",
+  "slug": "karate-cymbush-selecron-insecticides",
+  "sortOrder": 130,
+  "lang": "en",
+  "category": "Pesticides",
+  "title": "Karate Insecticide, Cymbush and Selecron: Uses, Groups and Safety",
+  "metaTitle": "Karate Insecticide, Cymbush and Selecron Explained",
+  "metaDescription": "Karate insecticide, Cymbush and Selecron: active ingredients, pyrethroid or organophosphate, the crops on each FPA label, waiting days and safe spraying.",
+  "focusKeyword": "karate insecticide",
+  "keywords": [
+    "karate insecticide",
+    "insecticide karate",
+    "cymbush insecticide",
+    "cymbush",
+    "selecron insecticide",
+    "lambda cyhalothrin",
+    "telluride insecticide",
+    "fertilizer and pesticide authority",
+    "ant bait",
+    "termiticides"
+  ],
+  "excerpt": "Karate insecticide, Cymbush and Selecron are old names in Filipino farming, and many farmers buy them out of habit. All three come from Syngenta Philippines, but they are not interchangeable. Two are pyrethroids and one is an organophosphate, and only two of them carry a rice listing. Here is what each one contains, what its label covers and how to use it without hurting yourself, your bees or your field.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-karate-cymbush-selecron-insecticides.webp",
+    "alt": "Vegetable farmer in the highlands spraying his crop with a knapsack sprayer",
+    "credit": "Doyanmoto, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Before you pick up any of these bottles, name the pest. A chewing caterpillar, a sucking hopper and a tiny thrips each call for a different tool. If you grow rice, our guide to [rice insects](/problems/rice-insects) helps you match the damage to the insect. Vegetable growers can start with [thrips](/problems/thrips) or [hanip, mites and aphids](/problems/hanip-mites-and-aphids).\n\nOnce you know the pest, the table below shows which of the three products actually lists it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The three products side by side"
+    },
+    {
+      "type": "table",
+      "caption": "Sources: Syngenta Philippines product pages and the FPA list of registered agricultural pesticides as of August 31, 2026. The label on your own bottle always comes first.",
+      "rows": [
+        [
+          "Product",
+          "Active ingredient",
+          "Class and IRAC group",
+          "FPA toxicity category",
+          "Rice on the FPA list",
+          "Days before harvest on rice"
+        ],
+        [
+          "Karate 2.5 EC",
+          "lambda cyhalothrin",
+          "pyrethroid, 3A",
+          "2",
+          "green leafhopper, armyworm, rice bug, leaffolder, black bug",
+          "3"
+        ],
+        [
+          "Cymbush 5 EC",
+          "cypermethrin",
+          "pyrethroid, 3A",
+          "4",
+          "green leafhopper, brown and white backed planthopper, leaffolder, stem borer, armyworm, rice bug",
+          "7"
+        ],
+        [
+          "Selecron 500 EC",
+          "profenofos",
+          "organophosphate, 1B",
+          "2",
+          "none listed",
+          "follow the label for your crop"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The toxicity category runs from 1 to 4, and a lower number means a more hazardous product. The Fertilizer and Pesticide Authority says red label pesticides, the most dangerous band, are already banned in the Philippines. So what you find in stores carries a yellow, blue or green band at the bottom of the label."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Karate insecticide and lambda cyhalothrin explained"
+    },
+    {
+      "type": "text",
+      "text": "Karate 2.5 EC contains lambda cyhalothrin, a pyrethroid. Pyrethroids are man made chemicals modeled on the pyrethrins found in chrysanthemum flowers. They upset the insect's nerves, which leads to quick paralysis and death. The Karate brand goes back a long way, since the first United States registration of lambda cyhalothrin in 1988 was for Karate.\n\nSyngenta lists Karate insecticide for rice, corn, mango, tomato, onion, mungbean, watermelon, tobacco, cotton and cacao. On rice, the FPA list names green leafhopper, armyworm, rice bug, leaffolder and black bug. The pre harvest interval on rice is 3 days, and workers may go back in once the spray has dried.\n\nFarmers who type insecticide Karate into a search bar usually mean this product. Lambda cyhalothrin also sits inside Alika 247 ZC, paired with thiamethoxam, which our page on [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) explains."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Cymbush insecticide: cypermethrin for many crops"
+    },
+    {
+      "type": "text",
+      "text": "Cymbush 5 EC contains cypermethrin, another pyrethroid in the same IRAC group 3A as lambda cyhalothrin. Its FPA list covers rice, corn, cabbage, beans, tomato, onion, watermelon, banana, mango, cotton and tobacco. On rice it names green leafhopper, brown and white backed planthoppers, leaffolder, stem borer, armyworm and rice bug.\n\nCymbush insecticide carries a 7 day pre harvest interval on every crop in its FPA listing, and reentry is allowed once the spray dries. It sits in toxicity category 4, the lowest band, but low toxicity to people is not the same as low toxicity to fish or bees."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Selecron insecticide: an organophosphate for vegetables"
+    },
+    {
+      "type": "text",
+      "text": "Selecron 500 EC contains profenofos, an organophosphate in IRAC group 1B. Organophosphates block an enzyme the insect nerve needs, so the signal never switches off. Syngenta describes Selecron as translaminar, which means it moves from the upper leaf surface to the underside, where many pests hide.\n\nOn the FPA list, Selecron insecticide covers cabbage, eggplant, tomato, potato, watermelon, stringbeans, mungbeans, soybeans, cotton and mango. We found no rice listing. It sits in toxicity category 2, and profenofos can poison people through the skin and lungs, so treat it with real care."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where Telluride insecticide fits"
+    },
+    {
+      "type": "text",
+      "text": "Telluride insecticide often comes up in the same conversations, but it is not a Syngenta product and not a pyrethroid. Telluride 1.8 EC comes from Aldiz Incorporated and contains abamectin, a compound first taken from a soil bacterium. Abamectin sits in IRAC group 6.\n\nIts FPA listing covers thrips, mites and leafminers on onion, tomato, eggplant, potato, watermelon, papaya, strawberry, banana, pineapple and ornamentals, plus cecid fly on mango. The waiting time before harvest ranges from 3 days on several vegetables to 14 days on potato and papaya. Like Karate and Selecron, it is toxicity category 2."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Karate after Cymbush is not a rotation"
+    },
+    {
+      "type": "text",
+      "text": "Karate insecticide and Cymbush share IRAC group 3A. So does the lambda cyhalothrin in Alika. If you switch from one to the other against the same pest, the insects face the same mode of action every time, and resistant ones survive to breed. IRAC advises against treating back to back generations of one pest with the same group.\n\nThere is a second risk in rice. IRRI links brown planthopper outbreaks to sprays that kill spiders, mirid bugs and water striders. Broad spectrum pyrethroids do not spare those natural enemies. So read our [brown planthopper](/problems/brown-planthopper) guide before you spray a pyrethroid early in the season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Safety: protective gear and waiting days"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Read the whole label before you open the bottle, including the first aid section.",
+        "Wear a long sleeved shirt, long pants, boots, rubber gloves and a mask while you mix and spray.",
+        "Mix outdoors, never with bare hands, and never spray against the wind or before rain.",
+        "Keep the tank away from fish ponds, canals and wells, because lambda cyhalothrin is highly toxic to fish.",
+        "Write down the spray date and count the pre harvest interval before you harvest or sell.",
+        "Wash yourself and your clothes after spraying, and store bottles locked away from children and food."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Bees and natural enemies",
+      "text": "The US National Pesticide Information Center rates lambda cyhalothrin as highly toxic to bees. Do not spray crops or weeds in flower while bees are working, and spray late in the afternoon when fewer are out. If anyone feels dizzy, weak or sick during or after spraying, stop, wash with soap and water, and bring the label to the nearest health center."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not for ants or termites"
+    },
+    {
+      "type": "text",
+      "text": "Karate and Cymbush are crop sprays, not ant bait or termiticides. Spraying them on an ant trail or a termite mound wastes money and spreads poison where you do not need it. For ants around the nursery or termites in the bodega, read our guide to [ant bait and termiticides](/blog/ant-bait-and-termiticides) instead."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Buy registered, keep records"
+    },
+    {
+      "type": "text",
+      "text": "Buy only from a store licensed by the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and check the product on the FPA registered list if the label looks off. Then keep a record. In anee.io, you can photograph the pest and ask Anee, the [AI agricultural technician](/features/ai-agricultural-technician), what it is before you buy. Each spray goes on the [cropping calendar](/features/cropping-calendar) with its date, and the bottle goes into the [farm inventory](/features/farm-inventory-and-expenses) with its price."
+    },
+    {
+      "type": "cta",
+      "title": "Spray the right pest, on the right day",
+      "text": "Ask Anee about a pest photo in Tagalog or English, schedule every spray on your cropping calendar, and track each bottle and its cost per lot.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions farmers ask"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is Karate insecticide used for?",
+          "a": "Karate 2.5 EC is lambda cyhalothrin. In the Philippines it lists rice pests such as green leafhopper, armyworm, rice bug, leaffolder and black bug, plus pests of corn, vegetables, mango and other crops."
+        },
+        {
+          "q": "Is Cymbush the same as Karate?",
+          "a": "No. Cymbush is cypermethrin and Karate is lambda cyhalothrin. Both are pyrethroids in IRAC group 3A, so switching between them is not a rotation."
+        },
+        {
+          "q": "Can I use Selecron insecticide on rice?",
+          "a": "We found no rice listing for Selecron 500 EC on the FPA list. Its registered crops are vegetables, legumes, cotton and mango, so use it only on crops its label names."
+        },
+        {
+          "q": "How long do I wait before harvest after Karate insecticide?",
+          "a": "The FPA list gives a 3 day pre harvest interval for Karate on rice and most of its other crops. Always go by the label on your own bottle."
+        },
+        {
+          "q": "What is Telluride insecticide?",
+          "a": "Telluride 1.8 EC is abamectin from Aldiz Incorporated, registered for thrips, mites and leafminers on vegetables, fruit and ornamentals."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Alika, Virtako and Chess for rice",
+          "url": "/blog/rice-insecticides-alika-virtako-chess"
+        },
+        {
+          "label": "Brown planthopper",
+          "url": "/problems/brown-planthopper"
+        },
+        {
+          "label": "Rice leaffolder",
+          "url": "/problems/rice-leaffolder"
+        },
+        {
+          "label": "Thrips",
+          "url": "/problems/thrips"
+        },
+        {
+          "label": "Ant bait and termiticides",
+          "url": "/blog/ant-bait-and-termiticides"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Syngenta Philippines: Karate 2.5 EC",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/karate-25-ec"
+        },
+        {
+          "label": "Syngenta Philippines: Cymbush 5 EC",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/cymbush-5-ec"
+        },
+        {
+          "label": "Syngenta Philippines: Selecron 500 EC",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/selecron-500-ec"
+        },
+        {
+          "label": "FPA: Registered products (pesticide list as of August 31, 2026)",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        },
+        {
+          "label": "FPA: Cagayan Valley training on label color bands",
+          "url": "https://fpa.da.gov.ph/fpa-cagayan-valley-trains-dealers-on-safe-handling-of-fertilizers-and-pesticides/"
+        },
+        {
+          "label": "IRAC: Mode of action classification",
+          "url": "https://irac-online.org/mode-of-action/classification-online/"
+        },
+        {
+          "label": "NPIC: Lambda cyhalothrin general fact sheet",
+          "url": "https://www.npic.orst.edu/factsheets/l_cyhalogen.pdf"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Planthopper",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper"
+        }
+      ]
+    }
+  ]
+}

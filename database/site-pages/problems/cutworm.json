@@ -1,0 +1,229 @@
+{
+  "section": "problems",
+  "slug": "cutworm",
+  "sortOrder": 100,
+  "lang": "en",
+  "category": "Corn pests",
+  "title": "Cutworm: How to Protect Corn Seedlings and Vegetables",
+  "metaTitle": "Cutworm: Signs and Control in Corn and Vegetables",
+  "metaDescription": "A cutworm hides in the soil by day and cuts corn seedlings and vegetable transplants at night. Learn the kinds, the signs and control that fits the label.",
+  "focusKeyword": "cutworm",
+  "keywords": [
+    "cutworm",
+    "corn seedling",
+    "cymbush insecticide"
+  ],
+  "excerpt": "A cutworm is a moth caterpillar that hides in the soil by day and chews through young stems at night. A patchy stand in the first weeks after planting often points to cutworms. This guide covers the two groups found on Philippine farms, the damage they do to corn and vegetables, and how to control them.",
+  "heroImage": {
+    "src": "/images/site/guides/problems-cutworm.webp",
+    "alt": "Black cutworm larva curled in the soil beside a corn seedling it cut off at the base",
+    "credit": "W.M. Hantsbarger, Bugwood.org, CC BY 3.0 us, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What a cutworm is"
+    },
+    {
+      "type": "text",
+      "text": "Cutworm is a farm name for the larvae of several moths in the family Noctuidae. Two kinds matter most on Philippine farms, and they behave a little differently."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Black cutworm (Agrotis ipsilon)"
+    },
+    {
+      "type": "text",
+      "text": "This is the classic soil cutworm. The larva is dark gray to black and grows to about 5 cm. It hides under the soil surface by day and feeds after dark, and it curls into a tight C when you dig it up.\n\nSmall larvae feed on leaves first. Larger ones cut seedlings off near the soil line, based on UMass Extension. In the Philippines, a De La Salle University study recorded it among the potato pests of La Trinidad, Benguet."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Common cutworm (Spodoptera litura)"
+    },
+    {
+      "type": "text",
+      "text": "Also called the tobacco cutworm, this relative of the fall armyworm feeds more on leaves than on stems. It attacks onion, many vegetables, legumes and tobacco. The DA Cagayan Valley corn guide also lists it as a corn pest that can strip young plants and cut their stems and leaves.\n\nOnion growers in Central Luzon know it well. PhilRice researchers worked with farmers in Nueva Ecija to control it with NPV, a virus that infects its larvae."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Signs of cutworm damage"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "A corn seedling cut clean at or near the soil line, lying on the ground in the morning",
+        "Wilted seedlings with the stem chewed partway through",
+        "Gaps in the row, often in patches or near weedy borders",
+        "Small holes in leaves from young larvae, before they start cutting",
+        "A gray or dark larva curled in the soil a few centimeters from the cut plant"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Field crickets also cut corn seedlings along the soil surface, as the DA guide notes. So dig around a cut plant before you decide. A curled larva means cutworm, while an empty burrow nearby points to crickets.\n\nOn vegetables, look at fresh transplants of cabbage, tomato, eggplant and onion. The same night feeding leaves toppled seedlings and chewed leaves."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why the trouble starts before planting"
+    },
+    {
+      "type": "text",
+      "text": "Black cutworm moths lay their eggs mostly on grasses and weeds. UMass Extension adds that weedy and reduced tillage fields tend to suffer the most damage. So when you plant into a field that was full of weeds, the larvae may already be waiting in the soil.\n\nThat is why the DA guide lists clean culture as the first step against Spodoptera litura in corn."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Cutworm control"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Before and at planting"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Plow and harrow well, so larvae come up where birds and the sun can reach them.",
+        "Clear weeds and grasses from the field and its borders before you plant.",
+        "Buy a little extra seed so you can replant gaps quickly. Our [corn seeds](/crops/corn-seeds) guide gives the seeding rates.",
+        "For vegetable transplants, wrap a paper or plastic collar around each stem so larvae cannot reach it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Scouting"
+    },
+    {
+      "type": "text",
+      "text": "Walk the field every few days in the first weeks after emergence, early in the morning. UMass Extension suggests checking at least 100 plants, with extra attention near field edges, for cut stems and leaf feeding. Dig around each fresh cut to find and kill the larva.\n\nThe same United States guide suggests spot treatment once about 5 percent of plants are cut. Use that as a rough guide, and weigh it against the cost of replanting."
+    },
+    {
+      "type": "text",
+      "text": "On anee.io, put a stand count and a scouting task on the [cropping calendar](/features/cropping-calendar) for each lot, dated from its own planting day. If you cannot tell cutworm from cricket damage, send Anee, the AI technician, a photo of the cut seedling."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Biological control"
+    },
+    {
+      "type": "text",
+      "text": "Ground beetles, parasitic flies and wasps all attack the larvae, so skip broad sprays you do not need. For Spodoptera litura, NPV has a strong local record. In the PhilRice study in Nueva Ecija onion fields, NPV sprays timed by pheromone trap catches worked about as well as three to four insecticide sprays."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Cymbush insecticide and other labeled sprays"
+    },
+    {
+      "type": "text",
+      "text": "Cymbush 5 EC contains cypermethrin, a Group 3A pyrethroid. Its Syngenta Philippines label lists cutworm on beans, onion, tobacco and cotton, but for corn it lists only borers and earworms. Karate 2.5 EC, with lambda cyhalothrin, lists cutworms on tomato, onion and tobacco. For corn, the label of Proclaim Opti 5 WG, with emamectin benzoate, lists cutworm.\n\nSo before you use Cymbush insecticide against cutworm, check that your crop is on the label. The larvae feed above ground at night, and UMass Extension times sprays for that window, so aim at the base of the plants. Follow the label rate and the harvest interval, and see our guide to [Karate, Cymbush and Selecron](/blog/karate-cymbush-selecron-insecticides)."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Follow the label and the FPA registration",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) for your crop and pest. The label gives the rate, the interval between sprays and the days to wait before harvest."
+    },
+    {
+      "type": "cta",
+      "title": "Protect the stand from day one",
+      "text": "anee.io dates your land preparation, planting, stand count and scouting for every lot, and Anee answers your pest questions in Tagalog or English.",
+      "label": "Sign up free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Cutworm FAQ"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the difference between a cutworm and an armyworm?",
+          "a": "Cutworms mostly hide in the soil and cut young stems at the base. Armyworms feed on leaves above ground, often in large numbers. The common cutworm, Spodoptera litura, behaves a bit like both. Compare it with the [fall armyworm](/problems/fall-armyworm)."
+        },
+        {
+          "q": "Why do my corn seedlings fall over overnight?",
+          "a": "A corn seedling found cut at the soil line in the morning usually means cutworms or field crickets. Dig around the cut plant, because a curled gray larva means cutworm."
+        },
+        {
+          "q": "Does Cymbush insecticide kill cutworms?",
+          "a": "Its Philippine label lists cutworm on beans, onion, tobacco and cotton, not on corn. For corn, choose a product whose label names this pest on corn."
+        },
+        {
+          "q": "Do cutworms attack vegetables?",
+          "a": "Yes. Black cutworm feeds on most vegetables, and Philippine product labels list cutworm on cabbage, eggplant, tomato and onion. See our guide to [vegetables in the Philippines](/crops/vegetables-philippines)."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Fall armyworm",
+          "url": "/problems/fall-armyworm"
+        },
+        {
+          "label": "Asian corn borer",
+          "url": "/problems/asian-corn-borer"
+        },
+        {
+          "label": "Corn seeds",
+          "url": "/crops/corn-seeds"
+        },
+        {
+          "label": "Pagtatanim ng gulay",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Hanip, mites and aphids",
+          "url": "/problems/hanip-mites-and-aphids"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "UMass Extension: Black cutworm fact sheet",
+          "url": "https://www.umass.edu/agriculture-food-environment/vegetable/fact-sheets/cutworm-black"
+        },
+        {
+          "label": "DA Regional Field Office 2: Corn Production Techno Guide (revised 2012)",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
+        },
+        {
+          "label": "Punzal and others (2013): Management of the common cutworm in onion with sex pheromones and NPV",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/4792/"
+        },
+        {
+          "label": "De La Salle University: Potato insect pests and natural enemies in La Trinidad, Benguet",
+          "url": "https://animorepository.dlsu.edu.ph/etdm_bio/24/"
+        },
+        {
+          "label": "Syngenta Philippines: Cymbush 5 EC label",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/cymbush-5-ec"
+        },
+        {
+          "label": "Syngenta Philippines: Karate 2.5 EC label",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/karate-25-ec"
+        },
+        {
+          "label": "Syngenta Philippines: Proclaim Opti 5 WG label",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/proclaim-opti-5-wg"
+        }
+      ]
+    }
+  ]
+}

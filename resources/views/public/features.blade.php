@@ -121,7 +121,7 @@
                 <div>
                     <p class="fx-kicker">Community</p>
                     <h2 class="fx-h">Co-farmers, discussions and a ladder worth climbing</h2>
-                    <p class="fx-p">A news feed for wins and warnings, focused discussion rooms, direct messages with photos, clips and voice notes — and a 50-rank ladder that turns helping into a game.</p>
+                    <p class="fx-p">A news feed for wins and warnings, focused discussion rooms, direct messages with photos, clips and voice notes — and a 100-level ladder that turns helping into a game.</p>
                     <ul class="fx-list">
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Public, password and approval rooms for private groups</li>
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>A team Collab Room per season: chat, whiteboard and calls</li>
@@ -147,6 +147,25 @@
             </div>
         </div>
     </section>
+
+    {{-- ================= EACH FEATURE ON ITS OWN PAGE ================= --}}
+    @if ($featurePages->isNotEmpty())
+    @include('public.site.css')
+    <section class="py-16 sm:py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="max-w-2xl mx-auto text-center reveal">
+                <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Up close</p>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">Each Feature on Its Own Page</h2>
+                <p class="mt-4 text-gray-600">How each part of anee.io works on a real farm, what it keeps track of, and how to set it up for your next season.</p>
+            </div>
+            <div class="mt-10 sp-grid">
+                @foreach ($featurePages as $p)
+                    <div class="reveal grid" style="--reveal-delay: {{ ($loop->index % 3) * 0.06 }}s">@include('public.site.tile', ['p' => $p])</div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @endif
 
     {{-- ================= CTA ================= --}}
     <section class="py-16 sm:py-20 bg-white">

@@ -1,0 +1,189 @@
+{
+  "section": "features",
+  "slug": "cropping-calendar",
+  "sortOrder": 10,
+  "lang": "en",
+  "category": "Planning",
+  "title": "A Cropping Calendar That Dates Every Task From Day Zero",
+  "metaTitle": "Cropping Calendar App: Plan Every Farm Task by Day Count",
+  "metaDescription": "A cropping calendar for Filipino farms: land preparation to harvest, every task dated by DAS, DAT or DAP from each lot's day zero. Start free on anee.io.",
+  "focusKeyword": "cropping calendar",
+  "keywords": [
+    "cropping calendar",
+    "cropping schedule",
+    "farm calendar",
+    "days after sowing",
+    "days after transplanting",
+    "pagtatanim ng palay",
+    "fertilizer for rice"
+  ],
+  "excerpt": "The anee.io cropping calendar holds your whole season on one board, from land preparation to harvest. It dates every task from each lot's own day zero, so a lot sown a week late keeps its own timing. When the weather moves your plan, you drag the task and the calendar follows.",
+  "heroImage": {
+    "src": "/images/site/app/board.png",
+    "alt": "The anee.io cropping calendar on a phone, showing a week of farm activities with growth stage and labor cost chips",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What goes on your cropping calendar"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io a season lives in a cropping schedule, and the Activities board is its calendar. Each day is a card. Open it to see what happens that day, on which lot, who works it and what it costs. The day card also shows each lot's growth stage, so you know what the crop is doing while you plan."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Tasks: land preparation, sowing, transplanting, fertilizer, spraying, weeding and harvest",
+        "Irrigation days, placed by crop stage",
+        "Hired services like the tractor, the harvester or the thresher, with their cost",
+        "Payroll days for your [workers and their pay](/features/farm-workers-and-payroll)",
+        "Reminders and checklists for the small things that slip",
+        "Day notes with photos, clips and voice notes"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Day zero and the DAS, DAT or DAP count"
+    },
+    {
+      "type": "text",
+      "text": "Farmers count days after an event, not calendar dates. Rice recommendations from PhilRice speak of days after sowing or transplanting, and the board works the same way.\n\nEach lot has its own day zero. For direct seeded palay (rice still in the husk) it is the sowing date, and the count is DAS, days after sowing. Transplanted rice counts DAS in the seedbed, then DAT from the day you transplant. For corn and many vegetables the count is DAP, days after planting. Every task shows its count beside the date, so 'DAT 21' and the weekday sit together on one card.\n\nNeed the usual timings? Our guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) walks through the rice season, and [fertilizer for rice](/blog/fertilizer-for-rice) lists when each application usually goes in. Put those days on your board once and they stay dated for every lot."
+    },
+    {
+      "type": "table",
+      "caption": "A paper calendar and the anee.io board, side by side",
+      "rows": [
+        [
+          "Situation",
+          "Paper calendar",
+          "anee.io board"
+        ],
+        [
+          "Two lots sown a week apart",
+          "One list of dates for both",
+          "Each lot counts from its own day zero"
+        ],
+        [
+          "Rain delays the fertilizer",
+          "Cross out and rewrite by hand",
+          "Drag the task to its new day"
+        ],
+        [
+          "A worker asks what is next",
+          "Look for the notebook",
+          "Open the day card on a phone"
+        ],
+        [
+          "Harvest time, what did it cost?",
+          "Add it up from memory",
+          "Labor and materials already totaled"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When the season does not follow the plan"
+    },
+    {
+      "type": "text",
+      "text": "Rain comes early, the tractor is late, a typhoon closes the road for three days. On the board you drag a task to its new day, or move a whole day's work at once to a new date or day number. Keep an idea you have not decided on as a draft. Save a version of the plan when you want to try another timing without losing the original.\n\nYou can undo any change, even after you log out and come back tomorrow. That works because anee.io keeps the steps on the server, not only on your phone.\n\nIf a lot runs behind, set its delay counter. Each task then shows the delayed count beside the calendar's count, so you see where the crop really stands."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Tags, filters and search"
+    },
+    {
+      "type": "text",
+      "text": "Tag tasks by input, by lot or by anything your farm uses. Then filter the board to show only what you need today, like the whole day labor or every herbicide spray. Search finds one task by name when the season gets long."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Take the cropping calendar to the field"
+    },
+    {
+      "type": "text",
+      "text": "anee.io is a web app that runs in any phone browser, so the board goes wherever you go. On the Solo Farmer and Farm Owner plans, offline mode keeps your recent seasons on the phone. Tick tasks done, move dates, write day notes and take photos where there is no signal. Your changes sync when the connection comes back.\n\nWorkers can follow the board too. On the Farm Owner plan each worker gets a login, and you decide if they may view or edit the plan."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Start from a plan you trust",
+      "text": "Write your protocol once in the [Protocol Builder](/features/protocol-builder), then import it as a new cropping schedule. Every task lands on its day count for each lot, and [growth stages and weather](/features/growth-stages-and-weather) read from the same day zero."
+    },
+    {
+      "type": "cta",
+      "title": "Plan your next season on one board",
+      "text": "Sign up free and build your first cropping schedule. The free Libre plan includes the Activities board for one season.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the cropping calendar"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is a cropping calendar?",
+          "a": "It is the season's plan laid out by date: when to prepare the land, sow, fertilize, spray, irrigate and harvest. In anee.io each task also carries its day count from the lot's day zero."
+        },
+        {
+          "q": "What do DAS, DAT and DAP mean?",
+          "a": "Days after sowing, days after transplanting and days after planting. Each lot uses the count that fits how you planted it, and the board shows it on every task."
+        },
+        {
+          "q": "Can two lots follow different dates?",
+          "a": "Yes. Each lot has its own day zero, so a lot planted a week later keeps its own timing on the same board."
+        },
+        {
+          "q": "Does it work without internet?",
+          "a": "On the Solo Farmer and Farm Owner plans, offline mode lets you use the board, notes and growth stages without signal. Your changes sync once you are back online."
+        },
+        {
+          "q": "Can I undo a mistake?",
+          "a": "Yes. Undo keeps working even after you log out, so you can still take back a wrong drag from last night."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Farm workers and payroll",
+          "url": "/features/farm-workers-and-payroll"
+        },
+        {
+          "label": "Growth stages and weather",
+          "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "Protocol Builder",
+          "url": "/features/protocol-builder"
+        },
+        {
+          "label": "Notes, photos and voice",
+          "url": "/features/notes-photos-and-voice"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        }
+      ]
+    }
+  ]
+}

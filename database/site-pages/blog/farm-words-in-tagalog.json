@@ -1,0 +1,475 @@
+{
+  "section": "blog",
+  "slug": "farm-words-in-tagalog",
+  "sortOrder": 20,
+  "lang": "en",
+  "category": "Farm culture",
+  "title": "Weeds in Tagalog and Other Farm Words: An English Tagalog Glossary",
+  "metaTitle": "Weeds in Tagalog: English Tagalog Farm Words Glossary",
+  "metaDescription": "Weeds in Tagalog is damo. Learn the Tagalog for grass, bugs, pests, mites, maggots, mildew, fertilizer and pesticide, plus the local names of rice bugs.",
+  "focusKeyword": "weeds in Tagalog",
+  "keywords": [
+    "weeds in tagalog",
+    "grass in tagalog",
+    "bugs in tagalog",
+    "pest in tagalog",
+    "mite in tagalog",
+    "mites in tagalog",
+    "maggots in tagalog",
+    "diseased in tagalog",
+    "mildew in tagalog",
+    "fertilizer in tagalog",
+    "pesticide in tagalog",
+    "corns in tagalog",
+    "palay in english",
+    "english ng palay",
+    "palayan",
+    "palayan in english",
+    "black rice bug",
+    "alitangya",
+    "tayangaw",
+    "hanip insect",
+    "alibangbang insect"
+  ],
+  "excerpt": "Weeds in Tagalog is damo, the same word Filipinos use for grass. So when a farmer says the field is full of damo, they mean the unwanted plants, not a lawn. This glossary gives the Tagalog farm words that matter in the field, each one checked against a dictionary, plus the local names of the bugs that attack palay.",
+  "heroImage": {
+    "src": "/images/site/photos/inspect.jpg",
+    "alt": "A farmer inspecting a crop for weeds and pests, the field words this Tagalog glossary covers",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Weeds in Tagalog and grass in Tagalog"
+    },
+    {
+      "type": "text",
+      "text": "Damo means both grass and weed. Tagalog.com and Wiktionary give both meanings, so the sentence tells you which one. For example, damo sa palayan is weeds in the rice field, while damuhan is a grassy place or a lawn. So weeds in Tagalog and grass in Tagalog are the same word, and only the setting tells them apart.\n\nPhilRice handouts use the same word. They call weeding pagdadamo, and they call herbicide pamatay damo or herbisidyo. If you want the weeds themselves, with names like mutha and gabi gabi, see our guide to [common weeds in the Philippines](/problems/common-weeds-philippines)."
+    },
+    {
+      "type": "table",
+      "caption": "Weeds and grass in Tagalog",
+      "rows": [
+        [
+          "English",
+          "Tagalog",
+          "Notes"
+        ],
+        [
+          "weed, weeds",
+          "damo",
+          "Also means grass. Add sa palayan or sa maisan to be clear."
+        ],
+        [
+          "grass",
+          "damo",
+          "Damuhan is grassland, a lawn or a weedy patch."
+        ],
+        [
+          "weeding",
+          "pagdadamo",
+          "Pulling or cutting weeds by hand or with a rotary weeder."
+        ],
+        [
+          "herbicide",
+          "pamatay damo, herbisidyo",
+          "Both appear in PhilRice farmer handouts."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Bugs in Tagalog, pest in Tagalog and maggots in Tagalog"
+    },
+    {
+      "type": "text",
+      "text": "Bugs in Tagalog are insekto or kulisap. Insekto comes from Spanish, while kulisap is older and often means a tiny insect. So pamatay kulisap is insecticide. Pest in Tagalog is peste, and it covers insects, rats, snails and anything else that damages the crop.\n\nMaggots in Tagalog are uod. In fact, uod covers every soft larva: maggots, grubs, worms and caterpillars. That is why farmers call the fall armyworm an uod too. A hairy, itchy caterpillar has its own name, higad. For the insects that attack palay, see our list of [rice insects](/problems/rice-insects)."
+    },
+    {
+      "type": "table",
+      "caption": "Bugs and pests in Tagalog",
+      "rows": [
+        [
+          "English",
+          "Tagalog",
+          "Notes"
+        ],
+        [
+          "insect, bug",
+          "insekto, kulisap",
+          "Kulisap is often a tiny insect."
+        ],
+        [
+          "insecticide",
+          "pamatay kulisap",
+          "Also called by the English word or the brand name."
+        ],
+        [
+          "pest",
+          "peste",
+          "Any animal that damages the crop."
+        ],
+        [
+          "maggot, grub, caterpillar, worm",
+          "uod",
+          "One word for all soft larvae."
+        ],
+        [
+          "hairy caterpillar",
+          "higad",
+          "The itchy, woolly kind."
+        ],
+        [
+          "rat",
+          "daga",
+          "A pest in every rice field."
+        ],
+        [
+          "golden apple snail",
+          "kuhol",
+          "PhilRice lists it with weeds as a pest of palay."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Mite in Tagalog: what hanip really means"
+    },
+    {
+      "type": "text",
+      "text": "The usual answer for mite in Tagalog is hanip. But Wiktionary defines hanip as the chicken louse or chicken flea, the tiny pest that crawls in the feathers of hens. Tagalog.com lists another hanip too, which means walking quietly to catch something.\n\nSo a hanip insect, strictly, lives on poultry. Even so, farmers carry the word into the field for tiny crop pests. For mites on vegetables and fruit trees, no dictionary we checked gives a separate common Tagalog word, and many technicians just say mites. Our page on [hanip, mites and aphids](/problems/hanip-mites-and-aphids) shows how to tell these tiny pests apart."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Diseased in Tagalog and mildew in Tagalog"
+    },
+    {
+      "type": "text",
+      "text": "Diseased in Tagalog is may sakit, often written maysakit. Sakit means disease or illness, so halamang may sakit is a diseased plant.\n\nMildew in Tagalog is amag. The same word means mold, and maamag means moldy. Some word lists online give agiw for mildew, but that is wrong. Tagalog.com defines agiw as cobwebs or dirty residue in the corners of a house, not a fungus on leaves. For the leaf and fruit diseases farmers fight most, see [anthracnose](/problems/anthracnose) and our guide to [fungicides](/blog/fungicides)."
+    },
+    {
+      "type": "table",
+      "caption": "Plant health words in Tagalog",
+      "rows": [
+        [
+          "English",
+          "Tagalog",
+          "Notes"
+        ],
+        [
+          "diseased, sick",
+          "may sakit, maysakit",
+          "Halamang may sakit is a diseased plant."
+        ],
+        [
+          "disease",
+          "sakit",
+          "Also means pain or illness."
+        ],
+        [
+          "mold, mildew",
+          "amag",
+          "Maamag means moldy."
+        ],
+        [
+          "cobweb, dirty residue",
+          "agiw",
+          "Not mildew, even if some lists say so."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fertilizer in Tagalog and pesticide in Tagalog"
+    },
+    {
+      "type": "text",
+      "text": "Fertilizer in Tagalog is abono or pataba. Both are common in farm talk. Abono also has an older meaning, a payment made in advance, but in the field it means fertilizer. So when a farmer asks how many sacks of abono per hectare, read our guide to [urea fertilizer](/blog/urea-fertilizer) or the [fertilizer calculation](/blog/fertilizer-calculation) page.\n\nPesticide in Tagalog is pestisidyo. Tagalog.com places insecticide, herbicide and fungicide all under that one word. Before you buy any of them, check the product's registration with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority)."
+    },
+    {
+      "type": "table",
+      "caption": "Inputs and harvest words in Tagalog",
+      "rows": [
+        [
+          "English",
+          "Tagalog",
+          "Notes"
+        ],
+        [
+          "fertilizer",
+          "abono, pataba",
+          "Abono also means an advance payment."
+        ],
+        [
+          "pesticide",
+          "pestisidyo",
+          "Covers insecticide, herbicide and fungicide."
+        ],
+        [
+          "seed",
+          "binhi",
+          "PhilRice urges clean, certified binhi."
+        ],
+        [
+          "seedling",
+          "punla",
+          "Also the seedbed where seedlings grow."
+        ],
+        [
+          "harvest",
+          "ani",
+          "Also the yield itself."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Palay in English, palayan in English and corn in Tagalog"
+    },
+    {
+      "type": "text",
+      "text": "Palay in English is the rice plant, or rice grain still in its husk. In trade and statistics it is called unhusked rice or paddy. Students who search for the English ng palay usually need exactly those words. Once milled, palay becomes bigas, and once cooked it becomes kanin. Our page on [palay](/crops/palay) explains each stage of the crop.\n\nPalayan in English is a rice field or rice paddy. The dike around each paddy is the pilapil, and the grain head is the uhay. For a real example, read about the [palayan of Nueva Ecija](/blog/palayan-nueva-ecija). Corn in Tagalog is mais, the same word for the plant, the ear and the grain."
+    },
+    {
+      "type": "table",
+      "caption": "Rice and corn words",
+      "rows": [
+        [
+          "Tagalog",
+          "English"
+        ],
+        [
+          "palay",
+          "rice plant, unhusked rice, paddy"
+        ],
+        [
+          "bigas",
+          "milled rice, uncooked"
+        ],
+        [
+          "kanin",
+          "cooked rice"
+        ],
+        [
+          "palayan",
+          "rice field, rice paddy"
+        ],
+        [
+          "pilapil",
+          "dike or bund around a paddy"
+        ],
+        [
+          "uhay",
+          "ear or panicle of grain"
+        ],
+        [
+          "mais",
+          "corn, maize"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rice bug, black rice bug and their local names"
+    },
+    {
+      "type": "text",
+      "text": "Two bugs share many names, so be careful. PhilRice gives atangya as the Tagalog name and dangaw as the Ilocano name of the rice bug, the slender bug that sucks milky grains. It calls the rice black bug, sometimes written black rice bug, itim na atangya. Syngenta Philippines adds tiyangaw for both.\n\nDictionaries mix them up further. Wiktionary lists atangya and alitangya for the rice black bug itself. Tayangaw appears in the SIL Masbatenyo dictionary as a pest of rice plants, glossed as rice weevil, with the example damo sin tayangaw an akon humay, or my rice plants are full of tayangaw. Because names change from town to town, trust the shape of the insect more than the name. Our pages on the [rice bug](/problems/rice-bug) and the [rice black bug](/problems/rice-black-bug) show both."
+    },
+    {
+      "type": "table",
+      "caption": "Local names of the rice bug and the rice black bug",
+      "rows": [
+        [
+          "Pest",
+          "Scientific name",
+          "Local names",
+          "Where the name comes from"
+        ],
+        [
+          "Rice bug",
+          "Leptocorisa oratorius, L. acuta",
+          "atangya, dangaw, tiyangaw",
+          "PhilRice, Syngenta Philippines"
+        ],
+        [
+          "Rice black bug",
+          "Scotinophara coarctata",
+          "itim na atangya, itim na dangaw, tiyangaw",
+          "PhilRice, Syngenta Philippines"
+        ],
+        [
+          "Rice black bug",
+          "Scotinophara coarctata",
+          "atangya, alitangya",
+          "Wiktionary"
+        ],
+        [
+          "Pest of rice plants",
+          "not given",
+          "tayangaw",
+          "SIL Masbatenyo dictionary"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Alibangbang insect: a butterfly, not a pest name"
+    },
+    {
+      "type": "text",
+      "text": "The alibangbang insect is a butterfly. Wiktionary gives that meaning in Cebuano, Hiligaynon, Hanunoo and Higaonon, while in Naga Bikol the word can mean a dragonfly. In Tagalog dictionaries, though, alibangbang is a tree, Bauhinia, whose leaves look like butterfly wings. The everyday Tagalog word for butterfly is paruparo.\n\nSo if a farmer from the Visayas reports alibangbang in the field, ask to see it. Adult butterflies rarely harm crops, but their caterpillars, the uod, can strip leaves."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ask in Tagalog or English with Anee"
+    },
+    {
+      "type": "text",
+      "text": "Farm talk mixes both languages, and so does anee.io. [Anee, the AI technician](/features/ai-agricultural-technician), answers in Tagalog or English. So you can type may uod sa mais ko or there are worms in my corn and get the same help. Before answering, Anee reads your cropping schedule, the growth stage of each lot and the weather. It can also look at a photo of the pest or the sick leaf."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Write the scientific name once",
+      "text": "When you log a pest or weed in your notes, add the scientific name next to the local name, for example atangya, Leptocorisa oratorius. Then anyone who reads the record later, from any province, knows exactly what you saw."
+    },
+    {
+      "type": "cta",
+      "title": "Ask Anee in your own words",
+      "text": "Describe the pest, weed or disease in Tagalog or English, add a photo, and get an answer that knows your crop stage and weather.",
+      "label": "Meet Anee",
+      "url": "/features/ai-agricultural-technician"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm words in Tagalog"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is weeds in Tagalog?",
+          "a": "Damo. The same word means grass, so farmers add context, for example damo sa palayan for weeds in the rice field."
+        },
+        {
+          "q": "What is the Tagalog of mites?",
+          "a": "The dictionary word is hanip, the chicken louse or chicken flea. Farmers also use hanip for tiny crop pests, and many technicians simply say mites."
+        },
+        {
+          "q": "What is palay in English?",
+          "a": "Palay is the rice plant and its unhusked grain, called paddy or unhusked rice in English. Milled, it becomes bigas. Cooked, it becomes kanin."
+        },
+        {
+          "q": "What is fertilizer in Tagalog?",
+          "a": "Abono or pataba. Both are used in the field, for example abono para sa palay."
+        },
+        {
+          "q": "What is the local name of the black rice bug?",
+          "a": "PhilRice uses itim na atangya. Syngenta Philippines also lists itim na dangaw and tiyangaw, and Wiktionary lists alitangya."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Common weeds in the Philippines",
+          "url": "/problems/common-weeds-philippines"
+        },
+        {
+          "label": "Rice bug (atangya)",
+          "url": "/problems/rice-bug"
+        },
+        {
+          "label": "Rice black bug",
+          "url": "/problems/rice-black-bug"
+        },
+        {
+          "label": "Hanip, mites and aphids",
+          "url": "/problems/hanip-mites-and-aphids"
+        },
+        {
+          "label": "Palay",
+          "url": "/crops/palay"
+        },
+        {
+          "label": "Alamat ng palay",
+          "url": "/blog/alamat-ng-palay"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Tagalog.com dictionary: damo",
+          "url": "https://www.tagalog.com/dictionary/damo"
+        },
+        {
+          "label": "Tagalog.com dictionary: uod",
+          "url": "https://www.tagalog.com/dictionary/uod"
+        },
+        {
+          "label": "Tagalog.com dictionary: amag",
+          "url": "https://www.tagalog.com/dictionary/amag"
+        },
+        {
+          "label": "Tagalog.com dictionary: agiw",
+          "url": "https://www.tagalog.com/dictionary/agiw"
+        },
+        {
+          "label": "Tagalog.com dictionary: pestisidyo",
+          "url": "https://www.tagalog.com/dictionary/pestisidyo"
+        },
+        {
+          "label": "Tagalog.com dictionary: palayan",
+          "url": "https://www.tagalog.com/dictionary/palayan"
+        },
+        {
+          "label": "Wiktionary: hanip (Tagalog)",
+          "url": "https://en.wiktionary.org/wiki/hanip"
+        },
+        {
+          "label": "Wiktionary: alitangya (Tagalog)",
+          "url": "https://en.wiktionary.org/wiki/alitangya"
+        },
+        {
+          "label": "Wiktionary: alibangbang",
+          "url": "https://en.wiktionary.org/wiki/alibangbang"
+        },
+        {
+          "label": "PhilRice: Rice bug handout, Leptocorisa oratorius",
+          "url": "https://www.pinoyrice.com/wp-content/uploads/rice-bug.pdf"
+        },
+        {
+          "label": "PhilRice: Rice black bug",
+          "url": "https://www.pinoyrice.com/rice-black-bug-rbb/"
+        },
+        {
+          "label": "Syngenta Philippines: Rice bugs",
+          "url": "https://www.syngenta.com.ph/insects/rice-bugs"
+        },
+        {
+          "label": "SIL Masbatenyo dictionary: tayangaw",
+          "url": "https://www.webonary.org/masbatenyo/g5e52d4df-eb47-4efa-aad8-9b3ddabc66a2/?lang=en"
+        },
+        {
+          "label": "PhilRice: Pamamahala ng damo handout",
+          "url": "https://www.pinoyrice.com/wp-content/uploads/damo.pdf"
+        }
+      ]
+    }
+  ]
+}

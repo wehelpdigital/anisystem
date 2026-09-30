@@ -1,0 +1,173 @@
+{
+  "section": "features",
+  "slug": "ai-agricultural-technician",
+  "sortOrder": 20,
+  "lang": "en",
+  "category": "Anee AI Technician",
+  "title": "Anee, the AI Agricultural Technician Who Knows Your Farm",
+  "metaTitle": "AI Agricultural Technician for Filipino Farmers: Anee",
+  "metaDescription": "Anee is the AI agricultural technician inside anee.io. Ask in Tagalog or English, send a photo of a pest, and get answers that read your own farm first.",
+  "focusKeyword": "AI agricultural technician",
+  "keywords": [
+    "AI agricultural technician",
+    "agricultural technician",
+    "agricultural equipment technician",
+    "Tagalog or English",
+    "pest photo",
+    "season report"
+  ],
+  "excerpt": "Anee is the AI agricultural technician built into anee.io. Before she answers, she reads your cropping schedule, the growth stage of each lot and the weather at your farm, so her advice fits your field and not a textbook field. Ask her in Tagalog or English, at any hour, from any phone.",
+  "heroImage": {
+    "src": "/images/site/lp/anee-chat-hand.webp",
+    "alt": "A farmer holds his phone in a palay field while Anee, the AI agricultural technician, reads a photo of his rice leaves",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What an AI agricultural technician does for your farm"
+    },
+    {
+      "type": "text",
+      "text": "A good technician knows two things: crop science and your farm. Most answers you find online only know the first. Anee knows both, because she works inside the app where your season already lives.\n\nAsk her 'Ano ang dapat kong gawin sa palay ko ngayong linggo?' and she first reads your season: the lots, their day counts, their growth stages and the forecast for each location. Then she answers in the language you used. If you wrote in Tagalog, the answer comes back in Tagalog. Palay, by the way, is rice still in its husk."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What farmers ask her"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Pests and diseases, with a photo of the leaf, the stem or the insect itself",
+        "Fertilizer: which kind, how much per hectare and on which day of the count",
+        "Water: when to drain, when to flood, and what the coming rain means for a spray day",
+        "Weeds: what that grass or sedge is and when to control it",
+        "The plan: what comes next on your [cropping calendar](/features/cropping-calendar) and what to prepare this week"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Show her a photo of the problem"
+    },
+    {
+      "type": "text",
+      "text": "Many field problems are easier to show than to describe. Tap the camera in the chat, take a clear photo in daylight and send it with your question. Anee looks at the picture, weighs it against your crop and its stage, and tells you what she sees and what to check next.\n\nTreat her reading as a first opinion. If you need to spray, follow the product label and the FPA registration, and call your municipal agriculturist for a serious outbreak. Our guides on the [rice black bug](/problems/rice-black-bug) and the [brown planthopper](/problems/brown-planthopper) show what to look for in the field."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Analyses and reports she writes for you"
+    },
+    {
+      "type": "text",
+      "text": "Besides the chat, Anee runs longer jobs that land as full reports. You can keep each one and open it again later."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Season report**: after harvest she reads the activities, costs, yields and weather of the whole season and writes what went well and what to change. See [farm reports](/features/farm-reports).",
+        "**Analyze So Far**: a mid season reading of one lot, whether it is on track, and what to do next",
+        "**When to Plant and What to Plant**: the safer planting months for your town and the crops that fit your field, explained on the [when to plant analysis](/features/when-to-plant-analysis) page",
+        "**Variety Research and Comparison**: varieties for your crop, ranked by what matters to you",
+        "**Crop Protocol Analysis**: a season plan by growth stage for your crop, variety and planting month",
+        "**Protocol review**: she checks a plan you built in the [Protocol Builder](/features/protocol-builder) and marks its strengths, gaps and risks"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Anee and the agricultural technician in the field"
+    },
+    {
+      "type": "text",
+      "text": "Anee does not replace a licensed agricultural technician who walks your paddies. She is also not an agricultural equipment technician who can fix your hand tractor or your water pump. She cannot touch the soil or smell a rotting stem.\n\nWhat she gives you is an answer at any hour, even at nine in the evening before a spray day, when nobody else picks up the phone. Use her to prepare for the technician's visit too. Ask her first, write down her reading, and your hour with the technician goes further. If you are curious about the profession itself, read about the [agricultural engineer career](/blog/agricultural-engineer-career)."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Ask with details",
+      "text": "Name the lot, the variety, the day count and what you saw. 'Lot 2, NSIC Rc 222, DAT 35, may puting guhit sa dahon' gets a sharper answer than 'may sakit ang palay'."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How credits work"
+    },
+    {
+      "type": "text",
+      "text": "Anee runs on credits. The chat shows what a question will cost before you send it, and each analysis shows its price and your balance before you confirm. Every new account starts with a few free credits.\n\nThe Libre plus Anee plan opens the chat and every analysis. Solo Farmer and Farm Owner add fresh credits each renewal, and on any of these plans you can buy a credit pack when you run low. The [pricing page](/pricing) lists the current plans."
+    },
+    {
+      "type": "cta",
+      "title": "Ask Anee your first question",
+      "text": "Sign up free, set up your first cropping schedule, then add Anee with Libre plus Anee or any paid plan.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions farmers ask about Anee"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can Anee answer in Tagalog?",
+          "a": "Yes. Ask in Tagalog or English and she answers in the language you used."
+        },
+        {
+          "q": "Does Anee know my farm?",
+          "a": "She reads your cropping schedules, lots, growth stages and the weather at each lot before she answers. The more you keep on the board, the better her answers fit."
+        },
+        {
+          "q": "Is Anee a licensed agricultural technician?",
+          "a": "No. She is an AI agricultural technician, so use her for quick answers and planning. For field inspections, soil tests and anything that needs a signature, go to your municipal agriculturist or a licensed technician."
+        },
+        {
+          "q": "Can Anee tell a pest from a photo?",
+          "a": "She can look at a photo of a pest or a sick plant and tell you what she sees and what to check. A sharp, close photo in daylight works best. Confirm in the field before you spray."
+        },
+        {
+          "q": "Which plans include Anee?",
+          "a": "Libre plus Anee, Solo Farmer and Farm Owner. The free Libre plan does not include the chat, but you can add Anee any time."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More anee.io features",
+      "items": [
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "Growth stages and weather",
+          "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "When to plant analysis",
+          "url": "/features/when-to-plant-analysis"
+        },
+        {
+          "label": "Farm reports",
+          "url": "/features/farm-reports"
+        },
+        {
+          "label": "Protocol Builder",
+          "url": "/features/protocol-builder"
+        },
+        {
+          "label": "Plans and pricing",
+          "url": "/pricing"
+        }
+      ]
+    }
+  ]
+}

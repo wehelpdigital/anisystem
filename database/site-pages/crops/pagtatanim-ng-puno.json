@@ -1,0 +1,263 @@
+{
+  "section": "crops",
+  "slug": "pagtatanim-ng-puno",
+  "sortOrder": 70,
+  "lang": "tl",
+  "category": "Fruit and tree crops",
+  "title": "Pagtatanim ng Puno: Paano Magtanim ng Punong Prutas at Punong Kahoy",
+  "metaTitle": "Pagtatanim ng Puno: Punla, Hukay, Dilig at Abono",
+  "metaDescription": "Paano ang tamang pagtatanim ng puno: pagpili ng punla, laki ng hukay, pagtatanim, dilig, natural na abono at pag aalaga, batay sa gabay ng DA at PCA.",
+  "focusKeyword": "pagtatanim ng puno",
+  "keywords": [
+    "pagtatanim ng puno",
+    "pagtatanim ng halaman",
+    "pagtatanim",
+    "natural fertilizer for plants",
+    "humus fertilizer",
+    "fertilizer for coconut tree",
+    "fertilizer for coconut tree in philippines"
+  ],
+  "excerpt": "Ang pagtatanim ng puno ay puhunang ilang taon bago magbalik, kaya dapat tama ang simula. Mangga man, niyog, durian, mangosteen o punong kahoy para sa lilim, halos pareho ang mga hakbang: pumili ng malusog na punla, maghukay nang tama, magtanim sa simula ng tag ulan, magdilig, mag abono at mag alaga hanggang kaya na ng puno ang sarili.",
+  "heroImage": {
+    "src": "/images/site/guides/crops-pagtatanim-ng-puno.webp",
+    "alt": "Batang punla ng mangga na tumutubo sa tuyong lupa, ang simula ng pagtatanim ng puno",
+    "credit": "Karthika Manikandan, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Sa lahat ng pagtatanim ng halaman, ang puno ang pinakamatagal bago magbunga. Ayon sa DA, karaniwang namumulaklak ang mangosteen sa 10 hanggang 15 taon, pero 8 hanggang 9 na taon lang kung asexually propagated at maayos ang alaga. Ang durian ay puwedeng mamunga sa edad na limang taon. Kaya bawat pagkakamali sa pagtatanim ay ilang taon mong dadalhin.\n\nAng mga sukat dito ay galing sa mga production guide ng DA para sa mangosteen, durian at saging, at sa Philippine Coconut Authority (PCA) para sa niyog. Iba iba ang bawat puno, kaya tingnan din ang gabay para sa mismong puno na itatanim mo."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Hakbang 1: Pagpili ng punla"
+    },
+    {
+      "type": "text",
+      "text": "Ang punla ang pinakamahalagang desisyon sa pagtatanim ng puno. Para sa punong prutas, mas mabuti ang grafted o marcotted na punla dahil mas maagang mamunga at pareho ang bunga sa inang puno. Bumili sa kilalang nursery na may malusog na mga punla: berde at buo ang dahon, walang peste, at matibay ang tangkay.\n\nMas mabuti rin ang malalaking punla. Sa durian, ang gabay ng DA ay gumagamit ng large planting materials, mga punlang inalagaan sa nursery nang higit isa o dalawang taon. Ang mangosteen naman ay inililipat sa bukid sa edad na dalawang taon, kapag mga 25 hanggang 30 sentimetro na ang taas."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Hakbang 2: Paglalatag at paghuhukay"
+    },
+    {
+      "type": "text",
+      "text": "Linisin ang lugar, tanggalin ang mga tuod at ugat, at araruhin kung kaya. Maglagay ng tulos sa bawat pwesto ng puno ayon sa tamang layo. Sa paghuhukay, ihiwalay ang ibabaw na lupa (topsoil) sa lupang nasa ilalim, dahil ang topsoil ang itatabon sa ugat pagkatanim."
+    },
+    {
+      "type": "table",
+      "caption": "Layo at laki ng hukay para sa ilang puno, mula sa mga gabay ng DA",
+      "rows": [
+        [
+          "Puno",
+          "Layo ng pagitan",
+          "Laki ng hukay"
+        ],
+        [
+          "Mangosteen",
+          "8 metro por 8 metro, mga 156 na puno bawat ektarya",
+          "60 por 60 por 60 sentimetro, punuin ng dumi ng hayop"
+        ],
+        [
+          "Durian",
+          "8 metro por 8 metro, o 6 por 6 metro kung high density",
+          "30 sentimetro ang lapad at 30 sentimetro ang lalim"
+        ],
+        [
+          "Saging na saba",
+          "4 metro por 4 metro, 625 bawat ektarya",
+          "50 hanggang 60 sentimetro ang lapad, 60 hanggang 80 sentimetro ang lalim"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Hakbang 3: Ang mismong pagtatanim ng puno"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Pumili ng tamang buwan",
+          "text": "Magtanim sa simula ng tag ulan. Ito ang payo ng DA para sa durian at mangosteen, dahil tuloy tuloy ang basa ng lupa habang kumakapit ang ugat."
+        },
+        {
+          "title": "Maglagay ng abono sa butas",
+          "text": "Sa durian, 50 gramo o mga 5 kutsarang complete fertilizer. Sa mangosteen, 200 hanggang 250 gramo, 3 pulgada sa ilalim ng ugat at 5 pulgada sa gilid ng punla. Sa niyog, 100 gramong asin ayon sa PCA."
+        },
+        {
+          "title": "Alisin ang plastic nang buo ang lupa",
+          "text": "Hubarin ang polyethylene bag nang hindi nababasag ang bola ng lupa sa ugat. Itanim ang punla nang mga isang pulgada mula sa dating linya ng lupa nito."
+        },
+        {
+          "title": "Tabunan at diinan",
+          "text": "Punuin ang butas ng topsoil at diinan nang dahan dahan hanggang kumapit ang lupa sa punla. Lagyan ng tukod kung mahangin."
+        },
+        {
+          "title": "Liliman ang bagong tanim",
+          "text": "Ayon sa gabay ng DA sa durian, liliman ang bagong tanim nang dalawang linggo hanggang ilang buwan, depende sa panahon, para makabawi sa paglipat at hindi masunog sa araw."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Hakbang 4: Pagdidilig"
+    },
+    {
+      "type": "text",
+      "text": "Diligan agad pagkatanim, at ituloy tuwing kulang ang ulan para laging basa ang lupa. Pero ingat sa sobra. Ayon sa gabay ng DA sa mangosteen, puwedeng mamatay agad ang punla kapag may nakatayong tubig sa ugat.\n\nSa tag araw, ang payo ng DA para sa durian ay diligan at lagyan ng mulch ang paligid ng puno. Puwedeng gamitin ang tuyong dayami, dahon, pinutol na damo, bunot ng niyog o tinadtad na katawan ng saging."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Hakbang 5: Abono para sa puno"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Natural fertilizer for plants: compost at humus"
+    },
+    {
+      "type": "text",
+      "text": "Ang pinakamurang natural fertilizer for plants ay ang compost na gawa mo mismo. Ayon sa ATI Cordillera, binubulok ng mabubuting bacteria at fungi ang damo, dahon at dumi ng hayop hanggang maging humus, isang maitim at masustansyang materyal na parang lupa. Kaya kapag may nagtanong kung ano ang humus fertilizer, ito iyon: compost na hinog na, na nagpapabuhaghag sa lupa at tumutulong humawak ng tubig.\n\nMahilig sa dumi ng hayop ang puno. Sabi ng gabay ng DA sa mangosteen, mabuti ang tugon nito sa manuring, kaya pinupuno ng dumi ng hayop ang hukay bago magtanim. Para sa iba pang halimbawa, basahin ang [organic fertilizer examples](/blog/organic-fertilizer-examples)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Complete fertilizer habang lumalaki"
+    },
+    {
+      "type": "text",
+      "text": "Sa batang mangosteen, ang gabay ng DA ay 300 hanggang 500 gramong 14 14 14 o 12 24 12 bawat puno, kasama ang 200 hanggang 300 gramong urea. Hatiin ito sa dalawa: ang una sa simula ng tag ulan, ang pangalawa sa dulo ng tag ulan. Dagdagan ang dami taon taon habang lumalaki ang puno.\n\nSa paglalagay, gumawa ng 4 hanggang 6 na butas sa lupa na paikot sa gilid ng lilim ng puno. Ilagay ang abono sa mga butas at tabunan, para hindi sumingaw at hindi anurin ng ulan. Basahin ang aming gabay sa [fertilizer for plants](/blog/fertilizer-for-plants) para sa iba pang pananim."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Iba ang abono ng niyog",
+      "text": "Ang niyog ay nangangailangan ng chlorine, kaya asin at ammonium sulfate ang pangunahing abono ayon sa PCA. Nasa aming gabay sa [fertilizer for coconut tree in the Philippines](/crops/coconut-fertilizer) ang dami bawat edad ng puno."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Hakbang 6: Pag aalaga habang lumalaki"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Ring weeding:** linisin ang damo sa paligid ng puno, mga 1 metro ang radius para sa mangosteen, at laging bago mag abono.",
+        "**Pruning:** putulin ang patay, bali o may sakit na sanga, pati ang water sprouts, para maganda ang hugis ng puno.",
+        "**Intercrop:** habang hindi pa namumunga ang puno, magtanim ng pananim na pangkabuhayan sa pagitan ng hanay. Sa durian, iminumungkahi ng DA ang saging na lakatan, na itinatanim nang mas maaga para magbigay ng lilim.",
+        "**Bantay peste:** tingnan ang dahon at sanga linggo linggo, lalo na sa tag ulan."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Kung saging ang ilalagay mo sa pagitan, basahin ang aming gabay sa [banana farming in the Philippines](/crops/banana-farming-philippines). Kung gulay naman, nasa [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay) ang mga hakbang."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pagtatanim ng puno para sa kagubatan at lilim"
+    },
+    {
+      "type": "text",
+      "text": "Pareho ang mga hakbang sa punong kahoy: malusog na punla, tamang hukay, pagtatanim sa tag ulan, at pag aalaga sa unang dalawang taon. Piliin ang katutubong puno na bagay sa lugar. Magtanong sa pinakamalapit na tanggapan ng DENR, ang CENRO, kung anong puno ang angkop at kung saan may punla. Ang DENR din ang nagpapatakbo ng National Greening Program, ang malaking programa ng gobyerno sa pagtatanim ng puno."
+    },
+    {
+      "type": "cta",
+      "title": "Bantayan ang bawat puno sa anee.io",
+      "text": "May growth stages ang anee.io para sa mga punong prutas tulad ng mangga, niyog, durian, mangosteen, rambutan, kalamansi at langka. Gawing lote ang bawat taniman, lagyan ng petsa ang bawat abono sa cropping calendar, at sukatin ang taniman sa mapa.",
+      "label": "Mag sign up",
+      "url": "/signup"
+    },
+    {
+      "type": "text",
+      "text": "May dilaw na dahon o kakaibang batik sa puno? Kunan ng litrato at ipakita kay Anee, ang [AI technician](/features/ai-agricultural-technician) ng anee.io, na sumasagot sa Tagalog o English. Puwede mo ring iguhit at sukatin ang orchard sa [farm maps](/features/farm-maps)."
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Kailan ang pinakamagandang panahon ng pagtatanim ng puno?",
+          "a": "Sa simula ng tag ulan. Ito ang payo ng DA para sa durian at mangosteen, dahil may sapat na basa ang lupa habang kumakapit ang ugat."
+        },
+        {
+          "q": "Gaano kalaki dapat ang hukay?",
+          "a": "Depende sa puno. Sa gabay ng DA, 60 por 60 por 60 sentimetro para sa mangosteen, at 30 sentimetro ang lapad at lalim para sa durian."
+        },
+        {
+          "q": "Ano ang puwedeng natural fertilizer for plants na puno?",
+          "a": "Hinog na compost, binulok na dumi ng hayop at vermicast. Ilagay sa hukay bago magtanim at sa paligid ng puno habang lumalaki."
+        },
+        {
+          "q": "Ano ang humus fertilizer?",
+          "a": "Ang humus ay maitim at masustansyang materyal na nabubuo kapag nabulok nang husto ang compost. Pinabubuhaghag nito ang lupa at tinutulungang humawak ng tubig."
+        },
+        {
+          "q": "Ilang taon bago mamunga ang puno?",
+          "a": "Iba iba. Ayon sa DA, ang durian ay puwedeng mamunga sa limang taon, at ang mangosteen na asexually propagated, gaya ng grafted, sa 8 hanggang 9 na taon."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Kaugnay na gabay",
+      "items": [
+        {
+          "label": "Fertilizer for coconut tree",
+          "url": "/crops/coconut-fertilizer"
+        },
+        {
+          "label": "Banana farming in the Philippines",
+          "url": "/crops/banana-farming-philippines"
+        },
+        {
+          "label": "Pagtatanim ng gulay",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Organic fertilizer examples",
+          "url": "/blog/organic-fertilizer-examples"
+        },
+        {
+          "label": "Mga salitang pangsaka sa Tagalog",
+          "url": "/blog/farm-words-in-tagalog"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DA High Value Crops Development Program, Mangosteen Production Guide",
+          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Mangosteen-Production-Guide.pdf"
+        },
+        {
+          "label": "DA Regional Field Office 12, Durian Production Guide",
+          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/Durian-Production-Guide-koronadal-new.pdf"
+        },
+        {
+          "label": "BPI via DA Northern Mindanao, Saba Banana Production Guide",
+          "url": "https://cagayandeoro.da.gov.ph/wp-content/uploads/2013/04/SABA-BANANA-PRODUCTION-GUIDE.pdf"
+        },
+        {
+          "label": "ATI Cordillera, A Guide to Simple Composting",
+          "url": "https://ati2.da.gov.ph/ati-car/content/sites/default/files/2022-12/a_guide_to_simple_composting.pdf"
+        },
+        {
+          "label": "PCA Davao Research Center and ATI Cagayan Valley, Common Salt Fertilization on Coconut",
+          "url": "https://ati2.da.gov.ph/ati-2/content/sites/default/files/2023-07/Common%20Salt%20Fertlization%20on%20Coconuts%20FINAL.pdf"
+        },
+        {
+          "label": "DA Cordillera, Technoguide in Citrus Production (propagation)",
+          "url": "https://hvcdp.da.gov.ph/wp-content/uploads/2022/05/DA-CAR-TECHNOGUIDE-IN-CITRUS-PRODUCTION.pdf"
+        }
+      ]
+    }
+  ]
+}

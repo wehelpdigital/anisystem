@@ -1,0 +1,300 @@
+{
+  "section": "problems",
+  "slug": "hanip-mites-and-aphids",
+  "sortOrder": 80,
+  "lang": "en",
+  "category": "Crop pests",
+  "title": "Hanip Insect: Mites, Aphids and How to Control Them",
+  "metaTitle": "Hanip Insect: Mites and Aphids on Crops and Their Control",
+  "metaDescription": "Hanip insect is farm talk for tiny pests like mites. Learn the Tagalog words, the aphids scientific name, the damage they do and safe ways to control them.",
+  "focusKeyword": "hanip insect",
+  "keywords": [
+    "hanip insect",
+    "aphids scientific name",
+    "mites in tagalog",
+    "mite in tagalog",
+    "thrips"
+  ],
+  "excerpt": "In Tagalog, hanip is the tiny louse or flea of chickens, but farmers use the word for tiny crop pests too, like the white mites that Bulacan sampaguita growers call hanip na puti. So when someone reports a hanip insect problem on a crop, check for three suspects: mites, aphids and thrips. This page shows how to tell them apart and how to control them without wiping out their natural enemies or your budget.",
+  "heroImage": {
+    "src": "/images/site/guides/problems-hanip-mites-and-aphids.webp",
+    "alt": "Hanip insect pests: a colony of yellow cotton aphids, Aphis gossypii, feeding under a leaf",
+    "credit": "Dr Lewis Wilson, CSIRO, CC BY 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Mites and aphids are small enough to miss and breed fast enough that a few this week can be a colony by the next. In warm weather a newborn aphid can start giving birth within about a week, all without mating. A single spider mite colony under a leaf can hold hundreds.\n\nNone of them is hard to kill with the right product. The hard part is finding them early, and not making them worse with the wrong spray."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What hanip means in Tagalog"
+    },
+    {
+      "type": "text",
+      "text": "Tagalog dictionaries define hanip as the chicken louse or chicken flea, the tiny pest that crawls in the feathers of backyard hens. A close cousin is tungaw, the tiny red itch mite that bites fowls in the skin folds. Both words name something small that crawls and bites or sucks.\n\nFarmers carry the word into the field. In a UPLB survey of sampaguita growers in San Miguel, Bulacan, farmers named 'hanip na puti', or white mites, among their common pests, next to green worms and small grasshoppers. So on a crop, hanip points first to mites."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Mites in Tagalog and mite in Tagalog"
+    },
+    {
+      "type": "text",
+      "text": "Ask for mites in Tagalog and you get a few answers, because no single word has the dictionaries' full agreement. One online dictionary files the mite under 'araknido', the general word for spiders, ticks and their kin. In farm talk, hanip is the closest fit for the mite in Tagalog, while tungaw stays with the biting mites of chickens. For more terms like these, see our list of [farm words in Tagalog](/blog/farm-words-in-tagalog)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Is a mite an insect?"
+    },
+    {
+      "type": "text",
+      "text": "Strictly speaking, no. Adult mites have eight legs like spiders, while insects such as aphids and [thrips](/problems/thrips) have six. The name hanip insect sticks anyway, and since the control steps overlap, it pays to learn all three."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Spider mites and broad mites on vegetables"
+    },
+    {
+      "type": "text",
+      "text": "The two spotted spider mite, Tetranychus urticae, feeds on a long list of crops, beans, eggplant, tomato and cucurbits among them. Colonies live under the leaves, often with fine webbing. Their feeding leaves pale speckles on top of the leaf, and a heavy attack turns leaves bronze and yellow until they drop. Hot, dry and dusty weather favors them, and plants short of water suffer most.\n\nThe broad mite, Polyphagotarsonemus latus, is smaller still, too small to see without a strong hand lens. Its main hosts are sili, bell pepper and tomato, but it also feeds on beans, eggplant, mango and papaya. Infested leaves turn bronze and stiff and roll under at the edges. Flowers drop, and the fruit comes out scarred and misshapen. That downward roll is a good clue, because chilli thrips curl sili leaves upward instead."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Aphids and the aphids scientific name"
+    },
+    {
+      "type": "text",
+      "text": "Aphids are soft, pear shaped insects that suck sap through a long, slender beak. Their color runs from green and yellow to brown or black. The aphids scientific name at family level is Aphididae, in the order Hemiptera, the true bugs. Within that family, these species turn up often on vegetable crops:"
+    },
+    {
+      "type": "table",
+      "caption": "Aphids scientific name and common crop species",
+      "rows": [
+        [
+          "Scientific name",
+          "Common name",
+          "Crops it attacks"
+        ],
+        [
+          "Aphididae",
+          "The aphid family",
+          "Every aphid belongs here, in the order Hemiptera"
+        ],
+        [
+          "Aphis gossypii",
+          "Cotton aphid or melon aphid",
+          "Ampalaya, cucumber, squash, melon, eggplant, sili, okra"
+        ],
+        [
+          "Myzus persicae",
+          "Green peach aphid",
+          "Pechay, mustasa, cabbage, pepper, potato"
+        ],
+        [
+          "Aphis craccivora",
+          "Cowpea aphid",
+          "Sitaw, mungbean, peanut and other legumes"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Aphids multiply fast, and one female can give birth to many young a day. They also leave sticky honeydew that turns black with sooty mold, and ants guard them to get it. Worse, aphids carry plant viruses, and a probe of a few minutes is enough to pass one on. Papaya ringspot virus, for example, spreads through aphids such as Aphis gossypii and Myzus persicae."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Hanip insect or thrips? How to tell them apart"
+    },
+    {
+      "type": "table",
+      "caption": "Mites, aphids and thrips side by side",
+      "rows": [
+        [
+          "Pest",
+          "Legs and size",
+          "Where it hides",
+          "Damage"
+        ],
+        [
+          "Spider mite",
+          "Eight legs, a tiny moving dot",
+          "Under leaves, in fine webbing",
+          "Pale speckles, bronze leaves, webbing"
+        ],
+        [
+          "Broad mite",
+          "Eight legs, too small to see without a lens",
+          "New leaves and buds",
+          "Bronze leaves that roll down, dropped flowers"
+        ],
+        [
+          "Aphid",
+          "Six legs, soft pear shaped body",
+          "Tips and under young leaves, in colonies",
+          "Curled leaves, honeydew, sooty mold, ants"
+        ],
+        [
+          "Thrips",
+          "Six legs, slender body, fringed wings",
+          "Inside flowers and leaf folds",
+          "Silvery streaks, scars, sili leaves that curl up"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Tap a leaf over a white sheet of paper. Mites show up as slow moving dots, aphids as soft round bodies, and thrips as fast little dashes. A cheap 10x hand lens settles most arguments."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to control hanip insects: mites and aphids"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Scout the underside",
+          "text": "Turn leaves over at least once a week, and more often in hot, dry spells. Check the youngest leaves and buds for broad mites and aphids, and the lower leaves for spider mites."
+        },
+        {
+          "title": "Wash them off",
+          "text": "A strong spray of water knocks aphids and spider mites off the plant and rinses away the dust that mites like. Keep the crop watered too, because water stressed plants suffer most."
+        },
+        {
+          "title": "Protect the natural enemies",
+          "text": "Lady beetles, lacewings, syrphid fly larvae and tiny parasitic wasps eat aphids. Puffed up, crusty aphid mummies are a sign the wasps are at work. Predatory mites and some lady beetles eat spider mites."
+        },
+        {
+          "title": "Use soft sprays first",
+          "text": "Insecticidal soap and horticultural oils, neem oil among them, kill aphids and mites on contact. They must hit the pests, so cover the underside of the leaves and repeat as the label directs. Use products registered with the FPA."
+        },
+        {
+          "title": "Go easy on nitrogen and ants",
+          "text": "Heavy nitrogen feeds aphid outbreaks, so do not overdo [urea fertilizer](/blog/urea-fertilizer). Keep ants off the plants too, because they guard aphids from their enemies."
+        },
+        {
+          "title": "Choose the right chemical",
+          "text": "If counts keep rising, use a miticide for mites and an aphicide for aphids, because many insecticides do not kill mites. Rotate IRAC groups, follow the label rate and the days before harvest, and pick only products registered for your crop."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Why mites get worse after a spray",
+      "text": "A broad spectrum insecticide sprayed for another pest can wipe out predatory mites and lady beetles, and spider mites then explode. If you must spray, spot treat the hot spots instead of the whole field, and check the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) registration of every product."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io helps with hanip insects"
+    },
+    {
+      "type": "text",
+      "text": "Mites and aphids build up between visits, so a routine beats a rescue. Set a weekly scouting task on the [cropping calendar](/features/cropping-calendar), and check the forecast in [growth stages and weather](/features/growth-stages-and-weather). A hot, dry week is your cue to turn leaves over.\n\nFound something you cannot name? Take a close up photo of the underside and ask [Anee, the AI technician](/features/ai-agricultural-technician). You can type in Tagalog, for example 'may hanip ang talong ko', and Anee answers in Tagalog or English with what to check next. Your photos stay in your notes and gallery, and the [inventory](/features/farm-inventory-and-expenses) tracks the soap, oil or miticide you buy and use."
+    },
+    {
+      "type": "cta",
+      "title": "Show Anee what is under the leaf",
+      "text": "Sign up for anee.io, add your lots, and send Anee a photo whenever tiny pests show up. You get an answer in Tagalog or English that fits your crop and its stage.",
+      "label": "Sign up for anee.io",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Hanip insect questions farmers ask"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is hanip in English?",
+          "a": "Dictionaries give chicken louse or chicken flea. On crops, farmers also use hanip for tiny pests such as mites."
+        },
+        {
+          "q": "What is mite in Tagalog?",
+          "a": "No single word covers it. Hanip is the closest in farm talk, tungaw is the biting red mite of chickens, and at least one dictionary uses araknido for mites, spiders and ticks."
+        },
+        {
+          "q": "What is the scientific name of aphids?",
+          "a": "Aphids make up the family Aphididae in the order Hemiptera. Common crop species are Aphis gossypii, Myzus persicae and Aphis craccivora."
+        },
+        {
+          "q": "Does neem oil kill mites and aphids?",
+          "a": "Neem oil, like other horticultural oils, works on contact against soft pests such as aphids and mites. It has to cover them, so spray the underside of the leaves and repeat as the label directs."
+        },
+        {
+          "q": "Are the hanip on chickens the same as the mites on plants?",
+          "a": "No. The hanip of chickens are lice, fleas or mites that live on birds. Plant mites such as spider mites feed only on plants and do not bite people or poultry."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Thrips on rice, onion, chili and mango",
+          "url": "/problems/thrips"
+        },
+        {
+          "label": "Farm words in Tagalog",
+          "url": "/blog/farm-words-in-tagalog"
+        },
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "Pagtatanim ng gulay",
+          "url": "/crops/pagtatanim-ng-gulay"
+        },
+        {
+          "label": "Karate, Cymbush and Selecron insecticides",
+          "url": "/blog/karate-cymbush-selecron-insecticides"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Wiktionary, hanip (Tagalog)",
+          "url": "https://en.wiktionary.org/wiki/hanip"
+        },
+        {
+          "label": "Wiktionary, tungaw (Tagalog)",
+          "url": "https://en.wiktionary.org/wiki/tungaw"
+        },
+        {
+          "label": "Tagalog.com dictionary, mite",
+          "url": "https://www.tagalog.com/dictionary/mite"
+        },
+        {
+          "label": "Navasero and Navasero (2004), sampaguita pest problems in San Miguel, Bulacan, The Philippine Entomologist 18(2), UPLB",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/5618/"
+        },
+        {
+          "label": "UC IPM Pest Notes, Aphids",
+          "url": "https://ipm.ucanr.edu/PMG/PESTNOTES/pn7404.html"
+        },
+        {
+          "label": "UC IPM Pest Notes, Spider mites",
+          "url": "https://ipm.ucanr.edu/PMG/PESTNOTES/pn7405.html"
+        },
+        {
+          "label": "Pacific Pests, Pathogens and Weeds, Capsicum broad mite fact sheet",
+          "url": "https://apps.lucidcentral.org/pppw_v10/text/web_full/entities/capsicum_broad_mite_049.htm"
+        }
+      ]
+    }
+  ]
+}

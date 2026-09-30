@@ -1,0 +1,150 @@
+{
+  "section": "features",
+  "slug": "notes-photos-and-voice",
+  "sortOrder": 70,
+  "lang": "en",
+  "category": "Records",
+  "title": "Farm Notes With Photos, Videos and Voice, Made in the Field",
+  "metaTitle": "Farm Notes App: Photos, Videos and Voice Notes",
+  "metaDescription": "Keep farm notes the fast way: snap a photo, film a clip or just speak. Notes per season and per day, a gallery with albums, and tags. Start free on anee.io.",
+  "focusKeyword": "farm notes",
+  "keywords": [
+    "farm notes",
+    "voice notes",
+    "farm photos",
+    "Quick Voice",
+    "gallery",
+    "contact list"
+  ],
+  "excerpt": "The fastest farm notes are the ones you can make while standing in the mud. In anee.io you snap a photo, film a clip or simply speak, and it files itself as a note on the right season. Later you find it again by search, by tag or in the gallery.",
+  "heroImage": {
+    "src": "/images/site/app/notes.png",
+    "alt": "The anee.io farm notes screen with a voice record, a team whiteboard, a day note and a team map note",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Farm notes per season, per day and global"
+    },
+    {
+      "type": "text",
+      "text": "Every season has a notebook for notes that belong to the whole crop, like the variety you chose and why. Each day on the board also takes day notes. Write what happened on that date, like the rain that came at 2 PM or the rats on Lot 3. Global Notes gathers every note from every season in one place, along with notes that belong to no season at all.\n\nBecause day notes sit on the [cropping calendar](/features/cropping-calendar), the record of what happened stays beside the task you planned."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Quick Capture, Quick Record and Quick Voice"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Quick Capture**: take one or more photos and they become one note, or send them to a gallery album instead",
+        "**Quick Record**: film a short video when a picture will not do, like water running through a broken bund",
+        "**Quick Voice**: say it, and it files itself as a note, handy when your hands are muddy"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Voice notes play right on the card, in notes, on activities and in chat. Photos, clips and voice notes can also ride on any activity, so the proof of the work sits beside the task. Photos and voice notes work on every plan, and video recording comes with Solo Farmer and Farm Owner."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Draw: a pad for sketches"
+    },
+    {
+      "type": "text",
+      "text": "Sometimes a sketch explains more than a photo. The Draw pad lets you sketch a field layout, a planting plan or a note for a worker. You can draw over a field photo too. A drawing made inside a note shows there as a tag. When you open it from the note, closing it brings you back to the note."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The gallery, albums and tags"
+    },
+    {
+      "type": "text",
+      "text": "Every picture the season makes lands in the gallery, drawings and saved maps included. Each one links back to the record it came from. Make albums for what you want to keep together, like 'Lot 2 tillering' or 'Harvest 2026'. Videos have their own tab.\n\nTags tie it all together. Tag a note, a photo or a task by lot, by problem or by anything you like. Then find everything with that tag at once. For maps inside notes, see [farm maps](/features/farm-maps). Your records also help [Anee, the AI technician](/features/ai-agricultural-technician). Realign by Anee reads a lot's notes, and her season report reads your photo captions."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The Contact List, your farm phonebook"
+    },
+    {
+      "type": "text",
+      "text": "Keep the numbers you call every season in one place: the agri supply, the tractor owner, the buyer, the municipal agriculturist. Each contact can hold several phone numbers and emails, an address by province and town, and tags of its own. Tap to call, text or email."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Name the lot first",
+      "text": "Say or write the lot name at the start, like 'Lot 2, may nakita akong daga'. Months later, a search for that lot finds every note about it."
+    },
+    {
+      "type": "cta",
+      "title": "Start your farm notebook",
+      "text": "Sign up free. Farm notes, photos, voice notes, drawings and tags are all on the free Libre plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm notes"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can I record voice notes in Tagalog?",
+          "a": "Yes. A voice note is your own recording, so speak in any language you like. It plays back right on the note."
+        },
+        {
+          "q": "Where do my photos go?",
+          "a": "Into the note or day you took them for, and into the gallery, where you can also sort them into albums."
+        },
+        {
+          "q": "Can I find an old note quickly?",
+          "a": "Search your notes by words, open Global Notes to see every season at once, or filter by tag."
+        },
+        {
+          "q": "Do notes work without signal?",
+          "a": "On the Solo Farmer and Farm Owner plans, offline mode keeps notes, day notes and the camera and voice buttons working in the field. They sync when you are back online."
+        },
+        {
+          "q": "Is the Contact List shared with my workers?",
+          "a": "No. Your Contact List is your own phonebook, and each person who uses it keeps their own."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "Farm maps",
+          "url": "/features/farm-maps"
+        },
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Farmer community",
+          "url": "/features/farmer-community"
+        },
+        {
+          "label": "Farm reports",
+          "url": "/features/farm-reports"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,269 @@
+{
+  "section": "blog",
+  "slug": "rice-insecticides-alika-virtako-chess",
+  "sortOrder": 150,
+  "lang": "en",
+  "category": "Pesticides",
+  "title": "Alika Insecticide, Virtako and Chess: Which Rice Pest Each One Is For",
+  "metaTitle": "Alika Insecticide, Virtako and Chess for Rice Pests",
+  "metaDescription": "Alika insecticide, Virtako and Chess compared: active ingredients, IRAC groups, the rice pests on each FPA label and how to rotate them to slow resistance.",
+  "focusKeyword": "alika insecticide",
+  "keywords": [
+    "alika insecticide",
+    "virtako insecticide",
+    "chess insecticide",
+    "syngenta philippines",
+    "fertilizer and pesticide authority",
+    "brown planthopper",
+    "plant hopper",
+    "telluride insecticide"
+  ],
+  "excerpt": "Alika insecticide, Virtako and Chess sit side by side on almost every agrivet shelf, and all three come from Syngenta Philippines. But they are not three names for one thing. Each carries different active ingredients, targets different rice pests and asks you to wait a different number of days before harvest. This guide lays out what the product pages and the official registration list say, so you pay for the right bottle.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-rice-insecticides-alika-virtako-chess.webp",
+    "alt": "Farmer with a knapsack sprayer spraying an insecticide on a green rice paddy",
+    "credit": "T. R. Shankar Raman, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A rice insecticide only works if it matches the pest. So before any product talk, look closely at your field. Deadhearts and whiteheads point to stem borer. Folded, scraped leaves point to leaffolder. Yellowing at the base of the hills, with insects that drop onto the water when you tap the stems, points to planthoppers. Empty, spotted grains at the milk stage point to rice bug.\n\nIf you are not sure, start with our guide to [rice insects](/problems/rice-insects). Then come back here and pick the product whose label names your pest."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The three products side by side"
+    },
+    {
+      "type": "table",
+      "caption": "Sources: Syngenta Philippines product pages and the FPA list of registered agricultural pesticides as of August 31, 2026. Always read the label on your own bottle, because registrations change.",
+      "rows": [
+        [
+          "Product",
+          "Active ingredients",
+          "IRAC groups",
+          "Rice pests on the FPA list",
+          "Days before harvest on rice"
+        ],
+        [
+          "Alika 247 ZC",
+          "lambda cyhalothrin plus thiamethoxam",
+          "3A and 4A",
+          "stem borer, leafhopper, rice bug",
+          "14"
+        ],
+        [
+          "Virtako 40 WG",
+          "chlorantraniliprole plus thiamethoxam",
+          "28 and 4A",
+          "green leafhopper, stem borer, whorl maggot, leaffolder, brown planthopper, rice black bug, rice bug",
+          "26"
+        ],
+        [
+          "Chess 50 WG",
+          "pymetrozine",
+          "9B",
+          "leafhoppers, green leafhopper, rice black bug, brown planthopper",
+          "36"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The last column is the pre harvest interval, the days you must wait between the last spray and harvest. Notice how far apart they are. Chess needs more than a month, so it belongs early in the season. Alika insecticide has the shortest wait of the three on rice."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Alika insecticide: two actions in one bottle"
+    },
+    {
+      "type": "text",
+      "text": "Alika 247 ZC mixes lambda cyhalothrin, a pyrethroid in IRAC group 3A, with thiamethoxam, a neonicotinoid in group 4A. The pyrethroid knocks insects down on contact. Thiamethoxam moves inside the plant, so insects that suck sap take it in as they feed. The ZC formulation holds both, one in tiny capsules and one as a suspension.\n\nSyngenta Philippines lists rice among the crops for Alika insecticide, with stem borer, leafhoppers and rice bug as the rice targets. The company says it protects for up to 14 days. On the FPA list, Alika sits in toxicity category 2, and workers should stay out of a treated field for at least one day after spraying.\n\nFor [rice bug](/problems/rice-bug), timing is everything. IRRI advises scouting from just before flowering until the hard dough stage, counting bugs early in the morning or late in the afternoon. Direct control may be needed if you find more than 10 rice bugs in 20 hills. Below that, natural enemies such as wasps and spiders often keep the bugs in check."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Virtako insecticide for stem borer and leaffolder"
+    },
+    {
+      "type": "text",
+      "text": "Virtako 40 WG pairs chlorantraniliprole, a diamide in IRAC group 28, with the same thiamethoxam found in Alika. The diamide stops caterpillars from feeding, which is why Virtako insecticide is a common pick for stem borer and [rice leaffolder](/problems/rice-leaffolder). Its FPA rice listing is the widest of the three, from green leafhopper to rice black bug.\n\nThe Philippine product is a wettable granule packed in small sachets that you mix in the knapsack. Do not confuse it with the Virtako granules sold in India, a different formulation broadcast by hand. The label on a Philippine pack is the one that counts here.\n\nIRRI also reminds farmers that rice at the vegetative stage can usually recover from leaffolder damage. Early season sprays often give little return and can wipe out the natural enemies that keep planthoppers down. So save the diamide for damage that threatens the flag leaf or the panicle."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Chess insecticide for the brown planthopper"
+    },
+    {
+      "type": "text",
+      "text": "Chess 50 WG contains only pymetrozine, IRAC group 9B. It acts on the sense organs that insects use for balance and movement. Hoppers that pick it up stop feeding and slowly starve. Syngenta says Chess insecticide protects for up to 21 days and is highly selective for beneficial insects.\n\nThe FPA rice listing names the brown planthopper, the green leafhopper and the rice black bug. Many farmers and store receipts spell it plant hopper, two words, but it is the same insect. Because its pre harvest interval on rice is 36 days, Chess is a tool for the tillering and booting stages, not for the last weeks before harvest.\n\nBefore you spray, read our [brown planthopper](/problems/brown-planthopper) guide. IRRI warns that planthopper outbreaks often follow insecticides that kill spiders, mirid bugs and water striders. If natural enemies outnumber the hoppers, IRRI says the risk of hopperburn is low."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What about Telluride insecticide?"
+    },
+    {
+      "type": "text",
+      "text": "Telluride insecticide is not a Syngenta product. Telluride 1.8 EC comes from Aldiz Incorporated and contains abamectin, which sits in IRAC group 6. On the FPA list it covers thrips, mites, leafminers and a few borers on crops such as onion, tomato, eggplant, watermelon, papaya, banana and pineapple. We found no rice listing for it. So if a seller offers it for your palay, ask to see the label first."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rotate by IRAC group, not by brand"
+    },
+    {
+      "type": "text",
+      "text": "Here is the trap. Alika and Virtako both contain thiamethoxam. If you spray Alika insecticide, then switch to Virtako against the same hoppers, you have changed the brand but kept group 4A. The same goes for Karate and Cymbush, which share group 3A with the lambda cyhalothrin in Alika. Our page on [Karate, Cymbush and Selecron](/blog/karate-cymbush-selecron-insecticides) covers those older products."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Name the pest first",
+          "text": "Match the damage to one pest. A photo of the insect helps an agriculturist or Anee confirm it before you spend."
+        },
+        {
+          "title": "Read the group number",
+          "text": "Find the IRAC group on the label or the product page. Write it down with the date of the spray."
+        },
+        {
+          "title": "Change the group, not only the name",
+          "text": "IRAC advises against treating back to back generations of one pest with the same mode of action group."
+        },
+        {
+          "title": "Count back from harvest",
+          "text": "Check the pre harvest interval before the last spray. A long wait like the one for Chess rules it out near harvest."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Buy only what the FPA has registered"
+    },
+    {
+      "type": "text",
+      "text": "Under the law that created the Fertilizer and Pesticide Authority, no pesticide may be sold or used in the country unless the FPA has registered it. The agency posts its list of registered products online, and anyone can check a brand there. Buy from a store with an FPA license and keep your receipt. Our guide to the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) shows how to check a product and where to report fakes."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Protect yourself and the paddy",
+      "text": "Wear long sleeves, long pants, boots, gloves and a mask when you mix and spray. Never spray against the wind. Lambda cyhalothrin is highly toxic to fish and bees, so keep the spray away from fish ponds, canals and flowering weeds. Follow the rate, the pre harvest interval and the reentry time printed on the label."
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, you can send a clear photo of the insect and the damage to Anee, the [AI agricultural technician](/features/ai-agricultural-technician), and ask in Tagalog or English what it is before you buy anything. Then put the spray on the [cropping calendar](/features/cropping-calendar) with a reminder for the day the pre harvest interval ends. Finally, log each bottle in the [farm inventory](/features/farm-inventory-and-expenses), so its cost lands on the right lot."
+    },
+    {
+      "type": "cta",
+      "title": "Know the pest before you pay for the bottle",
+      "text": "Snap the insect, ask Anee, and let the cropping calendar remember every spray date and waiting period for each lot.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions farmers ask"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is Alika insecticide good for rice bug?",
+          "a": "Rice bug is one of the three rice pests on the Alika label, along with stem borer and leafhopper. Scout first. IRRI suggests direct control only when you count more than 10 rice bugs in 20 hills."
+        },
+        {
+          "q": "What is the difference between Virtako and Alika?",
+          "a": "Both carry thiamethoxam. Alika insecticide adds lambda cyhalothrin, a pyrethroid, while Virtako adds chlorantraniliprole, a diamide that stops caterpillars from feeding. Alika has a 14 day wait before harvest on rice, and Virtako has 26 days."
+        },
+        {
+          "q": "What is Chess insecticide used for?",
+          "a": "Chess is for hoppers. On rice its FPA listing names the brown planthopper, green leafhopper and rice black bug. Its 36 day pre harvest interval makes it an early season product."
+        },
+        {
+          "q": "Can I use Telluride insecticide on palay?",
+          "a": "Telluride 1.8 EC is abamectin from Aldiz. The FPA list shows it for vegetables, fruit and ornamentals, mostly against thrips and mites, with no rice listing that we could find."
+        },
+        {
+          "q": "How do I know a bottle is genuine?",
+          "a": "Buy from an FPA licensed store, check that the product appears on the FPA list of registered pesticides, and look for a clean, complete label. Report doubtful products to the nearest FPA regional office."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Brown planthopper",
+          "url": "/problems/brown-planthopper"
+        },
+        {
+          "label": "Rice bug",
+          "url": "/problems/rice-bug"
+        },
+        {
+          "label": "Rice black bug",
+          "url": "/problems/rice-black-bug"
+        },
+        {
+          "label": "Karate, Cymbush and Selecron",
+          "url": "/blog/karate-cymbush-selecron-insecticides"
+        },
+        {
+          "label": "Fungicides for rice and vegetables",
+          "url": "/blog/fungicides"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Syngenta Philippines: Alika 247 ZC",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/alika-247-zc"
+        },
+        {
+          "label": "Syngenta Philippines: Virtako 40 WG",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/virtako-40-wg"
+        },
+        {
+          "label": "Syngenta Philippines: Chess 50 WG",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/chess-50-wg"
+        },
+        {
+          "label": "FPA: Registered products (pesticide list as of August 31, 2026)",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        },
+        {
+          "label": "IRAC: Mode of action classification",
+          "url": "https://irac-online.org/mode-of-action/classification-online/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Planthopper",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/planthopper"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Rice bug",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-bug"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Rice leaffolder",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-leaffolder"
+        },
+        {
+          "label": "NPIC: Lambda cyhalothrin general fact sheet",
+          "url": "https://www.npic.orst.edu/factsheets/l_cyhalogen.pdf"
+        }
+      ]
+    }
+  ]
+}

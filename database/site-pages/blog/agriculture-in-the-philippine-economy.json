@@ -1,0 +1,234 @@
+{
+  "section": "blog",
+  "slug": "agriculture-in-the-philippine-economy",
+  "sortOrder": 250,
+  "lang": "en",
+  "category": "Careers and economy",
+  "title": "Agriculture in the Economy of the Philippines: Jobs, Crops and Challenges",
+  "metaTitle": "Agriculture in the Economy: Philippine Farm Facts for 2026",
+  "metaDescription": "Agriculture in the economy of the Philippines: its share of GDP and jobs from the latest PSA data, the main crops, the challenges and what crop yields mean.",
+  "focusKeyword": "agriculture in the economy",
+  "keywords": [
+    "agriculture in economy",
+    "agricultural engineer hiring",
+    "fertilizer in agriculture"
+  ],
+  "excerpt": "Agriculture in the economy of the Philippines is small in pesos but huge in people. It makes less than a tenth of the country's output, yet it employs about one in five working Filipinos. Here are the latest PSA numbers, the crops that carry the sector, the problems that hold farms back, and what a farmer can control on the ground.",
+  "heroImage": {
+    "src": "/images/site/fields-aerial.jpg",
+    "alt": "Aerial view of Philippine farm fields, the base of agriculture in the economy",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How big is agriculture in the economy?"
+    },
+    {
+      "type": "text",
+      "text": "The PSA counts farming, forestry and fishing together as one industry, AFF for short. In 2025, AFF produced about PHP 2.41 trillion out of a PHP 28.01 trillion economy at current prices. That is about 8.6 percent of GDP, down from about 9.1 percent in 2024.\n\nThe share keeps sliding mainly because the rest of the economy grows faster, not because farms produce less. At constant 2018 prices, farm output grew about 3.1 percent in 2025, while the whole economy grew about 4.4 percent. In the second quarter of 2026, for example, AFF still grew 2.7 percent year on year. Even so, it made up only 7.5 percent of GDP in that quarter, the smallest of the three major industries."
+    },
+    {
+      "type": "text",
+      "text": "Jobs tell a different story. In the July 2026 Labor Force Survey, agriculture employed 19.7 percent of the 49.21 million working Filipinos, or roughly 9.7 million people. Agriculture and forestry alone was the second biggest employer among all sub sectors, next only to wholesale and retail trade.\n\nSo about a fifth of workers produce less than a tenth of the output. That means output per farm worker sits well below the national average. It also means that every peso of extra yield or saved cost on a farm reaches a large share of Filipino households."
+    },
+    {
+      "type": "table",
+      "caption": "Agriculture in the Philippine economy, latest PSA figures",
+      "rows": [
+        [
+          "Measure",
+          "Figure",
+          "Period"
+        ],
+        [
+          "AFF share of GDP, current prices",
+          "about 8.6 percent",
+          "2025"
+        ],
+        [
+          "AFF share of GDP, current prices",
+          "about 9.1 percent",
+          "2024"
+        ],
+        [
+          "AFF share of GDP, constant 2018 prices",
+          "7.5 percent",
+          "Second quarter 2026"
+        ],
+        [
+          "AFF growth, year on year",
+          "2.7 percent",
+          "Second quarter 2026"
+        ],
+        [
+          "Agriculture share of employed persons",
+          "19.7 percent",
+          "July 2026"
+        ],
+        [
+          "Value of production in agriculture and fisheries",
+          "PHP 452.22 billion at 2018 prices",
+          "Second quarter 2026"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The crops and products that carry the sector"
+    },
+    {
+      "type": "text",
+      "text": "Crops make up the biggest part of farm output. In the second quarter of 2026, crops accounted for 55.0 percent of the value of production in agriculture and fisheries. Poultry followed with 17.7 percent, then livestock with 13.7 percent and fisheries with 13.6 percent.\n\nPalay leads the crops. It was the top contributor to AFF growth in that quarter, with a 5.7 percent rise, while corn grew 0.8 percent. After rice and corn come coconut, banana, sugarcane, mango, pineapple, cassava, coffee, cacao and abaca. For the two staples, see our guides to [palay](/crops/palay) and [pagtatanim ng mais](/crops/pagtatanim-ng-mais). Export crops have their own pages too, such as [banana farming](/crops/banana-farming-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What holds Philippine farms back"
+    },
+    {
+      "type": "text",
+      "text": "Weather comes first. Typhoons, floods and dry spells hit the same months that farmers plant and harvest, and a single storm can flatten a field a week before harvest. Some crops also slipped in 2026. In the second quarter, sugarcane fell 22.5 percent, rubber 16.4 percent and banana 4.0 percent from a year earlier.\n\nNext come costs. Fertilizer, fuel, seed and hired labor are all paid in cash, often on credit, long before the harvest comes in. Then the farmer sells at the farmgate price, which swings from season to season and is usually far below the retail price of rice. Our page on [palay prices in the Philippines](/blog/palay-price-philippines) tracks those swings.\n\nFinally, timing matters. PSA projects that palay output for July to September 2026 may drop 15.0 percent from a year earlier, mostly because the harvested area may shrink by 15.8 percent. Yield per hectare, on the other hand, may rise slightly. In other words, fewer hectares, not weaker plants, drive most of that dip."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fertilizer in agriculture: the biggest input you control"
+    },
+    {
+      "type": "text",
+      "text": "Fertilizer in agriculture does one job: it puts back the nitrogen, phosphorus and potassium that each harvest takes away. Without it, yields fall. But too much is money thrown into the mud, because the crop cannot use more than it needs and the rest washes away.\n\nSo the best savings come from the right rate at the right stage. First, test your soil or use the recommendation for your area. Next, split nitrogen into two or three doses timed to the crop's growth. Then record what you actually applied, lot by lot. Our guides to [fertilizer for rice](/blog/fertilizer-for-rice), [urea fertilizer](/blog/urea-fertilizer) and [fertilizer calculation](/blog/fertilizer-calculation) walk through each step."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Agricultural engineer hiring and farm jobs"
+    },
+    {
+      "type": "text",
+      "text": "The sector needs more than hands in the field. Irrigation, farm machines, dryers, mills and cold storage all need engineers. Republic Act 10915, the Philippine Agricultural and Biosystems Engineering Act of 2016, requires government agencies, local governments, irrigation systems, rice mills, feed mills and machinery firms to employ licensed agricultural and biosystems engineers.\n\nThat law is a steady driver of agricultural engineer hiring in the Philippines, from the Department of Agriculture down to the town hall. If you are weighing the course, read our guide to the [agricultural engineer career](/blog/agricultural-engineer-career), with the board exam, the jobs and the pay."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ani and crop yields: what the numbers mean"
+    },
+    {
+      "type": "text",
+      "text": "Ani is the Tagalog word for harvest, and it also means the yield itself. Crop yield is the harvest per hectare, usually in metric tons. For July to September 2025, PSA recorded an average palay yield of 4.09 metric tons per hectare. That is about 82 bags of 50 kilograms each. Corn in the same period averaged 3.07 metric tons per hectare.\n\nThose are national averages, so many farms do better and many do worse. The gap between them comes from variety, water, fertilizer, pests and timing. For a deeper look at the word, see our page on [ani meaning](/blog/ani-meaning). For the seeds behind higher yields, see [rice varieties in the Philippines](/crops/rice-varieties-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How digital tools help a farm hold on to its margin"
+    },
+    {
+      "type": "text",
+      "text": "A farmer cannot stop a typhoon or set the farmgate price. Still, most of the other levers sit on the farm: timing, input rates, labor and records. That is where a simple app helps.\n\nIn anee.io, the [cropping calendar](/features/cropping-calendar) dates every task from each lot's own planting day, so fertilizer and spraying happen on time. The [inventory and expenses](/features/farm-inventory-and-expenses) module tracks every sack of fertilizer and what each activity used. At harvest, the [farm reports](/features/farm-reports) show labor, expenses, profit and yield, and you can compare one season against another. Anee, the AI technician, answers questions in Tagalog or English and checks your crop stage and the weather first."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Where these numbers come from",
+      "text": "The GDP shares come from the PSA national accounts. The 2024 and 2025 figures add up the four quarters at current prices. Job figures come from the PSA Labor Force Survey, and yields from the PSA palay and corn estimates. PSA revises its figures, so check the latest release before you quote them."
+    },
+    {
+      "type": "cta",
+      "title": "Run your season on numbers, not guesses",
+      "text": "Plan the season, log every input and see your real cost and yield per lot. Start free on anee.io.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about agriculture in the Philippine economy"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the share of agriculture in the economy of the Philippines?",
+          "a": "Agriculture, forestry and fishing made up about 8.6 percent of GDP in 2025 at current prices, based on PSA national accounts. In the second quarter of 2026, its share was 7.5 percent at constant prices."
+        },
+        {
+          "q": "How many Filipinos work in agriculture?",
+          "a": "In July 2026, agriculture employed 19.7 percent of the 49.21 million employed persons, roughly 9.7 million people, according to the PSA Labor Force Survey."
+        },
+        {
+          "q": "What is the most important crop in the Philippines?",
+          "a": "Palay. It is the country's main staple and the top contributor to farm output growth in the second quarter of 2026. Corn, coconut, banana and sugarcane follow."
+        },
+        {
+          "q": "What is the average palay yield per hectare?",
+          "a": "PSA recorded 4.09 metric tons per hectare for July to September 2025. Yields vary a lot by season, variety and water supply."
+        },
+        {
+          "q": "Why is agriculture's share of GDP falling?",
+          "a": "Mostly because services and industry grow faster. Farm output still grows in most quarters, but its slice of the whole economy gets smaller."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Agricultural engineer career",
+          "url": "/blog/agricultural-engineer-career"
+        },
+        {
+          "label": "Palay price in the Philippines",
+          "url": "/blog/palay-price-philippines"
+        },
+        {
+          "label": "Ani meaning",
+          "url": "/blog/ani-meaning"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "Palay",
+          "url": "/crops/palay"
+        },
+        {
+          "label": "Farm reports",
+          "url": "/features/farm-reports"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PSA: National Accounts of the Philippines, second quarter 2026",
+          "url": "https://psa.gov.ph/statistics/national-accounts"
+        },
+        {
+          "label": "PSA: Labor Force Survey, July 2026 results",
+          "url": "https://psa.gov.ph/statistics/labor-force-survey"
+        },
+        {
+          "label": "PSA: Value of Production in Philippine Agriculture and Fisheries, second quarter 2026",
+          "url": "https://psa.gov.ph/statistics/vop-main/national"
+        },
+        {
+          "label": "PSA: Updates on palay and corn estimates, July to September 2026",
+          "url": "https://psa.gov.ph/statistics/crops/palay-and-corn-estimates"
+        },
+        {
+          "label": "Agriculture, forestry and fishing value added as a share of GDP, Philippines (data.worldbank.org)",
+          "url": "https://data.worldbank.org/indicator/NV.AGR.TOTL.ZS?locations=PH"
+        },
+        {
+          "label": "Republic Act 10915, Philippine Agricultural and Biosystems Engineering Act of 2016 (Lawphil)",
+          "url": "https://lawphil.net/statutes/repacts/ra2016/ra_10915_2016.html"
+        }
+      ]
+    }
+  ]
+}

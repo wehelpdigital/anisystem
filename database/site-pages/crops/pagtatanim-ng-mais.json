@@ -1,0 +1,299 @@
+{
+  "section": "crops",
+  "slug": "pagtatanim-ng-mais",
+  "sortOrder": 100,
+  "lang": "tl",
+  "category": "Mais",
+  "title": "Pagtatanim ng Mais: Gabay Mula Paghahanda ng Lupa Hanggang Ani",
+  "metaTitle": "Pagtatanim ng Mais: Step by Step na Gabay sa Maisan",
+  "metaDescription": "Gabay sa pagtatanim ng mais: paghahanda ng lupa, binhi, tamang layo, abono, damo, fall armyworm at corn borer, hanggang pag aani at presyo ng mais.",
+  "focusKeyword": "pagtatanim ng mais",
+  "keywords": [
+    "pagtatanim ng mais",
+    "maisan",
+    "corn husk",
+    "corn seeds",
+    "seeds corn",
+    "fall armyworm",
+    "asian corn borer",
+    "broadleaves weeds",
+    "grasses weeds",
+    "gulay na mais",
+    "corn kernel price"
+  ],
+  "excerpt": "Ang pagtatanim ng mais ay puwedeng maging maayos na kabuhayan kung tama ang timing, ang binhi at ang alaga. Sa gabay na ito, dadaanan natin ang bawat hakbang sa maisan: paghahanda ng lupa, pagpili ng binhi, pagtatanim, abono, damo, peste at pag aani. Nakabatay ang mga numero sa corn techno guide ng DA at sa datos ng PSA.",
+  "heroImage": {
+    "src": "/images/site/guides/crops-pagtatanim-ng-mais.webp",
+    "alt": "Maisan sa gilid ng bundok sa Pilar, Capiz na tuyo na ang mga dahon at malapit nang anihin",
+    "credit": "Rochelle Vergara, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Kailan magtanim ng mais"
+    },
+    {
+      "type": "text",
+      "text": "Sa Cagayan Valley, karaniwang nagtatanim mula Abril hanggang Hunyo para sa wet season, at mula Oktubre hanggang Disyembre para sa dry season, ayon sa DA Regional Field Office 2. Magkakaiba ang panahon sa bawat probinsya, kaya itanong din sa inyong Municipal Agriculturist ang lokal na kalendaryo.\n\nKailangan ng mais ng mga 400 hanggang 600 mm na ulan na pantay ang bagsak habang lumalaki ito. Parehong masama sa mais ang sobrang tubig at ang tagtuyot. Kung may patubig, mas mataas ang puwedeng anihin sa dry season.\n\nSa anee.io, tinitingnan ng [When to Plant Analysis](/features/when-to-plant-analysis) ang panahon sa inyong bayan para makita kung kailan mas ligtas magtanim."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Paghahanda ng lupa sa maisan"
+    },
+    {
+      "type": "text",
+      "text": "Pinakamainam sa mais ang lupang buhaghag, mataba sa organic matter at may pH na 5.5 hanggang 7.0. Kapag bumaba sa 5.4 ang pH, kailangan ng apog o agricultural lime ayon sa resulta ng soil test. Magpasuri ng lupa sa soils laboratory o sa opisina ng LGU. Ayon sa DA, tatlong taon ang bisa ng resulta."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Araro",
+          "text": "Araruhin nang 15 hanggang 20 cm ang lalim kapag tama ang basa ng lupa."
+        },
+        {
+          "title": "Suyod",
+          "text": "Suyurin agad pagkatapos ng araro, dalawa hanggang tatlong beses na may isang linggong pagitan. Nadudurog nito ang tipak ng lupa at namamatay ang mga tumutubong damo."
+        },
+        {
+          "title": "Organic fertilizer",
+          "text": "Sa huling suyod, isabog ang hindi bababa sa sampung sako ng organic fertilizer kada ektarya."
+        },
+        {
+          "title": "Tudling",
+          "text": "Gumawa ng tudling o furrow na 70 hanggang 75 cm ang layo sa isa't isa, depende sa binhi."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Sa maisan na nasa gilid ng bundok, gumamit ng contour farming o SALT (Sloping Agricultural Land Technology) para hindi maanod ang lupa sa malakas na ulan."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pagpili ng binhi"
+    },
+    {
+      "type": "text",
+      "text": "Tatlong uri ng corn seeds ang mabibili sa atin: hybrid, OPV o open pollinated variety, at GM o biotech na mais. Ang hybrid ang karaniwang gamit sa yellow corn para sa feeds, pero kailangan mong bumili ng bagong binhi bawat taniman. Ang OPV naman ang gamit sa white corn at glutinous corn, at puwede kang magtabi ng sariling binhi. May Bt ang karamihan sa GM corn laban sa Asian corn borer, at tolerance sa herbicide.\n\nBago bumili ng seeds, alamin muna kung anong corn ang binibili ng buyer sa inyong lugar: yellow corn para sa feed mill, white corn para sa grits, o gulay na mais. Bumili ng certified na binhi sa accredited dealer at tingnan ang tag. Mas detalyado ito sa aming gabay sa [corn seeds](/crops/corn-seeds)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pagtatanim ng mais: tamang layo at lalim"
+    },
+    {
+      "type": "table",
+      "caption": "Dami ng binhi at layo ng tanim ayon sa corn techno guide ng DA Regional Field Office 2",
+      "rows": [
+        [
+          "Uri ng binhi",
+          "Binhi kada ektarya",
+          "Layo ng tudling",
+          "Layo ng butas",
+          "Target na puno kada ektarya"
+        ],
+        [
+          "Hybrid",
+          "22 hanggang 24 kg",
+          "70 cm",
+          "18 hanggang 20 cm",
+          "75,000 pataas"
+        ],
+        [
+          "OPV, white o glutinous",
+          "20 kg",
+          "75 cm",
+          "25 cm",
+          "50,000 pataas"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Isang buto bawat butas, at tabunan ng mga 3.5 cm na lupa. Kung gulay na mais ang target at gusto ninyo ng mas malaking bunga, gamitin ang mas maluwag na 30 x 75 cm. Kung iba ang nakasulat sa sako ng seed company, sundin ang sako para sa hybrid na iyon.\n\nMakisabay sa mga kapitbahay sa pagtatanim. Ayon sa DA, ang sabay na pagtatanim o synchronous planting ang unang depensa laban sa corn borer. Mga isang linggo pagkatanim, lakarin ang mga hilera at bilangin ang mga butas na hindi tumubo, saka tamnan agad ang mga bakante."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Abono: kailan at gaano karami"
+    },
+    {
+      "type": "text",
+      "text": "Pinakamainam na batayan ang soil test. Kung walang soil test, sundin ang Balanced Fertilization Strategy ng DA. Sa lupang mababa ang sustansya, ang kailangan ng hybrid ayon sa DA ay 120 kg na N, 60 kg na P at 60 kg na K kada ektarya. Sa OPV, 80 kg na N, 60 kg na P at 60 kg na K. Gamitin ang aming gabay sa [fertilizer calculation](/blog/fertilizer-calculation) para gawing sako ang mga numerong ito."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Basal, sa araw ng pagtatanim",
+          "text": "Ilagay ang lahat ng P at K at kalahati ng N sa tudling, mga 5 cm sa gilid at 5 cm sa ilalim ng buto. Karaniwang gamit dito ang [complete fertilizer 14 14 14](/blog/complete-fertilizer-14-14-14)."
+        },
+        {
+          "title": "Side dress, 21 hanggang 30 araw matapos itanim",
+          "text": "Ilagay ang natitirang kalahati ng N kapag apat na linggo na ang mais o hanggang tuhod na ang taas, mga 4 hanggang 5 cm ang layo sa puno. Karaniwang [urea](/blog/urea-fertilizer) ang gamit, at sabay ito ng hilling up."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Sa dry season, ilagay na ang lahat ng abono habang may basa pa ang lupa sa pagtatanim. Kung manilaw ang dahon dahil kulang sa nitrogen at may basa pa ang lupa, puwedeng magdagdag ng isa hanggang dalawang sako ng urea.\n\nSa anee.io, nakatala sa Inventory ang bawat sako ng abono na nagamit sa bawat gawain, kaya alam mo ang gastos kada lote."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Damo sa maisan"
+    },
+    {
+      "type": "text",
+      "text": "Ayon sa DA, ang unang 30 araw ang pinakadelikadong panahon ng damo sa mais. Tatlong grupo ng weeds ang karaniwan sa maisan: grasses, broadleaves at sedges."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Grasses.** Halimbawa ang aguingay (Rottboellia cochinchinensis), na mabilis kumalat sa maisan. Ayon sa DA, nakokontrol ito ng tamang pre emergence herbicide.",
+        "**Broadleaves.** Halimbawa ang mara kamote (Ipomoea triloba) at kulitis (Amaranthus), na mabilis lumaki tuwing wet season.",
+        "**Sedges.** Halimbawa ang mutha (Cyperus rotundus). Mas marami pa sa aming gabay sa [karaniwang damo sa Pilipinas](/problems/common-weeds-philippines)."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Sa conventional na mais, pinakapraktikal ang dalawang beses na cultivation: off barring sa 15 hanggang 20 araw at hilling up sa 21 hanggang 30 araw matapos itanim, saka spot weeding. Sa GM corn na glyphosate tolerant, sundin ang rekomendasyon ng manufacturer. Kapag gagamit ng herbicide, basahin at sundin ang label."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Peste: fall armyworm, Asian corn borer at cutworm"
+    },
+    {
+      "type": "text",
+      "text": "Maglakad sa maisan kahit isang beses kada linggo, mula pagtubo hanggang tasseling. Mas madaling kontrolin ang peste kapag maaga itong nakita."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Fall armyworm.** Kumakain sa ubod ng batang mais at may iniiwang dumi na parang kusot. Hanapin ang baligtad na Y sa ulo ng uod at apat na itim na tuldok na parisukat malapit sa buntot. Basahin ang buong gabay sa [fall armyworm](/problems/fall-armyworm).",
+        "**Asian corn borer.** Maliliit na butas sa dahon, butas sa tangkay na may dumi sa bunganga, at nababaling puno. Ayon sa DA, tanggalin ang tassel ng 75 percent ng mga puno bago mag pollen shed, isang hilerang may tassel sa bawat tatlong hilerang tinanggalan. Nasa gabay ng [Asian corn borer](/problems/asian-corn-borer) ang Trichogramma at Bt corn.",
+        "**Cutworm.** Pinuputol ang punla sa may lupa tuwing gabi. Tingnan ang gabay sa [cutworm](/problems/cutworm)."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Bago mag spray",
+      "text": "Gumamit lamang ng insecticide na rehistrado sa FPA para sa mais at sa pesteng iyon. Sundin ang label sa dami, sa pagitan ng spray at sa pre harvest interval, at magsuot ng proteksyon. Mas mura at mas ligtas ang tamang timing kaysa sa madalas na pag spray."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pag aani, pagpapatuyo at corn husk"
+    },
+    {
+      "type": "text",
+      "text": "Karaniwang handa nang anihin ang mais 95 hanggang 120 araw matapos itanim, depende sa variety, panahon at lugar. Tatlong palatandaan ayon sa DA: tuyo na ang corn husk at ilang dahon, lumipas na ang araw ng maturity ng variety, at may itim na guhit o black layer sa puno ng butil.\n\nAnihin sa maaraw na araw, at kung kaya ninyong patuyuin agad. Patuyuin muna ang busal na may butil hanggang 18 hanggang 20 percent moisture bago ipasok sa sheller, para hindi mabasag ang butil at hindi pasukin ng amag na may aflatoxin. Pagkatapos, patuyuin ang butil hanggang 14 percent o mas mababa bago iimbak.\n\nHuwag itapon ang corn husk. Puwede itong ipakain sa baka at kambing, gawing compost, o gamiting pambalot ng binaki."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Gulay na mais at presyo ng mais"
+    },
+    {
+      "type": "text",
+      "text": "Ang gulay na mais ay glutinous o sweet corn na inaani habang bata at malambot pa ang butil. Inilalaga ito, iniihaw, o isinasahog sa sinabawang mais at ginataang mais.\n\nAyon sa PSA, ang national average na farmgate price noong Hunyo 2026 ay PHP 19.06 kada kilo sa yellow corn, PHP 20.23 sa white corn, at PHP 28.50 sa white green corn. Mas mataas ito kaysa Hunyo 2025, nang PHP 14.96 ang yellow corn at PHP 13.65 ang white corn. Bumababa ang presyo kapag basa, basag o inaamag ang butil, kaya sulit ang maayos na pagpapatuyo.\n\nPara sa detalye ng corn kernel price at kung paano ito tinatawaran ng buyer, basahin ang aming gabay sa [corn kernel](/crops/corn-kernel)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Paano makakatulong ang anee.io sa maisan"
+    },
+    {
+      "type": "text",
+      "text": "Sa anee.io, ilalagay mo lang ang petsa ng pagtatanim ng bawat lote. Lalabas na sa [cropping calendar](/features/cropping-calendar) ang bawat gawain mula basal hanggang ani, na binibilang mula sa sariling DAP ng lote. Makikita mo rin ang growth stage ng mais sa kahit anong petsa, pati ang panahon sa lokasyon ng lote. Kapag may nakitang peste, kunan ng litrato at itanong kay Anee, ang AI technician na sumasagot sa Tagalog o English."
+    },
+    {
+      "type": "cta",
+      "title": "Simulan ang maisan season sa anee.io",
+      "text": "Libre ang Libre plan. Gumawa ng cropping schedule, idagdag ang mga lote, at hayaang paalalahanan ka ng anee.io sa bawat gawain sa pagtatanim ng mais.",
+      "label": "Gumawa ng libreng account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Mga tanong tungkol sa pagtatanim ng mais"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Ilang kilo ng binhi ng mais ang kailangan kada ektarya?",
+          "a": "Ayon sa DA Cagayan Valley, 22 hanggang 24 kg ng hybrid o mga 20 kg ng OPV kada ektarya. Tingnan din ang sako ng seed company."
+        },
+        {
+          "q": "Kailan dapat maglagay ng abono sa mais?",
+          "a": "Sa araw ng pagtatanim para sa basal, at sa 21 hanggang 30 araw matapos itanim para sa side dress ng natitirang nitrogen."
+        },
+        {
+          "q": "Ilang araw bago anihin ang mais?",
+          "a": "Mga 95 hanggang 120 araw matapos itanim para sa butil, depende sa variety. Mas maaga ang ani ng gulay na mais dahil inaani ito habang malambot pa ang butil."
+        },
+        {
+          "q": "Ano ang gamot sa fall armyworm?",
+          "a": "Walang iisang gamot. Pagsamahin ang lingguhang scouting, pagdurog ng itlog, earwig at Trichogramma, at insecticide na rehistrado sa FPA para sa fall armyworm sa mais kapag lampas 10 percent na ang tinamaan. Sundin palagi ang label."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Iba pang gabay sa mais",
+      "items": [
+        {
+          "label": "Corn seeds",
+          "url": "/crops/corn-seeds"
+        },
+        {
+          "label": "Corn kernel at presyo",
+          "url": "/crops/corn-kernel"
+        },
+        {
+          "label": "Fall armyworm",
+          "url": "/problems/fall-armyworm"
+        },
+        {
+          "label": "Asian corn borer",
+          "url": "/problems/asian-corn-borer"
+        },
+        {
+          "label": "Cutworm",
+          "url": "/problems/cutworm"
+        },
+        {
+          "label": "Karaniwang damo sa Pilipinas",
+          "url": "/problems/common-weeds-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "DA Regional Field Office 2: Corn Production Techno Guide (revised 2012)",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
+        },
+        {
+          "label": "PSA OpenSTAT: Farmgate prices of cereals",
+          "url": "https://openstat.psa.gov.ph/PXWeb/pxweb/en/DB/DB__2M__NFG/0032M4AFN01.px/"
+        },
+        {
+          "label": "DA Cagayan Valley: Combating fall armyworm using biological control (May 2025)",
+          "url": "https://cagayanvalley.da.gov.ph/2025/05/19/combating-fall-armyworm-using-biological-control-see-the-increase-in-yields-and-income-through-ipm/"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,356 @@
+{
+  "section": "crops",
+  "slug": "pagtatanim-ng-palay",
+  "sortOrder": 40,
+  "lang": "tl",
+  "category": "Palay",
+  "title": "Pagtatanim ng Palay: Gabay Mula Punla Hanggang Pag Aani",
+  "metaTitle": "Pagtatanim ng Palay: Step by Step na Gabay sa Bukid",
+  "metaDescription": "Gabay sa pagtatanim ng palay: lupa, punla, lipat tanim o sabog, tubig, abono, damo, peste, pag aani at treser ayon sa PalayCheck System ng PhilRice.",
+  "focusKeyword": "pagtatanim ng palay",
+  "keywords": [
+    "pagtatanim ng palay",
+    "pagtatanim",
+    "palay",
+    "ani",
+    "palay seedlings",
+    "rice seed",
+    "rice variety",
+    "rice variety 216",
+    "variety of rice in the philippines",
+    "palatak palay seeder",
+    "treser ng palay",
+    "pag aani ng palay",
+    "palay check system",
+    "fertilizer for rice",
+    "broadleaves",
+    "sedges weeds",
+    "common weeds in the philippines",
+    "sofit"
+  ],
+  "excerpt": "Ang pagtatanim ng palay ay hindi lang pagbaon ng punla sa putik. Sunod sunod na desisyon ito mula sa binhi hanggang sa pag aani, at bawat mali ay bawas sa ani. Heto ang buong proseso, hakbang hakbang, batay sa PalayCheck System ng PhilRice.",
+  "heroImage": {
+    "src": "/images/site/photos/transplant.jpg",
+    "alt": "Pagtatanim ng palay: mga magsasakang naglilipat ng punla sa putikang bukid",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Galing sa PalayCheck 2022 revised edition ng PhilRice at sa IRRI ang mga numero dito. Iba iba ang lupa at tubig sa bawat bayan, kaya gawin itong gabay sa pagtatanim ng palay at itanong pa rin sa inyong municipal agriculturist ang bagay sa inyong lugar."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pagtatanim ng palay: pumili muna ng binhi at variety"
+    },
+    {
+      "type": "text",
+      "text": "Dito nagsisimula ang ani. Ayon sa PalayCheck, ang dekalidad na binhi na may germination na 85 percent pataas ay puwedeng magdagdag ng 10 percent o higit pa sa ani. Kaya bumili ng certified rice seed na may valid na blue tag ng BPI NSQCS mula sa accredited seed grower.\n\nSa pagpili ng rice variety, tingnan kung bagay ito sa inyong bukid (irrigated o rainfed), sa season at sa problema sa lugar gaya ng bagyo o baha. Halimbawa, ang rice variety na NSIC Rc 216 (Tubigan 17) ay nahihinog sa 112 araw mula sa pagpupunla kapag lipat tanim, ayon sa PhilRice. Ang NSIC Rc 222 naman ang inirerekomenda ng PalayCheck sa Central Luzon para sa dry at wet season.\n\nPara makita ang bawat variety of rice in the Philippines na may maturity at yield, basahin ang aming [gabay sa rice varieties](/crops/rice-varieties-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Paghahanda ng lupa"
+    },
+    {
+      "type": "text",
+      "text": "Ang pantay na lupa ang pundasyon ng lahat. Mas madali ang patubig, mas kaunti ang damo at kuhol, at sabay ang hinog ng palay. Ayon sa PalayCheck, puwedeng bumaba ng 5 percent ang ani kapag hindi maayos ang paghahanda."
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Linisin at ayusin ang pilapil at kanal. Ang pilapil na 15 cm ang taas at 20 cm ang lapad ay hindi gaanong binubutas ng daga.",
+        "Araruhin ang bukid 21 hanggang 30 araw bago magtanim para mabulok ang dayami at tumubo muna ang buto ng damo.",
+        "Suyurin tuwing ikapitong araw pagkatapos araruhin.",
+        "Sa huling suyod, pantayin ang lupa habang may 5 cm na tubig. Walang bahaging mas malalim sa 5 cm, at walang lupang nakausli."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Punla: paghahanda ng palay seedlings"
+    },
+    {
+      "type": "text",
+      "text": "Para sa manual na lipat tanim, 20 hanggang 40 kg na binhi bawat hectare ang rekomendasyon ng PalayCheck, sa punlaan na 400 square meters. Ilipat ang palay seedlings sa edad na 18 hanggang 21 araw, 2 hanggang 3 punla bawat butas o hill."
+    },
+    {
+      "type": "table",
+      "caption": "Rekomendasyon ng PalayCheck para sa lipat tanim",
+      "rows": [
+        [
+          "Paraan",
+          "Binhi bawat hectare",
+          "Punlaan",
+          "Edad ng punla",
+          "Punla bawat hill",
+          "Agwat"
+        ],
+        [
+          "Manual na lipat tanim",
+          "20 hanggang 40 kg",
+          "400 square meters",
+          "18 hanggang 21 araw",
+          "2 hanggang 3",
+          "20 x 20 cm (wet season), 20 x 15 cm (dry season)"
+        ],
+        [
+          "Mechanical transplanter, tray",
+          "20 hanggang 40 kg",
+          "250 hanggang 300 tray",
+          "14 hanggang 18 araw",
+          "3 hanggang 6",
+          "30 x 15 cm"
+        ]
+      ]
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Huwag gupitin ang dulo ng dahon ng punla bago ilipat. Ayon sa PalayCheck, dito pumapasok ang sakit.",
+        "Ang punla na lampas 25 araw ay mabagal makabawi at kaunti ang suwi o tillers.",
+        "Tapalan ang mga butas na walang punla sa loob ng 7 araw pagkatapos ilipat, gamit ang punla mula sa parehong punlaan."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Lipat tanim o sabog tanim?"
+    },
+    {
+      "type": "text",
+      "text": "Sa direct wet seeding, binhing pinatubo na ang direktang inihahasik sa putik. Mas tipid ito sa trabaho, pero mas mabigat ang laban sa damo, kuhol at ibon. Ayon sa PalayCheck, 40 hanggang 60 kg bawat hectare ang binhi kung row seeding, at 60 hanggang 80 kg kung sabog.\n\nKung row seeding ang gusto mo, may drum seeder at may bago ring gawang Pinoy, ang palatak palay seeder. Gawa ito ni Engr. Delfin Cuevas Jr. ng Farmwell Agricultural Machinery Manufacturing sa Bongabong, Oriental Mindoro, sa tulong ng DOST MIMAROPA. Ayon sa DOST, 89.09 percent ang field efficiency nito sa testing at puwede itong makatipid ng hanggang P9,000 bawat hectare. Nanalo ito sa 2025 Presidential Filipinnovation Awards."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Tubig: gaano kalalim at kailan"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Mula early tillering hanggang 1 o 2 linggo bago anihin, panatilihin ang 3 hanggang 5 cm na tubig.",
+        "Sa flowering, gawing 5 hanggang 7 cm ang tubig.",
+        "Sa direct seeding, huwag munang patubigan mula 0 hanggang 14 araw pagkatapos maghasik, maliban kung matindi ang tagtuyot.",
+        "Patuyuin ang bukid isang linggo bago anihin kung dry season, at dalawang linggo kung wet season o malagkit ang lupa.",
+        "Kung kulang ang tubig, gamitin ang Alternate Wetting and Drying (AWD) na may observation well."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Abono: tamang element, dami at oras"
+    },
+    {
+      "type": "text",
+      "text": "Sa PalayCheck, tatlo ang tanong: anong Element, gaano karami (Amount) at kailan (Timing). Pinakamainam na batayan ang Leaf Color Chart (LCC), ang MOET kit o ang Rice Crop Manager. Kapag may LCC, sukatin ang dahon tuwing pitong araw mula 14 DAT o 21 DAS hanggang early flowering.\n\nKung walang LCC, ito ang oras ng nitrogen ayon sa PalayCheck:"
+    },
+    {
+      "type": "table",
+      "caption": "Oras ng paglalagay ng nitrogen kung walang LCC (PalayCheck)",
+      "rows": [
+        [
+          "Maturity ng variety",
+          "Una",
+          "Ikalawa",
+          "Ikatlo"
+        ],
+        [
+          "Mas maikli sa 110 araw",
+          "0 hanggang 14 DAT o 7 hanggang 10 DAS",
+          "5 hanggang 7 araw bago ang panicle initiation",
+          "Wala"
+        ],
+        [
+          "Mas mahaba sa 110 araw",
+          "0 hanggang 14 DAT o 7 hanggang 10 DAS",
+          "Mid tillering",
+          "5 hanggang 7 araw bago o pagkatapos ng panicle initiation"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Ang dami ng urea, complete o ammonium sulfate ay depende sa lupa at target na ani. Para sa computation, basahin ang aming gabay sa [fertilizer for rice](/blog/fertilizer-for-rice). Tandaan na ang sobrang nitrogen sa flowering ay nagpapadapa sa palay at nagdadala ng peste."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Damo: grasses, sedges at broadleaves"
+    },
+    {
+      "type": "text",
+      "text": "Tatlong grupo ang sedges, grasses at broadleaves na weeds sa palayan. Sa listahan ng IRRI ng 12 pinakamahirap na damo ng palay sa Asya, kasama ang Echinochloa colona, Cyperus iria at Fimbristylis miliacea. Ayon sa PalayCheck, kontrolin ang damo sa unang 45 araw. Unahin ang maayos na paghahanda ng lupa, malinis na binhi at tamang tubig, saka ang pagbubunot. Herbicide ang huling opsyon.\n\nHalimbawa ng pre emergent herbicide ang Sofit 300 EC ng Syngenta, na may pretilachlor (Group K3). Ayon sa label, inilalagay ito 0 hanggang 4 na araw pagkatapos maghasik o maglipat. Sundin ang rate sa label at bumili lang ng produktong rehistrado sa FPA. Para makilala ang common weeds in the Philippines, tingnan ang aming [gabay sa damo](/problems/common-weeds-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Peste at sakit"
+    },
+    {
+      "type": "text",
+      "text": "Ang unang depensa ay resistant na variety at sabay sabay na pagtatanim pagkatapos ng 30 araw na pahinga ng bukid. Sa pahingang iyon, nawawalan ng pagkain ang karamihan sa insekto. Maglibot din sa bukid bawat linggo.\n\nBabala ng PalayCheck: huwag mag spray laban sa mga kumakain ng dahon sa loob ng 30 DAT o 40 DAS. Pinapatay ng maagang spray ang mga kaibigang insekto, gaya ng gagamba na kumakain ng planthopper. Kilalanin ang mga kalaban sa [rice insects](/problems/rice-insects) at [brown planthopper](/problems/brown-planthopper)."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Basahin muna ang label",
+      "text": "Bago gumamit ng herbicide o insecticide, basahin ang label at tiyaking rehistrado ito sa FPA. Huwag lumampas sa rate."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pag aani ng palay"
+    },
+    {
+      "type": "text",
+      "text": "Patuyuin ang bukid 1 hanggang 2 linggo bago ang takdang ani. Anihin kapag 85 hanggang 90 percent ng butil ay kulay ginto kung kamay ang gagapas, o 90 hanggang 95 percent kung combine harvester.\n\nKapag masyadong maaga, hilaw ang butil at puwedeng bumaba sa 53 percent ang milling recovery. Kapag masyadong huli, lalagas ang butil. Karaniwang moisture ng bagong aning palay ay 18 hanggang 21 percent sa dry season at 20 hanggang 25 percent sa wet season."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Treser ng palay: ang paggiik"
+    },
+    {
+      "type": "text",
+      "text": "Kapag kamay ang gumapas, igiik ang palay sa loob ng isang araw sa wet season, o dalawang araw sa dry season. Huwag itong itambak nang matagal sa bukid dahil iinit ito at bababa ang kalidad ng bigas.\n\nSa treser ng palay, sundin ang bilis ng drum na mga 800 rpm para sa karamihan ng thresher na may makina. Mas mabilis, mas malaki ang sayang sa blower. Huwag ding igiik ang palay na tumutulo pa sa basa."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Pagpapatuyo at pag iimbak"
+    },
+    {
+      "type": "text",
+      "text": "Patuyuin nang pantay sa loob ng 12 hanggang 24 oras pagkatapos igiik, hanggang 12 hanggang 14 percent moisture. Kung sa semento magbibilad, haluin kada 30 minuto. Ilagay ang sako sa ibabaw ng pallet, at huwag itabi kasama ng abono, kemikal o semento sa bodega."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ano ang PalayCheck System ng PhilRice?"
+    },
+    {
+      "type": "text",
+      "text": "Ang PalayCheck System, na hinahanap din bilang Palay Check System, ay rice integrated crop management system ng PhilRice para sa pagtatanim ng palay. Sa halip na hiwa hiwalay na payo, pinagsasama nito ang binhi, lupa, tubig, abono, peste, ani at postharvest. Learning, checking and sharing ang tawag dito ng PhilRice: ikinukumpara mo ang gawi mo sa pinakamainam na gawi, sinusukat ang resulta, at ibinabahagi sa kapwa magsasaka.\n\nSa 2022 revised edition, may siyam na Key Checks:"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Dekalidad na binhi ng recommended variety.",
+        "Pantay na bukid.",
+        "Sabay sabay na pagtatanim pagkatapos ng hindi bababa sa 30 araw na pahinga.",
+        "Sapat na bilang ng malulusog na punla.",
+        "Sapat na sustansya mula tillering hanggang early panicle initiation at flowering.",
+        "Walang stress sa tagtuyot o sa sobrang tubig.",
+        "Walang malaking bawas sa ani dahil sa peste.",
+        "Inani sa tamang oras.",
+        "Tamang pagpapatuyo, paglilinis at pag iimbak."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Sa bawat season, itala ang ginawa mo at kung naabot ang bawat Key Check. Makikita mo agad kung saan ka nabawasan ng ani.\n\nDito tumutulong ang anee.io. Sa [cropping calendar](/features/cropping-calendar), ilagay ang araw ng lipat tanim o paghahasik ng bawat lot, at kusang nakadate ang abono, patubig, spray at ani batay sa DAT o DAS. Puwede mo ring tanungin si Anee, ang [AI technician](/features/ai-agricultural-technician), sa Tagalog at padalhan ng litrato ng peste o may sakit na dahon."
+    },
+    {
+      "type": "cta",
+      "title": "Iplano ang buong season sa anee.io",
+      "text": "Ilagay ang day zero ng bawat lot at kusang nakadate ang bawat gawain, mula punla hanggang pag aani ng palay. May libreng plan na tinatawag na Libre.",
+      "label": "Magsimula nang libre",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Mga tanong tungkol sa pagtatanim ng palay"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Ilang araw ang punla bago ilipat?",
+          "a": "18 hanggang 21 araw para sa manual na lipat tanim, at 14 hanggang 18 araw para sa mechanical transplanter. Mabagal makabawi ang punla na lampas 25 araw."
+        },
+        {
+          "q": "Kailan ang tamang oras ng pag aani ng palay?",
+          "a": "Kapag 85 hanggang 90 percent ng butil ay kulay ginto kung kamay ang gagapas, o 90 hanggang 95 percent kung combine harvester. Patuyuin muna ang bukid 1 hanggang 2 linggo bago nito."
+        },
+        {
+          "q": "Ano ang Palay Check System?",
+          "a": "Ito ang PalayCheck System ng PhilRice, isang rice integrated crop management system na may siyam na Key Checks mula binhi hanggang pag iimbak. Ikinukumpara mo ang gawi mo sa bawat Key Check at sinusukat ang resulta bawat season."
+        },
+        {
+          "q": "Ano ang palatak palay seeder?",
+          "a": "Seeder ito para sa direct seeding na gawa ni Engr. Delfin Cuevas Jr. sa Oriental Mindoro, sa tulong ng DOST MIMAROPA. Ayon sa DOST, puwede itong makatipid ng hanggang P9,000 bawat hectare."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Basahin din",
+      "items": [
+        {
+          "label": "Palay: meaning, growth stages at palay to rice",
+          "url": "/crops/palay"
+        },
+        {
+          "label": "Rice varieties in the Philippines",
+          "url": "/crops/rice-varieties-philippines"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "Common weeds sa palayan",
+          "url": "/problems/common-weeds-philippines"
+        },
+        {
+          "label": "Rice insects",
+          "url": "/problems/rice-insects"
+        },
+        {
+          "label": "Cropping calendar ng anee.io",
+          "url": "/features/cropping-calendar"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: Top popular rice varieties (NSIC Rc 216, Rc 222)",
+          "url": "https://www.philrice.gov.ph/top-5-popular-rice-varieties/"
+        },
+        {
+          "label": "DOST MIMAROPA: Palatak Palay Seeder wins 2025 Presidential Filipinnovation Award",
+          "url": "https://region4b.dost.gov.ph/mindoro-invented-palatak-palay-seeder-wins-2025-presidential-filipinnovation-award/"
+        },
+        {
+          "label": "DOST MIMAROPA: Farmers in Oriental Mindoro receive the Palatak Palay Seeder",
+          "url": "https://region4b.dost.gov.ph/farmers-in-oriental-mindoro-receive-locally-made-palatak-palay-seeder-technology/"
+        },
+        {
+          "label": "The Manila Times: Seeder from Mindoro gets users nationwide (2026)",
+          "url": "https://www.manilatimes.net/2026/05/14/business/agribusiness/seeder-from-mindoro-gets-users-nationwide/2343113"
+        },
+        {
+          "label": "Syngenta Philippines: Sofit 300 EC product label",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/sofit-300-ec"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: The dirty dozen of weeds",
+          "url": "http://www.knowledgebank.irri.org/step-by-step-production/growth/weed-management/the-dirty-dozen-of-weeds"
+        }
+      ]
+    }
+  ]
+}

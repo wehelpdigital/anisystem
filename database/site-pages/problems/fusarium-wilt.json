@@ -1,0 +1,246 @@
+{
+  "section": "problems",
+  "slug": "fusarium-wilt",
+  "sortOrder": 120,
+  "lang": "en",
+  "category": "Crop diseases",
+  "title": "Fusarium Wilt: Panama Disease in Banana and Wilt in Tomato",
+  "metaTitle": "Fusarium Wilt in Banana and Tomato: Signs and Prevention",
+  "metaDescription": "Fusarium wilt kills banana, tomato and other crops from the roots up, and no fungicide cures it. Learn the signs, how it spreads and how to keep it out.",
+  "focusKeyword": "fusarium wilt",
+  "keywords": [
+    "fusarium wilt",
+    "fungicide",
+    "banana farming philippines"
+  ],
+  "excerpt": "Fusarium wilt is a soil fungus disease that plugs a plant's water pipes from the inside. In banana, farmers know it as Panama disease, and its Tropical Race 4 strain has hit Cavendish farms in Mindanao. In tomato it shows up as plants that yellow and wilt on one side. Once a plant has fusarium wilt, nothing cures it, so the work is to spot it early and keep it off your farm.",
+  "heroImage": {
+    "src": "/images/site/guides/problems-fusarium-wilt.webp",
+    "alt": "Banana plant killed by fusarium wilt, with dead brown leaves hanging around the trunk",
+    "credit": "Scot Nelson from Honolulu, Hawaii, USA, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The FAO notes that people suspected Tropical Race 4, or TR4, in the country as early as the 1970s, but researchers confirmed it in Philippine Cavendish only in 2008. Cases on the farms they surveyed rose from 700 in 2005 to 15,000 in 2007. In 2012, according to PCAARRD, TR4 ravaged 635 hectares of banana plantation in Davao and threatened Bukidnon, North Cotabato and Agusan del Sur.\n\nTomato growers face their own form of the same fungus. The disease moves with soil, water and planting material, so a farm that controls those three has a real chance of keeping it out."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What causes fusarium wilt"
+    },
+    {
+      "type": "text",
+      "text": "Fusarium oxysporum lives in the soil. It enters through the roots, grows into the xylem, the pipes that carry water up the plant, and blocks them. So the plant wilts even when the soil is wet.\n\nThe fungus comes in forms that each attack a narrow range of crops. Fusarium oxysporum f. sp. cubense, or Foc, attacks banana. Fusarium oxysporum f. sp. lycopersici attacks tomato. The banana form is not the one that wilts tomatoes, but both forms behave the same way in the soil.\n\nWhat makes it worse is how long it lasts. The fungus forms thick walled resting spores that, according to the FAO, can survive in soil for more than 20 years."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fusarium wilt of banana, or Panama disease"
+    },
+    {
+      "type": "text",
+      "text": "Look at the oldest leaves first. These are the signs the FAO lists for Panama disease:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Yellowing that starts at the edges of the older leaves and moves to the younger ones. At first it can look like potassium deficiency.",
+        "Leaves that bend at the leaf stalk and hang down around the trunk like a skirt.",
+        "A pseudostem, the soft trunk, that splits lengthwise near the base.",
+        "New leaves that come out pale, small and crumpled.",
+        "Inside the corm or pseudostem, yellow, red or brown strands where the water tubes run.",
+        "No symptoms on the fruit itself."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "A sick plant rarely recovers. The mother plant often sends up many infected suckers before it dies, and those suckers can look healthy for months. That is how planting material carries the disease from farm to farm."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Panama disease or Moko?"
+    },
+    {
+      "type": "text",
+      "text": "Moko, a bacterial wilt, also kills bananas here, and the two get mixed up. Fusarium wilt yellows the old leaves first, spares the young buds, leaves no ooze on a cut surface and does not touch the fruit. Moko often starts on the younger leaves, can kill young shoots, leaks bacterial ooze from cut surfaces and rots the fruit inside."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fusarium wilt of tomato and other vegetables"
+    },
+    {
+      "type": "text",
+      "text": "In tomato, the lower leaves turn yellow first, often on one branch or one side of the plant. The plant droops in the midday heat, and later it stays wilted. Cut the stem near the soil line and you will see dark brown streaks running up inside.\n\nTomato has three known races of the fungus. Seed companies breed varieties that resist one, two or all three, and the seed packet or catalog lists the resistance. Ask your seed supplier which resistant varieties grow well in your area. Watermelon and other crops have their own forms of the fungus, and the same rules apply."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Fusarium wilt or bacterial wilt?"
+    },
+    {
+      "type": "text",
+      "text": "Bacterial wilt also attacks tomato and eggplant, and it often wilts the whole plant fast while the leaves stay green. Try the water test. Cut a finger length of stem from the base of a wilting plant and hang it in a clear glass of water. If milky threads stream out within a few minutes, it is bacterial wilt. If nothing comes out and the inside of the stem is brown, suspect fusarium wilt."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How fusarium wilt spreads"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Planting material.** Suckers, corms and seedlings from a sick farm are the fastest way to carry the fungus to new land.",
+        "**Soil.** Mud on boots, hoes, bolos, tractor tires and the roots of transplants.",
+        "**Water.** Runoff, floods and irrigation canals that pass through infested blocks.",
+        "**Feet and hooves.** Anyone, or any carabao, that walks from a sick block to a clean one with mud on them."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Quarantine and sanitation: keep the fungus out"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Plant clean",
+          "text": "Use tissue culture banana plantlets from a trusted, accredited lab or nursery instead of suckers from another farm. For tomato, raise seedlings in clean media or buy them from a clean nursery."
+        },
+        {
+          "title": "Scrape first, then disinfect",
+          "text": "Scrape mud off boots and tools before they go into a foot bath. A study on Davao farms found that soil weakens disinfectants, and that fusarium built up in foot bath water as the day went on. The project behind that study suggests low cost boot scrapers made of wire mesh. Change the foot bath liquid often and follow the product label for the mix."
+        },
+        {
+          "title": "Isolate a sick plant",
+          "text": "Do not cut a sick banana and drag it across the field. Mark the spot, keep people and animals out, and ask your municipal agriculturist or the BPI regional office how to destroy it where it stands. Many growers inject such plants with herbicide so they dry and die in place."
+        },
+        {
+          "title": "Keep the water apart",
+          "text": "Stop drainage from a sick block from running into clean blocks. Also avoid irrigating with water that has passed through infested fields."
+        },
+        {
+          "title": "Report a suspect case",
+          "text": "If you see Cavendish wilting in an area without TR4, report it to the DA or BPI so a lab can confirm it. Early action keeps one sick mat from becoming a sick block."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "No fungicide cures fusarium wilt",
+      "text": "Philippine researchers note that there is no proven chemical control for fusarium wilt of banana, and an infected plant rarely recovers. Be wary of any product sold as a cure. Spend the money on clean planting material and resistant varieties instead. Our [fungicides](/blog/fungicides) guide covers the diseases where sprays do work, such as [anthracnose](/problems/anthracnose)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Resistant varieties are the best defense"
+    },
+    {
+      "type": "text",
+      "text": "Because nothing cures the disease, the lasting answer is a variety the fungus cannot kill. For Cavendish, breeders in Taiwan selected Giant Cavendish tissue culture variants, called GCTCV, that hold up against TR4. Seven of them went through trials in Mindanao with DOST PCAARRD, UPLB and the DA.\n\nFarmer cooperators preferred GCTCV 218 and GCTCV 219. GCTCV 218 had a sturdy pseudostem, even hands and bunches comparable to Grand Nain, while GCTCV 219 proved highly resistant to TR4. An ACIAR project in Davao del Norte found GCTCV 218 the only way smallholders with TR4 could keep growing bananas. The project also helped set up tissue culture labs to supply them. The PCAARRD program, for its part, worked out biological control and soil amendment steps to use alongside these plants.\n\nResistant does not mean immune, so keep every sanitation step even with the new plants. For tomato, pick a variety whose seed packet lists resistance to Fusarium. For the full crop guide, read our page on [banana farming in the Philippines](/crops/banana-farming-philippines), and for vegetables see [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io helps you watch for fusarium wilt"
+    },
+    {
+      "type": "text",
+      "text": "The disease spreads quietly, so a good record is half the fight. In anee.io, each lot has its own map, so you can draw the infested block on your [farm map](/features/farm-maps) and keep workers from walking through it.\n\nWhen a plant yellows, take a photo and ask [Anee, the AI technician](/features/ai-agricultural-technician). Anee can look at a picture of a yellowing banana or a wilting tomato and walk you through the checks on this page in Tagalog or English. You can also put 'clean boots at the foot bath' on the [cropping calendar](/features/cropping-calendar) as a daily task, so it shows up in the 6 AM morning email with the rest of the day's plan."
+    },
+    {
+      "type": "cta",
+      "title": "Keep a record of every sick plant",
+      "text": "Sign up for anee.io, map your lots, and show Anee a photo the day you see a plant wilt. You get answers in Tagalog or English, and a record you can use next season.",
+      "label": "Sign up for anee.io",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fusarium wilt questions farmers ask"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is there a fungicide that cures fusarium wilt?",
+          "a": "No. Philippine researchers note that there is no proven chemical control for fusarium wilt of banana, and an infected plant rarely recovers. Clean planting material, sanitation and resistant varieties are the tools that work."
+        },
+        {
+          "q": "Is Panama disease the same as fusarium wilt?",
+          "a": "Yes. Panama disease is the common name for fusarium wilt of banana, caused by Fusarium oxysporum f. sp. cubense. TR4 is the strain that kills Cavendish."
+        },
+        {
+          "q": "Can I replant banana where Panama disease killed my plants?",
+          "a": "The spores can live in the soil for more than 20 years, so a susceptible variety planted in the same spot will likely die too. Ask your agriculturist about resistant varieties such as GCTCV 218, and keep the sanitation steps."
+        },
+        {
+          "q": "How do I tell fusarium wilt from bacterial wilt in tomato?",
+          "a": "Hang a cut piece of the lower stem in clear water. Milky threads streaming out point to bacterial wilt. Brown streaks inside the stem and no ooze point to fusarium wilt."
+        },
+        {
+          "q": "Does Panama disease damage the banana fruit?",
+          "a": "No. The FAO notes that the fruit shows no symptoms. The damage is in the roots, corm, pseudostem and leaves."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Banana farming in the Philippines",
+          "url": "/crops/banana-farming-philippines"
+        },
+        {
+          "label": "Anthracnose on mango, sili and onion",
+          "url": "/problems/anthracnose"
+        },
+        {
+          "label": "Fungicides used in the Philippines",
+          "url": "/blog/fungicides"
+        },
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "Farm maps on anee.io",
+          "url": "/features/farm-maps"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FAO (2014), Technical manual: Prevention and diagnostic of Fusarium wilt (Panama disease) of banana caused by Foc Tropical Race 4",
+          "url": "https://www.fao.org/fileadmin/templates/banana/documents/Docs_Resources_2015/TR4/13ManualFusarium.pdf"
+        },
+        {
+          "label": "PCAARRD, S and T management approaches against Fusarium wilt of Cavendish in Mindanao developed",
+          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/s-t-management-approaches-against-fusarium-wilt-of-cavendish-in-mindanao-developed"
+        },
+        {
+          "label": "ACIAR HORT/2012/097 final report, Integrated management of Fusarium wilt of bananas in the Philippines and Australia",
+          "url": "https://www.aciar.gov.au/sites/default/files/project-page-docs/final_report_hort-2012-097.pdf"
+        },
+        {
+          "label": "Genetic diversity of Fusarium oxysporum f. sp. cubense causing Panama wilt of banana in the Philippines, Pathogens (2020)",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7168611/"
+        },
+        {
+          "label": "UC IPM, Fusarium wilt of tomato",
+          "url": "https://ipm.ucanr.edu/agriculture/tomato/fusarium-wilt/"
+        }
+      ]
+    }
+  ]
+}

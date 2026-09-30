@@ -1,0 +1,230 @@
+{
+  "section": "blog",
+  "slug": "alamat-ng-mais",
+  "sortOrder": 260,
+  "lang": "tl",
+  "category": "Farm culture",
+  "title": "Alamat ng Mais: Buod, Aral at Dalawang Bersiyon ng Kuwento",
+  "metaTitle": "Alamat ng Mais: Buod, Banghay at Aral ng Kuwento",
+  "metaDescription": "Alamat ng mais: ang kuwento ni Maita na may gintong buhok at ang mga alahas na naging butil, kasama ang buod, banghay, aral at tunay na pinagmulan ng mais.",
+  "focusKeyword": "alamat ng mais",
+  "keywords": [
+    "alamat ng mais",
+    "alamat ng palay"
+  ],
+  "excerpt": "Ang alamat ng mais ay kuwentong bayan na nagpapaliwanag kung bakit may buhok ang mais at kung bakit parang mga hiyas ang butil nito. Dalawang bersiyon ang madalas ikuwento: ang tungkol kay Maita, ang dalagang may gintong buhok, at ang tungkol sa magkasintahang nagnakaw ng alahas. Narito ang dalawa, ang buod, ang banghay, ang aral, at ang totoong pinagmulan ng mais.",
+  "heroImage": {
+    "src": "/images/site/corn-rows.jpg",
+    "alt": "Mga hanay ng mais sa bukid, ang halamang pinagmulan ng alamat ng mais",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ang alamat ng mais: ang kuwento ni Maita"
+    },
+    {
+      "type": "text",
+      "text": "Noong unang panahon, may magkabiyak na nagtatanim ng gulay. May anak silang dalaga na nagngangalang Maita. Maganda si Maita, at pinakamaganda sa lahat ang kanyang buhok: mahaba, madulas, malambot, at kumikinang na parang ginto kapag tinatamaan ng araw.\n\nHalos buong araw ay sinusuklay ni Maita ang kanyang buhok. Ilang ulit siyang pinagsabihan ng kanyang ama na tigilan ito at tumulong sa mga gawain sa bahay. Pero pinabayaan siya ng kanyang ina, sa paniniwalang lilipas din ang ugaling iyon. Hindi ito lumipas.\n\nIsang araw, nagkasakit ang ama. Bago umalis ang ina, ibinilin niya kay Maita na magluto, alagaan ang ama, at diligan ang mga gulay sa taniman. Pero nang mapatingin si Maita sa salamin, muli niyang sinuklay ang kanyang buhok at nakalimutan niya ang lahat. Tinatawag siya ng ama na nagugutom na, pero hindi niya ito pinansin.\n\nNang dumating ang ina, lanta na ang mga gulay at nagsusuklay pa rin si Maita. Sa sobrang galit, pinagalitan niya ang anak at sinabing gugupitin niya ang buhok nito. Umiiyak na tumakbo palayo si Maita, at hindi na siya nakita kailanman.\n\nHindi nagtagal, may tumubong halamang hindi pa nila nakikita. Nang pitasin nila ang bunga at balatan, nakita nila ang maliliit na butil na kulay dilaw at ang manipis na buhok na kulay ginto, madulas at maganda, gaya ng buhok ni Maita. Naniwala ang magkabiyak na iyon ang kanilang anak, kaya tinawag nila itong mais bilang alaala sa kanya."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ikalawang bersiyon: ang mga alahas na naging butil"
+    },
+    {
+      "type": "text",
+      "text": "Sa isa pang kilalang bersiyon, magkasintahan sina Minong at Celia na tumatakas sa mga maykapangyarihan. Yakap ni Minong ang isang supot ng alahas, mga pulseras, kuwintas, hikaw at singsing, na ninakaw niya sa mga libingan. Tinulungan silang magtago ng isang matandang babae, pero nahuli rin sila.\n\nPinalaya si Celia. Si Minong naman ay itinali sa isang puno at iniwan sa mga langgam hanggang mamatay. Bumalik si Celia sa lugar na iyon para umiyak, nagsisisi sa kanilang kasalanan at sa buhay na hindi na nila magkakasamang mabubuo.\n\nMakalipas ang ilang araw, may tumubong mga halaman malapit sa puno. Ang bunga nito ay may busil na nababalutan ng mga hanay ng butil na parang hiyas, may puti, may dilaw at may bahagyang pula. Para kay Celia, iyon ang mga alahas na dala ni Minong. Itinanim niya ang mga ito saan man siya magpunta, para maalala ang kanyang minamahal.\n\nNagbabago ang pangalan ng mga tauhan depende sa nagkukuwento, pero pareho ang diwa: ang butil ng mais ay galing sa mga hiyas na naiwan sa lupa."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Buod ng alamat ng mais"
+    },
+    {
+      "type": "text",
+      "text": "Kung kailangan mo ng maikling buod para sa klase, ito ang bersiyon ni Maita.\n\nMay dalagang nagngangalang Maita na may mahaba at gintong buhok. Halos buong araw siyang nagsusuklay at hindi tumutulong sa bahay. Nang magkasakit ang kanyang ama, iniwan sa kanya ng ina ang pagluluto, ang pagbabantay sa ama, at ang pagdidilig ng gulay, pero nakalimutan niya ang lahat dahil sa pagsusuklay. Pinagalitan siya ng ina, tumakbo siya palayo, at hindi na bumalik. May tumubong halamang may dilaw na butil at gintong buhok, at tinawag itong mais bilang alaala kay Maita."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Banghay ng kuwento ni Maita"
+    },
+    {
+      "type": "text",
+      "text": "Karaniwang hinihingi sa klase ang simula, kasukdulan at wakas. Kung limang bahagi ang hinihingi ng guro, gamitin ang buong talahanayan."
+    },
+    {
+      "type": "table",
+      "caption": "Banghay ng alamat ng mais, bersiyon ni Maita",
+      "rows": [
+        [
+          "Bahagi",
+          "Nangyari sa kuwento"
+        ],
+        [
+          "Tauhan",
+          "Si Maita, ang kanyang ama, at ang kanyang ina"
+        ],
+        [
+          "Tagpuan",
+          "Ang bahay at ang taniman ng gulay ng pamilya"
+        ],
+        [
+          "Simula",
+          "Si Maita ay dalagang may mahabang gintong buhok na halos buong araw ay nagsusuklay."
+        ],
+        [
+          "Saglit na kasiglahan",
+          "Nagkasakit ang ama at iniwan kay Maita ang pagluluto, ang ama, at ang taniman."
+        ],
+        [
+          "Kasukdulan",
+          "Nakalimutan ni Maita ang lahat dahil sa pagsusuklay. Pinagalitan siya ng ina at tumakbo siya palayo."
+        ],
+        [
+          "Kakalasan",
+          "Hindi na nakita si Maita, at may tumubong halamang hindi pa nila kilala."
+        ],
+        [
+          "Wakas",
+          "Nakita sa bunga ang gintong buhok at dilaw na butil, at tinawag itong mais."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Aral ng alamat ng mais"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Unahin ang tungkulin bago ang sarili. Dahil sa labis na pagsusuklay, napabayaan ni Maita ang maysakit na ama at ang taniman.",
+        "Makinig sa magulang. Tama ang ama nang pagsabihan niya si Maita.",
+        "Huwag kunin ang hindi iyo. Sa ikalawang bersiyon, buhay ang naging kapalit ng nakaw na alahas.",
+        "Ang tunay na kayamanan ay ang pagkaing galing sa lupa. Mas mahalaga ang butil na bumubuhay sa tao kaysa sa alahas.",
+        "Alagaan ang taniman. Isang araw lang na walang dilig, lanta na ang gulay."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Alamat ng mais at alamat ng palay: ano ang pinagkaiba?"
+    },
+    {
+      "type": "text",
+      "text": "Sa [alamat ng palay](/blog/alamat-ng-palay), regalo ng diyos o ng mga engkantada ang palay, at may kasamang ritwal ng pasasalamat bago umani. Sa alamat ng mais, galing ang halaman sa isang taong nawala, at ang aral ay tungkol sa ugali at tungkulin.\n\nPareho silang paraan ng ating mga ninuno para ipaliwanag ang pagkaing nasa hapag bawat araw. At pareho silang nagtuturo na ang ani ay hindi basta dumarating. May kasama itong pangangalaga, pagtupad sa pangako, at pasasalamat."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ang totoong pinagmulan ng mais"
+    },
+    {
+      "type": "text",
+      "text": "Magandang malaman ng mga estudyante na hindi katutubo sa Pilipinas ang mais. Ayon sa mga siyentipiko, pinaamo ito ng mga katutubo sa timog Mexico mga 9,000 taon na ang nakalipas mula sa isang ligaw na damong tinatawag na teosinte. Dinala ito sa Pilipinas noong panahon ng mga Espanyol, malamang sa Cebu, at ang pinakaunang tala ng taniman ng mais sa Cebu ay mula pa noong 1700s.\n\nNgayon, ang puting mais ang pangalawang pangunahing pagkain sa maraming lugar sa Visayas at Mindanao, kasunod ng bigas. Kaya may tinatawag tayong [mais rice](/crops/mais-rice), ang giniling na mais na isinasaing gaya ng kanin. Ang alamat ay kuwento ng aral, at ang kasaysayang ito ang totoong pinagmulan."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Mula kuwento hanggang taniman"
+    },
+    {
+      "type": "text",
+      "text": "Kung gusto mong subukang magtanim, basahin ang aming gabay sa [pagtatanim ng mais](/crops/pagtatanim-ng-mais) at kung paano pumili ng [binhi ng mais](/crops/corn-seeds). Bantayan din ang [fall armyworm](/problems/fall-armyworm), ang uod na kumakain sa ubod ng batang mais.\n\nSa anee.io, makikita mo ang yugto ng mais sa bawat lote ayon sa bilang ng araw mula nang itanim, kasama ang dapat gawin at dapat bantayan sa yugtong iyon. Kapag may uod o sakit kang nakita, kunan ito ng litrato at itanong kay [Anee, ang AI technician](/features/ai-agricultural-technician). Sumasagot siya sa Tagalog o English."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Para sa estudyante",
+      "text": "Kapag sinabi ng guro na alamat ng mais, itanong kung aling bersiyon. Kung walang binanggit, ang kuwento ni Maita ang pinakakaraniwan. Isulat din kung saan mo nabasa ang kuwento, dahil nagbabago ang pangalan ng mga tauhan sa bawat pinagkunan."
+    },
+    {
+      "type": "cta",
+      "title": "Planuhin ang iyong taniman ng mais",
+      "text": "Gumawa ng libreng cropping schedule sa anee.io. May petsa ang bawat gawain mula pagtatanim hanggang anihan, at nakikita mo ang yugto ng mais sa bawat lote.",
+      "label": "Magsimula nang libre",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Mga tanong tungkol sa alamat ng mais"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Sino ang pangunahing tauhan sa alamat ng mais?",
+          "a": "Sa pinakakilalang bersiyon, si Maita, isang dalagang may mahabang gintong buhok. Sa isa pang bersiyon, ang magkasintahang sina Minong at Celia."
+        },
+        {
+          "q": "Ano ang aral ng alamat ng mais?",
+          "a": "Unahin ang tungkulin bago ang sarili at makinig sa magulang. Sa ikalawang bersiyon, ang aral ay huwag kunin ang hindi sa iyo."
+        },
+        {
+          "q": "Bakit may buhok ang mais ayon sa alamat?",
+          "a": "Ayon sa kuwento ni Maita, ang buhok ng mais ay ang gintong buhok ng dalagang nawala, kaya ito manipis, madulas at kulay ginto."
+        },
+        {
+          "q": "Saan talaga nagmula ang mais?",
+          "a": "Sa timog Mexico, kung saan ito pinaamo mga 9,000 taon na ang nakalipas. Dinala ito sa Pilipinas noong panahon ng mga Espanyol."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Basahin din",
+      "items": [
+        {
+          "label": "Alamat ng palay",
+          "url": "/blog/alamat-ng-palay"
+        },
+        {
+          "label": "Pagtatanim ng mais",
+          "url": "/crops/pagtatanim-ng-mais"
+        },
+        {
+          "label": "Binhi ng mais",
+          "url": "/crops/corn-seeds"
+        },
+        {
+          "label": "Butil ng mais",
+          "url": "/crops/corn-kernel"
+        },
+        {
+          "label": "Mais rice",
+          "url": "/crops/mais-rice"
+        },
+        {
+          "label": "Fall armyworm sa mais",
+          "url": "/problems/fall-armyworm"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Mga Kwentong Pambata: Alamat ng Mais (bersiyon ni Maita)",
+          "url": "http://mgakwentongpambata.blogspot.com/2019/06/alamat-ng-mais.html"
+        },
+        {
+          "label": "Mga Kwentong Bayan: Ang Alamat ng Mais (bersiyon nina Minong at Celia)",
+          "url": "https://www.mgakwentongbayan.com/ang-alamat-ng-mais/"
+        },
+        {
+          "label": "Wikipedia: Maize, ang pinagmulan ng mais sa Mexico",
+          "url": "https://en.wikipedia.org/wiki/Maize"
+        },
+        {
+          "label": "Wikipedia: Visayan white corn, ang pagdating ng mais sa Cebu",
+          "url": "https://en.wikipedia.org/wiki/Visayan_white_corn"
+        }
+      ]
+    }
+  ]
+}

@@ -114,7 +114,18 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
                 && str_contains((string) @file_get_contents(app_path('Models/AiSetting.php')), 'No fortune-telling'),
             'pbWindow' => str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), 'function removeAnalysis')
                 && str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), "@section('body-class', 'hide-tabbar')"),
+            'sitePages' => class_exists(\App\Support\SitePages::class) && Illuminate\Support\Facades\Route::has('site.crops.show')
+                && Illuminate\Support\Facades\Route::has('site.preview.post') && is_file(resource_path('views/public/site/page.blade.php')),
         ],
+        // The guides, crop problems, blog and feature pages live per section:
+        // whether the shipment migration ran and what the mother app left live.
+        'sitePages' => (function () {
+            try {
+                return \App\Models\AsSitePage::live()->selectRaw('section, count(*) n')->groupBy('section')->pluck('n', 'section');
+            } catch (\Throwable $e) {
+                return 'no table';
+            }
+        })(),
         'viewCacheCompiled' => count(glob(storage_path('framework/views/*.php')) ?: []),
         // Whether the deployed environment can reach the mailing list at all
         // -- booleans only, never the token. A signup that verified on the live
@@ -214,6 +225,20 @@ Route::get('/legal/{slug}', [App\Http\Controllers\LegalController::class, 'showP
 Route::get('/tutorial', [App\Http\Controllers\PublicController::class, 'tutorial'])->defaults('face', 'ph')->name('ph.tutorial');
 Route::get('/contact', [App\Http\Controllers\PublicController::class, 'contact'])->defaults('face', 'ph')->name('ph.contact');
 Route::post('/contact', [App\Http\Controllers\PublicController::class, 'submitContact'])->defaults('face', 'ph')->name('ph.contact.submit');
+// The guides, the problems, the blog and a page per feature (2026-10-01):
+// the Philippine site's own, at the root. See App\Support\SitePages.
+Route::get('/crops', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'crops')->name('site.crops');
+Route::get('/crops/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'crops')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.crops.show');
+Route::get('/problems', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'problems')->name('site.problems');
+Route::get('/problems/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'problems')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.problems.show');
+Route::get('/blog', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'blog')->name('site.blog');
+Route::get('/blog/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'blog')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.blog.show');
+Route::get('/features/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'features')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.features.show');
+Route::get('/sitemap.xml', [App\Http\Controllers\SitePageController::class, 'sitemap'])->name('site.sitemap');
+// The mother app's builder preview: signed, never indexed, drafts included.
+Route::get('/site-preview/{id}', [App\Http\Controllers\SitePageController::class, 'preview'])->whereNumber('id')->name('site.preview');
+Route::post('/site-preview', [App\Http\Controllers\SitePageController::class, 'preview'])->name('site.preview.post')
+    ->withoutMiddleware([Illuminate\Foundation\Http\Middleware\ValidateCsrfToken::class]);
 // The old Philippine addresses: for good at the root now, tracking tags and all.
 Route::get('/ph/{rest?}', function (Illuminate\Http\Request $request, string $rest = '') {
     $q = $request->getQueryString();

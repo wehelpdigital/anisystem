@@ -33,7 +33,8 @@
             }, 600);
         });
     </script>
-    <title>@yield('title', 'anee.io') — anee.io</title>
+    {{-- A page that writes its whole title (the guides: "... | anee.io") says so. --}}
+    <title>@hasSection('title_full')@yield('title_full')@else@yield('title', 'anee.io') — anee.io @endif</title>
     <meta name="description" content="@yield('meta_description', 'anee.io — the cropping schedule manager for ' . \App\Support\Region::t('farmersOf') . '. Plan lots, workers, materials, activities and irrigation in one mobile-friendly web app.')">
     {{-- Indexable only once the mother app's switch says so (App\Support\Seo). --}}
     <meta name="robots" content="{{ \App\Support\Seo::robots() }}">
@@ -88,10 +89,28 @@
 
                 <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700">
                     <a href="{{ route('home') }}" class="hover:text-brand-600 {{ request()->routeIs('home', 'ph.home') ? 'text-brand-700' : '' }}">Home</a>
-                    <a href="{{ route('features') }}" class="hover:text-brand-600 {{ request()->routeIs('features', 'ph.features') ? 'text-brand-700' : '' }}">Features</a>
+                    <a href="{{ route('features') }}" class="hover:text-brand-600 {{ request()->routeIs('features', 'ph.features', 'site.features.show') ? 'text-brand-700' : '' }}">Features</a>
+                    {{-- The guides, the problems and the blog, behind one word (the /ph face's: they are written for Philippine farms). --}}
+                    @if (\App\Support\Region::ph())
+                    <div class="relative" x-data="{ g: false }" @mouseenter="g = true" @mouseleave="g = false">
+                        <button type="button" class="inline-flex items-center gap-1 hover:text-brand-600 {{ request()->routeIs('site.*') ? 'text-brand-700' : '' }}" @click="g = !g" :aria-expanded="g">
+                            Guides
+                            <svg class="w-3.5 h-3.5 transition-transform duration-300" :class="g && 'rotate-180'" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                        </button>
+                        <div x-show="g" x-cloak x-transition.opacity.duration.200ms class="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-72">
+                            <div class="rounded-2xl bg-white shadow-card-lg ring-1 ring-black/5 p-2">
+                                @foreach ([['crops', 'Crop guides', 'Palay, mais, gulay, coconut, banana'], ['problems', 'Crop problems', 'Pests, diseases and weeds'], ['blog', 'Blog', 'Fertilizer, pesticides, prices, Tagalog farm words']] as [$sec, $lab, $sub])
+                                    <a href="{{ url('/' . $sec) }}" class="block rounded-xl px-3 py-2.5 hover:bg-brand-50">
+                                        <span class="block text-sm font-bold text-gray-900">{{ $lab }}</span>
+                                        <span class="block text-xs font-medium text-gray-500">{{ $sub }}</span>
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                     <a href="{{ route('pricing') }}" class="hover:text-brand-600 {{ request()->routeIs('pricing', 'ph.pricing') ? 'text-brand-700' : '' }}">Pricing</a>
                     <a href="{{ route('about') }}" class="hover:text-brand-600 {{ request()->routeIs('about', 'ph.about') ? 'text-brand-700' : '' }}">About</a>
-                    <a href="{{ route('tutorial') }}" class="hover:text-brand-600 {{ request()->routeIs('tutorial', 'ph.tutorial') ? 'text-brand-700' : '' }}">Tutorial</a>
                     <a href="{{ route('contact') }}" class="hover:text-brand-600 {{ request()->routeIs('contact', 'ph.contact') ? 'text-brand-700' : '' }}">Contact</a>
                 </nav>
 
@@ -116,6 +135,13 @@
         <div x-show="open" x-cloak x-transition.opacity class="lg:hidden border-t border-gray-100 bg-white px-4 pb-5 pt-3 space-y-1">
             @foreach ([['home','Home'],['features','Features'],['pricing','Pricing'],['about','About'],['tutorial','Tutorial'],['contact','Contact Us']] as [$r, $label])
                 <a href="{{ route($r) }}" class="block rounded-xl px-4 py-3 text-base font-semibold {{ request()->routeIs($r, 'ph.' . $r) ? 'bg-brand-50 text-brand-700' : 'text-gray-700 hover:bg-gray-50' }}">{{ $label }}</a>
+                @if ($r === 'features' && \App\Support\Region::ph())
+                    <div class="grid grid-cols-3 gap-1.5 px-1 py-1">
+                        @foreach ([['crops', 'Crop guides'], ['problems', 'Crop problems'], ['blog', 'Blog']] as [$sec, $lab])
+                            <a href="{{ url('/' . $sec) }}" class="rounded-xl px-2 py-2.5 text-center text-sm font-bold {{ request()->is($sec, $sec . '/*') ? 'bg-brand-600 text-white' : 'bg-brand-50 text-brand-800' }}">{{ $lab }}</a>
+                        @endforeach
+                    </div>
+                @endif
             @endforeach
             <div class="pt-3 flex flex-col gap-2">
                 @include('partials.face-switch', ['wide' => true])
@@ -136,8 +162,8 @@
 
     {{-- Footer --}}
     <footer class="bg-gray-900 text-gray-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 grid gap-10 md:grid-cols-3">
-            <div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 grid gap-10 md:grid-cols-3 {{ \App\Support\Region::ph() ? 'lg:grid-cols-6' : '' }}">
+            <div class="lg:col-span-1">
                 <img src="{{ asset('images/site/logo-white.png') }}?v=anee" alt="anee.io" class="h-8 w-auto mb-4">
                 <p class="text-sm leading-relaxed text-gray-400">
                     anee.io is the cropping schedule manager empowering {{ \App\Support\Region::t('farmersOf') }} with
@@ -156,6 +182,18 @@
                     <li><a href="{{ route('login') }}" class="hover:text-accent-500">Log In</a></li>
                 </ul>
             </div>
+            {{-- The guides, a door away from every public page. --}}
+            @php($footLinks = \App\Support\Region::ph() ? \App\Support\SitePages::footerLinks() : [])
+            @foreach ([['crops', 'Crop guides'], ['problems', 'Crop problems'], ['blog', 'From the blog']] as [$sec, $lab])
+                @if (! empty($footLinks[$sec]))
+                    <div>
+                        <h4 class="text-white font-bold mb-4"><a href="{{ url('/' . $sec) }}" class="hover:text-accent-500">{{ $lab }}</a></h4>
+                        <ul class="space-y-2 text-sm">
+                            @foreach ($footLinks[$sec] as $l)<li><a href="{{ $l['url'] }}" class="hover:text-accent-500">{{ $l['label'] }}</a></li>@endforeach
+                        </ul>
+                    </div>
+                @endif
+            @endforeach
             <div>
                 <h4 class="text-white font-bold mb-4">Contact</h4>
                 <ul class="space-y-2 text-sm text-gray-400">

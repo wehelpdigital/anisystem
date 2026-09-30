@@ -1,0 +1,182 @@
+{
+  "section": "features",
+  "slug": "farm-maps",
+  "sortOrder": 80,
+  "lang": "en",
+  "category": "Planning",
+  "title": "Farm Map: Draw, Measure and Pin Your Fields Over a Satellite View",
+  "metaTitle": "Farm Map App: Draw and Measure Your Fields",
+  "metaDescription": "Draw your farm map over satellite imagery, measure each field's area and length, drop pins and attach maps to lots and notes. Try it free on anee.io.",
+  "focusKeyword": "farm map",
+  "keywords": [
+    "farm map",
+    "field area",
+    "satellite map",
+    "measure a field",
+    "map pins",
+    "fertilizer calculation"
+  ],
+  "excerpt": "A farm map in anee.io starts from a satellite view of your land. Trace each field, and the app tells you its area and the length of its sides. Drop pins on the pump or the drying area, save the map as your own, and use it in any season, on any lot.",
+  "heroImage": {
+    "src": "/images/site/fields-aerial.jpg",
+    "alt": "Aerial view of green rice paddies divided by bunds and an irrigation canal, the kind of land you trace on a farm map",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Draw and measure over satellite imagery"
+    },
+    {
+      "type": "text",
+      "text": "Open Maps, find your farm on the satellite view and trace the field with your finger. The app measures the area as you draw, so you know if that lot is really one hectare or closer to 0.8. Lines measure length, which helps when you plan a canal, a fence or the rows of a new orchard."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Field shapes that show their area",
+        "Lines that show their length, for canals, fences and paths",
+        "Text labels to name each block",
+        "Pins for a single place, like the pump, the gate or the drying area"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Pins that lead the way"
+    },
+    {
+      "type": "text",
+      "text": "A pin remembers one place. Tap it and you can open that spot in Google Maps, which helps a new worker or a hired tractor driver find the right field on the first try."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Your farm map works in every season"
+    },
+    {
+      "type": "text",
+      "text": "A saved map belongs to you, not to one season. Draw the farm once, then use it again next wet season and the dry season after that. Inside a season, attach a map to a lot so the lot carries its own outline. You can also tag a map in a note or on an activity, so the spray plan points to the exact block it covers.\n\nOn the free Libre plan you can keep up to three maps. Solo Farmer and Farm Owner have no map limit."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The team map in the Collab Room"
+    },
+    {
+      "type": "text",
+      "text": "On the Farm Owner plan, each season has a Collab Room with a shared team map. Everyone working the season can draw on it and see the others' changes, so the owner in town and the foreman in the field look at the same picture. Save it as a map and it joins the season's maps. The [farmer community](/features/farmer-community) page explains the rest of the Collab Room."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Maps and the rest of your season"
+    },
+    {
+      "type": "text",
+      "text": "Pinned lots feed the rest of the app. The weather for each lot follows its location, so a farm with lots in two barangays gets two forecasts on [growth stages and weather](/features/growth-stages-and-weather).\n\nSaved maps and drawings from the Draw pad also show up in the gallery, and each links back to the note it belongs to. Open one from a note and closing it brings you back to that note. See [notes, photos and voice](/features/notes-photos-and-voice) for how the gallery works."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Measure before you buy",
+      "text": "Trace the lot before you order fertilizer. A lot smaller than you thought means fewer bags, and our guide to [fertilizer calculation](/blog/fertilizer-calculation) shows how to turn the area into bags."
+    },
+    {
+      "type": "table",
+      "caption": "What each part of the farm map is for",
+      "rows": [
+        [
+          "Tool",
+          "What it gives you",
+          "Good for"
+        ],
+        [
+          "Field shape",
+          "Area of the field",
+          "Lot size, seed and fertilizer needs"
+        ],
+        [
+          "Line",
+          "Length",
+          "Canals, fences, paths, orchard rows"
+        ],
+        [
+          "Pin",
+          "One exact place",
+          "Pump, gate, drying area, directions"
+        ],
+        [
+          "Text label",
+          "A name on the map",
+          "Block names workers understand"
+        ]
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Put your farm on the map",
+      "text": "Sign up free and draw your first farm map today. The Libre plan keeps up to three maps.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the farm map"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How does anee.io measure field area?",
+          "a": "It measures the shape you trace over the satellite view and shows the area as you draw. Trace close to the bunds for the best figure."
+        },
+        {
+          "q": "Can I use one map for many seasons?",
+          "a": "Yes. Saved maps belong to you and work in any season. Attach one to a lot or tag it in a note whenever you need it."
+        },
+        {
+          "q": "Can my workers see the map?",
+          "a": "Workers with Maps access on a season can view or edit the maps linked to it, depending on what you allow. Only the owner can delete a map. Worker logins come with Farm Owner."
+        },
+        {
+          "q": "What is the team map?",
+          "a": "It is a shared map for everyone on a season, part of the Collab Room on the Farm Owner plan. Changes show for the whole team."
+        },
+        {
+          "q": "How many maps can I save?",
+          "a": "Up to three on the free Libre plan, and as many as you need on Solo Farmer and Farm Owner."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Growth stages and weather",
+          "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "Notes, photos and voice",
+          "url": "/features/notes-photos-and-voice"
+        },
+        {
+          "label": "Farmer community",
+          "url": "/features/farmer-community"
+        },
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "Fertilizer calculation",
+          "url": "/blog/fertilizer-calculation"
+        }
+      ]
+    }
+  ]
+}

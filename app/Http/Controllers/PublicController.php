@@ -17,6 +17,8 @@ class PublicController extends Controller
         return view('public.home', [
             'tiers' => \Illuminate\Support\Arr::except(config('tiers'), ['admin']),
             'stats' => $this->liveStats(),
+            // The guides are written for Philippine farms: the /ph face only.
+            'guides' => \App\Support\Region::ph() ? \App\Support\SitePages::homePicks() : [],
         ]);
     }
 
@@ -42,7 +44,9 @@ class PublicController extends Controller
 
     public function features()
     {
-        return view('public.features');
+        return view('public.features', [
+            'featurePages' => \App\Support\SitePages::inSection('features'),
+        ]);
     }
 
     public function pricing()

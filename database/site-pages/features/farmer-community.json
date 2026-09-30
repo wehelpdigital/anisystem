@@ -1,0 +1,145 @@
+{
+  "section": "features",
+  "slug": "farmer-community",
+  "sortOrder": 110,
+  "lang": "en",
+  "category": "Community",
+  "title": "A Farmer Community for Filipino Growers, Inside anee.io",
+  "metaTitle": "Farmer Community for Filipino Farmers: Ask and Share",
+  "metaDescription": "Join a farmer community built for Filipino growers: a news feed, discussion rooms, direct messages with photos and voice, and a team room per season.",
+  "focusKeyword": "farmer community",
+  "keywords": [
+    "farmer community",
+    "news feed",
+    "discussion rooms",
+    "co farmers",
+    "Collab Room",
+    "rice insects"
+  ],
+  "excerpt": "The farmer community inside anee.io is where Filipino growers trade what worked and warn each other early. Post to the news feed, join a discussion room on your crop and message a fellow farmer with a photo or a voice note. Help others and you climb the ranking ladder.",
+  "heroImage": {
+    "src": "/images/site/app/community.png",
+    "alt": "The anee.io farmer community screen with the news feed, co farmer requests, discussions and people you may know",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The news feed of the farmer community"
+    },
+    {
+      "type": "text",
+      "text": "The feed is for wins and warnings: a good stand of palay, planthoppers showing up two barangays away, a buyer paying well this week. Post with photos or a GIF, react to advice that works, and save posts you want to come back to. Follow the growers whose fields you want to learn from, and share a good post with others."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Discussion rooms on the crops you grow"
+    },
+    {
+      "type": "text",
+      "text": "A discussion is a room on one topic, like hybrid rice, mango flowering or organic inputs. A room can be public and open to anyone. It can also be private with a password that the organizer shares, or private with approval, where the organizer lets each person in.\n\nOn the free plan you can join one open room. Solo Farmer lets you join as many as you like, private rooms included. Farm Owner can also open rooms of its own. That makes it a good home for a cooperative or an irrigators' group."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Direct messages and co farmers"
+    },
+    {
+      "type": "text",
+      "text": "Chat with any member directly. Messages carry photos on every plan, and the paid plans add video clips and voice notes. So you can show a sick plant instead of describing it.\n\nCo farmers are the members you connect with. Send a request, and once they accept, their latest shows on your co farmers page. The community also suggests people you may know."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The ranking ladder"
+    },
+    {
+      "type": "text",
+      "text": "What you do for the community earns points: posting, replying, the replies and reactions your posts receive, and simply showing up. Points raise your level. Each band of levels carries a title, from New Member and Rising Farmer up to Harvest Hero and beyond. The badge sits beside your name, so helpful farmers are easy to spot. Replies your posts receive count for more than the clicks you give."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The Collab Room: your team's own space"
+    },
+    {
+      "type": "text",
+      "text": "Each season on the Farm Owner plan has a Collab Room, private to the people who work that season. It has a team chat, a whiteboard for sketching plans together, a shared team map and a shared chat with Anee. The owner, the foreman and the workers talk in one place, next to the plan itself, instead of in scattered group chats.\n\nSee [farm workers and payroll](/features/farm-workers-and-payroll) for worker logins, and [farm maps](/features/farm-maps) for the team map."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Share what works, and why",
+      "text": "When a spray or a fertilizer plan works, post the day count and the product's active ingredient, not only the brand. It helps a grower in another province judge if it fits his field. For common rice pests, see our guide to [rice insects](/problems/rice-insects)."
+    },
+    {
+      "type": "text",
+      "text": "Before you post a question, you can also ask [Anee, the AI technician](/features/ai-agricultural-technician). Then bring her answer to the community and hear what farmers near you have seen."
+    },
+    {
+      "type": "cta",
+      "title": "Join the farmer community",
+      "text": "Sign up free and meet growers who plant what you plant.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the farmer community"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is the community free?",
+          "a": "Yes. Every plan includes the community with photo posts and messages. Paid plans add video and voice, more discussion rooms and private rooms."
+        },
+        {
+          "q": "Can I make a private group for my cooperative?",
+          "a": "Yes, on the Farm Owner plan. Create a discussion room and make it private with a password or with approval, so only your members get in."
+        },
+        {
+          "q": "What is a co farmer?",
+          "a": "A member you have connected with. Their latest posts show on your co farmers page."
+        },
+        {
+          "q": "How do I rank up?",
+          "a": "Post, reply, react and come back often. The replies and reactions your posts receive count more than the clicks you give."
+        },
+        {
+          "q": "Who can see the Collab Room?",
+          "a": "Only the people working that season: the owner and the workers given access."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Farm maps",
+          "url": "/features/farm-maps"
+        },
+        {
+          "label": "Notes, photos and voice",
+          "url": "/features/notes-photos-and-voice"
+        },
+        {
+          "label": "Farm workers and payroll",
+          "url": "/features/farm-workers-and-payroll"
+        },
+        {
+          "label": "Rice insects",
+          "url": "/problems/rice-insects"
+        }
+      ]
+    }
+  ]
+}

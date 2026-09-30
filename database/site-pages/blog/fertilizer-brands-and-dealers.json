@@ -1,0 +1,278 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-brands-and-dealers",
+  "sortOrder": 120,
+  "lang": "en",
+  "category": "Farm inputs",
+  "title": "Fertilizer Dealer Guide: Yara, Atlas and How to Compare Urea Prices",
+  "metaTitle": "Fertilizer Dealer Guide: Brands, Urea Price and Fakes",
+  "metaDescription": "Buy from a licensed fertilizer dealer: what Yara and Atlas sell, the latest FPA urea price, how to compare cost per kg of nutrient, and how to avoid fakes.",
+  "focusKeyword": "fertilizer dealer",
+  "keywords": [
+    "fertilizer dealer",
+    "fertilizer dealer supply",
+    "fertilizer yara",
+    "yara winner fertilizer",
+    "atlas fertilizer",
+    "urea fertilizer price",
+    "commercial fertilizer",
+    "fertilizer pesticide authority"
+  ],
+  "excerpt": "Your fertilizer dealer is often your first source of farm advice and your lender in a tight season. It is also where most of your input money goes. A good one sells registered products at a fair price and gives a receipt. This guide covers the license every fertilizer dealer needs and two brands you see in almost every store. It also shows a simple way to tell which bag is really cheaper.",
+  "heroImage": {
+    "src": "/images/site/photos/sacks.jpg",
+    "alt": "Farmer checking his notebook beside stacks of Atlas Super Gro 16 20 0 fertilizer bags in a farm shed",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Commercial fertilizer means any manufactured fertilizer sold in a bag or bottle with a stated nutrient content, called the guaranteed analysis. Urea, ammosul, complete 14 14 14 and muriate of potash are all commercial fertilizer. Compost you make from rice straw and manure is not, though it still feeds the soil. Our pages on [inorganic fertilizer examples](/blog/inorganic-fertilizer-examples) and [organic fertilizer examples](/blog/organic-fertilizer-examples) explain the difference in more detail."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Buy from a licensed fertilizer dealer"
+    },
+    {
+      "type": "text",
+      "text": "Every fertilizer dealer or farm supply store in the Philippines needs a license from the Fertilizer and Pesticide Authority, the FPA. The license comes after the dealer attends FPA training on safe handling and the rules of selling farm inputs. The FPA also inspects stores for unregistered, fake and off spec products.\n\nAsk to see the license, or look up the store on the FPA list of licensed handlers. Our guide to the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) shows how to check both the store and the product in a few minutes."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Ask for an official receipt for every purchase, even on credit.",
+        "Check that each bag is sealed, clean and marked with its grade and FPA registration number.",
+        "Weigh one bag now and then. A 50 kg bag should weigh 50 kg.",
+        "Ask the fertilizer dealer where the stock came from and how long it has sat in the store.",
+        "Compare prices with the FPA weekly price report for your province before you pay."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Yara fertilizer in the Philippines"
+    },
+    {
+      "type": "text",
+      "text": "Yara Fertilizers Philippines, Inc. has sold fertilizer in the country since 1986. It has its head office in Taguig City, main warehouses in Bulacan and Davao, and a satellite warehouse in Cebu. Its parent, Yara International, is a Norwegian company that began in 1905 as Norsk Hydro.\n\nOn the FPA fertilizer list, Yara fertilizer includes the Viking Ship urea line and Viking Ship NPK 14 14 14. It also includes YaraMila compound fertilizers, YaraLiva calcium nitrate and YaraVita foliar micronutrients."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Yara Winner fertilizer"
+    },
+    {
+      "type": "text",
+      "text": "The product most farmers call Yara Winner fertilizer is YaraMila Winner, grade 15 9 20. The FPA list shows it with added sulfur, magnesium, boron, manganese and zinc. Yara says it mixes nitrate and ammonium nitrogen and suits vegetables at flowering and fruiting. Its high potassium share fits crops that are setting flowers and fruit."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Atlas Fertilizer Corporation"
+    },
+    {
+      "type": "text",
+      "text": "Atlas Fertilizer Corporation was incorporated on October 10, 1957, and calls itself the oldest operating fertilizer company in the country. It says it was also the first to make a complete line of mixed grades, the NP, NPK and NK fertilizers farmers know. Its plant stands in Daanlungsod, Toledo City, Cebu, and its head office is in Makati. The Japanese trading company Sojitz Corporation owns and runs it.\n\nOn the FPA list, Atlas fertilizer products include Atlas Urea, Atlas Ammosul 21 0 0 and Atlas Super Gro 16 20 0. The list also shows Atlas Perfect Gro 14 14 14, diammonium phosphate 18 46 0 and muriate of potash. Atlas also offers a phone app, Atlas Fertilizer Expert, that gives fertilizer recommendations for rice and corn."
+    },
+    {
+      "type": "text",
+      "text": "Both companies sell good products, and so do many others. What matters more is the grade, the price per kilogram of nutrient, and a licensed store."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Urea fertilizer price this season"
+    },
+    {
+      "type": "text",
+      "text": "The FPA posts retail fertilizer prices every week. For September 14 to 18, 2026, the national weighted average urea fertilizer price was PHP 2,320.69 per 50 kg bag of prilled urea. Granular urea averaged PHP 2,322.28. Regional averages for prilled urea ran from about PHP 2,156 in the Cordillera to about PHP 2,678 in Zamboanga Peninsula. Prices move with global oil and gas prices, the exchange rate and the season, so check the latest report before you buy. For more on the product itself, see our [urea fertilizer](/blog/urea-fertilizer) guide."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Compare the price per kilogram of nutrient"
+    },
+    {
+      "type": "text",
+      "text": "A cheaper bag is not always cheaper fertilizer. What you pay for is the nutrient inside, so divide the bag price by the kilograms of nutrient it holds. A 50 kg bag of urea at 46 percent nitrogen holds 23 kg of nitrogen. A bag of ammosul at 21 percent holds only 10.5 kg."
+    },
+    {
+      "type": "table",
+      "caption": "Source: FPA national weighted average retail prices, September 14 to 18, 2026. Price per kg is the bag price divided by the total N, P2O5 and K2O in a 50 kg bag.",
+      "rows": [
+        [
+          "Fertilizer",
+          "Grade",
+          "Price per 50 kg bag",
+          "Nutrient in the bag",
+          "Price per kg of nutrient"
+        ],
+        [
+          "Urea, prilled",
+          "46 0 0",
+          "PHP 2,320.69",
+          "23 kg N",
+          "PHP 100.90"
+        ],
+        [
+          "Ammosul",
+          "21 0 0",
+          "PHP 1,213.63",
+          "10.5 kg N",
+          "PHP 115.58"
+        ],
+        [
+          "Complete",
+          "14 14 14",
+          "PHP 1,902.92",
+          "21 kg N, P2O5 and K2O",
+          "PHP 90.62"
+        ],
+        [
+          "Ammophos",
+          "16 20 0",
+          "PHP 1,753.71",
+          "18 kg N and P2O5",
+          "PHP 97.43"
+        ],
+        [
+          "Muriate of potash",
+          "0 0 60",
+          "PHP 1,668.08",
+          "30 kg K2O",
+          "PHP 55.60"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "So on nitrogen alone, urea costs less per kilogram than ammosul that week. But ammosul also carries about 24 percent sulfur, which some soils need. Compare like with like: nitrogen sources against nitrogen sources, and mixed grades against the mix of nutrients your crop needs. Our [fertilizer calculation](/blog/fertilizer-calculation) guide shows how to turn a recommendation into bags per hectare."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Quick formula",
+      "text": "Kilograms of nutrient in a bag equals the bag weight times the grade number, divided by 100. Then divide the bag price by that number. Do it for every bag you are offered, and the cheapest nutrient becomes obvious."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to avoid fake fertilizer"
+    },
+    {
+      "type": "text",
+      "text": "The FPA warns buyers about products that are unregistered, smuggled, underweight, expired or below standard, including those sold online. A bag that sells far below the weekly average for your province deserves a hard look. So do resewn bags, faded print and a grade that does not match the FPA list. If in doubt, email the FPA at focu@fpa.da.gov.ph. You can also visit the nearest regional field unit with the bag and your receipt."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Track every bag in anee.io"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, each bag goes into the [farm inventory](/features/farm-inventory-and-expenses) with its price. Each fertilizer activity can then record what it used from that stock. The [farm reports](/features/farm-reports) then show what fertilizer really cost you per lot and per season. You can also plan grades and rates ahead in the [protocol builder](/features/protocol-builder). And Anee answers in Tagalog or English when you ask which grade fits your crop stage."
+    },
+    {
+      "type": "cta",
+      "title": "Know what every bag costs you",
+      "text": "Log each bag in the inventory, see fertilizer spending per lot in your reports, and plan the next season's program ahead of time.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions farmers ask"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How do I know a fertilizer dealer is licensed?",
+          "a": "Ask to see the FPA license, or look up the store name on the FPA list of licensed handlers on fpa.da.gov.ph."
+        },
+        {
+          "q": "What is Yara Winner fertilizer for?",
+          "a": "YaraMila Winner is a 15 9 20 compound fertilizer with sulfur, magnesium and trace elements. Yara recommends it for vegetables at flowering and fruiting."
+        },
+        {
+          "q": "Who makes Atlas fertilizer?",
+          "a": "Atlas Fertilizer Corporation, founded in 1957, with a plant in Toledo City, Cebu. The Japanese company Sojitz owns it."
+        },
+        {
+          "q": "What is the urea fertilizer price today?",
+          "a": "It changes every week. For September 14 to 18, 2026, the FPA national average was about PHP 2,321 per 50 kg bag of prilled urea. Check the FPA weekly price report for your province."
+        },
+        {
+          "q": "Is the cheapest bag the best buy?",
+          "a": "Not always. Divide the price by the kilograms of nutrient in the bag, and buy only registered products from a licensed store."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Read next",
+      "items": [
+        {
+          "label": "Urea fertilizer",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "Complete fertilizer 14 14 14",
+          "url": "/blog/complete-fertilizer-14-14-14"
+        },
+        {
+          "label": "Ammonium sulfate 21 0 0",
+          "url": "/blog/ammonium-sulfate-21-0-0"
+        },
+        {
+          "label": "Fertilizer calculation",
+          "url": "/blog/fertilizer-calculation"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FPA: Weekly fertilizer prices, September 14 to 18, 2026",
+          "url": "https://fpa.da.gov.ph/wp-content/uploads/2026/09/WFP-WK38-2026.sgd_.pdf"
+        },
+        {
+          "label": "FPA: Weekly prices page",
+          "url": "https://fpa.da.gov.ph/weekly-prices/"
+        },
+        {
+          "label": "FPA: Registered products (fertilizer list as of September 15, 2026)",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        },
+        {
+          "label": "FPA: Licensed handlers",
+          "url": "https://fpa.da.gov.ph/resources/reports/licensed-handlers/"
+        },
+        {
+          "label": "Yara Philippines: About Yara Philippines",
+          "url": "https://www.yara.ph/about-yara/yara-philippines/"
+        },
+        {
+          "label": "Yara Philippines: YaraMila Winner",
+          "url": "https://www.yara.ph/crop-nutrition/fertilizers/yaramila/yaramila-winner/"
+        },
+        {
+          "label": "Atlas Fertilizer Corporation",
+          "url": "https://atlasfertilizer.com/"
+        },
+        {
+          "label": "FPA: Frequently asked questions",
+          "url": "https://fpa.da.gov.ph/faqs/"
+        }
+      ]
+    }
+  ]
+}
