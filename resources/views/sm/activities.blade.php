@@ -4132,18 +4132,9 @@
         @if ($may('video'))
         <button type="button" id="recordTodayVideoBtn" class="btn btn-white btn-sm toolbar-in-menu hidden" data-activities-only aria-hidden="true" tabindex="-1">Record a video</button>
         @endif
-        @if ($may('draw'))
-        <button type="button" id="openDrawBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4"/></svg>
-            Draw
-        </button>
-        @endif
-        @if ($may('maps'))
-        <button type="button" id="openMapsBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
-            Maps
-        </button>
-        @endif
+        {{-- Draw and Maps are Global and Quick Tools now (2026-09-30), not
+             rooms of the season. A day still takes a drawing or a map from
+             its own menu. --}}
         <button type="button" id="openDraftsBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
             Drafts <span id="draftsBadge" class="badge badge-gray">{{ $draftsCount }}</span>
@@ -4907,12 +4898,9 @@
              still one URL away however few doors show. (The middleware
              refuses it either way; this is about not offering a door that
              would only say no.) --}}
-        @if ($may('maps'))
-        maps:          { label: 'Maps',          url: @json(route('sm.maps',         ['id' => $schedule->id])), sticky: true },
-        @endif
-        @if ($may('draw'))
-        draw:          { label: 'Draw',          url: @json(route('sm.draw',         ['id' => $schedule->id])) },
-        @endif
+        {{-- maps and draw left this table on 2026-09-30: they are Global and
+             Quick Tools (/app/maps, /app/draw), and their old addresses
+             redirect there. --}}
         // Kept as an alias: 'media' was the Media Box, which is now the
         // Gallery's first tab. Old links and bookmarks still land right.
         media:         { label: 'Gallery',       url: @json(route('sm.gallery',      ['id' => $schedule->id])) },
@@ -6275,8 +6263,6 @@
     // Toolbar "Notes" button opens the schedule notebook module (distinct from
     // the per-date notes in the timeline).
     document.getElementById('openNotesBtn')?.addEventListener('click', () => showModule('notes'));
-    document.getElementById('openDrawBtn')?.addEventListener('click', () => showModule('draw'));
-    document.getElementById('openMapsBtn')?.addEventListener('click', () => showModule('maps'));
     /* Back to wherever you actually came from: the module that was showing
        when this one was opened, or — if the shell was opened straight into a
        module from the schedule's own page — that page. Activities only when

@@ -21,11 +21,11 @@ class UndoJournalController extends BaseScheduleController
 
     public function get(Request $request)
     {
-        $schedule = $this->schedule($request->query('scheduleId'));
         $module = $this->moduleKey($request);
+        $scope = $this->scope($request, $module);
 
         $row = DB::table('as_undo_steps')
-            ->where('croppingScheduleId', $schedule->id)
+            ->where('croppingScheduleId', $scope)
             ->where('module', $module)
             ->where('userId', (int) Auth::id())
             ->first();
@@ -40,8 +40,8 @@ class UndoJournalController extends BaseScheduleController
 
     public function put(Request $request)
     {
-        $schedule = $this->schedule($request->query('scheduleId'));
         $module = $this->moduleKey($request);
+        $scope = $this->scope($request, $module);
 
         $undo = array_slice((array) $request->input('undo', []), -self::MAX_STEPS);
         $redo = array_slice((array) $request->input('redo', []), -self::MAX_STEPS);
@@ -59,7 +59,7 @@ class UndoJournalController extends BaseScheduleController
 
         DB::table('as_undo_steps')->updateOrInsert(
             [
-                'croppingScheduleId' => $schedule->id,
+                'croppingScheduleId' => $scope,
                 'module' => $module,
                 'userId' => (int) Auth::id(),
             ],
@@ -72,6 +72,20 @@ class UndoJournalController extends BaseScheduleController
     }
 
     /** 'activities', 'draw', 'map' — optionally suffixed with an identity. */
+    /**
+     * Which shelf the steps are kept on: a season's, or -- for the map and the
+     * drawing pad, which are the grower's own tools now -- 0, your own.
+     */
+    private function scope(Request $request, string $module): int
+    {
+        $sid = (int) $request->query('scheduleId');
+        if ($sid <= 0 && preg_match('/^(draw|map)\b/', $module)) {
+            return 0;
+        }
+
+        return (int) $this->schedule($sid)->id;
+    }
+
     private function moduleKey(Request $request): string
     {
         $module = (string) $request->query('module', '');

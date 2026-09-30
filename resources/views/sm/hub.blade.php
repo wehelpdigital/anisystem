@@ -103,12 +103,9 @@
         // could remember which one a photo had gone into.
         ['Gallery', 'gallery', (int) $mediaCount,
             'M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM8 14l2.5-3 2 2.5L15 10l3 4'],
-        ['Maps', 'maps', null,
-            'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2M15 11.5a2 2 0 11-4 0 2 2 0 014 0z'],
-        // A pencil on a sheet, distinct from the Notes pencil-over-page: this
-        // one is the sheet itself, because the drawing is the whole point.
-        ['Draw', 'draw', null,
-            'M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4'],
+        // Maps and Draw left the season (2026-09-30): they are the grower's
+        // own tools in Global and Quick Tools, and a season uses a map by
+        // linking it (a lot, an activity, a day, the Collab Room).
         // "Chat Anee": on this shelf the tile beside it is a drawing
         // pad and the one above it is a map, and "AI" named the machinery
         // rather than the person you talk to. The person is Anee.

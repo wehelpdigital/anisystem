@@ -1862,7 +1862,7 @@ class ActivityController extends BaseScheduleController
         // null over the media deleted every attachment the note carried.
         // Clearing attachments is said explicitly with media: [].
         $media = $request->has('media')
-            ? $this->normalizeNoteMedia($request->input('media'))
+            ? $this->normalizeNoteMedia($request->input('media'), $schedule)
             : (is_array($existing?->media) && $existing->media !== [] ? $existing->media : null);
 
         if (! $this->noteHasBody($content) && empty($media)) {
@@ -2052,7 +2052,7 @@ class ActivityController extends BaseScheduleController
         }
 
         $content = \App\Support\HtmlSanitizer::rich($request->input('content'));
-        $media = $this->normalizeNoteMedia($request->input('media'));
+        $media = $this->normalizeNoteMedia($request->input('media'), $schedule);
 
         $id = (int) $request->input('id');
         $note = $id
@@ -2149,18 +2149,37 @@ class ActivityController extends BaseScheduleController
         return filled(trim(strip_tags($content))) || str_contains($content, '<img');
     }
 
-    /** Keep only well-formed {type,path,poster} media rows. */
-    private function normalizeNoteMedia($media): ?array
+    /**
+     * Keep only well-formed {type,path,poster} media rows.
+     *
+     * A map keeps the saved map it is a picture of (saveId) when the writer
+     * may open it -- and the season is linked to that map, so the rest of
+     * the team can open it from the day too (maps are their owners' since
+     * 2026-09-30; see App\Support\MapAccess).
+     */
+    private function normalizeNoteMedia($media, ?\App\Models\AsCroppingSchedule $schedule = null): ?array
     {
         return collect(is_array($media) ? $media : [])
             ->filter(fn ($m) => in_array($m['type'] ?? '', ['image', 'video', 'drawing', 'map'], true) && filled($m['path'] ?? null))
-            ->map(fn ($m) => array_filter([
-                'type' => $m['type'],
-                'path' => $m['path'],
-                'poster' => $m['poster'] ?? null,
-                // What makes a drawing reopenable rather than just a picture.
-                'strokes' => ($m['type'] ?? '') === 'drawing' ? ($m['strokes'] ?? null) : null,
-            ], fn ($v) => $v !== null))
+            ->map(function ($m) use ($schedule) {
+                $saveId = null;
+                if (($m['type'] ?? '') === 'map' && (int) ($m['saveId'] ?? 0) > 0
+                    && \App\Support\MapAccess::viewable((int) $m['saveId'])) {
+                    $saveId = (int) $m['saveId'];
+                    if ($schedule) {
+                        \App\Support\MapAccess::link($saveId, $schedule->id);
+                    }
+                }
+
+                return array_filter([
+                    'type' => $m['type'],
+                    'path' => $m['path'],
+                    'poster' => $m['poster'] ?? null,
+                    // What makes a drawing reopenable rather than just a picture.
+                    'strokes' => ($m['type'] ?? '') === 'drawing' ? ($m['strokes'] ?? null) : null,
+                    'saveId' => $saveId,
+                ], fn ($v) => $v !== null);
+            })
             ->values()->all() ?: null;
     }
 
@@ -2179,7 +2198,10 @@ class ActivityController extends BaseScheduleController
                 'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
                 // A map chip should open THE map, not the module's front door
                 // — the saved map whose filed picture this attachment is.
-                'mapUrl' => $mapUrls[$m['path'] ?? ''] ?? null,
+                'mapUrl' => ! empty($m['saveId'])
+                    ? \App\Support\MapAccess::url((int) $m['saveId'])
+                    : ($mapUrls[$m['path'] ?? ''] ?? null),
+                'saveId' => ! empty($m['saveId']) ? (int) $m['saveId'] : null,
             ])
             ->filter(fn ($m) => $m['url'])
             ->values()->all();
@@ -2200,27 +2222,8 @@ class ActivityController extends BaseScheduleController
             return $this->mapUrlsCache[$scheduleId];
         }
 
-        $saves = \App\Models\ScheduleMapSave::active()
-            ->where('scheduleId', $scheduleId)
-            ->orderByDesc('id')
-            ->get(['id', 'noteId']);
-        $notes = \App\Models\AsScheduleNote::active()
-            ->whereIn('id', $saves->pluck('noteId')->filter()->all())
-            ->get()->keyBy('id');
-
-        $byPath = [];
-        foreach ($saves as $save) {
-            $note = $save->noteId ? $notes->get($save->noteId) : null;
-            foreach ((is_array($note?->media) ? $note->media : []) as $m) {
-                $path = (string) ($m['path'] ?? '');
-                $isMap = ($m['type'] ?? '') === 'map' || preg_match('~/map-[A-Za-z0-9]+\.png$~', $path);
-                if ($path !== '' && $isMap && ! isset($byPath[$path])) {
-                    $byPath[$path] = route('sm.maps', ['id' => $scheduleId, 'save' => $save->id]);
-                }
-            }
-        }
-
-        return $this->mapUrlsCache[$scheduleId] = $byPath;
+        // The maps this season uses (they are their owners' now).
+        return $this->mapUrlsCache[$scheduleId] = \App\Support\MapAccess::urlsByPicture($scheduleId);
     }
 
     /** Soft-delete a positioned inline note. */
@@ -2506,19 +2509,19 @@ class ActivityController extends BaseScheduleController
             }
         }
 
-        $maps = \App\Models\ScheduleMapSave::active()
-            ->where('scheduleId', $schedule->id)
-            ->orderByDesc('id')->limit(50)->get()
-            ->map(function ($m) use ($schedule, $when) {
+        // Maps the season uses, and your own (Global and Quick Tools).
+        $maps = \App\Support\MapAccess::choices($schedule->id)
+            ->orderByDesc('id')->limit(100)->get()
+            ->map(function ($m) use ($when) {
                 $n = count(json_decode((string) $m->objects, true) ?: []);
 
                 return [
                     'ref' => (string) $m->id,
                     'label' => (string) ($m->title ?: 'Map'),
-                    'url' => route('sm.maps', ['id' => $schedule->id, 'save' => $m->id]),
+                    'url' => \App\Support\MapAccess::url((int) $m->id),
                     // Always answerable: the filed picture, the satellite
                     // render, or the shapes drawn by the app itself.
-                    'thumb' => route('sm.map.thumb', ['scheduleId' => $schedule->id, 'id' => $m->id]),
+                    'thumb' => \App\Support\MapAccess::thumbUrl((int) $m->id),
                     'when' => $when($m->created_at),
                     'meta' => $n . ' shape' . ($n === 1 ? '' : 's'),
                 ];
@@ -2567,6 +2570,15 @@ class ActivityController extends BaseScheduleController
         }
         if (count($tags) >= 12) {
             return $this->jsonFail('That activity already carries 12 tags.', 422);
+        }
+        // A map is its owner's: the season uses it now, so the team can
+        // open it from the card.
+        if ($tag['kind'] === 'map' && ctype_digit($tag['ref'])) {
+            if (! \App\Support\MapAccess::viewable((int) $tag['ref'])) {
+                return $this->jsonFail('That map no longer exists.', 404);
+            }
+            \App\Support\MapAccess::link((int) $tag['ref'], $schedule->id);
+            $tag['url'] = \App\Support\MapAccess::url((int) $tag['ref']);
         }
         $tags[] = $tag;
         $activity->update(['tags' => $tags]);

@@ -2396,6 +2396,7 @@ document.addEventListener('pointerdown', (e) => {
         [/^\/app\/sm-lots/, 'Lots'], [/^\/app\/sm-workers/, 'Workers'],
         [/^\/app\/sm-inventory/, 'Inventory'], [/^\/app\/sm-maps/, 'Maps'],
         [/^\/app\/sm-draw/, 'Draw'], [/^\/app\/sm-reports/, 'Reports'],
+        [/^\/app\/maps/, 'Maps'], [/^\/app\/draw/, 'Draw'],
         [/^\/app\/sm-gallery/, 'The Gallery'], [/^\/app\/sm-settings/, 'Settings'],
         [/^\/app\/sm-tags/, 'Tags'], [/^\/app\/sm-documentation/, 'Documentation'],
         [/^\/app\/sm-weather/, 'Weather'], [/^\/app\/sm-post-harvest/, 'Observations'],

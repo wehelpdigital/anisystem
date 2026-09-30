@@ -7,7 +7,6 @@ use App\Models\AsInlineNote;
 use App\Models\AsScheduleActivity;
 use App\Models\AsScheduleNote;
 use App\Models\ScheduleAiMessage;
-use App\Models\ScheduleMapSave;
 
 /**
  * Every picture and video a season has, wherever it was made.
@@ -100,11 +99,11 @@ class SeasonMedia
         // A map save remembers the note it wrote; the tile can therefore open
         // the map ITSELF — shapes still editable — rather than the module's
         // front door with the right map somewhere on its shelf.
-        $mapSaveByNote = \App\Models\ScheduleMapSave::active()
-            ->where('scheduleId', $schedule->id)
+        $mapSaveByNote = \App\Support\MapAccess::ofSeason($schedule->id)
             ->whereNotNull('noteId')
             ->orderByDesc('id')
             ->pluck('id', 'noteId');
+        $mapUrlByPath = \App\Support\MapAccess::urlsByPicture($schedule->id);
 
         // The notebook. A drawing lives in a note, so this is also where most
         // drawings come from — tagged as drawings, opening in the pad.
@@ -118,11 +117,13 @@ class SeasonMedia
                 $isDrawing = $type === 'drawing' || (bool) preg_match('~/board-[A-Za-z0-9]+\.png$~', (string) ($m['path'] ?? ''));
 
                 if ($isMap) {
+                    $saveId = (int) ($m['saveId'] ?? 0) ?: ($mapSaveByNote[$n->id] ?? null);
                     $push(['type' => 'map'] + $m, 'Map', (string) $n->title, $n->updated_at,
-                        route('sm.maps', array_filter(['id' => $schedule->id, 'save' => $mapSaveByNote[$n->id] ?? null])));
+                        $saveId ? \App\Support\MapAccess::url((int) $saveId)
+                            : ($mapUrlByPath[(string) ($m['path'] ?? '')] ?? route('maps.page')));
                 } elseif ($isDrawing) {
                     $push(['type' => 'drawing'] + $m, 'Drawing', (string) $n->title, $n->updated_at,
-                        route('sm.draw', ['id' => $schedule->id, 'open' => $n->id . ':' . $i]), true);
+                        route('draw.page', ['open' => $n->id . ':' . $i]), true);
                 } else {
                     $push($m, 'Note', (string) $n->title, $n->updated_at, $notesUrl);
                 }
@@ -279,8 +280,7 @@ class SeasonMedia
     {
         $titles = self::noteTitles($schedule);
 
-        return ScheduleMapSave::active()
-            ->where('scheduleId', $schedule->id)
+        return \App\Support\MapAccess::ofSeason($schedule->id)
             ->orderByDesc('id')
             ->limit(100)
             ->get()

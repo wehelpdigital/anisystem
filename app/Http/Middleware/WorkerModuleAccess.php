@@ -205,6 +205,17 @@ class WorkerModuleAccess
             return $next($request);
         }
 
+        /* Maps and drawings of your OWN (2026-09-30): the canvas and save
+         * endpoints serve the global Maps and Draw pages when no season is
+         * named, and those are the worker's own tools, not the farm's -- the
+         * same rule Global Notes keeps. A farm map or drawing reached that
+         * way is still fenced: MapAccess asks the Maps pen before opening or
+         * changing one, and a season's drawing is only reached by naming
+         * its season, which brings this gate back. */
+        if (Str::is(['sm.map', 'sm.map.*', 'sm.draw.*'], $name) && (int) $request->query('scheduleId') <= 0) {
+            return $next($request);
+        }
+
         // A GET is looking; anything else is changing something.
         $wanted = $request->isMethodSafe() ? 'view' : 'edit';
 

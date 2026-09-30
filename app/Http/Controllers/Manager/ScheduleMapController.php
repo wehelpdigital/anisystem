@@ -6,15 +6,24 @@ use App\Events\ScheduleMapLocation;
 use App\Events\ScheduleMapPushed;
 use App\Models\AsScheduleNote;
 use App\Models\ScheduleMapObject;
+use App\Models\ScheduleMapSave;
+use App\Support\MapAccess;
 use App\Support\ScheduleTeam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 /**
- * The Collab Room map: persistent shapes the team draws over real ground,
- * plus ephemeral live positions. Shapes persist and broadcast; positions
- * only broadcast — where someone stood is not something to keep.
+ * The map: shapes drawn over real ground, and the saved maps they become.
+ *
+ * Two canvases share this controller (2026-09-30). `?scheduleId=N` is a
+ * season's TEAM canvas, the one the Collab Room draws on together: shapes
+ * persist and broadcast, live positions only broadcast. No scheduleId (or 0)
+ * is the caller's OWN canvas, behind the global Maps page and a lot's map.
+ *
+ * Saved maps are never a season's any more: they are their owner's
+ * (scheduleId 0), linked to the seasons that use them. App\Support\MapAccess
+ * decides who may open or change one; every save-touching door asks it.
  */
 class ScheduleMapController extends BaseScheduleController
 {
@@ -30,71 +39,89 @@ class ScheduleMapController extends BaseScheduleController
     private const FONTS = 'sans,serif,cond,mono';
 
     /**
-     * The map as a schedule module of its own, for planning outside a call.
-     * Same partial the Collab Room embeds, so the tools, the saved maps and
-     * the live team drawing are the same map — not a copy of one.
+     * Maps, in Global and Quick Tools: every map of your own (and, for a
+     * worker holding the Maps pen, the farm's), on your own canvas. It was a
+     * module of each season until 2026-09-30.
      */
     public function page(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request, 'id');
-        // Maps is a per-worker permission now; WorkerModuleAccess asks it for
-        // every sm.map* route, this page included -- a typed URL is the same
-        // question asked a second way and still gets the same answer.
-
         return view('sm.maps', [
-            'schedule' => $schedule,
-            // The module opens on the shelf of saved maps, so it needs them
-            // at first paint — same rows the saves endpoint serves.
-            'saves' => $this->saveRows($schedule),
-            // Whether the live canvas holds anything worth going back to.
-            'liveCount' => ScheduleMapObject::active()->where('scheduleId', $schedule->id)->count(),
-            // Which lot sent you here, if one did. ?lot= comes off the Lots
-            // module's "Attach a map" — the page then opens straight onto the
-            // canvas with the pin tool out, because somebody who pressed that
-            // button has already said what they came to do.
-            'attachLot' => $this->attachLot($schedule, $request->query('lot')),
+            'schedule' => null,
+            'saves' => MapAccess::rows(MapAccess::shelf()->orderByDesc('id')->limit(200)->get()),
+            // Whether your canvas holds anything worth going back to.
+            'liveCount' => $this->canvasQuery(null)->count(),
+            'attachLot' => null,
         ]);
     }
 
     /**
-     * The lot named in ?lot=, if it is really one of this schedule's.
-     *
-     * Nothing here trusts the query string: a lot id from another farm would
-     * otherwise put that farm's name on this page and, worse, be the id a pin
-     * gets written to. The pin endpoint checks the same thing again — this is
-     * the display half, that is the writing half, and neither leans on the
-     * other.
+     * The season Maps module's old address. A season no longer has maps of
+     * its own; a link to one still lands -- on the map it named, or on a
+     * lot's own map when it came from a lot.
      */
-    private function attachLot($schedule, $lotId): ?array
+    public function legacyPage(Request $request)
     {
-        $id = (int) $lotId;
-        if ($id <= 0) {
-            return null;
+        $sid = (int) $request->query('id');
+        if ($sid > 0 && (int) $request->query('lot') > 0) {
+            return redirect()->route('sm.lots.map', ['id' => $sid, 'lot' => (int) $request->query('lot')]);
         }
 
-        $lot = \App\Models\AsScheduleLot::where('croppingScheduleId', $schedule->id)
-            ->where('deleteStatus', 1)->find($id);
+        return redirect()->route('maps.page', array_filter(['save' => (int) $request->query('save')]));
+    }
 
-        return $lot ? [
-            'id' => $lot->id,
-            'name' => $lot->lotName,
-            'pinned' => $lot->isPinned(),
-            'lat' => $lot->pinLat,
-            'lng' => $lot->pinLng,
-            'label' => $lot->pinLabel,
-            'mapSaveId' => $lot->mapSaveId,
-        ] : null;
+    /**
+     * Which of your own canvases a request draws on when it is not a
+     * season's: 0 is the Maps page's, and -lotId is a lot's map, so opening
+     * a lot never clears the map you left unsaved on the Maps page. Rows are
+     * always fenced to your own userId as well.
+     */
+    private int $ownKey = 0;
+
+    /**
+     * Which canvas a request draws on: a season's team canvas (the Collab
+     * Room) when it names one, else one of the caller's own. Returns the
+     * season, or null for your own canvas.
+     */
+    private function canvas(Request $request): ?\App\Models\AsCroppingSchedule
+    {
+        $sid = (int) $request->query('scheduleId');
+        if ($sid <= 0) {
+            $this->ownKey = $sid;
+
+            return null;
+        }
+        $schedule = $this->schedule($sid);
+        if (! ScheduleTeam::canAccess($schedule, (int) Auth::id())) {
+            abort(response()->json(['success' => false, 'message' => 'You are not part of this schedule team.'], 403));
+        }
+
+        return $schedule;
+    }
+
+    /** The shapes on a canvas: the season's, or the caller's own. */
+    private function canvasQuery(?\App\Models\AsCroppingSchedule $schedule)
+    {
+        return $schedule
+            ? ScheduleMapObject::active()->where('scheduleId', $schedule->id)
+            : ScheduleMapObject::active()->where('scheduleId', $this->ownKey)->where('userId', (int) Auth::id());
+    }
+
+    /**
+     * Changing a team canvas is an edit of the farm's record; your own canvas
+     * is yours, whatever a boss's grant says.
+     */
+    private function assertCanDraw(?\App\Models\AsCroppingSchedule $schedule): void
+    {
+        if ($schedule) {
+            $this->assertCanEdit();
+        }
     }
 
     public function objects(Request $request)
     {
-        $schedule = $this->schedule($request->query('scheduleId'));
-        if (! ScheduleTeam::canAccess($schedule, (int) Auth::id())) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
-        }
+        $schedule = $this->canvas($request);
 
-        $rows = ScheduleMapObject::active()
-            ->where('scheduleId', $schedule->id)
+        $rows = $this->canvasQuery($schedule)
             ->orderBy('id')
             ->limit(2000)
             ->get();
@@ -107,17 +134,14 @@ class ScheduleMapController extends BaseScheduleController
 
     public function push(Request $request)
     {
-        $schedule = $this->schedule($request->query('scheduleId'));
+        $schedule = $this->canvas($request);
         $meId = (int) Auth::id();
-        if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
-        }
         // Membership was the whole of this test, so a VIEW-ONLY worker could
         // put shapes on the team's map by calling this directly — the one
         // promise "view-only access" makes is that nothing they do is
         // written down. Drawing is an edit like reshaping and removing,
         // which have asked this all along.
-        $this->assertCanEdit();
+        $this->assertCanDraw($schedule);
 
         $validator = Validator::make($request->all(), [
             'kind' => 'required|in:pen,line,path,rect,area,text,arrow,pin',
@@ -135,7 +159,7 @@ class ScheduleMapController extends BaseScheduleController
         }
 
         $object = ScheduleMapObject::create([
-            'scheduleId' => $schedule->id,
+            'scheduleId' => $schedule?->id ?? $this->ownKey,
             'userId' => $meId,
             'kind' => $request->input('kind'),
             'color' => $request->input('color'),
@@ -146,7 +170,7 @@ class ScheduleMapController extends BaseScheduleController
             'deleteStatus' => 1,
         ]);
 
-        $this->emit($schedule->id, ['action' => 'add', 'object' => $object->shaped(), 'actorUserId' => $meId]);
+        $this->emit($schedule, ['action' => 'add', 'object' => $object->shaped(), 'actorUserId' => $meId]);
 
         return response()->json(['success' => true, 'data' => ['object' => $object->shaped()]]);
     }
@@ -154,17 +178,14 @@ class ScheduleMapController extends BaseScheduleController
     /** Move or reshape an existing object; the team sees it land live. */
     public function update(Request $request)
     {
-        $schedule = $this->schedule($request->query('scheduleId'));
+        $schedule = $this->canvas($request);
         $meId = (int) Auth::id();
-        if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
-        }
 
         // Reshaping someone's lot boundary is an edit to the farm's own map.
         // This door resolves with the raw resolver, which carries no write
         // check of its own — so being on the team was the whole of the test,
         // and a view-only member could drag a field to a different shape.
-        $this->assertCanEdit();
+        $this->assertCanDraw($schedule);
 
         // Everything but the id is optional, and only what was sent is
         // written. This door used to move geometry and nothing else, so a
@@ -183,9 +204,7 @@ class ScheduleMapController extends BaseScheduleController
             return $this->jsonFail($validator->errors()->first(), 422);
         }
 
-        $object = ScheduleMapObject::active()
-            ->where('scheduleId', $schedule->id)
-            ->find($request->input('id'));
+        $object = $this->canvasQuery($schedule)->find($request->input('id'));
         if (! $object) {
             return $this->jsonFail('That shape no longer exists.', 404);
         }
@@ -208,56 +227,48 @@ class ScheduleMapController extends BaseScheduleController
         }
 
         $object->update($patch);
-        $this->emit($schedule->id, ['action' => 'update', 'object' => $object->fresh()->shaped(), 'actorUserId' => $meId]);
+        $this->emit($schedule, ['action' => 'update', 'object' => $object->fresh()->shaped(), 'actorUserId' => $meId]);
 
         return response()->json(['success' => true, 'data' => ['object' => $object->fresh()->shaped()]]);
     }
 
     public function remove(Request $request)
     {
-        $schedule = $this->schedule($request->query('scheduleId'));
+        $schedule = $this->canvas($request);
         $meId = (int) Auth::id();
-        if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
-        }
 
         // Same line clear() and update() draw: membership lets you draw,
         // but taking a shape OFF the team's map — even one at a time — is an
         // edit of the farm's record. The button is already gone for a
         // view-only worker; this is the lock behind that door.
-        $this->assertCanEdit();
+        $this->assertCanDraw($schedule);
 
-        $object = ScheduleMapObject::active()
-            ->where('scheduleId', $schedule->id)
-            ->find($request->input('id'));
+        $object = $this->canvasQuery($schedule)->find($request->input('id'));
         if (! $object) {
             return $this->jsonFail('That shape is already gone.', 404);
         }
 
         $object->update(['deleteStatus' => 0]);
-        $this->emit($schedule->id, ['action' => 'remove', 'id' => (int) $object->id, 'actorUserId' => $meId]);
+        $this->emit($schedule, ['action' => 'remove', 'id' => (int) $object->id, 'actorUserId' => $meId]);
 
         return response()->json(['success' => true, 'message' => 'Removed.']);
     }
 
     public function clear(Request $request)
     {
-        $schedule = $this->schedule($request->query('scheduleId'));
+        $schedule = $this->canvas($request);
         $meId = (int) Auth::id();
-        if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
-        }
         // Membership lets you draw; wiping the whole team's canvas is an edit
         // of the schedule's record, and a view-only worker holds no such right.
         // The button is hidden for them too — this is the lock behind the door.
-        if (! \App\Support\WorkerContext::canEdit()) {
+        if ($schedule && ! \App\Support\WorkerContext::canEdit()) {
             return $this->jsonFail('Only someone with edit access can clear the team map.', 403);
         }
 
-        ScheduleMapObject::active()->where('scheduleId', $schedule->id)->update(['deleteStatus' => 0]);
-        $this->emit($schedule->id, ['action' => 'clear', 'actorUserId' => $meId]);
+        $this->canvasQuery($schedule)->update(['deleteStatus' => 0]);
+        $this->emit($schedule, ['action' => 'clear', 'actorUserId' => $meId]);
 
-        return response()->json(['success' => true, 'message' => 'Map cleared for the team.']);
+        return response()->json(['success' => true, 'message' => $schedule ? 'Map cleared for the team.' : 'Map cleared.']);
     }
 
     /**
@@ -267,10 +278,11 @@ class ScheduleMapController extends BaseScheduleController
      */
     public function trace(Request $request)
     {
-        $schedule = $this->schedule($request->query('scheduleId'));
+        $schedule = $this->canvas($request);
         $me = Auth::user();
-        if (! ScheduleTeam::canAccess($schedule, (int) $me->id)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+        // Your own canvas has nobody watching it.
+        if (! $schedule) {
+            return response()->json(['success' => true]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -310,10 +322,7 @@ class ScheduleMapController extends BaseScheduleController
      */
     public function basemap(Request $request)
     {
-        $schedule = $this->schedule($request->query('scheduleId'));
-        if (! ScheduleTeam::canAccess($schedule, (int) Auth::id())) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
-        }
+        $this->canvas($request);
 
         $validator = Validator::make($request->all(), [
             'lat' => 'required|numeric|between:-90,90',
@@ -355,21 +364,24 @@ class ScheduleMapController extends BaseScheduleController
         }
     }
 
-    /** Named map snapshots the team saved, newest first. */
+    /**
+     * The saved maps a canvas may open. On your own canvas: your shelf (see
+     * MapAccess::shelf). On a season's team canvas: the maps that season
+     * uses, and your own.
+     */
     public function saves(Request $request)
     {
-        $schedule = $this->schedule($request->query('scheduleId'));
-        if (! ScheduleTeam::canAccess($schedule, (int) Auth::id())) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
-        }
+        $schedule = $this->canvas($request);
+        $rows = ($schedule ? MapAccess::choices($schedule->id) : MapAccess::shelf())
+            ->orderByDesc('id')->limit(200)->get();
 
         return response()->json([
             'success' => true,
             'data' => [
-                'saves' => $this->saveRows($schedule),
-                // How many shapes the live canvas holds right now, so the
-                // Maps shelf can tell whether "The canvas" is worth a card.
-                'liveCount' => ScheduleMapObject::active()->where('scheduleId', $schedule->id)->count(),
+                'saves' => MapAccess::rows($rows),
+                // How many shapes the canvas holds right now, so the shelf
+                // can tell whether "The canvas" is worth a card.
+                'liveCount' => $this->canvasQuery($schedule)->count(),
             ],
         ]);
     }
@@ -381,20 +393,14 @@ class ScheduleMapController extends BaseScheduleController
      */
     public function thumb(Request $request)
     {
-        $schedule = $this->schedule($request->query('scheduleId'));
-        if (! ScheduleTeam::canAccess($schedule, (int) Auth::id())) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
-        }
-        $save = \App\Models\ScheduleMapSave::active()
-            ->where('scheduleId', $schedule->id)
-            ->find($request->query('id'));
+        $save = MapAccess::viewable($request->query('id'));
         if (! $save) {
             return $this->jsonFail('That saved map no longer exists.', 404);
         }
 
         // The filed picture first. A remote file is durable; a local one is
         // only trusted while the disk actually still has it.
-        $path = $this->savedPicturePath($save);
+        $path = $save->noteId ? MapAccess::picturePath(AsScheduleNote::active()->find($save->noteId)) : null;
         if ($path !== null) {
             if (\App\Support\MediaStore::isRemote($path)) {
                 return redirect()->away(\App\Support\MediaStore::url($path));
@@ -461,111 +467,32 @@ class ScheduleMapController extends BaseScheduleController
         ]);
     }
 
-    /** The map picture a save filed in the notebook, if any. */
-    private function savedPicturePath(\App\Models\ScheduleMapSave $save): ?string
-    {
-        $note = $save->noteId ? AsScheduleNote::active()->find($save->noteId) : null;
-        foreach ((is_array($note?->media) ? $note->media : []) as $m) {
-            $path = (string) ($m['path'] ?? '');
-            if ($path !== '' && (($m['type'] ?? '') === 'map' || preg_match('~/map-[A-Za-z0-9]+\.png$~', $path))) {
-                return $path;
-            }
-        }
-
-        return null;
-    }
-
-    /** The saved maps as the module lists them — one shape for the endpoint and the page. */
-    private function saveRows($schedule): array
-    {
-        $rows = \App\Models\ScheduleMapSave::active()
-            ->where('scheduleId', $schedule->id)
-            ->orderByDesc('id')
-            ->limit(50)
-            ->get();
-        $users = \App\Models\User::whereIn('id', $rows->pluck('userId')->unique())->get()->keyBy('id');
-        // The picture each save filed in the notebook, so a caller can show it
-        // or attach it elsewhere without reopening the map to redraw it.
-        $notes = \App\Models\AsScheduleNote::active()
-            ->whereIn('id', $rows->pluck('noteId')->filter()->all())
-            ->get()->keyBy('id');
-        $picture = function ($noteId) use ($notes) {
-            $note = $noteId ? $notes->get($noteId) : null;
-            foreach ((is_array($note?->media) ? $note->media : []) as $m) {
-                $path = (string) ($m['path'] ?? '');
-                if (($m['type'] ?? '') === 'map' || preg_match('~/map-[A-Za-z0-9]+\.png$~', $path)) {
-                    return $path;
-                }
-            }
-
-            return null;
-        };
-
-        // What the save's note says the map was for, with the boilerplate
-        // line the save itself wrote stripped back off — this is what the
-        // edit sheet shows as the description.
-        $sayDescription = function ($noteId) use ($notes) {
-            $note = $noteId ? $notes->get($noteId) : null;
-            if (! $note) {
-                return '';
-            }
-            $txt = trim(strip_tags((string) $note->body));
-            $txt = trim((string) preg_replace('/Saved team map — tap View map to open it\.?\s*$/u', '', $txt));
-
-            return $txt;
-        };
-
-        return $rows->map(function ($r) use ($users, $picture, $sayDescription) {
-            $path = $picture($r->noteId ? (int) $r->noteId : null);
-
-            return [
-                'id' => (int) $r->id,
-                'title' => $r->title,
-                'description' => $sayDescription($r->noteId ? (int) $r->noteId : null),
-                'by' => (string) \Illuminate\Support\Str::of(optional($users->get($r->userId))->full_name ?? 'Someone')->explode(' ')->first(),
-                'when' => $r->created_at?->timezone('Asia/Manila')->format('M j, Y g:ia'),
-                'count' => count(json_decode((string) $r->objects, true) ?: []),
-                // Where it was drawn. A map made in the Collab Room is the
-                // team's; one made in the Maps module is your own working
-                // copy, and telling them apart matters when you are about
-                // to replace what is on screen.
-                'source' => $r->source === 'team' ? 'team' : 'solo',
-                'imagePath' => $path,
-                'imageUrl' => \App\Support\MediaStore::url($path),
-                // Always answerable: serves the filed picture while its file
-                // lives, and redraws one from the shapes when it does not.
-                'thumbUrl' => route('sm.map.thumb', ['scheduleId' => $r->scheduleId, 'id' => $r->id]),
-                // A saved map files a picture in the notebook; this is the
-                // way back to the note that says what the plan was for.
-                'noteHref' => $r->noteId
-                    ? route('sm.notes', ['id' => $r->scheduleId, 'open' => $r->noteId])
-                    : null,
-            ];
-        })->all();
-    }
-
     /**
-     * Save the whole map. mode=map keeps a reopenable snapshot AND files a
-     * picture note in the notebook; mode=image files only the picture. The
-     * picture comes from the Static Maps API with every shape drawn on it —
-     * the live WebGL map cannot be screenshotted from JS.
+     * Save the whole map. mode=map keeps a reopenable snapshot AND files its
+     * picture in a note; mode=image files only the picture. The picture comes
+     * from the canvas the client composed, else the Static Maps API with
+     * every shape drawn on it — the live WebGL map cannot be screenshotted.
+     *
+     * A map is always its owner's (2026-09-30): a new one belongs to whoever
+     * saves it, and its picture note goes to their Global Notes. Saved from a
+     * season's team canvas, it is also linked to that season. Writing into an
+     * existing map needs MapAccess::canEdit -- its owner, or a worker with
+     * the Maps pen on a season that uses it.
      */
     public function saveMap(Request $request)
     {
-        $schedule = $this->schedule($request->query('scheduleId'));
+        $schedule = $this->canvas($request);
         $meId = (int) Auth::id();
-        if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
-        }
-        // Saving files the map into the schedule's records — the note right,
-        // same line the whiteboard's save draws.
-        if (! \App\Support\WorkerContext::canAddNotes()) {
+        // Filing from a team canvas writes into the season's records -- the
+        // note right, same line the whiteboard's save draws. Your own canvas
+        // files into your own notes.
+        if ($schedule && ! \App\Support\WorkerContext::canAddNotes()) {
             return $this->jsonFail('You are not allowed to save to this schedule.', 403);
         }
         // The tier's map shelf: how many saved maps this member may keep.
         $mapCap = \App\Support\Tier::limit('mapsTotal');
         if ($mapCap !== null && ! $request->input('saveId')
-            && \App\Models\ScheduleMapSave::active()->where('userId', $meId)->count() >= $mapCap) {
+            && MapAccess::owned($meId)->count() >= $mapCap) {
             \App\Support\Tier::denyFor('mapsTotal', 'Your plan keeps up to ' . $mapCap . ' saved maps. Delete one, or move up to {plan} for more.');
         }
 
@@ -590,8 +517,7 @@ class ScheduleMapController extends BaseScheduleController
             return $this->jsonFail($validator->errors()->first(), 422);
         }
 
-        $objects = ScheduleMapObject::active()
-            ->where('scheduleId', $schedule->id)
+        $objects = $this->canvasQuery($schedule)
             ->orderBy('id')
             ->limit(2000)
             ->get()
@@ -603,25 +529,33 @@ class ScheduleMapController extends BaseScheduleController
 
         $mode = $request->input('mode');
         $quiet = $request->boolean('quiet');
-        $title = trim((string) $request->input('title')) ?: 'Team map';
+        $title = trim((string) $request->input('title')) ?: 'Map';
         $source = $request->input('source') === 'team' ? 'team' : 'solo';
         $description = trim((string) $request->input('description'));
 
         // Which saved map is being written into. Resolved up here rather than
         // at the end, because an autosave has to know whether it already owns
         // a note before it goes and makes one.
-        $existing = ($mode === 'map' && $request->filled('saveId'))
-            ? \App\Models\ScheduleMapSave::where('scheduleId', $schedule->id)
-                ->where('id', (int) $request->input('saveId'))
-                ->where('deleteStatus', 1)
-                ->first()
-            : null;
+        $existing = null;
+        if ($mode === 'map' && $request->filled('saveId')) {
+            $existing = ScheduleMapSave::active()->find((int) $request->input('saveId'));
+            if ($existing && ! MapAccess::canEdit($existing)) {
+                return $this->jsonFail('You can open this map but not change it. Save it as a new map of your own instead.', 403);
+            }
+        }
 
         // An autosave with nowhere to write is a bug on the client, not an
         // invitation to file a new map behind the user's back.
         if ($quiet && ! $existing) {
             return $this->jsonFail('That saved map no longer exists.', 404);
         }
+
+        // Whose map (and whose note) this is: the file's owner when writing
+        // into one, else whoever is saving it.
+        $ownerId = $existing ? (int) $existing->userId : $meId;
+        // Where the picture is kept: a map's note is its owner's own; a
+        // picture-only save from a team canvas is a note in that season.
+        $bucket = ($mode === 'image' && $schedule) ? $schedule->id : 0;
 
         // Best-effort picture; the reopenable snapshot never depends on it.
         $media = [];
@@ -639,7 +573,7 @@ class ScheduleMapController extends BaseScheduleController
         // write their sizes, so that path is the fallback, not the goal.
         $binary = $this->decodeDataUrlImage((string) $request->input('image'));
         if ($binary !== null) {
-            $path = \App\Support\MediaStore::putBinary($binary, 'maps', 'png', $schedule->id, $namePrefix);
+            $path = \App\Support\MediaStore::putBinary($binary, 'maps', 'png', $bucket ?: 'u' . $ownerId, $namePrefix);
             if ($path !== null) {
                 $media[] = ['type' => $mediaType, 'path' => $path, 'poster' => null];
             }
@@ -656,7 +590,7 @@ class ScheduleMapController extends BaseScheduleController
             try {
                 $img = \Illuminate\Support\Facades\Http::timeout(20)->get($url);
                 if ($img->ok() && str_starts_with((string) $img->header('Content-Type'), 'image/')) {
-                    $path = \App\Support\MediaStore::putBinary($img->body(), 'maps', 'png', $schedule->id, $namePrefix);
+                    $path = \App\Support\MediaStore::putBinary($img->body(), 'maps', 'png', $bucket ?: 'u' . $ownerId, $namePrefix);
                     if ($path !== null) {
                         $media[] = ['type' => $mediaType, 'path' => $path, 'poster' => null];
                     }
@@ -673,7 +607,7 @@ class ScheduleMapController extends BaseScheduleController
         $bodyText = $description !== '' ? $description : null;
         if ($mode === 'map') {
             $bodyText = trim(($description !== '' ? $description . "\n\n" : '')
-                . 'Saved team map — tap View map to open it.');
+                . 'Saved map — tap View map to open it.');
         }
         // A map that saves itself as it is edited writes back into the note it
         // already has. Minting one per autosave would bury an afternoon's
@@ -705,8 +639,8 @@ class ScheduleMapController extends BaseScheduleController
             }
         } else {
             $note = AsScheduleNote::create([
-                'croppingScheduleId' => $schedule->id,
-                'userId' => $meId,
+                'croppingScheduleId' => $bucket,
+                'userId' => $bucket ? $meId : $ownerId,
                 'title' => mb_substr($title, 0, 180),
                 'body' => $bodyText !== null
                     ? \App\Support\HtmlSanitizer::rich('<p>' . nl2br(e($bodyText)) . '</p>')
@@ -729,8 +663,8 @@ class ScheduleMapController extends BaseScheduleController
 
             // Writing back into the file this map was opened from: the same
             // record keeps its place in the list and its note keeps its
-            // history, rather than the team ending up with three copies of one
-            // plan and no way to tell which is current.
+            // history, rather than ending up with three copies of one plan
+            // and no way to tell which is current.
             if ($existing) {
                 $existing->update([
                     'title' => mb_substr($title, 0, 180),
@@ -739,8 +673,9 @@ class ScheduleMapController extends BaseScheduleController
                 ]);
                 $saveId = $existing->id;
             } else {
-                $saveId = \App\Models\ScheduleMapSave::create([
-                    'scheduleId' => $schedule->id,
+                $saveId = ScheduleMapSave::create([
+                    'scheduleId' => MapAccess::GLOBAL,
+                    'originScheduleId' => $schedule?->id,
                     'userId' => $meId,
                     'title' => mb_substr($title, 0, 180),
                     'source' => $source,
@@ -750,14 +685,18 @@ class ScheduleMapController extends BaseScheduleController
                 ])->id;
             }
 
+            if ($schedule) {
+                // The season this was drawn in uses it, so its team can open it.
+                MapAccess::link((int) $saveId, $schedule->id);
+                if ($request->has('tags')) {
+                    \App\Support\ScheduleTags::sync($schedule, 'map', (int) $saveId, $request->input('tags', []));
+                }
+            }
+
             // Everyone in the room is looking at these same shapes. Tell them
             // WHICH file they now belong to, so the next person to nudge one
             // writes back into it instead of forking a second copy.
-            if ($request->has('tags')) {
-                \App\Support\ScheduleTags::sync($schedule, 'map', (int) $saveId, $request->input('tags', []));
-            }
-
-            $this->emit($schedule->id, [
+            $this->emit($schedule, [
                 'action' => 'saved',
                 'saveId' => (int) $saveId,
                 'title' => mb_substr($title, 0, 180),
@@ -773,28 +712,22 @@ class ScheduleMapController extends BaseScheduleController
                 : ($mode === 'map'
                 ? (($saveId && $request->filled('saveId'))
                     ? 'Saved over “' . mb_substr($title, 0, 60) . '”.'
-                    : 'Map saved to Notes — reopen it any time from the map shelf'
-                    . (empty($media) ? ' (no picture: Static Maps API unavailable).' : ', and its picture is in Notes.'))
+                    : 'Map saved to your Maps — reopen it any time from Global and Quick Tools'
+                    . (empty($media) ? ' (no picture: Static Maps API unavailable).' : '.'))
                 : 'Saved to Notes as an image note.'),
         ]);
     }
 
-    /** Replace the live team map with a saved snapshot, for everyone. */
     /**
-     * Rename a saved map, reword what it was for, retie its tags — without
-     * opening the stage. The note the save filed keeps saying the same thing
-     * as the shelf: same title, and the description ahead of the boilerplate
-     * line the save itself wrote.
+     * Rename a saved map and reword what it was for, without opening the
+     * stage. The note the save filed keeps saying the same thing as the
+     * shelf: same title, and the description ahead of the boilerplate line
+     * the save itself wrote. Tags are a season's, so they are only tied when
+     * this comes from inside a season (?scheduleId=).
      */
     public function saveMeta(Request $request)
     {
-        $schedule = $this->schedule($request->query('scheduleId'));
-        if (! ScheduleTeam::canAccess($schedule, (int) Auth::id())) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
-        }
-        if (! \App\Support\WorkerContext::canAddNotes()) {
-            return $this->jsonFail('You are not allowed to save to this schedule.', 403);
-        }
+        $schedule = $this->canvas($request);
 
         $validator = Validator::make($request->all(), [
             'saveId' => 'required|integer',
@@ -806,27 +739,26 @@ class ScheduleMapController extends BaseScheduleController
             return $this->jsonFail($validator->errors()->first(), 422);
         }
 
-        $save = \App\Models\ScheduleMapSave::active()
-            ->where('scheduleId', $schedule->id)
-            ->find((int) $request->input('saveId'));
+        $save = MapAccess::editable($request->input('saveId'));
         if (! $save) {
-            return $this->jsonFail('That saved map no longer exists.', 404);
+            return $this->jsonFail('That saved map no longer exists, or is not yours to change.', 404);
         }
 
-        $title = trim((string) $request->input('title')) ?: 'Team map';
+        $title = trim((string) $request->input('title')) ?: 'Map';
         $save->update(['title' => mb_substr($title, 0, 180)]);
 
         if ($save->noteId && ($note = AsScheduleNote::active()->find($save->noteId))) {
             $description = trim((string) $request->input('description'));
             $bodyText = trim(($description !== '' ? $description . "\n\n" : '')
-                . 'Saved team map — tap View map to open it.');
+                . 'Saved map — tap View map to open it.');
             $note->update([
                 'title' => mb_substr($title, 0, 180),
                 'body' => \App\Support\HtmlSanitizer::rich('<p>' . nl2br(e($bodyText)) . '</p>'),
             ]);
         }
 
-        if ($request->has('tags')) {
+        if ($schedule && $request->has('tags')) {
+            MapAccess::link((int) $save->id, $schedule->id);
             \App\Support\ScheduleTags::sync($schedule, 'map', (int) $save->id, $request->input('tags', []));
         }
 
@@ -837,34 +769,47 @@ class ScheduleMapController extends BaseScheduleController
         ]]);
     }
 
+    /**
+     * Throw a saved map away. Only its owner may; the seasons that used it
+     * lose it with it (their lots forget it, its links go).
+     */
+    public function deleteSave(Request $request)
+    {
+        $save = ScheduleMapSave::active()->find((int) $request->input('id'));
+        if (! $save || ! MapAccess::isOwner($save)) {
+            return $this->jsonFail('That saved map no longer exists, or is not yours to delete.', 404);
+        }
+        $save->update(['deleteStatus' => 0]);
+        \App\Models\AsScheduleLot::where('mapSaveId', $save->id)->update(['mapSaveId' => null]);
+        \Illuminate\Support\Facades\DB::table('as_schedule_map_links')->where('saveId', $save->id)->delete();
+
+        return $this->jsonOk('Map deleted.');
+    }
+
+    /** Put a saved map on a canvas, replacing what is there. */
     public function loadSave(Request $request)
     {
-        $schedule = $this->schedule($request->query('scheduleId'));
+        $schedule = $this->canvas($request);
         $meId = (int) Auth::id();
-        if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
-        }
 
-        // Restoring a save clears every shape on the live map first. That is
+        // Restoring a save clears every shape on the team's map first. That is
         // a destructive edit to the farm's own map, not a thing that happens
         // only inside the room, so it asks the editing question.
-        $this->assertCanEdit();
+        $this->assertCanDraw($schedule);
 
-        $save = \App\Models\ScheduleMapSave::active()
-            ->where('scheduleId', $schedule->id)
-            ->find($request->input('id'));
+        $save = MapAccess::viewable($request->input('id'));
         if (! $save) {
             return $this->jsonFail('That saved map no longer exists.', 404);
         }
 
         $objects = json_decode((string) $save->objects, true) ?: [];
-        ScheduleMapObject::active()->where('scheduleId', $schedule->id)->update(['deleteStatus' => 0]);
+        $this->canvasQuery($schedule)->update(['deleteStatus' => 0]);
         foreach (array_slice($objects, 0, 2000) as $o) {
             if (! is_array($o['points'] ?? null) || empty($o['points'])) {
                 continue;
             }
             ScheduleMapObject::create([
-                'scheduleId' => $schedule->id,
+                'scheduleId' => $schedule?->id ?? $this->ownKey,
                 'userId' => $meId,
                 'kind' => $o['kind'] ?? 'pen',
                 'color' => $o['color'] ?? null,
@@ -882,14 +827,20 @@ class ScheduleMapController extends BaseScheduleController
         // One event; every client refetches rather than replaying a giant diff.
         // It names the save, too: a client that does not know which file is on
         // screen cannot write its own edits back into it.
-        $this->emit($schedule->id, [
+        $this->emit($schedule, [
             'action' => 'reload',
             'saveId' => (int) $save->id,
             'title' => (string) $save->title,
             'actorUserId' => $meId,
         ]);
 
-        return response()->json(['success' => true, 'message' => 'Map loaded for the team.']);
+        return response()->json([
+            'success' => true,
+            'message' => $schedule ? 'Map loaded for the team.' : 'Map opened.',
+            // Whether the opener may write back into it; a view-only opener's
+            // edits stay on their canvas until they save a map of their own.
+            'data' => ['canEdit' => MapAccess::canEdit($save), 'mine' => MapAccess::isOwner($save), 'title' => (string) $save->title],
+        ]);
     }
 
     /**
@@ -1005,10 +956,11 @@ class ScheduleMapController extends BaseScheduleController
     /** Live GPS position — broadcast to the room, never stored. */
     public function location(Request $request)
     {
-        $schedule = $this->schedule($request->query('scheduleId'));
+        $schedule = $this->canvas($request);
         $me = Auth::user();
-        if (! ScheduleTeam::canAccess($schedule, (int) $me->id)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+        // Nobody else is on your own canvas to be told where you are.
+        if (! $schedule) {
+            return response()->json(['success' => true]);
         }
 
         $validator = Validator::make($request->all(), [
@@ -1036,10 +988,14 @@ class ScheduleMapController extends BaseScheduleController
         return response()->json(['success' => true]);
     }
 
-    private function emit(int $scheduleId, array $payload): void
+    /** Tell a season's room; your own canvas has no room to tell. */
+    private function emit(?\App\Models\AsCroppingSchedule $schedule, array $payload): void
     {
+        if (! $schedule) {
+            return;
+        }
         try {
-            broadcast(new ScheduleMapPushed($scheduleId, $payload));
+            broadcast(new ScheduleMapPushed($schedule->id, $payload));
         } catch (\Throwable $e) {
             // best-effort — the poll fallback reconciles
         }

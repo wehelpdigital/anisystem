@@ -1,7 +1,13 @@
-{{-- Collab Room map: draw and measure over real ground, together.
-     Google Maps JS API (key in services.google_maps.key). Shapes persist and
-     broadcast on the schedule's board channel; member GPS positions broadcast
-     but are never stored. Expects: $schedule. --}}
+{{-- The map: draw and measure over real ground.
+     Google Maps JS API (key in services.google_maps.key).
+
+     Two canvases (2026-09-30). With a $schedule it is that season's TEAM
+     canvas, the Collab Room's: shapes persist and broadcast on the season's
+     board channel, member GPS positions broadcast but are never stored.
+     With $schedule null it is YOUR OWN canvas -- the global Maps page, a
+     lot's map -- and nothing broadcasts. Saved maps are always their owner's
+     (see App\Support\MapAccess). A lot's map passes $lotSchedule, the season
+     the lot's own pin and link endpoints answer to. --}}
 @php $cmapKey = config('services.google_maps.key'); @endphp
 
 <div class="cmap-wrap" id="cmapWrap">
@@ -26,7 +32,11 @@
      * is hidden by CSS rather than left out: the engine binds several of
      * these buttons without null guards, and a missing element would take
      * the whole map down with it. */
-    $cmapMayDraw = \App\Support\WorkerContext::canWriteModule('maps');
+    $schedule = $schedule ?? null;
+    $cmapOwn = ! $schedule;
+    // Your own canvas is yours to draw on. A team canvas, and a lot's map
+    // (the farm's), answer to the Maps pen.
+    $cmapMayDraw = ($cmapOwn && $mapChrome !== 'lot') ? true : \App\Support\WorkerContext::canWriteModule('maps');
 @endphp
 @if ($mapChrome === 'team')
     {{-- Only the Collab Room draws it: there the map is one tab among
@@ -226,7 +236,7 @@
         <div class="sheet hidden" id="cmapSavesSheet" style="--sheet-width:26rem">
             <div class="sheet-handle"></div>
             <div class="sheet-header">
-                <h3 class="sheet-title">Saved team maps</h3>
+                <h3 class="sheet-title">{{ $cmapOwn ? 'Your maps' : 'Saved maps' }}</h3>
                 <button type="button" class="icon-btn" data-sheet-close aria-label="Close">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
@@ -257,7 +267,10 @@
                 <input type="text" id="cmapSaveName" class="form-input" placeholder="e.g. North lot irrigation plan" autocomplete="off">
                 <label class="cmap-save-label" for="cmapSaveDesc">What is this map about? (optional)</label>
                 <textarea id="cmapSaveDesc" class="form-textarea" rows="3"></textarea>
+                @unless ($cmapOwn)
+                {{-- A season's words; your own maps are not a season's. --}}
                 <div class="tp-mount" id="cmapTagsMount" data-tags data-tags-kind="map" style="margin-top:.6rem"></div>
+                @endunless
                 {{-- Shown only when the shapes on screen came from a saved
                      map: the usual answer is "this one, changed". --}}
                 <button type="button" class="cmap-save-go cmap-save-over" id="cmapSaveOver" hidden><span id="cmapSaveOverLabel">Save over this map</span></button>
@@ -347,9 +360,9 @@
         <button type="button" class="cmap-tool" id="cmapFindMe" title="Centre the map on me" aria-label="Centre the map on my position">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.25"/><circle cx="12" cy="12" r="8"/><path stroke-linecap="round" d="M12 1.5v2.5M12 20v2.5M1.5 12h2.5M20 12h2.5"/></svg>
         </button>
-        @if ($mapChrome !== 'lot')
+        @if ($mapChrome !== 'lot' && ! $cmapOwn)
         {{-- Broadcasting where you are standing is a thing you do for a room.
-             A lot's own map has nobody in it to tell. --}}
+             Your own map, and a lot's, have nobody in it to tell. --}}
         <button type="button" class="cmap-tool" id="cmapGps" title="Share my live GPS position with the team" aria-label="Share my live GPS position">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><path stroke-linecap="round" d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22M12 12h.01"/></svg>
         </button>
@@ -357,8 +370,8 @@
         <button type="button" class="cmap-tool is-active" id="cmapLayer" title="Toggle map / satellite" aria-label="Toggle map or satellite view" aria-pressed="true">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>
         </button>
-        @if (\App\Support\WorkerContext::canEdit())
-        <button type="button" class="cmap-tool cmap-danger" id="cmapClear" title="Clear the whole map for the team" aria-label="Clear the map for the team">
+        @if ($cmapOwn || \App\Support\WorkerContext::canEdit())
+        <button type="button" class="cmap-tool cmap-danger" id="cmapClear" title="{{ $cmapOwn ? 'Clear the map' : 'Clear the whole map for the team' }}" aria-label="{{ $cmapOwn ? 'Clear the map' : 'Clear the map for the team' }}">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>
         </button>
         @endif
@@ -368,7 +381,7 @@
              and every mark after it writes back (see ensureLotFile). A Save
              here would only be a second door onto the same act, and the one
              that mints a duplicate file. --}}
-        @if ($mapChrome !== 'lot' && \App\Support\WorkerContext::canAddNotes())
+        @if ($mapChrome !== 'lot' && ($cmapOwn || \App\Support\WorkerContext::canAddNotes()))
         <button type="button" class="cmap-tool cmap-savebtn" id="cmapSaveMenuBtn" title="Open or save a map" aria-label="Open or save a map">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
         </button>
@@ -799,7 +812,13 @@
 <script>
 (() => {
     if (window.initCollabMap) return;
-    const SID = {{ (int) $schedule->id }};
+    // A season's id is its team canvas. 0 is your own (the Maps page), and
+    // -lotId a lot's own scratch canvas, so a lot never clears the Maps page.
+    const SID = {{ (int) ($schedule->id ?? ($canvasKey ?? 0)) }};
+    // Each of your own canvases keeps its own undo history.
+    const UNDO_MODULE = SID < 0 ? 'map:c' + (-SID) : 'map';
+    // The season a lot's pin and link are written to (a lot's map only).
+    const LOT_SID = {{ (int) (($lotSchedule ?? null)?->id ?? ($schedule->id ?? 0)) }};
     // This file had always reached for the global escapeHtml; the saved-map
     // list I added called it esc, which exists in the other partials and never
     // here — so opening the list threw before it drew a single row.
@@ -1576,7 +1595,7 @@
     function persistHist() {
         clearTimeout(persistHist._t);
         persistHist._t = setTimeout(() => {
-            api(`${URLS.undoJournal}?scheduleId=${SID}&module=map`, {
+            api(`${URLS.undoJournal}?scheduleId=${Math.max(0, SID)}&module=${UNDO_MODULE}`, {
                 method: 'POST',
                 body: { undo: histUndo.slice(-15), redo: histRedo.slice(-15) },
             }).catch(() => {});
@@ -1586,7 +1605,7 @@
         if (histSeeded) return;
         histSeeded = true;
         try {
-            const res = await api(`${URLS.undoJournal}?scheduleId=${SID}&module=map`);
+            const res = await api(`${URLS.undoJournal}?scheduleId=${Math.max(0, SID)}&module=${UNDO_MODULE}`);
             if (!histUndo.length && Array.isArray(res.data.undo)) histUndo.push(...res.data.undo);
             if (!histRedo.length && Array.isArray(res.data.redo)) histRedo.push(...res.data.redo);
             syncHistBtns();
@@ -1741,7 +1760,7 @@
             pushHist({ type: 'add', object: res.data.object });
             // A label says its own thing about what to do next, and pen
             // strokes say nothing at all.
-            if (kind !== 'pen' && kind !== 'text' && window.toast) toast(CHROME === 'lot' ? 'Saved.' : 'Saved to the team map.');
+            if (kind !== 'pen' && kind !== 'text' && window.toast) toast(SID > 0 && CHROME !== 'lot' ? 'Saved to the team map.' : 'Saved.');
             return res.data.object;
         } catch (e) { if (window.toast) toast(e.message, 'error'); return null; }
     }
@@ -2115,7 +2134,7 @@
             // scheduleId, not id: every write on the Lots controller reads
             // the schedule off that key, and a missing one is a 404 rather
             // than a helpful error.
-            await api(LOT_PIN_URL + '?scheduleId=' + SID, {
+            await api(LOT_PIN_URL + '?scheduleId=' + LOT_SID, {
                 method: 'POST',
                 body: { lotId: ATTACH.id, lat: pt[0], lng: pt[1], label: label || ATTACH.name },
             });
@@ -2156,7 +2175,7 @@
     async function unpinTheLot() {
         if (!ATTACH) return;
         try {
-            await api(LOT_PIN_URL + '?scheduleId=' + SID, {
+            await api(LOT_PIN_URL + '?scheduleId=' + LOT_SID, {
                 method: 'POST', body: { lotId: ATTACH.id, mapSaveId: ATTACH.mapSaveId || null },
             });
             ATTACH.pinned = false;
@@ -3541,7 +3560,7 @@
             // The lot keeps which map is its own. Quiet on failure: the map
             // is written either way, and the link can be made again by the
             // next mark.
-            await api(LOT_LINK_URL + '?scheduleId=' + SID, {
+            await api(LOT_LINK_URL + '?scheduleId=' + LOT_SID, {
                 method: 'POST', body: { lotId: ATTACH.id, mapSaveId: r.data.saveId },
             }).catch(() => {});
             return LOADED_SAVE;
@@ -3773,7 +3792,7 @@
                 if (ATTACH) {
                     ATTACH.mapSaveId = r.data.saveId;
                     if (ATTACH.pinned) {
-                        api(LOT_PIN_URL + '?scheduleId=' + SID, {
+                        api(LOT_PIN_URL + '?scheduleId=' + LOT_SID, {
                             method: 'POST',
                             body: {
                                 lotId: ATTACH.id, lat: ATTACH.lat, lng: ATTACH.lng,
@@ -3784,7 +3803,7 @@
                         // No pin yet — the pin endpoint would read missing
                         // coordinates as "remove the pin". The link travels
                         // its own quiet road instead.
-                        api(LOT_LINK_URL + '?scheduleId=' + SID, {
+                        api(LOT_LINK_URL + '?scheduleId=' + LOT_SID, {
                             method: 'POST',
                             body: { lotId: ATTACH.id, mapSaveId: r.data.saveId },
                         }).catch(() => { /* the map is saved; the link is a nicety */ });
@@ -3885,8 +3904,17 @@
         // no longer true.
         raiseVeil('Opening ' + (sv.name || 'the map') + '…');
         try {
-            await api(`${URLS.load}?scheduleId=${SID}`, { method: 'POST', body: { id: sv.id } });
-            setLoadedSave(sv);
+            const res = await api(`${URLS.load}?scheduleId=${SID}`, { method: 'POST', body: { id: sv.id } });
+            const got = (res && res.data) || {};
+            if (got.canEdit === false) {
+                /* A map you may look at but not change (a farm map, for a
+                   worker without the Maps pen): it is on your canvas, and
+                   nothing you do here writes back into it. */
+                setLoadedSave(null);
+                if (window.toast) toast('You can look at this map, not change it. Save it as a map of your own to keep changes.');
+            } else {
+                setLoadedSave({ id: sv.id, title: got.title || sv.title });
+            }
             window.closeSheet?.('cmapSavesSheet');
             endEdit(); dropAll();
             histUndo.length = 0; histRedo.length = 0; syncHistBtns();
@@ -3945,7 +3973,7 @@
         if (!silent) {
             const n = objIndex.size;
             const ok = window.confirmAction
-                ? await confirmAction({ title: 'Start a blank map?', message: 'Removes the ' + n + ' shape' + (n === 1 ? '' : 's') + ' on the canvas for the whole team. Save the current map first if it is worth keeping.', confirmText: 'Start blank' })
+                ? await confirmAction({ title: 'Start a blank map?', message: 'Removes the ' + n + ' shape' + (n === 1 ? '' : 's') + ' on the canvas' + (SID > 0 ? ' for the whole team' : '') + '. Save the current map first if it is worth keeping.', confirmText: 'Start blank' })
                 : confirm('Start a blank map? This clears the current shapes for everyone.');
             if (!ok) return;
         }
@@ -3967,9 +3995,10 @@
                 if (LOADED_SAVE && LOADED_SAVE.id === ask.id) continue;   // already on screen
                 try {
                     const r = await api(`${URLS.saves}?scheduleId=${SID}`);
-                    const sv = (r.data.saves || []).find((s) => s.id === ask.id);
-                    if (sv) await loadSavedMap(sv);
-                    else if (window.toast) toast('That saved map no longer exists.', 'error');
+                    // Not on this shelf is not the same as gone: a lot's map
+                    // may be a teammate's. The server says whether it opens.
+                    const sv = (r.data.saves || []).find((s) => s.id === ask.id) || { id: ask.id, title: '' };
+                    await loadSavedMap(sv);
                 } catch (e) { if (window.toast) toast(e.message, 'error'); }
             }
         } finally { drainingAsk = false; }
@@ -4175,7 +4204,7 @@
         document.getElementById('cmapGps')?.addEventListener('click', (e) => toggleGps(e.currentTarget));
         document.getElementById('cmapClear')?.addEventListener('click', async () => {
             const ok = window.confirmAction
-                ? await confirmAction({ title: 'Clear the map?', message: 'Removes every shape for the whole team.', confirmText: 'Clear map' })
+                ? await confirmAction({ title: 'Clear the map?', message: SID > 0 ? 'Removes every shape for the whole team.' : 'Removes every shape on this canvas. Saved maps stay on your shelf.', confirmText: 'Clear map' })
                 : confirm('Clear the map for everyone?');
             if (!ok) return;
             try {
@@ -4198,7 +4227,8 @@
         // The browser still asks permission; declining just leaves it off.
         if (document.getElementById('cmapGps')) toggleGps(document.getElementById('cmapGps'));
 
-        if (window.Echo) {
+        // Only a season's canvas has a room to listen to.
+        if (window.Echo && SID > 0) {
             try {
                 const ch = window.Echo.private('schedule-board.' + SID);
                 ch.listen('.map.object', (p) => {

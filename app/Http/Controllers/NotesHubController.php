@@ -63,8 +63,11 @@ class NotesHubController extends Controller
         $items = collect();
 
         // Global notes (this hub's own).
+        // Maps are their owners' now, and each one's picture note is a note
+        // of your own: its chip opens the map itself.
+        $ownSavesByNote = \App\Support\MapAccess::owned($userId)->whereNotNull('noteId')->orderByDesc('id')->pluck('id', 'noteId');
         foreach (AsScheduleNote::active()->where('userId', $userId)->where('croppingScheduleId', self::GLOBAL_SCHEDULE_ID)->orderByDesc('id')->get() as $n) {
-            $row = $this->row($n->id, 'global', $n->title, $n->body, $n->imagePath, 'Global note', null, $n->updated_at, $n->media);
+            $row = $this->row($n->id, 'global', $n->title, $n->body, $n->imagePath, 'Global note', null, $n->updated_at, $n->media, null, $ownSavesByNote[$n->id] ?? null);
             $row['tags'] = array_values(array_filter((array) ($n->tags ?? []), 'is_string'));
             $items->push($row);
         }
@@ -73,7 +76,7 @@ class NotesHubController extends Controller
         // can open the map itself rather than the module's front door. One
         // lookup for the whole shelf; note ids are unique across seasons.
         $savesByNote = empty($scheduleIds) ? collect() : \App\Models\ScheduleMapSave::active()
-            ->whereIn('scheduleId', $scheduleIds)
+            ->whereIn('id', \Illuminate\Support\Facades\DB::table('as_schedule_map_links')->whereIn('scheduleId', $scheduleIds)->select('saveId'))
             ->whereNotNull('noteId')
             ->orderByDesc('id')
             ->pluck('id', 'noteId');
@@ -290,15 +293,14 @@ class NotesHubController extends Controller
                     'title' => $m['title'] ?? null,
                     'url' => \App\Support\MediaStore::url($m['path']),
                     'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
-                    // A season's drawing or map opens in its module, exactly as
-                    // the season's own Notes shelf links it. A global note has
-                    // no module, so its chip keeps opening the picture — and a
-                    // worker is not sent to a module that would only say no.
-                    'mapUrl' => ($isMap && $scheduleId && ! $inWorker)
-                        ? route('sm.maps', array_filter(['id' => $scheduleId, 'save' => $mapSaveId]))
+                    // A drawing or a map opens in Draw or Maps (Global and
+                    // Quick Tools), on that very one when it is known. A
+                    // worker is not sent to a farm map they may not open.
+                    'mapUrl' => $isMap && ($mapSaveId || ($scheduleId && ! $inWorker))
+                        ? ($mapSaveId ? \App\Support\MapAccess::url((int) $mapSaveId) : route('maps.page'))
                         : null,
-                    'drawUrl' => (($m['type'] ?? '') === 'drawing' && $scheduleId && $noteId)
-                        ? route('sm.draw', ['id' => $scheduleId, 'open' => $noteId . ':' . $i])
+                    'drawUrl' => (($m['type'] ?? '') === 'drawing' && $noteId)
+                        ? route('draw.page', ['open' => $noteId . ':' . $i])
                         : null,
                 ];
             })

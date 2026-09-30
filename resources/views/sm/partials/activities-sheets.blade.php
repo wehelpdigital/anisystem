@@ -874,7 +874,6 @@
                 ['post-harvest', 'Observations', 'M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z'],
                 ['notes', 'Notes', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
                 ['tags', 'Tags', 'M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-5 5a2 2 0 01-2.828 0l-7-7A2 2 0 013 11V5a2 2 0 012-2h2z'],
-                ['maps', 'Maps', 'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2M15 11.5a2 2 0 11-4 0 2 2 0 014 0z'],
                 ['gallery', 'Gallery', 'M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM8 14l2.5-3 2 2.5L15 10l3 4'],
                 ['growth', 'Growth Stages', 'M12 21c0-4 1-7 4-9M12 21c0-5-2-8-6-9m6 9V8m0 0c0-2.5 1.5-4 4-4 0 2.5-1.5 4-4 4zm0 0C12 5.5 10.5 4 6.5 4c0 2.5 1.5 4 5.5 4z'],
                 ['weather', 'Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z'],
@@ -1271,8 +1270,6 @@
                 // Today's camera, without first finding today on the board.
                 ['captureTodayPhotoBtn', 'Capture a photo', 'M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9zm12 4a3 3 0 11-6 0 3 3 0 016 0z', '', ''],
                 ['recordTodayVideoBtn', 'Record a video', 'M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z', '', ''],
-                ['openDrawBtn', 'Draw', 'M4 20l4-1L20 7a2 2 0 00-3-3L5 16l-1 4zM14 6l4 4', '', ''],
-                ['openMapsBtn', 'Maps', 'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2', '', ''],
                 ['collabRoomBtn', 'Collab Room', 'M3 4h18M5 4v11a2 2 0 002 2h10a2 2 0 002-2V4M8 9h8M8 12h5M12 17v4m-3 0h6', '', ''],
                 ['contractAllBtn', 'Contract All', 'M5 11l7-7 7 7M5 19l7-7 7 7', '', ''],
                 ['toggleHiddenBtn', 'Show Hidden', 'M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21', '', 'actHiddenLabel'],
@@ -1291,8 +1288,6 @@
             $toolDoor = [
                 'captureTodayPhotoBtn' => $may('camera'),
                 'recordTodayVideoBtn' => $may('video'),
-                'openDrawBtn' => $may('draw'),
-                'openMapsBtn' => $may('maps'),
                 'openNotesBtn' => $may('notes'),
             ];
             $actRows = array_values(array_filter($actRows, fn ($r) => $toolDoor[$r[0]] ?? true));
@@ -1305,8 +1300,6 @@
                 'openNotesBtn' => 'sticky-note.png',
                 'captureTodayPhotoBtn' => 'camera.png',
                 'recordTodayVideoBtn' => 'video-camera-b.png',
-                'openDrawBtn' => 'writting.png',
-                'openMapsBtn' => 'location-marker.png',
                 'collabRoomBtn' => 'united.png',
             ];
         @endphp

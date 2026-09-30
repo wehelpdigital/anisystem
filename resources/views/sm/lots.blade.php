@@ -63,6 +63,43 @@
 @endsection
 
 @push('sheets')
+{{-- ATTACH A MAP (2026-09-30).
+
+     Maps are the grower's own now, drawn once in Maps and worn by any lot in
+     any season. So "Attach a map" asks one thing first: a map you already
+     have, or a new one. Picking one ties it to the lot (and the season, so
+     the team can open it); "Draw a new map" opens the lot's own map page,
+     where the first mark makes the file. --}}
+<div class="sheet hidden" id="lotMapPickSheet" style="--sheet-width:32rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <div class="min-w-0">
+            <h3 class="sheet-title">Attach a map</h3>
+            <p class="text-xs text-gray-500 truncate" id="lotMapPickFor"></p>
+        </div>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body lmp-body">
+        <a class="lmp-new" id="lotMapPickNew" href="#">
+            <span class="lmp-new-ico">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>
+            </span>
+            <span class="lmp-new-txt">
+                <b>Draw a new map</b>
+                <i>Pin where this lot is and draw its boundary — it saves itself as you go.</i>
+            </span>
+            <svg class="lmp-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
+        <div class="lmp-or"><span>or use one you already have</span></div>
+        <div class="relative lmp-searchwrap" id="lotMapPickSearchWrap" hidden>
+            <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+            <input type="search" id="lotMapPickSearch" class="form-input pl-10!" placeholder="Search your maps" autocomplete="off">
+        </div>
+        <div class="lmp-grid" id="lotMapPickGrid" aria-live="polite"></div>
+        <p class="lmp-empty" id="lotMapPickEmpty" hidden></p>
+    </div>
+</div>
+
 {{-- The lots search, behind its own small sheet. Typing filters the grid
      live underneath; closing keeps the filter (the pill shows the way off). --}}
 <div class="sheet hidden" id="lotSearchSheet" style="--sheet-width:26rem">
@@ -397,6 +434,57 @@
     html.dark .lot-pin-chip { background: rgb(225 29 72 / .16); border-color: rgb(225 29 72 / .3); color: #fda4af; }
     html.dark .lot-pin-chip:hover { background: rgb(225 29 72 / .24); }
     @media (prefers-reduced-motion: reduce) { .lot-pin-chip { transition: none; } }
+
+    /* ---- Attach a map: new, or one you already have ---- */
+    .lmp-body { display: flex; flex-direction: column; gap: .8rem; }
+    .lmp-new { display: flex; align-items: center; gap: .75rem; padding: .8rem .9rem; border-radius: .9rem;
+        text-decoration: none; border: 1.5px dashed var(--color-brand-300); background: var(--color-brand-50);
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .lmp-new:hover { border-color: var(--color-brand-500); transform: translateY(-1px); }
+    .lmp-new-ico { width: 2.5rem; height: 2.5rem; border-radius: .75rem; flex: none; display: inline-flex;
+        align-items: center; justify-content: center; background: var(--color-brand-600); color: #fff; }
+    .lmp-new-ico svg { width: 1.3rem; height: 1.3rem; }
+    .lmp-new-txt { min-width: 0; flex: 1 1 auto; }
+    .lmp-new-txt b { display: block; font-size: .9rem; font-weight: 800; color: var(--color-brand-800); }
+    .lmp-new-txt i { display: block; font-style: normal; font-size: .74rem; color: var(--color-gray-600); line-height: 1.35; }
+    .lmp-go { width: 1rem; height: 1rem; flex: none; color: var(--color-brand-600); }
+    .lmp-or { display: flex; align-items: center; gap: .6rem; font-size: .72rem; font-weight: 700; color: var(--color-gray-400);
+        text-transform: uppercase; letter-spacing: .05em; }
+    .lmp-or::before, .lmp-or::after { content: ''; flex: 1 1 auto; height: 1px; background: var(--color-gray-200); }
+    .lmp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr)); gap: .6rem; }
+    .lmp-card { display: flex; flex-direction: column; overflow: hidden; text-align: left; cursor: pointer;
+        border: 1px solid var(--color-gray-200); border-radius: .8rem; background: var(--color-white);
+        animation: lmpIn .32s cubic-bezier(.22,1,.36,1) both;
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    .lmp-card:hover { border-color: var(--color-brand-400); box-shadow: 0 10px 24px -18px rgb(0 0 0 / .5); transform: translateY(-1px); }
+    .lmp-card.is-busy { opacity: .55; pointer-events: none; }
+    .lmp-card.is-picked { border-color: var(--color-brand-500); box-shadow: 0 0 0 2px var(--color-brand-200); }
+    .lmp-thumb { position: relative; aspect-ratio: 4 / 3; background: var(--color-gray-50); display: flex;
+        align-items: center; justify-content: center; color: #6b9f3d; overflow: hidden; }
+    .lmp-thumb > svg { width: 1.8rem; height: 1.8rem; }
+    .lmp-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0;
+        transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .lmp-thumb img.is-loaded { opacity: 1; }
+    .lmp-meta { padding: .45rem .55rem .55rem; min-width: 0; }
+    .lmp-name { display: block; font-size: .78rem; font-weight: 700; color: var(--color-gray-900); line-height: 1.25;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lmp-sub { display: block; font-size: .66rem; color: var(--color-gray-500); margin-top: .1rem;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lmp-skel { border-radius: .8rem; aspect-ratio: 4 / 4.2; background: linear-gradient(90deg, var(--color-gray-100) 0%, var(--color-gray-50) 50%, var(--color-gray-100) 100%);
+        background-size: 200% 100%; animation: lmpShim 1.2s linear infinite; }
+    .lmp-empty { text-align: center; font-size: .82rem; color: var(--color-gray-500); padding: .8rem .5rem; }
+    @keyframes lmpIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    @keyframes lmpShim { to { background-position: -200% 0; } }
+    html.dark .lmp-new { background: rgb(107 159 61 / .12); border-color: rgb(107 159 61 / .45); }
+    html.dark .lmp-new-txt b { color: #cfe6b8; }
+    html.dark .lmp-card { background: #151b12; border-color: #2b3a1c; }
+    html.dark .lmp-name { color: #e8efe1; }
+    html.dark .lmp-thumb { background: #1b2416; }
+    html.dark .lmp-skel { background: linear-gradient(90deg, #1b2416 0%, #243019 50%, #1b2416 100%); background-size: 200% 100%; }
+    @media (prefers-reduced-motion: reduce) {
+        .lmp-new, .lmp-card, .lmp-thumb img { transition: none; animation: none; }
+        .lmp-skel { animation: none; }
+    }
 </style>
 <style>
     /* A field that is still filling itself, saying so.
@@ -735,6 +823,92 @@ const __init = () => {
     // exists, only 'edit' may attach, detach or start one.
     const MAPS_ACCESS = @json(\App\Support\WorkerContext::moduleAccess('maps'));
 
+    /* ---- Attach a map: new, or one you already have ---------------------
+       The maps come from the season (maps it already uses) and from your own
+       Maps. Picking one ties it to the lot; nothing is copied, so a change
+       to the map shows on every lot that wears it. */
+    const MAP_CHOICES_URL = @json(route('sm.lots.map.choices')) + '?scheduleId=' + {{ $schedule->id }};
+    const MAP_LINK_URL = @json(route('sm.lots.map.link')) + '?scheduleId=' + {{ $schedule->id }};
+    const MAP_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>';
+    let mapPickLot = null, mapChoices = null, mapPickBusy = false;
+
+    function paintMapChoices() {
+        const grid = document.getElementById('lotMapPickGrid');
+        const empty = document.getElementById('lotMapPickEmpty');
+        const wrap = document.getElementById('lotMapPickSearchWrap');
+        if (!grid) return;
+        if (mapChoices === null) {
+            grid.innerHTML = '<div class="lmp-skel"></div><div class="lmp-skel"></div><div class="lmp-skel"></div>';
+            empty.hidden = true;
+            return;
+        }
+        const q = (document.getElementById('lotMapPickSearch')?.value || '').trim().toLowerCase();
+        const rows = mapChoices.filter((m) => !q || [m.title, m.season, m.description].filter(Boolean).join(' ').toLowerCase().includes(q));
+        wrap.hidden = mapChoices.length < 7;
+        grid.innerHTML = rows.map((m, i) => {
+            const src = m.thumbUrl || m.imageUrl;
+            const sub = [m.count + ' shape' + (m.count === 1 ? '' : 's'), m.mine === false ? 'farm map' : null, m.season].filter(Boolean).join(' · ');
+            return `<button type="button" class="lmp-card" data-pick-map="${m.id}" style="animation-delay:${Math.min(i, 10) * 35}ms">
+                <span class="lmp-thumb">${MAP_ICON}${src ? `<img src="${escapeHtml(src)}" alt="" loading="lazy" onload="this.classList.add('is-loaded')" onerror="this.remove()">` : ''}</span>
+                <span class="lmp-meta"><span class="lmp-name">${escapeHtml(m.title || 'Map')}</span><span class="lmp-sub">${escapeHtml(sub)}</span></span>
+            </button>`;
+        }).join('');
+        empty.hidden = rows.length > 0;
+        empty.textContent = mapChoices.length
+            ? 'No map matches that.'
+            : 'You have no saved maps yet. Draw a new one above — it will be here for every lot after that.';
+    }
+
+    async function openMapPick(lot) {
+        mapPickLot = lot;
+        document.getElementById('lotMapPickFor').textContent = 'For ' + (lot.lotName || 'this lot');
+        document.getElementById('lotMapPickNew').href = `${MAP_URL}&lot=${lot.id}`;
+        const search = document.getElementById('lotMapPickSearch');
+        if (search) search.value = '';
+        // What was fetched last time shows at once; the fresh list replaces it.
+        paintMapChoices();
+        openSheet('lotMapPickSheet');
+        try {
+            const res = await api(MAP_CHOICES_URL);
+            mapChoices = (res.data && res.data.maps) || [];
+        } catch (err) {
+            mapChoices = mapChoices || [];
+            toast(err.message || 'Could not load your maps.', 'error');
+        }
+        paintMapChoices();
+    }
+
+    document.addEventListener('input', (e) => { if (e.target.id === 'lotMapPickSearch') paintMapChoices(); });
+    document.addEventListener('click', async (e) => {
+        const card = e.target.closest('[data-pick-map]');
+        if (!card || !mapPickLot || mapPickBusy) return;
+        mapPickBusy = true;
+        const lot = mapPickLot;
+        const id = Number(card.getAttribute('data-pick-map'));
+        card.classList.add('is-busy');
+        try {
+            const res = await api(MAP_LINK_URL, { method: 'POST', body: { lotId: lot.id, mapSaveId: id } });
+            card.classList.remove('is-busy');
+            card.classList.add('is-picked');
+            const fresh = res.data && (res.data.data || res.data);
+            const i = LOTS.findIndex((l) => l.id === lot.id);
+            if (i >= 0 && fresh && fresh.id) LOTS[i] = fresh; else if (i >= 0) LOTS[i].mapSaveId = id;
+            // A beat on the picked card, then the sheet goes and the lot shows its map.
+            const calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+            setTimeout(() => {
+                closeSheet('lotMapPickSheet');
+                renderList();
+                toast(res.message || 'Map attached.');
+                if (fresh && fresh.id) tellBoard('sm:lot-saved', fresh);
+            }, calm ? 0 : 260);
+        } catch (err) {
+            card.classList.remove('is-busy');
+            toast(err.message || 'Could not attach that map.', 'error');
+        } finally {
+            mapPickBusy = false;
+        }
+    });
+
     function lotCardHtml(lot) {
         // Same golden-angle hue the lot gets on its activity cards, so the colour
         // reads as "this lot" consistently across modules.
@@ -789,8 +963,11 @@ const __init = () => {
                     const btns = [];
                     if (MAY_EDIT_LOTS) btns.push(`<button type="button" class="btn btn-white btn-sm" data-edit-lot="${lot.id}">Edit</button>`);
                     const mayAttach = MAPS_ACCESS === 'edit' && MAY_EDIT_BOARD;
-                    if (lot.mapSaveId ? MAPS_ACCESS !== 'none' : mayAttach) {
-                        btns.push(`<a class="btn btn-white btn-sm" href="${MAP_URL}&lot=${lot.id}">${lot.mapSaveId ? 'Open the map' : 'Attach a map'}</a>`);
+                    if (lot.mapSaveId && MAPS_ACCESS !== 'none') {
+                        btns.push(`<a class="btn btn-white btn-sm" href="${MAP_URL}&lot=${lot.id}">Open the map</a>`);
+                    } else if (!lot.mapSaveId && mayAttach) {
+                        // New, or one of the maps you already have: asked in a sheet.
+                        btns.push(`<button type="button" class="btn btn-white btn-sm" data-attach-map="${lot.id}">Attach a map</button>`);
                     }
                     if (lot.mapSaveId && mayAttach) btns.push(`<button type="button" class="btn btn-white btn-sm text-red-600" data-detach-map="${lot.id}">Detach map</button>`);
                     if (MAY_EDIT_LOTS) btns.push(`<button type="button" class="btn btn-ghost btn-sm px-2.5! text-red-500 hover:bg-red-50! ml-auto" data-delete-lot="${lot.id}" aria-label="Delete lot">
@@ -988,14 +1165,21 @@ const __init = () => {
             return;
         }
 
+        const attachBtn = e.target.closest('[data-attach-map]');
+        if (attachBtn) {
+            const lot = LOTS.find((l) => String(l.id) === attachBtn.getAttribute('data-attach-map'));
+            if (lot) openMapPick(lot);
+            return;
+        }
+
         const detachBtn = e.target.closest('[data-detach-map]');
         if (detachBtn) {
             const lot = LOTS.find((l) => String(l.id) === detachBtn.getAttribute('data-detach-map'));
             if (!lot) return;
             const ok = await confirmAction({
                 title: 'Detach the map from ' + (lot.lotName || 'this lot') + '?',
-                message: 'The saved map for this lot is deleted — the drawing is gone for good, and the lot goes back to having no map. The lot itself is untouched.',
-                confirmText: 'Detach and delete',
+                message: 'The lot forgets this map. The map itself stays in your Maps, and on any other lot or season that uses it.',
+                confirmText: 'Detach',
             });
             if (!ok) return;
             try {

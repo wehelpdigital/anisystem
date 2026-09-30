@@ -3,7 +3,6 @@
 namespace App\Support;
 
 use App\Models\AsScheduleNote;
-use App\Models\ScheduleMapSave;
 use App\Models\TeamRecording;
 
 /**
@@ -70,7 +69,7 @@ class SeasonTeamBox
             }
         }
 
-        foreach (ScheduleMapSave::active()->where('scheduleId', $schedule->id)
+        foreach (\App\Support\MapAccess::ofSeason($schedule->id)
             ->orderByDesc('id')->get() as $m) {
             $picture = null;
             if ($m->noteId) {
@@ -94,7 +93,7 @@ class SeasonTeamBox
                 'posterUrl' => null,
                 // A map opens the map, not its picture — the shapes are the
                 // point and they are still editable where they live.
-                'href' => route('sm.maps', ['id' => $schedule->id, 'save' => $m->id]),
+                'href' => \App\Support\MapAccess::url((int) $m->id),
                 'video' => false,
                 'when' => $m->created_at?->timezone('Asia/Manila')->format('M j, Y'),
                 'sortKey' => (int) ($m->created_at?->timestamp ?? 0),

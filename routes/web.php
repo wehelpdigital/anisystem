@@ -88,6 +88,11 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'pbAnalyses' => str_contains((string) @file_get_contents(resource_path('views/protocol-builder/edit.blade.php')), 'data-tab="analyses"'),
             'boardTrio' => str_contains((string) @file_get_contents(resource_path('views/sm/partials/activities-js.blade.php')), 'the stretch goes with it')
                 && str_contains((string) @file_get_contents(resource_path('views/sm/activities.blade.php')), 'if (wasOpen) setTimeout(land, 300)'),
+            // Maps and Draw in Global and Quick Tools: the code, and whether the
+            // data move ran (no living save left on a season).
+            'globalMaps' => class_exists(\App\Support\MapAccess::class) && Illuminate\Support\Facades\Route::has('maps.page')
+                && Illuminate\Support\Facades\Route::has('draw.page')
+                && (function () { try { return \Illuminate\Support\Facades\DB::table('as_schedule_map_saves')->where('deleteStatus', 1)->where('scheduleId', '>', 0)->count() === 0; } catch (\Throwable $e) { return false; } })(),
             'manualOrders' => class_exists(\App\Services\OrderService::class) && class_exists(\App\Services\ReceiptCheck::class)
                 && is_file(resource_path('views/checkout/index.blade.php')) && is_file(resource_path('views/admin/orders.blade.php')),
             'phAtRoot' => Illuminate\Support\Facades\Route::has('ph.home') && url('/ph/pricing') === url('/pricing'),
@@ -297,6 +302,12 @@ Route::middleware('auth')->group(function () {
     // Support tickets (client side).
     Route::get('/app/tutorials', [App\Http\Controllers\TutorialController::class, 'index'])->name('tutorials.index');
     Route::get('/app/notes', [App\Http\Controllers\NotesHubController::class, 'index'])->name('notes.hub');
+    // Maps and Draw are the grower's own tools, in Global and Quick Tools
+    // (2026-09-30): a farm's fields do not change with the season. The
+    // canvas and save endpoints below (sm.map.*, sm.draw.*) serve them with
+    // no scheduleId; a season's Collab Room still passes its own.
+    Route::get('/app/maps', [App\Http\Controllers\Manager\ScheduleMapController::class, 'page'])->name('maps.page');
+    Route::get('/app/draw', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'page'])->name('draw.page');
     // Every picture from every season, the way Global Notes gathers the words.
     Route::get('/app/gallery', [App\Http\Controllers\GalleryHubController::class, 'index'])->name('gallery.hub');
 
@@ -458,7 +469,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
          * come. Everything else a farm day opens is here. */
         $names = [
             'app.dashboard', 'sm.index', 'notes.hub', 'gallery.hub',
-            'contacts.page', 'support.index', 'tutorials.index',
+            'maps.page', 'draw.page', 'contacts.page', 'support.index', 'tutorials.index',
             'account.index', 'account.settings', 'account.subscription',
             'community.index', 'community.connect.members',
             'community.cofarmers', 'community.connect.requests',
@@ -479,7 +490,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
          * recently touched are the ones a farmer is actually working. */
         $perSchedule = [
             'sm.hub', 'sm.activities', 'sm.lots', 'sm.workers', 'sm.inventory',
-            'sm.maps', 'sm.draw', 'sm.notes', 'sm.reports', 'sm.tags',
+            'sm.notes', 'sm.reports', 'sm.tags',
             'sm.documentation', 'sm.gallery', 'sm.settings', 'sm.weather.page',
             'sm.attendance', 'sm.growth', 'sm.post-harvest', 'sm.board',
             'sm.media', 'sm.expenses.report', 'sm.labor.report',
@@ -505,7 +516,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
         $shellKey = [
             'sm.activities' => 'activities', 'sm.lots' => 'lots',
             'sm.workers' => 'workers', 'sm.inventory' => 'inventory',
-            'sm.maps' => 'maps', 'sm.draw' => 'draw', 'sm.notes' => 'notes',
+            'sm.notes' => 'notes',
             'sm.tags' => 'tags', 'sm.documentation' => 'documentation',
             'sm.gallery' => 'gallery', 'sm.settings' => 'settings',
             'sm.weather.page' => 'weather', 'sm.growth' => 'growth',
@@ -683,6 +694,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-lots-delay', [App\Http\Controllers\Manager\LotController::class, 'delay'])->name('sm.lots.delay');
     Route::post('/app/sm-lots-map-link', [App\Http\Controllers\Manager\LotController::class, 'linkMap'])->name('sm.lots.map.link');
     Route::post('/app/sm-lots-map-detach', [App\Http\Controllers\Manager\LotController::class, 'detachMap'])->name('sm.lots.map.detach');
+    // Attach a map: the maps a lot may wear (the season's, and your own).
+    Route::get('/app/sm-lots-map-choices', [App\Http\Controllers\Manager\LotController::class, 'mapChoices'])->name('sm.lots.map.choices');
     // One lot's own map — its own page, not the Maps module wearing a label.
     Route::get('/app/sm-lot-map', [App\Http\Controllers\Manager\LotController::class, 'map'])->name('sm.lots.map');
 
@@ -778,11 +791,13 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/sm-growth-realign-job/{id}', [App\Http\Controllers\Manager\GrowthRealignController::class, 'job'])->whereNumber('id')->name('sm.growth.realign.job');
     // Media Box: every picture and video this schedule has, in one place.
     Route::get('/app/sm-media', [App\Http\Controllers\Manager\MediaBoxController::class, 'page'])->name('sm.media');
-    Route::get('/app/sm-draw', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'page'])->name('sm.draw');
+    // The season modules' old addresses land on the global pages.
+    Route::get('/app/sm-draw', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'legacyPage'])->name('sm.draw');
     Route::get('/app/sm-draw-one', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'one'])->name('sm.draw.one');
     Route::post('/app/sm-draw-save', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'save'])->name('sm.draw.save');
     Route::delete('/app/sm-draw-delete', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'remove'])->name('sm.draw.destroy');
-    Route::get('/app/sm-maps', [App\Http\Controllers\Manager\ScheduleMapController::class, 'page'])->name('sm.maps');
+    Route::get('/app/sm-maps', [App\Http\Controllers\Manager\ScheduleMapController::class, 'legacyPage'])->name('sm.maps');
+    Route::post('/app/sm-map-delete', [App\Http\Controllers\Manager\ScheduleMapController::class, 'deleteSave'])->name('sm.map.delete');
     Route::post('/app/sm-map-save', [App\Http\Controllers\Manager\ScheduleMapController::class, 'saveMap'])->name('sm.map.save');
     Route::post('/app/sm-map-save-meta', [App\Http\Controllers\Manager\ScheduleMapController::class, 'saveMeta'])->name('sm.map.save.meta');
     Route::post('/app/sm-map-load', [App\Http\Controllers\Manager\ScheduleMapController::class, 'loadSave'])->name('sm.map.load');

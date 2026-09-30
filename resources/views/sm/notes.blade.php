@@ -184,7 +184,7 @@
 <p class="note-count hidden" id="noteCount" aria-live="polite"></p>
 
 <div class="space-y-3" id="notesList" data-animate-list>
-    @include('sm.partials.notes-rows', ['notes' => $notes, 'schedule' => $schedule, 'mapSaves' => $mapSaves])
+    @include('sm.partials.notes-rows', ['notes' => $notes, 'schedule' => $schedule, 'mapSaves' => $mapSaves, 'mapUrlByPath' => $mapUrlByPath ?? []])
 </div>
 @include('partials.list-pager', [
     'noun' => 'note',
@@ -366,11 +366,11 @@ const __init = () => {
         // The door follows the MAPS grant, not the worker flag: a worker
         // given at least a look at Maps may open a note's map, one given
         // none gets no link — a link to "no access" helps nobody.
-        $mapModuleUrl = \App\Support\WorkerContext::canUseModule('maps')
-            ? route('sm.maps', ['id' => $schedule->id])
-            : null;
-        $mediaUrls = function ($items) use ($mapModuleUrl) {
-            return collect(is_array($items) ? $items : [])->map(function ($m) use ($mapModuleUrl) {
+        $mayMaps = \App\Support\WorkerContext::canUseModule('maps');
+        $mapModuleUrl = $mayMaps ? route('maps.page') : null;
+        $mapByPath = $mapUrlByPath ?? [];
+        $mediaUrls = function ($items) use ($mapModuleUrl, $mayMaps, $mapByPath) {
+            return collect(is_array($items) ? $items : [])->map(function ($m) use ($mapModuleUrl, $mayMaps, $mapByPath) {
                 if (empty($m['path'])) {
                     return null;
                 }
@@ -386,7 +386,11 @@ const __init = () => {
                     'url' => \App\Support\MediaStore::url($m['path']),
                     'poster' => $m['poster'] ?? null,
                     'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
-                    'mapUrl' => $isMap ? $mapModuleUrl : null,
+                    // The very map when it is known, else the Maps page.
+                    'mapUrl' => $isMap && $mayMaps
+                        ? (! empty($m['saveId']) ? \App\Support\MapAccess::url((int) $m['saveId']) : ($mapByPath[$m['path']] ?? $mapModuleUrl))
+                        : null,
+                    'saveId' => ! empty($m['saveId']) ? (int) $m['saveId'] : null,
                 ];
             })->filter()->values()->all();
         };
@@ -472,11 +476,12 @@ const __init = () => {
     // after an edit, which have no per-item link of their own. The doors
     // follow the grants: 'none' locks the attachment, a look opens it.
     window.NOTE_MAP_URL = @json(\App\Support\WorkerContext::canUseModule('maps')
-        ? route('sm.maps', ['id' => $schedule->id])
+        ? route('maps.page')
         : null);
-    // Where a drawing goes when its chip is tapped; the index is appended.
+    // Where a drawing goes when its chip is tapped (Draw, in Global and Quick
+    // Tools); ?open=<noteId>:<index> is appended.
     const DRAW_URL = @json(\App\Support\WorkerContext::canUseModule('draw')
-        ? route('sm.draw', ['id' => $schedule->id])
+        ? route('draw.page')
         : null);
     window.NOTE_DRAW_URL = DRAW_URL;
 
@@ -841,7 +846,7 @@ const __init = () => {
         const items = [];
         if (n.imageUrl) items.push({ type: 'image', url: n.imageUrl });
         (n.media || []).forEach((m, i) => items.push(Object.assign({}, m, {
-            drawUrl: m.type === 'drawing' ? DRAW_URL + '&open=' + n.id + ':' + i : null,
+            drawUrl: m.type === 'drawing' && DRAW_URL ? DRAW_URL + '?open=' + n.id + ':' + i : null,
             mapUrl: m.mapUrl || ((m.type === 'map' || /\/map-[A-Za-z0-9]+\.png$/.test(m.path || m.url || '')) ? window.NOTE_MAP_URL : null),
         })));
         return items;

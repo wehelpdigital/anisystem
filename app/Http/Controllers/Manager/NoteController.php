@@ -54,11 +54,12 @@ class NoteController extends BaseScheduleController
         // Saved team maps belong here too: a map the team named and kept is a
         // record of the season like any note, and hunting for it inside the
         // map's own tool menu is a detour.
-        $saves = \App\Models\ScheduleMapSave::active()
-            ->where('scheduleId', $schedule->id)
+        // The maps this season uses (maps are their owners' since 2026-09-30).
+        $saves = \App\Support\MapAccess::ofSeason($schedule->id)
             ->orderByDesc('id')
             ->limit(50)
             ->get();
+        $mapUrlByPath = \App\Support\MapAccess::urlsByPicture($schedule->id);
         $savers = \App\Models\User::whereIn('id', $saves->pluck('userId')->unique())->get()->keyBy('id');
         $mapSaves = $saves->map(fn ($m) => [
             'id' => (int) $m->id,
@@ -75,6 +76,7 @@ class NoteController extends BaseScheduleController
                 'notes' => $notes,
                 'schedule' => $schedule,
                 'mapSaves' => $mapSaves,
+                'mapUrlByPath' => $mapUrlByPath,
             ]);
         }
 
@@ -82,6 +84,7 @@ class NoteController extends BaseScheduleController
             'schedule' => $schedule,
             'notes' => $notes,
             'mapSaves' => $mapSaves,
+            'mapUrlByPath' => $mapUrlByPath,
         ]);
     }
 
@@ -94,7 +97,7 @@ class NoteController extends BaseScheduleController
          * a worker given "can add notes" but not the run of the plan. They
          * were shown the buttons and refused by the endpoint. */
         $schedule = $this->scheduleForNote($request);
-        $data = $this->validated($request);
+        $data = $this->validated($request, $schedule);
         if (! is_array($data)) {
             return $data;
         }
@@ -120,7 +123,7 @@ class NoteController extends BaseScheduleController
             return $this->jsonFail('Note not found.', 404);
         }
 
-        $data = $this->validated($request);
+        $data = $this->validated($request, $schedule);
         if (! is_array($data)) {
             return $data;
         }
@@ -340,7 +343,7 @@ class NoteController extends BaseScheduleController
     /**
      * @return array<string, mixed>|\Illuminate\Http\JsonResponse
      */
-    private function validated(Request $request)
+    private function validated(Request $request, ?\App\Models\AsCroppingSchedule $schedule = null)
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:191',
@@ -359,6 +362,8 @@ class NoteController extends BaseScheduleController
             // max:4000 counts the top level, which for a paged drawing is the
             // page list — the rule is what counts the objects inside them.
             'media.*.strokes' => ['nullable', 'array', 'max:4000', DrawStrokes::rule()],
+            // Which saved map a map picture is (maps are their owners' now).
+            'media.*.saveId' => 'nullable|integer',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
@@ -370,16 +375,31 @@ class NoteController extends BaseScheduleController
         $data['imagePath'] = $data['imagePath'] ?? null;
         $data['media'] = collect($data['media'] ?? [])
             ->filter(fn ($m) => in_array($m['type'] ?? '', ['image', 'video', 'drawing', 'map', 'audio'], true) && filled($m['path'] ?? null))
-            ->map(fn ($m) => array_filter([
-                'type' => $m['type'],
-                'path' => $m['path'],
-                'poster' => $m['poster'] ?? null,
-                'title' => filled($m['title'] ?? null) ? trim((string) $m['title']) : null,
-                'description' => filled($m['description'] ?? null) ? trim((string) $m['description']) : null,
-                // Kept with the note rather than in a file: strokes are what
-                // makes a drawing reopenable, and the disk is not permanent.
-                'strokes' => ($m['type'] ?? '') === 'drawing' ? ($m['strokes'] ?? null) : null,
-            ], fn ($v) => $v !== null))
+            ->map(function ($m) use ($schedule) {
+                // A map keeps the saved map it pictures when the writer may
+                // open it, and the season is linked to that map so the whole
+                // team can open it from the note.
+                $saveId = null;
+                if (($m['type'] ?? '') === 'map' && (int) ($m['saveId'] ?? 0) > 0
+                    && \App\Support\MapAccess::viewable((int) $m['saveId'])) {
+                    $saveId = (int) $m['saveId'];
+                    if ($schedule) {
+                        \App\Support\MapAccess::link($saveId, $schedule->id);
+                    }
+                }
+
+                return array_filter([
+                    'type' => $m['type'],
+                    'path' => $m['path'],
+                    'poster' => $m['poster'] ?? null,
+                    'title' => filled($m['title'] ?? null) ? trim((string) $m['title']) : null,
+                    'description' => filled($m['description'] ?? null) ? trim((string) $m['description']) : null,
+                    // Kept with the note rather than in a file: strokes are what
+                    // makes a drawing reopenable, and the disk is not permanent.
+                    'strokes' => ($m['type'] ?? '') === 'drawing' ? ($m['strokes'] ?? null) : null,
+                    'saveId' => $saveId,
+                ], fn ($v) => $v !== null);
+            })
             ->values()->all() ?: null;
 
         return $data;

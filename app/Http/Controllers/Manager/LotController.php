@@ -164,21 +164,36 @@ class LotController extends BaseScheduleController
         if (! $lot) {
             return $this->jsonFail('That lot is not on this schedule.', 404);
         }
-        $save = \App\Models\ScheduleMapSave::active()
-            ->where('scheduleId', $schedule->id)->find((int) $data['mapSaveId']);
+        // Maps are their owners' now: any map the caller may open (their
+        // own, or one this farm already uses) can be worn by a lot.
+        $save = \App\Support\MapAccess::viewable((int) $data['mapSaveId']);
         if (! $save) {
-            return $this->jsonFail('That saved map is not on this schedule.', 404);
+            return $this->jsonFail('That saved map no longer exists.', 404);
         }
 
         $lot->update(['mapSaveId' => $save->id]);
+        // The season uses it now, so its team can open it from the lot.
+        \App\Support\MapAccess::link((int) $save->id, $schedule->id);
 
-        return $this->jsonOk('Map tied to ' . $lot->lotName . '.', ['data' => $this->lotPayload($lot->fresh())]);
+        return $this->jsonOk('Map attached to ' . $lot->lotName . '.', ['data' => $this->lotPayload($lot->fresh())]);
     }
 
     /**
-     * Detach a lot's map: the saved map is deleted and the lot forgets it.
-     * The pin (the lot's place on the ground) stays — a lot does not lose
-     * its coordinates because its drawing was thrown away.
+     * The maps a lot may wear, for the Attach-a-map picker: the season's own
+     * and every map of the caller's (see MapAccess::choices), newest first.
+     */
+    public function mapChoices(Request $request)
+    {
+        $schedule = $this->schedule($request->query('scheduleId'));
+        $rows = \App\Support\MapAccess::choices($schedule->id)->orderByDesc('id')->limit(200)->get();
+
+        return $this->jsonOk('Loaded.', ['data' => ['maps' => \App\Support\MapAccess::rows($rows)]]);
+    }
+
+    /**
+     * Detach a lot's map: the lot forgets it. The map itself is its owner's
+     * and may be worn by other lots and seasons, so it stays on their Maps
+     * shelf; the pin (the lot's place on the ground) stays too.
      */
     public function detachMap(Request $request)
     {
@@ -188,15 +203,9 @@ class LotController extends BaseScheduleController
         if (! $lot) {
             return $this->jsonFail('That lot is not on this schedule.', 404);
         }
-        if ($lot->mapSaveId) {
-            \App\Models\ScheduleMapSave::active()
-                ->where('scheduleId', $schedule->id)
-                ->where('id', (int) $lot->mapSaveId)
-                ->update(['deleteStatus' => 0]);
-        }
         $lot->update(['mapSaveId' => null]);
 
-        return $this->jsonOk('Map detached from ' . $lot->lotName . '.', ['data' => $this->lotPayload($lot->fresh())]);
+        return $this->jsonOk('Map detached from ' . $lot->lotName . '. It is still in your Maps.', ['data' => $this->lotPayload($lot->fresh())]);
     }
 
     /**

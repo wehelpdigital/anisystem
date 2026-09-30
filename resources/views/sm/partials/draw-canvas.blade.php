@@ -404,6 +404,7 @@
     let onSave = null;
     let overwriteLabel = '';   // set per open: the drawing being replaced
     let scheduleId = null;     // set per open: whose gallery "From the gallery" lists
+    let galleryAll = false;    // or every season's (the global Draw page has no one season)
     /* Opened to be looked at, not worked on — a worker whose farm gave them
      * view access to Drawing. The pad is the only way to see a drawing whole
      * (its pages, its strokes at full size), so they still open it; what they
@@ -698,7 +699,7 @@
     let undoScheduleId = null;
     const UNDO_URL = @json(route('sm.undo.get'));
     function persistPadHist() {
-        if (!undoKey || !undoScheduleId || !window.api) return;
+        if (!undoKey || undoScheduleId === null || !window.api) return;
         clearTimeout(persistPadHist._t);
         persistPadHist._t = setTimeout(() => {
             api(`${UNDO_URL}?scheduleId=${undoScheduleId}&module=draw:${undoKey}`, {
@@ -708,7 +709,7 @@
         }, 900);
     }
     async function seedPadHist() {
-        if (!undoKey || !undoScheduleId || !window.api) return;
+        if (!undoKey || undoScheduleId === null || !window.api) return;
         try {
             const res = await api(`${UNDO_URL}?scheduleId=${undoScheduleId}&module=draw:${undoKey}`);
             if (!undoStack.length && Array.isArray(res.data.undo)) undoStack.push(...res.data.undo);
@@ -1067,9 +1068,9 @@
             const hint = document.getElementById('drawImgAskGalleryHint');
             const why = typeof window.smPickMedia !== 'function'
                 ? 'The gallery picker is not on this page.'
-                : (scheduleId ? '' : 'No season to borrow a gallery from here.');
+                : ((scheduleId || galleryAll) ? '' : 'No season to borrow a gallery from here.');
             if (g) { g.disabled = !!why; g.title = why; }
-            if (hint) hint.textContent = why || 'A photo this season already keeps';
+            if (hint) hint.textContent = why || (scheduleId ? 'A photo this season already keeps' : 'A photo from any of your seasons');
         }
         imgAsk.hidden = !on;
         // Back dismisses the question, the way it dismisses any other overlay.
@@ -1099,7 +1100,7 @@
        would sit the shared backdrop over the pad for the rest of the page. */
     let picking = false;              // the media picker sheet is up, over the pad
     function pickFromGallery() {
-        if (typeof window.smPickMedia !== 'function' || !scheduleId) return;
+        if (typeof window.smPickMedia !== 'function' || (!scheduleId && !galleryAll)) return;
         const root = document.documentElement;
         picking = true;
         root.classList.add('draw-pad-picking');
@@ -1117,6 +1118,8 @@
         document.addEventListener('sm:sheet-closed', onClosed);
         window.smPickMedia({
             scheduleId,
+            // No season in hand (the global Draw page): the whole gallery.
+            allSchedules: !scheduleId && galleryAll,
             kinds: 'image',
             title: 'Add to the drawing',
             onPick: async (item) => {
@@ -1489,6 +1492,10 @@
      *   opts.editable         offer the "Save as drawing" button
      *   opts.scheduleId       whose gallery "From the gallery" lists; without
      *                         one (and no shell tag) the door says why not
+     *   opts.allSchedules     no season, but every season's gallery will do
+     *                         (the global Draw page)
+     *   opts.undoGlobal       keep the undo history on your own shelf when
+     *                         there is no season (a drawing of your own)
      */
     window.openDrawCanvas = function (cb, existingUrl, opts) {
         opts = opts || {};
@@ -1505,6 +1512,7 @@
         scheduleId = opts.scheduleId
             || (window.SM_SHARE && window.SM_SHARE.scheduleId)
             || null;
+        galleryAll = !!opts.allSchedules;
         // What the pad is looking at, if it is looking at something that
         // already has a name. Drives the "save over this one" answer.
         overwriteLabel = opts.overwrite ? (opts.overwriteLabel || 'the one you opened') : '';
@@ -1535,7 +1543,7 @@
         window.registerOverlay?.('drawPad', close);
         document.body.style.overflow = 'hidden';
         reset(existingUrl, opts.objects);
-        undoScheduleId = scheduleId;
+        undoScheduleId = scheduleId || (opts.undoGlobal ? 0 : null);
         seedPadHist();
         requestAnimationFrame(fitStage);
     };

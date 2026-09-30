@@ -30,8 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const SCHEDULE_ID = @json($schedule->id);
     // The Maps module and what it has already saved — the day's "Add a map"
     // attaches one of those rather than making the day draw its own.
-    const MAPS_URL = @json(route('sm.maps', ['id' => $schedule->id]));
-    const MAP_SAVES_URL = @json(route('sm.map.saves')) + '?scheduleId=' + @json($schedule->id);
+    // Maps are Global and Quick Tools now (2026-09-30). A day picks from the
+    // maps this season uses and the grower's own, and attaching one links it
+    // to the season (MapAccess) so the whole team can open it.
+    const MAPS_URL = @json(route('maps.page'));
+    const MAP_SAVES_URL = @json(route('sm.lots.map.choices')) + '?scheduleId=' + @json($schedule->id);
     const DAY_TYPE_DEFAULT = @json($schedule->dayType ?: 'DAS');
     // The farm's own day, settled by the server. The board's first paint is
     // Blade's and every later render is this file's; both must ring the same
@@ -7129,7 +7132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         openSheet('dayMapPickSheet');
         try {
             const res = await api(MAP_SAVES_URL);
-            const saves = ((res.data && res.data.saves) || []).filter((s) => s.imagePath);
+            const saves = ((res.data && res.data.maps) || []).filter((s) => s.imagePath);
             if (!list) return;
             list.innerHTML = saves.length
                 ? saves.map((s) => `<button type="button" class="w-full flex items-center gap-3 rounded-xl p-2 text-left hover:bg-gray-50" data-map="${s.id}">
@@ -7139,7 +7142,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="block text-xs text-gray-400">${esc(s.by || '')} · ${esc(s.when || '')}</span>
                         </span>
                     </button>`).join('')
-                : '<p class="text-sm text-gray-400 py-2">No saved maps yet. Draw one in the Maps module and save it, then it can be attached here.</p>';
+                : '<p class="text-sm text-gray-400 py-2">No saved maps yet. Draw one in Maps (Global and Quick Tools) and save it, then it can be attached here.</p>';
             list.querySelectorAll('[data-map]').forEach((btn) => {
                 btn.addEventListener('click', () => {
                     const save = saves.find((s) => String(s.id) === btn.getAttribute('data-map'));
@@ -7151,7 +7154,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     // the day note to be explained in a later edit.
                     const entry = {
                         type: 'map', path: save.imagePath, url: save.imageUrl,
-                        mapUrl: MAPS_URL + '&save=' + save.id,
+                        mapUrl: save.url || (MAPS_URL + '?save=' + save.id),
+                        // Which saved map this picture is: the day keeps it,
+                        // and the season is linked to it on save.
+                        saveId: save.id,
                     };
                     setTimeout(() => newInlineNoteWith(mapPickDate, [entry], save.title || 'Map'), 260);
                 });
@@ -10658,7 +10664,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const srcBlk = $qs(`#activitiesList .date-note-block[data-date="${sourceDate}"]`);
         _setMoving(srcBlk, true);
         try {
-            const mediaSend = media.map((m) => ({ type: m.type, path: m.path, poster: m.poster || null, strokes: m.strokes || null }));
+            const mediaSend = media.map((m) => ({ type: m.type, path: m.path, poster: m.poster || null, strokes: m.strokes || null, saveId: m.saveId || null }));
             await api(U.dateNoteSave(), { method: 'POST', body: { noteDate: targetDate, noteContent: content, media: mediaSend } });
             await api(U.dateNoteDelete(), { method: 'DELETE', body: { noteDate: sourceDate } });
             _setMoving(srcBlk, false);
@@ -10823,7 +10829,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const content = el.querySelector('.inline-note-body')?.innerHTML || '';
         // Strokes travel too: dragging a note was re-saving its media without
         // them, which flattened every editable drawing the note carried.
-        const mediaSend = inlineNoteMedia(el).map((m) => ({ type: m.type, path: m.path, poster: m.poster || null, strokes: m.strokes || null }));
+        const mediaSend = inlineNoteMedia(el).map((m) => ({ type: m.type, path: m.path, poster: m.poster || null, strokes: m.strokes || null, saveId: m.saveId || null }));
         _setMoving(el, true);
         try {
             const res = await apiQ(U.inlineNoteSave(), { method: 'POST', body: {

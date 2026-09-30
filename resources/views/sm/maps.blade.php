@@ -1,10 +1,14 @@
-@extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
+{{-- Maps, in Global and Quick Tools (2026-09-30): every map of your own,
+     drawn on your own canvas, for every season. A season uses a map by
+     linking it (a lot, an activity, a day's note, its Collab Room) -- see
+     App\Support\MapAccess. --}}
+@extends('layouts.app')
 
-@section('title', 'Maps — ' . $schedule->title)
+@section('title', 'Maps')
 @section('page-title', 'Maps')
-@section('page-subtitle', $schedule->title)
+@section('page-subtitle', 'Your farm maps, for every season')
 @section('help-key', 'maps')
-@section('back', \App\Support\BackTo::url(route('sm.hub', ['id' => $schedule->id]), $schedule->id))
+@section('back', \App\Support\BackTo::url(route('app.dashboard')))
 
 @push('head')
     <style>
@@ -199,18 +203,16 @@
         // skips the shelf and opens the stage on that map.
         $openSaveQ = (int) request()->query('save');
 
-        /* Whether this visitor may CHANGE the shelf. A worker with view-level
-         * Maps reads every saved map and opens it on the stage; naming one,
-         * rewording it or starting a new one is edit work. The server refuses
-         * those writes anyway (sm.map.* wants edit for anything but a GET) —
-         * this stops the shelf offering doors that only lead to a refusal. */
-        $mpMayWrite = \App\Support\WorkerContext::canWriteModule('maps');
+        /* Your maps are yours to start, name and change. A farm map a
+         * worker can see (MapAccess::shelf) is renamed only by its owner;
+         * each card says whether it is yours. */
+        $mpMayWrite = true;
     @endphp
     {{-- No info card up here: How to use maps already covers it, and the
          paragraph was one more thing between a farmer and their maps. --}}
     <div id="smapHome" @if ($openSaveQ) class="hidden" @endif>
         <div class="mp-grid" id="mpGrid"></div>
-        <p class="mp-empty hidden" id="mpEmpty">@if ($mpMayWrite)No maps yet. Start one above — draw over the real ground, measure it, and save the plan with a name.@else No maps yet. The farm's saved maps will show here once someone draws one.@endif</p>
+        <p class="mp-empty hidden" id="mpEmpty">No maps yet. Start one above — draw your fields over the real ground, measure them, and save the plan with a name. Every season can use it: attach it to a lot, an activity or a day.</p>
     </div>
 
     <div id="smapStageWrap" @unless ($openSaveQ) class="hidden" @endunless>
@@ -239,7 +241,7 @@
             {{-- Maps edit as well as the notebook's pen: this button is a
                  proxy for the map bar's own Save, and a hidden button still
                  answers a scripted click. --}}
-            @if ($mpMayWrite && \App\Support\WorkerContext::canAddNotes())
+            @if ($mpMayWrite)
             <button type="button" class="mp-act is-save" data-proxy="cmapSaveMenuBtn" title="Open or save a map" aria-label="Open or save a map">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h8l4 4v12a2 2 0 01-2 2H7a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v5h6M8 14h8v6H8z"/></svg>
                 <span class="mp-actword">Save</span>
@@ -253,14 +255,13 @@
                  heading, because this page's own header already says Maps and
                  a second line saying "Team map" above the tools was the same
                  sentence twice. --}}
-            @include('sm.partials.schedule-map', ['schedule' => $schedule, 'mapChrome' => 'maps'])
-    @include('sm.partials.tag-picker')
+            @include('sm.partials.schedule-map', ['schedule' => null, 'mapChrome' => 'maps'])
         </div>
     </div>
 
     <script>
         (() => {
-            const SAVES_URL = @json(route('sm.map.saves')) + '?scheduleId=' + @json($schedule->id);
+            const SAVES_URL = @json(route('sm.map.saves'));
             const OPEN_SAVE = @json($openSaveQ);
             const ATTACH = @json($attachLot ?? null);
             let saves = @json($saves ?? []);
@@ -308,12 +309,13 @@
                     <div class="mp-thumb">${thumb}</div>
                     <div class="mp-meta">
                         <span class="mp-name">${esc(sv.title || 'Map')}
-                            ${MAY_WRITE ? `<button type="button" class="mp-pen" data-edit-save="${sv.id}" title="Edit name, description and tags" aria-label="Edit ${esc(sv.title || 'Map')}">
+                            ${MAY_WRITE && sv.mine !== false ? `<button type="button" class="mp-pen" data-edit-save="${sv.id}" title="Edit name and description" aria-label="Edit ${esc(sv.title || 'Map')}">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                             </button>` : ''}
                         </span>
                         <div class="mp-tags">
-                            <span class="badge ${sv.source === 'team' ? 'badge-blue' : 'badge-green'}">${sv.source === 'team' ? 'Team map' : 'My map'}</span>
+                            <span class="badge ${sv.mine === false ? 'badge-blue' : 'badge-green'}">${sv.mine === false ? 'Farm map' : 'My map'}</span>
+                            ${sv.season ? `<span class="badge badge-gray" title="The season it was first drawn in">${esc(sv.season)}</span>` : ''}
                             <span class="badge badge-gray">${sv.count} shape${sv.count === 1 ? '' : 's'}</span>
                             ${sv.noteHref ? `<a class="badge badge-gray mp-innote" href="${esc(sv.noteHref)}" title="Open the note this map filed its picture in">`
                                 + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="width:.7rem;height:.7rem"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.6L19 9.4V19a2 2 0 01-2 2z"/></svg>'
@@ -500,28 +502,46 @@
                 if (!metaSave) return;
                 document.getElementById('mpMetaTitle').value = metaSave.title || '';
                 document.getElementById('mpMetaDesc').value = metaSave.description || '';
-                const mount = document.getElementById('mpMetaTags');
-                if (window.smTags && mount) {
-                    window.smTags.mount(mount);
-                    window.smTags.load(mount, 'map', id);
-                }
                 openSheet('mpMetaSheet');
             }
             // Delegated: the sheet lives in the layout's stack, which is not
             // in the DOM yet when this inline script runs.
             document.addEventListener('click', async (e) => {
+                // Throwing a map away: it leaves every season that used it.
+                const del = e.target.closest('#mpMetaDelete');
+                if (del && metaSave) {
+                    const ok = window.confirmAction
+                        ? await confirmAction({ title: 'Delete this map?', message: '“' + (metaSave.title || 'Map') + '” goes from your Maps, and from every lot and season that uses it.', confirmText: 'Delete map', danger: true })
+                        : confirm('Delete this map?');
+                    if (!ok) return;
+                    del.disabled = true;
+                    try {
+                        const res = await api(@json(route('sm.map.delete')), { method: 'POST', body: { id: metaSave.id } });
+                        const goneId = metaSave.id;
+                        closeSheet('mpMetaSheet');
+                        const cardEl = grid.querySelector(`.mp-card[data-save="${goneId}"]`);
+                        const calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+                        if (cardEl && !calm) {
+                            cardEl.style.transition = 'opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1)';
+                            cardEl.style.opacity = '0';
+                            cardEl.style.transform = 'scale(.96)';
+                        }
+                        setTimeout(() => { saves = saves.filter((s) => s.id !== goneId); paint(); }, calm ? 0 : 280);
+                        toast(res.message || 'Map deleted.');
+                    } catch (err) { toast(err.message, 'error'); }
+                    finally { del.disabled = false; }
+                    return;
+                }
                 const btn = e.target.closest('#mpMetaSave');
                 if (!btn || !metaSave) return;
                 btn.disabled = true;
                 try {
-                    const res = await api(@json(route('sm.map.save.meta')) + '?scheduleId=' + @json($schedule->id), {
+                    const res = await api(@json(route('sm.map.save.meta')), {
                         method: 'POST',
                         body: {
                             saveId: metaSave.id,
                             title: document.getElementById('mpMetaTitle').value.trim(),
                             description: document.getElementById('mpMetaDesc').value.trim(),
-                            // Always sent, even empty, so removing every tag clears them.
-                            tags: window.smTags ? window.smTags.value(document.getElementById('mpMetaTags')) : [],
                         },
                     });
                     metaSave.title = res.data.title;
@@ -650,7 +670,7 @@
 @endsection
 
 @push('sheets')
-{{-- Edit a saved map's name, what it was for, and its tags. --}}
+{{-- Edit a saved map's name and what it was for, or throw it away. --}}
 <div class="sheet hidden" id="mpMetaSheet" style="--sheet-width:28rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
@@ -665,14 +685,11 @@
         <div>
             <label class="form-label" for="mpMetaDesc">What is this map about? <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="mpMetaDesc" class="form-textarea" rows="3" maxlength="2000"></textarea>
-            <p class="form-hint">Also updates the note this map filed in the notebook.</p>
-        </div>
-        <div>
-            <span class="form-label">Tags</span>
-            <div class="tp-mount" data-tags data-tags-kind="map" id="mpMetaTags"></div>
+            <p class="form-hint">Also updates the note this map filed its picture in.</p>
         </div>
     </div>
     <div class="sheet-footer">
+        <button type="button" class="btn btn-ghost text-red-600 mr-auto" id="mpMetaDelete">Delete</button>
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
         <button type="button" class="btn btn-primary" id="mpMetaSave">Save changes</button>
     </div>

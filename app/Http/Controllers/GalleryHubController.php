@@ -258,8 +258,11 @@ class GalleryHubController extends Controller
                 ->orderByDesc('id')
                 ->limit(300)
                 ->get();
+            // Your maps and drawings live here now (Global and Quick Tools):
+            // a map's picture opens the map, a drawing opens the pad.
+            $ownSaveByNote = \App\Support\MapAccess::owned($meId)->whereNotNull('noteId')->pluck('id', 'noteId');
             foreach ($globals as $gn) {
-                foreach ((is_array($gn->media) ? $gn->media : []) as $m) {
+                foreach ((is_array($gn->media) ? $gn->media : []) as $i => $m) {
                     if (empty($m['path'])) {
                         continue;
                     }
@@ -279,8 +282,12 @@ class GalleryHubController extends Controller
                         'url' => MediaStore::url($m['path']),
                         'posterUrl' => ! empty($m['poster']) ? MediaStore::url($m['poster']) : null,
                         'title' => $title ?: 'Untitled',
-                        'source' => 'Global note',
-                        'href' => route('notes.hub'),
+                        'source' => $kind === 'map' ? 'Maps' : ($kind === 'drawing' ? 'Draw' : 'Global note'),
+                        'href' => match (true) {
+                            $kind === 'map' && isset($ownSaveByNote[$gn->id]) => \App\Support\MapAccess::url((int) $ownSaveByNote[$gn->id]),
+                            $kind === 'drawing' => route('draw.page', ['open' => $gn->id . ':' . $i]),
+                            default => route('notes.hub', ['open' => $gn->id]),
+                        },
                         'when' => $gn->updated_at?->timezone('Asia/Manila')->format('M j, Y'),
                         'scheduleId' => 0,
                         'scheduleTitle' => 'Global notes',

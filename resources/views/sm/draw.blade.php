@@ -1,10 +1,13 @@
-@extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
+{{-- Draw, in Global and Quick Tools (2026-09-30). Your own drawings, and
+     the ones drawn inside the seasons you work in (each wearing its season's
+     name, and saved back where it lives). A new drawing is a note of your own. --}}
+@extends('layouts.app')
 
-@section('title', 'Draw — ' . $schedule->title)
+@section('title', 'Draw')
 @section('page-title', 'Draw')
-@section('page-subtitle', $schedule->title)
+@section('page-subtitle', 'Your drawings, from every season')
 @section('help-key', 'draw')
-@section('back', \App\Support\BackTo::url(route('sm.hub', ['id' => $schedule->id]), $schedule->id))
+@section('back', \App\Support\BackTo::url(route('app.dashboard')))
 
 @push('head')
     <style>
@@ -106,7 +109,7 @@
             <p class="dr-kept-title" id="drKeptTitle">Kept as a picture.</p>
             <p class="dr-kept-say" id="drKeptSay">It is not a drawing any more, so it is not on this shelf — you will find it in the Gallery and on its note.</p>
             <div class="dr-kept-acts">
-                <a class="btn btn-sm btn-white" id="drKeptGallery" href="{{ route('sm.gallery', ['id' => $schedule->id]) }}">Open the Gallery</a>
+                <a class="btn btn-sm btn-white" id="drKeptGallery" href="{{ route('gallery.hub') }}">Open the Gallery</a>
                 <a class="btn btn-sm btn-white hidden" id="drKeptNote" href="#">Open the note</a>
             </div>
         </div>
@@ -117,13 +120,8 @@
     <div class="dr-grid" id="drGrid"></div>
     <p class="dr-empty hidden" id="drEmpty">Nothing drawn yet. Start one above — save it as a picture, or as a drawing you can come back and change.</p>
 
-    {{-- The shell that hosts this module already carries the pad and the
-         lightbox; a second copy would only duplicate their ids. --}}
-    @if (! request()->boolean('partial'))
-        @include('sm.partials.draw-canvas')
-@include('sm.partials.tag-picker')
-        @include('sm.partials.note-lightbox')
-    @endif
+    @include('sm.partials.draw-canvas')
+    @include('sm.partials.note-lightbox')
     {{-- Unlike those two, no shell carries the gallery picker — so the pad's
          "From the gallery" door only works if this module brings it along, in
          both modes. Safe to repeat: its script binds once and by id, so a copy
@@ -151,20 +149,18 @@
                  with the vertical padding a multi-line box needs. --}}
             <textarea id="drNote" class="form-input form-textarea" rows="3" maxlength="2000" placeholder="What this shows, and why it was worth drawing."></textarea>
             <p class="text-xs text-gray-400 mt-1.5" id="drKind"></p>
-            <div class="tp-mount mt-3" id="drTagsMount" data-tags data-tags-kind="note"></div>
             <button type="button" class="btn btn-primary w-full mt-3" id="drConfirm">Save drawing</button>
         </div>
     </div>
 
     <script>
         (() => {
-            const SCHEDULE_ID = @json($schedule->id);
+            // Every call names whose note it means: 0 for your own, else the
+            // season the drawing lives in.
             const U = {
-                save: @json(route('sm.draw.save')) + '?scheduleId=' + SCHEDULE_ID,
-                one: @json(route('sm.draw.one')) + '?scheduleId=' + SCHEDULE_ID,
-                destroy: @json(route('sm.draw.destroy')) + '?scheduleId=' + SCHEDULE_ID,
-                // Where a picture ends up, for the notice that says so.
-                notes: @json(route('sm.notes', ['id' => $schedule->id])),
+                save: (sid) => @json(route('sm.draw.save')) + '?scheduleId=' + (sid || 0),
+                one: (sid) => @json(route('sm.draw.one')) + '?scheduleId=' + (sid || 0),
+                destroy: (sid) => @json(route('sm.draw.destroy')) + '?scheduleId=' + (sid || 0),
             };
             const esc = window.escapeHtml || ((s) => String(s ?? '')
                 .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'));
@@ -198,12 +194,12 @@
                     'A picture is not a drawing any more, so it does not sit on this shelf. '
                     + 'It is in the Gallery, and on the note it was saved to.';
                 const noteLink = document.getElementById('drKeptNote');
-                // Only the notebook can open a note by name. A picture saved
-                // onto a board or a day note is reached from the board itself,
-                // so a link there would promise more than it can do.
-                const canOpen = row.noteId && (row.source || 'note') === 'note';
+                // Only a notebook (a season's, or your own Global Notes) can
+                // open a note by name. A picture saved onto a board or a day
+                // note is reached from the board itself.
+                const canOpen = !!row.noteHref && (row.source || 'note') === 'note';
                 noteLink.classList.toggle('hidden', !canOpen);
-                if (canOpen) noteLink.href = U.notes + '&open=' + row.noteId;
+                if (canOpen) noteLink.href = row.noteHref;
                 kept.classList.remove('hidden');
                 requestAnimationFrame(() => kept.classList.add('is-in'));
             }
@@ -216,15 +212,15 @@
             }
             kept?.addEventListener('click', (e) => { if (e.target.closest('[data-kept-dismiss]')) hideKept(); });
 
-            // A view-level Draw grant reads the shelf; the pad and the bin
+            // Your own drawings are yours to change. A season's belong to the
+            // farm: a view-level Draw grant reads them, the pad and the bin
             // belong to 'edit'. The server refuses their writes regardless —
             // this keeps the shelf from offering doors that only refuse.
-            const DRAW_MAY_WRITE = @json(\App\Support\WorkerContext::canWriteModule('draw'));
-            const NEW_TILE = DRAW_MAY_WRITE
-                ? '<button type="button" class="dr-new" data-new>'
-                    + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>'
-                    + '<span>New drawing</span></button>'
-                : '';
+            const SEASON_MAY_WRITE = @json(\App\Support\WorkerContext::canWriteModule('draw') && \App\Support\WorkerContext::canEdit());
+            const mayWrite = (d) => !d || !d.scheduleId || SEASON_MAY_WRITE;
+            const NEW_TILE = '<button type="button" class="dr-new" data-new>'
+                + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>'
+                + '<span>New drawing</span></button>';
 
             function card(d, i) {
                 const tags = [];
@@ -232,6 +228,8 @@
                 // its strokes can be reopened, a flat picture can only be drawn
                 // over — worth knowing before you tap it.
                 if (d.team) tags.push('<span class="badge badge-blue">Team drawing</span>');
+                // Drawn inside a season: it lives there, and says which.
+                if (d.season) tags.push(`<span class="badge badge-yellow" title="Drawn in this season, and kept there">${esc(d.season)}</span>`);
                 tags.push(d.editable
                     ? '<span class="badge badge-green">Editable</span>'
                     : '<span class="badge badge-gray">Picture</span>');
@@ -257,7 +255,7 @@
                         ${d.note ? `<span class="dr-note">${esc(d.note)}</span>` : ''}
                         <div class="dr-tags">${tags.join('')}</div>
                         <span class="dr-when">${esc(d.when || '')}</span>
-                        ${DRAW_MAY_WRITE ? `<div class="dr-acts">
+                        ${mayWrite(d) ? `<div class="dr-acts">
                             <button type="button" class="dr-act" data-edit title="${d.team ? 'Draw over a copy' : 'Open in the pad'}" aria-label="Edit">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/></svg>
                             </button>
@@ -345,6 +343,8 @@
                         editable: !!objects,
                         noteId: over ? seed.noteId : null,
                         index: over ? (seed.index || 0) : 0,
+                        // Saved over: back where it lives. New: your own.
+                        scheduleId: over ? (seed.scheduleId || 0) : 0,
                         // Which shelf the note lives on — board and day notes
                         // hold drawings too, and a save-over must land there.
                         source: over ? (seed.source || 'note') : 'note',
@@ -364,7 +364,7 @@
                     // pad shows it whole, page by page, with no pen and no
                     // Save. The server refuses their writes regardless — this
                     // is so they never spend an afternoon earning a refusal.
-                    readOnly: !DRAW_MAY_WRITE,
+                    readOnly: !mayWrite(seed),
                     objects: seed.objects || null,
                     title: seed.title || 'Drawing',
                     overwrite: !!seed.noteId,
@@ -372,8 +372,13 @@
                     // with a name gets one.
                     undoKey: seed.noteId ? (seed.noteId + ':' + (seed.index || 0)) : null,
                     overwriteLabel: seed.title ? `“${seed.title}”` : 'the one you opened',
-                    // Lights the pad's "From the gallery" door for this season.
-                    scheduleId: SCHEDULE_ID,
+                    // Lights the pad's "From the gallery" door: the drawing's
+                    // own season, else every season's pictures.
+                    scheduleId: seed.scheduleId || null,
+                    allSchedules: true,
+                    // A drawing of your own keeps its undo history on your
+                    // own shelf.
+                    undoGlobal: !seed.scheduleId,
                 });
             }
 
@@ -381,11 +386,11 @@
                 // A team drawing is the team's record: drawing over it starts a
                 // new one rather than rewriting what the room agreed on.
                 if (d.team) { pad({ url: d.url, title: d.title + ' (copy)' }); return; }
-                if (!d.editable) { pad({ url: d.url, title: d.title, noteId: d.noteId, index: d.index, source: d.source, note: d.note || '' }); return; }
+                if (!d.editable) { pad({ url: d.url, title: d.title, noteId: d.noteId, index: d.index, source: d.source, scheduleId: d.scheduleId, note: d.note || '' }); return; }
                 try {
-                    const r = await api(`${U.one}&noteId=${d.noteId}&index=${d.index}&source=${encodeURIComponent(d.source || '')}`);
+                    const r = await api(`${U.one(d.scheduleId)}&noteId=${d.noteId}&index=${d.index}&source=${encodeURIComponent(d.source || '')}`);
                     pad({
-                        url: d.url, title: d.title, noteId: d.noteId, index: d.index, source: d.source,
+                        url: d.url, title: d.title, noteId: d.noteId, index: d.index, source: d.source, scheduleId: d.scheduleId,
                         note: (r.data && r.data.note) || d.note || '',
                         newTitle: (d.title || 'Drawing') + ' (copy)',
                         objects: (r.data && r.data.strokes) || null,
@@ -410,7 +415,7 @@
                     if (!ok) return;
                     cardEl.classList.add('is-going');
                     try {
-                        await api(`${U.destroy}&noteId=${d.noteId}&index=${d.index}&source=${encodeURIComponent(d.source || '')}`, { method: 'DELETE' });
+                        await api(`${U.destroy(d.scheduleId)}&noteId=${d.noteId}&index=${d.index}&source=${encodeURIComponent(d.source || '')}`, { method: 'DELETE' });
                         drawings = drawings.filter((x) => x !== d);
                         // The card leaves before the grid closes over it —
                         // repainting straight away is the "it just vanishes"
@@ -443,10 +448,13 @@
                 const btn = e.currentTarget;
                 btn.disabled = true;
                 try {
-                    const r = await api(U.save, { method: 'POST', body: Object.assign({ title, note, tags: window.smTags ? smTags.value(document.getElementById('drTagsMount')) : [] }, pending) });
+                    const r = await api(U.save(pending.scheduleId), { method: 'POST', body: Object.assign({ title, note }, pending) });
                     const d = r.data || {};
+                    const was = pending.noteId ? drawings.find((x) => x.noteId === pending.noteId && x.index === pending.index
+                        && (x.source || 'note') === (pending.source || 'note') && (x.scheduleId || 0) === (pending.scheduleId || 0)) : null;
                     const row = {
                         noteId: d.noteId, index: d.index, title: d.title || title,
+                        scheduleId: d.scheduleId || 0, season: was ? was.season : null, noteHref: d.noteHref || null,
                         source: (pending && pending.noteId) ? (pending.source || 'note') : 'note',
                         note: d.note != null ? d.note : note,
                         editable: !!d.editable, team: false, url: d.url, when: 'Just now',
@@ -455,7 +463,7 @@
                     // A re-saved drawing keeps its slot in the grid rather than
                     // arriving as a second copy of itself.
                     const at = drawings.findIndex((x) => x.noteId === row.noteId && x.index === row.index
-                        && (x.source || 'note') === row.source);
+                        && (x.source || 'note') === row.source && (x.scheduleId || 0) === row.scheduleId);
                     if (row.editable) {
                         hideKept();
                         if (at >= 0) drawings[at] = row; else drawings.unshift(row);
@@ -495,7 +503,9 @@
 
             /* A drawing tapped in Notes (or anywhere else) asks for itself by
                name: ?open=<noteId>:<index>. Without this the link could only
-               reach the front door of the module and leave you to find it. */
+               reach the front door of the module and leave you to find it.
+               Notebook note ids are unique across every season and your own
+               notes, so the pair names one drawing wherever it lives. */
             (function openFromLink() {
                 const want = new URLSearchParams(window.location.search).get('open')
                     || @json(request()->query('open'));

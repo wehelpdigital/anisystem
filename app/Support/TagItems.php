@@ -123,13 +123,14 @@ class TagItems
                 }
                 break;
             case 'map':
+                // The tag is this season's, which is what ties the map to it.
                 foreach (\App\Models\ScheduleMapSave::whereIn('id', $refIds)
-                    ->where('scheduleId', $schedule->id)->where('deleteStatus', 1)->get() as $m) {
+                    ->where('deleteStatus', 1)->get() as $m) {
                     $out[] = ['kind' => 'map', 'refId' => (int) $m->id, 'icon' => '🗺️',
                         'title' => trim((string) $m->title) ?: 'Saved map',
                         'sub' => 'map · ' . $m->created_at?->format('M j, Y'),
                         'when' => $m->created_at?->format('Y-m-d'),
-                        'url' => route('sm.maps', ['id' => $schedule->id, 'save' => $m->id])];
+                        'url' => \App\Support\MapAccess::url((int) $m->id)];
                 }
                 break;
             case 'doc':

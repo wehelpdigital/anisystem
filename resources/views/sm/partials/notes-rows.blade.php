@@ -30,9 +30,12 @@
         // The picture stays on the note for everyone; only the "open it in the
         // Maps module" link is withheld, because that module is not a worker's
         // to open — better no link than one that lands on "no access".
-        $mapUrl = \App\Support\WorkerContext::inWorkerContext() ? null : ($saveIdForNote
-            ? route('sm.maps', ['id' => $schedule->id, 'save' => $saveIdForNote])
-            : route('sm.maps', ['id' => $schedule->id]));
+        // Maps are in Global and Quick Tools now; the door follows the Maps
+        // grant, and lands on the very map whenever it is known.
+        $mayMaps = \App\Support\WorkerContext::canUseModule('maps');
+        $mapUrl = ! $mayMaps ? null : ($saveIdForNote
+            ? \App\Support\MapAccess::url((int) $saveIdForNote)
+            : route('maps.page'));
         foreach ((is_array($n->media) ? $n->media : []) as $mIndex => $m) {
             if (empty($m['path'])) continue;
             // Maps saved before they announced themselves are recognised by
@@ -47,11 +50,13 @@
                 // A recording's own name — the chip wears it instead of the
                 // word "Video", so three clips on one note read apart.
                 'title' => $m['title'] ?? null,
-                'mapUrl' => $isMap ? $mapUrl : null,
+                'mapUrl' => $isMap && $mayMaps
+                    ? (! empty($m['saveId']) ? \App\Support\MapAccess::url((int) $m['saveId']) : (($mapUrlByPath ?? [])[$m['path']] ?? $mapUrl))
+                    : null,
                 // A drawing opens where it can be changed, not where it can
-                // be squinted at: the Draw module, on this exact drawing.
-                'drawUrl' => ($m['type'] ?? '') === 'drawing'
-                    ? route('sm.draw', ['id' => $schedule->id, 'open' => $n->id . ':' . $mIndex])
+                // be squinted at: Draw, on this exact drawing.
+                'drawUrl' => ($m['type'] ?? '') === 'drawing' && \App\Support\WorkerContext::canUseModule('draw')
+                    ? route('draw.page', ['open' => $n->id . ':' . $mIndex])
                     : null,
             ];
             // What the EDITOR needs, which is not what a thumbnail needs:
@@ -65,7 +70,10 @@
                 'url' => \App\Support\MediaStore::url($m['path']),
                 'poster' => $m['poster'] ?? null,
                 'posterUrl' => ! empty($m['poster']) ? \App\Support\MediaStore::url($m['poster']) : null,
-                'mapUrl' => $isMap ? $mapUrl : null,
+                'mapUrl' => $isMap && $mayMaps
+                    ? (! empty($m['saveId']) ? \App\Support\MapAccess::url((int) $m['saveId']) : (($mapUrlByPath ?? [])[$m['path']] ?? $mapUrl))
+                    : null,
+                'saveId' => ! empty($m['saveId']) ? (int) $m['saveId'] : null,
             ];
         }
         // Every card carries its own note. The page used to hand the editor a

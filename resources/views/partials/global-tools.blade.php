@@ -116,6 +116,12 @@
         .qa-cmp .qa-ico { background: #f3effd; color: #6d28d9; }
         @media (hover: hover) {.qa-cmp:hover { border-color: #d9ccf7; } .qa-cmp:hover .qa-go { color: #6d28d9; } }
         html.dark .qa-cmp .qa-ico { background: rgb(109 40 217 / .24); color: #c4b5fd; }
+        .qa-maps .qa-ico { background: #eef6e6; color: #3d6823; }
+        @media (hover: hover) {.qa-maps:hover { border-color: #cfe3b8; } .qa-maps:hover .qa-go { color: #3d6823; } }
+        html.dark .qa-maps .qa-ico { background: rgb(107 159 61 / .2); }
+        .qa-draw .qa-ico { background: #fff4e5; color: #c2410c; }
+        @media (hover: hover) {.qa-draw:hover { border-color: #f5d3b3; } .qa-draw:hover .qa-go { color: #c2410c; } }
+        html.dark .qa-draw .qa-ico { background: rgb(194 65 12 / .2); }
         .qa-tags .qa-ico { background: #e7f6f1; color: #0f766e; }
         @media (hover: hover) {.qa-tags:hover { border-color: #bfe5d8; } .qa-tags:hover .qa-go { color: #0f766e; } }
         html.dark .qa-tags .qa-ico { background: rgb(15 118 110 / .24); color: #7dd3c0; }
@@ -257,6 +263,25 @@
                 <span class="qa-txt">
                     <b>Global Gallery</b>
                     <i>Every photo, drawing and saved map, from every schedule.</i>
+                </span>
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            {{-- Maps and Draw left the seasons (2026-09-30): a farm's fields do
+                 not change with the season, so the maps and drawings of them
+                 are the grower's own, and any season can use them. --}}
+            <a href="{{ route('maps.page') }}" class="qa-tile qa-maps">
+                <span class="qa-ico"><img src="{{ asset('images/location-marker.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
+                <span class="qa-txt">
+                    <b>Maps</b>
+                    <i>Draw and measure your fields over the real ground, once — then attach the map to any lot, activity or day, in any season.</i>
+                </span>
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </a>
+            <a href="{{ route('draw.page') }}" class="qa-tile qa-draw">
+                <span class="qa-ico"><img src="{{ asset('images/writting.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
+                <span class="qa-txt">
+                    <b>Draw</b>
+                    <i>Sketch a layout, a pest you found or a plan — and every drawing made in your seasons, in one place.</i>
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>

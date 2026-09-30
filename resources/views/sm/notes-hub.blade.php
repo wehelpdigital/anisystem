@@ -51,6 +51,10 @@
     .nh-body { padding: 0 .8rem .8rem; }
     #nhList.no-fold-anim .nh-fold, #nhList.no-fold-anim .nh-chev { transition: none; }
     html.dark .nh-card { background: #151b12; border-color: #2b3a1c; }
+    /* A note asked for by name (?open=) -- a map's or a drawing's note --
+       is unfolded and wears a ring for a moment so the eye finds it. */
+    .nh-card { transition: box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .nh-card.is-asked { box-shadow: 0 0 0 3px var(--color-brand-300); }
     html.dark .nh-title { color: #e8efe1; }
     html.dark .nh-body .text-gray-700 { color: #cdd8c0; }
 
@@ -187,6 +191,24 @@
         btn.textContent = anyOpen ? 'Collapse all' : 'Expand all';
     }
     sayFoldBtn();
+
+    /* ---- ?open=<id>: a note asked for by name ----------------------
+       Maps and drawings of your own keep their words in a note of yours,
+       and "In a note" on them lands here, on that note, opened. */
+    (() => {
+        const want = new URLSearchParams(location.search).get('open');
+        if (!want || !/^\d+$/.test(want)) return;
+        const card = list.querySelector(`.nh-card[data-note-type="global"][data-note-id="${want}"]`)
+            || list.querySelector(`.nh-card[data-note-id="${want}"]`);
+        if (!card) return;
+        card.classList.remove('is-folded', 'is-hidden');
+        setTimeout(() => {
+            card.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+            card.classList.add('is-asked');
+            setTimeout(() => card.classList.remove('is-asked'), 2400);
+        }, 180);
+        sayFoldBtn();
+    })();
 
     list.addEventListener('click', (e) => {
         // The actions inside an open note are not the fold.

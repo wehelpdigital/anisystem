@@ -64,9 +64,11 @@
 
 @section('content')
 <div class="lm-stage">
-    {{-- 'lot' mode: same engine, none of the room. --}}
-    @include('sm.partials.schedule-map', ['schedule' => $schedule, 'mapChrome' => 'lot'])
-    @include('sm.partials.tag-picker')
+    {{-- 'lot' mode: same engine, none of the room. Maps are the grower's
+         own now (2026-09-30): the lot's map is drawn on a canvas of the
+         visitor's own kept for this lot (-lotId), saved as their map, and
+         tied to the lot; the lot's pin and link are written to its season. --}}
+    @include('sm.partials.schedule-map', ['schedule' => null, 'canvasKey' => -1 * (int) $lot->id, 'lotSchedule' => $schedule, 'mapChrome' => 'lot'])
 </div>
 @endsection
 
@@ -81,9 +83,8 @@
 
     /* EACH LOT HAS ITS OWN MAP, AND STARTS ON A CLEAN ONE.
      *
-     * The engine boots onto the schedule's one live canvas, which is how
-     * Apartado 1's page came to show what was drawn for Apartado 2. So the
-     * moment the canvas reports in:
+     * The engine boots onto this lot's own canvas (never the Maps page's,
+     * never the team's). The moment it reports in:
      *  - a lot that already has a map is taken straight to THAT file;
      *  - a lot with none starts blank, always and without being asked. The
      *    question was one more thing between a farmer and their field, and
