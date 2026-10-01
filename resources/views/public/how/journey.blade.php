@@ -11,13 +11,18 @@
      fills as you scroll; each hub lights up with Anee's face as it reaches
      her. Tap a tool and it opens to say what it does.
 
+     The phone at the top plays a short film: someone logs in, and today's
+     dashboard comes up card by card (the day's activities, the weather,
+     Anee's tip, the community), each note around the phone lighting up as
+     its card arrives.
+
      The script mounts on a root (window.HowItWorks.mount(root, {scroller})),
      so the same code runs on the page (window scroll) and in the modal (the
      modal's own scroll), and sizes nothing until it is on screen. --}}
 @php
     $hwMode = $hwMode ?? 'site';
     $hwStages = \App\Support\HowItWorks::stages();
-    $hwChat = \App\Support\HowItWorks::chat();
+    $hwPhone = \App\Support\HowItWorks::phone();
     $hwPings = \App\Support\HowItWorks::pings();
     $hwPh = \App\Support\Region::ph();
     $hwLink = function (array $it) use ($hwMode, $hwPh) {
@@ -89,40 +94,86 @@
     @media (min-width: 1024px) { .hw-phone { width: 16.5rem; height: 32rem; margin-left: -8.25rem; } }
     .hw.is-ready .hw-phone { animation: hwPhone 1s .2s var(--ease) both; }
     @keyframes hwPhone { from { opacity: 0; transform: translateY(40px) scale(.96); } to { opacity: 1; transform: none; } }
-    .hw-scr { position: relative; height: 100%; display: flex; flex-direction: column; overflow: hidden; border-radius: 2.05rem; background: #f2f6ec; color: #14210c; text-align: left; }
-    .hw-app { display: flex; align-items: center; gap: .55rem; padding: .95rem .85rem .7rem; background: #fff; border-bottom: 1px solid #e6eddf; }
-    .hw-app img { width: 2.1rem; height: 2.1rem; border-radius: 999px; object-fit: cover; }
-    .hw-app b { display: block; font-family: var(--font-heading); font-size: .92rem; line-height: 1.1; }
-    .hw-app small { display: flex; align-items: center; gap: .3rem; font-size: .66rem; font-weight: 800; color: #4a7c2a; }
-    .hw-app small i { width: .42rem; height: .42rem; border-radius: 999px; background: #22c55e; animation: hwOnline 2s ease-out infinite; }
-    @keyframes hwOnline { 0% { box-shadow: 0 0 0 0 rgb(34 197 94 / .55); } 100% { box-shadow: 0 0 0 7px rgb(34 197 94 / 0); } }
-    .hw-chat { position: relative; flex: 1; min-height: 0; overflow: hidden; padding: .6rem .6rem .2rem; display: flex; flex-direction: column; justify-content: flex-end; }
-    .hw-chat::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2rem; z-index: 1; background: linear-gradient(#f2f6ec, rgb(242 246 236 / 0)); }
-    .hw-chat-in { display: flex; flex-direction: column; gap: .42rem; }
-    .hw-b { max-width: 88%; padding: .48rem .65rem; border-radius: .95rem; font-size: .72rem; line-height: 1.45; animation: hwBub .5s var(--ease) both; }
-    .hw-b.u { align-self: flex-end; background: #4a7c2a; color: #fff; border-bottom-right-radius: .28rem; }
-    .hw-b.a { align-self: flex-start; background: #fff; color: #1f2a17; border-bottom-left-radius: .28rem; box-shadow: 0 1px 2px rgb(0 0 0 / .06); }
-    .hw-b .pic { display: block; width: 7.2rem; height: 4.8rem; margin-bottom: .35rem; border-radius: .6rem; background: #9bbf72 center / cover no-repeat; }
-    .hw-b .card { display: flex; align-items: center; gap: .45rem; margin-top: .4rem; padding: .42rem .5rem; border-radius: .65rem; background: #f3f8ec; border: 1px solid #dbe8cc; }
-    .hw-b .card > span { font-size: 1rem; }
-    .hw-b .card b { display: block; font-size: .66rem; color: #2f5219; text-transform: uppercase; letter-spacing: .04em; }
-    .hw-b .card small { display: block; font-size: .7rem; font-weight: 800; color: #14210c; }
-    .hw-b.is-out { animation: hwBubOut .45s var(--ease) forwards; }
-    .hw-typing { align-self: flex-start; display: inline-flex; gap: .22rem; padding: .62rem .7rem; border-radius: .95rem; border-bottom-left-radius: .28rem; background: #fff; animation: hwBub .4s var(--ease) both; }
-    .hw-typing i { width: .38rem; height: .38rem; border-radius: 999px; background: #8fb86a; animation: hwDot 1s ease-in-out infinite; }
-    .hw-typing i:nth-child(2) { animation-delay: .15s; } .hw-typing i:nth-child(3) { animation-delay: .3s; }
-    @keyframes hwDot { 0%, 80%, 100% { opacity: .35; transform: none; } 40% { opacity: 1; transform: translateY(-3px); } }
-    @keyframes hwBub { from { opacity: 0; transform: translateY(10px) scale(.94); } to { opacity: 1; transform: none; } }
-    @keyframes hwBubOut { to { opacity: 0; transform: translateY(-8px); } }
-    .hw-bar { display: flex; align-items: center; gap: .4rem; margin: .45rem .55rem .75rem; padding: .5rem .5rem .5rem .8rem; border-radius: 999px; background: #fff; border: 1px solid #e0e8d6; font-size: .68rem; color: #9ca3af; }
-    .hw-bar span { flex: 1; }
-    .hw-bar i { width: 1.6rem; height: 1.6rem; border-radius: 999px; display: grid; place-items: center; background: #4a7c2a; color: #fff; }
-    .hw-bar i svg { width: .8rem; height: .8rem; }
+    .hw-scr { position: relative; height: 100%; overflow: hidden; border-radius: 2.05rem; background: #f2f6ec; color: #14210c; text-align: left; }
+    /* Two scenes on the one screen: the login, then today's dashboard. */
+    .hw-scene { position: absolute; inset: 0; display: flex; flex-direction: column; opacity: 0; transform: translateX(18px); pointer-events: none;
+        transition: opacity .5s var(--ease), transform .6s var(--ease); }
+    .hw-scene.is-on { opacity: 1; transform: none; }
+    .hw-scene.is-gone { opacity: 0; transform: translateX(-18px); }
+    .s-login { justify-content: center; padding: 1.3rem 1.05rem; background: radial-gradient(14rem 10rem at 50% 0%, #e2efd2, transparent 70%), #f7faf3; }
+    .hw-lg-mark { display: block; width: 3.1rem; height: auto; margin: 0 auto .55rem; }
+    .hw-lg-h { display: block; text-align: center; font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; }
+    .hw-lg-s { display: block; margin-bottom: .85rem; text-align: center; font-size: .66rem; color: #6b7280; }
+    .hw-fld { position: relative; display: block; margin-top: .5rem; padding: .45rem .65rem .5rem; border-radius: .7rem; background: #fff; border: 1.5px solid #dfe7d4;
+        transition: border-color .3s var(--ease), box-shadow .3s var(--ease); }
+    .hw-fld i { display: block; font-style: normal; font-size: .54rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #6b7280; }
+    .hw-fld span { font-size: .74rem; font-weight: 700; color: #14210c; }
+    .hw-fld em { display: inline-block; width: 1.5px; height: .85em; margin-left: 1px; vertical-align: -.1em; background: #4a7c2a; opacity: 0; }
+    .hw-fld.is-focus { border-color: #6b9f3d; box-shadow: 0 0 0 3px rgb(107 159 61 / .16); }
+    .hw-fld.is-focus em { opacity: 1; animation: hwCaret 1s steps(1) infinite; }
+    @keyframes hwCaret { 50% { opacity: 0; } }
+    .hw-lg-btn { display: flex; align-items: center; justify-content: center; gap: .4rem; margin-top: .85rem; padding: .6rem; border-radius: .75rem;
+        background: #f5c518; color: #3b2f00; font-size: .78rem; font-weight: 800; transition: transform .2s var(--ease), filter .2s var(--ease); }
+    .hw-lg-btn.is-press { transform: scale(.95); filter: brightness(.94); }
+    .hw-lg-btn i { display: none; width: .8rem; height: .8rem; border-radius: 999px; border: 2px solid rgb(59 47 0 / .25); border-top-color: #3b2f00; animation: hwSpin .7s linear infinite; }
+    .hw-lg-btn.is-busy i { display: inline-block; }
+    .hw-lg-f { margin-top: .8rem; text-align: center; font-size: .62rem; font-weight: 700; color: #4a7c2a; }
+    /* A fingertip: where the next tap lands. */
+    .hw-tap { position: absolute; z-index: 5; width: 1.8rem; height: 1.8rem; margin: -.9rem 0 0 -.9rem; border-radius: 999px; pointer-events: none;
+        background: rgb(20 33 12 / .16); box-shadow: 0 0 0 2px rgb(255 255 255 / .8); opacity: 0; }
+    .hw-tap.is-tap { animation: hwTap .55s var(--ease); }
+    @keyframes hwTap { 0% { opacity: 0; transform: scale(.4); } 30% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.6); } }
+    .hw-dtop { flex: none; display: flex; align-items: center; gap: .45rem; padding: .95rem .8rem .6rem; background: #fff; border-bottom: 1px solid #e6eddf; }
+    .hw-dtop img { width: 1.6rem; height: auto; }
+    .hw-dtop b { display: block; font-family: var(--font-heading); font-size: .82rem; line-height: 1.1; }
+    .hw-dtop small { display: block; font-size: .56rem; color: #6b7280; }
+    .hw-dtop .av { margin-left: auto; width: 1.6rem; height: 1.6rem; border-radius: 999px; display: grid; place-items: center; background: #4a7c2a; color: #fff; font-size: .6rem; font-weight: 900; }
+    .hw-dscroll { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+    .hw-dlist { display: flex; flex-direction: column; gap: .45rem; padding: .6rem; transition: transform 1.2s var(--ease); }
+    .hw-hi, .hw-card { opacity: 0; transform: translateY(14px) scale(.97); transition: opacity .5s var(--ease), transform .6s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease); }
+    .hw-hi.is-in, .hw-card.is-in { opacity: 1; transform: none; }
+    .hw-hi small { display: block; font-size: .55rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #6b8f4a; }
+    .hw-hi b { display: block; font-family: var(--font-heading); font-size: .92rem; font-weight: 800; }
+    .hw-card { padding: .5rem .6rem; border-radius: .8rem; background: #fff; border: 1px solid #e6eddf; box-shadow: 0 1px 2px rgb(0 0 0 / .04); }
+    .hw-card.is-hot { border-color: #f5c518; box-shadow: 0 0 0 2px rgb(245 197 24 / .3); }
+    .hw-card h6 { display: flex; align-items: center; gap: .3rem; margin-bottom: .3rem; font-size: .58rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: #2f5219; }
+    .hw-task { display: flex; align-items: center; gap: .45rem; padding: .22rem 0; }
+    .hw-task + .hw-task { border-top: 1px dashed #e8eee0; }
+    .hw-chk { flex: none; width: .95rem; height: .95rem; border-radius: .3rem; border: 1.5px solid #b9d39b; display: grid; place-items: center;
+        transition: background-color .3s var(--ease), border-color .3s var(--ease); }
+    .hw-chk svg { width: .62rem; height: .62rem; color: #fff; stroke-dasharray: 24; stroke-dashoffset: 24; transition: stroke-dashoffset .35s var(--ease) .1s; }
+    .hw-task.is-done .hw-chk { background: #4a7c2a; border-color: #4a7c2a; }
+    .hw-task.is-done .hw-chk svg { stroke-dashoffset: 0; }
+    .hw-task b { display: block; font-size: .66rem; font-weight: 800; line-height: 1.2; transition: color .3s var(--ease); }
+    .hw-task small { display: block; font-size: .56rem; color: #6b7280; }
+    .hw-task.is-done b { color: #9ca3af; text-decoration: line-through; }
+    .hw-wx { display: flex; align-items: center; gap: .5rem; }
+    .hw-wx .e { font-size: 1.5rem; line-height: 1; }
+    .hw-wx b { display: block; font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; line-height: 1; }
+    .hw-wx small { display: block; font-size: .58rem; color: #4b5563; }
+    .hw-rain { display: inline-block; margin-top: .35rem; padding: .14rem .45rem; border-radius: 999px; background: #e0ecfd; color: #1e3a8a; font-size: .56rem; font-weight: 800; }
+    .hw-tipc { display: flex; align-items: flex-start; gap: .45rem; }
+    .hw-tipc img { flex: none; width: 1.45rem; height: 1.45rem; border-radius: 999px; object-fit: cover; }
+    .hw-tipc p { font-size: .62rem; line-height: 1.45; }
+    .hw-com { display: flex; align-items: center; gap: .45rem; }
+    .hw-avs { display: flex; }
+    .hw-avs i { width: 1.2rem; height: 1.2rem; margin-left: -.35rem; border-radius: 999px; border: 2px solid #fff; display: grid; place-items: center;
+        font-style: normal; font-size: .48rem; font-weight: 900; color: #fff; background: hsl(var(--h) 45% 42%); }
+    .hw-avs i:first-child { margin-left: 0; }
+    .hw-com p { font-size: .62rem; line-height: 1.35; }
+    .hw-post { margin-top: .4rem; padding: .38rem .5rem; border-radius: .55rem; background: #f6f9f2; font-size: .58rem; line-height: 1.4; color: #374151; }
+    .hw-post b { font-weight: 800; color: #14210c; }
+    .hw-dnav { flex: none; display: grid; grid-template-columns: repeat(4, 1fr); padding: .4rem .3rem .65rem; background: #fff; border-top: 1px solid #e6eddf; }
+    .hw-dnav span { display: flex; flex-direction: column; align-items: center; gap: .1rem; font-size: .48rem; font-weight: 700; color: #9ca3af; }
+    .hw-dnav span.on { color: #4a7c2a; }
+    .hw-dnav svg { width: .95rem; height: .95rem; }
 
     /* The notes around the phone: four at its sides on a wide screen, one at a time under it on a phone. */
     .hw-ping { position: absolute; z-index: 3; }
     .hw-ping-in { display: flex; align-items: center; gap: .6rem; padding: .62rem .85rem .62rem .62rem; border-radius: 1rem; background: rgb(255 255 255 / .97); color: #14210c;
-        box-shadow: 0 22px 44px -22px rgb(0 0 0 / .75); text-align: left; white-space: nowrap; }
+        box-shadow: 0 22px 44px -22px rgb(0 0 0 / .75); text-align: left; white-space: nowrap; transition: box-shadow .4s var(--ease); }
+    /* The note whose card has just come up on the phone. */
+    .hw-ping.is-hot .hw-ping-in { box-shadow: 0 0 0 3px rgb(245 197 24 / .8), 0 22px 44px -22px rgb(0 0 0 / .75); }
     .hw-ping-in > span { width: 2.1rem; height: 2.1rem; border-radius: .75rem; display: grid; place-items: center; background: #eef6e5; font-size: 1.05rem; }
     .hw-ping b { display: block; font-size: .8rem; line-height: 1.2; }
     .hw-ping small { display: block; font-size: .7rem; color: #5b6b4c; }
@@ -136,7 +187,9 @@
         .hw-ping:nth-of-type(2) { right: calc(50% + 13rem); top: 18rem; }
         .hw-ping:nth-of-type(3) { left: calc(50% + 11.5rem); top: 7rem; }
         .hw-ping:nth-of-type(4) { left: calc(50% + 12.5rem); top: 21.5rem; }
-        .hw.is-ready .hw-ping { opacity: 1; transform: none; transition-delay: calc(1s + var(--k) * .18s); }
+        .hw.is-ready .hw-ping { opacity: 1; transform: none;
+            transition: opacity .6s var(--ease) calc(1s + var(--k) * .18s), transform .6s var(--ease) calc(1s + var(--k) * .18s), scale .45s var(--ease); }
+        .hw-ping.is-hot { scale: 1.06; }
         .hw.is-ready .hw-ping .hw-ping-in { animation: hwBob 6s ease-in-out infinite; animation-delay: calc(var(--k) * -1.4s); }
     }
     @keyframes hwBob { 50% { transform: translateY(-6px); } }
@@ -325,22 +378,65 @@
         <div class="hw-show" aria-hidden="true">
             <svg class="hw-show-svg"></svg>
             @foreach ($hwPings as $k => [$emo, $t, $s])
-                <div class="hw-ping {{ $k === 0 ? 'is-on' : '' }}" style="--k: {{ $k }}"><div class="hw-ping-in"><span>{{ $emo }}</span><div><b>{{ $t }}</b><small>{{ $s }}</small></div></div></div>
+                <div class="hw-ping" style="--k: {{ $k }}"><div class="hw-ping-in"><span>{{ $emo }}</span><div><b>{{ $t }}</b><small>{{ $s }}</small></div></div></div>
             @endforeach
             <div class="hw-phone">
                 <div class="hw-scr">
-                    <div class="hw-app">
-                        <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="">
-                        <div><b>Anee</b><small><i></i>AI farm technician</small></div>
+                    {{-- Scene one: logging in. --}}
+                    <div class="hw-scene s-login is-on">
+                        <img class="hw-lg-mark" src="{{ asset('images/logo-mark.png') }}?v=anee" alt="">
+                        <b class="hw-lg-h">Welcome back</b>
+                        <small class="hw-lg-s">Log in to your farm</small>
+                        <span class="hw-fld" data-f="email"><i>Email</i><span></span><em></em></span>
+                        <span class="hw-fld" data-f="pass"><i>Password</i><span></span><em></em></span>
+                        <span class="hw-lg-btn"><i></i><b>Log In</b></span>
+                        <span class="hw-lg-f">New here? Start free</span>
                     </div>
-                    <div class="hw-chat"><div class="hw-chat-in"></div></div>
-                    <div class="hw-bar"><span>Ask Anee anything…</span>
-                        <i><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg></i>
+                    {{-- Scene two: today, on the dashboard. --}}
+                    <div class="hw-scene s-dash">
+                        <div class="hw-dtop">
+                            <img src="{{ asset('images/logo-mark.png') }}?v=anee" alt="">
+                            <div><b>Dashboard</b><small>Your farm at a glance</small></div>
+                            <span class="av">{{ mb_substr($hwPhone['name'], 0, 1) }}</span>
+                        </div>
+                        <div class="hw-dscroll"><div class="hw-dlist">
+                            <div class="hw-hi"><small>{{ now(config('app.timezone'))->format('l, F j') }}</small><b>{{ $hwPhone['hello'] }}, {{ $hwPhone['name'] }}!</b></div>
+                            <div class="hw-card">
+                                <h6>📋 Today's activities</h6>
+                                @foreach ($hwPhone['tasks'] as [$tt, $tl])
+                                    <div class="hw-task"><span class="hw-chk"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span><div><b>{{ $tt }}</b><small>{{ $tl }}</small></div></div>
+                                @endforeach
+                            </div>
+                            <div class="hw-card">
+                                <h6>🌤️ Weather today</h6>
+                                <div class="hw-wx"><span class="e">⛅</span><div><b>{{ $hwPhone['temp'] }}</b><small>{{ $hwPhone['sky'] }}</small></div></div>
+                                <span class="hw-rain">🌧️ {{ $hwPhone['rain'] }}</span>
+                            </div>
+                            <div class="hw-card">
+                                <h6>💡 Anee's tip for today</h6>
+                                <div class="hw-tipc"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt=""><p>{{ $hwPhone['tip'] }}</p></div>
+                            </div>
+                            <div class="hw-card">
+                                <h6>💬 Today in the community</h6>
+                                <div class="hw-com">
+                                    <span class="hw-avs">@foreach ($hwPhone['faces'] as [$fi, $fh])<i style="--h: {{ $fh }}">{{ $fi }}</i>@endforeach</span>
+                                    <p><b>{{ $hwPhone['posts'] }} new posts</b> from farmers near you</p>
+                                </div>
+                                <div class="hw-post"><b>{{ $hwPhone['post'][0] }}:</b> {{ $hwPhone['post'][1] }}</div>
+                            </div>
+                        </div></div>
+                        <div class="hw-dnav">
+                            <span class="on"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>Home</span>
+                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path stroke-linecap="round" d="M8 3v4M16 3v4M3 10h18"/></svg>Schedules</span>
+                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>Community</span>
+                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16l-1.5 11a2 2 0 01-2 1.7h-9a2 2 0 01-2-1.7L4 7zm4 0V5a4 4 0 018 0v2"/></svg>Shop</span>
+                        </div>
                     </div>
+                    <span class="hw-tap"></span>
                 </div>
             </div>
         </div>
-        <p class="sr-only">A phone shows a chat with Anee: she names the best planting window for the town, reads a photo of yellowing rice leaves and says what to apply before the rain, and sums up the season's profit.</p>
+        <p class="sr-only">A phone shows someone logging in to anee.io, then today's dashboard: the day's activities on each lot, today's weather, Anee's tip for the day, and what is new in the community.</p>
     </section>
 
     <div class="hw-steps">
@@ -419,7 +515,7 @@
         </div>
     </div>
 
-    <script type="application/json" data-hw-chat>@json($hwChat)</script>
+    <script type="application/json" data-hw-phone>@json(['email' => $hwPhone['email']])</script>
 </div>
 
 @once
@@ -432,50 +528,81 @@
     const wide = () => window.matchMedia('(min-width: 1024px)').matches;
     const make = (tag, attrs = {}) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); return n; };
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-    const PIC = @json(asset('images/site/palay.jpg'));
 
-    /* ---- the phone: three talks with Anee, round and round while it is on screen ---- */
+    /* ---- the phone: a login, then today's dashboard card by card, round
+       and round while it is on screen. Each card lights its note. ---- */
     function phone(root) {
-        const box = root.querySelector('.hw-chat-in');
-        const data = JSON.parse(root.querySelector('[data-hw-chat]').textContent || '[]');
-        if (!box || !data.length) return;
-        const bubble = (who, html) => {
-            const n = document.createElement('div');
-            n.className = 'hw-b ' + who;
-            n.innerHTML = html;
-            return n;
-        };
-        const answer = (t) => esc(t.a) + (t.card ? `<span class="card"><span>${esc(t.card[0])}</span><span><b>${esc(t.card[1])}</b><small>${esc(t.card[2])}</small></span></span>` : '');
-        const asked = (t) => (t.photo ? `<span class="pic" style="background-image:url('${PIC}')"></span>` : '') + esc(t.u);
+        const scr = root.querySelector('.hw-scr');
+        if (!scr) return;
+        const login = scr.querySelector('.s-login'), dash = scr.querySelector('.s-dash');
+        const email = scr.querySelector('[data-f="email"]'), pass = scr.querySelector('[data-f="pass"]');
+        const btn = scr.querySelector('.hw-lg-btn'), tap = scr.querySelector('.hw-tap');
+        const view = scr.querySelector('.hw-dscroll'), list = scr.querySelector('.hw-dlist'), hi = scr.querySelector('.hw-hi');
+        const cards = [...scr.querySelectorAll('.hw-card')], tasks = [...scr.querySelectorAll('.hw-task')];
+        const data = JSON.parse(root.querySelector('[data-hw-phone]').textContent || '{}');
+        const ping = (k) => root._hwPing && root._hwPing(k);
         if (still()) {
-            data.slice(0, 2).forEach((t) => { box.append(bubble('u', asked(t)), bubble('a', answer(t))); });
+            login.classList.remove('is-on'); dash.classList.add('is-on');
+            hi.classList.add('is-in'); cards.forEach((c) => c.classList.add('is-in'));
+            if (tasks[0]) tasks[0].classList.add('is-done');
+            ping(0);
             return;
         }
-        // A new line slides the conversation up instead of jumping it.
-        const add = (n) => {
-            const before = box.offsetHeight;
-            box.appendChild(n);
-            const grew = box.offsetHeight - before;
-            box.animate([{ transform: `translateY(${grew}px)` }, { transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.22,1,.36,1)' });
-            while (box.children.length > 7) box.firstElementChild.remove();
-        };
-        // Watch the phone, not the list: an empty list has no height to be seen.
         let seen = false;
         new IntersectionObserver((es) => { seen = es.some((e) => e.isIntersecting); }).observe(root.querySelector('.hw-phone'));
         const until = async () => { while (!seen || document.hidden) await sleep(400); };
+        const tapAt = (el) => {
+            const sr = scr.getBoundingClientRect(), r = el.getBoundingClientRect();
+            tap.style.left = (r.left - sr.left + r.width * .5) + 'px';
+            tap.style.top = (r.top - sr.top + r.height * .55) + 'px';
+            tap.classList.remove('is-tap'); void tap.offsetWidth; tap.classList.add('is-tap');
+        };
+        const type = async (fld, text, ms) => {
+            const out = fld.querySelector('span');
+            for (const ch of text) { await until(); out.textContent += ch; await sleep(ms); }
+        };
+        const reset = () => {
+            [email, pass].forEach((f) => { f.classList.remove('is-focus'); f.querySelector('span').textContent = ''; });
+            btn.classList.remove('is-press', 'is-busy'); btn.querySelector('b').textContent = 'Log In';
+            dash.classList.remove('is-on', 'is-gone'); login.classList.remove('is-gone'); login.classList.add('is-on');
+            hi.classList.remove('is-in'); cards.forEach((c) => c.classList.remove('is-in', 'is-hot'));
+            tasks.forEach((t) => t.classList.remove('is-done'));
+            list.style.transform = '';
+            ping(-1);
+        };
         (async () => {
-            await sleep(900);
+            await sleep(800);
             for (;;) {
-                for (const t of data) {
-                    await until(); add(bubble('u', asked(t))); await sleep(1100);
-                    await until(); const typing = document.createElement('div'); typing.className = 'hw-typing'; typing.innerHTML = '<i></i><i></i><i></i>'; add(typing); await sleep(1500);
-                    typing.remove(); add(bubble('a', answer(t))); await sleep(3200);
+                reset();
+                await sleep(1000);
+                await until(); tapAt(email); email.classList.add('is-focus'); await sleep(350);
+                await type(email, data.email || 'juan@bukid.ph', 65); await sleep(300);
+                email.classList.remove('is-focus'); tapAt(pass); pass.classList.add('is-focus'); await sleep(300);
+                await type(pass, '••••••••', 80); await sleep(350);
+                pass.classList.remove('is-focus'); await until(); tapAt(btn); btn.classList.add('is-press'); await sleep(180);
+                btn.classList.remove('is-press'); btn.classList.add('is-busy'); btn.querySelector('b').textContent = 'Logging in'; await sleep(1100);
+                login.classList.remove('is-on'); login.classList.add('is-gone'); dash.classList.add('is-on'); await sleep(450);
+                hi.classList.add('is-in'); await sleep(500);
+                for (let k = 0; k < cards.length; k++) {
+                    await until();
+                    cards.forEach((c) => c.classList.remove('is-hot'));
+                    // The list rolls up when the next card would land below the screen.
+                    const over = cards[k].offsetTop + cards[k].offsetHeight - (view.clientHeight - 8);
+                    if (over > 0) list.style.transform = 'translateY(' + (-over) + 'px)';
+                    cards[k].classList.add('is-in', 'is-hot');
+                    ping(k);
+                    if (k === 0) {
+                        await sleep(1000); tasks[0] && tasks[0].classList.add('is-done');
+                        await sleep(800); tasks[1] && tasks[1].classList.add('is-done');
+                        await sleep(700);
+                    } else {
+                        await sleep(1900);
+                    }
                 }
-                await sleep(1800);
-                [...box.children].forEach((c) => c.classList.add('is-out'));
-                await sleep(500);
-                box.textContent = '';
+                cards.forEach((c) => c.classList.remove('is-hot'));
+                await sleep(2200);
+                dash.classList.remove('is-on'); dash.classList.add('is-gone'); ping(-1);
+                await sleep(800);
             }
         })();
     }
@@ -499,18 +626,22 @@
                 const base = make('path', { d, class: 'hw-arc', pathLength: 1 }), flow = make('path', { d, class: 'hw-flow', pathLength: 1 }), dot = make('circle', { cx: ex, cy: ey, r: 3.5, class: 'hw-dest' });
                 [base, flow, dot].forEach((n) => n.style.setProperty('--i', i + 4));
                 svg.append(base, flow, dot);
+                g._arc = [base, flow, dot];
+                if (g.classList.contains('is-hot')) g._arc.forEach((n) => n.classList.add('is-on'));
             });
             // The hero's routes play as soon as they are drawn.
             show.classList.add('is-in');
         };
         new ResizeObserver(() => requestAnimationFrame(draw)).observe(show);
-        let k = 0;
-        setInterval(() => {
-            if (wide() || document.hidden) return;
-            list[k].classList.remove('is-on');
-            k = (k + 1) % list.length;
-            list[k].classList.add('is-on');
-        }, 2800);
+        // The phone lights the note of the card it has just shown (-1: none):
+        // on a desk the note glows and its route turns gold; on a phone it is
+        // the one note under the phone.
+        root._hwPing = (k) => list.forEach((g, i) => {
+            const on = i === k;
+            g.classList.toggle('is-hot', on);
+            g.classList.toggle('is-on', on);
+            (g._arc || []).forEach((n) => n.classList.toggle('is-on', on));
+        });
     }
 
     /* ---- a step's field: the dots, the routes from Anee to each tool ---- */
@@ -649,8 +780,8 @@
         const scroller = opts.scroller || window;
         const stages = [...root.querySelectorAll('.hw-steps .hw-stage')];
         root.classList.add('is-ready');
-        phone(root);
         pings(root);
+        phone(root);
         stages.forEach(field);
         rail(root, scroller, stages);
         if (still()) stages.forEach((st) => st.classList.add('is-in'));

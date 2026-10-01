@@ -259,36 +259,38 @@ class HowItWorks
         ]));
     }
 
-    /** The phone in the hero: three short talks with Anee, plan, grow and look back. */
-    public static function chat(): array
+    /** The phone in the hero: someone logs in, and today's dashboard comes up. */
+    public static function phone(): array
     {
-        if (Region::ph()) {
-            return [
-                ['u' => 'Kailan ako dapat magtanim ng palay?', 'a' => 'Para sa bayan ninyo, ang pinakamagandang tanim ay June 15 hanggang July 5. Ligtas ang ani bago ang malalakas na bagyo. 🌾',
-                    'card' => ['📅', 'When to Plant', 'Best window: Jun 15 to Jul 5']],
-                ['u' => 'Naninilaw ang dahon sa Lot 2', 'photo' => true, 'a' => 'Nasa tillering na ang Lot 2, day 28. Mukhang kulang sa nitrogen. Lagyan ng 1 sako ng urea kada ektarya bago umulan sa Huwebes.'],
-                ['u' => 'Magkano ang kinita namin ngayong season?', 'a' => 'Kumita kayo ng ₱48,200, mas mataas ng 12% kaysa noong nakaraang season. Gusto mo bang makita kung saan pa makakatipid? 📊',
-                    'card' => ['💰', 'Profit Report', '₱48,200 this season']],
-            ];
-        }
+        $ph = Region::ph();
 
         return [
-            ['u' => 'When should I plant my rice?', 'a' => 'For your town, the best window is June 15 to July 5. Your harvest lands before the strongest storms. 🌾',
-                'card' => ['📅', 'When to Plant', 'Best window: Jun 15 to Jul 5']],
-            ['u' => 'The leaves on Lot 2 are turning yellow', 'photo' => true, 'a' => "Lot 2 is at tillering, day 28. It looks hungry for nitrogen. Apply 1 bag of urea per hectare before Thursday's rain."],
-            ['u' => 'How much did we make this season?', 'a' => 'You made $3,100, up 12% on last season. Want to see where you can still save? 📊',
-                'card' => ['💰', 'Profit Report', '$3,100 this season']],
+            'name' => $ph ? 'Juan' : 'Sam',
+            'email' => $ph ? 'juan@bukid.ph' : 'sam@greenacre.farm',
+            'hello' => $ph ? 'Magandang umaga' : 'Good morning',
+            'tasks' => [
+                ['Apply urea, 1 bag per hectare', 'Lot 2, day 28'],
+                ['Irrigate the paddy', 'Lot 1, day 35'],
+                ['Scout for armyworm', 'Lot 2, day 28'],
+            ],
+            'temp' => '31°C',
+            'sky' => 'Partly cloudy',
+            'rain' => 'Rain after 3 PM',
+            'tip' => 'Spray before 3 PM today. The rain after that would wash it off.',
+            'posts' => 5,
+            'faces' => [['R', 20], ['M', 140], ['B', 210]],
+            'post' => $ph ? ['Rosa', 'Ang ganda ng tubo ng mais ko ngayong linggo! 🌽'] : ['Rosa', 'My corn is looking great this week! 🌽'],
         ];
     }
 
-    /** The little notes that float around the phone. */
+    /** The notes that float around the phone, one for each card on its dashboard. */
     public static function pings(): array
     {
         return [
-            ['🌱', 'Lot 1 is at tillering', 'Day 28, on track'],
-            ['🌧️', 'Rain on Thursday', 'Spray on Wednesday'],
-            ['📦', 'Urea: 12 bags left', 'Enough for this stage'],
-            ['☀️', '6:00 AM plan sent', 'To 4 workers'],
+            ['📋', "Today's activities", '3 tasks on 2 lots'],
+            ['🌤️', 'Weather today', '31°C, rain after 3 PM'],
+            ['💡', "Anee's tip for today", 'Spray before the rain'],
+            ['💬', 'Today in the community', '5 new posts near you'],
         ];
     }
 
