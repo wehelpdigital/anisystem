@@ -300,7 +300,7 @@ class HowItWorks
             'crops' => $ph ? '🌾' : '🌽',
             'tasks' => [
                 ['Fertilizer', 'high', 'Apply urea, 1 bag per hectare', 'Lot 2', 3, 'Half day'],
-                ['Irrigation', 'medium', 'Irrigate the paddy', 'Lot 1', 1, 'Half day'],
+                ['Irrigation', 'medium', $ph ? 'Irrigate the paddy' : 'Irrigate the north block', 'Lot 1', 1, 'Half day'],
                 ['Scouting', 'low', 'Scout for armyworm', 'Lot 2', 1, null],
             ],
             'place' => $ph ? 'Cabanatuan, Nueva Ecija' : 'Fresno, California',
@@ -309,6 +309,30 @@ class HowItWorks
             'post' => $ph
                 ? ['Rosa Santos', 'RS', 20, '2h', 'Ang ganda ng tubo ng mais ko ngayong linggo! 🌽', 24, 6]
                 : ['Rosa Santos', 'RS', 20, '2h', 'My corn is looking great this week! 🌽', 24, 6],
+            // After the dashboard the film opens the season: the Cropping
+            // Schedules list, the season's modules, then its activities board
+            // with today's tasks (the same three as on the dashboard).
+            'board' => [
+                'desc' => $ph ? 'Riverside and the upper field' : 'The north and south blocks',
+                'crop' => $ph ? 'Rice, transplanted (Palay)' : 'Sweet corn',
+                'day' => 28,
+                'stage' => $ph ? 'Tillering' : 'Six leaf stage',
+                'length' => 105,
+                'lots' => 2,
+                'workers' => 3,
+                'activities' => 36,
+                // Lot => its day count, for the lot chip on each card.
+                'das' => ['Lot 1' => 30, 'Lot 2' => 28],
+                // Per task above: the type as the board names it, a water
+                // badge (irrigation only) and the card's note.
+                'cards' => [
+                    ['Fertilizer (Granular)', null, 'Broadcast evenly before the rain this afternoon.'],
+                    ['Irrigation', 'Irrigate', 'Keep 3 to 5 cm of water in the field.'],
+                    ['Monitoring', null, $ph ? 'Start with the leaves near the levee.' : 'Start with the rows nearest the road.'],
+                ],
+                // Yesterday's one task, already done.
+                'yesterday' => ['Water check after the rain', 'Lot 1'],
+            ],
         ];
     }
 

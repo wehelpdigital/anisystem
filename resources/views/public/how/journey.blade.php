@@ -15,7 +15,8 @@
      then the dashboard as it looks inside (the greeting, the tiles, the tip
      of the day, today's work on a season and its weather, the news feed),
      scrolled the way a thumb would, each note around the phone lighting up
-     as its part comes into view. It is drawn at a real phone's width (390px)
+     as its part comes into view; then the Schedules tab, the season's
+     modules and its activities board (HowItWorks::phone()['board']). It is drawn at a real phone's width (390px)
      and scaled to the frame, so its sizes are the app's own.
 
      The script mounts on a root (window.HowItWorks.mount(root, {scroller})),
@@ -26,6 +27,25 @@
     $hwStages = \App\Support\HowItWorks::stages();
     $hwPhone = \App\Support\HowItWorks::phone();
     $hwPings = \App\Support\HowItWorks::pings();
+    // The season the film opens after the dashboard, and its dates.
+    $hwB = $hwPhone['board'];
+    $hwToday = now(config('app.timezone'));
+    $hwStart = $hwToday->copy()->subDays($hwB['day']);
+    $hwEnd = $hwStart->copy()->addDays($hwB['length']);
+    $hwPct = (int) round($hwB['day'] / $hwB['length'] * 100);
+    $hwPrio = ['high' => '#f46a6a', 'medium' => '#f1b44c', 'low' => '#94a3b8'];
+    // A one-path icon, drawn like the app's.
+    $hwI = fn (string $d, $w = 2) => '<svg fill="none" stroke="currentColor" stroke-width="' . $w . '" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="' . $d . '"/></svg>';
+    $hwBellD = 'M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 00-4-5.7V5a2 2 0 10-4 0v.3A6 6 0 006 11v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9';
+    // The top bar's right side and the tab bar, the same on every screen.
+    $hwTopR = '<span class="r"><span class="hwr-help">?</span><span class="hwr-bell">' . $hwI($hwBellD) . '<em>1</em></span><span class="hwr-av">' . e($hwPhone['initials']) . '</span></span>';
+    $hwTabs = [
+        ['Home', '<path stroke-linecap="round" stroke-linejoin="round" d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/>'],
+        ['Schedules', '<rect x="3" y="5" width="18" height="16" rx="2"/><path stroke-linecap="round" d="M8 3v4M16 3v4M3 10h18M8 14h2M14 14h2M8 17h2"/>'],
+        ['Community', '<path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/>'],
+        ['Shop', '<path stroke-linecap="round" stroke-linejoin="round" d="M4 9l1.5-5h13L20 9M4 9h16M4 9v10a1 1 0 001 1h14a1 1 0 001-1V9M9 20v-6h6v6"/>'],
+    ];
+    $hwNav = fn (int $on) => '<div class="hwr-nav">' . collect($hwTabs)->map(fn ($t, $k) => '<span' . ($k === $on ? ' class="on"' : '') . '><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">' . $t[1] . '</svg>' . $t[0] . '</span>')->implode('') . '</div>';
     $hwPh = \App\Support\Region::ph();
     $hwLink = function (array $it) use ($hwMode, $hwPh) {
         if ($it['url']) {
@@ -242,6 +262,165 @@
     .hwr-nav span { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 11px; font-weight: 600; color: #6b7280; }
     .hwr-nav span.on { color: #3d6823; }
     .hwr-nav svg { width: 22px; height: 22px; }
+    .hwr-top > div { min-width: 0; }
+    .hwr-top > div b, .hwr-top > div small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hwr-back { flex: none; display: grid; margin-left: -4px; color: #6b7280; }
+    .hwr-back svg { width: 24px; height: 24px; }
+
+    /* -- after the dashboard: the Schedules tab, a season's modules, its activities board -- */
+    .s-list, .s-hub, .s-acts { background: #f1f3f5; }
+    .s-list.is-on .hwr-list > *, .s-hub.is-on .hwr-list > *, .s-acts.is-on .hwr-list > * { animation: hwrUp .55s var(--ease) both; animation-delay: calc(var(--n, 0) * 70ms + 150ms); }
+    .s-hub .hwr-list, .s-acts .hwr-list { gap: 12px; }
+    .hwl-open, .hwr-list > .hwh-cta { transition: scale .2s var(--ease), box-shadow .45s var(--ease); }
+    .hwl-open.is-press, .hwh-cta.is-press { scale: .97; }
+    /* The season list. */
+    .hwl-hero { padding: 17px 18px; border-radius: 16px; border: 1px solid #e5e7eb; background: linear-gradient(180deg, #aeb4be, #cfd2d7); }
+    .hwl-left { display: flex; align-items: center; gap: 14px; }
+    .hwl-ico { flex: none; width: 66px; height: 66px; border-radius: 999px; display: grid; place-items: center; background: rgb(255 255 255 / .9); color: #4a7c2a; }
+    .hwl-ico svg { width: 30px; height: 30px; }
+    .hwl-say { min-width: 0; padding: 10px 13px; border-radius: 14px; background: rgb(255 255 255 / .9); box-shadow: 0 1px 2px rgb(15 23 42 / .05); }
+    .hwl-say b { display: block; font-family: var(--font-heading); font-size: 18px; font-weight: 800; line-height: 1.25; color: #111827; }
+    .hwl-say p { margin-top: 4px; font-size: 13px; line-height: 1.45; color: #6b7280; }
+    .hwl-say strong { color: #1f2937; }
+    .hwl-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
+    .hwl-stats div { display: flex; flex-direction: column; align-items: center; padding: 8px 4px; border-radius: 12px; background: #fafafb; border: 1px solid #e5e7eb; }
+    .hwl-stats b { font-size: 19px; font-weight: 800; line-height: 1.25; color: #1f2937; }
+    .hwl-stats i { font-style: normal; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #6b7280; }
+    .hwl-stats .on { background: #edf3e5; border-color: #b9d79c; }
+    .hwl-stats .on b, .hwl-stats .on i { color: #3d6823; }
+    .hwl-add { display: flex; align-items: center; justify-content: center; gap: 10px; height: 50px; border-radius: 16px; color: #fff; font-size: 15px; font-weight: 800;
+        background: linear-gradient(115deg, #7bb24a, #4a7c2a 30%, #3d6823 55%, #6b9f3d 80%, #8fc96a); box-shadow: 0 10px 22px -12px rgb(61 104 35 / .65); }
+    .hwl-add svg { width: 20px; height: 20px; }
+    .hwl-search { display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 14px; border-radius: 12px; background: #fff; border: 1px solid #d1d5db; color: #9ca3af; font-size: 16px; }
+    .hwl-search svg { width: 20px; height: 20px; }
+    .hwl-pills { display: flex; justify-content: space-between; margin-top: -4px; }
+    .hwl-pills span { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; background: #fff; border: 1px solid #e5e7eb; font-size: 12px; font-weight: 700; color: #4b5563; }
+    .hwl-pills svg { width: 15px; height: 15px; }
+    .hwl-card { overflow: hidden; border-radius: 16px; background: #fff; border: 1px solid #f3f4f6; box-shadow: 0 1px 3px rgb(26 26 26 / .06), 0 4px 14px -4px rgb(26 26 26 / .08); }
+    .hwl-cover { display: flex; align-items: center; gap: 10px; min-height: 58px; padding: 9px 13px; background: linear-gradient(120deg, #f4e9dc, #dfc9ac 42%, #cbb08c 68%, #ecdfcd); }
+    .hwl-cover > span { font-size: 22px; }
+    .hwl-cover b { flex: 1; min-width: 0; font-family: var(--font-heading); font-size: 14.5px; font-weight: 800; color: #111827; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hwl-cover i { display: grid; color: #6b5a42; }
+    .hwl-cover svg { width: 18px; height: 18px; }
+    .hwl-body { display: flex; flex-direction: column; align-items: flex-start; padding: 14px 15px 16px; }
+    .hwl-body .d { font-size: 12.5px; color: #6b7280; }
+    .hwl-body .s { margin-top: 8px; font-size: 12.8px; font-weight: 700; color: #3d6823; }
+    .hwl-bar { align-self: stretch; height: 6px; margin-top: 8px; border-radius: 999px; background: #f3f4f6; overflow: hidden; }
+    .hwl-bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #4a7c2a, #6b9f3d); }
+    .hwl-dates { align-self: stretch; display: flex; justify-content: space-between; margin-top: 5px; font-size: 11px; color: #9ca3af; }
+    .hwl-dates b { font-weight: 700; color: #1f2937; }
+    .hwl-meta { display: flex; gap: 14px; margin-top: 10px; font-size: 11.5px; color: #4b5563; }
+    .hwl-meta span { display: inline-flex; align-items: center; gap: 4px; }
+    .hwl-meta svg { width: 14px; height: 14px; }
+    .hwl-made { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; padding: 3px 9px; border-radius: 999px; background: #f9fafb; border: 1px solid #e5e7eb;
+        font-size: 10.5px; font-weight: 600; color: #6b7280; }
+    .hwl-made svg { width: 12px; height: 12px; }
+    .hwl-open { align-self: stretch; display: flex; align-items: center; justify-content: center; height: 44px; margin-top: 16px; border-radius: 12px; color: #fff; font-size: 16px; font-weight: 600;
+        background: linear-gradient(120deg, #2f5219, #4a7c2a 28%, #6b9f3d 52%, #4a7c2a 76%, #2f5219); }
+    /* A season's modules. */
+    .hwh-card { position: relative; overflow: hidden; border-radius: 16px; background: #fff; border: 1px solid #f3f4f6; box-shadow: 0 1px 3px rgb(26 26 26 / .06), 0 4px 14px -4px rgb(26 26 26 / .08); }
+    .hwh-card::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 5px; background: linear-gradient(90deg, #4a7c2a, #8fc96a 55%, #4a7c2a); }
+    .hwh-in { padding: 20px 17px 14px; }
+    .hwh-row { display: flex; align-items: flex-start; gap: 8px; }
+    .hwh-row .t { flex: 1; min-width: 0; font-family: var(--font-heading); font-size: 22px; font-weight: 800; line-height: 1.15; color: #111827; }
+    .hwh-row .pen { flex: none; width: 32px; height: 32px; border-radius: 999px; display: grid; place-items: center; background: #f3f8ec; color: #3d6823; }
+    .hwh-row .pen svg { width: 15px; height: 15px; }
+    .hwh-row .st { flex: none; padding: 3px 9px; border-radius: 999px; background: #e4efd4; color: #3d6823; font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .hwh-in .d { margin-top: 6px; font-size: 13.5px; color: #6b7280; }
+    .hwh-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .hwh-chips span { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; background: #f9fafb; border: 1px solid #e5e7eb; font-size: 12px; font-weight: 700; color: #374151; }
+    .hwh-foot { display: flex; gap: 8px; padding: 10px 13px; background: #f9fafb; border-top: 1px solid #f3f4f6; }
+    .hwh-foot span { flex: 1; display: flex; align-items: center; justify-content: center; height: 32px; border-radius: 10px; font-size: 12.5px; font-weight: 600; }
+    .hwh-foot .a { background: #fff; border: 1px solid #e5e7eb; color: #374151; }
+    .hwh-foot .c { color: #fff; background: linear-gradient(120deg, #2f5219, #4a7c2a 28%, #6b9f3d 52%, #4a7c2a 76%, #2f5219); }
+    .hwr-tip .ask { margin-top: 8px; font-size: 12px; font-weight: 800; color: #a8cc7e; }
+    .hwh-cta { position: relative; overflow: hidden; display: flex; align-items: center; gap: 12px; padding: 14px 15px; border-radius: 16px; background: #fff; border: 1px solid #e5e7eb; }
+    .hwh-cta::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--a); }
+    .hwh-cta .chip { flex: none; width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--a); }
+    .hwh-cta .chip img { width: 28px; height: 28px; object-fit: contain; }
+    .hwh-cta .tx { min-width: 0; }
+    .hwh-cta b { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; line-height: 1.25; color: #111827; }
+    .hwh-cta em { padding: 2px 10px; border-radius: 999px; background: rgb(240 200 0 / .2); color: #c79e00; font-style: normal; font-size: 12px; font-weight: 600; }
+    .hwh-cta small { display: block; margin-top: 2px; font-size: 14px; line-height: 1.4; color: #6b7280; }
+    .hwh-cta > svg { flex: none; margin-left: auto; width: 22px; height: 22px; color: var(--a); opacity: .75; }
+    .hwh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .hwh-grid > span { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 11px 12px; border-radius: 16px; background: #fff; border: 1px solid #f3f4f6;
+        box-shadow: 0 1px 3px rgb(26 26 26 / .06), 0 4px 14px -4px rgb(26 26 26 / .08); }
+    .hwh-grid i { flex: none; width: 37px; height: 37px; border-radius: 10px; display: grid; place-items: center; background: #f3f8ec; }
+    .hwh-grid i img { width: 24px; height: 24px; object-fit: contain; }
+    .hwh-grid i img.face { width: 28px; height: 28px; border-radius: 999px; object-fit: cover; }
+    .hwh-grid b { flex: 1; min-width: 0; font-size: 13.4px; font-weight: 700; color: #111827; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hwh-grid em { flex: none; padding: 2px 10px; border-radius: 999px; background: #e4efd4; color: #2d5016; font-style: normal; font-size: 12px; font-weight: 600; }
+    /* The activities board. */
+    .hwa-tools { flex: none; display: flex; gap: 6px; padding: 12px 16px 2px; }
+    .hwa-tools span, .hwa-ver span { position: relative; height: 36px; min-width: 36px; display: grid; place-items: center; border-radius: 8px; background: #fff; border: 1px solid #e5e7eb; color: #374151; }
+    .hwa-tools svg, .hwa-ver svg { width: 18px; height: 18px; }
+    .hwa-tools .m { display: flex; align-items: center; gap: 6px; padding: 0 10px; font-size: 14px; font-weight: 600; }
+    .hwa-tools em { position: absolute; top: -7px; right: -7px; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 999px; display: grid; place-items: center;
+        background: #ef4444; color: #fff; font-style: normal; font-size: 10px; font-weight: 800; box-shadow: 0 0 0 2px #fff; }
+    .hwa-ver { display: flex; gap: 4px; }
+    .hwa-ver .sel { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; font-weight: 600; }
+    .hwa-ver .add { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+    .hwa-ver .ai { overflow: hidden; padding: 0; }
+    .hwa-ver .ai img { width: 30px; height: 30px; border-radius: 8px; object-fit: cover; }
+    .hwa-g { overflow: hidden; border-radius: 16px; background: #fff; border: 1px solid #f3f4f6; border-left: 4px solid var(--c);
+        box-shadow: 0 1px 3px rgb(26 26 26 / .06), 0 4px 14px -4px rgb(26 26 26 / .08); }
+    .hwa-h { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; padding: 10px 10px 10px 9px;
+        background: linear-gradient(115deg, color-mix(in srgb, var(--c) 12%, #fff), color-mix(in srgb, var(--c) 26%, #fff) 32%, color-mix(in srgb, var(--c) 13%, #fff) 64%, color-mix(in srgb, var(--c) 22%, #fff)); }
+    .hwa-h > svg { flex: none; width: 16px; height: 16px; color: var(--c); transition: transform .4s var(--ease); }
+    .hwa-g.is-open .hwa-h > svg:first-child { transform: rotate(90deg); }
+    .hwa-h .dw { font-size: 13px; font-weight: 800; letter-spacing: .02em; color: var(--c); }
+    .hwa-h b { font-size: 16px; font-weight: 800; color: #111827; }
+    .hwa-h .dd { width: 22px; height: 22px; border-radius: 999px; display: grid; place-items: center; border: 1.5px dashed #9ca3af; color: #6b7280; }
+    .hwa-h .dd svg { width: 12px; height: 12px; }
+    .hwa-h .ct { margin-left: auto; min-width: 28px; padding: 2px 9px; border-radius: 999px; text-align: center; background: rgb(255 255 255 / .8); color: var(--c); font-size: 11px; font-weight: 700; }
+    .hwa-h .pl { display: grid; margin: 0 4px; color: #4b5563; }
+    .hwa-h .pl svg { width: 20px; height: 20px; }
+    .hwa-h .kb { width: 18px; height: 18px; color: #4b5563; }
+    .hwa-h .br { flex-basis: 100%; height: 0; }
+    .hwa-h .wx { margin-left: 2px; display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; background: rgb(255 255 255 / .85);
+        font-size: 10.5px; font-weight: 700; color: #1f2937; }
+    .hwa-h .wx i { max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-style: normal; color: #374151; }
+    .hwa-b { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .6s var(--ease); }
+    .hwa-b > div { min-height: 0; overflow: hidden; }
+    .hwa-g.is-open .hwa-b { grid-template-rows: 1fr; }
+    .hwa-in { display: grid; gap: 10px; padding: 11px; }
+    .hwa-c { padding: 12px 13px; border-radius: 13.6px; background: #fff; border: 1px solid #eef0f3; border-left: 4px solid var(--p); transition: opacity .4s var(--ease); }
+    .hwa-c.is-done { opacity: .8; }
+    .hwa-btns { display: flex; gap: 9px; }
+    .hwa-btns span { width: 34px; height: 34px; border-radius: 9.6px; display: grid; place-items: center; }
+    .hwa-btns svg { width: 17px; height: 17px; }
+    .hwa-btns .ck { width: 30px; height: 30px; margin: 2px; border-radius: 8.8px; border: 2px solid #d1d5db; background: #fff; color: transparent;
+        transition: background-color .3s var(--ease), border-color .3s var(--ease), color .3s var(--ease), transform .3s var(--ease); }
+    .hwa-c.is-done .ck { background: #4a7c2a; border-color: #4a7c2a; color: #fff; transform: scale(1.08); }
+    .hwa-btns .ty { background: #f3f8ec; color: #3d6823; }
+    .hwa-btns .st { background: #fef9c3; color: #a16207; }
+    .hwa-btns .dd { background: #ecfccb; color: #3f6212; }
+    .hwa-btns .mn { background: #ffe4e6; color: #be123c; }
+    .hwa-btns .fd { background: #e0f2fe; color: #0284c7; }
+    .hwa-tl { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin-top: 10px; }
+    .hwa-tl b { font-family: var(--font-heading); font-size: 15px; font-weight: 700; line-height: 1.35; color: #111827; transition: color .3s var(--ease); }
+    .hwa-c.is-done .hwa-tl b { color: #6b7280; text-decoration: line-through; }
+    .hwa-lot { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px 3px 6px; border-radius: 8px; background: #3f4bb5; color: #fff; font-size: 11.5px; font-weight: 800;
+        box-shadow: 0 1px 2px rgb(0 0 0 / .15); }
+    .hwa-lot svg { width: 12px; height: 12px; }
+    .hwa-lot i { margin-left: 3px; padding-left: 6px; border-left: 1px solid rgb(255 255 255 / .38); font-style: normal; font-weight: 700; opacity: .92; }
+    .hwa-bd { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+    .hwa-bd span { display: inline-flex; align-items: center; gap: 3px; padding: 2px 10px; border-radius: 999px; background: #e4efd4; color: #2d5016; font-size: 12px; font-weight: 600; }
+    .hwa-bd .high, .hwa-bd .medium, .hwa-bd .low { font-weight: 700; text-transform: uppercase; }
+    .hwa-bd .high { background: #f46a6a; color: #fff; }
+    .hwa-bd .medium { background: #f1b44c; color: #3b2f10; }
+    .hwa-bd .low { background: #74788d; color: #fff; }
+    .hwa-bd .w { background: #e1effa; color: #2f8fd8; }
+    .hwa-bd .w svg { width: 13px; height: 13px; }
+    .hwa-c p { margin-top: 8px; font-size: 14px; line-height: 1.45; color: #374151; }
+    .hwa-tm { display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; padding: 3px 7px; border-radius: 8px; background: #f3f4f6; color: #4b5563; font-size: 11.5px; font-weight: 600; }
+    .hwa-tm svg { width: 13px; height: 13px; }
+    .hwa-rest { display: flex; align-items: center; gap: 10px; padding: 9px 13px; border-radius: 12.8px; background: #fafafa; border: 1px dashed #d1d5db; }
+    .hwa-rest > svg { flex: none; width: 18px; height: 18px; color: #9ca3af; }
+    .hwa-rest b { display: block; font-size: 13px; font-weight: 600; color: #4b5563; }
+    .hwa-rest small { display: block; font-size: 11.5px; color: #9ca3af; }
+    .hwa-rest > span { flex: none; margin-left: auto; padding: 6px 14px; border-radius: 8px; background: #fff; border: 1px solid #e5e7eb; font-size: 14px; font-weight: 600; color: #374151; }
 
     /* The notes around the phone: four at its sides on a wide screen, one at a time under it on a phone. */
     .hw-ping { position: absolute; z-index: 3; }
@@ -729,18 +908,166 @@
                                 <div class="re"><span>👍 {{ $plikes }}</span><span>💬 {{ $pcom }}</span><span>↗ Share</span></div>
                             </section>
                         </div></div>
-                        <div class="hwr-nav">
-                            <span class="on"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>Home</span>
-                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path stroke-linecap="round" d="M8 3v4M16 3v4M3 10h18M8 14h2M14 14h2M8 17h2"/></svg>Schedules</span>
-                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>Community</span>
-                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 9l1.5-5h13L20 9M4 9h16M4 9v10a1 1 0 001 1h14a1 1 0 001-1V9M9 20v-6h6v6"/></svg>Shop</span>
+                        {!! $hwNav(0) !!}
+                    </div>
+                    {{-- Scene three: Cropping Schedules, the season list. --}}
+                    <div class="hw-scene s-list">
+                        <div class="hwr-top">
+                            <img src="{{ asset('images/logo-mark.png') }}?v=anee" alt="">
+                            <div><b>Cropping Schedules</b><small>Plan and manage your seasons</small></div>
+                            {!! $hwTopR !!}
                         </div>
+                        <div class="hwr-view"><div class="hwr-list">
+                            <section class="hwl-hero" style="--n: 0">
+                                <div class="hwl-left">
+                                    <span class="hwl-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path stroke-linecap="round" d="M8 3v4M16 3v4M3 10h18"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 19v-3.5m0 0c0-1.6 1.1-2.7 2.7-2.7 0 1.6-1.1 2.7-2.7 2.7zm0 0c0-1.3-.9-2.2-2.2-2.2 0 1.3.9 2.2 2.2 2.2z"/></svg></span>
+                                    <div class="hwl-say"><b>Here are your cropping schedules for today</b><p>{{ $hwToday->format('l, F j') }}: <strong>{{ count($hwPhone['tasks']) }} activities</strong> on the board today, 1 season running.</p></div>
+                                </div>
+                                <div class="hwl-stats"><div class="on"><b>{{ count($hwPhone['tasks']) }}</b><i>Today</i></div><div><b>{{ $hwB['lots'] }}</b><i>Lots</i></div><div><b>{{ $hwB['workers'] }}</b><i>Workers</i></div></div>
+                            </section>
+                            <span class="hwl-add" style="--n: 1">{!! $hwI('M12 5v14M5 12h14', 2.6) !!}Add New Cropping Schedule</span>
+                            <span class="hwl-search" style="--n: 2"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-4-4"/></svg>Search schedules</span>
+                            <div class="hwl-pills" style="--n: 3"><span>{!! $hwI('M4 6h16M7 12h10M10 18h4') !!}Filter</span><span>Collapse all</span></div>
+                            <section class="hwl-card" data-s="season" style="--n: 4">
+                                <div class="hwl-cover">
+                                    <span>{{ $hwPhone['crops'] }}</span><b>{{ $hwPhone['season'] }}</b>
+                                    <i><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"/></svg></i>
+                                    <i>{!! $hwI('M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 002 2h8a2 2 0 002-2l1-12M9 7V4h6v3') !!}</i>
+                                    <i>{!! $hwI('M6 9l6 6 6-6', 2.4) !!}</i>
+                                </div>
+                                <div class="hwl-body">
+                                    <p class="d">{{ $hwB['desc'] }}</p>
+                                    <p class="s">Day {{ $hwB['day'] }} · {{ $hwB['stage'] }}</p>
+                                    <span class="hwl-bar"><i style="width: {{ $hwPct }}%"></i></span>
+                                    <span class="hwl-dates"><span>{{ $hwStart->format('M j') }} to {{ $hwEnd->format('M j, Y') }}</span><b>{{ $hwPct }}%</b></span>
+                                    <span class="hwl-meta">
+                                        <span>{!! $hwI('M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2') !!}{{ $hwB['lots'] }} lots</span>
+                                        <span>{!! $hwI('M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z') !!}{{ $hwB['workers'] }} workers</span>
+                                        <span>{!! $hwI('M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01', 2.2) !!}{{ $hwB['activities'] }} activities</span>
+                                    </span>
+                                    <span class="hwl-made"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path stroke-linecap="round" d="M8 3v4M16 3v4M3 10h18"/></svg>Created {{ $hwStart->copy()->subDays(6)->format('M j, Y') }}</span>
+                                    <span class="hwl-open">Open</span>
+                                </div>
+                            </section>
+                        </div></div>
+                        {!! $hwNav(1) !!}
+                    </div>
+                    {{-- Scene four: the season's modules. --}}
+                    <div class="hw-scene s-hub">
+                        <div class="hwr-top">
+                            <span class="hwr-back">{!! $hwI('M15 19l-7-7 7-7', 2.4) !!}</span>
+                            <div><b>{{ $hwPhone['season'] }}</b><small>Schedule modules</small></div>
+                            {!! $hwTopR !!}
+                        </div>
+                        <div class="hwr-view"><div class="hwr-list">
+                            <section class="hwh-card" style="--n: 0">
+                                <div class="hwh-in">
+                                    <div class="hwh-row"><b class="t">{{ $hwPhone['season'] }}</b><span class="pen">{!! $hwI('M15.2 5.2l3.6 3.6M4 20l1-4.6L16.4 4a1.5 1.5 0 012.1 0l1.5 1.5a1.5 1.5 0 010 2.1L8.6 19 4 20z') !!}</span><span class="st">Generated</span></div>
+                                    <p class="d">{{ $hwB['desc'] }}</p>
+                                    <div class="hwh-chips">
+                                        <span>{{ $hwPhone['crops'] }} {{ $hwB['crop'] }}</span><span>📐 {{ $hwB['lots'] }} lots</span><span>👷 {{ $hwB['workers'] }} workers</span>
+                                        <span>🗓️ DAS counting</span><span>🌱 Started {{ $hwStart->format('M j, Y') }}</span>
+                                    </div>
+                                </div>
+                                <div class="hwh-foot"><span class="a">Archive this Schedule</span><span class="c">Close this season</span></div>
+                            </section>
+                            <section class="hwr-tip" style="--n: 1">
+                                <div class="h"><span><img src="{{ asset('images/idea.png') }}" alt=""></span><div><small>Tip of the day</small><b>{{ $hwPhone['tipTitle'] }}</b></div></div>
+                                <p>{{ $hwPhone['tip'] }}</p>
+                                <p class="ask">Ask Anee about this ›</p>
+                            </section>
+                            @foreach ([
+                                ['acts', '#4a7c2a', 'thunder.png', 'Activities', 'Your day by day plan, goals and milestones.'],
+                                [null, '#d97706', 'camera.png', 'Quick Capture', 'Take a photo and save it fast.'],
+                                [null, '#b91c1c', 'video-camera-b.png', 'Quick Record', 'Record a short video.'],
+                                [null, '#b91c1c', 'voice-recorder.png', 'Quick Voice', 'Speak and it saves as a note.'],
+                            ] as $k => [$cs, $ca, $ci, $ct, $cx])
+                                <section class="hwh-cta" @if ($cs) data-s="{{ $cs }}" @endif style="--n: {{ $k + 2 }}; --a: {{ $ca }}">
+                                    <span class="chip"><img data-src="{{ asset('images/' . $ci) }}" alt=""></span>
+                                    <span class="tx"><b>{{ $ct }}@if ($cs)<em>{{ $hwB['activities'] }}</em>@endif</b><small>{{ $cx }}</small></span>
+                                    {!! $hwI('M9 5l7 7-7 7', 2.5) !!}
+                                </section>
+                            @endforeach
+                            <div class="hwh-grid" style="--n: 6">
+                                @foreach ([['Settings', 'gear.png', null], ['Lots', 'treasure-map.png', $hwB['lots']], ['Workers', 'tractor.png', $hwB['workers']], ['Inventory', 'sack.png', null],
+                                    ['Documentation', 'document.png', null], ['Observations', 'pencil.png', null], ['Tags', 'label.png', null], ['Notes', 'sticky-note.png', null],
+                                    ['Weather', 'weather.png', null], ['Growth Stages', 'plant.png', null], ['Gallery', 'gallery.png', null], ['Chat Anee', null, null],
+                                    ['Collab Room', 'united.png', null], ['Reports', 'pie-chart.png', null]] as [$ml, $mi, $mc])
+                                    <span><i>@if ($mi)<img data-src="{{ asset('images/' . $mi) }}" alt="">@else<img class="face" src="{{ asset('images/anee/avatar-160.jpg') }}" alt="">@endif</i><b>{{ $ml }}</b>@if ($mc)<em>{{ $mc }}</em>@endif</span>
+                                @endforeach
+                            </div>
+                        </div></div>
+                        {!! $hwNav(1) !!}
+                    </div>
+                    {{-- Scene five: the activities board, today's three tasks. --}}
+                    @php
+                        $hwDays = [$hwToday->copy()->subDay(), $hwToday, $hwToday->copy()->addDay(), $hwToday->copy()->addDays(3)];
+                        // A day's header, left open for what follows it (today's weather).
+                        $hwDay = fn ($d, $n) => '<div class="hwa-h">' . $hwI('M9 5l7 7-7 7', 2.6) . '<span class="dw">' . strtoupper($d->format('D')) . '</span><b>' . $d->format('M j, y') . '</b>'
+                            . '<span class="dd">' . $hwI('M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16', 2.4) . '</span><span class="ct">' . $n . '</span><span class="pl">' . $hwI('M12 5v14M5 12h14', 2.2) . '</span>'
+                            . '<svg class="kb" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></svg>';
+                    @endphp
+                    <div class="hw-scene s-acts">
+                        <div class="hwr-top">
+                            <span class="hwr-back">{!! $hwI('M15 19l-7-7 7-7', 2.4) !!}</span>
+                            <div><b>Activities</b><small>{{ $hwPhone['season'] }}</small></div>
+                            {!! $hwTopR !!}
+                        </div>
+                        <div class="hwa-tools">
+                            <span class="m">{!! $hwI('M4 6h16M4 12h16M4 18h16') !!}Modules</span>
+                            <span>{!! $hwI('M14.7 6.3a4 4 0 00-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 005.4-5.4l-2.5 2.5-2.4-.6-.6-2.4 2.5-2.5z') !!}</span>
+                            <span>{!! $hwI($hwBellD) !!}<em>2</em></span>
+                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-4-4"/></svg></span>
+                            <span>{!! $hwI('M12 3s6 6.686 6 11a6 6 0 11-12 0c0-4.314 6-11 6-11z') !!}</span>
+                            <span>{!! $hwI('M4 4v5h5M20 20v-5h-5M5.1 15a7.5 7.5 0 0013.4 1.5M18.9 9A7.5 7.5 0 005.5 7.5') !!}</span>
+                        </div>
+                        <div class="hwr-view"><div class="hwr-list">
+                            <div class="hwa-ver" style="--n: 0">
+                                <span class="sel">{!! $hwI('M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5') !!}Original{!! $hwI('M6 9l6 6 6-6', 2.4) !!}</span>
+                                <span>{!! $hwI('M12 4v11m0 0l-4-4m4 4l4-4M5 20h14') !!}</span>
+                                <span class="add">{!! $hwI('M12 5v14M5 12h14', 2.6) !!}</span>
+                                <span class="ai"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt=""></span>
+                            </div>
+                            {{-- Yesterday: one task, done. --}}
+                            <div class="hwa-g" style="--n: 1; --c: #4a90e2">{!! $hwDay($hwDays[0], 1) !!}</div></div>
+                            {{-- Today: the dashboard's three tasks. --}}
+                            <div class="hwa-g is-today" style="--n: 2; --c: #3fb468">
+                                {!! $hwDay($hwDays[1], count($hwPhone['tasks'])) !!}<i class="br"></i><span class="wx">⛅ <i>{{ $hwPhone['place'] }}</i> <b>{{ $hwPhone['days'][0][2] }}°</b></span></div>
+                                <div class="hwa-b"><div><div class="hwa-in">
+                                    @foreach ($hwPhone['tasks'] as $k => [$ty, $pr, $tn, $tl, $tw, $th])
+                                        @php [$cl, $cw, $cn] = $hwB['cards'][$k]; @endphp
+                                        <div class="hwa-c" style="--p: {{ $hwPrio[$pr] }}">
+                                            <div class="hwa-btns">
+                                                <span class="ck">{!! $hwI('M5 13l4 4L19 7', 3) !!}</span>
+                                                <span class="ty"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4" width="12" height="17" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 4V3h6v1M9 13l2 2 4-4"/></svg></span>
+                                                <span class="st"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.4 2.63 5.33 5.88.86-4.25 4.15 1 5.86L12 16.85l-5.26 2.75 1-5.86-4.25-4.15 5.88-.86z"/></svg></span>
+                                                <span class="dd">{!! $hwI('M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16', 2.4) !!}</span>
+                                                <span class="mn">{!! $hwI('M4 6h16M4 12h16M4 18h16') !!}</span>
+                                                <span class="fd">{!! $hwI('M18 15l-6-6-6 6', 2.2) !!}</span>
+                                            </div>
+                                            <div class="hwa-tl"><b>{{ $tn }}</b><span class="hwa-lot"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>{{ $tl }}<i>DAS {{ $hwB['das'][$tl] ?? $hwB['day'] }}</i></span></div>
+                                            <div class="hwa-bd"><span class="{{ $pr }}">{{ $pr }}</span><span>{{ $cl }}</span>@if ($cw)<span class="w">{!! $hwI('M12 3s6 6.686 6 11a6 6 0 11-12 0c0-4.314 6-11 6-11z') !!}{{ $cw }}</span>@endif</div>
+                                            <p>{{ $cn }}</p>
+                                            @if ($th)<span class="hwa-tm">{!! $hwI('M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z') !!}{{ $th }}</span>@endif
+                                        </div>
+                                    @endforeach
+                                </div></div></div>
+                            </div>
+                            {{-- Tomorrow: nothing on it yet. --}}
+                            <div class="hwa-rest" style="--n: 3">
+                                {!! $hwI('M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z') !!}
+                                <div><b>{{ $hwDays[2]->format('l, F j, Y') }}</b><small>No activities scheduled</small></div>
+                                <span>+ Add</span>
+                            </div>
+                            <div class="hwa-g" style="--n: 4; --c: #f5a623">{!! $hwDay($hwDays[3], 2) !!}</div></div>
+                        </div></div>
                     </div>
                     <span class="hw-tap"></span>
                 </div></div>
             </div>
         </div>
-        <p class="sr-only">A phone shows someone logging in to anee.io, then the dashboard as it looks inside the app: the morning greeting, the tip of the day, today's activities on a season with the weather for the farm, and a post in the news feed.</p>
+        <p class="sr-only">A phone shows someone logging in to anee.io, then the dashboard as it looks inside the app: the morning greeting, the tip of the day, today's activities on a season with the weather for the farm, and a post in the news feed. Then it opens the Schedules tab: the season's card, the season's modules (Activities, Quick Capture, Lots, Workers, Inventory, Reports and more) and its activities board, where today's three tasks are opened and two are ticked done.</p>
     </section>
 
     <div class="hw-steps">
@@ -857,8 +1184,10 @@
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
     /* ---- the phone: the login page, then the dashboard scrolled the way a
-       thumb would, round and round while it is on screen. Each part that
-       comes into view lights its note. ---- */
+       thumb would, then the Schedules tab: the season's card, its modules
+       and its activities board, where today opens and two tasks get done.
+       Round and round while it is on screen; each part of the dashboard
+       that comes into view lights its note, the board lights today's. ---- */
     function phone(root) {
         const scr = root.querySelector('.hw-scr'), app = root.querySelector('.hwr');
         if (!scr || !app) return;
@@ -866,9 +1195,11 @@
         fit();
         new ResizeObserver(fit).observe(scr);
         const q = (sel) => app.querySelector(sel), qa = (sel) => [...app.querySelectorAll(sel)];
-        const login = q('.s-login'), dash = q('.s-dash');
+        const login = q('.s-login'), dash = q('.s-dash'), seasons = q('.s-list'), hub = q('.s-hub'), acts = q('.s-acts');
+        const scenes = [login, dash, seasons, hub, acts].filter(Boolean);
         const email = q('[data-f="email"]'), pass = q('[data-f="pass"]'), btn = q('.hwr-btn'), tap = q('.hw-tap');
-        const view = q('.hwr-view'), list = q('.hwr-list');
+        const tabs = qa('.s-dash .hwr-nav span'), openBtn = q('.hwl-open'), today = q('.hwa-g.is-today');
+        const cards = qa('.hwa-c');
         const track = q('.hwr-track'), tasks = qa('.hwr-task'), dots = qa('.hwr-dots i');
         const parts = qa('[data-s]');
         const data = JSON.parse(root.querySelector('[data-hw-phone]').textContent || '{}');
@@ -894,15 +1225,21 @@
             fld.classList.add('has');
             for (const ch of text) { await until(); out.textContent += ch; await sleep(ms); }
         };
-        // The list rolls so a part sits near the top of the screen, never past
-        // the end. Measured against the list itself, in the app's pixels: a
-        // part's offsetTop counts from whichever card holds it.
-        const scrollTo = (el) => {
-            const max = Math.max(0, list.offsetHeight - view.clientHeight);
-            const at = (el.getBoundingClientRect().top - list.getBoundingClientRect().top) / sc();
-            const y = Math.min(max, Math.max(0, at - 12));
-            list.style.transform = 'translateY(' + (-y) + 'px)';
+        // A screen's list rolls so a part sits near the top, never past the
+        // end (no part: back to the top). Measured against the list itself,
+        // in the app's pixels: a part's offsetTop counts from whichever card
+        // holds it.
+        const scrollTo = (el, scene = dash) => {
+            const v = scene.querySelector('.hwr-view'), l = scene.querySelector('.hwr-list');
+            const max = Math.max(0, l.offsetHeight - v.clientHeight);
+            const at = el ? (el.getBoundingClientRect().top - l.getBoundingClientRect().top) / sc() : 0;
+            l.style.transform = 'translateY(' + (-Math.min(max, Math.max(0, at - 12))) + 'px)';
         };
+        // One screen slides out as the next slides in.
+        const swap = (from, to) => { from.classList.remove('is-on'); from.classList.add('is-gone'); to.classList.remove('is-gone'); to.classList.add('is-on'); };
+        const press = (el) => { el.classList.add('is-press'); setTimeout(() => el.classList.remove('is-press'), 200); };
+        // The later screens' pictures load once the film has started, not with the page.
+        const wake = () => qa('img[data-src]').forEach((i) => { i.src = i.dataset.src; i.removeAttribute('data-src'); });
         const slide = (i) => {
             track.style.transform = 'translateX(' + (-100 * i) + '%)';
             dots.forEach((d, k) => d.classList.toggle('on', k === i));
@@ -911,8 +1248,12 @@
         const reset = () => {
             [email, pass].forEach((f) => { f.classList.remove('is-focus', 'has'); f.querySelector('.v').textContent = ''; });
             btn.classList.remove('is-press', 'is-busy');
-            dash.classList.remove('is-on', 'is-gone'); login.classList.remove('is-gone'); login.classList.add('is-on');
-            list.style.transform = ''; slide(0); tasks.forEach((t) => t.classList.remove('is-done')); hot(null);
+            scenes.forEach((sc0) => { sc0.classList.remove('is-on', 'is-gone'); const l = sc0.querySelector('.hwr-list'); if (l) l.style.transform = ''; });
+            login.classList.add('is-on');
+            slide(0); tasks.forEach((t) => t.classList.remove('is-done')); hot(null);
+            tabs.forEach((t, k) => t.classList.toggle('on', k === 0));
+            if (today) today.classList.remove('is-open');
+            cards.forEach((c) => c.classList.remove('is-done'));
             ping(-1);
         };
         const part = (s) => parts.find((p) => p.dataset.s === s);
@@ -921,6 +1262,7 @@
             for (;;) {
                 reset();
                 await sleep(1000);
+                wake();
                 await until(); tapAt(email); email.classList.add('is-focus'); await sleep(350);
                 await type(email, data.email || 'juan@bukid.ph', 65); await sleep(300);
                 email.classList.remove('is-focus'); tapAt(pass); pass.classList.add('is-focus'); await sleep(300);
@@ -941,8 +1283,26 @@
                 // And the news feed.
                 await until(); scrollTo(part('post')); hot(part('post')); ping(3); await sleep(2600);
                 hot(null);
-                await sleep(1200);
-                dash.classList.remove('is-on'); dash.classList.add('is-gone'); ping(-1);
+                await sleep(600);
+                if (!seasons || !hub || !acts) { dash.classList.remove('is-on'); dash.classList.add('is-gone'); ping(-1); await sleep(800); continue; }
+                // The Schedules tab: the season's card, then Open.
+                await until(); tapAt(tabs[1]); tabs.forEach((t, k) => t.classList.toggle('on', k === 1)); await sleep(280);
+                swap(dash, seasons); ping(-1); await sleep(1900);
+                await until(); scrollTo(part('season'), seasons); hot(part('season')); await sleep(1800);
+                await until(); tapAt(openBtn); press(openBtn); await sleep(340);
+                hot(null); swap(seasons, hub); await sleep(2000);
+                // The season's modules: down past the grid, back up to Activities.
+                await until(); scrollTo(hub.querySelector('.hwh-grid'), hub); await sleep(2700);
+                await until(); scrollTo(null, hub); await sleep(1300);
+                hot(part('acts')); await sleep(800);
+                await until(); tapAt(part('acts')); press(part('acts')); await sleep(340);
+                hot(null); swap(hub, acts); ping(0); await sleep(1600);
+                // The activities board: today opens, and two of its tasks get done.
+                await until(); tapAt(today.querySelector('.hwa-h')); today.classList.add('is-open'); await sleep(850);
+                await until(); scrollTo(today, acts); await sleep(1700);
+                for (const c of cards.slice(0, 2)) { await until(); tapAt(c.querySelector('.ck')); c.classList.add('is-done'); await sleep(1250); }
+                await sleep(1300);
+                acts.classList.remove('is-on'); acts.classList.add('is-gone'); ping(-1);
                 await sleep(800);
             }
         })();
