@@ -313,6 +313,8 @@
     /* A tool: a chip that opens. The float is on an inner layer, so the
        chip's own box (where its route ends) never moves. */
     .hw-item { width: 100%; max-width: 30rem; }
+    /* On a phone the field is no box at all: its hub and tools sit in the step's own grid. */
+    .hw-field { display: contents; }
     .hw-float { will-change: transform; }
     .hw-chip { position: relative; display: flex; align-items: center; gap: .75rem; width: 100%; padding: .7rem .75rem .7rem .7rem; border-radius: 1.1rem; text-align: left;
         color: var(--ink); background: rgb(25 40 18 / .94); border: 1px solid rgb(255 255 255 / .12); box-shadow: 0 18px 40px -26px rgb(0 0 0 / .9);
@@ -409,11 +411,28 @@
         .hw-step { justify-content: flex-end; }
         .hw-say { grid-column: 3; grid-row: 1; justify-self: start; align-self: center; max-width: 25rem; margin-bottom: 1.5rem; }
         .hw-say::before { left: -.4rem; top: 1.2rem; }
-        .hw-hub { position: relative; left: auto; top: auto; grid-column: 2; grid-row: 2 / span var(--rows); align-self: center; justify-self: center; }
+        /* The field: Anee in the middle and her tools blown out around her
+           (placed by the script); until it has, a tidy wrap. */
+        .hw-field { grid-column: 1 / -1; grid-row: 2; position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+            gap: 1rem; min-height: var(--fh); }
+        .hw-field .hw-hub { position: relative; left: auto; top: auto; flex: none; }
+        .hw-field .hw-item { width: auto; max-width: 17.5rem; }
+        .hw-txt small { display: none; }
+        .hw-field.is-scatter { display: block; height: var(--fh); }
+        .hw-field.is-scatter .hw-hub { position: absolute; left: 50%; top: 50%; margin: calc(var(--hub) / -2) 0 0 calc(var(--hub) / -2); }
+        .hw-field.is-scatter .hw-item { position: absolute; left: 0; top: 0; }
+        .hw-field.is-scatter .hw-item.is-open { z-index: 8; }
+        /* What a tool does opens as a card beside it, over whatever is under it. */
+        .hw-field.is-scatter .hw-more { position: absolute; left: 0; top: calc(100% + .45rem); width: 22rem; }
+        .hw-field.is-scatter .hw-item.up .hw-more { top: auto; bottom: calc(100% + .45rem); }
+        .hw-field.is-scatter .hw-item.end .hw-more { left: auto; right: 0; }
+        .hw-field.is-scatter .hw-item.is-open .hw-chip { border-radius: 1.1rem; }
+        .hw-field.is-scatter .hw-more-in { margin-top: 0; border-radius: 1.1rem; border-color: rgb(245 197 24 / .35); box-shadow: 0 30px 60px -24px rgb(0 0 0 / .9); }
+        /* The entrance: every tool bursts out of Anee to its place. */
+        .hw.is-ready .hw-field.is-scatter .hw-item { transform: translate(var(--fx, 0px), var(--fy, 0px)) scale(.3);
+            transition: opacity .5s var(--ease), transform 1s var(--ease); transition-delay: calc(.35s + var(--i) * .05s); }
+        .hw-stage.is-in .hw-field.is-scatter .hw-item { transform: none; }
         .hw-num { width: 2.1rem; height: 2.1rem; font-size: .95rem; right: .1rem; top: .1rem; }
-        .hw-item { grid-row: var(--r); align-self: center; width: 19.5rem; max-width: 100%; }
-        .hw-item.l { grid-column: 1; justify-self: end; margin-right: var(--nudge); }
-        .hw-item.r { grid-column: 3; justify-self: start; margin-left: var(--nudge); }
         .hw-end { padding: 3rem 0 0; text-align: center; }
         .hw-end > p:not(.hw-step) { margin-left: auto; margin-right: auto; }
         .hw-end .hw-step { justify-content: center; }
@@ -560,32 +579,31 @@
         <div class="hw-rail" aria-hidden="true"><i class="hw-rail-base"></i><i class="hw-rail-fill"></i><i class="hw-rail-tip"></i></div>
 
         @foreach ($hwStages as $n => $st)
-            @php $rows = (int) ceil(count($st['items']) / 2); @endphp
-            <section class="hw-stage" id="hw-step-{{ $st['key'] }}" data-stage="{{ $st['key'] }}" data-pattern="{{ $st['pattern'] }}" style="--rows: {{ $rows }}" aria-labelledby="hw-h-{{ $st['key'] }}">
+            <section class="hw-stage" id="hw-step-{{ $st['key'] }}" data-stage="{{ $st['key'] }}" data-pattern="{{ $st['pattern'] }}" aria-labelledby="hw-h-{{ $st['key'] }}">
                 <svg class="hw-svg" aria-hidden="true"></svg>
                 <header class="hw-head">
                     <p class="hw-step">Step {{ $n + 1 }} <span>{{ $st['when'] }}</span></p>
                     <{{ $hwHead }} class="hw-h2" id="hw-h-{{ $st['key'] }}">{{ $st['title'] }}</{{ $hwHead }}>
                     <p class="hw-sub">{{ $st['lede'] }}</p>
                 </header>
+                <div class="hw-say">
+                    <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" loading="lazy">
+                    <div><small>Anee</small><p>{!! $hwWords($st['say']) !!}</p></div>
+                </div>
+                {{-- Anee and her tools. On a desk the script scatters the tools
+                     around her (.is-scatter); a phone lists them down the rail. --}}
+                <div class="hw-field" style="--fh: {{ 24 + count($st['items']) * 1.6 }}rem">
                 <div class="hw-hub" aria-hidden="true">
                     <i class="hw-ring"></i><i class="hw-ring"></i>
                     <span class="hw-hub-core"><img src="{{ asset('images/anee/emoji/' . $st['face'] . '.png') }}" alt="" loading="lazy"></span>
                     <span class="hw-num">{{ $n + 1 }}</span>
                 </div>
-                <div class="hw-say">
-                    <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" loading="lazy">
-                    <div><small>Anee</small><p>{!! $hwWords($st['say']) !!}</p></div>
-                </div>
                 @foreach ($st['items'] as $i => $it)
                     @php
-                        $row = intdiv($i, 2);
-                        $t = $rows > 1 ? (($row + .5) / $rows - .5) * 2 : 0;
-                        $nudge = round((1 - $t * $t) * 2.6, 2);
                         $link = $hwLink($it);
                         $uid = 'hw-' . $st['key'] . '-' . $it['key'];
                     @endphp
-                    <div class="hw-item {{ $i % 2 ? 'r' : 'l' }}" style="--i: {{ $i }}; --r: {{ $row + 2 }}; --nudge: {{ $nudge }}rem">
+                    <div class="hw-item" style="--i: {{ $i }}">
                         <div class="hw-float">
                             <button type="button" class="hw-chip" id="{{ $uid }}-b" aria-expanded="false" aria-controls="{{ $uid }}">
                                 <span class="hw-ico {{ str_starts_with($it['icon'], 'anee/') ? 'is-face' : '' }}"><img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy"></span>
@@ -610,6 +628,7 @@
                         </div>
                     </div>
                 @endforeach
+                </div>
             </section>
         @endforeach
 
@@ -779,7 +798,68 @@
         const svg = st.querySelector('.hw-svg'), hub = st.querySelector('.hw-hub');
         const gDots = make('g'), gArcs = make('g');
         svg.append(gDots, gArcs);
-        const routes = [...st.querySelectorAll('.hw-item')].map((it, i) => {
+        const fieldEl = st.querySelector('.hw-field'), items = [...st.querySelectorAll('.hw-item')];
+        // On a desk the tools are blown out around Anee: placed on a loose
+        // ring (every other one nearer), nudged apart until no two overlap
+        // and none covers her, and kept inside the field. The same step
+        // lands the same way every time (the jitter is seeded by its name).
+        let laid = '';
+        const scatter = () => {
+            const on = wide();
+            const key = on + ':' + fieldEl.clientWidth;
+            if (key === laid) return;
+            laid = key;
+            fieldEl.classList.toggle('is-scatter', on);
+            if (!on) { items.forEach((it) => { it.style.left = it.style.top = ''; it.classList.remove('up', 'end'); }); return; }
+            const W = fieldEl.clientWidth, H = fieldEl.clientHeight, n = items.length;
+            if (!W || !H || !n) return;
+            const cx = W / 2, cy = H / 2, hr = hub.offsetWidth / 2 + 28, pad = 18;
+            const box = items.map((it) => ({ w: it.offsetWidth, h: it.querySelector('.hw-chip').offsetHeight }));
+            let seed = [...(st.dataset.stage || 'x')].reduce((a, c) => (a * 31 + c.charCodeAt(0)) % 233280, 7);
+            const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+            const p = box.map((b, i) => {
+                const a = -Math.PI / 2 + (i + .5) * (2 * Math.PI / n) + (rnd() - .5) * .35;
+                const k = i % 2 ? .72 + rnd() * .1 : .93 + rnd() * .07;
+                return { x: cx + Math.cos(a) * (cx - b.w / 2 - 6) * k, y: cy + Math.sin(a) * (cy - b.h / 2 - 6) * k };
+            });
+            for (let round = 0; round < 160; round++) {
+                let moved = false;
+                for (let i = 0; i < n; i++) {
+                    for (let j = i + 1; j < n; j++) {
+                        const ox = (box[i].w + box[j].w) / 2 + pad - Math.abs(p[i].x - p[j].x);
+                        const oy = (box[i].h + box[j].h) / 2 + pad - Math.abs(p[i].y - p[j].y);
+                        if (ox > 0 && oy > 0) {
+                            moved = true;
+                            if (oy < ox) { const d = (p[i].y < p[j].y ? -1 : 1) * oy / 2; p[i].y += d; p[j].y -= d; }
+                            else { const d = (p[i].x < p[j].x ? -1 : 1) * ox / 2; p[i].x += d; p[j].x -= d; }
+                        }
+                    }
+                }
+                for (let i = 0; i < n; i++) {
+                    const ox = box[i].w / 2 + hr - Math.abs(p[i].x - cx), oy = box[i].h / 2 + hr - Math.abs(p[i].y - cy);
+                    if (ox > 0 && oy > 0) {
+                        moved = true;
+                        if (oy < ox) p[i].y += (p[i].y < cy ? -1 : 1) * oy; else p[i].x += (p[i].x < cx ? -1 : 1) * ox;
+                    }
+                    p[i].x = Math.min(W - box[i].w / 2, Math.max(box[i].w / 2, p[i].x));
+                    p[i].y = Math.min(H - box[i].h / 2, Math.max(box[i].h / 2, p[i].y));
+                }
+                if (!moved) break;
+            }
+            items.forEach((it, i) => {
+                it.style.left = (p[i].x - box[i].w / 2) + 'px';
+                it.style.top = (p[i].y - box[i].h / 2) + 'px';
+                it.style.setProperty('--fx', (cx - p[i].x) + 'px');
+                it.style.setProperty('--fy', (cy - p[i].y) + 'px');
+                it.classList.toggle('up', p[i].y > H * .55);
+                it.classList.toggle('end', p[i].x > W * .6);
+            });
+        };
+        // Where an element sits in the step, from layout boxes (no transform counts).
+        const off = (el) => { let x = 0, y = 0, e = el; while (e && e !== st) { x += e.offsetLeft; y += e.offsetTop; e = e.offsetParent; } return [x, y]; };
+        const hubC = () => { const [x, y] = off(hub); return [x + hub.offsetWidth / 2, y + hub.offsetHeight / 2]; };
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { laid = ''; requestAnimationFrame(() => draw()); });
+        const routes = items.map((it, i) => {
             const base = make('path', { class: 'hw-arc', pathLength: 1 }), flow = make('path', { class: 'hw-flow', pathLength: 1 }), dest = make('circle', { class: 'hw-dest', r: 3.5 });
             [base, flow, dest].forEach((n) => n.style.setProperty('--i', i));
             gArcs.append(base, flow, dest);
@@ -790,18 +870,24 @@
         const draw = () => {
             const W = st.offsetWidth, H = st.offsetHeight;
             if (!W) return;
+            scatter();
             svg.setAttribute('width', W); svg.setAttribute('height', H); svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-            const [hx, hy] = hubAt(hub);
+            const [hx, hy] = hubC();
             routes.forEach((r) => {
                 // Layout boxes (offset*), not screen boxes: the entrance and
                 // the float move a chip, never where its route ends.
-                const bl = r.it.offsetLeft, bw = r.it.offsetWidth;
-                const ay = r.it.offsetTop + r.chip.offsetHeight / 2;
-                const ax = bl + bw / 2 >= hx ? bl : bl + bw;
+                const [bl, bt] = off(r.it), bw = r.it.offsetWidth, ch = r.chip.offsetHeight;
+                const mx = bl + bw / 2, my = bt + ch / 2;
+                // A tool straight above or below Anee is met at its edge facing her.
+                const upright = wide() && Math.abs(mx - hx) < bw / 2 + 24;
+                const ax = upright ? mx : (mx >= hx ? bl : bl + bw);
+                const ay = upright ? (my < hy ? bt + ch : bt) : my;
                 const dx = ax - hx, dy = ay - hy;
-                const d = Math.abs(dx) > 80
-                    ? `M ${hx} ${hy} C ${hx + dx * 0.5} ${hy}, ${hx + dx * 0.5} ${ay}, ${ax} ${ay}`
-                    : `M ${hx} ${hy} C ${hx} ${hy + dy * 0.8}, ${hx + dx * 0.15} ${ay}, ${ax} ${ay}`;
+                const d = upright
+                    ? `M ${hx} ${hy} C ${hx} ${hy + dy * 0.5}, ${ax} ${hy + dy * 0.5}, ${ax} ${ay}`
+                    : Math.abs(dx) > 80
+                        ? `M ${hx} ${hy} C ${hx + dx * 0.5} ${hy}, ${hx + dx * 0.5} ${ay}, ${ax} ${ay}`
+                        : `M ${hx} ${hy} C ${hx} ${hy + dy * 0.8}, ${hx + dx * 0.15} ${ay}, ${ax} ${ay}`;
                 r.base.setAttribute('d', d); r.flow.setAttribute('d', d);
                 r.dest.setAttribute('cx', ax); r.dest.setAttribute('cy', ay);
             });
@@ -817,7 +903,7 @@
                     first = false;
                     draw();
                     dotsW = st.offsetWidth;
-                    dots(st, gDots, ...hubAt(hub), st.offsetWidth, st.offsetHeight);
+                    dots(st, gDots, ...hubC(), st.offsetWidth, st.offsetHeight);
                     st.getBoundingClientRect();
                     requestAnimationFrame(() => st.classList.add('is-in'));
                     // Once everything has landed, the routes are measured again from where it all rests.
@@ -826,7 +912,6 @@
             });
         }, { threshold: 0.12 }).observe(st);
     }
-    const hubAt = (hub) => [hub.offsetLeft + hub.offsetWidth / 2, hub.offsetTop + hub.offsetHeight / 2];
 
     /* Each step's field of dots tells its part of the season: lots marked
        out, rows sown left to right, sprouts growing out from Anee, a pest
