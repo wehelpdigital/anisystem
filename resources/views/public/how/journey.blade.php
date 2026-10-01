@@ -92,7 +92,6 @@
         background: radial-gradient(closest-side, rgb(168 204 126 / .2), transparent 70%); animation: hwGlow 9s ease-in-out infinite; }
     @keyframes hwGlow { 50% { transform: scale(1.12); opacity: .7; } }
     .hw-kick { display: inline-flex; align-items: center; gap: .6rem; font-size: .72rem; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; color: var(--leaf); }
-    .hw-kick::before { content: ''; width: 1.6rem; height: 2px; border-radius: 2px; background: currentColor; }
     .hw-h1 { margin: .9rem auto 0; max-width: 48rem; font-family: var(--font-heading); font-weight: 800; color: #fff;
         font-size: clamp(2.05rem, 5.6vw, 3.75rem); line-height: 1.04; letter-spacing: -.02em; text-wrap: balance; }
     .hw-h1 em { font-style: normal; color: var(--acc); }

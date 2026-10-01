@@ -17,7 +17,6 @@
     .hwc-open { display: grid; gap: 1rem; width: 100%; padding: 1.1rem 1.1rem 1.15rem; text-align: left; cursor: pointer; }
     @media (min-width: 768px) { .hwc-open { grid-template-columns: minmax(0, 1fr) auto; align-items: center; padding: 1.25rem 1.4rem; gap: 1.4rem; } }
     .hwc-kick { display: inline-flex; align-items: center; gap: .45rem; font-size: .66rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: #a8cc7e; }
-    .hwc-kick::before { content: ''; width: 1.2rem; height: 2px; border-radius: 2px; background: currentColor; }
     .hwc-h { display: block; margin-top: .35rem; font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; line-height: 1.2; color: #fff; }
     .hwc-p { display: block; margin-top: .3rem; font-size: .86rem; line-height: 1.5; color: #b9caa8; }
     /* A face for each step on a dotted line, a light running along it and each face waking as it passes. */
