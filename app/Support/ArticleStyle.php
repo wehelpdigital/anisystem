@@ -53,6 +53,27 @@ class ArticleStyle
         'plays a key role' => 'matters a lot', 'a key role' => 'a big part',
     ];
 
+    /**
+     * Keywords that read backwards in a sentence, put in the order a person
+     * says them (STYLE.md: "fertilizer urea" becomes "urea fertilizer").
+     */
+    public const ORDER = [
+        'fertilizer urea' => 'urea fertilizer', 'fertilizer yara' => 'Yara fertilizer', 'fertilizer atlas' => 'Atlas fertilizer',
+        'rice variety philippines' => 'rice varieties in the Philippines', 'fertilizer price philippines' => 'fertilizer prices in the Philippines',
+    ];
+
+    /** Names written the way their owners write them, whatever case a keyword came in. */
+    public const PROPER = [
+        'fertilizer and pesticide authority', 'department of agriculture', 'bureau of plant industry', 'bureau of soils and water management',
+        'philippine rice research institute', 'international rice research institute', 'philippine coconut authority',
+        'agricultural training institute', 'philippine statistics authority', 'philrice', 'philmech', 'pagasa', 'uplb',
+        'yara', 'atlas', 'dekalb', 'syngenta', 'bayer', 'east west seed', 'ramgo', 'allied botanical',
+    ];
+
+    private const CANON = [
+        'philrice' => 'PhilRice', 'philmech' => 'PhilMech', 'pagasa' => 'PAGASA', 'uplb' => 'UPLB', 'east west seed' => 'East West Seed',
+    ];
+
     /** A line of prose made to follow the rules; [label](address) links kept whole. */
     public static function clean(?string $text): string
     {
@@ -91,6 +112,14 @@ class ArticleStyle
 
                 return $good;
             }, $text);
+        }
+        foreach (self::ORDER as $bad => $good) {
+            $text = preg_replace('/\b' . preg_quote($bad, '/') . '\b/iu', $good, $text);
+        }
+        foreach (self::PROPER as $name) {
+            $canon = self::CANON[$name] ?? ucwords($name);
+            $canon = str_replace([' And ', ' Of '], [' and ', ' of '], $canon);
+            $text = preg_replace('/\b' . preg_quote($name, '/') . '\b/iu', $canon, $text);
         }
         // Tidy what the swaps left: ". ." and ", ," and doubled spaces.
         $text = preg_replace('/\s+([,.])/u', '$1', $text);
