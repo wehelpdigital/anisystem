@@ -137,6 +137,9 @@
         .pm-ask b { display: block; font-family: var(--font-heading); font-size: 1rem; color: #3b2f00; }
         .pm-ask small { display: block; font-size: .8rem; color: #6b5300; }
         @media (prefers-reduced-motion: reduce) { .ask-pill { transition: none; } }
+        /* A <details> that is closing still says [open] until its height has
+           folded away; its icon turns back at the start, not the end. */
+        details.is-closing > summary svg { transform: none !important; rotate: none !important; }
         /* Between lg and xl the bar is short of room: the logo is Home, About
            and Contact wait in the footer, and the pill says the short name. */
         @media (max-width: 1279.98px) { .nav-xl { display: none; } .ask-pill .ask-more { display: none; } }
@@ -404,6 +407,49 @@
     </footer>
 
     @stack('scripts')
+    <script>
+        /* Every accordion on the public pages opens and shuts by gliding.
+           A <details> on its own snaps, so its summary's click is taken
+           here: the height runs from where it is to where it is going on
+           the house easing, the answer fades up as it opens, and a click
+           mid way turns it around from wherever it stands. A <details
+           data-no-anim> keeps the browser's own snap. */
+        (() => {
+            const EASE = 'cubic-bezier(.22,1,.36,1)';
+            const still = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const shut = (d, s) => {
+                const cs = getComputedStyle(d);
+                return s.offsetHeight + parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom)
+                    + parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+            };
+            document.addEventListener('click', (e) => {
+                const s = e.target.closest('details > summary');
+                if (!s || e.defaultPrevented) return;
+                const d = s.parentElement;
+                if (d.hasAttribute('data-no-anim') || still() || typeof d.animate !== 'function') return;
+                e.preventDefault();
+                const from = d.offsetHeight;
+                if (d._glide) { d._glide.onfinish = null; d._glide.cancel(); }
+                d.style.overflow = 'hidden';
+                const closing = d.open && !d.classList.contains('is-closing');
+                if (closing) {
+                    d.classList.add('is-closing');
+                    const a = d.animate({ height: [from + 'px', shut(d, s) + 'px'] }, { duration: 280, easing: EASE });
+                    d._glide = a;
+                    a.onfinish = () => { d.open = false; d.classList.remove('is-closing'); d.style.overflow = ''; d._glide = null; };
+                    return;
+                }
+                d.classList.remove('is-closing');
+                d.open = true;
+                const to = d.offsetHeight;
+                const a = d.animate({ height: [from + 'px', to + 'px'] }, { duration: 300, easing: EASE });
+                d._glide = a;
+                a.onfinish = () => { d.style.overflow = ''; d._glide = null; };
+                [...d.children].filter((c) => c !== s).forEach((c) => c.animate(
+                    { opacity: [0, 1], transform: ['translateY(-4px)', 'none'] }, { duration: 300, easing: EASE }));
+            });
+        })();
+    </script>
     {{-- A form's first field is focused for a keyboard and a mouse only. On a
          phone, focusing it throws the keypad up over the page before anybody
          has read it (2026-09-30), so a touch screen waits to be tapped. --}}

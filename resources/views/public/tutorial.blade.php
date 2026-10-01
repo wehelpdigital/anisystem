@@ -153,6 +153,14 @@
                 ];
             @endphp
 
+            <style>
+                /* The answer unrolls and rolls back up on the house easing. */
+                .tq-a { display: grid; grid-template-rows: 0fr; opacity: 0;
+                    transition: grid-template-rows .3s cubic-bezier(.22,1,.36,1), opacity .3s cubic-bezier(.22,1,.36,1); }
+                .tq-a.is-open { grid-template-rows: 1fr; opacity: 1; }
+                .tq-a > div { min-height: 0; overflow: hidden; }
+                @media (prefers-reduced-motion: reduce) { .tq-a { transition: none; } }
+            </style>
             <div class="mt-10 space-y-3" x-data="{ openFaq: null }">
                 @foreach ($faqs as $i => $faq)
                     <div class="card overflow-hidden reveal" style="--reveal-delay: {{ min($i, 6) * 0.04 }}s">
@@ -167,9 +175,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
                             </svg>
                         </button>
-                        <div x-show="openFaq === {{ $i }}" x-cloak x-transition.opacity.duration.150ms
-                             class="px-5 sm:px-6 pb-5 -mt-1">
-                            <p class="text-sm sm:text-base text-gray-600 leading-relaxed">{{ $faq['a'] }}</p>
+                        <div class="tq-a" :class="{ 'is-open': openFaq === {{ $i }} }">
+                            <div><p class="px-5 sm:px-6 pb-5 -mt-1 text-sm sm:text-base text-gray-600 leading-relaxed">{{ $faq['a'] }}</p></div>
                         </div>
                     </div>
                 @endforeach
