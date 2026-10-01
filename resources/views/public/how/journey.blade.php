@@ -592,7 +592,7 @@
                 </div>
                 {{-- Anee and her tools. On a desk the script scatters the tools
                      around her (.is-scatter); a phone lists them down the rail. --}}
-                <div class="hw-field" style="--fh: {{ 24 + count($st['items']) * 1.6 }}rem">
+                <div class="hw-field" style="--fh: {{ 26 + count($st['items']) * 1.8 }}rem">
                 <div class="hw-hub" aria-hidden="true">
                     <i class="hw-ring"></i><i class="hw-ring"></i>
                     <span class="hw-hub-core"><img src="{{ asset('images/anee/emoji/' . $st['face'] . '.png') }}" alt="" loading="lazy"></span>
@@ -799,8 +799,8 @@
         const gDots = make('g'), gArcs = make('g');
         svg.append(gDots, gArcs);
         const fieldEl = st.querySelector('.hw-field'), items = [...st.querySelectorAll('.hw-item')];
-        // On a desk the tools are blown out around Anee: placed on a loose
-        // ring (every other one nearer), nudged apart until no two overlap
+        // On a desk the tools are blown out around Anee: placed round her at
+        // shuffled distances (some close, some far out), nudged apart until no two overlap
         // and none covers her, and kept inside the field. The same step
         // lands the same way every time (the jitter is seeded by its name).
         let laid = '';
@@ -817,9 +817,13 @@
             const box = items.map((it) => ({ w: it.offsetWidth, h: it.querySelector('.hw-chip').offsetHeight }));
             let seed = [...(st.dataset.stage || 'x')].reduce((a, c) => (a * 31 + c.charCodeAt(0)) % 233280, 7);
             const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+            // How far out each one sits: from close to Anee to the edge of the
+            // field, the distances shuffled so near and far fall at random.
+            const reach = Array.from({ length: n }, (_, i) => .42 + (i / Math.max(1, n - 1)) * .58);
+            for (let i = n - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [reach[i], reach[j]] = [reach[j], reach[i]]; }
             const p = box.map((b, i) => {
-                const a = -Math.PI / 2 + (i + .5) * (2 * Math.PI / n) + (rnd() - .5) * .35;
-                const k = i % 2 ? .72 + rnd() * .1 : .93 + rnd() * .07;
+                const a = -Math.PI / 2 + (i + .5) * (2 * Math.PI / n) + (rnd() - .5) * .45;
+                const k = Math.min(1, reach[i] + (rnd() - .5) * .06);
                 return { x: cx + Math.cos(a) * (cx - b.w / 2 - 6) * k, y: cy + Math.sin(a) * (cy - b.h / 2 - 6) * k };
             });
             for (let round = 0; round < 160; round++) {
