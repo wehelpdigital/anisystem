@@ -21,20 +21,31 @@
         </div>
     </section>
 
-    {{-- ================= THE PLANS, AS A DECK =================
+    {{-- ================= THE PLANS, AS A CARD SPREAD =================
          One plan is read at a time. Libre sits in front when the page opens
-         and the paid plans wait behind it as a faded stack; tapping one (or
-         its name in the row above, or swiping the front card on a phone)
-         deals it to the front, and the card that was there tucks back in
-         just behind it. Every card is as tall as the one in front, so the
-         deck glides when that changes. The motion lives in the script at
-         the foot of this file, the dress in the pd- styles beside it. --}}
+         and the paid plans are spread out behind it, a little askew like
+         cards fanned on a table, each one showing its header: the name, the
+         line under it and the price. Tapping one (or its name in the row
+         above, or swiping the front card on a phone) deals it to the front,
+         and the card that was there goes back into the spread, which always
+         reads in plan order from the top. Every card is as tall as the one
+         in front, so the deck glides when that changes. The motion lives in
+         the script at the foot of this file, the dress in the pd- styles. --}}
     @php
         $pdKeys  = array_keys($tiers);
         $pdFree  = collect($tiers)->search(fn ($t) => empty($t['price']));
         $pdOrder = array_values(array_unique(array_merge($pdFree !== false ? [$pdFree] : [], $pdKeys)));
         $pdTint  = ['libre' => '#86b556', 'libreAnee' => '#f5c518', 'solo' => '#4a7c2a', 'owner' => '#2d5016'];
         $pdSpare = ['#86b556', '#f5c518', '#4a7c2a', '#2d5016', '#6b9f3d', '#c79e00'];
+        // The spread: behind the front card, the last plan sits nearest and
+        // the first furthest up, so the headers read in plan order downward.
+        // Each place back sits a little askew (the script keeps the same list).
+        $pdSlotOf = [$pdOrder[0] => 0];
+        foreach (array_reverse(array_values(array_diff($pdKeys, [$pdOrder[0]]))) as $i => $k) {
+            $pdSlotOf[$k] = $i + 1;
+        }
+        $pdX = [0, -6, 8, -10, 12, -12];
+        $pdR = [0, -1.6, 1.4, -1.8, 1.6, -1.6];
     @endphp
     <section class="py-16 sm:py-20 bg-gray-50 bg-drift" x-data="pdDeck()">
         <div class="pd-scope max-w-6xl mx-auto px-4 sm:px-6">
@@ -61,16 +72,33 @@
                         @php
                             $isStar = $key === 'owner';
                             $isFree = empty($tier['price']);
-                            $pdSlot = array_search($key, $pdOrder, true);
+                            $pdSlot = $pdSlotOf[$key] ?? 0;
+                            if (! $isFree) { $prM = \App\Support\Region::tierPrice($key, 'month'); $prY = \App\Support\Region::tierPrice($key, 'year'); }
                         @endphp
                         <div class="pd-card {{ $pdSlot === 0 ? 'is-front' : 'is-back' }} {{ $isStar ? 'is-star' : '' }}"
                              data-name="{{ $tier['name'] }}" data-slot="{{ $pdSlot }}"
-                             style="--s: {{ $pdSlot }}; z-index: {{ 10 + (count($pdOrder) - $pdSlot) * 2 }}; --pd-tint: {{ $pdTint[$key] ?? $pdSpare[$loop->index % count($pdSpare)] }}"
+                             style="--s: {{ $pdSlot }}; --x: {{ $pdX[$pdSlot] ?? 0 }}px; --r: {{ $pdR[$pdSlot] ?? 0 }}deg; z-index: {{ 10 + (count($pdOrder) - $pdSlot) * 2 }}; --pd-tint: {{ $pdTint[$key] ?? $pdSpare[$loop->index % count($pdSpare)] }}"
                              @if ($pdSlot) role="button" tabindex="0" aria-label="Show the {{ $tier['name'] }} plan" @endif>
                             @if ($isStar)<span class="pr-flag">Most complete</span>@endif
                             <div class="pd-face" id="pd-panel-{{ $key }}" role="tabpanel" aria-labelledby="pd-tab-{{ $key }}"
                                  @if ($pdSlot) inert aria-hidden="true" @else tabindex="0" @endif>
                                 <span class="pd-band" aria-hidden="true"></span>
+                                {{-- The header a card shows while it waits in the spread. --}}
+                                <div class="pd-peek" aria-hidden="true">
+                                    <span class="pd-peek-t">
+                                        <b>{{ $tier['name'] }}@if ($isStar)<em>Most complete</em>@endif</b>
+                                        <small>{{ $tier['tagline'] }}</small>
+                                    </span>
+                                    <span class="pd-peek-p">
+                                        @if ($isFree)
+                                            <b>Free</b><small>forever</small>
+                                        @else
+                                            <span x-show="!yearly"><b>{{ \App\Support\Region::priceTag($prM) }}</b><small>/ month</small></span>
+                                            <span x-show="yearly" x-cloak><b>{{ \App\Support\Region::priceTag($prY) }}</b><small>/ year</small></span>
+                                        @endif
+                                    </span>
+                                    <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                                </div>
                                 <div class="pd-inner">
                                     <span class="pr-name">{{ $tier['name'] }}</span>
                                     <span class="pr-for">{{ $tier['tagline'] }}</span>
@@ -84,7 +112,6 @@
                                         <span class="pr-day">{{ \App\Support\Region::money(0) }} a day, for as long as you like</span>
                                     @else
                                         {{-- Pesos at home, dollars on the international face (App\Support\Region). --}}
-                                        @php $prM = \App\Support\Region::tierPrice($key, 'month'); $prY = \App\Support\Region::tierPrice($key, 'year'); @endphp
                                         <span class="pr-price" x-show="!yearly">
                                             <span class="pr-amount">{{ \App\Support\Region::priceTag($prM) }}</span>
                                             <span class="pr-per">/ month</span>
@@ -119,10 +146,13 @@
                 </div>
             </div>
 
-            <p class="pd-free reveal">
-                <span class="pd-free-ico" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></span>
-                <span>Start for free forever on the {{ $pdFree !== false ? $tiers[$pdFree]['name'] : 'Libre' }} plan. <strong>No payments, no trial time.</strong></span>
-            </p>
+            <div class="pd-cta reveal">
+                <a href="{{ route('signup') }}" class="btn btn-accent btn-lg pd-go">
+                    <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                    Start for free forever on {{ $pdFree !== false ? $tiers[$pdFree]['name'] : 'Libre' }}
+                </a>
+                <p class="pd-note">No payments, no trial time.</p>
+            </div>
         </div>
     </section>
 
@@ -257,21 +287,22 @@
         .pd-tabs .pd-thumb { border-radius: .9rem; }
     }
 
-    /* ---- the deck ----
+    /* ---- the spread ----
        Every card sits in the same grid cell. --s is a card's place in the
-       pile (0 is the front); each place back peeks up one --pd-step and
-       shrinks by --pd-shrink. The script keeps the cards as tall as the
-       front one (--pd-h), so the deck's height follows it. */
-    .pd-stage { margin-top: 1.6rem; }
-    .pd-deck { --pd-step: 13px; --pd-shrink: .05; position: relative; display: grid; max-width: 27rem; margin: 0 auto;
-        padding-top: calc(var(--pd-step) * var(--pd-n, 3) + 8px); touch-action: pan-y; }
-    @media (min-width: 640px) { .pd-deck { --pd-step: 18px; --pd-shrink: .045; max-width: 28rem; } }
+       spread (0 is the front); each place back rises one --pd-step, a
+       header's height, so its header shows above the card in front of it,
+       and sits askew by --x and --r. The script keeps the cards as tall as
+       the front one (--pd-h), so the deck's height follows it. */
+    .pd-stage { margin-top: 1.8rem; }
+    .pd-deck { --pd-step: 3.7rem; --pd-shrink: .018; position: relative; display: grid; max-width: 27rem; margin: 0 auto;
+        padding-top: calc(var(--pd-step) * var(--pd-n, 3) + 14px); touch-action: pan-y; }
+    @media (min-width: 640px) { .pd-deck { --pd-step: 4.7rem; --pd-shrink: .016; max-width: 29rem; } }
     .pd-card { grid-area: 1 / 1; align-self: start; position: relative; height: var(--pd-h, auto);
         border-radius: 1.35rem; transform-origin: 50% 0; outline: none; -webkit-tap-highlight-color: transparent;
-        transform: translate3d(0, calc(var(--s, 0) * var(--pd-step) * -1 - var(--pd-lift, 0px)), 0) rotate(0deg) scale(calc(1 - var(--s, 0) * var(--pd-shrink)));
-        box-shadow: 0 10px 24px -18px rgb(20 33 12 / .45);
+        transform: translate3d(var(--x, 0px), calc(var(--s, 0) * var(--pd-step) * -1 - var(--pd-lift, 0px)), 0) rotate(var(--r, 0deg)) scale(calc(1 - var(--s, 0) * var(--pd-shrink)));
+        box-shadow: 0 -12px 26px -20px rgb(20 33 12 / .45), 0 10px 24px -18px rgb(20 33 12 / .45);
         transition: transform .55s var(--pd-ease), height .5s var(--pd-ease), box-shadow .45s var(--pd-ease); }
-    .pd-card.is-front { box-shadow: 0 34px 70px -38px rgb(20 33 12 / .55), 0 3px 10px -6px rgb(20 33 12 / .16); }
+    .pd-card.is-front { box-shadow: 0 -14px 30px -22px rgb(20 33 12 / .5), 0 34px 70px -38px rgb(20 33 12 / .55), 0 3px 10px -6px rgb(20 33 12 / .16); }
     .pd-card.is-back { cursor: pointer; user-select: none; }
     .pd-face { position: relative; height: 100%; overflow: hidden; border-radius: inherit; outline: none;
         background: #fff; border: 1px solid #e1e8d7; transition: border-color .45s var(--pd-ease); }
@@ -283,18 +314,38 @@
     /* The fade that sends a card into the background: deeper in the pile,
        further away. A hovered (or focused) card behind clears a little. */
     .pd-fog { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: #e9eee2;
-        opacity: calc((min(var(--s, 0), 1) * .24 + var(--s, 0) * .16) * var(--pd-fogk, 1));
+        opacity: calc((min(var(--s, 0), 1) * .2 + var(--s, 0) * .1) * var(--pd-fogk, 1));
         transition: opacity .45s var(--pd-ease); }
     @media (hover: hover) {
-        .pd-card.is-back:not(.is-flying):hover { --pd-lift: 8px; --pd-fogk: .5; }
+        .pd-card.is-back:not(.is-flying):hover { --pd-lift: 10px; --pd-fogk: .5; }
     }
+    /* A waiting card's header: the name, its line, the price, an arrow to bring it forward. */
+    /* Taller than the strip that shows, so no fogged face peeks under it where the cards sit askew. */
+    .pd-peek { position: absolute; left: 0; right: 0; top: 6px; z-index: 3; height: calc(var(--pd-step) + 1.5rem); display: flex; align-items: flex-start; gap: .8rem;
+        padding: .85rem 1.1rem 0 1.3rem; background: #fff; opacity: 0; pointer-events: none; transition: opacity .35s var(--pd-ease); }
+    .pd-peek-p, .pd-peek > svg { margin-top: .1rem; }
+    .pd-card.is-back .pd-peek { opacity: 1; }
+    .pd-peek-t { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .1rem; }
+    .pd-peek-t b { display: flex; align-items: center; gap: .45rem; font-family: var(--font-heading); font-size: 1.08rem; font-weight: 800; line-height: 1.2; color: #14210c; white-space: nowrap; }
+    .pd-peek-t em { font-style: normal; padding: .14rem .45rem; border-radius: 999px; background: #4a7c2a; color: #fff; font-family: var(--font-sans, inherit);
+        font-size: .58rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+    .pd-peek-t small { font-size: .78rem; color: #6b7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pd-peek-p { flex: none; text-align: right; white-space: nowrap; }
+    .pd-peek-p b { font-family: var(--font-heading); font-size: 1.12rem; font-weight: 800; color: #2f5219; }
+    .pd-peek-p small { margin-left: .2rem; font-size: .72rem; font-weight: 600; color: #6b7280; }
+    .pd-peek > svg { flex: none; width: 1.15rem; height: 1.15rem; color: #86b556; transition: transform .28s var(--pd-ease); }
+    .pd-card.is-back:hover .pd-peek > svg { transform: translateY(2px); }
+    @media (max-width: 639.98px) { .pd-peek-t small { display: none; } .pd-peek { padding: 1rem .9rem 0 1.1rem; gap: .6rem; } .pd-peek-t b { font-size: 1rem; } .pd-peek-p, .pd-peek > svg { margin-top: 0; } }
+    /* A narrow phone keeps the name and the price; the front card says "Most complete" itself. */
+    @media (max-width: 419.98px) { .pd-peek-t em { display: none; } }
     .pd-card.is-back:not(.is-flying):focus-visible { --pd-lift: 8px; --pd-fogk: .5; outline: 3px solid #86b556; outline-offset: 2px; }
     .pd-face:focus-visible { outline: 3px solid #86b556; outline-offset: 3px; }
     /* A card being dealt or dragged is moved by the script, not by these. */
     .pd-card.is-flying, .pd-card.is-dragging { transition: height .5s var(--pd-ease), box-shadow .45s var(--pd-ease); }
     .pd-card.is-flying .pd-inner, .pd-card.is-flying .pd-fog { transition: none; }
     .pd-deck.pd-instant .pd-card, .pd-deck.pd-instant .pd-inner,
-    .pd-deck.pd-instant .pd-fog, .pd-deck.pd-instant .pr-flag { transition: none; }
+    .pd-deck.pd-instant .pd-fog, .pd-deck.pd-instant .pr-flag, .pd-deck.pd-instant .pd-peek { transition: none; }
+    .pd-card.is-flying .pd-peek { transition: none; }
 
     .pd-card .pr-flag { z-index: 3; transform: translate(-50%, 0);
         transition: opacity .35s var(--pd-ease) .2s, transform .45s var(--pd-ease) .2s; }
@@ -308,19 +359,16 @@
     .pd-card .pr-price, .pd-card .pr-year, .pd-card .pr-day { animation: pdSwap .45s var(--pd-ease) both; }
     @keyframes pdSwap { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
-    /* The one line under the deck. */
-    .pd-free { display: flex; align-items: center; justify-content: center; gap: .8rem; width: fit-content; max-width: 100%;
-        margin: 2.4rem auto 0; padding: .8rem 1.3rem .8rem .85rem; border-radius: 1.3rem; background: #fff;
-        border: 1px solid #dcead0; box-shadow: 0 18px 40px -30px rgb(20 33 12 / .5);
-        font-family: var(--font-heading); font-size: 1rem; font-weight: 700; line-height: 1.4; color: #14210c; }
-    .pd-free strong { color: #4a7c2a; font-weight: 800; }
-    .pd-free-ico { flex: none; display: grid; place-items: center; width: 2.3rem; height: 2.3rem; border-radius: 999px;
-        background: #eef5e5; color: #4a7c2a; }
-    .pd-free-ico svg { width: 1.2rem; height: 1.2rem; }
-    @media (max-width: 479.98px) { .pd-free { font-size: .93rem; padding-right: 1rem; } }
+    /* The way in, under the deck: one button, and the promise under it. */
+    .pd-cta { margin-top: 2.6rem; display: flex; flex-direction: column; align-items: center; gap: .7rem; text-align: center; }
+    .pd-go { gap: .55rem; box-shadow: 0 18px 36px -18px rgb(199 158 0 / .85); transition: transform .28s var(--pd-ease), box-shadow .28s var(--pd-ease); }
+    .pd-go:hover { transform: translateY(-2px); box-shadow: 0 22px 40px -18px rgb(199 158 0 / .95); }
+    .pd-go svg { flex: none; width: 1.2rem; height: 1.2rem; }
+    .pd-note { font-size: .92rem; font-weight: 700; color: #4a7c2a; }
+    @media (max-width: 479.98px) { .pd-go { width: 100%; justify-content: center; } }
 
     @media (prefers-reduced-motion: reduce) {
-        .pd-seg > button, .pd-thumb, .pd-card, .pd-face, .pd-inner, .pd-fog, .pd-card .pr-flag { transition: none !important; }
+        .pd-seg > button, .pd-thumb, .pd-card, .pd-face, .pd-inner, .pd-fog, .pd-peek, .pd-card .pr-flag, .pd-go { transition: none !important; }
         .pd-card .pr-price, .pd-card .pr-year, .pd-card .pr-day { animation: none; }
     }
     html.sm-still .pd-seg > button, html.sm-still .pd-thumb, html.sm-still .pd-card, html.sm-still .pd-face,
@@ -331,7 +379,10 @@
 
 @push('scripts')
 <script>
-    /* The plan deck. `order` lists the cards front to back. A card picked
+    /* The plan spread. `order` lists the cards front to back; behind the
+       front card the rest always stand in plan order read from the top (the
+       last plan nearest), each at its slot's tilt (SPREAD_X / SPREAD_R, the
+       same numbers the page was drawn with). A card picked
        from the pile slides out to one side from behind it while the front
        card fades and drops toward the other; at the turn they swap layers,
        then the picked card settles in front and the old one tucks in right
@@ -374,19 +425,25 @@
             const order = cards.map((c, i) => i).sort((a, b) => cards[a].dataset.slot - cards[b].dataset.slot);
             let busy = false, queued = null, drag = null;
 
+            const SPREAD_X = [0, -6, 8, -10, 12, -12], SPREAD_R = [0, -1.6, 1.4, -1.8, 1.6, -1.6];
+            const X = (s) => SPREAD_X[s] || 0, R = (s) => SPREAD_R[s] || 0;
             const z = (s) => 10 + (n - s) * 2;
             const num = (name) => parseFloat(getComputedStyle(deck).getPropertyValue(name)) || 0;
+            // The step is set in rem: read it as pixels off a card's resting place.
+            const step = () => { const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16; const v = getComputedStyle(deck).getPropertyValue('--pd-step').trim(); return v.endsWith('rem') ? parseFloat(v) * rem : parseFloat(v) || 0; };
             // A place in the pile as a transform, plus an optional push away
             // from it (x, y, a turn of r degrees about `pivot` px down the card,
             // and a scale k on top). Same shape every time, so it interpolates.
             const pose = (s, x = 0, y = 0, r = 0, k = 1, pivot = 0) =>
-                'translate3d(' + x + 'px, ' + (y - s * num('--pd-step')) + 'px, 0) translateY(' + pivot + 'px) rotate(' + r
+                'translate3d(' + (x + X(s)) + 'px, ' + (y - s * step()) + 'px, 0) translateY(' + pivot + 'px) rotate(' + (r + R(s))
                 + 'deg) translateY(' + (-pivot) + 'px) scale(' + ((1 - s * num('--pd-shrink')) * k) + ')';
 
             const paint = () => {
                 order.forEach((ci, s) => {
                     const c = cards[ci], f = parts[ci].face, front = s === 0;
                     c.style.setProperty('--s', s);
+                    c.style.setProperty('--x', X(s) + 'px');
+                    c.style.setProperty('--r', R(s) + 'deg');
                     c.style.zIndex = z(s);
                     c.dataset.slot = s;
                     c.classList.toggle('is-front', front);
@@ -429,8 +486,10 @@
                 const fromA = getComputedStyle(A).transform, fromB = getComputedStyle(B).transform;
                 const fogA = getComputedStyle(parts[ci].fog).opacity;
                 if (!dir) dir = ci > old ? 1 : -1;
-                order.splice(k, 1);
-                order.unshift(ci);
+                // The picked card to the front; the rest back in plan order, the last plan nearest.
+                const rest = order.filter((x) => x !== ci).sort((a, b) => b - a);
+                order.splice(0, n, ci, ...rest);
+                const sB = order.indexOf(old);
                 const moving = !still() && typeof A.animate === 'function';
                 if (moving) { A.classList.add('is-flying'); B.classList.add('is-flying'); }
                 B.classList.remove('is-dragging');
@@ -441,7 +500,7 @@
                 if (!moving) return;
 
                 busy = true;
-                const w = A.offsetWidth, h = A.offsetHeight, step = num('--pd-step');
+                const w = A.offsetWidth, h = A.offsetHeight, st = step();
                 const T = 640, F = .42;   // the whole deal, and the moment the two swap layers
                 const fogB = getComputedStyle(parts[old].fog).opacity;   // its resting fade, one place back
                 const awayA = dir * w * (w < 400 ? .42 : .54);
@@ -450,16 +509,16 @@
                 const runs = [
                     A.animate([
                         { transform: fromA, easing: EASE },
-                        { transform: pose(0, awayA, -(k * step) - 28, dir * 6, 1.02, h / 2), offset: F, easing: EASE },
-                        { transform: pose(0, 0, 0, 0, 1, h / 2) },
+                        { transform: pose(0, awayA, -(k * st) - 28, dir * 6, 1.02, h / 2), offset: F, easing: EASE },
+                        { transform: pose(0) },
                     ], o),
                     A.animate([{ zIndex: z(k) - 1 }, { zIndex: z(k) - 1, offset: F }, { zIndex: z(0) + 3, offset: F }, { zIndex: z(0) + 3 }], o),
                     B.animate([
                         { transform: fromB, easing: EASE },
                         { transform: pose(0, awayB, 14, -dir * 4, .95, h / 2), offset: F, easing: EASE },
-                        { transform: pose(1, 0, 0, 0, 1, h / 2) },
+                        { transform: pose(sB) },
                     ], o),
-                    B.animate([{ zIndex: z(0) + 2 }, { zIndex: z(0) + 2, offset: F }, { zIndex: z(1), offset: F }, { zIndex: z(1) }], o),
+                    B.animate([{ zIndex: z(0) + 2 }, { zIndex: z(0) + 2, offset: F }, { zIndex: z(sB), offset: F }, { zIndex: z(sB) }], o),
                     parts[ci].inner.animate([{ opacity: 0 }, { opacity: 0, offset: F }, { opacity: 1, offset: .82 }, { opacity: 1 }], o),
                     parts[old].inner.animate([{ opacity: 1 }, { opacity: 0, offset: F * .8 }, { opacity: 0 }], o),
                     parts[ci].fog.animate([{ opacity: fogA }, { opacity: .16, offset: F }, { opacity: 0 }], o),
