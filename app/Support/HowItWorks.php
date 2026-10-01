@@ -57,7 +57,7 @@ class HowItWorks
                         'Pick your crop and variety, and Anee writes the season for your place by growth stage: the bags of fertilizer and when, the sprays, the water and what to watch for.',
                         ['Stage by stage, from land prep to harvest', 'Fertilizer, sprays and water on their days', 'Read against your weather, soil and water'],
                         null, 'proto.page'),
-                    self::item('maps', 'Lot planning with Maps', 'Draw, measure and pin your fields', 'location-marker.png', false,
+                    self::item('maps', 'Lot planning with Maps powered with GPS', 'Draw, measure and pin your fields', 'location-marker.png', false,
                         'Trace each field over a satellite view and the app gives you its area and the length of each side. Drop pins on the pump, the gate or the low spot that floods.',
                         ['The area and sides of every field', 'Pins with notes and photos', 'Attach a map to a lot, a task or a note'],
                         'farm-maps', 'maps.page'),
@@ -262,6 +262,7 @@ class HowItWorks
         // a little off the spot the desktop burst gives it, in rem [right, down].
         $nudge = [
             'variety' => [0, -2.5],     // up a little
+            'review' => [-7, 0],        // Anee reviews your protocol, further left
             'access' => [0, 5.6],       // Team logins, further down
             'board' => [0, 5.6],        // Today on the board, further down
             'season' => [-6.9, 6.25],   // Anee Season Report, further down and left
