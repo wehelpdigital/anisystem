@@ -123,7 +123,11 @@
     .ak-said .t p + p { margin-top: .4rem; }
     .ak-said .t .anee-emo img { width: 1.4em; height: 1.4em; vertical-align: -.3em; }
     .ak-said.is-no { background: #fffbeb; border-color: #fde68a; }
-    .ak-dots { display: inline-flex; gap: .25rem; padding: .5rem .1rem; }
+    .ak-dots { display: inline-flex; align-items: center; gap: .25rem; padding: .5rem .1rem; }
+    /* While Anee reads, the dots sit level with her face, in the middle of the card. */
+    .ak-said.is-wait { align-items: center; }
+    .ak-said.is-wait .t { display: flex; align-items: center; min-height: 2.6rem; }
+    .ak-said.is-wait .ak-dots { padding: 0 .1rem; }
     .ak-dots i { width: .5rem; height: .5rem; border-radius: 999px; background: #8fb86a; animation: akDot 1.1s ease-in-out infinite; }
     .ak-dots i:nth-child(2) { animation-delay: .15s; } .ak-dots i:nth-child(3) { animation-delay: .3s; }
     @keyframes akDot { 0%, 80%, 100% { opacity: .35; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
@@ -515,7 +519,8 @@
     box.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('akSearch').requestSubmit(); } });
     $('akChips').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; box.value = b.textContent; grow(); box.focus(); });
     const say = (html, no) => {
-        said.innerHTML = `<div class="ak-said ${no ? 'is-no' : ''}"><img src="${AVATAR}" alt=""><div class="t">${html}</div></div>`;
+        const wait = html.includes('ak-dots');
+        said.innerHTML = `<div class="ak-said ${no ? 'is-no' : ''} ${wait ? 'is-wait' : ''}"><img src="${AVATAR}" alt=""><div class="t">${html}</div></div>`;
         const r = said.firstElementChild.getBoundingClientRect();
         if (r.bottom > innerHeight - 20) said.firstElementChild.scrollIntoView({ block: 'center', behavior: reduce() ? 'auto' : 'smooth' });
     };
