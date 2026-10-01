@@ -140,6 +140,13 @@
         /* Between lg and xl the bar is short of room: the logo is Home, About
            and Contact wait in the footer, and the pill says the short name. */
         @media (max-width: 1279.98px) { .nav-xl { display: none; } .ask-pill .ask-more { display: none; } }
+        /* The slot grows into the space between the links and the flags and
+           centres the pill in it; the links keep their place after the logo. */
+        @media (min-width: 1024px) {
+            #pubNav { margin-left: 3.5rem; }
+            .ask-slot { flex: 1 1 auto; min-width: 0; justify-content: center; padding: 0 .75rem; }
+        }
+        .ask-pill { font-size: .875rem; }
         @keyframes pmRow { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         @media (prefers-reduced-motion: reduce) {
             .pm-burger span, .pm-in, .pm-out { transition: none; }
@@ -165,7 +172,7 @@
                     <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-7 md:h-8 w-auto">
                 </a>
 
-                <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700">
+                <nav id="pubNav" class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700">
                     <a href="{{ route('home') }}" class="nav-xl hover:text-brand-600 {{ request()->routeIs('home', 'ph.home') ? 'text-brand-700' : '' }}">Home</a>
                     <a href="{{ route('features') }}" class="hover:text-brand-600 {{ request()->routeIs('features', 'ph.features', 'site.features.show') ? 'text-brand-700' : '' }}">Features</a>
                     {{-- The guides, the problems and the blog, behind one word (the /ph face's: they are written for Philippine farms). --}}
@@ -190,12 +197,17 @@
                     <a href="{{ route('pricing') }}" class="hover:text-brand-600 {{ request()->routeIs('pricing', 'ph.pricing') ? 'text-brand-700' : '' }}">Pricing</a>
                     <a href="{{ route('about') }}" class="nav-xl hover:text-brand-600 {{ request()->routeIs('about', 'ph.about') ? 'text-brand-700' : '' }}">About</a>
                     <a href="{{ route('contact') }}" class="nav-xl hover:text-brand-600 {{ request()->routeIs('contact', 'ph.contact') ? 'text-brand-700' : '' }}">Contact</a>
-                    {{-- The featured door: one free question for Anee (AskAneeController). --}}
+                </nav>
+
+                {{-- The featured door: one free question for Anee (AskAneeController).
+                     Its own slot, taking the room between the last link and the
+                     flags, so the pill stands in the middle of that gap. --}}
+                <div class="ask-slot hidden lg:flex">
                     <a href="{{ url('/ask-anee') }}" class="ask-pill {{ request()->routeIs('ask.*') ? 'is-on' : '' }}">
                         <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" aria-hidden="true">
                         <span><span class="ask-more">Try and </span>Ask Anee</span>
                     </a>
-                </nav>
+                </div>
 
                 <div class="hidden lg:flex items-center gap-3">
                     @include('partials.face-switch')
