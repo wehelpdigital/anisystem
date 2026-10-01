@@ -181,8 +181,25 @@
 
                 <nav id="pubNav" class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700">
                     <a href="{{ route('home') }}" class="nav-xl nav-home hover:text-brand-600 {{ request()->routeIs('home', 'ph.home') ? 'text-brand-700' : '' }}">Home</a>
-                    <a href="{{ route('how') }}" class="hover:text-brand-600 whitespace-nowrap {{ request()->routeIs('how', 'ph.how') ? 'text-brand-700' : '' }}">How It Works</a>
-                    <a href="{{ route('features') }}" class="hover:text-brand-600 {{ request()->routeIs('features', 'ph.features', 'site.features.show') ? 'text-brand-700' : '' }}">Features</a>
+                    {{-- How It Works, with Features under it (2026-10-01). The words themselves still open the six steps. --}}
+                    <div class="relative" x-data="{ h: false }" @mouseenter="h = true" @mouseleave="h = false" @focusin="h = true" @focusout="h = $el.contains($event.relatedTarget)">
+                        <a href="{{ route('how') }}" class="inline-flex items-center gap-1 whitespace-nowrap hover:text-brand-600 {{ request()->routeIs('how', 'ph.how', 'features', 'ph.features', 'site.features.show') ? 'text-brand-700' : '' }}" :aria-expanded="h">
+                            How It Works
+                            <svg class="w-3.5 h-3.5 transition-transform duration-300" :class="h && 'rotate-180'" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                        </a>
+                        <div x-show="h" x-cloak x-transition.opacity.duration.200ms class="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-72">
+                            <div class="rounded-2xl bg-white shadow-card-lg ring-1 ring-black/5 p-2">
+                                <a href="{{ route('how') }}" class="block rounded-xl px-3 py-2.5 hover:bg-brand-50 {{ request()->routeIs('how', 'ph.how') ? 'bg-brand-50' : '' }}">
+                                    <span class="block text-sm font-bold text-gray-900">How It Works</span>
+                                    <span class="block text-xs font-medium text-gray-500">Six steps, with Anee at every one</span>
+                                </a>
+                                <a href="{{ route('features') }}" class="block rounded-xl px-3 py-2.5 hover:bg-brand-50 {{ request()->routeIs('features', 'ph.features', 'site.features.show') ? 'bg-brand-50' : '' }}">
+                                    <span class="block text-sm font-bold text-gray-900">Features</span>
+                                    <span class="block text-xs font-medium text-gray-500">Every tool your farm runs on</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     {{-- The guides, the problems and the blog, behind one word (the /ph face's: they are written for Philippine farms). --}}
                     @if (\App\Support\Region::ph())
                     <div class="relative" x-data="{ g: false }" @mouseenter="g = true" @mouseleave="g = false">
