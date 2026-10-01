@@ -83,13 +83,6 @@
                                 {{-- The corner a card shows while it waits in the hand. --}}
                                 <div class="pd-peek" aria-hidden="true">
                                     <b class="pd-peek-n">{{ $tier['name'] }}</b>
-                                    <span class="pd-peek-p">
-                                        @if ($isFree)
-                                            <b>Free</b>
-                                        @else
-                                            <b x-show="!yearly">{{ \App\Support\Region::priceTag($prM) }}</b><b x-show="yearly" x-cloak>{{ \App\Support\Region::priceTag($prY) }}</b><small x-show="!yearly">/ month</small><small x-show="yearly" x-cloak>/ year</small>
-                                        @endif
-                                    </span>
                                 </div>
                                 <div class="pd-inner">
                                     <span class="pr-name">{{ $tier['name'] }}</span>
@@ -148,70 +141,10 @@
         </div>
     </section>
 
-    {{-- ================= CREDITS ================= --}}
-    <section class="anee-band">
-        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-            <div class="fx-row">
-                <div class="reveal">
-                    <p class="text-sm font-bold uppercase tracking-wider text-accent-400">AI credits</p>
-                    <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-white text-balance">Anee works by the question, not by the month</h2>
-                    <p class="mt-4 text-[#cdd8c0] leading-relaxed">
-                        The AI technician runs on credits so a quiet month costs you nothing extra.
-                        A chat with Anee costs a few credits. The deep analyses, like when to plant,
-                        what to plant and the full season report, cost more because they read everything
-                        you've recorded. Credits never expire.
-                    </p>
-                    <ul class="fx-list mt-5">
-                        <li style="color:#e8efe1"><svg fill="none" stroke="#a8cc7e" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Packs start at {{ \App\Support\Region::priceTag(\App\Support\Region::packPrice(\App\Models\AiCreditPack::where('deleteStatus', 1)->where('isActive', 1)->orderBy('price')->first() ?: (object) ['price' => 99, 'packKey' => 'starter'])) }}, paid through {{ \App\Support\Region::payMethod() }} like everything else</li>
-                        <li style="color:#e8efe1"><svg fill="none" stroke="#a8cc7e" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Bigger packs carry bonus credits</li>
-                        <li style="color:#e8efe1"><svg fill="none" stroke="#a8cc7e" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Every feature shows its price in credits before you run it</li>
-                    </ul>
-                </div>
-                <div class="reveal">
-                    <div class="rounded-2xl bg-white/5 ring-1 ring-white/15 backdrop-blur p-6 max-w-sm mx-auto">
-                        <p class="text-xs font-bold uppercase tracking-wider text-[#a8cc7e]">What credits buy</p>
-                        <ul class="mt-4 space-y-3 text-sm text-[#e8efe1]">
-                            <li class="flex justify-between gap-4"><span>A chat with Anee</span><span class="font-bold text-white whitespace-nowrap">a few credits</span></li>
-                            <li class="flex justify-between gap-4"><span>When to Plant analysis</span><span class="font-bold text-white whitespace-nowrap">{{ \App\Support\AiPrices::of('wtp') }} cr</span></li>
-                            <li class="flex justify-between gap-4"><span>What to Plant analysis</span><span class="font-bold text-white whitespace-nowrap">{{ \App\Support\AiPrices::of('what') }} cr</span></li>
-                            <li class="flex justify-between gap-4"><span>Analyze the season so far</span><span class="font-bold text-white whitespace-nowrap">{{ \App\Support\AiPrices::of('sofar') }} cr</span></li>
-                            <li class="flex justify-between gap-4"><span>Full season report</span><span class="font-bold text-white whitespace-nowrap">{{ \App\Support\AiPrices::of('season') }} cr</span></li>
-                            <li class="flex justify-between gap-4"><span>Compare two reports</span><span class="font-bold text-white whitespace-nowrap">{{ \App\Support\AiPrices::of('compare') }} cr</span></li>
-                        </ul>
-                        <p class="mt-4 text-[11px] text-[#8fa383]">Credit prices are shown in-app before every run.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    {{-- ================= HOW PAYING WORKS ================= --}}
-    <section class="py-16 sm:py-20 bg-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6">
-            <div class="max-w-2xl mx-auto text-center reveal">
-                <p class="text-sm font-bold uppercase tracking-wider text-brand-600">No card needed</p>
-                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink">Paying is a {{ \App\Support\Region::payMethod() }} send away</h2>
-            </div>
-            <div class="mt-10 grid gap-4 sm:grid-cols-3">
-                @foreach ([
-                    ['1', 'Pick your plan', 'Choose inside the app after signing up. Plans and credit packs live in the same shop.'],
-                    ['2', 'Send via ' . \App\Support\Region::payMethod(), 'Send the amount and upload your receipt right in the checkout.'],
-                    ['3', 'We activate you', 'Our team verifies and emails you. Renewals stack on your remaining days.'],
-                ] as [$n, $t, $p])
-                    <div class="card card-hover reveal text-center">
-                        <div class="card-body">
-                            <div class="mx-auto w-10 h-10 rounded-full bg-accent-500 text-ink font-heading font-bold text-lg flex items-center justify-center">{{ $n }}</div>
-                            <h3 class="mt-3 font-heading font-bold text-ink">{{ $t }}</h3>
-                            <p class="mt-2 text-sm text-gray-600 leading-relaxed">{{ $p }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
 
     {{-- ================= FAQ ================= --}}
-    <section class="py-16 sm:py-20 bg-gray-50">
+    <section class="py-16 sm:py-20 bg-white">
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
             <h2 class="font-heading text-3xl font-bold text-ink text-center reveal">Fair questions</h2>
             <div class="mt-8 space-y-3">
@@ -305,34 +238,37 @@
     .pd-card.is-star.is-front .pd-face { border-color: #4a7c2a; }
     .pd-band { position: absolute; left: 0; right: 0; top: 0; z-index: 4; height: 6px; background: var(--pd-tint); }
     .pd-inner { display: flex; flex-direction: column; padding: 1.6rem 1.4rem 1.6rem;
-        transition: opacity .35s var(--pd-ease); }
-    .pd-card.is-back .pd-inner { opacity: 0; }
-    /* A card in the hand wears a card back under its corner: a fine
-       lattice in its own colour inside a white frame. */
-    .pd-fog { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0; border-radius: inherit; background-color: #f7faf2;
-        background-image: repeating-linear-gradient(45deg, transparent 0 9px, color-mix(in srgb, var(--pd-tint) 22%, transparent) 9px 10px),
-            repeating-linear-gradient(-45deg, transparent 0 9px, color-mix(in srgb, var(--pd-tint) 22%, transparent) 9px 10px);
-        box-shadow: inset 0 0 0 .6rem #fff, inset 0 0 0 calc(.6rem + 1.5px) color-mix(in srgb, var(--pd-tint) 45%, transparent);
+        transition: opacity .4s var(--pd-ease), filter .4s var(--pd-ease); }
+    /* A card in the hand shows what it holds, out of focus: its list is
+       there to be guessed at, and its name sits sharp in the corner. Its
+       price waits until it comes to the front. */
+    .pd-card.is-back .pd-inner { opacity: .72; filter: blur(2.6px); }
+    @media (max-width: 639.98px) { .pd-card.is-back .pd-inner { filter: blur(2px); } }
+    .pd-inner .pr-name, .pd-inner .pr-price, .pd-inner .pr-year, .pd-inner .pr-day { transition: opacity .3s var(--pd-ease); }
+    .pd-card.is-back .pd-inner .pr-name, .pd-card.is-back .pd-inner .pr-price,
+    .pd-card.is-back .pd-inner .pr-year, .pd-card.is-back .pd-inner .pr-day { opacity: 0; }
+    /* A card being dealt shows its name and price only as its corner fades, not over it. */
+    .pd-card.is-flying.is-front .pd-inner .pr-name, .pd-card.is-flying.is-front .pd-inner .pr-price,
+    .pd-card.is-flying.is-front .pd-inner .pr-year, .pd-card.is-flying.is-front .pd-inner .pr-day { transition-delay: .3s; }
+    /* A light wash over a card in the hand, so the front one stands out. */
+    .pd-fog { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0; border-radius: inherit;
+        background: linear-gradient(180deg, rgb(255 255 255 / .1) 0%, rgb(243 247 238 / .55) 100%);
         transition: opacity .45s var(--pd-ease); }
     .pd-card.is-back .pd-fog { opacity: 1; }
     @media (hover: hover) {
         .pd-card.is-back:not(.is-flying):hover { --pd-lift: 14px; }
     }
-    /* The corner: the name, then the price, the way a playing card shows its rank. */
-    .pd-peek { position: absolute; left: 0; right: 0; top: 6px; z-index: 3; height: calc(var(--pd-rise) * 1rem + 2.4rem);
-        display: flex; flex-direction: column; align-items: flex-start; gap: .25rem; padding: .85rem 1rem 0 1.15rem;
-        background: #fff; border-bottom: 1.5px solid color-mix(in srgb, var(--pd-tint) 45%, transparent);
+    /* The corner: the card's own name, sharp, where the blurred one would
+       be (the way a playing card shows its rank). Narrow on a phone, where
+       only a sliver of each card shows, so long names take two lines. */
+    .pd-peek { position: absolute; left: 0; top: 6px; z-index: 3; padding: calc(1.6rem - 6px) 1rem 0 1.4rem;
         opacity: 0; pointer-events: none; transition: opacity .35s var(--pd-ease); }
     .pd-card.is-back .pd-peek { opacity: 1; }
-    .pd-peek-n { max-width: calc(var(--pd-gap) * 1rem - 1.7rem); font-family: var(--font-heading); font-size: 1.04rem; font-weight: 800; line-height: 1.15; color: #14210c; }
-    .pd-peek-p { white-space: nowrap; }
-    .pd-peek-p b { font-family: var(--font-heading); font-size: 1.08rem; font-weight: 800; color: #2f5219; }
-    .pd-peek-p small { margin-left: .2rem; font-size: .7rem; font-weight: 600; color: #6b7280; }
+    .pd-peek-n { display: block; max-width: calc(var(--pd-gap) * 1rem - 1.8rem); font-family: var(--font-heading); font-size: 1.06rem; font-weight: 800;
+        line-height: 1.15; color: #14210c; text-shadow: 0 0 6px #fff, 0 0 2px #fff; }
     @media (max-width: 639.98px) {
-        .pd-peek { padding: .6rem .35rem 0 .6rem; gap: .15rem; }
-        .pd-peek-n { max-width: calc(var(--pd-gap) * 1rem - .9rem); font-size: .74rem; line-height: 1.12; }
-        .pd-peek-p b { font-size: .84rem; }
-        .pd-peek-p small { display: none; }
+        .pd-peek { padding: .6rem .35rem 0 .6rem; }
+        .pd-peek-n { max-width: calc(var(--pd-gap) * 1rem - .9rem); font-size: .78rem; line-height: 1.12; }
     }
     .pd-card.is-back:not(.is-flying):focus-visible { --pd-lift: 10px; outline: 3px solid #86b556; outline-offset: 2px; }
     .pd-face:focus-visible { outline: 3px solid #86b556; outline-offset: 3px; }
@@ -351,7 +287,7 @@
     .pd-inner .pr-amount { font-size: 2.6rem; line-height: 1.1; }
     .pd-inner .pr-list { margin-top: 1.2rem; padding-top: 1.15rem; border-top: 1px dashed #dbe5cf; }
     /* Monthly and yearly swap by x-show; whichever appears rises in. */
-    .pd-card .pr-price, .pd-card .pr-year, .pd-card .pr-day { animation: pdSwap .45s var(--pd-ease) both; }
+    .pd-card.is-front .pr-price, .pd-card.is-front .pr-year, .pd-card.is-front .pr-day { animation: pdSwap .45s var(--pd-ease) both; }
     @keyframes pdSwap { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
     /* The way in, under the deck: one button, and the promise under it. */
@@ -494,6 +430,8 @@
                 const A = cards[ci], B = cards[old];
                 const fromA = getComputedStyle(A).transform, fromB = getComputedStyle(B).transform;
                 const fogA = getComputedStyle(parts[ci].fog).opacity;
+                // How out of focus a waiting card is, read off the picked one before it moves (a phone blurs less).
+                const blurA = (getComputedStyle(parts[ci].inner).filter || '').startsWith('blur') ? getComputedStyle(parts[ci].inner).filter : 'blur(2.6px)';
                 if (!dir) dir = ci > old ? 1 : -1;
                 // The picked card to the front; the rest back into the hand in plan order.
                 const rest = order.filter((x) => x !== ci).sort((a, b) => a - b);
@@ -528,8 +466,11 @@
                         { transform: pose(sB) },
                     ], o),
                     B.animate([{ zIndex: z(0) + 2 }, { zIndex: z(0) + 2, offset: F }, { zIndex: z(sB), offset: F }, { zIndex: z(sB) }], o),
-                    parts[ci].inner.animate([{ opacity: 0 }, { opacity: 0, offset: F }, { opacity: 1, offset: .85 }, { opacity: 1 }], o),
-                    parts[old].inner.animate([{ opacity: 1 }, { opacity: 0, offset: F * .8 }, { opacity: 0 }], o),
+                    parts[ci].inner.animate([
+                        { opacity: .72, filter: blurA }, { opacity: .72, filter: blurA, offset: F * .5 },
+                        { opacity: 1, filter: 'blur(0px)', offset: .85 }, { opacity: 1, filter: 'blur(0px)' }], o),
+                    parts[old].inner.animate([
+                        { opacity: 1, filter: 'blur(0px)' }, { opacity: .72, filter: blurA, offset: F }, { opacity: .72, filter: blurA }], o),
                     parts[ci].fog.animate([{ opacity: fogA }, { opacity: fogA, offset: F * .5 }, { opacity: 0, offset: F }, { opacity: 0 }], o),
                     parts[old].fog.animate([{ opacity: 0 }, { opacity: 0, offset: F * .8 }, { opacity: 1, offset: F }, { opacity: 1 }], o),
                     parts[ci].peek.animate([{ opacity: 1 }, { opacity: 1, offset: F * .5 }, { opacity: 0, offset: F }, { opacity: 0 }], o),
