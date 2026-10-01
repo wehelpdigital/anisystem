@@ -89,13 +89,24 @@
                             @endforeach
                         </tr>
                     </thead>
-                    @foreach ($pcGroups as [$gName, $gIcon, $rows])
+                    @foreach ($pcGroups as $g)
+                        @php [$gName, $gIcon, $rows] = $g; $gNote = $g[3] ?? null; @endphp
                         <tbody>
                             <tr class="pc-g">
                                 <th colspan="{{ count($pcPlans) + 1 }}" scope="colgroup">
                                     <span class="pc-gi"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $gIcon }}"/></svg></span>{{ $gName }}
                                 </th>
                             </tr>
+                            @if ($gNote)
+                                <tr class="pc-note">
+                                    <td colspan="{{ count($pcPlans) + 1 }}">
+                                        <span class="pc-note-in">
+                                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 11v5m0-8.5h.01"/></svg>
+                                            <span>{{ $gNote }}</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            @endif
                             @foreach ($rows as [$label, $hint, $read])
                                 <tr class="pc-row">
                                     <th scope="row"><b>{{ $label }}</b>@if ($hint)<small>{{ $hint }}</small>@endif</th>
@@ -179,6 +190,10 @@
     .pc-gi { display: inline-grid; place-items: center; width: 1.7rem; height: 1.7rem; margin-right: .55rem; border-radius: .55rem; vertical-align: -.45rem;
         background: #fff; color: #4a7c2a; box-shadow: 0 1px 0 #d9e9c6, 0 6px 14px -10px rgb(20 33 12 / .5); }
     .pc-gi svg { width: 1rem; height: 1rem; }
+    /* A group's note: said once, across the whole row. */
+    .pc-table .pc-note td { padding: .7rem .7rem .75rem; text-align: left; background: #fffbea; border-bottom: 1px solid #f6e7b0; }
+    .pc-note-in { display: flex; align-items: flex-start; gap: .55rem; font-size: .84rem; line-height: 1.5; font-weight: 600; color: #5c4a00; }
+    .pc-note-in svg { flex: none; width: 1.1rem; height: 1.1rem; margin-top: .1rem; color: #c79e00; }
     .pc-row th { text-align: left; font-weight: 400; }
     .pc-row th b { display: block; font-size: .92rem; font-weight: 700; color: #1f2937; line-height: 1.3; }
     .pc-row th small { display: block; margin-top: .15rem; font-size: .76rem; line-height: 1.35; color: #6b7280; }

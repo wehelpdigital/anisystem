@@ -9,7 +9,8 @@ namespace App\Support;
  * App\Support\Tier read, so the table can never promise a door the app
  * keeps shut. A row is [label, hint, reader]: the reader gets one tier's
  * config and returns true (included), false (not included) or a short
- * text ("3", "Unlimited", "Today and tomorrow").
+ * text ("3", "Unlimited", "Today and tomorrow"). A group may carry a note,
+ * a line said once under its heading.
  */
 class PlanCompare
 {
@@ -45,8 +46,7 @@ class PlanCompare
                 ['Chat with Anee', 'Ask anything, send a photo', $gate('ai')],
                 ['AI analyses', 'When to Plant, What to Plant, Variety Research, Crop Protocol', $gate('aiAnalyses')],
                 ['Realign by Anee', 'The true growth stage of a lot', $gate('ai')],
-                ['AI credits each renewal', 'Buy more packs any time', fn (array $t) => ! $t['ai'] ? false : ($t['creditsMonthly'] ? $t['creditsMonthly'] . ' credits' : 'Packs only')],
-            ]],
+            ], 'Anee works on AI credits, bought as packs inside the app. Every chat and analysis shows its price in credits before it runs.'],
             ['Workers and team', 'M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z', [
                 ['Workers and payroll', 'Roster, rates, attendance', $gate('workers')],
                 ['Inventory', 'The shed: what you have and what it cost', $gate('inventory')],
