@@ -53,22 +53,22 @@ class HowItWorks
                         'Anee looks up the varieties of your crop and compares them for your area: yield, maturity, resistance and how they did in weather like yours.',
                         ['Varieties side by side', 'Strong and weak points for your area', 'The sources she used, to check yourself'],
                         null, 'vary.page'),
+                    self::item('cropProtocol', 'Crop Protocol Analysis', 'Anee writes a protocol for your variety', 'icons/biostimulant.png', true,
+                        'Pick your crop and variety, and Anee writes the season for your place by growth stage: the bags of fertilizer and when, the sprays, the water and what to watch for.',
+                        ['Stage by stage, from land prep to harvest', 'Fertilizer, sprays and water on their days', 'Read against your weather, soil and water'],
+                        null, 'proto.page'),
                     self::item('maps', 'Lot planning with Maps', 'Draw, measure and pin your fields', 'location-marker.png', false,
                         'Trace each field over a satellite view and the app gives you its area and the length of each side. Drop pins on the pump, the gate or the low spot that floods.',
                         ['The area and sides of every field', 'Pins with notes and photos', 'Attach a map to a lot, a task or a note'],
                         'farm-maps', 'maps.page'),
-                    self::item('draw', 'Team planning with Draw', 'Sketch the plan your team will follow', 'writting.png', false,
-                        'Sketch a layout, a plan or a flow: where the seedbed goes, how the water moves, who works which lot. Everyone works from the same picture.',
+                    self::item('draw', 'Draw', 'Team planning: sketch the plan everyone follows', 'writting.png', false,
+                        'Plan with your team on a drawing: where the seedbed goes, how the water moves, who works which lot. Sketch a layout, a plan or a flow, and everyone works from the same picture.',
                         ['Shapes, lines, text and colors', 'Draw over a photo of your field', 'Kept in your gallery for any season'],
                         null, 'draw.page'),
                     self::item('protocol', 'Protocol Builder', 'Write the whole season before day zero', 'icons/bricks.png', false,
                         'Write every task of the season on its day: land prep, sowing, each fertilizer and spray with its rate, counted in days after sowing or transplanting. Keep one version for the wet season and one for the dry.',
                         ['Tasks on a day count (DAS, DAT, DAP)', 'Materials and rules in one place', 'Turn it into a cropping schedule'],
                         'protocol-builder', 'pb.page'),
-                    self::item('cropProtocol', 'Crop Protocol Analysis', 'Anee writes a protocol for your variety', 'icons/biostimulant.png', true,
-                        'Pick your crop and variety, and Anee writes the season for your place by growth stage: the bags of fertilizer and when, the sprays, the water and what to watch for.',
-                        ['Stage by stage, from land prep to harvest', 'Fertilizer, sprays and water on their days', 'Read against your weather, soil and water'],
-                        null, 'proto.page'),
                     self::item('inventory', 'Materials and inventory', 'Know what to buy before you need it', 'sack.png', false,
                         'Your protocol adds up what its tasks will use and sets it against what you have, so you see what is left to buy. Stock the shed with fertilizer, seed and chemicals, each in its own unit.',
                         ['What the plan needs against what you have', 'Counted in bags, liters or kilos', 'Every move in and out on record'],
@@ -259,27 +259,37 @@ class HowItWorks
         ]));
     }
 
-    /** The phone in the hero: someone logs in, and today's dashboard comes up. */
+    /**
+     * The phone in the hero: someone logs in, and the real dashboard comes up
+     * as it looks inside the app (the greeting, the three tiles, the tip of the
+     * day, today's work on a season with its weather, the news feed).
+     */
     public static function phone(): array
     {
         $ph = Region::ph();
 
         return [
             'name' => $ph ? 'Juan' : 'Sam',
+            'initials' => $ph ? 'JD' : 'SR',
             'email' => $ph ? 'juan@bukid.ph' : 'sam@greenacre.farm',
             'hello' => $ph ? 'Magandang umaga' : 'Good morning',
-            'tasks' => [
-                ['Apply urea, 1 bag per hectare', 'Lot 2, day 28'],
-                ['Irrigate the paddy', 'Lot 1, day 35'],
-                ['Scout for armyworm', 'Lot 2, day 28'],
-            ],
-            'temp' => '31°C',
-            'sky' => 'Partly cloudy',
-            'rain' => 'Rain after 3 PM',
+            'plan' => 'Solo Farmer',
+            'daysLeft' => 28,
+            'tipTitle' => 'Spraying',
             'tip' => 'Spray before 3 PM today. The rain after that would wash it off.',
-            'posts' => 5,
-            'faces' => [['R', 20], ['M', 140], ['B', 210]],
-            'post' => $ph ? ['Rosa', 'Ang ganda ng tubo ng mais ko ngayong linggo! 🌽'] : ['Rosa', 'My corn is looking great this week! 🌽'],
+            'season' => $ph ? 'Wet season palay 2026' : 'Spring corn 2026',
+            'crops' => $ph ? '🌾' : '🌽',
+            'tasks' => [
+                ['Fertilizer', 'high', 'Apply urea, 1 bag per hectare', 'Lot 2', 3, 'Half day'],
+                ['Irrigation', 'medium', 'Irrigate the paddy', 'Lot 1', 1, 'Half day'],
+                ['Scouting', 'low', 'Scout for armyworm', 'Lot 2', 1, null],
+            ],
+            'place' => $ph ? 'Cabanatuan, Nueva Ecija' : 'Fresno, California',
+            'days' => [['Today', '⛅', 31, 24], ['Fri', '🌧️', 29, 24], ['Sat', '🌦️', 30, 24], ['Sun', '☀️', 32, 25], ['Mon', '⛅', 31, 24]],
+            'advice' => 'Rain after 3 PM today. Spray in the morning.',
+            'post' => $ph
+                ? ['Rosa Santos', 'RS', 20, '2h', 'Ang ganda ng tubo ng mais ko ngayong linggo! 🌽', 24, 6]
+                : ['Rosa Santos', 'RS', 20, '2h', 'My corn is looking great this week! 🌽', 24, 6],
         ];
     }
 

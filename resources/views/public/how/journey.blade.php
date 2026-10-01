@@ -11,10 +11,12 @@
      fills as you scroll; each hub lights up with Anee's face as it reaches
      her. Tap a tool and it opens to say what it does.
 
-     The phone at the top plays a short film: someone logs in, and today's
-     dashboard comes up card by card (the day's activities, the weather,
-     Anee's tip, the community), each note around the phone lighting up as
-     its card arrives.
+     The phone at the top plays a short film of the real app: the login page,
+     then the dashboard as it looks inside (the greeting, the tiles, the tip
+     of the day, today's work on a season and its weather, the news feed),
+     scrolled the way a thumb would, each note around the phone lighting up
+     as its part comes into view. It is drawn at a real phone's width (390px)
+     and scaled to the frame, so its sizes are the app's own.
 
      The script mounts on a root (window.HowItWorks.mount(root, {scroller})),
      so the same code runs on the page (window scroll) and in the modal (the
@@ -94,79 +96,152 @@
     @media (min-width: 1024px) { .hw-phone { width: 16.5rem; height: 32rem; margin-left: -8.25rem; } }
     .hw.is-ready .hw-phone { animation: hwPhone 1s .2s var(--ease) both; }
     @keyframes hwPhone { from { opacity: 0; transform: translateY(40px) scale(.96); } to { opacity: 1; transform: none; } }
-    .hw-scr { position: relative; height: 100%; overflow: hidden; border-radius: 2.05rem; background: #f2f6ec; color: #14210c; text-align: left; }
-    /* Two scenes on the one screen: the login, then today's dashboard. */
-    .hw-scene { position: absolute; inset: 0; display: flex; flex-direction: column; opacity: 0; transform: translateX(18px); pointer-events: none;
+    .hw-scr { position: relative; height: 100%; overflow: hidden; border-radius: 2.05rem; background: #f9fafb; color: #1f2937; text-align: left; }
+    .hwr { position: absolute; left: 0; top: 0; width: 390px; height: calc(100% / var(--sc, .6)); transform: scale(var(--sc, .6)); transform-origin: 0 0;
+        font-family: var(--font-sans); font-size: 16px; line-height: 1.5; }
+    .hwr * { box-sizing: border-box; }
+    .hw-scene { position: absolute; inset: 0; display: flex; flex-direction: column; opacity: 0; transform: translateX(26px); pointer-events: none;
         transition: opacity .5s var(--ease), transform .6s var(--ease); }
     .hw-scene.is-on { opacity: 1; transform: none; }
-    .hw-scene.is-gone { opacity: 0; transform: translateX(-18px); }
-    .s-login { justify-content: center; padding: 1.3rem 1.05rem; background: radial-gradient(14rem 10rem at 50% 0%, #e2efd2, transparent 70%), #f7faf3; }
-    .hw-lg-mark { display: block; width: 3.1rem; height: auto; margin: 0 auto .55rem; }
-    .hw-lg-h { display: block; text-align: center; font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; }
-    .hw-lg-s { display: block; margin-bottom: .85rem; text-align: center; font-size: .66rem; color: #6b7280; }
-    .hw-fld { position: relative; display: block; margin-top: .5rem; padding: .45rem .65rem .5rem; border-radius: .7rem; background: #fff; border: 1.5px solid #dfe7d4;
-        transition: border-color .3s var(--ease), box-shadow .3s var(--ease); }
-    .hw-fld i { display: block; font-style: normal; font-size: .54rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #6b7280; }
-    .hw-fld span { font-size: .74rem; font-weight: 700; color: #14210c; }
-    .hw-fld em { display: inline-block; width: 1.5px; height: .85em; margin-left: 1px; vertical-align: -.1em; background: #4a7c2a; opacity: 0; }
-    .hw-fld.is-focus { border-color: #6b9f3d; box-shadow: 0 0 0 3px rgb(107 159 61 / .16); }
-    .hw-fld.is-focus em { opacity: 1; animation: hwCaret 1s steps(1) infinite; }
-    @keyframes hwCaret { 50% { opacity: 0; } }
-    .hw-lg-btn { display: flex; align-items: center; justify-content: center; gap: .4rem; margin-top: .85rem; padding: .6rem; border-radius: .75rem;
-        background: #f5c518; color: #3b2f00; font-size: .78rem; font-weight: 800; transition: transform .2s var(--ease), filter .2s var(--ease); }
-    .hw-lg-btn.is-press { transform: scale(.95); filter: brightness(.94); }
-    .hw-lg-btn i { display: none; width: .8rem; height: .8rem; border-radius: 999px; border: 2px solid rgb(59 47 0 / .25); border-top-color: #3b2f00; animation: hwSpin .7s linear infinite; }
-    .hw-lg-btn.is-busy i { display: inline-block; }
-    .hw-lg-f { margin-top: .8rem; text-align: center; font-size: .62rem; font-weight: 700; color: #4a7c2a; }
-    /* A fingertip: where the next tap lands. */
-    .hw-tap { position: absolute; z-index: 5; width: 1.8rem; height: 1.8rem; margin: -.9rem 0 0 -.9rem; border-radius: 999px; pointer-events: none;
-        background: rgb(20 33 12 / .16); box-shadow: 0 0 0 2px rgb(255 255 255 / .8); opacity: 0; }
+    .hw-scene.is-gone { opacity: 0; transform: translateX(-26px); }
+    /* The fingertip: where the next tap lands. */
+    .hw-tap { position: absolute; z-index: 9; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 999px; pointer-events: none;
+        background: rgb(20 33 12 / .16); box-shadow: 0 0 0 3px rgb(255 255 255 / .85); opacity: 0; }
     .hw-tap.is-tap { animation: hwTap .55s var(--ease); }
     @keyframes hwTap { 0% { opacity: 0; transform: scale(.4); } 30% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.6); } }
-    .hw-dtop { flex: none; display: flex; align-items: center; gap: .45rem; padding: .95rem .8rem .6rem; background: #fff; border-bottom: 1px solid #e6eddf; }
-    .hw-dtop img { width: 1.6rem; height: auto; }
-    .hw-dtop b { display: block; font-family: var(--font-heading); font-size: .82rem; line-height: 1.1; }
-    .hw-dtop small { display: block; font-size: .56rem; color: #6b7280; }
-    .hw-dtop .av { margin-left: auto; width: 1.6rem; height: 1.6rem; border-radius: 999px; display: grid; place-items: center; background: #4a7c2a; color: #fff; font-size: .6rem; font-weight: 900; }
-    .hw-dscroll { position: relative; flex: 1; min-height: 0; overflow: hidden; }
-    .hw-dlist { display: flex; flex-direction: column; gap: .45rem; padding: .6rem; transition: transform 1.2s var(--ease); }
-    .hw-hi, .hw-card { opacity: 0; transform: translateY(14px) scale(.97); transition: opacity .5s var(--ease), transform .6s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease); }
-    .hw-hi.is-in, .hw-card.is-in { opacity: 1; transform: none; }
-    .hw-hi small { display: block; font-size: .55rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #6b8f4a; }
-    .hw-hi b { display: block; font-family: var(--font-heading); font-size: .92rem; font-weight: 800; }
-    .hw-card { padding: .5rem .6rem; border-radius: .8rem; background: #fff; border: 1px solid #e6eddf; box-shadow: 0 1px 2px rgb(0 0 0 / .04); }
-    .hw-card.is-hot { border-color: #f5c518; box-shadow: 0 0 0 2px rgb(245 197 24 / .3); }
-    .hw-card h6 { display: flex; align-items: center; gap: .3rem; margin-bottom: .3rem; font-size: .58rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: #2f5219; }
-    .hw-task { display: flex; align-items: center; gap: .45rem; padding: .22rem 0; }
-    .hw-task + .hw-task { border-top: 1px dashed #e8eee0; }
-    .hw-chk { flex: none; width: .95rem; height: .95rem; border-radius: .3rem; border: 1.5px solid #b9d39b; display: grid; place-items: center;
-        transition: background-color .3s var(--ease), border-color .3s var(--ease); }
-    .hw-chk svg { width: .62rem; height: .62rem; color: #fff; stroke-dasharray: 24; stroke-dashoffset: 24; transition: stroke-dashoffset .35s var(--ease) .1s; }
-    .hw-task.is-done .hw-chk { background: #4a7c2a; border-color: #4a7c2a; }
-    .hw-task.is-done .hw-chk svg { stroke-dashoffset: 0; }
-    .hw-task b { display: block; font-size: .66rem; font-weight: 800; line-height: 1.2; transition: color .3s var(--ease); }
-    .hw-task small { display: block; font-size: .56rem; color: #6b7280; }
-    .hw-task.is-done b { color: #9ca3af; text-decoration: line-through; }
-    .hw-wx { display: flex; align-items: center; gap: .5rem; }
-    .hw-wx .e { font-size: 1.5rem; line-height: 1; }
-    .hw-wx b { display: block; font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; line-height: 1; }
-    .hw-wx small { display: block; font-size: .58rem; color: #4b5563; }
-    .hw-rain { display: inline-block; margin-top: .35rem; padding: .14rem .45rem; border-radius: 999px; background: #e0ecfd; color: #1e3a8a; font-size: .56rem; font-weight: 800; }
-    .hw-tipc { display: flex; align-items: flex-start; gap: .45rem; }
-    .hw-tipc img { flex: none; width: 1.45rem; height: 1.45rem; border-radius: 999px; object-fit: cover; }
-    .hw-tipc p { font-size: .62rem; line-height: 1.45; }
-    .hw-com { display: flex; align-items: center; gap: .45rem; }
-    .hw-avs { display: flex; }
-    .hw-avs i { width: 1.2rem; height: 1.2rem; margin-left: -.35rem; border-radius: 999px; border: 2px solid #fff; display: grid; place-items: center;
-        font-style: normal; font-size: .48rem; font-weight: 900; color: #fff; background: hsl(var(--h) 45% 42%); }
-    .hw-avs i:first-child { margin-left: 0; }
-    .hw-com p { font-size: .62rem; line-height: 1.35; }
-    .hw-post { margin-top: .4rem; padding: .38rem .5rem; border-radius: .55rem; background: #f6f9f2; font-size: .58rem; line-height: 1.4; color: #374151; }
-    .hw-post b { font-weight: 800; color: #14210c; }
-    .hw-dnav { flex: none; display: grid; grid-template-columns: repeat(4, 1fr); padding: .4rem .3rem .65rem; background: #fff; border-top: 1px solid #e6eddf; }
-    .hw-dnav span { display: flex; flex-direction: column; align-items: center; gap: .1rem; font-size: .48rem; font-weight: 700; color: #9ca3af; }
-    .hw-dnav span.on { color: #4a7c2a; }
-    .hw-dnav svg { width: .95rem; height: .95rem; }
+
+    /* -- the login page, as anee.io draws it -- */
+    .s-login { background: #f9fafb; }
+    .hwr-pub { flex: none; display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 16px; background: #fff; border-bottom: 1px solid #f3f4f6; }
+    .hwr-pub img { height: 28px; width: auto; transform: translateY(-9%); }
+    .hwr-burger { display: grid; gap: 5px; width: 22px; }
+    .hwr-burger i { height: 2px; border-radius: 2px; background: #374151; }
+    .hwr-login { padding: 48px 16px 0; }
+    .hwr-login h3 { text-align: center; font-family: var(--font-heading); font-size: 24px; font-weight: 700; color: #1a1a1a; }
+    .hwr-login > p { margin-top: 4px; text-align: center; font-size: 14px; color: #4b5563; }
+    .hwr-card { margin-top: 24px; padding: 16px; border-radius: 16px; background: #fff; box-shadow: 0 4px 6px -2px rgb(26 26 26 / .05), 0 12px 32px -8px rgb(26 26 26 / .14); }
+    .hwr-lab { display: flex; justify-content: space-between; align-items: baseline; margin: 0 0 6px; font-size: 14px; font-weight: 600; color: #1f2937; }
+    .hwr-lab a { font-size: 12px; font-weight: 600; color: #3d6823; }
+    .hwr-in { position: relative; display: flex; align-items: center; height: 44px; margin-bottom: 16px; padding: 0 16px; border-radius: 12px; background: #fff; border: 1px solid #d1d5db;
+        font-size: 16px; color: #1a1a1a; transition: border-color .3s var(--ease), box-shadow .3s var(--ease); }
+    .hwr-in .ph { color: #9ca3af; }
+    .hwr-in.has .ph { display: none; }
+    .hwr-in em { display: inline-block; width: 2px; height: 20px; margin-left: 1px; background: #4a7c2a; opacity: 0; }
+    .hwr-in.is-focus { border-color: #6b9f3d; box-shadow: 0 0 0 4px rgb(107 159 61 / .18); }
+    .hwr-in.is-focus em { opacity: 1; animation: hwCaret 1s steps(1) infinite; }
+    @keyframes hwCaret { 50% { opacity: 0; } }
+    .hwr-keep { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #374151; }
+    .hwr-keep i { width: 18px; height: 18px; border-radius: 4px; display: grid; place-items: center; background: #2563eb; color: #fff; font-style: normal; font-size: 12px; font-weight: 900; }
+    .hwr-btn { display: flex; align-items: center; justify-content: center; gap: 10px; height: 54px; margin-top: 18px; border-radius: 14px; background: #f5c518;
+        font-size: 18px; font-weight: 500; color: #1a1a1a; transition: transform .2s var(--ease), filter .2s var(--ease); }
+    .hwr-btn.is-press { transform: scale(.97); filter: brightness(.94); }
+    .hwr-btn i { display: none; width: 18px; height: 18px; border-radius: 999px; border: 2.5px solid rgb(26 26 26 / .2); border-top-color: #1a1a1a; animation: hwSpin .7s linear infinite; }
+    .hwr-btn.is-busy i { display: inline-block; }
+    .hwr-sign { margin-top: 20px; text-align: center; font-size: 14px; color: #374151; }
+    .hwr-sign b { color: #3d6823; }
+
+    /* -- the dashboard, as the app draws it -- */
+    .s-dash { background: #f9fafb; }
+    .hwr-top { flex: none; display: flex; align-items: center; gap: 12px; height: 57px; padding: 0 16px; background: #fff; border-bottom: 1px solid #e5e7eb; }
+    .hwr-top > img { height: 28px; width: auto; }
+    .hwr-top b { display: block; font-size: 16px; font-weight: 700; line-height: 1.25; color: #111827; }
+    .hwr-top small { display: block; font-size: 12px; color: #6b7280; line-height: 1.3; }
+    .hwr-top .r { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+    .hwr-help { width: 36px; height: 36px; border-radius: 999px; display: grid; place-items: center; background: #eef6e5; color: #4a7c2a; font-weight: 800; font-size: 15px; box-shadow: inset 0 0 0 1.5px #cfe3b8; }
+    .hwr-bell { position: relative; width: 40px; height: 40px; display: grid; place-items: center; color: #6b7280; }
+    .hwr-bell svg { width: 22px; height: 22px; }
+    .hwr-bell em { position: absolute; top: 3px; right: 3px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 999px; display: grid; place-items: center;
+        background: #ef4444; color: #fff; font-style: normal; font-size: 10px; font-weight: 800; box-shadow: 0 0 0 2px #fff; }
+    .hwr-av { width: 40px; height: 40px; border-radius: 999px; display: grid; place-items: center; background: #4a7c2a; color: #fff; font-size: 15px; font-weight: 800; }
+    .hwr-view { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+    .hwr-list { display: flex; flex-direction: column; gap: 16px; padding: 16px; transition: transform 1.1s var(--ease); }
+    .s-dash.is-on .hwr-list > * { animation: hwrUp .55s var(--ease) both; animation-delay: calc(var(--n, 0) * 70ms + 150ms); }
+    @keyframes hwrUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    .hwr-list > [data-s] { transition: box-shadow .45s var(--ease); }
+    .hwr-list > [data-s].is-hot { box-shadow: 0 0 0 3px rgb(245 197 24 / .85), 0 18px 34px -20px rgb(20 33 12 / .5); }
+    .hwr-hero { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 9px 15px; align-items: center; padding: 20px 21px; border-radius: 18px;
+        border: 1px solid #cfe0b8; background: linear-gradient(118deg, #f2f8ec, #e2f0d2 22%, #cfe6b6 46%, #e8f4dc 66%, #dceecb 84%, #f2f8ec); }
+    .hwr-sky { grid-row: 1 / span 2; width: 54px; height: 54px; border-radius: 999px; overflow: hidden; align-self: center; }
+    .hwr-sky svg { width: 100%; height: 100%; display: block; }
+    .hwr-hero b { font-family: var(--font-heading); font-size: 21px; font-weight: 800; line-height: 1.2; letter-spacing: -.01em; color: #24380f; }
+    .hwr-hero p { margin-top: 3px; font-size: 13px; color: #4c6b33; }
+    .hwr-chips { grid-column: 2; display: flex; flex-wrap: wrap; gap: 6px; }
+    .hwr-chips span { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 999px; font-size: 12px; font-weight: 700;
+        background: #f0f7e8; border: 1px solid #cfe3b8; color: #3d6823; }
+    .hwr-chips .rank { background: #fff; border-color: #dfe8d4; color: #4b5563; }
+    .hwr-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .hwr-stats div { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 76px; padding: 10px 6px; border-radius: 16px; text-align: center;
+        background: #fff; border: 1px solid #e5e7eb; }
+    .hwr-stats b { font-size: 22px; font-weight: 800; line-height: 1.1; color: #111827; }
+    .hwr-stats b.w { font-size: 15px; }
+    .hwr-stats i { margin-top: 3px; font-style: normal; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #9ca3af; }
+    .hwr-stats .lead { background: #f0f7e8; border-color: #cfe3b8; }
+    .hwr-stats .lead b { color: #3d6823; } .hwr-stats .lead i { color: #6b9f3d; }
+    .hwr-tip { position: relative; padding: 15px 17px; border-radius: 16px; color: #e8efe1; background: linear-gradient(135deg, #10160c 0%, #1c2416 55%, #24301a 100%);
+        outline: 2px dashed #86b556; outline-offset: -5px; }
+    .hwr-tip .h { display: flex; align-items: center; gap: 10px; }
+    .hwr-tip .h > span { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: rgb(255 255 255 / .08); }
+    .hwr-tip .h img { width: 22px; height: 22px; object-fit: contain; }
+    .hwr-tip small { display: block; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #a8cc7e; }
+    .hwr-tip .h b { display: block; font-size: 14px; font-weight: 700; color: #fff; }
+    .hwr-tip p { margin-top: 9px; font-size: 15px; line-height: 1.55; }
+    .hwr-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: -4px; padding: 0 4px; font-size: 16px; font-weight: 700; color: #111827; }
+    .hwr-h span { display: inline-flex; align-items: center; gap: 8px; }
+    .hwr-h a { font-size: 14px; font-weight: 700; color: #3d6823; }
+    .hwr-sched { border-radius: 16px; background: #fff; border: 1px solid #e5e7eb; overflow: hidden; }
+    .hwr-cover { display: flex; align-items: center; gap: 8px; min-height: 58px; padding: 9px 16px; background: linear-gradient(120deg, #f4e9dc, #dfc9ac 42%, #cbb08c 68%, #ecdfcd); }
+    .hwr-cover span { font-size: 22px; }
+    .hwr-cover b { flex: 1; font-size: 16px; font-weight: 700; color: #111827; }
+    .hwr-cover svg { width: 18px; height: 18px; color: #6b5a42; }
+    .hwr-sb { display: flex; flex-direction: column; gap: 12px; padding: 16px; }
+    .hwr-day { padding: 10px 10px 10px; border-radius: 14px; background: #f0f7e8; }
+    .hwr-dh { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .hwr-when { display: flex; flex-direction: column; align-items: center; min-width: 48px; padding: 4px 6px; border-radius: 9px; background: #4a7c2a; }
+    .hwr-when b { font-size: 13px; font-weight: 800; line-height: 1.1; color: #fff; }
+    .hwr-when i { font-style: normal; font-size: 9px; font-weight: 700; color: rgb(255 255 255 / .85); }
+    .hwr-dt b { display: block; font-size: 13px; font-weight: 800; color: #1f2937; line-height: 1.2; }
+    .hwr-dt i { display: block; font-style: normal; font-size: 11px; color: #6b7280; }
+    .hwr-rail { overflow: hidden; border-radius: 11px; }
+    .hwr-track { display: flex; transition: transform .55s var(--ease); }
+    .hwr-task { flex: 0 0 100%; display: flex; flex-direction: column; gap: 4px; padding: 10px 11px 10px; border-radius: 11px; background: #fff; border: 1px solid #e5e7eb;
+        border-left: 3px solid var(--p); }
+    .hwr-task .t { display: flex; align-items: center; gap: 6px; }
+    .hwr-task .ty { font-size: 10px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #9ca3af; }
+    .hwr-task .pr { margin-left: auto; padding: 2px 6px; border-radius: 999px; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em;
+        color: var(--p); background: color-mix(in srgb, var(--p) 18%, transparent); }
+    .hwr-task .n { font-size: 13.5px; font-weight: 700; line-height: 1.35; color: #111827; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hwr-task .f { display: flex; flex-wrap: wrap; gap: 2px 10px; font-size: 11px; font-weight: 600; color: #6b7280; }
+    .hwr-task .f span { display: inline-flex; align-items: center; gap: 3px; }
+    .hwr-task .f svg { width: 11px; height: 11px; }
+    .hwr-task.is-done { border-left-color: #4a7c2a; }
+    .hwr-task.is-done .n { color: #9ca3af; text-decoration: line-through; }
+    .hwr-task .ok { display: none; margin-left: 6px; padding: 2px 6px; border-radius: 999px; background: #e4f0d6; color: #3d6823; font-size: 9px; font-weight: 800; text-transform: uppercase; }
+    .hwr-task.is-done .ok { display: inline-block; }
+    .hwr-dots { display: flex; justify-content: center; gap: 5px; margin-top: 8px; }
+    .hwr-dots i { width: 6px; height: 6px; border-radius: 999px; background: #c9dcb4; transition: width .3s var(--ease), background-color .3s var(--ease); }
+    .hwr-dots i.on { width: 16px; background: #4a7c2a; }
+    .hwr-wx { padding: 10px 11px 9px; border-radius: 14px; border: 1px solid #e5e7eb; background: #fff; }
+    .hwr-wx .pl { font-size: 11px; font-weight: 700; color: #4b5563; }
+    .hwr-wx .pl b { font-weight: 800; color: #1f2937; }
+    .hwr-wx .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-top: 8px; text-align: center; }
+    .hwr-wx .row span { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 5px 0; border-radius: 9px; font-size: 10px; font-weight: 700; color: #6b7280; }
+    .hwr-wx .row span:first-child { background: #f0f7e8; color: #3d6823; }
+    .hwr-wx .row em { font-style: normal; font-size: 20px; line-height: 1.2; }
+    .hwr-wx .row b { font-size: 12px; font-weight: 800; color: #1f2937; }
+    .hwr-wx .ad { margin-top: 8px; padding-top: 7px; border-top: 1px solid #f1f4ee; font-size: 10.5px; line-height: 1.5; color: #4b5563; }
+    .hwr-open { display: flex; align-items: center; justify-content: center; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #4a7c2a, #3d6823); color: #fff; font-size: 14px; font-weight: 700; }
+    .hwr-post { border-radius: 16px; background: #fff; border: 1px solid #e5e7eb; overflow: hidden; }
+    .hwr-post .who { display: flex; align-items: center; gap: 10px; padding: 12px 14px 8px; }
+    .hwr-post .who > i { width: 40px; height: 40px; border-radius: 999px; display: grid; place-items: center; font-style: normal; font-size: 14px; font-weight: 800; color: #fff; background: hsl(var(--h) 45% 42%); }
+    .hwr-post .who b { display: block; font-size: 14px; font-weight: 700; color: #111827; }
+    .hwr-post .who small { display: block; font-size: 12px; color: #9ca3af; }
+    .hwr-post p { padding: 0 14px 10px; font-size: 14px; line-height: 1.5; color: #1f2937; }
+    .hwr-post .pic { height: 150px; background: #9bbf72 center / cover no-repeat; }
+    .hwr-post .re { display: flex; gap: 16px; padding: 10px 14px; font-size: 13px; font-weight: 700; color: #6b7280; }
+    .hwr-nav { flex: none; display: grid; grid-template-columns: repeat(4, 1fr); padding: 8px 6px 12px; background: #fff; border-top: 1px solid #e5e7eb; }
+    .hwr-nav span { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 11px; font-weight: 600; color: #6b7280; }
+    .hwr-nav span.on { color: #3d6823; }
+    .hwr-nav svg { width: 22px; height: 22px; }
 
     /* The notes around the phone: four at its sides on a wide screen, one at a time under it on a phone. */
     .hw-ping { position: absolute; z-index: 3; }
@@ -381,62 +456,103 @@
                 <div class="hw-ping" style="--k: {{ $k }}"><div class="hw-ping-in"><span>{{ $emo }}</span><div><b>{{ $t }}</b><small>{{ $s }}</small></div></div></div>
             @endforeach
             <div class="hw-phone">
-                <div class="hw-scr">
-                    {{-- Scene one: logging in. --}}
+                <div class="hw-scr"><div class="hwr">
+                    {{-- Scene one: the login page. --}}
                     <div class="hw-scene s-login is-on">
-                        <img class="hw-lg-mark" src="{{ asset('images/logo-mark.png') }}?v=anee" alt="">
-                        <b class="hw-lg-h">Welcome back</b>
-                        <small class="hw-lg-s">Log in to your farm</small>
-                        <span class="hw-fld" data-f="email"><i>Email</i><span></span><em></em></span>
-                        <span class="hw-fld" data-f="pass"><i>Password</i><span></span><em></em></span>
-                        <span class="hw-lg-btn"><i></i><b>Log In</b></span>
-                        <span class="hw-lg-f">New here? Start free</span>
+                        <div class="hwr-pub"><img src="{{ asset('images/logo.png') }}?v=anee" alt=""><span class="hwr-burger"><i></i><i></i><i></i></span></div>
+                        <div class="hwr-login">
+                            <h3>Welcome back</h3>
+                            <p>Log in to manage your farm.</p>
+                            <div class="hwr-card">
+                                <div class="hwr-lab">Email address</div>
+                                <span class="hwr-in" data-f="email"><span class="ph">you@example.com</span><span class="v"></span><em></em></span>
+                                <div class="hwr-lab">Password <a>Forgot password?</a></div>
+                                <span class="hwr-in" data-f="pass"><span class="ph">••••••••</span><span class="v"></span><em></em></span>
+                                <span class="hwr-keep"><i>✓</i>Keep me logged in</span>
+                                <span class="hwr-btn"><i></i><b>Log In</b></span>
+                            </div>
+                            <p class="hwr-sign">No account yet? <b>Sign up free</b></p>
+                        </div>
                     </div>
-                    {{-- Scene two: today, on the dashboard. --}}
+                    {{-- Scene two: the dashboard. --}}
                     <div class="hw-scene s-dash">
-                        <div class="hw-dtop">
+                        <div class="hwr-top">
                             <img src="{{ asset('images/logo-mark.png') }}?v=anee" alt="">
                             <div><b>Dashboard</b><small>Your farm at a glance</small></div>
-                            <span class="av">{{ mb_substr($hwPhone['name'], 0, 1) }}</span>
+                            <span class="r">
+                                <span class="hwr-help">?</span>
+                                <span class="hwr-bell"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 00-4-5.7V5a2 2 0 10-4 0v.3A6 6 0 006 11v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg><em>1</em></span>
+                                <span class="hwr-av">{{ $hwPhone['initials'] }}</span>
+                            </span>
                         </div>
-                        <div class="hw-dscroll"><div class="hw-dlist">
-                            <div class="hw-hi"><small>{{ now(config('app.timezone'))->format('l, F j') }}</small><b>{{ $hwPhone['hello'] }}, {{ $hwPhone['name'] }}!</b></div>
-                            <div class="hw-card">
-                                <h6>📋 Today's activities</h6>
-                                @foreach ($hwPhone['tasks'] as [$tt, $tl])
-                                    <div class="hw-task"><span class="hw-chk"><svg fill="none" stroke="currentColor" stroke-width="3.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span><div><b>{{ $tt }}</b><small>{{ $tl }}</small></div></div>
-                                @endforeach
+                        <div class="hwr-view"><div class="hwr-list">
+                            <section class="hwr-hero" data-s="hero" style="--n: 0">
+                                <span class="hwr-sky"><svg viewBox="0 0 56 56" aria-hidden="true"><defs><linearGradient id="hwSkyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe0ff"/><stop offset="1" stop-color="#fff3c4"/></linearGradient></defs><rect width="56" height="56" fill="url(#hwSkyG)"/><g class="hw-sun"><circle cx="28" cy="30" r="9" fill="#fbbf24"/><g stroke="#fbbf24" stroke-width="2.4" stroke-linecap="round"><path d="M28 14v4M28 42v4M12 30h4M40 30h4M17 19l3 3M36 38l3 3M17 41l3-3M36 22l3-3"/></g></g><path d="M0 44c10-6 22-7 32-3s18 3 24 0v15H0z" fill="#86b556"/><path d="M0 48c12-3 24-3 34 0s16 2 22 0v8H0z" fill="#6b9f3d"/></svg></span>
+                                <div><b>{{ $hwPhone['hello'] }}, {{ $hwPhone['name'] }}</b><p>Today is {{ now(config('app.timezone'))->format('F jS, Y') }}. You have 1 active cropping schedule.</p></div>
+                                <div class="hwr-chips"><span class="rank">🌱 Lv 3 · New Member</span><span>{{ $hwPhone['daysLeft'] }} days left</span></div>
+                            </section>
+                            <div class="hwr-stats" style="--n: 1">
+                                <div class="lead"><b>1</b><i>Schedule</i></div>
+                                <div><b class="w">{{ $hwPhone['plan'] }}</b><i>Active plan</i></div>
+                                <div><b>{{ $hwPhone['daysLeft'] }}</b><i>Days left</i></div>
                             </div>
-                            <div class="hw-card">
-                                <h6>🌤️ Weather today</h6>
-                                <div class="hw-wx"><span class="e">⛅</span><div><b>{{ $hwPhone['temp'] }}</b><small>{{ $hwPhone['sky'] }}</small></div></div>
-                                <span class="hw-rain">🌧️ {{ $hwPhone['rain'] }}</span>
-                            </div>
-                            <div class="hw-card">
-                                <h6>💡 Anee's tip for today</h6>
-                                <div class="hw-tipc"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt=""><p>{{ $hwPhone['tip'] }}</p></div>
-                            </div>
-                            <div class="hw-card">
-                                <h6>💬 Today in the community</h6>
-                                <div class="hw-com">
-                                    <span class="hw-avs">@foreach ($hwPhone['faces'] as [$fi, $fh])<i style="--h: {{ $fh }}">{{ $fi }}</i>@endforeach</span>
-                                    <p><b>{{ $hwPhone['posts'] }} new posts</b> from farmers near you</p>
+                            <section class="hwr-tip" data-s="tip" data-ping="2" style="--n: 2">
+                                <div class="h"><span><img src="{{ asset('images/idea.png') }}" alt=""></span><div><small>Tip of the day</small><b>{{ $hwPhone['tipTitle'] }}</b></div></div>
+                                <p>{{ $hwPhone['tip'] }}</p>
+                            </section>
+                            <div class="hwr-h" style="--n: 3"><span>📅 My Cropping Schedules</span><a>View all</a></div>
+                            <section class="hwr-sched" data-s="tasks" data-ping="0" style="--n: 4">
+                                <div class="hwr-cover"><span>{{ $hwPhone['crops'] }}</span><b>{{ $hwPhone['season'] }}</b><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
+                                <div class="hwr-sb">
+                                    <div class="hwr-day">
+                                        <div class="hwr-dh">
+                                            <span class="hwr-when"><b>Today</b><i>{{ now(config('app.timezone'))->format('M j') }}</i></span>
+                                            <span class="hwr-dt"><b>{{ count($hwPhone['tasks']) }} tasks</b><i>due today</i></span>
+                                        </div>
+                                        <div class="hwr-rail"><div class="hwr-track">
+                                            @foreach ($hwPhone['tasks'] as [$ty, $pr, $tn, $tl, $tw, $th])
+                                                <div class="hwr-task" style="--p: {{ ['high' => '#f46a6a', 'medium' => '#f1b44c', 'low' => '#94a3b8'][$pr] }}">
+                                                    <span class="t"><span class="ty">{{ $ty }}</span><span class="ok">Done</span><span class="pr">{{ ucfirst($pr) }}</span></span>
+                                                    <span class="n">{{ $tn }}</span>
+                                                    <span class="f">
+                                                        <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>{{ $tl }}</span>
+                                                        <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>{{ $tw }}</span>
+                                                        @if ($th)<span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>{{ $th }}</span>@endif
+                                                    </span>
+                                                </div>
+                                            @endforeach
+                                        </div></div>
+                                        <div class="hwr-dots">@foreach ($hwPhone['tasks'] as $t)<i class="{{ $loop->first ? 'on' : '' }}"></i>@endforeach</div>
+                                    </div>
+                                    <div class="hwr-wx" data-s="wx" data-ping="1">
+                                        <div class="pl">📍 <b>{{ $hwPhone['place'] }}</b> · this morning</div>
+                                        <div class="row">@foreach ($hwPhone['days'] as [$dn, $de, $dh, $dl])<span>{{ $dn }}<em>{{ $de }}</em><b>{{ $dh }}°</b>{{ $dl }}°</span>@endforeach</div>
+                                        <div class="ad">🌧️ {{ $hwPhone['advice'] }}</div>
+                                    </div>
+                                    <span class="hwr-open">Open schedule</span>
                                 </div>
-                                <div class="hw-post"><b>{{ $hwPhone['post'][0] }}:</b> {{ $hwPhone['post'][1] }}</div>
-                            </div>
+                            </section>
+                            <div class="hwr-h" style="--n: 5"><span>📰 News Feed</span><a>See more</a></div>
+                            @php [$pn, $pi, $phue, $pt, $ptext, $plikes, $pcom] = $hwPhone['post']; @endphp
+                            <section class="hwr-post" data-s="post" data-ping="3" style="--n: 6">
+                                <div class="who"><i style="--h: {{ $phue }}">{{ $pi }}</i><div><b>{{ $pn }}</b><small>{{ $pt }} · near you</small></div></div>
+                                <p>{{ $ptext }}</p>
+                                <div class="pic" style="background-image: url('{{ asset('images/site/corn-rows.jpg') }}')"></div>
+                                <div class="re"><span>👍 {{ $plikes }}</span><span>💬 {{ $pcom }}</span><span>↗ Share</span></div>
+                            </section>
                         </div></div>
-                        <div class="hw-dnav">
+                        <div class="hwr-nav">
                             <span class="on"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>Home</span>
-                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path stroke-linecap="round" d="M8 3v4M16 3v4M3 10h18"/></svg>Schedules</span>
+                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path stroke-linecap="round" d="M8 3v4M16 3v4M3 10h18M8 14h2M14 14h2M8 17h2"/></svg>Schedules</span>
                             <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>Community</span>
-                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16l-1.5 11a2 2 0 01-2 1.7h-9a2 2 0 01-2-1.7L4 7zm4 0V5a4 4 0 018 0v2"/></svg>Shop</span>
+                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 9l1.5-5h13L20 9M4 9h16M4 9v10a1 1 0 001 1h14a1 1 0 001-1V9M9 20v-6h6v6"/></svg>Shop</span>
                         </div>
                     </div>
                     <span class="hw-tap"></span>
-                </div>
+                </div></div>
             </div>
         </div>
-        <p class="sr-only">A phone shows someone logging in to anee.io, then today's dashboard: the day's activities on each lot, today's weather, Anee's tip for the day, and what is new in the community.</p>
+        <p class="sr-only">A phone shows someone logging in to anee.io, then the dashboard as it looks inside the app: the morning greeting, the tip of the day, today's activities on a season with the weather for the farm, and a post in the news feed.</p>
     </section>
 
     <div class="hw-steps">
@@ -529,47 +645,66 @@
     const make = (tag, attrs = {}) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); return n; };
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-    /* ---- the phone: a login, then today's dashboard card by card, round
-       and round while it is on screen. Each card lights its note. ---- */
+    /* ---- the phone: the login page, then the dashboard scrolled the way a
+       thumb would, round and round while it is on screen. Each part that
+       comes into view lights its note. ---- */
     function phone(root) {
-        const scr = root.querySelector('.hw-scr');
-        if (!scr) return;
-        const login = scr.querySelector('.s-login'), dash = scr.querySelector('.s-dash');
-        const email = scr.querySelector('[data-f="email"]'), pass = scr.querySelector('[data-f="pass"]');
-        const btn = scr.querySelector('.hw-lg-btn'), tap = scr.querySelector('.hw-tap');
-        const view = scr.querySelector('.hw-dscroll'), list = scr.querySelector('.hw-dlist'), hi = scr.querySelector('.hw-hi');
-        const cards = [...scr.querySelectorAll('.hw-card')], tasks = [...scr.querySelectorAll('.hw-task')];
+        const scr = root.querySelector('.hw-scr'), app = root.querySelector('.hwr');
+        if (!scr || !app) return;
+        const fit = () => { if (scr.clientWidth) app.style.setProperty('--sc', scr.clientWidth / 390); };
+        fit();
+        new ResizeObserver(fit).observe(scr);
+        const q = (sel) => app.querySelector(sel), qa = (sel) => [...app.querySelectorAll(sel)];
+        const login = q('.s-login'), dash = q('.s-dash');
+        const email = q('[data-f="email"]'), pass = q('[data-f="pass"]'), btn = q('.hwr-btn'), tap = q('.hw-tap');
+        const view = q('.hwr-view'), list = q('.hwr-list');
+        const track = q('.hwr-track'), tasks = qa('.hwr-task'), dots = qa('.hwr-dots i');
+        const parts = qa('[data-s]');
         const data = JSON.parse(root.querySelector('[data-hw-phone]').textContent || '{}');
         const ping = (k) => root._hwPing && root._hwPing(k);
+        const sc = () => parseFloat(app.style.getPropertyValue('--sc')) || .6;
         if (still()) {
             login.classList.remove('is-on'); dash.classList.add('is-on');
-            hi.classList.add('is-in'); cards.forEach((c) => c.classList.add('is-in'));
-            if (tasks[0]) tasks[0].classList.add('is-done');
             ping(0);
             return;
         }
         let seen = false;
         new IntersectionObserver((es) => { seen = es.some((e) => e.isIntersecting); }).observe(root.querySelector('.hw-phone'));
         const until = async () => { while (!seen || document.hidden) await sleep(400); };
+        // Where a tap lands, in the app's own (unscaled) pixels.
         const tapAt = (el) => {
-            const sr = scr.getBoundingClientRect(), r = el.getBoundingClientRect();
-            tap.style.left = (r.left - sr.left + r.width * .5) + 'px';
-            tap.style.top = (r.top - sr.top + r.height * .55) + 'px';
+            const a = app.getBoundingClientRect(), r = el.getBoundingClientRect(), k = sc();
+            tap.style.left = ((r.left - a.left) / k + (r.width / k) * .5) + 'px';
+            tap.style.top = ((r.top - a.top) / k + (r.height / k) * .55) + 'px';
             tap.classList.remove('is-tap'); void tap.offsetWidth; tap.classList.add('is-tap');
         };
         const type = async (fld, text, ms) => {
-            const out = fld.querySelector('span');
+            const out = fld.querySelector('.v');
+            fld.classList.add('has');
             for (const ch of text) { await until(); out.textContent += ch; await sleep(ms); }
         };
+        // The list rolls so a part sits near the top of the screen, never past
+        // the end. Measured against the list itself, in the app's pixels: a
+        // part's offsetTop counts from whichever card holds it.
+        const scrollTo = (el) => {
+            const max = Math.max(0, list.offsetHeight - view.clientHeight);
+            const at = (el.getBoundingClientRect().top - list.getBoundingClientRect().top) / sc();
+            const y = Math.min(max, Math.max(0, at - 12));
+            list.style.transform = 'translateY(' + (-y) + 'px)';
+        };
+        const slide = (i) => {
+            track.style.transform = 'translateX(' + (-100 * i) + '%)';
+            dots.forEach((d, k) => d.classList.toggle('on', k === i));
+        };
+        const hot = (el) => parts.forEach((p) => p.classList.toggle('is-hot', p === el));
         const reset = () => {
-            [email, pass].forEach((f) => { f.classList.remove('is-focus'); f.querySelector('span').textContent = ''; });
-            btn.classList.remove('is-press', 'is-busy'); btn.querySelector('b').textContent = 'Log In';
+            [email, pass].forEach((f) => { f.classList.remove('is-focus', 'has'); f.querySelector('.v').textContent = ''; });
+            btn.classList.remove('is-press', 'is-busy');
             dash.classList.remove('is-on', 'is-gone'); login.classList.remove('is-gone'); login.classList.add('is-on');
-            hi.classList.remove('is-in'); cards.forEach((c) => c.classList.remove('is-in', 'is-hot'));
-            tasks.forEach((t) => t.classList.remove('is-done'));
-            list.style.transform = '';
+            list.style.transform = ''; slide(0); tasks.forEach((t) => t.classList.remove('is-done')); hot(null);
             ping(-1);
         };
+        const part = (s) => parts.find((p) => p.dataset.s === s);
         (async () => {
             await sleep(800);
             for (;;) {
@@ -580,27 +715,22 @@
                 email.classList.remove('is-focus'); tapAt(pass); pass.classList.add('is-focus'); await sleep(300);
                 await type(pass, '••••••••', 80); await sleep(350);
                 pass.classList.remove('is-focus'); await until(); tapAt(btn); btn.classList.add('is-press'); await sleep(180);
-                btn.classList.remove('is-press'); btn.classList.add('is-busy'); btn.querySelector('b').textContent = 'Logging in'; await sleep(1100);
-                login.classList.remove('is-on'); login.classList.add('is-gone'); dash.classList.add('is-on'); await sleep(450);
-                hi.classList.add('is-in'); await sleep(500);
-                for (let k = 0; k < cards.length; k++) {
-                    await until();
-                    cards.forEach((c) => c.classList.remove('is-hot'));
-                    // The list rolls up when the next card would land below the screen.
-                    const over = cards[k].offsetTop + cards[k].offsetHeight - (view.clientHeight - 8);
-                    if (over > 0) list.style.transform = 'translateY(' + (-over) + 'px)';
-                    cards[k].classList.add('is-in', 'is-hot');
-                    ping(k);
-                    if (k === 0) {
-                        await sleep(1000); tasks[0] && tasks[0].classList.add('is-done');
-                        await sleep(800); tasks[1] && tasks[1].classList.add('is-done');
-                        await sleep(700);
-                    } else {
-                        await sleep(1900);
-                    }
-                }
-                cards.forEach((c) => c.classList.remove('is-hot'));
-                await sleep(2200);
+                btn.classList.remove('is-press'); btn.classList.add('is-busy'); await sleep(1100);
+                login.classList.remove('is-on'); login.classList.add('is-gone'); dash.classList.add('is-on');
+                await sleep(2000);
+                // The tip of the day.
+                await until(); scrollTo(part('tip')); hot(part('tip')); ping(2); await sleep(2300);
+                // Today's work on the season: the tasks slide by, two get done.
+                await until(); scrollTo(part('tasks')); hot(part('tasks')); ping(0); await sleep(1300);
+                tasks[0] && tasks[0].classList.add('is-done'); await sleep(900);
+                slide(1); await sleep(1000); tasks[1] && tasks[1].classList.add('is-done'); await sleep(900);
+                slide(2); await sleep(1300);
+                // The weather for the farm.
+                await until(); scrollTo(part('wx')); hot(part('wx')); ping(1); await sleep(2300);
+                // And the news feed.
+                await until(); scrollTo(part('post')); hot(part('post')); ping(3); await sleep(2600);
+                hot(null);
+                await sleep(1200);
                 dash.classList.remove('is-on'); dash.classList.add('is-gone'); ping(-1);
                 await sleep(800);
             }
