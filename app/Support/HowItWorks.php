@@ -126,7 +126,7 @@ class HowItWorks
                 'when' => 'Day by day',
                 'title' => 'Grow with the count',
                 'lede' => 'Every day the app knows how old each lot is, what stage it is in and what the weather is about to do.',
-                'say' => 'Your lots are growing. I watch the stage, the weather and your records, and tell you what matters today.',
+                'say' => null,   // taken out on the owner's word (2026-10-02)
                 'face' => 'happy',
                 'pattern' => 'grow',
                 'glyph' => 'M12 21c0-4 1-7 4-9M12 21c0-5-2-8-6-9m6 9V8m0 0c0-2.5 1.5-4 4-4 0 2.5-1.5 4-4 4zm0 0C12 5.5 10.5 4 6.5 4c0 2.5 1.5 4 5.5 4z',
