@@ -53,7 +53,9 @@
     .hwm-x svg { width: 1.2rem; height: 1.2rem; }
     .hwm-scroll { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
     .hwm-scroll .hw-stage { scroll-margin-top: 1rem; }
-    .hwm-bar > div, .hwm-scroll > * { animation: hwmIn .5s .18s cubic-bezier(.22,1,.36,1) both; }
+    /* backwards, not both: a transform held after the entrance would make the
+       tour the box its position: fixed tool sheet is placed in. */
+    .hwm-bar > div, .hwm-scroll > * { animation: hwmIn .5s .18s cubic-bezier(.22,1,.36,1) backwards; }
     @keyframes hwmIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) {
         .hwc-art::after, .hwc-art i, .hwc-art img, .hwm-bar > div, .hwm-scroll > * { animation: none; }
