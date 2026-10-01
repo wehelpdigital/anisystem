@@ -137,6 +137,8 @@
                     Start for free forever on {{ $pdFree !== false ? $tiers[$pdFree]['name'] : 'Libre' }}
                 </a>
                 <p class="pd-note">No payments, no trial time.</p>
+                <a href="{{ route('pricing.compare') }}" class="pd-more">Compare every plan side by side
+                    <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
         </div>
     </section>
@@ -296,6 +298,11 @@
     .pd-go:hover { transform: translateY(-2px); box-shadow: 0 22px 40px -18px rgb(199 158 0 / .95); }
     .pd-go svg { flex: none; width: 1.2rem; height: 1.2rem; }
     .pd-note { font-size: .92rem; font-weight: 700; color: #4a7c2a; }
+    .pd-more { display: inline-flex; align-items: center; gap: .4rem; margin-top: .3rem; font-size: .9rem; font-weight: 800; color: #2f5219;
+        text-decoration: underline; text-decoration-color: #b9d39b; text-underline-offset: 4px; transition: color .28s var(--pd-ease); }
+    .pd-more:hover { color: #4a7c2a; }
+    .pd-more svg { width: 1rem; height: 1rem; transition: transform .28s var(--pd-ease); }
+    .pd-more:hover svg { transform: translateX(3px); }
     @media (max-width: 479.98px) { .pd-go { width: 100%; justify-content: center; } }
 
     @media (prefers-reduced-motion: reduce) {

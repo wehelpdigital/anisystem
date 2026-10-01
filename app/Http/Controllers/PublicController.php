@@ -49,6 +49,12 @@ class PublicController extends Controller
         ]);
     }
 
+    /** Every plan side by side (App\Support\PlanCompare reads config/tiers). */
+    public function compare()
+    {
+        return view('public.pricing-compare');
+    }
+
     /** How It Works: the season in six steps (App\Support\HowItWorks). */
     public function how()
     {
