@@ -66,7 +66,8 @@
                     <span class="truncate max-w-[14rem] sm:max-w-none">{{ $S::shortTitle($page) }}</span>
                 </nav>
                 <div class="{{ $portrait ? 'sp-fhero' : '' }}">
-                <div class="mt-5 max-w-3xl">
+                {{-- The title and its intro use the page's full width: there is no sidebar beside them. --}}
+                <div class="mt-5">
                     @if ($feat)
                         <div class="sp-fbadge">
                             <span class="sp-fico"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $feat['icon'] }}"/></svg></span>
