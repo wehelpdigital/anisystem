@@ -359,6 +359,10 @@
     .hw-flow.is-on { stroke: var(--acc); }
     .hw-dest { fill: var(--leaf); transform: scale(0); transform-box: fill-box; transform-origin: center; transition: fill .4s var(--ease); }
     .hw-dest.is-on { fill: var(--acc); }
+    /* A ring that flares where a streak lands, once, as the burst arrives. */
+    .hw-spark { fill: none; stroke: var(--acc); stroke-width: 1.6; opacity: 0; transform-box: fill-box; transform-origin: center; }
+    .hw .is-in .hw-spark { animation: hwSpark 1s var(--ease) forwards; animation-delay: calc(1.15s + var(--i) * .05s); }
+    @keyframes hwSpark { 0% { opacity: .95; transform: scale(.2); } 100% { opacity: 0; transform: scale(2.6); } }
     .hw-dot { fill: #fff; opacity: 0; transition: opacity .8s ease; transition-delay: var(--d); }
     .hw-dot.k { fill: var(--leaf); }
     .hw-dot.t { fill: var(--acc); }
@@ -445,6 +449,7 @@
         .hw .hw-head, .hw .hw-say, .hw .hw-hub, .hw .hw-item, .hw .hw-w, .hw .hw-ping, .hw .hw-copy > * { opacity: 1 !important; transform: none !important; }
         .hw .hw-arc { stroke-dashoffset: 0; }
         .hw .hw-dest { transform: none; }
+        .hw .hw-spark { display: none; }
         .hw .hw-dot { opacity: var(--o); }
         .hw .hw-dot.g { transform: none; }
         .hw .hw-flow, .hw .hw-line-flow { display: none; }
@@ -799,10 +804,11 @@
         const gDots = make('g'), gArcs = make('g');
         svg.append(gDots, gArcs);
         const fieldEl = st.querySelector('.hw-field'), items = [...st.querySelectorAll('.hw-item')];
-        // On a desk the tools are blown out around Anee: placed round her at
-        // shuffled distances (some close, some far out), nudged apart until no two overlap
-        // and none covers her, and kept inside the field. The same step
-        // lands the same way every time (the jitter is seeded by its name).
+        // On a desk the tools burst out of Anee like a firework: spaced evenly
+        // all the way round her, long streaks and short ones taking turns so
+        // no side is heavier than another, nudged apart only if two would
+        // touch, and kept inside the field. The same step lands the same way
+        // every time (the little jitter is seeded by its name).
         let laid = '';
         const scatter = () => {
             const on = wide();
@@ -817,13 +823,9 @@
             const box = items.map((it) => ({ w: it.offsetWidth, h: it.querySelector('.hw-chip').offsetHeight }));
             let seed = [...(st.dataset.stage || 'x')].reduce((a, c) => (a * 31 + c.charCodeAt(0)) % 233280, 7);
             const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
-            // How far out each one sits: from close to Anee to the edge of the
-            // field, the distances shuffled so near and far fall at random.
-            const reach = Array.from({ length: n }, (_, i) => .42 + (i / Math.max(1, n - 1)) * .58);
-            for (let i = n - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [reach[i], reach[j]] = [reach[j], reach[i]]; }
             const p = box.map((b, i) => {
-                const a = -Math.PI / 2 + (i + .5) * (2 * Math.PI / n) + (rnd() - .5) * .45;
-                const k = Math.min(1, reach[i] + (rnd() - .5) * .06);
+                const a = -Math.PI / 2 + (i + .5) * (2 * Math.PI / n) + (rnd() - .5) * .08;
+                const k = i % 2 ? .6 + rnd() * .06 : .93 + rnd() * .07;
                 return { x: cx + Math.cos(a) * (cx - b.w / 2 - 6) * k, y: cy + Math.sin(a) * (cy - b.h / 2 - 6) * k };
             });
             for (let round = 0; round < 160; round++) {
@@ -865,10 +867,11 @@
         if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { laid = ''; requestAnimationFrame(() => draw()); });
         const routes = items.map((it, i) => {
             const base = make('path', { class: 'hw-arc', pathLength: 1 }), flow = make('path', { class: 'hw-flow', pathLength: 1 }), dest = make('circle', { class: 'hw-dest', r: 3.5 });
-            [base, flow, dest].forEach((n) => n.style.setProperty('--i', i));
-            gArcs.append(base, flow, dest);
+            const spark = make('circle', { class: 'hw-spark', r: 9 });
+            [base, flow, dest, spark].forEach((n) => n.style.setProperty('--i', i));
+            gArcs.append(base, flow, dest, spark);
             it._hw = { base, flow, dest };
-            return { it, chip: it.querySelector('.hw-chip'), base, flow, dest };
+            return { it, chip: it.querySelector('.hw-chip'), base, flow, dest, spark };
         });
         let dotsW = 0;
         const draw = () => {
@@ -882,18 +885,27 @@
                 // the float move a chip, never where its route ends.
                 const [bl, bt] = off(r.it), bw = r.it.offsetWidth, ch = r.chip.offsetHeight;
                 const mx = bl + bw / 2, my = bt + ch / 2;
-                // A tool straight above or below Anee is met at its edge facing her.
-                const upright = wide() && Math.abs(mx - hx) < bw / 2 + 24;
-                const ax = upright ? mx : (mx >= hx ? bl : bl + bw);
-                const ay = upright ? (my < hy ? bt + ch : bt) : my;
-                const dx = ax - hx, dy = ay - hy;
-                const d = upright
-                    ? `M ${hx} ${hy} C ${hx} ${hy + dy * 0.5}, ${ax} ${hy + dy * 0.5}, ${ax} ${ay}`
-                    : Math.abs(dx) > 80
+                let ax, ay, d;
+                if (wide()) {
+                    // A firework streak: from the edge of Anee's circle straight
+                    // out to where the line toward her meets the chip's edge,
+                    // with the slightest swirl.
+                    const vx = hx - mx, vy = hy - my;
+                    const t = Math.min(Math.abs(vx) > .01 ? (bw / 2) / Math.abs(vx) : Infinity, Math.abs(vy) > .01 ? (ch / 2) / Math.abs(vy) : Infinity, 1);
+                    ax = mx + vx * t; ay = my + vy * t;
+                    const len = Math.hypot(ax - hx, ay - hy) || 1, ux = (ax - hx) / len, uy = (ay - hy) / len;
+                    const rim = hub.offsetWidth / 2 + 6, sx = hx + ux * rim, sy = hy + uy * rim, bow = (len - rim) * .07;
+                    d = `M ${sx} ${sy} Q ${(sx + ax) / 2 - uy * bow} ${(sy + ay) / 2 + ux * bow} ${ax} ${ay}`;
+                } else {
+                    ax = mx >= hx ? bl : bl + bw; ay = my;
+                    const dx = ax - hx, dy = ay - hy;
+                    d = Math.abs(dx) > 80
                         ? `M ${hx} ${hy} C ${hx + dx * 0.5} ${hy}, ${hx + dx * 0.5} ${ay}, ${ax} ${ay}`
                         : `M ${hx} ${hy} C ${hx} ${hy + dy * 0.8}, ${hx + dx * 0.15} ${ay}, ${ax} ${ay}`;
+                }
                 r.base.setAttribute('d', d); r.flow.setAttribute('d', d);
                 r.dest.setAttribute('cx', ax); r.dest.setAttribute('cy', ay);
+                r.spark.setAttribute('cx', ax); r.spark.setAttribute('cy', ay);
             });
             if (st.classList.contains('is-in') && Math.abs(W - dotsW) > 2) { dotsW = W; dots(st, gDots, hx, hy, W, H); }
         };
