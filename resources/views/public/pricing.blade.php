@@ -21,33 +21,30 @@
         </div>
     </section>
 
-    {{-- ================= THE PLANS, AS A CARD SPREAD =================
-         One plan is read at a time. Libre sits in front when the page opens
-         and the paid plans are spread out behind it, a little askew like
-         cards fanned on a table, each one showing its header: the name, the
-         line under it and the price. Tapping one (or its name in the row
-         above, or swiping the front card on a phone) deals it to the front,
-         and the card that was there goes back into the spread, which always
-         reads in plan order from the top. Every card is as tall as the one
-         in front, so the deck glides when that changes. The motion lives in
-         the script at the foot of this file, the dress in the pd- styles. --}}
+    {{-- ================= THE PLANS, AS A HAND OF CARDS =================
+         One plan is read at a time. Libre stands in front when the page
+         opens, and the other plans fan out behind it from left to right in
+         plan order, like playing cards held in a hand: each turned a little,
+         the one on the right always over the one on its left, so every card
+         shows its corner (the name and the price). Tapping one (or its name
+         in the row above, or swiping the front card on a phone) lifts it out
+         of the hand and deals it to the front, and the card that was there
+         slides back into its place in the fan. Every card is as tall as the
+         one in front, so the deck glides when that changes. The motion lives
+         in the script at the foot of this file, the dress in the pd- styles. --}}
     @php
         $pdKeys  = array_keys($tiers);
         $pdFree  = collect($tiers)->search(fn ($t) => empty($t['price']));
         $pdOrder = array_values(array_unique(array_merge($pdFree !== false ? [$pdFree] : [], $pdKeys)));
         $pdTint  = ['libre' => '#86b556', 'libreAnee' => '#f5c518', 'solo' => '#4a7c2a', 'owner' => '#2d5016'];
         $pdSpare = ['#86b556', '#f5c518', '#4a7c2a', '#2d5016', '#6b9f3d', '#c79e00'];
-        // The spread: behind the front card, the last plan sits nearest and
-        // the first furthest up, so the headers read in plan order downward.
-        // Each place back sits a little askew (the script keeps the same list).
+        // Front first, then the hand from left to right in plan order.
         $pdSlotOf = [$pdOrder[0] => 0];
-        foreach (array_reverse(array_values(array_diff($pdKeys, [$pdOrder[0]]))) as $i => $k) {
+        foreach (array_values(array_diff($pdKeys, [$pdOrder[0]])) as $i => $k) {
             $pdSlotOf[$k] = $i + 1;
         }
-        $pdX = [0, -6, 8, -10, 12, -12];
-        $pdR = [0, -1.6, 1.4, -1.8, 1.6, -1.6];
     @endphp
-    <section class="py-16 sm:py-20 bg-gray-50 bg-drift" x-data="pdDeck()">
+    <section class="py-16 sm:py-20 bg-gray-50 bg-drift pd-section" x-data="pdDeck()">
         <div class="pd-scope max-w-6xl mx-auto px-4 sm:px-6">
             <div class="pd-head reveal">
                 <div class="pd-seg pd-bill" role="group" aria-label="Billing period">
@@ -67,7 +64,7 @@
             </div>
 
             <div class="pd-stage reveal" style="--reveal-delay: .08s">
-                <div class="pd-deck" style="--pd-n: {{ count($pdOrder) - 1 }}">
+                <div class="pd-deck">
                     @foreach ($tiers as $key => $tier)
                         @php
                             $isStar = $key === 'owner';
@@ -77,27 +74,22 @@
                         @endphp
                         <div class="pd-card {{ $pdSlot === 0 ? 'is-front' : 'is-back' }} {{ $isStar ? 'is-star' : '' }}"
                              data-name="{{ $tier['name'] }}" data-slot="{{ $pdSlot }}"
-                             style="--s: {{ $pdSlot }}; --x: {{ $pdX[$pdSlot] ?? 0 }}px; --r: {{ $pdR[$pdSlot] ?? 0 }}deg; z-index: {{ 10 + (count($pdOrder) - $pdSlot) * 2 }}; --pd-tint: {{ $pdTint[$key] ?? $pdSpare[$loop->index % count($pdSpare)] }}"
+                             style="--s: {{ $pdSlot }}; z-index: {{ 10 + (count($pdOrder) - $pdSlot) * 2 }}; --pd-tint: {{ $pdTint[$key] ?? $pdSpare[$loop->index % count($pdSpare)] }}"
                              @if ($pdSlot) role="button" tabindex="0" aria-label="Show the {{ $tier['name'] }} plan" @endif>
                             @if ($isStar)<span class="pr-flag">Most complete</span>@endif
                             <div class="pd-face" id="pd-panel-{{ $key }}" role="tabpanel" aria-labelledby="pd-tab-{{ $key }}"
                                  @if ($pdSlot) inert aria-hidden="true" @else tabindex="0" @endif>
                                 <span class="pd-band" aria-hidden="true"></span>
-                                {{-- The header a card shows while it waits in the spread. --}}
+                                {{-- The corner a card shows while it waits in the hand. --}}
                                 <div class="pd-peek" aria-hidden="true">
-                                    <span class="pd-peek-t">
-                                        <b>{{ $tier['name'] }}@if ($isStar)<em>Most complete</em>@endif</b>
-                                        <small>{{ $tier['tagline'] }}</small>
-                                    </span>
+                                    <b class="pd-peek-n">{{ $tier['name'] }}</b>
                                     <span class="pd-peek-p">
                                         @if ($isFree)
-                                            <b>Free</b><small>forever</small>
+                                            <b>Free</b>
                                         @else
-                                            <span x-show="!yearly"><b>{{ \App\Support\Region::priceTag($prM) }}</b><small>/ month</small></span>
-                                            <span x-show="yearly" x-cloak><b>{{ \App\Support\Region::priceTag($prY) }}</b><small>/ year</small></span>
+                                            <b x-show="!yearly">{{ \App\Support\Region::priceTag($prM) }}</b><b x-show="yearly" x-cloak>{{ \App\Support\Region::priceTag($prY) }}</b><small x-show="!yearly">/ month</small><small x-show="yearly" x-cloak>/ year</small>
                                         @endif
                                     </span>
-                                    <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                                 </div>
                                 <div class="pd-inner">
                                     <span class="pr-name">{{ $tier['name'] }}</span>
@@ -287,65 +279,68 @@
         .pd-tabs .pd-thumb { border-radius: .9rem; }
     }
 
-    /* ---- the spread ----
-       Every card sits in the same grid cell. --s is a card's place in the
-       spread (0 is the front); each place back rises one --pd-step, a
-       header's height, so its header shows above the card in front of it,
-       and sits askew by --x and --r. The script keeps the cards as tall as
-       the front one (--pd-h), so the deck's height follows it. */
+    /* ---- the hand ----
+       Every card sits in the same grid cell, centred. --s is a card's place
+       (0 is the front; 1, 2, 3 the hand from left to right). The script
+       turns a place into --x, --y, --r and --k from the numbers here, which
+       change with the screen: --pd-gap rem between cards in the hand,
+       --pd-tilt degrees of turn per card, --pd-rise rem the hand stands
+       above the front card, --pd-drop rem the outer cards sit lower, --pd-k
+       their size. It keeps every card as tall as the front one (--pd-h). */
+    .pd-section { overflow: hidden; }
     .pd-stage { margin-top: 1.8rem; }
-    .pd-deck { --pd-step: 3.7rem; --pd-shrink: .018; position: relative; display: grid; max-width: 27rem; margin: 0 auto;
-        padding-top: calc(var(--pd-step) * var(--pd-n, 3) + 14px); touch-action: pan-y; }
-    @media (min-width: 640px) { .pd-deck { --pd-step: 4.7rem; --pd-shrink: .016; max-width: 29rem; } }
-    .pd-card { grid-area: 1 / 1; align-self: start; position: relative; height: var(--pd-h, auto);
+    .pd-deck { --pd-gap: 3.8; --pd-tilt: 5; --pd-rise: 4.6; --pd-drop: .3; --pd-k: .8; --pd-cw: min(21rem, calc(100% - 2.4rem));
+        position: relative; display: grid; justify-items: center; max-width: 54rem; margin: 0 auto;
+        padding-top: calc(var(--pd-rise) * 1rem + 1.5rem); touch-action: pan-y; }
+    @media (min-width: 640px) { .pd-deck { --pd-gap: 8.5; --pd-tilt: 7; --pd-rise: 4.6; --pd-drop: .9; --pd-k: .9; --pd-cw: 23rem; } }
+    .pd-card { grid-area: 1 / 1; align-self: start; width: var(--pd-cw); position: relative; height: var(--pd-h, auto);
         border-radius: 1.35rem; transform-origin: 50% 0; outline: none; -webkit-tap-highlight-color: transparent;
-        transform: translate3d(var(--x, 0px), calc(var(--s, 0) * var(--pd-step) * -1 - var(--pd-lift, 0px)), 0) rotate(var(--r, 0deg)) scale(calc(1 - var(--s, 0) * var(--pd-shrink)));
-        box-shadow: 0 -12px 26px -20px rgb(20 33 12 / .45), 0 10px 24px -18px rgb(20 33 12 / .45);
-        transition: transform .55s var(--pd-ease), height .5s var(--pd-ease), box-shadow .45s var(--pd-ease); }
-    .pd-card.is-front { box-shadow: 0 -14px 30px -22px rgb(20 33 12 / .5), 0 34px 70px -38px rgb(20 33 12 / .55), 0 3px 10px -6px rgb(20 33 12 / .16); }
+        transform: translate3d(var(--x, 0px), calc(var(--y, 0px) - var(--pd-lift, 0px)), 0) rotate(var(--r, 0deg)) scale(var(--k, 1));
+        box-shadow: -6px 14px 30px -22px rgb(20 33 12 / .55);
+        transition: transform .6s var(--pd-ease), height .5s var(--pd-ease), box-shadow .45s var(--pd-ease); }
+    .pd-card.is-front { box-shadow: 0 34px 70px -38px rgb(20 33 12 / .55), 0 3px 10px -6px rgb(20 33 12 / .16); }
     .pd-card.is-back { cursor: pointer; user-select: none; }
     .pd-face { position: relative; height: 100%; overflow: hidden; border-radius: inherit; outline: none;
         background: #fff; border: 1px solid #e1e8d7; transition: border-color .45s var(--pd-ease); }
     .pd-card.is-star.is-front .pd-face { border-color: #4a7c2a; }
-    .pd-band { position: absolute; left: 0; right: 0; top: 0; z-index: 1; height: 6px; background: var(--pd-tint); }
+    .pd-band { position: absolute; left: 0; right: 0; top: 0; z-index: 4; height: 6px; background: var(--pd-tint); }
     .pd-inner { display: flex; flex-direction: column; padding: 1.6rem 1.4rem 1.6rem;
         transition: opacity .35s var(--pd-ease); }
     .pd-card.is-back .pd-inner { opacity: 0; }
-    /* The fade that sends a card into the background: deeper in the pile,
-       further away. A hovered (or focused) card behind clears a little. */
-    .pd-fog { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: #e9eee2;
-        opacity: calc((min(var(--s, 0), 1) * .2 + var(--s, 0) * .1) * var(--pd-fogk, 1));
+    /* A card in the hand wears a card back under its corner: a fine
+       lattice in its own colour inside a white frame. */
+    .pd-fog { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0; border-radius: inherit; background-color: #f7faf2;
+        background-image: repeating-linear-gradient(45deg, transparent 0 9px, color-mix(in srgb, var(--pd-tint) 22%, transparent) 9px 10px),
+            repeating-linear-gradient(-45deg, transparent 0 9px, color-mix(in srgb, var(--pd-tint) 22%, transparent) 9px 10px);
+        box-shadow: inset 0 0 0 .6rem #fff, inset 0 0 0 calc(.6rem + 1.5px) color-mix(in srgb, var(--pd-tint) 45%, transparent);
         transition: opacity .45s var(--pd-ease); }
+    .pd-card.is-back .pd-fog { opacity: 1; }
     @media (hover: hover) {
-        .pd-card.is-back:not(.is-flying):hover { --pd-lift: 10px; --pd-fogk: .5; }
+        .pd-card.is-back:not(.is-flying):hover { --pd-lift: 14px; }
     }
-    /* A waiting card's header: the name, its line, the price, an arrow to bring it forward. */
-    /* Taller than the strip that shows, so no fogged face peeks under it where the cards sit askew. */
-    .pd-peek { position: absolute; left: 0; right: 0; top: 6px; z-index: 3; height: calc(var(--pd-step) + 1.5rem); display: flex; align-items: flex-start; gap: .8rem;
-        padding: .85rem 1.1rem 0 1.3rem; background: #fff; opacity: 0; pointer-events: none; transition: opacity .35s var(--pd-ease); }
-    .pd-peek-p, .pd-peek > svg { margin-top: .1rem; }
+    /* The corner: the name, then the price, the way a playing card shows its rank. */
+    .pd-peek { position: absolute; left: 0; right: 0; top: 6px; z-index: 3; height: calc(var(--pd-rise) * 1rem + 2.4rem);
+        display: flex; flex-direction: column; align-items: flex-start; gap: .25rem; padding: .85rem 1rem 0 1.15rem;
+        background: #fff; border-bottom: 1.5px solid color-mix(in srgb, var(--pd-tint) 45%, transparent);
+        opacity: 0; pointer-events: none; transition: opacity .35s var(--pd-ease); }
     .pd-card.is-back .pd-peek { opacity: 1; }
-    .pd-peek-t { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .1rem; }
-    .pd-peek-t b { display: flex; align-items: center; gap: .45rem; font-family: var(--font-heading); font-size: 1.08rem; font-weight: 800; line-height: 1.2; color: #14210c; white-space: nowrap; }
-    .pd-peek-t em { font-style: normal; padding: .14rem .45rem; border-radius: 999px; background: #4a7c2a; color: #fff; font-family: var(--font-sans, inherit);
-        font-size: .58rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
-    .pd-peek-t small { font-size: .78rem; color: #6b7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .pd-peek-p { flex: none; text-align: right; white-space: nowrap; }
-    .pd-peek-p b { font-family: var(--font-heading); font-size: 1.12rem; font-weight: 800; color: #2f5219; }
-    .pd-peek-p small { margin-left: .2rem; font-size: .72rem; font-weight: 600; color: #6b7280; }
-    .pd-peek > svg { flex: none; width: 1.15rem; height: 1.15rem; color: #86b556; transition: transform .28s var(--pd-ease); }
-    .pd-card.is-back:hover .pd-peek > svg { transform: translateY(2px); }
-    @media (max-width: 639.98px) { .pd-peek-t small { display: none; } .pd-peek { padding: 1rem .9rem 0 1.1rem; gap: .6rem; } .pd-peek-t b { font-size: 1rem; } .pd-peek-p, .pd-peek > svg { margin-top: 0; } }
-    /* A narrow phone keeps the name and the price; the front card says "Most complete" itself. */
-    @media (max-width: 419.98px) { .pd-peek-t em { display: none; } }
-    .pd-card.is-back:not(.is-flying):focus-visible { --pd-lift: 8px; --pd-fogk: .5; outline: 3px solid #86b556; outline-offset: 2px; }
+    .pd-peek-n { max-width: calc(var(--pd-gap) * 1rem - 1.7rem); font-family: var(--font-heading); font-size: 1.04rem; font-weight: 800; line-height: 1.15; color: #14210c; }
+    .pd-peek-p { white-space: nowrap; }
+    .pd-peek-p b { font-family: var(--font-heading); font-size: 1.08rem; font-weight: 800; color: #2f5219; }
+    .pd-peek-p small { margin-left: .2rem; font-size: .7rem; font-weight: 600; color: #6b7280; }
+    @media (max-width: 639.98px) {
+        .pd-peek { padding: .6rem .35rem 0 .6rem; gap: .15rem; }
+        .pd-peek-n { max-width: calc(var(--pd-gap) * 1rem - .9rem); font-size: .74rem; line-height: 1.12; }
+        .pd-peek-p b { font-size: .84rem; }
+        .pd-peek-p small { display: none; }
+    }
+    .pd-card.is-back:not(.is-flying):focus-visible { --pd-lift: 10px; outline: 3px solid #86b556; outline-offset: 2px; }
     .pd-face:focus-visible { outline: 3px solid #86b556; outline-offset: 3px; }
     /* A card being dealt or dragged is moved by the script, not by these. */
     .pd-card.is-flying, .pd-card.is-dragging { transition: height .5s var(--pd-ease), box-shadow .45s var(--pd-ease); }
-    .pd-card.is-flying .pd-inner, .pd-card.is-flying .pd-fog { transition: none; }
+    .pd-card.is-flying .pd-inner, .pd-card.is-flying .pd-fog, .pd-card.is-flying .pd-peek { transition: none; }
     .pd-deck.pd-instant .pd-card, .pd-deck.pd-instant .pd-inner,
     .pd-deck.pd-instant .pd-fog, .pd-deck.pd-instant .pr-flag, .pd-deck.pd-instant .pd-peek { transition: none; }
-    .pd-card.is-flying .pd-peek { transition: none; }
 
     .pd-card .pr-flag { z-index: 3; transform: translate(-50%, 0);
         transition: opacity .35s var(--pd-ease) .2s, transform .45s var(--pd-ease) .2s; }
@@ -379,10 +374,9 @@
 
 @push('scripts')
 <script>
-    /* The plan spread. `order` lists the cards front to back; behind the
-       front card the rest always stand in plan order read from the top (the
-       last plan nearest), each at its slot's tilt (SPREAD_X / SPREAD_R, the
-       same numbers the page was drawn with). A card picked
+    /* The plan hand. `order` lists the front card, then the hand from left
+       to right, always in plan order. place(s) turns a slot into where the
+       card stands, from the --pd-* numbers on the deck. A card picked
        from the pile slides out to one side from behind it while the front
        card fades and drops toward the other; at the turn they swap layers,
        then the picked card settles in front and the old one tucks in right
@@ -417,7 +411,7 @@
             const cards = Array.from(deck.querySelectorAll('.pd-card'));
             const n = cards.length;
             const parts = cards.map((c) => ({
-                face: c.querySelector('.pd-face'), inner: c.querySelector('.pd-inner'), fog: c.querySelector('.pd-fog'),
+                face: c.querySelector('.pd-face'), inner: c.querySelector('.pd-inner'), fog: c.querySelector('.pd-fog'), peek: c.querySelector('.pd-peek'),
             }));
             const tabs = Array.from(root.querySelectorAll('.pd-tab'));
             const tabRow = root.querySelector('.pd-tabs');
@@ -425,25 +419,40 @@
             const order = cards.map((c, i) => i).sort((a, b) => cards[a].dataset.slot - cards[b].dataset.slot);
             let busy = false, queued = null, drag = null;
 
-            const SPREAD_X = [0, -6, 8, -10, 12, -12], SPREAD_R = [0, -1.6, 1.4, -1.8, 1.6, -1.6];
-            const X = (s) => SPREAD_X[s] || 0, R = (s) => SPREAD_R[s] || 0;
-            const z = (s) => 10 + (n - s) * 2;
+            // Right over left in the hand, and the front card over all of it.
+            const z = (s) => (s ? 10 + s : 12 + n * 2);
             const num = (name) => parseFloat(getComputedStyle(deck).getPropertyValue(name)) || 0;
-            // The step is set in rem: read it as pixels off a card's resting place.
-            const step = () => { const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16; const v = getComputedStyle(deck).getPropertyValue('--pd-step').trim(); return v.endsWith('rem') ? parseFloat(v) * rem : parseFloat(v) || 0; };
-            // A place in the pile as a transform, plus an optional push away
-            // from it (x, y, a turn of r degrees about `pivot` px down the card,
-            // and a scale k on top). Same shape every time, so it interpolates.
-            const pose = (s, x = 0, y = 0, r = 0, k = 1, pivot = 0) =>
-                'translate3d(' + (x + X(s)) + 'px, ' + (y - s * step()) + 'px, 0) translateY(' + pivot + 'px) rotate(' + (r + R(s))
-                + 'deg) translateY(' + (-pivot) + 'px) scale(' + ((1 - s * num('--pd-shrink')) * k) + ')';
+            const rem = () => parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+            let G = null;
+            const geo = () => {
+                const r = rem();
+                G = { gap: num('--pd-gap') * r, tilt: num('--pd-tilt'), rise: num('--pd-rise') * r, drop: num('--pd-drop') * r, k: num('--pd-k') || .9 };
+            };
+            // A slot as a place: the front stands upright; the hand fans out
+            // from the middle, each card a gap over, a tilt more turned, the
+            // outer ones a little lower.
+            const place = (s) => {
+                if (!G) geo();
+                if (!s) return { x: 0, y: 0, r: 0, k: 1 };
+                const t = (s - 1) - (n - 2) / 2;
+                return { x: t * G.gap, y: -G.rise + Math.abs(t) * G.drop, r: t * G.tilt, k: G.k };
+            };
+            // A place as a transform, plus an optional push away from it. Same
+            // shape as the CSS one (translate, rotate, scale), so they meet.
+            const pose = (s, dx = 0, dy = 0, dr = 0, dk = 1) => {
+                const p = place(s);
+                return 'translate3d(' + (p.x + dx) + 'px, ' + (p.y + dy) + 'px, 0) rotate(' + (p.r + dr) + 'deg) scale(' + (p.k * dk) + ')';
+            };
 
             const paint = () => {
                 order.forEach((ci, s) => {
                     const c = cards[ci], f = parts[ci].face, front = s === 0;
+                    const p = place(s);
                     c.style.setProperty('--s', s);
-                    c.style.setProperty('--x', X(s) + 'px');
-                    c.style.setProperty('--r', R(s) + 'deg');
+                    c.style.setProperty('--x', p.x + 'px');
+                    c.style.setProperty('--y', p.y + 'px');
+                    c.style.setProperty('--r', p.r + 'deg');
+                    c.style.setProperty('--k', p.k);
                     c.style.zIndex = z(s);
                     c.dataset.slot = s;
                     c.classList.toggle('is-front', front);
@@ -486,8 +495,8 @@
                 const fromA = getComputedStyle(A).transform, fromB = getComputedStyle(B).transform;
                 const fogA = getComputedStyle(parts[ci].fog).opacity;
                 if (!dir) dir = ci > old ? 1 : -1;
-                // The picked card to the front; the rest back in plan order, the last plan nearest.
-                const rest = order.filter((x) => x !== ci).sort((a, b) => b - a);
+                // The picked card to the front; the rest back into the hand in plan order.
+                const rest = order.filter((x) => x !== ci).sort((a, b) => a - b);
                 order.splice(0, n, ci, ...rest);
                 const sB = order.indexOf(old);
                 const moving = !still() && typeof A.animate === 'function';
@@ -500,29 +509,31 @@
                 if (!moving) return;
 
                 busy = true;
-                const w = A.offsetWidth, h = A.offsetHeight, st = step();
-                const T = 640, F = .42;   // the whole deal, and the moment the two swap layers
-                const fogB = getComputedStyle(parts[old].fog).opacity;   // its resting fade, one place back
-                const awayA = dir * w * (w < 400 ? .42 : .54);
-                const awayB = -dir * Math.max(w * .14, Math.abs(dragX || 0) + 16);
+                const T = 720, F = .44;   // the whole deal, and the moment the two swap layers
+                const lift = Math.max(48, G.rise * 1.15);
+                const turnA = place(k).r;
                 const o = { duration: T };
                 const runs = [
+                    // Out of the hand, straight up and straightening, then down to the front.
                     A.animate([
                         { transform: fromA, easing: EASE },
-                        { transform: pose(0, awayA, -(k * st) - 28, dir * 6, 1.02, h / 2), offset: F, easing: EASE },
+                        { transform: pose(k, 0, -lift, -turnA * .6, 1.03), offset: F, easing: EASE },
                         { transform: pose(0) },
                     ], o),
-                    A.animate([{ zIndex: z(k) - 1 }, { zIndex: z(k) - 1, offset: F }, { zIndex: z(0) + 3, offset: F }, { zIndex: z(0) + 3 }], o),
+                    A.animate([{ zIndex: z(k) }, { zIndex: z(k), offset: F }, { zIndex: z(0) + 3, offset: F }, { zIndex: z(0) + 3 }], o),
+                    // The old front card sinks a little, goes under, and slides into its place in the hand.
                     B.animate([
                         { transform: fromB, easing: EASE },
-                        { transform: pose(0, awayB, 14, -dir * 4, .95, h / 2), offset: F, easing: EASE },
+                        { transform: pose(0, dir * -24, 26, dir * -3, .96), offset: F, easing: EASE },
                         { transform: pose(sB) },
                     ], o),
                     B.animate([{ zIndex: z(0) + 2 }, { zIndex: z(0) + 2, offset: F }, { zIndex: z(sB), offset: F }, { zIndex: z(sB) }], o),
-                    parts[ci].inner.animate([{ opacity: 0 }, { opacity: 0, offset: F }, { opacity: 1, offset: .82 }, { opacity: 1 }], o),
+                    parts[ci].inner.animate([{ opacity: 0 }, { opacity: 0, offset: F }, { opacity: 1, offset: .85 }, { opacity: 1 }], o),
                     parts[old].inner.animate([{ opacity: 1 }, { opacity: 0, offset: F * .8 }, { opacity: 0 }], o),
-                    parts[ci].fog.animate([{ opacity: fogA }, { opacity: .16, offset: F }, { opacity: 0 }], o),
-                    parts[old].fog.animate([{ opacity: 0 }, { opacity: .3, offset: F }, { opacity: fogB }], o),
+                    parts[ci].fog.animate([{ opacity: fogA }, { opacity: fogA, offset: F * .5 }, { opacity: 0, offset: F }, { opacity: 0 }], o),
+                    parts[old].fog.animate([{ opacity: 0 }, { opacity: 0, offset: F * .8 }, { opacity: 1, offset: F }, { opacity: 1 }], o),
+                    parts[ci].peek.animate([{ opacity: 1 }, { opacity: 1, offset: F * .5 }, { opacity: 0, offset: F }, { opacity: 0 }], o),
+                    parts[old].peek.animate([{ opacity: 0 }, { opacity: 0, offset: F }, { opacity: 1, offset: .8 }, { opacity: 1 }], o),
                 ];
                 Promise.all(runs.map((a) => a.finished)).catch(() => {}).then(() => {
                     A.classList.remove('is-flying');
@@ -598,7 +609,12 @@
             deck.addEventListener('pointerup', letGo);
             deck.addEventListener('pointercancel', letGo);
 
-            const refresh = () => { measure(); placeThumb(tabRow); placeThumb(bill); };
+            const refresh = () => {
+                const before = G && JSON.stringify(G);
+                geo();
+                if (JSON.stringify(G) !== before) paint();
+                measure(); placeThumb(tabRow); placeThumb(bill);
+            };
             deck.classList.add('pd-instant');
             paint();
             mark(order[0]);
