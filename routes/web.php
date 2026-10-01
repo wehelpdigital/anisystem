@@ -206,6 +206,8 @@ Route::prefix('{face}')->where(['face' => 'en'])->group(function () {
     Route::get('/', [App\Http\Controllers\PublicController::class, 'home'])->name('home');
     Route::get('/about', [App\Http\Controllers\PublicController::class, 'about'])->name('about');
     Route::get('/features', [App\Http\Controllers\PublicController::class, 'features'])->name('features');
+    // How It Works (2026-10-01): the season in six steps, Anee at every one.
+    Route::get('/how-it-works', [App\Http\Controllers\PublicController::class, 'how'])->name('how');
     Route::get('/pricing', [App\Http\Controllers\PublicController::class, 'pricing'])->name('pricing');
     // The ads landing page (2026-09-29): its words from the mother app.
     Route::get('/start', [App\Http\Controllers\PublicController::class, 'landing'])->name('landing');
@@ -219,6 +221,7 @@ Route::prefix('{face}')->where(['face' => 'en'])->group(function () {
 Route::get('/', [App\Http\Controllers\PublicController::class, 'home'])->defaults('face', 'ph')->name('ph.home');
 Route::get('/about', [App\Http\Controllers\PublicController::class, 'about'])->defaults('face', 'ph')->name('ph.about');
 Route::get('/features', [App\Http\Controllers\PublicController::class, 'features'])->defaults('face', 'ph')->name('ph.features');
+Route::get('/how-it-works', [App\Http\Controllers\PublicController::class, 'how'])->defaults('face', 'ph')->name('ph.how');
 Route::get('/pricing', [App\Http\Controllers\PublicController::class, 'pricing'])->defaults('face', 'ph')->name('ph.pricing');
 Route::get('/start', [App\Http\Controllers\PublicController::class, 'landing'])->defaults('face', 'ph')->name('ph.landing');
 Route::get('/legal/{slug}', [App\Http\Controllers\LegalController::class, 'showPh'])->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('ph.legal.show');
@@ -269,7 +272,7 @@ Route::get('/face/{face}', function (Illuminate\Http\Request $request, string $f
     // The page without its face, then with the chosen one; only a public
     // page is a place to go back to.
     $page = preg_replace('#^/(ph|en)(?=/|$)#', '', '/' . ltrim((string) $request->query('to', ''), '/')) ?: '/';
-    if (! preg_match('#^/(about|features|pricing|start|tutorial|contact|legal/[a-z0-9\-]+)?$#', $page)) {
+    if (! preg_match('#^/(about|features|how-it-works|pricing|start|tutorial|contact|legal/[a-z0-9\-]+)?$#', $page)) {
         $page = '/';
     }
     $to = $face === 'en' ? rtrim('/en' . $page, '/') : $page;

@@ -143,6 +143,10 @@
         /* Between lg and xl the bar is short of room: the logo is Home, About
            and Contact wait in the footer, and the pill says the short name. */
         @media (max-width: 1279.98px) { .nav-xl { display: none; } .ask-pill .ask-more { display: none; } }
+        /* How It Works joined the bar (2026-10-01): below 1440 the logo is Home. */
+        @media (max-width: 1439.98px) { .nav-home { display: none; } }
+        @media (min-width: 1024px) and (max-width: 1279.98px) { header #pubNav { margin-left: 1.5rem; column-gap: 1.25rem; } }
+        #pubNav ~ div .btn { white-space: nowrap; }
         /* The slot grows into the space between the links and the flags and
            centres the pill in it; the links keep their place after the logo. */
         @media (min-width: 1024px) {
@@ -176,7 +180,8 @@
                 </a>
 
                 <nav id="pubNav" class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700">
-                    <a href="{{ route('home') }}" class="nav-xl hover:text-brand-600 {{ request()->routeIs('home', 'ph.home') ? 'text-brand-700' : '' }}">Home</a>
+                    <a href="{{ route('home') }}" class="nav-xl nav-home hover:text-brand-600 {{ request()->routeIs('home', 'ph.home') ? 'text-brand-700' : '' }}">Home</a>
+                    <a href="{{ route('how') }}" class="hover:text-brand-600 whitespace-nowrap {{ request()->routeIs('how', 'ph.how') ? 'text-brand-700' : '' }}">How It Works</a>
                     <a href="{{ route('features') }}" class="hover:text-brand-600 {{ request()->routeIs('features', 'ph.features', 'site.features.show') ? 'text-brand-700' : '' }}">Features</a>
                     {{-- The guides, the problems and the blog, behind one word (the /ph face's: they are written for Philippine farms). --}}
                     @if (\App\Support\Region::ph())
@@ -233,6 +238,7 @@
         @php
             $pmPages = [
                 ['home', 'Home', 'M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10'],
+                ['how', 'How It Works', 'M6 21a2 2 0 100-4 2 2 0 000 4zM18 7a2 2 0 100-4 2 2 0 000 4zM6 17V11a4 4 0 014-4h6M18 7v6a4 4 0 01-4 4H8'],
                 ['features', 'Features', 'M4 5h6v6H4zM14 5h6v6h-6zM4 15h6v4H4zM14 15h6v4h-6z'],
                 ['pricing', 'Pricing', 'M7 7h.01M3 12l9-9h8v8l-9 9-8-8z'],
                 ['about', 'About', 'M12 11v6m0-10h.01M12 21a9 9 0 110-18 9 9 0 010 18z'],
@@ -318,6 +324,7 @@
                 <div class="pf-col" x-data="{ o: false }" :class="o && 'is-open'">
                     <button type="button" class="pf-h" @click="o = !o" :aria-expanded="o"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg><span>Quick links</span><i class="pf-plus" aria-hidden="true"></i></button>
                     <div class="pf-fold"><ul class="pf-list">
+                        <li><a href="{{ route('how') }}">How it works</a></li>
                         <li><a href="{{ route('features') }}">Features</a></li>
                         <li><a href="{{ url('/ask-anee') }}">Ask Anee for free</a></li>
                         <li><a href="{{ url('/questions') }}">Farmers' questions</a></li>

@@ -952,6 +952,10 @@
             : null,
     ])
 
+    {{-- How anee.io works: a card that opens the six step tour full screen
+         (the public /how-it-works picture, its links opening the app). --}}
+    @include('app.partials.how-card')
+
     {{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
     @include('partials.ad-slot', ['placement' => 'dashboard'])
 

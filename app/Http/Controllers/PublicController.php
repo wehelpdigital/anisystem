@@ -49,6 +49,12 @@ class PublicController extends Controller
         ]);
     }
 
+    /** How It Works: the season in six steps (App\Support\HowItWorks). */
+    public function how()
+    {
+        return view('public.how');
+    }
+
     public function pricing()
     {
         // The same table the in-app gates read — the page can never promise
