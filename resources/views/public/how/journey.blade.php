@@ -643,17 +643,16 @@
     .hw-by { position: absolute; top: -.6rem; right: .8rem; display: inline-flex; align-items: center; gap: .25rem; padding: .12rem .45rem .12rem .14rem; border-radius: 999px;
         background: var(--acc); color: #3b2f00; font-size: .6rem; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; box-shadow: 0 6px 14px -6px rgb(245 197 24 / .8); }
     .hw-by img { width: .95rem; height: .95rem; border-radius: 999px; object-fit: cover; }
-    .hw-plus { position: relative; flex: none; width: 1.65rem; height: 1.65rem; border-radius: 999px; background: rgb(255 255 255 / .08); transition: background .28s var(--ease); }
-    .hw-plus::before, .hw-plus::after { content: ''; position: absolute; left: 50%; top: 50%; width: .62rem; height: 2px; margin: -1px 0 0 -.31rem; border-radius: 2px;
-        background: var(--leaf); transition: transform .32s var(--ease), background .28s var(--ease); }
-    .hw-plus::after { transform: rotate(90deg); }
-    .hw-item.is-open .hw-chip { border-color: rgb(245 197 24 / .6); border-bottom-left-radius: .45rem; border-bottom-right-radius: .45rem; }
+    /* The chip's play button: the tool opens as a film of the app in use. */
+    .hw-plus { position: relative; flex: none; width: 1.65rem; height: 1.65rem; border-radius: 999px; background: rgb(255 255 255 / .08); transition: background .28s var(--ease), transform .28s var(--ease); }
+    .hw-plus::before { content: ''; position: absolute; left: 50%; top: 50%; margin: -.3rem 0 0 -.16rem; border-style: solid; border-width: .3rem 0 .3rem .48rem;
+        border-color: transparent transparent transparent var(--leaf); transition: border-color .28s var(--ease); }
+    .hw-chip:hover .hw-plus { background: rgb(245 197 24 / .18); transform: scale(1.08); }
+    .hw-chip:hover .hw-plus::before, .hw-item.is-open .hw-plus::before { border-left-color: var(--acc); }
     .hw-item.is-open .hw-plus { background: rgb(245 197 24 / .18); }
-    .hw-item.is-open .hw-plus::before, .hw-item.is-open .hw-plus::after { background: var(--acc); }
-    .hw-item.is-open .hw-plus::after { transform: rotate(0); }
-    .hw-more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .38s var(--ease); }
-    .hw-more > div { min-height: 0; overflow: hidden; }
-    .hw-item.is-open .hw-more { grid-template-rows: 1fr; }
+    .hw-item.is-open .hw-chip { border-color: rgb(245 197 24 / .6); }
+    /* A tool's words stay in the page (they fill the film's card); they are never shown in place. */
+    .hw-more { display: none; }
     .hw-more-in { margin-top: .3rem; padding: .9rem 1rem 1rem; border-radius: .45rem .45rem 1.1rem 1.1rem; background: rgb(25 40 18 / .96); border: 1px solid rgb(255 255 255 / .1);
         opacity: 0; transform: translateY(-6px); transition: opacity .3s var(--ease), transform .38s var(--ease); }
     .hw-item.is-open .hw-more-in { opacity: 1; transform: none; transition-delay: .06s; }
@@ -835,12 +834,6 @@
         .hw-field.is-scatter .hw-hub { position: absolute; left: 50%; top: 50%; margin: calc(var(--hub) / -2) 0 0 calc(var(--hub) / -2); }
         .hw-field.is-scatter .hw-item { position: absolute; left: 0; top: 0; }
         .hw-field.is-scatter .hw-item.is-open { z-index: 8; }
-        /* What a tool does opens as a card beside it, over whatever is under it. */
-        .hw-field.is-scatter .hw-more { position: absolute; left: 0; top: calc(100% + .45rem); width: 22rem; }
-        .hw-field.is-scatter .hw-item.up .hw-more { top: auto; bottom: calc(100% + .45rem); }
-        .hw-field.is-scatter .hw-item.end .hw-more { left: auto; right: 0; }
-        .hw-field.is-scatter .hw-item.is-open .hw-chip { border-radius: 1.1rem; }
-        .hw-field.is-scatter .hw-more-in { margin-top: 0; border-radius: 1.1rem; border-color: rgb(245 197 24 / .35); box-shadow: 0 30px 60px -24px rgb(0 0 0 / .9); }
         /* The entrance: every tool bursts out of Anee to its place. */
         .hw.is-ready .hw-field.is-scatter .hw-item { transform: translate(var(--fx, 0px), var(--fy, 0px)) scale(.3);
             transition: opacity .5s var(--ease), transform 1s var(--ease); transition-delay: calc(.35s + var(--i) * .05s); }
@@ -877,7 +870,7 @@
         .hw-ico { width: 3.3rem; height: 3.3rem; border-radius: 1rem; box-shadow: 0 12px 24px -14px rgb(0 0 0 / .9), 0 0 0 1px rgb(255 255 255 / .12);
             transition: transform .28s var(--ease), box-shadow .28s var(--ease); }
         .hw-chip:active .hw-ico { transform: scale(.93); }
-        .hw-chip[aria-expanded="true"] .hw-ico { box-shadow: 0 0 0 3px var(--acc), 0 12px 24px -14px rgb(0 0 0 / .9); }
+        .hw-item.is-open .hw-ico { box-shadow: 0 0 0 3px var(--acc), 0 12px 24px -14px rgb(0 0 0 / .9); }
         .hw-ico img { width: 2rem; height: 2rem; }
         .hw-txt b { font-size: .74rem; font-weight: 700; line-height: 1.25; }
         .hw-txt small, .hw-plus, .hw-more { display: none; }
@@ -896,35 +889,65 @@
     }
     @media (min-width: 560px) and (max-width: 1023.98px) { .hw-field { --cols: 4; } }
 
-    /* The sheet a tool opens in on a phone. */
+    /* ---------- a tool, played on a phone ----------
+       Tapping a tool opens this: a phone playing a recording of the real app
+       in use, beside what the tool does. A sheet from the bottom on a phone,
+       a card in the middle on a desk; Previous and Next walk the tools. */
     html.hw-lock { overflow: hidden; }
-    .hw-sheet { position: fixed; inset: 0; z-index: 300; display: flex; align-items: flex-end; justify-content: center; }
-    .hw-sheet[hidden] { display: none; }
-    .hw-sheet-bg { position: absolute; inset: 0; background: rgb(6 10 4 / .62); opacity: 0; transition: opacity .3s var(--ease); }
-    .hw-sheet.is-on .hw-sheet-bg { opacity: 1; }
-    .hw-sheet-card { position: relative; width: 100%; max-width: 34rem; max-height: 85vh; overflow-y: auto; overscroll-behavior: contain;
-        padding: .6rem 1.2rem calc(1.5rem + env(safe-area-inset-bottom, 0px)); border-radius: 1.6rem 1.6rem 0 0; text-align: left; color: var(--ink);
-        background: linear-gradient(180deg, #1a2d12, #101b0b); border: 1px solid rgb(168 204 126 / .2); border-bottom: 0;
-        transform: translateY(100%); transition: transform .34s var(--ease); }
-    .hw-sheet.is-on .hw-sheet-card { transform: none; }
-    .hw-sheet-grab { display: block; width: 2.6rem; height: .3rem; margin: 0 auto 1rem; border-radius: 999px; background: rgb(255 255 255 / .25); }
-    .hw-sheet-head { display: flex; align-items: center; gap: .8rem; }
-    .hw-sheet-head .hw-ico { width: 3.3rem; height: 3.3rem; border-radius: 1rem; }
-    .hw-sheet-head .hw-ico img { width: 2rem; height: 2rem; }
-    .hw-sheet-head .hw-ico.is-face img { width: 100%; height: 100%; }
-    .hw-sheet-head b { display: block; font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; line-height: 1.2; color: #fff; }
-    .hw-sheet-head small { display: block; margin-top: .2rem; font-size: .84rem; line-height: 1.4; color: var(--mute); }
-    .hw-sheet-head em { display: inline-flex; align-items: center; gap: .3rem; margin-top: .4rem; padding: .12rem .5rem .12rem .15rem; border-radius: 999px;
+    .hw-film { position: fixed; inset: 0; z-index: 300; display: flex; align-items: flex-end; justify-content: center; }
+    .hw-film[hidden] { display: none; }
+    .hw-film-bg { position: absolute; inset: 0; background: rgb(6 10 4 / .74); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); opacity: 0; transition: opacity .3s var(--ease); }
+    .hw-film.is-on .hw-film-bg { opacity: 1; }
+    .hw-film-card { position: relative; width: 100%; max-width: 40rem; max-height: 94vh; overflow-y: auto; overscroll-behavior: contain; text-align: left; color: var(--ink);
+        padding: 1.1rem 1.1rem calc(1.4rem + env(safe-area-inset-bottom, 0px)); border-radius: 1.6rem 1.6rem 0 0;
+        background: linear-gradient(180deg, #1a2d12, #0f1a0a); border: 1px solid rgb(168 204 126 / .2); border-bottom: 0;
+        transform: translateY(100%); transition: transform .42s var(--ease); }
+    .hw-film.is-on .hw-film-card { transform: none; }
+    .hw-film-x { position: absolute; top: .8rem; right: .8rem; z-index: 2; width: 2.4rem; height: 2.4rem; border-radius: .8rem; display: grid; place-items: center;
+        background: rgb(255 255 255 / .1); color: #fff; transition: background .28s var(--ease); }
+    .hw-film-x:hover { background: rgb(255 255 255 / .18); }
+    .hw-film-x:focus-visible, .hw-film-nav button:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+    .hw-film-x svg { width: 1.1rem; height: 1.1rem; }
+    .hw-film-phone { width: min(13.5rem, 56vw); margin: .3rem auto 0; padding: .45rem; border-radius: 2.2rem; background: linear-gradient(160deg, #262d22, #0a0d08 70%);
+        box-shadow: 0 40px 70px -40px rgb(0 0 0 / .9), 0 0 0 1px rgb(255 255 255 / .1) inset, 0 0 0 6px rgb(168 204 126 / .07), 0 0 50px -12px rgb(168 204 126 / .35); }
+    .hw-film-scr { position: relative; aspect-ratio: 390 / 844; overflow: hidden; border-radius: 1.8rem; background: #f1f3f5; }
+    .hw-film-scr video { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .hw-film-scr::after { content: ''; position: absolute; left: 50%; top: 50%; width: 2.2rem; height: 2.2rem; margin: -1.1rem 0 0 -1.1rem; border-radius: 999px;
+        border: 3px solid rgb(74 124 42 / .2); border-top-color: #4a7c2a; opacity: 0; transition: opacity .3s ease; animation: hwSpin .8s linear infinite; }
+    .hw-film-scr.is-loading::after { opacity: 1; }
+    .hw-film.no-video .hw-film-phone { display: none; }
+    .hw-film-copy { margin-top: 1.1rem; }
+    .hw-film-head { display: flex; align-items: center; gap: .8rem; margin-top: .55rem; padding-right: 2.6rem; }
+    .hw-film-head .hw-ico { width: 3.1rem; height: 3.1rem; border-radius: 1rem; }
+    .hw-film-head .hw-ico img { width: 1.9rem; height: 1.9rem; }
+    .hw-film-head .hw-ico.is-face img { width: 100%; height: 100%; }
+    .hw-film-head b { display: block; font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; line-height: 1.2; color: #fff; }
+    .hw-film-head small { display: block; margin-top: .2rem; font-size: .85rem; line-height: 1.4; color: var(--mute); }
+    .hw-film-head em { display: inline-flex; align-items: center; gap: .3rem; margin-top: .4rem; padding: .12rem .5rem .12rem .15rem; border-radius: 999px;
         background: var(--acc); color: #3b2f00; font-style: normal; font-size: .62rem; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; }
-    .hw-sheet-head em img { width: 1rem; height: 1rem; border-radius: 999px; }
-    .hw-sheet-head em[hidden] { display: none; }
-    .hw-sheet-x { flex: none; align-self: flex-start; margin-left: auto; width: 2.4rem; height: 2.4rem; border-radius: .8rem; display: grid; place-items: center;
-        background: rgb(255 255 255 / .08); color: #fff; transition: background .28s var(--ease); }
-    .hw-sheet-x:hover { background: rgb(255 255 255 / .16); }
-    .hw-sheet-x:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
-    .hw-sheet-x svg { width: 1.1rem; height: 1.1rem; }
-    .hw-sheet-body { margin-top: 1.1rem; }
-    .hw-sheet-body p { font-size: .95rem; line-height: 1.6; color: #d9e5cd; }
+    .hw-film-head em img { width: 1rem; height: 1rem; border-radius: 999px; }
+    .hw-film-head em[hidden] { display: none; }
+    .hw-film-body { margin-top: 1rem; }
+    .hw-film-body p { font-size: .95rem; line-height: 1.6; color: #d9e5cd; }
+    .hw-film-nav { display: flex; justify-content: space-between; gap: .6rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgb(255 255 255 / .08); }
+    .hw-film-nav button { display: inline-flex; align-items: center; gap: .35rem; padding: .55rem .9rem; border-radius: .8rem; font-size: .85rem; font-weight: 800; color: #fff;
+        background: rgb(255 255 255 / .07); transition: background .28s var(--ease), opacity .28s var(--ease); }
+    .hw-film-nav button:hover:not(:disabled) { background: rgb(255 255 255 / .14); }
+    .hw-film-nav button:disabled { opacity: .3; cursor: default; }
+    .hw-film-nav svg { width: 1rem; height: 1rem; }
+    .hw-film.is-swap .hw-film-copy, .hw-film.is-swap .hw-film-phone { animation: hwSwap .45s var(--ease); }
+    @keyframes hwSwap { from { opacity: .15; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    @media (min-width: 768px) {
+        .hw-film { align-items: center; padding: 1.5rem; }
+        .hw-film-card { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 2.3rem; max-width: 56rem; padding: 2rem 2.3rem;
+            border-radius: 1.6rem; border-bottom: 1px solid rgb(168 204 126 / .2); opacity: 0; transform: translateY(26px) scale(.97);
+            transition: transform .42s var(--ease), opacity .3s var(--ease); }
+        .hw-film.is-on .hw-film-card { opacity: 1; transform: none; }
+        .hw-film-phone { width: 15.5rem; margin: 0; }
+        .hw-film-copy { margin-top: 0; }
+        .hw-film.no-video .hw-film-card { grid-template-columns: minmax(0, 1fr); max-width: 34rem; }
+    }
+    @media (min-width: 768px) and (max-height: 760px) { .hw-film-phone { width: 12.5rem; } }
 
     @media (prefers-reduced-motion: reduce) {
         .hw *, .hw *::before, .hw *::after { animation: none !important; transition: none !important; }
@@ -1207,7 +1230,7 @@
                 @endif
                 {{-- Anee and her tools. On a desk the script scatters the tools
                      around her (.is-scatter); a phone shows them as a grid of
-                     icons, each opening its card in the sheet below. --}}
+                     icons. Any tool opens the film modal below. --}}
                 <div class="hw-field" style="--fh: {{ 26 + count($st['items']) * 1.8 }}rem">
                 <div class="hw-hub" aria-hidden="true">
                     <i class="hw-ring"></i><i class="hw-ring"></i>
@@ -1219,9 +1242,9 @@
                         $link = $hwLink($it);
                         $uid = 'hw-' . $st['key'] . '-' . $it['key'];
                     @endphp
-                    <div class="hw-item" style="--i: {{ $i }}" @if ($it['nudge']) data-nudge="{{ implode(',', $it['nudge']) }}" @endif>
+                    <div class="hw-item" style="--i: {{ $i }}" @if ($it['nudge']) data-nudge="{{ implode(',', $it['nudge']) }}" @endif @if ($it['video']) data-video="{{ $it['video'][0] }}" data-poster="{{ $it['video'][1] }}" @endif>
                         <div class="hw-float">
-                            <button type="button" class="hw-chip" id="{{ $uid }}-b" aria-expanded="false" aria-controls="{{ $uid }}">
+                            <button type="button" class="hw-chip" id="{{ $uid }}-b" aria-haspopup="dialog">
                                 <span class="hw-ico {{ str_starts_with($it['icon'], 'anee/') ? 'is-face' : '' }}"><img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy"></span>
                                 <span class="hw-txt"><b>{{ $it['name'] }}</b><small>{{ $it['short'] }}</small></span>
                                 @if ($it['anee'])<span class="hw-by"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="">Anee</span>@endif
@@ -1273,19 +1296,26 @@
         </div>
     </div>
 
-    {{-- What a tool does, on a phone: a sheet filled from the tool's own card. --}}
-    <div class="hw-sheet" hidden role="dialog" aria-modal="true" aria-label="About this tool">
-        <div class="hw-sheet-bg" data-sheet-close></div>
-        <div class="hw-sheet-card">
-            <span class="hw-sheet-grab" aria-hidden="true"></span>
-            <div class="hw-sheet-head">
-                <span class="hw-ico"></span>
-                <div><b></b><small></small><em hidden><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="">With Anee</em></div>
-                <button type="button" class="hw-sheet-x" data-sheet-close aria-label="Close">
-                    <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
-                </button>
+    {{-- A tool, played on a phone: the real app in use, beside the tool's own card. --}}
+    <div class="hw-film" hidden role="dialog" aria-modal="true" aria-label="About this tool">
+        <div class="hw-film-bg" data-film-close></div>
+        <div class="hw-film-card">
+            <button type="button" class="hw-film-x" data-film-close aria-label="Close">
+                <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+            <div class="hw-film-phone"><div class="hw-film-scr"><video muted playsinline loop preload="none" aria-hidden="true"></video></div></div>
+            <div class="hw-film-copy">
+                <p class="hw-step hw-film-step"></p>
+                <div class="hw-film-head">
+                    <span class="hw-ico"></span>
+                    <div><b></b><small></small><em hidden><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="">With Anee</em></div>
+                </div>
+                <div class="hw-film-body"></div>
+                <div class="hw-film-nav">
+                    <button type="button" data-film-step="-1"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Previous</button>
+                    <button type="button" data-film-step="1">Next<svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>
+                </div>
             </div>
-            <div class="hw-sheet-body"></div>
         </div>
     </div>
 
@@ -1935,58 +1965,96 @@
                 if (to) to.scrollIntoView({ behavior: still() ? 'auto' : 'smooth', block: 'start' });
                 return;
             }
-            if (e.target.closest('[data-sheet-close]')) { closeSheet(); return; }
+            if (e.target.closest('[data-film-close]')) { closeFilm(); return; }
+            const step = e.target.closest('[data-film-step]');
+            if (step) { stepFilm(Number(step.dataset.filmStep)); return; }
             const chip = e.target.closest('.hw-chip');
-            if (!chip) return;
-            const item = chip.closest('.hw-item'), st = item.closest('.hw-stage');
-            // Below a desk the tools are icons, and what one does opens in a sheet.
-            if (!wide()) { openSheet(item); return; }
-            const open = !item.classList.contains('is-open');
-            st.querySelectorAll('.hw-item.is-open').forEach((x) => { if (x !== item) toggle(x, false); });
-            toggle(item, open);
+            if (chip) openFilm(chip.closest('.hw-item'));
         });
     }
-    /* The sheet: the tool's own card (its words, what you get, its link)
-       copied into a panel that rises from the bottom. */
-    let sheetFrom = null;
-    function openSheet(item) {
-        const root = item.closest('[data-hw]'), sheet = root.querySelector('.hw-sheet');
-        if (!sheet) return;
+    /* The film modal: the tool's recording on a phone, and its own card
+       (its words, what you get, its link). Opening another tool from inside
+       swaps both; closing stops the video and drops its source, so a film
+       is only fetched while it is being watched. */
+    let filmFrom = null;
+    function openFilm(item) {
+        const root = item.closest('[data-hw]'), film = root.querySelector('.hw-film');
+        if (!film) return;
         const chip = item.querySelector('.hw-chip'), ico = chip.querySelector('.hw-ico');
-        const head = sheet.querySelector('.hw-sheet-head'), hIco = head.querySelector('.hw-ico');
+        const head = film.querySelector('.hw-film-head'), hIco = head.querySelector('.hw-ico');
         hIco.innerHTML = ico.innerHTML;
         hIco.className = ico.className;
-        head.querySelector('b').textContent = chip.querySelector('.hw-txt b').textContent;
+        const name = chip.querySelector('.hw-txt b').textContent;
+        head.querySelector('b').textContent = name;
         head.querySelector('small').textContent = chip.querySelector('.hw-txt small').textContent;
         head.querySelector('em').hidden = !chip.querySelector('.hw-by');
-        sheet.querySelector('.hw-sheet-body').innerHTML = item.querySelector('.hw-more-in').innerHTML;
-        sheet.setAttribute('aria-label', head.querySelector('b').textContent);
-        sheetFrom = chip;
-        chip.setAttribute('aria-expanded', 'true');
-        sheet.hidden = false;
-        document.documentElement.classList.add('hw-lock');
-        requestAnimationFrame(() => requestAnimationFrame(() => sheet.classList.add('is-on')));
-        setTimeout(() => sheet.querySelector('.hw-sheet-x').focus({ preventScroll: true }), 60);
+        film.querySelector('.hw-film-step').innerHTML = item.closest('.hw-stage').querySelector('.hw-step').innerHTML;
+        film.querySelector('.hw-film-body').innerHTML = item.querySelector('.hw-more-in').innerHTML;
+        film.setAttribute('aria-label', name);
+        const scr = film.querySelector('.hw-film-scr'), v = film.querySelector('video');
+        v.pause();
+        film.classList.toggle('no-video', !item.dataset.video);
+        if (item.dataset.video) {
+            scr.classList.add('is-loading');
+            v.poster = item.dataset.poster || '';
+            v.src = item.dataset.video;
+            v.onplaying = () => scr.classList.remove('is-loading');
+            const p = v.play();
+            if (p) p.catch(() => scr.classList.remove('is-loading'));
+        } else {
+            v.removeAttribute('src');
+            v.removeAttribute('poster');
+            v.load();
+        }
+        const all = [...root.querySelectorAll('.hw-steps .hw-item')], i = all.indexOf(item);
+        film.querySelector('[data-film-step="-1"]').disabled = i <= 0;
+        film.querySelector('[data-film-step="1"]').disabled = i >= all.length - 1;
+        if (filmFrom && filmFrom !== item) toggle(filmFrom, false);
+        filmFrom = item;
+        toggle(item, true);
+        if (film.hidden) {
+            film.hidden = false;
+            document.documentElement.classList.add('hw-lock');
+            requestAnimationFrame(() => requestAnimationFrame(() => film.classList.add('is-on')));
+            setTimeout(() => film.querySelector('.hw-film-x').focus({ preventScroll: true }), 60);
+        } else {
+            film.classList.remove('is-swap'); void film.offsetWidth; film.classList.add('is-swap');
+            film.querySelector('.hw-film-card').scrollTop = 0;
+        }
     }
-    function closeSheet() {
-        const sheet = sheetFrom && sheetFrom.closest('[data-hw]').querySelector('.hw-sheet');
-        if (!sheet || sheet.hidden) return;
-        sheet.classList.remove('is-on');
+    function stepFilm(d) {
+        if (!filmFrom) return;
+        const all = [...filmFrom.closest('[data-hw]').querySelectorAll('.hw-steps .hw-item')];
+        const next = all[all.indexOf(filmFrom) + d];
+        if (next) openFilm(next);
+    }
+    function closeFilm() {
+        const item = filmFrom, film = item && item.closest('[data-hw]').querySelector('.hw-film');
+        if (!film || film.hidden) return;
+        filmFrom = null;
+        toggle(item, false);
+        film.classList.remove('is-on', 'is-swap');
         document.documentElement.classList.remove('hw-lock');
-        const from = sheetFrom;
-        from.setAttribute('aria-expanded', 'false');
-        setTimeout(() => { sheet.hidden = true; from.focus({ preventScroll: true }); }, still() ? 0 : 340);
+        const v = film.querySelector('video');
+        v.pause();
+        setTimeout(() => {
+            film.hidden = true;
+            v.removeAttribute('src');
+            v.load();
+            item.querySelector('.hw-chip').focus({ preventScroll: true });
+        }, still() ? 0 : 360);
     }
-    // Escape closes the sheet first (caught before the dashboard's modal hears it).
+    // Escape closes the film first (caught before the dashboard's modal hears
+    // it); the arrow keys walk the tools.
     window.addEventListener('keydown', (e) => {
-        if (e.key !== 'Escape' || !sheetFrom) return;
-        const sheet = sheetFrom.closest('[data-hw]').querySelector('.hw-sheet');
-        if (sheet && !sheet.hidden) { e.stopPropagation(); closeSheet(); }
+        if (!filmFrom) return;
+        if (e.key === 'Escape') { e.stopPropagation(); closeFilm(); }
+        else if (e.key === 'ArrowRight') stepFilm(1);
+        else if (e.key === 'ArrowLeft') stepFilm(-1);
     }, true);
 
     function toggle(item, on) {
         item.classList.toggle('is-open', on);
-        item.querySelector('.hw-chip').setAttribute('aria-expanded', on ? 'true' : 'false');
         if (item._hw) ['base', 'flow', 'dest'].forEach((k) => item._hw[k].classList.toggle('is-on', on));
     }
 

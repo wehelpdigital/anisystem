@@ -285,6 +285,7 @@ class HowItWorks
         foreach ($stages as &$st) {
             foreach ($st['items'] as &$it) {
                 $it['nudge'] = $nudge[$it['key']] ?? null;
+                $it['video'] = self::video($it['key']);
             }
             unset($it);
         }
@@ -398,6 +399,26 @@ class HowItWorks
                 ['✅', 'Tick it done', 'The shed and the costs follow'],
                 ['🌱', 'Check the growth stage', 'Where each lot stands today'],
             ],
+        ];
+    }
+
+    /**
+     * A tool's film: a phone recording of the real app in use, played in the
+     * modal a tool opens (public/videos/how/{key}.mp4 and its .webp poster,
+     * recorded on the test owner's account). Null until one is recorded; the
+     * modal then shows the tool's words alone. The file's time busts caches.
+     */
+    public static function video(string $key): ?array
+    {
+        $mp4 = public_path('videos/how/' . $key . '.mp4');
+        if (! is_file($mp4)) {
+            return null;
+        }
+        $poster = public_path('videos/how/' . $key . '.webp');
+
+        return [
+            asset('videos/how/' . $key . '.mp4') . '?v=' . filemtime($mp4),
+            is_file($poster) ? asset('videos/how/' . $key . '.webp') . '?v=' . filemtime($poster) : '',
         ];
     }
 
