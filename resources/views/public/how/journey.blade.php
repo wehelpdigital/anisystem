@@ -399,6 +399,85 @@
     .hw-stage.is-in:not(.is-live) .hw-flow, .hw-stage.is-in:not(.is-live) .hw-float,
     .hw-stage.is-in:not(.is-live) .hw-ring, .hw-stage.is-in:not(.is-live) .hw-dot.p { animation-play-state: paused; }
 
+    /* ---------- between steps 2 and 3: asking Anee in her chat ---------- */
+    .hw-band { position: relative; isolation: isolate; scroll-margin-top: 6rem; display: grid; grid-template-columns: minmax(0, 1fr); row-gap: 1.3rem;
+        padding: 2.6rem 0 3rem var(--gut); }
+    .hw-band-svg { position: absolute; left: 0; top: 0; z-index: -1; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    .hw-band-phone { display: flex; justify-content: center; }
+    .hw-phone2 { position: relative; width: 15.5rem; height: 30rem; padding: .5rem; border-radius: 2.5rem; background: linear-gradient(160deg, #262d22, #0a0d08 70%);
+        box-shadow: 0 50px 90px -40px rgb(0 0 0 / .9), 0 0 0 1px rgb(255 255 255 / .1) inset, 0 0 0 7px rgb(168 204 126 / .07), 0 0 60px -10px rgb(168 204 126 / .35); }
+    .hw-scr2 { position: relative; height: 100%; overflow: hidden; border-radius: 2.05rem; background: #f6f7f4; color: #1f2937; text-align: left; }
+    .hw-band-notes { display: flex; flex-wrap: wrap; justify-content: center; gap: .55rem; }
+    .hw-note { display: flex; align-items: center; gap: .55rem; padding: .55rem .85rem .55rem .55rem; border-radius: 1rem; background: rgb(255 255 255 / .97); color: #14210c;
+        box-shadow: 0 22px 44px -22px rgb(0 0 0 / .75); opacity: .5; transform: scale(.97);
+        transition: opacity .4s var(--ease), transform .4s var(--ease), box-shadow .4s var(--ease); }
+    .hw-note > span { width: 2rem; height: 2rem; border-radius: .7rem; display: grid; place-items: center; background: #eef6e5; font-size: 1rem; }
+    .hw-note b { display: block; font-size: .8rem; line-height: 1.2; }
+    .hw-note small { display: block; font-size: .7rem; color: #5b6b4c; }
+    .hw-note.is-read { opacity: 1; transform: none; }
+    .hw-note.is-hot { opacity: 1; transform: scale(1.05); box-shadow: 0 0 0 3px rgb(245 197 24 / .8), 0 22px 44px -22px rgb(0 0 0 / .75); }
+    /* The chat, as the app draws it (inside the 390px .hwr). */
+    .s-chat { background: #f6f7f4; }
+    .hwc-top .back { flex: none; width: 24px; height: 24px; color: #4b5563; }
+    .hwc-top .t { min-width: 0; }
+    .hwc-top .t b { max-width: 190px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hwc-top .kebab { display: grid; gap: 3px; padding: 0 8px; }
+    .hwc-top .kebab i { width: 4px; height: 4px; border-radius: 999px; background: #4b5563; }
+    .hwc-body { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+    .hwc-list { display: flex; flex-direction: column; padding: 16px; transition: transform .7s var(--ease); }
+    .hwc-day { display: flex; justify-content: center; margin-bottom: 14px; }
+    .hwc-day span { padding: 3px 12px; border-radius: 999px; background: #e9ede4; color: #6b7280; font-size: 11px; font-weight: 700; }
+    .hwc-msg { display: none; gap: 10px; align-items: flex-end; margin-bottom: 16px; opacity: 0; transform: translateY(10px); transition: opacity .45s var(--ease), transform .5s var(--ease); }
+    .hwc-msg.is-shown { display: flex; }
+    .hwc-msg.is-in { opacity: 1; transform: none; }
+    .hwc-msg.me { flex-direction: row-reverse; }
+    .hwc-face { flex: none; width: 38px; height: 38px; border-radius: 999px; overflow: hidden; display: grid; place-items: center; background: #4a7c2a; color: #fff; font-size: 12px; font-weight: 800; }
+    .hwc-msg:not(.me) .hwc-face { background: #f3f8ec; box-shadow: 0 0 0 2px #fff, 0 0 0 3px #c9e0ad; }
+    .hwc-face img { width: 100%; height: 100%; object-fit: cover; }
+    .hwc-b { max-width: 82%; padding: 10px 14px; font-size: 14.5px; line-height: 1.55; color: #1f2937; background: #fff; border: 1px solid #f3f4f6;
+        border-radius: 18px 18px 18px 6px; box-shadow: 0 1px 2px rgb(26 26 26 / .06), 0 3px 10px -4px rgb(26 26 26 / .08); }
+    .hwc-msg.me .hwc-b { color: #fff; background: linear-gradient(135deg, #4a7c2a, #3d6823); border-color: transparent; border-radius: 18px 18px 6px 18px; box-shadow: 0 3px 12px -4px rgb(45 80 22 / .45); }
+    .hwc-b img { display: block; width: 100%; height: 150px; margin-bottom: 7px; border-radius: 10px; object-fit: cover; }
+    .hwc-b time { display: block; margin-top: 4px; text-align: right; font-size: 10.5px; font-weight: 600; opacity: .55; }
+    .hwc-b p { margin: 0 0 6px; }
+    .hwc-b ul { list-style: disc; margin: 6px 0; padding-left: 20px; }
+    .hwc-b li { margin: 3px 0; }
+    .hwc-b .cost { display: inline-flex; align-items: center; gap: 5px; margin-top: 8px; padding: 2px 9px; border-radius: 999px; font-size: 11px; font-weight: 800; color: #8a6100; background: rgb(245 197 24 / .15); }
+    .hwc-b .cost::before { content: ''; width: 6px; height: 6px; border-radius: 999px; background: #f5c518; }
+    .hwc-wait { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #4b5563; }
+    .hwc-wait .dots { display: inline-flex; gap: 4px; }
+    .hwc-wait .dots i { width: 7px; height: 7px; border-radius: 999px; background: #8fb86a; animation: hwcDot 1s ease-in-out infinite; }
+    .hwc-wait .dots i:nth-child(2) { animation-delay: .15s; } .hwc-wait .dots i:nth-child(3) { animation-delay: .3s; }
+    @keyframes hwcDot { 0%, 80%, 100% { opacity: .35; transform: none; } 40% { opacity: 1; transform: translateY(-3px); } }
+    .hwc-comp { flex: none; margin: 8px 14px 4px; padding: 6px; border-radius: 26px; background: #fff; box-shadow: 0 6px 20px -10px rgb(26 26 26 / .3), 0 0 0 1px #eef0ea; }
+    .hwc-shot { display: none; position: relative; width: 56px; height: 56px; margin: 4px 0 6px 6px; }
+    .hwc-shot img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
+    .hwc-shot i { position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; border-radius: 999px; display: grid; place-items: center; background: #374151; color: #fff; font-size: 12px; font-style: normal; }
+    .hwc-comp.has-shot .hwc-shot { display: block; animation: hwrUp .4s var(--ease) both; }
+    .hwc-row { display: flex; align-items: center; gap: 8px; }
+    .hwc-row .cam { flex: none; width: 38px; height: 38px; border-radius: 999px; display: grid; place-items: center; background: #eef6e5; color: #3d6823; }
+    .hwc-row .cam svg { width: 20px; height: 20px; }
+    .hwc-row .in { flex: 1; min-width: 0; max-height: 4.1em; overflow: hidden; font-size: 15px; line-height: 1.35; color: #1f2937; }
+    .hwc-row .in .ph { color: #9ca3af; }
+    .hwc-row .in.has .ph { display: none; }
+    .hwc-row .in em { display: inline-block; width: 2px; height: 18px; margin-left: 1px; vertical-align: -3px; background: #4a7c2a; opacity: 0; }
+    .hwc-row .in.is-focus em { opacity: 1; animation: hwCaret 1s steps(1) infinite; }
+    .hwc-row .go { flex: none; width: 40px; height: 40px; border-radius: 999px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #4a7c2a, #3d6823);
+        transition: transform .2s var(--ease); }
+    .hwc-row .go svg { width: 18px; height: 18px; }
+    .hwc-row .go.is-press { transform: scale(.88); }
+    .hwc-credits { flex: none; padding: 2px 0 12px; text-align: center; font-size: 11px; color: #6b7280; }
+    .hwc-credits i { display: inline-block; width: 8px; height: 8px; border-radius: 999px; background: #f5c518; }
+    @media (min-width: 1024px) {
+        .hw-band { grid-template-columns: minmax(0, 1fr) 18rem minmax(0, 1fr); column-gap: 2.5rem; align-items: center; padding: 4.5rem 0; }
+        .hw-band-copy { grid-column: 1; grid-row: 1; justify-self: end; max-width: 27rem; text-align: right; }
+        .hw-band-copy .hw-step { justify-content: flex-end; }
+        .hw-band-phone { grid-column: 2; grid-row: 1; }
+        .hw-phone2 { width: 16.5rem; height: 32rem; }
+        .hw-band-notes { grid-column: 3; grid-row: 1; justify-self: start; flex-direction: column; align-items: flex-start; gap: 2.2rem; }
+        .hw-note:nth-child(2) { margin-left: 2.4rem; }
+    }
+
     /* The end of the rail: the season comes round again. */
     .hw-end { position: relative; padding: 1rem 0 0 var(--gut); }
     .hw-loop { position: absolute; left: calc(var(--rail-x) - var(--pad) - var(--hub) / 2); top: .6rem; width: var(--hub); height: var(--hub); border-radius: 999px; display: grid; place-items: center;
@@ -635,6 +714,10 @@
                 @endforeach
                 </div>
             </section>
+            {{-- Between steps 2 and 3: the second phone, asking Anee about a crop. --}}
+            @if ($n === 1)
+                @include('public.how.chat-band')
+            @endif
         @endforeach
 
         <div class="hw-end">
@@ -757,6 +840,101 @@
                 await sleep(1200);
                 dash.classList.remove('is-on'); dash.classList.add('is-gone'); ping(-1);
                 await sleep(800);
+            }
+        })();
+    }
+
+    /* ---- between steps 2 and 3: a grower asks Anee about a crop in the
+       real chat. A photo, the question typed, sent; Anee reads the lot, the
+       weather and the photo (each note lights up), then answers. ---- */
+    function chatFilm(root) {
+        const band = root.querySelector('.hw-band');
+        if (!band) return;
+        const scr = band.querySelector('.hw-scr2'), app = band.querySelector('.hwr');
+        const fit = () => { if (scr.clientWidth) app.style.setProperty('--sc', scr.clientWidth / 390); };
+        fit();
+        new ResizeObserver(fit).observe(scr);
+        const q = (sel) => band.querySelector(sel);
+        const ask = q('[data-c="ask"]'), wait = q('[data-c="wait"]'), answer = q('[data-c="answer"]');
+        const comp = q('.hwc-comp'), input = q('.hwc-row .in'), cam = q('.hwc-row .cam'), go = q('.hwc-row .go');
+        const list = q('.hwc-list'), body = q('.hwc-body'), tap = q('.hw-tap'), waitTx = wait.querySelector('.tx');
+        const notes = [...band.querySelectorAll('.hw-note')];
+        const data = JSON.parse(q('[data-hw-chat]').textContent || '{}');
+        const sc = () => parseFloat(app.style.getPropertyValue('--sc')) || .6;
+        // The notes beside the phone, and their lines on a desk.
+        const svg = q('.hw-band-svg'), phoneEl = q('.hw-phone2');
+        const lines = () => {
+            svg.textContent = '';
+            if (!wide()) return;
+            const b = band.getBoundingClientRect(), p = phoneEl.getBoundingClientRect();
+            svg.setAttribute('viewBox', `0 0 ${b.width} ${b.height}`);
+            notes.forEach((n, i) => {
+                const r = n.getBoundingClientRect();
+                const sx = p.right - b.left, sy = p.top - b.top + p.height * (.3 + i * .2);
+                const ex = r.left - b.left, ey = r.top - b.top + r.height / 2, dx = ex - sx;
+                const d = `M ${sx} ${sy} C ${sx + dx * .5} ${sy}, ${sx + dx * .5} ${ey}, ${ex} ${ey}`;
+                const base = make('path', { d, class: 'hw-arc', pathLength: 1 }), flow = make('path', { d, class: 'hw-flow', pathLength: 1 }), dot = make('circle', { cx: ex, cy: ey, r: 3.5, class: 'hw-dest' });
+                [base, flow, dot].forEach((x) => x.style.setProperty('--i', i + 2));
+                svg.append(base, flow, dot);
+                n._arc = [base, flow, dot];
+                if (n.classList.contains('is-hot')) n._arc.forEach((x) => x.classList.add('is-on'));
+            });
+        };
+        new ResizeObserver(() => requestAnimationFrame(lines)).observe(band);
+        const note = (k) => notes.forEach((n, i) => {
+            n.classList.toggle('is-hot', i === k);
+            if (k === 99 || i < k) n.classList.add('is-read');
+            (n._arc || []).forEach((x) => x.classList.toggle('is-on', i === k));
+        });
+        const show = (m) => { m.classList.add('is-shown'); void m.offsetWidth; m.classList.add('is-in'); };
+        const hide = (m) => m.classList.remove('is-in', 'is-shown');
+        const roll = (y) => { const max = Math.max(0, list.offsetHeight - body.clientHeight); list.style.transform = 'translateY(' + (-Math.min(max, Math.max(0, y))) + 'px)'; };
+        const toEnd = () => roll(Infinity);
+        const toTop = (m) => roll((m.getBoundingClientRect().top - list.getBoundingClientRect().top) / sc() - 14);
+        if (still()) {
+            show(ask); show(answer); toEnd(); notes.forEach((n) => n.classList.add('is-read'));
+            return;
+        }
+        let seen = false;
+        new IntersectionObserver((es) => {
+            seen = es.some((e) => e.isIntersecting);
+            if (seen) band.classList.add('is-in');
+        }, { threshold: .2 }).observe(band);
+        const until = async () => { while (!seen || document.hidden) await sleep(400); };
+        const tapAt = (el) => {
+            const a = app.getBoundingClientRect(), r = el.getBoundingClientRect(), k = sc();
+            tap.style.left = ((r.left - a.left) / k + (r.width / k) * .5) + 'px';
+            tap.style.top = ((r.top - a.top) / k + (r.height / k) * .5) + 'px';
+            tap.classList.remove('is-tap'); void tap.offsetWidth; tap.classList.add('is-tap');
+        };
+        const out = input.querySelector('.v');
+        const reset = () => {
+            [ask, wait, answer].forEach(hide);
+            comp.classList.remove('has-shot'); input.classList.remove('has', 'is-focus'); out.textContent = '';
+            list.style.transform = ''; waitTx.textContent = (data.reading || [''])[0];
+            notes.forEach((n) => { n.classList.remove('is-hot', 'is-read'); (n._arc || []).forEach((x) => x.classList.remove('is-on')); });
+        };
+        (async () => {
+            await sleep(600);
+            for (;;) {
+                reset();
+                await sleep(900);
+                await until(); tapAt(cam); await sleep(380); comp.classList.add('has-shot'); await sleep(800);
+                await until(); tapAt(input); input.classList.add('is-focus', 'has'); await sleep(250);
+                for (const ch of (data.question || '')) { await until(); out.textContent += ch; await sleep(38); }
+                await sleep(450);
+                input.classList.remove('is-focus'); tapAt(go); go.classList.add('is-press'); await sleep(160); go.classList.remove('is-press');
+                show(ask); comp.classList.remove('has-shot'); out.textContent = ''; input.classList.remove('has');
+                toEnd(); await sleep(800);
+                show(wait); toEnd();
+                for (let k = 0; k < (data.reading || []).length; k++) {
+                    await until(); waitTx.textContent = data.reading[k]; note(k); await sleep(1350);
+                }
+                note(99);
+                hide(wait); show(answer); toTop(answer); await sleep(2800);
+                await until(); toEnd(); await sleep(3400);
+                [ask, answer].forEach((m) => m.classList.remove('is-in'));
+                await sleep(600);
             }
         })();
     }
@@ -1013,6 +1191,7 @@
         root.classList.add('is-ready');
         pings(root);
         phone(root);
+        chatFilm(root);
         stages.forEach(field);
         rail(root, scroller, stages);
         if (still()) stages.forEach((st) => st.classList.add('is-in'));

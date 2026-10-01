@@ -293,6 +293,40 @@ class HowItWorks
         ];
     }
 
+    /**
+     * The second phone, between steps 2 and 3: a grower asks Anee about a
+     * crop in the real chat, with a photo, and Anee answers knowing the lot,
+     * its stage and the weather. The notes say what she read first.
+     */
+    public static function chat(): array
+    {
+        $ph = Region::ph();
+
+        return [
+            'initials' => $ph ? 'JD' : 'SR',
+            'question' => $ph
+                ? 'Naninilaw ang dahon ng palay ko sa Lot 2. Ano ang dapat kong gawin?'
+                : 'The leaves on my rice in Lot 2 are turning yellow. What should I do?',
+            'reading' => $ph
+                ? ['Binabasa ang Lot 2 at ang stage nito…', 'Tinitingnan ang panahon sa bukid mo…', 'Sinusuri ang litrato mo…']
+                : ['Reading Lot 2 and its stage…', 'Checking the weather on your farm…', 'Looking at your photo…'],
+            'lead' => $ph ? 'Nasa tillering na ang Lot 2 (day 28).' : 'Lot 2 is at tillering (day 28).',
+            'body' => $ph
+                ? 'Ang paninilaw ng mga lumang dahon sa stage na ito ay kadalasang kulang sa nitrogen.'
+                : 'Yellowing on the older leaves at this stage usually means the crop is short of nitrogen.',
+            'steps' => $ph
+                ? ['Lagyan ng <b>1 sako ng urea kada ektarya</b> ngayong linggo.', 'Gawin ito <b>bago umulan sa Huwebes</b>, para hindi masayang.', 'Kung may brown na batik, padalhan mo ako ng mas malapit na litrato.']
+                : ['Apply <b>1 bag of urea per hectare</b> this week.', "Do it <b>before Thursday's rain</b>, so none of it is wasted.", 'If you see brown spots, send me a closer photo.'],
+            'cost' => 7,
+            'balance' => 120,
+            'notes' => [
+                ['🌾', 'Lot 2, day 28', 'Tillering stage'],
+                ['🌦️', 'Rain on Thursday', 'Feed the crop before it'],
+                ['📷', 'Your photo', 'Older leaves turning yellow'],
+            ],
+        ];
+    }
+
     /** The notes that float around the phone, one for each card on its dashboard. */
     public static function pings(): array
     {
