@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Log;
  *                         AniSystem store, the farm as custom data
  *
  * The moment they give the farm and the email (captureFarm), before any
- * question; the question and its answer link join the same lead when the
+ * question (and someone the form turns away for the week still joins the
+ * list, listOnly); the question and its answer link join the same lead when the
  * answer is emailed (noteQuestion). The same email again adds lines to the
  * lead it already is, never a second lead.
  *
@@ -58,6 +59,25 @@ class AskAneeLeads
                 'Gave their farm: ' . trim($q->farmWords() . ' of ' . $q->cropLabel . ($q->placeWords() ? ' in ' . $q->placeWords() : '')) . '.');
         } catch (\Throwable $e) {
             Log::warning('Ask Anee: CRM lead not written', ['id' => $q->id, 'error' => $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Someone the form turned away (this email or this browser already asked
+     * this week) still gave their name and email: they join the Acumbamail
+     * list all the same. No row and no CRM lead, since nothing was asked.
+     */
+    public function listOnly(string $email, string $name): void
+    {
+        [$first, $last] = $this->split($name, $email);
+        try {
+            $f = config('acumbamail.fields');
+            app(AcumbamailService::class)->addLead($email, [
+                (string) $f['first_name'] => $first,
+                (string) $f['last_name'] => $last,
+            ]);
+        } catch (\Throwable $e) {
+            report($e);
         }
     }
 

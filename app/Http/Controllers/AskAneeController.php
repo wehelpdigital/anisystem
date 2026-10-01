@@ -106,6 +106,15 @@ class AskAneeController extends Controller
         }
         $editing = ! empty($data['token']) ? $this->byToken($data['token']) : null;
         if ($refused = $this->refusal($request, $email, $editing?->id)) {
+            // Everyone who fills in the form joins the anee.io subscribers
+            // list (the owner, 2026-10-02), even when this week's question is
+            // already used. A member is on the list already, as a member, and
+            // listing them again would stamp them a lead.
+            if (($refused->getData(true)['data']['refused'] ?? '') !== 'member') {
+                $name = (string) $data['name'];
+                app()->terminating(fn () => app(AskAneeLeads::class)->listOnly($email, $name));
+            }
+
             return $refused;
         }
 
