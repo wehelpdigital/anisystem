@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AsAskQuestion;
 use App\Models\AsSitePage;
+use App\Models\User;
 use App\Services\AskAnee;
 use App\Services\AskAneeLeads;
 use App\Services\MailService;
@@ -12,6 +13,7 @@ use App\Support\CropCatalog;
 use App\Support\Recaptcha;
 use App\Support\SitePages;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 
@@ -35,9 +37,23 @@ use Illuminate\Support\Str;
  * Every step a visitor sends carries a reCAPTCHA token, a hidden field no
  * person fills, and a rate limit per address; the model is only asked at
  * step 2 and on the first opening of the answer.
+ *
+ * Who may ask (the same day, on the owner's word): people who are not
+ * members yet, one question a week. Both are judged on the email in the
+ * database, at every step that could spend the question (refusal()). The
+ * browser keeps its own week as well (a cookie set when the answer is sent),
+ * so one person cannot spend a new address on every question.
  */
 class AskAneeController extends Controller
 {
+    /** One free question in this many days, for an email and for a browser. */
+    private const WEEK_DAYS = 7;
+
+    /** How many answers one browser may be sent in that week. */
+    private const BROWSER_MAX = 1;
+
+    private const BROWSER_COOKIE = 'anee_ask';
+
     public function __construct(private AskAnee $anee) {}
 
     public function page()
@@ -84,9 +100,13 @@ class AskAneeController extends Controller
         $ip = (string) $request->ip();
         foreach ([['ask-f-h:' . $ip, 10, 3600], ['ask-e:' . sha1($email), 6, 86400]] as [$key, $max, $decay]) {
             if (RateLimiter::tooManyAttempts($key, $max)) {
-                return $this->json(false, 'That is a lot for one day. Make a free account and ask Anee as much as you like.', ['limited' => true], 429);
+                return $this->json(false, 'That is a lot for one day. Please try again tomorrow.', ['limited' => true], 429);
             }
             RateLimiter::hit($key, $decay);
+        }
+        $editing = ! empty($data['token']) ? $this->byToken($data['token']) : null;
+        if ($refused = $this->refusal($request, $email, $editing?->id)) {
+            return $refused;
         }
 
         $fields = [
@@ -101,7 +121,7 @@ class AskAneeController extends Controller
             'town' => Str::limit(trim(strip_tags($data['town'])), 118, ''),
         ];
         // The same visitor going back to fix a detail keeps their row.
-        $q = ! empty($data['token']) ? $this->byToken($data['token']) : null;
+        $q = $editing;
         if ($q && in_array($q->status, ['profile', 'declined', 'ready', 'failed'], true)) {
             $q->update($fields);
         } else {
@@ -145,12 +165,16 @@ class AskAneeController extends Controller
             return $this->json(false, 'Please fill in your farm details first.', ['restart' => true], 410);
         }
         if ($q->status === 'emailed') {
-            return $this->json(false, 'You have used your free question. Make a free account and ask Anee as much as you like.', ['used' => true], 409);
+            return $this->json(false, 'You have used this week\'s free question. You can ask again next week.', ['used' => true], 409);
+        }
+        // Another tab may have spent this email's week since the farm step.
+        if ($refused = $this->refusal($request, (string) $q->email, $q->id)) {
+            return $refused;
         }
         $ip = (string) $request->ip();
         foreach ([['ask-q-h:' . $ip, 8, 3600], ['ask-q-d:' . $ip, 25, 86400]] as [$key, $max, $decay]) {
             if (RateLimiter::tooManyAttempts($key, $max)) {
-                return $this->json(false, 'That is a lot of questions for one day. Make a free account and ask Anee as much as you like.', ['limited' => true], 429);
+                return $this->json(false, 'That is a lot of questions for one day. Please try again tomorrow.', ['limited' => true], 429);
             }
             RateLimiter::hit($key, $decay);
         }
@@ -234,6 +258,10 @@ class AskAneeController extends Controller
         if ($q->status === 'emailed') {
             return $this->json(true, 'Sent.', ['email' => $q->email]);
         }
+        // The last door before the question is spent: asked once more.
+        if ($refused = $this->refusal($request, (string) $q->email, $q->id)) {
+            return $refused;
+        }
         $url = route('ask.answer', ['token' => $q->token]);
         $sent = app(MailService::class)->sendTemplate('ask_anee_answer', (string) $q->email, (string) $q->name, [
             'firstName' => e(Str::before((string) $q->name, ' ') ?: 'there'),
@@ -250,17 +278,23 @@ class AskAneeController extends Controller
         }
         $q->update(['status' => 'emailed', 'emailedAt' => now()]);
 
-        $payload = ['success' => true, 'message' => 'Sent.', 'data' => ['email' => $q->email]];
-        $note = fn () => app(AskAneeLeads::class)->noteQuestion($q->fresh(), $url);
-        if (function_exists('fastcgi_finish_request')) {
-            response()->json($payload)->send();
-            fastcgi_finish_request();
-            $note();
-            exit;
-        }
-        $note();
+        /* The lead hears of the question once the visitor has their answer.
+         * A terminating callback, not a hand sent response: the browser's
+         * week travels as a cookie, and only a response that goes back out
+         * through the middleware gets it sealed and attached. (Symfony's
+         * send() finishes the FastCGI request before these callbacks run.) */
+        app()->terminating(function () use ($q, $url) {
+            if ($now = $q->fresh()) {
+                app(AskAneeLeads::class)->noteQuestion($now, $url);
+            }
+        });
+        $week = $this->browserSends($request);
+        $week[] = now()->getTimestamp();
 
-        return response()->json($payload);
+        return response()->json(['success' => true, 'message' => 'Sent.', 'data' => [
+            'email' => $q->email,
+            'next' => now()->addDays(self::WEEK_DAYS)->toIso8601String(),
+        ]])->withCookie(cookie(self::BROWSER_COOKIE, json_encode($week), self::WEEK_DAYS * 1440));
     }
 
     /** Step 5: the emailed button. The answer, or the wait for it. */
@@ -417,6 +451,65 @@ class AskAneeController extends Controller
         }
 
         return null;
+    }
+
+    /**
+     * Why this email (or this browser) may not ask now, or null.
+     *
+     *   member   the email already has an anee.io login: they ask in the app
+     *   week     the email was sent an answer in the last seven days
+     *   browser  this browser was, under any email (the cookie's week)
+     *
+     * The page shows each in a modal and starts the form over. $except is the
+     * question being asked now, which never counts against itself.
+     */
+    private function refusal(Request $request, string $email, ?int $except = null)
+    {
+        $email = mb_strtolower(trim($email));
+        if ($email !== '' && User::where('email', $email)->where('deleteStatus', 1)->exists()) {
+            return $this->json(false, 'This email already has an anee.io account. Log in to ask Anee.', [
+                'refused' => 'member', 'email' => $email,
+            ], 403);
+        }
+        $last = $email === '' ? null : AsAskQuestion::where('email', $email)
+            ->where('status', 'emailed')->where('deleteStatus', 1)
+            ->where('emailedAt', '>=', now()->subDays(self::WEEK_DAYS))
+            ->when($except, fn ($w) => $w->where('id', '!=', $except))
+            ->max('emailedAt');
+        if ($last) {
+            return $this->refusedUntil('week', $email, Carbon::parse($last)->addDays(self::WEEK_DAYS),
+                'This email already asked Anee this week.');
+        }
+        $used = $this->browserSends($request);
+        if (count($used) >= self::BROWSER_MAX) {
+            // Open again when enough of them have aged out of the week.
+            $until = Carbon::createFromTimestamp($used[count($used) - self::BROWSER_MAX], config('app.timezone'))->addDays(self::WEEK_DAYS);
+
+            return $this->refusedUntil('browser', $email, $until, 'This browser already asked Anee this week.');
+        }
+
+        return null;
+    }
+
+    private function refusedUntil(string $why, string $email, Carbon $until, string $message)
+    {
+        return $this->json(false, $message, [
+            'refused' => $why,
+            'email' => $email,
+            'until' => $until->toIso8601String(),
+            'untilText' => $until->format('l, F j \a\t g:i A'),
+        ], 403);
+    }
+
+    /** When this browser was sent its answers this week (the cookie), oldest first. */
+    private function browserSends(Request $request): array
+    {
+        $raw = json_decode((string) $request->cookie(self::BROWSER_COOKIE, '[]'), true);
+        $since = now()->subDays(self::WEEK_DAYS)->getTimestamp();
+        $out = array_values(array_filter(is_array($raw) ? $raw : [], fn ($t) => is_int($t) && $t > $since && $t <= time() + 60));
+        sort($out);
+
+        return $out;
     }
 
     /** Anee's words as the page draws them: escaped, then her faces. */

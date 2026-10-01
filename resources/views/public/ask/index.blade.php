@@ -148,6 +148,49 @@
     .ak-ghost { display: inline-flex; align-items: center; justify-content: center; padding: .6rem 1rem; border-radius: .8rem; font-weight: 700;
         color: #fff; border: 1.5px solid rgb(255 255 255 / .45); background: transparent; transition: background .28s cubic-bezier(.22,1,.36,1); }
     .ak-ghost:hover { background: rgb(255 255 255 / .1); }
+    /* Start over: the form comes back empty. */
+    .ak-again { margin-top: 1.1rem; display: flex; flex-direction: column; align-items: center; gap: .45rem; }
+    .ak-reset { display: inline-flex; align-items: center; gap: .45rem; padding: .6rem 1.1rem; border-radius: 999px; font-weight: 800; font-size: .92rem;
+        color: #2f5219; background: #fff; border: 1.5px solid #cfe3b8;
+        transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .ak-reset:hover { background: #f3f8ec; border-color: #9fc47a; transform: translateY(-1px); }
+    .ak-reset svg { width: 1.05rem; height: 1.05rem; transition: transform .5s cubic-bezier(.22,1,.36,1); }
+    .ak-reset:hover svg { transform: rotate(-160deg); }
+    .ak-again p { font-size: .8rem; color: #6b7280; }
+
+    /* ---- the refusal: why this email cannot ask now ---- */
+    .ak-modal { position: fixed; inset: 0; z-index: 70; display: flex; align-items: flex-end; justify-content: center; }
+    @media (min-width: 640px) { .ak-modal { align-items: center; padding: 1rem; } }
+    .ak-modal[hidden] { display: none; }
+    .ak-modal-bg { position: absolute; inset: 0; background: rgb(14 22 9 / .55); opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .ak-modal.is-on .ak-modal-bg { opacity: 1; }
+    .ak-modal-card { position: relative; width: 100%; max-width: 27rem; padding: 2rem 1.4rem calc(1.4rem + env(safe-area-inset-bottom, 0px)); text-align: center;
+        background: #fff; border-radius: 1.6rem 1.6rem 0 0; box-shadow: 0 40px 80px -30px rgb(14 22 9 / .6);
+        transform: translateY(100%); transition: transform .32s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    @media (min-width: 640px) { .ak-modal-card { border-radius: 1.6rem; padding: 2.1rem 1.8rem 1.6rem; opacity: 0; transform: translateY(18px) scale(.96); } }
+    .ak-modal.is-on .ak-modal-card { transform: none; opacity: 1; }
+    .ak-modal-card::before { content: ''; position: absolute; inset: 0 0 auto; height: 6.5rem; border-radius: inherit;
+        background: radial-gradient(18rem 7rem at 50% 0%, rgb(245 197 24 / .2), transparent 70%); pointer-events: none; }
+    .ak-modal-face { position: relative; display: inline-block; }
+    .ak-modal-face img { width: 4.6rem; height: 4.6rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 4px #fff, 0 14px 30px -14px rgb(40 70 15 / .55); }
+    .ak-modal-face span { position: absolute; right: -.35rem; bottom: -.2rem; width: 2rem; height: 2rem; border-radius: 999px; display: grid; place-items: center;
+        font-size: 1.05rem; background: #fff; box-shadow: 0 4px 12px -4px rgb(0 0 0 / .25); }
+    .ak-modal.is-on .ak-modal-face span { animation: akPop .5s .12s cubic-bezier(.22,1,.36,1) both; }
+    .ak-modal-card h3 { margin-top: 1rem; font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; line-height: 1.2; color: #14210c; text-wrap: balance; }
+    .ak-modal-card > p { margin-top: .5rem; font-size: .96rem; line-height: 1.6; color: #4b5563; }
+    .ak-modal-card > p b { color: #1f3a0f; overflow-wrap: anywhere; }
+    .ak-when { display: flex; align-items: center; gap: .6rem; margin-top: 1rem; padding: .75rem .9rem; border-radius: 1rem; text-align: left;
+        background: #f3f8ec; border: 1px solid #dbe8cc; }
+    .ak-when svg { flex: none; width: 1.3rem; height: 1.3rem; color: #4a7c2a; }
+    .ak-when small { display: block; font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #6b8f4a; }
+    .ak-when b { display: block; font-size: .95rem; color: #1f3a0f; }
+    .ak-modal-btns { display: flex; flex-direction: column; gap: .5rem; margin-top: 1.3rem; }
+    .ak-modal-btns .btn { width: 100%; justify-content: center; }
+    .ak-modal-ok { padding: .7rem 1rem; border-radius: .85rem; font-weight: 800; color: #4b5563; background: #f3f4f6;
+        transition: background .28s cubic-bezier(.22,1,.36,1); }
+    .ak-modal-ok:hover { background: #e5e7eb; }
+    .ak-modal-ok:focus-visible, .ak-reset:focus-visible { outline: 2px solid #6b9f3d; outline-offset: 2px; }
+    .ak-modal-foot { margin-top: .8rem; font-size: .76rem; color: #9ca3af; }
 
     /* ---- the picker sheet (crop, province, town) ---- */
     .ak-sheet { position: fixed; inset: 0; z-index: 60; display: flex; align-items: flex-end; justify-content: center; }
@@ -216,7 +259,9 @@
         .ak-st { opacity: 1; transform: none; transition: none; }
         .ak-st:hover .ak-ic { transform: none; }
         .ak-face::after, .ak-dots i, .ak-ask.is-busy svg { animation: none; }
-        .ak-panel, .ak-sheet-bg { transition: none; }
+        .ak-panel, .ak-sheet-bg, .ak-modal-card, .ak-modal-bg, .ak-reset, .ak-reset svg { transition: none; }
+        .ak-modal.is-on .ak-modal-face span { animation: none; }
+        .ak-reset:hover, .ak-reset:hover svg { transform: none; }
     }
 </style>
 
@@ -312,7 +357,7 @@
                     <button type="button">How do I stop fall armyworm?</button>
                     <button type="button">Best fertilizer for eggplant?</button>
                 </div>
-                <p class="ak-note">One free question. Ask in Tagalog or English.</p>
+                <p class="ak-note">One free question a week. Ask in Tagalog or English.</p>
             </div>
 
             {{-- The end: the answer is on its way. --}}
@@ -321,6 +366,13 @@
                 <h2>Your answer is on its way!</h2>
                 <p>Anee sent it to <b id="akSentTo"></b>. If you do not see it, look in Promotions or Spam.</p>
                 <p class="ak-q" id="akSentQ"></p>
+                <div class="ak-again">
+                    <button type="button" class="ak-reset" id="akReset">
+                        <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M4.6 15a8 8 0 101.9-8.3L4 9"/></svg>
+                        Start over
+                    </button>
+                    <p id="akNext">One free question a week.</p>
+                </div>
                 <div class="ak-more">
                     <b>Want Anee on your farm every day?</b>
                     <p>Plan your whole season, see the growth stage and the weather for every lot, and ask Anee anytime, even with a photo of a sick plant.</p>
@@ -395,6 +447,25 @@
     </div>
 </div>
 
+{{-- Why this email cannot ask now (member, this week, this browser). Closing it starts the form over. --}}
+<div class="ak-modal" id="akModal" hidden role="alertdialog" aria-modal="true" aria-labelledby="akModalT" aria-describedby="akModalP">
+    <div class="ak-modal-bg" data-shut></div>
+    <div class="ak-modal-card">
+        <div class="ak-modal-face"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt=""><span id="akModalIc" aria-hidden="true">🗓️</span></div>
+        <h3 id="akModalT"></h3>
+        <p id="akModalP"></p>
+        <div class="ak-when" id="akModalWhen" hidden>
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path stroke-linecap="round" d="M8 3v4M16 3v4M3 10h18"/></svg>
+            <div><small>You can ask again on</small><b id="akModalDate"></b></div>
+        </div>
+        <div class="ak-modal-btns">
+            <a class="btn btn-accent btn-lg" id="akModalGo" href="{{ route('signup') }}?utm_source=ask-anee&utm_medium=limit">Make a free account</a>
+            <button type="button" class="ak-modal-ok" id="akModalOk" data-shut>OK, got it</button>
+        </div>
+        <p class="ak-modal-foot">The form will be cleared so you can start fresh.</p>
+    </div>
+</div>
+
 @include('sm.partials.anee-wait')
 @include('partials.anee-emoji')
 @endsection
@@ -406,6 +477,8 @@
     const URLS = { farm: @json(route('ask.farm')), ask: @json(route('ask.question')), state: @json(url('/ask-anee/question')), send: @json(route('ask.send')) };
     const CROPS = @json($crops);
     const AVATAR = @json(asset('images/anee/avatar-160.jpg'));
+    const LOGIN = @json(route('login'));
+    const SIGNUP = @json(route('signup') . '?utm_source=ask-anee&utm_medium=limit');
     const $ = (id) => document.getElementById(id);
     const reduce = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -505,6 +578,7 @@
             show('akAsk');
             if (window.matchMedia('(hover: hover)').matches) setTimeout(() => $('akQ').focus(), 380);
         } catch (ex) {
+            if (ex.data && ex.data.refused) { refuse(ex.data); return; }
             err.textContent = ex.message || 'Something went wrong. Please try again.';
             err.hidden = false;
         } finally {
@@ -542,12 +616,14 @@
             if (d.agri) {
                 await new Promise((r) => setTimeout(r, 1600));
                 await prepare();
-                await post(URLS.send, { token }, 'ask_send');
+                const sent = (await post(URLS.send, { token }, 'ask_send')).data || {};
                 $('akSentTo').textContent = email;
                 $('akSentQ').textContent = '“' + q + '”';
+                $('akNext').textContent = 'One free question a week.' + (sent.next ? ' Your next one opens on ' + when(sent.next) + '.' : '');
                 show('akSent');
             }
         } catch (ex) {
+            if (ex.data && ex.data.refused) { said.innerHTML = ''; refuse(ex.data); return; }
             if (ex.data && ex.data.restart) { show('akFarm'); }
             say(esc(ex.message || 'Something went wrong. Please try again.'), true);
         } finally {
@@ -588,6 +664,94 @@
         await new Promise((r) => setTimeout(r, total * 0.35));
         await w.done({ title: 'Your answer is ready!', line: 'Sending it to your email now.' });
     }
+
+    /* A date the visitor reads in their own time: "Thursday, October 8 at 3:40 PM". */
+    function when(iso, fallback) {
+        const d = new Date(iso);
+        if (isNaN(d)) return fallback || '';
+        return d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
+            + ' at ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+    }
+
+    /* ---- start over: every field empty again, the first step on screen ---- */
+    function resetAll() {
+        farmForm.reset();
+        Object.assign(state, { unit: 'ha', crop: null, cropLabel: '', province: '', town: '' });
+        farmForm.querySelectorAll('[data-unit]').forEach((x) => x.classList.toggle('is-on', x.dataset.unit === 'ha'));
+        $('akCrop').querySelector('.ic').textContent = '🌱';
+        setTag($('akCrop'), 'Choose a crop', false);
+        setTag($('akProv'), 'Province', false);
+        setTag($('akTown'), 'Town', false);
+        $('akPlaceAbroad').hidden = true;
+        $('akPlacePH').hidden = false;
+        $('akAbroadBtn').textContent = 'Farm outside the Philippines?';
+        farmForm.querySelectorAll('.is-bad').forEach((x) => x.classList.remove('is-bad'));
+        $('akFarmErr').hidden = true;
+        token = null; email = '';
+        box.value = ''; said.innerHTML = ''; grow();
+        $('akSentTo').textContent = ''; $('akSentQ').textContent = '';
+        show('akFarm');
+    }
+    const focusName = () => { if (window.matchMedia('(hover: hover)').matches) $('akName').focus({ preventScroll: true }); };
+    $('akReset').addEventListener('click', () => { resetAll(); setTimeout(focusName, 380); });
+
+    /* ---- the refusal: a member, this email's week, or this browser's week ----
+       Said in a modal; closing it, by any way out, starts the form over. */
+    const modal = $('akModal');
+    const WHY = {
+        member: {
+            ic: '👋', t: 'You are already a member',
+            p: (m) => `<b>${esc(m)}</b> already has an anee.io account. Log in and ask Anee inside the app.`,
+            go: ['Log in to anee.io', LOGIN],
+        },
+        week: {
+            ic: '🗓️', t: 'You already asked Anee this week',
+            p: (m) => `Each email gets one free question a week, and <b>${esc(m)}</b> has used this week's. Want Anee every day? Start with a free anee.io account.`,
+            go: ['Make a free account', SIGNUP],
+        },
+        browser: {
+            ic: '🗓️', t: 'This browser already asked this week',
+            p: () => 'One free question a week can be sent from each browser, and this one has used it. Want Anee every day? Start with a free anee.io account.',
+            go: ['Make a free account', SIGNUP],
+        },
+    };
+    let shutTimer = null;
+    function refuse(d) {
+        const w = WHY[d.refused] || WHY.week;
+        $('akModalIc').textContent = w.ic;
+        $('akModalT').textContent = w.t;
+        $('akModalP').innerHTML = w.p(d.email || email);
+        $('akModalWhen').hidden = !d.until;
+        if (d.until) $('akModalDate').textContent = when(d.until, d.untilText);
+        $('akModalGo').textContent = w.go[0];
+        $('akModalGo').href = w.go[1];
+        clearTimeout(shutTimer);
+        modal.hidden = false;
+        document.documentElement.style.overflow = 'hidden';
+        requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('is-on')));
+        setTimeout(() => $('akModalOk').focus({ preventScroll: true }), 80);
+    }
+    function shut() {
+        if (modal.hidden || !modal.classList.contains('is-on')) return;
+        modal.classList.remove('is-on');
+        document.documentElement.style.overflow = '';
+        resetAll();
+        shutTimer = setTimeout(() => { modal.hidden = true; focusName(); }, reduce() ? 0 : 330);
+    }
+    modal.addEventListener('click', (e) => { if (e.target.closest('[data-shut]')) shut(); });
+    // Leaving for the login or signup page: the form is left empty behind it.
+    $('akModalGo').addEventListener('click', () => resetAll());
+    document.addEventListener('keydown', (e) => {
+        if (modal.hidden) return;
+        if (e.key === 'Escape') { e.preventDefault(); shut(); return; }
+        if (e.key === 'Tab') {
+            // Focus stays inside the card while it is open.
+            const go = $('akModalGo'), ok = $('akModalOk');
+            if (e.shiftKey && document.activeElement === go) { e.preventDefault(); ok.focus(); }
+            else if (!e.shiftKey && document.activeElement === ok) { e.preventDefault(); go.focus(); }
+            else if (document.activeElement !== go && document.activeElement !== ok) { e.preventDefault(); ok.focus(); }
+        }
+    });
 
     /* ---- how it works: the steps rise in turn when they come into view ---- */
     const how = $('akHow');
