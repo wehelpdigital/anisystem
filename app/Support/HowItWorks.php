@@ -36,7 +36,7 @@ class HowItWorks
                 'when' => 'Before day zero',
                 'title' => 'Plan the season',
                 'lede' => 'Decide when, what and how before a single seed goes in. A mistake costs the least while it is still on paper.',
-                'say' => "Tell me your town and your crop. I will find the planting window, the crop and the variety, then check your plan before you spend a {$peso}.",
+                'say' => null,   // the owner took every step's Anee line out (2026-10-02)
                 'face' => 'thinking',
                 'pattern' => 'plan',
                 'glyph' => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4',
@@ -167,7 +167,7 @@ class HowItWorks
                 'when' => 'When something looks wrong',
                 'title' => 'Catch problems early',
                 'lede' => 'Yellow leaves, holes in the leaves, a storm on the way. The sooner you know what it is, the less it costs.',
-                'say' => 'Send me a photo. I already know the crop, the stage, the weather and what you applied, so my answer fits your field.',
+                'say' => null,   // the owner took every step's Anee line out (2026-10-02)
                 'face' => 'concerned',
                 'pattern' => 'protect',
                 'glyph' => 'M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3zM9 12l2 2 4-4',
@@ -196,7 +196,7 @@ class HowItWorks
                 'when' => $ph ? 'Ani time' : 'Harvest time',
                 'title' => 'Harvest and after',
                 'lede' => 'Write down what came off the field and where it went, while you still remember it.',
-                'say' => ($ph ? 'Ani na! ' : 'Harvest day! ') . 'Write down the yield and the price, and I will tell you what this season really earned.',
+                'say' => null,   // the owner took every step's Anee line out (2026-10-02)
                 'face' => 'starstruck',
                 'pattern' => 'harvest',
                 'glyph' => 'M5 9h14l-1.5 10a2 2 0 01-2 1.7h-7a2 2 0 01-2-1.7L5 9zm3 0V7a4 4 0 018 0v2',
@@ -225,7 +225,7 @@ class HowItWorks
                 'when' => 'Look back',
                 'title' => 'Reports and analysis',
                 'lede' => 'The records you kept all season add up on their own. See what it cost, what it earned and what to change.',
-                'say' => 'Let me read the whole season. I will show you what went well, what went wrong and what to change next time.',
+                'say' => null,   // the owner took every step's Anee line out (2026-10-02)
                 'face' => 'delighted',
                 'pattern' => 'reports',
                 'glyph' => 'M4 19h16M7 16v-4m5 4V8m5 8v-6',
