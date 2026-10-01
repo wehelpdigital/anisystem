@@ -1,5 +1,5 @@
 {{-- How anee.io works, on the dashboard (2026-10-01): a card that opens the
-     same six step picture as the public /how-it-works page, full screen.
+     same seven step picture as the public /how-it-works page, full screen.
      The tour itself is public/how/journey ($hwMode 'app': its links open the
      tools in the app). It is mounted the first time the card is opened, and
      the modal grows out of the card and folds back into it. #how-it-works
@@ -20,7 +20,7 @@
     .hwc-kick::before { content: ''; width: 1.2rem; height: 2px; border-radius: 2px; background: currentColor; }
     .hwc-h { display: block; margin-top: .35rem; font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; line-height: 1.2; color: #fff; }
     .hwc-p { display: block; margin-top: .3rem; font-size: .86rem; line-height: 1.5; color: #b9caa8; }
-    /* Six faces on a dotted line, a light running along it and each face waking as it passes. */
+    /* A face for each step on a dotted line, a light running along it and each face waking as it passes. */
     .hwc-art { position: relative; display: flex; align-items: center; justify-content: space-between; gap: .35rem; margin-top: .9rem; max-width: 22rem; }
     .hwc-art::before { content: ''; position: absolute; left: 1rem; right: 1rem; top: 50%; height: 2px; margin-top: -1px;
         background: radial-gradient(circle, rgb(255 255 255 / .35) 1px, transparent 1.4px) left center / 8px 2px repeat-x; }
@@ -28,8 +28,8 @@
         background: linear-gradient(90deg, transparent, #f5c518); box-shadow: 0 0 10px #f5c518; animation: hwcRun 4.8s linear infinite; }
     @keyframes hwcRun { from { transform: translateX(0); opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } to { transform: translateX(calc(min(22rem, 100vw - 5rem) - 4.2rem)); opacity: 0; } }
     .hwc-art i { position: relative; z-index: 1; width: 2.3rem; height: 2.3rem; border-radius: 999px; overflow: hidden; border: 2px solid rgb(168 204 126 / .4); background: #1a2c12;
-        animation: hwcWake 4.8s var(--ease, cubic-bezier(.22,1,.36,1)) infinite; animation-delay: calc(var(--k) * .72s); }
-    .hwc-art img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.7) brightness(.8); animation: hwcFace 4.8s ease infinite; animation-delay: calc(var(--k) * .72s); }
+        animation: hwcWake 4.8s var(--ease, cubic-bezier(.22,1,.36,1)) infinite; animation-delay: calc(var(--k) * 3.6s / var(--last, 5)); }
+    .hwc-art img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.7) brightness(.8); animation: hwcFace 4.8s ease infinite; animation-delay: calc(var(--k) * 3.6s / var(--last, 5)); }
     @keyframes hwcWake { 0%, 100% { transform: none; border-color: rgb(168 204 126 / .4); } 6% { transform: scale(1.18); border-color: #f5c518; } 16% { transform: none; border-color: #f5c518; } 40% { border-color: rgb(168 204 126 / .4); } }
     @keyframes hwcFace { 0%, 100% { filter: grayscale(.7) brightness(.8); } 6%, 30% { filter: none; } }
     .hwc-go { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .7rem 1.15rem; border-radius: .95rem; font-weight: 800; font-size: .92rem;
@@ -70,8 +70,8 @@
         <span>
             <span class="hwc-kick">How anee.io works</span>
             <span class="hwc-h" id="hwcH">See how Anee helps at every step</span>
-            <span class="hwc-p">Six steps, from the first plan to the last sack. Tap any tool to see what it does for your farm.</span>
-            <span class="hwc-art" aria-hidden="true">
+            <span class="hwc-p">Seven steps, from the first plan to the last sack. Tap any tool to see what it does for your farm.</span>
+            <span class="hwc-art" aria-hidden="true" style="--last: {{ max(1, count($hwcStages) - 1) }}">
                 @foreach ($hwcStages as $k => $s)
                     <i style="--k: {{ $k }}"><img src="{{ asset('images/anee/emoji/' . $s['face'] . '.png') }}" alt=""></i>
                 @endforeach
@@ -89,7 +89,7 @@
     <div class="hwm-bar">
         <div class="flex items-center gap-2.5 min-w-0">
             <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="">
-            <div class="min-w-0"><b id="hwmTitle">How anee.io works</b><small>Six steps, with Anee at every one</small></div>
+            <div class="min-w-0"><b id="hwmTitle">How anee.io works</b><small>Seven steps, with Anee at every one</small></div>
         </div>
         <button type="button" class="hwm-x" id="hwmClose" aria-label="Close the tour">
             <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>

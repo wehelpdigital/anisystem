@@ -1,4 +1,4 @@
-{{-- How anee.io works: the season in six steps, Anee at every one
+{{-- How anee.io works: the season in seven steps, Anee at every one
      (App\Support\HowItWorks). One partial, two homes: the public page
      /how-it-works ($hwMode 'site') and the full screen tour behind the
      dashboard's card ($hwMode 'app', inside a scrolling modal).
@@ -273,6 +273,141 @@
     .s-hub .hwr-list, .s-acts .hwr-list { gap: 12px; }
     .hwl-open, .hwr-list > .hwh-cta { transition: scale .2s var(--ease), box-shadow .45s var(--ease); }
     .hwl-open.is-press, .hwh-cta.is-press { scale: .97; }
+    /* The board band's phone: the same board, with its sheets, the drag and Growth Stages. */
+    .s-growth { background: #f1f3f5; }
+    .s-growth.is-on .hwr-list > * { animation: hwrUp .55s var(--ease) both; animation-delay: calc(var(--n, 0) * 70ms + 150ms); }
+    .s-growth .hwr-list { gap: 12px; }
+    .hw-tap { transition: opacity .3s ease; }
+    .hw-tap.is-hold { opacity: 1; animation: none; transition: left .9s var(--ease), top .9s var(--ease), opacity .3s ease; }
+    .s-board .hwa-c { max-height: 260px; overflow: hidden;
+        transition: opacity .4s var(--ease), max-height .55s var(--ease), padding .55s var(--ease), margin .55s var(--ease), border-width .55s var(--ease), filter .3s ease; }
+    .s-board .hwa-c.is-dragging { opacity: .3; filter: grayscale(.5); outline: 2px dashed #b9c6a8; outline-offset: -2px; }
+    .s-board .hwa-c.is-gone { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; border-width: 0; margin-top: -10px; outline: 0; }
+    .s-board .hwb-ghost { position: absolute; z-index: 6; margin: 0; max-height: none; pointer-events: none; opacity: .75; box-shadow: 0 18px 40px rgb(15 23 42 / .3);
+        transition: transform .9s var(--ease), opacity .3s ease; }
+    .s-board .hwb-ghost.is-up { transform: translate(6px, -6px) scale(1.03); }
+    .s-board .hwb-ghost.is-drop { opacity: 0; }
+    .s-board .hwa-rest { transition: background-color .3s ease, border-color .3s ease; }
+    .s-board .hwa-rest.is-over { background: #f3f8ec; border-color: #6b9f3d; }
+    .hwb-fold { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .55s var(--ease), margin .55s var(--ease); }
+    .hwb-fold > div { min-height: 0; overflow: hidden; }
+    .hwb-fold.is-shut { grid-template-rows: 0fr; margin-top: -12px; }
+    /* A note on a day, as the board draws one. */
+    .hwb-memo { position: relative; max-height: 150px; overflow: hidden; padding: 6px 54px 7px 10px; border-radius: 9.6px; background: #fffbeb; border: 1px dashed #fde68a; color: #78350f;
+        transition: max-height .55s var(--ease), opacity .45s var(--ease), padding .55s var(--ease), margin .55s var(--ease), border-width .55s var(--ease); }
+    .hwb-memo.is-shut { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; border-width: 0; margin-bottom: -10px; }
+    .hwb-memo .tag { display: flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #b45309; }
+    .hwb-memo .tag svg { width: 11px; height: 11px; }
+    .hwb-memo b { display: block; margin-top: 3px; font-size: 12.5px; font-weight: 800; color: #111827; }
+    .hwb-memo p { margin-top: 2px; font-size: 12.8px; line-height: 1.5; }
+    .hwb-memo .kb { position: absolute; top: 7px; right: 28px; width: 18px; height: 18px; color: #b45309; }
+    .hwb-memo .grip { position: absolute; top: 8px; right: 8px; width: 15px; height: 15px; color: #fde68a; }
+    /* The sheets that rise over the board. */
+    .hwb-sheet { position: absolute; inset: 0; z-index: 20; }
+    .hwb-sheet::before { content: ''; position: absolute; inset: 0; background: rgb(17 24 39 / .45); opacity: 0; transition: opacity .35s var(--ease); }
+    .hwb-sheet.is-on::before { opacity: 1; }
+    .hwb-panel { position: absolute; left: 0; right: 0; bottom: 0; max-height: 94%; display: flex; flex-direction: column; overflow: hidden; border-radius: 24px 24px 0 0; background: #fff;
+        box-shadow: 0 -10px 40px -20px rgb(0 0 0 / .4); transform: translateY(105%); transition: transform .45s var(--ease); }
+    .hwb-sheet.is-on .hwb-panel { transform: none; }
+    .hwb-grab { flex: none; width: 44px; height: 5px; margin: 10px auto 4px; border-radius: 999px; background: #d1d5db; }
+    .hwb-sh { flex: none; display: flex; align-items: center; justify-content: space-between; padding: 10px 20px 14px; border-bottom: 1px solid #f3f4f6; }
+    .hwb-sh b { font-family: var(--font-heading); font-size: 18px; font-weight: 800; color: #111827; }
+    .hwb-sh svg { width: 22px; height: 22px; color: #4b5563; }
+    .hwb-rows { display: grid; gap: 2px; padding: 10px 14px 18px; }
+    .hwb-row { display: flex; align-items: center; gap: 14px; padding: 10px 12px; border-radius: 12px; font-size: 15px; font-weight: 600; color: #374151; transition: background-color .3s var(--ease); }
+    .hwb-row i { flex: none; width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: #f3f8ec; }
+    .hwb-row i img { width: 22px; height: 22px; object-fit: contain; }
+    .hwb-row i img.face { width: 26px; height: 26px; border-radius: 999px; object-fit: cover; }
+    .hwb-row i svg { width: 20px; height: 20px; color: #9ca3af; }
+    .hwb-row.p i { width: 22px; background: none; }
+    .hwb-row.back { color: #6b7280; }
+    .hwb-row.back i { background: #f3f4f6; }
+    .hwb-row.on { background: #f0f7e8; }
+    .hwb-row.on::after { content: '✓'; margin-left: auto; color: #9ca3af; }
+    .hwb-row.is-hot { background: #e4efd4; }
+    .hwb-mview { flex: 1; min-height: 0; overflow: hidden; }
+    .hwb-mlist { transition: transform .8s var(--ease); }
+    /* The note editor. */
+    .hwb-ed { display: flex; flex-direction: column; gap: 9px; padding: 14px 20px 10px; }
+    .hwb-media { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+    .hwb-media span { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 7px 0 6px; border: 1px solid #e5e7eb; border-radius: 10px; font-size: 11px; font-weight: 600; color: #374151; }
+    .hwb-media svg { width: 17px; height: 17px; }
+    .hwb-media .rec { width: 13px; height: 13px; margin: 2px; border-radius: 999px; background: #ef4444; }
+    .hwb-media .emo { font-style: normal; font-size: 15px; line-height: 17px; }
+    .hwb-lab { font-size: 14px; font-weight: 600; color: #1f2937; }
+    .hwb-lab em { font-style: normal; color: #ef4444; }
+    .hwb-ed .hwr-in { margin: -4px 0 0; }
+    .hwb-cap { font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #6b7280; }
+    .hwb-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: -4px; }
+    .hwb-chips span { max-width: 100%; padding: 4px 11px; border-radius: 999px; border: 1px solid #e5e7eb; font-size: 12px; font-weight: 600; color: #374151; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        transition: background-color .3s var(--ease), border-color .3s var(--ease), color .3s var(--ease); }
+    .hwb-chips span.on { background: #4a7c2a; border-color: #4a7c2a; color: #fff; }
+    .hwb-box { overflow: hidden; border: 1px solid #e5e7eb; border-radius: 12px; }
+    .hwb-tools { display: flex; align-items: center; gap: 15px; padding: 9px 12px; background: #f9fafb; border-bottom: 1px solid #e5e7eb; font-size: 15px; color: #374151; }
+    .hwb-tools span:first-child { font-size: 13px; }
+    .hwb-text { min-height: 92px; padding: 11px 14px; font-size: 15px; line-height: 1.5; color: #111827; }
+    .hwb-text .ph { color: #9ca3af; }
+    .hwb-text.has .ph { display: none; }
+    .hwb-text em { display: inline-block; width: 2px; height: 18px; margin-left: 1px; vertical-align: -3px; background: #4a7c2a; opacity: 0; }
+    .hwb-text.is-focus em { opacity: 1; animation: hwCaret 1s steps(1) infinite; }
+    .hwb-hint { font-size: 11.5px; color: #6b7280; }
+    .hwb-foot { flex: none; display: flex; align-items: center; gap: 12px; padding: 12px 20px 16px; border-top: 1px solid #f3f4f6; }
+    .hwb-foot .c { padding: 0 8px; font-size: 15px; font-weight: 600; color: #374151; }
+    .hwb-save { flex: 1; display: grid; place-items: center; height: 48px; border-radius: 12px; background: #4a7c2a; color: #fff; font-size: 16px; font-weight: 700; transition: scale .2s var(--ease); }
+    .hwb-save.is-press { scale: .97; }
+    /* Growth Stages, as the module draws it. */
+    .hwg-pills { display: flex; gap: 10px; }
+    .hwg-pills span { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: 999px; font-size: 15px; font-weight: 600; }
+    .hwg-pills svg { width: 18px; height: 18px; }
+    .hwg-pills .m { background: #fff; border: 1.5px dashed #d1d5db; color: #374151; }
+    .hwg-pills .on { background: #4a7c2a; color: #fff; box-shadow: 0 6px 14px -8px rgb(74 124 42 / .8); }
+    .hwg-date { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; color: #6b7280; }
+    .hwg-date span { display: inline-flex; align-items: center; gap: 6px; padding: 6px 13px; border-radius: 999px; border: 1px solid #cfe3b8; background: #f0f7e8; color: #3d6823; }
+    .hwg-date svg { width: 15px; height: 15px; }
+    .hwg-all { align-self: flex-start; padding: 6px 14px; border-radius: 8px; background: #fff; border: 1px solid #e5e7eb; font-size: 14px; font-weight: 600; color: #374151; }
+    .hwg-card { overflow: hidden; border-radius: 16px; background: #fff; border: 1px solid #e5e7eb; box-shadow: 0 16px 40px -30px rgb(16 22 12 / .35); }
+    .hwg-top { position: relative; overflow: hidden; display: flex; align-items: center; gap: 11px; padding: 13px 14px; color: #e8efe1;
+        background: linear-gradient(135deg, #10160c 0%, #1c2416 55%, #24301a 100%); }
+    .hwg-top::before { content: ''; position: absolute; inset: -40% -10%; pointer-events: none; background: radial-gradient(closest-side, rgb(134 181 86 / .28), transparent 70%); opacity: .7; }
+    .hwg-top > * { position: relative; }
+    .hwg-top > svg { flex: none; width: 16px; height: 16px; color: #a8cc7e; }
+    .hwg-card.is-open .hwg-top > svg { transform: rotate(90deg); }
+    .hwg-top .e { font-size: 27px; line-height: 1; }
+    .hwg-top .l { min-width: 0; }
+    .hwg-top b { display: block; font-size: 15.5px; font-weight: 800; color: #f1f6ec; }
+    .hwg-top .c { display: block; font-size: 11.5px; font-weight: 700; color: #cdd8c0; }
+    .hwg-top .md { display: block; margin-top: 2px; font-size: 10.5px; line-height: 1.35; color: #8fa383; }
+    .hwg-chip { display: inline-flex; margin-top: 5px; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; color: #dcedc8; border: 1px solid rgb(168 204 126 / .3);
+        background: linear-gradient(115deg, #223618, #3d6823, #4a7c2a, #223618); }
+    .hwg-age { flex: none; margin-left: auto; text-align: right; }
+    .hwg-age b { font-size: 21.6px; line-height: 1; color: #d6e8bf; }
+    .hwg-age i { font-style: normal; font-size: 10px; font-weight: 800; letter-spacing: .06em; color: #9dc178; }
+    .hwg-body { padding: 14px; }
+    .hwg-stage { font-size: 16.8px; font-weight: 800; color: #111827; }
+    .hwg-what { margin-top: 3px; font-size: 13.6px; line-height: 1.5; color: #4b5563; }
+    .hwg-bar { display: block; height: 6.4px; margin-top: 10px; border-radius: 999px; background: #e5e7eb; overflow: hidden; }
+    .hwg-bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #4a7c2a, #a8cc7e, #4a7c2a); }
+    .hwg-next { margin-top: 5px; font-size: 11.5px; color: #6b7280; }
+    .hwg-needs { margin-top: 11px; padding: 10px 11px; border-radius: 11px; background: rgb(107 159 61 / .14); color: #3f6220; font-size: 13.4px; line-height: 1.5; }
+    .hwg-lists { display: grid; gap: 8px; margin-top: 13px; }
+    .hwg-list { padding: 10px 12px; border-radius: 13px; }
+    .hwg-list h4 { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; font-size: 10.2px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .hwg-list h4 svg { width: 14px; height: 14px; }
+    .hwg-list li { display: flex; gap: 6px; font-size: 12.8px; line-height: 1.45; }
+    .hwg-list li::before { content: ''; flex: none; width: 5.6px; height: 5.6px; margin-top: 7px; border-radius: 999px; background: currentColor; opacity: .5; }
+    .hwg-list li + li { margin-top: 5px; }
+    .hwg-do { background: rgb(107 159 61 / .14); color: #3f6220; }
+    .hwg-watch { background: rgb(217 130 20 / .12); color: #92400e; }
+    .hwg-steps { display: grid; gap: 5px; margin-top: 13px; padding-top: 10px; border-top: 1px dashed #e5e7eb; }
+    .hwg-step { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; color: #6b7280; }
+    .hwg-step i { flex: none; width: 9.6px; height: 9.6px; margin-top: 5px; border-radius: 999px; background: #d1d5db; }
+    .hwg-step.is-past i { background: #6b9f3d; }
+    .hwg-step.is-now { font-weight: 700; color: #111827; }
+    .hwg-step.is-now i { background: #6b9f3d; box-shadow: 0 0 0 3px rgb(107 159 61 / .25); }
+    .hwg-step em { margin-left: auto; font-style: normal; opacity: .7; font-variant-numeric: tabular-nums; }
+    .hwg-warn { display: flex; gap: 9px; padding: 11px 13px; border-radius: 13px; background: #fffbeb; border: 1px solid #fde68a; color: #92400e; font-size: 12.5px; line-height: 1.5; }
+    .hwg-warn svg { flex: none; width: 17px; height: 17px; margin-top: 1px; color: #b45309; }
+
     /* The season list. */
     .hwl-hero { padding: 17px 18px; border-radius: 16px; border: 1px solid #e5e7eb; background: linear-gradient(180deg, #aeb4be, #cfd2d7); }
     .hwl-left { display: flex; align-items: center; gap: 14px; }
@@ -666,7 +801,12 @@
         .hw-band-phone { grid-column: 2; grid-row: 1; }
         .hw-phone2 { width: 16.5rem; height: 32rem; }
         .hw-band-notes { grid-column: 3; grid-row: 1; justify-self: start; flex-direction: column; align-items: flex-start; gap: 2.2rem; }
-        .hw-note:nth-child(2) { margin-left: 2.4rem; }
+        .hw-note:nth-child(even) { margin-left: 2.4rem; }
+        /* The board band faces the other way: its words on the right, its notes on the left. */
+        .hw-band.is-flip .hw-band-copy { grid-column: 3; justify-self: start; text-align: left; }
+        .hw-band.is-flip .hw-band-copy .hw-step { justify-content: flex-start; }
+        .hw-band.is-flip .hw-band-notes { grid-column: 1; justify-self: end; align-items: flex-end; gap: 1.7rem; }
+        .hw-band.is-flip .hw-note:nth-child(even) { margin-left: 0; margin-right: 2.4rem; }
     }
 
     /* The end of the rail: the season comes round again. */
@@ -807,12 +947,12 @@
         <div class="hw-copy">
             <p class="hw-kick">How it works</p>
             <{{ $hwTop }} class="hw-h1">From the first plan to the last sack, <em>Anee is with you</em></{{ $hwTop }}>
-            <p class="hw-lede">anee.io follows your season the way a farm lives it: plan, plant, grow, protect, harvest, then look back. Every step has its tools, and Anee, the AI farm technician, works beside you at each one.</p>
+            <p class="hw-lede">anee.io follows your season the way a farm lives it: plan, build the plan, plant, grow, protect, harvest, then look back. Every step has its tools, and Anee, the AI farm technician, works beside you at each one.</p>
             <div class="hw-btns">
                 @if ($hwMode === 'site')
                     <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start free</a>
                 @endif
-                <button type="button" class="hw-ghost" data-hw-go="plan">See the six steps
+                <button type="button" class="hw-ghost" data-hw-go="plan">See the seven steps
                     <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m0 0l-6-6m6 6l6-6"/></svg>
                 </button>
             </div>
@@ -966,7 +1106,7 @@
                                     <p class="d">{{ $hwB['desc'] }}</p>
                                     <div class="hwh-chips">
                                         <span>{{ $hwPhone['crops'] }} {{ $hwB['crop'] }}</span><span>📐 {{ $hwB['lots'] }} lots</span><span>👷 {{ $hwB['workers'] }} workers</span>
-                                        <span>🗓️ DAS counting</span><span>🌱 Started {{ $hwStart->format('M j, Y') }}</span>
+                                        <span>🗓️ {{ $hwB['counter'] }} counting</span><span>🌱 Started {{ $hwStart->format('M j, Y') }}</span>
                                     </div>
                                 </div>
                                 <div class="hwh-foot"><span class="a">Archive this Schedule</span><span class="c">Close this season</span></div>
@@ -1013,15 +1153,7 @@
                             <div><b>Activities</b><small>{{ $hwPhone['season'] }}</small></div>
                             {!! $hwTopR !!}
                         </div>
-                        <div class="hwa-tools">
-                            <span class="m">{!! $hwI('M4 6h16M4 12h16M4 18h16') !!}Modules</span>
-                            <span>{!! $hwI('M14.7 6.3a4 4 0 00-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 005.4-5.4l-2.5 2.5-2.4-.6-.6-2.4 2.5-2.5z') !!}</span>
-                            <span>{!! $hwI($hwBellD) !!}<em>2</em></span>
-                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
-                            <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-4-4"/></svg></span>
-                            <span>{!! $hwI('M12 3s6 6.686 6 11a6 6 0 11-12 0c0-4.314 6-11 6-11z') !!}</span>
-                            <span>{!! $hwI('M4 4v5h5M20 20v-5h-5M5.1 15a7.5 7.5 0 0013.4 1.5M18.9 9A7.5 7.5 0 005.5 7.5') !!}</span>
-                        </div>
+                        @include('public.how.act-tools')
                         <div class="hwr-view"><div class="hwr-list">
                             <div class="hwa-ver" style="--n: 0">
                                 <span class="sel">{!! $hwI('M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5') !!}Original{!! $hwI('M6 9l6 6 6-6', 2.4) !!}</span>
@@ -1035,22 +1167,8 @@
                             <div class="hwa-g is-today" style="--n: 2; --c: #3fb468">
                                 {!! $hwDay($hwDays[1], count($hwPhone['tasks'])) !!}<i class="br"></i><span class="wx">⛅ <i>{{ $hwPhone['place'] }}</i> <b>{{ $hwPhone['days'][0][2] }}°</b></span></div>
                                 <div class="hwa-b"><div><div class="hwa-in">
-                                    @foreach ($hwPhone['tasks'] as $k => [$ty, $pr, $tn, $tl, $tw, $th])
-                                        @php [$cl, $cw, $cn] = $hwB['cards'][$k]; @endphp
-                                        <div class="hwa-c" style="--p: {{ $hwPrio[$pr] }}">
-                                            <div class="hwa-btns">
-                                                <span class="ck">{!! $hwI('M5 13l4 4L19 7', 3) !!}</span>
-                                                <span class="ty"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4" width="12" height="17" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 4V3h6v1M9 13l2 2 4-4"/></svg></span>
-                                                <span class="st"><svg fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.4 2.63 5.33 5.88.86-4.25 4.15 1 5.86L12 16.85l-5.26 2.75 1-5.86-4.25-4.15 5.88-.86z"/></svg></span>
-                                                <span class="dd">{!! $hwI('M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16', 2.4) !!}</span>
-                                                <span class="mn">{!! $hwI('M4 6h16M4 12h16M4 18h16') !!}</span>
-                                                <span class="fd">{!! $hwI('M18 15l-6-6-6 6', 2.2) !!}</span>
-                                            </div>
-                                            <div class="hwa-tl"><b>{{ $tn }}</b><span class="hwa-lot"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>{{ $tl }}<i>DAS {{ $hwB['das'][$tl] ?? $hwB['day'] }}</i></span></div>
-                                            <div class="hwa-bd"><span class="{{ $pr }}">{{ $pr }}</span><span>{{ $cl }}</span>@if ($cw)<span class="w">{!! $hwI('M12 3s6 6.686 6 11a6 6 0 11-12 0c0-4.314 6-11 6-11z') !!}{{ $cw }}</span>@endif</div>
-                                            <p>{{ $cn }}</p>
-                                            @if ($th)<span class="hwa-tm">{!! $hwI('M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z') !!}{{ $th }}</span>@endif
-                                        </div>
+                                    @foreach ($hwPhone['tasks'] as $k => $task)
+                                        @include('public.how.act-card', ['task' => $task, 'k' => $k])
                                     @endforeach
                                 </div></div></div>
                             </div>
@@ -1129,8 +1247,11 @@
                 @endforeach
                 </div>
             </section>
-            {{-- Between steps 2 and 3: the second phone, asking Anee about a crop. --}}
-            @if ($n === 1)
+            {{-- After setting up: a phone on the activities board. After the
+                 count: a phone asking Anee about a crop, before problems. --}}
+            @if ($st['key'] === 'plant')
+                @include('public.how.board-band')
+            @elseif ($st['key'] === 'grow')
                 @include('public.how.chat-band')
             @endif
         @endforeach
@@ -1308,34 +1429,27 @@
         })();
     }
 
-    /* ---- between steps 2 and 3: a grower asks Anee about a crop in the
-       real chat. A photo, the question typed, sent; Anee reads the lot, the
-       weather and the photo (each note lights up), then answers. ---- */
-    function chatFilm(root) {
-        const band = root.querySelector('.hw-band');
-        if (!band) return;
+    /* ---- what both band phones share: the 390px screen fitted to its
+       frame, the notes beside the phone with their lines on a desk (to
+       whichever side the notes sit), a fingertip, and playing only while
+       the band is on screen. ---- */
+    function bandKit(band) {
         const scr = band.querySelector('.hw-scr2'), app = band.querySelector('.hwr');
         const fit = () => { if (scr.clientWidth) app.style.setProperty('--sc', scr.clientWidth / 390); };
         fit();
         new ResizeObserver(fit).observe(scr);
-        const q = (sel) => band.querySelector(sel);
-        const ask = q('[data-c="ask"]'), wait = q('[data-c="wait"]'), answer = q('[data-c="answer"]');
-        const comp = q('.hwc-comp'), input = q('.hwc-row .in'), cam = q('.hwc-row .cam'), go = q('.hwc-row .go');
-        const list = q('.hwc-list'), body = q('.hwc-body'), tap = q('.hw-tap'), rows = [...wait.querySelectorAll('.hwc-steps li')];
-        const notes = [...band.querySelectorAll('.hw-note')];
-        const data = JSON.parse(q('[data-hw-chat]').textContent || '{}');
         const sc = () => parseFloat(app.style.getPropertyValue('--sc')) || .6;
-        // The notes beside the phone, and their lines on a desk.
-        const svg = q('.hw-band-svg'), phoneEl = q('.hw-phone2');
+        const notes = [...band.querySelectorAll('.hw-note')];
+        const svg = band.querySelector('.hw-band-svg'), phoneEl = band.querySelector('.hw-phone2'), tap = band.querySelector('.hw-tap');
         const lines = () => {
             svg.textContent = '';
             if (!wide()) return;
             const b = band.getBoundingClientRect(), p = phoneEl.getBoundingClientRect();
             svg.setAttribute('viewBox', `0 0 ${b.width} ${b.height}`);
             notes.forEach((n, i) => {
-                const r = n.getBoundingClientRect();
-                const sx = p.right - b.left, sy = p.top - b.top + p.height * (.3 + i * .2);
-                const ex = r.left - b.left, ey = r.top - b.top + r.height / 2, dx = ex - sx;
+                const r = n.getBoundingClientRect(), left = r.right <= p.left;
+                const sx = (left ? p.left : p.right) - b.left, sy = p.top - b.top + p.height * (.3 + i * (.4 / Math.max(1, notes.length - 1)));
+                const ex = (left ? r.right : r.left) - b.left, ey = r.top - b.top + r.height / 2, dx = ex - sx;
                 const d = `M ${sx} ${sy} C ${sx + dx * .5} ${sy}, ${sx + dx * .5} ${ey}, ${ex} ${ey}`;
                 const base = make('path', { d, class: 'hw-arc', pathLength: 1 }), flow = make('path', { d, class: 'hw-flow', pathLength: 1 }), dot = make('circle', { cx: ex, cy: ey, r: 3.5, class: 'hw-dest' });
                 [base, flow, dot].forEach((x) => x.style.setProperty('--i', i + 2));
@@ -1350,15 +1464,7 @@
             if (k === 99 || i < k) n.classList.add('is-read');
             (n._arc || []).forEach((x) => x.classList.toggle('is-on', i === k));
         });
-        const show = (m) => { m.classList.add('is-shown'); void m.offsetWidth; m.classList.add('is-in'); };
-        const hide = (m) => m.classList.remove('is-in', 'is-shown');
-        const roll = (y) => { const max = Math.max(0, list.offsetHeight - body.clientHeight); list.style.transform = 'translateY(' + (-Math.min(max, Math.max(0, y))) + 'px)'; };
-        const toEnd = () => roll(Infinity);
-        const toTop = (m) => roll((m.getBoundingClientRect().top - list.getBoundingClientRect().top) / sc() - 14);
-        if (still()) {
-            show(ask); show(answer); toEnd(); notes.forEach((n) => n.classList.add('is-read'));
-            return;
-        }
+        const clear = () => notes.forEach((n) => { n.classList.remove('is-hot', 'is-read'); (n._arc || []).forEach((x) => x.classList.remove('is-on')); });
         let seen = false;
         new IntersectionObserver((es) => {
             seen = es.some((e) => e.isIntersecting);
@@ -1371,6 +1477,145 @@
             tap.style.top = ((r.top - a.top) / k + (r.height / k) * .5) + 'px';
             tap.classList.remove('is-tap'); void tap.offsetWidth; tap.classList.add('is-tap');
         };
+        return { app, sc, notes, note, clear, until, tapAt, tap };
+    }
+
+    /* ---- between steps 3 and 4: the season's activities board. A note goes
+       on today from the day's menu, the scouting is held and dragged to
+       tomorrow, the urea is ticked done, then Modules opens Growth Stages
+       and the open lot is read down to its timeline. ---- */
+    function boardFilm(root) {
+        const band = root.querySelector('#hw-board');
+        if (!band) return;
+        const { sc, notes, note, clear, until, tapAt, tap } = bandKit(band);
+        const q = (sel) => band.querySelector(sel), qa = (sel) => [...band.querySelectorAll(sel)];
+        const board = q('.s-board'), growth = q('.s-growth');
+        const today = q('.hwb-today'), count = today.querySelector('.hwa-h .ct');
+        const memo = q('.hwb-memo'), cards = [...today.querySelectorAll('.hwa-c')];
+        const menu = q('.hwb-menu'), editor = q('.hwb-editor'), mods = q('.hwb-mods');
+        const noteRow = q('[data-row="note"]'), growthRow = q('[data-row="growth"]'), mview = q('.hwb-mview'), mlist = q('.hwb-mlist');
+        const title = q('.hwb-title'), text = q('.hwb-text'), pick = q('.hwb-chips [data-pick]'), save = q('.hwb-save');
+        const rest = q('.hwb-rest'), tmr = q('.hwb-tmr'), restBox = rest.querySelector('.hwa-rest');
+        const words = { title: memo.querySelector('b').textContent, body: memo.querySelector('p').textContent };
+        // A screen's list rolls so a part sits near the top (no part: back to the top).
+        const roll = (scene, el, pad = 12) => {
+            const v = scene.querySelector('.hwr-view'), l = scene.querySelector('.hwr-list');
+            const max = Math.max(0, l.offsetHeight - v.clientHeight);
+            const at = el ? (el.getBoundingClientRect().top - l.getBoundingClientRect().top) / sc() : 0;
+            l.style.transform = 'translateY(' + (-Math.min(max, Math.max(0, at - pad))) + 'px)';
+        };
+        const press = (el) => { el.classList.add('is-press'); setTimeout(() => el.classList.remove('is-press'), 200); };
+        const type = async (fld, said, ms) => {
+            const out = fld.querySelector('.v');
+            fld.classList.add('has', 'is-focus');
+            for (const ch of said) { await until(); out.textContent += ch; await sleep(ms); }
+            fld.classList.remove('is-focus');
+        };
+        const wake = () => qa('img[data-src]').forEach((i) => { i.src = i.dataset.src; i.removeAttribute('data-src'); });
+        const reset = () => {
+            [menu, editor, mods].forEach((x) => x.classList.remove('is-on'));
+            memo.classList.add('is-shut');
+            [title, text].forEach((f) => { f.classList.remove('has', 'is-focus'); f.querySelector('.v').textContent = ''; });
+            pick.classList.remove('on');
+            [noteRow, growthRow].forEach((r) => r.classList.remove('is-hot'));
+            cards.forEach((c) => c.classList.remove('is-done', 'is-dragging', 'is-gone'));
+            rest.classList.remove('is-shut'); restBox.classList.remove('is-over'); tmr.classList.add('is-shut');
+            count.textContent = cards.length;
+            mlist.style.transform = '';
+            [board, growth].forEach((x) => { x.classList.remove('is-gone'); x.querySelector('.hwr-list').style.transform = ''; });
+            growth.classList.remove('is-on'); board.classList.add('is-on');
+            clear();
+        };
+        if (still()) {
+            wake();
+            memo.classList.remove('is-shut'); cards[0].classList.add('is-done'); cards[2].classList.add('is-gone');
+            rest.classList.add('is-shut'); tmr.classList.remove('is-shut'); count.textContent = cards.length - 1;
+            notes.forEach((n) => n.classList.add('is-read'));
+            return;
+        }
+        (async () => {
+            await sleep(700);
+            for (;;) {
+                reset();
+                await until(); wake(); await sleep(1300);
+                // A note on today: the day's menu, then the note editor.
+                note(0);
+                await until(); tapAt(today.querySelector('.hwa-h .kb')); await sleep(260);
+                menu.classList.add('is-on'); await sleep(1100);
+                await until(); tapAt(noteRow); noteRow.classList.add('is-hot'); await sleep(320);
+                menu.classList.remove('is-on'); editor.classList.add('is-on'); await sleep(950);
+                await until(); tapAt(title); await sleep(220);
+                await type(title, words.title, 45); await sleep(250);
+                await until(); tapAt(pick); pick.classList.add('on'); await sleep(550);
+                await until(); tapAt(text); await sleep(220);
+                await type(text, words.body, 28); await sleep(450);
+                await until(); tapAt(save); press(save); await sleep(320);
+                editor.classList.remove('is-on'); await sleep(380);
+                memo.classList.remove('is-shut'); roll(board, today); await sleep(2000);
+                // The scouting goes to tomorrow: held, carried, let go.
+                note(1);
+                const card = cards[2];
+                await until(); roll(board, cards[1]); await sleep(1400);
+                await until(); tapAt(card); tap.classList.add('is-hold'); await sleep(420);
+                const v = board.querySelector('.hwr-view'), k = sc(), vr = v.getBoundingClientRect(), cr = card.getBoundingClientRect();
+                const ghost = card.cloneNode(true);
+                ghost.classList.add('hwb-ghost');
+                Object.assign(ghost.style, { left: (cr.left - vr.left) / k + 'px', top: (cr.top - vr.top) / k + 'px', width: cr.width / k + 'px' });
+                v.appendChild(ghost);
+                card.classList.add('is-dragging');
+                void ghost.offsetWidth; ghost.classList.add('is-up'); await sleep(450);
+                const dy = (restBox.getBoundingClientRect().top - cr.top) / k + 4, dx = 10;
+                ghost.style.transform = `translate(${dx}px, ${dy}px) scale(1.03)`;
+                tap.style.left = (parseFloat(tap.style.left) + dx) + 'px'; tap.style.top = (parseFloat(tap.style.top) + dy) + 'px';
+                await sleep(550); restBox.classList.add('is-over'); await sleep(550);
+                ghost.classList.add('is-drop'); tap.classList.remove('is-hold');
+                card.classList.remove('is-dragging'); card.classList.add('is-gone');
+                rest.classList.add('is-shut'); tmr.classList.remove('is-shut'); count.textContent = cards.length - 1;
+                await sleep(350); ghost.remove(); await sleep(1300);
+                // The urea gets done.
+                note(2);
+                await until(); roll(board, today); await sleep(1300);
+                await until(); tapAt(cards[0].querySelector('.ck')); cards[0].classList.add('is-done'); await sleep(1600);
+                // Modules, then Growth Stages, read down to the timeline.
+                note(3);
+                await until(); tapAt(board.querySelector('.hwa-tools .m')); await sleep(260);
+                mods.classList.add('is-on'); await sleep(1100);
+                await until();
+                const want = (growthRow.getBoundingClientRect().bottom - mlist.getBoundingClientRect().top) / sc() - mview.clientHeight + 24;
+                mlist.style.transform = 'translateY(' + (-Math.max(0, want)) + 'px)'; await sleep(1000);
+                await until(); tapAt(growthRow); growthRow.classList.add('is-hot'); await sleep(450);
+                mods.classList.remove('is-on'); board.classList.remove('is-on'); board.classList.add('is-gone'); growth.classList.add('is-on'); await sleep(2000);
+                await until(); roll(growth, q('.hwg-card.is-open')); await sleep(2300);
+                await until(); roll(growth, q('.hwg-lists') || q('.hwg-needs') || q('.hwg-steps')); await sleep(2600);
+                await until(); roll(growth, q('.hwg-steps')); await sleep(2600);
+                note(99); await sleep(900);
+                growth.classList.remove('is-on'); growth.classList.add('is-gone');
+                await sleep(800);
+            }
+        })();
+    }
+
+    /* ---- between steps 4 and 5: a grower asks Anee about a crop in the
+       real chat. A photo, the question typed, sent; Anee studies the photo,
+       checks the related data (each note lights up), then answers. ---- */
+    function chatFilm(root) {
+        const band = root.querySelector('#hw-ask');
+        if (!band) return;
+        const { sc, notes, note, until, tapAt } = bandKit(band);
+        const q = (sel) => band.querySelector(sel);
+        const ask = q('[data-c="ask"]'), wait = q('[data-c="wait"]'), answer = q('[data-c="answer"]');
+        const comp = q('.hwc-comp'), input = q('.hwc-row .in'), cam = q('.hwc-row .cam'), go = q('.hwc-row .go');
+        const list = q('.hwc-list'), body = q('.hwc-body'), rows = [...wait.querySelectorAll('.hwc-steps li')];
+        const data = JSON.parse(q('[data-hw-chat]').textContent || '{}');
+        const show = (m) => { m.classList.add('is-shown'); void m.offsetWidth; m.classList.add('is-in'); };
+        const hide = (m) => m.classList.remove('is-in', 'is-shown');
+        const roll = (y) => { const max = Math.max(0, list.offsetHeight - body.clientHeight); list.style.transform = 'translateY(' + (-Math.min(max, Math.max(0, y))) + 'px)'; };
+        const toEnd = () => roll(Infinity);
+        const toTop = (m) => roll((m.getBoundingClientRect().top - list.getBoundingClientRect().top) / sc() - 14);
+        if (still()) {
+            show(ask); show(answer); toEnd(); notes.forEach((n) => n.classList.add('is-read'));
+            return;
+        }
         const out = input.querySelector('.v');
         const reset = () => {
             [ask, wait, answer].forEach(hide);
@@ -1610,6 +1855,11 @@
                 let o = 0.05 + 0.32 * f * f, d = r * 0.02, cls = '', pd = '';
                 if (pat === 'plan') {
                     if (lots.some(([a, b, e, z]) => x >= a * W && x <= e * W && y >= b * H && y <= z * H)) { cls = 'k'; o = Math.min(0.95, o + 0.5); d = 0.8 + (c % 6) * 0.04; }
+                } else if (pat === 'build') {
+                    if (r % 2) continue;
+                    const course = r / 2, shift = course % 2 ? 2 : 0;
+                    if ((c + shift) % 4 === 3) continue;
+                    cls = 'k'; o = Math.min(0.9, o * 1.6); d = (1 - y / H) * 1.3 + Math.floor((c + shift) / 4) * 0.03;
                 } else if (pat === 'plant') {
                     if (r % 2) continue; cls = 'k'; o = Math.min(0.9, o * 1.7); d = (x / W) * 1 + r * 0.012;
                 } else if (pat === 'grow') {
@@ -1673,6 +1923,7 @@
         root.classList.add('is-ready');
         pings(root);
         phone(root);
+        boardFilm(root);
         chatFilm(root);
         stages.forEach(field);
         rail(root, scroller, stages);

@@ -3,8 +3,10 @@
 namespace App\Support;
 
 /**
- * How anee.io works (2026-10-01): the cropping season told as six steps,
- * each with the tools a grower reaches for at it and what Anee does there.
+ * How anee.io works (2026-10-01): the cropping season told as seven steps
+ * (six until 2026-10-02, when planning split into planning and building the
+ * plan), each with the tools a grower reaches for at it and what Anee does
+ * there.
  *
  * One list drives both tellings: the public page (/how-it-works) and the
  * full screen tour behind the dashboard's card. Change a word here and both
@@ -35,7 +37,7 @@ class HowItWorks
                 'word' => 'Plan',
                 'when' => 'Before day zero',
                 'title' => 'Plan the season',
-                'lede' => 'Decide when, what and how before a single seed goes in. A mistake costs the least while it is still on paper.',
+                'lede' => 'Decide when, what, where and how before a single seed goes in. A mistake costs the least while it is still on paper.',
                 'say' => null,   // the owner took every step's Anee line out (2026-10-02)
                 'face' => 'thinking',
                 'pattern' => 'plan',
@@ -65,6 +67,19 @@ class HowItWorks
                         'Plan with your team on a drawing: where the seedbed goes, how the water moves, who works which lot. Sketch a layout, a plan or a flow, and everyone works from the same picture.',
                         ['Shapes, lines, text and colors', 'Draw over a photo of your field', 'Kept in your gallery for any season'],
                         null, 'draw.page'),
+                ],
+            ],
+            [
+                'key' => 'build',
+                'word' => 'Build',
+                'when' => 'Ready for day zero',
+                'title' => 'Build and finalize the plan',
+                'lede' => 'Write the season task by task, count what it will use against what is in the shed, and let Anee check it before you commit.',
+                'say' => null,
+                'face' => 'thumbsup',
+                'pattern' => 'build',
+                'glyph' => 'M4 6h7v5H4zM13 6h7v5h-7zM4 13h4v5H4zM10 13h10v5H10z',
+                'items' => [
                     self::item('protocol', 'Protocol Builder', 'Write the whole season before day zero', 'icons/bricks.png', false,
                         'Write every task of the season on its day: land prep, sowing, each fertilizer and spray with its rate, counted in days after sowing or transplanting. Keep one version for the wet season and one for the dry.',
                         ['Tasks on a day count (DAS, DAT, DAP)', 'Materials and rules in one place', 'Turn it into a cropping schedule'],
@@ -262,7 +277,7 @@ class HowItWorks
         // a little off the spot the desktop burst gives it, in rem [right, down].
         $nudge = [
             'variety' => [0, -2.5],     // up a little
-            'review' => [-7, 0],        // Anee reviews your protocol, further left
+            // ('review' sat 7rem further left until it moved to Step 2, 2026-10-02.)
             'access' => [0, 5.6],       // Team logins, further down
             'board' => [0, 5.6],        // Today on the board, further down
             'season' => [-6.9, 6.25],   // Anee Season Report, further down and left
@@ -286,6 +301,11 @@ class HowItWorks
     public static function phone(): array
     {
         $ph = Region::ph();
+        // The season's crop as the app's crop tables know it, and the count
+        // it runs on (transplanted rice counts days after transplanting).
+        $cropKey = $ph ? 'rice' : 'corn_sweet';
+        $counter = $ph ? 'DAT' : 'DAP';
+        $stage = CropStages::stageFor($cropKey, 28, $counter, null);
 
         return [
             'name' => $ph ? 'Juan' : 'Sam',
@@ -315,14 +335,16 @@ class HowItWorks
             'board' => [
                 'desc' => $ph ? 'Riverside and the upper field' : 'The north and south blocks',
                 'crop' => $ph ? 'Rice, transplanted (Palay)' : 'Sweet corn',
+                'cropKey' => $cropKey,
+                'counter' => $counter,
                 'day' => 28,
-                'stage' => $ph ? 'Tillering' : 'Six leaf stage',
+                'stage' => self::plain($stage['label'] ?? ($ph ? 'Active tillering' : 'Rapid growth')),
                 'length' => 105,
                 'lots' => 2,
                 'workers' => 3,
                 'activities' => 36,
                 // Lot => its day count, for the lot chip on each card.
-                'das' => ['Lot 1' => 30, 'Lot 2' => 28],
+                'das' => ['Lot 2' => 28, 'Lot 1' => 30],
                 // Per task above: the type as the board names it, a water
                 // badge (irrigation only) and the card's note.
                 'cards' => [
@@ -337,9 +359,58 @@ class HowItWorks
     }
 
     /**
-     * The second phone, between steps 2 and 3: a grower asks Anee about a
-     * crop in the real chat, with a photo, and Anee answers knowing the lot,
-     * its stage and the weather. The notes say what she read first.
+     * The phone between steps 3 and 4: the same season's activities board.
+     * A note goes on today, a task is dragged to tomorrow and one is ticked
+     * done, then the Modules menu opens Growth Stages. Each lot's stage, its
+     * tips and its timeline come from CropStages and CropStageTips, so the
+     * film reads the crop exactly the way the app does.
+     */
+    public static function board(): array
+    {
+        $ph = Region::ph();
+        $b = self::phone()['board'];
+        $lots = [];
+        foreach ($b['das'] as $name => $day) {
+            $st = CropStages::stageFor($b['cropKey'], $day, $b['counter'], null);
+            $tips = $st ? CropStageTips::for($b['cropKey'], $st['index'], $b['counter']) : ['do' => [], 'watch' => []];
+            $lots[$name] = [
+                'day' => $day,
+                'stage' => self::plain($st['label'] ?? ''),
+                'what' => self::plain($st['what'] ?? ''),
+                'needs' => self::plain($st['needs'] ?? ''),
+                'progress' => isset($st['progress']) ? (int) round($st['progress'] * 100) : null,
+                'dayIn' => ($st['dayInStage'] ?? 0) + 1,
+                'next' => isset($st['next']) ? [self::plain($st['next']['label']), $st['next']['inDays']] : null,
+                'do' => array_map([self::class, 'plain'], array_slice($tips['do'] ?? [], 0, 2)),
+                'watch' => array_map([self::class, 'plain'], array_slice($tips['watch'] ?? [], 0, 2)),
+                'timeline' => array_map(fn ($t) => [self::plain($t['label']), $t['from'], $t['isNow'], $t['isPast']],
+                    CropStages::timeline($b['cropKey'], $day, $b['counter'], null)),
+            ];
+        }
+
+        return [
+            'note' => [$ph ? 'East side, after the urea' : 'North block, after the urea', 'Leaves look greener already. Half a bag left in the shed.'],
+            'mode' => self::plain(\App\Http\Controllers\Manager\GrowthStageController::counterSays($b['counter'])),
+            'lots' => $lots,
+            'notes' => [
+                ['📝', 'Add a note', 'Words, photos or your voice'],
+                ['↕️', 'Drag it to another day', 'Rain coming? Move the task'],
+                ['✅', 'Tick it done', 'The shed and the costs follow'],
+                ['🌱', 'Check the growth stage', 'Where each lot stands today'],
+            ],
+        ];
+    }
+
+    /** The crop tables' words, said without dashes, the way the site writes. */
+    public static function plain(?string $s): string
+    {
+        return str_replace([' — ', '—', ' – ', '–'], [', ', ', ', ' to ', ' to '], (string) $s);
+    }
+
+    /**
+     * The phone between steps 4 and 5: a grower asks Anee about a crop in
+     * the real chat, with a photo, and Anee answers knowing the lot, its
+     * stage and the weather. The notes say what she read first.
      */
     public static function chat(): array
     {

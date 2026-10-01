@@ -55,7 +55,7 @@ class PublicController extends Controller
         return view('public.pricing-compare');
     }
 
-    /** How It Works: the season in six steps (App\Support\HowItWorks). */
+    /** How It Works: the season in seven steps (App\Support\HowItWorks). */
     public function how()
     {
         return view('public.how');

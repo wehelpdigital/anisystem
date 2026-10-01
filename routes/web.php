@@ -206,7 +206,7 @@ Route::prefix('{face}')->where(['face' => 'en'])->group(function () {
     Route::get('/', [App\Http\Controllers\PublicController::class, 'home'])->name('home');
     Route::get('/about', [App\Http\Controllers\PublicController::class, 'about'])->name('about');
     Route::get('/features', [App\Http\Controllers\PublicController::class, 'features'])->name('features');
-    // How It Works (2026-10-01): the season in six steps, Anee at every one.
+    // How It Works (2026-10-01): the season in seven steps, Anee at every one.
     Route::get('/how-it-works', [App\Http\Controllers\PublicController::class, 'how'])->name('how');
     Route::get('/pricing', [App\Http\Controllers\PublicController::class, 'pricing'])->name('pricing');
     Route::get('/pricing/compare', [App\Http\Controllers\PublicController::class, 'compare'])->name('pricing.compare');
