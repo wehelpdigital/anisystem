@@ -172,14 +172,45 @@
     .ak-row-opt:hover { background: #f7fbf1; }
     .ak-none { padding: 1rem .2rem; font-size: .9rem; color: #6b7280; }
 
-    .ak-how { display: grid; gap: 1rem; }
-    @media (min-width: 768px) { .ak-how { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-    .ak-how > div { padding: 1.2rem; border-radius: 1.2rem; background: #fff; border: 1px solid #e5ecdc; }
-    .ak-how span { display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: .8rem; background: #eef6e5; color: #3d6823; font-weight: 900; }
-    .ak-how b { display: block; margin-top: .7rem; font-family: var(--font-heading); color: #14210c; }
-    .ak-how p { margin-top: .3rem; font-size: .9rem; color: #6b7280; line-height: 1.5; }
+    /* ---- how it works: four steps on one path ---- */
+    .ak-how-wrap { background: linear-gradient(180deg, #f9fbf6 0%, #ffffff 100%); border-top: 1px solid #e4efd4; }
+    .ak-how-head { text-align: center; max-width: 36rem; margin: 0 auto; }
+    .ak-how-head .ak-how-kick { margin-top: 0; font-size: .74rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #4a7c2a; }
+    .ak-how-head h2 { margin-top: .4rem; font-family: var(--font-heading); font-weight: 800; font-size: clamp(1.7rem, 4vw, 2.4rem); color: #14210c; line-height: 1.15; }
+    .ak-how-head p { margin-top: .55rem; color: #6b7280; line-height: 1.6; }
+    .ak-how { position: relative; display: grid; gap: 1.6rem; margin-top: 2.6rem; }
+    /* A phone walks the steps down a dotted path on the left. */
+    .ak-how::before { content: ''; position: absolute; left: 1.95rem; top: 2rem; bottom: 2rem; width: 2px;
+        background: repeating-linear-gradient(to bottom, #b9d39b 0 6px, transparent 6px 12px); }
+    .ak-st { position: relative; display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: 1rem; align-items: start;
+        opacity: 0; transform: translateY(14px); transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1);
+        transition-delay: calc(var(--i) * 110ms); }
+    .ak-how.is-in .ak-st { opacity: 1; transform: none; }
+    .ak-ic { position: relative; width: 4rem; height: 4rem; border-radius: 1.3rem; display: grid; place-items: center; color: #fff;
+        background: linear-gradient(140deg, #6b9f3d, #3d6823); box-shadow: 0 14px 30px -14px rgb(40 70 15 / .6), 0 0 0 6px #f9fbf6;
+        transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .ak-st:hover .ak-ic { transform: translateY(-3px) rotate(-3deg); }
+    .ak-ic svg { width: 1.75rem; height: 1.75rem; }
+    .ak-ic em { position: absolute; top: -.5rem; right: -.5rem; width: 1.55rem; height: 1.55rem; border-radius: 999px; display: grid; place-items: center;
+        background: #f5c518; color: #3b2f00; font-style: normal; font-size: .76rem; font-weight: 900; box-shadow: 0 0 0 3px #fff; }
+    .ak-st.is-gold .ak-ic { background: linear-gradient(140deg, #f7d443, #e0a800); color: #3b2f00; }
+    .ak-st.is-gold .ak-ic em { background: #3d6823; color: #fff; }
+    .ak-st .txt { padding-top: .3rem; }
+    .ak-st b { display: block; font-family: var(--font-heading); font-size: 1.08rem; font-weight: 800; color: #14210c; }
+    .ak-st p { margin-top: .3rem; font-size: .93rem; line-height: 1.55; color: #6b7280; }
+    /* A wide screen lays them in a row on one dotted line. */
+    @media (min-width: 900px) {
+        .ak-how { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; }
+        .ak-how::before { left: 12.5%; right: 12.5%; top: 2rem; bottom: auto; width: auto; height: 2px;
+            background: repeating-linear-gradient(to right, #b9d39b 0 8px, transparent 8px 16px); }
+        .ak-st { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+        .ak-st .txt { padding: .2rem .5rem 0; }
+    }
+    .ak-how-go { margin-top: 2.4rem; text-align: center; }
     @media (prefers-reduced-motion: reduce) {
         .ak-step, .ak-said, .ak-tick { animation: none; }
+        .ak-st { opacity: 1; transform: none; transition: none; }
+        .ak-st:hover .ak-ic { transform: none; }
         .ak-face::after, .ak-dots i, .ak-ask.is-busy svg { animation: none; }
         .ak-panel, .ak-sheet-bg { transition: none; }
     }
@@ -198,7 +229,7 @@
             <span class="is-on" id="akS1"><i>1</i>Your farm</span><b></b><span id="akS2"><i>2</i>Your question</span>
         </div>
 
-        <div class="ak-stage">
+        <div class="ak-stage" id="akStage">
             {{-- Step 1: who is asking, and about what farm. --}}
             <form class="ak-step ak-card" id="akFarm" novalidate autocomplete="on">
                 <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
@@ -299,33 +330,36 @@
     </div>
 </section>
 
-<section class="bg-white">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-14">
-        <h2 class="font-heading text-2xl sm:text-3xl font-bold text-ink">How it works</h2>
-        <div class="ak-how mt-6">
-            <div><span>1</span><b>Tell Anee about your farm</b><p>Your name, email, farm size, crop and place.</p></div>
-            <div><span>2</span><b>Ask one question</b><p>Anything about your crops, in Tagalog or English.</p></div>
-            <div><span>3</span><b>Get it by email</b><p>Anee sends a link to your full answer.</p></div>
-            <div><span>4</span><b>Read the full answer</b><p>What to do, when, and how much, with sources.</p></div>
+<section class="ak-how-wrap">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-16">
+        <div class="ak-how-head">
+            <p class="ak-how-kick">How it works</p>
+            <h2>Your answer in four easy steps</h2>
+            <p>No account needed. It is free, and it takes about a minute.</p>
+        </div>
+        <div class="ak-how" id="akHow">
+            <div class="ak-st" style="--i: 0">
+                <span class="ak-ic"><em>1</em><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z"/></svg></span>
+                <div class="txt"><b>Tell Anee about your farm</b><p>Your name, email, farm size, crop and where the farm is.</p></div>
+            </div>
+            <div class="ak-st" style="--i: 1">
+                <span class="ak-ic"><em>2</em><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-3.5-3.5"/></svg></span>
+                <div class="txt"><b>Ask one question</b><p>Anything about your crops, in Tagalog or English.</p></div>
+            </div>
+            <div class="ak-st" style="--i: 2">
+                <span class="ak-ic"><em>3</em><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></span>
+                <div class="txt"><b>Check your email</b><p>Anee sends you a link to your answer.</p></div>
+            </div>
+            <div class="ak-st is-gold" style="--i: 3">
+                <span class="ak-ic"><em>4</em><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7 3h7l5 5v11a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg></span>
+                <div class="txt"><b>Read the full answer</b><p>What to do, when, and how much, with the sources Anee used.</p></div>
+            </div>
+        </div>
+        <div class="ak-how-go">
+            <a href="#akStage" class="btn btn-accent btn-lg" id="akHowGo">Ask Anee now</a>
         </div>
     </div>
 </section>
-
-@if ($recent->count())
-<section class="bg-[#f9fbf6] border-t border-[#e4efd4]">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-        <div class="flex flex-wrap items-end justify-between gap-3 mb-6">
-            <h2 class="font-heading text-2xl font-bold text-ink">Questions farmers asked Anee</h2>
-            <a href="{{ url('/questions') }}" class="text-sm font-extrabold text-brand-700 hover:text-brand-800">See all questions ›</a>
-        </div>
-        <div class="sp-grid">
-            @foreach ($recent as $p)
-                @include('public.site.tile', ['p' => $p])
-            @endforeach
-        </div>
-    </div>
-</section>
-@endif
 
 <section class="anee-band">
     <div class="relative max-w-4xl mx-auto px-4 sm:px-6 py-14 sm:py-16 text-center">
@@ -549,6 +583,22 @@
         await new Promise((r) => setTimeout(r, total * 0.35));
         await w.done({ title: 'Your answer is ready!', line: 'Sending it to your email now.' });
     }
+
+    /* ---- how it works: the steps rise in turn when they come into view ---- */
+    const how = $('akHow');
+    if (how && 'IntersectionObserver' in window && !reduce()) {
+        const io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { how.classList.add('is-in'); io.disconnect(); } }, { threshold: .25 });
+        io.observe(how);
+    } else if (how) {
+        how.classList.add('is-in');
+    }
+    $('akHowGo').addEventListener('click', (e) => {
+        e.preventDefault();
+        const top = $('akStage').getBoundingClientRect().top + scrollY - 120;
+        window.scrollTo({ top, behavior: reduce() ? 'auto' : 'smooth' });
+        const first = !$('akAsk').hidden ? $('akQ') : (!$('akFarm').hidden ? $('akName') : null);
+        if (first && window.matchMedia('(hover: hover)').matches) setTimeout(() => first.focus({ preventScroll: true }), 450);
+    });
 
     /* ---- the sheet ---- */
     const sheet = $('akSheet'), list = $('akList'), find = $('akFind');

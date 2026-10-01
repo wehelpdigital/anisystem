@@ -45,7 +45,6 @@ class AskAneeController extends Controller
         return view('public.ask.index', [
             'siteKey' => Recaptcha::siteKey(),
             'crops' => $this->crops(),
-            'recent' => $this->published()->limit(6)->get(),
             'countries' => \App\Support\Region::countries(),
         ]);
     }
