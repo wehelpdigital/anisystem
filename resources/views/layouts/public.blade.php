@@ -154,6 +154,12 @@
             .ask-slot { flex: 1 1 auto; min-width: 0; justify-content: center; padding: 0 .75rem; }
         }
         .ask-pill { font-size: .875rem; }
+        /* The wordmark's letters sit in the lower part of the logo (the leaves
+           and the dot of the i reach higher), so a logo centred by its box
+           reads about 3px low against the links beside it. Lifted by its own
+           height's 9%, the letters line up with the menu, the pill and the
+           buttons (measured, 2026-10-01). */
+        .pub-logo { transform: translateY(-9%); }
         @keyframes pmRow { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         @media (prefers-reduced-motion: reduce) {
             .pm-burger span, .pm-in, .pm-out { transition: none; }
@@ -176,7 +182,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="flex items-center justify-between h-16 md:h-20">
                 <a href="{{ route('home') }}" class="flex items-center shrink-0">
-                    <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="h-7 md:h-8 w-auto">
+                    <img src="{{ asset('images/logo.png') }}?v=anee" alt="anee.io" class="pub-logo h-7 md:h-8 w-auto">
                 </a>
 
                 <nav id="pubNav" class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700">
