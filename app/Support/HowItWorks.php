@@ -85,7 +85,7 @@ class HowItWorks
                 'when' => 'Day zero',
                 'title' => 'Set up and plant',
                 'lede' => 'Turn the plan into a living cropping schedule. Each lot keeps its own day zero, so every task lands on the right date.',
-                'say' => 'Day zero! From here I count the days for every lot and know where each one stands.',
+                'say' => null,   // the owner took this step's line out (2026-10-01)
                 'face' => 'salute',
                 'pattern' => 'plant',
                 'glyph' => 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z',

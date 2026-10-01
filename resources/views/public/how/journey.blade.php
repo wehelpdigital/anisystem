@@ -670,10 +670,12 @@
                     <{{ $hwHead }} class="hw-h2" id="hw-h-{{ $st['key'] }}">{{ $st['title'] }}</{{ $hwHead }}>
                     <p class="hw-sub">{{ $st['lede'] }}</p>
                 </header>
+                @if (! empty($st['say']))
                 <div class="hw-say">
                     <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" loading="lazy">
                     <div><small>Anee</small><p>{!! $hwWords($st['say']) !!}</p></div>
                 </div>
+                @endif
                 {{-- Anee and her tools. On a desk the script scatters the tools
                      around her (.is-scatter); a phone lists them down the rail. --}}
                 <div class="hw-field" style="--fh: {{ 26 + count($st['items']) * 1.8 }}rem">
