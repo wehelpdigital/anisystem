@@ -304,25 +304,27 @@ class HowItWorks
 
         return [
             'initials' => $ph ? 'JD' : 'SR',
+            // A leaf with a real problem on it: sheath blight's bleached,
+            // brown-edged blotches (the crop problem guide's own photo).
+            'photo' => 'images/site/guides/problems-sheath-blight.webp',
             'question' => $ph
-                ? 'Naninilaw ang dahon ng palay ko sa Lot 2. Ano ang dapat kong gawin?'
-                : 'The leaves on my rice in Lot 2 are turning yellow. What should I do?',
-            'reading' => $ph
-                ? ['Binabasa ang Lot 2 at ang stage nito…', 'Tinitingnan ang panahon sa bukid mo…', 'Sinusuri ang litrato mo…']
-                : ['Reading Lot 2 and its stage…', 'Checking the weather on your farm…', 'Looking at your photo…'],
-            'lead' => $ph ? 'Nasa tillering na ang Lot 2 (day 28).' : 'Lot 2 is at tillering (day 28).',
+                ? 'May ganitong mantsa ang dahon ng palay ko at kumakalat. Ano ito at ano ang dapat kong gawin?'
+                : 'These patches are spreading on my rice leaves. What is it and what should I do?',
+            // What Anee does before she answers, in order.
+            'reading' => ['Deeply analyzing your photo', 'Checking related data', 'Providing your answer'],
+            'lead' => $ph ? 'Mukhang sheath blight ito, isang sakit na dulot ng fungus.' : 'This looks like sheath blight, a disease caused by a fungus.',
             'body' => $ph
-                ? 'Ang paninilaw ng mga lumang dahon sa stage na ito ay kadalasang kulang sa nitrogen.'
-                : 'Yellowing on the older leaves at this stage usually means the crop is short of nitrogen.',
+                ? 'Ang malapad na maputlang mantsa na may kayumangging gilid ang karaniwang tanda nito, lalo na kung maalinsangan at siksik ang tanim.'
+                : 'Wide pale blotches with brown edges are its usual sign, especially in humid weather and a dense crop.',
             'steps' => $ph
-                ? ['Lagyan ng <b>1 sako ng urea kada ektarya</b> ngayong linggo.', 'Gawin ito <b>bago umulan sa Huwebes</b>, para hindi masayang.', 'Kung may brown na batik, padalhan mo ako ng mas malapit na litrato.']
-                : ['Apply <b>1 bag of urea per hectare</b> this week.', "Do it <b>before Thursday's rain</b>, so none of it is wasted.", 'If you see brown spots, send me a closer photo.'],
+                ? ['<b>Huwag munang dagdagan ang urea.</b> Pinapalala ng sobrang nitrogen ang sakit.', 'Mag-spray ng <b>fungicide na rehistrado para sa sheath blight</b>, nakatutok sa ibabang bahagi ng puno.', 'Pagkatapos ng ani, linisin ang dayami at damo para hindi na ito bumalik.']
+                : ['<b>Hold off on more urea for now.</b> Too much nitrogen makes it worse.', 'Spray a <b>fungicide registered for sheath blight</b>, aimed at the lower stems.', 'After harvest, clear the straw and weeds so it does not come back.'],
             'cost' => 7,
             'balance' => 120,
             'notes' => [
-                ['🌾', 'Lot 2, day 28', 'Tillering stage'],
-                ['🌦️', 'Rain on Thursday', 'Feed the crop before it'],
-                ['📷', 'Your photo', 'Older leaves turning yellow'],
+                ['🔍', 'Deeply analyzing the photo', 'Leaf color, spots and pattern'],
+                ['📊', 'Checking related data', 'Your season, weather and records'],
+                ['✍️', 'Providing the answer', 'What it is and what to do'],
             ],
         ];
     }

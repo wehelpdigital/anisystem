@@ -437,18 +437,30 @@
     .hwc-b { max-width: 82%; padding: 10px 14px; font-size: 14.5px; line-height: 1.55; color: #1f2937; background: #fff; border: 1px solid #f3f4f6;
         border-radius: 18px 18px 18px 6px; box-shadow: 0 1px 2px rgb(26 26 26 / .06), 0 3px 10px -4px rgb(26 26 26 / .08); }
     .hwc-msg.me .hwc-b { color: #fff; background: linear-gradient(135deg, #4a7c2a, #3d6823); border-color: transparent; border-radius: 18px 18px 6px 18px; box-shadow: 0 3px 12px -4px rgb(45 80 22 / .45); }
-    .hwc-b img { display: block; width: 100%; height: 150px; margin-bottom: 7px; border-radius: 10px; object-fit: cover; }
+    .hwc-pic { position: relative; display: block; overflow: hidden; margin-bottom: 7px; border-radius: 10px; }
+    .hwc-pic img { display: block; width: 100%; height: 190px; object-fit: cover; object-position: 50% 62%; }
+    /* While Anee studies the photo, a light sweeps down it. */
+    .hwc-pic::after { content: ''; position: absolute; left: 0; right: 0; top: -30%; height: 30%; opacity: 0;
+        background: linear-gradient(180deg, rgb(245 197 24 / 0), rgb(245 197 24 / .55) 80%, rgb(255 255 255 / .9)); box-shadow: 0 0 18px rgb(245 197 24 / .6); }
+    .hwc-msg.is-scanning .hwc-pic::after { opacity: 1; animation: hwcScan 1.2s ease-in-out infinite; }
+    .hwc-msg.is-scanning .hwc-pic { box-shadow: 0 0 0 2px #f5c518; }
+    @keyframes hwcScan { from { top: -30%; } to { top: 100%; } }
     .hwc-b time { display: block; margin-top: 4px; text-align: right; font-size: 10.5px; font-weight: 600; opacity: .55; }
     .hwc-b p { margin: 0 0 6px; }
     .hwc-b ul { list-style: disc; margin: 6px 0; padding-left: 20px; }
     .hwc-b li { margin: 3px 0; }
     .hwc-b .cost { display: inline-flex; align-items: center; gap: 5px; margin-top: 8px; padding: 2px 9px; border-radius: 999px; font-size: 11px; font-weight: 800; color: #8a6100; background: rgb(245 197 24 / .15); }
     .hwc-b .cost::before { content: ''; width: 6px; height: 6px; border-radius: 999px; background: #f5c518; }
-    .hwc-wait { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #4b5563; }
-    .hwc-wait .dots { display: inline-flex; gap: 4px; }
-    .hwc-wait .dots i { width: 7px; height: 7px; border-radius: 999px; background: #8fb86a; animation: hwcDot 1s ease-in-out infinite; }
-    .hwc-wait .dots i:nth-child(2) { animation-delay: .15s; } .hwc-wait .dots i:nth-child(3) { animation-delay: .3s; }
-    @keyframes hwcDot { 0%, 80%, 100% { opacity: .35; transform: none; } 40% { opacity: 1; transform: translateY(-3px); } }
+    /* Anee's three steps before she answers: waiting, working, done. */
+    .hwc-steps { display: grid; gap: 8px; margin: 2px 0; padding: 0; list-style: none; font-size: 13.5px; color: #9ca3af; }
+    .hwc-steps li { display: flex; align-items: center; gap: 9px; transition: color .3s var(--ease); }
+    .hwc-steps li i { position: relative; flex: none; width: 17px; height: 17px; border-radius: 999px; border: 2px solid #d1d5db;
+        transition: border-color .3s var(--ease), background-color .3s var(--ease); }
+    .hwc-steps li.on { color: #1f2937; font-weight: 700; }
+    .hwc-steps li.on i { border-color: #d7e8c3; border-top-color: #4a7c2a; animation: hwSpin .8s linear infinite; }
+    .hwc-steps li.done { color: #3d6823; }
+    .hwc-steps li.done i { border-color: #4a7c2a; background: #4a7c2a; }
+    .hwc-steps li.done i::after { content: ''; position: absolute; left: 4px; top: 1px; width: 4px; height: 8px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
     .hwc-comp { flex: none; margin: 8px 14px 4px; padding: 6px; border-radius: 26px; background: #fff; box-shadow: 0 6px 20px -10px rgb(26 26 26 / .3), 0 0 0 1px #eef0ea; }
     .hwc-shot { display: none; position: relative; width: 56px; height: 56px; margin: 4px 0 6px 6px; }
     .hwc-shot img { width: 100%; height: 100%; border-radius: 10px; object-fit: cover; }
@@ -859,7 +871,7 @@
         const q = (sel) => band.querySelector(sel);
         const ask = q('[data-c="ask"]'), wait = q('[data-c="wait"]'), answer = q('[data-c="answer"]');
         const comp = q('.hwc-comp'), input = q('.hwc-row .in'), cam = q('.hwc-row .cam'), go = q('.hwc-row .go');
-        const list = q('.hwc-list'), body = q('.hwc-body'), tap = q('.hw-tap'), waitTx = wait.querySelector('.tx');
+        const list = q('.hwc-list'), body = q('.hwc-body'), tap = q('.hw-tap'), rows = [...wait.querySelectorAll('.hwc-steps li')];
         const notes = [...band.querySelectorAll('.hw-note')];
         const data = JSON.parse(q('[data-hw-chat]').textContent || '{}');
         const sc = () => parseFloat(app.style.getPropertyValue('--sc')) || .6;
@@ -913,7 +925,7 @@
         const reset = () => {
             [ask, wait, answer].forEach(hide);
             comp.classList.remove('has-shot'); input.classList.remove('has', 'is-focus'); out.textContent = '';
-            list.style.transform = ''; waitTx.textContent = (data.reading || [''])[0];
+            list.style.transform = ''; rows.forEach((r) => r.classList.remove('on', 'done')); ask.classList.remove('is-scanning');
             notes.forEach((n) => { n.classList.remove('is-hot', 'is-read'); (n._arc || []).forEach((x) => x.classList.remove('is-on')); });
         };
         (async () => {
@@ -929,10 +941,19 @@
                 show(ask); comp.classList.remove('has-shot'); out.textContent = ''; input.classList.remove('has');
                 toEnd(); await sleep(800);
                 show(wait); toEnd();
-                for (let k = 0; k < (data.reading || []).length; k++) {
-                    await until(); waitTx.textContent = data.reading[k]; note(k); await sleep(1350);
+                // Deeply analyzing the photo (a light sweeps it), checking the
+                // related data, providing the answer: each ticked in turn.
+                for (let k = 0; k < rows.length; k++) {
+                    await until();
+                    rows.forEach((r, i) => { r.classList.toggle('on', i === k); r.classList.toggle('done', i < k); });
+                    ask.classList.toggle('is-scanning', k === 0);
+                    note(k);
+                    await sleep(k === 0 ? 2000 : 1500);
                 }
+                rows.forEach((r) => { r.classList.remove('on'); r.classList.add('done'); });
+                ask.classList.remove('is-scanning');
                 note(99);
+                await sleep(500);
                 hide(wait); show(answer); toTop(answer); await sleep(2800);
                 await until(); toEnd(); await sleep(3400);
                 [ask, answer].forEach((m) => m.classList.remove('is-in'));

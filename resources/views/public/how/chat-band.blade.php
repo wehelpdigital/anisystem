@@ -1,14 +1,15 @@
 {{-- Between steps 2 and 3 (HowItWorks::chat): a second phone, the real Anee
-     chat, where a grower sends a photo and asks about a crop and Anee answers
-     knowing the lot, its stage and the weather. The notes beside the phone
-     light up as she reads each. Played by chatFilm() in the journey script. --}}
+     chat, where a grower sends a photo of a sick leaf and asks what it is.
+     Before Anee answers she works through three steps (the photo, the
+     related data, the answer), shown in her bubble and lit in the notes
+     beside the phone. Played by chatFilm() in the journey script. --}}
 @php $hc = \App\Support\HowItWorks::chat(); @endphp
 <section class="hw-band" id="hw-ask" aria-labelledby="hw-ask-h">
     <svg class="hw-band-svg" aria-hidden="true"></svg>
     <div class="hw-band-copy">
         <p class="hw-step">Any day <span>any question</span></p>
         <{{ $hwHead }} class="hw-h2" id="hw-ask-h">Ask Anee about your crops</{{ $hwHead }}>
-        <p class="hw-sub">Snap a photo of what worries you and ask in {{ \App\Support\Region::ph() ? 'Tagalog or English' : 'plain English' }}. Anee already knows the lot, its stage, the weather and what you applied, so her answer fits your field.</p>
+        <p class="hw-sub">Snap a photo of what worries you and ask in {{ \App\Support\Region::ph() ? 'Tagalog or English' : 'plain English' }}. Anee studies the photo closely, checks the data related to your farm, then tells you what it is and what to do.</p>
     </div>
     <div class="hw-band-phone" aria-hidden="true">
         <div class="hw-phone2"><div class="hw-scr2"><div class="hwr">
@@ -27,14 +28,14 @@
                     <div class="hwc-msg me" data-c="ask">
                         <span class="hwc-face">{{ $hc['initials'] }}</span>
                         <div class="hwc-b">
-                            <img src="{{ asset('images/site/palay.jpg') }}" alt="">
+                            <span class="hwc-pic"><img src="{{ asset($hc['photo']) }}" alt=""></span>
                             {{ $hc['question'] }}
                             <time>7:42 AM</time>
                         </div>
                     </div>
                     <div class="hwc-msg" data-c="wait">
                         <span class="hwc-face"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt=""></span>
-                        <div class="hwc-b hwc-wait"><span class="dots"><i></i><i></i><i></i></span><span class="tx">{{ $hc['reading'][0] }}</span></div>
+                        <div class="hwc-b hwc-wait"><ol class="hwc-steps">@foreach ($hc['reading'] as $rd)<li><i></i>{{ $rd }}</li>@endforeach</ol></div>
                     </div>
                     <div class="hwc-msg" data-c="answer">
                         <span class="hwc-face"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt=""></span>
@@ -47,7 +48,7 @@
                     </div>
                 </div></div>
                 <div class="hwc-comp">
-                    <div class="hwc-shot"><img src="{{ asset('images/site/palay.jpg') }}" alt=""><i>×</i></div>
+                    <div class="hwc-shot"><img src="{{ asset($hc['photo']) }}" alt=""><i>×</i></div>
                     <div class="hwc-row">
                         <span class="cam"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.9a2 2 0 001.7-.9l.8-1.2A2 2 0 0110.1 4h3.8a2 2 0 011.7.9l.8 1.2a2 2 0 001.7.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg></span>
                         <span class="in"><span class="ph">Ask about your crop</span><span class="v"></span><em></em></span>
@@ -64,6 +65,6 @@
             <div class="hw-note" style="--k: {{ $k }}"><span>{{ $emo }}</span><div><b>{{ $t }}</b><small>{{ $s }}</small></div></div>
         @endforeach
     </div>
-    <script type="application/json" data-hw-chat>@json(['question' => $hc['question'], 'reading' => $hc['reading']])</script>
-    <p class="sr-only">A phone shows the Anee chat: a grower attaches a photo of yellowing rice leaves and asks what to do. Anee reads the lot and its stage, the weather and the photo, then answers: the lot is at tillering, it is short of nitrogen, apply one bag of urea per hectare before Thursday's rain.</p>
+    <script type="application/json" data-hw-chat>@json(['question' => $hc['question']])</script>
+    <p class="sr-only">A phone shows the Anee chat: a grower attaches a photo of a rice leaf with pale, brown-edged blotches and asks what it is. Anee deeply analyzes the photo, checks the related data, then answers: it looks like sheath blight; hold off on more urea, spray a fungicide registered for it at the lower stems, and clear the straw and weeds after harvest.</p>
 </section>
