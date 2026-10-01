@@ -239,8 +239,8 @@ Route::get('/features/{slug}', [App\Http\Controllers\SitePageController::class, 
 Route::get('/ask-anee', [App\Http\Controllers\AskAneeController::class, 'page'])->defaults('face', 'ph')->name('ask.page');
 Route::post('/ask-anee/question', [App\Http\Controllers\AskAneeController::class, 'ask'])->name('ask.question');
 Route::get('/ask-anee/question/{token}', [App\Http\Controllers\AskAneeController::class, 'state'])->where('token', '[A-Za-z0-9]{40}')->name('ask.state');
-Route::post('/ask-anee/details', [App\Http\Controllers\AskAneeController::class, 'details'])->name('ask.details');
-Route::post('/ask-anee/email', [App\Http\Controllers\AskAneeController::class, 'email'])->name('ask.email');
+Route::post('/ask-anee/farm', [App\Http\Controllers\AskAneeController::class, 'farm'])->name('ask.farm');
+Route::post('/ask-anee/send', [App\Http\Controllers\AskAneeController::class, 'send'])->name('ask.send');
 Route::get('/ask-anee/answer/{token}', [App\Http\Controllers\AskAneeController::class, 'answer'])->where('token', '[A-Za-z0-9]{40}')->defaults('face', 'ph')->name('ask.answer');
 Route::post('/ask-anee/answer/{token}/start', [App\Http\Controllers\AskAneeController::class, 'start'])->where('token', '[A-Za-z0-9]{40}')->name('ask.start');
 Route::get('/ask-anee/answer/{token}/job', [App\Http\Controllers\AskAneeController::class, 'job'])->where('token', '[A-Za-z0-9]{40}')->name('ask.job');

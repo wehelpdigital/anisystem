@@ -28,14 +28,17 @@ class AskAnee
     public function __construct(private AiClient $ai, private PageWriter $writer) {}
 
     /** @return array{ok: bool, agri: bool, reply: string, topic: string, crop: ?string, lang: string, match: ?int, error: ?string} */
-    public function classify(string $question): array
+    /** @param array{name?: string, farm?: string} $who the visitor and their farm, given before the question */
+    public function classify(string $question, array $who = []): array
     {
         $settings = AiSetting::current()->forField('PH');
         $candidates = $this->candidates($question);
         $list = $candidates->map(fn ($p) => $p->id . ': ' . $p->title)->implode("\n");
         $crops = collect(CropCatalog::CROPS)->map(fn ($c, $k) => $k . ' = ' . CropCatalog::label($k))->implode('; ');
 
-        $prompt = "A visitor on anee.io's public website typed one free question into \"Try and Ask Anee\". They will give a few farm details next, and the full answer is sent to their email.\n\n"
+        $prompt = "A visitor on anee.io's public website typed one free question into \"Try and Ask Anee\". The full answer is written later and sent to their email.\n\n"
+            . (! empty($who['name']) ? 'Their name: ' . $who['name'] . "\n" : '')
+            . (! empty($who['farm']) ? 'Their farm: ' . $who['farm'] . "\n" : '')
             . "Their question:\n\"\"\"" . $question . "\"\"\"\n\n"
             . "Questions this site has already answered (id: title):\n" . ($list !== '' ? $list : '(none yet)') . "\n\n"
             . "Crop keys: {$crops}\n\n"
@@ -44,7 +47,7 @@ class AskAnee
             . "agri: true when it is about agriculture and crops: planting, seeds and varieties, soil, water, fertilizer, pests, diseases, weeds, crop growth, harvest and post harvest, crop prices and selling, farm costs, farm tools and machines, farm planning. False for anything else (other subjects, greetings with no question, requests unrelated to farming).\n"
             . "reply: what you say to them now, 1 to 3 short sentences in the visitor's own language (Tagalog, Taglish or English), warm, with one or two of your faces (:anee-NAME:).\n"
             . "  If agri is false: say sorry, you only answer questions about agriculture and crops, and invite them to ask one. Do not answer their question.\n"
-            . "  If agri is true: do NOT answer yet. Say it is a good question, and that to analyze it properly you need a few details about their farm: the farm size, the crop, and where the farm is.\n"
+            . "  If agri is true: do NOT answer yet. Say it is a good question (use their first name if you have it), and that you are now looking at it together with their farm, and the full answer goes to their email.\n"
             . "topic: 3 to 8 plain English words naming the subject, e.g. \"yellow leaves on rice after transplanting\".\n"
             . "crop: the crop key when the question clearly names a crop, else null.\n"
             . "lang: \"tl\" when the question is mostly Tagalog or Taglish, else \"en\".\n"

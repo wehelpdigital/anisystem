@@ -18,18 +18,23 @@ use Illuminate\Support\Str;
 /**
  * Try and Ask Anee (2026-10-01): one free farming question on the public site.
  *
- *   1. ask      the question; Anee says whether she takes it (farming only)
- *   2. details  the farm: size, crop, province and town
+ * Reordered the same day on the owner's word: the farm first, then the
+ * question in one search bar.
+ *
+ *   1. farm     name, email, farm size, main crop, province and town; the
+ *               visitor becomes a lead here (Acumbamail and the mother's CRM)
+ *   2. ask      the question, in a search bar; Anee says whether she takes
+ *               it (farming only), off the request's clock (state polls)
  *   3. (the page plays a short wait: the answer is "being prepared")
- *   4. email    where to send it; the visitor becomes a lead (Acumbamail
- *               and the mother's CRM) and the email goes out with a button
+ *   4. send     the answer email goes out with its button, and the question
+ *               joins the lead
  *   5. answer   the button: the answer is written then (a job the page
  *               waits on) as a page of its own at /question/{slug}, or an
  *               existing page that already answers it is opened
  *
  * Every step a visitor sends carries a reCAPTCHA token, a hidden field no
- * person fills, and a rate limit per address; the model is only ever asked
- * at step 1 and on the first opening of the answer.
+ * person fills, and a rate limit per address; the model is only asked at
+ * step 2 and on the first opening of the answer.
  */
 class AskAneeController extends Controller
 {
@@ -45,13 +50,104 @@ class AskAneeController extends Controller
         ]);
     }
 
-    /** Step 1: the question. */
+    /** Step 1: who is asking, and about what farm. A lead from here on. */
+    public function farm(Request $request)
+    {
+        if ($refused = $this->guard($request, 'ask_farm')) {
+            return $refused;
+        }
+        $data = $request->validate([
+            'name' => 'required|string|max:120',
+            'email' => 'required|string|max:190|email:rfc,dns',
+            'farmSize' => 'required|numeric|min:0.01|max:1000000',
+            'farmUnit' => 'required|in:ha,sqm',
+            'crop' => 'required|string|max:40',
+            'cropOther' => 'nullable|string|max:80',
+            'country' => 'nullable|string|size:2',
+            'province' => 'required|string|max:80',
+            'town' => 'required|string|max:120',
+            'token' => 'nullable|string|size:40',
+        ], [
+            'name.required' => 'What is your name?',
+            'email.required' => 'Please type your email address.',
+            'email.email' => 'That email address does not look right. Please check it.',
+            'farmSize.required' => 'How big is the farm?',
+            'crop.required' => 'Which crop do you grow?',
+            'province.required' => 'Which province is the farm in?',
+            'town.required' => 'Which town is the farm in?',
+        ]);
+        $crop = isset(CropCatalog::CROPS[$data['crop']]) ? $data['crop'] : null;
+        $label = $crop ? self::plain(CropCatalog::label($crop)) : trim((string) ($data['cropOther'] ?? ''));
+        if ($label === '') {
+            return $this->json(false, 'Which crop do you grow?', ['errors' => ['crop' => ['Which crop do you grow?']]], 422);
+        }
+        $email = mb_strtolower(trim($data['email']));
+        $ip = (string) $request->ip();
+        foreach ([['ask-f-h:' . $ip, 10, 3600], ['ask-e:' . sha1($email), 6, 86400]] as [$key, $max, $decay]) {
+            if (RateLimiter::tooManyAttempts($key, $max)) {
+                return $this->json(false, 'That is a lot for one day. Make a free account and ask Anee as much as you like.', ['limited' => true], 429);
+            }
+            RateLimiter::hit($key, $decay);
+        }
+
+        $fields = [
+            'name' => Str::limit(trim(strip_tags($data['name'])), 118, ''),
+            'email' => $email,
+            'farmSize' => round((float) $data['farmSize'], 2),
+            'farmUnit' => $data['farmUnit'],
+            'crop' => $crop,
+            'cropLabel' => Str::limit($label, 118, ''),
+            'country' => \App\Support\Region::valid($data['country'] ?? 'PH') ?: 'PH',
+            'province' => Str::limit(trim(strip_tags($data['province'])), 78, ''),
+            'town' => Str::limit(trim(strip_tags($data['town'])), 118, ''),
+        ];
+        // The same visitor going back to fix a detail keeps their row.
+        $q = ! empty($data['token']) ? $this->byToken($data['token']) : null;
+        if ($q && in_array($q->status, ['profile', 'declined', 'ready', 'failed'], true)) {
+            $q->update($fields);
+        } else {
+            $q = AsAskQuestion::create($fields + [
+                'token' => Str::random(40),
+                'question' => '',
+                'status' => 'profile',
+                'ip' => $ip,
+                'userAgent' => Str::limit((string) $request->userAgent(), 250, ''),
+                'source' => Str::limit((string) $request->input('src', ''), 120, '') ?: null,
+                'deleteStatus' => 1,
+            ]);
+        }
+
+        $payload = ['success' => true, 'message' => 'ok', 'data' => [
+            'token' => $q->token,
+            'first' => Str::before($fields['name'], ' ') ?: $fields['name'],
+        ]];
+        // The marketing side after the answer: the visitor waits on nothing.
+        $lead = fn () => app(AskAneeLeads::class)->captureFarm($q->fresh());
+        if (function_exists('fastcgi_finish_request')) {
+            response()->json($payload)->send();
+            fastcgi_finish_request();
+            $lead();
+            exit;
+        }
+        $lead();
+
+        return response()->json($payload);
+    }
+
+    /** Step 2: the question. */
     public function ask(Request $request)
     {
         if ($refused = $this->guard($request, 'ask_question')) {
             return $refused;
         }
-        $data = $request->validate(['question' => 'required|string|min:6|max:700']);
+        $data = $request->validate(['question' => 'required|string|min:6|max:700', 'token' => 'required|string|size:40']);
+        $q = $this->byToken($data['token']);
+        if (! $q) {
+            return $this->json(false, 'Please fill in your farm details first.', ['restart' => true], 410);
+        }
+        if ($q->status === 'emailed') {
+            return $this->json(false, 'You have used your free question. Make a free account and ask Anee as much as you like.', ['used' => true], 409);
+        }
         $ip = (string) $request->ip();
         foreach ([['ask-q-h:' . $ip, 8, 3600], ['ask-q-d:' . $ip, 25, 86400]] as [$key, $max, $decay]) {
             if (RateLimiter::tooManyAttempts($key, $max)) {
@@ -60,22 +156,23 @@ class AskAneeController extends Controller
             RateLimiter::hit($key, $decay);
         }
 
-        $question = trim(preg_replace('/\s+/u', ' ', strip_tags($data['question'])));
-        $q = AsAskQuestion::create([
-            'token' => Str::random(40),
-            'question' => $question,
+        $q->update([
+            'question' => trim(preg_replace('/\s+/u', ' ', strip_tags($data['question']))),
             'status' => 'asked',
-            'ip' => $ip,
-            'userAgent' => Str::limit((string) $request->userAgent(), 250, ''),
-            'source' => Str::limit((string) $request->input('src', ''), 120, '') ?: null,
-            'deleteStatus' => 1,
+            'isAgri' => null,
+            'reply' => null,
+            'matchedPageId' => null,
+            'answerError' => null,
         ]);
 
         /* Anee reads it off the request's clock: her first word can take
          * twenty seconds, and the edge in front of anee.io gives a request
          * about that long. The page asks after her answer (state). */
         $read = function () use ($q) {
-            $c = $this->anee->classify($q->question);
+            $c = $this->anee->classify($q->question, [
+                'name' => Str::before((string) $q->name, ' '),
+                'farm' => trim($q->farmWords() . ' of ' . Str::before((string) $q->cropLabel, ' (') . ($q->placeWords() ? ' in ' . $q->placeWords() : '')),
+            ]);
             $q->update($c['ok'] ? [
                 'topic' => $c['topic'],
                 'lang' => $c['lang'],
@@ -83,7 +180,7 @@ class AskAneeController extends Controller
                 'reply' => $c['reply'],
                 'detectedCrop' => $c['crop'],
                 'matchedPageId' => $c['match'],
-                'status' => $c['agri'] ? 'details' : 'declined',
+                'status' => $c['agri'] ? 'ready' : 'declined',
             ] : ['status' => 'failed', 'answerError' => Str::limit((string) $c['error'], 480, '')]);
         };
         if (function_exists('fastcgi_finish_request')) {
@@ -101,12 +198,12 @@ class AskAneeController extends Controller
     /** What Anee said to the question, once she has read it. */
     public function state(string $token)
     {
-        $q = strlen($token) === 40 ? AsAskQuestion::where('token', $token)->where('deleteStatus', 1)->first() : null;
+        $q = $this->byToken($token);
         if (! $q) {
             return $this->json(false, 'That question has expired. Please ask it again.', [], 410);
         }
         if ($q->status === 'asked') {
-            if ($q->created_at->lt(now()->subSeconds(100))) {
+            if ($q->updated_at->lt(now()->subSeconds(100))) {
                 $q->update(['status' => 'failed', 'answerError' => 'Anee took too long to read that.']);
 
                 return $this->json(false, 'Anee could not read that just now. Please try again.', [], 503);
@@ -117,88 +214,30 @@ class AskAneeController extends Controller
         if ($q->status === 'failed') {
             return $this->json(false, 'Anee could not read that just now. Please try again.', [], 503);
         }
-        $agri = (bool) $q->isAgri;
 
         return $this->json(true, 'ok', [
-            'token' => $agri ? $q->token : null,
-            'agri' => $agri,
+            'token' => $q->token,
+            'agri' => (bool) $q->isAgri,
             'reply' => $this->said((string) $q->reply),
-            'crop' => $q->detectedCrop,
-            'cropLabel' => $q->detectedCrop ? self::plain(CropCatalog::label($q->detectedCrop)) : null,
         ]);
     }
 
-    /** Step 2: the farm. */
-    public function details(Request $request)
+    /** Step 4: the answer email, after the wait. The question joins the lead. */
+    public function send(Request $request)
     {
-        if ($refused = $this->guard($request, 'ask_details')) {
+        if ($refused = $this->guard($request, 'ask_send')) {
             return $refused;
         }
         $q = $this->byToken((string) $request->input('token'));
-        if (! $q || ! in_array($q->status, ['details', 'ready'], true)) {
+        if (! $q || ! $q->isAgri || ! in_array($q->status, ['ready', 'emailed'], true)) {
             return $this->json(false, 'That question has expired. Please ask it again.', [], 410);
         }
-        $data = $request->validate([
-            'farmSize' => 'required|numeric|min:0.01|max:1000000',
-            'farmUnit' => 'required|in:ha,sqm',
-            'crop' => 'required|string|max:40',
-            'cropOther' => 'nullable|string|max:80',
-            'country' => 'nullable|string|size:2',
-            'province' => 'required|string|max:80',
-            'town' => 'required|string|max:120',
-        ], [
-            'farmSize.required' => 'How big is the farm?',
-            'crop.required' => 'Which crop is it?',
-            'province.required' => 'Which province is the farm in?',
-            'town.required' => 'Which town is the farm in?',
-        ]);
-        $crop = isset(CropCatalog::CROPS[$data['crop']]) ? $data['crop'] : null;
-        $label = $crop ? self::plain(CropCatalog::label($crop)) : trim((string) ($data['cropOther'] ?? ''));
-        if ($label === '') {
-            return $this->json(false, 'Which crop is it?', ['errors' => ['crop' => ['Which crop is it?']]], 422);
+        if ($q->status === 'emailed') {
+            return $this->json(true, 'Sent.', ['email' => $q->email]);
         }
-        $country = \App\Support\Region::valid($data['country'] ?? 'PH') ?: 'PH';
-        $q->update([
-            'farmSize' => round((float) $data['farmSize'], 2),
-            'farmUnit' => $data['farmUnit'],
-            'crop' => $crop,
-            'cropLabel' => Str::limit($label, 118, ''),
-            'country' => $country,
-            'province' => Str::limit(trim(strip_tags($data['province'])), 78, ''),
-            'town' => Str::limit(trim(strip_tags($data['town'])), 118, ''),
-            'status' => 'ready',
-        ]);
-
-        return $this->json(true, 'ok', [
-            'crop' => Str::before($label, ' ('),
-            'place' => $q->placeWords(),
-        ]);
-    }
-
-    /** Step 4: where the answer goes. The visitor becomes a lead here. */
-    public function email(Request $request)
-    {
-        if ($refused = $this->guard($request, 'ask_email')) {
-            return $refused;
-        }
-        $q = $this->byToken((string) $request->input('token'));
-        if (! $q || ! in_array($q->status, ['ready', 'emailed'], true)) {
-            return $this->json(false, 'That question has expired. Please ask it again.', [], 410);
-        }
-        $data = $request->validate(['email' => 'required|string|max:190|email:rfc,dns'], [
-            'email.required' => 'Please type your email address.',
-            'email.email' => 'That email address does not look right. Please check it.',
-        ]);
-        $email = mb_strtolower(trim($data['email']));
-        $key = 'ask-e:' . sha1($email);
-        if (RateLimiter::tooManyAttempts($key, 6)) {
-            return $this->json(false, 'This address has asked a lot today. Make a free account and ask Anee as much as you like.', ['limited' => true], 429);
-        }
-        RateLimiter::hit($key, 86400);
-
-        $q->update(['email' => $email]);
         $url = route('ask.answer', ['token' => $q->token]);
-        $sent = app(MailService::class)->sendTemplate('ask_anee_answer', $email, '', [
+        $sent = app(MailService::class)->sendTemplate('ask_anee_answer', (string) $q->email, (string) $q->name, [
+            'firstName' => e(Str::before((string) $q->name, ' ') ?: 'there'),
             'question' => e(Str::limit($q->question, 400)),
             'crop' => e(Str::before((string) $q->cropLabel, ' (')),
             'farmSize' => e($q->farmWords()),
@@ -208,20 +247,19 @@ class AskAneeController extends Controller
             'siteName' => 'anee.io',
         ], ['relatedType' => 'ask_question', 'relatedId' => $q->id]);
         if (! $sent) {
-            return $this->json(false, 'The email could not be sent just now. Please check the address and try again.', [], 502);
+            return $this->json(false, 'The email could not be sent just now. Please try again.', [], 502);
         }
         $q->update(['status' => 'emailed', 'emailedAt' => now()]);
 
-        $payload = ['success' => true, 'message' => 'Sent.', 'data' => ['email' => $email]];
-        $leads = fn () => app(AskAneeLeads::class)->capture($q->fresh(), $url);
-        // The marketing side after the answer has gone: the visitor waits on nothing.
+        $payload = ['success' => true, 'message' => 'Sent.', 'data' => ['email' => $q->email]];
+        $note = fn () => app(AskAneeLeads::class)->noteQuestion($q->fresh(), $url);
         if (function_exists('fastcgi_finish_request')) {
             response()->json($payload)->send();
             fastcgi_finish_request();
-            $leads();
+            $note();
             exit;
         }
-        $leads();
+        $note();
 
         return response()->json($payload);
     }

@@ -17,7 +17,7 @@ class AsAskQuestion extends BaseModel
     protected $table = 'as_ask_questions';
 
     protected $fillable = [
-        'token', 'question', 'topic', 'lang', 'isAgri', 'reply', 'detectedCrop', 'matchedPageId',
+        'token', 'name', 'question', 'topic', 'lang', 'isAgri', 'reply', 'detectedCrop', 'matchedPageId',
         'farmSize', 'farmUnit', 'crop', 'cropLabel', 'country', 'province', 'town', 'email', 'status',
         'answerStatus', 'answerPhase', 'answerTry', 'answerStartedAt', 'answerBeatAt', 'answerError',
         'pageId', 'crmLeadId', 'listedAt', 'emailedAt', 'openedAt', 'ip', 'userAgent', 'source', 'deleteStatus',

@@ -516,9 +516,9 @@ class AniSystemEmailTemplateSeeder extends Seeder
             'ask_anee_answer' => [
                 'name' => 'Ask Anee — your answer is ready',
                 'subject' => 'Anee answered your question 🌾',
-                'tags' => '{{question}}, {{crop}}, {{farmSize}}, {{location}}, {{answerUrl}}, {{signupUrl}}, {{siteName}}',
+                'tags' => '{{firstName}}, {{question}}, {{crop}}, {{farmSize}}, {{location}}, {{answerUrl}}, {{signupUrl}}, {{siteName}}',
                 'body' => S::wrap(
-                    '<p>Hi there,</p>'
+                    '<p>Hi {{firstName}},</p>'
                     . '<p>Thank you for asking me! I looked at your question together with your farm, and your answer is ready.</p>'
                     . S::label('You asked')
                     . S::panel('<em>“{{question}}”</em>')
