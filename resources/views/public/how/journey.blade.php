@@ -701,7 +701,7 @@
                         $link = $hwLink($it);
                         $uid = 'hw-' . $st['key'] . '-' . $it['key'];
                     @endphp
-                    <div class="hw-item" style="--i: {{ $i }}">
+                    <div class="hw-item" style="--i: {{ $i }}" @if ($it['nudge']) data-nudge="{{ implode(',', $it['nudge']) }}" @endif>
                         <div class="hw-float">
                             <button type="button" class="hw-chip" id="{{ $uid }}-b" aria-expanded="false" aria-controls="{{ $uid }}">
                                 <span class="hw-ico {{ str_starts_with($it['icon'], 'anee/') ? 'is-face' : '' }}"><img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy"></span>
@@ -1053,6 +1053,15 @@
                 }
                 if (!moved) break;
             }
+            // A tool the owner placed by hand moves off its burst spot by its
+            // own nudge (rem, right and down), still kept inside the field.
+            const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+            items.forEach((it, i) => {
+                if (!it.dataset.nudge) return;
+                const [nx, ny] = it.dataset.nudge.split(',').map(Number);
+                p[i].x = Math.min(W - box[i].w / 2, Math.max(box[i].w / 2, p[i].x + nx * rem));
+                p[i].y = Math.min(H - box[i].h / 2, Math.max(box[i].h / 2, p[i].y + ny * rem));
+            });
             items.forEach((it, i) => {
                 it.style.left = (p[i].x - box[i].w / 2) + 'px';
                 it.style.top = (p[i].y - box[i].h / 2) + 'px';

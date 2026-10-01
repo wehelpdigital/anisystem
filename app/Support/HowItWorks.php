@@ -29,7 +29,7 @@ class HowItWorks
         $ph = Region::ph();
         $peso = $ph ? 'peso' : 'dollar';
 
-        return array_values(array_filter([
+        $stages = array_values(array_filter([
             [
                 'key' => 'plan',
                 'word' => 'Plan',
@@ -257,6 +257,24 @@ class HowItWorks
                 ],
             ],
         ]));
+
+        // Hand placed on the owner's word (2026-10-02): where a tool should sit
+        // a little off the spot the desktop burst gives it, in rem [right, down].
+        $nudge = [
+            'variety' => [0, -2.5],     // up a little
+            'access' => [0, 5.6],       // Team logins, further down
+            'board' => [0, 5.6],        // Today on the board, further down
+            'season' => [-6.9, 6.25],   // Anee Season Report, further down and left
+        ];
+        foreach ($stages as &$st) {
+            foreach ($st['items'] as &$it) {
+                $it['nudge'] = $nudge[$it['key']] ?? null;
+            }
+            unset($it);
+        }
+        unset($st);
+
+        return $stages;
     }
 
     /**
