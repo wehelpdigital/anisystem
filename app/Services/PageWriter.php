@@ -48,7 +48,126 @@ class PageWriter
             return ['ok' => false, 'page' => null, 'error' => $result['error'] ?? 'The page came back unreadable.', 'result' => $result];
         }
 
-        return ['ok' => true, 'page' => $this->shape($data, $brief, (array) ($result['sources'] ?? [])), 'error' => null, 'result' => $result];
+        $page = $this->shape($data, $brief, (array) ($result['sources'] ?? []));
+
+        /* The rules a page must meet are checked, not hoped for (audit): the
+         * meta tags, the headings, the keyphrase, the main keywords. A page
+         * that misses any goes back once with the list, and the better of
+         * the two is kept. */
+        $problems = self::audit($page);
+        if ($problems) {
+            $fix = $this->ai->askForJson($settings, $this->repairPrompt($page, $problems), 9000, $parse,
+                ['onPhase' => $beat ? fn (string $phase, int $try = 1) => $beat('document-json', $try) : null]);
+            foreach (['tokensIn', 'tokensOut'] as $k) {
+                $result[$k] = (int) ($result[$k] ?? 0) + (int) ($fix[$k] ?? 0);
+            }
+            if (is_array($fix['data'] ?? null)) {
+                $again = $this->shape($fix['data'], $brief, (array) ($result['sources'] ?? []));
+                if (count(self::audit($again)) < count($problems)) {
+                    $page = $again;
+                }
+            }
+        }
+
+        return ['ok' => true, 'page' => $page, 'error' => null, 'result' => $result];
+    }
+
+    /**
+     * What a page still gets wrong against the house rules, one sentence
+     * each, written to be handed back to the model. Empty when it passes.
+     *
+     * @return list<string>
+     */
+    public static function audit(array $p): array
+    {
+        $out = [];
+        $plain = fn ($s) => mb_strtolower(SitePages::plain((string) $s));
+        $re = fn (string $needle) => '/(?<![\p{L}\p{N}])' . preg_quote($needle, '/') . '(?![\p{L}\p{N}])/u';
+        $has = fn (string $hay, string $needle) => $needle !== '' && (bool) preg_match($re($needle), $hay);
+        $count = fn (string $hay, string $needle) => $needle === '' ? 0 : (int) preg_match_all($re($needle), $hay);
+
+        $focus = mb_strtolower(trim((string) ($p['focusKeyword'] ?? '')));
+        $heads = [];
+        $levels = [];
+        $body = $plain($p['excerpt'] ?? '');
+        foreach ((array) ($p['blocks'] ?? []) as $b) {
+            if (($b['type'] ?? '') === 'heading') {
+                $heads[] = $plain($b['text'] ?? '');
+                $levels[] = (int) ($b['level'] ?? 2);
+            }
+            $t = [];
+            array_walk_recursive($b, function ($v, $k) use (&$t) {
+                if (is_string($v) && ! in_array($k, ['type', 'url', 'src', 'tone', 'level'], true)) {
+                    $t[] = $v;
+                }
+            });
+            $body .= ' ' . $plain(implode(' ', $t));
+        }
+
+        $mt = mb_strlen((string) ($p['metaTitle'] ?? ''));
+        $md = mb_strlen((string) ($p['metaDescription'] ?? ''));
+        if ($focus === '') {
+            $out[] = 'There is no focusKeyword.';
+        }
+        if ($mt < 35 || $mt > 60) {
+            $out[] = "metaTitle is {$mt} characters. It must be 35 to 60.";
+        }
+        if ($focus !== '' && ! $has($plain($p['metaTitle'] ?? ''), $focus)) {
+            $out[] = 'metaTitle must contain the focus keyphrase, near the start.';
+        }
+        if ($md < 120 || $md > 156) {
+            $out[] = "metaDescription is {$md} characters. It must be 120 to 156.";
+        }
+        if ($focus !== '' && ! $has($plain($p['metaDescription'] ?? ''), $focus)) {
+            $out[] = 'metaDescription must contain the focus keyphrase.';
+        }
+        if ($focus !== '' && ! $has($plain($p['title'] ?? ''), $focus)) {
+            $out[] = 'The title (the H1) must contain the focus keyphrase.';
+        }
+        if ($focus !== '' && ! $has($plain($p['excerpt'] ?? ''), $focus)) {
+            $out[] = 'The excerpt (the first paragraph) must contain the focus keyphrase.';
+        }
+        $h2 = count(array_filter($levels, fn ($l) => $l === 2));
+        if ($h2 < 3) {
+            $out[] = "There are {$h2} H2 headings. Use at least 3, one per main section.";
+        }
+        if ($focus !== '' && ! array_filter($heads, fn ($h) => $has($h, $focus))) {
+            $out[] = 'At least one H2 must contain the focus keyphrase.';
+        }
+        $mains = array_values(array_filter(array_map(fn ($k) => mb_strtolower(trim((string) $k)), (array) ($p['mainKeywords'] ?? []))));
+        if (! $mains) {
+            $out[] = 'Choose 1 or 2 mainKeywords (the highest search volume keywords from the list that fit the topic) and return them.';
+        }
+        foreach ($mains as $k) {
+            $n = $count($body, $k);
+            if ($n < 2) {
+                $out[] = 'The main keyword "' . $k . '" appears ' . $n . ' time(s) in the content. Use it at least 2 times, naturally (the excerpt, an H2, the paragraphs).';
+            }
+        }
+        if (! array_filter((array) ($p['blocks'] ?? []), fn ($b) => ($b['type'] ?? '') === 'faq')) {
+            $out[] = 'Add an faq block with 3 to 6 questions people really ask.';
+        }
+        $words = str_word_count($body);
+        if ($words < 700) {
+            $out[] = "The content is {$words} words. Write at least 800.";
+        }
+
+        return $out;
+    }
+
+    /** The page handed back with what to fix. */
+    private function repairPrompt(array $page, array $problems): string
+    {
+        $show = array_intersect_key($page, array_flip(['title', 'slug', 'metaTitle', 'metaDescription', 'focusKeyword', 'mainKeywords', 'keywords', 'excerpt', 'category', 'lang', 'crop', 'blocks']));
+        $show['keywordsUsed'] = $show['keywords'] ?? [];
+        unset($show['keywords']);
+
+        return "You wrote this page for anee.io (JSON below). It breaks these rules:\n- " . implode("\n- ", $problems) . "\n\n"
+            . "Fix every one. Keep everything else as it is: the facts, the links, the sources, the cta, the order of the sections. "
+            . "Keep the house rules: plain words, no dashes, no semicolons, no forbidden words, keywords in natural word order with names capitalized. "
+            . "The title is the only H1, body headings are H2 (H3 only inside an H2 section).\n\n"
+            . json_encode($show, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+            . "\n\nReturn ONLY the corrected JSON object in the same format, no fences, no commentary.";
     }
 
     /** The pages a writer may link to, "url — title", from the live site. */
@@ -123,9 +242,14 @@ class PageWriter
             . "\n--- SEO (Yoast) ---\n"
             . ($focus !== '' ? "The focus keyphrase is \"{$focus}\".\n" : "Choose one focus keyphrase: the phrase a farmer would type into Google for this, 2 to 5 words, preferably one of the keywords below when one fits.\n")
             . "Put the focus keyphrase in the title, at the start of the metaTitle, in the metaDescription, in the slug, in the excerpt (the first paragraph) and in at least one H2. Use it naturally, about 1 percent of words, and use synonyms and the secondary keywords for the rest.\n"
-            . "metaTitle: 60 characters or less. metaDescription: 120 to 156 characters, with the keyphrase and a reason to click.\n"
+            . "Meta tags: metaTitle 35 to 60 characters, starting with the focus keyphrase (the site adds \" | anee.io\"). metaDescription 120 to 156 characters, one or two active sentences with the focus keyphrase and a reason to click. The slug: the keyphrase words, lower case, joined by hyphens.\n"
+            . "Headings: the title is the page's only H1 (it carries the focus keyphrase). Body headings are H2 for each main section (4 to 7 of them) and H3 only inside an H2 section, never an H3 before the first H2, never a skipped level. The focus keyphrase in at least one H2, a main keyword in another H2 where it reads naturally.\n"
+            . "Structure for rich results: a steps block for any procedure (it becomes HowTo data), an faq block with 3 to 6 questions farmers really ask with direct answers (FAQ data), a table for rates, doses or comparisons, and a clear direct answer to the main question in the excerpt.\n"
             . "Length: {$words} words. H2 for sections, H3 inside them, a heading at least every 300 words. Paragraphs of 2 to 4 sentences, never over 150 words. At most a quarter of sentences over 20 words. Transition words (also, but, so, because, for example, first, next, then, after that, finally, besides, instead, in fact, as a result) in at least 30 percent of sentences. Passive voice in under 10 percent. Never three sentences in a row starting with the same word.\n"
-            . ($keywords ? "\nSecondary keywords (from our keyword research, with monthly searches). Weave in the ones that fit this topic naturally and grammatically, at least three if they fit, never forced; a keyword that cannot be used naturally is left out. Rewrite word order to read right (\"fertilizer urea\" becomes \"urea fertilizer\"):\n- " . implode("\n- ", $keywords) . "\n" : '')
+            . ($keywords ? "\nKeywords from our keyword research, with monthly searches:\n- " . implode("\n- ", $keywords) . "\n"
+                . "MAIN KEYWORDS: choose 1 or 2 of these, the highest search volume ones that truly fit this topic, and use each one at least 2 times in the content (the excerpt, an H2, the paragraphs), naturally. Return them as mainKeywords.\n"
+                . "Secondary keywords: weave in the others that fit the topic, at least three if they fit. Never force one: a keyword that does not belong to this topic is left out.\n"
+                . "Every keyword reads naturally and in proper case: rewrite the word order (\"fertilizer urea\" becomes \"urea fertilizer\", \"fertilizer yara\" becomes \"Yara fertilizer\"), capitalize names of brands, agencies and varieties (Atlas, Yara, Fertilizer and Pesticide Authority, PhilRice, NSIC Rc 222), and use a farmer's own word where a keyword would sound odd (binhi or seed, not \"corn kernel\", when seeds are meant).\n" : '')
             . "\n--- Links ---\nAt least 3 internal links inside the body text as [label](/path), using ONLY these pages:\n" . self::urlMap() . "\n"
             . "At least 1 outbound link to an authoritative source, in a sources block (full https addresses from the research notes).\n"
             . "\n--- anee.io, honestly ---\nOnly claim what anee.io really does: a cropping calendar that dates every task from each lot's own day zero (DAS, DAT or DAP), Anee the AI technician who answers in Tagalog or English and can look at a photo of a pest or a sick plant, growth stages for 85 Philippine crops with the weather forecast per lot, When to Plant and What to Plant analyses, Variety Research, Crop Protocol Analysis, the Protocol Builder, workers and payroll, inventory that tracks fertilizer and chemicals, labor, expenses and profit reports, notes with photos and voice, farm maps, a farmer community. Free to start (Libre), paid plans for more.\n"
@@ -134,7 +258,7 @@ class PageWriter
             . "heading {level: 2 or 3, text} | text {text: paragraphs separated by a blank line, inline [label](/url) and **bold** only} | list {ordered: true/false, items: [strings]} | steps {items: [{title, text}]} | table {caption, rows: [[header cells], [cells]...]} | callout {tone: tip, warn or info, title, text} | quote {text, cite} | faq {items: [{q, a}]} (3 to 6 questions people really ask) | cta {title, text, label, url} | links {title, items: [{label, url}]} (3 to 6 related pages from the list) | sources {items: [{label, url}]} | divider {}\n"
             . "A good shape: 1 or 2 text blocks, then H2 sections with text, lists, tables or steps as the content needs, a callout, the cta about two thirds down, a faq, a links block, a sources block last. The excerpt is the first paragraph (shown under the title): do not repeat it as the first text block.\n"
             . "\n--- Answer ---\nReturn ONLY this JSON object, no fences, no commentary:\n"
-            . '{"title": "...", "slug": "words-of-the-keyphrase", "metaTitle": "...", "metaDescription": "...", "focusKeyword": "...", "keywordsUsed": ["the secondary keywords you used"], "excerpt": "...", "category": "a short category, e.g. Palay, Mais, Fertilizer, Pests", "lang": "' . $lang . '", "crop": "one crop key or null", "blocks": [ ... ]}'
+            . '{"title": "...", "slug": "words-of-the-keyphrase", "metaTitle": "...", "metaDescription": "...", "focusKeyword": "...", "mainKeywords": ["1 or 2 main keywords"], "keywordsUsed": ["the secondary keywords you used"], "excerpt": "...", "category": "a short category, e.g. Palay, Mais, Fertilizer, Pests", "lang": "' . $lang . '", "crop": "one crop key or null", "blocks": [ ... ]}'
             . "\nCrop keys: {$crops}\n";
     }
 
@@ -234,8 +358,18 @@ class PageWriter
             }
         }
 
+        // Headings in order: H2 for sections, H3 only after an H2 (the title is the H1).
+        $seenH2 = false;
+        foreach ($blocks as $i => $blk) {
+            if ($blk['type'] === 'heading') {
+                $level = (int) ($blk['level'] ?? 2) >= 3 && $seenH2 ? 3 : 2;
+                $seenH2 = $seenH2 || $level === 2;
+                $blocks[$i]['level'] = $level;
+            }
+        }
         $blocks = ArticleStyle::cleanBlocks($blocks);
         $focus = ArticleStyle::clean((string) ($d['focusKeyword'] ?? ($b['focusKeyword'] ?? '')));
+        $mains = array_values(array_slice(array_filter(array_map(fn ($k) => ArticleStyle::clean((string) $k), (array) ($d['mainKeywords'] ?? []))), 0, 2));
         $title = ArticleStyle::clean((string) $d['title']);
         $metaTitle = ArticleStyle::clean((string) ($d['metaTitle'] ?? $title));
         $meta = ArticleStyle::clean((string) ($d['metaDescription'] ?? ''));
@@ -248,7 +382,8 @@ class PageWriter
             'metaTitle' => self::cut($metaTitle, 60),
             'metaDescription' => self::cut($meta, 156),
             'focusKeyword' => Str::limit($focus, 120, ''),
-            'keywords' => array_values(array_slice(array_filter(array_map(fn ($k) => ArticleStyle::clean((string) $k), (array) ($d['keywordsUsed'] ?? []))), 0, 12)),
+            'mainKeywords' => $mains,
+            'keywords' => array_values(array_slice(array_unique(array_merge($mains, array_filter(array_map(fn ($k) => ArticleStyle::clean((string) $k), (array) ($d['keywordsUsed'] ?? []))))), 0, 12)),
             'excerpt' => $fixLinks(ArticleStyle::clean((string) ($d['excerpt'] ?? ''))),
             'category' => Str::limit(ArticleStyle::clean((string) ($d['category'] ?? '')), 60, '') ?: null,
             'lang' => ($d['lang'] ?? '') === 'tl' ? 'tl' : 'en',

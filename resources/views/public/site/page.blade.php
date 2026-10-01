@@ -35,66 +35,23 @@
     <meta property="og:site_name" content="anee.io">
     <meta property="og:locale" content="{{ $page->lang === 'tl' ? 'tl_PH' : 'en_PH' }}">
     @if ($heroSrc)<meta property="og:image" content="{{ $heroSrc }}">@endif
+    @if ($heroSrc && trim((string) ($hero['alt'] ?? '')) !== '')<meta property="og:image:alt" content="{{ $hero['alt'] }}">@endif
+    @if ($isFeature)
+        <meta property="og:type" content="website">
+    @else
+        <meta property="article:published_time" content="{{ ($page->publishedAt ?? $updated)->toAtomString() }}">
+        <meta property="article:modified_time" content="{{ $updated->toAtomString() }}">
+        <meta property="article:section" content="{{ $page->category ?: $meta['label'] }}">
+        @foreach (array_slice(array_values(array_unique(array_filter(array_merge([(string) $page->focusKeyword], (array) ($page->keywords ?? []))))), 0, 8) as $tag)
+            <meta property="article:tag" content="{{ $tag }}">
+        @endforeach
+    @endif
     <meta name="twitter:card" content="summary_large_image">
-    @php
-        $ld = [[
-            '@context' => 'https://schema.org',
-            '@type' => $page->section === 'features' ? 'WebPage' : 'Article',
-            'headline' => $page->title,
-            'description' => $page->metaDescription,
-            'inLanguage' => $page->lang === 'tl' ? 'fil-PH' : 'en-PH',
-            'mainEntityOfPage' => $canonical,
-            'dateModified' => $updated->toAtomString(),
-            'datePublished' => ($page->publishedAt ?? $updated)->toAtomString(),
-            'author' => ['@type' => 'Organization', 'name' => 'anee.io', 'url' => url('/')],
-            'publisher' => ['@type' => 'Organization', 'name' => 'anee.io', 'url' => url('/'), 'logo' => ['@type' => 'ImageObject', 'url' => asset('images/logo.png')]],
-        ], [
-            '@context' => 'https://schema.org',
-            '@type' => 'BreadcrumbList',
-            'itemListElement' => [
-                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')],
-                ['@type' => 'ListItem', 'position' => 2, 'name' => $meta['label'], 'item' => $sectionUrl],
-                ['@type' => 'ListItem', 'position' => 3, 'name' => $page->title, 'item' => $canonical],
-            ],
-        ]];
-        if ($heroSrc) {
-            $ld[0]['image'] = [$heroSrc];
-        }
-        // An answered question says so to search engines: the question, and
-        // the answer's opening as the accepted one.
-        if ($isQuestion) {
-            $asked = collect($blocks)->first(fn ($b) => ($b['type'] ?? '') === 'callout');
-            $ld[] = [
-                '@context' => 'https://schema.org',
-                '@type' => 'QAPage',
-                'mainEntity' => [
-                    '@type' => 'Question',
-                    'name' => $page->title,
-                    'text' => $asked ? $S::plain((string) ($asked['text'] ?? '')) : $page->title,
-                    'answerCount' => 1,
-                    'datePublished' => ($page->publishedAt ?? $updated)->toAtomString(),
-                    'author' => ['@type' => 'Person', 'name' => 'A farmer'],
-                    'acceptedAnswer' => [
-                        '@type' => 'Answer',
-                        'text' => $S::plain((string) $page->excerpt),
-                        'url' => $canonical,
-                        'datePublished' => ($page->publishedAt ?? $updated)->toAtomString(),
-                        'author' => ['@type' => 'Organization', 'name' => 'anee.io', 'url' => url('/')],
-                    ],
-                ],
-            ];
-        }
-        if ($faq) {
-            $ld[] = [
-                '@context' => 'https://schema.org',
-                '@type' => 'FAQPage',
-                'mainEntity' => array_map(fn ($f) => ['@type' => 'Question', 'name' => $f['q'], 'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f['a']]], $faq),
-            ];
-        }
-    @endphp
-    @foreach ($ld as $graph)
-        <script type="application/ld+json">{!! json_encode($graph, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
-    @endforeach
+    <meta name="twitter:title" content="{{ $seoTitle }}">
+    <meta name="twitter:description" content="{{ $page->metaDescription }}">
+    @if ($heroSrc)<meta name="twitter:image" content="{{ $heroSrc }}">@endif
+    {{-- One graph, every node tied to the others (App\Support\PageSchema). --}}
+    <script type="application/ld+json">{!! json_encode(\App\Support\PageSchema::graph($page, $blocks, $meta, $canonical, $faq), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
 @endpush
 
 @section('content')
@@ -222,6 +179,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
             <div class="flex flex-wrap items-end justify-between gap-3 mb-6">
                 <h2 class="font-heading text-2xl font-bold text-ink">{{ $isQuestion ? 'More questions farmers asked' : 'More guides for your farm' }}</h2>
+                @unless ($isQuestion)
                 <div class="sp-tabs">
                     <a href="{{ $S::url('questions') }}" class="{{ $isQuestion ? 'is-on' : '' }}">Farmers' questions</a>
                     <a href="{{ $S::url('crops') }}" class="{{ $page->section === 'crops' ? 'is-on' : '' }}">Crop guides</a>
@@ -229,6 +187,7 @@
                     <a href="{{ $S::url('blog') }}" class="{{ $page->section === 'blog' ? 'is-on' : '' }}">Blog</a>
                     <a href="{{ route('features') }}" class="{{ $page->section === 'features' ? 'is-on' : '' }}">Features</a>
                 </div>
+                @endunless
             </div>
             <div class="sp-grid">
                 @foreach ($related as $r)
