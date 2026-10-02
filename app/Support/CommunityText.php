@@ -70,6 +70,11 @@ class CommunityText
             return '<a href="' . $url . '" class="hashtag-link">#' . $tag . '</a>';
         }, $safe);
 
+        // **words** → bold. Anee writes her community answers with it (her
+        // replies printed the asterisks); the text is already escaped, so
+        // only the <b> is new markup.
+        $safe = preg_replace('/\*\*(?=\S)(.+?)(?<=\S)\*\*/u', '<b>$1</b>', $safe);
+
         return $safe;
     }
 
