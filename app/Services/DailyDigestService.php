@@ -106,6 +106,32 @@ class DailyDigestService
         return ['sent' => $sent, 'skipped' => $skipped];
     }
 
+    /**
+     * A task's description as one readable line. Bare strip_tags ran the
+     * paragraphs and list items into each other ("panicleWhat to applyPer
+     * hectareUrea"); each block now ends as a sentence and list items are
+     * joined with semicolons.
+     */
+    public static function plainText(string $html): string
+    {
+        $t = preg_replace('~</li\s*>~i', '; ', $html);
+        $t = preg_replace('~<br\s*/?>|</(p|div|h[1-6]|ul|ol|tr|blockquote)\s*>~i', "
+", $t);
+        $t = html_entity_decode(strip_tags($t), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $lines = [];
+        foreach (explode("
+", $t) as $line) {
+            $line = trim(preg_replace('/\s+/u', ' ', $line));
+            $line = rtrim($line, '; ');
+            if ($line === '') {
+                continue;
+            }
+            $lines[] = preg_match('/[.:!?]$/u', $line) ? $line : $line . '.';
+        }
+
+        return implode(' ', $lines);
+    }
+
     /** One message. A transport failure is logged, never thrown at the runner. */
     private function deliver(
         AsCroppingSchedule $schedule,
@@ -153,7 +179,7 @@ class DailyDigestService
             return [
                 'title' => (string) $a->activityTitle,
                 'tags' => trim($when . ($lots ? ' · ' . $lots : '')),
-                'description' => filled($a->description) ? strip_tags((string) $a->description) : null,
+                'description' => filled($a->description) ? self::plainText((string) $a->description) : null,
             ];
         })->values()->all();
     }
