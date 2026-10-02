@@ -74,7 +74,10 @@
 @once
 @push('head')
 <style>
-    .hw { --ease: cubic-bezier(.22,1,.36,1); --ink: #eef4e6; --mute: #b9caa8; --soft: #8ea47a; --acc: #f5c518; --leaf: #a8cc7e;
+    /* The whirlpool's clock (a registered number, so it can be animated). */
+    @property --hw-t { syntax: '<number>'; inherits: false; initial-value: 1; }
+    @keyframes hwWhirl { from { --hw-t: 0; } to { --hw-t: 1; } }
+    .hw { --swirl: -320deg; --ease: cubic-bezier(.22,1,.36,1); --ink: #eef4e6; --mute: #b9caa8; --soft: #8ea47a; --acc: #f5c518; --leaf: #a8cc7e;
         --pad: 1rem; --rail-x: 50%; --hub: 2.9rem;
         position: relative; color: var(--ink); background: #0d1609; overflow-x: clip; text-align: left; }
     @media (min-width: 640px) { .hw { --pad: 1.5rem; } }
@@ -834,10 +837,20 @@
         .hw-field.is-scatter .hw-hub { position: absolute; left: 50%; top: 50%; margin: calc(var(--hub) / -2) 0 0 calc(var(--hub) / -2); }
         .hw-field.is-scatter .hw-item { position: absolute; left: 0; top: 0; }
         .hw-field.is-scatter .hw-item.is-open { z-index: 8; }
-        /* The entrance: every tool bursts out of Anee to its place. */
-        .hw.is-ready .hw-field.is-scatter .hw-item { transform: translate(var(--fx, 0px), var(--fy, 0px)) scale(.3);
-            transition: opacity .5s var(--ease), transform 1s var(--ease); transition-delay: calc(.35s + var(--i) * .05s); }
-        .hw-stage.is-in .hw-field.is-scatter .hw-item { transform: none; }
+        /* The entrance, a whirlpool: every tool spins out of Anee to its
+           place, its line turning with it. --hw-t runs 0 to 1; at t the tool
+           sits at t of its distance from Anee, turned back by (1 - t) of the
+           swirl, so line and tool share one angle all the way out. */
+        .hw.is-ready .hw-field.is-scatter .hw-item {
+            --hw-t: 0; --vx: calc(var(--fx, 0px) * -1); --vy: calc(var(--fy, 0px) * -1); --a: calc((1 - var(--hw-t)) * var(--swirl));
+            transform: translate(calc((var(--vx) * cos(var(--a)) - var(--vy) * sin(var(--a))) * var(--hw-t) - var(--vx)),
+                calc((var(--vx) * sin(var(--a)) + var(--vy) * cos(var(--a))) * var(--hw-t) - var(--vy))) scale(calc(.35 + .65 * var(--hw-t)));
+            transition: opacity .5s var(--ease); transition-delay: calc(.3s + var(--i) * .06s); }
+        .hw-stage.is-in .hw-field.is-scatter .hw-item { animation: hwWhirl 1.6s var(--ease) both; animation-delay: calc(.3s + var(--i) * .06s); }
+        .hw-swirl { --hw-t: 1; transform: rotate(calc((1 - var(--hw-t)) * var(--swirl))) scale(var(--hw-t)); }
+        .hw.is-ready .hw-swirl { --hw-t: 0; }
+        .hw .is-in .hw-swirl { animation: hwWhirl 1.6s var(--ease) both; animation-delay: calc(.3s + var(--i) * .06s); }
+        .hw .is-in .hw-spark { animation-delay: calc(1.3s + var(--i) * .06s); }
         .hw-num { width: 2.1rem; height: 2.1rem; font-size: .95rem; right: .1rem; top: .1rem; }
         .hw-end { padding: 3rem 0 0; text-align: center; }
         .hw-end > p:not(.hw-step) { margin-left: auto; margin-right: auto; }
@@ -953,7 +966,7 @@
         .hw *, .hw *::before, .hw *::after { animation: none !important; transition: none !important; }
         .hw .hw-head, .hw .hw-say, .hw .hw-hub, .hw .hw-item, .hw .hw-w, .hw .hw-ping, .hw .hw-copy > * { opacity: 1 !important; transform: none !important; }
         .hw .hw-arc { stroke-dashoffset: 0; }
-        .hw .hw-dest { transform: none; }
+        .hw .hw-dest, .hw .hw-swirl { transform: none; }
         .hw .hw-spark { display: none; }
         .hw .hw-dot { opacity: var(--o); }
         .hw .hw-dot.g { transform: none; }
@@ -1803,9 +1816,14 @@
             const base = make('path', { class: 'hw-arc', pathLength: 1 }), flow = make('path', { class: 'hw-flow', pathLength: 1 }), dest = make('circle', { class: 'hw-dest', r: 3.5 });
             const spark = make('circle', { class: 'hw-spark', r: 9 });
             [base, flow, dest, spark].forEach((n) => n.style.setProperty('--i', i));
-            gArcs.append(base, flow, dest, spark);
+            // Each tool's line, its end dot and its spark turn together
+            // about Anee (the whirlpool entrance), so they ride in one group.
+            const swirl = make('g', { class: 'hw-swirl' });
+            swirl.style.setProperty('--i', i);
+            swirl.append(base, flow, dest, spark);
+            gArcs.append(swirl);
             it._hw = { base, flow, dest };
-            return { it, chip: it.querySelector('.hw-chip'), base, flow, dest, spark };
+            return { it, chip: it.querySelector('.hw-chip'), base, flow, dest, spark, swirl };
         });
         let dotsW = 0;
         const draw = () => {
@@ -1815,6 +1833,7 @@
             svg.setAttribute('width', W); svg.setAttribute('height', H); svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
             const [hx, hy] = hubC();
             routes.forEach((r) => {
+                r.swirl.style.transformOrigin = `${hx}px ${hy}px`;
                 // Layout boxes (offset*), not screen boxes: the entrance and
                 // the float move a chip, never where its route ends.
                 const [bl, bt] = off(r.it), bw = r.it.offsetWidth, ch = r.chip.offsetHeight;
