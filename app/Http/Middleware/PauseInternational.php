@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Support\Region;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -25,7 +26,14 @@ class PauseInternational
 
     public function handle(Request $request, Closure $next): Response
     {
-        if (! Region::intlPaused($request) || in_array($request->route()?->getName(), self::OPEN, true)) {
+        if (! Region::intlPaused($request)) {
+            return $next($request);
+        }
+        if (in_array($request->route()?->getName(), self::OPEN, true)) {
+            // Logging out lands on route('home'), which for this account's
+            // country is the closed /en face: send it home to the root instead.
+            URL::defaults(['face' => 'ph']);
+
             return $next($request);
         }
 
