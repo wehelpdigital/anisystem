@@ -1279,6 +1279,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const gate = document.getElementById('joinPrompt');
         const composer = document.getElementById('composerCard');
+        if (join && !composer) {
+            // The page was drawn for a visitor: the composer and the New topic
+            // button are members only, so they are not on it. The page drawn
+            // for a member has them. Without this, the missing composer threw
+            // here and a join that had worked said "No connection".
+            setTimeout(() => window.location.reload(), 900);
+            return true;
+        }
         if (join) {
             if (gate) {
                 gate.style.maxHeight = gate.scrollHeight + 'px';
@@ -1292,7 +1300,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 composer.addEventListener('animationend', () => composer.classList.remove('is-entering'), { once: true });
             }
         } else {
-            composer.classList.add('hidden');
+            composer?.classList.add('hidden');
         }
         return true;
     }
