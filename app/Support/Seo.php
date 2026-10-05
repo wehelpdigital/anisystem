@@ -64,6 +64,10 @@ final class Seo
     public static function robots(?Request $request = null): string
     {
         $request ??= request();
+        // The international site is closed for maintenance: never indexed while it is.
+        if (! Region::intlOpen() && $request?->route('face') === 'en') {
+            return 'noindex, nofollow';
+        }
 
         return self::publicIndexable() && self::isPublicPage($request) ? 'index, follow' : 'noindex, nofollow';
     }
@@ -92,6 +96,9 @@ final class Seo
             } else {
                 foreach (self::CLOSED as $path) {
                     $lines[] = 'Disallow: ' . $path;
+                }
+                if (! Region::intlOpen()) {
+                    $lines[] = 'Disallow: /en';   // closed for maintenance
                 }
                 $lines[] = 'Allow: /';
             }

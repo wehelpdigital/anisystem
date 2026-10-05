@@ -113,8 +113,37 @@ final class Region
         if (! $req instanceof Request) {
             return self::HOME;
         }
+        // While the international version is closed, nobody is moved onto
+        // it by a cookie, a ?country= or where they are reading from.
+        if (! self::intlOpen()) {
+            return self::HOME;
+        }
 
         return self::chosen($req) ?: self::detect($req) ?: self::HOME;
+    }
+
+    /** Whether the international version is open (closed for maintenance since 2026-10-05; config/app.php). */
+    public static function intlOpen(): bool
+    {
+        return (bool) config('app.international_open', false);
+    }
+
+    /** Whether this request is for the international version while it is closed (PauseInternational answers it). */
+    public static function intlPaused(?Request $req = null): bool
+    {
+        if (self::intlOpen()) {
+            return false;
+        }
+        $req ??= (app()->bound('request') ? request() : null);
+        if (! $req instanceof Request) {
+            return false;
+        }
+        if ($req->route('face') === 'en') {
+            return true;
+        }
+        $user = Auth::user();
+
+        return $user && self::of($user) !== self::HOME && ! $user->isSuperAdmin();
     }
 
     /** What the visitor chose (the flag, or ?country=XX), kept in the session and a cookie. */

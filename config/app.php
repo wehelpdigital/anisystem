@@ -17,6 +17,14 @@ return [
     // whose .env forgot APP_NAME should still say anee.io, not Laravel.
     'name' => env('APP_NAME', 'anee.io'),
 
+    // The international version (the /en public site and every account set
+    // to a country other than the Philippines) is closed for maintenance on
+    // the owner's word (2026-10-05): those visits get the maintenance page
+    // (App\Http\Middleware\PauseInternational), and every other visitor
+    // reads the Philippine site whatever country they are in. Set
+    // INTERNATIONAL_OPEN=true to open it again.
+    'international_open' => (bool) env('INTERNATIONAL_OPEN', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

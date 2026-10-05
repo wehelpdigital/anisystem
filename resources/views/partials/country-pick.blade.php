@@ -18,6 +18,12 @@
     $cpId = $id ?? 'countryPick';
     $cpName = $name ?? 'country';
     $cpVal = \App\Support\Region::valid($value ?? null) ?: \App\Support\Region::code();
+    // While the international version is closed for maintenance
+    // (config('app.international_open')), the only country to pick is home.
+    $cpLocked = ! \App\Support\Region::intlOpen();
+    if ($cpLocked) {
+        $cpVal = \App\Support\Region::HOME;
+    }
 @endphp
 @once
 <style>
@@ -43,6 +49,10 @@
     .country-row-t { min-width: 0; font-size: .875rem; font-weight: 600; color: var(--color-gray-900); }
     .country-row small { margin-left: auto; font-size: .68rem; color: var(--color-gray-400); font-weight: 700; }
     .country-none { font-size: .8rem; color: var(--color-gray-400); text-align: center; padding: 1rem 0; }
+    .country-tag.is-locked { cursor: default; }
+    .country-tag.is-locked:hover { border-color: var(--color-gray-200); background: var(--color-white); }
+    html.dark .country-tag.is-locked:hover { background: #1c2416; border-color: #2b3a1c; }
+    .country-lock-say { margin-top: .35rem; font-size: .75rem; color: var(--color-gray-500); }
     html.dark .country-row:hover, html.dark .country-row.is-on { background: #22301a; }
     html.dark .country-row-t { color: #e8efe1; }
 </style>
@@ -58,6 +68,14 @@
 </script>
 @endonce
 
+@if ($cpLocked)
+<div class="country-tag is-locked" id="{{ $cpId }}Btn">
+    <span class="country-tag-e" id="{{ $cpId }}Flag">{{ \App\Support\Region::flag($cpVal) }}</span>
+    <span class="country-tag-t" id="{{ $cpId }}Now">{{ \App\Support\Region::name($cpVal) }}</span>
+</div>
+<input type="hidden" name="{{ $cpName }}" id="{{ $cpId }}" value="{{ $cpVal }}">
+<p class="country-lock-say">anee.io is open in the Philippines for now. Other countries are coming soon.</p>
+@else
 <button type="button" class="country-tag" id="{{ $cpId }}Btn" aria-haspopup="dialog" aria-controls="{{ $cpId }}Sheet">
     <span class="country-tag-e" id="{{ $cpId }}Flag">{{ \App\Support\Region::flag($cpVal) }}</span>
     <span class="country-tag-t" id="{{ $cpId }}Now">{{ \App\Support\Region::name($cpVal) }}</span>
@@ -88,6 +106,7 @@
         <p class="country-none hidden" id="{{ $cpId }}None">No country found.</p>
     </div>
 </div>
+@endif
 
 <script>
 (() => {
@@ -95,7 +114,7 @@
     const $ = (s) => document.getElementById(id + s);
     const input = document.getElementById(id);
     const btn = $('Btn'), search = $('Search'), list = $('List'), none = $('None');
-    if (!btn || !input) return;
+    if (!btn || !input || !list) return;   // a locked tag has no sheet
     const phone = () => !window.matchMedia('(min-width: 640px)').matches;
     btn.addEventListener('click', () => {
         if (window.openSheet) window.openSheet(id + 'Sheet');

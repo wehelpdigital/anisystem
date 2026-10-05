@@ -105,7 +105,8 @@ class GoogleAuthController extends Controller
                 'email' => $email,
                 'googleId' => $sub,
                 // Where they are reading from; settable in the account later.
-                'country' => \App\Support\Region::detect($request) ?: \App\Support\Region::code(),
+                // (Home only while the international version is closed.)
+                'country' => (\App\Support\Region::intlOpen() ? \App\Support\Region::detect($request) : null) ?: \App\Support\Region::code(),
                 // Nobody knows this password, and that is the point — the
                 // account opens with Google (or a password reset later).
                 'password' => Str::random(40),

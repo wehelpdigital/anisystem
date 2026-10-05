@@ -43,6 +43,9 @@ return Application::configure(basePath: dirname(__DIR__))
             // Which country this request is in, before anything renders or
             // any route is generated (the public site's {face} default).
             \App\Http\Middleware\ResolveRegion::class,
+            // The international version is closed for maintenance for now
+            // (config('app.international_open')): its visits get that page.
+            \App\Http\Middleware\PauseInternational::class,
             // One device at a time; then "keep me logged in" slides another
             // ten days from this visit; then the last-seen (online) stamp.
             // The session is no longer tied to the network it came from: a

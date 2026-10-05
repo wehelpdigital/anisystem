@@ -39,6 +39,11 @@ class RegisterController extends Controller
         // The country first: the phone rule is the country's. Unknown or
         // missing, it is where the visitor is reading from.
         $country = \App\Support\Region::valid($request->input('country')) ?: \App\Support\Region::code();
+        // While the international version is closed for maintenance, every
+        // new account is a Philippine one (the form offers no other country).
+        if (! \App\Support\Region::intlOpen()) {
+            $country = \App\Support\Region::HOME;
+        }
         $phoneRule = \App\Support\Region::phone($country);
         // Normalize phone: strip spaces, dashes and brackets before validating.
         $request->merge([
