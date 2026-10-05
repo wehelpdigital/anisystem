@@ -62,8 +62,16 @@
                     Everything your farm needs for a
                     {{-- The promise, underlined by hand: one gold brush stroke that
                          draws itself under the words once the page has settled
-                         (one line only, on the owner's word). --}}
-                    <span class="hp-mark"><span class="hp-shimmer">higher yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
+                         (one line only, on the owner's word). The first word
+                         takes turns (2026-10-06): higher, stable, bigger... each
+                         fading out and the next fading in, the space between
+                         them easing to the new word's width. The page itself
+                         only ever says "higher"; the others come from
+                         data-words, so the heading reads the same to search
+                         engines and screen readers. Each word wears its own
+                         shimmer: a gradient clipped to text does not reach
+                         into a moving child. --}}
+                    <span class="hp-mark"><span class="hp-rot" data-words="higher,stable,bigger,better,steady,record,greater,maximum"><span class="hp-rot-w hp-shimmer">higher</span></span> <span class="hp-shimmer">yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
                 </h1>
                 <p class="hp-lede animate-fade-up" style="animation-delay:.12s">
                     @if ($ph)
@@ -147,7 +155,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick is-red">The inconvenient truth</p>
-                <h2 class="hp-h2">Traditional farming is <em class="is-red">not profitable anymore.</em></h2>
+                <h2 class="hp-h2">Traditional farming is <em class="is-red">not profitable</em> anymore.</h2>
                 <p class="hp-p">
                     Fertilizer, diesel and the extra sprays and work that unpredictable weather forces on you cost
                     more every season. But the price you get for your {{ $ph ? 'palay' : 'harvest' }} stays low. When
@@ -180,7 +188,7 @@
                 <div class="hp-sum-card is-way reveal" style="--reveal-delay: .24s">
                     <span class="hp-sum-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8m0 0h-5m5 0v5"/></svg></span>
                     <p class="hp-sum-k">The only way up is a higher yield.</p>
-                    <p class="hp-sum-p">Grow more from the same hectare with precision farming: the right work, in the right amount, on the right day.</p>
+                    <p class="hp-sum-p">Yield more from the same hectare with precision farming: the right work, in the right amount, on the right day.</p>
                     <span class="hp-sum-brand"><img src="{{ asset('images/logo-mark.png') }}" alt="" onerror="this.remove()">anee.io shows you how.</span>
                 </div>
             </div>
@@ -251,31 +259,6 @@
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and farm with precision {!! $arrow !!}</a>
                 </div>
                 <p class="hp-cta-note">Your first season plan is free, and it moves when the weather does.</p>
-            </div>
-        </div>
-    </section>
-
-    {{-- ================= NOT A PRODUCT, MANAGEMENT ================= --}}
-    {{-- The thesis said once more, as large as it deserves: harvests are lost
-         in management, not for lack of a product. (The costs that used to sit
-         here open the page now, in The truth.) --}}
-    <section class="hp-sec bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="hp-truth is-solo reveal">
-                <p class="hp-truth-k">Before you buy another sack</p>
-                <p class="hp-truth-h">A new product will not fix it. <span>Better farm management will.</span></p>
-                <p class="hp-truth-p">
-                    Most harvest is lost to a spray done three days late, a guessed dose, water at the wrong time
-                    and costs nobody wrote down. anee.io is not another product to buy. <b>It helps every product you
-                    already buy work better.</b>
-                </p>
-            </div>
-
-            <div class="hp-cta reveal">
-                <div class="hp-cta-row">
-                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and grow more {!! $arrow !!}</a>
-                </div>
-                <p class="hp-cta-note">A bigger harvest from the same hectare is the raise you give yourself.</p>
             </div>
         </div>
     </section>
@@ -990,6 +973,16 @@
     .hp-down svg { width: 1.2rem; height: 1.2rem; }
     @keyframes hpNudge { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 6px); } }
 
+    /* ---- the turning word in the headline ---- */
+    .hp-rot { display: inline-block; position: relative; white-space: nowrap; vertical-align: top;
+        transition: width .55s var(--hp-ease); }
+    .hp-rot-w { display: inline-block; will-change: opacity, transform;
+        transition: opacity .38s ease, transform .45s var(--hp-ease), filter .38s ease; }
+    .hp-rot-w.is-out { opacity: 0; transform: translateY(-.28em); filter: blur(5px); }
+    .hp-rot-w.is-in { opacity: 0; transform: translateY(.28em); filter: blur(5px); transition: none; }
+    .hp-rot-probe { position: absolute; left: 0; top: 0; visibility: hidden; pointer-events: none; }
+    @media (prefers-reduced-motion: reduce) { .hp-rot, .hp-rot-w { transition: none !important; } }
+
     /* ---- the tour window ---- */
     .hp-modal { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 1rem;
         visibility: hidden; opacity: 0; transition: opacity .3s var(--hp-ease), visibility .3s; }
@@ -1029,21 +1022,6 @@
         text-transform: uppercase; color: var(--hp-sun); }
     .hp-why-badge svg { width: .85rem; height: .85rem; }
     .hp-why-a p { margin-top: .35rem; font-size: .92rem; line-height: 1.6; color: #fff; }
-
-    /* ---- the big truth ---- */
-    .hp-truth { position: relative; margin-top: 3rem; padding: 2.4rem 1.4rem; border-radius: 1.75rem; text-align: center; overflow: hidden;
-        background: radial-gradient(120% 140% at 50% 0%, #4a7c2a 0%, #2f5219 55%, #1d330f 100%); color: #fff;
-        box-shadow: 0 30px 60px -36px rgb(29 51 15 / .9); }
-    .hp-truth::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .5;
-        background-image: radial-gradient(rgb(255 255 255 / .1) 1px, transparent 1px); background-size: 18px 18px; }
-    .hp-truth > * { position: relative; }
-    .hp-truth-k { font-size: .76rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-sun); }
-    .hp-truth-h { margin-top: .8rem; font-family: var(--font-heading); font-weight: 800; line-height: 1.12; letter-spacing: -.015em;
-        font-size: clamp(1.6rem, 4vw, 2.6rem); text-wrap: balance; }
-    .hp-truth-h span { display: block; color: var(--hp-sun); }
-    .hp-truth-p { margin: 1.1rem auto 0; max-width: 44rem; font-size: 1rem; line-height: 1.7; color: #dceccb; }
-    .hp-truth-p b { color: #fff; }
-    @media (min-width: 640px) { .hp-truth { padding: 3.2rem 2.5rem; } }
 
     /* ---- fixes ---- */
     .hp-fix-grid { display: grid; gap: 1rem; }
@@ -1305,7 +1283,6 @@
     .hp-sum-brand img { width: 1.5rem; height: 1.5rem; object-fit: contain; }
     .hp-sum-op { align-self: center; justify-self: center; font-family: var(--font-heading); font-size: 2.6rem; font-weight: 800; line-height: 1;
         color: #9ca3af; }
-    .hp-truth.is-solo { margin-top: 0; }
 
     /* ---- the most searched guides, as links ---- */
     .hp-topics { margin: 2.2rem auto 0; max-width: 60rem; display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
@@ -1389,6 +1366,53 @@
             requestAnimationFrame(tick);
         }, { threshold: 0.4 });
     });
+
+    /* The headline's first word takes turns: higher, stable, bigger... The
+       old word fades up and away, the gap eases to the new word's width, and
+       the new one rises in. It rests while the hero is off screen or the tab
+       is hidden, and never turns for a visitor who asked for less motion. */
+    const rot = document.querySelector('.hp-rot');
+    if (rot && !reduce) {
+        const words = (rot.dataset.words || '').split(',').map((w) => w.trim()).filter(Boolean);
+        const el = rot.querySelector('.hp-rot-w');
+        let n = 0, timer = null, visible = true;
+        const widthOf = (w) => {
+            const probe = el.cloneNode(false);
+            probe.classList.add('hp-rot-probe');
+            probe.classList.remove('is-out', 'is-in');
+            probe.textContent = w;
+            rot.appendChild(probe);
+            const px = probe.getBoundingClientRect().width;
+            probe.remove();
+            return px;
+        };
+        const settle = () => { rot.style.width = widthOf(el.textContent) + 'px'; };
+        const turn = () => {
+            if (!visible || document.hidden) return;
+            n = (n + 1) % words.length;
+            const next = words[n];
+            el.classList.add('is-out');
+            setTimeout(() => {
+                rot.style.width = widthOf(next) + 'px';
+                el.textContent = next;
+                el.classList.remove('is-out');
+                el.classList.add('is-in');
+                void el.offsetWidth;
+                el.classList.remove('is-in');
+            }, 380);
+        };
+        const start = () => { clearInterval(timer); timer = setInterval(turn, 2800); };
+        if (words.length > 1) {
+            // Begin once the underline has drawn itself under the first word.
+            setTimeout(() => {
+                settle();
+                start();
+                if (document.fonts && document.fonts.ready) document.fonts.ready.then(settle);
+                window.addEventListener('resize', settle);
+                seen(rot, (on) => { visible = on; }, { threshold: 0.1 });
+            }, 2300);
+        }
+    }
 
     /* The hero phone plays its films one after another while it is on screen. */
     const hero = document.querySelector('[data-hero-film]');
