@@ -34,7 +34,10 @@
         $v = $HW::video($key);
         return $v ? ['key' => $key, 'src' => $v[0], 'poster' => $v[1], 'name' => $name ?? ($tools[$key]['name'] ?? '')] : null;
     };
-    $heroFilms = collect([['board', 'Today on the board'], ['growth', 'Growth stages'], ['chat', 'Chat with Anee']])
+    // The hero phone, in turn: ask Anee, draw the farm on a map, move a job
+    // to another day and tick it done, then answer in a discussion. Short
+    // cuts made for this spot (the full films play in How It Works).
+    $heroFilms = collect([['hero-chat', 'Chat with Anee'], ['hero-maps', 'Draw your farm on a map'], ['hero-board', 'Move and finish activities'], ['hero-talk', 'Join the discussions']])
         ->map(fn ($f) => $filmOf($f[0], $f[1]))->filter()->values();
     $aneePrice = $R::priceTag($R::tierPrice('libreAnee', 'month'));
     $face = asset('images/anee/avatar-160.jpg');
