@@ -226,7 +226,7 @@
                      farmer is capping their own income without knowing it. --}}
                 <p class="hp-loss-warn">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18M10.6 10.6a2 2 0 002.8 2.8M9.9 5.1A9.8 9.8 0 0112 5c4.5 0 8.3 2.9 9.5 7a10 10 0 01-2.9 4.4M6.6 6.6A10 10 0 002.5 12c1.2 4.1 5 7 9.5 7 1.6 0 3.1-.4 4.4-1"/></svg>
-                    <span><b>You could be limiting your own income and not even know it.</b> Here is where that money goes.</span>
+                    <span><b>You could be limiting your own income and not even know it.</b></span>
                 </p>
             </div>
 
