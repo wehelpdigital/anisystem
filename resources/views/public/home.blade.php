@@ -119,7 +119,7 @@
             </div>
         </div>
 
-        <a href="#hp-proof" class="hp-down" aria-label="Scroll to read more">
+        <a href="#hp-truth" class="hp-down" aria-label="Scroll to read more">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
         </a>
     </section>
@@ -136,6 +136,63 @@
             </video>
         </div>
     </div>
+
+    {{-- ================= THE TRUTH ================= --}}
+    {{-- The owner's thesis, said first (2026-10-06): traditional farming does
+         not pay any more. Costs go up and prices stay low, so the only way up
+         is a higher yield, through precision farming, with anee.io. Shown as a
+         sum: costs up, plus prices down, equals the one way out. --}}
+    <section class="hp-sec hp-truth2" id="hp-truth">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="hp-head reveal">
+                <p class="hp-kick is-red">The truth</p>
+                <h2 class="hp-h2">Traditional farming is <em class="is-red">not profitable anymore.</em></h2>
+                <p class="hp-p">
+                    Fertilizer, diesel and the extra sprays and work that unpredictable weather forces on you cost
+                    more every season. But the price you get for your {{ $ph ? 'palay' : 'harvest' }} stays low. When
+                    costs go up and prices stay down, guessing is too expensive. <b>The only way to survive and succeed
+                    is a higher yield from every hectare, through precision farming.</b> anee.io helps you do exactly that.
+                </p>
+            </div>
+
+            <div class="hp-sum">
+                <div class="hp-sum-card is-up reveal">
+                    <span class="hp-sum-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m0 0l-6 6m6-6l6 6"/></svg></span>
+                    <p class="hp-sum-k">Costs keep going up</p>
+                    <ul class="hp-sum-list">
+                        <li>{{ $ph ? 'A sack of urea or complete fertilizer 14 14 14 costs more every season' : 'Every sack of fertilizer costs more each season' }}</li>
+                        <li>Diesel for the tractor, the pump and every trip to town</li>
+                        <li>Extra sprays and work when rain, heat or pests come early</li>
+                    </ul>
+                </div>
+                <span class="hp-sum-op" aria-hidden="true">+</span>
+                <div class="hp-sum-card is-down reveal" style="--reveal-delay: .12s">
+                    <span class="hp-sum-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m0 0l6-6m-6 6l-6-6"/></svg></span>
+                    <p class="hp-sum-k">Prices stay low</p>
+                    <ul class="hp-sum-list">
+                        <li>{{ $ph ? 'The palay price at harvest barely moves' : 'The price at harvest barely moves' }}</li>
+                        <li>Imports can push it down before you sell</li>
+                        <li>You cannot set the price you get</li>
+                    </ul>
+                </div>
+                <span class="hp-sum-op" aria-hidden="true">=</span>
+                <div class="hp-sum-card is-way reveal" style="--reveal-delay: .24s">
+                    <span class="hp-sum-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8m0 0h-5m5 0v5"/></svg></span>
+                    <p class="hp-sum-k">The only way up: a higher yield</p>
+                    <p class="hp-sum-p">Grow more from the same hectare with precision farming: the right work, in the right amount, on the right day.</p>
+                    <span class="hp-sum-brand"><img src="{{ asset('images/logo-mark.png') }}" alt="" onerror="this.remove()">anee.io shows you how</span>
+                </div>
+            </div>
+
+            <div class="hp-cta reveal">
+                <div class="hp-cta-row">
+                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start precision farming, free {!! $arrow !!}</a>
+                    <a href="{{ route('how') }}" class="hp-alt">See how it works</a>
+                </div>
+                <p class="hp-cta-note">Free forever on Libre. No card needed.</p>
+            </div>
+        </div>
+    </section>
 
     {{-- ================= PROOF: WHAT IS INSIDE ================= --}}
     <section class="hp-proof" id="hp-proof">
@@ -245,39 +302,13 @@
         </div>
     </section>
 
-    {{-- ================= THE SQUEEZE, AND THE BIG TRUTH ================= --}}
-    {{-- Everything pressing on a farm from the outside, named honestly, the
-         one lever that is still the farmer's own, and the thesis said once,
-         as large as it deserves: harvests are lost in management. --}}
+    {{-- ================= NOT A PRODUCT, MANAGEMENT ================= --}}
+    {{-- The thesis said once more, as large as it deserves: harvests are lost
+         in management, not for lack of a product. (The costs that used to sit
+         here open the page now, in The truth.) --}}
     <section class="hp-sec bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="hp-head reveal">
-                <p class="hp-kick">Farming costs keep rising</p>
-                <h2 class="hp-h2">Costs keep going up. <em>So your harvest has to go up too.</em></h2>
-                <p class="hp-p">
-                    You cannot control the price of fertilizer, fuel or palay. What you can control is how well you
-                    use what you already bought. A bigger harvest from the same field is the best way to earn more.
-                </p>
-            </div>
-
-            <div class="sq-grid mt-12">
-                @foreach ([
-                    ['Fertilizer costs more', 'A sack of urea fertilizer or complete fertilizer 14 14 14 costs more every season. It only pays off if you apply it on the right day and in the right amount.', '<path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M6 21V9l6-5 6 5v12M10 21v-5h4v5"/><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 12.5h5"/>'],
-                    ['The weather is hard to predict', 'Planting by habit gets caught by the rain. Planting by day count, with the forecast beside it, lets you move first.', '<path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/><path stroke-linecap="round" d="M8 21l-1 2M12 21l-1 2M16 21l-1 2"/>'],
-                    ['The soil is tired', 'Years of the same crop wear the soil down. A wrong dose then hurts twice: you waste the fertilizer, and you lose harvest.', '<path stroke-linecap="round" stroke-linejoin="round" d="M2.5 15.5c3-1.6 6-1.6 9 0s6 1.6 9 0"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.5 19.5c3-1.6 6-1.6 9 0s6 1.6 9 0"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 11.5V4m0 0L9 6.5M12 4l3 2.5"/>'],
-                    ['Fuel costs more', 'Every tractor pass and every hour of pumping water costs diesel. Fewer wasted trips means more money saved.', '<path stroke-linecap="round" stroke-linejoin="round" d="M4 21V5a2 2 0 012-2h5a2 2 0 012 2v16M3 21h12"/><path stroke-linecap="round" stroke-linejoin="round" d="M13 10h3a2 2 0 012 2v5a1.5 1.5 0 003 0v-7l-2.5-2.5"/><path stroke-linecap="round" d="M6.5 7.5h4"/>'],
-                    ['Prices you cannot control', 'Imports can push the palay price down before you harvest. You cannot change the price, but you can harvest more sacks.', '<path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"/><circle cx="12" cy="12" r="9"/>'],
-                    ['What you can control', 'How you manage your farm. The same inputs, used on time and written down, give a bigger harvest than spending more.', '<path stroke-linecap="round" stroke-linejoin="round" d="M4 19l6-6 4 4 6-8"/><path stroke-linecap="round" stroke-linejoin="round" d="M20 9V5h-4"/>', true],
-                ] as $i => $sq)
-                    <div class="sq-card reveal{{ ($sq[3] ?? false) ? ' is-lead' : '' }}" style="--reveal-delay: {{ ($i % 3) * 0.07 }}s">
-                        <span class="sq-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">{!! $sq[2] !!}</svg></span>
-                        <p class="sq-t">{{ $sq[0] }}</p>
-                        <p class="sq-p">{{ $sq[1] }}</p>
-                    </div>
-                @endforeach
-            </div>
-
-            <div class="hp-truth reveal">
+            <div class="hp-truth is-solo reveal">
                 <p class="hp-truth-k">Before you buy another sack</p>
                 <p class="hp-truth-h">A new product will not fix it. <span>Better farm management will.</span></p>
                 <p class="hp-truth-p">
@@ -930,7 +961,7 @@
     .hp-h2 { margin-top: .7rem; font-family: var(--font-heading); font-weight: 800; color: var(--hp-ink);
         font-size: clamp(1.8rem, 4.2vw, 2.85rem); line-height: 1.1; letter-spacing: -.015em; text-wrap: balance; }
     .hp-h2 em { font-style: normal; color: var(--hp-green); }
-    .hp-p { margin-top: 1rem; color: #4b5563; font-size: clamp(1rem, 1.5vw, 1.1rem); line-height: 1.7; }
+    .hp-p { margin-top: 1rem; color: #4b5563; font-size: clamp(1rem, 1.5vw, 1.1rem); line-height: 1.7; text-wrap: pretty; }
     .hp-p b { color: var(--hp-ink); }
     .on-dark .hp-kick { color: var(--hp-sun); }
     .on-dark .hp-h2 { color: #fff; }
@@ -1384,6 +1415,46 @@
     .hg-all { font-size: .88rem; font-weight: 800; color: #3d6823; text-decoration: none; }
     .hg-all:hover { text-decoration: underline; }
 
+    /* ---- the truth: costs up, plus prices down, equals one way out ---- */
+    .hp-truth2 { background: linear-gradient(180deg, #ffffff 0%, #fbf8f1 100%); }
+    .hp-h2 em.is-red { color: #b91c1c; }
+    .hp-sum { margin-top: 3rem; display: grid; gap: .8rem; justify-items: stretch; }
+    @media (min-width: 960px) { .hp-sum { grid-template-columns: 1fr auto 1fr auto 1.2fr; gap: 1.1rem; align-items: stretch; } }
+    .hp-sum-card { position: relative; display: flex; flex-direction: column; border-radius: 1.5rem; padding: 1.4rem 1.4rem 1.5rem;
+        background: #fff; border: 1px solid #e5e7eb; box-shadow: 0 24px 50px -40px rgb(20 33 12 / .6);
+        transition: transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
+    .hp-sum-card:hover { transform: translateY(-4px); }
+    .hp-sum-card.is-up { background: #fff6f5; border-color: #fecaca; }
+    .hp-sum-card.is-down { background: #fffbeb; border-color: #fde68a; }
+    .hp-sum-card.is-way { color: #fff; border: 0; background: radial-gradient(120% 120% at 0% 0%, #5c9434 0%, #3d6823 45%, #24420f 100%);
+        box-shadow: 0 30px 60px -30px rgb(36 66 15 / .85), 0 0 0 3px rgb(245 197 24 / .55); }
+    .hp-sum-ico { width: 3rem; height: 3rem; border-radius: 1rem; display: grid; place-items: center; }
+    .hp-sum-ico svg { width: 1.6rem; height: 1.6rem; }
+    .is-up .hp-sum-ico { color: #dc2626; background: #fee2e2; }
+    .is-down .hp-sum-ico { color: #b45309; background: #fef3c7; }
+    .is-way .hp-sum-ico { color: var(--hp-ink); background: var(--hp-sun); }
+    .is-up .hp-sum-ico svg { animation: hpRise 2.2s var(--hp-ease) infinite; }
+    .is-down .hp-sum-ico svg { animation: hpSink 2.2s var(--hp-ease) infinite .4s; }
+    .is-way .hp-sum-ico { animation: hpGlowSun 2.8s ease-in-out infinite; }
+    @keyframes hpRise { 0%, 100% { transform: translateY(2px); } 50% { transform: translateY(-4px); } }
+    @keyframes hpSink { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(4px); } }
+    @keyframes hpGlowSun { 0%, 100% { box-shadow: 0 0 0 0 rgb(245 197 24 / .55); } 50% { box-shadow: 0 0 0 9px rgb(245 197 24 / 0); } }
+    .hp-sum-k { margin-top: 1rem; font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; line-height: 1.25; color: var(--hp-ink); }
+    .is-up .hp-sum-k { color: #991b1b; }
+    .is-down .hp-sum-k { color: #92400e; }
+    .is-way .hp-sum-k { color: #fff; font-size: 1.3rem; }
+    .hp-sum-list { margin-top: .7rem; display: grid; gap: .5rem; }
+    .hp-sum-list li { position: relative; padding-left: 1.05rem; font-size: .92rem; line-height: 1.5; color: #4b5563; }
+    .hp-sum-list li::before { content: ''; position: absolute; left: 0; top: .55em; width: .42rem; height: .42rem; border-radius: 999px; background: currentColor; opacity: .45; }
+    .is-up .hp-sum-list li::before { background: #dc2626; opacity: .7; }
+    .is-down .hp-sum-list li::before { background: #d97706; opacity: .7; }
+    .hp-sum-p { margin-top: .7rem; font-size: .98rem; line-height: 1.6; color: #e4f0d6; }
+    .hp-sum-brand { margin-top: auto; padding-top: 1.1rem; display: inline-flex; align-items: center; gap: .5rem; font-weight: 800; color: var(--hp-sun); }
+    .hp-sum-brand img { width: 1.5rem; height: 1.5rem; object-fit: contain; }
+    .hp-sum-op { align-self: center; justify-self: center; font-family: var(--font-heading); font-size: 2.6rem; font-weight: 800; line-height: 1;
+        color: #9ca3af; }
+    .hp-truth.is-solo { margin-top: 0; }
+
     /* ---- the most searched guides, as links ---- */
     .hp-topics { margin: 2.2rem auto 0; max-width: 60rem; display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
     .hp-topic { padding: .45rem .9rem; border-radius: 999px; font-size: .86rem; font-weight: 800; text-decoration: none;
@@ -1410,7 +1481,7 @@
     @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
         .hp-hero-bg, .hp-hero-glow, .hp-stage-ring, .hp-shimmer, .hp-mark-line, .hp-mark-line path, .hp-go::after, .hp-tour-dot::before, .hp-float, .hp-down, .hp-marquee-track,
-        .hp-biz-b, .hp-final-face, .hp-live, .hp-read i, .hp-vs.is-visible .hp-vs-new > span { animation: none !important; }
+        .hp-biz-b, .hp-final-face, .hp-live, .hp-read i, .hp-sum-ico, .hp-sum-ico svg, .hp-vs.is-visible .hp-vs-new > span { animation: none !important; }
         .hp-st-tab.is-on.is-timing .hp-st-bar i { animation: none; }
         .hp-phone.is-hero, .hp-st-pane, .hp-tool, .hp-msg, .hp-read, .hp-film, .hp-film-tag, .hp-modal, .hp-modal-box, .hp-sticky,
         .hp-go, .hp-alt, .hp-fact, .hp-why-card, .hp-fix, .hp-st-tab, .hp-gain, .hp-reel-card .hp-phone, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
