@@ -58,7 +58,11 @@
                     {{ $R::t('cropsLine') }}
                 </span>
                 <h1 class="hp-h1 animate-fade-up" style="animation-delay:.06s">
-                    Manage your crops <span class="hp-shimmer">like a pro.</span>
+                    Manage your crops for a
+                    {{-- The promise, underlined by hand: a gold brush stroke that
+                         draws itself under the words once the page has settled,
+                         then a thinner second stroke, the way a pen goes back. --}}
+                    <span class="hp-mark"><span class="hp-shimmer">higher yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" pathLength="1" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/><path class="b" pathLength="1" d="M28 21 C 90 15, 170 22, 272 17"/></svg></span>
                 </h1>
                 <p class="hp-lede animate-fade-up" style="animation-delay:.12s">
                     @if ($ph)
@@ -991,6 +995,15 @@
         background-image: linear-gradient(100deg, #f5c518 0%, #fde68a 30%, #f5c518 55%, #e9a80b 80%, #f5c518 100%);
         background-size: 220% 100%; animation: hpShimmer 6s linear infinite; }
     @keyframes hpShimmer { from { background-position: 0% 0; } to { background-position: -220% 0; } }
+    /* The hand drawn underline under "higher yield". */
+    .hp-mark { position: relative; display: inline-block; white-space: nowrap; padding-bottom: .08em; }
+    .hp-mark-line { position: absolute; left: -2%; bottom: -.16em; width: 104%; height: .34em; overflow: visible; pointer-events: none; }
+    .hp-mark-line path { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; }
+    .hp-mark-line .a { stroke: #f5c518; stroke-width: 7px; filter: drop-shadow(0 3px 8px rgb(245 197 24 / .45));
+        animation: hpDraw .95s var(--hp-ease) .75s forwards, hpGlint 4.5s ease-in-out 2.4s infinite; }
+    .hp-mark-line .b { stroke: #fde68a; stroke-width: 3px; opacity: .85; animation: hpDraw .7s var(--hp-ease) 1.45s forwards; }
+    @keyframes hpDraw { to { stroke-dashoffset: 0; } }
+    @keyframes hpGlint { 0%, 100% { stroke: #f5c518; } 50% { stroke: #fde68a; } }
     .hp-lede { margin-top: 1.4rem; max-width: 36rem; font-size: clamp(1.02rem, 1.7vw, 1.18rem); line-height: 1.7; color: #dde6d4; }
     .hp-hero-acts { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .8rem; }
     .hp-trust { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; font-size: .9rem; font-weight: 700; color: #e6eddd; }
@@ -1386,12 +1399,13 @@
 
     @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
-        .hp-hero-bg, .hp-hero-glow, .hp-stage-ring, .hp-shimmer, .hp-go::after, .hp-tour-dot::before, .hp-float, .hp-down, .hp-marquee-track,
+        .hp-hero-bg, .hp-hero-glow, .hp-stage-ring, .hp-shimmer, .hp-mark-line path, .hp-go::after, .hp-tour-dot::before, .hp-float, .hp-down, .hp-marquee-track,
         .hp-biz-b, .hp-final-face, .hp-live, .hp-read i, .hp-vs.is-visible .hp-vs-new > span { animation: none !important; }
         .hp-st-tab.is-on.is-timing .hp-st-bar i { animation: none; }
         .hp-phone.is-hero, .hp-st-pane, .hp-tool, .hp-msg, .hp-read, .hp-film, .hp-film-tag, .hp-modal, .hp-modal-box, .hp-sticky,
         .hp-go, .hp-alt, .hp-fact, .hp-why-card, .hp-fix, .hp-st-tab, .hp-gain, .hp-reel-card .hp-phone, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
         .hp-chat .hp-msg, .hp-chat .hp-read { opacity: 1; transform: none; }
+        .hp-mark-line path { stroke-dashoffset: 0; }
         .hp-marquee-track { flex-wrap: wrap; width: auto; justify-content: center; }
         .hp-marquee-set + .hp-marquee-set { display: none; }
     }
