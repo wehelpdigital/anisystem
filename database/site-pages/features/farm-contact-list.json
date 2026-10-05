@@ -1,0 +1,200 @@
+{
+  "section": "features",
+  "slug": "farm-contact-list",
+  "sortOrder": 295,
+  "lang": "en",
+  "category": "Records",
+  "title": "Farm Contact List: Buyers, Traders and Workers in One Phonebook",
+  "metaTitle": "Farm Contact List: Buyers, Workers and Suppliers",
+  "metaDescription": "A farm contact list for the numbers your season needs: buyers, traders, workers, drivers and suppliers, with tags, search and tap to call. Free on anee.io.",
+  "focusKeyword": "farm contact list",
+  "keywords": [
+    "farm contact list",
+    "fertilizer dealer supply",
+    "palay price today",
+    "agricultural technician",
+    "Fertilizer and Pesticide Authority"
+  ],
+  "excerpt": "The farm contact list in anee.io is a phonebook for everyone around your farm: workers, traders, buyers, drivers and suppliers. Tag each one, find them in seconds, and call or text with one tap. It belongs to you, not to one season, so the numbers stay year after year.",
+  "heroImage": {
+    "src": "/images/site/app/how/contacts.webp",
+    "alt": "The anee.io farm contact list on a phone, with a search box, tag chips for Buyer, Driver and Fertilizer Dealer, and a palay buyer with call and text buttons",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What each contact holds"
+    },
+    {
+      "type": "text",
+      "text": "Open the Contact List from the tools on your dashboard and tap Add a New Contact. You only need the name. The other fields wait for the day you need them."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Mobile numbers**: one or several, so the buyer's second phone is not lost",
+        "**Emails**, for the suppliers and offices that use them",
+        "**Business or role**: what they do, like tractor rental, harvest crew or palay buyer",
+        "**Address**: house number, street, purok or sitio, then the barangay or a landmark",
+        "**Province and town**, picked from a list: choose the province first and only its towns show",
+        "**Tags**, like Buyer, Driver or Fertilizer Dealer",
+        "**Notes**: rates, landmarks, who referred them"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Tags: Buyer, Driver, Harvester and your own"
+    },
+    {
+      "type": "text",
+      "text": "To start, the app suggests ten tags: Worker, Tractor Rental, Harvester, Seed Supplier, Fertilizer Dealer, Buyer, Technician, Driver, Irrigation and Landlord. You can also type your own, like 'rice buyer' or 'sprayer for hire'. A contact can wear up to ten tags, so the cousin who drives and also buys corn shows under both.\n\nEvery tag you use appears as a chip at the top of the list, with a count beside it. Tap Buyer and only the buyers stay. Then tap All and everyone comes back."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Find a buyer in seconds"
+    },
+    {
+      "type": "text",
+      "text": "The search box filters as you type. It looks through names, numbers, emails, the business line, the address, the province, the town and the tags. So 'Cabanatuan' finds everyone in that town, and 'harvester' finds the crew even if you forgot their names.\n\nEach row shows the name, what they do, the town and the first number. Beside it sit the Call and Text buttons, plus Email when there is an address. Tap Call and your phone opens its dialer with the number ready. To change a contact, tap the row itself."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Call two buyers before you sell"
+    },
+    {
+      "type": "text",
+      "text": "At harvest, tap the Buyer chip and call two or three of them before you agree. Check the [palay price today](/blog/palay-price-philippines) first, so you know a fair offer when you hear one. After the sale, write who paid what in your [harvest records](/features/harvest-records)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Who belongs in your farm contact list"
+    },
+    {
+      "type": "text",
+      "text": "Think of everyone you had to search for last season. Here is a start:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Your [fertilizer dealer and supply store](/blog/fertilizer-brands-and-dealers), with the price they quoted in the notes",
+        "The tractor owner, the harvester operator and the thresher crew, with their rates",
+        "Buyers and traders, with how they paid you before",
+        "Drivers who haul sacks to the mill or the market",
+        "The agricultural technician from your municipal agriculture office",
+        "The landlord, if you rent the land, and your irrigation association"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Before you save a new dealer, check that the store is on the licensed list of the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority). And when a farm question comes up at night, [Anee, the AI agricultural technician](/features/ai-agricultural-technician), answers in Tagalog or English."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "New workers can join the list on their own"
+    },
+    {
+      "type": "text",
+      "text": "On the Solo Farmer and Farm Owner plans you keep a [roster of workers](/features/farm-workers-and-payroll) for each season. When you add a new worker with an email that is not yet in your Contact List, the app offers 'Add to my Contact List too'. Leave it ticked and the worker lands in your phonebook with the Worker tag."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Yours, across every season"
+    },
+    {
+      "type": "text",
+      "text": "A season ends, but the people stay. The Contact List does not belong to any one cropping schedule. So the harvester you hired in the wet season is still there in the dry season, and five years from now.\n\nIt is also private. Each person who signs in keeps their own list, so your workers never see yours, even when they log in to your farm. The Contact List works on every plan, including the free Libre plan."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Write the town, not only the name",
+      "text": "Months later you may forget a name but still remember the place. Fill in the province and town, and a search for the town brings the person back. Notes from the call itself belong in your [farm notes](/features/notes-photos-and-voice)."
+    },
+    {
+      "type": "cta",
+      "title": "Build your farm contact list",
+      "text": "Sign up free and save the numbers your season depends on. The Contact List is on every plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the farm contact list"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can I save more than one number for a person?",
+          "a": "Yes. Add up to ten mobile numbers and ten emails. The first number is the one the Call and Text buttons use."
+        },
+        {
+          "q": "Can I make my own tags?",
+          "a": "Yes. Type any tag up to 30 characters, like 'mango buyer'. Each contact can carry up to ten."
+        },
+        {
+          "q": "Can my workers see my contacts?",
+          "a": "No. The Contact List is personal. Each person who signs in keeps their own, and nobody else can open it."
+        },
+        {
+          "q": "Is the Contact List tied to one season?",
+          "a": "No. It sits outside your seasons, so every contact stays when a season ends."
+        },
+        {
+          "q": "Does it cost anything?",
+          "a": "No. The Contact List is free on every plan, the Libre plan included."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Harvest records",
+          "url": "/features/harvest-records"
+        },
+        {
+          "label": "Farm workers and payroll",
+          "url": "/features/farm-workers-and-payroll"
+        },
+        {
+          "label": "Farm documentation",
+          "url": "/features/farm-documentation"
+        },
+        {
+          "label": "Farm photo gallery",
+          "url": "/features/farm-photo-gallery"
+        },
+        {
+          "label": "Fertilizer dealer guide",
+          "url": "/blog/fertilizer-brands-and-dealers"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FPA: Licensed handlers",
+          "url": "https://fpa.da.gov.ph/resources/reports/licensed-handlers/"
+        },
+        {
+          "label": "PSA: Farmgate prices of palay (dry)",
+          "url": "https://psa.gov.ph/farmgate-prices-palay"
+        }
+      ]
+    }
+  ]
+}

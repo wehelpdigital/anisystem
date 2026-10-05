@@ -1,0 +1,202 @@
+{
+  "section": "features",
+  "slug": "morning-plan-email",
+  "sortOrder": 245,
+  "lang": "en",
+  "category": "Workers",
+  "title": "Morning Plan Email: The Day's Farm Work in Every Inbox at 6 AM",
+  "metaTitle": "Morning Plan Email: Your Crew's Farm Work at 6 AM",
+  "metaDescription": "The anee.io morning plan email sends your crew today's and tomorrow's farm work at 6 AM Philippine time, each worker only their own tasks. Nothing to send.",
+  "focusKeyword": "morning plan email",
+  "keywords": [
+    "morning plan email",
+    "fertilizer application",
+    "fertilizer for rice",
+    "fertilizer urea"
+  ],
+  "excerpt": "The morning plan email puts the day's farm work in your team's inbox at 6 AM Philippine time, every day, on its own. Each task says if it is for today or tomorrow and which lot it is on, so the crew walks out to the field already knowing the plan.",
+  "heroImage": {
+    "src": "/images/site/app/how/morning.webp",
+    "alt": "The Notifications settings of a season in anee.io: the daily schedule email with Email the workers, Email everyone in the team and Send me one now",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the morning plan email says"
+    },
+    {
+      "type": "text",
+      "text": "The email lists the tasks on the board for today and tomorrow. Each line carries the task's name, the word Today or Tomorrow, and the lots it is on. The task's own notes follow as plain text, so the amounts and reminders you wrote on the board reach the worker too."
+    },
+    {
+      "type": "table",
+      "caption": "What a worker might read on a Tuesday morning",
+      "rows": [
+        [
+          "When and where",
+          "Task",
+          "From the task's notes"
+        ],
+        [
+          "Today, Lot 2",
+          "Top dress with urea",
+          "Take 2 bags from the shed. Start at the gate side."
+        ],
+        [
+          "Today, Lot 1",
+          "Hand weeding",
+          "Whole day. Bring your own bolo."
+        ],
+        [
+          "Tomorrow, Lot 1 and Lot 2",
+          "Check the water",
+          "Close the inlet if the paddy is full."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Drafts and hidden tasks stay out of it. If the board has nothing for today or tomorrow, nobody gets an email that morning. An empty email only teaches people to skip the next one."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Two switches: the workers, or everyone"
+    },
+    {
+      "type": "text",
+      "text": "Turn the morning email on in the season's Settings, under Notifications. There are two choices, and you can tick one or both."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Email the workers.** Each worker gets only their own tasks, the ones you put them on. A worker with nothing today or tomorrow gets nothing, and workers with no email are skipped.",
+        "**Email everyone in the team.** The owner and every worker with an email get the full plan for today and tomorrow."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "With both on, a worker who already got the full plan does not get a second, shorter copy. The email leaves at 6:00 AM Philippine time, the same hour for every farm, so there is no clock to set."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Send me one now"
+    },
+    {
+      "type": "text",
+      "text": "Want to see it before your crew does? Tap **Send me one now**, and the same email goes to you alone, right away. It is the quickest way to check that your task names and notes read well in an inbox."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why an email beats a text the night before"
+    },
+    {
+      "type": "text",
+      "text": "On many farms the plan travels by text at nine in the evening, or by word of mouth at the gate. Then somebody misses it, and a [fertilizer application](/blog/fertilizer-application-methods) lands on the wrong lot or a day late. The email leaves at the same hour every morning, and nobody has to remember to send it.\n\nIt also carries the details. Timing matters for [fertilizer for rice](/blog/fertilizer-for-rice), so a crew that reads tomorrow's work today can have the [urea fertilizer](/blog/urea-fertilizer) out of the shed on time. That is why the email covers two days, not one."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "No login needed"
+    },
+    {
+      "type": "text",
+      "text": "A worker does not need an anee.io account to get the email. An email address on their card in the Workers module is enough. If they should open the board too, give them a [team login](/features/team-logins) on the Farm Owner plan.\n\nThe switches work on every plan. But a crew of workers to email needs the Workers module, and that comes with Solo Farmer and Farm Owner."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Write each task for the person who reads it",
+      "text": "The email is only as clear as the board. Name tasks the way your crew talks, put the lot on every task, and write the amount in the notes, like '2 bags' instead of 'fertilizer'. Plan the season on the [cropping calendar](/features/cropping-calendar), and the email does the rest."
+    },
+    {
+      "type": "text",
+      "text": "Need the crew to know about Thursday tonight? Open that day's menu on the board and tap Email this date. Pick who gets it from the season's workers and send it right away, with a short note of your own if you like."
+    },
+    {
+      "type": "cta",
+      "title": "Start every day on the same page",
+      "text": "Sign up free and build your season on the board. Add workers on Solo Farmer or Farm Owner, then switch on the morning email.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the morning plan email"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What time does the morning email arrive?",
+          "a": "It leaves at 6:00 AM Philippine time every day. The hour is the same for every farm."
+        },
+        {
+          "q": "Does it cover tomorrow too?",
+          "a": "Yes. Each email lists today's work and tomorrow's, and marks every task Today or Tomorrow."
+        },
+        {
+          "q": "Do my workers need an account?",
+          "a": "No. An email address on the worker's card is enough. They only need a login if they should open the board itself."
+        },
+        {
+          "q": "What if nothing is planned?",
+          "a": "Then no email goes out that day. It only comes when there is work on the board for today or tomorrow."
+        },
+        {
+          "q": "Can I test it first?",
+          "a": "Yes. Tap Send me one now in the season's Notifications settings, and the email comes to you alone."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Team logins",
+          "url": "/features/team-logins"
+        },
+        {
+          "label": "Farm workers and payroll",
+          "url": "/features/farm-workers-and-payroll"
+        },
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "Collab Room",
+          "url": "/features/collab-room"
+        },
+        {
+          "label": "Stock that counts itself",
+          "url": "/features/automatic-stock-deduction"
+        },
+        {
+          "label": "Fertilizer application methods",
+          "url": "/blog/fertilizer-application-methods"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice policy brief: Reinforcing right element, amount and timing for improved fertilizer application",
+          "url": "https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application/"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: PalayCheck Key Check 5, Nutrient Management",
+          "url": "https://www.pinoyrice.com/palaycheck/nutrient-management/"
+        }
+      ]
+    }
+  ]
+}

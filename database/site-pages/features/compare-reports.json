@@ -1,0 +1,203 @@
+{
+  "section": "features",
+  "slug": "compare-reports",
+  "sortOrder": 330,
+  "lang": "en",
+  "category": "Records",
+  "title": "Compare Reports: This Season Against the Last, Side by Side",
+  "metaTitle": "Compare Reports: Two Farm Seasons Side by Side",
+  "metaDescription": "Compare reports from two seasons side by side: profit, expenses, labor or Anee's reads, with the difference line by line and Anee's view if you want it.",
+  "focusKeyword": "compare reports",
+  "keywords": [
+    "compare reports",
+    "season against season",
+    "rice variety",
+    "rice varieties philippines",
+    "fertilizer application",
+    "ani",
+    "yield per hectare"
+  ],
+  "excerpt": "Compare Reports puts two saved reports of the same kind side by side, like this dry season's profit against the last. You see each figure, the difference and which side did better. If you want, Anee reads both and explains what changed and why.",
+  "heroImage": {
+    "src": "/images/site/app/how/compare.webp",
+    "alt": "Compare Reports in anee.io on a phone, with two seasons' profit figures side by side and the difference between them",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What you can compare"
+    },
+    {
+      "type": "text",
+      "text": "Any two saved reports of the same kind can stand together. They can come from two seasons, or from one season saved at different times. Closed and archived seasons count too, because last season is the whole point."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[Labor report](/features/labor-report): labor cost, worker days, cost per worker day, pay by kind of work and pay by worker",
+        "[Expenses report](/features/expenses-report): total spent, income, net, where the money went and month by month",
+        "[Profit report](/features/profit-report): net profit, money in, money out, margin and profit lot by lot",
+        "[Anee's season report](/features/anee-season-report): her scores one by one, plus the money",
+        "Analyze So Far: standing, score, work done on time, overdue tasks and money spent so far",
+        "[View as Protocol](/features/view-as-protocol): yield, harvest value, steps done and every step on its own day count"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to compare reports in three steps"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Choose the kind of report",
+          "text": "Labor, expenses, profit, a season report, a so far read or a protocol. Both sides must be the same kind, so you compare apples with apples."
+        },
+        {
+          "title": "Pick Report A and Report B",
+          "text": "For each side, choose the season, then one of its saved reports. If a report covers only some lots or days, it carries a Filtered tag, so you know it shows part of a season."
+        },
+        {
+          "title": "Add Anee's read, if you like",
+          "text": "The comparison itself costs no credits and appears right away. Anee's read costs a few credits, and the price shows before you confirm."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Reading the comparison"
+    },
+    {
+      "type": "text",
+      "text": "First come the main figures, side by side, from the app's own arithmetic. Each row shows A, B and the difference. Where better has a direction, like lower costs or higher profit, the row also marks the side that did better.\n\nNext, line by line, the page shows where the two part ways and what they share. Two protocols also line up day by day, each step on its own day count. At the bottom you can open either report on its own, charts and all."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What Anee adds"
+    },
+    {
+      "type": "text",
+      "text": "Anee reads both reports and the figures between them. She opens with a headline on the biggest difference and says which season came out ahead, and why. After that she lists what changed, with the numbers, and the strengths of each side. She ends with what to carry into your next season.\n\nWant to keep talking? Tap Ask Anee about it, and the chat opens with the comparison attached. Questions there run on credits, like everything [Anee, the AI technician](/features/ai-agricultural-technician) does."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Good questions to answer with two reports"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Did the new rice variety pay? Compare the profit of the season you planted it against the season before. Our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) helps you pick the next one to try.",
+        "Did a hired harvester cost less than a crew? Put two labor reports side by side.",
+        "Did a change in [fertilizer application](/blog/fertilizer-application-methods) move your ani? Compare two protocols day by day, with the yield each one produced.",
+        "Which months ran heavy? Compare two expenses reports month by month, each season counted from its own first month."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Compare like with like",
+      "text": "A report on one lot will look cheap next to a report on the whole farm. Before you read the difference, check that both sides cover the same lots and the same part of the season. When two lots differ in size, yield per hectare is fairer than the total harvest."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Saved for later"
+    },
+    {
+      "type": "text",
+      "text": "Every comparison lands on the Saved tab, newest first. Search it by name, rename it and add a note on what you wanted to learn. If you delete a comparison, the two reports stay where they were.\n\nCompare Reports comes with the Solo Farmer and Farm Owner plans. On Farm Owner, a worker with view access to Reports can read the farm's comparisons, while edit access lets them make new ones. For the whole family of reports, start with [farm reports](/features/farm-reports)."
+    },
+    {
+      "type": "cta",
+      "title": "See which season did better",
+      "text": "Sign up free and save a report each season. Then compare them on the Solo Farmer or Farm Owner plan.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about Compare Reports"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Does it cost credits to compare reports?",
+          "a": "No. Putting two reports side by side is free and instant. Only Anee's read costs credits, and you see the price before you confirm."
+        },
+        {
+          "q": "Can I compare a profit report with an expenses report?",
+          "a": "No. Both sides must be the same kind of report, so every figure has a partner on the other side."
+        },
+        {
+          "q": "Can both reports come from the same season?",
+          "a": "Yes. Pick the same season twice, for example an expenses report of DAT 0 to 45 and one of the whole season."
+        },
+        {
+          "q": "Where do the reports come from?",
+          "a": "From each season's saved reports. Make a report on the season's Reports page first, then come back to compare."
+        },
+        {
+          "q": "What does Anee say in her read?",
+          "a": "Which side came out ahead and why, what changed with the figures, the strengths of each, and what to carry forward into your next season."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Farm reports",
+          "url": "/features/farm-reports"
+        },
+        {
+          "label": "Profit report",
+          "url": "/features/profit-report"
+        },
+        {
+          "label": "Expenses report",
+          "url": "/features/expenses-report"
+        },
+        {
+          "label": "Labor report",
+          "url": "/features/labor-report"
+        },
+        {
+          "label": "Anee season report",
+          "url": "/features/anee-season-report"
+        },
+        {
+          "label": "View as Protocol",
+          "url": "/features/view-as-protocol"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice: Top popular rice varieties (NSIC Rc 216, Rc 222)",
+          "url": "https://www.philrice.gov.ph/top-5-popular-rice-varieties/"
+        },
+        {
+          "label": "PSA: Updates on palay and corn estimates",
+          "url": "https://psa.gov.ph/statistics/crops/palay-and-corn-estimates"
+        }
+      ]
+    }
+  ]
+}

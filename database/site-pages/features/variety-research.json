@@ -1,0 +1,201 @@
+{
+  "section": "features",
+  "slug": "variety-research",
+  "sortOrder": 210,
+  "lang": "en",
+  "category": "Agronomy",
+  "title": "Variety Research: Compare Seed Varieties Before You Buy",
+  "metaTitle": "Variety Research: Compare Rice, Corn and Vegetable Seed",
+  "metaDescription": "Variety research by Anee: she searches the newest Philippine varieties and hybrids, compares yield, maturity and resistance, and ranks them for your field.",
+  "focusKeyword": "variety research",
+  "keywords": [
+    "variety research",
+    "rice variety",
+    "rice hybrid",
+    "rice seeds",
+    "variety of corn",
+    "corn seeds"
+  ],
+  "excerpt": "Seed is one of the first costs of the season, and the wrong variety can cost you the harvest. Variety Research in anee.io has Anee search the newest Philippine varieties of your crop, compare them for your field and season, and rank them by what matters most to you.",
+  "heroImage": {
+    "src": "/images/site/app/how/variety.webp",
+    "alt": "The Variety Research screen in anee.io on a phone, showing the price in credits and asking where the field is",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How variety research works in anee.io"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Where and when",
+          "text": "Type the town and province of the field. Then pick the season you plan to plant, the wet season, the dry season or a third crop, and the year."
+        },
+        {
+          "title": "The crop and the ground",
+          "text": "Pick the crop from the same list your lots use. Say if the land is lowland, upland or highland, and describe the soil by feel. Then tick the troubles you have seen, like drought, floods, salty or acid soil, heavy pests or past disease."
+        },
+        {
+          "title": "The varieties you are weighing",
+          "text": "Type up to eight names as they are sold. If you leave the list empty, Anee picks the top yielding released varieties herself, inbreds and hybrids both."
+        },
+        {
+          "title": "What matters most",
+          "text": "Put yield, protection and tolerance, survival and quickness of harvest in your order. The first counts 40 percent of the score, then 30, 20 and 10."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Anee searches before she answers"
+    },
+    {
+      "type": "text",
+      "text": "For this tool, Anee goes online first. She looks for the varieties of your crop registered or released in the Philippines this year and the two years before. Then she gathers trial yields, days to maturity and resistance ratings for each one, preferring PhilRice, DA, BPI, NSIC and IRRI pages.\n\nShe also reads the seasonal outlook for your region, the El Niño or La Niña state and the next seven days of weather at your field. If she cannot reach the web on a run, the report says so, because the answer then rests only on what she already knows."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the comparison shows"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Hybrids and inbreds in two lists, with the best of each named at the top",
+        "Each variety's breeder, release year, days to maturity and published yield",
+        "Four scores per variety, and an overall score weighed by your order",
+        "Strong and weak points, and a note on how it fits your field",
+        "A verdict on every variety you named, even one she could not find",
+        "The newest releases, what your soil and weather ask of a variety, and the risks to plan for",
+        "Practical tips for growing the top pick on your ground",
+        "Every source she read, so you can check them yourself"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Why two lists? Hybrid seed is bought new each season and usually yields more, but it costs more. Inbred and open pollinated varieties give seed you can save and plant again. So a rice hybrid from a seed company sits in one list, while an NSIC registered inbred like those in our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines) sits in the other."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice, corn or vegetables"
+    },
+    {
+      "type": "text",
+      "text": "Choosing a rice variety is where many farmers start, but the same tool works for mais and vegetables. When you weigh which variety of corn to plant, our guide to [corn seeds](/crops/corn-seeds) explains hybrid and open pollinated seed. For palay, good [rice seeds](/crops/palay) matter as much as the variety, so buy certified seed from a source you trust."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Check what you can really buy",
+      "text": "Trial yields come from trial farms, and your field will differ. Before you decide, ask the nearest DA office or PhilRice station which seed you can get near you."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep the research and build on it"
+    },
+    {
+      "type": "text",
+      "text": "Each research you run stays on the Saved tab, where you can rename it, describe it, tag it and search it. Tap Attach to Anee to ask her more, for example how the top pick handles a late typhoon. That chat works like any talk with [Anee, the AI agricultural technician](/features/ai-agricultural-technician).\n\nNot sure of the crop yet? Start with the [What to Plant Analysis](/features/what-to-plant-analysis). Once you have the variety, the [Crop Protocol Analysis](/features/crop-protocol-analysis) writes a season plan for it. Then, when you plant, set it as the variety of your [lot](/features/farm-lots).\n\nVariety Research runs on credits and comes with Libre plus Anee, Solo Farmer and Farm Owner. The price shows before you press Run, and a failed run costs nothing."
+    },
+    {
+      "type": "cta",
+      "title": "Compare varieties before you buy seed",
+      "text": "Sign up free, add Anee, and run your first Variety Research for your own field.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about variety research"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Which is the best rice variety for my farm?",
+          "a": "There is no single best one. It depends on your season, soil, water and the pests in your area, so Variety Research ranks them for your own field and priorities."
+        },
+        {
+          "q": "Does Anee compare hybrids and inbreds?",
+          "a": "Yes. She lists them apart, since hybrid seed is bought new each season while inbred seed can be saved."
+        },
+        {
+          "q": "Can I compare varieties I already know?",
+          "a": "Yes. Type up to eight names. Each one gets a verdict, even if it does not suit your field or she could not find it."
+        },
+        {
+          "q": "Where does the information come from?",
+          "a": "Anee searches the web for registrations, trial yields and resistance ratings, and lists every source she read under the report."
+        },
+        {
+          "q": "Which plans include it?",
+          "a": "Libre plus Anee, Solo Farmer and Farm Owner. Each run uses credits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Rice varieties in the Philippines",
+          "url": "/crops/rice-varieties-philippines"
+        },
+        {
+          "label": "Corn seeds",
+          "url": "/crops/corn-seeds"
+        },
+        {
+          "label": "What to plant analysis",
+          "url": "/features/what-to-plant-analysis"
+        },
+        {
+          "label": "Crop protocol analysis",
+          "url": "/features/crop-protocol-analysis"
+        },
+        {
+          "label": "When to plant analysis",
+          "url": "/features/when-to-plant-analysis"
+        },
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: NSIC releases nine new PhilRice bred varieties (2016)",
+          "url": "https://www.philrice.gov.ph/nsic-releases-nine-new-philrice-bred-varieties/"
+        },
+        {
+          "label": "PhilRice: Top popular rice varieties",
+          "url": "https://www.philrice.gov.ph/top-5-popular-rice-varieties/"
+        },
+        {
+          "label": "DA Bicol: New hybrid rice varieties showcased at the 2023 field day",
+          "url": "https://bicol.da.gov.ph/new-hybrid-rice-varieties-showcased-in-da-bicols-hybrid-rice-techno-demo-field-day-in-baao-and-tigaon-camsur/"
+        },
+        {
+          "label": "DA Regional Field Office 2: Corn Production Techno Guide (revised 2012)",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
+        },
+        {
+          "label": "PAGASA: Seasonal forecast",
+          "url": "https://www.pagasa.dost.gov.ph/climate/climate-prediction/seasonal-forecast"
+        }
+      ]
+    }
+  ]
+}

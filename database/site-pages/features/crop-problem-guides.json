@@ -1,0 +1,221 @@
+{
+  "section": "features",
+  "slug": "crop-problem-guides",
+  "sortOrder": 285,
+  "lang": "en",
+  "category": "Agronomy",
+  "title": "Crop Problem Guides: Pests, Diseases and Weeds of Philippine Farms",
+  "metaTitle": "Crop Problems in the Philippines: Free Field Guides",
+  "metaDescription": "Free guides to crop problems in the Philippines: rice and corn pests, plant diseases and weeds. Learn the signs, the causes and what to do about each one.",
+  "focusKeyword": "crop problems",
+  "keywords": [
+    "crop problems",
+    "brown planthopper",
+    "sheath blight disease",
+    "thrips insect",
+    "common weeds in the philippines",
+    "fertilizer and pesticide authority"
+  ],
+  "excerpt": "The anee.io crop problem guides are free field guides to the crop problems Filipino farmers meet most: the pests, diseases and weeds of palay, mais, vegetables and fruit. Each guide shows how to spot the problem, why it comes and what to do about it, with the local names farmers use. You do not need an account to read them.",
+  "heroImage": {
+    "src": "/images/site/app/how/guides.webp",
+    "alt": "The anee.io crop problems page on a phone, with filters for rice pests, corn pests, crop diseases and weeds above the rice bug guide",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the crop problem guides cover"
+    },
+    {
+      "type": "text",
+      "text": "Every guide follows the same order, so you know where to look. It opens with a photo and what the problem is. Then come the signs in the field, why it builds up and how to manage it, with cultural control first and chemicals last. Each one ends with the questions farmers ask and the sources behind it, from PhilRice, IRRI, the DA and the product labels.\n\nOn the [crop problems page](/problems), filter by rice pests, corn pests, crop pests, rice diseases, crop diseases or weeds."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rice pests"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[Brown planthopper](/problems/brown-planthopper): the sap sucker behind hopperburn, and why an early spray can make it worse",
+        "[Rice black bug](/problems/rice-black-bug): the itim na atangya that hides at the base of the hill and leaves bugburn",
+        "[Rice bug](/problems/rice-bug): the atangya that empties milky grains, with counts that tell you when to act",
+        "[Rice leaffolder](/problems/rice-leaffolder): the mambibilot that folds leaves, and when its damage really matters",
+        "[Rice insects](/problems/rice-insects): the main pests by crop stage, and the spiders and wasps that eat them for free"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Corn pests"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[Fall armyworm](/problems/fall-armyworm): the caterpillar first reported in Cagayan in 2019, and how to scout for it",
+        "[Asian corn borer](/problems/asian-corn-borer): the stalk borer, with detasseling, Trichogramma and Bt corn",
+        "[Cutworm](/problems/cutworm): the night feeder that cuts corn seedlings and young vegetable stems"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Diseases, tiny pests and weeds"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[Sheath blight](/problems/sheath-blight): the sheath blight disease of dense, well fed palay in hot, humid weather",
+        "[Anthracnose](/problems/anthracnose): black, sunken spots on mango, rotting sili and the kulot of onion",
+        "[Fusarium wilt](/problems/fusarium-wilt): Panama disease in banana and wilt in tomato",
+        "[Thrips](/problems/thrips): the thrips insect behind silvery onion leaves and curled sili",
+        "[Hanip, mites and aphids](/problems/hanip-mites-and-aphids): what hanip means in the field, and how to control mites and aphids",
+        "[Common weeds in the Philippines](/problems/common-weeds-philippines): the grasses, sedges and broadleaves of rice and corn, with their local names"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to use the guides in the field"
+    },
+    {
+      "type": "text",
+      "text": "Start with what you see, not with a chemical. Walk the field, note the crop stage and look closely at the leaf, the stem and the base of the hill. Then match it against the guide. Many problems look alike from the road. A brown patch in palay (rice still in the husk) may be hopperburn, bugburn or a disease, and each needs a different answer. Our [rice insects](/problems/rice-insects) guide shows how to tell an insect from a disease before you spray."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Look and take a photo",
+          "text": "Take a sharp photo in daylight of the damage and, if you can, of the insect itself."
+        },
+        {
+          "title": "Match it to a guide",
+          "text": "Compare the signs, the crop stage and the recent weather with what the guide describes."
+        },
+        {
+          "title": "Check if it pays to act",
+          "text": "Several guides give counts or damage levels before a spray pays off. Below that, natural enemies often do the job for you."
+        },
+        {
+          "title": "Follow the label",
+          "text": "If you must spray, use a product registered for that crop and pest, and follow its label. Our page on the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) explains the registration."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Not sure? Ask with a photo"
+    },
+    {
+      "type": "text",
+      "text": "When you cannot tell, a plan with Anee lets you send the photo to [Anee, the AI technician](/features/ai-agricultural-technician) in anee.io. She looks at the picture, weighs it against your crop and its stage, and tells you what she sees and what to check next. Treat her reading as a first opinion, and call your municipal agriculturist for a serious outbreak."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "From the guide to your board"
+    },
+    {
+      "type": "text",
+      "text": "The guides tell you what to watch for, and anee.io helps you watch at the right time. [Growth stages and weather](/features/growth-stages-and-weather) lists what to look for at each lot's stage. [Anee's tip of the day](/features/farm-tip-of-the-day) may name the pest of the week, like the rice black bug at tillering. Put each scouting walk or spray on [today on the board](/features/daily-farm-tasks) so it gets a date and a tick.\n\nHalfway through the season, [Analyze So Far](/features/analyze-so-far) weighs the risks ahead for each lot. When one of those risks is a pest or a disease, the matching guide is one tap away."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Never spray on a guess",
+      "text": "A wrong spray costs money and kills the spiders and wasps that keep pests down. Confirm the problem first, use only FPA registered products and follow the label for the rate, the timing and your safety."
+    },
+    {
+      "type": "cta",
+      "title": "Catch crop problems at the right stage",
+      "text": "Read the guides free, any time. Sign up free to see each lot's stage, what to watch for and a daily tip on your phone.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about crop problems"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Are the guides free?",
+          "a": "Yes. Anyone can read them on the web, with or without an anee.io account."
+        },
+        {
+          "q": "Which crops do the guides cover?",
+          "a": "Mostly palay and corn, plus mango, sili, onion, banana, tomato and other vegetables where a pest or disease hits them."
+        },
+        {
+          "q": "Do the guides give spray rates?",
+          "a": "They name the active ingredients and their groups, then point you to the product label for the rate. Always follow the label and the FPA registration."
+        },
+        {
+          "q": "How do I tell an insect problem from a disease?",
+          "a": "Look for the insect itself, its eggs or its droppings, and check where the damage starts. The rice insects guide walks you through it."
+        },
+        {
+          "q": "Where do the facts come from?",
+          "a": "From PhilRice, IRRI, the DA and its regional offices, universities and the makers' own label pages. Each guide lists its sources at the end."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "All crop problem guides",
+          "url": "/problems"
+        },
+        {
+          "label": "Analyze So Far",
+          "url": "/features/analyze-so-far"
+        },
+        {
+          "label": "Anee's tip of the day",
+          "url": "/features/farm-tip-of-the-day"
+        },
+        {
+          "label": "Growth stages and weather",
+          "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: Brown Planthopper",
+          "url": "https://www.pinoyrice.com/brown-planthopper/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Insect fact sheets",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects"
+        },
+        {
+          "label": "FPA: Registered products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

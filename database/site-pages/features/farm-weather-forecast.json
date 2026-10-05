@@ -1,0 +1,182 @@
+{
+  "section": "features",
+  "slug": "farm-weather-forecast",
+  "sortOrder": 255,
+  "lang": "en",
+  "category": "Agronomy",
+  "title": "Farm Weather Forecast for Each Lot, Right Beside Your Plan",
+  "metaTitle": "Farm Weather Forecast: Rain and Heat for Each Lot",
+  "metaDescription": "A farm weather forecast for each lot's town on anee.io: six days of rain chances and highs, hour by hour, and a warning when rain falls on a spray day.",
+  "focusKeyword": "farm weather forecast",
+  "keywords": [
+    "farm weather forecast",
+    "foliar fertilizer spray",
+    "fungicide",
+    "fertilizer application"
+  ],
+  "excerpt": "The anee.io farm weather forecast follows your lots, not the nearest city. Each lot's town gets six days of highs, lows and chances of rain, hour by hour when you need it. The board also warns you when rain is forecast on a day you planned to spray.",
+  "heroImage": {
+    "src": "/images/site/app/how/weather.webp",
+    "alt": "The anee.io farm weather forecast for Lot 2 in Muñoz, Central Luzon: rain showers today, a six day strip of highs, lows and rain chances, and what it means for the day's work",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the farm weather forecast shows"
+    },
+    {
+      "type": "text",
+      "text": "Open Weather in any season, and each town your lots stand in gets its own card. The card names the place and the lots in it. Below that, a short line covers today: the sky, the high and the low, and the chance of rain in plain words. On Philippine accounts the sky also carries its name in Filipino."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Six days in a strip, each with its high, its low and its chance of rain",
+        "Tap a day to open its hours, with the temperature and the chance of rain for each hour",
+        "A line that says when rain will likely start and which hour is wettest, or that the day is a good window for field work",
+        "What it means today: a short note on what the sky means for the work, like not a drying day and not a spraying one",
+        "The weather right now and how hot it feels, on Solo Farmer and Farm Owner"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Set the town on each lot"
+    },
+    {
+      "type": "text",
+      "text": "The forecast reads each lot's town and province from the [farm lots](/features/farm-lots) module. Lots in the same town share one card, while a farm spread over three towns gets three. A lot with no town shows no forecast, so fill that in first."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rain on a spray day? The board warns you"
+    },
+    {
+      "type": "text",
+      "text": "The forecast does not stay on its own page. On the Activities board, each day's header carries a weather chip for the towns where that day's work is, next to each lot's growth stage. So when you plan Thursday, you see Thursday's sky.\n\nWhen a spray task lands on a day with rain forecast for its lot, that day gets a reminder: rain forecast on a spray day. It names the spray and says what rain does to it. A [foliar fertilizer spray](/blog/foliar-fertilizer) or a [fungicide](/blog/fungicides) that a shower washes off is money spent twice. For a herbicide, the reminder adds that rain can carry it into the paddy water and the lots nearby. Drag the task to a drier day, and the reminder clears."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Look back at the weather you planned under"
+    },
+    {
+      "type": "text",
+      "text": "The board keeps the latest forecast it showed for each day. Later, open that day's menu and tap View saved weather to see what the forecast said when you made the call.\n\nAnee looks back too. When she writes your season report, or when you run [Realign by Anee](/features/realign-by-anee), she reads the weather your field actually had. The season report sums it up month by month: the rain, the wet days, the very hot days and the windy ones."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plan the week with the farm weather forecast"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "On Sunday, open Weather and read the six day strip for each town.",
+        "Open any day with a high chance of rain and see which hours are wet.",
+        "Move sprays and drying work on the board to the dry windows.",
+        "Time each fertilizer application around the heaviest rain days, too.",
+        "Read the day's line again each morning, because forecasts change."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Then read the week beside your [crop growth stages](/features/growth-stages-and-weather). A lot at flowering and a lot still tillering may need different work under the same sky. That is why the board's [daily farm tasks](/features/daily-farm-tasks) show the stage and the forecast side by side."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "For typhoons, follow PAGASA",
+      "text": "The forecast in anee.io comes from Open Meteo, a weather service with open data, and it is a tool for planning field work. For typhoon signals, storm surge and flood warnings, follow PAGASA and your municipal disaster office."
+    },
+    {
+      "type": "text",
+      "text": "On the free Libre and Libre plus Anee plans you see today and tomorrow, and the other days stay locked. Solo Farmer and Farm Owner open all six days, the hours and the weather right now."
+    },
+    {
+      "type": "cta",
+      "title": "See the sky over your own lots",
+      "text": "Sign up free, give each lot its town, and the forecast shows up on your board.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the farm weather forecast"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Where does the forecast come from?",
+          "a": "From Open Meteo, a weather service that draws on the models of national weather services. The app asks it again once a reading is an hour old, and each card shows how fresh it is."
+        },
+        {
+          "q": "Is it the forecast for my exact field?",
+          "a": "It is for the town and province you set on each lot. Lots in different towns get separate forecasts."
+        },
+        {
+          "q": "How many days does it show?",
+          "a": "Six days on Solo Farmer and Farm Owner. The free plans show today and tomorrow, with the other days locked."
+        },
+        {
+          "q": "Does it replace PAGASA?",
+          "a": "No. Use it to plan field work, and follow PAGASA for typhoon signals, storm surge and flood warnings."
+        },
+        {
+          "q": "Will it tell me not to spray?",
+          "a": "If a spray task sits on a day with rain forecast for its lot, the board shows a reminder on that day. The choice to move it stays yours."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Growth stages and weather",
+          "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "Farm lots",
+          "url": "/features/farm-lots"
+        },
+        {
+          "label": "Realign by Anee",
+          "url": "/features/realign-by-anee"
+        },
+        {
+          "label": "Today on the board",
+          "url": "/features/daily-farm-tasks"
+        },
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "Foliar fertilizer",
+          "url": "/blog/foliar-fertilizer"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PAGASA: Farm Weather Forecast and agri weather products",
+          "url": "https://www.pagasa.dost.gov.ph/agri-weather"
+        },
+        {
+          "label": "Open Meteo: Free weather forecast API",
+          "url": "https://open-meteo.com/"
+        }
+      ]
+    }
+  ]
+}

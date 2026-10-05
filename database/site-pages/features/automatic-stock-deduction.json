@@ -1,0 +1,188 @@
+{
+  "section": "features",
+  "slug": "automatic-stock-deduction",
+  "sortOrder": 250,
+  "lang": "en",
+  "category": "Money",
+  "title": "Automatic Stock Deduction: Tick a Task Done and the Shed Updates",
+  "metaTitle": "Automatic Stock Deduction: Tick a Task, the Shed Updates",
+  "metaDescription": "Automatic stock deduction on anee.io: tick a fertilizer or spray task done and its bags leave the shed count. Untick it and they go back. Costs follow.",
+  "focusKeyword": "automatic stock deduction",
+  "keywords": [
+    "automatic stock deduction",
+    "fertilizer urea",
+    "14 14 14 fertilizer",
+    "46 0 0 fertilizer",
+    "fertilizer calculation",
+    "fertilizer computation"
+  ],
+  "excerpt": "With automatic stock deduction, you never subtract a sack by hand again. When you tick a fertilizer or spray task done on the anee.io board, the materials it lists leave the shed count. Untick it and they go back on the shelf, and every move carries its cost into your expenses report.",
+  "heroImage": {
+    "src": "/images/site/app/how/stock.webp",
+    "alt": "The anee.io inventory shed for automatic stock deduction: complete 14 14 14, muriate of potash, tricyclazole fungicide and urea, each with bags on hand and price per bag",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How automatic stock deduction works"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Put the item in the shed",
+          "text": "In the Inventory module, add each input with its kind, what you count it in and how many you have. Bags of 50 kg, kilos, liters, bottles, sachets and drums are all there, and the price is optional."
+        },
+        {
+          "title": "List it on the task",
+          "text": "On a task, add the material and answer Take it from the inventory? with the item from your shed. Then write the amount, in bags or in kilos."
+        },
+        {
+          "title": "Tick the task done",
+          "text": "The board locks the task and takes the amount off the count. A short message says how many items left the shed."
+        },
+        {
+          "title": "Untick to put it back",
+          "text": "Reopen the task, and the stock returns to the shelf. No extra line stays in the log to puzzle you later."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "A double tap, or a weak signal that sends the tick twice, does not spend twice. The app spends a task's materials once. Each move also carries the task's own date, not the day you happened to tick it, so the log reads like a diary of the field."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Bags or kilos, it does the math"
+    },
+    {
+      "type": "text",
+      "text": "Say the shed holds 10 bags of urea, a 46 0 0 fertilizer, counted in bags of 50 kg. A task that lists 75 kg of [urea fertilizer](/blog/urea-fertilizer) takes 1.5 bags off when you tick it. Liters and milliliters convert the same way, so 500 ml of a foliar feed comes off a count kept in liters."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "On hand is the sum of the moves"
+    },
+    {
+      "type": "text",
+      "text": "anee.io keeps no running total that could drift away from the truth. Instead, the figure on each item is the sum of its moves: the starting count, each delivery, each task ticked done and each hand entry. Every move records the stock before and after it, the date and who made it.\n\nOpen the Logs tab to read the moves line by line, newest first and grouped by day. Even if two people tick two tasks at the same moment, the count comes out right, because each move waits its turn."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Not enough in the shed? The task tells you"
+    },
+    {
+      "type": "text",
+      "text": "When you list an item on a task, the sheet checks what is still free after the other work you planned. If the shed runs short, it says Not enough in inventory and shows how much is left. Add a price to the line, and it becomes a new purchase instead: the bags come in at that price, then go out when the task is done."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Costs that follow into your expenses report"
+    },
+    {
+      "type": "text",
+      "text": "Each delivery or starting count is a batch with its own price, because a bag bought in June rarely costs what it did in March. You can fix a batch's price later in the Pricing tab. The [expenses report](/features/expenses-report) and the day's cash on the board both use each batch's own price, so the money side agrees with the shed.\n\nDelete a done task, and its stock goes back on the shelf. Any purchase the task declared leaves with it, since nobody bought stock for work that never happened."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Starting in the middle of a season?",
+      "text": "When you add an item, set Counted from to the day counting should begin. Tasks marked done from that day that used the item come off the count, even before you add stock. The app matches older task lines to the new item by its name, so the shed starts honest."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Buy what the plan needs, not more"
+    },
+    {
+      "type": "text",
+      "text": "Automatic stock deduction tells you what is left, and the plan tells you what is still to come. Put the two together before you drive to the agri supply. First, work out the bags each lot needs with our guide to [fertilizer calculation](/blog/fertilizer-calculation). Then subtract what the shed already holds, say 6 bags of [14 14 14 fertilizer](/blog/complete-fertilizer-14-14-14) left from basal. A fertilizer computation done this way stops the extra sack that sits in the bodega until next season.\n\nThe inventory comes with the Solo Farmer and Farm Owner plans. On Farm Owner, each worker's [team login](/features/team-logins) can view the shed or edit it, as you choose. The full shed, with its units and moves, is on the [farm inventory and expenses](/features/farm-inventory-and-expenses) page."
+    },
+    {
+      "type": "cta",
+      "title": "Let the shed count itself",
+      "text": "Sign up free, then open the inventory on the Solo Farmer or Farm Owner plan.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about automatic stock deduction"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What if I tick a task done by mistake?",
+          "a": "Untick it. The materials go back on the count, and the log keeps no trace of the wrong tick."
+        },
+        {
+          "q": "Does every material on a task leave the shed?",
+          "a": "Only the lines you picked from the inventory. A line you only typed by name is a note to yourself and moves nothing."
+        },
+        {
+          "q": "Can I count in bags but write kilos on a task?",
+          "a": "Yes. Pick the unit you buy in for the item. A task can still list kilos, and the app converts them to bags when you tick it done."
+        },
+        {
+          "q": "Can I change an item's unit later?",
+          "a": "Yes. Change bags of 50 kg to kilos and every line in its log converts too, so the shelf says 600 kg where it said 12 bags."
+        },
+        {
+          "q": "Which plan includes it?",
+          "a": "The inventory, with automatic stock deduction, comes with the Solo Farmer and Farm Owner plans."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Farm inventory and expenses",
+          "url": "/features/farm-inventory-and-expenses"
+        },
+        {
+          "label": "Expenses report",
+          "url": "/features/expenses-report"
+        },
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "Morning plan email",
+          "url": "/features/morning-plan-email"
+        },
+        {
+          "label": "Team logins",
+          "url": "/features/team-logins"
+        },
+        {
+          "label": "Fertilizer calculation",
+          "url": "/blog/fertilizer-calculation"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FPA: Weekly fertilizer prices",
+          "url": "https://fpa.da.gov.ph/weekly-prices/"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: PalayCheck Key Check 5, Nutrient Management",
+          "url": "https://www.pinoyrice.com/palaycheck/nutrient-management/"
+        }
+      ]
+    }
+  ]
+}

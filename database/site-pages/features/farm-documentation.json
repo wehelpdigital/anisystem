@@ -1,0 +1,179 @@
+{
+  "section": "features",
+  "slug": "farm-documentation",
+  "sortOrder": 300,
+  "lang": "en",
+  "category": "Records",
+  "title": "Farm Documentation: The Season's Protocol, Rules and Files in One Place",
+  "metaTitle": "Farm Documentation: Protocols, Rules and Files per Season",
+  "metaDescription": "Farm documentation that stays with the season: protocols, critical rules, mixing charts and receipts, each with text and files. Start free on anee.io.",
+  "focusKeyword": "farm documentation",
+  "keywords": [
+    "farm documentation",
+    "foliar fertilizer",
+    "fertilizer calculation",
+    "Fertilizer and Pesticide Authority"
+  ],
+  "excerpt": "Farm documentation in anee.io keeps the season's references together: the protocol you followed, the rules your crew must not break, receipts and any other file. Each document has its own text and attachments. It stays with the season, so you find it again next year.",
+  "heroImage": {
+    "src": "/images/site/app/how/documentation.webp",
+    "alt": "The Documentation module of anee.io on a phone, where a season's farm documentation sits as cards with a type, text and attached files",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What a document can be"
+    },
+    {
+      "type": "text",
+      "text": "Open a season, go to Documentation and tap Add Document. First pick the type. Four types come built in, and you can add your own."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Protocol**: the plan you are following, like the season's fertilizer and spray program",
+        "**Introduction**: what this season is about, the variety and why you chose it",
+        "**Critical Rule**: what the crew must never get wrong, like the waiting days after a spray",
+        "**Miscellaneous**: everything else worth keeping",
+        "**Your own type**: tap New tag and name it, like Mixing Chart or Receipts, and the season keeps it for next time"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Then add a title if you like, put on a few tags, and write the content. The editor keeps headings, bold text, numbered and bullet lists, quotes and links. A document can be words alone, a file alone, or both."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Text and files together"
+    },
+    {
+      "type": "text",
+      "text": "On the Solo Farmer and Farm Owner plans, attach files to any document: photos, PDF, Word, Excel or plain text, up to 10 MB each. Snap the official receipt from the agri supply, the result of a soil test, or the seed tag of the variety you planted. Each file shows as a chip on the card, and a tap opens it.\n\nOn the free Libre plan the words still save. So you can still type the protocol, the rules and what each receipt said."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ideas for your farm documentation"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "A mixing chart for your [foliar fertilizer](/blog/foliar-fertilizer) and sprays, so whoever mixes the tank reads the same numbers",
+        "The [fertilizer calculation](/blog/fertilizer-calculation) for each lot, worked out once: how many bags its size needs",
+        "A photo of each product label with its [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) registration, beside a Critical Rule on how to use it",
+        "Receipts for seeds, fertilizer and hired services",
+        "The lease or the agreement with your landlord",
+        "The protocol from the seed company or the agriculture office, word for word"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Documentation or the Protocol Builder?"
+    },
+    {
+      "type": "text",
+      "text": "If you want every task dated on the board, plan it in the [Protocol Builder](/features/protocol-builder) and import it as a new season. Documentation holds the words and papers around the plan instead: why you chose it, the rules and the receipts. For a researched starting point on a crop, try [Crop Protocol Analysis](/features/crop-protocol-analysis)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Kept with the season, easy to find next year"
+    },
+    {
+      "type": "text",
+      "text": "Every document belongs to its season, so your farm documentation never mixes with another crop's papers. Open the same season a year later and the protocol, the rules and the receipts are where you left them. A count on the Add Document button tells you how many the season holds.\n\nPlanning the same crop again? Duplicate the season from your schedules list, and the copy brings its documents along with the lots, workers and activities. Tags help too. Tag a document by lot or by input, and it shows on the season's Tags page beside every activity and note with the same tag."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Notes or documentation?",
+      "text": "Use [farm notes](/features/notes-photos-and-voice) for what happened, day by day. Use Documentation for what you will read again: the plan, the rules and the papers. Harvest numbers go in your [harvest records](/features/harvest-records)."
+    },
+    {
+      "type": "cta",
+      "title": "Keep this season's papers in one place",
+      "text": "Sign up free. Documentation text is on every plan, and file attachments come with Solo Farmer and Farm Owner.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm documentation"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What files can I attach?",
+          "a": "Photos, PDF, Word, Excel and plain text files, up to 10 MB each, on the Solo Farmer and Farm Owner plans."
+        },
+        {
+          "q": "Can I use it on the free plan?",
+          "a": "Yes. On Libre every document keeps its title and text. Only the file attachments need Solo Farmer or Farm Owner."
+        },
+        {
+          "q": "Can I make my own document types?",
+          "a": "Yes. Pick New tag and name it, like Mixing Chart. The season keeps it for the next document."
+        },
+        {
+          "q": "Will my documents carry over to next season?",
+          "a": "If you duplicate a season, its documents go with the copy. A new empty season starts with none."
+        },
+        {
+          "q": "Can I change a document later?",
+          "a": "Yes. Tap the pencil to change the text, the files or the tags, or delete the document."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Harvest records",
+          "url": "/features/harvest-records"
+        },
+        {
+          "label": "Farm contact list",
+          "url": "/features/farm-contact-list"
+        },
+        {
+          "label": "Farm photo gallery",
+          "url": "/features/farm-photo-gallery"
+        },
+        {
+          "label": "Protocol Builder",
+          "url": "/features/protocol-builder"
+        },
+        {
+          "label": "Notes, photos and voice",
+          "url": "/features/notes-photos-and-voice"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "FPA: Registered products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        }
+      ]
+    }
+  ]
+}

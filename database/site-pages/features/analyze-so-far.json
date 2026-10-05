@@ -1,0 +1,203 @@
+{
+  "section": "features",
+  "slug": "analyze-so-far",
+  "sortOrder": 280,
+  "lang": "en",
+  "category": "Anee AI Technician",
+  "title": "Analyze So Far: Crop Monitoring Halfway Through the Season",
+  "metaTitle": "Analyze So Far: Crop Monitoring at Mid Season",
+  "metaDescription": "Analyze So Far is crop monitoring by Anee: where each lot stands, the risks in the coming weeks and the next steps in order, while there is time to act.",
+  "focusKeyword": "Analyze So Far",
+  "keywords": [
+    "Analyze So Far",
+    "crop monitoring",
+    "agricultural technician",
+    "ani",
+    "cavan rice"
+  ],
+  "excerpt": "Analyze So Far is crop monitoring you run halfway through the season. Anee reads the season as it stands today: the work done against the plan, the money spent, the weather so far and each crop's stage. Then she says where each lot stands, the risks ahead and what to do next.",
+  "heroImage": {
+    "src": "/images/site/app/how/sofar.webp",
+    "alt": "The anee.io Reports page with Analyze So Far, while Anee's wait card shows a farm tip as she prepares a crop monitoring report",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Analyze So Far reads"
+    },
+    {
+      "type": "text",
+      "text": "The [season report](/features/anee-season-report) looks back once the harvest is in. Analyze So Far looks at a season that is still running. Open Reports in your season, tap Analyze So Far, and pick the whole season or a single lot. Anee then reads:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Every task planned up to today, and which ones you ticked done",
+        "The money spent so far against the whole plan, month by month",
+        "Each lot's crop, day count, stage and likely harvest date",
+        "The rain, hot days and windy days your field has had, from a weather archive",
+        "The El Niño or La Niña picture and the outlook for the months ahead",
+        "Your season notes, observations and the captions on your photos"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What crop monitoring with Anee gives you"
+    },
+    {
+      "type": "text",
+      "text": "After a few minutes the report opens. It starts with a verdict in plain words, a score out of 100 and a standing: On track, Needs attention or Needs rescue. Anee says rescue when it is true, so treat it as an honest check up.\n\nBelow the verdict come the parts you act on:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Where the crop stands**: each lot's stage, the next stage and about when harvest falls, with what the crop needs now and what to watch for",
+        "**What's next**: three to seven steps in order, each with a date or day count and a tag for now or soon",
+        "**The risks**: the threats in the coming weeks, each marked low, moderate or high",
+        "**The plan to today**: how many tasks due by today are done, which are overdue and what comes in the next 14 days",
+        "**The money so far**: spent against the whole plan, what is still to spend and where it went",
+        "**The weather**: the rain so far by month and what the coming weeks may bring"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "She also scores five things out of 100, each with one line of why. They are the protocol, the timing, the weather, the money and your records. Then come what is good, and what needs work with a fix for each."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The harvest to expect"
+    },
+    {
+      "type": "text",
+      "text": "Near the end, Anee gives a likely harvest window. She adds a fair ani (harvest) to expect per hectare, in cavans of rice or your own unit. It is her estimate if things go on as they are, and she says what could change it. Our page on [ani meaning](/blog/ani-meaning) explains yield per hectare. To weigh that harvest against what buyers pay, see [palay price in the Philippines](/blog/palay-price-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When to run crop monitoring"
+    },
+    {
+      "type": "text",
+      "text": "Run it once the season has real records in it, usually around halfway, while there is still time to act. Some good moments:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Before panicle initiation in rice, ahead of the big fertilizer decision",
+        "After a typhoon or a long dry spell",
+        "When the money feels heavier than the plan said",
+        "Before you book the harvester and the drying space"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "It only needs a season with tasks on it. If every task is already done, it points you to the season report instead. If a lot runs late, ask for [Realign by Anee](/features/realign-by-anee) first, so the stage Anee reads matches the field.\n\nThen act on the list. Put each next step on [today on the board](/features/daily-farm-tasks) so it gets a date and a tick. If a risk names a pest or a disease, our free [crop problem guides](/features/crop-problem-guides) show what to look for before you spray."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "A guide, as good as your records",
+      "text": "Anee reads what the board holds. Tick tasks on the day they happen and log costs as they come, and the report gets sharper. Its last card lists what your records lack, so the next read is better."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Price, plans and the Saved shelf"
+    },
+    {
+      "type": "text",
+      "text": "Analyze So Far sits with the full report shelf, so it comes with Solo Farmer and Farm Owner. One report costs 200 credits. The page shows the price and your balance first, and nothing comes off until you press Run. Solo Farmer adds 30 credits at each renewal and Farm Owner adds 100, and credit packs cover the rest.\n\nEvery report lands on the Saved tab, newest first. Rename it, add a description and open it again any time. Tap Ask Anee about it and the chat opens with the report attached. Then ask what a risk means for Lot 2. It is the same chat as [Anee, the AI agricultural technician](/features/ai-agricultural-technician), with your report already in her hands."
+    },
+    {
+      "type": "cta",
+      "title": "Check your season while there is time",
+      "text": "Analyze So Far comes with Solo Farmer and Farm Owner. Compare the plans and pick the one that fits your farm.",
+      "label": "See the plans",
+      "url": "/pricing"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about crop monitoring with Anee"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How is it different from the season report?",
+          "a": "The season report reads a finished season with its harvest. Analyze So Far reads a season still running and looks ahead: the risks, the next steps and the harvest to expect."
+        },
+        {
+          "q": "Can I check one lot only?",
+          "a": "Yes. Pick a lot before you run it, or keep the whole season to read all lots together."
+        },
+        {
+          "q": "How long does it take?",
+          "a": "A few minutes. Anee's wait card shows while she reads, and the report opens when she is done."
+        },
+        {
+          "q": "If I delete a report, do I get the credits back?",
+          "a": "No. Deleting a report does not return its credits, so keep the ones that matter and rename them."
+        },
+        {
+          "q": "Which plans include it?",
+          "a": "Solo Farmer and Farm Owner, because it belongs to the full report shelf. It runs on credits like every report Anee writes."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Anee season report",
+          "url": "/features/anee-season-report"
+        },
+        {
+          "label": "Crop problem guides",
+          "url": "/features/crop-problem-guides"
+        },
+        {
+          "label": "Realign by Anee",
+          "url": "/features/realign-by-anee"
+        },
+        {
+          "label": "Farm reports",
+          "url": "/features/farm-reports"
+        },
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Plans and pricing",
+          "url": "/pricing"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "NOAA Climate Prediction Center: ENSO diagnostic discussion",
+          "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml"
+        },
+        {
+          "label": "PAGASA: Philippine Atmospheric, Geophysical and Astronomical Services Administration",
+          "url": "https://www.pagasa.dost.gov.ph/"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        }
+      ]
+    }
+  ]
+}

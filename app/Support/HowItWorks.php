@@ -26,6 +26,47 @@ namespace App\Support;
  */
 class HowItWorks
 {
+    /** Each tool's own article page on the Philippine site, /features/{slug} (2026-10-05). */
+    public const PAGES = [
+        'when' => 'when-to-plant-analysis',
+        'what' => 'what-to-plant-analysis',
+        'variety' => 'variety-research',
+        'cropProtocol' => 'crop-protocol-analysis',
+        'maps' => 'farm-maps',
+        'draw' => 'farm-drawing',
+        'protocol' => 'protocol-builder',
+        'inventory' => 'farm-inventory-and-expenses',
+        'review' => 'protocol-review-by-anee',
+        'schedule' => 'cropping-calendar',
+        'lots' => 'farm-lots',
+        'workers' => 'farm-workers-and-payroll',
+        'access' => 'team-logins',
+        'collab' => 'collab-room',
+        'morning' => 'morning-plan-email',
+        'stock' => 'automatic-stock-deduction',
+        'growth' => 'growth-stages-and-weather',
+        'weather' => 'farm-weather-forecast',
+        'realign' => 'realign-by-anee',
+        'board' => 'daily-farm-tasks',
+        'capture' => 'notes-photos-and-voice',
+        'offline' => 'offline-farm-app',
+        'tip' => 'farm-tip-of-the-day',
+        'chat' => 'ai-agricultural-technician',
+        'sofar' => 'analyze-so-far',
+        'guides' => 'crop-problem-guides',
+        'community' => 'farmer-community',
+        'observations' => 'harvest-records',
+        'contacts' => 'farm-contact-list',
+        'documentation' => 'farm-documentation',
+        'gallery' => 'farm-photo-gallery',
+        'labor' => 'labor-report',
+        'expenses' => 'expenses-report',
+        'profit' => 'profit-report',
+        'season' => 'anee-season-report',
+        'compare' => 'compare-reports',
+        'asProtocol' => 'view-as-protocol',
+    ];
+
     public static function stages(): array
     {
         $ph = Region::ph();
@@ -110,8 +151,8 @@ class HowItWorks
                         ['Drag a task to move it', 'Drafts and versions for the what ifs', 'Undo that survives a logout'],
                         'cropping-calendar', 'sm.index'),
                     self::item('lots', 'Lots', 'Each field with its own crop and count', 'treasure-map.png', false,
-                        'Add each field as a lot with its crop, variety, size and planting date. Lots sown a week apart keep their own count, so the timing stays honest.',
-                        ['Crop, variety, size and dates per lot', "Attach the lot's map", 'Two crops in one season if you grow them'],
+                        'Add each field as a lot with its crop, variety, size and place. Each lot counts from its own day zero, so lots sown a week apart keep their own timing.',
+                        ['Crop, variety, size and place per lot', "Attach the lot's map", 'A different crop on each lot if you grow them'],
                         null, 'sm.index'),
                     self::item('workers', 'Workers and payroll', 'The right hands on the right task', 'tractor.png', false,
                         "Keep a roster with each worker's rate, put people on each task, tick who came, and the labor cost adds itself up.",
@@ -121,8 +162,8 @@ class HowItWorks
                         'Give a worker or a partner their own login, and decide module by module what they may see and what they may change.',
                         ['None, view or edit, per module', 'A diary of every change and who made it', 'One login for each person'],
                         null, 'sm.index'),
-                    self::item('collab', 'Collab Room', 'Chat, whiteboard and calls for the team', 'speech-bubbles.png', true,
-                        'Each season has a room for its team: chat with photos and voice notes, a shared whiteboard, calls, and Anee in the room to answer the whole team at once.',
+                    self::item('collab', 'Collab Room', 'Chat, whiteboard and live cameras for the team', 'speech-bubbles.png', true,
+                        'Each season has a room for its team: chat with photos and voice notes, a shared whiteboard, live cameras, and Anee in the room to answer the whole team at once.',
                         ['A group chat for each season', 'A whiteboard everyone can draw on', 'Ask Anee together'],
                         null, 'sm.index'),
                     self::item('morning', 'Morning plan email', "Today's work in every inbox at 6 AM", 'time.png', false,
@@ -152,7 +193,7 @@ class HowItWorks
                         'growth-stages-and-weather', 'sm.index'),
                     self::item('weather', 'Weather for your farm', 'The forecast where your field is', 'weather.png', false,
                         'See the forecast for your own farm beside your plan, so a spray is not wasted on the day before the rain.',
-                        ['Rain, heat and wind for the week', 'Right beside the growth stages', 'Anee reads it before she answers'],
+                        ['Rain and heat for the coming days', 'Right beside the growth stages', 'A reminder when rain falls on a spray day'],
                         'growth-stages-and-weather', 'sm.index'),
                     self::item('realign', 'Realign by Anee', 'When a crop runs ahead or behind', 'user-refresh.png', true,
                         "Crops do not read calendars. Anee reads a lot's records, its weather and your notes, works out the stage it is truly in, and moves that lot's stage count to match.",
@@ -160,7 +201,7 @@ class HowItWorks
                         null, 'sm.index'),
                     self::item('board', 'Today on the board', 'Tick the work as it gets done', 'list.png', false,
                         'Open the day and see each task on its lot. Tick it done, mark who worked, and add a photo or a voice note. The board keeps the record for your reports.',
-                        ['Done, moved or skipped, all on record', 'Workers and materials on each task', 'Photos, clips and voice on any task'],
+                        ['Done and moved, all on record', 'Workers and materials on each task', 'Photos, clips and voice on any task'],
                         'cropping-calendar', 'sm.index'),
                     self::item('capture', 'Notes from the field', 'Snap it, film it or just say it', 'voice-recorder.png', false,
                         'Quick Capture takes a photo, Quick Record takes a video and Quick Voice files what you say as a note. It all lands with the season, easy to find later.',
@@ -171,8 +212,8 @@ class HowItWorks
                         ['Turn it on once for each phone', 'Your recent seasons stay open', 'Changes wait, then sync'],
                         null, null),
                     self::item('tip', "Anee's tip of the day", 'One useful thing to do today', 'idea.png', true,
-                        'Each day Anee looks at your lots, their stages and the weather, and gives you one tip worth acting on today.',
-                        ['Read on your dashboard each morning', 'Fitted to your lots and stages', 'Ask her more with one tap'],
+                        'Each day the dashboard gives you one tip for the stage your crop is in, from what anee.io knows about each crop and stage. Tap it to ask Anee more.',
+                        ['Read on your dashboard each morning', 'Fitted to your crop and its stage', 'Ask her more with one tap'],
                         null, null),
                 ],
             ],
@@ -230,7 +271,7 @@ class HowItWorks
                         null, 'sm.index'),
                     self::item('gallery', 'Season gallery', 'Every photo from planting to harvest', 'gallery.png', false,
                         'Every photo, clip and drawing the season made, with albums you put together yourself, like the harvest or the lot that did best.',
-                        ['Albums you make on purpose', 'Every season in one Global Gallery', 'Attach any picture to a note'],
+                        ['Albums you make on purpose', 'Every season in one Global Gallery', 'Pick a saved picture for a task or a record'],
                         'notes-photos-and-voice', 'gallery.hub'),
                 ],
             ],
@@ -246,8 +287,8 @@ class HowItWorks
                 'glyph' => 'M4 19h16M7 16v-4m5 4V8m5 8v-6',
                 'items' => [
                     self::item('labor', 'Labor Report', 'Worker days and labor cost', 'icons/tea.png', false,
-                        'Every worker day and the labor cost for the season, added up from the board. Nothing to type twice.',
-                        ['Counted from the attendance you ticked', 'Saved on your report shelf', 'Copy it as text to share'],
+                        'Every worker day and the labor cost for the season, added up from the workers you put on each task. Nothing to type twice.',
+                        ['Each worker at their own rate', 'Saved on your report shelf', 'The busiest months at a glance'],
                         'farm-reports', 'sm.index'),
                     self::item('expenses', 'Expenses Report', "Every {$peso} spent this season", 'icons/money-bag.png', false,
                         "Materials, services and labor: every {$peso} the season cost, in one report built from your records.",
@@ -285,6 +326,11 @@ class HowItWorks
         foreach ($stages as &$st) {
             foreach ($st['items'] as &$it) {
                 $it['nudge'] = $nudge[$it['key']] ?? null;
+                // Every tool opens onto its own article page.
+                if (isset(self::PAGES[$it['key']])) {
+                    $it['page'] = self::PAGES[$it['key']];
+                    $it['url'] = null;
+                }
                 $it['video'] = self::video($it['key']);
             }
             unset($it);

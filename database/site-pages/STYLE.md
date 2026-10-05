@@ -226,7 +226,20 @@ Features:
 /features/farm-reports, /features/growth-stages-and-weather,
 /features/when-to-plant-analysis, /features/farm-maps,
 /features/notes-photos-and-voice, /features/farmer-community,
-/features/protocol-builder
+/features/protocol-builder,
+/features/what-to-plant-analysis, /features/variety-research,
+/features/crop-protocol-analysis, /features/farm-drawing,
+/features/protocol-review-by-anee, /features/farm-lots,
+/features/team-logins, /features/collab-room, /features/morning-plan-email,
+/features/automatic-stock-deduction, /features/farm-weather-forecast,
+/features/realign-by-anee, /features/daily-farm-tasks,
+/features/offline-farm-app, /features/farm-tip-of-the-day,
+/features/analyze-so-far, /features/crop-problem-guides,
+/features/harvest-records, /features/farm-contact-list,
+/features/farm-documentation, /features/farm-photo-gallery,
+/features/labor-report, /features/expenses-report, /features/profit-report,
+/features/anee-season-report, /features/compare-reports,
+/features/view-as-protocol
 
 Crops:
 /crops/palay, /crops/pagtatanim-ng-palay, /crops/rice-varieties-philippines,

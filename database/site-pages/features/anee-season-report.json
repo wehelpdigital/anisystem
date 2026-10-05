@@ -1,0 +1,220 @@
+{
+  "section": "features",
+  "slug": "anee-season-report",
+  "sortOrder": 325,
+  "lang": "en",
+  "category": "Anee AI Technician",
+  "title": "Anee's Season Report: What Went Well, What Went Wrong, What to Change",
+  "metaTitle": "Season Report by Anee: Your Finished Farm Season, Explained",
+  "metaDescription": "Anee's season report reads your finished season, from plan to harvest, and shows what went well, what went wrong and what to change. Try it on anee.io.",
+  "focusKeyword": "season report",
+  "keywords": [
+    "season report",
+    "ani",
+    "crop yields meaning",
+    "agricultural technician",
+    "yield per hectare"
+  ],
+  "excerpt": "Anee's season report reads your finished season, from the first task to the last sack. She looks at the work, the money, the harvest, your notes and the weather. Then she tells you plainly what went well, what went wrong and what to change next time, with a score out of 100.",
+  "heroImage": {
+    "src": "/images/site/app/how/season.webp",
+    "alt": "Anee's season report in anee.io on a phone, with an overall score out of 100, a headline and the season's verdict",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Anee reads before she writes"
+    },
+    {
+      "type": "text",
+      "text": "Anee is the [AI agricultural technician](/features/ai-agricultural-technician) inside anee.io. For a season report she reads your farm's own records, not a template."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Every activity on the board, with its date, lot, workers and materials",
+        "The money, from the same arithmetic as the [profit report](/features/profit-report)",
+        "Your Observations: the yield, the price and the notes you wrote after harvest",
+        "Each lot's crop, variety, day zero and typical maturity",
+        "The season's weather from the archive for your field, and the El Niño or La Niña outlook",
+        "The captions and notes on up to 20 of your season photos",
+        "Your past seasons of the same crop, so she can compare"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the season report tells you"
+    },
+    {
+      "type": "text",
+      "text": "The report opens with a headline, a short verdict and an overall score out of 100. Five more scores follow: planning, execution, cost control, timing and record keeping. Each one comes with a plain sentence on why it landed there."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**What went well**, named plainly so you keep doing it",
+        "**What went wrong**, honest but never cruel",
+        "**What to improve**, as concrete moves for next season",
+        "**Protocol changes**: what you did, what to do instead and when, in your own DAS, DAT or DAP count",
+        "**Where you can save**, with a rough amount for one season",
+        "**What was lacking** in your records, and a checklist for next season"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Beside her words sit graphs drawn from the app's own figures. You see money in and money out, where the money went, spending month by month and the results lot by lot. Another graph shows how long each crop took against a typical crop. A weather chart shows the rain, heat and wind of each month, and 'The season in moments' marks the turning points on their dates."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Your ani against a typical farm"
+    },
+    {
+      "type": "text",
+      "text": "Ani is the Filipino word for harvest. Anee sets your yield per hectare against a typical yield for that crop on farms in your part of the country, and for the variety if she knows it. Then she says if you came out above, about the same or below. Our page on [ani meaning](/blog/ani-meaning) shows how to work out yield per hectare yourself."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Before you run a season report"
+    },
+    {
+      "type": "text",
+      "text": "A season report is a look back, so it needs a finished season. The page checks the season first and tells you what is still missing."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Mark the season completed",
+          "text": "Close the season in its Hub. If the season is still running, use [Analyze So Far](/features/analyze-so-far) instead, the mid season read."
+        },
+        {
+          "title": "Tick the work that happened",
+          "text": "Tick every activity done, or delete it if it never happened. That keeps the read honest."
+        },
+        {
+          "title": "Record the harvest",
+          "text": "Add at least one entry in Observations, best of all the yield and its price. The harvest is half the story."
+        },
+        {
+          "title": "Check the price in credits",
+          "text": "Anee's read runs on credits. Before you press Run, the page shows the price and your balance, and nothing comes off until you do. If a run fails, you pay nothing."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Treat it as a guide",
+      "text": "Read the season report as a guide, not a final verdict. Anee weighs typhoons, dry spells and late rains before she blames the farmer, but she only knows what you recorded. Good records make a fair report."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep it, ask about it, compare it"
+    },
+    {
+      "type": "text",
+      "text": "Each season report stays on the Saved tab. Rename it, then add a description and tags. Tap Ask Anee about it to open a chat with the report attached, and ask about any part, like why the timing score came out low. Each question in the chat also runs on credits.\n\nWhen the next season closes, put the two reports side by side in [Compare Reports](/features/compare-reports). It lines up the scores and the money, and Anee can explain what changed. To carry the good parts forward, write them into your next plan in the [Protocol Builder](/features/protocol-builder)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Which plans have it"
+    },
+    {
+      "type": "text",
+      "text": "The season report comes with Solo Farmer and Farm Owner, the plans with the full report shelf and Anee. Both plans add credits at each renewal, and you can buy more whenever you need them."
+    },
+    {
+      "type": "cta",
+      "title": "Let Anee read your season",
+      "text": "Sign up free and keep this season on the board. When it closes, Anee can write its story.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the season report"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Does the season report cost credits?",
+          "a": "Yes. It runs on credits, and the page shows the price and your balance before you press Run. If a run fails, you pay nothing."
+        },
+        {
+          "q": "Why can't I run a season report yet?",
+          "a": "Mark the season completed, tick every activity done or delete it, and record at least one observation. The page lists what is still missing."
+        },
+        {
+          "q": "What does crop yield mean in the report?",
+          "a": "In plain words, the meaning of crop yields is the harvest you get from a given area. Your season report puts it per hectare, in your own unit, such as cavans or sacks."
+        },
+        {
+          "q": "Can I get a report on one lot?",
+          "a": "The season report covers the whole season. For one lot while the crop is still growing, use Analyze So Far, which lets you pick the lot."
+        },
+        {
+          "q": "Which plans include it?",
+          "a": "Solo Farmer and Farm Owner. The free Libre plan has the labor report, and Libre plus Anee adds the chat but not the season report."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Farm reports",
+          "url": "/features/farm-reports"
+        },
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Analyze So Far",
+          "url": "/features/analyze-so-far"
+        },
+        {
+          "label": "Compare Reports",
+          "url": "/features/compare-reports"
+        },
+        {
+          "label": "Profit report",
+          "url": "/features/profit-report"
+        },
+        {
+          "label": "Ani meaning",
+          "url": "/blog/ani-meaning"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PSA: Updates on palay and corn estimates",
+          "url": "https://psa.gov.ph/statistics/crops/palay-and-corn-estimates"
+        },
+        {
+          "label": "PSA: 2024 Costs and Returns of Palay Production",
+          "url": "https://psa.gov.ph/content/2024-costs-and-returns-palay-production"
+        }
+      ]
+    }
+  ]
+}

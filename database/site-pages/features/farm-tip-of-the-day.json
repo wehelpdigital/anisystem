@@ -1,0 +1,180 @@
+{
+  "section": "features",
+  "slug": "farm-tip-of-the-day",
+  "sortOrder": 275,
+  "lang": "en",
+  "category": "Agronomy",
+  "title": "Anee's Tip of the Day: Farm Tips for Your Crop's Stage",
+  "metaTitle": "Farm Tips of the Day, Fitted to Your Crop's Stage",
+  "metaDescription": "One of the farm tips anee.io keeps for each crop stage greets you every morning, picked for what your lots are doing today. Free on every plan.",
+  "focusKeyword": "farm tips",
+  "keywords": [
+    "farm tips",
+    "agricultural technician",
+    "nitrogen fertilizer",
+    "rice black bug",
+    "sheath blight"
+  ],
+  "excerpt": "Anee's tip of the day is one of the farm tips worth acting on today, picked for what your lots are doing right now. It sits at the top of your dashboard each morning and on each season's hub. When a lot is at tillering, the tip is about tillering. Tap Ask Anee about this, and the chat opens with the question already typed.",
+  "heroImage": {
+    "src": "/images/site/app/how/tip.webp",
+    "alt": "The anee.io dashboard on a phone with the tip of the day, one of the farm tips: do not spray before rain, with an Ask Anee about this link",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How the farm tips are picked"
+    },
+    {
+      "type": "text",
+      "text": "Each morning anee.io looks at the lots in your season. For each lot with a crop and a day zero, it works out the stage the crop is in today, the same stage you see on [growth stages and weather](/features/growth-stages-and-weather). Then it gathers the lines written for that stage: what to do now and what to watch for. Those lines go into the pool twice, so a tip about the field you stand in comes up more often than a general one.\n\nThe rest of the pool is general practice, in groups like water, soil, fertilizer, pests, weather, records, workers, harvest and money. A season with no crop set yet still gets a good tip, never an empty card."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The same tip all day, a new one tomorrow"
+    },
+    {
+      "type": "text",
+      "text": "The choice holds steady for the day. Open the app three times before lunch and you read the same tip, because advice that changes on every page load reads as noise. Tomorrow brings another one.\n\nWhen the tip comes from your own crop, the card carries a badge that says Your crop, today. It also names the crop and the stage the line came from, like Rice and active tillering."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Farm tips from your own crop's stage"
+    },
+    {
+      "type": "text",
+      "text": "Here are a few of the lines a rice farmer may meet through the season:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "At active tillering: the second nitrogen split goes on now, because it decides how many stems you carry. Our page on [nitrogen fertilizer](/blog/urea-fertilizer) covers urea and the splits.",
+        "Also at tillering: the [rice black bug](/problems/rice-black-bug) and the green leafhopper build up, so check at night with a torch",
+        "At panicle initiation: [sheath blight](/problems/sheath-blight) starts at the waterline in a dense crop, so look low, not high",
+        "At flowering: a hot, dry spell can leave empty grains, and the rice bug arrives at first milk",
+        "Near harvest: book the harvester and the drying space now, not in the last week"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Rice, corn, banana, mango, sugarcane, coconut and the general vegetables crop each have stage lines of their own. Other crops draw from the general pool. Even then the advice stays practical: walk the field twice a week and look under the leaves, or never spray before rain, since it washes off and you paid for nothing.\n\nIf a lot runs late and you asked for [Realign by Anee](/features/realign-by-anee), the tip follows her stage, not the calendar's. That way a field held back by a typhoon gets the tip for where it really is."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ask Anee about this"
+    },
+    {
+      "type": "text",
+      "text": "Under the tip sits a link: Ask Anee about this. Tap it and the chat opens with the question already in the box, the tip followed by 'What should I do about this on my farm?' Nothing goes out until you press send, so you can add the lot, the variety or a photo first. On a season's hub, the chat opens right where you are.\n\nReading the tip is free on every plan, Libre included, and it uses no credits. Asking about it needs a plan with Anee: Libre plus Anee, Solo Farmer or Farm Owner. Each question then costs credits, like any chat with [Anee, the AI agricultural technician](/features/ai-agricultural-technician)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why one tip a day works"
+    },
+    {
+      "type": "text",
+      "text": "Nobody needs a manual every morning. What helps is one thing to check before the crew arrives. A single tip, read over coffee, is easy to act on: walk the bund, look under the leaves, hold the spray if rain is coming. Over a season that adds up to dozens of small checks you might have skipped.\n\nIf a tip calls for work, put it on [today on the board](/features/daily-farm-tasks) so it gets a date, a lot and a tick when it is done."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Pair it with Growth Stages",
+      "text": "The tip gives you one line. For the full lists of what to do now and what to watch for at each lot's stage, open Growth Stages and pick today's date."
+    },
+    {
+      "type": "cta",
+      "title": "Get a tip for your own crop",
+      "text": "Sign up free, add a lot with its crop and day zero, and tomorrow's tip starts reading your field.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm tips"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Does the tip of the day cost credits?",
+          "a": "No. The tip is free on every plan. Only asking Anee about it uses credits."
+        },
+        {
+          "q": "Why did I get a general tip?",
+          "a": "Your lots may have no crop or day zero set, or your crop has no stage lines of its own. Set both in Lots and your own crop joins the pool."
+        },
+        {
+          "q": "Does the tip change during the day?",
+          "a": "No. You see the same tip all day and a new one tomorrow."
+        },
+        {
+          "q": "Where do the farm tips come from?",
+          "a": "The stage lines follow the usual Philippine extension advice from PhilRice, PhilMech and the DA Bureau of Plant Industry. Your own records still beat any general advice, so check your field before you act."
+        },
+        {
+          "q": "Which season does the dashboard read?",
+          "a": "The dashboard reads your latest season. Each season's hub shows a tip for that season."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Growth stages and weather",
+          "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "Realign by Anee",
+          "url": "/features/realign-by-anee"
+        },
+        {
+          "label": "Today on the board",
+          "url": "/features/daily-farm-tasks"
+        },
+        {
+          "label": "Works without signal",
+          "url": "/features/offline-farm-app"
+        },
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Crop problem guides",
+          "url": "/features/crop-problem-guides"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Growth stages of the rice plant",
+          "url": "http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Black bug",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/black-bug"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Sheath blight",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/sheath-blight"
+        }
+      ]
+    }
+  ]
+}

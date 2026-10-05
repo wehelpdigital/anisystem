@@ -1,0 +1,188 @@
+{
+  "section": "features",
+  "slug": "protocol-review-by-anee",
+  "sortOrder": 225,
+  "lang": "en",
+  "category": "Anee AI Technician",
+  "title": "Protocol Review by Anee: A Second Pair of Eyes on Your Crop Plan",
+  "metaTitle": "Protocol Review by Anee: Check Your Crop Plan First",
+  "metaDescription": "Protocol review by Anee: she reads every task of your crop protocol against the growth stages, scores it out of 100 and says what to fix before you plant.",
+  "focusKeyword": "protocol review",
+  "keywords": [
+    "protocol review",
+    "fertilizer calculation",
+    "fertilizer for rice",
+    "top dressing fertilizer",
+    "Fertilizer and Pesticide Authority"
+  ],
+  "excerpt": "A mistake in the plan costs nothing while it is still on paper. In a protocol review, Anee reads the crop protocol you wrote in the anee.io Protocol Builder, task by task. She scores it and says what is good, what is missing and what could go wrong. Then she suggests the tasks to add.",
+  "heroImage": {
+    "src": "/images/site/app/how/review.webp",
+    "alt": "A rice protocol in the anee.io Protocol Builder with tasks on the DAS count and the Analyses tab where each protocol review is kept",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Anee checks in a protocol review"
+    },
+    {
+      "type": "text",
+      "text": "Tap Analyze by Anee at the top of a protocol. She reads the version you are using, with every task on its day count and the materials and rates in each. Your notes and phase dividers count too. Then she sets it all against the growth stage table anee.io keeps for that crop."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Coverage**: land preparation, planting, water, nutrition by stage, weed, pest and disease control, monitoring and harvest",
+        "**Timing**: tasks that come too early, too late or out of order for the crop's stage",
+        "**Products and rates**: the wrong product for the job, a tank mix that must not be made, too much or too little",
+        "**Safety**: the waiting days between the last spray and harvest, when workers may go back into a sprayed field, and anything else that puts the crop or the worker at risk"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the review gives you"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "A score out of 100 and a short verdict, like solid but thin on weed control",
+        "What is good, with the reason",
+        "What is missing or weak, why it matters and the fix",
+        "What could go wrong, on which days, and what to do about it",
+        "A mark on every task: good, check or concern, with a short note",
+        "Tasks Anee would add, each on its day count, ready to add with one tap",
+        "A note on the order and spacing of the tasks, and a short summary to act on"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The marks also show on the task cards, so you can scroll your plan and find every concern. When you add one of her tasks, it lands on its day count with her reason in its note. That way you still remember why it is there next season.\n\nThe score is honest. A protocol with only two tasks cannot score high, however good those two are."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Every protocol review stays on the Analyses tab"
+    },
+    {
+      "type": "text",
+      "text": "The protocol's Analyses tab keeps each run, newest first, with the version it read and the credits it used. So you can run a review, change the plan, run another and open the older one to see what moved. Keep one version for the wet season and one for the dry, and review each.\n\nWant to ask more? Open a review and tap Ask Anee about it. A chat opens with the review attached, so she can explain a gap or suggest another product for your area. It works like any question to [Anee, the AI agricultural technician](/features/ai-agricultural-technician)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The review and the builder's own warnings"
+    },
+    {
+      "type": "text",
+      "text": "The [Protocol Builder](/features/protocol-builder) already warns you as you write. For example, it flags two sprays on one day or a spray within 14 days of harvest. Those checks are free and instant. The review goes further, because Anee reads the whole season as an agronomist would, including what is not there yet.\n\nNo protocol yet? Let the [Crop Protocol Analysis](/features/crop-protocol-analysis) write a first plan by growth stage. Then write your own in the builder and ask for a review before day zero."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Check the numbers yourself too"
+    },
+    {
+      "type": "text",
+      "text": "Anee flags rates that look too high or too low, but the season's fertilizer is still yours to work out. Our guide to [fertilizer calculation](/blog/fertilizer-calculation) turns a recommendation into bags for your area. [Fertilizer for rice](/blog/fertilizer-for-rice) lists the usual timing of each split, top dressing fertilizer included. For sprays, use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label.\n\nThe review also reads your Materials tab, with how much of each input you have on hand. If the tasks call for more, she sees the shortfall. Once the season runs, the [farm inventory](/features/farm-inventory-and-expenses) on Solo Farmer and Farm Owner keeps count of what you buy and use."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Runs on credits",
+      "text": "The review comes with Libre plus Anee, Solo Farmer and Farm Owner. Its sheet shows the price and your balance, and no credits come off until you tap Analyze it. Removing a review from the tab does not return its credits. The Protocol Builder itself is free on every plan."
+    },
+    {
+      "type": "cta",
+      "title": "Let Anee check your plan",
+      "text": "Write your protocol free in the Protocol Builder, then add Anee for a review before you plant.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the protocol review"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is a protocol review?",
+          "a": "It is Anee reading your crop protocol the way an experienced agronomist would. She scores it and lists its strengths, gaps, risks and the tasks she would add."
+        },
+        {
+          "q": "Does she change my protocol?",
+          "a": "No. She only suggests. If you agree with a missing task, add it with one tap, and everything else stays as you wrote it."
+        },
+        {
+          "q": "Can I review an older version?",
+          "a": "Anee reads the version in use. Switch to the version you want, then run the review, and each review notes the version it read."
+        },
+        {
+          "q": "Can I keep old reviews?",
+          "a": "Yes. Every run stays on the Analyses tab until you remove it."
+        },
+        {
+          "q": "Which plans include it?",
+          "a": "Libre plus Anee, Solo Farmer and Farm Owner, and each review uses credits. The Protocol Builder itself is free on every plan."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Protocol Builder",
+          "url": "/features/protocol-builder"
+        },
+        {
+          "label": "Crop protocol analysis",
+          "url": "/features/crop-protocol-analysis"
+        },
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Farm inventory and expenses",
+          "url": "/features/farm-inventory-and-expenses"
+        },
+        {
+          "label": "Fertilizer calculation",
+          "url": "/blog/fertilizer-calculation"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice policy brief: Reinforcing right element, amount and timing for improved fertilizer application",
+          "url": "https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application/"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "FPA: Frequently asked questions",
+          "url": "https://fpa.da.gov.ph/faqs/"
+        },
+        {
+          "label": "FPA: Registered products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

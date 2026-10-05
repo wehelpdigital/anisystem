@@ -1,0 +1,188 @@
+{
+  "section": "features",
+  "slug": "team-logins",
+  "sortOrder": 235,
+  "lang": "en",
+  "category": "Workers",
+  "title": "Team Logins: Each Worker Opens Only What You Allow",
+  "metaTitle": "Team Logins for Your Farm: Worker Access by Module",
+  "metaDescription": "Team logins on anee.io give each worker or partner their own account. Pick none, view or edit for every module, and see who changed what on your farm.",
+  "focusKeyword": "team logins",
+  "keywords": [
+    "team logins",
+    "worker login",
+    "agricultural technician",
+    "fertilizer urea",
+    "palay"
+  ],
+  "excerpt": "Team logins in anee.io give each worker, foreman or partner an account of their own on your farm. You decide, module by module, what each person may open and what they may change. The season also keeps a diary of every change, with the name of the person who made it.",
+  "heroImage": {
+    "src": "/images/site/app/how/access.webp",
+    "alt": "The Edit Worker sheet in anee.io with the Login access card open: Send registration link, Set a password and a Create login button for team logins",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How team logins work"
+    },
+    {
+      "type": "text",
+      "text": "A login starts from the worker's own card in the Workers module. Open the card, find Login access and pick one of two ways in. **Send registration link** emails the worker a link, and they set their own password. **Set a password** lets you type one for them, at least 8 characters, to hand over in person.\n\nUntil the worker registers, the card says Invite sent. After that it says Login, and the panel of rights opens below it.\n\nAlready on anee.io? Then use the Has an anee.io account tab and type the email they sign in with. They join your farm with view rights to start."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "One login for each person"
+    },
+    {
+      "type": "text",
+      "text": "Every worker login is the person's own anee.io account, tied to their own email. So nobody shares a password written on the back of a calendar, and the diary can tell Mang Ben's edits from Aling Rosa's. Someone who helps on two farms simply switches between them.\n\nA login is also an invitation to a job, not to your whole farm. The worker sees the season whose roster they are on, not the next field's crop, costs or crew."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "None, view or edit, module by module"
+    },
+    {
+      "type": "text",
+      "text": "Once a login exists, each module takes one of three answers. None closes the door, View lets the worker read, and Edit lets them add and change things. Changes save by themselves, so there is no extra button to forget."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Activities: the daily plan, the board and the lots. Every worker can at least view it, so here the choice is View or Edit.",
+        "Notes: day notes with their photos and videos. Starts at View.",
+        "Reports: the labor and money reports of the farm. Starts at View.",
+        "Inventory: items on hand, stock moves and what they cost. Starts at None.",
+        "Maps: field and lot maps, to view only or to draw and save. Starts at None.",
+        "Draw: drawings and saved pictures. Starts at None."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Take a sprayer with View on Activities. He can read that the [urea fertilizer](/blog/urea-fertilizer) goes on Lot 2 on Thursday, but he cannot drag the task to Friday. Your foreman, with Edit, can.\n\nThink about Reports too. The labor report shows what each worker earns, and the Data Privacy Act of 2012 treats a person's details as personal information. So set Reports to None for anyone who has no need to see the pay."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Switches for Anee, the camera and voice"
+    },
+    {
+      "type": "text",
+      "text": "Four more rows are plain switches, and each one starts off. **Camera** lets the worker take photos into the farm, and **Video record** lets them record clips. **Voice record** lets them speak a note instead of typing it, which helps when their hands are full of seedlings. Finally, **Chat Anee** lets them ask Anee, the [AI agricultural technician](/features/ai-agricultural-technician), about your farm."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Anee uses your credits, not theirs",
+      "text": "When a worker chats with Anee or runs a season read on your farm, your account pays the credits. Turn off Chat Anee, or set Reports to None or View, to stop that. On their own farm, they pay their own."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Who team logins are for"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "A foreman (katiwala) who runs the board while you are in town: Edit on Activities, Notes and Inventory.",
+        "A sprayer who only needs the day's tasks: View on Activities, with the camera on for photos of what he finds.",
+        "A partner who financed the palay: View on Activities and Reports, None on the rest.",
+        "A family member who keeps the books: Edit on Inventory, View on Reports."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Logins also open the season's [Collab Room](/features/collab-room), where the team chats and draws on one whiteboard. A worker with no login can still get the [morning plan email](/features/morning-plan-email) with their own tasks, as long as their card has an email address."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A diary of every change, with a name on it"
+    },
+    {
+      "type": "text",
+      "text": "Each season keeps a logs diary under Settings. It lists what was done, whose hand did it and when, and you can narrow it to one person. So when a date moved and nobody remembers why, the diary answers.\n\nWorker logins and the logs diary come with the Farm Owner plan. See [farm workers and payroll](/features/farm-workers-and-payroll) for the roster, rates and payroll days that come before them."
+    },
+    {
+      "type": "cta",
+      "title": "Give your crew their own logins",
+      "text": "Team logins come with the Farm Owner plan, along with the Collab Room and the logs diary. Compare the plans and pick the one that fits your farm.",
+      "label": "See the plans",
+      "url": "/pricing"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about team logins"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Which plan has team logins?",
+          "a": "Worker logins, access by module and the logs diary come with the Farm Owner plan. Solo Farmer has the worker roster and payroll, but no logins."
+        },
+        {
+          "q": "Does a worker need a smartphone?",
+          "a": "They need a phone or any device with a browser, because anee.io is a web app. A worker without one can stay on the roster, and you keep their attendance yourself."
+        },
+        {
+          "q": "Can a worker see my other seasons?",
+          "a": "No. A login opens the season whose roster the worker is on. Add them to another season's roster with the same email, and that season opens too."
+        },
+        {
+          "q": "What if a worker forgets the password?",
+          "a": "Open their card and tap Send password change link. They get an email to pick a new one, and the old password works until they change it."
+        },
+        {
+          "q": "Can I take a login away?",
+          "a": "Yes. Tap the remove icon on the login card and confirm. After that, the worker can no longer log in to your farm."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Farm workers and payroll",
+          "url": "/features/farm-workers-and-payroll"
+        },
+        {
+          "label": "Collab Room",
+          "url": "/features/collab-room"
+        },
+        {
+          "label": "Morning plan email",
+          "url": "/features/morning-plan-email"
+        },
+        {
+          "label": "Stock that counts itself",
+          "url": "/features/automatic-stock-deduction"
+        },
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Plans and pricing",
+          "url": "/pricing"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Republic Act 10173, Data Privacy Act of 2012 (Lawphil)",
+          "url": "https://lawphil.net/statutes/repacts/ra2012/ra_10173_2012.html"
+        }
+      ]
+    }
+  ]
+}

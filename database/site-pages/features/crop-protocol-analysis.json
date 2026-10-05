@@ -1,0 +1,200 @@
+{
+  "section": "features",
+  "slug": "crop-protocol-analysis",
+  "sortOrder": 215,
+  "lang": "en",
+  "category": "Agronomy",
+  "title": "Crop Protocol Analysis: Anee Writes Your Season by Growth Stage",
+  "metaTitle": "Crop Protocol Analysis: A Season Plan by Growth Stage",
+  "metaDescription": "Crop Protocol Analysis: Anee writes a season plan for your crop and variety, with fertilizer bags by growth stage, the sprays to keep ready and the water.",
+  "focusKeyword": "crop protocol analysis",
+  "keywords": [
+    "crop protocol analysis",
+    "fertilizer application",
+    "14 14 14 fertilizer",
+    "ammonium sulfate fertilizer",
+    "urea fertilizer",
+    "foliar fertilizer"
+  ],
+  "excerpt": "The Crop Protocol Analysis in anee.io writes the season for one field. Pick the crop and variety and describe the field. Anee then works out which fertilizer to use, how many bags and at which growth stage. She adds the sprays to keep ready, a water plan and the threats to watch.",
+  "heroImage": {
+    "src": "/images/site/app/how/cropProtocol.webp",
+    "alt": "The Crop Protocol Analysis screen in anee.io, where Anee writes a season plan by growth stage with fertilizer, sprays and water",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the crop protocol analysis asks"
+    },
+    {
+      "type": "text",
+      "text": "Most questions are optional. Each answer changes which fertilizer to use and when, so give what you know and skip the rest."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Where the field is, the crop and the variety",
+        "The month you will plant and how: for rice, transplanted, wet direct seeded or dry direct seeded",
+        "Your goal, from highest yield to lower cost, and a target yield in cavans or tons per hectare if you have one",
+        "Field size, soil type, water source and the troubles you have seen",
+        "Soil condition, like acid, alkaline, sodic, saline or acid sulfate, and phosphorus or potassium levels if you know them",
+        "The last crop and its straw, what the field got last season, and the fertilizers sold near you"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Anee reads up before she writes"
+    },
+    {
+      "type": "text",
+      "text": "Like Variety Research, this tool searches the web first. Anee looks up your variety's published traits and the official nutrient and pest advice for your crop and region. She also reads the seasonal outlook, El Niño or La Niña, and the week's weather at your field.\n\nIf she cannot find your variety online, the report says so and names the one she assumed."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fertilizer by growth stage, not by calendar"
+    },
+    {
+      "type": "text",
+      "text": "Every step follows a growth stage you can see, with its day count beside it, like DAT 35 to 49. The plants are the clock, and the days are only a guide. Each stage gives the fertilizer and its purpose, what to look for and what to do if you see it.\n\nRates come per hectare in 50 kilogram bags, and the app scales them to your field. Most of the nitrogen goes where the crop builds yield, like tillering and panicle initiation in rice. A young crop gets a small starter instead of a big dose it cannot use. For the methods behind each fertilizer application, see our guide to [fertilizer application methods](/blog/fertilizer-application-methods)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Five programs to choose from"
+    },
+    {
+      "type": "text",
+      "text": "Anee writes five fertilizer programs for the same stages, each for a different kind of farmer. For example, one may keep cost low while another pushes for the top yield. Another may use only [14 14 14 fertilizer](/blog/complete-fertilizer-14-14-14) for a farmer who wants one product. Each one shows its total bags. It also checks the nitrogen, phosphorus and potassium it gives against your target, so a shortfall shows at once."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why these bags on this soil"
+    },
+    {
+      "type": "text",
+      "text": "The report explains its choices in plain words. On a salty or sodic soil, Anee keeps muriate of potash late and light, since it adds chloride the soil does not need. [Ammonium sulfate fertilizer](/blog/ammonium-sulfate-21-0-0) supplies sulfur and slowly lowers the pH of an alkaline soil. In flooded rice, [urea fertilizer](/blog/urea-fertilizer) goes in small splits into shallow water, never onto a full flood. She also lists what a farmer here might have done instead, and why it would fail on your ground."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Sprays, water and threats"
+    },
+    {
+      "type": "text",
+      "text": "For each insect, disease or weed, the report gives the stage it strikes and the sign to act on. Then it names a product to ask for, with its active ingredient, or an equivalent. It never gives a spray rate, because the dose is on the label. Follow the label and the FPA registration.\n\nFoliar sprays appear only where they pay, like a zinc spray on flooded rice. Our guide to [foliar fertilizer](/blog/foliar-fertilizer) explains when one helps. The water plan fits your source, with what to change if the season turns dry or wet. Finally, you see the deficiencies your soil is prone to, and if your target yield is realistic."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "A guide to start from",
+      "text": "Anee has not walked your field, so change the plan to fit what you know. Then write your own in the [Protocol Builder](/features/protocol-builder), and let [Anee review it](/features/protocol-review-by-anee) before you plant."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep it, ask about it, build on it"
+    },
+    {
+      "type": "text",
+      "text": "Each protocol stays on the Saved tab, with a name, description and tags you can search. Tap Attach to Anee to ask her about any stage. The totals give the bags for the whole field, amounts only, so you can price them with your dealer.\n\nBefore this tool, pick the crop with the [What to Plant Analysis](/features/what-to-plant-analysis) and the seed with [Variety Research](/features/variety-research). The Crop Protocol Analysis runs on credits with Libre plus Anee, Solo Farmer or Farm Owner."
+    },
+    {
+      "type": "cta",
+      "title": "Get a season plan for your variety",
+      "text": "Sign up free, add Anee, and let her write your first crop protocol by growth stage.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the crop protocol analysis"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What does the analysis give me?",
+          "a": "A season plan for one field by growth stage. It covers fertilizer bags and timing, five programs, threats, a water plan and a yield check."
+        },
+        {
+          "q": "Does it give spray rates?",
+          "a": "No. It names the product and the moment. The rate is on the product label, and you should use only FPA registered products."
+        },
+        {
+          "q": "Are the fertilizer amounts for my field size?",
+          "a": "Yes. Rates are per hectare in 50 kilogram bags, and the totals follow the field size you enter."
+        },
+        {
+          "q": "Can I turn it into a cropping schedule?",
+          "a": "Use it as your guide in the Protocol Builder. Write the tasks on their day count there, then port the protocol to a new cropping schedule when you plant."
+        },
+        {
+          "q": "Which plans include it?",
+          "a": "Libre plus Anee, Solo Farmer and Farm Owner. Each run uses credits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Protocol Builder",
+          "url": "/features/protocol-builder"
+        },
+        {
+          "label": "Anee reviews your protocol",
+          "url": "/features/protocol-review-by-anee"
+        },
+        {
+          "label": "Variety research",
+          "url": "/features/variety-research"
+        },
+        {
+          "label": "What to plant analysis",
+          "url": "/features/what-to-plant-analysis"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "Fertilizer calculation",
+          "url": "/blog/fertilizer-calculation"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice policy brief: Reinforcing right element, amount and timing for improved fertilizer application",
+          "url": "https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application/"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: PalayCheck Key Check 5, Nutrient Management",
+          "url": "https://www.pinoyrice.com/palaycheck/nutrient-management/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Nitrogen",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/nutrient-management/item/nitrogen"
+        },
+        {
+          "label": "FPA: Registered products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        },
+        {
+          "label": "DA Regional Field Office 2: Corn Production Techno Guide (revised 2012)",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
+        }
+      ]
+    }
+  ]
+}

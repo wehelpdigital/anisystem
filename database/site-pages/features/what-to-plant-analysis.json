@@ -1,0 +1,198 @@
+{
+  "section": "features",
+  "slug": "what-to-plant-analysis",
+  "sortOrder": 205,
+  "lang": "en",
+  "category": "Planning",
+  "title": "What to Plant: Anee Ranks the Crops That Fit Your Land",
+  "metaTitle": "What to Plant: Crops Ranked for Your Land and Season",
+  "metaDescription": "Not sure what to plant this season? Anee reads your soil, water, climate and market, then ranks the crops that fit your land, with the harvest risk of each.",
+  "focusKeyword": "what to plant",
+  "keywords": [
+    "what to plant",
+    "vegetables in the Philippines",
+    "pagtatanim ng gulay",
+    "pagtatanim ng puno",
+    "banana farming in the Philippines"
+  ],
+  "excerpt": "Not sure what to plant this season? The What to Plant Analysis in anee.io asks about your field, your water, your budget and your market. Then Anee, the AI technician, ranks the crops that fit your land best, each with a planting window, a harvest window and the plain reasons behind it.",
+  "heroImage": {
+    "src": "/images/site/app/how/what.webp",
+    "alt": "The What to Plant analysis on a phone, asking where the field is before Anee ranks the crops that fit it",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How the What to Plant Analysis works"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Say where and when",
+          "text": "Type the town and province of the field. Then pick the month you plan to prepare the land and plant, since the whole list is built around that month."
+        },
+        {
+          "title": "Describe the ground",
+          "text": "Choose the soil by feel: heavy clay, loam, sandy, silty or rocky. Next, say if the field has reliable irrigation, some water or rain only. You need no soil test, but a pH reading helps if you have one."
+        },
+        {
+          "title": "Add what you know",
+          "text": "Optional questions cover the slope, elevation, sunlight, last crop, labor, budget and where you sell. Tick the troubles too, like floods, strong winds or poor drainage, and skip what you do not know."
+        },
+        {
+          "title": "Put your priorities in order",
+          "text": "Rank what matters most to you: profit, survival through weather and pests, low cost and easy care, a quick harvest, a sure market or food for the family. The first one counts most in every score."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "If you would never plant root crops or fruit trees, leave those groups out. At least one group always stays in play."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What you get back"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Ten crops ranked** for your field and month, plus any you named, each scored out of 100",
+        "**Six fit scores** per crop: profit, survival, ease, speed, market and food",
+        "**Planting and harvest windows**, with the weather risk in the harvest month",
+        "**Surprise picks**: up to three crops rare in your area that still fit your land",
+        "**Crops to avoid** on your ground, each with the reason",
+        "**What Anee could not know**, where a soil test or a field visit would help"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "A chart lays each crop's months in the field over the year's risks of storms, floods, drought and heat. So a crop that would ripen in the middle of typhoon season shows it at once, and its score drops for it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Anee reads before she ranks"
+    },
+    {
+      "type": "text",
+      "text": "Anee reasons from the PAGASA climate normals for your region, the soil and water you described, and each crop's real needs and calendar. She also reads the current El Niño or La Niña outlook, because a dry year and a wet year favor different crops.\n\nHer picks come mainly from the 85 Philippine crops that anee.io keeps growth stages for. Temperate crops like wheat or apples never make the list for a Philippine field, and cool highland crops only appear if your field really sits up in the highlands.\n\nFor a feel of the choices, our guide to [vegetables in the Philippines](/crops/vegetables-philippines) covers the common lowland and highland crops. Then [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay) walks through planting them. If a tree crop comes out on top, read [pagtatanim ng puno](/crops/pagtatanim-ng-puno) and our page on [banana farming in the Philippines](/crops/banana-farming-philippines) before you buy planting material."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Your water and soil signs count"
+    },
+    {
+      "type": "text",
+      "text": "The look of your irrigation water is a clue. Muddy water carries silt, which suits a paddy but clogs drip lines. Salty water or a white crust points to salt tolerant crops, and Anee says in each reason which sign moved a crop up or down."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "A guide, not a promise",
+      "text": "No analysis knows your soil like a soil test, so treat the result as a shortlist and talk it over with your municipal agriculturist. Once you pick a crop, the [When to Plant Analysis](/features/when-to-plant-analysis) can time it for your town."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "From the shortlist to your season"
+    },
+    {
+      "type": "text",
+      "text": "Every finished analysis stays on the Saved tab. Rename it, add a description and tags, and search for it later. Tap Attach to Anee to open a chat with the analysis attached, then ask her about the second pick or a crop she left out. That chat works like any talk with [Anee, the AI agricultural technician](/features/ai-agricultural-technician).\n\nNext, compare seed with [Variety Research](/features/variety-research), and let the [Crop Protocol Analysis](/features/crop-protocol-analysis) write a season plan for that variety. When you plant, add a [lot](/features/farm-lots) for the crop, and the [cropping calendar](/features/cropping-calendar) dates every task from its day zero.\n\nThe analysis runs on credits, and the price shows before you press Run. It comes with Libre plus Anee, Solo Farmer and Farm Owner, while the free Libre plan has no Anee."
+    },
+    {
+      "type": "cta",
+      "title": "Find the crop that fits your land",
+      "text": "Sign up free, add Anee, and run your first What to Plant Analysis for your own field.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about what to plant"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What should I plant this season?",
+          "a": "It depends on your soil, water, slope, market and the weather ahead. The analysis weighs all of these and ranks the crops that fit your field."
+        },
+        {
+          "q": "Do I need a soil test?",
+          "a": "No. Describe the soil by feel and skip what you cannot answer. Still, a pH reading from a test kit makes the ranking sharper."
+        },
+        {
+          "q": "Can Anee check a crop I already have in mind?",
+          "a": "Yes. Add up to eight crops, and Anee scores and ranks each one beside her picks. If one fits your land poorly, she says so plainly."
+        },
+        {
+          "q": "How is it different from When to Plant?",
+          "a": "What to Plant chooses the crop. Once you have one, [When to Plant](/features/when-to-plant-analysis) finds its safest planting window in your town."
+        },
+        {
+          "q": "Which plans include it?",
+          "a": "Libre plus Anee, Solo Farmer and Farm Owner. Each run uses credits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "When to plant analysis",
+          "url": "/features/when-to-plant-analysis"
+        },
+        {
+          "label": "Variety research",
+          "url": "/features/variety-research"
+        },
+        {
+          "label": "Crop protocol analysis",
+          "url": "/features/crop-protocol-analysis"
+        },
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "Pagtatanim ng puno",
+          "url": "/crops/pagtatanim-ng-puno"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PAGASA: Climatological data and normals",
+          "url": "https://www.pagasa.dost.gov.ph/climate/climate-data"
+        },
+        {
+          "label": "PAGASA: Seasonal forecast",
+          "url": "https://www.pagasa.dost.gov.ph/climate/climate-prediction/seasonal-forecast"
+        },
+        {
+          "label": "NOAA Climate Prediction Center: ENSO diagnostic discussion",
+          "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml"
+        },
+        {
+          "label": "ATI Central Visayas, Pechay Production Guide",
+          "url": "https://ati2.da.gov.ph/ati-7/content/sites/default/files/users/user16/PECHAY%20final_2.pdf"
+        }
+      ]
+    }
+  ]
+}

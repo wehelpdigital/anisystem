@@ -1,0 +1,213 @@
+{
+  "section": "features",
+  "slug": "labor-report",
+  "sortOrder": 310,
+  "lang": "en",
+  "category": "Money",
+  "title": "Labor Report: Worker Days and Labor Cost for the Whole Season",
+  "metaTitle": "Labor Report: Farm Worker Days and Labor Cost",
+  "metaDescription": "A labor report that adds itself up from your board: half days, whole days and labor cost by month, by worker and by activity. Start free on anee.io.",
+  "focusKeyword": "labor report",
+  "keywords": [
+    "labor report",
+    "pagtatanim ng palay",
+    "fertilizer application"
+  ],
+  "excerpt": "The labor report in anee.io adds up every worker day and the labor cost of the season from the activities on your board. Each worker's rate, times the half days and whole days on their tasks, gives the total. There is nothing to type twice, and every report stays on your shelf.",
+  "heroImage": {
+    "src": "/images/site/app/how/labor.webp",
+    "alt": "The anee.io labor report on a phone, showing a season's labor cost and worker days",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where the numbers come from"
+    },
+    {
+      "type": "text",
+      "text": "You already did the work on the [cropping calendar](/features/cropping-calendar). Each activity lists the workers on it and says if it takes a half day or a whole day. Each worker on your [farm workers and payroll](/features/farm-workers-and-payroll) roster also has a pay per half day. The labor report reads both and does the math."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "A half day pays the rate once",
+          "text": "Say Mang Tonyo earns 250 pesos per half day. A half day task then pays him 250 pesos."
+        },
+        {
+          "title": "A whole day pays it twice",
+          "text": "The same worker on a whole day task earns 500 pesos."
+        },
+        {
+          "title": "Long tasks count every day",
+          "text": "A whole day harvest that runs three days pays him 1,500 pesos. With a date range, only the days inside it count."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "When you set rates, check the daily minimum wage for your region on the website of the National Wages and Productivity Commission."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pick what the labor report covers"
+    },
+    {
+      "type": "text",
+      "text": "Open the season's Reports and tap Labor Report. All filters are optional, so if you leave them empty the report covers the whole season."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Workers**: everyone, or only the people you pick",
+        "**Lots**: one, a few or all",
+        "**Which part of the season**: the whole season, a day count range like day 0 to day 45, or two calendar dates"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Then tap Make the report. For example, a range of day 0 to day 30 shows what the first month after transplanting cost in wages. Our guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) lists the usual tasks of each stage, so you know which days to pick."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the report shows"
+    },
+    {
+      "type": "text",
+      "text": "At the top sits the total labor expense, with the number of activities, worker assignments, half days and whole days. Below it, two tiles split the money: Land Preparation, the work before day zero, and Main Cropping, from day zero on. If a lot has no day zero yet, a third tile holds that work under No start day."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Busiest Months**: labor month by month, by cost or by number of activities, with the busiest month marked",
+        "**Worker Earnings**: who earns the most, each worker's share of the total, and who did the most work",
+        "**Breakdown**: each worker's half days and whole days, then every activity day by day with each hand's rate and pay"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Questions it answers"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "How much did land preparation cost before day zero?",
+        "Which month needed the most hands?",
+        "What did the crew earn for [fertilizer application](/blog/fertilizer-application-methods) alone? Narrow the Breakdown to the Fertilizer activity type.",
+        "Who worked the most, and what did each person earn?"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Labor is one line of the season's money. The [expenses report](/features/expenses-report) adds materials and services, and the [profit report](/features/profit-report) sets it all against the harvest."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Every labor report stays on your shelf"
+    },
+    {
+      "type": "text",
+      "text": "Each report you make lands on the Saved Reports tab, newest first. Rename it, add a description and tags, and open it again any time. It comes back exactly as you made it, even after the board changes.\n\nFrom an open report, tap Ask Anee to bring it into a chat with [Anee, the AI technician](/features/ai-agricultural-technician). She reads the figures with you and answers in Tagalog or English. Like everything Anee does, the chat runs on credits."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Which plans have it"
+    },
+    {
+      "type": "text",
+      "text": "The labor report opens on every plan, the free Libre plan included. But it counts workers, and the Workers module comes with Solo Farmer and Farm Owner. On Farm Owner, a worker with view access can read the shelf, while only those who can edit make new reports."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "The report counts who is on each task",
+      "text": "If someone did not work an activity, take them off it on the board, and the report follows. Keep each worker's rate current too, so the total matches what you paid. For the full picture of the season, see [farm reports](/features/farm-reports)."
+    },
+    {
+      "type": "cta",
+      "title": "See what your season paid its workers",
+      "text": "Sign up free. The labor report is on every plan, and the Workers module comes with Solo Farmer and Farm Owner.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the labor report"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How does anee.io work out labor cost?",
+          "a": "Each worker's pay per half day, times the half days and whole days of the activities they are on. A whole day counts as two half days, and a task that runs several days counts each day."
+        },
+        {
+          "q": "Do I need to type the wages again?",
+          "a": "No. The report reads the workers and rates already on your board, so there is nothing to type twice."
+        },
+        {
+          "q": "Can I see one worker's pay only?",
+          "a": "Yes. Pick that worker in the filters before you make the report, or narrow the Breakdown to them."
+        },
+        {
+          "q": "Is the labor report free?",
+          "a": "It opens on every plan. To put workers on activities you need the Workers module, which comes with Solo Farmer and Farm Owner."
+        },
+        {
+          "q": "Can I keep old reports?",
+          "a": "Yes. Every report stays on the Saved Reports tab until you delete it."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Farm workers and payroll",
+          "url": "/features/farm-workers-and-payroll"
+        },
+        {
+          "label": "Farm reports",
+          "url": "/features/farm-reports"
+        },
+        {
+          "label": "Expenses report",
+          "url": "/features/expenses-report"
+        },
+        {
+          "label": "Profit report",
+          "url": "/features/profit-report"
+        },
+        {
+          "label": "Compare Reports",
+          "url": "/features/compare-reports"
+        },
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "National Wages and Productivity Commission (DOLE): Daily minimum wage rates by region",
+          "url": "https://nwpc.dole.gov.ph/"
+        }
+      ]
+    }
+  ]
+}

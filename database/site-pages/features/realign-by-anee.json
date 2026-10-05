@@ -1,0 +1,207 @@
+{
+  "section": "features",
+  "slug": "realign-by-anee",
+  "sortOrder": 260,
+  "lang": "en",
+  "category": "Anee AI Technician",
+  "title": "Realign by Anee: Find the Real Growth Stage of Every Lot",
+  "metaTitle": "Realign by Anee: The Real Growth Stage of Your Crop",
+  "metaDescription": "Is your palay ahead of the calendar or behind it? Realign by Anee reads a lot's records, notes and weather and names its real growth stage on anee.io.",
+  "focusKeyword": "Realign by Anee",
+  "keywords": [
+    "Realign by Anee",
+    "real growth stage",
+    "agricultural technician",
+    "palay",
+    "top dressing fertilizer",
+    "fertilizer for rice",
+    "pagtatanim ng palay"
+  ],
+  "excerpt": "Crops do not read calendars. Realign by Anee reads a lot's records, the weather it went through and your notes, then names the real growth stage the crop is in today and how many days it runs ahead or behind. Her answer moves that lot's stage readings, while your calendar dates stay where they are.",
+  "heroImage": {
+    "src": "/images/site/app/how/realign.webp",
+    "alt": "A rice lot in anee.io at DAT 28 in active tillering, with what to do now, what to watch for and the Realign by Anee button that reads the real growth stage",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why the real growth stage drifts from the calendar"
+    },
+    {
+      "type": "text",
+      "text": "The [cropping calendar](/features/cropping-calendar) counts days from each lot's day zero and reads a stage off that count. For transplanted rice at DAT 30, the count says active tillering. The plant does not always agree. A herbicide that scorched the leaves can set a field back a week. Drought, a flood or a hungry field make it run late, while a sunny stretch or a fast variety can push it ahead.\n\nThen the stage on your board is off, and so is the advice that comes with it. You end up timing fertilizer or a spray for a crop that is not ready for it. Realign by Anee closes that gap."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Anee reads before she answers"
+    },
+    {
+      "type": "text",
+      "text": "Open Growth Stages, or the growth stage sheet on the board, and tap Realign by Anee on a lot. She then reads the lot's whole history since day zero:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Every activity on the lot, and the fertilizer, seed and chemicals it used",
+        "Your day notes, board notes and season notes, with their tags",
+        "The observations you filed for the lot",
+        "The weather your field had, month by month: rain, dry spells, very hot days and windy days"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The more you keep on the board, the sharper her reading. A note like 'Lot 2, naninilaw pa rin after the herbicide' (still yellowing after the herbicide) tells her more than any count can. Our page on [notes, photos and voice](/features/notes-photos-and-voice) shows the quickest ways to keep them."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What you get back"
+    },
+    {
+      "type": "text",
+      "text": "After about a minute the result sheet opens. At the top sits the stage she found, the day count the crop acts like and the count the calendar says, with a chip like '6 days behind'. Below that come:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**The real stage beside the calendar's**, on one rail with both markers",
+        "**Her confidence**, as a percent bar",
+        "**Why she thinks so**: three to six reasons, each naming the activity, note or weather that moved her, with its date",
+        "**What to do now**: the work for this stage, most urgent first",
+        "**What to watch for this week**: the signs to look for in the field"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Your calendar dates stay as they are"
+    },
+    {
+      "type": "text",
+      "text": "Realign moves the stage, not the plan. The day count and every task date stay where you put them. What changes is the stage the app reads for that lot. The board's day headers, the Tools sheet and Growth Stages all show her stage until you ask again. So the to do list and the watch list follow the plant instead of the date.\n\nThe app also caps the shift at about half the crop's days to maturity, so one odd answer cannot throw a lot across its season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When to ask for a realign"
+    },
+    {
+      "type": "text",
+      "text": "Ask when the field and the board disagree, for example:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "After a typhoon, a flood or a long dry spell",
+        "When a herbicide scorched the crop and it stalled",
+        "Before panicle initiation in rice, because the [top dressing fertilizer](/blog/fertilizer-application-methods) for that stage should follow the plant, not the date",
+        "Before you book the harvest crew and the drying space"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Rice is where timing pays most. Our guide to [fertilizer for rice](/blog/fertilizer-for-rice) ties each split to a stage, and [pagtatanim ng palay](/crops/pagtatanim-ng-palay) walks through the whole season. When the palay (rice still in the husk) runs late, the right day for each split moves with it.\n\nAfter a realign, the rest of the app follows. [Today on the board](/features/daily-farm-tasks) shows her stage on each day header, and [Anee's tip of the day](/features/farm-tip-of-the-day) picks its lines from that stage as well."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Ask again when the field changes",
+      "text": "A reading is a snapshot. Two or three weeks after a setback, the crop may have caught up, so ask again. Before a new run, the sheet shows her last reading."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plans, credits and who pays"
+    },
+    {
+      "type": "text",
+      "text": "Realign by Anee comes with every plan that has Anee: Libre plus Anee, Solo Farmer and Farm Owner. On the free Libre plan the button shows with a lock. A realign costs 60 credits, one price for any season, and the sheet shows the price and your balance first. Nothing comes off your balance until her answer lands on the lot. If the run fails, you pay nothing.\n\nA lot needs a crop and a day zero before she can read it. On a team farm, the credits come from the farm owner's balance. Realign is one of the jobs of [Anee, the AI agricultural technician](/features/ai-agricultural-technician), so you can open her reading in the chat and ask about it."
+    },
+    {
+      "type": "cta",
+      "title": "Read where your crop really stands",
+      "text": "Sign up free, set up a lot with its crop and day zero, then add Anee with Libre plus Anee or any paid plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about Realign by Anee"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What does Realign by Anee change?",
+          "a": "Only the stage reading for that lot. The day count, the task dates and the rest of your plan stay as they were."
+        },
+        {
+          "q": "How is it different from the delay counter?",
+          "a": "The delay counter is a number you set yourself. Realign is Anee's own reading of the field, with her reasons, and it moves the stage everywhere the app shows it."
+        },
+        {
+          "q": "Can her reading be wrong?",
+          "a": "Yes, so treat it like a technician's opinion. Check her reasons against your field. A low confidence usually means thin records, so add notes and ask again."
+        },
+        {
+          "q": "Which plans include it?",
+          "a": "Libre plus Anee, Solo Farmer and Farm Owner. It runs on credits like every other job Anee does for you."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Growth stages and weather",
+          "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "Today on the board",
+          "url": "/features/daily-farm-tasks"
+        },
+        {
+          "label": "Anee's tip of the day",
+          "url": "/features/farm-tip-of-the-day"
+        },
+        {
+          "label": "Works without signal",
+          "url": "/features/offline-farm-app"
+        },
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Growth stages of the rice plant",
+          "url": "http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm"
+        },
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "Open Meteo: Historical weather API",
+          "url": "https://open-meteo.com/en/docs/historical-weather-api"
+        }
+      ]
+    }
+  ]
+}

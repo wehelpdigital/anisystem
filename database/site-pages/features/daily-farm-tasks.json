@@ -1,0 +1,191 @@
+{
+  "section": "features",
+  "slug": "daily-farm-tasks",
+  "sortOrder": 265,
+  "lang": "en",
+  "category": "Records",
+  "title": "Today on the Board: Daily Farm Tasks You Tick as You Go",
+  "metaTitle": "Daily Farm Tasks: Tick the Work Done on Your Phone",
+  "metaDescription": "See your daily farm tasks lot by lot, tick them done, mark who worked, add photos and voice notes, and drag a task to another day. Start free on anee.io.",
+  "focusKeyword": "daily farm tasks",
+  "keywords": [
+    "daily farm tasks",
+    "fertilizer urea",
+    "fertilizer application",
+    "common weeds in the philippines"
+  ],
+  "excerpt": "Your daily farm tasks sit on the anee.io board, one day card at a time. Open today and see each task on its lot. Tick it done, mark who worked, and add a photo or a voice note while you stand in the field. The board keeps the record, and your reports add themselves up from it.",
+  "heroImage": {
+    "src": "/images/site/app/how/board.webp",
+    "alt": "A day card on the anee.io board with daily farm tasks: hand weeding on Lot 2 at DAT 25, with the growth stage and the weather for Muñoz",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Open today and see the work"
+    },
+    {
+      "type": "text",
+      "text": "The Activities board is your season laid out day by day. Tap Today and it scrolls to this morning's card. The day header shows the date, each lot's growth stage and the weather for the lot's location. Under it, every task sits on its lot with its day count, like 'DAT+25' on a transplanted lot.\n\nEach task card carries what the crew needs:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "The lot, the kind of task and its priority",
+        "The workers on it, whole day or half day, and what their labor costs",
+        "The materials it uses, like two bags of [urea fertilizer](/blog/urea-fertilizer), with the quantity and price",
+        "Hired services, like the tractor or the harvester, with their cost",
+        "Your instructions, plus photos, short videos and voice notes"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "A busy season gets long. Hide done days, hide empty dates or search for one task by name, and the board shows only what is left."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Tick daily farm tasks done as they happen"
+    },
+    {
+      "type": "text",
+      "text": "When the crew finishes the job, tap the tick on the card. The task turns done and locks, so nobody moves or edits it by accident. If you ticked the wrong one, untick it and the lock opens again.\n\nA tick does more than cross out a line. If the task lists materials and you keep the [farm inventory](/features/farm-inventory-and-expenses), ticking it takes those bags out of stock, and unticking puts them back. On a payroll day the card shows the roster, so you tick who came, and the day's labor figure follows each tick."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Workers and materials on each task"
+    },
+    {
+      "type": "text",
+      "text": "Open a task and add the hands who will do it, whole day or half day. The card then shows each name and the labor cost. Add the fertilizer, seed or chemical it needs with the amount, and the price rides along. That way the day header totals what the whole day costs before the work begins.\n\nWorkers and the inventory come with Solo Farmer and Farm Owner. Our page on [farm workers and payroll](/features/farm-workers-and-payroll) explains the half day rates."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Photos, clips and voice on any task"
+    },
+    {
+      "type": "text",
+      "text": "Proof of the work belongs beside the task. Attach photos, film a short clip or tap the mic and record a voice note, and it plays right on the card. A foreman can say 'Lot 3, tapos na ang abono, kulang ng dalawang sako' and the owner hears it later in his own words. That means the fertilizer is done, but two sacks short.\n\nThe day has a menu too, for a day note, a photo, video or voice, a drawing or a map, an extra expense or income, and stock in or out. Photos and voice work on every plan, while video recording comes with Solo Farmer and Farm Owner. See [notes, photos and voice](/features/notes-photos-and-voice) for the rest of the note tools."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When the plan moves, drag the task"
+    },
+    {
+      "type": "text",
+      "text": "Rain at 2 PM, a late tractor, a sick worker. Drag the card to another day, or use Move to a date from its menu. To push a whole day's work, move the day to a new date or a new day number at once. Not sure yet? Move a task to drafts and it waits off the board, with nothing lost.\n\nEvery change can be undone, even after you log out. On the Farm Owner plan, the logs diary also records who moved what and when."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Good habits for the board"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Put every [fertilizer application](/blog/fertilizer-application-methods) on its day with the bags it needs, so the crew brings the right amount",
+        "Before a hand weeding day, show the crew our guide to the [common weeds in the Philippines](/problems/common-weeds-philippines) so they pull the right ones",
+        "Record a voice note when something looks wrong",
+        "Check tomorrow's card before you leave the field"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The board in the field and on the team"
+    },
+    {
+      "type": "text",
+      "text": "No signal at the far lot? On Solo Farmer and Farm Owner, [offline mode](/features/offline-farm-app) keeps the board on your phone, and your changes sync once you are back online.\n\nOn Farm Owner, each worker can have a [team login](/features/team-logins) and open the same board, with view or edit rights you choose. If a lot runs late, [Realign by Anee](/features/realign-by-anee) reads its real stage, and the day headers follow her reading. Each morning, [Anee's tip of the day](/features/farm-tip-of-the-day) gives you one more thing worth checking."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Tick on the day",
+      "text": "A tick on the day beats ten from memory on Saturday. Tick each task as the crew finishes it, and your [farm reports](/features/farm-reports) match what really happened."
+    },
+    {
+      "type": "cta",
+      "title": "Put today's work on one board",
+      "text": "Sign up free. The Libre plan includes the Activities board for one season, with photos and voice notes.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about daily farm tasks"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What happens when I tick a task done?",
+          "a": "It turns done and locks against edits. If it lists materials and you keep the inventory, they come out of stock. Untick it and the stock comes back, with the task open to edits again."
+        },
+        {
+          "q": "Can workers tick tasks themselves?",
+          "a": "On the Farm Owner plan, workers get their own logins, and you decide if each one may view or edit the board. On a payroll day you can also let workers tick their own attendance."
+        },
+        {
+          "q": "Does the board work on the free plan?",
+          "a": "Yes. Libre includes the board for one season and one lot, with photos and voice notes. Workers, inventory and video come with Solo Farmer."
+        },
+        {
+          "q": "Can I undo a wrong drag?",
+          "a": "Yes. Undo keeps working even after you log out and come back."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "Realign by Anee",
+          "url": "/features/realign-by-anee"
+        },
+        {
+          "label": "Works without signal",
+          "url": "/features/offline-farm-app"
+        },
+        {
+          "label": "Anee's tip of the day",
+          "url": "/features/farm-tip-of-the-day"
+        },
+        {
+          "label": "Farm workers and payroll",
+          "url": "/features/farm-workers-and-payroll"
+        },
+        {
+          "label": "Farm inventory and expenses",
+          "url": "/features/farm-inventory-and-expenses"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "IRRI: Steps to successful rice production",
+          "url": "http://knowledgebank.irri.org/images/docs/12-Steps-Required-for-Successful-Rice-Production.pdf"
+        }
+      ]
+    }
+  ]
+}

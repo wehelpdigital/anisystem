@@ -1,0 +1,194 @@
+{
+  "section": "features",
+  "slug": "harvest-records",
+  "sortOrder": 290,
+  "lang": "en",
+  "category": "Records",
+  "title": "Harvest Records: Yield, Moisture, Price and Buyer per Lot",
+  "metaTitle": "Harvest Records App: Yield, Moisture, Price and Buyer",
+  "metaDescription": "Keep harvest records per lot: yield, moisture, wet or dry weight, price and buyer, with photos. Plan next season from real numbers. Start free on anee.io.",
+  "focusKeyword": "harvest records",
+  "keywords": [
+    "harvest records",
+    "ani",
+    "crop yields meaning",
+    "pag aani ng palay",
+    "palay price today"
+  ],
+  "excerpt": "Harvest records in anee.io live in the Observations module of each season. After the ani (the harvest), note the yield, moisture, price and buyer for each lot. Add any problem you saw, and next season you plan from real numbers instead of memory.",
+  "heroImage": {
+    "src": "/images/site/app/how/observations.webp",
+    "alt": "Recording harvest records in anee.io on a phone: the Record an observation form set to Yield, with the lot, how much was harvested, the unit and the moisture at harvest",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What goes into your harvest records"
+    },
+    {
+      "type": "text",
+      "text": "Open a season, go to Observations and tap Record an observation. Give it a title like 'Lot 1 harvest, 92 sacks', a date and a lot. Then choose what kind of observation it is. The form asks only the questions that fit, so a harvest figure and a lesson never share one long form."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Yield**: how much you harvested, the unit (kg, sacks, cavans or tons), the moisture at harvest, wet or dry weight, and the area harvested",
+        "**Selling and price**: how much you sold, the price per unit, the buyer, and how they paid: cash on pickup, partly paid or on credit",
+        "**Drying and storage**: sun or mechanical dryer, days spent drying, moisture after drying, where the grain is kept and what was lost",
+        "**Grain or produce quality**: the grade the buyer gave, the share rejected or downgraded, and why",
+        "**Pest and disease outcome** and **Weather impact**: what hit the crop, how bad it got, the area it reached and the estimated loss",
+        "**Lesson for next season**: what went wrong or right and what to do differently"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Every observation also takes notes, photos and tags, and video clips come with the Solo Farmer and Farm Owner plans. If the season already has the picture, pick it from the [farm photo gallery](/features/farm-photo-gallery) instead of taking it again."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Moisture, wet weight and dry weight"
+    },
+    {
+      "type": "text",
+      "text": "A yield figure means little without its moisture. Palay fresh off the field holds a lot of water, so wet sacks lose weight once dried. That is why the Yield form asks for the moisture at harvest and whether the weight is wet or dry.\n\nPhilRice's PalayCheck guide says to cut by hand when 85 to 90 percent of the grains turn golden yellow. With a combine harvester, wait for 90 to 95 percent. Moisture at harvest is usually 18 to 21 percent in the dry season, 20 to 25 percent in the wet. After threshing, dry the grain to 12 to 14 percent within 12 to 24 hours. So record a Drying and storage observation too, and both readings sit side by side.\n\nFor the whole routine of pag aani ng palay (harvesting rice), read our guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The season so far, added up for you"
+    },
+    {
+      "type": "text",
+      "text": "Above the list, Season so far adds up what you recorded. It shows the harvest in each unit you used, the gross value, the average moisture and the number of observations. Kilograms and sacks keep separate totals. Each card also works out its own gross value, the amount times the price per unit. For example, sell 4,200 kilograms at 23.50 pesos and the card shows 98,700 pesos."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Yield per hectare, the fair way to compare"
+    },
+    {
+      "type": "text",
+      "text": "The meaning of crop yields is simple: the harvest you get from a given area. Our page on [ani meaning](/blog/ani-meaning) explains the word and how farmers raise it. The Yield form asks for the area harvested, so later you can compare a small lot with a big one fairly. For instance, 50 cavans from half a hectare is 100 cavans per hectare."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Buyers and the price you got"
+    },
+    {
+      "type": "text",
+      "text": "Write who bought the harvest, at what price and how they paid. A trader who still owes half is easy to forget by the next planting. The card keeps the name under 'Sold to'.\n\nBefore you agree to a price, check the [palay price today](/blog/palay-price-philippines) from the PSA and the NFA. After two or three seasons, your records show which buyer paid best. Keep that buyer's number in the [farm contact list](/features/farm-contact-list) so you can call again."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where your harvest records go next"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "The [profit report](/features/profit-report) sets your yield and selling price against what the season spent. It will not run without a yield entry, so it never shows a made up profit.",
+        "[Anee's season report](/features/anee-season-report) reads your observations when she writes the story of the season.",
+        "[View as Protocol](/features/view-as-protocol) puts each lot's yield and price under the tasks that produced it.",
+        "Your [farm documentation](/features/farm-documentation) keeps the protocol and receipts of the same season."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Record it the day you weigh",
+      "text": "Write the observation while the sacks are still in front of you, and snap a photo of the weighing. A number noted that day beats one you try to recall six months later. The [farm reports](/features/farm-reports) can only add up what you wrote down."
+    },
+    {
+      "type": "cta",
+      "title": "Start your harvest records free",
+      "text": "Observations are on every plan, including the free Libre plan. Sign up and record your next harvest lot by lot.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about harvest records"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can I record the harvest in cavans instead of kilograms?",
+          "a": "Yes. Type the unit you use, like kg, sacks, cavans or tons. Season so far keeps a separate total for each unit."
+        },
+        {
+          "q": "Should I enter the wet or the dry weight?",
+          "a": "Either one, but say which. The Yield form asks if the weight is wet or dry and what the moisture was, because wet palay usually sells for less."
+        },
+        {
+          "q": "Can I keep a record for one lot only?",
+          "a": "Yes. Pick the lot on the form, or leave it on Whole season when the record covers every lot."
+        },
+        {
+          "q": "What if I typed the wrong number?",
+          "a": "Tap the pencil on the card to fix it, or delete the card. The season totals update right away."
+        },
+        {
+          "q": "Do harvest records cost anything?",
+          "a": "No. Observations are on every plan, the free Libre plan included. Video clips need Solo Farmer or Farm Owner, and Anee's season report runs on credits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Farm reports",
+          "url": "/features/farm-reports",
+          "a": "Yes. Type the unit you use, like kg, sacks, cavans or tons. Season so far keeps a separate total for each unit."
+        },
+        {
+          "label": "Profit report",
+          "url": "/features/profit-report",
+          "a": "Either one, but say which. The Yield form asks if the weight is wet or dry, and wet palay usually sells for less."
+        },
+        {
+          "label": "Farm contact list",
+          "url": "/features/farm-contact-list"
+        },
+        {
+          "label": "Farm documentation",
+          "url": "/features/farm-documentation"
+        },
+        {
+          "label": "Farm photo gallery",
+          "url": "/features/farm-photo-gallery"
+        },
+        {
+          "label": "Ani meaning",
+          "url": "/blog/ani-meaning"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: PalayCheck harvest management",
+          "url": "https://www.pinoyrice.com/palaycheck/harvest-management/"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: PalayCheck postharvest management",
+          "url": "https://www.pinoyrice.com/palaycheck/postharvest-management/"
+        },
+        {
+          "label": "PSA: Farmgate prices of palay (dry)",
+          "url": "https://psa.gov.ph/farmgate-prices-palay"
+        }
+      ]
+    }
+  ]
+}

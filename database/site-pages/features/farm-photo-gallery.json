@@ -1,0 +1,200 @@
+{
+  "section": "features",
+  "slug": "farm-photo-gallery",
+  "sortOrder": 305,
+  "lang": "en",
+  "category": "Records",
+  "title": "Farm Photo Gallery: Every Photo, Clip and Drawing From the Season",
+  "metaTitle": "Farm Photo Gallery: Albums and Every Season in One Place",
+  "metaDescription": "A farm photo gallery that fills itself: every photo, clip, drawing and map from the season, albums you make, and one Global Gallery. Start free on anee.io.",
+  "focusKeyword": "farm photo gallery",
+  "keywords": [
+    "farm photo gallery",
+    "palay picture",
+    "palay image",
+    "palay seedlings",
+    "palayan drawing"
+  ],
+  "excerpt": "The farm photo gallery in anee.io fills itself. Every photo, clip, drawing and map the season makes lands there, from planting to harvest. Make albums for what you want to keep together, like the harvest or the lot that did best. The Global Gallery then shows every season at once.",
+  "heroImage": {
+    "src": "/images/site/app/how/gallery.webp",
+    "alt": "The anee.io farm photo gallery on a phone, with a season's photos, drawings and maps on one shelf",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Four shelves in each season's gallery"
+    },
+    {
+      "type": "text",
+      "text": "Open a season and go to Gallery. A button at the top says which shelf you are on, and a tap opens the others."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**All Media**: every photo, drawing and map from this season",
+        "**Albums**: groups of pictures you put together yourself",
+        "**Videos**: every clip from notes, days, the Collab Room and Quick Record",
+        "**Team box**: call and camera recordings, whiteboard drawings and team maps from the Collab Room"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "On All Media, each tile says where the picture came from and when, like Note, Day note or Activity. Chips along the top narrow the shelf to one source, and the search box finds a picture by its name. Photos and clips open full size. Drawings and maps open where you can keep working on them."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Albums you make on purpose"
+    },
+    {
+      "type": "text",
+      "text": "The rest of the gallery fills itself, but an album is your own choice. Tap New album and give it a title and a short description, like 'Flooded corner, August'. Then add pictures from your phone, several at a time.\n\nTo tidy up, tap pictures to pick them, then move them to another album or delete them. You can also rename any album picture and add a description. A year from now it still says what it shows. Delete an album that still holds pictures and the app asks first, so you can move the keepers out."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Album ideas for a rice season"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Your [palay seedlings](/crops/pagtatanim-ng-palay) in the seedbed, one photo every few days",
+        "One [palay picture](/crops/palay) of the same spot each week, from tillering to harvest",
+        "A problem you are watching, like rats on one bund or yellow leaves in one corner",
+        "The harvest: the cutting, the threshing, the sacks and the weighing",
+        "The lot that did best, so you remember what worked"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "A palay image from the same spot every week shows the crop's progress better than memory. Then set it beside the [growth stages and weather](/features/growth-stages-and-weather) of that lot to see if the crop runs on time."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How pictures reach the farm photo gallery"
+    },
+    {
+      "type": "text",
+      "text": "You rarely add a picture by hand. Photos on notes, day notes and activities show up on their own, and so do drawings and saved maps. Quick Capture can also send photos straight to an album instead of a note. After you film a clip in a note, the app asks its name and can file it in an album.\n\nA palayan drawing (a sketch of your rice field) made on the [Draw pad](/features/farm-drawing) lands in the gallery as well. So does every map you save in [farm maps](/features/farm-maps)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Use a picture again without taking it twice"
+    },
+    {
+      "type": "text",
+      "text": "The gallery also works the other way. When you add photos to an activity or to your [harvest records](/features/harvest-records), tap Choose from the gallery. It lists what the season already has. Pick one and the same picture sits in both places. The Draw pad can also open a gallery picture to draw over. You can even show one to Anee in chat."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Every season in one Global Gallery"
+    },
+    {
+      "type": "text",
+      "text": "The Global Gallery, opened from the tools on your dashboard, puts every season on one shelf. All Media, Albums, Videos and Team box work as they do inside a season. Each tile names the season it came from. A Voice shelf plays every voice recording, Quick Voice notes included. One search box looks across all of it.\n\nAlbums are read only there. To make or change one, open its season's gallery."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Plans and storage"
+    },
+    {
+      "type": "text",
+      "text": "The gallery is on every plan. Video recording comes with Solo Farmer and Farm Owner. The Collab Room that fills the Team box is a Farm Owner feature. Your plan also sets the storage: 1 GB on Libre, 6 GB on Solo Farmer, 15 GB on Farm Owner."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Name it the day you take it",
+      "text": "A photo called IMG 2041 tells you nothing next year. So give each picture a title with the lot and what it shows, like 'Lot 2, tillering, day 30'. Later, search finds it by those words. For the story behind the photo, write [farm notes](/features/notes-photos-and-voice)."
+    },
+    {
+      "type": "cta",
+      "title": "Start your season's gallery",
+      "text": "Sign up free. The gallery, albums and the Global Gallery are on every plan.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the farm photo gallery"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Do I have to upload photos to the gallery myself?",
+          "a": "No. Photos from notes, day notes and activities show up on their own, along with drawings and saved maps. You only upload when you fill an album."
+        },
+        {
+          "q": "Can I delete a photo from the gallery?",
+          "a": "You delete album pictures right in the gallery. A photo on a note or an activity comes off in that note or activity, so the record stays whole."
+        },
+        {
+          "q": "Can I see photos from all my seasons together?",
+          "a": "Yes. The Global Gallery shows every season on one shelf, with the season's name on each picture."
+        },
+        {
+          "q": "Can I record videos?",
+          "a": "Yes, on Solo Farmer and Farm Owner. Every clip from notes, days, the Collab Room and Quick Record lands on the Videos shelf."
+        },
+        {
+          "q": "Is there a storage limit?",
+          "a": "Yes, by plan: 1 GB on Libre, 6 GB on Solo Farmer, 15 GB on Farm Owner."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Notes, photos and voice",
+          "url": "/features/notes-photos-and-voice"
+        },
+        {
+          "label": "Farm drawing",
+          "url": "/features/farm-drawing"
+        },
+        {
+          "label": "Farm maps",
+          "url": "/features/farm-maps"
+        },
+        {
+          "label": "Harvest records",
+          "url": "/features/harvest-records"
+        },
+        {
+          "label": "Farm documentation",
+          "url": "/features/farm-documentation"
+        },
+        {
+          "label": "Palay",
+          "url": "/crops/palay"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Growth stages of the rice plant",
+          "url": "http://www.knowledgebank.irri.org/ericeproduction/0.2._Growth_stages_of_the_rice_plant.htm"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Insect fact sheets",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects"
+        }
+      ]
+    }
+  ]
+}

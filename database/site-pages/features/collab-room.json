@@ -1,0 +1,189 @@
+{
+  "section": "features",
+  "slug": "collab-room",
+  "sortOrder": 240,
+  "lang": "en",
+  "category": "Workers",
+  "title": "Collab Room: Team Chat, Whiteboard and Calls for Each Season",
+  "metaTitle": "Collab Room: Farm Team Chat, Whiteboard and Calls",
+  "metaDescription": "The Collab Room gives each season's crew one place to chat, draw on a shared whiteboard, call, share cameras and ask Anee together. On the Farm Owner plan.",
+  "focusKeyword": "collab room",
+  "keywords": [
+    "collab room",
+    "rice bug",
+    "fall armyworm",
+    "agricultural technician"
+  ],
+  "excerpt": "The Collab Room is your season's own meeting place in anee.io. The owner, the foreman and the workers chat with photos and voice notes and draw on one whiteboard. They also call each other and ask Anee together, right beside the plan they are working on.",
+  "heroImage": {
+    "src": "/images/site/app/how/collab.webp",
+    "alt": "Team chat in the anee.io Collab Room: a worker reports low water in Lot 2 and that Lot 1 got its top dress of 1.5 bags of urea",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Who gets into the collab room"
+    },
+    {
+      "type": "text",
+      "text": "Each season on the Farm Owner plan has a room of its own. Its members are the owner and the workers who have a [team login](/features/team-logins) to your farm. So the room opens once your crew has logins, and nobody outside that team can read it.\n\nBefore you walk in, a short list asks who is joining. Everyone starts ticked, and you untick anyone who should sit this one out. Inside, the members' faces sit at the top with a green dot for whoever is online."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Team chat with photos and voice notes"
+    },
+    {
+      "type": "text",
+      "text": "The Chat tab is the season's group chat. Type a message, attach several photos at once, record a voice note or a short video, or send a file up to 50 MB. So a worker at the far lot can write 'Lot 1 top dress is done, 1.5 bags of urea', and the owner in town reads it a minute later.\n\nFor a private word, tap a member's face in the list. The chat then opens a direct message to that person. It is the same thread the [farmer community](/features/farmer-community) uses, so the history stays in one place."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A whiteboard everyone draws on"
+    },
+    {
+      "type": "text",
+      "text": "The Drawing tab is a shared whiteboard, and every stroke shows up for the others live. Use it to sketch which lot gets the tractor first, or where the new canal should run."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Pen, line, arrow, rectangle, circle, text and eraser",
+        "Several pages, plus a grid when you need straight rows",
+        "Undo your own last stroke without touching anyone else's",
+        "Save the pages into the season's notes once the plan is agreed",
+        "Open past drawings when you need last week's sketch again"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Someone who joins late still sees the whole board, because the room keeps every stroke."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Draw on a photo together"
+    },
+    {
+      "type": "text",
+      "text": "The Photo tab puts one picture in the middle and hands everyone a pen. Pick a photo from the gallery, upload one or take one. Then circle the [rice bug](/problems/rice-bug) on the panicle, or ring the window panes that [fall armyworm](/problems/fall-armyworm) left on a corn leaf, and the whole team looks at the same spot. Save the marked picture as a note or into the gallery's Team photos album."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Calls, cameras and where everyone is"
+    },
+    {
+      "type": "text",
+      "text": "The Cameras tab is the room's live call. Each person taps Share my camera and points the phone at what they see: a broken pilapil (paddy dike), a yellow patch, a pump that will not start. Tap one view to fill the screen.\n\nYour microphone starts muted, so sharing a picture does not put your voice in every speaker until you unmute. After that, the call keeps running while you switch tabs, and the team can talk over the whiteboard. Only the owner can record, and everyone sees when a recording starts.\n\nWhere we are puts a dot on a shared map for each member who turns on Share my location. As they walk, the dot moves with them, and it leaves when they turn sharing off. No record of where anyone was stays behind."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The plan and the map, inside the room"
+    },
+    {
+      "type": "text",
+      "text": "Next to the chat, the Activities tab holds the whole board, so the team ticks work done without leaving the conversation. The Map tab is the season's team map. Draw and measure over satellite imagery, and every shape appears for the others live. The [farm maps](/features/farm-maps) page explains the tools."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ask Anee together"
+    },
+    {
+      "type": "text",
+      "text": "The Anee tab is a chat with the AI [agricultural technician](/features/ai-agricultural-technician) that the whole team shares. Any member asks, and everyone sees the question and the answer. Keep separate sessions for separate topics, like one for pests and one for water, and save a good session to the season's notes. The answers use the owner's credits."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Agree in the room, then put it on the board",
+      "text": "A plan agreed on the whiteboard or in chat still belongs on the season's plan. Before you leave the room, put the task on the [cropping calendar](/features/cropping-calendar). Then it shows on the board for everyone, and in the [morning plan email](/features/morning-plan-email) if you send one."
+    },
+    {
+      "type": "cta",
+      "title": "Open a room for your crew",
+      "text": "The Collab Room comes with the Farm Owner plan, along with worker logins and the logs diary.",
+      "label": "See the plans",
+      "url": "/pricing"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the collab room"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Which plan has the Collab Room?",
+          "a": "The Farm Owner plan. Its members are the owner and the workers who have a team login to the farm."
+        },
+        {
+          "q": "Can I talk to one worker privately?",
+          "a": "Yes. Tap their face in the member list, and the chat opens a private message to that person."
+        },
+        {
+          "q": "Is my location saved?",
+          "a": "No. Your dot goes only to the people in the room while sharing is on, and the room keeps no history of it."
+        },
+        {
+          "q": "Who pays for Anee in the room?",
+          "a": "The farm owner. Anee's answers in the room use the owner's credits, whoever asks."
+        },
+        {
+          "q": "Can I keep a whiteboard sketch?",
+          "a": "Yes. Save its pages to the season's notes, or open them again later from past drawings."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Team logins",
+          "url": "/features/team-logins"
+        },
+        {
+          "label": "Morning plan email",
+          "url": "/features/morning-plan-email"
+        },
+        {
+          "label": "Farmer community",
+          "url": "/features/farmer-community"
+        },
+        {
+          "label": "Farm maps",
+          "url": "/features/farm-maps"
+        },
+        {
+          "label": "AI agricultural technician",
+          "url": "/features/ai-agricultural-technician"
+        },
+        {
+          "label": "Rice bug",
+          "url": "/problems/rice-bug"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Rice bug",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-bug"
+        },
+        {
+          "label": "DA Cagayan Valley: Combating fall armyworm using biological control (May 2025)",
+          "url": "https://cagayanvalley.da.gov.ph/2025/05/19/combating-fall-armyworm-using-biological-control-see-the-increase-in-yields-and-income-through-ipm/"
+        }
+      ]
+    }
+  ]
+}

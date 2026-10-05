@@ -1,0 +1,182 @@
+{
+  "section": "features",
+  "slug": "view-as-protocol",
+  "sortOrder": 335,
+  "lang": "en",
+  "category": "Planning",
+  "title": "View as Protocol: Turn Your Best Lot Into Next Season's Recipe",
+  "metaTitle": "View as Protocol: Your Best Lot as Next Season's Recipe",
+  "metaDescription": "View as Protocol writes one lot's finished season as a step by step recipe: what you did, with what and on which DAS, DAT or DAP day. Start free on anee.io.",
+  "focusKeyword": "view as protocol",
+  "keywords": [
+    "view as protocol",
+    "farm protocol",
+    "fertilizer application",
+    "top dressing fertilizer",
+    "fertilizer for rice",
+    "pagtatanim ng palay",
+    "ani"
+  ],
+  "excerpt": "View as Protocol turns one lot's finished season into a step by step recipe. It lists the work you really did, in order by the lot's own day count, with the materials and the crew. At the bottom sits what the recipe produced, so you can tell a protocol worth keeping from one to fix.",
+  "heroImage": {
+    "src": "/images/site/app/how/asProtocol.webp",
+    "alt": "View as Protocol in anee.io on a phone, listing one lot's finished farm tasks in order by day count with their materials",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What View as Protocol writes down"
+    },
+    {
+      "type": "text",
+      "text": "Pick a lot and tap Make the protocol. The app walks through the season's board and keeps only the work you ticked done on that lot, plus the whole farm tasks. Each step then lands on its day in the lot's own count."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**The day**: DAS, DAT or DAP from the lot's day zero, with the date beside it. Work before day zero, like land preparation, shows a minus day.",
+        "**The task**: its name, half or whole day, how many workers, and a whole farm tag where it applies",
+        "**The materials**: each one with the amount and unit you used, like 2 bags of urea",
+        "**The lot**: crop, variety, size, the day count it keeps, day zero and the span from first step to last",
+        "**The harvest**: the yield you recorded in Observations and the price it sold at"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Planned tasks you never ticked stay out, and the page tells you how many it left out. What you get is what really happened, not what the plan hoped for."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why a finished lot makes a good farm protocol"
+    },
+    {
+      "type": "text",
+      "text": "Most farmers carry their best season in their head. Then the next season starts, and the timing of the second [fertilizer application](/blog/fertilizer-application-methods) becomes a guess again. A written protocol keeps it.\n\nSay Lot 3 gave your best ani this year. View as Protocol shows exactly what you did there: the day you sprayed the herbicide, the day you put on the top dressing fertilizer, and how many bags went in. For palay, set it next to our guide on [fertilizer for rice](/blog/fertilizer-for-rice). You will see where your timing matched the usual advice and where it did not."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Check it against the usual season"
+    },
+    {
+      "type": "text",
+      "text": "A protocol from your own lot is honest, but it can still carry habits worth fixing. If you grow rice, our guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay) lists the usual steps from seedbed to harvest. Hold your recipe up against it and look for the step that came late or never came at all."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "From recipe to next season's plan"
+    },
+    {
+      "type": "text",
+      "text": "The protocol is a ready start, not a copy you must follow. Open the [Protocol Builder](/features/protocol-builder) and write next season's plan from it. Keep the steps that worked, move the ones that came late, and drop what did nothing.\n\nBefore you port the new plan into a season, you can also ask Anee to read it in [Protocol Review by Anee](/features/protocol-review-by-anee). That review runs on credits, and the price shows before you confirm."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep it, compare it, ask about it"
+    },
+    {
+      "type": "text",
+      "text": "The app saves every protocol on the spot, on the Saved tab, newest first. Give it a name, a description and tags, like 'best wet season lot'. Tap Ask Anee and the chat opens with the protocol attached, so you can ask what to change. Questions in the chat run on credits.\n\nTwo protocols also compare well. In [Compare Reports](/features/compare-reports) they line up day by day, each step on its own day count. You also see the yield, the harvest value, the steps done and the crew days of each. It is the clearest way to see why one lot beat another."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Tick the work on the day",
+      "text": "View as Protocol lists only work marked done. If a task happened but stayed unticked, it will be missing from the recipe. So tick tasks done on the [cropping calendar](/features/cropping-calendar) as you go, and your protocol writes itself."
+    },
+    {
+      "type": "text",
+      "text": "View as Protocol comes with the Solo Farmer and Farm Owner plans, along with the other reports beyond the labor report. See the whole family on the [farm reports](/features/farm-reports) page."
+    },
+    {
+      "type": "cta",
+      "title": "Write down what worked",
+      "text": "Sign up free and run your season on the board. Then turn your best lot into a protocol on Solo Farmer or Farm Owner.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about View as Protocol"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is a farm protocol?",
+          "a": "It is the season's recipe: every task in order by day count, with the inputs and the amounts. View as Protocol writes one from a lot's real records instead of from a plan."
+        },
+        {
+          "q": "Does it include tasks I planned but did not do?",
+          "a": "No. Only work ticked done goes in. The page notes how many planned tasks it left out."
+        },
+        {
+          "q": "Which day count does it use?",
+          "a": "The lot's own: DAS, DAT or DAP, counted from the lot's day zero. Work before day zero, like land preparation, shows a minus day."
+        },
+        {
+          "q": "Can I turn it into next season's plan?",
+          "a": "Yes, by hand. Use it as your starting point in the Protocol Builder, keep what worked, then port the new protocol into a cropping schedule."
+        },
+        {
+          "q": "Can I make one for the whole farm?",
+          "a": "Each protocol covers one lot, plus the whole farm tasks that touched it. Make one per lot, then compare two of them in Compare Reports."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Protocol Builder",
+          "url": "/features/protocol-builder"
+        },
+        {
+          "label": "Compare Reports",
+          "url": "/features/compare-reports"
+        },
+        {
+          "label": "Anee season report",
+          "url": "/features/anee-season-report"
+        },
+        {
+          "label": "Farm reports",
+          "url": "/features/farm-reports"
+        },
+        {
+          "label": "Protocol Review by Anee",
+          "url": "/features/protocol-review-by-anee"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: PalayCheck Key Check 5, Nutrient Management",
+          "url": "https://www.pinoyrice.com/palaycheck/nutrient-management/"
+        },
+        {
+          "label": "PhilRice policy brief: Reinforcing right element, amount and timing for improved fertilizer application",
+          "url": "https://www.philrice.gov.ph/reinforcing-right-e-a-t-for-improved-fertilizer-application/"
+        }
+      ]
+    }
+  ]
+}

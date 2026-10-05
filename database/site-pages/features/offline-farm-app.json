@@ -1,0 +1,185 @@
+{
+  "section": "features",
+  "slug": "offline-farm-app",
+  "sortOrder": 270,
+  "lang": "en",
+  "category": "Records",
+  "title": "Works Without Signal: An Offline Farm App for the Far Lot",
+  "metaTitle": "Offline Farm App: Keep Working With No Signal",
+  "metaDescription": "anee.io works as an offline farm app in the field. Tick tasks, write notes and take photos with no signal, and your changes sync once you are back online.",
+  "focusKeyword": "offline farm app",
+  "keywords": [
+    "offline farm app",
+    "palayan",
+    "maisan",
+    "corn seedling"
+  ],
+  "excerpt": "anee.io works as an offline farm app when the signal drops at the far lot. Turn on offline mode once on your phone, and your recent seasons stay open with no internet. Tick tasks done and write notes out there. The changes wait on the phone, then sync by themselves when the signal comes back.",
+  "heroImage": {
+    "src": "/images/site/app/how/offline.webp",
+    "alt": "The anee.io account menu on a phone with the Offline mode switch, above the Activities board of a wet season palay plan",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why an offline farm app matters on Philippine farms"
+    },
+    {
+      "type": "text",
+      "text": "Signal in the province is strong on the highway and weak at the far end of the palayan (rice field). The bars on your phone may show, but the data behind them often does not come. An app that needs the internet for every tap fails you exactly where the work happens.\n\nSo anee.io keeps a copy of your farm on the phone. You plan at home with signal, walk to the field, and keep working whether the line holds or not."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Turn it on once for each phone"
+    },
+    {
+      "type": "text",
+      "text": "Offline mode is off at first. Switch it on from your account menu, or in Settings under the Offline Mode tab. The choice lives on that phone, so turn it on for each phone or tablet you take to the field.\n\nOnce it is on, anee.io fills the phone's shelf while you still have signal, and a loader shows how far along it is. It saves the pages a farm day needs, including your three most recently used seasons. After that, the phone keeps each page you open too. Let the loader finish before you leave the house, and the far lot is ready."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What you can do with no signal"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Open the dashboard, your seasons and each season's hub",
+        "Use the [daily farm tasks](/features/daily-farm-tasks) board: tick tasks done, drag them to another day, edit them or delete them",
+        "Write notes and day notes",
+        "Read each lot's growth stage",
+        "Take photos, record voice notes and film short clips with the Quick Tools"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Each change shows a line like 'Saved on this phone. It will sync when you are back online.' A yellow bar across the top says you are offline and counts the changes waiting to sync.\n\nSome rooms need the internet to do their job, so they stay closed offline. Anee's chat and her analyses need a live connection to think. A saved copy of the asking screen would only promise an answer that cannot come, so those screens tell you plainly that they need a signal."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "A morning at the far lot"
+    },
+    {
+      "type": "text",
+      "text": "Say you walk your maisan (corn field) at dawn and find cut [corn seedlings](/crops/corn-seeds) along one row. Take the photo, record a voice note and tick the scouting task done, all with no bars. Everything waits on the phone and goes up when you are back in range. Later, our [cutworm](/problems/cutworm) guide helps you check what did the damage."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Changes wait, then sync"
+    },
+    {
+      "type": "text",
+      "text": "Your offline work goes into a small outbox on the phone. When the signal returns, anee.io first checks that the server really answers, because a phone can show bars with no data behind them. Then a card that says Syncing your offline work replays every change in order and reloads the page, so you see the farm as it now stands.\n\nIf someone else changed the same task while you were away, the last save wins. Your change still goes in, and a note tells you the farm may have changed, so you can refresh and check."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Before you leave the house",
+      "text": "Open the seasons you will work on today while you still have signal, and let the loader finish. A page you opened once with offline mode on will open again in the field."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plans, phones and privacy"
+    },
+    {
+      "type": "text",
+      "text": "Offline mode comes with the Solo Farmer and Farm Owner plans. It follows the farm, not the person: a worker logged in to a paid farm has it, even if the worker's own account is on Libre. On the free Libre plan the switch shows with a lock.\n\nanee.io runs in your phone's browser, and you can add it to your home screen like an app. Turn offline mode off and the phone clears its saved copies. Do that before you hand the phone to someone else."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What else works in the field"
+    },
+    {
+      "type": "text",
+      "text": "The growth stage you read offline follows any reading from [Realign by Anee](/features/realign-by-anee), so a lot that runs late shows its real stage out there too. Back in signal, the dashboard greets you with [Anee's tip of the day](/features/farm-tip-of-the-day). For the full picture of photos, clips and voice on the farm, see [notes, photos and voice](/features/notes-photos-and-voice)."
+    },
+    {
+      "type": "cta",
+      "title": "Take the farm where the signal is not",
+      "text": "Start free on Libre, then move to Solo Farmer when you need offline mode, workers and the full weather.",
+      "label": "See the plans",
+      "url": "/pricing"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the offline farm app"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Do I need to turn it on every day?",
+          "a": "No. Turn it on once on each phone, and it stays on until you switch it off."
+        },
+        {
+          "q": "What if I lose signal before the loader finishes?",
+          "a": "Pages it already saved still open. A page it did not reach shows a short note that it is not saved on this phone yet, so open it once with signal next time."
+        },
+        {
+          "q": "Can I ask Anee offline?",
+          "a": "No. Anee needs the internet to think, so the chat and the analyses wait until you are back online."
+        },
+        {
+          "q": "What happens to a photo I took offline?",
+          "a": "It waits in the phone's outbox with its date and uploads when the signal returns."
+        },
+        {
+          "q": "Which plans have offline mode?",
+          "a": "Solo Farmer and Farm Owner. A worker in a farm on one of those plans has it too."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Today on the board",
+          "url": "/features/daily-farm-tasks"
+        },
+        {
+          "label": "Realign by Anee",
+          "url": "/features/realign-by-anee"
+        },
+        {
+          "label": "Anee's tip of the day",
+          "url": "/features/farm-tip-of-the-day"
+        },
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "Notes, photos and voice",
+          "url": "/features/notes-photos-and-voice"
+        },
+        {
+          "label": "Plans and pricing",
+          "url": "/pricing"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "MDN Web Docs: Service Worker API",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API"
+        },
+        {
+          "label": "MDN Web Docs: IndexedDB API",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API"
+        }
+      ]
+    }
+  ]
+}

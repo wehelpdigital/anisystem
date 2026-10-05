@@ -1,0 +1,185 @@
+{
+  "section": "features",
+  "slug": "profit-report",
+  "sortOrder": 320,
+  "lang": "en",
+  "category": "Money",
+  "title": "Farm Profit Report: What Your Harvest Earned Against What It Cost",
+  "metaTitle": "Profit Report for Farms: Harvest Sales Against Season Costs",
+  "metaDescription": "A profit report that sets your harvest sales against every peso the season cost, lot by lot, with margin and cost per cavan. Start free on anee.io.",
+  "focusKeyword": "profit report",
+  "keywords": [
+    "profit report",
+    "farm profit",
+    "cost per cavan",
+    "palay price per kilo today",
+    "rice palay price philippines",
+    "cavan rice",
+    "palay price today"
+  ],
+  "excerpt": "The anee.io profit report sets what your harvest earned against everything the season spent. Sales come from the yields and prices you record after harvest. Costs come from the same records as your expenses. What is left is your real profit, for the whole season and for each lot.",
+  "heroImage": {
+    "src": "/images/site/app/how/profit.webp",
+    "alt": "The anee.io profit report on a phone, with net profit, margin, money in, money out and a profit card for each lot",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where the profit report gets its numbers"
+    },
+    {
+      "type": "text",
+      "text": "Money in and money out come from two places you already fill in. The report only does the arithmetic, so there is nothing new to type."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Money in**: each yield you record in Observations, times the price per unit it sold at, plus any income from the day book",
+        "**Money out**: materials, labor, services, extra expenses and stock buys, the same buckets as the [expenses report](/features/expenses-report)",
+        "**Lot by lot**: an activity on several lots shares its cost evenly between them, while whole season costs sit under General"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Record each harvest in [harvest records](/features/harvest-records), the Observations module: the amount, the unit, the price, the buyer and the moisture. You type the unit yourself, so cavans, sacks, kilograms or tons all work. If a lot sold in one unit, the report also gives its cost per unit, like the cost of each cavan."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What the profit report shows"
+    },
+    {
+      "type": "text",
+      "text": "The top line is the net profit and the margin, the share of money in that you kept. Under it sit money in and money out. A bar then shows where the money went, with each category's share in percent.\n\nLot cards come next. Each card shows what the lot earned, what it spent, its profit and margin, the yield and the cost per unit. Two lots of the same palay can tell very different stories, and this is where you see it."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Put the right price on your harvest"
+    },
+    {
+      "type": "text",
+      "text": "A profit figure is only as good as the price you enter. So before you sell, check the [palay price per kilo today](/blog/palay-price-philippines) for your province. The rice and palay price in the Philippines moves with the month, the moisture and the buyer. A cavan of palay or of milled rice weighs about 50 kg, so the price per cavan is the price per kilo times 50.\n\nFor a yardstick, the PSA put the national average cost of producing palay in 2024 at 14.52 pesos per kilogram. If your own cost per kilo sits well above that, the [expenses report](/features/expenses-report) shows you where the money went."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "The report will not guess",
+      "text": "Without at least one yield in Observations, the profit report shows no number. Instead it lists what is missing, with a button to open Observations. It also warns you when work is not ticked done, when a harvest has no price, or when a crop ran far past its usual maturity."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Planned costs and real costs"
+    },
+    {
+      "type": "text",
+      "text": "Activities you have not ticked done still count as planned costs. That means the report reads like the full plan until you tick the work that happened. Tick tasks done on the day, or delete the ones you skipped, and the figure becomes what really happened.\n\nThe profit report updates each time you open it. To keep a copy, tap Ask Anee about it at the bottom. The app then saves the report to the season's shelf and opens a chat with it attached, so you can ask [Anee, the AI technician](/features/ai-agricultural-technician), where the margin went. Questions run on credits."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Season against season"
+    },
+    {
+      "type": "text",
+      "text": "Saved profit reports can stand side by side in [Compare Reports](/features/compare-reports): net profit, money in, money out, margin and profit lot by lot. After the season closes, [Anee's season report](/features/anee-season-report) reads the same figures and tells you the story behind them."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why farm profit is worth counting"
+    },
+    {
+      "type": "text",
+      "text": "A good palay price today does not always mean a good season. A lot can give 100 cavans and still lose money if the fertilizer, the hired harvester and the labor ate it first. Another lot with fewer cavans can earn more because it cost less.\n\nThat is why the profit report keeps the lot cards side by side. When one lot keeps winning, look at what you did there with [View as Protocol](/features/view-as-protocol), then do it again on the others."
+    },
+    {
+      "type": "cta",
+      "title": "Know what your harvest really earned",
+      "text": "Sign up free and keep your season on the board. Then open the profit report on the Solo Farmer or Farm Owner plan.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the profit report"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How does anee.io work out my profit?",
+          "a": "It multiplies each recorded yield by its selling price and adds day book income. Then it subtracts every cost of the season. The margin is the profit as a share of what came in."
+        },
+        {
+          "q": "Why does my profit report say it is not ready?",
+          "a": "It needs at least one yield in Observations. Add the harvest amount and its selling price, then open the report again."
+        },
+        {
+          "q": "Can I see the profit of each lot?",
+          "a": "Yes. Each lot gets its own card with earnings, costs, profit, margin and cost per unit. Costs that belong to the whole season sit under General."
+        },
+        {
+          "q": "What should I compare my cost per kilo with?",
+          "a": "Your own past seasons first. For a national yardstick, the PSA reported an average palay production cost of 14.52 pesos per kilogram in 2024, or 59,695 pesos per hectare."
+        },
+        {
+          "q": "Which plans include the profit report?",
+          "a": "Solo Farmer and Farm Owner. The free Libre plan has the labor report and Observations, so your harvest records are ready when you upgrade."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Farm reports",
+          "url": "/features/farm-reports"
+        },
+        {
+          "label": "Expenses report",
+          "url": "/features/expenses-report"
+        },
+        {
+          "label": "Harvest records",
+          "url": "/features/harvest-records"
+        },
+        {
+          "label": "Compare Reports",
+          "url": "/features/compare-reports"
+        },
+        {
+          "label": "Anee season report",
+          "url": "/features/anee-season-report"
+        },
+        {
+          "label": "Palay price in the Philippines",
+          "url": "/blog/palay-price-philippines"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PSA: Farmgate prices of palay (dry)",
+          "url": "https://psa.gov.ph/farmgate-prices-palay"
+        },
+        {
+          "label": "PSA: 2024 Costs and Returns of Palay Production",
+          "url": "https://psa.gov.ph/content/2024-costs-and-returns-palay-production"
+        },
+        {
+          "label": "PSA: Updated milling recovery rate of 63.0 percent from palay to rice",
+          "url": "https://psa.gov.ph/content/psa-board-approves-updated-milling-recovery-rate-630-percent-palay-rice"
+        }
+      ]
+    }
+  ]
+}

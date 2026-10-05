@@ -1,0 +1,208 @@
+{
+  "section": "features",
+  "slug": "expenses-report",
+  "sortOrder": 315,
+  "lang": "en",
+  "category": "Money",
+  "title": "Farm Expenses Report: Every Peso Your Season Cost",
+  "metaTitle": "Expenses Report for Farms: Every Peso the Season Cost",
+  "metaDescription": "An expenses report built from your farm records: materials, labor, services and extra costs, by lot, by month and by day count. Start free on anee.io.",
+  "focusKeyword": "expenses report",
+  "keywords": [
+    "expenses report",
+    "farm expenses",
+    "cost per hectare",
+    "urea fertilizer price",
+    "fertilizer urea price",
+    "fertilizer calculation",
+    "14 14 14 fertilizer"
+  ],
+  "excerpt": "The anee.io expenses report adds up every peso your season cost, straight from the records you already keep. Materials, labor, hired services, extra expenses and stock buys land in one total. You can read it by month, by lot or by any stretch of the crop's own day count.",
+  "heroImage": {
+    "src": "/images/site/app/how/expenses.webp",
+    "alt": "The anee.io expenses report on a phone, with the total spent, the cost of each category and a month by month chart of farm expenses",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What goes into the expenses report"
+    },
+    {
+      "type": "text",
+      "text": "You do not type this report. It reads the season you planned and worked on the board, then sorts every cost into a bucket. The buckets are the same ones the [profit report](/features/profit-report) uses, so the two agree to the peso."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Materials**: what each activity used, from the shed or typed in, at the price you gave it",
+        "**Labor**: each worker's rate times the whole or half days they gave the activity",
+        "**Services**: hired work like the tractor or the harvester, and service activities with their own price",
+        "**Extra expenses**: the fare to the agri supply, a pump repair, anything you logged on a day",
+        "**Stock buys**: fertilizer, seeds and chemicals bought into your [farm inventory](/features/farm-inventory-and-expenses) outside an activity",
+        "**Income**: sales you logged by day, shown beside the total so you also see a net"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Stock that an activity used counts once, as that activity's material line. A purchase tied to the same activity stays out, so nothing counts twice. Labor follows the arithmetic of the [labor report](/features/labor-report), down to the half day."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pick the part of the season you want"
+    },
+    {
+      "type": "text",
+      "text": "Every filter is optional. Leave them empty and the report adds up the whole season. Narrow it when you have a question, like what fertilizer cost on one lot alone."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Lots**: one lot or several. An activity on three lots splits its cost three ways.",
+        "**Categories**: only labor, only materials, or any mix of the six",
+        "**Inventory kind**: granular fertilizer, foliar feed, pesticide, herbicide, fungicide, molluscicide or seed. You can also leave the shed's stock out completely.",
+        "**Work status**: planned and done, done only, or what the work still ahead will cost",
+        "**Which part of the season**: the whole season, a range of dates, or a range of the crop's own day count"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Count by DAS, DAT or DAP"
+    },
+    {
+      "type": "text",
+      "text": "A day count range reads each row on its own lot. A transplanted lot counts DAT from its transplant day, a direct seeded lot counts DAS, and corn counts DAP. Fruit trees count their age in months. So one range, like DAT 0 to 45, gives you the early season cost of every lot at once, even if you planted them on different days.\n\nLines with no lot, like day book entries and stock buys, have no day count. That is why a day count range leaves them out, and the page tells you so as you set the range."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Reading the expenses report"
+    },
+    {
+      "type": "text",
+      "text": "At the top sits the total spent, with your income and the net under it. Tiles show what each category cost. Next comes a month by month chart, green for money out and gold for money in. After that you get every entry, grouped by month, with its date and what it paid for.\n\nThis is where the fertilizer bill shows itself. If urea took the biggest bite, check the [urea fertilizer price](/blog/urea-fertilizer) your dealer charged against the national average before you buy again."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Your farm expenses against the national figure"
+    },
+    {
+      "type": "text",
+      "text": "The PSA put the average cost of producing palay in 2024 at 59,695 pesos per hectare, or about 14.52 pesos for each kilogram. Close to half of that went to labor. Your expenses report gives you your own cost per hectare instead of a national average, so you know which line to work on."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Plan the next bill before you buy",
+      "text": "Your expenses report shows how many bags each lot really took. Put that next to a [fertilizer calculation](/blog/fertilizer-calculation) for the coming season, and you will know whether to buy more or less. A bag of [14 14 14 fertilizer](/blog/complete-fertilizer-14-14-14) you did not need is money you keep."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Saved, named and ready for Anee"
+    },
+    {
+      "type": "text",
+      "text": "The app keeps every expenses report you make on the Saved Reports tab, newest first. Give it a name, a short description and tags, so you find it next year. A filtered report also names what it covers, such as the lots, the day range and the categories.\n\nOpen a saved report and tap Ask Anee. The chat opens with the report attached, so you can ask why one month cost so much or where to cut. Questions to [Anee, the AI technician](/features/ai-agricultural-technician), run on credits. Saved reports also feed [Compare Reports](/features/compare-reports), where this season's spending stands beside the last."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Which plans have it"
+    },
+    {
+      "type": "text",
+      "text": "The expenses report comes with the Solo Farmer and Farm Owner plans. The free Libre plan has the labor report. On Farm Owner, a worker with view access to Reports can read the saved reports, while edit access lets them make new ones."
+    },
+    {
+      "type": "cta",
+      "title": "See where your season's money went",
+      "text": "Create a free account and keep your season on the board. Open the expenses report when you move to Solo Farmer or Farm Owner.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the expenses report"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What does the expenses report count?",
+          "a": "Materials, labor, hired services, extra expenses from the day book and stock bought into inventory. Income you logged shows beside the total, so you also see a net."
+        },
+        {
+          "q": "Does it count planned work or only work done?",
+          "a": "Both, unless you choose. Pick done only for what you really spent, or still ahead for what the remaining work will cost."
+        },
+        {
+          "q": "How does it split an activity done on two lots?",
+          "a": "Evenly between the lots. Costs with no lot, like a pump repair, belong to the season as a whole."
+        },
+        {
+          "q": "Can I see only the fertilizer cost?",
+          "a": "Yes. Set the inventory kind to granular fertilizer or foliar feed. The report then keeps only the materials and stock buys of that kind from your inventory."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Farm reports",
+          "url": "/features/farm-reports"
+        },
+        {
+          "label": "Labor report",
+          "url": "/features/labor-report"
+        },
+        {
+          "label": "Profit report",
+          "url": "/features/profit-report"
+        },
+        {
+          "label": "Farm inventory and expenses",
+          "url": "/features/farm-inventory-and-expenses"
+        },
+        {
+          "label": "Automatic stock deduction",
+          "url": "/features/automatic-stock-deduction"
+        },
+        {
+          "label": "Fertilizer calculation",
+          "url": "/blog/fertilizer-calculation"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PSA: 2024 Costs and Returns of Palay Production",
+          "url": "https://psa.gov.ph/content/2024-costs-and-returns-palay-production"
+        },
+        {
+          "label": "PSA: Updates on Fertilizer Prices",
+          "url": "https://psa.gov.ph/publication/updates-on-fertilizer-prices"
+        },
+        {
+          "label": "FPA: Weekly fertilizer prices",
+          "url": "https://fpa.da.gov.ph/weekly-prices/"
+        },
+        {
+          "label": "PhilRice: Balanced fertilization cuts fertilizer costs",
+          "url": "https://www.philrice.gov.ph/balanced-fertilization-cuts-fertilizer-costs-by-p2-4k-experts/"
+        }
+      ]
+    }
+  ]
+}

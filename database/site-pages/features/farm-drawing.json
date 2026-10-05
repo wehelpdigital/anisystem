@@ -1,0 +1,169 @@
+{
+  "section": "features",
+  "slug": "farm-drawing",
+  "sortOrder": 220,
+  "lang": "en",
+  "category": "Planning",
+  "title": "Farm Drawing: Sketch the Plan Your Whole Team Follows",
+  "metaTitle": "Farm Drawing Pad: Sketch Field Layouts and Team Plans",
+  "metaDescription": "A farm drawing pad in anee.io: sketch the seedbed, the water flow and who works which lot, draw over a photo of your field, and keep it for any season.",
+  "focusKeyword": "farm drawing",
+  "keywords": [
+    "farm drawing",
+    "palayan drawing",
+    "palayan in English",
+    "maisan"
+  ],
+  "excerpt": "A quick farm drawing settles what words cannot: where the seedbed goes, which way the water runs, which crew takes which lot. With the Draw pad in anee.io, you sketch it on your phone, even over a photo of the field. Then the picture stays where your team can find it.",
+  "heroImage": {
+    "src": "/images/site/app/how/draw.webp",
+    "alt": "A farm drawing on the anee.io Draw pad, with two lots drawn as green boxes, a blue canal and an arrow showing where the water enters",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What you can put on a farm drawing"
+    },
+    {
+      "type": "text",
+      "text": "Open Draw and start a new drawing. The pad has the tools a field plan needs. They work with a finger on a phone or a mouse on a computer."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "A pen for freehand lines, plus straight lines and arrows for canals and water flow",
+        "Boxes and circles for lots, the seedbed, the shed or the pump",
+        "Text labels in your color and size",
+        "Nine colors, a size slider and a grid to keep shapes straight",
+        "Select, to move, resize, turn or delete anything, even text and pictures",
+        "An eraser, undo, redo and a clear button",
+        "More than one page in a drawing, like the whole farm first and then one block up close"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Draw over a photo of your field"
+    },
+    {
+      "type": "text",
+      "text": "Tap the picture button to take a photo, upload one from your phone or pick one from the gallery. The photo becomes a shape on the sheet. Move it, resize it or turn it, then draw on top of it.\n\nFor example, photograph the paddy from the dike. Then mark where the water should enter, where the weeds are worst or where the bund needs repair. A worker who sees the photo with your arrows on it understands the job before reaching the field."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "A palayan drawing or a maisan plan"
+    },
+    {
+      "type": "text",
+      "text": "A palayan drawing does not need to be pretty. Palayan in English is a rice field. A few boxes for the paddies, a line for the canal and an arrow for the flow will do. Our list of [farm words in Tagalog](/blog/farm-words-in-tagalog) has more terms like it. The same goes for a maisan, a cornfield, where you mark the rows, the path and the low spot.\n\nA sketch also helps before land preparation. PhilRice's PalayCheck asks for a field with no high and low spots after final leveling. So marking where water pools is a good first step. When you need exact areas and side lengths, trace the field in [farm maps](/features/farm-maps) over the satellite view instead."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plan with your team from the same picture"
+    },
+    {
+      "type": "text",
+      "text": "A drawing made inside a season stays with it, in a note, on a day of the board or on the team whiteboard. On Farm Owner, workers with their own login can open those drawings if you give them access to Draw. So the foreman in the field and the owner in town look at the same layout. You set that access per person on [team logins](/features/team-logins).\n\nThe [Collab Room](/features/collab-room) on Farm Owner also has a whiteboard the whole team can draw on. Save it, and it joins the season's drawings marked as a team drawing."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Saved where you will look for it"
+    },
+    {
+      "type": "text",
+      "text": "When you save, give the drawing a name and, if you like, a description. Save it as a drawing to change it later, or as a flat image you can still draw over. Either way it shows in your gallery and on its note, so you can open it again next season.\n\nThe Draw page keeps every drawing you can still change, newest first. They come from your own notes and from every season you work in. Each one carries its season's name and a link back to the note that explains it. See [notes, photos and voice](/features/notes-photos-and-voice) and the [farm photo gallery](/features/farm-photo-gallery) for the rest."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Sketch before day zero",
+      "text": "Draw the plan while changes are still free. Mark the seedbed, the order of planting and who takes each lot. Then put the work on the [cropping calendar](/features/cropping-calendar), lot by lot, so the dates match the picture."
+    },
+    {
+      "type": "cta",
+      "title": "Sketch your farm plan free",
+      "text": "Draw comes with every plan, including the free Libre plan. Sign up and make your first farm drawing today.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm drawing in anee.io"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is the drawing pad free?",
+          "a": "Yes. Draw is on every plan, including the free Libre plan."
+        },
+        {
+          "q": "Can I draw on a photo of my field?",
+          "a": "Yes. Take a photo, upload one or pick one from the gallery. It becomes a shape you can move and resize, and you draw on top of it."
+        },
+        {
+          "q": "Can my workers see my drawings?",
+          "a": "Drawings made inside a season stay with it. On Farm Owner, workers with their own login can open them if you allow the Draw module."
+        },
+        {
+          "q": "Can I change a drawing later?",
+          "a": "Save it as a drawing and you can open it and change it any time. If you save it as an image, it becomes a flat picture."
+        },
+        {
+          "q": "What is the difference between Draw and Maps?",
+          "a": "Draw is a free sketch on a blank sheet or a photo. Maps traces your field over a satellite view and measures its area and sides."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Farm maps",
+          "url": "/features/farm-maps"
+        },
+        {
+          "label": "Collab Room",
+          "url": "/features/collab-room"
+        },
+        {
+          "label": "Team logins",
+          "url": "/features/team-logins"
+        },
+        {
+          "label": "Farm photo gallery",
+          "url": "/features/farm-photo-gallery"
+        },
+        {
+          "label": "Notes, photos and voice",
+          "url": "/features/notes-photos-and-voice"
+        },
+        {
+          "label": "What to plant analysis",
+          "url": "/features/what-to-plant-analysis"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "IRRI: Steps to successful rice production",
+          "url": "http://knowledgebank.irri.org/images/docs/12-Steps-Required-for-Successful-Rice-Production.pdf"
+        }
+      ]
+    }
+  ]
+}

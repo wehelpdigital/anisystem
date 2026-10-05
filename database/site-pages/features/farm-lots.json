@@ -1,0 +1,177 @@
+{
+  "section": "features",
+  "slug": "farm-lots",
+  "sortOrder": 230,
+  "lang": "en",
+  "category": "Planning",
+  "title": "Farm Lots: Each Field With Its Own Crop, Variety and Day Count",
+  "metaTitle": "Farm Lots: Track Each Field's Crop, Size and Day Count",
+  "metaDescription": "Set up farm lots in anee.io: each field keeps its crop, variety, size, location and its own day zero, so lots sown a week apart stay on their own count.",
+  "focusKeyword": "farm lots",
+  "keywords": [
+    "farm lots",
+    "rice variety",
+    "pagtatanim ng palay",
+    "pagtatanim ng mais"
+  ],
+  "excerpt": "Few farms plant every field on the same day. In anee.io your farm lots are the fields of a season, each with its own crop, variety, size and location. Every lot counts from its own day zero, so a lot sown a week late keeps honest timing on the board.",
+  "heroImage": {
+    "src": "/images/site/app/how/lots.webp",
+    "alt": "The Edit Lot form in anee.io, one of the farm lots, with a one hectare size, the variety NSIC Rc222 and the barangay, province and town of the field",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What each of your farm lots holds"
+    },
+    {
+      "type": "text",
+      "text": "Open a cropping schedule and add a lot for each field. Only the name must be filled in, so add the rest as you know it."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "The name, and the size in hectares, square meters or acres",
+        "The crop, from 85 Philippine crops, which sets the lot's growth stages",
+        "Days to maturity for your variety, so every stage moves with it, or the age of the trees for an orchard",
+        "The variety, typed as it is sold",
+        "The day counter, which decides how the lot's days are counted",
+        "Barangay, purok, province and town, so the weather follows the lot",
+        "Notes and tags"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Type the rice variety as the seed bag says it, like NSIC Rc 222. Choose the crop and the day counter with care, because they cannot change after you save. Every date on the board depends on them."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Day zero and the count for each lot"
+    },
+    {
+      "type": "text",
+      "text": "The day counter tells anee.io how to count. Sown then transplanted counts days after sowing, DAS, then starts over as DAT on transplant day. Direct seeded counts DAS all season. Planted counts DAP, days after planting, for corn and most vegetables. Mature trees have no day count, so their stages follow the age of the trees.\n\nDay zero itself is set on the board. When you add the sowing or planting activity, mark it as Day 0 for the lot. For transplanted rice, mark the transplanting too. From there the [cropping calendar](/features/cropping-calendar) dates each task by the lot's own count. Two lots sown a week apart keep separate counts, so DAT 21 falls on the right day for both.\n\nFor the usual timing of each step, see our guide to [pagtatanim ng palay](/crops/pagtatanim-ng-palay). Corn growers can read [pagtatanim ng mais](/crops/pagtatanim-ng-mais)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When a lot falls behind"
+    },
+    {
+      "type": "text",
+      "text": "Rain, a late tractor or a replant can leave one lot behind the calendar. On the board, tap a task's day count and add a delay counter for that lot. Each activity then shows both counts side by side, the calendar's and the delayed one, and nothing else moves."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pin the lot and attach its map"
+    },
+    {
+      "type": "text",
+      "text": "Tap Attach a map on a lot, then pick one of your saved maps or draw a new one. On a new map you pin the lot and trace its edges over the satellite view. A pinned lot shows a chip that opens the spot in Google Maps, which helps a hired driver find the right field. See [farm maps](/features/farm-maps) for measuring area and sides.\n\nThe lot's town and province also feed the [farm weather forecast](/features/farm-weather-forecast). So if your lots sit in two towns, each gets its own forecast."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Two crops in one season"
+    },
+    {
+      "type": "text",
+      "text": "The crop belongs to the lot, not to the season. So one cropping schedule can carry palay in the paddies and mais on the upland block, each with its own stages and count. [Growth stages and weather](/features/growth-stages-and-weather) then show each lot's stage on any date you pick.\n\nThe free Libre plan and Libre plus Anee allow one lot per season. Solo Farmer allows up to five lots in a season, and Farm Owner has no limit. Adding, editing and deleting lots stays with the farm owner. Workers with a [team login](/features/team-logins) still see the lots on the board."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Start from a protocol",
+      "text": "Port a protocol from the [Protocol Builder](/features/protocol-builder) into a new season. You name the lots and give each its start date as you go. Every task then lands on each lot's own count."
+    },
+    {
+      "type": "cta",
+      "title": "Set up your first lot free",
+      "text": "Sign up free, start a cropping schedule and add your first lot. Libre includes one lot per season.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about farm lots"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is a lot in anee.io?",
+          "a": "A lot is one field in a season, with its own crop, variety, size, location and day count. Activities on the board link to the lots they cover."
+        },
+        {
+          "q": "Can I change a lot's crop later?",
+          "a": "No. The crop and the day counter stay fixed once you save, because every date and stage depends on them. Add a new lot instead."
+        },
+        {
+          "q": "How do I set the planting date?",
+          "a": "Mark the sowing or planting activity as Day 0 on the board. For transplanted rice, mark the transplanting too."
+        },
+        {
+          "q": "How many lots can I add?",
+          "a": "One per season on Libre and Libre plus Anee, up to five on Solo Farmer, and as many as you need on Farm Owner."
+        },
+        {
+          "q": "Can one season have two crops?",
+          "a": "Yes, on a plan with more than one lot. Each lot carries its own crop, so rice and corn can share one season."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Cropping calendar",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "Farm maps",
+          "url": "/features/farm-maps"
+        },
+        {
+          "label": "Growth stages and weather",
+          "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "Team logins",
+          "url": "/features/team-logins"
+        },
+        {
+          "label": "Farm weather forecast",
+          "url": "/features/farm-weather-forecast"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: PalayCheck System, 2022 revised edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2023/02/PalayCheck-System-2022-Revised-Edition.pdf"
+        },
+        {
+          "label": "DA Regional Field Office 2: Corn Production Techno Guide (revised 2012)",
+          "url": "https://cagayanvalley.da.gov.ph/wp-content/uploads/2018/02/corn_techno_guide_final.pdf"
+        },
+        {
+          "label": "PAGASA: Seasonal forecast",
+          "url": "https://www.pagasa.dost.gov.ph/climate/climate-prediction/seasonal-forecast"
+        }
+      ]
+    }
+  ]
+}
