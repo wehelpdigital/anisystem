@@ -214,8 +214,14 @@
                 <h2 class="hp-h2">Guessing Is the Most <em class="is-red">Expensive</em> Thing on Your Farm.</h2>
                 <p class="hp-p">
                     A spray a few days late, a dose that was guessed, planting in the wrong week. Each one looks small,
-                    but crop studies show how much harvest they take from every hectare. <b>Here is where that money
-                    goes.</b>
+                    but crop studies show how much harvest they take from every hectare. The harvest just comes in a
+                    little smaller, season after season, until it feels normal.
+                </p>
+                {{-- The owner's point (2026-10-06): the loss is invisible, so the
+                     farmer is capping their own income without knowing it. --}}
+                <p class="hp-loss-warn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18M10.6 10.6a2 2 0 002.8 2.8M9.9 5.1A9.8 9.8 0 0112 5c4.5 0 8.3 2.9 9.5 7a10 10 0 01-2.9 4.4M6.6 6.6A10 10 0 002.5 12c1.2 4.1 5 7 9.5 7 1.6 0 3.1-.4 4.4-1"/></svg>
+                    <span><b>You could be limiting your own income and not even know it.</b> Here is where that money goes.</span>
                 </p>
             </div>
 
@@ -964,6 +970,15 @@
     .on-dark .hp-kick.is-red { color: #fca5a5; }
     .on-dark .hp-h2 em.is-red { color: #f87171; }
     .hp-loss-dark .loss-card { border-color: rgb(254 202 202 / .5); box-shadow: 0 24px 50px -30px rgb(0 0 0 / .8); }
+    .hp-loss-warn { margin: 1.6rem auto 0; display: inline-flex; align-items: flex-start; gap: .7rem; max-width: 40rem; text-align: left;
+        padding: .9rem 1.15rem; border-radius: 1.1rem; font-size: 1rem; line-height: 1.55; color: #f3e3e1;
+        background: rgb(248 113 113 / .12); box-shadow: inset 0 0 0 1px rgb(248 113 113 / .4), 0 0 0 0 rgb(248 113 113 / .35);
+        animation: hpWarn 3.2s ease-in-out infinite 1s; }
+    .hp-loss-warn svg { flex: none; width: 1.4rem; height: 1.4rem; margin-top: .05rem; color: #fca5a5; }
+    .hp-loss-warn b { color: #fff; }
+    @keyframes hpWarn { 0%, 100% { box-shadow: inset 0 0 0 1px rgb(248 113 113 / .4), 0 0 0 0 rgb(248 113 113 / .3); }
+        50% { box-shadow: inset 0 0 0 1px rgb(248 113 113 / .6), 0 0 0 8px rgb(248 113 113 / 0); } }
+    @media (prefers-reduced-motion: reduce) { .hp-loss-warn { animation: none; } }
     .hp-loss-src { margin-top: 1.1rem; text-align: center; font-size: .78rem; line-height: 1.5; color: rgb(255 255 255 / .5); }
 
     /* ---- the turning word in the headline ---- */
