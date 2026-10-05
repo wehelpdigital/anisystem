@@ -47,7 +47,7 @@
                 <input type="hidden" id="qrSchedule" value="{{ $fixedScheduleId }}">
             @else
                 <div>
-                    <label class="form-label" for="qrSchedule">Connect to schedule</label>
+                    <label class="form-label" for="qrSchedule">Which season?</label>
                     <select id="qrSchedule" class="form-select">
                         @foreach ($allSchedules as $s)
                             <option value="{{ $s->id }}">{{ $s->title }}</option>
@@ -74,7 +74,7 @@
                         <input type="radio" name="qrTarget" value="note" checked>
                         <span>
                             <span class="block font-semibold text-gray-900">Save to notes</span>
-                            <span class="block text-xs text-gray-500">Keep it in this schedule's notes.</span>
+                            <span class="block text-xs text-gray-500">Keep it in this season's notes.</span>
                         </span>
                     </label>
                     @endif

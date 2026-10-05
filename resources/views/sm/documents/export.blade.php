@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Schedule: {{ $schedule->title }}</title>
+    <title>Season: {{ $schedule->title }}</title>
     <style>
         @page { size: A4; margin: 20mm 18mm 22mm; }
         * { box-sizing: border-box; }
@@ -337,9 +337,9 @@
         @endif
         <div class="doc-meta">
             <span><strong>Status:</strong> {{ ucfirst($schedule->status) }}</span>
-            <span><strong>Day Type:</strong> {{ $schedule->dayType }}</span>
+            <span><strong>Day count:</strong> {{ $schedule->dayType }}</span>
             @if($firstDate)
-                <span><strong>Spans:</strong>
+                <span><strong>Dates:</strong>
                     {{ \Illuminate\Support\Carbon::parse($firstDate)->format('M j, Y') }}
                     @if($lastEnd) to {{ \Illuminate\Support\Carbon::parse($lastEnd)->format('M j, Y') }} @endif
                 </span>
@@ -363,7 +363,7 @@
                     $exportHiddenBits = [];
                     if ($exportHideWorkers)     { $exportHiddenBits[] = 'workers'; }
                     if ($exportHideNotes)       { $exportHiddenBits[] = 'notes'; }
-                    if ($exportHideCriticality) { $exportHiddenBits[] = 'criticality'; }
+                    if ($exportHideCriticality) { $exportHiddenBits[] = 'priority'; }
                     if (count($exportHiddenBits)) {
                         $exportFilterBits[] = 'hidden: ' . implode(' + ', $exportHiddenBits);
                     }
@@ -512,8 +512,8 @@
         <section class="section">
             <h2>Summary</h2>
             <div class="summary-grid">
-                <div><div class="label">Total Activities</div><div class="value">{{ $totalActivities }}</div></div>
-                <div><div class="label">Date Groups</div><div class="value">{{ $dateKeys->filter(fn($k) => $k !== '__no-date__')->count() }}</div></div>
+                <div><div class="label">Activities</div><div class="value">{{ $totalActivities }}</div></div>
+                <div><div class="label">Days</div><div class="value">{{ $dateKeys->filter(fn($k) => $k !== '__no-date__')->count() }}</div></div>
                 <div><div class="label">Lots</div><div class="value">{{ $schedule->lots->count() }}</div></div>
                 {{-- Suppressed alongside the roster: a worker headcount is still
                      a worker fact, so leaving it would half-answer a request to
@@ -535,7 +535,7 @@
                         <tr>
                             <td><strong>{{ $lot->lotName }}</strong></td>
                             <td>{{ rtrim(rtrim((string) $lot->lotSize, '0'), '.') }} {{ $lot->lotSizeUnit }}</td>
-                            <td>@if(!empty($lot->variety))<strong>{{ $lot->variety }}</strong>@else<span class="muted">—</span>@endif</td>
+                            <td>@if(!empty($lot->variety))<strong>{{ $lot->variety }}</strong>@else<span class="muted">Not set</span>@endif</td>
                             <td>{{ $lot->notes }}</td>
                         </tr>
                     @endforeach
@@ -549,7 +549,7 @@
             <h2>Workers</h2>
             @php $skillsCatalog = \App\Models\AsScheduleWorker::SKILLS; @endphp
             <table class="worker-table">
-                <thead><tr><th>Priority</th><th>Name</th><th>Cost / Half Day</th><th>Skills</th><th>Notes</th></tr></thead>
+                <thead><tr><th>Priority</th><th>Name</th><th>Pay per half day</th><th>Skills</th><th>Notes</th></tr></thead>
                 <tbody>
                     @foreach($schedule->workers->sortBy('priority') as $w)
                         @php $wSkills = is_array($w->skills) ? $w->skills : []; @endphp
@@ -559,7 +559,7 @@
                             <td>{{ \App\Support\Region::money($w->costPerHalfDay) }}</td>
                             <td>
                                 @if(count($wSkills) === 0)
-                                    <span style="color:#9aa0a6;">—</span>
+                                    <span style="color:#9aa0a6;">None</span>
                                 @else
                                     @foreach($wSkills as $k)
                                         @if(isset($skillsCatalog[$k]))
@@ -629,7 +629,7 @@
                         $startCarbon = $a->targetDate ? \Illuminate\Support\Carbon::parse($a->targetDate) : null;
                         $isRange = $endCarbon && $startCarbon && $endCarbon->greaterThan($startCarbon);
                         $rangeDays = $isRange ? ($startCarbon->diffInDays($endCarbon) + 1) : 1;
-                        $timeLabel = ['half' => 'Half day', 'whole' => 'Whole day', 'n/a' => 'N/A'][$a->timeRequired] ?? ucfirst($a->timeRequired);
+                        $timeLabel = ['half' => 'Half day', 'whole' => 'Whole day', 'n/a' => 'Not set'][$a->timeRequired] ?? ucfirst($a->timeRequired);
                     @endphp
                     <div class="activity">
                         <div class="activity-title-row">
@@ -673,7 +673,7 @@
                         @endif
                         @if($a->items->count())
                             <div class="activity-line">
-                                <span class="label">Materials &amp; Items:</span>
+                                <span class="label">Materials:</span>
                                 @foreach($a->items as $it)
                                     @php
                                         $qtyTrim = $it->quantity !== null ? rtrim(rtrim(number_format((float) $it->quantity, 4, '.', ''), '0'), '.') : null;
@@ -690,7 +690,7 @@
                 @endforeach
             </div>
         @empty
-            <p style="color: #6b7280; font-style: italic;">No activities have been defined for this schedule.</p>
+            <p style="color: #6b7280; font-style: italic;">This season has no activities yet.</p>
         @endforelse
     </section>
 
@@ -702,8 +702,8 @@
     @if(!$exportActivitiesOnly && $schedule->irrigations->count() > 0)
         <section class="section">
             <h2 class="page-break">Irrigation Schedules</h2>
-            <p>Each entry shows the irrigation cycle, the task type, its priority for overlap resolution,
-               the lots it pertains to, and the workers responsible.</p>
+            <p>Each entry shows the irrigation, its task, its priority (when two overlap, the lower number wins),
+               its lots and the workers who do it.</p>
             @foreach($schedule->irrigations as $i)
                 @php
                     $iMeta = \App\Models\AsScheduleIrrigation::taskTypeMeta($i->taskType);
@@ -726,7 +726,7 @@
                         </span>
                         @if(!$exportHideCriticality)
                             <span class="irr-prio-badge" style="background: {{ $iPrioColor }}; color: {{ $iPrioTextColor }};">
-                                P{{ $iPrio }}
+                                Priority {{ $iPrio }}
                             </span>
                         @endif
                     </div>
@@ -764,7 +764,7 @@
                          offsets into concrete calendar dates the worker can act on. --}}
                     @if(!$iIsDateMode && $schedule->defaultGroupings->count() > 0)
                         <div class="irr-block-line">
-                            <span class="irr-block-label">Calendar coverage per group:</span>
+                            <span class="irr-block-label">Dates for each group:</span>
                         </div>
                         <ul class="irr-block-coverage">
                             @foreach($schedule->defaultGroupings as $g)
@@ -780,7 +780,7 @@
                                         · {{ $gStart->copy()->addDays((int) $i->startDay)->format('M j, Y') }}
                                         @if($i->endDay !== $i->startDay)
                                             → {{ $gStart->copy()->addDays((int) $i->endDay)->format('M j, Y') }}
-                                            ({{ ((int) $i->endDay - (int) $i->startDay) + 1 }}d)
+                                            ({{ ((int) $i->endDay - (int) $i->startDay) + 1 }} days)
                                         @endif
                                     @else
                                         <small class="muted">(no start date set)</small>

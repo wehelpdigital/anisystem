@@ -121,7 +121,7 @@ class DocEntryController extends BaseScheduleController
             'name.required' => 'Enter a tag name.',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $name = trim($request->input('name'));
@@ -175,20 +175,20 @@ class DocEntryController extends BaseScheduleController
             'files.*' => 'file|max:10240|mimes:jpg,jpeg,png,gif,webp,pdf,doc,docx,txt,xls,xlsx',
             'keepPaths' => 'nullable|array',
         ], [
-            'tagId.in' => 'That tag does not belong to this schedule.',
+            'tagId.in' => 'That tag is not in this season.',
             'files.*.mimes' => 'Allowed files: images, PDF, Word, Excel or TXT.',
             'files.*.max' => 'Each file must be 10 MB or smaller.',
         ]);
 
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $type = $request->input('type');
         $tagId = $type === AsScheduleDocEntry::TYPE_CUSTOM ? ($request->input('tagId') ?: null) : null;
 
         if ($type === AsScheduleDocEntry::TYPE_CUSTOM && ! $tagId) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => ['tagId' => ['Pick a tag for this document.']]]);
+            return $this->jsonFail('Pick a tag for this document.', 422, ['errors' => ['tagId' => ['Pick a tag for this document.']]]);
         }
 
         $content = HtmlSanitizer::rich($request->input('content'));
@@ -199,7 +199,7 @@ class DocEntryController extends BaseScheduleController
         $hasNewFiles = $request->hasFile('files');
         $keepsFiles = filled($request->input('keepPaths'));
         if (! $content && ! $title && ! $hasNewFiles && ! $keepsFiles) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => ['content' => ['Add some text or attach a file.']]]);
+            return $this->jsonFail('Add some text or attach a file.', 422, ['errors' => ['content' => ['Add some text or attach a file.']]]);
         }
 
         return [
@@ -219,7 +219,7 @@ class DocEntryController extends BaseScheduleController
     {
         if ($request->hasFile('files')
             && ! \App\Support\Tier::scheduleCan(\App\Models\AsCroppingSchedule::find($scheduleId), 'docUploads')) {
-            \App\Support\Tier::scheduleDenyFor(\App\Models\AsCroppingSchedule::find($scheduleId), 'docUploads', 'Attaching files to documentation comes with {plan}. The entry\'s words still save.');
+            \App\Support\Tier::scheduleDenyFor(\App\Models\AsCroppingSchedule::find($scheduleId), 'docUploads', 'Attaching files in Documentation comes with {plan}. The words you wrote are still saved.');
         }
         if (! $request->hasFile('files')) {
             return [];

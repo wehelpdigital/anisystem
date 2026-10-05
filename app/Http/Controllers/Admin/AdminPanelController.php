@@ -280,8 +280,8 @@ class AdminPanelController extends Controller
         }
 
         return response()->json(['success' => true,
-            'message' => 'Tier set to ' . (config('tiers.' . $data['tier'] . '.name') ?? $data['tier'])
-                . ($granted ? ' — ' . $granted . ' credits granted.' : '.'),
+            'message' => 'Plan set to ' . (config('tiers.' . $data['tier'] . '.name') ?? $data['tier'])
+                . ($granted ? '. ' . $granted . ' credits given.' : '.'),
         ]);
     }
 
@@ -325,7 +325,7 @@ class AdminPanelController extends Controller
         } catch (\Throwable $e) {
             Log::warning('Admin reset link failed: ' . $e->getMessage());
 
-            return response()->json(['success' => false, 'message' => 'The email could not be sent — check the mail settings.'], 500);
+            return response()->json(['success' => false, 'message' => 'The email could not be sent. Check the mail settings.'], 500);
         }
 
         /* The broker answers with a status, not an exception: one link per
@@ -333,7 +333,7 @@ class AdminPanelController extends Controller
            nothing. Reporting that as "sent" left an admin believing a mail
            had gone when it had not. */
         if ($status === Password::RESET_THROTTLED) {
-            return response()->json(['success' => false, 'message' => 'A reset link went to ' . $u->email . ' less than a minute ago — give it a moment before sending another.'], 429);
+            return response()->json(['success' => false, 'message' => 'A reset link went to ' . $u->email . ' less than a minute ago. Wait a minute before sending another.'], 429);
         }
         if ($status !== Password::RESET_LINK_SENT) {
             return response()->json(['success' => false, 'message' => 'The link could not be sent: ' . __($status)], 422);
@@ -353,7 +353,7 @@ class AdminPanelController extends Controller
 
         $u->forceFill(['password' => Hash::make($data['password'])])->save();
 
-        return response()->json(['success' => true, 'message' => 'Password changed. Tell the client — it is not emailed.']);
+        return response()->json(['success' => true, 'message' => 'Password changed. It is not emailed, so tell the client yourself.']);
     }
 
     /**
@@ -416,7 +416,7 @@ class AdminPanelController extends Controller
         }
 
         return response()->json(['success' => true, 'message' => sprintf(
-            '%s%s credits — %s now has %s.',
+            '%s%s credits. %s now has %s.',
             $credits > 0 ? '+' : '−', rtrim(rtrim(number_format(abs($credits), 2), '0'), '.'),
             $target->firstName ?: $target->email, number_format((float) $balance, 2)
         )]);
@@ -436,10 +436,10 @@ class AdminPanelController extends Controller
         $data = $request->validate(['admin' => 'required|boolean']);
 
         if ($u->id === Auth::id()) {
-            return response()->json(['success' => false, 'message' => 'Your own hat stays on your own head.'], 422);
+            return response()->json(['success' => false, 'message' => 'You cannot change your own admin access.'], 422);
         }
         if (! $data['admin'] && (int) $u->adminUserId > 0) {
-            return response()->json(['success' => false, 'message' => 'This admin is linked to the mother site — manage that link there.'], 422);
+            return response()->json(['success' => false, 'message' => 'This admin is linked to the mother site. Change their access there.'], 422);
         }
 
         $u->forceFill(['panelAdmin' => $data['admin'] ? 1 : 0])->save();
@@ -515,7 +515,7 @@ class AdminPanelController extends Controller
         if (! \App\Support\AdminCaptcha::check($u->id, $data['captcha'])) {
             return response()->json([
                 'success' => false,
-                'message' => 'Those characters did not match, or the picture went stale. Here is a fresh one.',
+                'message' => 'Those characters did not match, or the picture expired. Here is a new one.',
                 'data' => ['svg' => \App\Support\AdminCaptcha::issue($u->id)],
             ], 422);
         }
@@ -546,7 +546,7 @@ class AdminPanelController extends Controller
         $request->session()->put('admin_impersonator', Auth::id());
         Auth::login($u);
 
-        return response()->json(['success' => true, 'message' => 'You are now seeing the app as ' . ($u->firstName ?: $u->email) . '.', 'data' => ['redirect' => '/app']]);
+        return response()->json(['success' => true, 'message' => 'You are now logged in as ' . ($u->firstName ?: $u->email) . '.', 'data' => ['redirect' => '/app']]);
     }
 
     /**

@@ -83,8 +83,8 @@ class CompareController extends BaseScheduleController
         'labor' => [
             'metrics' => [
                 'cost' => ['Labor cost', 'money', 'lower', 'coins', null, false],
-                'workdays' => ['Worker-days', 'num1', null, 'people', 'whole days, plus half days counted as half', false],
-                'perDay' => ['Cost per worker-day', 'money', 'lower', 'scale', null, false],
+                'workdays' => ['Worker days', 'num1', null, 'people', 'whole days, plus half days counted as half', false],
+                'perDay' => ['Cost per worker day', 'money', 'lower', 'scale', null, false],
                 'assignments' => ['Worker assignments', 'count', null, 'list', null, false],
                 'activities' => ['Activities counted', 'count', null, 'check', null, false],
             ],
@@ -130,7 +130,7 @@ class CompareController extends BaseScheduleController
                 'revenue' => ['Money in', 'money', 'higher', 'coins', null, false],
                 'cost' => ['Money out', 'money', 'lower', 'scale', null, false],
                 'margin' => ['Margin', 'pct', 'higher', 'percent', 'profit as a share of money in', false],
-                'workerDays' => ['Worker-days', 'num1', null, 'people', 'whole days, plus half days counted as half', false],
+                'workerDays' => ['Worker days', 'num1', null, 'people', 'whole days, plus half days counted as half', false],
             ],
             'groups' => [
                 'scores' => ['The scores, one by one', 'score', 'out of 100', false, true],
@@ -159,7 +159,7 @@ class CompareController extends BaseScheduleController
                 'yieldValue' => ['Harvest value', 'money', 'higher', 'coins', 'yield times the price it sold at', false],
                 'steps' => ['Steps done', 'count', null, 'list', null, false],
                 'span' => ['Days from first step to last', 'days', null, 'clock', null, false],
-                'crewDays' => ['Crew-days', 'num1', null, 'people', 'workers times whole or half days', false],
+                'crewDays' => ['Crew days', 'num1', null, 'people', 'workers times whole or half days', false],
                 'materials' => ['Material lines', 'count', null, 'box', null, false],
                 'skipped' => ['Planned, never ticked', 'count', 'lower', 'alert', null, false],
             ],
@@ -311,10 +311,10 @@ class CompareController extends BaseScheduleController
         $a = $found->get($aId);
         $b = $found->get($bId);
         if (! $a || ! $b) {
-            return $this->jsonFail('One of those reports is no longer on its shelf. Pick again.', 422);
+            return $this->jsonFail('One of those reports was deleted. Pick again.', 422);
         }
         if ($a->kind !== $b->kind) {
-            return $this->jsonFail('Compare two reports of the same type — apples with apples.', 422);
+            return $this->jsonFail('Pick two reports of the same kind.', 422);
         }
 
         // The season's own door, both times: a season this person may not
@@ -322,7 +322,7 @@ class CompareController extends BaseScheduleController
         $seasonA = $this->schedule($a->croppingScheduleId);
         $seasonB = (int) $b->croppingScheduleId === (int) $seasonA->id ? $seasonA : $this->schedule($b->croppingScheduleId);
         if (! Tier::scheduleCan($seasonA, 'reportsAll')) {
-            Tier::scheduleDenyFor($seasonA, 'reportsAll', 'Compare Reports comes with {plan} — every plan includes the Labor report.');
+            Tier::scheduleDenyFor($seasonA, 'reportsAll', 'Compare Reports comes with {plan}. Every plan has the Labor report.');
         }
         // The diary line belongs to the season the comparison lives on.
         $request->attributes->set('auditScheduleId', (int) $seasonA->id);
@@ -352,14 +352,14 @@ class CompareController extends BaseScheduleController
         $settings = AiSetting::current();
         $credits = app(AiCreditService::class);
         if (! $payer->canUseAi() || ! $settings->isUsable()) {
-            return $this->jsonFail('Anee\'s read needs the AI Technician on the farm\'s plan. You can still compare by hand.', 403);
+            return $this->jsonFail('Anee\'s read needs Anee on the farm\'s plan. You can still compare without her, for free.', 403);
         }
         $price = AiPrices::of('compare');
         $balance = $credits->balance((int) $payer->id);
         if ($balance < $price && ! $credits->unlimited((int) $payer->id)) {
             return $this->jsonFail('Anee\'s read costs ' . $price . ' credits and '
                 . ((int) $payer->id === (int) Auth::id() ? 'you have ' : 'the farm has ')
-                . number_format((int) floor($balance)) . '. You can still compare by hand.', 402, ['outOfCredits' => true]);
+                . number_format((int) floor($balance)) . '. You can still compare without her, for free.', 402, ['outOfCredits' => true]);
         }
 
         /* One in flight at a time: a double press must not buy two. A row
@@ -393,7 +393,7 @@ class CompareController extends BaseScheduleController
             try {
                 AsFarmReport::where('id', $id)->where('status', 'pending')->update([
                     'status' => 'failed', 'deleteStatus' => 0,
-                    'error' => 'The comparison took too long and was stopped. Nothing was charged — please try again.',
+                    'error' => 'The comparison took too long and was stopped. Nothing was charged. Please try again.',
                 ]);
             } catch (\Throwable $e) {
                 // Nothing more to do at shutdown.
@@ -445,13 +445,13 @@ class CompareController extends BaseScheduleController
             $analysis = $result['data'];
             if ($analysis === null) {
                 Log::warning('compare: unparsable answer', ['head' => mb_substr((string) ($result['text'] ?? ''), 0, 400)]);
-                throw new \RuntimeException($result['error'] ?? 'Anee\'s read came back unreadable. Nothing was charged — please try again.');
+                throw new \RuntimeException($result['error'] ?? 'Anee\'s answer could not be read. Nothing was charged. Please try again.');
             }
 
             $row = AsFarmReport::find($id);
             $note = AiUsage::record('compare', (int) $row->userId, $payerId, $id, $settings, $result, $price);
             $credits->chargeAllowingNegative($payerId, (float) $price,
-                mb_substr('Comparison analysis — ' . mb_substr((string) $row->title, 0, 140) . $note, 0, 250));
+                mb_substr('Comparison analysis: ' . mb_substr((string) $row->title, 0, 140) . $note, 0, 250));
 
             $rep = (array) $row->report;
             $rep['analysis'] = $analysis;
@@ -505,8 +505,8 @@ class CompareController extends BaseScheduleController
         if ($r->status === 'pending') {
             if ($this->dead($r)) {
                 $why = ($r->created_at && $r->created_at->lt(now()->subMinutes(15)))
-                    ? 'The comparison took too long and was stopped. Nothing was charged — please try again.'
-                    : 'Anee was interrupted mid-way (the server restarted under her). Nothing was charged — please run it again.';
+                    ? 'The comparison took too long and was stopped. Nothing was charged. Please try again.'
+                    : 'Anee was stopped halfway because the server restarted. Nothing was charged. Please run it again.';
                 AsFarmReport::where('id', $id)->where('status', 'pending')->update([
                     'status' => 'failed', 'deleteStatus' => 0, 'error' => $why,
                 ]);
@@ -619,7 +619,7 @@ class CompareController extends BaseScheduleController
             return $this->jsonFail('Give it a name.', 422);
         }
         if (mb_strlen($title) > 191 || mb_strlen($desc) > 2000) {
-            return $this->jsonFail('That is longer than a name or description can be.', 422);
+            return $this->jsonFail('That name or description is too long.', 422);
         }
         $r->update(['title' => $title, 'description' => $desc !== '' ? $desc : null]);
 
@@ -640,7 +640,7 @@ class CompareController extends BaseScheduleController
         }
         $r->update(['deleteStatus' => 0]);
 
-        return $this->jsonOk('Comparison removed.');
+        return $this->jsonOk('Comparison deleted.');
     }
 
     /* ============================== DOORS =============================== */
@@ -653,14 +653,14 @@ class CompareController extends BaseScheduleController
     private function gate(bool $write = false, bool $page = false): void
     {
         if (! Tier::farmCan('reportsAll')) {
-            Tier::farmDenyFor('reportsAll', 'Compare Reports comes with {plan} — every plan includes the Labor report.');
+            Tier::farmDenyFor('reportsAll', 'Compare Reports comes with {plan}. Every plan has the Labor report.');
         }
         $may = WorkerContext::canView() && ($write ? WorkerContext::canWriteModule('reports') : WorkerContext::canUseModule('reports'));
         if ($may) {
             return;
         }
         $message = $write && WorkerContext::canUseModule('reports')
-            ? 'You have view-only access to Reports on this farm.'
+            ? 'You can only view Reports on this farm.'
             : 'The farm owner has not given you access to Reports.';
         if ($page) {
             abort(response()->view('sm.no-access', ['what' => 'Reports', 'backUrl' => null, 'backLabel' => null], 403));
@@ -1144,7 +1144,7 @@ class CompareController extends BaseScheduleController
         $months = [];
         foreach ($pm as $ym => $v) {
             $spend = is_array($v) ? (float) ($v['spend'] ?? 0) : (float) $v;
-            $label = preg_match('/^\d{4}-\d{2}$/', (string) $ym) ? \Carbon\Carbon::createFromFormat('Y-m-d', $ym . '-01')->format('M Y') : (string) $ym;
+            $label = preg_match('/^\d{4}-\d{2}$/', (string) $ym) ? \Carbon\Carbon::createFromFormat('Y-m-d', $ym . '-01')->format('M Y') : ((string) $ym === '—' ? 'No date' : (string) $ym);
             $months[] = [$label, $spend];
         }
 

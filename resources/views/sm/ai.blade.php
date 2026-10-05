@@ -470,7 +470,7 @@
         {{-- Born hidden; the script seats it on the shell's toolbar — the
              same line as the hamburger, per the owner — and the module-shown
              event keeps it there only while this module holds the stage. --}}
-        <button type="button" class="btn btn-white btn-sm hidden" id="aiMenuBtn" title="AI options" aria-label="AI options" aria-haspopup="dialog" style="margin-left:auto">
+        <button type="button" class="btn btn-white btn-sm hidden" id="aiMenuBtn" title="{{ $settings->assistantName }} options" aria-label="{{ $settings->assistantName }} options" aria-haspopup="dialog" style="margin-left:auto">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>
         </button>
     @endif
@@ -481,7 +481,7 @@
             <span id="aiLinkChipText">{{ $conversation?->link_label }}</span>
             <button type="button" id="aiLinkChipClear" class="text-brand-500 hover:text-red-600 font-bold" aria-label="Remove link">✕</button>
         </span>
-        <span class="text-xs text-gray-400">This chat is linked here.</span>
+        <span class="text-xs text-gray-400">Linked to this chat.</span>
     </div>
 
     @unless ($settings->isUsable())
@@ -491,7 +491,7 @@
             </span>
             <div>
                 <h3>{{ $settings->assistantName }} is not switched on yet</h3>
-                <p>It will show here once it is set up.</p>
+                <p>She will answer here once she is turned on.</p>
             </div>
         </div>
     @endunless
@@ -501,9 +501,9 @@
             <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>
         </span>
         <div>
-            <h3>You have no AI Credits left</h3>
+            <h3>You have no AI credits left</h3>
             <p>A question costs about 4 credits{{ $aiPerPhoto > 0 ? ', plus ' . $aiPerPhotoTxt . ' for each photo' : '' }}.</p>
-            <a href="{{ route('ai.credits') }}" class="btn btn-accent btn-sm mt-2">Get AI Credits</a>
+            <a href="{{ route('ai.credits') }}" class="btn btn-accent btn-sm mt-2">Get AI credits</a>
         </div>
     </div>
 
@@ -589,7 +589,7 @@
                         <p class="ai-howto-lbl">For example</p>
                         <p class="ai-howto-eg"><b>Not</b> "my rice is sick"</p>
                         <span class="ai-howto-rule" aria-hidden="true"></span>
-                        <p class="ai-howto-eg"><b>Try</b> {{ \App\Support\Region::ph() ? '"RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"' : '"I planted P1197 corn six weeks ago. The lower leaves are yellowing from the edges in, the newest leaves are still green. I side-dressed urea ten days ago and it has rained hard since. What is going on?"' }}</p>
+                        <p class="ai-howto-eg"><b>Try</b> {{ \App\Support\Region::ph() ? '"RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"' : '"I planted P1197 corn six weeks ago. The lower leaves are yellowing from the edges in, the newest leaves are still green. I side dressed urea ten days ago and it has rained hard since. What is going on?"' }}</p>
                         <a href="#" class="anee-guide-link" data-anee-guide>Read the full guide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a>
                     </div>
                 </div>
@@ -614,7 +614,7 @@
             @endphp
             <button type="button" class="ai-see" id="aiUsePlan" aria-pressed="false"
                     data-plan-tokens="{{ (int) ($planTokens ?? 0) }}"
-                    title="Sends this whole season with your question: each lot today, the work done, notes, team and store">
+                    title="Sends this whole season with your question: each lot today, the work done, notes, team and inventory">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.4 1.8 1.8-5.4M9 20l11-11a2.83 2.83 0 10-4-4L5 16l4 4z"/></svg>
                 This season's plan
                 {{-- The price is on the switch, not in a footnote. Turning
@@ -702,7 +702,7 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-4">
-        <p class="text-sm text-gray-600">Pin this chat to a day or an activity in <strong>{{ $schedule->title }}</strong>. Anee keeps it in mind when she answers.</p>
+        <p class="text-sm text-gray-600">Link this chat to a day or an activity in <strong>{{ $schedule->title }}</strong>. Anee keeps it in mind when she answers.</p>
         <div>
             <label class="form-label" for="aiLinkDate">Day</label>
             <div class="flex gap-2">
@@ -712,7 +712,7 @@
                         <option value="{{ $d }}">{{ AiCarbon::parse($d)->format('D, M j, Y') }}</option>
                     @endforeach
                 </select>
-                <button type="button" id="aiLinkDayBtn" class="btn btn-primary shrink-0">Pin day</button>
+                <button type="button" id="aiLinkDayBtn" class="btn btn-primary shrink-0">Link day</button>
             </div>
         </div>
         <div>
@@ -724,11 +724,11 @@
                         <option value="{{ $a['id'] }}">{{ $a['date'] }} · {{ \Illuminate\Support\Str::limit($a['title'], 44) }}</option>
                     @endforeach
                 </select>
-                <button type="button" id="aiLinkActBtn" class="btn btn-primary shrink-0">Pin activity</button>
+                <button type="button" id="aiLinkActBtn" class="btn btn-primary shrink-0">Link activity</button>
             </div>
         </div>
         @if ($aiDays->isEmpty())
-            <p class="text-sm text-gray-400">This plan has no activities with dates yet.</p>
+            <p class="text-sm text-gray-400">This season has no activities with dates yet.</p>
         @endif
     </div>
     <div class="sheet-footer">
@@ -758,7 +758,7 @@
             ])
         @endforeach
         @if ($conversations->isEmpty())
-            <p class="text-sm text-gray-500 text-center py-6" data-sessions-empty>No questions yet for this plan.</p>
+            <p class="text-sm text-gray-500 text-center py-6" data-sessions-empty>No questions yet for this season.</p>
         @endif
         <template id="aiSessionSheetRowTpl">@include('sm.partials.ai-session-sheet-row', [
             'id' => '__ID__',
@@ -782,7 +782,7 @@
     <div class="sheet-body space-y-1">
         <button type="button" class="ai-attach-opt" id="aiNewChatBtn">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg></span>
-            <span>New session<span class="sub">Start a fresh question</span></span>
+            <span>New chat<span class="sub">Start a new question</span></span>
         </button>
         <button type="button" class="ai-attach-opt" id="aiHistoryBtn">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
@@ -790,7 +790,7 @@
         </button>
         <button type="button" class="ai-attach-opt" id="aiLinkBtn">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.83 10.17a4 4 0 010 5.66l-3 3a4 4 0 11-5.66-5.66l1.5-1.5m6.33-1.83a4 4 0 000-5.66l-1.5-1.5"/></svg></span>
-            <span>Link<span class="sub">Link this chat to a day or activity</span></span>
+            <span>Link to a day<span class="sub">Link this chat to a day or activity</span></span>
         </button>
         <button type="button" class="ai-attach-opt" id="aiMenuToTask">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></span>
@@ -873,7 +873,7 @@ const __init = () => {
         link: @json(route('ai.conversation.link')),
     };
     const COIN = '<svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>';
-    const buyCard = (msg) => `<div class="ai-buyc"><span class="ico">${COIN}</span><div><h3>You're out of AI Credits</h3><p>${escapeHtml(msg)}</p><a class="btn btn-accent btn-sm mt-2" href="${escapeHtml(URLS.credits)}">Get AI Credits</a></div></div>`;
+    const buyCard = (msg) => `<div class="ai-buyc"><span class="ico">${COIN}</span><div><h3>You're out of AI credits</h3><p>${escapeHtml(msg)}</p><a class="btn btn-accent btn-sm mt-2" href="${escapeHtml(URLS.credits)}">Get AI credits</a></div></div>`;
     const AVATAR = @json($settings->faceUrl());
     const MY_FACE = @json(\App\Support\ChatFace::mine());
     const BOT = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/></svg>';
@@ -993,7 +993,7 @@ const __init = () => {
         btn.innerHTML = on ? SPIN : sendIdleHtml;
         btn.setAttribute('aria-label', on ? 'Sending' : 'Send');
         const hint = byId('aiHint');
-        if (hint) hint.textContent = on ? 'Asking the technician…' : (hint.dataset.idle || '');
+        if (hint) hint.textContent = on ? 'Asking Anee…' : (hint.dataset.idle || '');
     }
 
     const input = byId('aiText');

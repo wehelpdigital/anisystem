@@ -209,7 +209,7 @@
             @endforeach
         </span>
         <span class="min-w-0 grow">
-            <span class="block text-sm font-bold text-gray-900" style="font-family:var(--font-heading)">{{ $friendRequestCount }} co-farmer {{ Str::plural('request', $friendRequestCount) }}</span>
+            <span class="block text-sm font-bold text-gray-900" style="font-family:var(--font-heading)">{{ $friendRequestCount }} cofarmer {{ Str::plural('request', $friendRequestCount) }}</span>
             <span class="block text-xs text-gray-500 truncate">{{ $friendRequests->first()->full_name }}{{ $friendRequestCount > 1 ? ' and others are' : ' is' }} waiting for you</span>
         </span>
         <svg class="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -446,7 +446,7 @@
         <div class="card p-8 text-center">
             <div class="empty-tile">🏠</div>
             <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">{{ \App\Support\Region::ph() ? 'Tahimik pa ang kapitbahayan' : 'The neighbourhood is quiet so far' }}</p>
-            <p class="text-sm text-gray-500 mt-1">{{ \App\Support\Region::ph() ? "Ikaw ang mauna — share what's happening sa bukid mo." : "Be the first — share what's happening on your farm." }}</p>
+            <p class="text-sm text-gray-500 mt-1">{{ \App\Support\Region::ph() ? "Ikaw ang mauna. Share what's happening sa bukid mo." : "Be the first. Share what's happening on your farm." }}</p>
         </div>
     @endforelse
     {{-- A wall too short for the plan to reach still gets one of each. --}}
@@ -472,7 +472,7 @@
                      the honest answer for it. --}}
                 data-before="{{ \Illuminate\Support\Carbon::parse($posts->last()->lastActivityAt ?: $posts->last()->created_at)->toIso8601String() }}">Load more posts</button>
         <div class="feed-spin" id="feedSpin" role="status" aria-label="Loading older posts" hidden><i></i><i></i><i></i></div>
-        <p class="wall-end" id="feedEnd" hidden>🌾 {{ \App\Support\Region::ph() ? 'Nasa dulo ka na' : 'You have reached the end' }} — that's the whole wall for now.</p>
+        <p class="wall-end" id="feedEnd" hidden>🌾 {{ \App\Support\Region::ph() ? 'Nasa dulo ka na' : 'You have reached the end' }}. That's the whole wall for now.</p>
     </div>
 @endif
 </div>{{-- /plaza-center --}}

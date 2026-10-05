@@ -39,10 +39,10 @@
         // is an image path, and the loop below knows the difference.
         ['AiAccess', 'images/anee/avatar-160.jpg', 'Chat Anee', 'Ask Anee questions. Answers use YOUR credits, not theirs.'],
         ['CameraAccess', '📷', 'Camera', 'Take photos and save them to this farm.'],
-        ['VideoAccess', '🎥', 'Video record', 'Record clips and attach them.'],
+        ['VideoAccess', '🎥', 'Record video', 'Record clips and attach them.'],
         // Its own switch: speaking a note is what a farmer does with their
         // hands full, and an owner may want that without lending a camera.
-        ['VoiceAccess', '🎙️', 'Voice record', 'Speak a note instead of typing it.'],
+        ['VoiceAccess', '🎙️', 'Voice notes', 'Speak a note instead of typing it.'],
     ];
 @endphp
 <div class="wr-block" data-wr-block>
@@ -70,7 +70,7 @@
                     <button type="button" data-wr-val="none" title="No access">None</button>
                 @endif
                 <button type="button" data-wr-val="view" title="View only">View</button>
-                <button type="button" data-wr-val="edit" title="Can edit &amp; create">Edit</button>
+                <button type="button" data-wr-val="edit" title="Can edit and create">Edit</button>
             </span>
         </div>
     @endforeach

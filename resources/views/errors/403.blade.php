@@ -1,5 +1,5 @@
 @extends('errors.layout')
 @section('code', '403')
 @section('emoji', '🚧')
-@section('title', 'This gate is closed')
-@section('message', "You don't have permission to view this page. If you think this is a mistake, please contact support.")
+@section('title', 'You cannot open this page')
+@section('message', "Your account does not have access to this page. If you think this is a mistake, please contact support.")

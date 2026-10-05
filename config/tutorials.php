@@ -58,7 +58,7 @@ return [
 
         'hub' => [
             'title' => 'Inside a schedule',
-            'blurb' => 'This is one season and all of its modules. Tap a tile to open the plan, your lots, your workers, your records and the rest.',
+            'blurb' => 'This is one season and all of its tools. Tap a tile to open the plan, your lots, your workers, your records and the rest.',
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 

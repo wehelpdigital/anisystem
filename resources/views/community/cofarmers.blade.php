@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'My Co-Farmers — Community')
+@section('title', 'My Cofarmers · Community')
 @section('body-class', 'plaza-ground')
 @section('page-title', 'Community')
 @section('help-key', 'community-cofarmers')
-@section('page-subtitle', 'Your co-farmers and their latest')
+@section('page-subtitle', 'Your cofarmers and their latest news')
 
 @push('head')
 @include('community.partials.plaza-css')
@@ -39,7 +39,7 @@
      The nav pill already says where you are; a heading block on top of it
      was the one thing keeping the two pages from reading as one design. --}}
 <div class="cf-head cf-head-acts" style="margin-top:0">
-    <button type="button" id="cfSearchBtn" class="btn btn-outline btn-sm" title="Search your co-farmers" aria-label="Search your co-farmers">
+    <button type="button" id="cfSearchBtn" class="btn btn-outline btn-sm" title="Search your cofarmers" aria-label="Search your cofarmers">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
         Search
     </button>
@@ -52,17 +52,17 @@
 <div class="sheet hidden" id="cfSearchSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Search your co-farmers</h3>
+        <h3 class="sheet-title">Search your cofarmers</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body" style="padding-bottom:1.1rem">
         @include('community.partials.live-search', [
             'id' => 'cfFind',
             'value' => $q ?? '',
-            'placeholder' => 'Search co-farmers…',
-            'label' => 'Search your co-farmers — name, place or what they do',
+            'placeholder' => 'Search cofarmers…',
+            'label' => 'Search your cofarmers by name, place or work',
         ])
-        <button type="button" class="btn btn-primary w-full" data-sheet-close>Show the co-farmers</button>
+        <button type="button" class="btn btn-primary w-full" data-sheet-close>Show cofarmers</button>
     </div>
 </div>
 
@@ -70,7 +70,7 @@
 @if ($friends->isEmpty())
     <div class="card p-8 text-center">
         <div class="empty-tile">🤝</div>
-        <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">{{ \App\Support\Region::ph() ? 'Wala ka pang co-farmers' : 'No co-farmers yet' }}</p>
+        <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">{{ \App\Support\Region::ph() ? 'Wala ka pang cofarmers' : 'No cofarmers yet' }}</p>
         <p class="text-sm text-gray-500 mt-1 mb-4">{{ \App\Support\Region::ph() ? 'Connect with members para makita mo dito ang mga balita nila.' : 'Connect with members to see their news here.' }}</p>
         <a href="{{ route('community.connect.members') }}" class="btn btn-primary">Find members</a>
     </div>
@@ -84,9 +84,9 @@
     <div class="card p-8 text-center" id="cfNone" hidden>
         <div class="empty-tile">🔎</div>
         <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">{{ \App\Support\Region::ph() ? 'Walang tugma' : 'No match' }}</p>
-        <p class="text-sm text-gray-500 mt-1">Nobody here answers to that — by name, by place, or by what they do.</p>
+        <p class="text-sm text-gray-500 mt-1">No cofarmer matches that name, place or work.</p>
     </div>
-    @include('partials.list-pager', ['noun' => 'co-farmer', 'paginator' => $friends,
+    @include('partials.list-pager', ['noun' => 'cofarmer', 'paginator' => $friends,
         'rowsUrl' => route('community.cofarmers') . '?rows=1'])
 @endif
 
@@ -128,7 +128,7 @@
             else {
                 note.hidden = false;
                 note.innerHTML = count
-                    ? count + ' ' + (count === 1 ? 'co-farmer' : 'co-farmers') + ' matching <b></b>.'
+                    ? count + ' ' + (count === 1 ? 'cofarmer' : 'cofarmers') + ' matching <b></b>.'
                     : ((window.ANEE_REGION || {}).ph === false ? 'No match for <b></b>.' : 'Walang tugma sa <b></b>.');
                 note.querySelector('b').textContent = '\u201c' + query + '\u201d';
             }

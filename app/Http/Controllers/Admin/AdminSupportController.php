@@ -205,7 +205,7 @@ class AdminSupportController extends Controller
             }
         }
 
-        return response()->json(['success' => true, 'message' => 'Reply sent — the client is notified in the app and by email.']);
+        return response()->json(['success' => true, 'message' => 'Reply sent. The client is told in the app and by email.']);
     }
 
     /**
@@ -254,22 +254,22 @@ class AdminSupportController extends Controller
             $hit = DB::table('as_support_canned')->where('id', (int) $data['id'])
                 ->where('deleteStatus', 1)->update($row);
             if (! $hit) {
-                return response()->json(['success' => false, 'message' => 'That template is gone already.'], 404);
+                return response()->json(['success' => false, 'message' => 'That saved reply was already removed.'], 404);
             }
 
-            return response()->json(['success' => true, 'message' => 'Template saved.']);
+            return response()->json(['success' => true, 'message' => 'Saved reply updated.']);
         }
 
         DB::table('as_support_canned')->insert($row + ['deleteStatus' => 1, 'created_at' => now()]);
 
-        return response()->json(['success' => true, 'message' => 'Template added to the shelf.']);
+        return response()->json(['success' => true, 'message' => 'Saved reply added.']);
     }
 
     public function deleteCanned(int $id)
     {
         DB::table('as_support_canned')->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
-        return response()->json(['success' => true, 'message' => 'Template removed.']);
+        return response()->json(['success' => true, 'message' => 'Saved reply removed.']);
     }
 
     /**

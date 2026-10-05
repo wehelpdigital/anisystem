@@ -73,7 +73,7 @@ class ActivityVersionController extends BaseScheduleController
             'versionName.required' => 'Give the new version a name (e.g. "Budget Cut V1").',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         // Resolve the source version (if any) and verify it belongs to this
@@ -85,7 +85,7 @@ class ActivityVersionController extends BaseScheduleController
                 ->where('id', (int) $request->sourceVersionId)
                 ->first();
             if (!$source) {
-                return $this->jsonFail('Source version not found for this schedule.', 404);
+                return $this->jsonFail('The version to copy from was not found in this season.', 404);
             }
         }
 
@@ -121,7 +121,7 @@ class ActivityVersionController extends BaseScheduleController
                 return $version;
             });
         } catch (\Throwable $e) {
-            return $this->jsonFail('Failed to create version: ' . $e->getMessage(), 500);
+            return $this->jsonFail('Could not create the version: ' . $e->getMessage(), 500);
         }
 
         return $this->jsonOk('Version created.', ['data' => $newVersion]);
@@ -141,7 +141,7 @@ class ActivityVersionController extends BaseScheduleController
             'description' => 'nullable|string|max:5000',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $version = AsScheduleActivityVersion::active()
@@ -177,12 +177,12 @@ class ActivityVersionController extends BaseScheduleController
                 $this->activateVersion($schedule->id, $id);
             });
         } catch (\Throwable $e) {
-            return $this->jsonFail('Failed to switch version: ' . $e->getMessage(), 500);
+            return $this->jsonFail('Could not switch to that version: ' . $e->getMessage(), 500);
         }
 
         $this->broadcastBoard($schedule, 'version-active', ['versionId' => $version->id], null);
 
-        return $this->jsonOk('Active version switched.', ['data' => $version->fresh()]);
+        return $this->jsonOk('Now using this version.', ['data' => $version->fresh()]);
     }
 
     /**
@@ -230,7 +230,7 @@ class ActivityVersionController extends BaseScheduleController
                 }
             });
         } catch (\Throwable $e) {
-            return $this->jsonFail('Failed to delete version: ' . $e->getMessage(), 500);
+            return $this->jsonFail('Could not delete the version: ' . $e->getMessage(), 500);
         }
 
         return $this->jsonOk('Version deleted.');
@@ -253,7 +253,7 @@ class ActivityVersionController extends BaseScheduleController
             'globalActivityNote' => 'nullable|string|max:500000',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $version = AsScheduleActivityVersion::active()

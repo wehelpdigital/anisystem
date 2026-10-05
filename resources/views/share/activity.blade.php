@@ -36,7 +36,7 @@
                     {{ $startC->format('l, M j, Y') }}@if($isRange) → {{ $endC->format('M j') }}@endif
                 </span>
             @else
-                <span class="badge badge-gray">Unscheduled</span>
+                <span class="badge badge-gray">No date yet</span>
             @endif
         </div>
 
@@ -53,12 +53,12 @@
         @endif
 
         @if($activity->imageUrl())
-            <div class="mt-4"><img src="{{ $activity->imageUrl() }}" alt="Reference" loading="lazy" class="rounded-lg max-h-80 w-auto"></div>
+            <div class="mt-4"><img src="{{ $activity->imageUrl() }}" alt="Reference photo" loading="lazy" class="rounded-lg max-h-80 w-auto"></div>
         @endif
 
         @if($activity->workers->count())
             <div class="mt-4">
-                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Assigned</p>
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Workers</p>
                 <div class="flex flex-wrap gap-1.5">
                     @foreach($activity->workers as $w)
                         <span class="item-tag worker-tag">{{ $workerAlias[$w->id] ?? $w->workerName }}</span>

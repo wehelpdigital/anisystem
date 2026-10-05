@@ -45,7 +45,7 @@ class AneeChatGuide
         ['kind' => 'callout', 'tone' => 'good', 'title' => 'Like this',
             'text' => "\"RC222 ang tanim ko, 45 DAT. Naninilaw ang gilid ng mga dahon, lalo na sa mga lumang dahon. Nag-urea ako 10 araw na ang nakalipas, isang sako bawat ektarya. Sobrang maulan nitong linggo. Ano ang problema at ano ang dapat kong gawin?\""],
         ['kind' => 'callout', 'tone' => 'good', 'title' => 'Or like this',
-            'text' => "\"Yellow corn P3585, 40 days after planting. The lower leaves are yellowing from the tip down in a V shape; the new leaves are still green. I side-dressed 2 bags of urea per hectare two weeks ago and it has rained hard since. Is it nitrogen, and should I apply more?\""],
+            'text' => "\"Yellow corn P3585, 40 days after planting. The lower leaves are yellowing from the tip down in a V shape; the new leaves are still green. I side dressed 2 bags of urea per hectare two weeks ago and it has rained hard since. Is it nitrogen, and should I apply more?\""],
 
         ['kind' => 'heading', 'text' => 'Sending photos'],
         ['kind' => 'steps', 'items' => [
@@ -78,6 +78,6 @@ class AneeChatGuide
         ]],
 
         ['kind' => 'callout', 'tone' => 'note', 'title' => 'Save your credits',
-            'text' => "Spell product names carefully, give numbers with their units (bags per hectare, ml per 16-liter tank), and read the whole answer before you ask again."],
+            'text' => "Spell product names carefully, give numbers with their units (bags per hectare, ml per 16 liter tank), and read the whole answer before you ask again."],
     ];
 }

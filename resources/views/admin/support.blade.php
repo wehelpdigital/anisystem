@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title', 'Support')
-@section('subtitle', 'Tickets, answered from this side')
+@section('subtitle', 'Answer the help requests clients send')
 
 {{-- The sticky header's own row for this page. Two rooms on one page --
      the tickets, and the shelf of canned answers a reply can start from --
@@ -11,7 +11,7 @@
     <div class="ad-seg" id="tkSeg" data-on="0" role="tablist" aria-label="Support rooms">
         <span class="ad-seg-thumb" aria-hidden="true"></span>
         <button type="button" class="is-on" id="tabBtnTickets" role="tab" aria-selected="true">Tickets</button>
-        <button type="button" id="tabBtnCanned" role="tab" aria-selected="false">Canned responses</button>
+        <button type="button" id="tabBtnCanned" role="tab" aria-selected="false">Saved replies</button>
     </div>
     <div class="ad-fold" id="tkTools">
         <div class="space-y-2">
@@ -37,7 +37,7 @@
             <div id="tkList"></div>
             <div id="tkEmpty" class="hidden text-center py-10">
                 <p class="font-bold text-gray-900">No tickets here</p>
-                <p class="text-sm text-gray-400">Quiet is good.</p>
+                <p class="text-sm text-gray-400">When a client asks for help, the ticket shows here.</p>
             </div>
         </div>
         <div class="ad-more" id="tkMore" hidden><span class="ad-spin"></span> Loading more…</div>
@@ -46,7 +46,7 @@
     <div id="tabCanned" class="hidden">
         <div class="card p-3.5 mb-3 space-y-2">
             <p class="font-bold text-sm text-gray-900">Merge fields</p>
-            <p class="text-xs text-gray-400 -mt-1.5">Write these into a template (or any reply) and they become the client's own facts at send time. Tap one to copy it.</p>
+            <p class="text-xs text-gray-400 -mt-1.5">Put these in a saved reply or any reply. When it is sent, each one is swapped for the client's own details. Tap one to copy it.</p>
             <div class="flex flex-wrap gap-1.5" id="mfChips">
                 <button type="button" class="chip" data-mf="{first_name}">{first_name}</button>
                 <button type="button" class="chip" data-mf="{last_name}">{last_name}</button>
@@ -58,8 +58,8 @@
         </div>
 
         <div class="card p-3.5 mb-3 space-y-2">
-            <p class="font-bold text-sm text-gray-900" id="cnFormTitle">New template</p>
-            <input type="text" id="cnTitle" class="form-input" maxlength="120" placeholder="What this answer is for — e.g. Welcome & first steps">
+            <p class="font-bold text-sm text-gray-900" id="cnFormTitle">New saved reply</p>
+            <input type="text" id="cnTitle" class="form-input" maxlength="120" placeholder="What this answer is for, e.g. Welcome and first steps">
             <div class="tk-toolbar" data-editor="cnBody">
                 <button type="button" data-cmd="bold" title="Bold"><b>B</b></button>
                 <button type="button" data-cmd="italic" title="Italic"><i>I</i></button>
@@ -70,15 +70,15 @@
             <input type="hidden" id="cnId" value="">
             <div class="flex gap-2">
                 <button type="button" class="btn btn-white btn-sm hidden" id="cnCancel">Cancel edit</button>
-                <button type="button" class="btn btn-primary btn-sm flex-1" id="cnSave">Save template</button>
+                <button type="button" class="btn btn-primary btn-sm flex-1" id="cnSave">Save reply</button>
             </div>
         </div>
 
         <div class="card !p-0 overflow-hidden">
             <div id="cnList"></div>
             <div id="cnEmpty" class="hidden text-center py-10">
-                <p class="font-bold text-gray-900">The shelf is empty</p>
-                <p class="text-sm text-gray-400">Write the first answer above.</p>
+                <p class="font-bold text-gray-900">No saved replies yet</p>
+                <p class="text-sm text-gray-400">Write your first one above.</p>
             </div>
         </div>
     </div>
@@ -165,11 +165,11 @@
             <button type="button" data-cmd="link" title="Link">🔗</button>
             <button type="button" id="tkAttachImg" title="Attach an image">🖼️</button>
             <button type="button" id="tkAttachVid" title="Attach a video">🎥</button>
-            <select id="tkCanned" aria-label="Insert a canned response">
-                <option value="">Canned response…</option>
+            <select id="tkCanned" aria-label="Insert a saved reply">
+                <option value="">Saved reply…</option>
             </select>
         </div>
-        <div class="tk-editor" id="tkReply" contenteditable="true" data-placeholder="Write the reply — it lands in their app, their bell, and their inbox. Merge fields like {first_name} become their facts."></div>
+        <div class="tk-editor" id="tkReply" contenteditable="true" data-placeholder="Write the reply. They get it in the app, as a notification, and by email. Merge fields like {first_name} become their own details."></div>
         <input type="file" id="tkFileImg" accept="image/*" hidden>
         <input type="file" id="tkFileVid" accept="video/*" hidden>
         <button type="button" class="btn btn-primary w-full" id="tkSend">Send reply</button>
@@ -206,7 +206,7 @@
             </span>
             <span class="ad-end">
                 <span class="ad-badge ${BADGE[t.status] || 'is-closed'}">${esc(t.status)}</span>
-                ${t.messages ? `<span class="block text-xs text-gray-400 mt-0.5">${t.messages} msg</span>` : ''}
+                ${t.messages ? `<span class="block text-xs text-gray-400 mt-0.5">${t.messages} message${t.messages === 1 ? '' : 's'}</span>` : ''}
             </span>
         </button>`;
 
@@ -402,7 +402,7 @@
         try {
             const res = await api(U.canned, { method: 'GET' });
             CANNED = res.data.rows || [];
-            $id('tkCanned').innerHTML = '<option value="">Canned response…</option>'
+            $id('tkCanned').innerHTML = '<option value="">Saved reply…</option>'
                 + CANNED.map((c) => `<option value="${c.id}">${esc(c.title)}</option>`).join('');
             paintCanned();
         } catch (_) { /* the shelf can wait */ }
@@ -477,7 +477,7 @@
                 </span>
                 <span class="ad-end flex gap-1.5">
                     <button type="button" class="btn btn-white btn-sm" data-cn-edit="${c.id}">Edit</button>
-                    <button type="button" class="btn btn-white btn-sm cn-bin" data-cn-del="${c.id}" title="Remove this template" aria-label="Remove ${esc(c.title)}"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg></button>
+                    <button type="button" class="btn btn-white btn-sm cn-bin" data-cn-del="${c.id}" title="Remove this saved reply" aria-label="Remove ${esc(c.title)}"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg></button>
                 </span>
             </div>`).join('');
         $id('cnEmpty').classList.toggle('hidden', CANNED.length > 0);
@@ -486,7 +486,7 @@
     $id('mfChips').addEventListener('click', async (e) => {
         const b = e.target.closest('[data-mf]');
         if (!b) return;
-        try { await navigator.clipboard.writeText(b.getAttribute('data-mf')); toast('Copied — paste it into the answer.'); }
+        try { await navigator.clipboard.writeText(b.getAttribute('data-mf')); toast('Copied. Paste it into the answer.'); }
         catch (_) { toast(b.getAttribute('data-mf'), 'success'); }
     });
 
@@ -506,8 +506,8 @@
         const del = e.target.closest('[data-cn-del]');
         if (del) {
             const ok = window.confirmAction
-                ? await confirmAction({ title: 'Remove this template?', message: 'Replies already sent keep their words.', confirmText: 'Remove', danger: true })
-                : confirm('Remove this template?');
+                ? await confirmAction({ title: 'Remove this saved reply?', message: 'Replies already sent stay as they are.', confirmText: 'Remove', danger: true })
+                : confirm('Remove this saved reply?');
             if (!ok) return;
             try {
                 const res = await api(U.cannedDel(del.getAttribute('data-cn-del')), { method: 'DELETE' });
@@ -521,7 +521,7 @@
         $id('cnId').value = '';
         $id('cnTitle').value = '';
         $id('cnBody').innerHTML = '';
-        $id('cnFormTitle').textContent = 'New template';
+        $id('cnFormTitle').textContent = 'New saved reply';
         $id('cnCancel').classList.add('hidden');
     });
 
@@ -529,7 +529,7 @@
         const btn = e.currentTarget;
         const title = $id('cnTitle').value.trim();
         const body = $id('cnBody').innerHTML;
-        if (!title) { toast('Name the template first.', 'error'); return; }
+        if (!title) { toast('Give the reply a name first.', 'error'); return; }
         if (!$id('cnBody').textContent.trim()) { toast('Write the answer itself.', 'error'); return; }
         btn.disabled = true;
         try {

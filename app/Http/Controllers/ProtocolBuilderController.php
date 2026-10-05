@@ -53,9 +53,9 @@ class ProtocolBuilderController extends Controller
 {
     /** How a protocol counts its days, and which counters its tasks may use. */
     public const DAY_TYPES = [
-        'DAT' => ['label' => 'DAS → DAT', 'sub' => 'Sown in a seedbed, then transplanted — the count restarts at the transplant. Work before the program is counted back from the sowing.', 'counters' => ['DAS', 'DAT'], 'icon' => '🌾'],
-        'DAS' => ['label' => 'DAS only', 'sub' => 'Direct seeded — one count from sowing to harvest.', 'counters' => ['DAS'], 'icon' => '🌱'],
-        'DAP' => ['label' => 'DAP', 'sub' => 'Planted from seedlings, cuttings, tubers or setts — days after planting.', 'counters' => ['DAP'], 'icon' => '🪴'],
+        'DAT' => ['label' => 'DAS → DAT', 'sub' => 'Sown in a seedbed, then transplanted. The count starts again at transplanting. Work before the program is counted back from the sowing.', 'counters' => ['DAS', 'DAT'], 'icon' => '🌾'],
+        'DAS' => ['label' => 'DAS only', 'sub' => 'Direct seeded. One count from sowing to harvest.', 'counters' => ['DAS'], 'icon' => '🌱'],
+        'DAP' => ['label' => 'DAP', 'sub' => 'Planted from seedlings, cuttings, tubers or setts. Days after planting.', 'counters' => ['DAP'], 'icon' => '🪴'],
         // A standing orchard has no sowing and no planting this season. The
         // board counts an orchard lot's days from the day its program starts —
         // DOS, the Day of Start (activities-js activityRefCounter) — while the
@@ -154,7 +154,7 @@ class ProtocolBuilderController extends Controller
             'tags.*' => 'string|max:30',
         ]);
         if ($v->fails()) {
-            return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
+            return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
         }
         $crop = CropStages::normalize($request->input('crop'));
         $dayType = self::fitDayType($crop, (string) $request->input('dayType'));
@@ -195,12 +195,12 @@ class ProtocolBuilderController extends Controller
             'history' => 'nullable|array',
         ]);
         if ($v->fails()) {
-            return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
+            return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
         }
         // A tab from before versions came sends none: it writes the one in use.
         $ver = $request->filled('versionId') ? $this->versionOf($p, (int) $request->input('versionId')) : $this->current($p);
         if (! $ver) {
-            return $this->json(false, 'That version is gone — it was deleted somewhere else. Reload to keep working.', ['stale' => true], 409);
+            return $this->json(false, 'That version is gone. It was deleted somewhere else. Reload to keep working.', ['stale' => true], 409);
         }
         if ((int) $request->input('rev') !== (int) $ver->rev) {
             return $this->json(false, 'This protocol was changed somewhere else. Reload to keep working on the latest.', ['stale' => true, 'rev' => (int) $ver->rev], 409);
@@ -239,7 +239,7 @@ class ProtocolBuilderController extends Controller
             'preview' => 'nullable|boolean',
         ]);
         if ($v->fails()) {
-            return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
+            return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
         }
         $crop = CropStages::normalize($request->input('crop'));
         // The count follows the crop the way the Lots form narrows it; an
@@ -392,7 +392,7 @@ class ProtocolBuilderController extends Controller
         $ver = AsProtocolVersion::create($this->copyOf($from, $p, trim((string) $request->input('name')), (int) $rows->max('sortOrder') + 1));
         $p->forceFill(['versionId' => $ver->id])->save();
 
-        return $this->json(true, 'Made "' . $ver->name . '" — a copy of "' . $from->name . '". You are on it now.', [
+        return $this->json(true, 'Made "' . $ver->name . '", a copy of "' . $from->name . '". You are on it now.', [
             'version' => $this->versionContent($ver, $p),
             'versions' => $this->versionRows($this->versions($p)),
         ]);
@@ -476,7 +476,7 @@ class ProtocolBuilderController extends Controller
     public function fileStore(Request $request, int $id, int $vid)
     {
         if (! self::canUpload()) {
-            Tier::deny('Files beside your protocol — labels, leaflets, soil tests — come with Libre + Anee and every plan above it. Writing the rules and notes stays free.', 'libreAnee');
+            Tier::deny('Files beside your protocol (labels, leaflets, soil tests) come with Libre + Anee and every plan above it. Writing the rules and notes stays free.', 'libreAnee');
         }
         $p = $this->mine($id);
         $ver = $p ? $this->versionOf($p, $vid) : null;
@@ -509,7 +509,7 @@ class ProtocolBuilderController extends Controller
         if ($sent !== '' && $kept !== '' && $sent !== $kept) {
             MediaStore::delete($path);
 
-            return $this->json(false, 'The file store cannot keep .' . $sent . ' files yet — pictures work now, and documents will once the server is updated.', ['kept' => $kept], 422);
+            return $this->json(false, 'The file store cannot keep .' . $sent . ' files yet. Pictures work now, and documents will once the server is updated.', ['kept' => $kept], 422);
         }
         $entry = [
             'id' => $this->key(null),
@@ -565,7 +565,7 @@ class ProtocolBuilderController extends Controller
         }
         $p->forceFill(['deleteStatus' => 0])->save();
 
-        return $this->json(true, 'Protocol removed.');
+        return $this->json(true, 'Protocol deleted.');
     }
 
     /* ------------------------------------------------------------ Anee reads it */
@@ -587,7 +587,9 @@ class ProtocolBuilderController extends Controller
         $payer = $this->payer();
         $settings = AiSetting::current();
         if (! $payer->canUseAi() || ! $settings->isUsable()) {
-            return $this->json(false, 'Anee is not available on this plan.', [], 403);
+            return $this->json(false, $payer->canUseAi()
+                ? 'Anee is not switched on yet. Please check back soon.'
+                : Tier::aneeNeeds($payer, 'The review'), [], 403);
         }
         // Anee reads the version in use.
         $ver = $this->current($p);
@@ -617,7 +619,7 @@ class ProtocolBuilderController extends Controller
             try {
                 AsProtocol::where('id', $id)->where('analysisStatus', 'pending')->update([
                     'analysisStatus' => 'failed',
-                    'analysisError' => 'The review took too long and was stopped. Nothing was charged — please try again.',
+                    'analysisError' => 'The review took too long and was stopped. Nothing was charged. Please try again.',
                 ]);
             } catch (\Throwable $e) {
             }
@@ -650,12 +652,12 @@ class ProtocolBuilderController extends Controller
             $review = $result['data'];
             if ($review === null) {
                 \Log::warning('protocol-builder: unparsable review', ['head' => mb_substr((string) ($result['text'] ?? ''), 0, 400)]);
-                throw new \RuntimeException($result['error'] ?? 'The review came back unreadable. Nothing was charged — please try again.');
+                throw new \RuntimeException($result['error'] ?? 'The review could not be read. Nothing was charged. Please try again.');
             }
             $row = AsProtocol::find($id);
             $charged = (float) AiPrices::of('builder');
             $note = AiUsage::record('builder', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
-            $this->credits->chargeAllowingNegative($payerId, $charged, mb_substr('Protocol Builder review — ' . $row->title . $note, 0, 250));
+            $this->credits->chargeAllowingNegative($payerId, $charged, mb_substr('Protocol Builder review: ' . $row->title . $note, 0, 250));
             $row->forceFill([
                 'analysis' => $review,
                 'analysisStatus' => 'ready',
@@ -703,7 +705,7 @@ class ProtocolBuilderController extends Controller
         }
         if ($p->analysisStatus === 'pending') {
             if ($this->dead($p)) {
-                $p->forceFill(['analysisStatus' => 'failed', 'analysisError' => 'The review was interrupted mid-way. Nothing was charged — please try again.'])->save();
+                $p->forceFill(['analysisStatus' => 'failed', 'analysisError' => 'The review was stopped halfway. Nothing was charged. Please try again.'])->save();
 
                 return $this->json(false, $p->analysisError, ['status' => 'failed'], 502);
             }
@@ -876,7 +878,7 @@ class ProtocolBuilderController extends Controller
             ])->save();
         }
 
-        return $this->json(true, 'Analysis removed.', [
+        return $this->json(true, 'Analysis deleted.', [
             'analyses' => $this->analysisRows($p),
             'analysis' => $p->analysisStatus === 'ready' ? $p->analysis : null,
             'analysisAt' => $p->analysisAt ? Carbon::parse($p->analysisAt)->format('M j, Y · g:i A') : null,
@@ -1104,7 +1106,7 @@ PROMPT;
             'lots.*.treePlantedAt' => 'nullable|date|before_or_equal:today',
         ]);
         if ($v->fails()) {
-            return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
+            return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
         }
         $lotsIn = array_values((array) $request->input('lots'));
         $cap = Tier::limit('lotsPerSchedule');
@@ -1140,7 +1142,7 @@ PROMPT;
             $materials = $this->cleanMaterials((array) ($ver->materials ?? []));
             $tasks = $this->cleanTasks((array) ($ver->tasks ?? []), $proto->dayType, $materials);
             if (! count(array_filter($tasks, [self::class, 'isTask']))) {
-                return $this->json(false, '"' . $proto->title . '"' . ($rowsOf->count() > 1 ? ' (' . $ver->name . ')' : '') . ' has no tasks yet — nothing to port for ' . $l['name'] . '.', [], 422);
+                return $this->json(false, '"' . $proto->title . '"' . ($rowsOf->count() > 1 ? ' (' . $ver->name . ')' : '') . ' has no tasks yet, so there is nothing to port for ' . $l['name'] . '.', [], 422);
             }
             $start = Carbon::parse($l['startDate'])->startOfDay();
             $transplant = null;
@@ -1162,7 +1164,7 @@ PROMPT;
             if ($proto->dayType === 'TREE') {
                 $treePlanted = ($source && $source->treePlantedAt) ? $source->treePlantedAt : ($l['treePlantedAt'] ?? null);
                 if (! $treePlanted) {
-                    return $this->json(false, $l['name'] . ' runs a protocol for mature trees — say how old the trees are.', [], 422);
+                    return $this->json(false, $l['name'] . ' runs a protocol for mature trees. Say how old the trees are.', [], 422);
                 }
                 $treePlanted = Carbon::parse($treePlanted)->format('Y-m-d');
             }
@@ -1253,7 +1255,7 @@ PROMPT;
         foreach ($plan as $x) {
             $x['proto']->forceFill(['portedScheduleId' => $schedule->id, 'portedAt' => now()])->save();
         }
-        $say = 'The season is set up — ' . count($plan) . ($plan && count($plan) === 1 ? ' lot, ' : ' lots, ') . $made['activities'] . ' activities on the board'
+        $say = 'The season is set up: ' . count($plan) . ($plan && count($plan) === 1 ? ' lot, ' : ' lots, ') . $made['activities'] . ' activities on the board'
             . ($made['notes'] ? ' and ' . $made['notes'] . ($made['notes'] === 1 ? ' note' : ' notes') . ' on the day book' : '')
             . ($made['rules'] ? ', the rules and notes in the season\'s Notes' : '')
             . ($made['moved'] ? '; ' . $made['moved'] . ($made['moved'] === 1 ? ' activity slid' : ' activities slid') . ' to a later day so no day asks for more than ' . $workers . ($workers === 1 ? ' worker' : ' workers') : '') . '.';
@@ -1450,7 +1452,7 @@ PROMPT;
                         $total = ($use !== null && $g['perKnapsack'] && ! empty($g['loads']))
                             ? ' × ' . self::num((float) $g['loads']) . ' loads = ' . self::num($use) . ' ' . $m['unit']
                             : '';
-                        $out .= '<li>' . $e($it['name']) . ($kind !== '' && $it['kind'] !== 'other' ? ' — ' . $e($kind) : '') . ($it['amount'] !== '' ? ' · ' . $e($it['amount']) . $e($total) : '') . '</li>';
+                        $out .= '<li>' . $e($it['name']) . ($kind !== '' && $it['kind'] !== 'other' ? ' · ' . $e($kind) : '') . ($it['amount'] !== '' ? ' · ' . $e($it['amount']) . $e($total) : '') . '</li>';
                     }
                     $out .= '</ul>';
                 }
@@ -1986,7 +1988,7 @@ PROMPT;
         AsScheduleNote::create([
             'croppingScheduleId' => $schedule->id,
             'userId' => (int) Auth::id(),
-            'title' => mb_substr('Rules & notes — ' . $proto->title . ($named ? ' (' . $ver->name . ')' : ''), 0, 191),
+            'title' => mb_substr('Rules & notes: ' . $proto->title . ($named ? ' (' . $ver->name . ')' : ''), 0, 191),
             'body' => $body !== '' ? HtmlSanitizer::rich($body) : null,
             'media' => $media ?: null,
             'sortOrder' => 0,

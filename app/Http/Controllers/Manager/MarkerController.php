@@ -31,10 +31,10 @@ class MarkerController extends BaseScheduleController
             'noteContent' => 'nullable|string|max:5000',
             'versionId'   => 'nullable|integer',
         ], [
-            'markerDate.required' => 'Marker date is required.',
+            'markerDate.required' => 'Pick a date for the marker.',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         // A submitted versionId must belong to THIS schedule — never trust a

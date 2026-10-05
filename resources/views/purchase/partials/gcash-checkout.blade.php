@@ -176,7 +176,7 @@
                     @error('notes') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
 
-                <button type="submit" class="btn btn-accent btn-lg w-full">Send Proof</button>
+                <button type="submit" class="btn btn-accent btn-lg w-full">Send Payment Proof</button>
                 <p class="text-center text-xs text-gray-500">
                     Our team checks {{ $payMethod }} payments by hand. We will email you once it is approved.
                 </p>

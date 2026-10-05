@@ -41,7 +41,7 @@ class PostHarvestFields
         ],
         'pest' => [
             ['pestName', 'Pest or disease', 'text', ['placeholder' => 'e.g. rice black bug, sheath blight']],
-            ['severity', 'How bad it got', 'select', ['options' => ['light' => 'Light — noticed, little damage', 'moderate' => 'Moderate — visible loss', 'severe' => 'Severe — serious loss']]],
+            ['severity', 'How bad it got', 'select', ['options' => ['light' => 'Light: noticed, little damage', 'moderate' => 'Moderate: visible loss', 'severe' => 'Severe: serious loss']]],
             ['affectedArea', 'How much was affected', 'text', ['placeholder' => 'e.g. 0.4 ha, the north corner']],
             ['actionTaken', 'What was done about it', 'text', ['placeholder' => 'e.g. sprayed on the 12th, drained the paddy']],
             ['lossEstimate', 'Estimated loss', 'money', ['placeholder' => 'e.g. 8000']],
@@ -70,7 +70,7 @@ class PostHarvestFields
             ['pricePerUnit', 'Price per unit', 'money', ['placeholder' => 'e.g. 23.50']],
             ['buyer', 'Sold to', 'text', ['placeholder' => 'e.g. NFA, local trader']],
             ['paymentTerms', 'How it was paid', 'select', ['options' => [
-                'cash' => 'Cash on pickup', 'partial' => 'Partly paid', 'credit' => 'On credit — still owed',
+                'cash' => 'Cash on pickup', 'partial' => 'Partly paid', 'credit' => 'On credit (still owed)',
             ]]],
         ],
         'lesson' => [

@@ -92,7 +92,7 @@ class ScheduleMapController extends BaseScheduleController
         }
         $schedule = $this->schedule($sid);
         if (! ScheduleTeam::canAccess($schedule, (int) Auth::id())) {
-            abort(response()->json(['success' => false, 'message' => 'You are not part of this schedule team.'], 403));
+            abort(response()->json(['success' => false, 'message' => 'You are not on this season\'s team.'], 403));
         }
 
         return $schedule;
@@ -293,7 +293,7 @@ class ScheduleMapController extends BaseScheduleController
             'points.*' => 'array|size:2',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Bad trace.', 422);
+            return $this->jsonFail('That line could not be traced. Please try again.', 422);
         }
 
         try {
@@ -337,7 +337,7 @@ class ScheduleMapController extends BaseScheduleController
 
         $key = (string) config('services.google_maps.key');
         if ($key === '') {
-            return $this->jsonFail('No map key configured.', 404);
+            return $this->jsonFail('Maps are not set up yet.', 404);
         }
 
         $size = (int) $request->input('size', 640);
@@ -352,7 +352,7 @@ class ScheduleMapController extends BaseScheduleController
         try {
             $res = \Illuminate\Support\Facades\Http::timeout(20)->get($url);
             if (! $res->ok() || ! str_starts_with((string) $res->header('Content-Type'), 'image/')) {
-                return $this->jsonFail('Could not fetch the map imagery.', 502);
+                return $this->jsonFail('Could not load the map picture.', 502);
             }
 
             return response($res->body(), 200, [
@@ -360,7 +360,7 @@ class ScheduleMapController extends BaseScheduleController
                 'Cache-Control' => 'private, max-age=120',
             ]);
         } catch (\Throwable $e) {
-            return $this->jsonFail('Could not fetch the map imagery.', 502);
+            return $this->jsonFail('Could not load the map picture.', 502);
         }
     }
 
@@ -533,7 +533,7 @@ class ScheduleMapController extends BaseScheduleController
         // note right, same line the whiteboard's save draws. Your own canvas
         // files into your own notes.
         if ($schedule && ! \App\Support\WorkerContext::canAddNotes()) {
-            return $this->jsonFail('You are not allowed to save to this schedule.', 403);
+            return $this->jsonFail('You are not allowed to save to this season.', 403);
         }
         // The tier's map shelf: how many saved maps this member may keep.
         $mapCap = \App\Support\Tier::limit('mapsTotal');
@@ -660,13 +660,13 @@ class ScheduleMapController extends BaseScheduleController
         }
 
         if ($mode === 'image' && empty($media)) {
-            return $this->jsonFail('Could not take the map picture — the Static Maps API may not be enabled for this key.', 422);
+            return $this->jsonFail('Could not take a picture of the map. Map pictures may not be set up yet.', 422);
         }
 
         $bodyText = $description !== '' ? $description : null;
         if ($mode === 'map') {
             $bodyText = trim(($description !== '' ? $description . "\n\n" : '')
-                . 'Saved map — tap View map to open it.');
+                . 'Saved map. Tap View map to open it.');
         }
         // A map that saves itself as it is edited writes back into the note it
         // already has. Minting one per autosave would bury an afternoon's
@@ -770,10 +770,10 @@ class ScheduleMapController extends BaseScheduleController
                 : ($writesMap
                 ? (($saveId && $request->filled('saveId'))
                     ? 'Saved over “' . mb_substr($title, 0, 60) . '”.'
-                    : 'Map saved to your Maps — reopen it any time from Global and Quick Tools'
+                    : 'Map saved to your Maps. Open it again any time from Global and Quick Tools'
                     . ($mode === 'plain'
                         ? '.'
-                        : (empty($media) ? ' (no picture: Static Maps API unavailable).' : ', and its picture is in your Notes.')))
+                        : (empty($media) ? ' (no picture could be taken).' : ', and its picture is in your Notes.')))
                 : 'Saved to Notes as an image note.'),
         ]);
     }
@@ -810,7 +810,7 @@ class ScheduleMapController extends BaseScheduleController
         if ($save->noteId && ($note = AsScheduleNote::active()->find($save->noteId))) {
             $description = trim((string) $request->input('description'));
             $bodyText = trim(($description !== '' ? $description . "\n\n" : '')
-                . 'Saved map — tap View map to open it.');
+                . 'Saved map. Tap View map to open it.');
             $note->update([
                 'title' => mb_substr($title, 0, 180),
                 'body' => \App\Support\HtmlSanitizer::rich('<p>' . nl2br(e($bodyText)) . '</p>'),
@@ -1029,7 +1029,7 @@ class ScheduleMapController extends BaseScheduleController
             'acc' => 'nullable|numeric|min:0|max:100000',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Bad position.', 422);
+            return $this->jsonFail('Your location could not be read.', 422);
         }
 
         try {

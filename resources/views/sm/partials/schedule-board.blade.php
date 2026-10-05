@@ -60,7 +60,7 @@
              a hidden control over an open route is the hole this app keeps
              re-learning, so the controller checks these same lines. --}}
         @if (\App\Support\WorkerContext::canAddNotes())
-        <button type="button" id="sbSaveNotes" class="sb-btn" title="Save pages to schedule notes" aria-label="Save to notes">
+        <button type="button" id="sbSaveNotes" class="sb-btn" title="Save pages to the season's notes" aria-label="Save to notes">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a1 1 0 011-1h9l4 4v10a1 1 0 01-1 1H6a1 1 0 01-1-1V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 4v4h6M8 19v-5h8v5"/></svg>
         </button>
         <button type="button" id="sbDrafts" class="sb-btn" title="Past drawings" aria-label="Past drawings">
@@ -68,7 +68,7 @@
             <span class="sb-badge hidden" id="sbDraftCount">0</span>
         </button>
         @endif
-        <button type="button" id="sbGrid" class="sb-btn" title="Toggle grid" aria-label="Toggle grid">
+        <button type="button" id="sbGrid" class="sb-btn" title="Show or hide the grid" aria-label="Show or hide the grid">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4h16v16H4z"/><path stroke-linecap="round" d="M4 10h16M4 15h16M10 4v16M15 4v16"/></svg>
         </button>
         <button type="button" id="sbUndo" class="sb-btn" title="Undo my last stroke" aria-label="Undo">
@@ -83,7 +83,7 @@
             <span class="sb-btn-txt">Clear</span>
         </button>
         @endif
-        <button type="button" id="sbChatToggle" class="sb-btn is-active" title="Show or hide team chat" aria-label="Toggle team chat">
+        <button type="button" id="sbChatToggle" class="sb-btn is-active" title="Show or hide team chat" aria-label="Show or hide team chat">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12a8 8 0 01-11.6 7.1L3 20l1-5.5A8 8 0 1121 12z"/></svg>
         </button>
     </div>
@@ -122,7 +122,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-            <p class="sb-modal-hint">Saves <span id="sbSavePageCount">the board</span> as an image note in this schedule. The team can find it later.</p>
+            <p class="sb-modal-hint">Saves <span id="sbSavePageCount">the board</span> as an image note in this season. The team can find it later.</p>
             <label class="sb-modal-label" for="sbSaveTitle">Title</label>
             <input type="text" id="sbSaveTitle" class="sb-modal-input" maxlength="180" placeholder="Example: Field layout plan">
             <label class="sb-modal-label" for="sbSaveDesc">Description</label>
@@ -585,7 +585,7 @@
                 // A redo the board can no longer honour (someone cleared the
                 // page) is dropped rather than left to fail again.
                 if (redo) myUndone.pop();
-                toast(err.message || 'Could not do that.', 'error');
+                toast(err.message || (redo ? 'Could not redo that.' : 'Could not undo that.'), 'error');
             } finally { undoBusy = false; paintUndoBtns(); }
         }
         document.getElementById('sbUndo').addEventListener('click', () => stepUndo(false));
@@ -702,7 +702,7 @@
                 closeSaveModal();
             } catch (err) {
                 if (claimed) { autoDirty = true; queueAutosave(); }
-                if (typeof toast === 'function') toast('Could not save: ' + ((err && err.message) || 'error'), 'error');
+                if (typeof toast === 'function') toast((err && err.message) ? 'Could not save: ' + err.message : 'Could not save. Please try again.', 'error');
             } finally {
                 btn.disabled = false; savingNow = false;
                 document.getElementById('sbSaveSpin').classList.add('hidden');

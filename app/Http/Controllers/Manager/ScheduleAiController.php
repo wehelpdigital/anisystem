@@ -47,7 +47,7 @@ class ScheduleAiController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         $current = $this->resolveSession($schedule, $request->query('sessionId'));
@@ -75,7 +75,7 @@ class ScheduleAiController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         $session = ScheduleAiSession::create([
@@ -102,12 +102,12 @@ class ScheduleAiController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
         // Writing the notebook is the note right — the same line every other
         // door into the schedule's records draws for a worker.
         if (WorkerContext::activeGrant() && ! WorkerContext::canAddNotes()) {
-            return $this->jsonFail('You are not allowed to write notes on this schedule.', 403);
+            return $this->jsonFail('You are not allowed to write notes in this season.', 403);
         }
 
         $validator = Validator::make($request->all(), [
@@ -119,14 +119,14 @@ class ScheduleAiController extends BaseScheduleController
             'description' => 'nullable|string|max:2000',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $session = ScheduleAiSession::active()
             ->where('scheduleId', $schedule->id)
             ->find((int) $request->input('sessionId'));
         if (! $session) {
-            return $this->jsonFail('Session not found.', 404);
+            return $this->jsonFail('That chat was not found.', 404);
         }
 
         $activity = null;
@@ -135,7 +135,7 @@ class ScheduleAiController extends BaseScheduleController
                 ->where('croppingScheduleId', $schedule->id)
                 ->find((int) $request->input('activityId'));
             if (! $activity) {
-                return $this->jsonFail('That task is not on this schedule.', 404);
+                return $this->jsonFail('That task is not in this season.', 404);
             }
         }
 
@@ -145,7 +145,7 @@ class ScheduleAiController extends BaseScheduleController
             ->orderBy('id')
             ->get();
         if ($msgs->isEmpty()) {
-            return $this->jsonFail('This session has no messages yet.', 422);
+            return $this->jsonFail('This chat has no messages yet.', 422);
         }
 
         // Why it was kept leads; what it was filed onto follows; the talk last.
@@ -166,15 +166,15 @@ class ScheduleAiController extends BaseScheduleController
                 . '.</em></p>';
         }
         foreach ($msgs as $m) {
-            $who = $m->role === 'assistant' ? 'AI Technician' : ($m->author?->full_name ?: 'Member');
+            $who = $m->role === 'assistant' ? 'Anee' : ($m->author?->full_name ?: 'Member');
             $cls = $m->role === 'assistant' ? 'color:#3d6823' : 'color:#1f2937';
             $html .= '<p><strong style="' . $cls . '">' . e($who) . ':</strong> '
                 . nl2br(e((string) $m->content)) . '</p>';
         }
 
         $title = trim((string) $request->input('title'))
-            ?: ('AI · ' . ($session->title ?: 'Session')
-                . ($activity ? ' — ' . ($activity->activityTitle ?: 'Task') : ''));
+            ?: ('Anee · ' . ($session->title ?: 'Chat')
+                . ($activity ? ' · ' . ($activity->activityTitle ?: 'Task') : ''));
         $note = AsScheduleNote::create([
             'croppingScheduleId' => $schedule->id,
             'userId' => $meId,
@@ -187,8 +187,8 @@ class ScheduleAiController extends BaseScheduleController
         return response()->json([
             'success' => true,
             'message' => $activity
-                ? 'Saved this AI session onto the task, in the schedule notebook.'
-                : 'Saved this AI session to the schedule notebook.',
+                ? 'Saved this chat to the task, in the season notebook.'
+                : 'Saved this chat to the season notebook.',
             'data' => ['noteId' => $note->id],
         ]);
     }
@@ -199,7 +199,7 @@ class ScheduleAiController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         $session = $this->resolveSession($schedule, $request->query('sessionId'));
@@ -238,7 +238,7 @@ class ScheduleAiController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $askerId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $askerId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         // Every question here is charged to the owner's AI credits. Spending
@@ -248,12 +248,12 @@ class ScheduleAiController extends BaseScheduleController
         $ownerId = (int) $schedule->anisystemUserId;
         $owner = User::find($ownerId);
         if (! $owner || ! $owner->canUseAi()) {
-            return $this->jsonFail('Anee is not part of the plan the schedule owner\'s account is on.', 403);
+            return $this->jsonFail('The farm owner\'s plan does not include Anee.', 403);
         }
 
         $settings = AiSetting::current();
         if (! $settings || ! $settings->isUsable()) {
-            return $this->jsonFail('The AI Technician is not switched on yet. Please check back soon.', 503);
+            return $this->jsonFail('Anee is not switched on yet. Please check back soon.', 503);
         }
 
         $validator = Validator::make($request->all(), [
@@ -271,7 +271,7 @@ class ScheduleAiController extends BaseScheduleController
             'sessionId' => 'nullable|integer',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         // A question with no thread named starts one of its own.
@@ -315,8 +315,8 @@ class ScheduleAiController extends BaseScheduleController
             return response()->json([
                 'success' => false,
                 'message' => $balance <= 0
-                    ? 'The team AI is out of credits — the schedule owner can top up.'
-                    : 'Not enough owner credits for this question (needs ~' . ceil($estimate) . ').',
+                    ? 'The farm owner is out of credits for Anee. The owner can buy more.'
+                    : 'The farm owner does not have enough credits for this question (it needs about ' . ceil($estimate) . ').',
                 'data' => ['balance' => $balance, 'needed' => $estimate, 'outOfCredits' => true],
             ], 402);
         }
@@ -416,9 +416,9 @@ class ScheduleAiController extends BaseScheduleController
         $result = $this->ai->ask($settings, $history, $context . \App\Support\ModelImage::lookLine(count($images)) . $prompt, $image);
 
         if (! $result['ok']) {
-            $this->emit($schedule->id, 'ai.answer', ['error' => true, 'sessionId' => $session->id, 'content' => $result['error'] ?: 'The AI could not answer. Try again.']);
+            $this->emit($schedule->id, 'ai.answer', ['error' => true, 'sessionId' => $session->id, 'content' => $result['error'] ?: 'Anee could not answer. Please try again.']);
 
-            return ['ok' => false, 'message' => $result['error'] ?: 'The AI could not answer.', 'data' => ['question' => $qShaped]];
+            return ['ok' => false, 'message' => $result['error'] ?: 'Anee could not answer.', 'data' => ['question' => $qShaped]];
         }
 
         $charged = $this->credits->priceFor($settings, $result['tokensIn'], $result['tokensOut'], count($images));
@@ -427,7 +427,7 @@ class ScheduleAiController extends BaseScheduleController
             'role' => 'assistant', 'content' => $result['text'], 'creditsCharged' => $charged, 'deleteStatus' => 1,
         ]);
         $a->setRelation('author', $owner);
-        $newBalance = $this->credits->chargeAllowingNegative($ownerId, $charged, 'Team AI — ' . Str::limit($schedule->title, 50), $a->id);
+        $newBalance = $this->credits->chargeAllowingNegative($ownerId, $charged, 'Team chat with Anee: ' . Str::limit($schedule->title, 50), $a->id);
 
         $aShaped = $this->shape($a, $askerId);
         $aShaped['balance'] = $newBalance;
@@ -481,7 +481,7 @@ class ScheduleAiController extends BaseScheduleController
     {
         return [
             'id' => $s->id,
-            'title' => $s->title ?: 'New session',
+            'title' => $s->title ?: 'New chat',
             'untitled' => ! $s->title,
             'startedBy' => $s->starter?->full_name ?: 'Team',
             'at' => optional($s->lastMessageAt ?: $s->created_at)->format('M j, g:i A'),
@@ -515,7 +515,7 @@ class ScheduleAiController extends BaseScheduleController
             'image' => $m->imagePath ? \App\Support\MediaStore::url($m->imagePath) : null,
             'userId' => (int) $m->userId,
             'mine' => (int) $m->userId === $meId && $m->role === 'user',
-            'name' => $m->role === 'assistant' ? 'AI Technician' : ($author?->full_name ?: 'Member'),
+            'name' => $m->role === 'assistant' ? 'Anee' : ($author?->full_name ?: 'Member'),
             'initials' => $author?->initials ?: '·',
             'creditsCharged' => $m->creditsCharged !== null ? (float) $m->creditsCharged : null,
             'at' => optional($m->created_at)->format('M j, g:i A'),

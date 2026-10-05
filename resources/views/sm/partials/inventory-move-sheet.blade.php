@@ -165,7 +165,7 @@
 <div class="sheet hidden" id="ivMoveEditSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Edit this entry</h3>
+        <h3 class="sheet-title">Edit this stock change</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-3">

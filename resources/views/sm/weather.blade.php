@@ -1,6 +1,6 @@
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Weather — ' . $schedule->title)
+@section('title', 'Weather: ' . $schedule->title)
 @section('page-title', 'Weather')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'weather')

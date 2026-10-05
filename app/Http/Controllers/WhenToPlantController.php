@@ -37,9 +37,9 @@ class WhenToPlantController extends Controller
     public const PROBLEMS = [
         'floods' => 'Floods / standing water after rain',
         'cracking' => 'Cracking clay soil in the dry months',
-        'sandy' => 'Sandy / fast-draining soil',
+        'sandy' => 'Sandy / fast draining soil',
         'water_source' => 'Limited irrigation water source',
-        'rainfed' => 'Rain-fed only (no irrigation)',
+        'rainfed' => 'Rainfed only (no irrigation)',
         'river' => 'Beside a river (overflow reaches the field)',
         'sea' => 'Near the sea (salt spray / brackish water)',
         'wind' => 'Strong winds pass through (typhoon corridor)',
@@ -168,7 +168,7 @@ class WhenToPlantController extends Controller
             'phValue' => 'nullable|numeric|min:2|max:12',
         ]);
         if ($v->fails()) {
-            return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
+            return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
         }
         if (! isset(CropCatalog::CROPS[$request->input('crop')])) {
             return $this->json(false, 'Pick a crop from the list.', [], 422);
@@ -177,10 +177,10 @@ class WhenToPlantController extends Controller
         $to = (int) $request->input('toYear') * 12 + (int) $request->input('toMonth') - 1;
         $now = $yearNow * 12 + (int) now('Asia/Manila')->month - 1;
         if ($from < $now) {
-            return $this->json(false, 'Pick months from this month on — that one has already gone by.', [], 422);
+            return $this->json(false, 'Pick months from this month on. That one has already gone by.', [], 422);
         }
         if ($to < $from) {
-            return $this->json(false, 'The last month comes after the first one.', [], 422);
+            return $this->json(false, 'The last month must come after the first one.', [], 422);
         }
         if ($to - $from + 1 > self::MAX_SPAN) {
             return $this->json(false, 'Up to ' . self::MAX_SPAN . ' months at a time.', [], 422);
@@ -284,7 +284,7 @@ class WhenToPlantController extends Controller
                 \Illuminate\Support\Facades\Log::warning('when-to-plant: unparsable answer', [
                     'head' => mb_substr((string) $result['text'], 0, 400),
                 ]);
-                throw new \RuntimeException($result['error'] ?? 'The analysis came back unreadable. Nothing was charged — please try again.');
+                throw new \RuntimeException($result['error'] ?? 'The analysis could not be read. Nothing was charged. Please try again.');
             }
 
             $report['webSources'] = (array) ($result['sources'] ?? []);
@@ -301,7 +301,7 @@ class WhenToPlantController extends Controller
             $charged = (float) AiPrices::of('wtp');
             $note = AiUsage::record('wtp', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged,
-                mb_substr('When-to-plant analysis — ' . $crop['label'] . ', ' . ($p['year'] ?? '') . $note, 0, 250));
+                mb_substr('When to Plant analysis: ' . $crop['label'] . ', ' . ($p['year'] ?? '') . $note, 0, 250));
 
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report),
@@ -346,8 +346,8 @@ class WhenToPlantController extends Controller
         if ($r->status === 'pending') {
             if ($this->dead($r)) {
                 $why = \Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(20))
-                    ? 'The analysis took too long and was stopped. Nothing was charged — please try again.'
-                    : 'The analysis was interrupted mid-way (the server restarted under it). Nothing was charged — please run it again.';
+                    ? 'The analysis took too long and was stopped. Nothing was charged. Please try again.'
+                    : 'The analysis was stopped halfway because the server restarted. Nothing was charged. Please run it again.';
                 DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
                     'status' => 'failed', 'deleteStatus' => 0,
                     'error' => $why,
@@ -393,7 +393,7 @@ class WhenToPlantController extends Controller
             'charged' => 'nullable|numeric|min:0',
         ]);
         if ($v->fails()) {
-            return $this->json(false, 'Nothing to save yet — run the analysis first.', [], 422);
+            return $this->json(false, 'Nothing to save yet. Run the analysis first.', [], 422);
         }
 
         $p = (array) $request->input('params');
@@ -411,7 +411,7 @@ class WhenToPlantController extends Controller
             'updated_at' => now(),
         ]);
 
-        return $this->json(true, 'Saved — it is on the Saved tab now.', ['id' => $id]);
+        return $this->json(true, 'Saved. It is on the Saved tab now.', ['id' => $id]);
     }
 
     public function list(Request $request)
@@ -513,7 +513,7 @@ class WhenToPlantController extends Controller
         DB::table('as_plant_analyses')->where('userId', Auth::id())->where('id', $id)
             ->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
-        return $this->json(true, 'Analysis removed.');
+        return $this->json(true, 'Analysis deleted.');
     }
 
     /** Rename a saved analysis and describe it in your own words. */
@@ -536,7 +536,7 @@ class WhenToPlantController extends Controller
                 'updated_at' => now(),
             ]);
         if (! $updated) {
-            return $this->json(false, 'That analysis is not on your shelf.', [], 404);
+            return $this->json(false, 'That analysis is not in your saved list.', [], 404);
         }
 
         return $this->json(true, 'Analysis updated.', ['title' => $title, 'description' => $description ?: null]);
@@ -756,7 +756,7 @@ PROMPT;
         $a = date('M', mktime(0, 0, 0, (int) $p['fromMonth'], 1)) . ' ' . (int) $p['fromYear'];
         $b = date('M', mktime(0, 0, 0, (int) $p['toMonth'], 1)) . ' ' . (int) $p['toYear'];
 
-        return $a === $b ? $a : $a . ' – ' . $b;
+        return $a === $b ? $a : $a . ' to ' . $b;
     }
 
     /** The months spelt out for a brief: "November 2026 to January 2027 (3 months)". */

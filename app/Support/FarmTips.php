@@ -27,15 +27,15 @@ class FarmTips
         'Water' => [
             'Water early morning or late afternoon. Midday watering loses much of it to the air before the roots see any.',
             'A field that dries and floods in turn stresses a crop more than one kept a little dry throughout.',
-            'Check the levees after every heavy rain — a leak found today is cheaper than the fertiliser it carries away tomorrow.',
+            'Check the levees after every heavy rain. A leak found today is cheaper than the fertiliser it carries away tomorrow.',
         ],
         'Soil' => [
             'Test the soil before the season, not after a bad one. Lime takes months to work.',
             'Organic matter is the cheapest water storage there is. Return the straw and stubble where you can.',
-            'Compaction from wet-season traffic shows up as a crop that will not root deep. Stay off the field when it is soft.',
+            'Compaction from wet season traffic shows up as a crop that will not root deep. Stay off the field when it is soft.',
         ],
         'Fertiliser' => [
-            'Split nitrogen rather than giving it all at once — the plant can only use so much at a time, and the rest leaves with the water.',
+            'Split nitrogen rather than giving it all at once. The plant can only use so much at a time, and the rest leaves with the water.',
             'Band fertiliser beside the row rather than broadcasting it; less is wasted and less feeds the weeds.',
             'Dark green is not always healthy. Too much nitrogen makes soft growth that lodges and invites pests.',
         ],
@@ -43,7 +43,7 @@ class FarmTips
             'Walk the field twice a week and look under leaves. Most outbreaks are cheap to stop and expensive to catch up with.',
             'Spray in the cool of the day. Midday heat evaporates the mix and burns the leaf.',
             'Rotate what you spray. The same chemical every time is how resistance is bred on your own farm.',
-            'Keep the bunds and channels clear — tall weeds there are where borers and rats live between crops.',
+            'Keep the bunds and channels clear. Tall weeds there are where borers and rats live between crops.',
         ],
         'Weather' => [
             'A forecast is a warning, not a promise. Plan the day so a wrong forecast costs you time, not the crop.',
@@ -52,7 +52,7 @@ class FarmTips
         ],
         'Records' => [
             'Write down what you actually did, not what you planned. Next season is planned from the first and ruined by the second.',
-            'Photograph anything unusual the day you see it — a leaf, a receipt, a damaged bund. It costs nothing and settles arguments later.',
+            'Photograph anything unusual the day you see it: a leaf, a receipt, a damaged bund. It costs nothing and settles arguments later.',
             'Record the price you were paid, not the price you were quoted.',
         ],
         'Workers' => [
@@ -65,7 +65,7 @@ class FarmTips
             'Clean the threshing floor first. Grit and stones cost you at the buying station.',
         ],
         'Money' => [
-            'Count the cost of a day before it starts — wages plus what you must buy. A day that surprises you is a day you borrowed for.',
+            'Count the cost of a day before it starts: wages plus what you must buy. A day that surprises you is a day you borrowed for.',
             'Keep the season\'s receipts in one place while it is running. Nobody has ever enjoyed reconstructing them afterwards.',
         ],
     ];

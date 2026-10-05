@@ -7,7 +7,7 @@
 @endphp
 
 @section('share-title', $schedule->title)
-@section('og-title', $schedule->title . ' — cropping plan')
+@section('og-title', $schedule->title . ': cropping plan')
 @section('og-description', $ogDescription)
 @section('og-type', 'article')
 
@@ -34,7 +34,7 @@
             <span class="badge badge-gray">{{ $schedule->lots->count() }} {{ \Illuminate\Support\Str::plural('lot', $schedule->lots->count()) }}</span>
             <span class="badge badge-gray">{{ $schedule->workers->count() }} {{ \Illuminate\Support\Str::plural('worker', $schedule->workers->count()) }}</span>
             <span class="badge badge-gray">{{ $schedule->activities->count() }} {{ \Illuminate\Support\Str::plural('activity', $schedule->activities->count()) }}</span>
-            <span class="badge badge-green">Day counter: {{ $dayType }}</span>
+            <span class="badge badge-green">Day count: {{ $dayType }}</span>
         </div>
     </div>
 
@@ -89,7 +89,7 @@
                     <div class="share-day{{ $isToday ? ' share-day-today' : '' }}">
                         <div class="flex items-center gap-2 mb-2">
                             <h3 class="font-semibold text-gray-900">
-                                {{ $isNoDate ? 'Unscheduled' : $dateC->format('l, M j, Y') }}
+                                {{ $isNoDate ? 'No date yet' : $dateC->format('l, M j, Y') }}
                             </h3>
                             @if($isToday)<span class="badge badge-green">Today</span>@endif
                         </div>
@@ -110,7 +110,7 @@
                                         <div class="text-sm text-gray-700 mt-2 leading-relaxed break-words">{!! $a->description !!}</div>
                                     @endif
                                     @if($a->imageUrl())
-                                        <div class="mt-2"><img src="{{ $a->imageUrl() }}" alt="Reference" loading="lazy" class="rounded-lg max-h-64 w-auto"></div>
+                                        <div class="mt-2"><img src="{{ $a->imageUrl() }}" alt="Reference photo" loading="lazy" class="rounded-lg max-h-64 w-auto"></div>
                                     @endif
                                     @if($a->workers->count())
                                         <div class="flex flex-wrap gap-1.5 mt-2">

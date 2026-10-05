@@ -25,7 +25,7 @@
             </span>
         </a>
     @empty
-        <p class="text-xs text-gray-400 py-2">Wala pang artikulo — check back soon.</p>
+        <p class="text-xs text-gray-400 py-2">Wala pang artikulo. Check back soon.</p>
     @endforelse
 </div>
 

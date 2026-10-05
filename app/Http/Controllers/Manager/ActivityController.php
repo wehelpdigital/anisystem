@@ -282,7 +282,7 @@ class ActivityController extends BaseScheduleController
             'foliar_spray' => ['label' => 'Foliar spray', 'types' => ['foliar_spray'], 'family' => 'leaf'],
             'pesticide' => ['label' => 'Pesticide / insecticide', 'types' => ['pesticide'], 'family' => 'leaf'],
             'fungicide' => ['label' => 'Fungicide', 'types' => ['fungicide'], 'family' => 'leaf'],
-            'copper_fungicide' => ['label' => 'Copper-based fungicide', 'types' => ['copper_fungicide'], 'family' => 'leaf'],
+            'copper_fungicide' => ['label' => 'Copper fungicide', 'types' => ['copper_fungicide'], 'family' => 'leaf'],
             'microbial' => ['label' => 'Microbial / bio', 'types' => ['microbial'], 'family' => 'leaf'],
             'fertilizer' => ['label' => 'Granular fertiliser', 'types' => ['fertilizer'], 'family' => 'ground'],
         ];
@@ -374,7 +374,7 @@ class ActivityController extends BaseScheduleController
     {
         $schedule = $this->scheduleFromRequest($request);
         if ($schedule->isLocked()) {
-            return $this->jsonFail('This schedule is marked completed and locked. Reopen it in the Hub to make changes.', 423);
+            return $this->jsonFail('This season is closed and locked. Reopen it in the Hub to make changes.', 423);
         }
         $id = $this->queryId($request);
         $activity = AsScheduleActivity::active()->where('croppingScheduleId', $schedule->id)->where('id', $id)->first();
@@ -400,7 +400,7 @@ class ActivityController extends BaseScheduleController
             ]);
         }
         $this->broadcastBoard($schedule, 'deleted', ['id' => $activity->id], $activity->versionId);
-        return $this->jsonOk($returned > 0 ? 'Activity deleted — what it used is back in the inventory.' : 'Activity deleted.', ['stockMoved' => $returned > 0]);
+        return $this->jsonOk($returned > 0 ? 'Activity deleted. What it used is back in the inventory.' : 'Activity deleted.', ['stockMoved' => $returned > 0]);
     }
 
     /**
@@ -517,7 +517,7 @@ class ActivityController extends BaseScheduleController
 
         $this->broadcastBoard($schedule, 'toggle-done', ['id' => $activity->id, 'isDone' => $next], $activity->versionId);
 
-        $said = $next ? 'Marked as done — the activity is now locked.' : 'Reopened for editing.';
+        $said = $next ? 'Marked as done. The activity is now locked.' : 'Reopened for editing.';
         if ($moved > 0) {
             $said .= $next
                 ? ' ' . $moved . ' ' . \Illuminate\Support\Str::plural('item', $moved) . ' taken off the inventory.'
@@ -645,15 +645,15 @@ class ActivityController extends BaseScheduleController
             'description' => 'nullable|string|max:2000',
         ], [
             'image.required' => 'Pick an image to upload.',
-            'image.image'    => 'File must be an image.',
+            'image.image'    => 'The file must be a picture.',
             'image.mimes'    => 'Allowed types: JPG, PNG, WebP, GIF.',
-            'image.max'      => 'Image is too large — max 8 MB.',
+            'image.max'      => 'The picture is too large. The limit is 8 MB.',
             'video.required' => 'Pick a clip to upload.',
             'video.mimetypes' => 'Allowed types: MP4, MOV, WebM.',
-            'video.max'      => 'Clip is too large — max 100 MB.',
+            'video.max'      => 'The clip is too large. The limit is 100 MB.',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $file = $request->file($field);
@@ -1189,7 +1189,7 @@ class ActivityController extends BaseScheduleController
             'items.*.sequenceOrder' => 'required|integer|min:0',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $items = (array) $request->input('items');
@@ -1228,7 +1228,7 @@ class ActivityController extends BaseScheduleController
             if ($already + count($incomingIds) > self::MAX_ACTIVITIES_PER_DATE) {
                 return $this->jsonFail(
                     'That day would go past ' . self::MAX_ACTIVITIES_PER_DATE
-                        . ' activities — the most one day can hold. Move some to another day first.',
+                        . ' activities, the most one day can hold. Move some to another day first.',
                     422
                 );
             }
@@ -1250,7 +1250,7 @@ class ActivityController extends BaseScheduleController
                 }
             });
         } catch (\Throwable $e) {
-            return $this->jsonFail('Failed to reorder: ' . $e->getMessage(), 500);
+            return $this->jsonFail('Could not save the new order: ' . $e->getMessage(), 500);
         }
 
         $this->broadcastBoard($schedule, 'reordered', ['items' => $items], $this->activeVersionIdFor($schedule->id));
@@ -1269,7 +1269,7 @@ class ActivityController extends BaseScheduleController
             'targetDate' => 'required|date',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $activity = AsScheduleActivity::active()
@@ -1377,7 +1377,7 @@ class ActivityController extends BaseScheduleController
                 return $copy;
             });
         } catch (\Throwable $e) {
-            return $this->jsonFail('Failed to duplicate activity: ' . $e->getMessage(), 500);
+            return $this->jsonFail('Could not copy the activity: ' . $e->getMessage(), 500);
         }
 
         $fresh = $new->fresh(['items.material', 'items.service', 'lots', 'workers']);
@@ -1387,7 +1387,7 @@ class ActivityController extends BaseScheduleController
         $data = array_merge($data, $this->serializeWorkerPay($fresh));
 
         $this->broadcastBoard($schedule, 'saved', $data, $fresh->versionId);
-        return $this->jsonOk('Activity duplicated.', ['data' => $data]);
+        return $this->jsonOk('Activity copied.', ['data' => $data]);
     }
 
     /**
@@ -1466,7 +1466,7 @@ class ActivityController extends BaseScheduleController
     {
         $schedule = $this->scheduleFromRequest($request);
         if ($schedule->isLocked()) {
-            return $this->jsonFail('This schedule is marked completed and locked. Reopen it in the Hub to make changes.', 423);
+            return $this->jsonFail('This season is closed and locked. Reopen it in the Hub to make changes.', 423);
         }
 
         $validator = Validator::make($request->all(), [
@@ -1527,7 +1527,7 @@ class ActivityController extends BaseScheduleController
         ]);
 
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         // A done activity is locked — only notes (appendNote) or unchecking
@@ -1538,7 +1538,7 @@ class ActivityController extends BaseScheduleController
                 ->where('id', $id)
                 ->value('isDone');
             if ($locked) {
-                return $this->jsonFail('This activity is marked done and locked. Un-check it to edit.', 422);
+                return $this->jsonFail('This activity is marked done and locked. Untick it to edit.', 422);
             }
         }
 
@@ -1554,7 +1554,7 @@ class ActivityController extends BaseScheduleController
             ->unique()->values()->all();
         // Lot ids submitted but NONE valid → tampered payload.
         if ($rawLotIds->isNotEmpty() && empty($submittedLotIds)) {
-            return $this->jsonFail('Selected lots do not belong to this schedule.', 422);
+            return $this->jsonFail('Those lots are not in this season.', 422);
         }
 
         // Workers must belong to this schedule (zero allowed).
@@ -1589,7 +1589,7 @@ class ActivityController extends BaseScheduleController
             if ($p === '') continue;
             $bare = \App\Support\MediaStore::strip($p);
             if (str_contains($bare, '..') || ! preg_match(self::ATTACHABLE_PATH, $bare)) {
-                return $this->jsonFail('Invalid image path.', 422);
+                return $this->jsonFail('That picture could not be found.', 422);
             }
             $submittedImagePaths[] = $p;
         }
@@ -1791,7 +1791,7 @@ class ActivityController extends BaseScheduleController
                 return $activity;
             });
         } catch (\Throwable $e) {
-            return $this->jsonFail('Failed to save activity: ' . $e->getMessage(), 500);
+            return $this->jsonFail('Could not save the activity: ' . $e->getMessage(), 500);
         }
 
         if ($request->has('tags')) {
@@ -1838,12 +1838,12 @@ class ActivityController extends BaseScheduleController
             'media.*.strokes' => ['nullable', 'array', 'max:4000', DrawStrokes::rule()],
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $versionId = $this->activeVersionIdFor($schedule->id);
         if (!$versionId) {
-            return $this->jsonFail('No active version found for this schedule.', 422);
+            return $this->jsonFail('This season has no active plan version.', 422);
         }
 
         $noteDate = $request->input('noteDate');
@@ -1921,12 +1921,12 @@ class ActivityController extends BaseScheduleController
             'noteDate' => 'required|date',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $versionId = $this->activeVersionIdFor($schedule->id);
         if (!$versionId) {
-            return $this->jsonFail('No active version found for this schedule.', 422);
+            return $this->jsonFail('This season has no active plan version.', 422);
         }
 
         AsScheduleDateNote::active()
@@ -1966,7 +1966,7 @@ class ActivityController extends BaseScheduleController
         $kind = (string) $request->input('kind');
         $pen = ['image' => 'camera', 'video' => 'video', 'audio' => 'voice'][$kind] ?? null;
         if (! $pen) {
-            return $this->jsonFail('Unknown capture kind.', 422);
+            return $this->jsonFail('That kind of file cannot be added here.', 422);
         }
         $schedule = $this->scheduleForNoteMedia($request, [$pen]);
 
@@ -1982,12 +1982,12 @@ class ActivityController extends BaseScheduleController
             'file' => $rules,
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $versionId = $this->activeVersionIdFor($schedule->id);
         if (! $versionId) {
-            return $this->jsonFail('No active version found for this schedule.', 422);
+            return $this->jsonFail('This season has no active plan version.', 422);
         }
 
         $stored = \App\Support\MediaStore::putFile($request->file('file'), 'schedule-notes', $schedule->id);
@@ -2043,12 +2043,12 @@ class ActivityController extends BaseScheduleController
             'media.*.strokes' => ['nullable', 'array', 'max:4000', DrawStrokes::rule()],
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $versionId = $this->activeVersionIdFor($schedule->id);
         if (!$versionId) {
-            return $this->jsonFail('No active version found for this schedule.', 422);
+            return $this->jsonFail('This season has no active plan version.', 422);
         }
 
         $content = \App\Support\HtmlSanitizer::rich($request->input('content'));
@@ -2332,11 +2332,11 @@ class ActivityController extends BaseScheduleController
             ->where('id', $data['workerId'])
             ->first();
         if (! $worker) {
-            return $this->jsonFail('That worker is not on this schedule.', 404);
+            return $this->jsonFail('That worker is not in this season.', 404);
         }
 
         if ($schedule->isLocked()) {
-            return $this->jsonFail('This schedule is marked completed and locked. Reopen it in the Hub to make changes.', 423);
+            return $this->jsonFail('This season is closed and locked. Reopen it in the Hub to make changes.', 423);
         }
 
         if (! \App\Support\WorkerContext::canEdit() && ! $this->maySelfCheck($schedule, $worker, $data['date'])) {
@@ -2547,7 +2547,7 @@ class ActivityController extends BaseScheduleController
             'url' => 'required|string|max:600',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $activity = $this->activityFor($schedule->id, (int) $request->input('activityId'));
@@ -2569,7 +2569,7 @@ class ActivityController extends BaseScheduleController
             }
         }
         if (count($tags) >= 12) {
-            return $this->jsonFail('That activity already carries 12 tags.', 422);
+            return $this->jsonFail('That activity already has 12 tags, the most it can hold.', 422);
         }
         // A map is its owner's: the season uses it now, so the team can
         // open it from the card.
@@ -2713,7 +2713,7 @@ class ActivityController extends BaseScheduleController
     {
         $schedule = $this->scheduleFromRequest($request);
         if ($schedule->isLocked()) {
-            return $this->jsonFail('This schedule is marked completed and locked. Reopen it in the Hub to make changes.', 423);
+            return $this->jsonFail('This season is closed and locked. Reopen it in the Hub to make changes.', 423);
         }
 
         $activity = AsScheduleActivity::active()
@@ -2838,7 +2838,7 @@ class ActivityController extends BaseScheduleController
             'incomeDate' => 'required|date',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $rows = \App\Models\AsScheduleDayIncome::active()
@@ -2878,12 +2878,12 @@ class ActivityController extends BaseScheduleController
             'blockSort' => 'nullable|integer|min:-100000|max:100000',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $versionId = $this->activeVersionIdFor($schedule->id);
         if (!$versionId) {
-            return $this->jsonFail('No active version found for this schedule.', 422);
+            return $this->jsonFail('This season has no active plan version.', 422);
         }
 
         $kind = $request->input('kind');
@@ -2939,7 +2939,7 @@ class ActivityController extends BaseScheduleController
 
         $this->broadcastBoard($schedule, 'reload', [$dateCol => $to], $versionId);
 
-        return $this->jsonOk($from === $to ? 'Strip moved.' : 'Moved to ' . $to, [
+        return $this->jsonOk($from === $to ? 'Moved.' : 'Moved to ' . $to, [
             'kind'      => $kind,
             'fromDate'  => $from,
             'toDate'    => $to,
@@ -2967,12 +2967,12 @@ class ActivityController extends BaseScheduleController
             'ids.*'      => 'integer',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $versionId = $this->activeVersionIdFor($schedule->id);
         if (!$versionId) {
-            return $this->jsonFail('No active version found for this schedule.', 422);
+            return $this->jsonFail('This season has no active plan version.', 422);
         }
 
         $date = $request->input('incomeDate');
@@ -3021,12 +3021,12 @@ class ActivityController extends BaseScheduleController
             'note'       => 'nullable|string|max:500',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $versionId = $this->activeVersionIdFor($schedule->id);
         if (!$versionId) {
-            return $this->jsonFail('No active version found for this schedule.', 422);
+            return $this->jsonFail('This season has no active plan version.', 422);
         }
 
         $date = $request->input('incomeDate');
@@ -3134,7 +3134,7 @@ class ActivityController extends BaseScheduleController
             'expenseDate' => 'required|date',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $versionId = $this->activeVersionIdFor($schedule->id);
@@ -3169,12 +3169,12 @@ class ActivityController extends BaseScheduleController
             'ids.*'       => 'integer',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $versionId = $this->activeVersionIdFor($schedule->id);
         if (!$versionId) {
-            return $this->jsonFail('No active version found for this schedule.', 422);
+            return $this->jsonFail('This season has no active plan version.', 422);
         }
 
         $date = $request->input('expenseDate');
@@ -3227,12 +3227,12 @@ class ActivityController extends BaseScheduleController
             'note'        => 'nullable|string|max:500',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $versionId = $this->activeVersionIdFor($schedule->id);
         if (!$versionId) {
-            return $this->jsonFail('No active version found for this schedule.', 422);
+            return $this->jsonFail('This season has no active plan version.', 422);
         }
 
         $expenseDate = $request->input('expenseDate');
@@ -3388,7 +3388,7 @@ class ActivityController extends BaseScheduleController
         }
 
         return 'That day already has ' . self::MAX_ACTIVITIES_PER_DATE
-            . ' activities — the most one day can hold. Move some to another day first.';
+            . ' activities, the most one day can hold. Move some to another day first.';
     }
 
     private function activeVersionIdFor(int $scheduleId): ?int

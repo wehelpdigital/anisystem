@@ -23,7 +23,7 @@ trait GuardsScheduleWrites
         if (! WorkerContext::canEdit()) {
             abort(response()->json([
                 'success' => false,
-                'message' => 'You have view-only access to this schedule.',
+                'message' => 'You can view this season but not change it.',
             ], 403));
         }
     }
@@ -34,7 +34,7 @@ trait GuardsScheduleWrites
         if ($schedule->isLocked()) {
             abort(response()->json([
                 'success' => false,
-                'message' => 'This schedule is marked completed and locked. Reopen it in the Hub to make changes.',
+                'message' => 'This season is marked finished and locked. Reopen it in the Hub to make changes.',
             ], 423));
         }
     }

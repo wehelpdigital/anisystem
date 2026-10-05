@@ -178,7 +178,7 @@ class AccountController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Photo removed — your initials will show instead.',
+                'message' => 'Photo removed. Your initials will show instead.',
                 'data' => ['url' => null],
             ]);
         }

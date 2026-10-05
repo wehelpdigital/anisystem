@@ -209,7 +209,7 @@
             btn.dataset.busy = '1';
             btn.classList.add('is-busy');
             btn.setAttribute('aria-busy', 'true');
-            if (label) label.textContent = 'Signing in…';
+            if (label) label.textContent = 'Logging in…';
             // Deferred: a submit button disabled inside its own submit handler
             // can cancel the very submission it is reporting on.
             setTimeout(() => { btn.disabled = true; }, 0);

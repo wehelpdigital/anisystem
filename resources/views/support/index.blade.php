@@ -6,10 +6,10 @@
 
 @section('content')
 <div class="flex items-center justify-between gap-3 mb-4">
-    <h2 class="text-lg font-bold text-gray-900">Your tickets</h2>
+    <h2 class="text-lg font-bold text-gray-900">Your help requests</h2>
     <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('newTicketCard').classList.toggle('hidden')">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-        New ticket
+        Ask for help
     </button>
 </div>
 
@@ -30,12 +30,12 @@
             </select>
         </div>
         <div>
-            <label class="form-label" for="body">Describe the issue <span class="text-red-500">*</span></label>
+            <label class="form-label" for="body">Describe the problem <span class="text-red-500">*</span></label>
             <textarea id="body" name="body" rows="4" class="form-textarea" maxlength="8000" placeholder="What you did, what you saw, and any error message">{{ old('body') }}</textarea>
             @error('body') <p class="form-error">{{ $message }}</p> @enderror
         </div>
         <div class="flex justify-end">
-            <button type="submit" class="btn btn-primary">Send ticket</button>
+            <button type="submit" class="btn btn-primary">Send to support</button>
         </div>
     </form>
 </div>
@@ -59,8 +59,8 @@
 @empty
     <div class="card p-8 text-center">
         <div class="text-4xl mb-2">🎫</div>
-        <p class="font-bold text-gray-900">No tickets yet</p>
-        <p class="text-sm text-gray-500 mt-1">Need help? Tap <strong>New ticket</strong> and our team will answer.</p>
+        <p class="font-bold text-gray-900">No help requests yet</p>
+        <p class="text-sm text-gray-500 mt-1">Need help? Tap <strong>Ask for help</strong> and our team will answer.</p>
     </div>
 @endforelse
 @endsection

@@ -65,19 +65,19 @@ class CropCatalog
         'fruiting' => [
             [0.00, 'Seedling', 'Roots and the first true leaves.', 'Steady moisture. Harden off before transplanting.'],
             [0.18, 'Vegetative', 'Leaves and branches build the frame that carries the fruit.', 'Nitrogen. Stake or trellis what needs it.'],
-            [0.42, 'Flowering', 'Flowers set the crop; this week decides the yield.', 'Even water — swings drop flowers. Do not push nitrogen now.'],
+            [0.42, 'Flowering', 'Flowers set the crop; this week decides the yield.', 'Even water. Swings drop flowers. Do not push nitrogen now.'],
             [0.58, 'Fruit set & filling', 'Fruit forms and swells.', 'Potassium and calcium. Watch for fruit borer and mites.'],
             [0.80, 'Harvest', 'Pick as it comes, and keep picking.', 'Frequent picking keeps the plant setting more.'],
         ],
         'cucurbit' => [
             [0.00, 'Seedling', 'Cotyledons and the first true leaves.', 'Warm, moist soil. Guard against cutworm at the base.'],
             [0.15, 'Vine growth', 'Runners and tendrils reach out.', 'Nitrogen. Get the trellis up before the vines ask for it.'],
-            [0.38, 'Flowering', 'Male flowers first, then female ones behind them.', 'Do not spray at flowering — the bees are doing the work.'],
+            [0.38, 'Flowering', 'Male flowers first, then female ones behind them.', 'Do not spray at flowering. The bees are doing the work.'],
             [0.55, 'Fruit set & filling', 'Fruit sets on the female flowers and swells fast.', 'Heavy water and potassium. Rest fruit off wet soil.'],
             [0.80, 'Harvest', 'Cut while still tender; a missed fruit stops the vine.', 'Pick every two or three days.'],
         ],
         'legume' => [
-            [0.00, 'Emergence', 'Seedlings break ground.', 'Do not overwater — legumes rot in a soaked seedbed.'],
+            [0.00, 'Emergence', 'Seedlings break ground.', 'Do not overwater. Legumes rot in a soaked seedbed.'],
             [0.18, 'Vegetative', 'Leaves build and the nodules start fixing nitrogen.', 'Go easy on nitrogen; it has its own. Phosphorus helps.'],
             [0.42, 'Flowering', 'Flowers open and set the pods.', 'Even moisture. This is the week that decides the pods.'],
             [0.58, 'Pod filling', 'Pods fill and the seed hardens.', 'Water matters most now. Watch for pod borer.'],
@@ -85,14 +85,14 @@ class CropCatalog
         ],
         'root' => [
             [0.00, 'Establishment', 'Cuttings or seed pieces take root.', 'Keep the soil moist until they hold.'],
-            [0.15, 'Vegetative', 'Tops build the leaves that will feed the root.', 'Nitrogen early. Weed hard — roots hate competition.'],
+            [0.15, 'Vegetative', 'Tops build the leaves that will feed the root.', 'Nitrogen early. Weed hard, because roots hate competition.'],
             [0.45, 'Root initiation', 'Storage roots begin to form under the canopy.', 'Hill up. Switch from nitrogen toward potassium.'],
             [0.65, 'Bulking', 'The root swells; this is the whole yield.', 'Steady water and potassium. Do not disturb the hills.'],
-            [0.88, 'Harvest', 'Roots reach size and the tops begin to yellow.', 'Lift carefully — a bruised root will not keep.'],
+            [0.88, 'Harvest', 'Roots reach size and the tops begin to yellow.', 'Lift carefully. A bruised root will not keep.'],
         ],
         'bulb' => [
             [0.00, 'Establishment', 'Sets or seedlings root in.', 'Firm, moist soil. Shallow planting for bulbs.'],
-            [0.20, 'Leaf growth', 'Every leaf becomes a ring in the bulb.', 'Nitrogen now — leaves made late do not become bulb.'],
+            [0.20, 'Leaf growth', 'Every leaf becomes a ring in the bulb.', 'Nitrogen now. Leaves made late do not become bulb.'],
             [0.50, 'Bulbing', 'The base swells and the plant stops making leaves.', 'Stop nitrogen. Potassium and steady, lighter water.'],
             [0.80, 'Maturity & curing', 'Tops soften and fall over.', 'Withhold water. Lift and cure in shade before storing.'],
         ],
@@ -100,7 +100,7 @@ class CropCatalog
             [0.00, 'Emergence', 'Seedlings break ground and set their first roots.', 'Even moisture. Guard the seedbed from birds and rats.'],
             [0.15, 'Vegetative', 'Tillers or leaves build the frame.', 'The main nitrogen goes on here.'],
             [0.42, 'Reproductive', 'The head or ear forms inside the stem.', 'Do not let it dry now. Second nitrogen if the crop looks pale.'],
-            [0.60, 'Flowering', 'Pollination — the week that sets the grain.', 'Water without fail. Heat and drought here cost the most.'],
+            [0.60, 'Flowering', 'Pollination: the week that sets the grain.', 'Water without fail. Heat and drought here cost the most.'],
             [0.72, 'Grain filling', 'Grain fills and hardens.', 'Keep water on until the dough stage. Watch for rats and birds.'],
             [0.90, 'Ripening & harvest', 'Grain hardens and the crop dries down.', 'Drain the field. Harvest when most grains have turned.'],
         ],
@@ -108,9 +108,9 @@ class CropCatalog
          * fractions — a tree's life is not a run-up to one harvest, so
          * there is no maturity to take fractions of. */
         'tree' => [
-            [0, 'Establishment', 'The young tree puts down roots and holds.', 'Water through the dry months. Keep a clean weed-free ring.'],
-            [12, 'Juvenile growth', 'Frame and canopy build. No crop yet.', 'Feed lightly but often. Train the frame now — it is permanent.'],
-            [36, 'First bearing', 'The first flowers and a light crop.', 'Thin the first fruits; a young tree over-bearing sets itself back.'],
+            [0, 'Establishment', 'The young tree puts down roots and holds.', 'Water through the dry months. Keep a clean ring free of weeds.'],
+            [12, 'Juvenile growth', 'Frame and canopy build. No crop yet.', 'Feed lightly but often. Train the frame now, because it is permanent.'],
+            [36, 'First bearing', 'The first flowers and a light crop.', 'Thin the first fruits; a young tree that bears too much sets itself back.'],
             [72, 'Mature bearing', 'Full crop each season.', 'Feed after harvest, prune for light, and watch the flowering flush.'],
             [240, 'Old and declining', 'Yield eases off; wood is heavy and shaded.', 'Rejuvenation pruning, or plan the replacement.'],
         ],

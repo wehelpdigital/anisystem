@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Discussions — Community')
+@section('title', 'Discussions · Community')
 @section('body-class', 'plaza-ground')
 @section('page-title', 'Community')
 @section('help-key', 'community-discussions')
@@ -283,7 +283,7 @@
 
 <div class="disc-head">
     <h2 class="disc-head-title">Sali ka sa usapan</h2>
-    <p class="disc-head-sub">Post questions, share what works — every room here is a conversation somebody started.</p>
+    <p class="disc-head-sub">Ask questions and share what works. Every room here is a conversation a farmer started.</p>
     <div class="disc-head-acts">
         {{-- Starting a room is the Farm Owner plan's privilege. The button
              stays for everyone — locked, it opens the upgrade sheet. --}}
@@ -317,7 +317,7 @@
         <div class="card-body text-center py-14">
             <div class="empty-tile">👥</div>
             <h2 class="text-lg font-bold text-gray-900 mb-1" style="font-family:var(--font-heading)">Wala pang discussions</h2>
-            <p class="text-sm text-gray-500 mb-5">{{ \App\Support\Region::ph() ? 'Ikaw ang mag-umpisa — invite kapwa magsasaka to talk shop.' : 'Be the first — invite fellow farmers to talk shop.' }}</p>
+            <p class="text-sm text-gray-500 mb-5">{{ \App\Support\Region::ph() ? 'Ikaw ang mag-umpisa. Invite kapwa magsasaka to talk about farming.' : 'Be the first. Invite fellow farmers to talk about farming.' }}</p>
             <button type="button" class="btn btn-primary" onclick="document.getElementById('createGroupBtn').click()">Start the first discussion</button>
         </div>
     </div>

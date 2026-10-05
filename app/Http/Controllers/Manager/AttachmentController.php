@@ -28,12 +28,12 @@ class AttachmentController extends BaseScheduleController
             'file'        => 'required|file|max:10240|mimes:jpg,jpeg,png,gif,webp,pdf',
             'description' => 'nullable|string|max:20000',
         ], [
-            'file.required' => 'Pick an image (or PDF) to upload.',
-            'file.max'      => 'File is too large — max 10 MB.',
+            'file.required' => 'Pick a picture or PDF to upload.',
+            'file.max'      => 'The file is too large. The limit is 10 MB.',
             'file.mimes'    => 'Allowed types: JPG, PNG, GIF, WebP, PDF.',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $file         = $request->file('file');
@@ -87,7 +87,7 @@ class AttachmentController extends BaseScheduleController
             'description' => 'nullable|string|max:20000',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $row = AsScheduleAttachment::active()

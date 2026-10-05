@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Expenses Report — ' . $schedule->title)
+@section('title', 'Expenses Report: ' . $schedule->title)
 @section('page-title', 'Expenses Report')
 @section('page-subtitle', $schedule->title)
 @section('back', \App\Support\BackTo::url(route('sm.reports', ['id' => $schedule->id]), $schedule->id))
@@ -509,8 +509,8 @@ const __init = () => {
         if (KIND) bits.push('inventory: ' + ($id('xrKindNow')?.textContent || KIND));
         if (STATUS !== 'all') bits.push(STATUS === 'done' ? 'done only' : 'still ahead');
         const dayOn = sl.dayMin !== undefined || sl.dayMax !== undefined;
-        if (dayOn) bits.push(`${daySaid()} ${sl.dayMin ?? '−∞'} to ${sl.dayMax ?? '+∞'}${dayWord() === 'AGE' ? ' months' : ''}`);
-        if (sl.from || sl.to) bits.push(`${sl.from || '…'} to ${sl.to || '…'}`);
+        if (dayOn) bits.push(`${daySaid()} ${sl.dayMin ?? 'start'} to ${sl.dayMax ?? 'end'}${dayWord() === 'AGE' ? ' months' : ''}`);
+        if (sl.from || sl.to) bits.push(`${sl.from || 'start'} to ${sl.to || 'end'}`);
         const line = bits.length ? `Covers: ${bits.join(' · ')}` : 'Covers the whole season, every lot and every category.';
         return dayOn ? line + '. Entries with no lot, like day book lines and stock buys, have no day count, so they are left out.' : line;
     }
@@ -751,7 +751,7 @@ const __init = () => {
     function buildText() {
         const d = DATA;
         const lines = [];
-        lines.push(`EXPENSES REPORT — ${d.scheduleTitle || ''}`);
+        lines.push(`EXPENSES REPORT: ${d.scheduleTitle || ''}`);
         lines.push('='.repeat(50));
         lines.push(`Generated: ${new Date().toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'), { dateStyle: 'medium', timeStyle: 'short' })}`);
         lines.push('');
@@ -765,7 +765,7 @@ const __init = () => {
         lines.push('');
         lines.push('BY MONTH');
         lines.push('-'.repeat(50));
-        Object.entries(d.perMonth || {}).forEach(([ym, v]) => lines.push(`${ym}: out ${fmtPeso(v.spend)}${v.income ? ' · in ' + fmtPeso(v.income) : ''}`));
+        Object.entries(d.perMonth || {}).forEach(([ym, v]) => lines.push(`${ym === '—' ? 'No date' : ym}: out ${fmtPeso(v.spend)}${v.income ? ' · in ' + fmtPeso(v.income) : ''}`));
         lines.push('');
         lines.push('BY LOT (activity costs shared across their lots)');
         lines.push('-'.repeat(50));
@@ -775,7 +775,7 @@ const __init = () => {
         lines.push('-'.repeat(50));
         (d.rows || []).forEach((r) => {
             const c = CATS[r.cat] || {};
-            lines.push(`${r.on || 'no date'} · ${c.label || r.cat} · ${r.label}${r.meta ? ' (' + r.meta + ')' : ''} — ${r.cat === 'income' ? '+' : ''}${fmtPeso(r.amount)}`);
+            lines.push(`${r.on || 'no date'} · ${c.label || r.cat} · ${r.label}${r.meta ? ' (' + r.meta + ')' : ''}: ${r.cat === 'income' ? '+' : ''}${fmtPeso(r.amount)}`);
         });
         return lines.join('\n');
     }

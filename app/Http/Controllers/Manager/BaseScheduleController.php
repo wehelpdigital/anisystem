@@ -26,7 +26,7 @@ abstract class BaseScheduleController extends Controller
             ->first();
 
         if (!$schedule) {
-            abort(response()->json(['success' => false, 'message' => 'Cropping schedule not found.'], 404));
+            abort(response()->json(['success' => false, 'message' => 'Season not found.'], 404));
         }
 
         // A grant can say 'none' — community access without the farm. Until
@@ -37,7 +37,7 @@ abstract class BaseScheduleController extends Controller
         if (! \App\Support\WorkerContext::canView()) {
             abort(response()->json([
                 'success' => false,
-                'message' => 'You do not have access to this farm\'s schedules.',
+                'message' => 'You do not have access to this farm\'s seasons.',
             ], 403));
         }
 
@@ -81,7 +81,7 @@ abstract class BaseScheduleController extends Controller
             if (! \App\Support\WorkerContext::canAddNotes()) {
                 abort(response()->json([
                     'success' => false,
-                    'message' => 'You are not allowed to write notes on this schedule.',
+                    'message' => 'You are not allowed to write notes in this season.',
                 ], 403));
             }
 
@@ -126,7 +126,7 @@ abstract class BaseScheduleController extends Controller
             if (! $allowed) {
                 abort(response()->json([
                     'success' => false,
-                    'message' => 'You are not allowed to write notes on this schedule.',
+                    'message' => 'You are not allowed to write notes in this season.',
                 ], 403));
             }
 
@@ -150,7 +150,7 @@ abstract class BaseScheduleController extends Controller
             if (! \App\Support\WorkerContext::canWriteModule('inventory')) {
                 abort(response()->json([
                     'success' => false,
-                    'message' => 'You have view-only access to the Inventory on this farm.',
+                    'message' => 'You can only view the Inventory on this farm.',
                 ], 403));
             }
 
@@ -167,7 +167,7 @@ abstract class BaseScheduleController extends Controller
     {
         $value = $request->query($key);
         if ($value === null || $value === '' || !is_numeric($value)) {
-            abort(response()->json(['success' => false, 'message' => "Missing query parameter: {$key}"], 400));
+            abort(response()->json(['success' => false, 'message' => "This link is missing something ({$key}). Please reload the page."], 400));
         }
         return (int) $value;
     }

@@ -58,16 +58,16 @@
 
     {{-- A taste of the shelves, greyed until the doors open. --}}
     <div class="shop-grid">
-        <div class="shop-tile"><span>🌾</span>Seeds &amp; varieties<i>Certified, by crop</i></div>
-        <div class="shop-tile"><span>🧂</span>Fertilizer &amp; inputs<i>Priced per bag</i></div>
-        <div class="shop-tile"><span>🛠️</span>Tools &amp; equipment<i>From bolo to pump</i></div>
+        <div class="shop-tile"><span>🌾</span>Seeds and varieties<i>Certified, by crop</i></div>
+        <div class="shop-tile"><span>🧂</span>Fertilizer and farm inputs<i>Priced per bag</i></div>
+        <div class="shop-tile"><span>🛠️</span>Tools and equipment<i>From bolo to pump</i></div>
         <div class="shop-tile"><span>🧤</span>Safety gear<i>For every activity</i></div>
         <div class="shop-tile"><span>📖</span>Cheat Sheets<i>Short, useful farm guides</i></div>
         <div class="shop-tile"><span>👕</span>Fashion<i>Farm wear that works</i></div>
     </div>
 
     <p class="text-center text-xs text-gray-500 mt-6">
-        We will tell you here and in your notices when the shop opens.
+        We will tell you here and in your notifications when the shop opens.
     </p>
 </div>
 @endsection

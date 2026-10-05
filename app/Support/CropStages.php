@@ -48,13 +48,13 @@ class CropStages
        puddled, levelled field. */
     public const DSR_WET = [
         [0, 'Germination & emergence', 'The seed sprouts where it will stand.', 'Keep the bed saturated, not flooded. Guard against birds.'],
-        [8, 'Seedling establishment', 'Roots anchor and the first leaves open.', 'Shallow water once anchored. Weed early — DSR fights weeds.'],
-        [21, 'Active tillering', 'Tillers build the panicle count.', 'First and second nitrogen. Keep 3–5 cm of water.'],
+        [8, 'Seedling establishment', 'Roots anchor and the first leaves open.', 'Shallow water once anchored. Weed early: weeds are the big fight in DSR.'],
+        [21, 'Active tillering', 'Tillers build the panicle count.', 'First and second nitrogen. Keep 3 to 5 cm of water.'],
         [40, 'Panicle initiation', 'The panicle forms inside the stem.', 'The season\'s biggest fertiliser goes on here.'],
         [55, 'Booting & heading', 'The flag leaf swells; panicles push out.', 'Never let the field dry. Watch for stem borer.'],
-        [70, 'Flowering', 'Pollination — a few days that set the grain.', 'Keep water on. Do not spray at midday.'],
+        [70, 'Flowering', 'Pollination: a few days that set the grain.', 'Keep water on. Do not spray at midday.'],
         [85, 'Grain filling', 'Grains fill from milk to dough.', 'Water to the dough stage. Guard against rats and birds.'],
-        [105, 'Ripening & harvest', 'Grain hardens and the straw turns.', 'Drain 7–10 days before cutting.'],
+        [105, 'Ripening & harvest', 'Grain hardens and the straw turns.', 'Drain 7 to 10 days before cutting.'],
     ];
 
     /* Dry direct-seeded rice, from sowing: dry seed drilled or dibbled into
@@ -63,13 +63,13 @@ class CropStages
        later than in the wet crop. */
     public const DSR_DRY = [
         [0, 'Germination & emergence', 'The dry seed waits for moisture, then sprouts in the row.', 'Sow into moist soil, or water or wait for rain right after. Guard against ants and birds.'],
-        [10, 'Seedling establishment', 'Roots anchor in unpuddled soil; the first leaves open.', 'Keep the soil moist, not flooded. Weed now — a dry-seeded field weeds hardest.'],
+        [10, 'Seedling establishment', 'Roots anchor in unpuddled soil; the first leaves open.', 'Keep the soil moist, not flooded. Weed now: a dry seeded field is the hardest to weed.'],
         [25, 'Active tillering', 'Tillers build the panicle count.', 'First and second nitrogen. Bring water on where it can be held.'],
         [42, 'Panicle initiation', 'The panicle forms inside the stem.', 'The season\'s biggest fertiliser goes on here. Do not let it go dry.'],
         [58, 'Booting & heading', 'The flag leaf swells; panicles push out.', 'Water without fail. Watch for stem borer and blast.'],
-        [72, 'Flowering', 'Pollination — a few days that set the grain.', 'Drought here costs the most. Do not spray at midday.'],
+        [72, 'Flowering', 'Pollination: a few days that set the grain.', 'Drought here costs the most. Do not spray at midday.'],
         [88, 'Grain filling', 'Grains fill from milk to dough.', 'Keep moisture to the dough stage. Guard against rats and birds.'],
-        [108, 'Ripening & harvest', 'Grain hardens and the straw turns.', 'Let the field dry down 7–10 days before cutting.'],
+        [108, 'Ripening & harvest', 'Grain hardens and the straw turns.', 'Let the field dry down 7 to 10 days before cutting.'],
     ];
 
     public const TABLES = [
@@ -89,14 +89,14 @@ class CropStages
          */
         'rice' => [
             'stages' => [
-                [0, 'Recovery', 'The seedlings settle and put out new roots.', 'Shallow water, 2–3 cm. Do not let it dry out.'],
+                [0, 'Recovery', 'The seedlings settle and put out new roots.', 'Shallow water, 2 to 3 cm. Do not let it dry out.'],
                 [7, 'Early tillering', 'The first tillers come out from the base.', 'First nitrogen. Keep the water shallow.'],
-                [21, 'Active tillering', 'Tiller after tiller — the panicle count is decided here.', 'Weed now. Keep 3–5 cm of water.'],
+                [21, 'Active tillering', 'Tiller after tiller. The panicle count is decided here.', 'Weed now. Keep 3 to 5 cm of water.'],
                 [35, 'Panicle initiation', 'The panicle forms inside the stem, out of sight.', 'The biggest fertiliser of the season goes on here.'],
                 [50, 'Booting & heading', 'The flag leaf swells; panicles push out.', 'Never let the field dry. Watch for stem borer.'],
-                [60, 'Flowering', 'Pollination — a few days that set the grain.', 'Keep water on. Do not spray at midday.'],
+                [60, 'Flowering', 'Pollination: a few days that set the grain.', 'Keep water on. Do not spray at midday.'],
                 [73, 'Grain filling', 'Grains fill from milk to dough.', 'Water to the dough stage. Guard against rats and birds.'],
-                [90, 'Ripening & harvest', 'Grain hardens and the straw turns.', 'Drain 7–10 days before cutting. Harvest at 80–85% golden.'],
+                [90, 'Ripening & harvest', 'Grain hardens and the straw turns.', 'Drain 7 to 10 days before cutting. Harvest at 80 to 85% golden.'],
             ],
             // Direct seeded (DSR), from sowing — the wet crop's own table.
             'stagesDirect' => self::DSR_WET,
@@ -107,10 +107,10 @@ class CropStages
         'corn_yellow' => [
             'stages' => [
                 [0, 'Emergence', 'The shoot breaks through and lives on the seed.', 'Keep the soil damp, not wet. Watch for cutworm.'],
-                [10, 'Early vegetative', 'Leaves come one after another; roots go down.', 'First side-dress. Weed early — corn hates competition.'],
-                [30, 'Rapid growth', 'The stalk lengthens fast and the plant sets its size.', 'Second side-dress. Water is critical from here.'],
+                [10, 'Early vegetative', 'Leaves come one after another; roots go down.', 'First side dress. Weed early, because corn hates competition.'],
+                [30, 'Rapid growth', 'The stalk lengthens fast and the plant sets its size.', 'Second side dress. Water is critical from here.'],
                 [45, 'Tasselling', 'The tassel shows and pollen is nearly ready.', 'Do not let it dry out. This is the thirstiest week.'],
-                [55, 'Silking & pollination', 'Silks catch pollen — one silk, one kernel.', 'Water every few days. Nothing else matters as much.'],
+                [55, 'Silking & pollination', 'Silks catch pollen: one silk, one kernel.', 'Water every few days. Nothing else matters as much.'],
                 [70, 'Grain filling', 'Kernels fill; the ear takes its weight.', 'Steady water. Watch for earworm.'],
                 [95, 'Maturity & harvest', 'Husks dry and the kernel dents.', 'Harvest at the black layer, when the husk has dried down.'],
             ],
@@ -124,31 +124,31 @@ class CropStages
         'corn_sweet' => [
             'stages' => [
                 [0, 'Emergence', 'The shoot breaks through and lives on the seed.', 'Keep the soil damp, not wet. Watch for cutworm.'],
-                [8, 'Early vegetative', 'Leaves come one after another.', 'First side-dress. Weed early.'],
-                [24, 'Rapid growth', 'The stalk lengthens and sets the plant\'s size.', 'Second side-dress. Water is critical from here.'],
+                [8, 'Early vegetative', 'Leaves come one after another.', 'First side dress. Weed early.'],
+                [24, 'Rapid growth', 'The stalk lengthens and sets the plant\'s size.', 'Second side dress. Water is critical from here.'],
                 [38, 'Tasselling', 'The tassel shows and pollen is nearly ready.', 'Do not let it dry out. Plant in blocks, not rows, for pollination.'],
-                [46, 'Silking & pollination', 'Silks catch pollen — one silk, one kernel.', 'Water every few days. A missed silk is a missing kernel.'],
+                [46, 'Silking & pollination', 'Silks catch pollen: one silk, one kernel.', 'Water every few days. A missed silk is a missing kernel.'],
                 [58, 'Milk stage', 'Kernels fill with sweet liquid; this is the eating stage.', 'Steady water. Watch for earworm at the silk.'],
-                [70, 'Harvest', 'Silks brown, kernels squirt milky juice when pressed.', 'Pick in the cool of the morning and cool it fast — sugar turns to starch within hours.'],
+                [70, 'Harvest', 'Silks brown, kernels squirt milky juice when pressed.', 'Pick in the cool of the morning and cool it fast. Sugar turns to starch within hours.'],
             ],
         ],
         'sugarcane' => [
             'stages' => [
                 [0, 'Germination', 'Buds sprout from the setts.', 'Keep the furrow moist. Fill gaps by day 30.'],
-                [45, 'Tillering', 'The stool forms — the number of millable canes is set here.', 'First fertiliser. Weed thoroughly.'],
+                [45, 'Tillering', 'The stool forms. The number of millable canes is set here.', 'First fertiliser. Weed thoroughly.'],
                 [120, 'Grand growth', 'The cane lengthens fastest of all; most of the yield is made now.', 'Water and nitrogen. Earth up.'],
                 [270, 'Maturation', 'Sugar accumulates from the bottom up.', 'Withhold nitrogen. Ease water.'],
-                [330, 'Ripening & harvest', 'Brix rises and leaves dry off.', 'Harvest on mill schedule; burn or green-cut as agreed.'],
+                [330, 'Ripening & harvest', 'Brix rises and leaves dry off.', 'Harvest on mill schedule; burn or cut green as agreed.'],
             ],
         ],
         'banana' => [
             'stages' => [
                 [0, 'Establishment', 'The sucker roots and holds.', 'Water weekly. Mulch the base.'],
-                [60, 'Vegetative growth', 'Leaf after leaf; the pseudostem thickens.', 'Feed every 6–8 weeks. Desucker to one follower.'],
+                [60, 'Vegetative growth', 'Leaf after leaf; the pseudostem thickens.', 'Feed every 6 to 8 weeks. Desucker to one follower.'],
                 [180, 'Late vegetative', 'The plant builds the reserves the bunch will spend.', 'Keep potassium up. Prop tall plants.'],
                 [270, 'Shooting', 'The bunch emerges and the fingers set.', 'Bag the bunch. Remove the bell.'],
                 [330, 'Bunch filling', 'Fingers fill out and round off.', 'Water steadily. Support against wind.'],
-                [390, 'Harvest', 'Fingers are full; angles have softened.', 'Cut at three-quarters full for market.'],
+                [390, 'Harvest', 'Fingers are full; angles have softened.', 'Cut at three quarters full for market.'],
             ],
         ],
     ];

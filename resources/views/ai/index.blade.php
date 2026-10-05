@@ -455,7 +455,7 @@
             </span>
             <div>
                 <h3>{{ $settings->assistantName }} is not switched on yet</h3>
-                <p>It will show here once it is set up.</p>
+                <p>You can ask here once it is ready.</p>
             </div>
         </div>
     @endunless
@@ -466,9 +466,9 @@
             <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg>
         </span>
         <div>
-            <h3>You have no AI Credits left</h3>
+            <h3>You have no credits left</h3>
             <p>A question costs about 4 credits{{ $aiPerPhoto > 0 ? ', plus ' . $aiPerPhotoTxt . ' for each photo' : '' }}. Top up to keep asking.</p>
-            <a href="{{ route('ai.credits') }}" class="btn btn-accent btn-sm mt-2">Get AI Credits</a>
+            <a href="{{ route('ai.credits') }}" class="btn btn-accent btn-sm mt-2">Buy credits</a>
         </div>
     </div>
 
@@ -598,7 +598,7 @@
                      place beside the price and says what it is. An account
                      that rides free shows the sign for it rather than a
                      number that never moves. --}}
-                @if ($aiPayerIsMe)<a href="{{ route('ai.credits') }}" class="ai-bal" data-ai-bal style="margin-top:0" title="{{ $aiPayerIsMe ? 'Credits left in your wallet' : 'Credits of the farm you work on. The owner pays for answers here.' }}" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) $balance)) }}</b>@endif</a>@else<span class="ai-bal" data-ai-bal style="margin-top:0" title="{{ $aiPayerIsMe ? 'Credits left in your wallet' : 'Credits of the farm you work on. The owner pays for answers here.' }}" aria-label="Current credits"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) $balance)) }}</b>@endif</span>@endif
+                @if ($aiPayerIsMe)<a href="{{ route('ai.credits') }}" class="ai-bal" data-ai-bal style="margin-top:0" title="{{ $aiPayerIsMe ? 'Credits left in your wallet' : 'Credits of the farm you work on. The owner pays for answers here.' }}" aria-label="Credits left"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) $balance)) }}</b>@endif</a>@else<span class="ai-bal" data-ai-bal style="margin-top:0" title="{{ $aiPayerIsMe ? 'Credits left in your wallet' : 'Credits of the farm you work on. The owner pays for answers here.' }}" aria-label="Credits left"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) $balance)) }}</b>@endif</span>@endif
         </div>
     </div>
 </div>{{-- /.aichat --}}
@@ -670,7 +670,7 @@
     <div class="sheet-body space-y-1">
         <button type="button" class="ai-attach-opt js-ai-new" id="aiMenuNew">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg></span>
-            <span>New session<span class="sub">Start a fresh question</span></span>
+            <span>New question<span class="sub">Start over with an empty chat</span></span>
         </button>
         <button type="button" class="ai-attach-opt" id="aiMenuHistory">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
@@ -694,7 +694,7 @@
         @unless ($aiUnlimited)
             <a href="{{ route('ai.credits') }}" class="ai-attach-opt">
                 <span class="ic"><svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm.75 4.5v.63a2.5 2.5 0 01.2 4.84v.78a.75.75 0 01-1.5 0v-.75a2.6 2.6 0 01-1.83-1.1.75.75 0 011.24-.84c.24.35.63.57 1.09.57.6 0 1.05-.36 1.05-.83 0-.44-.3-.7-1.2-.95-1.13-.32-2.05-.8-2.05-2.05a2.2 2.2 0 011.5-2.03V6.5a.75.75 0 011.5 0z"/></svg></span>
-                <span>AI credits<span class="sub"><span id="aiBalance">{{ number_format((int) floor((float) $balance)) }}</span> left. Top up here.</span></span>
+                <span>My credits<span class="sub"><span id="aiBalance">{{ number_format((int) floor((float) $balance)) }}</span> left. Top up here.</span></span>
             </a>
         @endunless
     </div>
@@ -1342,7 +1342,7 @@ const __init = () => {
             if (err.data && err.data.outOfCredits) {
                 setBalance(err.data.balance || 0);
                 addTurn(false, '<p>' + escapeHtml(err.message) + '</p>'
-                    + `<p style="margin-top:.5rem"><a class="btn btn-accent btn-sm" href="${escapeHtml(@json(route('ai.credits')))}">Get AI Credits</a></p>`);
+                    + `<p style="margin-top:.5rem"><a class="btn btn-accent btn-sm" href="${escapeHtml(@json(route('ai.credits')))}">Buy credits</a></p>`);
             } else {
                 addTurn(false, '<p>' + escapeHtml(err.message) + '</p>');
             }

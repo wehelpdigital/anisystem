@@ -6,7 +6,7 @@
         {{-- A saved map opens in the Maps module: it is a place to work on,
              not a picture to squint at, and the module can pan, measure and
              draw where a thumbnail cannot. --}}
-        <a class="nm nm-map" href="{{ $m['mapUrl'] ?? '#' }}" title="Open this map in the Maps module">
+        <a class="nm nm-map" href="{{ $m['mapUrl'] ?? '#' }}" title="Open this map in Maps">
             <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>
             <span>View map</span>
         </a>

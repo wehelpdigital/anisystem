@@ -16,6 +16,6 @@
         {{-- Someone down as off this day, put on the work anyway. The flag
              stays on the name so the choice is visible later, rather than
              the roster quietly disagreeing with the rules. --}}
-        <span class="item-tag worker-tag">{{ $w->workerName }}@if ($a->targetDate && ! $w->isAvailableOn($a->targetDate))<span class="w-forced" title="Day off, but working anyway">forced</span>@endif</span>
+        <span class="item-tag worker-tag">{{ $w->workerName }}@if ($a->targetDate && ! $w->isAvailableOn($a->targetDate))<span class="w-forced" title="Day off, but working anyway">on day off</span>@endif</span>
     @endforeach
 @endif

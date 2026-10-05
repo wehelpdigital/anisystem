@@ -1,6 +1,6 @@
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Workers — ' . $schedule->title)
+@section('title', 'Workers · ' . $schedule->title)
 @section('page-title', 'Workers')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'workers')
@@ -24,7 +24,7 @@
 
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
             <p class="text-sm text-gray-500">
-                <span id="workerCount" class="font-bold text-gray-900">0</span> <span id="workerCountLabel">workers</span> on this schedule
+                <span id="workerCount" class="font-bold text-gray-900">0</span> <span id="workerCountLabel">workers</span> in this season
             </p>
             <button type="button" class="btn btn-primary w-full sm:w-auto shrink-0" data-add-worker>
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
@@ -42,7 +42,7 @@
                     <svg class="w-7 h-7 text-brand-600" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
                 </div>
                 <h2 class="font-bold text-gray-900 mb-1">No workers yet</h2>
-                <p class="text-sm text-gray-500 mb-4">Add the people who work on this schedule. Their pay, skills and days off help plan tasks and labor cost.</p>
+                <p class="text-sm text-gray-500 mb-4">Add the people who work in this season. Their pay, skills and days off help you plan tasks and labor cost.</p>
                 <button type="button" class="btn btn-primary" data-add-worker>Add your first worker</button>
             </div>
         </div>
@@ -255,7 +255,7 @@
 <div class="sheet hidden" id="rulesSheet" style="--sheet-width:34rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title" id="rulesSheetTitle">Availability Rules</h3>
+        <h3 class="sheet-title" id="rulesSheetTitle">Days off</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-5">
@@ -283,7 +283,7 @@
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
-        <button type="button" id="saveRulesBtn" class="btn btn-primary">Save Rules</button>
+        <button type="button" id="saveRulesBtn" class="btn btn-primary">Save days off</button>
     </div>
 </div>
 @endpush
@@ -609,9 +609,9 @@ const __init = () => {
             parts.push('Off: ' + [...w.offDays].sort((a, b) => a - b).map((d) => DAY_NAMES[d]).join(', '));
         }
         if ((w.offDates || []).length) {
-            parts.push(`${w.offDates.length} off ${w.offDates.length === 1 ? 'date' : 'dates'}`);
+            parts.push(`${w.offDates.length} other ${w.offDates.length === 1 ? 'day' : 'days'} off`);
         }
-        return parts.length ? parts.join(' · ') : 'No off rules';
+        return parts.length ? parts.join(' · ') : 'No days off';
     }
 
     // Initials for the avatar (first letters of up to two name words).
@@ -646,13 +646,13 @@ const __init = () => {
                     ${w.email ? contactLine('<path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>', w.email) : ''}
                     ${w.phone ? contactLine('<path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>', w.phone) : ''}
                     ${skills ? `<div class="flex flex-wrap gap-1.5 pt-0.5">${skills}</div>` : ''}
-                    <p class="text-xs ${offRules === 'No off rules' ? 'text-gray-400' : 'text-orange-700 font-medium'} off-rules-line flex items-center gap-1.5"><svg class="w-3.5 h-3.5 shrink-0 ${offRules === 'No off rules' ? 'text-gray-300' : 'text-orange-400'}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"/></svg><span class="truncate">${escapeHtml(offRules)}</span></p>
+                    <p class="text-xs ${offRules === 'No days off' ? 'text-gray-400' : 'text-orange-700 font-medium'} off-rules-line flex items-center gap-1.5"><svg class="w-3.5 h-3.5 shrink-0 ${offRules === 'No days off' ? 'text-gray-300' : 'text-orange-400'}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"/></svg><span class="truncate">${escapeHtml(offRules)}</span></p>
                     ${w.notes ? `<p class="text-xs text-gray-500 pt-0.5 line-clamp-2">${escapeHtml(w.notes)}</p>` : ''}
                 </div>
 
                 <div class="flex items-center gap-1.5 pt-3 border-t border-gray-100">
                     ${w.login && w.login.workerUserId ? `<button type="button" class="btn btn-white btn-sm px-2.5!" data-pm-worker="${w.login.workerUserId}" data-pm-name="${escapeHtml(w.workerName)}" title="Message ${escapeHtml(w.workerName)}" aria-label="Message ${escapeHtml(w.workerName)}"><img src="${CHAT_ICON}" alt="" class="w-4.5 h-4.5" style="object-fit:contain"></button>` : ''}
-                    <button type="button" class="btn btn-white btn-sm" data-rules-worker="${w.id}">Rules</button>
+                    <button type="button" class="btn btn-white btn-sm" data-rules-worker="${w.id}">Days off</button>
                     <button type="button" class="btn btn-white btn-sm" data-edit-worker="${w.id}">Edit</button>
                     <button type="button" class="btn btn-ghost btn-sm px-2.5! text-red-500 hover:bg-red-50! ml-auto" data-delete-worker="${w.id}" aria-label="Delete worker">
                         <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
@@ -789,7 +789,7 @@ const __init = () => {
         const a = d.account;
         const face = a.avatar ? `<img src="${escapeHtml(a.avatar)}" alt="">` : escapeHtml(a.initials || '·');
         let say, stop = false;
-        if (d.onRoster) { say = `${escapeHtml(a.name)} is already a worker on this schedule.`; stop = true; }
+        if (d.onRoster) { say = `${escapeHtml(a.name)} is already a worker in this season.`; stop = true; }
         else if (d.login === 'active') say = 'They already have access to your farm. They join as a worker with the rights you gave them.';
         else if (CAN_LOGINS) say = 'They join as a worker and can view this farm. You can change what they open from their card later.';
         else say = `They join as a worker with this name and email. Worker logins come with ${escapeHtml(LOGINS_PLAN)}.`;
@@ -871,7 +871,7 @@ const __init = () => {
         if (d.onRoster) {
             tone = 'is-stop';
             wlEmailBlocked = true;
-            html = `<span><b>${escapeHtml(d.onRosterName || 'Somebody')}</b> is already on this schedule with that email.</span>
+            html = `<span><b>${escapeHtml(d.onRosterName || 'Somebody')}</b> is already in this season with that email.</span>
                 <button type="button" class="btn btn-white btn-sm" data-wl-open="${d.onRoster}">Open their card</button>`;
         } else if (d.self) {
             tone = 'is-note';
@@ -1379,7 +1379,7 @@ const __init = () => {
 
     async function openRulesSheet(worker) {
         document.getElementById('rulesWorkerId').value = worker.id;
-        document.getElementById('rulesSheetTitle').textContent = `Rules for ${worker.workerName}`;
+        document.getElementById('rulesSheetTitle').textContent = `Days off for ${worker.workerName}`;
         document.getElementById('rulesDateInput').value = '';
 
         // Prefill from local state, then refresh from the server.
@@ -1509,7 +1509,7 @@ const __init = () => {
             const w = WORKERS.find((x) => String(x.id) === id);
             const ok = await confirmAction({
                 title: 'Delete worker?',
-                message: `"${w?.workerName || 'This worker'}" will be removed from the schedule.`,
+                message: `"${w?.workerName || 'This worker'}" will be removed from this season.`,
                 detail: 'Their past work records are kept.',
                 confirmText: 'Delete',
             });

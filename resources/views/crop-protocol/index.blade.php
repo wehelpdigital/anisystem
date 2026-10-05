@@ -909,7 +909,7 @@
         if (!OPT.quote) { q.hidden = true; return; }
         q.classList.toggle('is-min', quoteMin);
         $id('cpQuoteHead').setAttribute('aria-expanded', quoteMin ? 'false' : 'true');
-        $id('cpQuoteCost').innerHTML = `One protocol costs <b>${OPT.quote} credits</b>. You have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
+        $id('cpQuoteCost').innerHTML = `One protocol costs <b>${OPT.quote} credits</b>. You have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Write the protocol.`;
         $id('cpQuoteHint').textContent = `${OPT.quote} credits`;
         q.hidden = false;
     }

@@ -1,6 +1,6 @@
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Settings — ' . $schedule->title)
+@section('title', 'Settings · ' . $schedule->title)
 @section('page-title', 'Settings')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'settings')
@@ -118,12 +118,12 @@
         <div class="card">
             <div class="card-body space-y-4">
                 <div>
-                    <h2 class="font-bold text-gray-900">Basic Info</h2>
-                    <p class="text-sm text-gray-500">Title, description and how days are counted.</p>
+                    <h2 class="font-bold text-gray-900">Basic info</h2>
+                    <p class="text-sm text-gray-500">Season name, description and how days are counted.</p>
                 </div>
 
                 <div>
-                    <label for="settingsTitle" class="form-label">Title <span class="text-red-500">*</span></label>
+                    <label for="settingsTitle" class="form-label">Season name <span class="text-red-500">*</span></label>
                     {{-- Readable, not editable: a field that takes typing and
                          then has nowhere to send it is a small lie. --}}
                     <input type="text" id="settingsTitle" maxlength="255" class="form-input" value="{{ $schedule->title }}" @readonly($setWorker)>
@@ -161,7 +161,7 @@
 
                 @unless ($setWorker)
                 <div class="flex justify-end">
-                    <button type="button" id="saveBasicBtn" class="btn btn-primary w-full sm:w-auto">Save Basic Info</button>
+                    <button type="button" id="saveBasicBtn" class="btn btn-primary w-full sm:w-auto">Save basic info</button>
                 </div>
                 @endunless
             </div>
@@ -229,7 +229,7 @@
                         </span>
                         <div class="min-w-0">
                             <h2 class="nt-head-h">Logs</h2>
-                            <p class="nt-head-p">Every change in this schedule, newest first, with who made it.
+                            <p class="nt-head-p">Every change in this season, newest first, with who made it.
                                 Tap a line for details.</p>
                         </div>
                     </div>
@@ -253,7 +253,7 @@
                     </div>
 
                     <div id="setLogsList" class="mt-2"></div>
-                    <p id="setLogsEmpty" class="text-sm text-gray-400 text-center py-6" hidden>Nothing found. New changes in this schedule will show here.</p>
+                    <p id="setLogsEmpty" class="text-sm text-gray-400 text-center py-6" hidden>Nothing found. New changes in this season will show here.</p>
                     {{-- The endless scroll's foothold: watched, not clicked. --}}
                     <div id="setLogsMore" class="set-log-more" hidden>
                         <span class="set-log-spin"></span> Loading older logs…
@@ -601,7 +601,7 @@ const __init = () => {
                 // Live-update the app-bar subtitle (schedule title) + tab title.
                 const sub = document.querySelector('header .min-w-0 p.text-xs');
                 if (sub) sub.textContent = t;
-                document.title = `Settings — ${t} | anee.io`;
+                document.title = `Settings · ${t} | anee.io`;
             }
         } catch (err) {
             toast(err.message, 'error');
@@ -625,18 +625,18 @@ const __init = () => {
 <div class="sheet hidden" id="setTabSheet" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Which page?</h3>
+        <h3 class="sheet-title">Which settings?</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body dt-rows">
         <button type="button" class="dt-row is-on" data-set-tab-row="basic">
             <span class="dt-row-e">📋</span>
-            <span class="dt-row-body"><b>Basic info</b><i>Title, description and how days are counted.</i></span>
+            <span class="dt-row-body"><b>Basic info</b><i>Season name, description and how days are counted.</i></span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </button>
         <button type="button" class="dt-row" data-set-tab-row="notify">
             <span class="dt-row-e">✉️</span>
-            <span class="dt-row-body"><b>Notifications</b><i>The morning schedule email.</i></span>
+            <span class="dt-row-body"><b>Notifications</b><i>The morning email with the day's work.</i></span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </button>
         {{-- The diary is a Farm Owner privilege. Below that tier the row

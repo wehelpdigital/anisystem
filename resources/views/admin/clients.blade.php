@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title', 'Clients')
-@section('subtitle', 'Every account, and its care')
+@section('subtitle', 'Every account, and the tools to help each one')
 
 @push('head')
 <style>
@@ -132,7 +132,7 @@
                 ${c.isAdmin ? '<span class="ad-badge is-admin">admin</span>' : ''}
                 ${c.role ? `<span class="ad-badge is-role">${esc(c.role)}</span>` : ''}
                 ${c.suspendedSays ? `<span class="ad-badge is-susp">community suspended · ${esc(c.suspendedSays)}</span>` : ''}
-                <span class="badge badge-gray">joined ${esc(c.registered || '—')}</span>
+                <span class="badge badge-gray">${c.registered ? 'joined ' + esc(c.registered) : 'join date unknown'}</span>
                 <span class="badge badge-gray">${c.schedules} season${c.schedules === 1 ? '' : 's'}</span>
                 <a class="badge badge-gray" href="{{ route('admin.support') }}?client=${c.id}" title="Open this client's tickets">${c.tickets} ticket${c.tickets === 1 ? '' : 's'} ↗</a>
                 <span class="badge badge-green">${Number(c.creditBalance).toLocaleString()} credits</span>
@@ -145,62 +145,62 @@
                     <div><label class="form-label !mb-1 text-xs!">Last name</label><input id="ceLast" class="form-input" value="${esc(c.lastName || '')}"></div>
                 </div>
                 <div><label class="form-label !mb-1 text-xs!">Email</label><input id="ceEmail" type="email" class="form-input" value="${esc(c.email || '')}"></div>
-                <div><label class="form-label !mb-1 text-xs!">Phone</label><input id="cePhone" class="form-input" value="${esc(c.phone || '')}" placeholder="—"></div>
+                <div><label class="form-label !mb-1 text-xs!">Phone</label><input id="cePhone" class="form-input" value="${esc(c.phone || '')}" placeholder="Not set"></div>
                 <button type="button" class="btn btn-primary btn-sm w-full" id="ceSave">Save details</button>
             </div>
 
             <div class="card p-3.5 space-y-2.5">
                 <p class="font-bold text-sm text-gray-900">Password</p>
-                <p class="text-xs text-gray-400 -mt-1.5">Two ways: the polite one emails them a link, the direct one sets it here and now.</p>
+                <p class="text-xs text-gray-400 -mt-1.5">Email them a link so they set a new one, or set a new one yourself right here.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <button type="button" class="btn btn-white btn-sm" id="cePwLink">✉️ Email a reset link</button>
                     <button type="button" class="btn btn-white btn-sm" id="cePwManualBtn">⌨️ Set it manually</button>
                 </div>
                 <div id="cePwManual" class="hidden space-y-2 rounded-xl border border-dashed border-gray-300 p-3">
                     <div class="flex gap-2">
-                        <input id="cePwInput" class="form-input font-mono" placeholder="New password (min 8)" autocomplete="off">
+                        <input id="cePwInput" class="form-input font-mono" placeholder="New password (at least 8 characters)" autocomplete="off">
                         <button type="button" class="btn btn-white btn-sm shrink-0" id="cePwGen" title="Generate a strong one">🎲</button>
                     </div>
                     <button type="button" class="btn btn-primary btn-sm w-full" id="cePwSet">Change the password</button>
-                    <p class="text-xs text-amber-700 dark:text-amber-400">It is not emailed — read it to the client before closing this.</p>
+                    <p class="text-xs text-amber-700 dark:text-amber-400">It is not emailed. Tell it to the client before you close this.</p>
                 </div>
             </div>
 
             <div class="card p-3.5 space-y-2.5">
-                <p class="font-bold text-sm text-gray-900">Tier & subscription</p>
+                <p class="font-bold text-sm text-gray-900">Plan and subscription</p>
                 <div class="flex flex-wrap items-center gap-1.5 text-xs">
-                    <span class="ad-badge is-role">tier: ${esc(c.tierName || c.tier || 'Libre')}</span>
+                    <span class="ad-badge is-role">plan: ${esc(c.tierName || c.tier || 'Libre')}</span>
                     ${c.tierExpires ? `<span class="badge badge-gray">until ${esc(c.tierExpires)}</span>` : ''}
                     ${c.storageCapGb !== null ? `<span class="badge badge-gray">storage ${Number(c.storageUsedGb).toLocaleString()} / ${c.storageCapGb} GB</span>` : `<span class="badge badge-gray">storage ${Number(c.storageUsedGb).toLocaleString()} GB</span>`}
                 </div>
                 ${c.subscription ? `
-                    <p class="text-xs text-gray-400">${esc(c.subscription.planName || 'Plan')} · ${esc(c.subscription.status)} · ${esc(c.subscription.startsAt || '—')} → ${esc(c.subscription.expiresAt || '—')} · ₱${Number(c.subscription.price).toLocaleString()}</p>`
-                    : '<p class="text-xs text-gray-400">No subscription rows yet — this account stands on the Libre floor.</p>'}
+                    <p class="text-xs text-gray-400">${esc(c.subscription.planName || 'Plan')} · ${esc(c.subscription.status)} · ${esc(c.subscription.startsAt || 'no start date')} → ${esc(c.subscription.expiresAt || 'no end date')} · ₱${Number(c.subscription.price).toLocaleString()}</p>`
+                    : '<p class="text-xs text-gray-400">No subscriptions yet. This account is on Libre (free).</p>'}
                 {{-- The testing lever: hand-assign a tier and its expiry. A
                      manual row is just another subscription to planTier's
                      eyes; Libre cancels the active rows instead. --}}
                 <div class="grid grid-cols-2 gap-2">
-                    <div><label class="form-label !mb-1 text-xs!">Assign tier</label>
+                    <div><label class="form-label !mb-1 text-xs!">Choose a plan</label>
                         <select id="ceTierSel" class="form-input">
                             <option value="libre" ${c.tier === 'libre' ? 'selected' : ''}>Libre (free)</option>
                             <option value="libreAnee" ${c.tier === 'libreAnee' ? 'selected' : ''}>Libre + Anee</option>
                             <option value="solo" ${c.tier === 'solo' ? 'selected' : ''}>Solo Farmer</option>
                             <option value="owner" ${c.tier === 'owner' ? 'selected' : ''}>Farm Owner</option>
                         </select></div>
-                    <div><label class="form-label !mb-1 text-xs!">Expires (paid tiers)</label>
+                    <div><label class="form-label !mb-1 text-xs!">Ends on (paid plans)</label>
                         <input id="ceTierExp" type="date" class="form-input" value="${esc(c.tierExpires || '')}"></div>
                 </div>
-                <button type="button" class="btn btn-primary btn-sm w-full" id="ceTierSet">Set tier</button>
-                <p class="text-xs text-gray-400">Assigning grants the tier's welcome credits (Libre's starter only once). Leave the date empty for a 10-year assignment.</p>
+                <button type="button" class="btn btn-primary btn-sm w-full" id="ceTierSet">Set plan</button>
+                <p class="text-xs text-gray-400">Setting a plan also gives its welcome credits (Libre's starter credits only once). Leave the date empty to set it for 10 years.</p>
             </div>
 
             <div class="card p-3.5 space-y-2.5">
                 <p class="font-bold text-sm text-gray-900">Community</p>
                 ${c.suspendedSays ? `
-                    <p class="text-sm text-red-700 dark:text-red-400">Suspended until <b>${esc(c.suspendedSays)}</b> — the Community module will not open for them.</p>
+                    <p class="text-sm text-red-700 dark:text-red-400">Suspended until <b>${esc(c.suspendedSays)}</b>. The Community will not open for them.</p>
                     <button type="button" class="btn btn-white btn-sm w-full" id="ceLift">Lift the suspension now</button>`
                 : `
-                    <p class="text-xs text-gray-400 -mt-1.5">Bars them from the whole Community until the day you pick. The rest of the app keeps working.</p>
+                    <p class="text-xs text-gray-400 -mt-1.5">Blocks them from the whole Community until the day you pick. The rest of the app still works.</p>
                     <div class="flex gap-2">
                         <input type="date" id="ceSuspDate" class="form-input" min="${new Date(Date.now() + 86400000).toISOString().slice(0, 10)}">
                         <button type="button" class="btn btn-danger btn-sm shrink-0" id="ceSuspend">Suspend</button>
@@ -209,45 +209,45 @@
 
             <div class="card p-3.5 space-y-2.5">
                 <p class="font-bold text-sm text-gray-900">AI credits</p>
-                <p class="text-xs text-gray-400 -mt-1.5">Balance: <b>${Number(c.creditBalance).toLocaleString()}</b>. Positive adds, negative takes back; the client sees the reason in their own credits log.</p>
+                <p class="text-xs text-gray-400 -mt-1.5">Balance: <b>${Number(c.creditBalance).toLocaleString()}</b>. A positive number adds credits, a negative number takes them back. The client sees the reason in their credits history.</p>
                 ${(c.workerFarms && c.workerFarms.length) ? `
                     <div>
-                        <label class="form-label !mb-1 text-xs!">Whose balance receives it</label>
+                        <label class="form-label !mb-1 text-xs!">Whose credits get this</label>
                         <select id="ceCredTarget" class="form-select">
                             <option value="${c.id}">Their own account</option>
-                            ${c.workerFarms.map((f) => `<option value="${f.bossId}">The farm they work at — ${esc(f.bossName)} (owner's balance)</option>`).join('')}
+                            ${c.workerFarms.map((f) => `<option value="${f.bossId}">The farm they work at: ${esc(f.bossName)} (owner's balance)</option>`).join('')}
                         </select>
-                        <p class="text-xs text-gray-400 mt-1">A worker's questions bill the farm owner — pick where this grant should land.</p>
+                        <p class="text-xs text-gray-400 mt-1">A worker's questions are paid from the farm owner's credits. Pick where these credits go.</p>
                     </div>` : ''}
                 <div class="grid grid-cols-[6.5rem_1fr] gap-2">
                     <input type="number" step="any" id="ceCredAmt" class="form-input" placeholder="+10">
-                    <input type="text" id="ceCredWhy" class="form-input" maxlength="150" placeholder="Reason — e.g. Goodwill for the outage">
+                    <input type="text" id="ceCredWhy" class="form-input" maxlength="150" placeholder="Reason, e.g. Goodwill for the outage">
                 </div>
-                <button type="button" class="btn btn-primary btn-sm w-full" id="ceCredGo">Apply to their balance</button>
+                <button type="button" class="btn btn-primary btn-sm w-full" id="ceCredGo">Update their credits</button>
             </div>
 
             <div class="card p-3.5 space-y-2">
                 <p class="font-bold text-sm text-gray-900">See what they see</p>
-                <p class="text-xs text-gray-400 -mt-1">Opens the client panel signed in as them. A bar up top brings you back here.</p>
+                <p class="text-xs text-gray-400 -mt-1">Opens the app logged in as them. A bar at the top brings you back here.</p>
                 <button type="button" class="btn btn-white btn-sm w-full" id="ceLoginAs">👁 Log in as ${esc(c.firstName || c.name)}</button>
             </div>
 
             <div class="card p-3.5 space-y-2">
                 <p class="font-bold text-sm text-gray-900">Admin access</p>
                 ${c.isAdmin ? `
-                    <p class="text-xs text-gray-400 -mt-1">This account can open the admin panel — everything you can do here, they can.</p>
+                    <p class="text-xs text-gray-400 -mt-1">This account can open the admin panel. Everything you can do here, they can do too.</p>
                     <button type="button" class="btn btn-white btn-sm w-full" id="ceAdminOff">Remove admin access</button>`
                 : `
-                    <p class="text-xs text-gray-400 -mt-1">Grants the whole panel: clients, credits, support, impersonation. Not a small key.</p>
+                    <p class="text-xs text-gray-400 -mt-1">Gives them the whole panel: clients, credits, support, and logging in as any client. Give it with care.</p>
                     <button type="button" class="btn btn-white btn-sm w-full" id="ceAdminOn">🛡 Make ${esc(c.firstName || c.name)} an admin</button>`}
             </div>
 
             <div class="card p-3.5 space-y-2.5 ad-danger">
                 <p class="font-bold text-sm text-red-700 dark:text-red-400">Delete this client</p>
                 ${c.isAdmin ? `
-                    <p class="text-xs text-gray-400 -mt-1.5">This account is an admin. Take its admin access away first — deleting one is a decision of its own, and it should not ride along with the other.</p>`
+                    <p class="text-xs text-gray-400 -mt-1.5">This account is an admin. Remove its admin access first, then you can delete it.</p>`
                 : `
-                    <p class="text-xs text-gray-400 -mt-1.5">Takes ${esc(c.firstName || c.name)} out of the app: their farms, their work and their login all stop answering, and this panel has no button that puts them back.</p>
+                    <p class="text-xs text-gray-400 -mt-1.5">Removes ${esc(c.firstName || c.name)} from the app. Their farms, their work and their login all stop working, and there is no button here to bring them back.</p>
                     <button type="button" class="btn btn-danger btn-sm w-full" id="ceDelStart">Delete ${esc(c.firstName || c.name)}</button>
                     <div id="ceDelBox" class="hidden space-y-2">
                         <p class="text-xs text-gray-500 dark:text-gray-400">Read the characters and type them. They last two minutes, and each picture is good for one try.</p>
@@ -361,7 +361,7 @@
         };
         $id('cePwSet').onclick = busyable($id('cePwSet'), async () => {
             const pw = $id('cePwInput').value;
-            if (pw.length < 8) { toast('At least 8 characters.', 'error'); return; }
+            if (pw.length < 8) { toast('The password needs at least 8 characters.', 'error'); return; }
             const res = await api(U.pwSet(c.id), { method: 'PUT', body: { password: pw } });
             toast(res.message);
         });
@@ -385,7 +385,7 @@
 
         $id('ceCredGo').onclick = busyable($id('ceCredGo'), async () => {
             const amt = Number($id('ceCredAmt').value || 0);
-            if (!amt) { toast('How many credits? Positive adds, negative takes back.', 'error'); return; }
+            if (!amt) { toast('How many credits? A positive number adds, a negative number takes back.', 'error'); return; }
             const target = $id('ceCredTarget') ? Number($id('ceCredTarget').value) : c.id;
             const res = await api(U.credits(c.id), { method: 'POST', body: {
                 credits: amt, reason: $id('ceCredWhy').value.trim(), target,
@@ -399,7 +399,7 @@
         const admOn = $id('ceAdminOn');
         if (admOn) admOn.onclick = busyable(admOn, async () => {
             const ok = window.confirmAction
-                ? await confirmAction({ title: 'Make them an admin?', message: 'The whole panel — clients, credits, impersonation — opens to this account.', confirmText: 'Make admin', danger: true })
+                ? await confirmAction({ title: 'Make them an admin?', message: 'This account gets the whole panel: clients, credits, and logging in as any client.', confirmText: 'Make admin', danger: true })
                 : confirm('Make this account an admin?');
             if (!ok) return;
             const res = await api(U.admin(c.id), { method: 'PUT', body: { admin: true } });
@@ -410,7 +410,7 @@
         const admOff = $id('ceAdminOff');
         if (admOff) admOff.onclick = busyable(admOff, async () => {
             const ok = window.confirmAction
-                ? await confirmAction({ title: 'Remove admin access?', message: 'They keep their account; the panel closes to them.', confirmText: 'Remove', danger: true })
+                ? await confirmAction({ title: 'Remove admin access?', message: 'They keep their account but can no longer open this panel.', confirmText: 'Remove', danger: true })
                 : confirm('Remove admin access?');
             if (!ok) return;
             const res = await api(U.admin(c.id), { method: 'PUT', body: { admin: false } });

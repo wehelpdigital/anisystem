@@ -98,7 +98,7 @@ class PublicController extends Controller
                     'members' => $soften((int) \Illuminate\Support\Facades\DB::table('anisystem_users')->where('deleteStatus', 1)->count()),
                 ];
             } catch (\Throwable $e) {
-                return ['seasons' => '—', 'activities' => '—', 'notes' => '—', 'members' => '—'];
+                return [];
             }
         });
     }

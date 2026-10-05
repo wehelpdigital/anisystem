@@ -36,7 +36,7 @@
                 $figures[] = ['Price', \App\Support\Region::symbol() . number_format((float) $o->pricePerUnit, 2), 'text-gray-900'];
             }
             if ($o->gross_value !== null) {
-                $figures[] = ['Gross value', \App\Support\Region::symbol() . number_format($o->gross_value, 2), 'text-brand-700'];
+                $figures[] = ['Sale value', \App\Support\Region::symbol() . number_format($o->gross_value, 2), 'text-brand-700'];
             }
         @endphp
         @if ($figures)

@@ -10,6 +10,6 @@
     @elseif ($status === 'connected')
         {{-- No "Connected" label: standing here says it. Just the way out,
              which asks first (see connect-js). --}}
-        <button type="button" class="btn btn-ghost btn-sm text-gray-400 conn-btn" data-action="disconnect" title="Remove this co-farmer">✕</button>
+        <button type="button" class="btn btn-ghost btn-sm text-gray-400 conn-btn" data-action="disconnect" title="Remove this cofarmer">✕</button>
     @endif
 </span>

@@ -51,7 +51,7 @@ class CommunitySocialController extends Controller
             $this->notifications->notify(
                 $userId,
                 'community.follow',
-                (Auth::user()->full_name ?: 'A co-farmer') . ' is now following you',
+                (Auth::user()->full_name ?: 'A cofarmer') . ' is now following you',
                 null,
                 route('community.connect.profile', ['userId' => $meId]),
                 $meId,
@@ -254,7 +254,7 @@ class CommunitySocialController extends Controller
             $this->notifications->notify(
                 (int) $original->authorUserId,
                 'community.share',
-                (Auth::user()->full_name ?: 'A co-farmer') . ' shared your post',
+                (Auth::user()->full_name ?: 'A cofarmer') . ' shared your post',
                 null,
                 route('community.index') . '#post-' . $post->id,
                 $meId,
@@ -294,7 +294,7 @@ class CommunitySocialController extends Controller
         $toId = (int) $data['userId'];
         // Only to somebody who has agreed to hear from you.
         if (CommunityConnection::statusFor($meId, $toId) !== 'accepted') {
-            return $this->json(false, 'You can only send this to a co-farmer.', [], 403);
+            return $this->json(false, 'You can only send this to a cofarmer.', [], 403);
         }
 
         $link = $this->publicUrl($post);
@@ -312,7 +312,7 @@ class CommunitySocialController extends Controller
         $this->notifications->notify(
             $toId,
             'community.message',
-            (Auth::user()->full_name ?: 'A co-farmer') . ' sent you a post',
+            (Auth::user()->full_name ?: 'A cofarmer') . ' sent you a post',
             null,
             route('community.index') . '?dm=' . $meId,
             $meId,

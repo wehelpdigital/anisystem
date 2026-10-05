@@ -31,36 +31,6 @@
 @section('content')
     <div class="max-w-4xl mx-auto" x-data="scheduleWizard({{ \Illuminate\Support\Js::from($wizardConfig) }})">
 
-        {{-- ===== Dotted stepper ===== --}}
-        <div class="mb-6">
-            <div class="flex items-center justify-between text-xs font-semibold mb-2.5">
-                <span class="text-gray-500">Step <span x-text="step"></span> of <span x-text="steps.length"></span></span>
-                <span class="text-brand-700" x-text="steps[step - 1].label"></span>
-            </div>
-            <div class="relative px-1">
-                <div class="absolute left-1 right-1 top-4 h-1 rounded-full bg-gray-200"></div>
-                <div class="absolute left-1 top-4 h-1 rounded-full bg-brand-500 transition-all duration-500 ease-out"
-                     :style="`width: calc((100% - 0.5rem) * ${(step - 1) / (steps.length - 1)})`"></div>
-                <div class="relative flex items-start justify-between">
-                    <template x-for="(s, i) in steps" :key="i">
-                        <button type="button" @click="goTo(i + 1)" :disabled="i + 1 > maxReached"
-                                class="flex flex-col items-center gap-1.5"
-                                :class="i + 1 > maxReached ? 'cursor-default' : 'cursor-pointer'">
-                            <span class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ring-4 ring-gray-50 transition-all duration-300"
-                                  :class="dotClass(i + 1)">
-                                <template x-if="i + 1 < step">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-                                </template>
-                                <template x-if="i + 1 >= step"><span x-text="i + 1"></span></template>
-                            </span>
-                            <span class="hidden sm:block text-[0.688rem] font-medium transition-colors"
-                                  :class="i + 1 <= step ? 'text-brand-700' : 'text-gray-400'" x-text="s.label"></span>
-                        </button>
-                    </template>
-                </div>
-            </div>
-        </div>
-
         {{-- ===== Step card ===== --}}
         <div class="card overflow-hidden">
             <div class="card-body">
@@ -71,11 +41,11 @@
                      x-transition:enter-start="opacity-0 translate-x-8"
                      x-transition:enter-end="opacity-100 translate-x-0">
                     <h2 class="text-lg font-bold text-gray-900">Basic details</h2>
-                    <p class="text-sm text-gray-500 mt-1 mb-5">Name your schedule. Everything else is optional and you can change it later.</p>
+                    <p class="text-sm text-gray-500 mt-1 mb-5">Name your season. Everything else is optional, and you can change it later.</p>
 
                     <div class="space-y-4">
                         <div>
-                            <label class="form-label">Title <span class="text-red-500">*</span></label>
+                            <label class="form-label">Season name <span class="text-red-500">*</span></label>
                             <input type="text" x-model="form.title" maxlength="255"
                                    @keydown.enter.prevent="canNext && next()"
                                    {{-- No autofocus: on a phone it summoned the keypad over a form
@@ -120,8 +90,8 @@
                     <div class="mt-5 rounded-xl border border-brand-200 bg-brand-50 p-4">
                         <p class="text-sm font-bold text-brand-900">What happens next</p>
                         <p class="text-sm text-brand-800/90 mt-1 leading-relaxed">
-                            Your schedule opens right after you create it. Add lots, workers, materials
-                            and crops from inside. A checklist shows what is still missing.
+                            Your season opens right after you create it. Add lots, workers, materials
+                            and crops there. A checklist shows what is still missing.
                         </p>
                     </div>
                 </div>
@@ -143,7 +113,7 @@
                             class="btn btn-accent">
                         <template x-if="!saving">
                             <span class="inline-flex items-center gap-2">
-                                Create Schedule
+                                Create season
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
                             </span>
                         </template>
@@ -191,7 +161,7 @@
             },
             next() {
                 if (this.step === 1 && !this.canNext) {
-                    toast('Please add a title.', 'error');
+                    toast('Please add a season name.', 'error');
                     return;
                 }
                 if (this.step < this.steps.length) {
@@ -210,7 +180,7 @@
             async submit() {
                 if (!this.form.title.trim()) {
                     this.step = 1;
-                    toast('Please add a title.', 'error');
+                    toast('Please add a season name.', 'error');
                     return;
                 }
                 this.saving = true;
@@ -221,11 +191,11 @@
                 };
                 try {
                     const res = await api(config.storeUrl, { method: 'POST', body: payload });
-                    toast(res.message || 'Schedule created.', 'success');
+                    toast(res.message || 'Season created.', 'success');
                     window.location.href = res.data.redirect;
                 } catch (e) {
                     this.saving = false;
-                    toast(e.message || 'Could not create your schedule.', 'error');
+                    toast(e.message || 'Could not create your season. Please try again.', 'error');
                 }
             },
         };

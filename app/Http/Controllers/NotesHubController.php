@@ -85,7 +85,7 @@ class NotesHubController extends Controller
         foreach (AsScheduleNote::active()->whereIn('croppingScheduleId', $scheduleIds)->where('croppingScheduleId', '!=', self::GLOBAL_SCHEDULE_ID)->orderByDesc('id')->get() as $n) {
             $items->push($this->row(
                 $n->id, 'schedule', $n->title, $n->body, $n->imagePath,
-                $titles[$n->croppingScheduleId] ?? 'Schedule',
+                $titles[$n->croppingScheduleId] ?? 'Season',
                 route('sm.notes', ['id' => $n->croppingScheduleId]),
                 $n->updated_at, $n->media,
                 (int) $n->croppingScheduleId, $savesByNote[$n->id] ?? null
@@ -96,7 +96,7 @@ class NotesHubController extends Controller
         foreach (AsScheduleDateNote::active()->whereIn('croppingScheduleId', $scheduleIds)->orderByDesc('id')->get() as $n) {
             $date = $n->noteDate?->format('M j, Y');
             $items->push($this->row(
-                $n->id, 'day', ($titles[$n->croppingScheduleId] ?? 'Schedule') . ' — ' . $date, $n->noteContent, null,
+                $n->id, 'day', ($titles[$n->croppingScheduleId] ?? 'Season') . ' · ' . $date, $n->noteContent, null,
                 'Day note · ' . $date,
                 route('sm.activities', ['id' => $n->croppingScheduleId]),
                 $n->updated_at, $n->media
@@ -114,10 +114,10 @@ class NotesHubController extends Controller
             $items->push($this->row(
                 $n->id,
                 'day',
-                $n->title ?: (($titles[$n->croppingScheduleId] ?? 'Schedule') . ' — ' . $date),
+                $n->title ?: (($titles[$n->croppingScheduleId] ?? 'Season') . ' · ' . $date),
                 $n->content,
                 null,
-                ($titles[$n->croppingScheduleId] ?? 'Schedule') . ' · ' . $date,
+                ($titles[$n->croppingScheduleId] ?? 'Season') . ' · ' . $date,
                 route('sm.activities', ['id' => $n->croppingScheduleId]),
                 $n->updated_at,
                 $n->media
@@ -165,7 +165,7 @@ class NotesHubController extends Controller
             'media.*.description' => 'nullable|string|max:2000',
         ]);
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
+            return response()->json(['success' => false, 'message' => 'Please check what you entered.', 'errors' => $validator->errors()], 422);
         }
 
         $body = HtmlSanitizer::rich($request->input('body'));
@@ -173,7 +173,7 @@ class NotesHubController extends Controller
         $hasBody = filled(trim(strip_tags($body))) || str_contains($body, '<img');
         $title = trim((string) $request->input('title'));
         if ($title === '' && ! $hasBody && ! $request->filled('imagePath') && empty($media)) {
-            return response()->json(['success' => false, 'message' => 'Write something, draw, or add a photo/video.'], 422);
+            return response()->json(['success' => false, 'message' => 'Write something, draw, or add a photo or video.'], 422);
         }
         // No title field in the modal editor — derive one from the body text.
         if ($title === '') {
@@ -200,7 +200,7 @@ class NotesHubController extends Controller
             'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:8192',
         ]);
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'message' => 'Pick a photo (max 8 MB).', 'errors' => $validator->errors()], 422);
+            return response()->json(['success' => false, 'message' => 'Pick a photo (up to 8 MB).', 'errors' => $validator->errors()], 422);
         }
         try {
             $path = MediaOptimizer::storeImageAsWebp($request->file('image'), 'notes/photos', 1600, 82);
@@ -223,12 +223,12 @@ class NotesHubController extends Controller
             'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-msvideo|max:2097152',
         ]);
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'message' => 'Pick a video (max 300 MB).', 'errors' => $validator->errors()], 422);
+            return response()->json(['success' => false, 'message' => 'Pick a video (up to 300 MB).', 'errors' => $validator->errors()], 422);
         }
         try {
             $out = VideoOptimizer::storeCompressed($request->file('video'), 'notes/videos');
         } catch (\Throwable $e) {
-            return response()->json(['success' => false, 'message' => 'Video processing failed: ' . $e->getMessage()], 500);
+            return response()->json(['success' => false, 'message' => 'The video could not be saved: ' . $e->getMessage()], 500);
         }
 
         // Compress here, keep there — the same handover the schedule notebook
@@ -328,11 +328,11 @@ class NotesHubController extends Controller
     {
         $data = (string) $request->input('image', '');
         if (! preg_match('#^data:image/png;base64,#', $data)) {
-            return response()->json(['success' => false, 'message' => 'Invalid drawing.'], 422);
+            return response()->json(['success' => false, 'message' => 'That drawing could not be read. Please try again.'], 422);
         }
         $binary = base64_decode(substr($data, strpos($data, ',') + 1), true);
         if ($binary === false || strlen($binary) > 6_000_000) {
-            return response()->json(['success' => false, 'message' => 'Drawing too large.'], 422);
+            return response()->json(['success' => false, 'message' => 'The drawing is too large to save.'], 422);
         }
 
         $tmp = tempnam(sys_get_temp_dir(), 'draw') . '.png';

@@ -34,7 +34,7 @@ class ScheduleDayDigest extends Mailable
             subject: \App\Support\MailTemplate::subject(
                 \App\Models\AsEmailTemplate::KEY_DAILY_DIGEST,
                 $this->mergeValues(),
-                $this->dateLabel . ' — ' . $this->scheduleTitle,
+                $this->dateLabel . ' · ' . $this->scheduleTitle,
             ),
         );
     }

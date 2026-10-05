@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $label . ' — Community')
+@section('title', $label . ' · Community')
 @section('body-class', 'plaza-ground')
 @section('page-title', 'Community')
 @section('page-subtitle', $label)
@@ -39,7 +39,7 @@
                     <p class="text-sm font-semibold text-gray-900 truncate">{{ $member->full_name }}</p>
                     @include('community.partials.top-badge', ['topUser' => $member, 'topFlat' => true])
                     @if (in_array((int) $member->id, $friendIds, true))
-                        <span class="badge badge-green">Co-farmer</span>
+                        <span class="badge badge-green">Cofarmer</span>
                     @elseif ($member->statusBubble)
                         <p class="text-xs text-gray-400 truncate">{{ $member->statusBubble }}</p>
                     @endif
@@ -68,7 +68,7 @@
                 <p class="text-sm leading-tight">
                     <a href="{{ route('community.connect.profile', ['userId' => $author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $author->full_name }}</a>
                     @include('community.partials.top-badge', ['topUser' => $author])
-                    @if (in_array((int) $post->authorUserId, $friendIds, true))<span class="badge badge-green align-middle ml-1">Co-farmer</span>@endif
+                    @if (in_array((int) $post->authorUserId, $friendIds, true))<span class="badge badge-green align-middle ml-1">Cofarmer</span>@endif
                 </p>
                 <p class="text-xs text-gray-400">@if ($place)@include('community.partials.place', ['place' => $place]) · @endif{{ $post->created_at?->diffForHumans() }}</p>
             </div>
@@ -81,7 +81,7 @@
         @include('community.partials.react-bar', ['type' => 'wallpost', 'id' => $post->id, 'summary' => $post->reactionSummary ?? null])
         <div class="mt-3 pt-2 border-t border-gray-100">
             <a href="{{ route('community.connect.profile', ['userId' => $author->id]) }}#wallpost-{{ $post->id }}" class="text-xs font-semibold text-brand-700 hover:text-brand-800">
-                💬 {{ $post->comments_count }} {{ $post->comments_count === 1 ? 'comment' : 'comments' }} — view on wall →
+                💬 {{ $post->comments_count }} {{ $post->comments_count === 1 ? 'comment' : 'comments' }} · View on wall →
             </a>
         </div>
     </article>

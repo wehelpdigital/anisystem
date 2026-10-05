@@ -2,4 +2,4 @@
 @section('code', '429')
 @section('emoji', '🐢')
 @section('title', 'Slow down a little')
-@section('message', "You're moving faster than we can keep up. Please wait a few seconds and try again.")
+@section('message', "Too many tries in a short time. Please wait a few seconds and try again.")

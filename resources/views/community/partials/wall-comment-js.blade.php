@@ -387,7 +387,7 @@
                     if (window.plazaClearVideo) window.plazaClearVideo(form);
                 }
             } else say(data.message, 'error');
-        } catch (_) { say('Network error. Try again.', 'error'); }
+        } catch (_) { say('No connection. Try again.', 'error'); }
         finally { input.disabled = false; stopSending(sendBtn); }
     });
 
@@ -498,7 +498,7 @@
                 say(data.message);
             }
             else say(data.message, 'error');
-        } catch (_) { say('Network error. Try again.', 'error'); }
+        } catch (_) { say('No connection. Try again.', 'error'); }
     });
 
     // Delete own comment/reply → tombstone.
@@ -514,7 +514,7 @@
                 const holder = btn.closest('.wall-comment').querySelector('.flex > .min-w-0');
                 if (holder) holder.innerHTML = '<div class="bg-gray-50 rounded-lg px-2.5 py-1.5 text-xs text-gray-400 italic wall-comment-tombstone tombstone-in">This comment was deleted</div>';
             } else say(data.message, 'error');
-        } catch (_) { say('Network error. Try again.', 'error'); }
+        } catch (_) { say('No connection. Try again.', 'error'); }
     });
 
     // "View all comments" → expand the thread inline (accordion, no modal),

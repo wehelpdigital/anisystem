@@ -63,8 +63,8 @@
         </p>
         @if ($capped)
             {{-- The bar has stopped for a reason, and the reason is said. --}}
-            <p class="rk-me-gate">🔒 You are at the free summit — Level {{ $freeCap }}.
-                <a href="{{ url('/account/subscription') }}">Subscribe</a> to keep climbing; everything you do keeps counting the moment you do.</p>
+            <p class="rk-me-gate">🔒 You reached the top level for free accounts: Level {{ $freeCap }}.
+                <a href="{{ url('/account/subscription') }}">Subscribe</a> to keep climbing. Everything you do still counts, and it all shows the moment you subscribe.</p>
         @elseif ($myNext)
             <div class="rk-bar" role="progressbar" aria-valuemin="{{ $myRank['min'] }}" aria-valuemax="{{ $myNext['min'] }}" aria-valuenow="{{ $myPoints }}">
                 <span id="rkBarFill" data-to="{{ round($myProgress * 100, 1) }}"></span>
@@ -74,7 +74,7 @@
                 <p class="rk-me-title">Next title: <b>{{ $myNextTitle['emoji'] }} {{ $myNextTitle['name'] }}</b> at Level {{ $myNextTitle['n'] }} ({{ number_format($myNextTitle['min']) }} pts)</p>
             @endif
         @else
-            <p class="rk-me-next">🐉 Nasa tuktok ka na — the ladder has nothing above you.</p>
+            <p class="rk-me-next">🐉 Nasa tuktok ka na. There is no level above you.</p>
         @endif
     </div>
 
@@ -134,7 +134,7 @@
                 <div class="p-8 text-center">
                     <div class="empty-tile">🌱</div>
                     <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Walang nakaakyat pa</p>
-                    <p class="text-sm text-gray-500 mt-1">Be the first on the board — write a post, answer a co-farmer, ask the AI Technician.</p>
+                    <p class="text-sm text-gray-500 mt-1">Be the first on the board: write a post, answer a cofarmer, or ask Anee.</p>
                 </div>
             @endforelse
             {{-- Standing below the fold: three dots walk down to where YOU
@@ -180,23 +180,23 @@
                 @endforeach
             </div>
         @endforeach
-        <p class="rk-foot">Points land on their own — do the thing, and the ladder notices within a few minutes.</p>
+        <p class="rk-foot">Points are added on their own. Do the task, and your points update within a few minutes.</p>
     </div>
 
     {{-- ---------------- Guide ---------------- --}}
     <div data-rk-panel="guide" class="hidden" id="guide">
         {{-- The endpoints come from the ladder itself, so a renamed title can
              never leave this sentence telling an old story. --}}
-        <p class="rk-guide-intro">A hundred levels, ten titles — every tenth level hands you a new name
-            to wear, from {{ $titles[1]['name'] }} to {{ $titles[10]['name'] }}. Each level costs more than the one before it.</p>
+        <p class="rk-guide-intro">100 levels and ten titles. Every tenth level gives you a new title,
+            from {{ $titles[1]['name'] }} to {{ $titles[10]['name'] }}. Each level needs more points than the one before it.</p>
         {{-- The wrapped boxes on the ladder: nobody is told what is inside,
              only that there is one waiting — that is the whole point of a
              mystery. The gift wiggles (see .rk-gift) so the eye finds it. --}}
         <p class="rk-guide-gift"><span class="rk-gift" aria-hidden="true">🎁</span>
-            A <b>mystery prize</b> waits at <b>Level 40</b> — and more at <b>Level 50</b>, <b>60</b>, <b>80</b> and <b>100</b>. What is inside is only found out by the one who gets there.</p>
+            A <b>mystery prize</b> waits at <b>Level 40</b>, and more at <b>Level 50</b>, <b>60</b>, <b>80</b> and <b>100</b>. Only the one who gets there finds out what is inside.</p>
         @unless ($unlocked)
-            <p class="rk-guide-gate">🔒 The free road ends at <b>Level {{ $freeCap }}</b>.
-                <a href="{{ url('/account/subscription') }}">Subscribe</a> to climb past it — every point you keep earning starts counting again the moment you do.</p>
+            <p class="rk-guide-gate">🔒 Free accounts stop at <b>Level {{ $freeCap }}</b>.
+                <a href="{{ url('/account/subscription') }}">Subscribe</a> to climb past it. Every point you keep earning will count the moment you subscribe.</p>
         @endunless
         @foreach ($titles as $arcN => $title)
             @php
@@ -209,7 +209,7 @@
                     <span class="rk-arc-e">{{ $title['emoji'] }}</span>
                     <span class="rk-arc-mid">
                         <b>{{ $title['name'] }}</b>
-                        <i>Levels {{ $lo }}–{{ $hi }} · from {{ $levels[$lo - 1] === 0 ? 'the start' : number_format($levels[$lo - 1]) . ' pts' }}</i>
+                        <i>Levels {{ $lo }} to {{ $hi }} · from {{ $levels[$lo - 1] === 0 ? 'the start' : number_format($levels[$lo - 1]) . ' pts' }}</i>
                     </span>
                     @if ($mine)<span class="rk-you">Ikaw</span>@endif
                 </h3>
@@ -234,7 +234,7 @@
                     <div class="rk-cert-txt">
                         <i class="rk-cert-kicker">The Level 50 prize</i>
                         <b>Harvest Hero Certification</b>
-                        <span>Reach Level 50 and anee.io certifies you a <b>Harvest Hero</b> — an official certification carrying the anee.io seal, with your name on it, yours to show wherever farmers gather.</span>
+                        <span>Reach Level 50 and anee.io certifies you as a <b>Harvest Hero</b>: an official certificate with the anee.io seal and your name on it, yours to show wherever farmers gather.</span>
                     </div>
                     <span class="rk-gift rk-cert-gift" aria-hidden="true">🎁</span>
                 </div>
@@ -258,7 +258,7 @@
         <p class="rk-party-word">Congratulations!</p>
         <p class="rk-party-level" id="rkPartyLevel">Level 2</p>
         <p class="rk-party-title" id="rkPartyTitle"></p>
-        <p class="rk-party-sub">Your work in the community moved you up the ladder. Keep showing up — the next rung is already counting.</p>
+        <p class="rk-party-sub">Your work in the community moved you up the ladder. Keep showing up. Your points toward the next level are already counting.</p>
     </div>
 </div>
 

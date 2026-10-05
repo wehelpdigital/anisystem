@@ -98,12 +98,12 @@ class PurchaseController extends Controller
             'screenshot' => ['nullable', 'required_without:referenceNumber', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'notes' => ['nullable', 'string', 'max:2000'],
         ], [
-            'amountSent.min' => 'The amount sent must be at least ' . \App\Support\Region::money($price) . ' — the full plan price.',
+            'amountSent.min' => 'The amount sent must be at least ' . \App\Support\Region::money($price) . ', the full plan price.',
             'gcashPhone.regex' => 'Enter the GCash number in the format 09XXXXXXXXX (11 digits).',
             'referenceNumber.required_without' => 'Provide the ' . ($payPH ? 'GCash reference number' : 'PayPal transaction ID') . ' or upload a screenshot of the payment.',
             'screenshot.required_without' => 'Upload a screenshot of the payment or provide the ' . ($payPH ? 'GCash reference number' : 'PayPal transaction ID') . '.',
-            'screenshot.max' => 'The screenshot must be 5MB or smaller.',
-            'screenshot.mimes' => 'The screenshot must be a JPG, PNG or WEBP image.',
+            'screenshot.max' => 'The screenshot must be 5 MB or smaller.',
+            'screenshot.mimes' => 'The screenshot must be a JPG, PNG or WebP picture.',
         ]);
 
         // Per-user mutex so a double-click / parallel submit can't create two

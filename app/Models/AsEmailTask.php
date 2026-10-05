@@ -62,7 +62,7 @@ class AsEmailTask extends BaseModel
     {
         return match ($this->status) {
             self::SENT => 'Sent',
-            self::FAILED => $this->attempts >= self::MAX_ATTEMPTS ? 'Given up' : 'Failed — will retry',
+            self::FAILED => $this->attempts >= self::MAX_ATTEMPTS ? 'Given up' : 'Failed, will retry',
             default => $this->sendAfter && $this->sendAfter->isFuture() ? 'Scheduled' : 'Waiting',
         };
     }

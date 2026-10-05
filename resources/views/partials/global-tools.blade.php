@@ -148,7 +148,7 @@
                 <span class="qa-panel-ico"><img src="{{ asset('images/icons/tool-box.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                 <span class="qa-panel-txt">
                     <b>Global and Quick Tools</b>
-                    <i>Notes and pictures across every season, and the two ways to add one now.</i>
+                    <i>Tools for all your seasons, in one place.</i>
                 </span>
                 <svg class="qa-panel-chev" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
             </button>
@@ -162,11 +162,11 @@
                  chevron sat — the tap opens the upgrade sheet, not the page. --}}
             @php $qWtpLocked = ! \App\Support\Tier::farmCan('aiAnalyses'); $qWtpRung = \App\Support\Tier::farmUnlocksAt('aiAnalyses'); $qWtpWith = \App\Support\Tier::withPlan($qWtpRung); @endphp
             <a href="{{ route('wtp.page') }}" class="qa-tile qa-wtp"
-               @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The When to Plant analysis comes with {{ $qWtpWith }} — Anee reads your town's climate and ENSO outlook to name your safest planting window." @endif>
+               @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The When to Plant analysis comes with {{ $qWtpWith }}. Anee reads your town's climate and the El Niño or La Niña outlook to find your safest time to plant." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/appointment.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>When to Plant Analysis</b>
-                    <i>Deep analyze when is the best planting window for your crops based on historical, crop, weather, climate, and location data.</i>
+                    <i>Find the best time to plant your crop, based on your location, past weather, climate and the forecast.</i>
                 </span>
                 @if ($qWtpLocked)
                     <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
@@ -175,11 +175,11 @@
                 @endif
             </a>
             <a href="{{ route('whatp.page') }}" class="qa-tile qa-wtp"
-               @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The What to Plant analysis comes with {{ $qWtpWith }} — Anee weighs your location, season forecast and soil to recommend the crop." @endif>
+               @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The What to Plant analysis comes with {{ $qWtpWith }}. Anee looks at your location, the season's forecast and your soil to suggest the best crop." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/plant.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>What to Plant Analysis</b>
-                    <i>Deeply analyze the best crop you can plant in your area based on the climate, forecasted weather, historical data, season, soil, and irrigation data.</i>
+                    <i>Find the best crop to plant in your area, based on climate, the forecast, past weather, season, soil and water supply.</i>
                 </span>
                 @if ($qWtpLocked)
                     <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
@@ -190,11 +190,11 @@
             {{-- The third: which variety, searched on the web and ranked by
                  the farmer's own priorities. --}}
             <a href="{{ route('vary.page') }}" class="qa-tile qa-wtp"
-               @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="Variety research comes with {{ $qWtpWith }} — Anee analyzes the newest {{ \App\Support\Region::ph() ? 'Philippine' : 'local' }} varieties and hybrids deeply and ranks them for your soil, weather and priorities." @endif>
+               @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="Variety research comes with {{ $qWtpWith }}. Anee studies the newest {{ \App\Support\Region::ph() ? 'Philippine' : 'local' }} varieties and hybrids and ranks them for your soil, weather and priorities." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/biotechnology.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>Variety Research & Comparison</b>
-                    <i>Not sure what variety to plant? In this analysis, deeply analyze the best variety of crop to use based in your location, weather history, climate, forecasted weather, historical data, season, soil, and irrigation data.</i>
+                    <i>Not sure which variety to plant? Anee finds and ranks the best varieties for your location, weather, climate, season, soil and water supply.</i>
                 </span>
                 @if ($qWtpLocked)
                     <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
@@ -205,11 +205,11 @@
             {{-- The fourth: the whole season written out by growth stage --
                  bags, sprays, water, watch-list -- for one field. --}}
             <a href="{{ route('proto.page') }}" class="qa-tile qa-wtp"
-               @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The Crop Protocol Analysis comes with {{ $qWtpWith }} — Anee writes your season by growth stage: the bags of fertilizer and when, the sprays to have ready, the water, the pests and weeds to watch." @endif>
+               @if ($qWtpLocked) data-tier-lock="{{ $qWtpRung }}" data-lock-say="The Crop Protocol Analysis comes with {{ $qWtpWith }}. Anee writes your season stage by stage: which fertilizer and when, the sprays to have ready, the water, and the pests and weeds to watch." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/checklist.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qWtpLocked ? 'tl-dim' : '' }}">
                     <b>Crop Protocol Analysis</b>
-                    <i>Analyze the recommended protocol for your selected crop variety based on the location, historical data, forecasted weather, soil, climate, and irrigation.</i>
+                    <i>Get a recommended protocol for your crop variety, stage by stage, based on your location, weather, soil, climate and water supply.</i>
                 </span>
                 @if ($qWtpLocked)
                     <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
@@ -226,11 +226,11 @@
             @if (\App\Support\WorkerContext::canView() && \App\Support\WorkerContext::canUseModule('reports'))
                 @php $qCmpLocked = ! \App\Support\Tier::farmCan('reportsAll'); $qCmpRung = \App\Support\Tier::farmUnlocksAt('reportsAll'); @endphp
                 <a href="{{ route('compare.page') }}" class="qa-tile qa-cmp"
-                   @if ($qCmpLocked) data-tier-lock="{{ $qCmpRung }}" data-lock-say="{{ \App\Support\Tier::say($qCmpRung, 'Compare Reports comes with {plan} — hold any two saved reports side by side, this season against the last.') }}" @endif>
+                   @if ($qCmpLocked) data-tier-lock="{{ $qCmpRung }}" data-lock-say="{{ \App\Support\Tier::say($qCmpRung, 'Compare Reports comes with {plan}. See any two saved reports side by side, like this season against the last.') }}" @endif>
                     <span class="qa-ico"><img src="{{ asset('images/icons/ab-testing.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                     <span class="qa-txt {{ $qCmpLocked ? 'tl-dim' : '' }}">
                         <b>Compare Reports</b>
-                        <i>Compare different reports of the same type, see the difference, and let Anee analyze it.</i>
+                        <i>Put two reports of the same kind side by side, see what changed, and let Anee explain it.</i>
                     </span>
                     @if ($qCmpLocked)
                         <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
@@ -244,7 +244,7 @@
             <span class="qa-ico"><img src="{{ asset('images/icons/bricks.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
             <span class="qa-txt">
                 <b>Protocol Builder</b>
-                <i>Manually plan your protocol beforehand and save for later use. You can import it as a new cropping schedule, or let Anee review it for problems, strengths, weaknesses.</i>
+                <i>Write your own protocol ahead of time and save it. Turn it into a new cropping schedule later, or ask Anee to check it for problems and strong points.</i>
             </span>
             <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
@@ -254,7 +254,7 @@
                 <span class="qa-ico"><img src="{{ asset('images/sticky-note.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
                     <b>Global Notes</b>
-                    <i>Every note from every schedule, gathered in one place.</i>
+                    <i>Every note from all your seasons, in one place.</i>
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
@@ -262,7 +262,7 @@
                 <span class="qa-ico"><img src="{{ asset('images/gallery.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
                     <b>Global Gallery</b>
-                    <i>Every photo, drawing and saved map, from every schedule.</i>
+                    <i>Every photo, drawing and saved map, in one place.</i>
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
@@ -273,7 +273,7 @@
                 <span class="qa-ico"><img src="{{ asset('images/location-marker.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
                     <b>Maps</b>
-                    <i>Draw, measure, and pin your fields. Save and attach it to your lots, activity, or notes.</i>
+                    <i>Draw, measure and pin your fields. Save a map and attach it to your lots, activities or notes.</i>
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
@@ -281,7 +281,7 @@
                 <span class="qa-ico"><img src="{{ asset('images/writting.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
                     <b>Draw</b>
-                    <i>Sketch a layout, a plan, a flow, or anything to help you strategize your farm protocol.</i>
+                    <i>Sketch a field layout, a plan, or anything that helps you plan your farm work.</i>
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
@@ -291,7 +291,7 @@
                 <span class="qa-ico"><img src="{{ asset('images/list.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
                     <b>Contact List</b>
-                    <i>A basic phonebook where you save all contacts that you have: workers, traders, buyers, everyone related to your farm.</i>
+                    <i>Your farm phonebook: workers, traders, buyers and everyone your farm works with.</i>
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
@@ -303,7 +303,7 @@
                 <span class="qa-ico"><img src="{{ asset('images/label.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                 <span class="qa-txt">
                     <b>Global Tags</b>
-                    <i>Every tag from every season and tool, and everything wearing it, in one place.</i>
+                    <i>All your tags from every season and tool, and what each one is on.</i>
                 </span>
                 <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </a>
@@ -321,7 +321,7 @@
                     <span class="qa-ico"><img src="{{ asset('images/camera.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                     <span class="qa-txt">
                         <b>Quick Capture</b>
-                        <i>Photograph what you are standing in front of and file it now.</i>
+                        <i>Take a photo of what is in front of you and save it to a season now.</i>
                     </span>
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>
@@ -335,11 +335,11 @@
             @endphp
             @if ($allSchedules->isNotEmpty() && $qMayVideo)
                 <button type="button" id="quickRecordBtn" class="qa-tile qa-rec"
-                        @if ($qVidLocked) data-tier-lock="{{ $qVidRung }}" data-lock-say="{{ \App\Support\Tier::say($qVidRung, 'Video recording comes with {plan}. Photos and voice notes stay yours on every plan.') }}" @endif>
+                        @if ($qVidLocked) data-tier-lock="{{ $qVidRung }}" data-lock-say="{{ \App\Support\Tier::say($qVidRung, 'Video recording comes with {plan}. Photos and voice notes work on every plan.') }}" @endif>
                     <span class="qa-ico"><img src="{{ asset('images/video-camera-b.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                     <span class="qa-txt {{ $qVidLocked ? 'tl-dim' : '' }}">
                         <b>Quick Record</b>
-                        <i>Record a video if a picture is not enough, explain your observations while recording.</i>
+                        <i>Record a video when a photo is not enough, and explain what you see as you film.</i>
                     </span>
                     @if ($qVidLocked)
                         <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
@@ -356,7 +356,7 @@
                     <span class="qa-ico"><img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:1.4rem;height:1.4rem;object-fit:contain"></span>
                     <span class="qa-txt">
                         <b>Quick Voice</b>
-                        <i>Say what you are seeing and file it as a note, faster than typing in the field.</i>
+                        <i>Say what you see and save it as a note. Faster than typing in the field.</i>
                     </span>
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </button>

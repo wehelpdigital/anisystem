@@ -122,7 +122,7 @@
     <button type="button" class="pb-new mb-3" id="pbNewBtn">New protocol</button>
     <button type="button" class="pb-port mb-4" id="pbPortOpen">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2v4M16 2v4M12 12v6M9 15h6"/></svg>
-        Port to cropping schedule
+        Make a season from a protocol
     </button>
 
     <div class="pb-search hidden" id="pbSearchWrap">
@@ -151,13 +151,13 @@
 <div class="sheet hidden sheet-full" id="ppSheet" style="--sheet-width:34rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Port to a cropping schedule</h3>
+        <h3 class="sheet-title">Make a season from protocols</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
         <p class="pp-hint mb-3">This makes a new season from your protocols. Each lot runs one protocol from its own start date. Every task goes on the board on its day.</p>
         <div>
-            <label class="form-label" for="ppTitle">Schedule name</label>
+            <label class="form-label" for="ppTitle">Season name</label>
             <input type="text" id="ppTitle" class="form-input" maxlength="255" placeholder="e.g. Wet season 2026, Apartado">
         </div>
         <div class="mt-3">
@@ -185,7 +185,7 @@
         </div>
     </div>
     <div class="sheet-footer">
-        <button type="button" class="btn btn-primary w-full" id="ppGo">Port</button>
+        <button type="button" class="btn btn-primary w-full" id="ppGo">Make the season</button>
     </div>
 </div>
 
@@ -248,7 +248,7 @@
     <div class="sheet-body dt-rows">
         <button type="button" class="dt-row" data-row-act="open"><span class="dt-row-e">📖</span><span class="dt-row-body"><b>Open</b><i>Edit the tasks or ask Anee.</i></span></button>
         <button type="button" class="dt-row" data-row-act="copy"><span class="dt-row-e">📑</span><span class="dt-row-body"><b>Duplicate</b><i>Make a copy you can change freely.</i></span></button>
-        <button type="button" class="dt-row" data-row-act="delete"><span class="dt-row-e">🗑️</span><span class="dt-row-body"><b>Delete</b><i>Remove it from your list.</i></span></button>
+        <button type="button" class="dt-row" data-row-act="delete"><span class="dt-row-e">🗑️</span><span class="dt-row-body"><b>Delete</b><i>Take it off your list.</i></span></button>
     </div>
 </div>
 
@@ -289,9 +289,9 @@
     function paintCost() {
         const o = @json($aboutOpt);
         const cost = $id('pbAboutCost');
-        if (o.aiLocked) { cost.innerHTML = "Building and porting are free. Anee's review comes with <b class=\"is-inline\">" + @json(\App\Support\Tier::planName(\App\Support\Tier::farmUnlocksAt('aiAnalyses'))) + "</b> and every plan above it."; return; }
-        if (!o.canAnalyze) { cost.innerHTML = "Building and porting are free. Anee's review is not available right now."; return; }
-        cost.innerHTML = `Building and porting are free. A review by Anee costs <b class="is-inline">${o.quote} credits</b>. You have ${window.creditCoin(o.unlimited ? '∞' : Number(o.balance).toLocaleString())}. Nothing is charged until you ask for one.`;
+        if (o.aiLocked) { cost.innerHTML = "Writing protocols and making seasons from them is free. Anee's review comes with <b class=\"is-inline\">" + @json(\App\Support\Tier::planName(\App\Support\Tier::farmUnlocksAt('aiAnalyses'))) + "</b> and every plan above it."; return; }
+        if (!o.canAnalyze) { cost.innerHTML = "Writing protocols and making seasons from them is free. Anee's review is not available right now."; return; }
+        cost.innerHTML = `Writing protocols and making seasons from them is free. A review by Anee costs <b class="is-inline">${o.quote} credits</b>. You have ${window.creditCoin(o.unlimited ? '∞' : Number(o.balance).toLocaleString())}. Nothing is charged until you ask for one.`;
     }
 
     function paint() {
@@ -307,7 +307,7 @@
                     ${window.userTags ? window.userTags.chips(r.tags) : ''}
                     <span class="pb-row-tags">
                         ${r.score !== null ? `<span class="pb-tag is-score">Anee: ${r.score}/100</span>` : ''}
-                        ${r.ported ? `<span class="pb-tag is-ported">Ported ${esc(r.ported.at || '')}</span>` : ''}
+                        ${r.ported ? `<span class="pb-tag is-ported">Season made ${esc(r.ported.at || '')}</span>` : ''}
                         <span class="pb-tag">Updated ${esc(r.updated || '')}</span>
                     </span>
                 </span>
@@ -512,7 +512,7 @@
             PICK_FOR = l;
             $id('ppProtoList').innerHTML = ROWS.length ? ROWS.map((r) => `
                 <button type="button" class="dt-row${l.protocolId === r.id ? ' is-on' : ''}" data-pp-pick-proto="${r.id}"><span class="dt-row-e">${esc(r.cropIcon || '📋')}</span><span class="dt-row-body"><b>${esc(r.title)}</b><i>${esc(r.cropLabel || 'No crop')} · ${esc((DAY_TYPES[r.dayType] || {}).label || r.dayType)} · ${r.count} ${r.count === 1 ? 'task' : 'tasks'}${versionsOf(r).length > 1 ? ` · ${versionsOf(r).length} versions` : ''}</i></span><svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></button>`).join('')
-                : '<p class="text-sm text-gray-400 py-4 text-center">No protocol yet. Make one first.</p>';
+                : '<p class="text-sm text-gray-400 py-4 text-center">No protocols yet. Make one first.</p>';
             openSheet('ppProtoSheet');
             return;
         }
@@ -565,7 +565,7 @@
     });
     $id('ppGo').addEventListener('click', async () => {
         const title = $id('ppTitle').value.trim();
-        if (!title) { toast('Give the schedule a name.', 'error'); $id('ppTitle').focus(); return; }
+        if (!title) { toast('Give the season a name.', 'error'); $id('ppTitle').focus(); return; }
         for (const [i, l] of PLOTS.entries()) {
             if (!l.name.trim()) { toast(`Give lot ${i + 1} a name.`, 'error'); $id('ppName_' + l.key)?.focus(); return; }
             if (!l.protocolId) { toast(`Pick a protocol for lot ${i + 1}.`, 'error'); return; }
@@ -574,7 +574,7 @@
             if (isDat(l) && !l.transplant) { toast(`Pick the transplant date for lot ${i + 1}.`, 'error'); return; }
             if (isTree(l) && !treePlantedOf(l)) { toast(`Enter the tree age for lot ${i + 1}.`, 'error'); return; }
         }
-        const btn = $id('ppGo'); btn.disabled = true; const was = btn.textContent; btn.textContent = 'Porting… one moment';
+        const btn = $id('ppGo'); btn.disabled = true; const was = btn.textContent; btn.textContent = 'Making the season…';
         try {
             const res = await api(PORT_URL, { method: 'POST', body: {
                 title, description: $id('ppDesc').value.trim(),

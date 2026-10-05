@@ -88,7 +88,7 @@
                     <span class="cw-ico"><img src="{{ asset('images/discussion.png') }}" alt=""></span>
                     <span class="cw-txt">
                         <b>Discussions</b>
-                        <i>Focused discussion on topics, or open your own.</i>
+                        <i>Talk with others about one farm topic, or start your own.</i>
                     </span>
                     <svg class="cw-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </a>
@@ -96,15 +96,15 @@
                     <span class="cw-ico"><img src="{{ asset('images/blog.png') }}" alt=""></span>
                     <span class="cw-txt">
                         <b>Tech Blog</b>
-                        <i>Growing guides and field science, written to be used.</i>
+                        <i>Growing guides and farm science you can use in the field.</i>
                     </span>
                     <svg class="cw-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </a>
                 <a href="{{ route('community.connect.members') }}" class="cw-tile cw-mem">
                     <span class="cw-ico"><img src="{{ asset('images/connect.png') }}" alt=""></span>
                     <span class="cw-txt">
-                        <b>Co-Farmers</b>
-                        <i>Discover members here and connect with them, build a community.</i>
+                        <b>Cofarmers</b>
+                        <i>Find other farmers and connect with them.</i>
                     </span>
                     <svg class="cw-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                 </a>

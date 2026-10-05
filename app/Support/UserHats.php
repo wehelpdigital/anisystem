@@ -67,7 +67,7 @@ class UserHats
             'title' => 'My own farm',
             'detail' => $ownSchedules > 0
                 ? $ownSchedules . ' ' . str('schedule')->plural($ownSchedules) . ' of your own'
-                : 'Your own free account — start your first cropping schedule',
+                : 'Your own free account. Start your first cropping schedule.',
             'count' => $ownSchedules,
             'bossId' => null,
             'url' => null,
@@ -88,7 +88,7 @@ class UserHats
                 'kind' => 'worker',
                 'title' => 'Worker at ' . ($name !== '' ? $name : 'a farm'),
                 'detail' => $theirs . ' ' . str('schedule')->plural($theirs) . ' on this farm · '
-                    . ($g->scheduleAccess === 'edit' ? 'you can add and change work' : 'you can look, not change'),
+                    . ($g->scheduleAccess === 'edit' ? 'you can add and change work' : 'you can view only'),
                 'count' => $theirs,
                 'bossId' => (int) $g->bossUserId,
                 'url' => null,

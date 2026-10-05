@@ -62,7 +62,7 @@
                 ? `<span class="avatar overflow-hidden"><img src="${esc(it.avatar)}" alt="" class="w-full h-full object-cover"></span>`
                 : `<span class="avatar av-h${hue}">${esc(it.initials || '?')}</span>`;
             return `<div class="mention-item ${i === active ? 'is-active' : ''}" data-index="${i}">
-                ${av}<span class="mm-name">${esc(it.name)}</span>${it.isFriend ? '<span class="mm-badge">Co-farmer</span>' : ''}
+                ${av}<span class="mm-name">${esc(it.name)}</span>${it.isFriend ? '<span class="mm-badge">Cofarmer</span>' : ''}
             </div>`;
         }).join('');
         pop.classList.remove('hidden');

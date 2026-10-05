@@ -65,7 +65,7 @@ class RegisterController extends Controller
             $request->session()->put('signup.email', $pending->email);
 
             return redirect()->route('verify.notice')
-                ->with('success', 'That email is already waiting on its confirmation — we sent a fresh link.');
+                ->with('success', 'That email is still waiting to be confirmed. We sent you a new link.');
         }
 
         $data = $request->validate([
@@ -178,11 +178,11 @@ class RegisterController extends Controller
 
         if ($plan) {
             return redirect()->route('purchase.plans', ['plan' => $plan])
-                ->with('success', 'Email confirmed — welcome to anee.io! Pick your plan to upgrade, or start free.');
+                ->with('success', 'Email confirmed. Welcome to anee.io! Pick a plan, or start free.');
         }
 
         return redirect()->route('app.dashboard')
-            ->with('success', 'Email confirmed — welcome to anee.io! You are on the free Libre plan.');
+            ->with('success', 'Email confirmed. Welcome to anee.io! You are on the free Libre plan.');
     }
 
     private function sendVerification(User $user): void
@@ -210,7 +210,7 @@ class RegisterController extends Controller
             'link' => $link,
         ])->render());
 
-        $this->mail->send($user->email, $user->full_name, 'Confirm your email — anee.io', $html, [
+        $this->mail->send($user->email, $user->full_name, 'Confirm your email for anee.io', $html, [
             'templateKey' => 'email_verification',
             'userId' => $user->id,
         ]);

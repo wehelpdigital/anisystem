@@ -7,7 +7,7 @@
     $pageName = $isSofar ? 'Analyze So Far' : 'Anee Season Report';
 @endphp
 
-@section('title', $pageName . ' — ' . $schedule->title)
+@section('title', $pageName . ': ' . $schedule->title)
 @section('page-title', $pageName)
 @section('page-subtitle', $schedule->title)
 @section('back', \App\Support\BackTo::url(route('sm.reports', ['id' => $schedule->id]), $schedule->id))

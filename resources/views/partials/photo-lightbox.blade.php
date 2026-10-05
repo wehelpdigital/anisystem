@@ -76,7 +76,7 @@
                 + ' about this" aria-label="Ask ' + ASK.name + '"><img src="' + ASK.face + '" alt=""></button>' : '')
             + '<a class="plaza-lightbox-get" download href="#" target="_blank" rel="noopener">'
             + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">'
-            + '<path stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14"/></svg>Save</a>'
+            + '<path stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14"/></svg>Download</a>'
             + '<button type="button" class="plaza-lightbox-x" aria-label="Close">✕</button>'
             + '</div><img alt="">'
             + '<p class="plaza-lightbox-hint">Pinch or tap twice to zoom. Drag to move.</p>';

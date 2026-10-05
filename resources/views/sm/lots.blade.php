@@ -1,6 +1,6 @@
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Lots — ' . $schedule->title)
+@section('title', 'Lots · ' . $schedule->title)
 @section('page-title', 'Lots')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'lots')
@@ -13,7 +13,7 @@
     <div>
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
             <p class="text-sm text-gray-500">
-                <span id="lotCount" class="font-bold text-gray-900">0</span> <span id="lotCountLabel">lots</span> on this schedule
+                <span id="lotCount" class="font-bold text-gray-900">0</span> <span id="lotCountLabel">lots</span> in this season
             </p>
             {{-- A lot is a piece of the farm itself, not a day's work on it:
                  adding one is the owner's to do. A worker sees the lots and
@@ -50,9 +50,9 @@
                 </div>
                 <h2 class="font-bold text-gray-900 mb-1">No lots yet</h2>
                 @if (\App\Support\WorkerContext::inWorkerContext())
-                    <p class="text-sm text-gray-500">Lots are the fields in this schedule. The farm owner adds them.</p>
+                    <p class="text-sm text-gray-500">Lots are the fields in this season. The farm owner adds them.</p>
                 @else
-                    <p class="text-sm text-gray-500 mb-4">Lots are the fields in this schedule. You link activities to them.</p>
+                    <p class="text-sm text-gray-500 mb-4">Lots are the fields in this season. You link activities to them.</p>
                     <button type="button" class="btn btn-primary" data-add-lot>Add your first lot</button>
                 @endif
             </div>
@@ -1201,7 +1201,7 @@ const __init = () => {
             const lot = LOTS.find((l) => String(l.id) === id);
             const ok = await confirmAction({
                 title: 'Delete lot?',
-                message: `"${lot?.lotName || 'This lot'}" will be removed from the schedule.`,
+                message: `"${lot?.lotName || 'This lot'}" will be removed from this season.`,
                 detail: 'Records linked to it are kept.',
                 confirmText: 'Delete',
             });

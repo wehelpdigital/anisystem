@@ -48,10 +48,10 @@
     <div class="mt-3 sa-room" data-room="acq" hidden>
         <div class="card p-4 mb-4">
             <p class="font-bold text-gray-900">New analysis</p>
-            <p class="text-xs text-gray-500 mt-0.5 mb-3">Name the campaign, mark the window it ran, and say what the ads cost. Everything else is read from the platform's own records.</p>
+            <p class="text-xs text-gray-500 mt-0.5 mb-3">Name the campaign, pick the dates it ran, and enter what the ads cost. The rest comes from the app's own records.</p>
 
             <div class="sa-form">
-                <input type="text" id="saName" class="form-input" maxlength="191" placeholder="e.g. Facebook Ads — September push">
+                <input type="text" id="saName" class="form-input" maxlength="191" placeholder="e.g. Facebook Ads, September push">
 
                 <div class="sa-row">
                     {{-- The two dates wear tags; the native pickers stand behind them. --}}
@@ -112,7 +112,6 @@
             <span class="dt-row-body"><b>Acquisition Analysis</b><i>Ad spend against registrations, conversions and revenue.</i></span>
             <svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </button>
-        <p class="text-xs text-gray-400 px-1 pt-2">More analyses will take rows here as they are built.</p>
     </div>
 </div>
 
@@ -473,7 +472,7 @@
             const d = j.data;
             dashFor = want;
             lastDash = d;
-            $id('sdWhen').textContent = d.from + ' – ' + d.to;
+            $id('sdWhen').textContent = d.from + ' to ' + d.to;
             paintKpis(d);
             paintChart(d);
             paintRows($id('sdByProduct'), d.byProduct || [], 'Nothing sold in this period.');
@@ -581,13 +580,13 @@
             </div>
             <div class="sa-grid">
                 <div class="sa-stat"><i>Ad spend</i><b>${peso(d.spend)}</b><small>${peso(d.adCost)} ${esc(d.adCadence)} × ${d.units}</small></div>
-                <div class="sa-stat"><i>Registrations</i><b>${d.registrations}</b><small>${d.costPerRegistration !== null ? peso(d.costPerRegistration) + ' each' : 'no arrivals yet'}</small></div>
+                <div class="sa-stat"><i>Registrations</i><b>${d.registrations}</b><small>${d.costPerRegistration !== null ? peso(d.costPerRegistration) + ' each' : 'no sign ups yet'}</small></div>
                 <div class="sa-stat"><i>Clients won</i><b>${d.converted}</b><small>${d.costPerClient !== null ? peso(d.costPerClient) + ' to acquire one' : 'none converted yet'}</small></div>
-                <div class="sa-stat"><i>Revenue</i><b>${peso(d.revenue)}</b><small>${d.avgRevenuePerClient !== null ? peso(d.avgRevenuePerClient) + ' per client' : '—'}</small></div>
+                <div class="sa-stat"><i>Revenue</i><b>${peso(d.revenue)}</b><small>${d.avgRevenuePerClient !== null ? peso(d.avgRevenuePerClient) + ' per client' : 'no clients yet'}</small></div>
                 <div class="sa-stat"><i>Conversion rate</i><b>${d.conversionRate}%</b><small>of registrations paid</small></div>
-                <div class="sa-stat"><i>Cost per registration</i><b>${d.costPerRegistration !== null ? peso(d.costPerRegistration) : '—'}</b><small>spend ÷ registrations</small></div>
-                <div class="sa-stat"><i>Acquisition cost</i><b>${d.costPerClient !== null ? peso(d.costPerClient) : '—'}</b><small>spend ÷ clients</small></div>
-                <div class="sa-stat"><i>Return on ad spend</i><b>${d.roas !== null ? d.roas + '×' : '—'}</b><small>revenue ÷ spend</small></div>
+                <div class="sa-stat"><i>Cost per registration</i><b>${d.costPerRegistration !== null ? peso(d.costPerRegistration) : 'None yet'}</b><small>spend ÷ registrations</small></div>
+                <div class="sa-stat"><i>Acquisition cost</i><b>${d.costPerClient !== null ? peso(d.costPerClient) : 'None yet'}</b><small>spend ÷ clients</small></div>
+                <div class="sa-stat"><i>Return on ad spend</i><b>${d.roas !== null ? d.roas + '×' : 'None yet'}</b><small>revenue ÷ spend</small></div>
             </div>
             ${(d.planMix && d.planMix.length) ? `
             <div class="sa-mix">

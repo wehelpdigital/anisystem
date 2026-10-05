@@ -176,7 +176,7 @@ class SeasonMedia
                 // to say which. Asked of the name, the same way the album
                 // branch below does it; hardcoding 'image' rendered the clip as
                 // a broken picture.
-                $push(['type' => self::kindOf($path), 'path' => $path], 'Post-harvest', $label, $ph->updated_at,
+                $push(['type' => self::kindOf($path), 'path' => $path], 'Observation', $label, $ph->updated_at,
                     route('sm.post-harvest', ['id' => $schedule->id]));
             }
         }
@@ -201,8 +201,8 @@ class SeasonMedia
         // about is still a photo of this season.
         foreach (ScheduleAiMessage::active()->where('scheduleId', $schedule->id)
             ->whereNotNull('imagePath')->orderByDesc('id')->get() as $m) {
-            $push(['type' => 'image', 'path' => $m->imagePath], 'Asked the AI',
-                mb_strimwidth(trim(strip_tags((string) $m->content)) ?: 'Sent to the AI technician', 0, 80, '…'),
+            $push(['type' => 'image', 'path' => $m->imagePath], 'Asked Anee',
+                mb_strimwidth(trim(strip_tags((string) $m->content)) ?: 'Sent to Anee', 0, 80, '…'),
                 $m->updated_at, route('sm.ai', ['id' => $schedule->id]));
         }
 

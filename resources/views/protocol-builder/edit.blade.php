@@ -818,7 +818,7 @@
     <div class="sheet-body">
         <label class="form-label" for="pbnText">Note</label>
         <textarea id="pbnText" class="form-textarea" rows="5" maxlength="2000" placeholder="What to watch for, a lesson from last season, who to call"></textarea>
-        <p class="pbh-hint">Drag it where you want. It stays with the task above it. When ported, it goes to that day's day book.</p>
+        <p class="pbh-hint">Drag it where you want. It stays with the task above it. When you make a season from the protocol, it goes to that day's day book.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn text-red-600 bg-red-50 hover:bg-red-100 border border-red-100" id="pbnDelete" hidden>Delete</button>
@@ -854,7 +854,7 @@
             <div class="pbd-colors" id="pbdColors"></div>
         </div>
         <div class="pbd-preview" id="pbdPreview"></div>
-        <p class="pbh-hint">Dividers are not tasks, so they are not counted or checked. Anee reads them as phase headings. When ported, each one goes to that day's day book.</p>
+        <p class="pbh-hint">Dividers are not tasks, so they are not counted or checked. Anee reads them as phase headings. When you make a season from the protocol, each one goes to that day's day book.</p>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn text-red-600 bg-red-50 hover:bg-red-100 border border-red-100" id="pbdDelete" hidden>Delete</button>
@@ -1154,7 +1154,7 @@
     let DIRTY = false, BUSY = false, AGAIN = false, STALE = false, FAILS = 0, saveTimer = null;
     function say(state) {
         const el = $id('pbSaveState');
-        el.textContent = { saving: 'Saving…', saved: '✓ Saved', failed: 'Not saved, retrying', stale: 'Reload to save' }[state] || '';
+        el.textContent = { saving: 'Saving…', saved: '✓ Saved', failed: 'Not saved yet, trying again', stale: 'Reload to save' }[state] || '';
         el.classList.toggle('is-saved', state === 'saved');
         el.classList.toggle('is-failed', state === 'failed');
         el.classList.toggle('is-stale', state === 'stale');
@@ -1282,7 +1282,7 @@
         const n = onlyTasks.length ? onlyTasks[onlyTasks.length - 1] : null;
         if (n) tags.push(`<span class="pb-tag">Runs to <b>${esc(sayWhen(n.counter, n.day))}</b></span>`);
         if (REVIEW) tags.push(`<button type="button" class="pb-tag is-score" data-go-analyses title="Open the Analyses tab">Anee: <b>${REVIEW.score}/100</b></button>`);
-        if (P.ported) tags.push(`<a class="pb-tag is-ported" href="${esc(P.ported.url)}">Ported ${esc(P.ported.at || '')} → <b>${esc(P.ported.title || 'the season')}</b></a>`);
+        if (P.ported) tags.push(`<a class="pb-tag is-ported" href="${esc(P.ported.url)}">Season made ${esc(P.ported.at || '')} → <b>${esc(P.ported.title || 'the season')}</b></a>`);
         $id('pbHeadTags').innerHTML = tags.join('');
         $id('pbVerName').textContent = VER.name || 'Version 1';
         $id('pbVerCount').textContent = VERSIONS.length > 1 ? `· ${VERSIONS.length} versions` : '';
@@ -2412,7 +2412,7 @@
     let RQ = null, R_TOUCHED = false, R_DIRTY = false, R_BUSY = false, R_TIMER = null, R_LAST = RULES, R_FAILS = 0;
     function sayRules(state) {
         const el = $id('pbRulesState');
-        el.textContent = { saving: 'Saving…', saved: '✓ Saved', failed: 'Not saved, retrying' }[state] || '';
+        el.textContent = { saving: 'Saving…', saved: '✓ Saved', failed: 'Not saved yet, trying again' }[state] || '';
         el.classList.toggle('is-saved', state === 'saved');
         el.classList.toggle('is-failed', state === 'failed');
     }
@@ -2712,7 +2712,7 @@
                 <span class="pba-score${scoreCls(Number(a.score))}">${a.score ?? '?'}</span>
                 <span class="pba-t"><b>${esc(a.verdict || "Anee's analysis")}</b>
                     <small>${i === 0 ? '<em class="pba-new">Latest</em>' : ''}${esc(a.at || '')}${a.versionName ? ' · ' + esc(a.versionName) : ''}${a.credits ? ` · ${a.credits} credits` : ''}</small></span>
-                <button type="button" class="pba-del" data-an-del="${a.id}" title="Remove this analysis" aria-label="Remove this analysis">
+                <button type="button" class="pba-del" data-an-del="${a.id}" title="Delete this analysis" aria-label="Delete this analysis">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
                 </button>
             </div>`).join('') + (!AN_ALL && n > 5 ? `<button type="button" class="pba-more" data-an-all>Show all ${n}</button>` : '');
@@ -2741,14 +2741,14 @@
                 actions: [
                     // The review rides into the chat, for the questions it raises.
                     { label: 'Ask Anee about it', face: @json($options['aneeFace']), kind: 'primary', href: @json(route('ai.index')) + '?pbreview=' + id },
-                    { label: 'Remove this analysis', icon: 'trash', kind: 'danger', onClick: () => removeAnalysis(id, true) },
+                    { label: 'Delete this analysis', icon: 'trash', kind: 'danger', onClick: () => removeAnalysis(id, true) },
                 ],
                 onClose: () => { VIEW_ID = null; renderAnalyses(); },
             });
         }
     }
     async function removeAnalysis(id, fromView) {
-        const ok = await window.confirmAction({ title: 'Remove this analysis?', message: 'It will be removed from the Analyses tab. Credits used are not returned.', confirmText: 'Remove' });
+        const ok = await window.confirmAction({ title: 'Delete this analysis?', message: 'It will be taken off the Analyses tab. Credits used are not returned.', confirmText: 'Delete' });
         if (!ok) return;
         try {
             const d = (await api(U.base + '/analyses/' + id + '/delete', { method: 'POST', body: {} })).data || {};
@@ -2759,7 +2759,7 @@
             VIEW_ID = null;
             render();
             renderAnalyses();
-            toast('Analysis removed.');
+            toast('Analysis deleted.');
         } catch (err) { toast(err.message, 'error'); }
     }
     $id('pbAnList').addEventListener('click', async (e) => {

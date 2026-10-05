@@ -235,12 +235,12 @@
                         @if ($qcMayAi)
                         <label class="qc-tab" data-qc-target-row role="tab">
                             <input type="radio" name="qcTarget" value="ai">
-                            <span>Ask AI</span>
+                            <span>Ask Anee</span>
                         </label>
                         @endif
                     </div>
                     <p class="qc-tabhint" id="qcTabHint"></p>
-                    <p id="qcClipHint" class="hidden text-xs text-gray-500 mt-1">Clips can only go to an album. Notes and the AI Technician take photos only.</p>
+                    <p id="qcClipHint" class="hidden text-xs text-gray-500 mt-1">Clips can only go to an album. Notes and Anee take photos only.</p>
                 </div>
                 {{-- A note deserves a name of its own. The Gallery does not ask
                      these two: the album has its own name, and every photo gets
@@ -261,18 +261,18 @@
                     <input type="hidden" id="qcSchedule" value="{{ $fixedScheduleId }}">
                 @else
                     <div>
-                        <label class="form-label" for="qcSchedule">Connect to schedule <span aria-hidden="true">*</span></label>
+                        <label class="form-label" for="qcSchedule">Which season? <span aria-hidden="true">*</span></label>
                         {{-- Nothing chosen to begin with. It used to open on
                              whichever season came first, so a photo taken in a
                              hurry filed itself somewhere nobody picked — and
                              that is only discovered later, by not finding it. --}}
                         <select id="qcSchedule" class="form-select" required aria-describedby="qcScheduleErr">
-                            <option value="" selected>Choose a schedule…</option>
+                            <option value="" selected>Choose a season…</option>
                             @foreach ($allSchedules as $s)
                                 <option value="{{ $s->id }}">{{ $s->title }}</option>
                             @endforeach
                         </select>
-                        <p class="form-error hidden" id="qcScheduleErr" role="alert">Choose which schedule this belongs to.</p>
+                        <p class="form-error hidden" id="qcScheduleErr" role="alert">Choose which season this belongs to.</p>
                     </div>
                 @endif
                 <div>
@@ -750,7 +750,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (err) err.classList.toggle('hidden', ok);
         if (sel) sel.setAttribute('aria-invalid', ok ? 'false' : 'true');
         if (!ok && sel) {
-            toast('Choose which schedule this belongs to.', 'error');
+            toast('Choose which season this belongs to.', 'error');
             sel.focus();
             if (typeof sel.scrollIntoView === 'function') sel.scrollIntoView({ block: 'center', behavior: 'smooth' });
         }
@@ -892,9 +892,9 @@ document.addEventListener('DOMContentLoaded', () => {
         $('qcAlbumWrap').classList.toggle('hidden', !gallery);
         $('qcItemsWrap').classList.toggle('hidden', !gallery);
         const hints = {
-            note: "Keep the photos in this schedule's notes.",
+            note: "Keep the photos in this season's notes.",
             gallery: 'Put them in an album. Name each photo below.',
-            ai: 'Get advice on the first photo. Uses AI Credits.',
+            ai: 'Anee looks at the first photo and gives advice. Uses credits.',
         };
         const hint = $('qcTabHint');
         if (hint) hint.textContent = hints[t] || '';
@@ -1072,7 +1072,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.offline) { paintOfflineResult(data.message); return; }
         $('qcResult').innerHTML = `<div class="flex items-center gap-2 text-brand-700 font-semibold mb-1">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            ${escapeHtml(data.message)}</div><p class="text-gray-500 text-sm">Find it anytime in this schedule's Notes.</p>`;
+            ${escapeHtml(data.message)}</div><p class="text-gray-500 text-sm">Find it anytime in this season's Notes.</p>`;
         const link = $('qcResultLink');
         link.href = data.notesUrl; link.classList.remove('hidden'); link.textContent = 'Open notes';
         $('qcTitle').textContent = 'Saved';
@@ -1089,10 +1089,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (ask && !window.aneeOffline?.isDown?.()) return false;
         window.aneeOffline?.markDown?.();
         if (window.aneeOffline?.sayLocked) {
-            window.aneeOffline.sayLocked('Asking the AI Technician',
-                'The AI Technician needs signal to read your photo. Save it to Notes or the Gallery for now and it will upload by itself. Ask again when you have signal.');
+            window.aneeOffline.sayLocked('Asking Anee',
+                'Anee needs signal to read your photo. Save it to Notes or the Gallery for now and it will upload by itself. Ask again when you have signal.');
         } else {
-            toast('The AI Technician needs a connection. Save the photo to Notes for now.', 'error');
+            toast('Anee needs a connection. Save the photo to Notes for now.', 'error');
         }
 
         return true;
@@ -1101,7 +1101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function askAi(scheduleId) {
         // Upload the first photo, then ask the AI about it.
         const photos = items.filter((it) => it.kind === 'image');
-        if (!photos.length) throw new Error('The AI Technician reads photos. Take one first.');
+        if (!photos.length) throw new Error('Anee reads photos. Take one first.');
         const fd = new FormData();
         // Shrunk before it travels (window.aneeShrinkPhoto, app.js).
         fd.append('image', window.aneeShrinkPhoto ? await window.aneeShrinkPhoto(photos[0].file) : photos[0].file);
@@ -1128,18 +1128,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } catch (_) { aiNeedsTheLine(); return; }
         let askData = await ask.json().catch(() => ({}));
-        if (!ask.ok || !askData.success) throw new Error(askData.message || 'The AI Technician could not answer right now.');
+        if (!ask.ok || !askData.success) throw new Error(askData.message || 'Anee could not answer right now.');
         // Answered as a job: the ask is taken at once, the answer waited for.
         if (askData.data?.pending && window.aneeAskWait) askData = await window.aneeAskWait(askData);
 
         const reply = askData.data?.answer?.content || 'Answer received.';
-        $('qcResult').innerHTML = `<div class="font-semibold text-gray-900 mb-2">AI Technician says:</div>
+        $('qcResult').innerHTML = `<div class="font-semibold text-gray-900 mb-2">Anee says:</div>
             <div class="text-sm text-gray-700 whitespace-pre-line">${escapeHtml(reply)}</div>
-            ${photos.length > 1 ? '<p class="text-xs text-gray-400 mt-2">Only the first photo was sent to the AI.</p>' : ''}`;
+            ${photos.length > 1 ? '<p class="text-xs text-gray-400 mt-2">Only the first photo was sent to Anee.</p>' : ''}`;
         const link = $('qcResultLink');
         link.href = @json(url('/app/sm-activities')) + '?id=' + scheduleId + '&module=ai';
-        link.classList.remove('hidden'); link.textContent = 'Open AI Technician';
-        $('qcTitle').textContent = 'AI Technician';
+        link.classList.remove('hidden'); link.textContent = 'Open chat with Anee';
+        $('qcTitle').textContent = "Anee's answer";
         showStep('result');
     }
 

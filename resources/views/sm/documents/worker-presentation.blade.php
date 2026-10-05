@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Worker Presentation — {{ $schedule->title }}</title>
+    <title>Worker Presentation: {{ $schedule->title }}</title>
     <style>
         /* ===== PAGE & PRINT =====
            The @bottom-center running area carries the document attribution
@@ -16,7 +16,7 @@
             size: A4 portrait;
             margin: 18mm 16mm 22mm;
             @bottom-center {
-                content: "{!! addslashes($schedule->title) !!} — Worker Presentation · Generated {{ $generatedAt->format('M j, Y') }} · anee.io · Page " counter(page) " of " counter(pages);
+                content: "{!! addslashes($schedule->title) !!} · Worker Presentation · Generated {{ $generatedAt->format('M j, Y') }} · anee.io · Page " counter(page) " of " counter(pages);
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
                 font-size: 8pt;
                 color: #6b7280;
@@ -978,7 +978,7 @@
 </head>
 <body>
     <div class="action-bar no-print">
-        <div class="brand">Worker Presentation — {{ $schedule->title }}</div>
+        <div class="brand">Worker Presentation: {{ $schedule->title }}</div>
         <div class="zoom-group" role="group" aria-label="Zoom">
             <button type="button" onclick="adjustZoom(-10)" title="Zoom out">−</button>
             <span class="zoom-label" id="zoomLabel">130%</span>
@@ -986,7 +986,7 @@
         </div>
         <button type="button" class="act-btn" onclick="resetZoom()" title="Reset to default zoom">Reset</button>
         <button type="button" class="act-btn" onclick="window.close()">Close</button>
-        <button type="button" class="act-btn primary" onclick="window.print()" title="Use the browser's built-in print dialog (choose 'Save as PDF' for a PDF copy)">
+        <button type="button" class="act-btn primary" onclick="window.print()" title="Opens your browser's print window. Choose 'Save as PDF' to keep a PDF copy.">
             Print / Save PDF
         </button>
     </div>
@@ -1003,7 +1003,7 @@
             @if($firstDate && $lastDate)
                 <span><strong>Season:</strong> {{ $firstDate->format('M j, Y') }} → {{ $lastDate->format('M j, Y') }}</span>
             @endif
-            <span><strong>Day Type:</strong> {{ $schedule->dayType }}</span>
+            <span><strong>Day count:</strong> {{ $schedule->dayType }}</span>
             <span><strong>Status:</strong> {{ ucfirst($schedule->status) }}</span>
             <span><strong>Generated:</strong> {{ $generatedAt->format('M j, Y · g:i A') }}</span>
         </div>
@@ -1035,7 +1035,7 @@
         @if($schedule->criticalRules->count() > 0 || $wpRuleEntries->count() > 0)
             <div class="critical-rules-callout">
                 <div class="critical-rules-heading">
-                    ⚑ Critical Rules — Read Every Time
+                    ⚑ Critical Rules: Read Every Time
                 </div>
                 <ol class="critical-rules-print-list">
                     @foreach($schedule->criticalRules as $cRule)
@@ -1043,7 +1043,7 @@
                     @endforeach
                     @foreach($wpRuleEntries as $entry)
                         <li class="rich-inline">
-                            @if($entry->title)<strong>{{ $entry->title }} — </strong>@endif{!! $entry->content !!}
+                            @if($entry->title)<strong>{{ $entry->title }}: </strong>@endif{!! $entry->content !!}
                         </li>
                     @endforeach
                 </ol>
@@ -1131,16 +1131,16 @@
         @endif
 
         <p style="margin-top: 14px;">
-            This presentation summarizes the cropping plan for the upcoming season — how the lots are grouped, who's
-            working it, the activity schedule, expected labor allocation, and irrigation timing. Hand the relevant pages
-            to each worker so everyone understands their commitments.
+            This is the plan for the coming season: how the lots are grouped, who works on them, the activities,
+            the expected labor, and when to irrigate. Give each worker their own pages so everyone knows
+            their work.
         </p>
 
         <h2>Lot Groups</h2>
         @if($schedule->defaultGroupings->count() === 0)
-            <p class="muted">No groups defined for this schedule.</p>
+            <p class="muted">This season has no lot groups yet.</p>
         @else
-            <p>The schedule covers <strong>{{ $schedule->defaultGroupings->count() }}</strong>
+            <p>The season has <strong>{{ $schedule->defaultGroupings->count() }}</strong>
                {{ \Illuminate\Support\Str::plural('group', $schedule->defaultGroupings->count()) }} of lots:</p>
             <div class="grid-2">
                 @foreach($schedule->defaultGroupings as $group)
@@ -1176,7 +1176,7 @@
                         <th>Lot</th>
                         <th>Size</th>
                         <th>Variety</th>
-                        <th>{{ $schedule->dayType }} 0 anchor</th>
+                        <th>{{ $schedule->dayType }} 0 date</th>
                         <th>Notes</th>
                     </tr>
                 </thead>
@@ -1189,14 +1189,14 @@
                                 @if(!empty($lot->variety))
                                     <strong>{{ $lot->variety }}</strong>
                                 @else
-                                    <span class="muted">—</span>
+                                    <span class="muted">Not set</span>
                                 @endif
                             </td>
                             <td>
                                 @if(isset($lotDayZero[$lot->id]))
                                     {{ $lotDayZero[$lot->id]->format('M j, Y') }}
                                 @else
-                                    <span class="muted">— not set —</span>
+                                    <span class="muted">Not set</span>
                                 @endif
                             </td>
                             <td>{{ $lot->notes }}</td>
@@ -1219,13 +1219,13 @@
             <h2 class="page-break">Workers</h2>
             <p>The crop will be worked by <strong>{{ $workingWorkers->count() }}</strong>
                {{ \Illuminate\Support\Str::plural('worker', $workingWorkers->count()) }}.
-               Per-worker breakdowns appear in their own pages later in this document.</p>
+               Each worker has their own page later in this document.</p>
             <table>
                 <thead>
                     <tr>
                         <th class="center">Priority</th>
                         <th>Name</th>
-                        <th class="num">Half-day rate</th>
+                        <th class="num">Pay per half day</th>
                         <th>Skills</th>
                         <th>Notes</th>
                     </tr>
@@ -1239,7 +1239,7 @@
                             <td class="num">{{ \App\Support\Region::money((float) $w->costPerHalfDay) }}</td>
                             <td>
                                 @if(count($wSkills) === 0)
-                                    <span class="muted">—</span>
+                                    <span class="muted">None</span>
                                 @else
                                     @foreach($wSkills as $k)
                                         @if(isset($skillsCatalog[$k]))
@@ -1279,11 +1279,11 @@
                 @php $tmLegend = \App\Models\AsScheduleIrrigation::taskTypeMeta($slug); @endphp
                 <span><span class="sw" style="background: {{ $tmLegend['color'] }};"></span>{{ $tmLegend['icon'] }} {{ $tmLegend['label'] }}</span>
             @endforeach
-            <span class="muted">Bands span the cycle's calendar dates per group.</span>
+            <span class="muted">Each band shows the irrigation dates for one group.</span>
         </div>
 
         @if(count($calendarMonths) === 0)
-            <p class="muted">Nothing scheduled — the calendar is empty.</p>
+            <p class="muted">Nothing is scheduled yet, so the calendar is empty.</p>
         @else
             @foreach($calendarMonths as $monthCursor)
                 @php
@@ -1339,7 +1339,7 @@
                                                 $span = $band['endCol'] - $band['startCol'] + 1;
                                                 $bandRangeLabel = $band['totalStart']->format('M j');
                                                 if (!$band['totalStart']->equalTo($band['totalEnd'])) {
-                                                    $bandRangeLabel .= '–' . $band['totalEnd']->format('M j');
+                                                    $bandRangeLabel .= ' to ' . $band['totalEnd']->format('M j');
                                                 }
                                             @endphp
                                             <td colspan="{{ $span }}" class="cal-band-cell">
@@ -1376,9 +1376,9 @@
                                             <td colspan="{{ $span }}" class="cal-band-cell">
                                                 <div class="cal-irr-band"
                                                      style="background: {{ $band['color'] }};"
-                                                     title="{{ $band['taskLabel'] ?? 'Irrigate' }} — {{ $band['title'] }} · {{ $band['groupName'] }} · {{ $schedule->dayType }} {{ $band['dasStart'] }}–{{ $band['dasEnd'] }}">
+                                                     title="{{ $band['taskLabel'] ?? 'Irrigate' }}: {{ $band['title'] }} · {{ $band['groupName'] }} · {{ $schedule->dayType }} {{ $band['dasStart'] }} to {{ $band['dasEnd'] }}">
                                                     <span class="drop">{{ $band['taskIcon'] ?? '💧' }}</span>
-                                                    <span class="lbl">{{ $band['title'] }} · {{ $band['groupName'] }} · {{ $band['startDate']->format('M j') }}@if(!$band['startDate']->equalTo($band['endDate']))–{{ $band['endDate']->format('M j') }}@endif ↓</span>
+                                                    <span class="lbl">{{ $band['title'] }} · {{ $band['groupName'] }} · {{ $band['startDate']->format('M j') }}@if(!$band['startDate']->equalTo($band['endDate'])) to {{ $band['endDate']->format('M j') }}@endif ↓</span>
                                                 </div>
                                             </td>
                                             @php $colCursor = $band['endCol'] + 1; @endphp
@@ -1436,10 +1436,10 @@
              but it's already shown at the top of the document (above the
              intro tables) so showing it twice is just noise. Removed. --}}
         <div class="notice">
-            <strong>Weather flexibility.</strong>
-            These activity schedules are <strong>not fixed</strong>. They may be <strong>changed, combined, or cancelled</strong>
-            depending on weather conditions (rain, typhoon, drought), pest pressure, market timing, or any other field condition.
-            Treat the dates below as the planned baseline. Always confirm with the field supervisor before mobilizing for any activity.
+            <strong>The weather can change these plans.</strong>
+            These dates are <strong>not fixed</strong>. Work may be <strong>moved, combined or cancelled</strong>
+            because of the weather (rain, typhoon, drought), pests, market timing or other field conditions.
+            Treat the dates below as the plan. Always check with the field supervisor before starting any activity.
         </div>
 
         @php
@@ -1491,7 +1491,7 @@
         @endphp
 
         @if(count($timeline) === 0)
-            <p class="muted" style="font-style: italic;">No activities defined for this schedule.</p>
+            <p class="muted" style="font-style: italic;">This season has no activities yet.</p>
         @endif
         @foreach($timeline as $item)
             @if($item['type'] === 'rest')
@@ -1513,7 +1513,7 @@
                         <span class="day">{{ $dateCarbon->format('D') }}</span>
                         <span class="date">{{ $dateCarbon->format('F j, Y') }}</span>
                     @else
-                        <span class="date">No date assigned</span>
+                        <span class="date">No date set</span>
                     @endif
                     <span class="count">{{ $bucket->count() }} {{ \Illuminate\Support\Str::plural('activity', $bucket->count()) }}</span>
                 </div>
@@ -1550,7 +1550,7 @@
                                         {{ $iMeta['icon'] }} {{ $iMeta['label'] }}
                                     </span>
                                     <strong class="day-irr-name">{{ $iIrr->irrigationTitle }}</strong>
-                                    <span class="day-irr-prio" style="background: {{ $iPrioColor }}; color: {{ $iPrioTextColor }};">P{{ $iPrio }}</span>
+                                    <span class="day-irr-prio" style="background: {{ $iPrioColor }}; color: {{ $iPrioTextColor }};">Priority {{ $iPrio }}</span>
                                     @if(!empty($iEntry['groupNames']))
                                         <span class="day-irr-group">
                                             {{ implode(', ', $iEntry['groupNames']) }}
@@ -1584,13 +1584,13 @@
                         $startC = $a->targetDate;
                         $isRange = $endC && $startC && $endC->greaterThan($startC);
                         $rangeDays = $isRange ? ($startC->diffInDays($endC) + 1) : 1;
-                        $timeLabel = ['half' => 'Half day', 'whole' => 'Whole day', 'n/a' => 'N/A'][$a->timeRequired] ?? ucfirst($a->timeRequired);
+                        $timeLabel = ['half' => 'Half day', 'whole' => 'Whole day', 'n/a' => 'Not set'][$a->timeRequired] ?? ucfirst($a->timeRequired);
                     @endphp
                     <div class="activity priority-{{ $a->priority }}">
                         <div class="activity-title-row">
                             <span class="activity-title">{{ $a->activityTitle }}</span>
                             @if($isRange)
-                                <span class="activity-range">→ {{ $endC->format('M j') }} ({{ $rangeDays }}d)</span>
+                                <span class="activity-range">→ {{ $endC->format('M j') }} ({{ $rangeDays }} days)</span>
                             @endif
                             @if($a->activityType && isset(\App\Models\AsScheduleActivity::ACTIVITY_TYPES[$a->activityType]))
                                 <span class="type-pill">{{ \App\Models\AsScheduleActivity::ACTIVITY_TYPES[$a->activityType] }}</span>
@@ -1638,7 +1638,7 @@
                         @endif
                         @if($a->items->count())
                             <div class="activity-line">
-                                <span class="label">Materials/Items:</span>
+                                <span class="label">Materials:</span>
                                 <span>
                                     @foreach($a->items as $it)
                                         @php
@@ -1662,14 +1662,14 @@
         @endif {{-- /!laborOnly (hides intro + activities timeline) --}}
 
         {{-- Section 3: Monthly labor (counts only) --}}
-        <h2 class="page-break">Labor Counts per Month</h2>
+        <h2 class="page-break">Work Days per Month</h2>
         <p>
-            The table below shows the <strong>number of calendar days each month</strong> that have any scheduled activity.
-            If multiple workers share the same day, it still counts as one day (not multiplied by the worker count).
-            Per-worker breakdowns and monetary details appear in each worker's individual page.
+            The table shows <strong>how many days each month</strong> have at least one activity.
+            A day counts once, no matter how many workers are on it.
+            Each worker's own page shows their days and their pay.
         </p>
         @if(count($aggregateMonthly) === 0)
-            <p class="muted">No labor commitments scheduled yet.</p>
+            <p class="muted">No work is scheduled yet.</p>
         @else
             <table>
                 <thead>
@@ -1710,7 +1710,7 @@
                     <div class="name">{{ $w->workerName }}</div>
                     <div class="meta">
                         Priority #{{ $w->priority }} ·
-                        {{ \App\Support\Region::money((float) $w->costPerHalfDay) }} per half-day
+                        {{ \App\Support\Region::money((float) $w->costPerHalfDay) }} per half day
                         @if($w->notes)
                             · {{ $w->notes }}
                         @endif
@@ -1739,10 +1739,10 @@
                             <span class="time-badge time-whole">{{ $stats['wholeCount'] }} Whole</span>
                             <span class="time-badge time-half">{{ $stats['halfCount'] }} Half</span>
                             @if($stats['naCount'] > 0)
-                                <span class="time-badge time-na">{{ $stats['naCount'] }} N/A</span>
+                                <span class="time-badge time-na">{{ $stats['naCount'] }} Not set</span>
                             @endif
                         </div>
-                        <div class="sub">{{ $stats['units'] }} half-day units total</div>
+                        <div class="sub">{{ $stats['units'] }} half days in all</div>
                     </div>
                     <div class="worker-stat earnings">
                         <div class="lbl">Total Earnings</div>
@@ -1778,7 +1778,7 @@
                 @if(count($stats['workDays']) > 0)
                     <h3>All Scheduled Work Days</h3>
                     <p style="font-size: 9.5pt; color: #6b7280;">
-                        Dates listed individually — activity titles are intentionally hidden so this page can be handed
+                        Each date is listed on its own. Activity names are left out on purpose, so you can give this page
                         to {{ $w->workerName }} privately.
                     </p>
                     <table>
@@ -1800,7 +1800,7 @@
                                         @elseif($wd['timeRequired'] === 'half')
                                             <span class="time-badge time-half">Half</span>
                                         @else
-                                            <span class="time-badge time-na">N/A</span>
+                                            <span class="time-badge time-na">Not set</span>
                                         @endif
                                     </td>
                                 </tr>
@@ -1815,11 +1815,11 @@
         @if($showIrrigation)
         <h2 class="page-break">Irrigation Schedules</h2>
         @if($schedule->irrigations->count() === 0)
-            <p class="muted">No irrigation schedules defined.</p>
+            <p class="muted">No irrigation yet.</p>
         @else
             <p>
-                Irrigation cycles are defined as <strong>{{ $schedule->dayType }}</strong> ranges relative to each group's
-                Day 0 anchor. The calendar later in this document maps each cycle to its actual calendar dates per group.
+                Each irrigation runs over a <strong>{{ $schedule->dayType }}</strong> range, counted from each group's
+                day zero. The dates for each group are listed under each irrigation.
             </p>
             {{-- Task-type legend so workers know what each color means at a glance --}}
             <div style="display:flex; flex-wrap:wrap; gap:8px; margin: 6px 0 12px;">
@@ -1836,9 +1836,9 @@
                     $irrMeta = \App\Models\AsScheduleIrrigation::taskTypeMeta($irrigation->taskType);
                     $irrIsDateMode = ($irrigation->dayMode === 'date' && $irrigation->startDate && $irrigation->endDate);
                     if ($irrIsDateMode) {
-                        $rangeLabel = $irrigation->startDate->format('M j') . '–' . $irrigation->endDate->format('M j, Y');
+                        $rangeLabel = $irrigation->startDate->format('M j') . ' to ' . $irrigation->endDate->format('M j, Y');
                     } else {
-                        $rangeLabel = $schedule->dayType . ' ' . $irrigation->startDay . '–' . $irrigation->endDay;
+                        $rangeLabel = $schedule->dayType . ' ' . $irrigation->startDay . ' to ' . $irrigation->endDay;
                     }
                 @endphp
                 <div class="irr-row" style="border-left-color: {{ $irrMeta['color'] }};">
@@ -1847,8 +1847,8 @@
                     <span class="das" style="background: {{ ['','#9c1c1c','#d97a4f','#d9a23a','#7a8a99','#c8cdd5'][$irrPrio] ?? '#c8cdd5' }};
                                               color: {{ $irrPrio >= 3 ? '#3a2c0a' : '#fff' }};
                                               font-size: 9pt;"
-                          title="Priority {{ $irrPrio }} — lower number wins overlapping days">
-                        P{{ $irrPrio }}
+                          title="Priority {{ $irrPrio }}. When days overlap, the lower number wins.">
+                        Priority {{ $irrPrio }}
                     </span>
                     <div style="flex: 1; min-width: 0;">
                         <div class="title">
@@ -1883,7 +1883,7 @@
 
                         @if($schedule->defaultGroupings->count() > 0)
                             <div class="irr-coverage">
-                                <div class="cov-head">Calendar Coverage by Group</div>
+                                <div class="cov-head">Dates for Each Group</div>
                                 @foreach($schedule->defaultGroupings as $group)
                                     @php
                                         $groupStart = $group->startDate
@@ -1906,10 +1906,10 @@
                                         </span>
                                         @if($hasDates)
                                             <span class="grp-dates">
-                                                {{ $cycleStart->format('M j, Y') }}@if($cycleDays > 1) → {{ $cycleEnd->format('M j, Y') }} ({{ $cycleDays }}d)@endif
+                                                {{ $cycleStart->format('M j, Y') }}@if($cycleDays > 1) → {{ $cycleEnd->format('M j, Y') }} ({{ $cycleDays }} days)@endif
                                             </span>
                                         @else
-                                            <span class="grp-dates">no group start date — dates unavailable</span>
+                                            <span class="grp-dates">this group has no start date, so no dates yet</span>
                                         @endif
                                     </div>
                                 @endforeach
@@ -1922,7 +1922,7 @@
         @endif {{-- /Section 5 showIrrigation --}}
 
         <footer class="doc-footer">
-            {{ $schedule->title }} — Worker Presentation · Generated {{ $generatedAt->format('M j, Y · g:i A') }} ·
+            {{ $schedule->title }} · Worker Presentation · Generated {{ $generatedAt->format('M j, Y · g:i A') }} ·
             anee.io
         </footer>
     </div> {{-- /second .sheet (activities + labor + per-worker + irrigation + footer) --}}

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'View as Protocol — ' . $schedule->title)
+@section('title', 'View as Protocol: ' . $schedule->title)
 @section('page-title', 'View as Protocol')
 @section('page-subtitle', $schedule->title)
 @section('back', \App\Support\BackTo::url(route('sm.reports', ['id' => $schedule->id]), $schedule->id))
@@ -99,7 +99,7 @@
     </div>
         <div class="card p-4 mb-4 pt-wizard" id="ptWizard">
             <p class="text-sm font-bold text-gray-900">Which lot should it cover?</p>
-            <p class="text-xs text-gray-500 mt-1 mb-3">Only work marked done is listed, step by step by the lot's day count. When a season goes well, keep this page.</p>
+            <p class="text-xs text-gray-500 mt-1 mb-3">Only work marked done is listed, in order of the lot's day count. When a season goes well, keep this page.</p>
             <button type="button" class="crop-tag" id="ptLotBtn">
                 <span class="crop-tag-e">🌾</span>
                 <span class="crop-tag-t is-none" id="ptLotNow">Choose the lot</span>

@@ -20,7 +20,7 @@
         </button>
         <button type="button" id="locRecenter" class="btn btn-white btn-sm" title="Show everyone on the map">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5"/></svg>
-            Fit all
+            Show everyone
         </button>
         <span class="loc-count" id="locCount"></span>
     </div>

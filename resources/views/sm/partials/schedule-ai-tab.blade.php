@@ -34,8 +34,8 @@
         {{-- Sessions sidebar (team-visible) --}}
         <aside class="sai-sessions" id="saiSessions">
             <div class="sai-sessions-head">
-                <span>Sessions</span>
-                <button type="button" id="saiNewSession" class="sai-new" title="Start a new session">
+                <span>Chats</span>
+                <button type="button" id="saiNewSession" class="sai-new" title="Start a new chat">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>
                 </button>
             </div>
@@ -48,7 +48,7 @@
 
         <div class="sai-main">
             <div class="sai-head">
-                <button type="button" id="saiSessToggle" class="sai-sess-toggle" title="Show sessions" aria-label="Show sessions">
+                <button type="button" id="saiSessToggle" class="sai-sess-toggle" title="Show chats" aria-label="Show chats">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
                 {{-- Her name and what she is for, the same sentence the
@@ -56,9 +56,9 @@
                      with the job title: she has a face in the thread below
                      and a name here, and an emoji standing in for both was
                      the leftover of when she had neither. --}}
-                <span class="sai-title">{{ \App\Models\AiSetting::current()->assistantName }}, Your Smart Agritech <span class="sai-sub">· shared with your team</span></span>
+                <span class="sai-title">{{ \App\Models\AiSetting::current()->assistantName }}, Your Smart Agricultural Technician <span class="sai-sub">· shared with your team</span></span>
                 <span class="sai-spacer"></span>
-                <button type="button" id="saiSaveSession" class="sai-save" title="Save this session as a note or on a task" aria-haspopup="dialog">
+                <button type="button" id="saiSaveSession" class="sai-save" title="Save this chat as a note or on a task" aria-haspopup="dialog">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a1 1 0 011-1h9l4 4v10a1 1 0 01-1 1H6a1 1 0 01-1-1V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 4v4h6M8 19v-5h8v5"/></svg>
                     <span class="hidden sm:inline">Save</span>
                 </button>
@@ -102,16 +102,16 @@
                      because these are the two things that quietly move an
                      answer, and a team that cannot see them cannot tell why
                      the same question answered differently twice. --}}
-                <div class="sai-sees" role="group" aria-label="What the technician can see">
+                <div class="sai-sees" role="group" aria-label="What {{ \App\Models\AiSetting::current()->assistantName }} can see">
                     <button type="button" class="sai-see" id="saiUsePlan" aria-pressed="false"
                             title="Send this season's crop, variety and lots with the question">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.4 1.8 1.8-5.4M9 20l11-11a2.83 2.83 0 10-4-4L5 16l4 4z"/></svg>
                         This season's plan
                     </button>
                     <button type="button" class="sai-see is-on" id="saiUseMemory" aria-pressed="true"
-                            title="Let her read the earlier messages in this thread">
+                            title="Let her read the earlier messages in this chat">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                        This thread so far
+                        This chat so far
                     </button>
                     {{-- The owner's pool, which is what this room spends, at
                          the end of the row that decides what it spends. --}}
@@ -155,17 +155,17 @@
 <div class="sheet hidden" id="saiSaveSheet" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Save this session</h3>
+        <h3 class="sheet-title">Save this chat</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-1">
         <button type="button" class="sai-opt" id="saiSaveToNote">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.4-9.4a2 2 0 112.8 2.8L11 15l-4 1 1-4 8.6-8.4z"/></svg></span>
-            <span>Save as a new note<span class="sub">Save the full session to the notebook</span></span>
+            <span>Save as a new note<span class="sub">Save the full chat to the notebook</span></span>
         </button>
         <button type="button" class="sai-opt" id="saiSaveToTask">
             <span class="ic"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></span>
-            <span>Attach to a task<span class="sub">Save this session to a task in the notebook</span></span>
+            <span>Attach to a task<span class="sub">Save this chat to a task in the notebook</span></span>
         </button>
     </div>
 </div>
@@ -174,7 +174,7 @@
 <div class="sheet hidden" id="saiNoteSheet" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title" id="saiNoteHeading">Save this session as a note</h3>
+        <h3 class="sheet-title" id="saiNoteHeading">Save this chat as a note</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-3">
@@ -184,9 +184,9 @@
         </div>
         <div>
             <label class="form-label" for="saiNoteDesc">Description <span class="text-gray-400 font-normal">(optional)</span></label>
-            <textarea id="saiNoteDesc" class="form-textarea" rows="3" maxlength="2000" placeholder="Why keep this session?"></textarea>
+            <textarea id="saiNoteDesc" class="form-textarea" rows="3" maxlength="2000" placeholder="Why keep this chat?"></textarea>
         </div>
-        <p class="text-xs text-gray-400">The full session is saved with it.</p>
+        <p class="text-xs text-gray-400">The full chat is saved with it.</p>
         <button type="button" id="saiNoteSave" class="btn btn-primary w-full">Save to the notebook</button>
     </div>
 </div>
@@ -501,7 +501,7 @@
                 toast(on ? 'Anee will read your season, ' + @json($schedule->title) + ', with your question. This uses more credits.'
                          : 'She will answer without the plan.');
             } else {
-                toast(on ? 'She will read the rest of this thread.'
+                toast(on ? 'She will read the rest of this chat.'
                          : 'She will answer this question on its own.');
             }
         }
@@ -531,7 +531,7 @@
                 ${AI_FACE}
                 <h4>Hi team, I'm ${AI_NAME}</h4>
                 ${AI_HELLO}
-                <p>Your whole team sees the questions and answers. You can save a session to your notes.</p>
+                <p>Your whole team sees the questions and answers. You can save a chat to your notes.</p>
                 <div class="sai-howto" onclick="this.classList.toggle('is-open')" role="button" tabindex="0" aria-label="How to ask. Tap to open.">
                     <p class="sai-howto-h" style="display:flex;align-items:center;gap:.35rem">The more you tell me, the better I answer
                         <svg class="sai-howto-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
@@ -601,7 +601,7 @@
         /* ---------- sessions sidebar ---------- */
         function renderSessions() {
             const list = $('saiSessionsList');
-            if (!sessions.length) { list.innerHTML = '<div class="sai-sessions-empty">No sessions yet.</div>'; return; }
+            if (!sessions.length) { list.innerHTML = '<div class="sai-sessions-empty">No chats yet.</div>'; return; }
             list.innerHTML = '';
             sessions.forEach((s) => {
                 const b = document.createElement('button');
@@ -645,14 +645,14 @@
                 if (!msgs.length) showIntro(); else msgs.forEach((m) => addMsg(m, true));
                 if (res.data.maxId > lastId) lastId = res.data.maxId;
                 setBalance(res.data.balance);
-            } catch (_) { const l = $('saiLoading'); if (l) l.outerHTML = '<div class="sai-loading" id="saiLoading">Could not load.</div>'; }
+            } catch (_) { const l = $('saiLoading'); if (l) l.outerHTML = '<div class="sai-loading" id="saiLoading">Could not load the chat. Please try again.</div>'; }
         }
 
         async function newSession() {
             try {
                 const r = await api(`${U.sessionCreate}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: {} });
                 if (r.data && r.data.session) { upsertSession(r.data.session); await openSession(r.data.session.id); closeSidebarMobile(); }
-            } catch (err) { if (window.toast) toast(err.message || 'Could not start a session.', 'error'); }
+            } catch (err) { if (window.toast) toast(err.message || 'Could not start a new chat.', 'error'); }
         }
 
         /* Keeping a session: which door first, then its name. Nothing lands in
@@ -663,7 +663,7 @@
             if (!currentSession) { window.toast?.('Nothing to save yet. Ask a question first.', 'error'); return; }
             pendingTaskId = activityId || null;
             const head = $('saiNoteHeading');
-            if (head) head.textContent = pendingTaskId ? 'Attach this session to the task' : 'Save this session as a note';
+            if (head) head.textContent = pendingTaskId ? 'Attach this chat to the task' : 'Save this chat as a note';
             $('saiNoteTitle').value = '';
             $('saiNoteDesc').value = '';
             window.openSheet?.('saiNoteSheet');
@@ -689,8 +689,8 @@
                     description: $('saiNoteDesc').value.trim(),
                 } });
                 window.closeSheet?.('saiNoteSheet');
-                if (window.toast) toast((r && r.message) || 'Saved to the schedule notebook.', 'success');
-            } catch (err) { if (window.toast) toast(err.message || 'Could not save this session.', 'error'); }
+                if (window.toast) toast((r && r.message) || 'Saved to the season notebook.', 'success');
+            } catch (err) { if (window.toast) toast(err.message || 'Could not save this chat.', 'error'); }
             finally { btn.disabled = false; btn.textContent = was; }
         }
 
@@ -737,7 +737,7 @@
                 refreshSessionsSoon();
             } catch (err) {
                 clearThinking();
-                addMsg({ role: 'assistant', content: err.message || 'The AI could not answer.' });
+                addMsg({ role: 'assistant', content: err.message || 'Anee could not answer. Please try again.' });
                 if (err.data && err.data.outOfCredits) setBalance(err.data.balance);
                 if (err.stillWorking) { window.aneeDropChips(heldChips); }
                 else {
@@ -758,7 +758,7 @@
         function onAnswer(m) {
             if (m.sessionId && m.sessionId !== currentSession) { refreshSessionsSoon(); return; }
             clearThinking();
-            if (m.error) { addMsg({ role: 'assistant', content: m.content || 'The AI could not answer.' }); return; }
+            if (m.error) { addMsg({ role: 'assistant', content: m.content || 'Anee could not answer. Please try again.' }); return; }
             addMsg(m); setBalance(m.balance);
         }
         function onSession(payload) {
@@ -845,7 +845,7 @@
                         title: a.title,
                         description: a.description,
                     } });
-                    window.toast?.((r && r.message) || 'Saved to the schedule notebook.');
+                    window.toast?.((r && r.message) || 'Saved to the season notebook.');
                 },
             });
         });

@@ -429,7 +429,7 @@
             }
             $id('grxBalance').innerHTML = ' You have ' + creditCoin(d.unlimited ? '∞' : Number(d.balance).toLocaleString()) + '.';
             if (d.blocked) { $id('grxBlocked').textContent = d.blocked; $id('grxBlocked').hidden = false; return; }
-            if (!d.aiUsable) { $id('grxBlocked').textContent = 'The AI Technician is not available right now.'; $id('grxBlocked').hidden = false; return; }
+            if (!d.aiUsable) { $id('grxBlocked').textContent = 'Anee is not available right now.'; $id('grxBlocked').hidden = false; return; }
             if (!d.unlimited && Number(d.balance) < Number(d.price)) {
                 $id('grxBlocked').innerHTML = `You need ${esc(String(d.price))} credits for this and have ${esc(String(d.balance))}. <a href="${@json(route('sm.ai', ['id' => $schedule->id]))}" class="underline font-bold">Top up</a>.`;
                 $id('grxBlocked').hidden = false;

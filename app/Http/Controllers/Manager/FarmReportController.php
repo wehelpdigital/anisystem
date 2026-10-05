@@ -39,7 +39,7 @@ class FarmReportController extends BaseScheduleController
 
         // Writing to the shelf is edit work; a view-level worker reads it.
         if (! \App\Support\WorkerContext::canWriteModule('reports')) {
-            return $this->jsonFail('Generating and saving reports is for the owner, or a worker with edit access to Reports.', 403);
+            return $this->jsonFail('Only the owner, or a worker allowed to edit Reports, can make and save reports.', 403);
         }
 
         $v = Validator::make($request->all(), [
@@ -52,7 +52,7 @@ class FarmReportController extends BaseScheduleController
             'report' => 'nullable|array',
         ]);
         if ($v->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $v->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $v->errors()]);
         }
 
         $row = AsFarmReport::create([
@@ -67,7 +67,7 @@ class FarmReportController extends BaseScheduleController
             'deleteStatus' => 1,
         ]);
 
-        return $this->jsonOk('Report saved to the shelf.', ['data' => ['id' => $row->id]]);
+        return $this->jsonOk('Report saved.', ['data' => ['id' => $row->id]]);
     }
 
     /** What an attached report adds to a question — the composer's estimate. */
@@ -261,7 +261,7 @@ class FarmReportController extends BaseScheduleController
                     if ($labor > 0) {
                         $push([
                             'on' => $on, 'done' => $done, 'lotIds' => $aLots, 'cat' => 'labor',
-                            'label' => 'Labor — ' . $a->activityTitle,
+                            'label' => 'Labor: ' . $a->activityTitle,
                             'meta' => $a->workers->count() . ' ' . ($a->workers->count() === 1 ? 'worker' : 'workers')
                                 . ' · ' . ($a->timeRequired === 'whole' ? 'whole day' : 'half day')
                                 . ($rangeDays > 1 ? ' × ' . $rangeDays . ' days' : ''),
@@ -308,7 +308,7 @@ class FarmReportController extends BaseScheduleController
             $push([
                 'on' => $m->happenedOn ? substr((string) $m->happenedOn, 0, 10) : null,
                 'done' => null, 'lotIds' => [], 'cat' => 'purchase',
-                'label' => ($m->reason === AsInventoryMove::OPEN ? 'Opening stock — ' : 'Stock bought — ') . ($item?->name ?? 'item #' . $m->itemId),
+                'label' => ($m->reason === AsInventoryMove::OPEN ? 'Opening stock: ' : 'Stock bought: ') . ($item?->name ?? 'item #' . $m->itemId),
                 'meta' => ($item ? $item->say((float) $m->delta) : rtrim(rtrim(number_format((float) $m->delta, 3), '0'), '.'))
                     . ' at ' . \App\Support\Region::symbol() . number_format($price, 2) . ' each',
                 'amount' => $amount,
@@ -407,16 +407,16 @@ class FarmReportController extends BaseScheduleController
         $blockers = [];
         $warnings = [];
         if ($yieldRows->isEmpty()) {
-            $blockers[] = 'No yield has been recorded in Observations yet — a profit report needs the harvest side. Add a Yield observation with the amount (and its selling price) first.';
+            $blockers[] = 'No harvest is recorded in Observations yet, and a profit report needs it. First add a Yield observation with the amount and its selling price.';
         }
         if ($undone->count() > 0) {
             $warnings[] = $undone->count() . ' ' . ($undone->count() === 1 ? 'activity is' : 'activities are')
-                . ' not ticked done — their planned costs are still counted, so the figures read as the full plan, not only what happened.';
+                . ' not ticked done. Their planned costs are still counted, so the numbers show the full plan, not only what was done.';
         }
         $unpriced = $yieldRows->filter(fn ($h) => $h->pricePerUnit === null || (float) $h->pricePerUnit <= 0);
         if ($unpriced->count() > 0) {
             $warnings[] = $unpriced->count() . ' yield ' . ($unpriced->count() === 1 ? 'row has' : 'rows have')
-                . ' no selling price — that harvest counts ' . \App\Support\Region::symbol() . '0 revenue until a price is put on it.';
+                . ' no selling price. That harvest counts as ' . \App\Support\Region::symbol() . '0 income until you add a price.';
         }
 
         /* ---- crop-day sanity, per lot: how long the crop actually ran
@@ -432,10 +432,10 @@ class FarmReportController extends BaseScheduleController
             if ($ran <= 0) continue;
             if ($ran > $expected + 15) {
                 $warnings[] = $lot->lotName . ': the crop ran about ' . $ran . ' days against a typical ' . $expected
-                    . ' to maturity — delays (weather, replanting, late harvest) stretch costs, worth a look.';
+                    . ' to maturity. Delays (weather, replanting, late harvest) add to costs, so it is worth a look.';
             } elseif ($schedule->isLocked() && $ran < max(1, $expected - 15)) {
                 $warnings[] = $lot->lotName . ': the season closed at about ' . $ran . ' days against a typical '
-                    . $expected . ' to maturity — an early cut usually means yield was left in the field.';
+                    . $expected . ' to maturity. Harvesting early usually means some harvest was left in the field.';
             }
         }
 
@@ -621,21 +621,21 @@ class FarmReportController extends BaseScheduleController
             ->where('deleteStatus', 1)->count();
 
         if ($schedule->activities->isEmpty()) {
-            $blockers[] = 'The season has no activities yet — there is nothing to analyze.';
+            $blockers[] = 'The season has no activities yet, so there is nothing to look at.';
         }
         if ($kind === 'season') {
             if (! $schedule->isLocked()) {
-                $blockers[] = 'The season is not marked completed yet. Finish it in the Hub first — a season read is a look BACK.';
+                $blockers[] = 'The season is not closed yet. Close it in the Hub first, because this report looks back at a finished season.';
             }
             if ($undone > 0) {
-                $blockers[] = $undone . ' ' . ($undone === 1 ? 'activity is' : 'activities are') . ' not ticked done. Tick what happened (or delete what did not) so the read is honest.';
+                $blockers[] = $undone . ' ' . ($undone === 1 ? 'activity is' : 'activities are') . ' not ticked done. Tick what was done (or delete what was not) so the report is true.';
             }
             if ($harvestCount === 0) {
-                $blockers[] = 'No observations yet. Add at least the yield in Observations — the harvest is half the story.';
+                $blockers[] = 'No observations yet. Add at least the yield in Observations, because the harvest is half the story.';
             }
         } else {
             if ($undone === 0 && $schedule->activities->isNotEmpty()) {
-                $warnings[] = 'Everything is ticked done — the full Season Report may serve you better than a mid-season look.';
+                $warnings[] = 'Everything is ticked done. The full Season Report may help you more than a look at the season so far.';
             }
         }
 
@@ -734,7 +734,7 @@ class FarmReportController extends BaseScheduleController
             $report = $result['data'];
             if ($report === null) {
                 Log::warning('anee-report: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
-                throw new \RuntimeException($result['error'] ?? 'The report came back unreadable. Nothing was charged — please try again.');
+                throw new \RuntimeException($result['error'] ?? 'The report could not be read. Nothing was charged. Please try again.');
             }
 
             $row = AsFarmReport::find($id);
@@ -753,7 +753,7 @@ class FarmReportController extends BaseScheduleController
             }
             $note = AiUsage::record($row->kind === 'sofar' ? 'sofar' : 'season', (int) $row->userId, $payerId, $id, $settings, $result, (int) $price);
             $credits->chargeAllowingNegative($payerId, (float) $price,
-                mb_substr(($row->kind === 'sofar' ? 'Analyze So Far report' : 'Anee Season Report') . ' — ' . mb_substr((string) $row->title, 0, 120) . $note, 0, 250));
+                mb_substr(($row->kind === 'sofar' ? 'Analyze So Far report' : 'Anee Season Report') . ': ' . mb_substr((string) $row->title, 0, 120) . $note, 0, 250));
 
             $row->update([
                 'report' => $report,
@@ -988,7 +988,7 @@ class FarmReportController extends BaseScheduleController
             'schedule' => $schedule->title,
         ];
 
-        $title = 'Protocol — ' . $lot->lotName
+        $title = 'Protocol: ' . $lot->lotName
             . ($lot->variety ? ' (' . $lot->variety . ')' : ($report['crop'] ? ' (' . $report['crop'] . ')' : ''))
             . ' · ' . $schedule->title;
         $row = AsFarmReport::create([
@@ -1003,7 +1003,7 @@ class FarmReportController extends BaseScheduleController
             'deleteStatus' => 1,
         ]);
 
-        return $this->jsonOk('Protocol written and saved to the shelf.', ['data' => [
+        return $this->jsonOk('Protocol written and saved with your reports.', ['data' => [
             'id' => $row->id, 'title' => $row->title, 'report' => $report, 'kind' => 'protocol',
         ]]);
     }
@@ -1011,11 +1011,11 @@ class FarmReportController extends BaseScheduleController
     private function protocolBodyText(string $title, array $r): string
     {
         $L = [];
-        $L[] = 'FARM PROTOCOL — ' . $title;
+        $L[] = 'FARM PROTOCOL: ' . $title;
         $L[] = str_repeat('=', 50);
         $L[] = trim(($r['crop'] ?? '') . (($r['variety'] ?? null) ? ' · ' . $r['variety'] : '')
             . (($r['size'] ?? null) ? ' · ' . $r['size'] : ''));
-        $L[] = 'Day system: ' . $r['daySystem'] . (($r['zeroDate'] ?? null) ? ' (day zero: ' . $r['zeroDate'] . ')' : '');
+        $L[] = 'Day count: ' . $r['daySystem'] . (($r['zeroDate'] ?? null) ? ' (day zero: ' . $r['zeroDate'] . ')' : '');
         if ($r['yields']) {
             $L[] = 'PRODUCED: ' . implode('; ', $r['yields']);
         }
@@ -1023,12 +1023,12 @@ class FarmReportController extends BaseScheduleController
         $L[] = 'THE STEPS';
         $L[] = str_repeat('-', 50);
         foreach ($r['steps'] as $s2) {
-            $head = ($s2['dayLabel'] ?? ($s2['date'] ?? 'undated')) . ' — ' . $s2['title'];
+            $head = ($s2['dayLabel'] ?? ($s2['date'] ?? 'no date')) . ': ' . $s2['title'];
             $bits = [];
             if ($s2['date']) $bits[] = $s2['date'] . ($s2['endDate'] ? '→' . $s2['endDate'] : '');
             if ($s2['time']) $bits[] = $s2['time'];
             if ($s2['crew']) $bits[] = $s2['crew'] . ' worker' . ($s2['crew'] === 1 ? '' : 's');
-            if ($s2['wholeFarm']) $bits[] = 'whole-farm task';
+            if ($s2['wholeFarm']) $bits[] = 'whole farm task';
             $L[] = $head . ($bits ? ' (' . implode(', ', $bits) . ')' : '');
             foreach ($s2['materials'] as $m) {
                 $L[] = '    • ' . $m;
@@ -1036,7 +1036,7 @@ class FarmReportController extends BaseScheduleController
         }
         if (($r['skippedPlanned'] ?? 0) > 0) {
             $L[] = '';
-            $L[] = 'Note: ' . $r['skippedPlanned'] . ' planned but never-ticked activities are left out — this is what was actually done.';
+            $L[] = 'Note: ' . $r['skippedPlanned'] . ' planned activities that were never ticked are left out. This is what was really done.';
         }
 
         return implode("\n", $L);
@@ -1807,7 +1807,7 @@ class FarmReportController extends BaseScheduleController
     private function aneeBodyText(string $kind, string $title, array $r): string
     {
         $L = [];
-        $L[] = strtoupper($kind === 'sofar' ? 'ANALYZE SO FAR' : 'ANEE SEASON REPORT') . ' — ' . $title;
+        $L[] = strtoupper($kind === 'sofar' ? 'ANALYZE SO FAR' : 'ANEE SEASON REPORT') . ': ' . $title;
         $L[] = str_repeat('=', 50);
         $L[] = $r['headline'] ?? '';
         $L[] = $r['verdict'] ?? '';
@@ -1817,7 +1817,7 @@ class FarmReportController extends BaseScheduleController
                 $L[] = 'Scores: ' . collect($sc)->map(fn ($v, $k) => $k . ' ' . $v . '/100')->implode(', ');
             }
             foreach ((array) ($r['scoreWhy'] ?? []) as $k => $why) {
-                if (is_string($why) && $why !== '') $L[] = ' - ' . $k . ': ' . $why;
+                if (is_string($why) && $why !== '') $L[] = ' • ' . $k . ': ' . $why;
             }
             // The figures the graphs draw, so a reader of the words has them too.
             $F = (array) ($r['facts'] ?? []);
@@ -1831,7 +1831,7 @@ class FarmReportController extends BaseScheduleController
                     . ($M['margin'] !== null ? ' (margin ' . $M['margin'] . '%)' : '') . '.';
                 if (! empty($F['harvest'])) $L[] = 'Harvest: ' . implode(', ', $F['harvest']) . '.';
                 foreach ((array) ($F['lots'] ?? []) as $l) {
-                    $L[] = ' - ' . $l['name'] . ': earned ' . $sym . number_format((float) $l['revenue'], 2) . ', spent ' . $sym . number_format((float) $l['cost'], 2)
+                    $L[] = ' • ' . $l['name'] . ': earned ' . $sym . number_format((float) $l['revenue'], 2) . ', spent ' . $sym . number_format((float) $l['cost'], 2)
                         . ($l['yield'] ? ', harvest ' . implode(', ', $l['yield']) : '')
                         . ($l['perHa'] !== null ? ' (' . $l['perHa'] . ' ' . $l['unit'] . ' per hectare)' : '')
                         . ($l['daysRan'] ? ', ' . $l['daysRan'] . ' days to harvest' . ($l['maturity'] ? ' against a typical ' . $l['maturity'] : '') : '') . '.';
@@ -1848,37 +1848,37 @@ class FarmReportController extends BaseScheduleController
             if (! empty($r['moments'])) {
                 $L[] = '';
                 $L[] = 'THE SEASON IN MOMENTS';
-                foreach ((array) $r['moments'] as $m) { $L[] = ' - ' . ($m['when'] ?? '') . ': ' . ($m['what'] ?? '') . (! empty($m['mood']) ? ' [' . $m['mood'] . ']' : ''); }
+                foreach ((array) $r['moments'] as $m) { $L[] = ' • ' . ($m['when'] ?? '') . ': ' . ($m['what'] ?? '') . (! empty($m['mood']) ? ' [' . $m['mood'] . ']' : ''); }
             }
             if (! empty($r['savings'])) {
                 $L[] = '';
                 $L[] = 'WHERE YOU CAN SAVE';
-                foreach ((array) $r['savings'] as $x) { $L[] = ' - ' . ($x['what'] ?? '') . ': ' . ($x['idea'] ?? '') . (! empty($x['save']) ? ' (' . $x['save'] . ')' : ''); }
+                foreach ((array) $r['savings'] as $x) { $L[] = ' • ' . ($x['what'] ?? '') . ': ' . ($x['idea'] ?? '') . (! empty($x['save']) ? ' (' . $x['save'] . ')' : ''); }
             }
             foreach ([['strengths', 'WHAT WENT WELL'], ['wentWrong', 'WHAT WENT WRONG'], ['improvements', 'WHAT TO IMPROVE'], ['lacking', 'WHAT WAS LACKING'], ['nextSeason', 'NEXT SEASON CHECKLIST']] as [$k, $h]) {
                 if (! empty($r[$k])) {
                     $L[] = '';
                     $L[] = $h;
-                    foreach ((array) $r[$k] as $x) { $L[] = ' - ' . (is_string($x) ? $x : json_encode($x)); }
+                    foreach ((array) $r[$k] as $x) { $L[] = ' • ' . (is_string($x) ? $x : json_encode($x)); }
                 }
             }
             if (! empty($r['protocolChanges'])) {
                 $L[] = '';
                 $L[] = 'PROTOCOL CHANGES';
                 foreach ((array) $r['protocolChanges'] as $p) {
-                    $L[] = ' - ' . ($p['change'] ?? '') . ' — instead of "' . ($p['current'] ?? '') . '", do "' . ($p['suggested'] ?? '') . '" at ' . ($p['timing'] ?? '') . '. Why: ' . ($p['why'] ?? '');
+                    $L[] = ' • ' . ($p['change'] ?? '') . ': instead of "' . ($p['current'] ?? '') . '", do "' . ($p['suggested'] ?? '') . '" at ' . ($p['timing'] ?? '') . '. Why: ' . ($p['why'] ?? '');
                 }
             }
             foreach ([['weatherStory', 'THE WEATHER'], ['delays', 'DELAYS'], ['comparison', 'AGAINST PAST SEASONS'], ['encouragement', 'A WORD FROM ANEE']] as [$k, $h]) {
                 if (! empty($r[$k])) { $L[] = ''; $L[] = $h; $L[] = $r[$k]; }
             }
         } else {
-            $L[] = 'Standing: ' . strtoupper((string) ($r['standing'] ?? '')) . (isset($r['score']) ? ' — ' . (int) $r['score'] . '/100' : '');
+            $L[] = 'Standing: ' . strtoupper((string) ($r['standing'] ?? '')) . (isset($r['score']) ? ', ' . (int) $r['score'] . '/100' : '');
             if (! empty($r['scores']) && is_array($r['scores'])) {
                 $L[] = 'Scores: ' . implode(', ', array_map(fn ($k, $v) => $k . ' ' . (int) $v, array_keys($r['scores']), $r['scores']));
             }
             foreach ((array) ($r['scoreWhy'] ?? []) as $k => $why) {
-                if (is_string($why) && $why !== '') $L[] = ' - ' . $k . ': ' . $why;
+                if (is_string($why) && $why !== '') $L[] = ' • ' . $k . ': ' . $why;
             }
             // The figures the graphs draw (facts v2), so the words carry them too.
             $F = (array) ($r['facts'] ?? []);
@@ -1887,7 +1887,7 @@ class FarmReportController extends BaseScheduleController
                 $L[] = '';
                 $L[] = 'THE NUMBERS (as of ' . ($F['asOf'] ?? '') . ')';
                 foreach ((array) ($F['lots'] ?? []) as $l) {
-                    $L[] = ' - ' . $l['name'] . ': ' . ($l['day'] !== null ? $l['counter'] . ' ' . $l['day'] : 'no day zero')
+                    $L[] = ' • ' . $l['name'] . ': ' . ($l['day'] !== null ? $l['counter'] . ' ' . $l['day'] : 'no day zero')
                         . ($l['stage'] ? ', ' . $l['stage'] : '')
                         . (! empty($l['next']) ? ', next ' . $l['next']['label'] . ' in ' . $l['next']['inDays'] . ' days' : '')
                         . ($l['harvestOn'] ? ', harvest about ' . $l['harvestOn'] : '') . '.';
@@ -1897,13 +1897,13 @@ class FarmReportController extends BaseScheduleController
                     $L[] = 'Spent so far ' . $sym . number_format((float) $M['cost'], 2) . ', still to spend ' . $sym . number_format((float) ($M['planned'] ?? 0), 2)
                         . ', the whole plan ' . $sym . number_format((float) ($M['plan'] ?? 0), 2) . '.';
                 }
-                foreach ((array) ($F['overdue'] ?? []) as $o) { $L[] = ' - Overdue: ' . $o['title'] . ' (due ' . $o['date'] . ', ' . $o['late'] . ' days late)'; }
-                foreach ((array) ($F['coming'] ?? []) as $o) { $L[] = ' - Coming: ' . $o['title'] . ' (' . $o['date'] . ')'; }
+                foreach ((array) ($F['overdue'] ?? []) as $o) { $L[] = ' • Overdue: ' . $o['title'] . ' (due ' . $o['date'] . ', ' . $o['late'] . ' days late)'; }
+                foreach ((array) ($F['coming'] ?? []) as $o) { $L[] = ' • Coming: ' . $o['title'] . ' (' . $o['date'] . ')'; }
             }
             if (! empty($r['cropNow'])) {
                 $L[] = '';
                 $L[] = 'WHAT THE CROP NEEDS NOW';
-                foreach ((array) $r['cropNow'] as $x) { $L[] = ' - ' . ($x['lot'] ?? '') . ': ' . ($x['needs'] ?? '') . (! empty($x['watch']) ? ' Watch for: ' . $x['watch'] : ''); }
+                foreach ((array) $r['cropNow'] as $x) { $L[] = ' • ' . ($x['lot'] ?? '') . ': ' . ($x['needs'] ?? '') . (! empty($x['watch']) ? ' Watch for: ' . $x['watch'] : ''); }
             }
             if (! empty($r['harvestOutlook']) && is_array($r['harvestOutlook'])) {
                 $H = $r['harvestOutlook'];
@@ -1916,19 +1916,19 @@ class FarmReportController extends BaseScheduleController
             if (! empty($r['good'])) {
                 $L[] = '';
                 $L[] = "WHAT'S GOOD";
-                foreach ((array) $r['good'] as $x) { $L[] = ' - ' . ($x['point'] ?? '') . ' — ' . ($x['why'] ?? ''); }
+                foreach ((array) $r['good'] as $x) { $L[] = ' • ' . ($x['point'] ?? '') . ': ' . ($x['why'] ?? ''); }
             }
             if (! empty($r['bad'])) {
                 $L[] = '';
                 $L[] = 'WHAT NEEDS WORK';
-                foreach ((array) $r['bad'] as $x) { $L[] = ' - ' . ($x['point'] ?? '') . ' — ' . ($x['why'] ?? '') . (isset($x['fix']) ? ' Fix: ' . $x['fix'] : ''); }
+                foreach ((array) $r['bad'] as $x) { $L[] = ' • ' . ($x['point'] ?? '') . ': ' . ($x['why'] ?? '') . (isset($x['fix']) ? ' Fix: ' . $x['fix'] : ''); }
             }
             if (! empty($r['protocol']) && is_array($r['protocol'])) {
                 $L[] = '';
                 $L[] = 'THE PROTOCOL SO FAR';
                 if (! empty($r['protocol']['summary'])) $L[] = $r['protocol']['summary'];
-                foreach ((array) ($r['protocol']['followed'] ?? []) as $x) { $L[] = ' + ' . $x; }
-                foreach ((array) ($r['protocol']['missed'] ?? []) as $x) { $L[] = ' - ' . $x; }
+                foreach ((array) ($r['protocol']['followed'] ?? []) as $x) { $L[] = ' ✓ ' . $x; }
+                foreach ((array) ($r['protocol']['missed'] ?? []) as $x) { $L[] = ' ✗ ' . $x; }
                 if (! empty($r['protocol']['drift'])) $L[] = $r['protocol']['drift'];
             }
             foreach ([['timing', 'TIMING'], ['weather', 'THE WEATHER'], ['money', 'THE MONEY']] as [$k, $h]) {
@@ -1937,24 +1937,24 @@ class FarmReportController extends BaseScheduleController
                     $L[] = $h;
                     foreach (['summary', 'stage', 'outlook', 'verdict'] as $f) { if (! empty($r[$k][$f])) $L[] = ($f === 'summary' ? '' : ucfirst($f) . ': ') . $r[$k][$f]; }
                     if (isset($r[$k]['daysBehind']) && $r[$k]['daysBehind'] !== null) $L[] = 'Days behind: ' . (int) $r[$k]['daysBehind'];
-                    foreach ((array) ($r[$k]['risks'] ?? []) as $x) { $L[] = ' - ' . $x; }
+                    foreach ((array) ($r[$k]['risks'] ?? []) as $x) { $L[] = ' • ' . $x; }
                 }
             }
             if (! empty($r['risks'])) {
                 $L[] = '';
                 $L[] = 'RISKS';
-                foreach ((array) $r['risks'] as $x) { $L[] = ' - [' . ($x['severity'] ?? '') . '] ' . ($x['risk'] ?? '') . ' — ' . ($x['why'] ?? ''); }
+                foreach ((array) $r['risks'] as $x) { $L[] = ' • [' . ($x['severity'] ?? '') . '] ' . ($x['risk'] ?? '') . ': ' . ($x['why'] ?? ''); }
             }
             if (! empty($r['whatsNext'])) {
                 $L[] = '';
                 $L[] = "WHAT'S NEXT";
-                foreach ((array) $r['whatsNext'] as $x) { $L[] = ' - (' . ($x['urgency'] ?? '') . ') ' . ($x['action'] ?? '') . ' — ' . ($x['when'] ?? '') . '. ' . ($x['why'] ?? ''); }
+                foreach ((array) $r['whatsNext'] as $x) { $L[] = ' • (' . ($x['urgency'] ?? '') . ') ' . ($x['action'] ?? '') . ', ' . ($x['when'] ?? '') . '. ' . ($x['why'] ?? ''); }
             }
             foreach ([['lacking', 'WHAT THE RECORDS LACK'], ['weatherStory', 'THE WEATHER AHEAD'], ['encouragement', 'A WORD FROM ANEE']] as [$k, $h]) {
                 if (! empty($r[$k])) {
                     $L[] = '';
                     $L[] = $h;
-                    if (is_array($r[$k])) { foreach ($r[$k] as $x) { $L[] = ' - ' . $x; } }
+                    if (is_array($r[$k])) { foreach ($r[$k] as $x) { $L[] = ' • ' . $x; } }
                     else { $L[] = $r[$k]; }
                 }
             }
@@ -1992,7 +1992,7 @@ class FarmReportController extends BaseScheduleController
     private function guardReports($schedule): void
     {
         if (! \App\Support\Tier::scheduleCan($schedule, 'reportsAll')) {
-            \App\Support\Tier::scheduleDenyFor($schedule, 'reportsAll', 'The full report shelf comes with {plan} — every plan includes the Labor report.');
+            \App\Support\Tier::scheduleDenyFor($schedule, 'reportsAll', 'All the reports come with {plan}. Every plan includes the Labor report.');
         }
     }
 }

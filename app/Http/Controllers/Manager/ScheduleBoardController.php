@@ -39,7 +39,7 @@ class ScheduleBoardController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         $result = BoardSession::open($schedule->id, $meId);
@@ -70,7 +70,7 @@ class ScheduleBoardController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         ScheduleBoardPresence::touch_($schedule->id, $meId);
@@ -84,7 +84,7 @@ class ScheduleBoardController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         $drafts = ScheduleBoardDraft::active()
@@ -119,13 +119,13 @@ class ScheduleBoardController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
         // Not push()'s gate after all: reopening rebinds the whole board to a
         // note, and the autosave then FILES into it — a view-only worker would
         // be writing the schedule's records through everyone else's session.
         if (! \App\Support\WorkerContext::canAddNotes()) {
-            return $this->jsonFail('You are not allowed to reopen saved drawings on this schedule.', 403);
+            return $this->jsonFail('You are not allowed to reopen saved drawings in this season.', 403);
         }
 
         $draft = ScheduleBoardDraft::active()
@@ -206,7 +206,7 @@ class ScheduleBoardController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         $page = max(1, (int) $request->query('page', 1));
@@ -258,7 +258,7 @@ class ScheduleBoardController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         return response()->json(['success' => true, 'data' => ['pages' => $this->pageList($schedule->id)]]);
@@ -270,7 +270,7 @@ class ScheduleBoardController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         $this->pageList($schedule->id); // ensure page 1 exists first
@@ -296,7 +296,7 @@ class ScheduleBoardController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         $page = max(1, (int) $request->input('page', 1));
@@ -332,7 +332,7 @@ class ScheduleBoardController extends BaseScheduleController
             'uid' => 'nullable|string|max:40',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Invalid stroke.', 422);
+            return $this->jsonFail('That line could not be drawn. Please try again.', 422);
         }
 
         // Points are normalized 0..1 floats; keep 4 decimals (sub-pixel on a 4K
@@ -431,7 +431,7 @@ class ScheduleBoardController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         $page = max(1, (int) $request->input('page', 1));
@@ -444,7 +444,7 @@ class ScheduleBoardController extends BaseScheduleController
             $id = (int) $request->input('id');
             $event = $mine()->where('id', $id)->where('deleteStatus', 0)->first();
             if (! $event) {
-                return $this->jsonFail('That stroke cannot come back.', 404);
+                return $this->jsonFail('That line cannot be brought back.', 404);
             }
             // A clear since then wiped the page for everyone; bringing one
             // stroke back through it would be a ghost only I can explain.
@@ -504,14 +504,14 @@ class ScheduleBoardController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         // This one leaves the room: it writes a real note into the schedule's
         // notebook, which is the thing the note endpoints gate. Membership
         // says you may draw on the board, not that you may file the drawing.
         if (! \App\Support\WorkerContext::canAddNotes()) {
-            return $this->jsonFail('You are not allowed to write notes on this schedule.', 403);
+            return $this->jsonFail('You are not allowed to write notes in this season.', 403);
         }
 
         $auto = $request->boolean('auto');
@@ -578,7 +578,7 @@ class ScheduleBoardController extends BaseScheduleController
             }
 
             return $this->jsonFail(
-                'The board became a different drawing while that was saving — nothing was written.',
+                'The board changed to a different drawing while saving, so nothing was saved.',
                 409,
                 ['data' => ['code' => 'board-moved']]
             );
@@ -642,7 +642,7 @@ class ScheduleBoardController extends BaseScheduleController
 
         return response()->json([
             'success' => true,
-            'message' => 'Saved ' . count($media) . ' page' . (count($media) === 1 ? '' : 's') . ' to the schedule notebook.',
+            'message' => 'Saved ' . count($media) . ' page' . (count($media) === 1 ? '' : 's') . ' to the season notebook.',
             'data' => ['noteId' => $note->id, 'count' => count($media), 'auto' => $auto],
         ]);
     }

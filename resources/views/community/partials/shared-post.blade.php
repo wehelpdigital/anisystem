@@ -38,7 +38,7 @@
     @if ($shared->videoPath ?? null)
         {{-- A shared clip says it is one rather than trying to play here; the
              original is one tap away and plays where it lives. --}}
-        <span class="fp-shared-clip">🎬 A video — open the post to watch it</span>
+        <span class="fp-shared-clip">🎬 A video. Open the post to watch it.</span>
     @endif
     {{-- Where the original actually lives. It used to be the wall with an
          anchor on the end, which finds nothing once the post has scrolled

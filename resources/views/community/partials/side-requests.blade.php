@@ -2,7 +2,7 @@
      collection), $requestCount (int total). Buttons reuse connect-js. --}}
 <div class="card p-3 mb-3">
     <div class="flex items-center justify-between mb-1">
-        <h3 class="text-sm font-bold text-gray-900" style="font-family:var(--font-heading)">Co-Farmer Requests</h3>
+        <h3 class="text-sm font-bold text-gray-900" style="font-family:var(--font-heading)">Cofarmer Requests</h3>
         @if ($requestCount > 0)<span class="badge badge-green">{{ $requestCount }}</span>@endif
     </div>
     @forelse ($requests as $u)

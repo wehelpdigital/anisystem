@@ -49,13 +49,13 @@
             'icon' => 'M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4z',
         ],
         'cofarmers' => [
-            'label' => 'My Co-Farmers', 'short' => 'Co-Farmers',
+            'label' => 'My Cofarmers', 'short' => 'Cofarmers',
             'url' => route('community.cofarmers'),
             'pic' => 'friends.png',
             'icon' => 'M12 21c-4.5 0-8-2.5-8-5.5V13a3 3 0 013-3h10a3 3 0 013 3v2.5c0 3-3.5 5.5-8 5.5zM9 7a3 3 0 106 0 3 3 0 00-6 0z',
         ],
         'requests' => [
-            'label' => 'Co-Farmer Requests', 'short' => 'Requests',
+            'label' => 'Cofarmer Requests', 'short' => 'Requests',
             'url' => route('community.connect.requests'),
             'pic' => 'friend-request.png',
             'icon' => 'M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM19 8v6M22 11h-6',

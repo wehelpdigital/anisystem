@@ -2,4 +2,4 @@
 @section('code', '419')
 @section('emoji', '⏳')
 @section('title', 'Your session expired')
-@section('message', 'For your security, the page sat idle too long. Just head back and sign in again — nothing was lost.')
+@section('message', 'For your safety, this page was left open too long. Go back and sign in again. Nothing was lost.')

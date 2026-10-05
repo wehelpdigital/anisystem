@@ -50,7 +50,7 @@
                         When a neighbor asks <em>kumusta ang ani?</em>, they mean how many cavans of palay came off the field.
                         Our page on the <a href="{{ url('/blog/ani-meaning') }}" class="font-semibold text-brand-700 hover:underline">ani meaning</a> tells the rest.
                     @endif
-                    Ani is also the name of the technician inside the app: ask <span class="font-semibold text-ink">Anee</span>
+                    Ani also gives its name to the technician inside the app: ask <span class="font-semibold text-ink">Anee</span>
                     about your crop and she answers.
                 </p>
                 <p class="mt-4 text-gray-600 leading-relaxed">
@@ -60,7 +60,7 @@
                 </p>
                 <p class="mt-4 text-gray-600 leading-relaxed">
                     <span class="font-semibold text-ink">anee.io</span> is the next step: the cropping schedule manager our team
-                    uses to run client farms, packaged as a web app. Plan your lots, workers, materials, activities and
+                    uses to run client farms, now a web app for you. Plan your lots, workers, materials, activities and
                     irrigation for the whole season, then follow the plan day by day from your phone.
                 </p>
             </div>
@@ -142,8 +142,8 @@
                         ],
                         [
                             'img' => 'images/icons/technician-support.png',
-                            'title' => 'The Technician\'s Discipline',
-                            'text' => 'Built from the same protocol system anee.io technicians follow on client farms, critical rules and records included.',
+                            'title' => 'The Way Our Technicians Work',
+                            'text' => 'Built on the same protocols anee.io technicians follow on client farms, with their key rules and records.',
                         ],
                     ];
                 @endphp
@@ -189,7 +189,7 @@
                         ],
                         [
                             'title' => 'Simple on a Phone',
-                            'text' => 'If it does not work on a phone in the middle of a ' . ($ph ? 'palayan' : 'rice field') . ', it does not ship.',
+                            'text' => 'If it does not work on a phone in the middle of a ' . ($ph ? 'palayan' : 'rice field') . ', it does not go into the app.',
                             'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>',
                         ],
                     ];
@@ -221,7 +221,7 @@
             </p>
             <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
                 <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Get Started</a>
-                <a href="{{ route('tutorial') }}" class="btn btn-lg border-2 border-white/70 text-white bg-white/5 hover:bg-white/15">See How It Works</a>
+                <a href="{{ route('tutorial') }}" class="btn btn-lg border-2 border-white/70 text-white bg-white/5 hover:bg-white/15">Read the Tutorial</a>
             </div>
         </div>
     </section>

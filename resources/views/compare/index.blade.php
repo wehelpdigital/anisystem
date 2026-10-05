@@ -271,7 +271,7 @@
                     <span class="rx-empty-e"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></span>
                     <p class="rx-empty-t" id="cmpNothingT">Nothing to compare yet</p>
                     <p class="rx-empty-p" id="cmpNothingP">First save two reports of the same kind in any of your seasons. It can be a Labor, Expenses or Profit report, a protocol, or one of {{ $aneeName }}'s reports.</p>
-                    <a href="{{ route('sm.index') }}" class="btn btn-primary mt-4" data-nav-loader>Open my cropping schedules</a>
+                    <a href="{{ route('sm.index') }}" class="btn btn-primary mt-4" data-nav-loader>Open my seasons</a>
                 </div>
             </div>
 
@@ -291,7 +291,7 @@
                         @foreach (['a' => 'A', 'b' => 'B'] as $k => $L)
                             <div class="cmp-side is-{{ $k }}" id="cmpSide{{ $L }}">
                                 <div class="cmp-side-h"><span class="cx-letter is-{{ $k }}">{{ $L }}</span><b>Report {{ $L }}</b><span class="cmp-ok" aria-hidden="true">{!! $icoTick !!}</span></div>
-                                <span class="cmp-lab">Cropping schedule</span>
+                                <span class="cmp-lab">Season</span>
                                 <button type="button" class="crop-tag" data-cmp-season="{{ $k }}" disabled>
                                     <span class="crop-tag-e" data-cmp-e>🌱</span>
                                     <span class="crop-tag-t is-none" data-cmp-t>Choose the season</span>
@@ -540,7 +540,7 @@ const __init = () => {
         if (!any) {
             if (!(S.opts?.seasons || []).length) {
                 $id('cmpNothingT').textContent = 'No seasons to compare from yet';
-                $id('cmpNothingP').textContent = 'Start a cropping schedule and save two reports from its Reports page. Then come back to compare them.';
+                $id('cmpNothingP').textContent = 'Start a season and save two reports from its Reports page. Then come back to compare them.';
             }
             reveal($id('cmpNothing'));
             return;
@@ -571,7 +571,7 @@ const __init = () => {
         const coinHtml = o.payerIsMe && window.creditCoin ? window.creditCoin(have) : coin(have);
         bal.classList.toggle('is-short', short);
         bal.innerHTML = short
-            ? `${whose} ${coinHtml}. That is not enough for her read.${o.payerIsMe ? ` <a href="${esc(U.credits)}?tab=buy">Get credits</a>` : ' The farm owner can top up.'}`
+            ? `${whose} ${coinHtml}. That is not enough for her read.${o.payerIsMe ? ` <a href="${esc(U.credits)}?tab=buy">Buy credits</a>` : ' The farm owner can top up.'}`
             : `${whose} ${coinHtml}`;
         const box = $id('cmpWithAi');
         box.disabled = short;
@@ -883,7 +883,7 @@ const __init = () => {
         if (!ok) return;
         try {
             await api(U.del(v.id), { method: 'DELETE' });
-            toast('Comparison removed.');
+            toast('Comparison deleted.');
             S.savedDirty = true;
             window.reportView.close();
         } catch (err) { toast(err.message, 'error'); }

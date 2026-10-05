@@ -88,7 +88,7 @@
         <h1 class="err-title">@yield('title')</h1>
         <p class="err-msg">@yield('message')</p>
         <div class="err-actions">
-            <a href="{{ url('/') }}" class="btn btn-primary">Back to safety</a>
+            <a href="{{ url('/') }}" class="btn btn-primary">Go to the home page</a>
             <a href="javascript:history.back()" class="btn btn-ghost">Go back</a>
         </div>
         @hasSection('ref')

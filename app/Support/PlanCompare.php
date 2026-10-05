@@ -26,13 +26,13 @@ class PlanCompare
         $gate = fn (string $key) => fn (array $t) => (bool) ($t[$key] ?? false);
         $all = fn () => fn (array $t) => true;
         $paid = fn (array $t) => ! empty($t['price']);
-        $adFree = fn (array $t) => in_array('Ad-free', $t['features'] ?? [], true);
+        $adFree = fn (array $t) => (bool) array_intersect(['No ads', 'Ad-free'], $t['features'] ?? []);
 
         return [
             ['Seasons and fields', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z', [
-                ['Active cropping schedules', 'Seasons running at the same time', $count('schedulesActive')],
-                ['Archived schedules', 'Finished seasons you keep to look back on', $count('schedulesArchived')],
-                ['Lots per schedule', 'Fields, each with its own crop and day zero', $count('lotsPerSchedule')],
+                ['Active seasons', 'Seasons running at the same time', $count('schedulesActive')],
+                ['Archived seasons', 'Finished seasons you keep to look back on', $count('schedulesArchived')],
+                ['Lots per season', 'Fields, each with its own crop and day zero', $count('lotsPerSchedule')],
                 ['Activities board, notes, tags', 'The whole season day by day', $all()],
                 ['Growth stages', 'Where every lot stands on any date', $all()],
                 ['Farm maps', 'Draw, measure and pin your fields', $count('mapsTotal')],
@@ -40,7 +40,7 @@ class PlanCompare
             ]],
             ['Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z', [
                 ['Forecast', null, fn (array $t) => $t['weatherDays'] === null ? 'Full forecast' : 'Today and tomorrow'],
-                ['The sky right now', 'On your dashboard greeting', $gate('weatherNow')],
+                ['Weather right now', 'Shown on your dashboard', $gate('weatherNow')],
             ]],
             ['Anee, the AI technician', 'M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5', [
                 ['Chat with Anee', 'Ask anything, send a photo', $gate('ai')],
@@ -73,7 +73,7 @@ class PlanCompare
                 ['Create your own rooms', null, $gate('discussionCreate')],
             ]],
             ['The rest', 'M5 13l4 4L19 7', [
-                ['Free of ads', null, $adFree],
+                ['No ads', null, $adFree],
             ]],
         ];
     }

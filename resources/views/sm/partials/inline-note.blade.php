@@ -28,7 +28,7 @@
         ? 'Drag the grip to move · tap the dots for options'
         : ((\App\Support\WorkerContext::canWriteModule('notes'))
             ? 'Tap the dots for options'
-            : 'You are not allowed to write notes on this schedule');
+            : 'You do not have permission to add notes here');
 @endphp
 <div class="inline-note" data-inline-note="{{ $note->id }}" data-date="{{ $note->noteDate->format('Y-m-d') }}"
      data-sort-key="{{ (int) $note->sortKey }}" data-media="{{ $noteMedia->toJson() }}"

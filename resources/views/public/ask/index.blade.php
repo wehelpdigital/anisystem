@@ -611,7 +611,7 @@
                 await new Promise((r) => setTimeout(r, 1500));
                 d = (await window.api(URLS.state + '/' + d.token, { method: 'GET' })).data;
             }
-            if (d.pending) throw new Error('Anee is taking long to read that. Please try again.');
+            if (d.pending) throw new Error('Anee is taking a long time to read that. Please try again.');
             say(d.reply, !d.agri);
             if (d.agri) {
                 await new Promise((r) => setTimeout(r, 1600));

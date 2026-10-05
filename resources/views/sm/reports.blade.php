@@ -2,7 +2,7 @@
      the shell already wears the header and the menus. --}}
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Reports — ' . $schedule->title)
+@section('title', 'Reports: ' . $schedule->title)
 @section('page-title', 'Reports')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'reports')

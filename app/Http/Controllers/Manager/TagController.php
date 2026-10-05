@@ -77,7 +77,7 @@ class TagController extends BaseScheduleController
         $schedule = $this->schedule($request->input('scheduleId') ?: $request->query('scheduleId'));
         $tag = AsScheduleTag::forSchedule($schedule->id)->where('id', (int) $id)->first();
         if (! $tag) {
-            return response()->json(['success' => false, 'message' => 'That tag is not here.'], 404);
+            return response()->json(['success' => false, 'message' => 'That tag was not found.'], 404);
         }
         $tag->update(['deleteStatus' => 0]);
         AsScheduleTagLink::where('tagId', $tag->id)->delete();
@@ -124,7 +124,7 @@ class TagController extends BaseScheduleController
         $tag = AsScheduleTag::forSchedule($schedule->id)
             ->where('deleteStatus', 1)->where('id', (int) $request->query('tagId'))->first();
         if (! $tag) {
-            return response()->json(['success' => false, 'message' => 'That tag is not here.'], 404);
+            return response()->json(['success' => false, 'message' => 'That tag was not found.'], 404);
         }
 
         $links = AsScheduleTagLink::where('tagId', $tag->id)->get(['kind', 'refId']);

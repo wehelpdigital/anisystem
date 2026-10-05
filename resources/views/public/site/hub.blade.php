@@ -65,7 +65,7 @@
                     @endforeach
                 </div>
             @else
-                <p class="text-gray-500">Guides are on their way.</p>
+                <p class="text-gray-500">Guides are coming soon.</p>
             @endif
         </div>
     </section>

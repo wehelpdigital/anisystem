@@ -129,13 +129,13 @@
             <div class="min-w-0 grow">
                 <div class="flex items-start gap-2">
                     <h2 class="sched-title" id="schedTitleText">{{ $schedule->title }}</h2>
-                    <button type="button" id="schedRenameBtn" class="sched-pen" title="Rename this schedule" aria-label="Edit name and description">
+                    <button type="button" id="schedRenameBtn" class="sched-pen" title="Edit name and description" aria-label="Edit name and description">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                     </button>
                 </div>
                 <p class="sched-desc" id="schedDescText">{{ $schedule->description ?: 'No description yet. Tap the pencil to add one.' }}</p>
             </div>
-            <span class="sched-state sched-state-{{ $schedule->status }}">{{ ucfirst($schedule->status) }}</span>
+            <span class="sched-state sched-state-{{ $schedule->status }}">{{ ['setup' => 'Open', 'completed' => 'Closed', 'archived' => 'Archived'][$schedule->status] ?? ucfirst($schedule->status) }}</span>
         </div>
 
         <div class="sched-facts">
@@ -187,7 +187,7 @@
                 <button type="button" id="archiveToggleBtn"
                         data-archived="{{ $schedule->status === \App\Models\AsCroppingSchedule::STATUS_ARCHIVED ? 1 : 0 }}"
                         class="btn btn-sm btn-white">
-                    {{ $schedule->status === \App\Models\AsCroppingSchedule::STATUS_ARCHIVED ? 'Restore from Archives' : 'Archive this Schedule' }}
+                    {{ $schedule->status === \App\Models\AsCroppingSchedule::STATUS_ARCHIVED ? 'Restore from Archives' : 'Move to Archives' }}
                 </button>
                 <button type="button" id="statusToggleBtn" data-locked="{{ $schedule->isLocked() ? 1 : 0 }}"
                         class="btn btn-sm {{ $schedule->isLocked() ? 'btn-white' : 'btn-accent sweep-fill sweep-green' }}"
@@ -209,7 +209,7 @@
             </button>
         </div>
         <div class="sheet-body">
-            <label class="form-label" for="schedTitleInput">Title <span class="text-red-500">*</span></label>
+            <label class="form-label" for="schedTitleInput">Season name <span class="text-red-500">*</span></label>
             <input type="text" id="schedTitleInput" class="form-input" maxlength="255" value="{{ $schedule->title }}">
             <label class="form-label mt-3" for="schedDescInput">Description <span class="text-gray-400 font-normal">(optional)</span></label>
             <textarea id="schedDescInput" class="form-input" rows="4" maxlength="5000">{{ $schedule->description }}</textarea>
@@ -602,10 +602,10 @@
     <div class="card border-red-100 danger-head">
         <div class="card-body">
             <h3 class="font-bold text-red-700 mb-1">Danger zone</h3>
-            <p class="text-sm text-gray-500 mb-4">Delete this schedule and all its modules. This cannot be undone.</p>
+            <p class="text-sm text-gray-500 mb-4">Delete this season and everything in it. You cannot undo this.</p>
             <button type="button" id="deleteScheduleBtn" class="btn btn-danger-outline">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
-                Delete schedule
+                Delete season
             </button>
         </div>
     </div>
@@ -643,8 +643,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('deleteScheduleBtn')?.addEventListener('click', async () => {
         const ok = await confirmAction({
-            title: 'Delete schedule?',
-            message: @json('"' . $schedule->title . '" and its modules will be hidden from your account.'),
+            title: 'Delete this season?',
+            message: @json('"' . $schedule->title . '" and everything in it will be hidden from your account.'),
             detail: 'Its lots, workers and activities are kept but hidden.',
             confirmText: 'Delete',
         });
@@ -668,7 +668,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = e.currentTarget;
         const title = document.getElementById('schedTitleInput').value.trim();
         const description = document.getElementById('schedDescInput').value.trim();
-        if (!title) { toast('Please add a title.', 'error'); return; }
+        if (!title) { toast('Please add a season name.', 'error'); return; }
         btn.disabled = true;
         try {
             // The endpoint reads the schedule from the query, not the body.
@@ -696,8 +696,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!archived) {
             const ok = await confirmAction({
                 title: 'Move this season to the Archives?',
-                message: 'It leaves your season list and home screen. Nothing is deleted. Open it and its reports from Archives any time.',
-                confirmText: 'Archive this Schedule',
+                message: 'It leaves your season list and home screen. Nothing is deleted. You can open it and its reports from Archives any time.',
+                confirmText: 'Move to Archives',
                 confirmClass: 'btn-primary',
             });
             if (!ok) return;
@@ -707,7 +707,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const res = await api(@json(route('sm.status')), { method: 'POST', body: { id: {{ $schedule->id }}, status: archived ? 'completed' : 'archived' } });
             toast(res.message);
             setTimeout(() => window.location.reload(), 500);
-        } catch (err) { toast(err.message || 'Could not update.', 'error'); btn.disabled = false; }
+        } catch (err) { toast(err.message || 'Could not update the season. Please try again.', 'error'); btn.disabled = false; }
     });
 
     // Close the season (lock) / reopen it.
@@ -718,7 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const ok = await confirmAction({
                 title: 'Close this season?',
                 message: 'It becomes read only. Nothing can be added or changed until you reopen it. Everything is kept.',
-                confirmText: 'Close the season',
+                confirmText: 'Close season',
             });
             if (!ok) return;
         }
@@ -727,7 +727,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const res = await api(@json(route('sm.status')), { method: 'POST', body: { id: {{ $schedule->id }}, status: locked ? 'setup' : 'completed' } });
             toast(res.message);
             setTimeout(() => window.location.reload(), 500);
-        } catch (err) { toast(err.message || 'Could not update.', 'error'); btn.disabled = false; }
+        } catch (err) { toast(err.message || 'Could not update the season. Please try again.', 'error'); btn.disabled = false; }
     });
 });
 </script>

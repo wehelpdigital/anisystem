@@ -67,8 +67,8 @@
                         <div class="mx-auto w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center mb-3">
                             <svg class="w-7 h-7 text-gray-400" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.2 9a3.8 3.8 0 117.3 1.4c-.6 1.4-2.5 1.9-2.5 3.6M12 17.5h.01"/></svg>
                         </div>
-                        <h3 class="font-bold text-gray-900 mb-1">Nothing written for this one yet</h3>
-                        <p class="text-sm text-gray-500">The guide for {{ $moduleLabel }} hasn't been written yet.</p>
+                        <h3 class="font-bold text-gray-900 mb-1">No guide yet</h3>
+                        <p class="text-sm text-gray-500">The guide for {{ $moduleLabel }} is not written yet.</p>
                     </div>
                 @endif
             </div>

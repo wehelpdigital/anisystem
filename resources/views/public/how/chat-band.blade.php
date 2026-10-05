@@ -66,5 +66,5 @@
         @endforeach
     </div>
     <script type="application/json" data-hw-chat>@json(['question' => $hc['question']])</script>
-    <p class="sr-only">A phone shows the Anee chat: a grower attaches a photo of a rice leaf with pale, brown-edged blotches and asks what it is. Anee deeply analyzes the photo, checks the related data, then answers: it looks like sheath blight; hold off on more urea, spray a fungicide registered for it at the lower stems, and clear the straw and weeds after harvest.</p>
+    <p class="sr-only">A phone shows the Anee chat: a grower attaches a photo of a rice leaf with pale blotches that have brown edges and asks what it is. Anee studies the photo closely, checks the related data, then answers. It looks like sheath blight. Hold off on more urea, spray a fungicide registered for it at the lower stems, and clear the straw and weeds after harvest.</p>
 </section>

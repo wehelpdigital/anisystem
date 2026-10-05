@@ -53,8 +53,8 @@
     </main>
 
     <footer class="max-w-3xl mx-auto px-4 sm:px-6 py-8 text-center text-xs text-gray-400">
-        Shared with <a href="{{ route('home') }}" class="font-semibold text-brand-600">anee.io</a> —
-        plan lots, workers and a day-by-day cropping schedule.
+        Shared with <a href="{{ route('home') }}" class="font-semibold text-brand-600">anee.io</a>.
+        Plan your lots, your workers and a day by day cropping schedule.
     </footer>
 </body>
 </html>

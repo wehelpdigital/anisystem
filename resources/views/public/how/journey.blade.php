@@ -1020,7 +1020,7 @@
                     <div class="hw-scene s-dash">
                         <div class="hwr-top">
                             <img src="{{ asset('images/logo-mark.png') }}?v=anee" alt="">
-                            <div><b>Dashboard</b><small>Your farm at a glance</small></div>
+                            <div><b>Dashboard</b><small>Your farm in one view</small></div>
                             <span class="r">
                                 <span class="hwr-help">?</span>
                                 <span class="hwr-bell"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 00-4-5.7V5a2 2 0 10-4 0v.3A6 6 0 006 11v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg><em>1</em></span>

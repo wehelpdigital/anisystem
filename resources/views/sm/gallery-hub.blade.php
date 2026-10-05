@@ -236,7 +236,7 @@
                 {{ $q !== ''
                     ? 'Nothing in any season matches that.'
                     : ($tab === 'voice'
-                        ? 'No recordings yet. Tap the mic on the schedules page and talk. Quick Voice saves them here.'
+                        ? 'No recordings yet. Tap the mic on the seasons page and talk. Quick Voice saves them here.'
                         : 'Nothing here yet. Your photos, drawings and saved maps show up here on their own.') }}
             </p>
         @else

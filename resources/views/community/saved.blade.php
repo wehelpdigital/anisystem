@@ -43,7 +43,7 @@
                 <b></b>
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
             </button>
-            <span class="wb-hint" id="savedBarHint">{{ $savedTotal }} {{ \Illuminate\Support\Str::plural('post', $savedTotal) }} kept</span>
+            <span class="wb-hint" id="savedBarHint">{{ $savedTotal }} {{ \Illuminate\Support\Str::plural('post', $savedTotal) }} saved</span>
         </div>
     @endif
 
@@ -61,8 +61,8 @@
                 <div class="empty-tile">🔖</div>
                 <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Wala pang naka-save</p>
                 <p class="text-sm text-gray-500 mt-1">
-                    When a post is worth coming back to — a fertiliser rate, a price, a photo of a pest —
-                    tap its bookmark and it waits here.
+                    When a post is worth coming back to (a fertilizer rate, a price, a photo of a pest),
+                    tap its bookmark and it will wait here.
                 </p>
                 <a href="{{ route('community.index') }}" class="btn btn-primary btn-sm mt-4">Go to the News Feed</a>
             </div>
@@ -74,7 +74,7 @@
             <button type="button" id="savedLoadMore" class="btn btn-white btn-sm" data-infinite
                     data-before="{{ $before }}" {{ $hasMore ? '' : 'hidden' }}>Load more saved posts</button>
             <div class="sv-spin" id="savedSpin" role="status" aria-label="Loading more saved posts" hidden><i></i><i></i><i></i></div>
-            <p class="sv-end" id="savedEnd" {{ $hasMore ? 'hidden' : '' }}>🔖 That's everything you have kept.</p>
+            <p class="sv-end" id="savedEnd" {{ $hasMore ? 'hidden' : '' }}>🔖 That's all your saved posts.</p>
         </div>
     @endif
 </div>
@@ -88,10 +88,10 @@
     <div class="sheet-body" style="padding-bottom:1.1rem">
         @include('community.partials.live-search', [
             'id' => 'savedFind',
-            'placeholder' => 'Search what you kept…',
-            'label' => 'Search your saved posts — words or who wrote them',
+            'placeholder' => 'Search your saved posts…',
+            'label' => 'Search your saved posts by words or author',
         ])
-        <button type="button" class="btn btn-primary w-full" data-sheet-close>Show the posts</button>
+        <button type="button" class="btn btn-primary w-full" data-sheet-close>Show posts</button>
     </div>
 </div>
 
@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 wrap.innerHTML = '<div class="card p-8 text-center">'
                     + '<div class="empty-tile">🔎</div>'
                     + '<p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Walang tugma</p>'
-                    + '<p class="text-sm text-gray-500 mt-1">Nothing you kept says that — in the words or in who wrote it.</p></div>';
+                    + '<p class="text-sm text-gray-500 mt-1">None of your saved posts match those words or that author.</p></div>';
             }
             done = !(d.hasMore && d.before);
             if (spin) spin.hidden = true;

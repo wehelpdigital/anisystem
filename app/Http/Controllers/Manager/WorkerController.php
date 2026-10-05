@@ -41,7 +41,7 @@ class WorkerController extends BaseScheduleController
         // A page, not an endpoint, so the answer is a page too. It used to be
         // a 404, which told a farmer the module was missing when it is simply
         // not theirs — the owner asked for the plain version instead.
-        if ($no = $this->workerNoAccess('the Workers module')) {
+        if ($no = $this->workerNoAccess('Workers')) {
             return $no;
         }
 
@@ -197,7 +197,7 @@ class WorkerController extends BaseScheduleController
             return null;
         }
 
-        return $this->jsonFail(($twin->workerName ?: 'Somebody') . ' is already on this schedule with that email — open their card instead.', 422, ['data' => ['twinId' => (int) $twin->id]]);
+        return $this->jsonFail(($twin->workerName ?: 'Somebody') . ' is already in this season with that email. Open their card instead.', 422, ['data' => ['twinId' => (int) $twin->id]]);
     }
 
     public function store(Request $request)
@@ -230,7 +230,7 @@ class WorkerController extends BaseScheduleController
         // The tier's worker cap, judged by the schedule owner's plan.
         $wCap = \App\Support\Tier::scheduleLimit($schedule, 'workersPerSchedule');
         if ($wCap !== null && AsScheduleWorker::active()->where('croppingScheduleId', $schedule->id)->count() >= $wCap) {
-            \App\Support\Tier::scheduleDenyFor($schedule, 'workersPerSchedule', 'This plan allows up to ' . $wCap . ' workers per schedule. Move up to {plan} to add more.');
+            \App\Support\Tier::scheduleDenyFor($schedule, 'workersPerSchedule', 'This plan allows up to ' . $wCap . ' workers per season. Move up to {plan} to add more.');
         }
 
         $allowedSkillKeys = array_keys(AsScheduleWorker::SKILLS);
@@ -245,7 +245,7 @@ class WorkerController extends BaseScheduleController
         ]);
 
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
         if ($twin = $this->refuseDuplicateEmail($schedule, $request->input('email'))) {
             return $twin;
@@ -299,7 +299,7 @@ class WorkerController extends BaseScheduleController
         ]);
 
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
         if ($twin = $this->refuseDuplicateEmail($schedule, $request->input('email'), (int) $worker->id)) {
             return $twin;
@@ -392,7 +392,7 @@ class WorkerController extends BaseScheduleController
         ]);
 
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         DB::transaction(function () use ($worker, $request) {

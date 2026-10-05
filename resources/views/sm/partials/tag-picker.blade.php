@@ -67,7 +67,7 @@
     <div class="sheet-body">
         {{-- Just a door: the name is asked for in its own sheet, so this
              one stays a clean list to pick from. --}}
-        <button type="button" class="btn btn-primary w-full mb-3" id="tagPickNewBtn">Add a New Tag</button>
+        <button type="button" class="btn btn-primary w-full mb-3" id="tagPickNewBtn">Add a new tag</button>
         <div class="dt-rows" id="tagPickList"></div>
         <p id="tagPickEmpty" hidden>No tags yet. Add your first one.</p>
         {{-- Words from the member's other seasons and tools; a tap brings one here. --}}
@@ -83,7 +83,7 @@
 <div class="sheet hidden" id="tagNewSheet" style="--sheet-width:22rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Add a New Tag</h3>
+        <h3 class="sheet-title">Add a new tag</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">

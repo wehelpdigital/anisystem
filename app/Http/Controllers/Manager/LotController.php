@@ -162,7 +162,7 @@ class LotController extends BaseScheduleController
         $lot = AsScheduleLot::where('croppingScheduleId', $schedule->id)
             ->where('deleteStatus', 1)->find($data['lotId']);
         if (! $lot) {
-            return $this->jsonFail('That lot is not on this schedule.', 404);
+            return $this->jsonFail('That lot is not in this season.', 404);
         }
         // Maps are their owners' now: any map the caller may open (their
         // own, or one this farm already uses) can be worn by a lot.
@@ -201,11 +201,11 @@ class LotController extends BaseScheduleController
         $lot = AsScheduleLot::where('croppingScheduleId', $schedule->id)
             ->where('deleteStatus', 1)->find((int) $request->input('lotId'));
         if (! $lot) {
-            return $this->jsonFail('That lot is not on this schedule.', 404);
+            return $this->jsonFail('That lot is not in this season.', 404);
         }
         $lot->update(['mapSaveId' => null]);
 
-        return $this->jsonOk('Map detached from ' . $lot->lotName . '. It is still in your Maps.', ['data' => $this->lotPayload($lot->fresh())]);
+        return $this->jsonOk('Map removed from ' . $lot->lotName . '. It is still in your Maps.', ['data' => $this->lotPayload($lot->fresh())]);
     }
 
     /**
@@ -227,13 +227,13 @@ class LotController extends BaseScheduleController
             ->where('deleteStatus', 1)
             ->find($data['lotId']);
         if (! $lot) {
-            return $this->jsonFail('That lot is not on this schedule.', 404);
+            return $this->jsonFail('That lot is not in this season.', 404);
         }
 
         $days = (int) ($data['delayDays'] ?? 0);
         $lot->update(['delayDays' => $days > 0 ? $days : null]);
 
-        return $this->jsonOk($days > 0 ? 'Delay counter set: ' . $days . ' day' . ($days === 1 ? '' : 's') . ' behind.' : 'Delay counter removed.',
+        return $this->jsonOk($days > 0 ? 'Delay set: ' . $days . ' day' . ($days === 1 ? '' : 's') . ' behind.' : 'Delay removed.',
             ['data' => $this->lotPayload($lot->fresh())]);
     }
 
@@ -253,7 +253,7 @@ class LotController extends BaseScheduleController
             ->where('deleteStatus', 1)
             ->find($data['lotId']);
         if (! $lot) {
-            return $this->jsonFail('That lot is not on this schedule.', 404);
+            return $this->jsonFail('That lot is not in this season.', 404);
         }
 
         // Both or neither. Half a coordinate is a lot that claims to be
@@ -283,13 +283,13 @@ class LotController extends BaseScheduleController
         // The tier's lot cap, judged by the schedule owner's plan.
         $lotCap = \App\Support\Tier::scheduleLimit($schedule, 'lotsPerSchedule');
         if ($lotCap !== null && AsScheduleLot::active()->where('croppingScheduleId', $schedule->id)->count() >= $lotCap) {
-            \App\Support\Tier::scheduleDenyFor($schedule, 'lotsPerSchedule', 'This plan allows up to ' . $lotCap . ' lot' . ($lotCap == 1 ? '' : 's') . ' per schedule. Move up to {plan} for more room.');
+            \App\Support\Tier::scheduleDenyFor($schedule, 'lotsPerSchedule', 'This plan allows up to ' . $lotCap . ' lot' . ($lotCap == 1 ? '' : 's') . ' per season. Move up to {plan} for more.');
         }
 
         $validator = Validator::make($request->all(), $this->rules());
 
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $lot = AsScheduleLot::create(array_merge(
@@ -323,7 +323,7 @@ class LotController extends BaseScheduleController
         $validator = Validator::make($request->all(), $this->rules());
 
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         /* What the lot IS was settled when it was made.

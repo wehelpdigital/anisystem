@@ -22,6 +22,6 @@
 @endphp
 <span class="topb rk-place {{ $pcMetal ? 'topb-' . $pcMetal['key'] : 'topb-plain' }}" title="{{ $pcSays }}">
     <span class="topb-m" aria-hidden="true"></span>
-    <span class="topb-n">{{ $pcPlace > 0 ? '#' . $pcPlace : '—' }}</span>
+    <span class="topb-n">{{ $pcPlace > 0 ? '#' . $pcPlace : 'Not yet' }}</span>
     <span class="topb-say">{{ $pcSays }}</span>
 </span>

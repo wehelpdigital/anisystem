@@ -31,10 +31,10 @@
         </div>
         <div class="draw-toolbar">
             <div class="draw-tools" id="drawTools">
-                <button type="button" class="draw-tool" data-tool="select" title="Select · move · resize (marquee)">
+                <button type="button" class="draw-tool" data-tool="select" title="Select, move or resize">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l7 16 2-6 6-2z" stroke-linejoin="round"/></svg>
                 </button>
-                <button type="button" class="draw-tool is-active" data-tool="pen" title="Pen (freehand)">
+                <button type="button" class="draw-tool is-active" data-tool="pen" title="Pen: draw freehand">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l4-1 10-10-3-3L5 16l-1 4z" stroke-linejoin="round"/></svg>
                 </button>
                 <button type="button" class="draw-tool" data-tool="line" title="Line">
@@ -52,10 +52,10 @@
                 <button type="button" class="draw-tool" data-tool="text" title="Text">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 6h14M12 6v13M9 19h6" stroke-linecap="round"/></svg>
                 </button>
-                <button type="button" class="draw-tool" data-tool="eraser" title="Eraser (rub out a shape)">
+                <button type="button" class="draw-tool" data-tool="eraser" title="Eraser: rub out a shape">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15l7-7 6 6-4 4H8l-4-3z" stroke-linejoin="round"/><path d="M8 18h11" stroke-linecap="round"/></svg>
                 </button>
-                <button type="button" class="draw-tool" id="drawInsertImg" title="Insert a picture (it becomes a shape: move, resize, rotate, draw over it)">
+                <button type="button" class="draw-tool" id="drawInsertImg" title="Add a picture you can move, resize, turn and draw over">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 15l5-5 4 4 3-3 6 6" stroke-linejoin="round"/><circle cx="9" cy="9" r="1.3"/></svg>
                 </button>
             </div>
@@ -66,10 +66,10 @@
                 <input type="range" id="drawSize" min="1" max="40" value="4">
             </label>
             <span class="draw-div"></span>
-            <button type="button" class="draw-tool" id="drawDelete" title="Delete selected (Del)">
+            <button type="button" class="draw-tool" id="drawDelete" title="Delete what is selected">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <button type="button" class="draw-tool" id="drawGrid" title="Toggle grid">
+            <button type="button" class="draw-tool" id="drawGrid" title="Show or hide the grid">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9h18M3 15h18M9 3v18M15 3v18" stroke-linecap="round"/></svg>
             </button>
             <button type="button" class="draw-tool" id="drawUndo" title="Undo (Ctrl+Z)" aria-label="Undo" disabled>
@@ -88,7 +88,7 @@
              you can hear but not see. --}}
         <div class="draw-ask" id="drawAsk" hidden>
             <div class="draw-ask-card" role="dialog" aria-modal="true" aria-labelledby="drawAskTitle">
-                <h4 class="draw-ask-title" id="drawAskTitle">Keep this drawing</h4>
+                <h4 class="draw-ask-title" id="drawAskTitle">Save this drawing</h4>
                 {{-- Only when you opened something that already exists: the
                      common answer is "yes, this is that drawing, changed" —
                      which used to be indistinguishable from starting a new
@@ -134,7 +134,7 @@
                 <p class="draw-ask-hint">It goes where you tapped, in your colour and size.</p>
                 <div class="draw-ask-row">
                     <button type="button" class="btn btn-ghost" id="drawTextCancel">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="drawTextOk">Add it</button>
+                    <button type="button" class="btn btn-primary" id="drawTextOk">Add text</button>
                 </div>
             </div>
         </div>
@@ -1201,7 +1201,7 @@
     document.getElementById('drawClear').addEventListener('click', async (e) => {
         // An empty sheet has nothing to lose, and a dialog with only one
         // possible answer is a tap for its own sake.
-        if (!objects.length) { window.toast?.('This sheet is already empty.', 'info'); return; }
+        if (!objects.length) { window.toast?.('This page is already empty.', 'info'); return; }
         const btn = e.currentTarget;
         if (btn.disabled) return;
         btn.disabled = true;                     // no second Clear while the first is being asked
@@ -1212,9 +1212,9 @@
                 message: many
                     ? 'Every stroke on page ' + (pageIndex + 1)
                         + ' will be cleared. Other pages stay.'
-                    : 'Every stroke on this sheet will be cleared.',
+                    : 'Every stroke on this page will be cleared.',
                 detail: 'Undo brings it back.',
-                confirmText: 'Clear the sheet',
+                confirmText: 'Clear',
                 // Nothing to ask with (no dialog helper) is not a reason to
                 // block the button: this one is undoable.
                 assumeYes: true,

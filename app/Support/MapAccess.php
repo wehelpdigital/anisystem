@@ -224,7 +224,7 @@ class MapAccess
             // What the note says the map was for, with the boilerplate line
             // the save itself wrote taken back off.
             $words = trim(strip_tags((string) ($note?->body)));
-            $words = trim((string) preg_replace('/Saved (team )?map — tap View map to open it\.?\s*$/u', '', $words));
+            $words = trim((string) preg_replace('/Saved (team )?map(?: —|[.,:])? [Tt]ap View map to open it\.?\s*$/u', '', $words));
 
             return [
                 'id' => (int) $r->id,

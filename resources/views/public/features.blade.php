@@ -47,12 +47,12 @@
                 <div>
                     <p class="fx-kicker">Plan</p>
                     <h2 class="fx-h">The activities board: your season, day by day</h2>
-                    <p class="fx-p">Build the whole calendar from land prep to harvest. Every task is dated from each lot's own Day-0, so timing stays honest even when lots were sown a week apart.</p>
+                    <p class="fx-p">Build the whole calendar from land prep to harvest. Every task is dated from each lot's own day zero, so the timing stays right even when lots were sown a week apart.</p>
                     <ul class="fx-list">
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Tasks, irrigation, hired services, payroll days and reminder checklists</li>
-                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Drag to reschedule, drafts for the undecided, versions for the what-ifs</li>
+                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Drag to reschedule, drafts for plans not yet decided, versions to try other plans</li>
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Attach photos, clips and voice notes to any activity</li>
-                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Undo that survives a logout, because the journal lives on the server</li>
+                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Undo that still works after you log out, because it is saved on the server</li>
                     </ul>
                 </div>
             </div>
@@ -66,12 +66,12 @@
                 <div>
                     <p class="fx-kicker">People</p>
                     <h2 class="fx-h">Workers, payroll and permissions that fit a real farm</h2>
-                    <p class="fx-p">Keep the roster with rates and skills, assign hands to activities, and count the labor cost live. Give a worker their own login and decide module by module what they can see and what they can touch.</p>
+                    <p class="fx-p">Keep a list of your workers with their rates and skills, assign them to activities, and watch the labor cost add up as you plan. Give a worker their own login and decide, part by part, what they can see and what they can change.</p>
                     <ul class="fx-list">
-                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>None, view or edit, per module and per worker</li>
-                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Payroll days with per-worker rates and half/whole days</li>
+                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>None, view or edit, for each part of the app and each worker</li>
+                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Payroll days with each worker's own rate, for half or whole days</li>
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>The morning email tells the whole team today's plan at 6 AM</li>
-                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>A logs diary records every change and whose hand made it</li>
+                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>A log records every change and who made it</li>
                     </ul>
                 </div>
             </div>
@@ -84,9 +84,9 @@
                 <div>
                     <p class="fx-kicker">Records</p>
                     <h2 class="fx-h">Notes, photos, videos and your own voice</h2>
-                    <p class="fx-p">The fastest record is the one you can make standing in the mud. Snap it, film it, or just say it. Quick Voice files a spoken note in seconds, and everything lands in a gallery you can actually search.</p>
+                    <p class="fx-p">The fastest record is the one you can make standing in the mud. Take a photo, film it, or just say it. Quick Voice saves a spoken note in seconds, and everything lands in a gallery you can search.</p>
                     <ul class="fx-list">
-                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Notes per season, per day, and global notes for everything else</li>
+                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Notes for each season and each day, plus Global Notes for everything else</li>
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Voice notes play right on the card in notes, activities and chat</li>
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>A drawing pad for sketching over field photos</li>
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Tags tie notes, workers, lots and documents together</li>
@@ -102,10 +102,10 @@
                 <div>
                     <p class="fx-kicker">Agronomy</p>
                     <h2 class="fx-h">Growth stages and weather that read your fields</h2>
-                    <p class="fx-p">anee knows {{ \App\Support\Region::ph() ? '85 Philippine crops' : 'nearly a hundred crops' }}. Pick any date and it says where every lot stands: the crop growth stage, what it needs and what to watch for, with the week's forecast beside it.</p>
+                    <p class="fx-p">anee.io knows {{ \App\Support\Region::ph() ? '85 Philippine crops' : 'nearly a hundred crops' }}. Pick any date and it says where every lot stands: the crop growth stage, what it needs and what to watch for, with the week's forecast beside it.</p>
                     <ul class="fx-list">
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ \App\Support\Region::ph() ? 'Palay, mais, gulay and fruit trees' : 'Rice, corn, vegetables and fruit trees' }}, annuals and perennials both</li>
-                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Do-lists and watch-lists written for each stage</li>
+                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>What to do and what to watch for, written for each stage</li>
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Maps: draw and measure your lots, drop pins, save team maps</li>
                     </ul>
                 </div>
@@ -119,12 +119,12 @@
                 <div>
                     <p class="fx-kicker">Money</p>
                     <h2 class="fx-h">Inventory, expenses and reports that agree to the {{ \App\Support\Region::ph() ? 'peso' : 'cent' }}</h2>
-                    <p class="fx-p">The shed keeps stock with every move logged and named. Labor, expenses and profit reports are computed straight from the plan, and Anee can write the season's full story on top.</p>
+                    <p class="fx-p">The shed keeps your stock, and every move in or out is recorded with a name. Labor, expenses and profit reports are worked out straight from the plan, and Anee can write a full report of the season on top.</p>
                     <ul class="fx-list">
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Inventory items and moves, with an audit trail of who did what</li>
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Labor, expenses and profit, computed and never guessed</li>
-                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Post-harvest observations with yields, buyers and prices</li>
-                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Every report renameable, taggable and kept on its shelf</li>
+                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Post harvest observations with yields, buyers and prices</li>
+                        <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Rename and tag any report, and keep it saved on its shelf</li>
                     </ul>
                 </div>
             </div>
@@ -136,7 +136,7 @@
                 </div>
                 <div>
                     <p class="fx-kicker">Community</p>
-                    <h2 class="fx-h">Co-farmers, discussions and a ladder worth climbing</h2>
+                    <h2 class="fx-h">Cofarmers, discussions and a ladder worth climbing</h2>
                     <p class="fx-p">A news feed for wins and warnings, focused discussion rooms, direct messages with photos, clips and voice notes, and a ladder of 100 levels that turns helping into a game.</p>
                     <ul class="fx-list">
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Public, password and approval rooms for private groups</li>
@@ -155,11 +155,11 @@
             <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-white text-balance reveal">Anee, the AI technician who knows your farm</h2>
             <p class="mt-4 text-[#cdd8c0] leading-relaxed max-w-2xl mx-auto reveal">
                 She reads your schedules, stages and weather before answering. Ask in {{ \App\Support\Region::ph() ? 'Tagalog or English' : 'plain English' }},
-                send a photo of the problem, run when-to-plant and what-to-plant analyses for your town,
+                send a photo of the problem, run When to Plant and What to Plant analyses for your town,
                 or have her write the whole season's report. Anee runs on credits, so you pay only for what you ask.
             </p>
             <div class="mt-8 reveal">
-                <a href="{{ route('pricing') }}" class="btn btn-accent btn-lg">See plans &amp; credits</a>
+                <a href="{{ route('pricing') }}" class="btn btn-accent btn-lg">See plans and credits</a>
             </div>
         </div>
     </section>

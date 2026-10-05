@@ -32,7 +32,7 @@ class MediaSaveController extends Controller
             abort(400, 'Nothing to save.');
         }
         if (! $this->allowed($url)) {
-            abort(403, 'That file is not ours to hand over.');
+            abort(403, 'That file cannot be saved from here.');
         }
 
         // Local files stream off the disk; no point going out to the network
@@ -48,7 +48,7 @@ class MediaSaveController extends Controller
 
         $res = Http::timeout(30)->withOptions(['stream' => true])->get($url);
         if (! $res->successful()) {
-            abort(404, 'That file could not be fetched.');
+            abort(404, 'That file could not be loaded.');
         }
 
         $body = $res->toPsrResponse()->getBody();

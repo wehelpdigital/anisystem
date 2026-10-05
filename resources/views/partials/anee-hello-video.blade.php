@@ -88,7 +88,7 @@
      farmer's language; everywhere else the sentence it replaced comes
      back, in English, until an English hello is recorded. --}}
 @if (! \App\Support\Region::ph())
-<p class="anee-hello-line" style="margin:.4rem auto .2rem;max-width:var(--anee-film,22rem);text-align:center;font-size:.86rem;line-height:1.5;color:var(--color-gray-500)">Your agricultural technician, on call day and night — ask about your crops, show a photo, tell me what you see in the field.</p>
+<p class="anee-hello-line" style="margin:.4rem auto .2rem;max-width:var(--anee-film,22rem);text-align:center;font-size:.86rem;line-height:1.5;color:var(--color-gray-500)">Your farm technician, here day and night. Ask about your crops, send a photo, or tell me what you see in the field.</p>
 @else
 <div class="anee-hello-film">
     <video playsinline preload="none"
@@ -96,7 +96,7 @@
            aria-label="A hello from your technician">
         <source src="{{ asset('videos/anee-hello.mp4') }}" type="video/mp4">
     </video>
-    <button type="button" class="anee-hello-play" aria-label="Play the hello">
+    <button type="button" class="anee-hello-play" aria-label="Play Anee's hello">
         <span><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg></span>
     </button>
 </div>

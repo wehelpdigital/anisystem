@@ -174,7 +174,7 @@ class GalleryController extends BaseScheduleController
         } elseif ($request->boolean('withImages')) {
             AsGalleryImage::where('albumId', $album->id)->update(['deleteStatus' => 0]);
         } elseif (AsGalleryImage::where('albumId', $album->id)->where('deleteStatus', 1)->exists()) {
-            return $this->jsonFail('That album still has pictures. Move them somewhere, or say to delete them too.', 422);
+            return $this->jsonFail('That album still has pictures. Move them to another album, or choose to delete them too.', 422);
         }
 
         $album->update(['deleteStatus' => 0]);
@@ -337,7 +337,7 @@ class GalleryController extends BaseScheduleController
 
         $ids = (array) $request->input('ids', []);
         if (! $ids) {
-            return $this->jsonFail('Nothing chosen.', 422);
+            return $this->jsonFail('Choose at least one picture.', 422);
         }
 
         $rows = AsGalleryImage::where('croppingScheduleId', $schedule->id)

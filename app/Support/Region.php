@@ -532,7 +532,7 @@ final class Region
         };
     }
 
-    /** The season's title with its years: "Dry season 2026–27", "Spring planting 2026". */
+    /** The season's title with its years: "Dry season 2026 to 2027", "Spring planting 2026". */
     public static function seasonTitle(string $key, int $year, ?string $country = null): string
     {
         if ($country && self::valid($country) && self::valid($country) !== self::code()) {
@@ -540,7 +540,7 @@ final class Region
         }
         $label = self::seasons()[$key] ?? ucfirst($key);
         if (in_array($key, ['dry', 'winter'], true)) {
-            return $label . ' ' . $year . '–' . substr((string) ($year + 1), -2);
+            return $label . ' ' . $year . ' to ' . ($year + 1);
         }
 
         return $label . ' ' . $year;
@@ -633,7 +633,7 @@ final class Region
 
                 return [$tier => [
                     'price' => $fmt($m), 'per' => '/month',
-                    'year' => $y ? 'or ' . $fmt($y) . '/year — about ' . $fmt(round($y / 12, 2)) . '/mo' : '',
+                    'year' => $y ? 'or ' . $fmt($y) . ' a year (about ' . $fmt(round($y / 12, 2)) . ' a month)' : '',
                 ]];
             })->filter()->all(),
             'pay' => $c['pay'] ?? [],

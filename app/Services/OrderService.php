@@ -309,7 +309,7 @@ class OrderService
 
         $credits = (int) ($o->credits ?? 0);
         if ($credits > 0) {
-            $this->credits->grant($user->id, $credits, $o->itemName . ' — ' . number_format($credits) . ' AI credits with the plan, order ' . $o->orderNumber, 'purchase');
+            $this->credits->grant($user->id, $credits, $o->itemName . ': ' . number_format($credits) . ' AI credits with the plan, order ' . $o->orderNumber, 'purchase');
         }
 
         return [
@@ -446,8 +446,8 @@ class OrderService
             return;
         }
         $this->safe(fn () => $this->mail->sendTemplateToUser('order_received', $user, $this->tags($o)));
-        $this->safe(fn () => $this->notes->notify($user->id, 'order', 'Payment received — being reviewed',
-            'Order ' . $o->orderNumber . ' · ' . $o->itemName . '. We will tell you the moment it is decided.', $this->buyerUrl($o)));
+        $this->safe(fn () => $this->notes->notify($user->id, 'order', 'Payment received, now being checked',
+            'Order ' . $o->orderNumber . ' · ' . $o->itemName . '. We will tell you as soon as it is decided.', $this->buyerUrl($o)));
     }
 
     private function tellApproved(AsOrder $o): void
@@ -461,11 +461,11 @@ class OrderService
             $tags = $this->tags($o) + ['planName' => $o->itemName, 'expiresAt' => Carbon::parse($effect['expiresAt'] ?? now())->format('M j, Y')];
             $this->safe(fn () => $this->mail->sendTemplateToUser('payment_approved', $user, $tags));
             $queued = ! empty($effect['queued']);
-            $this->safe(fn () => $this->notes->notify($user->id, 'order', $queued ? 'Payment approved — your plan is lined up' : 'Payment approved — ' . $o->itemName . ' is active',
+            $this->safe(fn () => $this->notes->notify($user->id, 'order', $queued ? 'Payment approved: your plan is lined up' : 'Payment approved: ' . $o->itemName . ' is active',
                 $queued ? 'It starts ' . Carbon::parse($effect['startsAt'])->format('M j, Y') . ', when your current plan ends.' : 'Everything in your plan is open now.', route('account.subscription')));
         } else {
             $this->safe(fn () => $this->mail->sendTemplateToUser('credits_approved', $user, $this->tags($o)));
-            $this->safe(fn () => $this->notes->notify($user->id, 'order', 'Payment approved — ' . number_format((int) $o->credits) . ' credits added',
+            $this->safe(fn () => $this->notes->notify($user->id, 'order', 'Payment approved: ' . number_format((int) $o->credits) . ' credits added',
                 'They are in your account now and never expire.', route('ai.credits')));
         }
     }
@@ -490,7 +490,7 @@ class OrderService
             ->pluck('id');
         $buyer = User::find($o->userId);
         foreach ($admins as $id) {
-            $this->safe(fn () => $this->notes->notify((int) $id, 'order-admin', 'Payment to review — ' . $o->orderNumber,
+            $this->safe(fn () => $this->notes->notify((int) $id, 'order-admin', 'Payment to review: ' . $o->orderNumber,
                 trim(($buyer?->firstName . ' ' . $buyer?->lastName)) . ' · ' . $o->itemName . ' · ' . $o->methodLabel() . ' ' . number_format((float) $o->total, 2),
                 route('admin.orders', ['open' => $o->id])));
         }

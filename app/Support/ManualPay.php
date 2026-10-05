@@ -119,7 +119,7 @@ class ManualPay
             }
 
             return [
-                'key' => $key, 'kind' => 'credits', 'name' => $pack->packName . ' — ' . number_format((int) $pack->credits) . ' AI credits',
+                'key' => $key, 'kind' => 'credits', 'name' => $pack->packName . ' · ' . number_format((int) $pack->credits) . ' AI credits',
                 'short' => $pack->packName . ' credits', 'tier' => null, 'period' => null, 'days' => null, 'months' => null,
                 'packId' => (int) $pack->id, 'credits' => (int) $pack->credits,
                 'price' => round(Region::packPrice($pack), 2), 'currency' => Region::currency(),

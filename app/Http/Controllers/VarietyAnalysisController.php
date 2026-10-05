@@ -48,7 +48,7 @@ class VarietyAnalysisController extends Controller
         'yield' => ['label' => 'Yield', 'sub' => 'How much it gives per hectare when it goes well', 'icon' => '🌾'],
         'protection' => ['label' => 'Protection & tolerance', 'sub' => 'Resistance to pests and disease, tolerance of stress', 'icon' => '🛡️'],
         'survival' => ['label' => 'Survival', 'sub' => 'Comes through drought, flood, heat, poor soil', 'icon' => '💪'],
-        'quickness' => ['label' => 'Quickness of harvest', 'sub' => 'Days to maturity — the sooner, the sooner it sells', 'icon' => '⏱️'],
+        'quickness' => ['label' => 'Quickness of harvest', 'sub' => 'Days to maturity. The sooner it is ready, the sooner it sells', 'icon' => '⏱️'],
     ];
 
     /** How much each place in the farmer's order weighs. */
@@ -61,15 +61,15 @@ class VarietyAnalysisController extends Controller
 
     /** The ground's troubles, the sister's list plus the two the soil matters most to. */
     public const PROBLEMS = [
-        'drought' => 'Dries out / water runs short mid-season',
+        'drought' => 'Dries out / water runs short in the middle of the season',
         'floods' => 'Floods / standing water after rain',
         'water_source' => 'Limited irrigation water source',
         'salinity' => 'Salty or brackish (near the sea, saline soil)',
-        'acidic' => 'Acidic soil (low pH — yellowing, poor growth)',
-        'alkaline' => 'Alkaline soil (high pH — white crust, pale leaves)',
+        'acidic' => 'Acidic soil (low pH: yellowing, poor growth)',
+        'alkaline' => 'Alkaline soil (high pH: white crust, pale leaves)',
         // The rest of the soil's chemistry (2026-09-29), as every analysis asks it.
-        'sodic' => 'Sodic soil (high sodium — crusts, seals, water sits)',
-        'acid_sulfate' => 'Acid sulfate soil (very sour — yellow mottles, rusty water, old mangrove or swamp)',
+        'sodic' => 'Sodic soil (high sodium: crusts, seals, water sits)',
+        'acid_sulfate' => 'Acid sulfate soil (very sour: yellow mottles, rusty water, old mangrove or swamp)',
         'wind' => 'Strong winds pass through (typhoon corridor)',
         'pests' => 'Pests have been heavy in past seasons',
         'disease' => 'Disease has hit past crops (blast, tungro, wilt, rot…)',
@@ -168,7 +168,7 @@ class VarietyAnalysisController extends Controller
             'notes' => 'nullable|string|max:400',
         ]);
         if ($v->fails()) {
-            return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
+            return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
         }
 
         $price = AiPrices::of('variety');
@@ -217,7 +217,7 @@ class VarietyAnalysisController extends Controller
             try {
                 DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
                     'status' => 'failed',
-                    'error' => 'The research took too long and was stopped. Nothing was charged — please try again.',
+                    'error' => 'The research took too long and was stopped. Nothing was charged. Please try again.',
                     'updated_at' => now(),
                 ]);
             } catch (\Throwable $e) {
@@ -262,7 +262,7 @@ class VarietyAnalysisController extends Controller
                 \Illuminate\Support\Facades\Log::warning('variety-analysis: unparsable answer', [
                     'head' => mb_substr((string) $result['text'], 0, 400),
                 ]);
-                throw new \RuntimeException($result['error'] ?? 'The analysis came back unreadable. Nothing was charged — please try again.');
+                throw new \RuntimeException($result['error'] ?? 'The analysis could not be read. Nothing was charged. Please try again.');
             }
 
             // The ranking honours the farmer's own order, whatever the model
@@ -276,7 +276,7 @@ class VarietyAnalysisController extends Controller
             $crop = CropCatalog::CROPS[$p['crop']] ?? ['label' => 'Crop'];
             $note = AiUsage::record('variety', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged,
-                mb_substr('Variety research — ' . $crop['label'] . ', ' . $p['location'] . $note, 0, 250));
+                mb_substr('Variety research: ' . $crop['label'] . ', ' . $p['location'] . $note, 0, 250));
 
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report),
@@ -376,8 +376,8 @@ class VarietyAnalysisController extends Controller
         if ($r->status === 'pending') {
             if ($this->dead($r)) {
                 $why = \Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(20))
-                    ? 'The research took too long and was stopped. Nothing was charged — please try again.'
-                    : 'The research was interrupted mid-way (the server restarted under it). Nothing was charged — please run it again.';
+                    ? 'The research took too long and was stopped. Nothing was charged. Please try again.'
+                    : 'The research was stopped halfway because the server restarted. Nothing was charged. Please run it again.';
                 DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
                     'status' => 'failed', 'deleteStatus' => 0,
                     'error' => $why,
@@ -487,7 +487,7 @@ class VarietyAnalysisController extends Controller
             ->where('kind', 'variety')
             ->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
-        return $this->json(true, 'Analysis removed.');
+        return $this->json(true, 'Research deleted.');
     }
 
     /** Rename a saved analysis and describe it in your own words. */
@@ -510,7 +510,7 @@ class VarietyAnalysisController extends Controller
                 'updated_at' => now(),
             ]);
         if (! $updated) {
-            return $this->json(false, 'That analysis is not on your shelf.', [], 404);
+            return $this->json(false, 'That research is not in your saved list.', [], 404);
         }
 
         return $this->json(true, 'Analysis updated.', ['title' => $title, 'description' => $description ?: null]);

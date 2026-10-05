@@ -147,7 +147,7 @@
         <span class="gt-seg-pill" id="gtSegPill" aria-hidden="true"></span>
         <button type="button" class="is-on" data-gt-mode="all" role="tab" aria-selected="true">All</button>
         <button type="button" data-gt-mode="season" role="tab" aria-selected="false">In a season</button>
-        <button type="button" data-gt-mode="global" role="tab" aria-selected="false">Global</button>
+        <button type="button" data-gt-mode="global" role="tab" aria-selected="false">In tools</button>
     </div>
 
     {{-- One season, or one tool — a chooser that opens only when there is a choice. --}}

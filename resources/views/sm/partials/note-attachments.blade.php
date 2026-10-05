@@ -27,7 +27,7 @@
                 {{-- With no saved map to reopen, the picture of it still
                      opens — a dead chip reads as a broken note. --}}
                 @if (! empty($m['mapUrl']))
-                    <a class="na na-map" href="{{ $m['mapUrl'] }}" title="Open this map in the Maps module">
+                    <a class="na na-map" href="{{ $m['mapUrl'] }}" title="Open this map in Maps">
                 @else
                     <button type="button" class="na na-map" data-lb-type="image" data-lb-url="{{ $m['url'] }}" title="Open this map picture">
                 @endif
@@ -40,7 +40,7 @@
                 @endif
             @elseif ($type === 'drawing')
                 @if (! empty($m['drawUrl']))
-                    <a class="na na-draw" href="{{ $m['drawUrl'] }}" title="Open this drawing in the Draw module">
+                    <a class="na na-draw" href="{{ $m['drawUrl'] }}" title="Open this drawing in Draw">
                 @else
                     <button type="button" class="na na-draw" data-lb-type="image" data-lb-url="{{ $m['url'] }}" title="Open this drawing">
                 @endif

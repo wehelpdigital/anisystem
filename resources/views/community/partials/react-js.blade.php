@@ -55,7 +55,7 @@
             const d = await res.json();
             if (d.success) paint(d.data.counts || {}, d.data.mine);
             else { paint(current, mine); say(d.message || 'Could not react.', 'error'); }
-        } catch (_) { paint(current, mine); say('Network error — try again.', 'error'); }
+        } catch (_) { paint(current, mine); say('No connection. Try again.', 'error'); }
         finally { delete btn.dataset.busy; }
     });
 })();

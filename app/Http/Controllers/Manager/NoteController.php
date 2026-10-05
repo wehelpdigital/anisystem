@@ -161,10 +161,10 @@ class NoteController extends BaseScheduleController
             'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:8192',
         ], [
             'image.required' => 'Pick a photo first.',
-            'image.max' => 'Photo is too large — max 8 MB.',
+            'image.max' => 'The photo is too large. The limit is 8 MB.',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         // Re-encode + downscale to WebP so a phone photo doesn't cost megabytes.
@@ -210,17 +210,17 @@ class NoteController extends BaseScheduleController
             'albumId' => 'nullable|integer',
         ], [
             'video.required' => 'Pick a video first.',
-            'video.max' => 'Video is too large — max 300 MB.',
+            'video.max' => 'The video is too large. The limit is 300 MB.',
             'video.mimetypes' => 'That file is not a supported video.',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         try {
             $out = VideoOptimizer::storeCompressed($request->file('video'), 'schedule-notes/' . $schedule->id . '/videos');
         } catch (\Throwable $e) {
-            return $this->jsonFail('Video processing failed: ' . $e->getMessage(), 500);
+            return $this->jsonFail('The video could not be saved: ' . $e->getMessage(), 500);
         }
 
         // Compress here, keep there. The clip and its poster are handed to the
@@ -279,7 +279,7 @@ class NoteController extends BaseScheduleController
             }
         }
 
-        return $this->jsonOk($filedIn ? 'Video attached — also filed in "' . $filedIn . '".' : 'Video attached.', [
+        return $this->jsonOk($filedIn ? 'Video attached. Also saved in "' . $filedIn . '".' : 'Video attached.', [
             'data' => [
                 'type' => 'video',
                 'path' => $out['video'],
@@ -308,11 +308,11 @@ class NoteController extends BaseScheduleController
             'title' => 'nullable|string|max:191',
         ], [
             'audio.required' => 'Record something first.',
-            'audio.max' => 'That recording is larger than 50 MB — record a shorter one.',
+            'audio.max' => 'That recording is larger than 50 MB. Record a shorter one.',
             'audio.mimetypes' => 'That does not sound like an audio recording.',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $path = \App\Support\MediaStore::putFile($request->file('audio'), 'notes', $schedule->id);
@@ -366,7 +366,7 @@ class NoteController extends BaseScheduleController
             'media.*.saveId' => 'nullable|integer',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $data = $validator->validated();

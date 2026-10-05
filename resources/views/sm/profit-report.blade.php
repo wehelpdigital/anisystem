@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Profit Report — ' . $schedule->title)
+@section('title', 'Profit Report: ' . $schedule->title)
 @section('page-title', 'Profit Report')
 @section('page-subtitle', $schedule->title)
 @section('back', \App\Support\BackTo::url(route('sm.reports', ['id' => $schedule->id]), $schedule->id))
@@ -234,12 +234,12 @@ const __init = () => {
     function buildText() {
         const d = DATA;
         const lines = [];
-        lines.push(`PROFIT REPORT — ${d.scheduleTitle || ''}`);
+        lines.push(`PROFIT REPORT: ${d.scheduleTitle || ''}`);
         lines.push('='.repeat(50));
         lines.push(`Generated: ${new Date().toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'), { dateStyle: 'medium', timeStyle: 'short' })}`);
         lines.push('');
         lines.push(`NET PROFIT: ${fmtPeso(d.profit)}${d.margin !== null ? ` (${d.margin}% margin)` : ''}`);
-        lines.push(`Money in: ${fmtPeso(d.revenue)} (day-book income ${fmtPeso(d.dayIncome)})`);
+        lines.push(`Money in: ${fmtPeso(d.revenue)} (day book income ${fmtPeso(d.dayIncome)})`);
         lines.push(`Money out: ${fmtPeso(d.cost)}`);
         CATS.forEach(([k, label]) => { if (d.costCats[k] > 0) lines.push(`  ${label}: ${fmtPeso(d.costCats[k])}`); });
         if ((d.warnings || []).length) {

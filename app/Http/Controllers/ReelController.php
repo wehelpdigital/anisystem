@@ -116,7 +116,7 @@ class ReelController extends Controller
         return $this->json(
             true,
             ! empty($stored['raw'])
-                ? 'Reel posted — but this server could not edit the video, so it went up as filmed.'
+                ? 'Reel posted, but your edits could not be added, so it went up as filmed.'
                 : 'Reel posted.',
             ['postId' => (int) $post->id, 'raw' => ! empty($stored['raw'])]
         );

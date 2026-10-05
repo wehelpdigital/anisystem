@@ -38,7 +38,7 @@ class TagItems
                 foreach (\App\Models\AsScheduleDayExpense::whereIn('id', $refIds)
                     ->where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->get() as $e) {
                     $out[] = ['kind' => 'expense', 'refId' => (int) $e->id, 'icon' => '💸',
-                        'title' => (trim((string) $e->note) ?: 'Expense') . ' — ' . \App\Support\Region::symbol() . number_format((float) $e->amount, 2),
+                        'title' => (trim((string) $e->note) ?: 'Expense') . ': ' . \App\Support\Region::symbol() . number_format((float) $e->amount, 2),
                         'sub' => 'expense · ' . $day($e->expenseDate),
                         'when' => (string) $e->expenseDate,
                         'url' => route('sm.activities', ['id' => $schedule->id, 'day' => substr((string) $e->expenseDate, 0, 10)])];
@@ -48,7 +48,7 @@ class TagItems
                 foreach (\App\Models\AsScheduleDayIncome::whereIn('id', $refIds)
                     ->where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->get() as $i) {
                     $out[] = ['kind' => 'income', 'refId' => (int) $i->id, 'icon' => '💰',
-                        'title' => (trim((string) ($i->title ?: $i->note)) ?: 'Income') . ' — ' . \App\Support\Region::symbol() . number_format((float) $i->amount, 2),
+                        'title' => (trim((string) ($i->title ?: $i->note)) ?: 'Income') . ': ' . \App\Support\Region::symbol() . number_format((float) $i->amount, 2),
                         'sub' => 'income · ' . $day($i->incomeDate),
                         'when' => (string) $i->incomeDate,
                         'url' => route('sm.activities', ['id' => $schedule->id, 'day' => substr((string) $i->incomeDate, 0, 10)])];
@@ -60,7 +60,7 @@ class TagItems
                     $in = (float) $m->delta >= 0;
                     $qty = rtrim(rtrim(number_format(abs((float) ($m->enteredQty ?? $m->delta)), 2), '0'), '.');
                     $out[] = ['kind' => 'move', 'refId' => (int) $m->id, 'icon' => '📦',
-                        'title' => ($m->item?->name ?: 'Stock') . ' — ' . ($in ? '+' : '−') . $qty . ' ' . ($m->enteredUnit ?: ''),
+                        'title' => ($m->item?->name ?: 'Stock') . ': ' . ($in ? '+' : '−') . $qty . ' ' . ($m->enteredUnit ?: ''),
                         'sub' => 'stock ' . ($in ? 'in' : 'out') . ' · ' . $day($m->happenedOn ?? $m->created_at),
                         'when' => (string) ($m->happenedOn ?: $m->created_at?->format('Y-m-d')),
                         'url' => route('sm.inventory', ['id' => $schedule->id, 'move' => $m->id])];

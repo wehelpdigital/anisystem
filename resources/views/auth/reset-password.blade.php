@@ -36,7 +36,7 @@
                         class="form-input" placeholder="Repeat your new password" required autocomplete="new-password">
                 </div>
 
-                <button type="submit" class="btn btn-accent btn-lg w-full">Reset Password</button>
+                <button type="submit" class="btn btn-accent btn-lg w-full">Save New Password</button>
             </form>
         </div>
 

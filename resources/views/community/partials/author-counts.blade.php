@@ -9,16 +9,16 @@
      Expects: $user, and the already-resolved $afMine, $afMate, $afMates,
      $afMutual, $afFollowers. --}}
 @if ($afMine)<span class="af-mate af-mine">🙋 Your account</span>@endif
-@if ($afMate)<span class="af-mate">🤝 Co-farmer</span>@endif
+@if ($afMate)<span class="af-mate">🤝 Cofarmer</span>@endif
 @if ($afMates > 0)
-    <span class="af-fact"><b>{{ $afMates }}</b> {{ \Illuminate\Support\Str::plural('co-farmer', $afMates) }}</span>
+    <span class="af-fact"><b>{{ $afMates }}</b> {{ \Illuminate\Support\Str::plural('cofarmer', $afMates) }}</span>
 @endif
 @if ($afMutual > 0)
     {{-- The number is a door: tap it and the shared faces slide up
          (community.partials.mutual-js, included by the pages that draw
          cards). --}}
     <button type="button" class="af-fact js-mutual" data-mutual-user="{{ $user->id }}"
-            data-mutual-name="{{ $user->firstName }}"><b>{{ $afMutual }}</b> mutual {{ \Illuminate\Support\Str::plural('co-farmer', $afMutual) }}</button>
+            data-mutual-name="{{ $user->firstName }}"><b>{{ $afMutual }}</b> mutual {{ \Illuminate\Support\Str::plural('cofarmer', $afMutual) }}</button>
 @endif
 @if ($afFollowers > 0)
     <span class="af-fact"><b>{{ $afFollowers }}</b> {{ \Illuminate\Support\Str::plural('follower', $afFollowers) }}</span>

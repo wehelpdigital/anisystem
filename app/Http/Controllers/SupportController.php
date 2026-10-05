@@ -54,7 +54,7 @@ class SupportController extends Controller
             'deleteStatus' => 1,
         ]);
 
-        return redirect()->route('support.show', ['id' => $ticket->id])->with('success', 'Ticket submitted — our team will reply here.');
+        return redirect()->route('support.show', ['id' => $ticket->id])->with('success', 'Ticket sent. Our team will reply here.');
     }
 
     public function show(Request $request, int $id)

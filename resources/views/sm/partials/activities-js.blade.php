@@ -149,8 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
        reads as a bug. Twin of $mayEdit/$editTitle in activity-card.blade.php.
        An activity note is an edit (appendNote goes through the write gate) —
        only the DAY's note is what "notes-only" buys. */
-    const WHY_NO_EDIT = 'Only someone who can edit the plan may do this';
-    const WHY_NO_NOTE = 'You are not allowed to write notes on this schedule';
+    const WHY_NO_EDIT = 'You do not have permission to edit this plan';
+    const WHY_NO_NOTE = 'You do not have permission to add notes here';
     const LOCK_EDIT = CAN_EDIT ? '' : ' disabled';
     const LOCK_EDIT_CLS = CAN_EDIT ? '' : ' is-locked';
     const LOCK_NOTE = MAY_NOTE ? '' : ' disabled';
@@ -363,12 +363,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function timeRequiredLabel(v) {
         if (v === 'whole') return 'Whole day';
-        if (v === 'n/a') return 'N/A';
+        if (v === 'n/a') return 'No set time';
         return 'Half day';
     }
     function timeRequiredShortLabel(v) {
         if (v === 'whole') return 'Whole';
-        if (v === 'n/a') return 'N/A';
+        if (v === 'n/a') return 'No set time';
         return 'Half';
     }
     function trimQty(q) {
@@ -1102,7 +1102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }).join('');
         } else if (a.activityType !== 'worker_payroll') {
             // A payroll day has no lot by nature, so saying so is noise.
-            lotsRow = '<span class="item-tag activity-na-tag" title="Not tied to any lot">N/A: No lot</span>';
+            lotsRow = '<span class="item-tag activity-na-tag" title="Not tied to any lot">No lot</span>';
         }
         // The variety below the title, as a regular neutral tag. The day
         // count that used to sit beside it has gone up to the lot's own chip.
@@ -1164,7 +1164,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const workerTags = a.activityType === 'worker_payroll' ? '' : workerIds
             .map((id) => `<span class="item-tag worker-tag">${esc(WORKER_NAMES[id] || ('Worker #' + id))}`
                 + (workerOffOn(Number(id), (a.targetDate || '').slice(0, 10))
-                    ? '<span class="w-forced" title="Day off, but working anyway">forced</span>' : '')
+                    ? '<span class="w-forced" title="Day off, but working anyway">on day off</span>' : '')
                 + '</span>')
             .join('');
 
@@ -1193,7 +1193,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ? `<button type="button" class="act-voice-chip" data-audio-url="${esc(im.url)}"><img src="{{ asset('images/voice-recorder.png') }}" alt="" style="width:.95rem;height:.95rem;object-fit:contain"> Voice note</button>`
                     : (im.kind === 'video' || /\.(mp4|mov|m4v|webm|ogv|3gp)(\?|$)/i.test(im.path || im.url || ''))
                     ? `<video src="${esc(im.url)}" controls playsinline preload="metadata"></video>`
-                    : `<img src="${esc(im.url)}" alt="Reference image" loading="lazy">`)).join('')}</div>`
+                    : `<img src="${esc(im.url)}" alt="Activity photo" loading="lazy">`)).join('')}</div>`
             : '';
         const nameAttr = esc(a.activityTitle || '');
 
@@ -1235,7 +1235,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </span>
             <div class="min-w-0 grow">
             <div class="activity-card-lots activity-card-lothead">${isReminderCard
-                ? '<span class="badge reminder-head-badge">Reminder Checklist</span>'
+                ? '<span class="badge reminder-head-badge">Reminder checklist</span>'
                 : lotsRow}</div>
             <div class="act-title-line">
                 <h3 class="activity-card-title">${esc(a.activityTitle || '')}</h3>
@@ -1303,7 +1303,7 @@ document.addEventListener('DOMContentLoaded', () => {
                as any other change to the plan — no per-worker exception like
                the payroll roster has. Drawn greyed rather than dropped, and
                mirrored in activity-card.blade.php. */
-            return `<label class="act-rem-row${r.done ? ' is-done' : ''}${LOCK_EDIT_CLS}" data-rem-index="${i}" title="${esc(editTitle('Tick this errand off'))}">
+            return `<label class="act-rem-row${r.done ? ' is-done' : ''}${LOCK_EDIT_CLS}" data-rem-index="${i}" title="${esc(editTitle('Tick when done'))}">
                 <input type="checkbox"${r.done ? ' checked' : ''}${LOCK_EDIT}>
                 <span class="act-rem-name">${esc(r.text)}</span>
                 ${money}
@@ -1332,7 +1332,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const w = pay[id];
                 const here = w.present !== false;
                 const forced = workerOffOn(Number(id), date)
-                    ? '<span class="w-forced" title="Marked off this day">forced</span>' : '';
+                    ? '<span class="w-forced" title="Marked off this day">on day off</span>' : '';
                 // Anyone who can edit may move any tick; a worker may move
                 // only their own, and only where the task allows it.
                 const mine = ME_WORKER_ID && Number(ME_WORKER_ID) === Number(id);
@@ -1477,9 +1477,9 @@ document.addEventListener('DOMContentLoaded', () => {
     function labourParts(pay) {
         return Object.values(pay || {})
             .map((p) => {
-                const len = p.effectivePart === 'half' ? '½d' : (p.effectivePart === 'whole' ? '1d' : '—');
+                const len = p.effectivePart === 'half' ? '½d' : (p.effectivePart === 'whole' ? '1d' : '');
 
-                return `${p.name || 'Worker'} ${len} ${money(p.total)}`;
+                return `${p.name || 'Worker'}${len ? ' ' + len : ''} ${money(p.total)}`;
             })
             .join(' · ');
     }
@@ -1614,7 +1614,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function openAdvancedInfo(id, name) {
-        $id('advInfoTitle').textContent = name || 'Advanced info';
+        $id('advInfoTitle').textContent = name || 'Past work here';
         $id('advInfoBody').innerHTML = '<p class="text-sm text-gray-500 text-center py-6">Loading…</p>';
         $id('advInfoSub').textContent = '';
         openSheet('advInfoSheet');
@@ -1845,7 +1845,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 delete pill.dataset.short;
                 pill.innerHTML = total > 0
                     ? `${SVG.wallet}<span>${esc(money(total))}</span>`
-                    : `${SVG.wallet}<span>&mdash;</span>`;
+                    : `${SVG.wallet}<span>0</span>`;
             }
             const tip = total > 0
                 ? 'Cash to prepare for this day: wages, materials, stock bought and extra expenses'
@@ -2457,7 +2457,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="dd-link"><span>${span ? ddDays(span) + ' later' : 'Same day'}</span></div>
                 ${ddEnd(B)}
             </div>`;
-        $id('dateDiffTitle').textContent = 'Date difference';
+        $id('dateDiffTitle').textContent = 'Days between';
         $id('dateDiffBody').innerHTML = html;
         openSheet('dateDiffSheet');
     }
@@ -2570,7 +2570,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const short = n + ' lot' + (n === 1 ? '' : 's');
                 const word = pill.querySelector('span:last-child');
                 if (!word || word.textContent === short) return false;
-                if (!pill.title) pill.title = 'What the crop is doing on this day';
+                if (!pill.title) pill.title = 'Crop stage on this day';
                 word.textContent = short;
                 return true;
             },
@@ -2813,8 +2813,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // line. The month is repeated only when the range crosses one.
         const rangeShort = (dateObj && latestEndObj)
             ? (latestEndObj.getMonth() === dateObj.getMonth() && latestEndObj.getFullYear() === dateObj.getFullYear()
-                ? `${MONTH_SHORT[dateObj.getMonth()]} ${dateObj.getDate()}–${latestEndObj.getDate()}, ${yy}`
-                : `${MONTH_SHORT[dateObj.getMonth()]} ${dateObj.getDate()} – ${MONTH_SHORT[latestEndObj.getMonth()]} ${latestEndObj.getDate()}, ${yy}`)
+                ? `${MONTH_SHORT[dateObj.getMonth()]} ${dateObj.getDate()} to ${latestEndObj.getDate()}, ${yy}`
+                : `${MONTH_SHORT[dateObj.getMonth()]} ${dateObj.getDate()} to ${MONTH_SHORT[latestEndObj.getMonth()]} ${latestEndObj.getDate()}, ${yy}`)
             : '';
         const headerDate = dateObj
             ? `<span class="date-header-day">${DAY_SHORT[dateObj.getDay()]}</span><span class="date-header-date${rangeShort ? ' has-range' : ''}"><span class="dh-long">${esc(prettyDate(dateKey))}</span><span class="dh-short">${esc(dateShort)}</span>${rangeShort ? `<span class="dh-rangeshort">${esc(rangeShort)}</span>` : ''}</span>${rangeBadge}`
@@ -2839,7 +2839,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <button type="button" class="date-header-btn date-note-btn${LOCK_NOTE_CLS}" data-date="${esc(dateKey)}"${LOCK_NOTE} title="${esc(noteTitle('Add a note to this day'))}">${SVG.notePlus}</button>
                 <button type="button" class="date-header-btn day-expense-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Add an extra expense for this day'))}">${SVG.coin}</button>
                 <button type="button" class="date-header-btn date-marker-btn${hasMarker ? ' has-marker' : ''}${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle(hasMarker ? 'Edit the resume here marker' : 'Add a resume here marker after this day'))}">${SVG.bookmark}</button>
-                ${dateObj ? `<button type="button" class="date-header-btn share-day-btn" data-date="${esc(dateKey)}" title="Share this day's schedule (public link)">${SVG.share}</button>` : ''}
+                ${dateObj ? `<button type="button" class="date-header-btn share-day-btn" data-date="${esc(dateKey)}" title="Share this day (public link)">${SVG.share}</button>` : ''}
                 <button type="button" class="date-header-btn change-group-date-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Change the date of this whole day'))}">${SVG.calendarEdit}</button>
                 <button type="button" class="date-header-btn move-group-das-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Move this whole day to a day number'))}">${SVG.dayNumber}</button>
                 <button type="button" class="date-header-btn date-header-delete-btn delete-group-date-btn${LOCK_EDIT_CLS}" data-date="${esc(dateKey)}"${LOCK_EDIT} title="${esc(editTitle('Delete all activities on this day'))}">${SVG.trash}</button>
@@ -2870,7 +2870,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${headerDate}
                 <span class="date-header-count">${count}<span class="dh-word"> ${count === 1 ? 'activity' : 'activities'}</span></span>
                 ${buttons}
-                <span class="date-header-stage" hidden title="What the crop is doing on this day"></span>
+                <span class="date-header-stage" hidden title="Crop stage on this day"></span>
                 <span class="date-header-cash" hidden></span>
             </div>
             <div class="date-body"><div class="date-body-inner">
@@ -3391,7 +3391,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * oil or an acidic partner, and a herbicide in a knapsack that later
      * sprays a crop is a mistake you only make once. Saying so here is
      * cheaper than saying it after the field turns. */
-    const TT_SOLO = { copper_fungicide: 'Copper-based products', herbicide: 'Herbicide' };
+    const TT_SOLO = { copper_fungicide: 'Copper products', herbicide: 'Herbicide' };
     const TT_SOLO_WHY = {
         copper_fungicide: 'Copper burns leaves when mixed with oils or acids, and it kills most biologicals. Spray it on its own.',
         herbicide: 'Do not mix a herbicide with anything meant to help the crop. Rinse the sprayer well before using it for anything else.',
@@ -3598,7 +3598,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const others = mine.filter((t) => t !== solo).map((t) => warnChem(t)).join(', ');
                 const where = (a.lots || []).length
                     ? a.lots.map((l) => warnLotName(l)).join(', ')
-                    : 'the whole schedule';
+                    : 'the whole farm';
                 push(date, {
                     sig: `tank|${date}|${a.id}`,
                     ico: '🧪',
@@ -3637,7 +3637,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         push(date, {
                             sig: `overload|${date}|${lid}|${strongToday.type}>${sprayPrev.type}`,
                             ico: '🧪',
-                            title: 'Back-to-back chemical sprays',
+                            title: 'Chemical sprays two days in a row',
                             lots: [lid],
                             detail: `${warnLotName(lid)} got ${warnChem(sprayPrev.type)} yesterday, and today you are applying ${warnChem(strongToday.type)}. Strong sprays two days in a row can stress the crop or burn its leaves. Space them a few days apart.`,
                         });
@@ -3649,7 +3649,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         push(date, {
                             sig: `granular2|${date}|${lid}`,
                             ico: '🧂',
-                            title: 'Granular fertilizer two days running',
+                            title: 'Granular fertilizer two days in a row',
                             lots: [lid],
                             detail: `${warnLotName(lid)} got granular fertilizer yesterday and again today. Two days in a row can burn the crop or build up salt. Check the rates.`,
                         });
@@ -4076,7 +4076,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = $id('toggleHiddenBtn');
         if (!btn) return;
         const showing = document.body.classList.contains('show-hidden-activities');
-        $id('toggleHiddenLabel').textContent = (showing ? 'Hide Hidden' : 'Show Hidden') + ' (' + n + ')';
+        $id('toggleHiddenLabel').textContent = (showing ? 'Stop showing hidden' : 'Show hidden') + ' (' + n + ')';
         if (window.animToggleHidden) window.animToggleHidden(btn, n === 0);
         else btn.classList.toggle('hidden', n === 0);
         if (n === 0 && showing) {
@@ -4213,7 +4213,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (off && picked && !tag) {
                 tag = document.createElement('span');
                 tag.className = 'chip-forced';
-                tag.textContent = 'forced';
+                tag.textContent = 'on day off';
                 chip.appendChild(tag);
             } else if ((!off || !picked) && tag) {
                 tag.remove();
@@ -4271,7 +4271,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .map((c) => (c.textContent || '').trim()).filter(Boolean);
         // On a plan without the Workers module the tag names the plan instead.
         const shut = !!$id('activityWorkersBtn')?.dataset.tierLock;
-        t.textContent = !names.length ? (shut ? 'Workers: ' + (window.aneeTierName?.($id('activityWorkersBtn').dataset.tierLock) || 'a higher') + ' plan' : 'Nobody assigned (N/A)')
+        t.textContent = !names.length ? (shut ? 'Workers: ' + (window.aneeTierName?.($id('activityWorkersBtn').dataset.tierLock) || 'a higher') + ' plan' : 'Nobody assigned')
             : (names.length <= 2 ? names.join(', ') : names.length + ' workers');
         t.classList.toggle('is-none', !names.length);
     }
@@ -4463,7 +4463,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (workers.length) {
             bits.push(part
                 ? 'wages, ' + (part === 'whole' ? 'whole day' : 'half day') + ' × ' + who
-                : 'no wages: the time is N/A');
+                : 'no wages: no set time');
         }
         if (materials > 0) bits.push((workers.length ? '+ ' : '') + money(materials) + ' materials');
         const figure = money(wages + materials);
@@ -4945,7 +4945,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('activityImagesSection')?.classList.toggle('hidden', !task);
         $id('activityItemsSection')?.classList.toggle('hidden', svc || reminders);
         const secLabel = $id('itemsSectionLabel');
-        if (secLabel) secLabel.textContent = irr ? 'Materials' : 'Materials & Items';
+        if (secLabel) secLabel.textContent = irr ? 'Materials' : 'Materials & items';
         const titleEl = $id('activityTitle');
         if (titleEl) titleEl.setAttribute('placeholder',
             reminders ? 'e.g. Errands for the day'
@@ -5230,7 +5230,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         ? `<video src="${esc(m.url)}" muted playsinline preload="metadata"></video>
                            <span class="activity-image-play" aria-hidden="true">
                              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>`
-                        : `<img src="${esc(m.url)}" alt="Reference image" loading="lazy">`}
+                        : `<img src="${esc(m.url)}" alt="Activity photo" loading="lazy">`}
                     <button type="button" class="activity-image-x" data-remove-image="${i}" aria-label="Remove">✕</button>
                 </div>`).join('');
             grid.classList.toggle('hidden', rows.length === 0);
@@ -5722,7 +5722,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // This panel folds (animated) rather than display-hiding.
             $id('itemPanelFold')?.classList.add('is-shut');
             $id('itemsToggleBtn')?.setAttribute('aria-expanded', 'false');
-            if ($id('itemsToggleLabel')) $id('itemsToggleLabel').textContent = '+ Item';
+            if ($id('itemsToggleLabel')) $id('itemsToggleLabel').textContent = '+ Add item';
             return;
         }
         $id(formId)?.classList.add('hidden');
@@ -5846,7 +5846,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 b.setAttribute('data-value', id);
                 return b;
             }, filterHost?.querySelector('[data-value="__na__"]'));
-        if (filt) filt.title = 'Hide ' + lot.lotName + '. Cards that also cover a shown lot stay.';
+        if (filt) filt.title = 'Hide ' + lot.lotName + '. Activities that also cover a lot you still show will stay.';
 
         // Its day zero and counter may be new facts for the cards already on
         // the board, and its stage for the day headers.
@@ -6017,7 +6017,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $id('itemsToggleBtn')?.addEventListener('click', () => {
         const shut = $id('itemPanelFold').classList.toggle('is-shut');
         $id('itemsToggleBtn').setAttribute('aria-expanded', shut ? 'false' : 'true');
-        $id('itemsToggleLabel').textContent = shut ? '+ Item' : 'Cancel';
+        $id('itemsToggleLabel').textContent = shut ? '+ Add item' : 'Cancel';
         if (!shut) {
             refreshNameDatalist();
             /* The shelf is fetched the first time somebody opens this, not on
@@ -6080,7 +6080,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (unitNow) { unitNow.textContent = 'Pick a unit'; unitNow.classList.add('is-none'); }
         $id('itemPanelFold')?.classList.add('is-shut');
         $id('itemsToggleBtn')?.setAttribute('aria-expanded', 'false');
-        if ($id('itemsToggleLabel')) $id('itemsToggleLabel').textContent = '+ Item';
+        if ($id('itemsToggleLabel')) $id('itemsToggleLabel').textContent = '+ Add item';
     });
 
     // Escape a value for use inside an attribute selector.
@@ -6120,7 +6120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Collapse + clear the add-item panel.
         $id('itemPanelFold')?.classList.add('is-shut');
         $id('itemsToggleBtn')?.setAttribute('aria-expanded', 'false');
-        if ($id('itemsToggleLabel')) $id('itemsToggleLabel').textContent = '+ Item';
+        if ($id('itemsToggleLabel')) $id('itemsToggleLabel').textContent = '+ Add item';
         ['itemNameInput', 'itemPriceInput', 'itemUnitInput'].forEach((idv) => { if ($id(idv)) $id(idv).value = ''; });
         if ($id('itemQtyInput')) $id('itemQtyInput').value = '1';
         const unitNow = $id('itemUnitNow');
@@ -7287,7 +7287,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!id) return;
         const ok = window.confirmAction
             ? await confirmAction({ title: 'Remove this income?', message: 'It will no longer count towards the day.', confirmText: 'Remove' })
-            : confirm('Remove this income entry?');
+            : confirm('Remove this income?');
         if (!ok) return;
         try {
             const res = await api(U.dayIncomeDelete(id), { method: 'DELETE', body: { incomeId: id } });
@@ -7403,8 +7403,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="wx-hour" title="${esc(h.text || '')}">
                             <div class="wx-hour-time">${esc(h.hour || '')}</div>
                             <div class="wx-hour-emoji">${hourArt(h)}</div>
-                            <div class="wx-hour-temp">${h.temp != null ? h.temp + '&deg;' : '&ndash;'}</div>
-                            <div class="wx-hour-pop ${(h.pop || 0) < 20 ? 'is-dry' : ''}">&#128167;${h.pop != null ? h.pop + '%' : '&mdash;'}</div>
+                            <div class="wx-hour-temp">${h.temp != null ? h.temp + '&deg;' : ''}</div>
+                            <div class="wx-hour-pop ${(h.pop || 0) < 20 ? 'is-dry' : ''}">${h.pop != null ? '&#128167;' + h.pop + '%' : ''}</div>
                         </div>`).join('')}</div>`
                     : '<p class="wx-legend mt-2">No hourly weather was saved for this day.</p>';
                 return `<div class="card mb-3"><div class="card-body">
@@ -7417,7 +7417,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="wx-verdict mt-3"><span class="wx-verdict-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2h-2M9 3h6v3H9V3zM8 12h8M8 16h5"/></svg></span><span class="wx-verdict-text">
                         ${esc(d.text || 'No reading')}${d.max != null ? `, high of <b>${d.max}&deg;</b>` : ''}${d.min != null ? `, low of <b>${d.min}&deg;</b>` : ''}.
-                        Chance of rain that day was <b>${d.pop != null ? d.pop + '%' : '&mdash;'}</b>.
+                        ${d.pop != null ? `Chance of rain that day was <b>${d.pop}%</b>.` : 'The chance of rain was not saved.'}
                     </span></div>
                     ${rail}
                 </div></div>`;
@@ -8162,7 +8162,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('emailWhoMsgCount').parentElement.classList.remove('is-near');
         ewSay('', false);
 
-        title.textContent = about.activityId ? 'Email this activity' : 'Email this date';
+        title.textContent = about.activityId ? 'Email this activity' : 'Email this day';
         what.textContent = about.activityId ? (about.name || 'This activity') : 'The work for this day';
         when.textContent = about.activityId ? '' : (about.date || '');
         note.textContent = '';
@@ -8572,7 +8572,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json().catch(() => ({}));
             const items = (data.data && data.data.items) || [];
             if (!items.length) {
-                box.innerHTML = '<p class="text-sm text-gray-400 px-2 py-3 text-center">No co-farmers yet. Connect with members in the Community.</p>';
+                box.innerHTML = '<p class="text-sm text-gray-400 px-2 py-3 text-center">No cofarmers yet. Connect with members in the Community.</p>';
                 return;
             }
             box.innerHTML = items.map((u) => {
@@ -8586,7 +8586,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }).join('');
         } catch (_) {
             box.dataset.loaded = '';
-            box.innerHTML = '<p class="text-sm text-red-500 px-2 py-3 text-center">Could not load co-farmers.</p>';
+            box.innerHTML = '<p class="text-sm text-red-500 px-2 py-3 text-center">Could not load your cofarmers.</p>';
         }
     }
     document.addEventListener('click', async (e) => {
@@ -8614,7 +8614,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json().catch(() => ({}));
             if (res.ok && data.success !== false) {
                 send.textContent = 'Sent ✓';
-                toast('Shared with your co-farmer.');
+                toast('Shared with your cofarmer.');
             } else {
                 send.disabled = false; send.textContent = orig;
                 toast(data.message || 'Could not send.', 'error');
@@ -8810,7 +8810,7 @@ document.addEventListener('DOMContentLoaded', () => {
             recomputeLotDayZero();
             toast(`Moved ${items.length} ${items.length === 1 ? 'activity' : 'activities'} to ${prettyDateWords(newDate)}`
                 + (lockedCount ? ` · ${lockedCount} done stayed locked` : ''));
-            pushUndo(`Move group from ${oldDate} to ${newDate}`, () => restoreBoardSnapshot(snapshot));
+            pushUndo(`Move day from ${oldDate} to ${newDate}`, () => restoreBoardSnapshot(snapshot));
             return true;
         } catch (err) {
             toast(err.message, 'error');
@@ -9357,10 +9357,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<div class="ivn-row ${r.isIn ? '' : 'is-out'}" data-move-id="${r.id}" data-date="${esc(dateKey)}" data-reason="${esc(r.reason || '')}" data-item-id="${r.itemId || ''}" data-qty="${r.qty || 0}"${MAY_DRAG ? ' draggable="true" title="Drag between the day\u2019s activities, or to another day \u00b7 tap the dots for options"' : ''}>
                 <span class="ivn-e">${r.isIn ? '📥' : '📤'}</span>
                 <span class="ivn-t">
-                    <b>${r.isIn ? 'Added' : 'Expensed'} ${esc(r.says)}</b> · ${esc(r.icon)} ${esc(r.name)}
+                    <b>${r.isIn ? 'Added' : 'Used'} ${esc(r.says)}</b> · ${esc(r.icon)} ${esc(r.name)}
                     <small>· ${esc(r.reasonLabel)}${r.typedSays ? ' · typed as ' + esc(r.typedSays) : ''}${r.note ? ' · ' + esc(r.note) : ''}</small>
                 </span>
-                <button type="button" class="ivn-kebab${LOCK_EDIT_CLS}"${LOCK_EDIT} data-ivn-menu="${r.id}" title="${esc(editTitle('Entry options'))}" aria-label="Entry options">
+                <button type="button" class="ivn-kebab${LOCK_EDIT_CLS}"${LOCK_EDIT} data-ivn-menu="${r.id}" title="${esc(editTitle('More options'))}" aria-label="More options">
                     <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg>
                 </button>
                 ${IVN_GRIP}
@@ -9532,7 +9532,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ivnMoveCtx = ivnMenuCtx;
         dxMenuCtx = null;   // the day list is shared; one asker at a time
         const { date } = ivnMoveCtx;
-        $id('dxMoveSubtitle').textContent = 'Inventory entry, now on ' + prettyDateFull(date);
+        $id('dxMoveSubtitle').textContent = 'Stock record, now on ' + prettyDateFull(date);
         const body = $id('dxMoveBody');
         body.innerHTML = boardDays().map((d) => {
             const cur = d === date;
@@ -9914,7 +9914,7 @@ document.addEventListener('DOMContentLoaded', () => {
             repaintDayCash(fromDate);
             repaintDayCash(toDate);
             toast(fromDate === toDate
-                ? (kind === 'income' ? 'Income strip moved.' : 'Expense strip moved.')
+                ? (kind === 'income' ? 'Income list moved.' : 'Expense list moved.')
                 : ((kind === 'income' ? 'Income' : 'Expenses') + ' moved to ' + prettyDateWords(toDate) + '.'));
         } catch (err) {
             toast(err.message, 'error');
@@ -10055,7 +10055,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!mayEditBoard() || !id) return;
         const ok = window.confirmAction
             ? await confirmAction({ title: 'Delete this income?', message: 'It will no longer count towards the day.', confirmText: 'Delete', danger: true })
-            : confirm('Delete this income entry?');
+            : confirm('Delete this income?');
         if (!ok) return;
         try {
             await api(U.dayIncomeDelete(id), { method: 'DELETE', body: { incomeId: id } });
@@ -10519,7 +10519,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $id('progressMarkerId').value = info ? info.id : '';
         $id('markerSheetDate').textContent = prettyDateFull(dateKey);
         $id('progressMarkerNote').value = info ? info.note : '';
-        $id('markerSheetTitle').textContent = info ? 'Edit resume here marker' : 'Drop resume here marker';
+        $id('markerSheetTitle').textContent = info ? 'Edit resume here marker' : 'Add resume here marker';
         $id('progressMarkerClearBtn').classList.toggle('hidden', !info);
         openSheet('markerSheet');
         window.smFocus($id('progressMarkerNote'), { delay: 250 });
@@ -10776,7 +10776,7 @@ document.addEventListener('DOMContentLoaded', () => {
         el.setAttribute('data-sort-key', '0');
         el.setAttribute('data-media', JSON.stringify(mediaArr || []));
         el.setAttribute('data-title', title || '');
-        el.setAttribute('title', MAY_DRAG_NOTE ? 'Drag the grip to move · tap the dots for options' : 'Tap the pencil to edit');
+        el.setAttribute('title', MAY_DRAG_NOTE ? 'Drag the grip to move · tap the dots for options' : 'Tap the dots for options');
         el.innerHTML = (MAY_DRAG_NOTE ? INLINE_GRIP : '') + INLINE_TAG
             + inlineTitleHtml(title)
             + '<div class="inline-note-body">' + (bodyHtml || '') + '</div>'
@@ -10967,7 +10967,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.openNoteEditor({
             title: 'Add a note',
             askTitle: true,
-            noteTitle: suggested ? (suggested + ' — ' + prettyDate(dateKey)) : '',
+            noteTitle: suggested ? (suggested + ' (' + prettyDate(dateKey) + ')') : '',
             bodyHtml: '',
             media: mediaArr || [],
             imageUploadUrl: U.noteImageUpload(),
@@ -12537,7 +12537,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderDraftRow(d) {
-        const lots = (d.lots || []).map((l) => esc(l.lotName)).join(', ') || '—';
+        const lots = (d.lots || []).map((l) => esc(l.lotName)).join(', ') || 'None';
         const dateLabel = d.targetDate ? prettyDateFull(d.targetDate) : 'No date';
         const priority = d.priority || 'medium';
         const priorityCap = priority.charAt(0).toUpperCase() + priority.slice(1);

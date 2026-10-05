@@ -1156,7 +1156,7 @@
         /* ---------------- undoing one hand-typed entry ---------------- */
         async function delMove(id) {
             const ok = window.confirmAction ? await window.confirmAction({
-                title: 'Remove this entry?',
+                title: 'Remove this stock change?',
                 message: 'The stock goes back to what it was before this line. Later lines keep their old numbers.',
                 confirmText: 'Remove',
             }) : true;

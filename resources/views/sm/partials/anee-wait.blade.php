@@ -51,7 +51,7 @@
             <div class="aw-prog-row"><b id="aneeWaitPct">0%</b><span id="aneeWaitStep">Starting…</span><i id="aneeWaitClock">0:00</i></div>
             <p class="aw-check" id="aneeWaitCheck"></p>
         </div>
-        <p class="aw-stay" id="aneeWaitStay">Please stay on this screen. Closing or leaving loses this run — and the credits it uses.</p>
+        <p class="aw-stay" id="aneeWaitStay">Please stay on this screen. If you close it or leave, you lose this run and the credits it uses.</p>
     </div>
 </div>
 <style>
@@ -185,7 +185,7 @@
         // being out of reach -- that is the farmer's signal, not Anee's.
         checkEl.classList.remove('is-quiet', 'is-lost');
         if (P.ready || P.misses <= 0) { checkEl.textContent = ''; return; }
-        checkEl.textContent = `Can’t reach the server — retrying (${P.misses}/8)…`;
+        checkEl.textContent = `Can’t reach the server. Trying again (${P.misses}/8)…`;
         checkEl.classList.add('is-lost');
     };
     const startProg = (phases) => {
@@ -213,7 +213,7 @@
        shared pool in a fresh shuffle each run, so a three-minute wait never
        shows the same five sentences going round. */
     const MORE_LINES = [
-        'Cross-checking the numbers against the official recommendations…',
+        'Checking the numbers against the official recommendations…',
         'Reading the seasonal outlook once more…',
         'Weighing what the soil can hold against what the crop can take…',
         'Thinking about where the water will sit on this field…',
@@ -282,7 +282,7 @@
                 try { st = await window.api(job(id), { method: 'GET' }); }
                 catch (err) {
                     const failed = err.data && err.data.status === 'failed';
-                    const transient = !failed && (err.offline || (err.status && err.status >= 500) || /^Request failed \(5\d\d\)$/.test(err.message || ''));
+                    const transient = !failed && (err.offline || (err.status && err.status >= 500) || /^Request failed \(5\d\d\)$|\(error 5\d\d\)/.test(err.message || ''));
                     if (transient && ++misses <= 8) { window.aneeWait.progress({ misses }); continue; }
                     throw err;
                 }
@@ -291,7 +291,7 @@
                 if (d.status === 'ready') { stopProg(true); return d; }
                 window.aneeWait.progress({ phase: d.phase || 'start', try: d.try || 1, beatAgo: d.beatAgo, misses: 0 });
             }
-            throw new Error('Still working — give it a minute, then look on the Saved tab.');
+            throw new Error('Still working. Wait a minute, then check the Saved tab.');
         },
         phases: { research: RESEARCH_PHASES, plain: PLAIN_PHASES },
         show(opts = {}) {
@@ -337,7 +337,7 @@
                 stopProg(true);
                 clearInterval(lineTimer);
                 if (opts.title) title.textContent = opts.title;
-                line.textContent = opts.line || 'Done — here is what I found.';
+                line.textContent = opts.line || 'Done. Here is what I found.';
                 sub.textContent = '';
                 veil.classList.add('is-done');
                 const lift = () => {

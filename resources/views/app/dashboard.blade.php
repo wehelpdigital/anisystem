@@ -896,13 +896,13 @@
                     {{ $daysRemaining }} {{ \Illuminate\Support\Str::plural('day', (int) $daysRemaining) }} left
                 </span>
             @elseif ($status === 'pending')
-                <span class="dash-chip is-warn">Verification pending</span>
+                <span class="dash-chip is-warn">Payment being checked</span>
             @elseif (\App\Support\WorkerContext::activeGrant())
                 {{-- A worker is not the one who buys. The plan that governs
                      what they can reach is the farm's, and the button would
                      sell them a rung that changes nothing here. --}}
             @else
-                <a href="{{ route('purchase.plans') }}" class="btn btn-primary btn-sm">Upgrade your access</a>
+                <a href="{{ route('purchase.plans') }}" class="btn btn-primary btn-sm">Upgrade your plan</a>
             @endif
         </div>
     </div>
@@ -932,11 +932,11 @@
             <i>{{ \Illuminate\Support\Str::plural('Schedule', $scheduleCount) }}</i>
         </a>
         <div class="dash-stat">
-            <b class="dash-stat-word">{{ $isSuperAdmin ? 'Admin' : ($isActive ? $subscription->planName : ($isLibre ? config('tiers.libre.name', 'Libre') : '—')) }}</b>
+            <b class="dash-stat-word">{{ $isSuperAdmin ? 'Admin' : ($isActive ? $subscription->planName : ($isLibre ? config('tiers.libre.name', 'Libre') : 'None')) }}</b>
             <i>Active plan</i>
         </div>
         <div class="dash-stat {{ $expiringSoon ? 'is-warn' : '' }}">
-            <b>{{ $isSuperAdmin || $isLibre ? '∞' : ($isActive && $daysRemaining !== null ? number_format($daysRemaining) : '—') }}</b>
+            <b>{{ $isSuperAdmin || $isLibre ? '∞' : ($isActive ? ($daysRemaining !== null ? number_format($daysRemaining) : '∞') : '0') }}</b>
             <i>Days left</i>
         </div>
     </div>
@@ -1295,7 +1295,7 @@
                         {{-- The bar is a real slider, so it can be dragged to a
                              verse rather than only watched. --}}
                         <div class="dash-song-track">
-                            <input type="range" id="dashSongSeek" min="0" max="1000" value="0" step="1" aria-label="Seek">
+                            <input type="range" id="dashSongSeek" min="0" max="1000" value="0" step="1" aria-label="Move through the song">
                             <span class="dash-song-fill" id="dashSongFill"></span>
                         </div>
                         <span class="dash-song-time" id="dashSongTime">0:00</span>
@@ -1355,7 +1355,7 @@
                 <a href="{{ route('community.index') }}" id="dashWallEmpty" class="card card-hover block {{ $connectedWall->isEmpty() ? '' : 'hidden' }}">
                     <div class="card-body text-center py-8">
                         <div class="text-3xl mb-2">🌱</div>
-                        <h3 class="font-bold text-gray-900">Meet your co-farmers</h3>
+                        <h3 class="font-bold text-gray-900">Meet other farmers</h3>
                         <p class="text-sm text-gray-500 mt-1 max-w-sm mx-auto">Share an update above, or connect with other farmers to see their posts here.</p>
                     </div>
                 </a>
@@ -1393,7 +1393,7 @@
                             <a href="{{ route('ai.home') }}" class="flex items-center gap-3 px-1 py-2 rounded-lg hover:bg-gray-50 transition">
                                 <span class="text-2xl leading-none">💬</span>
                                 <div class="min-w-0">
-                                    <p class="font-bold text-gray-900 text-sm">Start a conversation</p>
+                                    <p class="font-bold text-gray-900 text-sm">Start a chat</p>
                                     <p class="text-xs text-gray-500">Ask about pests, fertilizer, planting…</p>
                                 </div>
                             </a>
@@ -1856,7 +1856,7 @@
             fd.append('render', 'feed');
             const res = await fetch(POST_URL, { method: 'POST', headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json' }, body: fd });
             const data = await res.json();
-            if (!data.success) { toast(data.message || 'Could not post.', 'error'); return; }
+            if (!data.success) { toast(data.message || 'Could not post. Please try again.', 'error'); return; }
             if (feed && data.data?.html) {
                 feed.insertAdjacentHTML('afterbegin', data.data.html);
                 const added = feed.firstElementChild;
@@ -1869,7 +1869,7 @@
             clearClips();
             window.closeSheet?.('dashComposerSheet');
             toast('Posted to your wall.');
-        } catch (_) { toast('Network error. Please try again.', 'error'); }
+        } catch (_) { toast('Could not connect. Please try again.', 'error'); }
         finally { btn.disabled = false; btn.innerHTML = prev; }
     });
 })();
@@ -1939,7 +1939,7 @@
         return `<div class="flex-1 min-w-0 text-center rounded-lg px-1 py-1.5">
             <p class="text-[0.625rem] font-bold ${today ? 'wx-today-label' : 'text-gray-500'} truncate">${esc(today ? 'Today' : d.dow)}</p>
             <div class="dash-wx-art" title="${esc(name)}">${art}</div>
-            <p class="text-[0.688rem] font-bold ${today ? 'wx-today-label' : 'text-gray-800'}">${d.max != null ? d.max + '°' : '–'}<span class="text-gray-400 font-medium">${d.min != null ? '/' + d.min + '°' : ''}</span></p>
+            <p class="text-[0.688rem] font-bold ${today ? 'wx-today-label' : 'text-gray-800'}">${d.max != null ? d.max + '°' : ''}<span class="text-gray-400 font-medium">${d.min != null ? (d.max != null ? '/' : '') + d.min + '°' : ''}</span></p>
             ${d.pop != null ? `<p class="text-[0.562rem] font-semibold text-blue-500">${d.pop}%</p>` : ''}
         </div>`;
     }
@@ -1947,7 +1947,7 @@
     function locBlock(loc) {
         if (!loc) return '';
         if (loc.ok === false) {
-            return `<p class="text-[0.688rem] text-gray-400 mt-2 pt-2 border-t border-gray-100">Weather unavailable for ${esc(loc.place || 'this location')}</p>`;
+            return `<p class="text-[0.688rem] text-gray-400 mt-2 pt-2 border-t border-gray-100">Could not get the weather for ${esc(loc.place || 'this place')}</p>`;
         }
         /* The panel takes today's colour and today's advice.
          *

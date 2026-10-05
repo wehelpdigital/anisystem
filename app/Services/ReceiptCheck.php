@@ -127,7 +127,7 @@ class ReceiptCheck
             ->whereNotIn('status', [AsOrder::CANCELLED])
             ->where(fn ($q) => $q->where('refNumber', $ref)->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(aiReport, '$.read.ref')) = ?", [$ref]))->exists();
         $refOk = $ref === '' ? null : (strlen($ref) === 13 && ! $refUsed && ($typed === '' || $typed === $ref));
-        $add('ref', 'A new 13-digit Ref No.', $refOk,
+        $add('ref', 'A new Ref No. (13 digits)', $refOk,
             $ref === '' ? 'No Ref No. could be read.'
                 : ($refUsed ? 'Ref No. ' . $ref . ' was already used on another order.'
                     : (strlen($ref) !== 13 ? 'Ref No. ' . $ref . ' is not 13 digits.'

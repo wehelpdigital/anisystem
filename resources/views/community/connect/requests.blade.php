@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Requests — Community')
+@section('title', 'Cofarmer Requests · Community')
 @section('body-class', 'plaza-ground')
 @section('page-title', 'Community')
-@section('page-subtitle', 'Members who want to connect')
+@section('page-subtitle', 'Members who want to be your cofarmer')
 @section('back', route('community.connect.members'))
 
 {{-- The shared plaza styles were missing here, so this page's avatars were

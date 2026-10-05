@@ -166,7 +166,7 @@
         const mapHref = m.mapUrl || window.NOTE_MAP_URL || '';
         if (looksLikeMap && mapHref) {
             const href = mapHref;
-            return `<a class="nm nm-map" href="${esc(href)}" title="Open this map in the Maps module">`
+            return `<a class="nm nm-map" href="${esc(href)}" title="Open this map in Maps">`
                 + '<svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>'
                 + `<span>View map</span>${extra || ''}</a>`;
         }
@@ -233,13 +233,13 @@
                 if (!m.mapUrl && m.url) {
                     return `<button type="button" class="na na-map" data-lb-type="image" data-lb-url="${esc(m.url)}" title="Open this map picture">${ICON.map}<span>Map</span></button>`;
                 }
-                return `<a class="na na-map" href="${esc(m.mapUrl || '#')}" title="Open this map in the Maps module">${ICON.map}<span>Map</span></a>`;
+                return `<a class="na na-map" href="${esc(m.mapUrl || '#')}" title="Open this map in Maps">${ICON.map}<span>Map</span></a>`;
             }
             if (m.type === 'drawing') {
                 if (!m.drawUrl && m.url) {
                     return `<button type="button" class="na na-draw" data-lb-type="image" data-lb-url="${esc(m.url)}" title="Open this drawing">${ICON.draw}<span>Drawing</span></button>`;
                 }
-                return `<a class="na na-draw" href="${esc(m.drawUrl || '#')}" title="Open this drawing in the Draw module">${ICON.draw}<span>Drawing</span></a>`;
+                return `<a class="na na-draw" href="${esc(m.drawUrl || '#')}" title="Open this drawing in Draw">${ICON.draw}<span>Drawing</span></a>`;
             }
             if (m.type === 'video') {
                 return `<button type="button" class="na na-video" data-lb-type="video" data-lb-url="${esc(m.url || '')}" data-lb-poster="${esc(m.posterUrl || '')}" title="Play this video">${ICON.video}<span>Video</span></button>`;

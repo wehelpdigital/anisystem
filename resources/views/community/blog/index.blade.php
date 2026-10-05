@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Technician\'s Blog — Community')
+@section('title', 'Technician\'s Blog · Community')
 @section('body-class', 'plaza-ground')
 @section('page-title', 'Community')
 @section('help-key', 'community-blog')
@@ -232,9 +232,9 @@
             'id' => 'blogFind',
             'value' => $q ?? '',
             'placeholder' => 'Search articles…',
-            'label' => 'Search the blog — title, words or author',
+            'label' => 'Search the blog by title, words or author',
         ])
-        <button type="button" class="btn btn-primary w-full" data-sheet-close>Show the articles</button>
+        <button type="button" class="btn btn-primary w-full" data-sheet-close>Show articles</button>
     </div>
 </div>
 
@@ -242,7 +242,7 @@
     <div class="card p-8 text-center">
         <div class="empty-tile">📰</div>
         <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">No articles yet</p>
-        <p class="text-sm text-gray-500 mt-1">The team hasn't published anything yet — check back soon.</p>
+        <p class="text-sm text-gray-500 mt-1">The team hasn't published anything yet. Check back soon.</p>
     </div>
 @else
     <div class="blog-grid" id="blogGrid">
@@ -252,7 +252,7 @@
     <div class="card p-8 text-center" id="blogNone" hidden>
         <div class="empty-tile">🔎</div>
         <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Walang tugma</p>
-        <p class="text-sm text-gray-500 mt-1">No article says that — in its title, its words, or who wrote it.</p>
+        <p class="text-sm text-gray-500 mt-1">No article matches that title, text or author.</p>
     </div>
 
     <div class="mt-6" id="blogPager">{{ $posts->links('community.partials.blog-pagination') }}</div>

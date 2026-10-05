@@ -78,7 +78,7 @@
                     </button>
                     <button type="button" id="aiFloatNewChat">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-                        New session
+                        New chat
                     </button>
                     <button type="button" id="aiFloatToTask">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
@@ -114,7 +114,7 @@
                         <p class="aif-howto-lbl">For example</p>
                         <p class="aif-howto-eg"><b>Not</b> "my rice is sick"</p>
                         <span class="aif-howto-rule" aria-hidden="true"></span>
-                        <p class="aif-howto-eg"><b>Try</b> {{ \App\Support\Region::ph() ? '"RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"' : '"I planted P1197 corn six weeks ago. The lower leaves are yellowing from the edges in, the newest leaves are still green. I side-dressed urea ten days ago and it has rained hard since. What is going on?"' }}</p>
+                        <p class="aif-howto-eg"><b>Try</b> {{ \App\Support\Region::ph() ? '"RC222 ang tanim ko, medyo naninilaw yung mga gilid na dahon at ang paninilaw ay nasa bandang gilid ng dahon. Kaka lagay ko lamang ng urea 10 days ago. Sobrang maulan kasi. Anong problema?"' : '"I planted P1197 corn six weeks ago. The lower leaves are yellowing from the edges in, the newest leaves are still green. I side dressed urea ten days ago and it has rained hard since. What is going on?"' }}</p>
                         <a href="#" class="anee-guide-link" data-anee-guide>Read the full guide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></a>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
             <div>
                 <p class="text-sm font-semibold text-gray-900">You're out of AI credits</p>
                 <p class="text-xs text-gray-500 mt-0.5">Buy AI credits to keep asking.</p>
-                <a href="{{ route('ai.credits') }}" class="btn btn-accent btn-sm mt-2">Get AI Credits</a>
+                <a href="{{ route('ai.credits') }}" class="btn btn-accent btn-sm mt-2">Get AI credits</a>
             </div>
         </div>
         @endunless
@@ -626,7 +626,7 @@
             }
         });
 
-        const buyCard = (msg) => `<div class="ai-buyc"><span class="ico">${COIN}</span><div><h3>You're out of AI Credits</h3><p>${escapeHtml(msg)}</p><a class="btn btn-accent btn-sm mt-2" href="${escapeHtml(URLS.credits)}">Get AI Credits</a></div></div>`;
+        const buyCard = (msg) => `<div class="ai-buyc"><span class="ico">${COIN}</span><div><h3>You're out of AI credits</h3><p>${escapeHtml(msg)}</p><a class="btn btn-accent btn-sm mt-2" href="${escapeHtml(URLS.credits)}">Get AI credits</a></div></div>`;
         let conversationId = null, busy = false, uploadsBusy = 0;
         const sayBusy = () => {
             const line = $('aiFloatBusy');

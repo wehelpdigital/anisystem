@@ -52,7 +52,7 @@
     </div>
     <div class="sheet-body">
         <p class="text-sm text-gray-500 mb-2" id="msgrForwardPreview"></p>
-        <label class="form-label">Send to a co-farmer</label>
+        <label class="form-label">Send to a cofarmer</label>
         <div id="msgrForwardList" class="space-y-1 max-h-72 overflow-y-auto rounded-xl border border-gray-100 p-1">
             <p class="text-sm text-gray-400 px-2 py-3 text-center">Loading…</p>
         </div>
@@ -653,14 +653,14 @@
                     ${avatarHtml({ avatar: u.avatar, initials: u.initials, userId: u.id })}
                     <span class="msgr-thread-mid">
                         <span class="msgr-thread-top"><span class="msgr-thread-name">${esc(u.name)}</span></span>
-                        <span class="msgr-thread-row2"><span class="msgr-thread-last">${u.isFriend ? 'Co-farmer' : 'Say hello'}</span></span>
+                        <span class="msgr-thread-row2"><span class="msgr-thread-last">${u.isFriend ? 'Cofarmer' : 'Say hello'}</span></span>
                     </span>
                 </div>`;
 
     const emptyHtml = `<div class="msgr-empty">
                     <svg fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.9 9.9 0 01-4.29-.94L3 20l1.05-3.15A7.6 7.6 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
                     <p class="msgr-empty-t">No messages yet</p>
-                    <p class="msgr-empty-s">Search above, or tap Message on a co-farmer's profile.</p>
+                    <p class="msgr-empty-s">Search above, or tap Message on a cofarmer's profile.</p>
                 </div>`;
 
     async function loadThreads() {
@@ -1056,7 +1056,7 @@
                     const d = await r.json();
                     if (d.success) { finalizePending(bodyEl, pendings[i], { id: d.data.id, body: d.data.body, image: d.data.image, video: d.data.video, voice: d.data.voice, poster: d.data.poster, replyTo: d.data.replyTo }); }
                     else { failPending(pendings[i], d.message); if (q.text && !input.value) input.value = q.text; }
-                } catch (_) { failPending(pendings[i], 'Network error. Try again.'); if (q.text && !input.value) input.value = q.text; }
+                } catch (_) { failPending(pendings[i], 'No connection. Try again.'); if (q.text && !input.value) input.value = q.text; }
             }
         };
         win.querySelector('.msgr-send').addEventListener('click', doSend);
@@ -1120,13 +1120,13 @@
 
         // Where you stand with them, in the words the rest of the app uses.
         const tie = {
-            connected: '<span class="msgr-intro-tie is-on">🤝 Co-farmers</span>',
+            connected: '<span class="msgr-intro-tie is-on">🤝 Cofarmers</span>',
             pending_out: '<span class="msgr-intro-tie">Request sent</span>',
             pending_in: '<span class="msgr-intro-tie">They asked to connect</span>',
-        }[u.status] || '<span class="msgr-intro-tie">Not co-farmers yet</span>';
+        }[u.status] || '<span class="msgr-intro-tie">Not cofarmers yet</span>';
 
         const bits = [];
-        if (u.mutual > 0) bits.push(`<b>${u.mutual}</b> mutual co-farmer${u.mutual > 1 ? 's' : ''}`);
+        if (u.mutual > 0) bits.push(`<b>${u.mutual}</b> mutual cofarmer${u.mutual > 1 ? 's' : ''}`);
         if (u.work) bits.push(esc(u.work));
         if (u.place) bits.push('📍 ' + esc(u.place));
         else if (u.since) bits.push('🌱 Member since ' + esc(u.since));
@@ -1375,12 +1375,12 @@
             forwardCache = (d.data && d.data.items) || [];
             renderForwardList(forwardCache);
         } catch (_) {
-            box.innerHTML = '<p class="text-sm text-red-500 px-2 py-3 text-center">Could not load co-farmers.</p>';
+            box.innerHTML = '<p class="text-sm text-red-500 px-2 py-3 text-center">Could not load cofarmers.</p>';
         }
     }
     function renderForwardList(items) {
         const box = document.getElementById('msgrForwardList');
-        if (!items.length) { box.innerHTML = '<p class="text-sm text-gray-400 px-2 py-3 text-center">No co-farmers yet.</p>'; return; }
+        if (!items.length) { box.innerHTML = '<p class="text-sm text-gray-400 px-2 py-3 text-center">No cofarmers yet.</p>'; return; }
         box.innerHTML = items.map((u) => {
             const av = u.avatar
                 ? `<img src="${esc(u.avatar)}" alt="" class="w-8 h-8 rounded-full object-cover shrink-0">`
@@ -1420,7 +1420,7 @@
                 const d = await r.json();
                 if (d.success) { fwd.textContent = 'Sent ✓'; if (window.toast) toast('Message forwarded.'); }
                 else { fwd.disabled = false; fwd.textContent = orig; if (window.toast) toast(d.message || 'Could not send.', 'error'); }
-            } catch (_) { fwd.disabled = false; fwd.textContent = orig; if (window.toast) toast('Network error.', 'error'); }
+            } catch (_) { fwd.disabled = false; fwd.textContent = orig; if (window.toast) toast('No connection. Try again.', 'error'); }
         }
     });
 

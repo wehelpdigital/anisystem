@@ -95,14 +95,14 @@
     <div class="card card-body" data-st-pane="offline" hidden>
         <div class="st-group">
             <h3>Offline Mode</h3>
-            <p class="st-why">For the field, where there is no signal. Off at first and saved on this device.</p>
+            <p class="st-why">For the field, where there is no signal. It starts off, and your choice is saved on this phone.</p>
 
             @php $offlineLocked = ! \App\Support\Tier::farmCan('offline'); $offlineRung = \App\Support\Tier::farmUnlocksAt('offline'); @endphp
             <button type="button" class="st-switch" id="stOffline" role="switch" aria-checked="false"
                     @if ($offlineLocked) data-tier-lock="{{ $offlineRung }}" data-lock-say="{{ \App\Support\Tier::say($offlineRung, 'Offline mode comes with {plan}. Your farm stays on your phone when the signal drops, and your work syncs when it comes back.') }}" @endif>
                 <span class="st-switch-txt {{ $offlineLocked ? 'tl-dim' : '' }}">
                     <b>Keep working without a signal</b>
-                    <span>When on, anee saves each page you visit on this phone, so it still opens
+                    <span>When on, the app saves each page you visit on this phone, so it still opens
                     with no internet. A yellow bar shows when you are offline.</span>
                     @if ($offlineLocked)
                         <span class="st-locked-say">🔒 Comes with {{ \App\Support\Tier::withPlan($offlineRung) }}{{ \App\Support\WorkerContext::inWorkerContext() ? ' for this farm' : '' }}. Tap to see the plans.</span>
@@ -140,7 +140,7 @@
         </div>
 
         <div class="st-group">
-            <h3>Seeing it clearly</h3>
+            <h3>Easier to see</h3>
             <p class="st-why">For bright sun, tired eyes, or an old screen.</p>
 
             <button type="button" class="st-switch" id="stContrast" role="switch" aria-checked="false">
@@ -179,7 +179,7 @@
             </div>
         </div>
 
-        <p class="text-xs text-gray-400 mt-4">Saved on this device. They work right away on every page.</p>
+        <p class="text-xs text-gray-400 mt-4">These are saved on this phone and work on every page right away.</p>
     </div>
 </div>
 @endsection

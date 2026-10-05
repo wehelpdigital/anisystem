@@ -586,7 +586,7 @@
             // closes.
             $__say = now()->format('l, F j');
             if ($summary['schedules'] === 0) {
-                $__say .= ': nothing planned yet. Create a schedule to start a season.';
+                $__say .= ': nothing planned yet. Create a cropping schedule to start a season.';
             } elseif ($summary['today'] > 0) {
                 $__say .= ': <b>' . $summary['today'] . ' ' . \Illuminate\Support\Str::plural('activity', $summary['today']) . '</b> on the board today';
                 $__say .= $summary['active'] ? ', ' . $summary['active'] . ' ' . \Illuminate\Support\Str::plural('season', $summary['active']) . ' running.' : '.';
@@ -646,7 +646,7 @@
             <div class="relative">
                 <svg class="w-5 h-5 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
                 <input type="text" name="search" id="scheduleSearch" value="{{ request('search') }}" class="form-input pl-11! pr-16! w-full"
-                    placeholder="Search schedules" aria-label="Search schedules" autocomplete="off" enterkeyhint="search">
+                    placeholder="Search seasons" aria-label="Search seasons" autocomplete="off" enterkeyhint="search">
                 <svg id="scheduleSearchSpin" class="hidden absolute right-9 top-1/2 -translate-y-1/2 w-4 h-4 animate-spin text-brand-600" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg>
                 <button type="button" id="scheduleSearchClear" class="{{ request('search') ? '' : 'hidden' }} absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-gray-400 hover:bg-gray-100" aria-label="Clear search">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -693,7 +693,7 @@
         <div class="sch-bar{{ ($showArchived ?? false) ? ' is-arch' : '' }}">
             <button type="button" id="schFilterBtn" class="sch-pill{{ $sort !== 'updated' ? ' is-set' : '' }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M6 12h12M10 20h4"/></svg>
-                Filter
+                Sort
                 @if ($sort !== 'updated')
                     <span class="sch-pill-now">{{ $sorts[$sort]['label'] }}</span>
                 @endif
@@ -714,11 +714,11 @@
         </div>
 
         {{-- The orders, asked for once. --}}
-        <div class="sch-modal hidden" id="schFilterModal" role="dialog" aria-modal="true" aria-label="Sort schedules">
+        <div class="sch-modal hidden" id="schFilterModal" role="dialog" aria-modal="true" aria-label="Sort seasons">
             <div class="sch-modal-back" data-sch-close></div>
             <div class="sch-modal-card">
                 <div class="sch-modal-head">
-                    <p class="font-bold text-gray-900">Sort schedules</p>
+                    <p class="font-bold text-gray-900">Sort seasons</p>
                     <button type="button" class="btn-ghost rounded-full w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-700" data-sch-close aria-label="Close">✕</button>
                 </div>
                 <div class="sch-modal-body">
@@ -740,7 +740,7 @@
                          updated" was the one you started with is not
                          something anybody should have to do. --}}
                     <button type="button" class="sch-clear" data-sort="updated"
-                            data-href="{{ route('sm.index', array_filter(['search' => request('search')])) }}">Clear filter</button>
+                            data-href="{{ route('sm.index', array_filter(['search' => request('search')])) }}">Reset order</button>
                     <button type="button" class="btn btn-white btn-sm ml-auto" data-sch-close>Done</button>
                 </div>
             </div>
@@ -764,7 +764,7 @@
                     <p class="text-sm text-gray-500 mb-5">A season shows here when you archive it. Nothing is lost. You can open it and restore it any time.</p>
                     <a href="{{ route('sm.index') }}" class="btn btn-outline">Back to seasons</a>
                 @elseif (request()->filled('search'))
-                    <h2 class="text-lg font-bold text-gray-900 mb-1">No schedules match your search</h2>
+                    <h2 class="text-lg font-bold text-gray-900 mb-1">No seasons match your search</h2>
                     <p class="text-sm text-gray-500 mb-5">Try other words, or clear the search to see all.</p>
                     <a href="{{ route('sm.index') }}" class="btn btn-outline">Clear search</a>
                 @else
@@ -776,7 +776,7 @@
                         <p class="text-sm text-gray-500 mb-5">When {{ $workerBossName ?: 'the farm owner' }} gives you a season to work on, it appears here.</p>
                     @else
                         <h2 class="text-lg font-bold text-gray-900 mb-1">No cropping schedules yet</h2>
-                        <p class="text-sm text-gray-500 mb-5">Create your first schedule to plan your lots, workers and daily activities.</p>
+                        <p class="text-sm text-gray-500 mb-5">Create your first cropping schedule to plan your lots, workers and daily activities.</p>
                         <a href="{{ route('sm.create') }}" class="btn btn-primary btn-lg">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
                             New Cropping Schedule
@@ -817,14 +817,14 @@
                             @if (! \App\Support\WorkerContext::activeGrant() || \App\Support\WorkerContext::canEdit())
                                 <button type="button" class="se-tool"
                                     data-duplicate-schedule="{{ $s->id }}" data-title="{{ $s->title }}"
-                                    title="Duplicate this schedule" aria-label="Duplicate {{ $s->title }}">
+                                    title="Make a copy of this season" aria-label="Duplicate {{ $s->title }}">
                                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                                 </button>
                             @endif
                             @if (! \App\Support\WorkerContext::activeGrant())
                                 <button type="button" class="se-tool is-danger"
                                     data-delete-schedule="{{ $s->id }}" data-title="{{ $s->title }}"
-                                    title="Delete this schedule" aria-label="Delete {{ $s->title }}">
+                                    title="Delete this season" aria-label="Delete {{ $s->title }}">
                                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"/></svg>
                                 </button>
                             @endif
@@ -1261,7 +1261,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!btn) return;
 
         const id = btn.getAttribute('data-delete-schedule');
-        const title = btn.getAttribute('data-title') || 'this schedule';
+        const title = btn.getAttribute('data-title') || 'this season';
 
         // A season's worth of work should not go on a mistaken tap. Typing the
         // word is the one confirmation that cannot be given by reflex.
@@ -1290,14 +1290,14 @@ document.addEventListener('DOMContentLoaded', () => {
             wrap.className = 'del-modal';
             wrap.innerHTML = `
                 <div class="del-card" role="dialog" aria-modal="true" aria-labelledby="delTitle">
-                    <h3 class="del-title" id="delTitle">Delete this schedule?</h3>
+                    <h3 class="del-title" id="delTitle">Delete this season?</h3>
                     <p class="del-text"><strong>${escapeHtml(title)}</strong> and all its lots, workers,
                         activities and notes will be removed from your account.</p>
                     <label class="del-label" for="delWord">Type <b>DELETE</b> to confirm</label>
                     <input type="text" id="delWord" class="form-input" autocomplete="off" spellcheck="false" placeholder="DELETE">
                     <div class="del-actions">
                         <button type="button" class="btn btn-white" data-del-no>Cancel</button>
-                        <button type="button" class="btn btn-danger" data-del-yes disabled>Delete schedule</button>
+                        <button type="button" class="btn btn-danger" data-del-yes disabled>Delete season</button>
                     </div>
                 </div>`;
             document.body.appendChild(wrap);
@@ -1333,18 +1333,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!btn) return;
 
         const id = btn.getAttribute('data-duplicate-schedule');
-        const title = btn.getAttribute('data-title') || 'this schedule';
+        const title = btn.getAttribute('data-title') || 'this season';
 
         const ok = await confirmAction({
-            title: 'Duplicate schedule?',
-            message: `This makes a full copy of "${title}" with every module, activity and version. It will be named "Copy of ${title}".`,
-            confirmText: 'Duplicate',
+            title: 'Make a copy of this season?',
+            message: `This copies "${title}" with everything in it: lots, workers, activities and saved versions. The copy is named "Copy of ${title}".`,
+            confirmText: 'Make a copy',
             confirmClass: 'btn-primary',
         });
         if (!ok) return;
 
         btn.disabled = true;
-        const loader = screenLoader(`Duplicating "${title}"…`);
+        const loader = screenLoader(`Copying "${title}"…`);
         try {
             const res = await api(`{{ route('sm.duplicate') }}?id=${id}`, { method: 'POST' });
             toast(res.message);

@@ -252,7 +252,7 @@ class ScheduleEmailController extends BaseScheduleController
         $raw = $request->input('emails', []);
         $raw = is_array($raw) ? $raw : preg_split('/[\s,;]+/', (string) $raw);
         if (count($raw) > self::MAX_EXTRA * 3) {
-            return 'Up to ' . self::MAX_EXTRA . ' other addresses at a time.';
+            return 'You can add up to ' . self::MAX_EXTRA . ' other email addresses at a time.';
         }
         $typed = [];
         $bad = [];
@@ -273,7 +273,7 @@ class ScheduleEmailController extends BaseScheduleController
                 . implode(', ', array_slice($bad, 0, 3)) . (count($bad) > 3 ? '…' : '') . '.';
         }
         if (count($typed) > self::MAX_EXTRA) {
-            return 'Up to ' . self::MAX_EXTRA . ' other addresses at a time.';
+            return 'You can add up to ' . self::MAX_EXTRA . ' other email addresses at a time.';
         }
 
         $to = [];
@@ -300,7 +300,7 @@ class ScheduleEmailController extends BaseScheduleController
             if (RateLimiter::remaining($key, self::EXTRA_PER_HOUR) < count($outside)) {
                 $mins = max(1, (int) ceil(RateLimiter::availableIn($key) / 60));
 
-                return "That is a lot of other addresses for one hour. Try again in {$mins} min, or send to the workers only.";
+                return "Too many other email addresses this hour. Try again in {$mins} minutes, or send to the workers only.";
             }
             RateLimiter::increment($key, 3600, count($outside));
         }

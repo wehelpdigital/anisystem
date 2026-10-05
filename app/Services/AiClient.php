@@ -175,7 +175,7 @@ class AiClient
         }
 
         return $sum + ['ok' => $data !== null, 'data' => $data, 'text' => (string) $result['text'],
-            'error' => $data === null ? 'The answer came back unreadable. Nothing was charged — please try again.' : null];
+            'error' => $data === null ? 'Anee\'s answer could not be read. Nothing was charged. Please try again.' : null];
     }
 
     /**

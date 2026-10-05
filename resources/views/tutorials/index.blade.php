@@ -78,7 +78,7 @@
             <div class="tut-stage-inner" id="tutStageInner"></div>
             <div class="tut-bar">
                 <span class="tut-modal-title" id="tutModalTitle"></span>
-                <button type="button" class="tut-fs" id="tutFullscreen">⛶ Fullscreen</button>
+                <button type="button" class="tut-fs" id="tutFullscreen">⛶ Full screen</button>
                 <button type="button" id="tutClose">✕ Close</button>
             </div>
         </div>

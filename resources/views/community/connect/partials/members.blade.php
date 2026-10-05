@@ -65,7 +65,7 @@
                 @if ($m->connStatus === 'connected')
                     <span class="conn-action mc-x" data-member-id="{{ $m->id }}" data-status="connected">
                         <button type="button" class="conn-btn mc-x-btn" data-action="disconnect"
-                                title="Remove {{ $m->firstName }} as a co-farmer" aria-label="Remove {{ $m->full_name }} as a co-farmer">
+                                title="Remove {{ $m->firstName }} as a cofarmer" aria-label="Remove {{ $m->full_name }} as a cofarmer">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
                         </button>
                     </span>

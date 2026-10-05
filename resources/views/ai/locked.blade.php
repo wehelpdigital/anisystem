@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'AI Technician')
-@section('page-title', 'AI Technician')
+@section('title', 'Chat with Anee')
+@section('page-title', 'Chat with Anee')
 @section('back', route('app.dashboard'))
 
 @push('head')
@@ -45,7 +45,7 @@
         @if ($__lockedGrant)
             <h2 class="text-xl font-bold text-gray-900" style="font-family:var(--font-heading)">Not on this farm's plan</h2>
             <p class="text-sm text-gray-500 mt-2">
-                The AI Technician is not part of the plan
+                Anee is not part of the plan
                 <strong>{{ optional($__lockedGrant->boss)->full_name ?: 'this farm' }}</strong> is on.
                 Only the farm owner can change that. Ask them if you need it for your work.
             </p>

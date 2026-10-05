@@ -190,5 +190,5 @@
             <div class="hw-note" style="--k: {{ $k }}"><span>{{ $emo }}</span><div><b>{{ $t }}</b><small>{{ $s }}</small></div></div>
         @endforeach
     </div>
-    <p class="sr-only">A phone shows the season's activities board. A note is added to today from the day's menu; the scouting task is held and dragged to tomorrow; the urea task is ticked done; then the Modules menu opens Growth Stages, where {{ $hbOpen }} is in {{ $hb['lots'][$hbOpen]['stage'] }} at {{ $hwB['counter'] }} {{ $hb['lots'][$hbOpen]['day'] }}, with what to do now, what to watch for and the stages ahead.</p>
+    <p class="sr-only">A phone shows the season's activities board. A note is added to today from the day's menu. The scouting task is held and dragged to tomorrow. The urea task is ticked done. Then the Modules menu opens Growth Stages, where {{ $hbOpen }} is in {{ $hb['lots'][$hbOpen]['stage'] }} at {{ $hwB['counter'] }} {{ $hb['lots'][$hbOpen]['day'] }}, with what to do now, what to watch for and the stages ahead.</p>
 </section>

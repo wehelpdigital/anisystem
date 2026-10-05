@@ -3,8 +3,8 @@
      Same house frame as every other email: App\Support\EmailSkin. --}}
 {!! \App\Support\EmailSkin::wrap(
     '<p>Hi ' . e($firstName) . ',</p>'
-    . '<p>' . e(\App\Support\Region::t('thanks')) . ' for signing up! One tap and your free anee.io account opens — your cropping '
-    . 'schedules, the activities board, and Anee, your AI farm technician, are waiting on the other side.</p>'
+    . '<p>' . e(\App\Support\Region::t('thanks')) . ' for signing up! One tap and your free anee.io account opens. Your cropping '
+    . 'schedules, the activities board and Anee, your AI farm technician, are waiting for you.</p>'
     . \App\Support\EmailSkin::button('Confirm my email', $link)
     . \App\Support\EmailSkin::note('The link works for 3 days. If you did not sign up for anee.io, you can ignore this email and nothing will happen.'),
     'Confirm your email',

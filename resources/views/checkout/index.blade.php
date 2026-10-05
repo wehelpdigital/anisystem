@@ -187,7 +187,7 @@
                                     Not available yet. Please use {{ $isPh ? 'GCash' : 'another way' }} for now.
                                 @elseif ($key === 'gcash')
                                     @if ($aiPlan) Anee checks it in about a minute, so your plan starts right away. @else A person checks it, usually within {{ $pay['reviewHours'] }} hours. @endif
-                                    + {{ $money($gcashFee) }} processing fee.
+                                    Plus a {{ $money($gcashFee) }} processing fee.
                                 @else
                                     A person checks it, usually within {{ $pay['reviewHours'] }} hours.
                                 @endif
@@ -229,7 +229,7 @@
                         <button type="button" class="co-copy" data-copy="{{ preg_replace('/\D/', '', $pay['gcashNumber']) }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>Copy</button></div>
                     <div class="co-acct-row"><div class="min-w-0"><small>Account name in GCash</small><b>{{ $pay['gcashName'] }}</b></div></div>
                     <div class="co-qr">
-                        <small class="text-xs font-extrabold uppercase tracking-wider text-gray-400">Or scan this QR</small>
+                        <small class="text-xs font-extrabold uppercase tracking-wider text-gray-400">Or scan this QR code</small>
                         <img src="{{ $qrUrl }}" alt="GCash QR code for anee.io" id="coQr" width="482" height="641" loading="lazy">
                         <a href="{{ $qrUrl }}" download="anee-gcash-qr.png" class="co-copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>Save QR</a>
                     </div>
@@ -270,7 +270,7 @@
                 </ol>
             </div>
 
-            <p class="co-sub mt-4">Order <b id="coPayNumber"></b>. You can add it as the message.</p>
+            <p class="co-sub mt-4">Your order number is <b id="coPayNumber"></b>. You can type it as the message.</p>
             <div class="co-actions">
                 <button type="button" class="btn btn-primary btn-lg" data-go="3">I have sent it</button>
                 <button type="button" class="btn btn-white" id="coChange">Change how I pay</button>
@@ -281,7 +281,7 @@
     {{-- ============ 3. THE PROOF ============ --}}
     <section class="co-step" data-step="3">
         <form class="card p-5 mt-4" id="coProof" novalidate>
-            <h2 class="co-h">Show us the payment</h2>
+            <h2 class="co-h">Send us your receipt</h2>
             <p class="co-sub">Send one of these. {{ $aiPlan ? 'A GCash receipt screenshot is fastest. Anee checks it in about a minute.' : 'A person checks it, usually within ' . $pay['reviewHours'] . ' hours.' }}</p>
             <div class="co-seg" role="tablist">
                 <button type="button" class="is-on" data-proof="image" role="tab" aria-selected="true">Screenshot</button>
@@ -315,7 +315,7 @@
                 <input type="text" id="coNote" class="form-input" maxlength="500" placeholder="e.g. paid from my wife's GCash">
             </div>
             <div class="co-actions">
-                <button type="submit" class="btn btn-primary btn-lg" id="coSend">Send for checking</button>
+                <button type="submit" class="btn btn-primary btn-lg" id="coSend">Send receipt</button>
                 <button type="button" class="btn btn-white" data-go="2" data-back>Back</button>
             </div>
         </form>
@@ -488,7 +488,7 @@
         const f = proofKind === 'ref' ? null : file.files[0];
         const ref = $('#coRef').value.trim();
         if (!f && !ref) {
-            window.toast?.(proofKind === 'ref' ? 'Type the reference number.' : 'Pick the receipt first, or send the reference number.', 'error');
+            window.toast?.(proofKind === 'ref' ? 'Type the reference number.' : 'Choose the receipt first, or type the reference number.', 'error');
             return;
         }
         if (order?.method === 'gcash' && proofKind === 'ref' && ref.replace(/\D/g, '').length !== 13) {
@@ -523,7 +523,7 @@
             window.toast?.(err.message, 'error');
         } finally {
             btn.disabled = false;
-            btn.textContent = 'Send for checking';
+            btn.textContent = 'Send receipt';
         }
     });
 
@@ -559,7 +559,7 @@
             startPoll();
         } else if (o.status === 'rejected' || o.status === 'revoked') {
             html = `<div class="co-badge no">${ICON.no}</div>
-                <h2>${o.status === 'revoked' ? 'This purchase was revoked' : 'We could not confirm this payment'}</h2>
+                <h2>${o.status === 'revoked' ? 'This purchase was cancelled' : 'We could not confirm this payment'}</h2>
                 <p>${o.reason ? esc(o.reason) + ' ' : ''}If you paid, email <a class="text-brand-700 underline" href="mailto:support@anee.io">support@anee.io</a> with your receipt. A person will help you.</p>
                 ${facts(base)}
                 <div class="co-actions"><a class="btn btn-primary btn-lg" href="${LINKS.again}">Try again</a></div>`;

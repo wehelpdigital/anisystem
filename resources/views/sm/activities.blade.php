@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Activities — ' . $schedule->title)
+@section('title', 'Activities: ' . $schedule->title)
 @section('page-title', 'Activities')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'activities')
@@ -3955,7 +3955,7 @@
     // known here rather than in the block further down that used to be the
     // first thing to ask. That block still reads these for the board itself.
     $boardMayEdit = \App\Support\WorkerContext::canEdit();
-    $whyNoEdit = 'Only someone who can edit the plan may do this';
+    $whyNoEdit = 'You do not have permission to edit this plan';
 @endphp
 
 {{-- ===================== TOOLBAR (sticky, persistent) =====================
@@ -4003,7 +4003,7 @@
         </button>
 
         <button type="button" id="readinessBtn" class="btn btn-white btn-sm relative {{ $readiness['count'] > 0 ? 'has-alerts' : '' }}"
-                title="{{ $readiness['count'] > 0 ? $readiness['count'] . ($readiness['count'] === 1 ? ' thing still needs' : ' things still need') . ' setting up' : 'Everything is set up' }}">
+                title="{{ $readiness['count'] > 0 ? $readiness['count'] . ($readiness['count'] === 1 ? ' thing still needs' : ' things still need') . ' to be set up' : 'Everything is set up' }}">
             <span class="readiness-ripple" aria-hidden="true"></span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0a3 3 0 11-6 0m6 0H9"/></svg>
             <span class="hidden sm:inline">Notice</span>
@@ -4107,7 +4107,7 @@
             <span id="viewToggleLabel">Calendar view</span>
         </button>
         <button type="button" id="openNotesBtn" class="btn btn-white btn-sm toolbar-desktop-action" data-activities-only
-                title="Open the schedule notebook">
+                title="Open this season's notes">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             <span class="hidden sm:inline">Notes</span>
         </button>
@@ -4127,7 +4127,7 @@
              alone were never the door — leave a button standing and anything
              that can call .click() still walks straight through. --}}
         @if ($may('camera'))
-        <button type="button" id="captureTodayPhotoBtn" class="btn btn-white btn-sm toolbar-in-menu hidden" data-activities-only aria-hidden="true" tabindex="-1">Capture a photo</button>
+        <button type="button" id="captureTodayPhotoBtn" class="btn btn-white btn-sm toolbar-in-menu hidden" data-activities-only aria-hidden="true" tabindex="-1">Take a photo</button>
         @endif
         @if ($may('video'))
         <button type="button" id="recordTodayVideoBtn" class="btn btn-white btn-sm toolbar-in-menu hidden" data-activities-only aria-hidden="true" tabindex="-1">Record a video</button>
@@ -4148,7 +4148,7 @@
     </button>
     <button type="button" id="contractAllBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 11l7-7 7 7M5 19l7-7 7 7"/></svg>
-            Contract All
+            Collapse all
         </button>
         <button type="button" id="openReportBtn" class="btn btn-white btn-sm toolbar-in-menu" data-activities-only>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9 9 0 1020.945 13H12a1 1 0 01-1-1V3.055zM15 3.936A9.02 9.02 0 0120.064 9H15V3.936z"/></svg>
@@ -4189,7 +4189,7 @@
     // MAY_DRAG_NOTE in partials/activities-js.blade.php.
     $boardMayDrag = $boardMayEdit && ! $isWorker;
     $boardMayDragNote = $boardMayNote && ! $isWorker;
-    $whyNoNote = 'You are not allowed to write notes on this schedule';
+    $whyNoNote = 'You do not have permission to add notes here';
 @endphp
 
 {{-- Long-board jump buttons (phones): the toolbar and the version bar sit at
@@ -4281,7 +4281,7 @@
              chips stay. Starting a new one is authoring a second plan, which
              is the owner's call — for a worker the door is not drawn at all. --}}
         @if (! $isWorker)
-        <button type="button" id="addVersionBtn" class="chip chip-dashed shrink-0" data-chip-manual>+ Version</button>
+        <button type="button" id="addVersionBtn" class="chip chip-dashed shrink-0" data-chip-manual>+ New version</button>
         @endif
     </div>
     <button type="button" id="manageVersionBtn" class="icon-btn shrink-0" title="Rename or delete the current version">
@@ -4302,7 +4302,7 @@
     </button>
     <button type="button" id="toggleHiddenBtn" class="btn btn-white btn-sm shrink-0 toolbar-desktop-action {{ $hiddenCount ? '' : 'hidden' }}">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>
-        <span id="toggleHiddenLabel">Show Hidden ({{ $hiddenCount }})</span>
+        <span id="toggleHiddenLabel">Show hidden ({{ $hiddenCount }})</span>
     </button>
     {{-- Stays visible on phones too (no toolbar-desktop-action), sitting
          right before Add Activity as the one-tap done-days toggle. --}}
@@ -4333,7 +4333,7 @@
          single open/close path. Drawn only where there is one to open. --}}
     @if (\App\Models\AiSetting::current()?->isUsable() && ! $isWorker)
         <button type="button" id="aiTechBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
-                title="Ask the AI technician" aria-label="Ask the AI technician">
+                title="Ask Anee" aria-label="Ask Anee">
             <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" class="w-5 h-5 rounded-full object-cover">
         </button>
     @endif
@@ -4386,12 +4386,12 @@
                 <div class="flex flex-wrap gap-1.5 mt-1.5" id="lotFilterChips" data-chip-group>
                     @foreach ($schedule->lots as $lot)
                         <button type="button" class="chip min-h-9! py-1! text-xs" data-value="{{ $lot->id }}"
-                            title="Hide {{ $lot->lotName }}. Cards that also cover a shown lot stay.">
+                            title="Hide {{ $lot->lotName }}. Activities that also cover a lot you still show will stay.">
                             {{ $lot->lotName }}@if(!empty($lot->variety)) · {{ $lot->variety }}@endif
                         </button>
                     @endforeach
                     <button type="button" class="chip chip-dashed min-h-9! py-1! text-xs" data-value="__na__"
-                        title="Hide activities with no lot">N/A</button>
+                        title="Hide activities with no lot">No lot</button>
                 </div>
             </div>
         @endif
@@ -4440,7 +4440,7 @@
      without this the board would just look broken. --}}
 <div id="dayZeroNone" class="card card-body text-center text-gray-500 py-8 hidden">
     <p class="font-bold text-gray-800 mb-1">No day zero yet</p>
-    <p class="text-sm">No activity is marked as day zero (DAS 0, DAP 0 or DAT 0). Tick “this is day zero” on the activity that starts the count.</p>
+    <p class="text-sm">No activity is marked as day zero (DAS 0, DAP 0 or DAT 0). Open the activity that starts the count and tick “Mark this activity as Day 0”.</p>
 </div>
 
 <div id="activitiesList" class="activity-timeline">
@@ -4543,8 +4543,8 @@
                                     && $latestEndCarbon->year === $dateCarbon->year;
                                 $rangeShort = $latestEndCarbon
                                     ? ($sameMonth
-                                        ? $dateCarbon->format('M j') . '–' . $latestEndCarbon->format('j') . ', ' . $dateCarbon->format('y')
-                                        : $dateCarbon->format('M j') . ' – ' . $latestEndCarbon->format('M j') . ', ' . $dateCarbon->format('y'))
+                                        ? $dateCarbon->format('M j') . ' to ' . $latestEndCarbon->format('j') . ', ' . $dateCarbon->format('y')
+                                        : $dateCarbon->format('M j') . ' to ' . $latestEndCarbon->format('M j') . ', ' . $dateCarbon->format('y'))
                                     : null;
                             @endphp
                             <span class="date-header-date{{ $rangeShort ? ' has-range' : '' }}"><span class="dh-long">{{ $dateCarbon->format('M j, Y') }}</span><span class="dh-short">{{ $dateCarbon->format('M j, y') }}</span>@if($rangeShort)<span class="dh-rangeshort">{{ $rangeShort }}</span>@endif</span>
@@ -4568,7 +4568,7 @@
                         {{-- What the crop is doing today, before what the day
                              costs: the plant's business comes before the
                              wallet's, and one explains the other. --}}
-                        <span class="date-header-stage" hidden title="What the crop is doing on this day"></span>
+                        <span class="date-header-stage" hidden title="Crop stage on this day"></span>
                         <span class="date-header-cash" hidden></span>
                         @if ($dateKey !== '__no-date__')
                             <button type="button" class="date-header-btn group-add-activity-btn" data-date="{{ $dateKey }}" title="Add an activity to this day">
@@ -4589,7 +4589,7 @@
                                 @endphp
                                 <button type="button" class="date-header-btn date-note-btn{{ $mayNoteHere ? '' : ' is-locked' }}" data-date="{{ $dateKey }}"
                                         @disabled(! $mayNoteHere)
-                                        title="{{ $mayNoteHere ? 'Add a note to this day' : 'You are not allowed to write notes on this schedule' }}">
+                                        title="{{ $mayNoteHere ? 'Add a note to this day' : 'You do not have permission to add notes here' }}">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.5 20H7a2 2 0 01-2-2V5a2 2 0 012-2h6l4 4v3M9 8h3M9 12h3"/><path stroke-linecap="round" stroke-linejoin="round" d="M17 15v5m2.5-2.5h-5"/></svg>
                                 </button>
                                 <button type="button" class="date-header-btn day-expense-btn" data-date="{{ $dateKey }}" title="Add an extra expense for this day">
@@ -4598,7 +4598,7 @@
                                 <button type="button" class="date-header-btn date-marker-btn {{ $existingMarker ? 'has-marker' : '' }}" data-date="{{ $dateKey }}" title="{{ $existingMarker ? 'Edit the resume here marker' : 'Add a resume here marker after this day' }}">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
                                 </button>
-                                <button type="button" class="date-header-btn share-day-btn" data-date="{{ $dateKey }}" title="Share this day's schedule (public link)">
+                                <button type="button" class="date-header-btn share-day-btn" data-date="{{ $dateKey }}" title="Share this day (public link)">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.68 13.34a3 3 0 100-2.68m0 2.68l6.64 3.86m-6.64-6.54l6.64-3.86m0 0a3 3 0 105.32-2.68 3 3 0 00-5.32 2.68zm0 13.08a3 3 0 105.32 2.68 3 3 0 00-5.32-2.68z"/></svg>
                                 </button>
                                 <button type="button" class="date-header-btn change-group-date-btn" data-date="{{ $dateKey }}" title="Change the date of this whole day">
@@ -4797,7 +4797,7 @@
 <div class="sheet hidden" id="ivnMenuSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Inventory entry</h3>
+        <h3 class="sheet-title">Stock record</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
@@ -5048,8 +5048,8 @@
             if (word) word.textContent = MODULES[backTo].label;
             btn.title = 'Back to ' + MODULES[backTo].label;
         } else if (enteredByLink) {
-            if (word) word.textContent = 'Schedule';
-            btn.title = 'Back to the cropping schedule';
+            if (word) word.textContent = 'Season';
+            btn.title = 'Back to the season';
         } else {
             if (word) word.textContent = 'Activities';
             btn.title = 'Back to activities';
@@ -5252,7 +5252,7 @@
         // reload, and a help button still pointing at Activities would explain
         // the wrong screen.
         window.smHelpKey?.(key);
-        document.title = MODULES[key].label + ' — ' + @json($schedule->title);
+        document.title = MODULES[key].label + ': ' + @json($schedule->title);
         setActivitiesChrome(key === 'activities');
         // Show a way back whenever another module is open, and say where to —
         // paintModuleBack decides whether it is worth showing at all, so it
@@ -5312,7 +5312,7 @@
                a board they have not seen. */
             const home = (backTo && MODULES[backTo]) ? backTo : (enteredByLink ? null : 'activities');
             a.setAttribute('href', home ? shellUrl(home) : (a.dataset.hubHref || HUB_URL));
-            const word = home ? MODULES[home].label : 'the cropping schedule';
+            const word = home ? MODULES[home].label : 'the season';
             a.setAttribute('aria-label', 'Back to ' + word);
             a.title = 'Back to ' + word;
         } else if (a.dataset.hubHref) {
@@ -5474,7 +5474,7 @@
          * because three names do not fit and would only trail off. */
         function sayPicks() {
             [['lots', lotsBtn, 'Every lot', 'lots'],
-             ['types', typesBtn, 'Activity Type', 'types'],
+             ['types', typesBtn, 'Activity type', 'types'],
              ['tags', document.getElementById('mirrorTagsBtn'), 'Tags', 'tags']].forEach(([which, btn, empty, word]) => {
                 if (!btn) return;
                 const names = chosenNames(which);
@@ -5489,7 +5489,7 @@
         function openPick(which) {
             picking = which;
             const [set, names] = setAndNames(which);
-            pickTitle.textContent = which === 'lots' ? 'Which lots?' : (which === 'tags' ? 'Which tags?' : 'Activity Type');
+            pickTitle.textContent = which === 'lots' ? 'Which lots?' : (which === 'tags' ? 'Which tags?' : 'Which activity types?');
             pickBody.innerHTML = '';
             [...names.entries()].sort((a, b) => a[1].localeCompare(b[1])).forEach(([key, name]) => {
                 const b = document.createElement('button');
@@ -5598,7 +5598,7 @@
                     d.title = 'Count the days between this one and another';
                     d.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">'
                         + '<path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg>'
-                        + '<span class="mir-diff-t">Date Diff</span>';
+                        + '<span class="mir-diff-t">Count days</span>';
                     head.appendChild(d);
                 }
                 body.appendChild(copy);
@@ -5767,8 +5767,8 @@
                 if (!t) return;
                 // The number goes on BOTH ends of the measurement, so the
                 // answer is there whichever one you are looking at.
-                t.textContent = !on ? 'Date Diff'
-                    : gap === null ? 'Pick another'
+                t.textContent = !on ? 'Count days'
+                    : gap === null ? 'Pick another day'
                     : gap === 0 ? 'Same day'
                     : gap + (gap === 1 ? ' day apart' : ' days apart');
             });
@@ -6369,7 +6369,7 @@
             const hiddenBtn = document.getElementById('toggleHiddenBtn');
             const hiddenLabel = document.getElementById('actHiddenLabel');
             if (hiddenRow && hiddenBtn) hiddenRow.classList.toggle('hidden', hiddenBtn.classList.contains('hidden'));
-            if (hiddenLabel) hiddenLabel.textContent = (document.getElementById('toggleHiddenLabel')?.textContent || 'Show Hidden').replace(/\s*\(\d+\)\s*$/, '');
+            if (hiddenLabel) hiddenLabel.textContent = (document.getElementById('toggleHiddenLabel')?.textContent || 'Show hidden').replace(/\s*\(\d+\)\s*$/, '');
 
         }
 
@@ -6439,7 +6439,7 @@
         readinessBtn.classList.toggle('has-alerts', n > 0 && !muted);
         readinessBtn.classList.toggle('has-blocking', blocking > 0);
         readinessBtn.title = n > 0
-            ? n + (n === 1 ? ' thing still needs' : ' things still need') + ' setting up'
+            ? n + (n === 1 ? ' thing still needs' : ' things still need') + ' to be set up'
             : 'Everything is set up';
         readinessCount.textContent = n;
         readinessCount.classList.toggle('hidden', n === 0);

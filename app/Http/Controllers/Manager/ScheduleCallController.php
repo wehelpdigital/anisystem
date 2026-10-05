@@ -25,19 +25,19 @@ class ScheduleCallController extends BaseScheduleController
         $schedule = $this->schedule($request->input('scheduleId') ?? $request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         [$room, $ok] = $this->resolveRoom($schedule, $meId, $request);
         if (! $ok) {
-            return $this->jsonFail('Invalid call target.', 422);
+            return $this->jsonFail('That call could not be started. Please try again.', 422);
         }
 
         $key = config('services.livekit.key');
         $secret = config('services.livekit.secret');
         $url = config('services.livekit.url');
         if (! $key || ! $secret || ! $url) {
-            return $this->jsonFail('Calls are not set up yet — a LiveKit key/secret is missing.', 503);
+            return $this->jsonFail('Calls are not set up yet.', 503);
         }
 
         $me = Auth::user();
@@ -73,12 +73,12 @@ class ScheduleCallController extends BaseScheduleController
         $schedule = $this->schedule($request->input('scheduleId') ?? $request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         [$room, $ok, $kind, $with] = $this->resolveRoom($schedule, $meId, $request, true);
         if (! $ok) {
-            return $this->jsonFail('Invalid call target.', 422);
+            return $this->jsonFail('That call could not be started. Please try again.', 422);
         }
 
         $me = Auth::user();
@@ -120,7 +120,7 @@ class ScheduleCallController extends BaseScheduleController
                 $kind === 'group' ? $who . ' started a team call' : $who . ' is calling you',
                 // Which farm the call is in, because the reader may be
                 // standing in a different one when the bell rings.
-                'In "' . $schedule->title . '" — tap to join.',
+                'In "' . $schedule->title . '". Tap to join.',
                 $url,
                 $meId,
                 (int) $schedule->id,
@@ -136,7 +136,7 @@ class ScheduleCallController extends BaseScheduleController
         $schedule = $this->schedule($request->input('scheduleId') ?? $request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         [$room, $ok] = $this->resolveRoom($schedule, $meId, $request);
@@ -158,10 +158,10 @@ class ScheduleCallController extends BaseScheduleController
         $schedule = $this->schedule($request->input('scheduleId') ?? $request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
         if ($meId !== (int) $schedule->anisystemUserId) {
-            return $this->jsonFail('Only the schedule owner can mute participants.', 403);
+            return $this->jsonFail('Only the farm owner can mute people in the call.', 403);
         }
 
         $validator = Validator::make($request->all(), [
@@ -171,13 +171,13 @@ class ScheduleCallController extends BaseScheduleController
             'muted' => 'nullable|boolean',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Invalid mute request.', 422);
+            return $this->jsonFail('That person could not be muted.', 422);
         }
 
         // The room must belong to this schedule — never touch an arbitrary room.
         $room = (string) $request->input('room');
         if (! str_starts_with($room, 'sched-' . $schedule->id . '-')) {
-            return $this->jsonFail('Invalid room.', 422);
+            return $this->jsonFail('That call room was not found.', 422);
         }
 
         $key = config('services.livekit.key');

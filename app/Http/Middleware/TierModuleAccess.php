@@ -33,10 +33,10 @@ class TierModuleAccess
 {
     /** Route-name patterns, the tier key they need, and what to say when it is missing. */
     private const RULES = [
-        ['sm.workers',     'workers',   'Workers come with {plan} — the crew, their days and their pay, on every activity.'],
-        ['sm.workers.*',   'workers',   'Workers come with {plan} — the crew, their days and their pay, on every activity.'],
-        ['sm.inventory',   'inventory', 'The Inventory comes with {plan} — the shed, its stock, and what each activity takes from it.'],
-        ['sm.inventory.*', 'inventory', 'The Inventory comes with {plan} — the shed, its stock, and what each activity takes from it.'],
+        ['sm.workers',     'workers',   'Workers come with {plan}. Keep your crew, their work days and their pay on every activity.'],
+        ['sm.workers.*',   'workers',   'Workers come with {plan}. Keep your crew, their work days and their pay on every activity.'],
+        ['sm.inventory',   'inventory', 'The Inventory comes with {plan}. Keep the stock in your shed and see what each activity uses.'],
+        ['sm.inventory.*', 'inventory', 'The Inventory comes with {plan}. Keep the stock in your shed and see what each activity uses.'],
     ];
 
     public function handle(Request $request, Closure $next): Response

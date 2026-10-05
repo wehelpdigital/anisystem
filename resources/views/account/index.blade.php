@@ -70,7 +70,7 @@
                         Choose cover photo
                         <input type="file" id="accountCoverInput" name="cover" accept="image/jpeg,image/png,image/webp" class="hidden">
                     </label>
-                    <p class="form-hint">Shown at the top of your community profile. We shrink it before upload.</p>
+                    <p class="form-hint">Shown at the top of your community profile. We make it smaller before it uploads.</p>
                     @error('cover') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
 
@@ -180,7 +180,7 @@
                             $currentProfession = old('profession', $user->profession);
                         @endphp
                         <div>
-                            <label for="profession" class="form-label">Profession / role</label>
+                            <label for="profession" class="form-label">Your work</label>
                             <select id="profession" name="profession" class="form-select">
                                 <option value="">Select…</option>
                                 @if ($currentProfession && ! in_array($currentProfession, $professions, true))
@@ -268,7 +268,7 @@
                 </div>
 
                 <div class="pt-1">
-                    <button type="submit" class="btn btn-primary w-full sm:w-auto">Update Password</button>
+                    <button type="submit" class="btn btn-primary w-full sm:w-auto">Save new password</button>
                 </div>
             </form>
         </div>

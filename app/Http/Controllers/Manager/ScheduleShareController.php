@@ -47,7 +47,7 @@ class ScheduleShareController extends BaseScheduleController
             ->values();
 
         if ($recipients->isEmpty()) {
-            return $this->jsonFail('No workers have an email yet. Add worker emails in the Workers module first.');
+            return $this->jsonFail('No workers have an email yet. Add their emails in Workers first.');
         }
 
         $publicUrl = $schedule->shareToken ? url('/s/' . $schedule->shareToken) : null;
@@ -67,7 +67,7 @@ class ScheduleShareController extends BaseScheduleController
         } catch (\Throwable $e) {
             Log::warning('Quick Share email failed', ['schedule' => $schedule->id, 'error' => $e->getMessage()]);
 
-            return $this->jsonFail('Email could not be sent. The mail server may not be configured yet.', 500, ['sent' => $sent]);
+            return $this->jsonFail('The email could not be sent. Email sending may not be set up yet.', 500, ['sent' => $sent]);
         }
 
         return $this->jsonOk(

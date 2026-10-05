@@ -493,8 +493,8 @@
         return xs.length && xs.every((v) => Math.abs(v) < 1000) && xs.some((v) => !Number.isInteger(v)) ? 2 : 0;
     };
     /* What a count counts, so a difference can say it. */
-    const NOUN = { workdays: 'worker-days', assignments: 'assignments', activities: 'activities', entries: 'entries', steps: 'steps',
-        crewDays: 'crew-days', materials: 'material lines', skipped: 'unticked activities', overdue: 'overdue activities' };
+    const NOUN = { workdays: 'worker days', assignments: 'assignments', activities: 'activities', entries: 'entries', steps: 'steps',
+        crewDays: 'crew days', materials: 'material lines', skipped: 'unticked activities', overdue: 'overdue activities' };
     const one = (v) => { const r = Math.round(v * 10) / 10; return num(r, Number.isInteger(r) ? 0 : 1); };
     const WORD = { 3: ['On track', 'is-good'], 2: ['Watch', 'is-watch'], 1: ['Rescue', 'is-bad'] };
     function fmt(v, unit, q, dec) {
@@ -506,7 +506,7 @@
             case 'days': return num(v) + (Math.abs(v) === 1 ? ' day' : ' days');
             case 'qty': return one(v) + (q ? ' ' + q : '');
             case 'num1': return one(v);
-            case 'word': return (WORD[v] || ['—'])[0];
+            case 'word': return (WORD[v] || ['Not set'])[0];
             default: return num(v);
         }
     }
@@ -571,7 +571,7 @@
             if (s.filtered) badges.push(`<span class="cx-badge" title="${esc(s.filtered)}">${I('filter')}<span>Filtered</span></span>`);
             if (s.author) badges.push(`<span class="cx-badge" title="Saved by ${esc(s.author)}">${I('user')}<span>${esc(s.author)}</span></span>`);
             if (s.seasonStatus) badges.push(`<span class="cx-badge"><span>${esc(s.seasonStatus)}</span></span>`);
-            if (s.gone) badges.push(`<span class="cx-badge"><span>No longer on its shelf</span></span>`);
+            if (s.gone) badges.push(`<span class="cx-badge"><span>Since deleted</span></span>`);
             return `<div class="cx-side is-${k}">
                 <div class="cx-side-top"><span class="cx-letter is-${k}">${k.toUpperCase()}</span><small>Report ${k.toUpperCase()}</small></div>
                 <b class="cx-side-t" title="${esc(s.title)}">${esc(s.title || 'A saved report')}</b>
@@ -642,7 +642,7 @@
                 <p class="cx-m-d ${s.cls}">${I(s.icon)}<span>${esc(s.text)}</span>${s.pct ? `<span class="cx-pct">${esc(s.pct)}</span>` : ''}</p>
             </div>`;
         }).join('');
-        return `<section class="cx-rise" style="--i:${i}">${head('grid', 'At a glance', 'The figures, side by side — the app’s own arithmetic')}<div class="cx-metrics">${cards}</div></section>`;
+        return `<section class="cx-rise" style="--i:${i}">${head('grid', 'At a glance', 'The figures side by side, counted by the app')}<div class="cx-metrics">${cards}</div></section>`;
     }
 
     function groups(list, i) {
@@ -652,7 +652,7 @@
             const rows = g.rows.map((r) => {
                 const d = (r.b || 0) - (r.a || 0);
                 const dTxt = Math.abs(d) < 1e-9 ? 'same' : ((d > 0 ? '+' : '−') + gap(d, g.unit));
-                const note = (r.aNote || r.bNote) ? `<span class="cx-g-note">A: ${esc(r.aNote || '—')} · B: ${esc(r.bNote || '—')}</span>` : '';
+                const note = (r.aNote || r.bNote) ? `<span class="cx-g-note">A: ${esc(r.aNote || 'None')} · B: ${esc(r.bNote || 'None')}</span>` : '';
                 const bar = (k) => {
                     const v = r[k] || 0;
                     return `<div class="cx-gb is-${k}"><span class="cx-letter is-${k} is-sm">${k.toUpperCase()}</span><span class="t"><i class="${v < 0 ? 'is-neg' : ''}" style="--w:${width(v, max, g.unit).toFixed(1)}%"></i></span><b class="${v < 0 ? 'is-neg' : ''}">${esc(fmt(v, g.unit))}</b></div>`;
@@ -703,7 +703,7 @@
                     <p>She reads both, side by side, and tells you what changed, the strengths of each, and what to carry into the next season.</p></div>
                 </div>
                 <button type="button" class="cx-anee-go" data-cx-add-anee><img src="${esc(opts.face)}" alt="">Add ${name}’s read ${opts.price ? coin(String(opts.price)) : ''}</button>
-                <span class="cx-anee-note">It saves as a new comparison with her read${data.mine ? ', and this one leaves the shelf' : ''}.</span>
+                <span class="cx-anee-note">It is saved as a new comparison with her read${data.mine ? ' and replaces this one' : ''}.</span>
             </section>`;
         }
         const li = (arr, icon) => (arr || []).map((x) => `<li>${I(icon)}<span>${esc(x)}</span></li>`).join('');
@@ -711,7 +711,7 @@
         const sB = rep.b || {};
         const overall = an.overall && an.overall.pick ? (() => {
             const p = an.overall.pick;
-            const who = p === 'A' ? `<span class="cx-letter is-a is-sm">A</span> comes out ahead` : (p === 'B' ? `<span class="cx-letter is-b is-sm">B</span> comes out ahead` : 'Honours even');
+            const who = p === 'A' ? `<span class="cx-letter is-a is-sm">A</span> comes out ahead` : (p === 'B' ? `<span class="cx-letter is-b is-sm">B</span> comes out ahead` : 'Both come out even');
             return `<div class="cx-anee-overall"><span class="cup">${I('cup')}</span><div class="min-w-0"><b>${who}</b>${an.overall.why ? `<p>${esc(an.overall.why)}</p>` : ''}</div></div>`;
         })() : '';
         const col = (k, arr, s) => (arr && arr.length) ? `<div class="cx-anee-col is-${k}">
@@ -743,7 +743,7 @@
             const la = (r.labels || {}).a;
             const lb = (r.labels || {}).b;
             const label = r.day === null ? 'No day count' : ((la && lb && la !== lb) ? `${la} · ${lb}` : (la || lb || ('Day ' + r.day)));
-            const cell = (k) => (r[k] || []).length ? `<div class="is-${k}">${r[k].map(item).join('')}</div>` : `<div class="is-${k}"><p class="none">—</p></div>`;
+            const cell = (k) => (r[k] || []).length ? `<div class="is-${k}">${r[k].map(item).join('')}</div>` : `<div class="is-${k}"><p class="none">Nothing</p></div>`;
             return `<div class="cx-tl-row"><span class="cx-tl-day">${esc(label)}</span><div class="cx-tl-cols">${cell('a')}${cell('b')}</div></div>`;
         };
         const FIRST = 8;
@@ -789,7 +789,7 @@
                 <span class="go">${pageFor(s) ? 'Open' : 'Read'} ${I('file')}</span>
             </button>`;
         };
-        return `<section class="cx-rise" style="--i:${i}">${head('file', 'The two reports, as saved', 'Open either one as its own report, charts and filters and all')}<div class="cx-src">${one('a')}${one('b')}</div></section>`;
+        return `<section class="cx-rise" style="--i:${i}">${head('file', 'The two reports, as saved', 'Open either one as its full report, with its charts and filters')}<div class="cx-src">${one('a')}${one('b')}</div></section>`;
     }
 
     /* The window: one per page, re-pointed at A or B. */
@@ -849,7 +849,7 @@
             const f = body.querySelector('iframe');
             setTimeout(() => { if (f.isConnected && !f.classList.contains('is-ready')) { f.classList.add('is-ready'); body.querySelector('.cxw-wait')?.remove(); } }, 12000);
         } else {
-            const note = s.gone ? 'This report has since left its shelf. Here is what it said when it was compared.'
+            const note = s.gone ? 'This report has since been deleted. Here is what it said when it was compared.'
                 : 'This kind of report is kept as text only. Here it is as it was saved.';
             body.innerHTML = `<div class="cxw-text"><p class="text-xs text-gray-500 mb-2">${esc(note)}</p><pre class="cx-pre">${esc(s.body || 'Nothing was written down for this one.')}</pre></div>`;
         }
@@ -908,14 +908,14 @@
         const gone = (rep.a && rep.a.gone) || (rep.b && rep.b.gone);
         if (!hasFigures && !gone) {
             const why = rep.mixed
-                ? 'This comparison was saved when two different kinds of report could be stacked together — they share no figures to line up, so here are the two as they were written.'
+                ? 'This comparison was saved when two different kinds of report could be put together. They share no figures to line up, so here are the two as they were written.'
                 : rep.legacy
-                ? 'This comparison was saved before comparisons lined up their figures, and its reports carry none to read — so here are the two as they were written.'
-                : 'These two were saved as text only, so there are no figures to line up — here they are as written.';
+                ? 'This comparison was saved before comparisons lined up their figures, and its reports have none to read. Here are the two as they were written.'
+                : 'These two were saved as text only, so there are no figures to line up. Here they are as written.';
             parts.push(`<div class="cx-note cx-rise" style="--i:${i++}">${I('info')}<span>${esc(why)}</span></div>`);
         }
         if (gone) {
-            parts.push(`<div class="cx-note cx-rise" style="--i:${i++}">${I('info')}<span>One of the two reports has since left its shelf. What it said is kept below, as it was when compared.</span></div>`);
+            parts.push(`<div class="cx-note cx-rise" style="--i:${i++}">${I('info')}<span>One of the two reports has since been deleted. What it said is kept below, as it was when compared.</span></div>`);
         }
         parts.push(metrics(rep.metrics, i++));
         parts.push(anee(rep, data, opts, i++));

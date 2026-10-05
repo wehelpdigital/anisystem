@@ -133,11 +133,11 @@
         {{-- pl-10!, not pl-10: .form-input sets its padding through
              @apply px-4, which lands later than the plain utility and wins
              the tie — the magnifier would sit on the placeholder's first letter. --}}
-        <input type="search" id="ctSearch" class="form-input pl-10! pr-10!" placeholder="Search for contacts" autocomplete="off" aria-label="Search contacts">
+        <input type="search" id="ctSearch" class="form-input pl-10! pr-10!" placeholder="Search contacts" autocomplete="off" aria-label="Search contacts">
         <button type="button" id="ctSearchX" class="ct-search-x hidden" aria-label="Clear search">✕</button>
     </div>
     <div class="mb-3">
-        <button type="button" id="ctAddBtn" class="btn btn-primary w-full justify-center">Add a New Contact</button>
+        <button type="button" id="ctAddBtn" class="btn btn-primary w-full justify-center">Add a new contact</button>
     </div>
 
     {{-- What the list is currently narrowed by, with its way off. --}}
@@ -156,7 +156,7 @@
     <div id="ctList" class="space-y-2.5"></div>
 
     {{-- The quiet states: still loading, or truly empty. --}}
-    <div id="ctLoading" class="text-center py-10 text-sm text-gray-400">Opening the phonebook…</div>
+    <div id="ctLoading" class="text-center py-10 text-sm text-gray-400">Loading contacts…</div>
     <div id="ctEmpty" class="card" hidden>
         <div class="card-body text-center py-10">
             <img src="{{ asset('images/list.png') }}" alt="" class="w-12 h-12 mx-auto mb-3 opacity-70">
@@ -204,7 +204,7 @@
             </button>
         </div>
         <div>
-            <label class="form-label" for="ctfCompany">Business / role</label>
+            <label class="form-label" for="ctfCompany">Business or work</label>
             <textarea id="ctfCompany" class="form-input" rows="2" style="padding-top:.7rem;padding-bottom:.7rem"
                       placeholder="What they do, like tractor rental or harvest crew" maxlength="500"></textarea>
         </div>
@@ -263,7 +263,7 @@
     </div>
     <div class="sheet-footer">
         {{-- No Cancel: the ✕ in the header already is one. --}}
-        <button type="button" class="btn btn-primary w-full" id="ctfSave">Save Contact</button>
+        <button type="button" class="btn btn-primary w-full" id="ctfSave">Save contact</button>
     </div>
 </div>
 
@@ -295,9 +295,9 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
-        <input type="search" class="form-input mb-3" id="ctPlaceFilter" placeholder="Type a name" autocomplete="off">
+        <input type="search" class="form-input mb-3" id="ctPlaceFilter" placeholder="Search by name" autocomplete="off">
         <div class="dt-rows ct-placelist" id="ctPlaceList"></div>
-        <p class="form-hint" id="ctPlaceNone" hidden>Nothing by that name.</p>
+        <p class="form-hint" id="ctPlaceNone" hidden>No place by that name.</p>
     </div>
 </div>
 @endsection
@@ -570,7 +570,7 @@
         if (!pb) { if ($('ctfProvinceIn')) $('ctfProvinceIn').value = place.province || ''; if ($('ctfTownIn')) $('ctfTownIn').value = place.town || ''; return; }
         $('ctfProvinceSay').textContent = place.province || 'Pick a province';
         pb.classList.toggle('is-set', !!place.province);
-        $('ctfTownSay').textContent = place.town || (place.province ? 'Pick a town' : 'Province first');
+        $('ctfTownSay').textContent = place.town || (place.province ? 'Pick a town' : 'Pick a province first');
         tb.classList.toggle('is-set', !!place.town);
         tb.disabled = !place.province;
     }
@@ -670,7 +670,7 @@
             document.getElementById('ctSheet').querySelector('[data-sheet-close]').click();
             reload();
         } catch (e) {
-            window.toast?.(e.message || 'Could not save.', 'error');
+            window.toast?.(e.message || 'Could not save. Please try again.', 'error');
         } finally { btn.disabled = false; }
     });
 

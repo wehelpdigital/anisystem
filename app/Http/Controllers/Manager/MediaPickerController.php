@@ -159,7 +159,7 @@ class MediaPickerController extends BaseScheduleController
             \App\Support\GalleryPick::VIDEO_EXTS
         );
         if ($path === null) {
-            return $this->jsonFail('That is not a clip this app keeps.', 422);
+            return $this->jsonFail('That clip is not saved in this app.', 422);
         }
 
         /* Finish even if the phone stops waiting.
@@ -208,7 +208,7 @@ class MediaPickerController extends BaseScheduleController
             \App\Support\GalleryPick::VIDEO_EXTS
         );
         if ($path === null) {
-            return $this->jsonFail('That is not a clip this app keeps.', 422);
+            return $this->jsonFail('That clip is not saved in this app.', 422);
         }
         // Already answered by somebody faster: keep the first one.
         if ($already = \App\Support\VideoPoster::stored($path)) {

@@ -118,7 +118,7 @@ class ShareController extends Controller
             $count . ' ' . Str::plural('activity', $count) . ' on ' . $date->format('M j, Y'),
         ]);
 
-        return trim($schedule->title . ' — ' . implode(' · ', $bits)) . '.';
+        return trim($schedule->title . ': ' . implode(' · ', $bits)) . '.';
     }
 
     private function resolve(string $token): AsCroppingSchedule
@@ -228,14 +228,14 @@ class ShareController extends Controller
             $schedule->activities->count() . ' ' . Str::plural('activity', $schedule->activities->count()),
         ]);
 
-        return 'A cropping plan on anee.io — ' . implode(' · ', $bits) . '.';
+        return 'A cropping plan on anee.io: ' . implode(' · ', $bits) . '.';
     }
 
     private function activitySummary(AsScheduleActivity $activity): string
     {
-        $when = $activity->targetDate ? Carbon::parse($activity->targetDate)->format('M j, Y') : 'unscheduled';
+        $when = $activity->targetDate ? Carbon::parse($activity->targetDate)->format('M j, Y') : 'No date yet';
         $lots = $activity->lots->pluck('lotName')->implode(', ');
 
-        return trim($when . ($lots ? ' · ' . $lots : '')) . ' — shared from anee.io.';
+        return trim($when . ($lots ? ' · ' . $lots : '')) . '. Shared from anee.io.';
     }
 }

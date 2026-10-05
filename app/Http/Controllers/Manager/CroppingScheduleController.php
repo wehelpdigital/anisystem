@@ -85,13 +85,13 @@ class CroppingScheduleController extends Controller
          */
         $sorts = [
             'updated' => ['label' => 'Last updated', 'column' => 'updated_at',
-                'why' => 'Whatever you touched last — the season or its tasks — comes first.'],
+                'why' => 'Whatever you changed last, the season or its tasks, comes first.'],
             'active'  => ['label' => 'Recently worked', 'column' => 'last_touched_at',
-                'why' => 'By the last task edited on the season, not the season itself.'],
+                'why' => 'By the last task changed in the season, not the season itself.'],
             'created' => ['label' => 'Newest first', 'column' => 'created_at',
                 'why' => 'The order they were made in.'],
-            'title'   => ['label' => 'Name (A–Z)', 'column' => 'title',
-                'why' => 'Alphabetical, for finding one you already know the name of.'],
+            'title'   => ['label' => 'Name (A to Z)', 'column' => 'title',
+                'why' => 'In ABC order, to find one when you know its name.'],
         ];
         $sort = $request->query('sort');
         $sort = isset($sorts[$sort]) ? $sort : 'updated';
@@ -174,7 +174,7 @@ class CroppingScheduleController extends Controller
                 'readings' => $readings,
                 'progress' => $progress,
                 'window' => $start && $last
-                    ? $start->format('M j') . ' – ' . $last->format('M j, Y')
+                    ? $start->format('M j') . ' to ' . $last->format('M j, Y')
                     : null,
             ];
         }
@@ -246,7 +246,7 @@ class CroppingScheduleController extends Controller
          * own here to add a season to, so the form is not theirs to open. The
          * dashboard withholds the buttons, and this answers anyone who types
          * the URL. */
-        if ($no = $this->workerNoAccess('creating a cropping schedule', route('sm.index'), 'Back to the seasons')) {
+        if ($no = $this->workerNoAccess('creating a season', route('sm.index'), 'Back to the seasons')) {
             return $no;
         }
 
@@ -268,7 +268,7 @@ class CroppingScheduleController extends Controller
             $limit = $user->scheduleLimit();
             return redirect()->route('sm.index')->with('error',
                 'Your ' . ($user->tierConfig()['name'] ?? ucfirst($user->planTier())) . ' plan allows '
-                . ($limit === 0 ? 'no' : ('up to ' . $limit)) . ' active cropping schedule' . ($limit == 1 ? '' : 's')
+                . ($limit === 0 ? 'no' : ('up to ' . $limit)) . ' active season' . ($limit == 1 ? '' : 's')
                 . '. Finish or archive a season, or move up to '
                 . \App\Support\Tier::withPlan(\App\Support\Tier::unlocksAt('schedulesActive', $user->planTier())) . ' for more.');
         }
@@ -279,7 +279,7 @@ class CroppingScheduleController extends Controller
     public function store(Request $request)
     {
         // The form's own door, closed to the same people (see create()).
-        if ($no = $this->workerNoAccess('creating a cropping schedule', route('sm.index'), 'Back to the seasons')) {
+        if ($no = $this->workerNoAccess('creating a season', route('sm.index'), 'Back to the seasons')) {
             return $no;
         }
 
@@ -291,7 +291,7 @@ class CroppingScheduleController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:5000',
         ], [
-            'title.required' => 'Cropping schedule title is required.',
+            'title.required' => 'Give the season a name.',
         ]);
 
         if ($validator->fails()) {
@@ -323,10 +323,10 @@ class CroppingScheduleController extends Controller
 
             return redirect()
                 ->route('sm.hub', ['id' => $schedule->id])
-                ->with('success', 'Cropping schedule created. Now set up its modules.');
+                ->with('success', 'Season created. Now set it up.');
         } catch (\Throwable $e) {
             Log::error('CroppingSchedule store failed: ' . $e->getMessage());
-            return redirect()->back()->withInput()->with('error', 'Failed to create cropping schedule.');
+            return redirect()->back()->withInput()->with('error', 'Could not create the season. Please try again.');
         }
     }
 
@@ -343,7 +343,7 @@ class CroppingScheduleController extends Controller
         if ($request->user() && ! $request->user()->canCreateSchedule()) {
             $limit = $request->user()->scheduleLimit();
             \App\Support\Tier::denyFor('schedulesActive', 'Your ' . ($request->user()->tierConfig()['name'] ?? ucfirst($request->user()->planTier())) . ' plan allows '
-                . ($limit === 0 ? 'no' : ('up to ' . $limit)) . ' active cropping schedule' . ($limit == 1 ? '' : 's')
+                . ($limit === 0 ? 'no' : ('up to ' . $limit)) . ' active season' . ($limit == 1 ? '' : 's')
                 . '. Finish or archive a season, or move up to {plan} for more.');
         }
 
@@ -358,7 +358,7 @@ class CroppingScheduleController extends Controller
             'materials' => 'nullable|array',
             'services' => 'nullable|array',
         ], [
-            'title.required' => 'Give your cropping schedule a title to continue.',
+            'title.required' => 'Give your season a name to continue.',
         ]);
 
         if ($validator->fails()) {
@@ -492,13 +492,13 @@ class CroppingScheduleController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'We could not create your schedule. Please try again.',
+                'message' => 'We could not create your season. Please try again.',
             ], 500);
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Cropping schedule created.',
+            'message' => 'Season created.',
             'data' => [
                 'scheduleId' => $schedule->id,
                 'redirect' => route('sm.hub', ['id' => $schedule->id]),
@@ -627,9 +627,9 @@ class CroppingScheduleController extends Controller
         return response()->json([
             'success' => true,
             'message' => match ($want) {
-                AsCroppingSchedule::STATUS_COMPLETED => 'Season closed — it stays on the shelf, locked, and its reports keep working.',
+                AsCroppingSchedule::STATUS_COMPLETED => 'Season closed. It stays in your list, locked, and its reports still work.',
                 AsCroppingSchedule::STATUS_ARCHIVED => 'Season moved to the Archives.',
-                default => 'Schedule reopened for editing.',
+                default => 'Season reopened for editing.',
             },
             'data' => ['status' => $schedule->status, 'locked' => $schedule->isLocked()],
         ]);
@@ -678,7 +678,7 @@ class CroppingScheduleController extends Controller
         // The diary is the Farm Owner plan's story — the tab stays visible
         // below it, locked, and this wall answers anyone who slips past.
         if (! \App\Support\Tier::scheduleCan($schedule, 'auditLogs')) {
-            \App\Support\Tier::scheduleDenyFor($schedule, 'auditLogs', 'The activity Logs come with {plan} — every change in the schedule, and by whose hand.');
+            \App\Support\Tier::scheduleDenyFor($schedule, 'auditLogs', 'Logs come with {plan}: every change in the season, and who made it.');
         }
 
         $q = \App\Models\AsScheduleAudit::where('croppingScheduleId', $schedule->id);
@@ -791,7 +791,7 @@ class CroppingScheduleController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
+            return response()->json(['success' => false, 'message' => 'Please check what you entered.', 'errors' => $validator->errors()], 422);
         }
 
         $payload = [
@@ -811,7 +811,7 @@ class CroppingScheduleController extends Controller
 
         $schedule->update($payload);
 
-        return response()->json(['success' => true, 'message' => 'Schedule updated.', 'data' => $schedule]);
+        return response()->json(['success' => true, 'message' => 'Season updated.', 'data' => $schedule]);
     }
 
     /**
@@ -831,7 +831,7 @@ class CroppingScheduleController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $result['skipped'] > 0
-                    ? 'Could not send — check your account has an email address and that SMTP is set up in the mother app.'
+                    ? 'Could not send. Check that your account has an email address. If it does, email sending may not be set up yet.'
                     : 'Nothing scheduled for today or tomorrow, so there is nothing to send.',
             ], 422);
         }
@@ -855,14 +855,14 @@ class CroppingScheduleController extends Controller
             'dayType' => 'required|in:DAP,DAS,DAT,TREE',
         ]);
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'message' => 'Invalid day type.'], 422);
+            return response()->json(['success' => false, 'message' => 'Pick a day count from the list.'], 422);
         }
 
         $schedule->update(['dayType' => $request->dayType]);
 
         return response()->json([
             'success' => true,
-            'message' => 'Counters now use ' . $request->dayType . '.',
+            'message' => 'Day counts now use ' . $request->dayType . '.',
             'data' => ['dayType' => $schedule->dayType],
         ]);
     }
@@ -874,12 +874,12 @@ class CroppingScheduleController extends Controller
         // whether the user is a worker anywhere: an owner who also helps on a
         // neighbour's farm was being refused on her own land.
         if (\App\Support\WorkerContext::inWorkerContext()) {
-            return response()->json(['success' => false, 'message' => 'Only the farm owner can delete a schedule.'], 403);
+            return response()->json(['success' => false, 'message' => 'Only the farm owner can delete a season.'], 403);
         }
         $schedule = $this->findOwnedOrFail($request->query('id'), true);
         $schedule->update(['deleteStatus' => 0]);
 
-        return response()->json(['success' => true, 'message' => 'Schedule deleted.']);
+        return response()->json(['success' => true, 'message' => 'Season deleted.']);
     }
 
     /**
@@ -994,12 +994,12 @@ class CroppingScheduleController extends Controller
             });
         } catch (\Throwable $e) {
             Log::error('Schedule duplicate failed', ['id' => $old->id, 'error' => $e->getMessage()]);
-            return response()->json(['success' => false, 'message' => 'Could not duplicate the schedule: ' . $e->getMessage()], 500);
+            return response()->json(['success' => false, 'message' => 'Could not copy the season: ' . $e->getMessage()], 500);
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Schedule duplicated.',
+            'message' => 'Season copied.',
             'data' => ['id' => $new->id, 'title' => $new->title, 'hubUrl' => route('sm.hub', ['id' => $new->id])],
         ]);
     }
@@ -1013,9 +1013,9 @@ class CroppingScheduleController extends Controller
     {
         if (!$id) {
             if ($json) {
-                abort(response()->json(['success' => false, 'message' => 'Missing schedule id.'], 400));
+                abort(response()->json(['success' => false, 'message' => 'No season was chosen. Go back and open it again.'], 400));
             }
-            abort(400, 'Missing schedule id.');
+            abort(400, 'No season was chosen. Go back and open it again.');
         }
 
         $schedule = AsCroppingSchedule::active()
@@ -1025,9 +1025,9 @@ class CroppingScheduleController extends Controller
 
         if (!$schedule) {
             if ($json) {
-                abort(response()->json(['success' => false, 'message' => 'Cropping schedule not found.'], 404));
+                abort(response()->json(['success' => false, 'message' => 'Season not found.'], 404));
             }
-            abort(404, 'Cropping schedule not found.');
+            abort(404, 'Season not found.');
         }
 
         // This controller has its own door, so it needs its own version of
@@ -1035,7 +1035,7 @@ class CroppingScheduleController extends Controller
         // access should not resolve a schedule.
         if (! \App\Support\WorkerContext::canView()) {
             if ($json) {
-                abort(response()->json(['success' => false, 'message' => 'You do not have access to this farm\'s schedules.'], 403));
+                abort(response()->json(['success' => false, 'message' => 'You do not have access to this farm\'s seasons.'], 403));
             }
             abort(403);
         }

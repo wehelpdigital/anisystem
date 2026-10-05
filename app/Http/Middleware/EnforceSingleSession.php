@@ -94,7 +94,7 @@ class EnforceSingleSession
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
 
-                $message = 'Signed out — your account was opened on another device. Log in again to continue here.';
+                $message = 'You were logged out because your account was opened on another device. Log in again to keep working here.';
                 if ($request->expectsJson() || $request->ajax()) {
                     return response()->json(['success' => false, 'message' => $message, 'loggedOut' => true], 401);
                 }

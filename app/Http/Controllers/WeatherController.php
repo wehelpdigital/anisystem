@@ -278,12 +278,12 @@ class WeatherController extends Controller
             ->where('id', $scheduleId)
             ->exists();
         if (! $owned) {
-            return response()->json(['success' => false, 'message' => 'Not your schedule.'], 403);
+            return response()->json(['success' => false, 'message' => 'This season is not yours.'], 403);
         }
 
         $date = (string) $request->query('date');
         if (! preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
-            return response()->json(['success' => false, 'message' => 'Bad date.'], 422);
+            return response()->json(['success' => false, 'message' => 'That date could not be read.'], 422);
         }
 
         $rows = \App\Models\AsScheduleWeatherDay::where('deleteStatus', 1)

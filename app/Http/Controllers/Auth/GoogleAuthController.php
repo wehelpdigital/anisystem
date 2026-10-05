@@ -48,7 +48,7 @@ class GoogleAuthController extends Controller
 
         if ($request->filled('error') || blank($request->input('code'))
             || blank($state) || ! hash_equals($state, (string) $request->input('state'))) {
-            return redirect()->route('login')->with('error', 'Google sign-in was cancelled or did not go through. Please try again.');
+            return redirect()->route('login')->with('error', 'Logging in with Google was cancelled or did not go through. Please try again.');
         }
 
         try {
@@ -66,7 +66,7 @@ class GoogleAuthController extends Controller
         } catch (\Throwable $e) {
             Log::warning('Google OAuth failed: '.$e->getMessage());
 
-            return redirect()->route('login')->with('error', 'Google sign-in did not go through. Please try again.');
+            return redirect()->route('login')->with('error', 'Logging in with Google did not go through. Please try again.');
         }
 
         $email = trim((string) ($profile['email'] ?? ''));

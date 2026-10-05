@@ -1,6 +1,6 @@
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Inventory — ' . $schedule->title)
+@section('title', 'Inventory: ' . $schedule->title)
 @section('page-title', 'Inventory')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'inventory')
@@ -203,10 +203,10 @@
     </div>
 
     <div class="iv-tabs" role="tablist">
-        <button type="button" class="iv-tab is-active" data-pane="ivPaneManage" role="tab">Management</button>
+        <button type="button" class="iv-tab is-active" data-pane="ivPaneManage" role="tab">Items</button>
         <button type="button" class="iv-tab" data-pane="ivPaneLogs" role="tab">Logs</button>
         <button type="button" class="iv-tab" data-pane="ivPanePricing" role="tab">Pricing</button>
-        <button type="button" class="iv-tab" data-pane="ivPaneTotals" role="tab">Current</button>
+        <button type="button" class="iv-tab" data-pane="ivPaneTotals" role="tab">On hand</button>
     </div>
 
     {{-- WHAT YOU KEEP. Each item with what is left of it and the two things

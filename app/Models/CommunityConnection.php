@@ -396,7 +396,7 @@ class CommunityConnection extends BaseModel
             if ($where !== '') {
                 $reason = 'In ' . $where;
             } elseif ($m > 0) {
-                $reason = $m . ' common co-farmer' . ($m > 1 ? 's' : '');
+                $reason = $m . ' common cofarmer' . ($m > 1 ? 's' : '');
             } elseif ($met > 0) {
                 $reason = 'You both commented on the same post';
             } else {

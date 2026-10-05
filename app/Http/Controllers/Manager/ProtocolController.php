@@ -25,7 +25,7 @@ class ProtocolController extends BaseScheduleController
         ]);
 
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $protocol = AsScheduleProtocol::active()->where('croppingScheduleId', $schedule->id)->first();

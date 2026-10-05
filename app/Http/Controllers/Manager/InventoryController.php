@@ -174,7 +174,7 @@ class InventoryController extends BaseScheduleController
             'unitPrice' => 'nullable|numeric|min:0|max:99999999',
         ]);
         if ($v->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $v->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $v->errors()]);
         }
         $move = AsInventoryMove::where('croppingScheduleId', $schedule->id)
             ->where('id', (int) $request->input('id'))
@@ -186,7 +186,7 @@ class InventoryController extends BaseScheduleController
             return $this->jsonFail('Only stock that came in has a price.', 422);
         }
         if ($move->activityId) {
-            return $this->jsonFail('This batch was bought on an activity — change the price on that activity\'s material line.', 422);
+            return $this->jsonFail('This batch was bought on an activity. Change the price on that activity\'s material line.', 422);
         }
         $price = $request->filled('unitPrice') ? round((float) $request->input('unitPrice'), 2) : null;
         /* The note said the price too ("Bought at ₱1,350.00 each") so every
@@ -203,7 +203,7 @@ class InventoryController extends BaseScheduleController
         return $this->jsonOk(
             $price !== null
                 ? 'Priced: ' . ($item ? $item->say((float) $move->delta) : 'this batch') . ' at ' . \App\Support\Region::symbol() . number_format($price, 2) . ' per ' . ($item ? AsInventoryItem::unitSays($item->unit, true) : 'unit') . '.'
-                : 'Price cleared — this batch reads at the item\'s usual price now.',
+                : 'Price cleared. This batch now uses the item\'s usual price.',
             ['data' => ['pricing' => $this->pricingPayload($schedule->id)]]
         );
     }
@@ -362,7 +362,7 @@ class InventoryController extends BaseScheduleController
         $schedule = $this->scheduleForShed($request);
         $v = Validator::make($request->all(), $this->rules());
         if ($v->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $v->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $v->errors()]);
         }
 
         $item = AsInventoryItem::create($this->fields($request) + [
@@ -426,7 +426,7 @@ class InventoryController extends BaseScheduleController
 
         return $this->jsonOk(
             $opening > 0
-                ? $item->name . ' added — ' . $item->say($opening) . ' on hand.'
+                ? $item->name . ' added. ' . $item->say($opening) . ' on hand.'
                 : 'Added to the inventory.',
             ['data' => $this->oneItem($item->fresh())]
         );
@@ -441,7 +441,7 @@ class InventoryController extends BaseScheduleController
         }
         $v = Validator::make($request->all(), $this->rules());
         if ($v->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $v->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $v->errors()]);
         }
 
         /* The unit may change on an edit (the owner's ask, 2026-09-15), and
@@ -468,12 +468,12 @@ class InventoryController extends BaseScheduleController
         $message = 'Saved.';
         if ($change['changed']) {
             $message = $change['converted']
-                ? 'Saved. The book now counts ' . AsInventoryItem::unitSays($item->unit, false) . ': '
+                ? 'Saved. The inventory now counts in ' . AsInventoryItem::unitSays($item->unit, false) . ': '
                     . AsInventoryItem::trim($before) . ' ' . AsInventoryItem::unitSays($was, abs($before - 1) < 0.0005)
-                    . ' became ' . $item->say($this->stock->onHand($item->id)) . ', every line and price with it.'
-                : 'Saved. Counted in ' . AsInventoryItem::unitSays($item->unit, false) . ' now — '
+                    . ' became ' . $item->say($this->stock->onHand($item->id)) . ', and every entry and price changed with it.'
+                : 'Saved. Counted in ' . AsInventoryItem::unitSays($item->unit, false) . ' now. '
                     . AsInventoryItem::unitSays($was, false) . ' and ' . AsInventoryItem::unitSays($item->unit, false)
-                    . ' cannot be converted, so the figures kept their numbers.';
+                    . ' cannot be converted, so the numbers stayed the same.';
         }
 
         return $this->jsonOk($message, ['data' => $this->oneItem($item), 'unitChanged' => $change['changed'], 'converted' => $change['converted']]);
@@ -525,7 +525,7 @@ class InventoryController extends BaseScheduleController
             'unitPrice' => 'nullable|numeric|min:0|max:99999999',
         ]);
         if ($v->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $v->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $v->errors()]);
         }
 
         $item = $this->itemOf($schedule->id, (int) $request->input('itemId'));
@@ -544,7 +544,7 @@ class InventoryController extends BaseScheduleController
         if ($converted === null) {
             return $this->jsonFail(
                 AsInventoryItem::unitSays($fromUnit, false) . ' cannot be counted into '
-                    . AsInventoryItem::unitSays($item->unit, false) . ' — different kinds of amount.',
+                    . AsInventoryItem::unitSays($item->unit, false) . '. They measure different things.',
                 422
             );
         }
@@ -599,7 +599,7 @@ class InventoryController extends BaseScheduleController
         $have = $this->stock->onHand($item->id);
 
         return $this->jsonOk(
-            ($in ? 'Added to ' : 'Taken from ') . $item->name . ' — ' . $item->say($have) . ' left.',
+            ($in ? 'Added to ' : 'Taken from ') . $item->name . '. ' . $item->say($have) . ' left.',
             ['data' => [
                 'move' => $move ? $this->movesPayload($schedule->id)[0] ?? null : null,
                 'item' => $this->oneItem($item),
@@ -625,7 +625,7 @@ class InventoryController extends BaseScheduleController
             'on' => 'required|date',
         ]);
         if ($v->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $v->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $v->errors()]);
         }
 
         $item = $this->itemOf($schedule->id, (int) $request->input('itemId'));
@@ -638,7 +638,7 @@ class InventoryController extends BaseScheduleController
 
         return $this->jsonOk(
             $item->name . ' now starts on ' . date('M j, Y', strtotime($request->input('on')))
-                . ' — ' . $item->say($have) . ' on hand after what the season used.',
+                . '. ' . $item->say($have) . ' on hand after what the season used.',
             ['data' => ['item' => $this->oneItem($item)]]
         );
     }
@@ -682,7 +682,7 @@ class InventoryController extends BaseScheduleController
             'boardSort' => 'nullable|integer',
         ]);
         if ($v->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $v->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $v->errors()]);
         }
 
         $move = AsInventoryMove::where('croppingScheduleId', $schedule->id)
@@ -697,7 +697,7 @@ class InventoryController extends BaseScheduleController
          * here even though its numbers are edited elsewhere. */
         if ($request->has('boardSort') && ! $request->filled('qty') && ! $request->filled('on') && ! $request->has('note')) {
             if (in_array($move->reason, [AsInventoryMove::ACTIVITY, AsInventoryMove::CREATED], true)) {
-                return $this->jsonFail('Only hand-typed lines sit on the board.', 422);
+                return $this->jsonFail('Only entries you typed in can be moved on the board.', 422);
             }
             $move->update(['boardSort' => $request->input('boardSort') === null ? null : (int) $request->input('boardSort')]);
 
@@ -708,7 +708,7 @@ class InventoryController extends BaseScheduleController
             return $this->jsonFail(
                 $move->reason === AsInventoryMove::ACTIVITY
                     ? 'This one came from an activity being marked done. Edit the activity instead.'
-                    : 'The Start is edited from its own editor — its date decides what the season used.',
+                    : 'The starting count is changed in its own editor. Its date decides what the season used.',
                 422
             );
         }
@@ -728,7 +728,7 @@ class InventoryController extends BaseScheduleController
             if ($converted === null) {
                 return $this->jsonFail(
                     AsInventoryItem::unitSays($fromUnit, false) . ' cannot be counted into '
-                        . AsInventoryItem::unitSays($item->unit, false) . ' — different kinds of amount.',
+                        . AsInventoryItem::unitSays($item->unit, false) . '. They measure different things.',
                     422
                 );
             }
@@ -763,7 +763,7 @@ class InventoryController extends BaseScheduleController
             \App\Support\ScheduleTags::sync($schedule, 'move', (int) $move->id, $request->input('tags', []));
         }
 
-        return $this->jsonOk('Entry updated — ' . $item->say($this->stock->onHand($item->id)) . ' on hand.');
+        return $this->jsonOk('Entry updated. ' . $item->say($this->stock->onHand($item->id)) . ' on hand.');
     }
 
     private function itemOf(int $scheduleId, $id): ?AsInventoryItem

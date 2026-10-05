@@ -31,7 +31,7 @@
                 @unless ($email)
                     <input name="email" type="email" class="form-input" placeholder="you@example.com" required>
                 @endunless
-                <button type="submit" class="btn btn-outline w-full">Resend email</button>
+                <button type="submit" class="btn btn-outline w-full">Send the link again</button>
             </form>
         </div>
 

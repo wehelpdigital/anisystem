@@ -1,6 +1,6 @@
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Observations — ' . $schedule->title)
+@section('title', 'Observations: ' . $schedule->title)
 @section('page-title', 'Observations')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'post-harvest')
@@ -79,13 +79,13 @@
         @endforeach
         @if ($summary['revenue'] !== null)
             <div class="ph-figure">
-                <dt class="text-gray-400">Gross value</dt>
+                <dt class="text-gray-400">Sale value</dt>
                 <dd class="text-brand-700">{{ \App\Support\Region::money($summary['revenue']) }}</dd>
             </div>
         @endif
         @if ($summary['avgMoisture'] !== null)
             <div class="ph-figure">
-                <dt class="text-gray-400">Avg moisture</dt>
+                <dt class="text-gray-400">Average moisture</dt>
                 <dd class="text-gray-900">{{ $summary['avgMoisture'] }}%</dd>
             </div>
         @endif
@@ -351,7 +351,7 @@ const __init = () => {
         if (o.moisturePercent !== null) out.push(['Moisture', o.moisturePercent + '%', 'text-gray-900']);
         if (o.pricePerUnit !== null) out.push(['Price', money(o.pricePerUnit), 'text-gray-900']);
         if (o.yieldAmount !== null && o.pricePerUnit !== null) {
-            out.push(['Gross value', money(o.yieldAmount * o.pricePerUnit), 'text-brand-700']);
+            out.push(['Sale value', money(o.yieldAmount * o.pricePerUnit), 'text-brand-700']);
         }
         return out;
     }
@@ -448,11 +448,11 @@ const __init = () => {
         const cells = Object.entries(SEASON.yields).map(([unit, amount]) =>
             `<div class="ph-figure"><dt class="text-gray-400">Total (${escapeHtml(unit)})</dt><dd class="text-brand-700">${escapeHtml(qty(amount))}</dd></div>`);
         if (SEASON.revenue > 0) {
-            cells.push(`<div class="ph-figure"><dt class="text-gray-400">Gross value</dt><dd class="text-brand-700">${escapeHtml(money(SEASON.revenue))}</dd></div>`);
+            cells.push(`<div class="ph-figure"><dt class="text-gray-400">Sale value</dt><dd class="text-brand-700">${escapeHtml(money(SEASON.revenue))}</dd></div>`);
         }
         if (SEASON.moistureRows > 0) {
             const avg = Math.round((SEASON.moistureSum / SEASON.moistureRows) * 10) / 10;
-            cells.push(`<div class="ph-figure"><dt class="text-gray-400">Avg moisture</dt><dd class="text-gray-900">${avg}%</dd></div>`);
+            cells.push(`<div class="ph-figure"><dt class="text-gray-400">Average moisture</dt><dd class="text-gray-900">${avg}%</dd></div>`);
         }
         cells.push(`<div class="ph-figure"><dt class="text-gray-400">Observations</dt><dd class="text-gray-900" id="phSummaryCount">${SEASON.count}</dd></div>`);
         document.getElementById('phSummaryGrid').innerHTML = cells.join('');
@@ -525,7 +525,7 @@ const __init = () => {
         const y = num(vals.yieldAmount);
         const p = num(vals.pricePerUnit);
         fld('phValueHint').textContent = (y !== null && p !== null)
-            ? 'Gross value: ' + money(y * p)
+            ? 'Sale value: ' + money(y * p)
             : '';
     }
 

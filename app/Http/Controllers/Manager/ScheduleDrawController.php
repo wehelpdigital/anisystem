@@ -250,7 +250,7 @@ class ScheduleDrawController extends BaseScheduleController
             'index' => 'nullable|integer|min:0',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $binary = $this->decodeDataUrlImage((string) $request->input('image'));
@@ -263,7 +263,7 @@ class ScheduleDrawController extends BaseScheduleController
         $scope = $schedule ? $schedule->id : 'u' . $me;
         $path = \App\Support\MediaStore::putBinary($binary, 'drawings', 'png', $scope);
         if ($path === null) {
-            return $this->jsonFail('Could not keep that drawing.', 500);
+            return $this->jsonFail('Could not save that drawing.', 500);
         }
 
         // A stamp-sized copy beside the picture, for every shelf that lists

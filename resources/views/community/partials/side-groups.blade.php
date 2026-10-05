@@ -39,6 +39,6 @@
         <p class="text-xs text-gray-400 py-2">Wala pang usapan.</p>
     @endforelse
     @if (! $mine && $groups->isNotEmpty())
-        <p class="text-[0.688rem] text-gray-400 mt-1.5 px-0.5">Wala ka pang sinasalihan — pumili ng isa.</p>
+        <p class="text-[0.688rem] text-gray-400 mt-1.5 px-0.5">Wala ka pang sinasalihan. Pumili ng isa.</p>
     @endif
 </div>

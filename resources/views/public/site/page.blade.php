@@ -147,7 +147,7 @@
                         <b>{{ $page->lang === 'tl' ? 'Ang buong season mo, nasa isang app' : 'Your whole season in one app' }}</b>
                         <p>{{ $page->lang === 'tl'
                             ? 'Kalendaryo ng bawat gawain, abono at gastos na nakatala, at si Anee, ang AI technician na sumasagot sa Tagalog.'
-                            : 'A cropping calendar that dates every task, fertilizer and costs on record, and Anee, the AI technician who answers in Tagalog or English.' }}</p>
+                            : 'A cropping calendar that dates every task, a record of your fertilizer and costs, and Anee, the AI technician who answers in Tagalog or English.' }}</p>
                         <a href="{{ route('signup') }}" class="btn btn-accent">{{ $page->lang === 'tl' ? 'Magsimula nang libre' : 'Start free' }}</a>
                     </div>
                     @if ($related->count())
@@ -169,7 +169,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
             <div class="flex flex-wrap items-end justify-between gap-3 mb-6">
                 <h2 class="font-heading text-2xl font-bold text-ink">More of what anee.io does</h2>
-                <a href="{{ route('features') }}" class="text-sm font-extrabold text-brand-700 hover:text-brand-800">The full feature tour ›</a>
+                <a href="{{ route('features') }}" class="text-sm font-extrabold text-brand-700 hover:text-brand-800">See all features ›</a>
             </div>
             @include('public.site.feature-grid', ['pages' => \App\Support\SitePages::inSection('features'), 'except' => $page->slug])
         </div>

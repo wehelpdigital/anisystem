@@ -153,13 +153,13 @@ class PostHarvestController extends BaseScheduleController
             'image' => 'required|image|mimes:jpg,jpeg,png,webp,gif|max:8192',
         ], [
             'image.required' => 'Pick a photo to upload.',
-            'image.image' => 'File must be an image.',
+            'image.image' => 'The file must be a picture.',
             'image.mimes' => 'Allowed types: JPG, PNG, WebP, GIF.',
-            'image.max' => 'Photo is too large — max 8 MB.',
+            'image.max' => 'The photo is too large. The limit is 8 MB.',
         ]);
 
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         try {
@@ -193,18 +193,18 @@ class PostHarvestController extends BaseScheduleController
             'video' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v,video/x-msvideo|max:2097152',
         ], [
             'video.required' => 'Pick a video first.',
-            'video.max' => 'Video is too large — max 300 MB.',
+            'video.max' => 'The video is too large. The limit is 300 MB.',
             'video.mimetypes' => 'That file is not a supported video.',
         ]);
 
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         try {
             $out = VideoOptimizer::storeCompressed($request->file('video'), 'schedule-post-harvest/' . $schedule->id . '/videos');
         } catch (\Throwable $e) {
-            return $this->jsonFail('Video processing failed: ' . $e->getMessage(), 500);
+            return $this->jsonFail('The video could not be saved: ' . $e->getMessage(), 500);
         }
 
         // Compress here, keep there — same trade the notes make: the clip
@@ -288,11 +288,11 @@ class PostHarvestController extends BaseScheduleController
             'imagePaths' => 'nullable|array|max:20',
             'imagePaths.*' => 'string|max:500',
         ], [
-            'lotId.in' => 'That lot does not belong to this schedule.',
+            'lotId.in' => 'That lot is not in this season.',
         ]);
 
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $data = $validator->validated();

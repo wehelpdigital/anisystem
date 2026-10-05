@@ -14,7 +14,7 @@
         <span class="yt-title" data-yt-title="{{ $vid }}">YouTube video</span>
         <div class="yt-actions">
             <a href="{{ $ytUrl }}" target="_blank" rel="noopener" class="yt-open">Watch on YouTube ↗</a>
-            <button type="button" class="yt-forward" data-yt-forward="{{ $vid }}" title="Forward to a co-farmer">
+            <button type="button" class="yt-forward" data-yt-forward="{{ $vid }}" title="Forward to a cofarmer">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                 Forward
             </button>
@@ -52,7 +52,7 @@
         <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body">
-        <label class="form-label">Send to a co-farmer</label>
+        <label class="form-label">Send to a cofarmer</label>
         <div id="ytForwardList" class="space-y-1 max-h-72 overflow-y-auto rounded-xl border border-gray-100 p-1">
             <p class="text-sm text-gray-400 px-2 py-3 text-center">Loading…</p>
         </div>
@@ -130,7 +130,7 @@
     function renderForwardList(items) {
         const box = document.getElementById('ytForwardList');
         if (!items.length) {
-            box.innerHTML = '<p class="text-sm text-gray-400 px-2 py-3 text-center">No co-farmers yet.</p>';
+            box.innerHTML = '<p class="text-sm text-gray-400 px-2 py-3 text-center">No cofarmers yet.</p>';
             return;
         }
         box.innerHTML = items.map((u) => {

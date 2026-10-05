@@ -6,7 +6,7 @@
     $isToday = $date->isSameDay(Carbon::today());
 @endphp
 
-@section('share-title', $date->format('M j, Y') . ' — ' . $schedule->title)
+@section('share-title', $date->format('M j, Y') . ' · ' . $schedule->title)
 @section('og-title', $schedule->title . ' · ' . $date->format('M j, Y'))
 @section('og-description', $ogDescription)
 @section('og-type', 'article')
@@ -41,7 +41,7 @@
                         <h3 class="font-semibold text-gray-900 leading-snug break-words">
                             {{ $a->activityTitle }}
                             @unless ($row['isStart'])
-                                <span class="text-xs font-normal text-gray-400">(continues)</span>
+                                <span class="text-xs font-normal text-gray-400">(started earlier)</span>
                             @endunless
                         </h3>
                         <span class="pill pill-{{ $a->priority }} shrink-0">{{ ucfirst($a->priority) }}</span>
@@ -55,7 +55,7 @@
                         <div class="text-sm text-gray-700 mt-2 leading-relaxed break-words">{!! $a->description !!}</div>
                     @endif
                     @if ($a->imageUrl())
-                        <div class="mt-2"><img src="{{ $a->imageUrl() }}" alt="Reference" loading="lazy" class="rounded-lg max-h-64 w-auto"></div>
+                        <div class="mt-2"><img src="{{ $a->imageUrl() }}" alt="Reference photo" loading="lazy" class="rounded-lg max-h-64 w-auto"></div>
                     @endif
                     @if ($a->workers->count())
                         <div class="flex flex-wrap gap-1.5 mt-2">

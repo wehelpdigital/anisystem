@@ -148,7 +148,7 @@
                     onerror="this.closest('.media-skel')?.classList.add('is-gone')">
                 <span class="post-media-full">
                     <svg style="width:.7rem;height:.7rem" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4h4M20 8V4h-4M4 16v4h4m12-4v4h-4"/></svg>
-                    See it whole
+                    See full photo
                 </span>
             </div>
         @endif

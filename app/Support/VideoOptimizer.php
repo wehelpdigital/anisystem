@@ -76,7 +76,7 @@ class VideoOptimizer
         $seconds = self::seconds($ffmpeg, $input);
         if ($seconds !== null && $seconds > self::MAX_SECONDS + 0.75) {
             throw new \RuntimeException(sprintf(
-                'That clip is %s long. Clips can be up to one minute — trim it and try again.',
+                'That clip is %s long. Clips can be up to one minute. Trim it and try again.',
                 self::spell($seconds)
             ));
         }

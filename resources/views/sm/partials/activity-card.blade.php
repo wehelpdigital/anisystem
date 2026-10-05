@@ -14,7 +14,7 @@
     $isRange = $startC && $endC && $endC->greaterThan($startC);
     $rangeDays = $isRange ? ($startC->diffInDays($endC) + 1) : 0;
     $typeLabel = ($a->activityType && isset($activityTypes[$a->activityType])) ? $activityTypes[$a->activityType] : null;
-    $timeLabel = $a->timeRequired === 'whole' ? 'Whole day' : ($a->timeRequired === 'half' ? 'Half day' : 'N/A');
+    $timeLabel = $a->timeRequired === 'whole' ? 'Whole day' : ($a->timeRequired === 'half' ? 'Half day' : 'No set time');
 
     $searchBits = [mb_strtolower($a->activityTitle), mb_strtolower($typeLabel ?? '')];
     foreach ($cardLots as $l) { $searchBits[] = mb_strtolower($l->lotName . ' ' . ($l->variety ?? '')); }
@@ -121,9 +121,9 @@
     $labour = $a->labourTotal();
     $labourParts = $a->workers->map(function ($w) use ($a) {
         $part = $a->dayPartFor($w);
-        $len = $part === 'half' ? '½d' : ($part === 'whole' ? '1d' : '—');
+        $len = $part === 'half' ? '½d' : ($part === 'whole' ? '1d' : '');
 
-        return $w->workerName . ' ' . $len . ' ' . \App\Support\Region::symbol() . number_format($a->workerPay($w), 2);
+        return $w->workerName . ($len !== '' ? ' ' . $len : '') . ' ' . \App\Support\Region::symbol() . number_format($a->workerPay($w), 2);
     })->join(' · ');
     $showCost = $labour > 0 && $a->activityType !== 'worker_payroll';
     /* THE SAME FIGURE, SHORT, FOR WHEN THE ROW CANNOT HOLD IT.
@@ -157,7 +157,7 @@
 
     $mayEdit = \App\Support\WorkerContext::canEdit();
     $lockCls = $mayEdit ? '' : ' is-locked';
-    $editTitle = fn ($plain) => $mayEdit ? $plain : 'Only someone who can edit the plan may do this';
+    $editTitle = fn ($plain) => $mayEdit ? $plain : 'You do not have permission to edit this plan';
 @endphp
 {{-- draggable follows $mayEdit too: a grip cursor on a card whose drop the
      gate will refuse is a promise the board cannot keep. A worker never drags,
@@ -258,7 +258,7 @@
                          of errands — so the slot that names the ground says what
                          the card is instead, and the lot (when there is one)
                          moves down beside the priority. --}}
-                    <span class="badge reminder-head-badge">Reminder Checklist</span>
+                    <span class="badge reminder-head-badge">Reminder checklist</span>
                 @elseif($cardLots->count())
                     @foreach($cardLots as $lot)
                         {{-- Auto colour per lot (golden-angle hue → distinct + stable). --}}
@@ -271,7 +271,7 @@
                 @elseif ($a->activityType !== 'worker_payroll')
                     {{-- A payroll day is about who turned up, not which field,
                          so "no lot" is its normal state rather than a gap. --}}
-                    <span class="item-tag activity-na-tag" title="Not tied to any lot">N/A: No lot</span>
+                    <span class="item-tag activity-na-tag" title="Not tied to any lot">No lot</span>
                 @endif
             </div>
             <div class="act-title-line">
@@ -393,7 +393,7 @@
                          .mp4 is what a broken-image glyph is made of. --}}
                     <video src="{{ $img['url'] }}" controls playsinline preload="metadata"></video>
                 @else
-                    <img src="{{ $img['url'] }}" alt="Reference image" loading="lazy">
+                    <img src="{{ $img['url'] }}" alt="Activity photo" loading="lazy">
                 @endif
             @endforeach
         </div>
@@ -433,7 +433,7 @@
                 @endphp
                 <label class="act-check-row{{ $here ? '' : ' is-out' }}{{ $mine ? ' is-me' : '' }}{{ $mayTick ? '' : ' is-locked' }}" data-att-worker="{{ $w->id }}">
                     <input type="checkbox" @checked($here) @disabled(! $mayTick)>
-                    <span class="act-check-name">{{ $w->workerName }}@if ($a->targetDate && ! $w->isAvailableOn($a->targetDate))<span class="w-forced" title="Marked off this day">forced</span>@endif</span>
+                    <span class="act-check-name">{{ $w->workerName }}@if ($a->targetDate && ! $w->isAvailableOn($a->targetDate))<span class="w-forced" title="Marked off this day">on day off</span>@endif</span>
                     <span class="act-check-pay">{{ \App\Support\Region::money($a->workerPay($w)) }}</span>
                 </label>
             @endforeach
@@ -465,7 +465,7 @@
                      not make still shows, greyed — an inviting box that flips,
                      403s and flips back is worse than one that says "not
                      yours". Twin of reminderChecklist() in the JS renderer. --}}
-                <label class="act-rem-row{{ $r['done'] ? ' is-done' : '' }}{{ $mayEdit ? '' : ' is-locked' }}" data-rem-index="{{ $i }}" title="{{ $editTitle('Tick this errand off') }}">
+                <label class="act-rem-row{{ $r['done'] ? ' is-done' : '' }}{{ $mayEdit ? '' : ' is-locked' }}" data-rem-index="{{ $i }}" title="{{ $editTitle('Tick when done') }}">
                     <input type="checkbox" @checked($r['done']) @disabled(! $mayEdit)>
                     <span class="act-rem-name">{{ $r['text'] }}</span>
                     @if ($r['kind'] !== 'none' && $r['amount'] > 0)

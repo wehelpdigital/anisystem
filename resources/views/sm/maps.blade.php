@@ -291,7 +291,7 @@
                 return `<div class="mp-card" data-current>
                     <div class="mp-thumb">${MAP_ICON}</div>
                     <div class="mp-meta">
-                        <span class="mp-name">The canvas</span>
+                        <span class="mp-name">Map in progress</span>
                         <div class="mp-tags"><span class="badge badge-green">${liveCount} shape${liveCount === 1 ? '' : 's'}</span></div>
                         <span class="mp-when">Pick up where you left off</span>
                     </div>

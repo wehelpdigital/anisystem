@@ -190,7 +190,7 @@ class WorkerModuleAccess
         'video' => 'video recording',
         'reports' => 'Reports',
         'community' => 'the Community',
-        'owner' => 'this — it belongs to the farm owner',
+        'owner' => 'this page, which only the farm owner can open',
     ];
 
     public function handle(Request $request, Closure $next): Response

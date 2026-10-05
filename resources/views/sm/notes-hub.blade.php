@@ -95,7 +95,7 @@
 
 @section('content')
 <div class="nh-top">
-    <p>All your notes in one place: your own notes, each schedule's notebook, and notes on a day. Tap a note to open it.</p>
+    <p>All your notes in one place: your own notes, each season's notebook, and notes on a day. Tap a note to open it.</p>
     <button type="button" id="addNoteBtn" class="btn btn-primary btn-sm nh-newbtn shrink-0">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
         New note
@@ -105,8 +105,8 @@
 @if ($notes->total() > 0)
     <div class="nh-filters" id="nhFilters">
         <button type="button" class="nh-filter is-on" data-kind="all">All</button>
-        <button type="button" class="nh-filter" data-kind="global">Global</button>
-        <button type="button" class="nh-filter" data-kind="schedule">Schedules</button>
+        <button type="button" class="nh-filter" data-kind="global">My notes</button>
+        <button type="button" class="nh-filter" data-kind="schedule">Seasons</button>
         <button type="button" class="nh-filter" data-kind="day">Days</button>
         <button type="button" class="nh-filter" data-fold="1" id="nhFoldAll">Collapse all</button>
     </div>

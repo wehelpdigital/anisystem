@@ -67,7 +67,7 @@ class WorkerInviteController extends Controller
         $user->forceFill(['currentSessionId' => $request->session()->getId()])->saveQuietly();
         session(['activeBossId' => $grant->bossUserId]);
 
-        return redirect()->route('app.dashboard')->with('success', 'Welcome! You now have access to your farm manager\'s schedules.');
+        return redirect()->route('app.dashboard')->with('success', 'Welcome! You can now open your farm manager\'s seasons.');
     }
 
     private function resolve(string $token): WorkerGrant

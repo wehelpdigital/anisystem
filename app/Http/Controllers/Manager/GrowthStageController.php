@@ -45,7 +45,7 @@ class GrowthStageController extends BaseScheduleController
         $lotId = (int) $request->query('lot');
         $row = collect($this->rowsFor($schedule, $on))->first(fn ($r) => (int) $r['lot']->id === $lotId);
         if (! $row) {
-            return response()->json(['success' => false, 'message' => 'That lot is not on this schedule.'], 404);
+            return response()->json(['success' => false, 'message' => 'That lot is not in this season.'], 404);
         }
 
         return response()->json(['success' => true, 'message' => 'ok', 'data' => [
@@ -119,26 +119,26 @@ class GrowthStageController extends BaseScheduleController
     public static function counterSays(?string $mode): string
     {
         return match (strtoupper((string) ($mode ?: 'DAT'))) {
-            'DAS' => 'Direct seeded — one count from sowing',
+            'DAS' => 'Direct seeded: one count from sowing',
             'DAP' => 'Counted from planting',
-            'TREE' => 'A standing crop — read by the age of the trees',
-            default => 'Sown, then transplanted — DAS until the transplant, DAT after',
+            'TREE' => 'A standing crop, read by the age of the trees',
+            default => 'Sown, then transplanted: DAS until the transplant, DAT after',
         };
     }
 
     private function whyBlocked($lot, ?string $crop, ?array $age, bool $hasDayZero): ?string
     {
         if (! $crop) {
-            return 'No crop set on this lot. Open Lots and say what is growing here.';
+            return 'No crop is set on this lot. Open Lots and say what is growing here.';
         }
         // A tree is not waiting for a day zero; it is waiting to be told how
         // old it is, which is a different thing and a different fix.
         if (! $age && CropStages::isPerennial($crop)) {
-            return 'No age on these trees yet. Open Lots and say how old they are — that is what their guidance is read against.';
+            return 'These trees have no age yet. Open Lots and say how old they are, because their guidance depends on it.';
         }
         if (! $age) {
             return $hasDayZero
-                ? 'This date is before the lot\'s day zero — nothing is planted yet.'
+                ? 'This date is before the lot\'s day zero, so nothing is planted yet.'
                 : 'No day zero on this lot yet. Set one in Lots, or tick "this is day zero" on the activity that starts the count.';
         }
 

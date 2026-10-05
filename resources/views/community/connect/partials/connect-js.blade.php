@@ -10,7 +10,7 @@
         if (status === 'none') return `<button type="button" class="btn btn-primary btn-sm conn-btn" data-action="connect">Connect</button>`;
         if (status === 'pending_out') return `<button type="button" class="btn btn-white btn-sm conn-btn" data-action="disconnect">Requested</button>`;
         if (status === 'pending_in') return `<button type="button" class="btn btn-primary btn-sm conn-btn" data-action="accept">Accept</button><button type="button" class="btn btn-white btn-sm conn-btn" data-action="decline">Decline</button>`;
-        if (status === 'connected') return `<button type="button" class="btn btn-ghost btn-sm text-gray-400 conn-btn" data-action="disconnect" title="Remove this co-farmer">✕</button>`;
+        if (status === 'connected') return `<button type="button" class="btn btn-ghost btn-sm text-gray-400 conn-btn" data-action="disconnect" title="Remove this cofarmer">✕</button>`;
         return '';
     }
 
@@ -34,8 +34,8 @@
         if (action === 'disconnect' && wrap.getAttribute('data-status') === 'connected' && window.confirmAction) {
             const name = btn.getAttribute('aria-label') || 'this member';
             const ok = await window.confirmAction({
-                title: 'Remove this co-farmer?',
-                message: 'You will stop being co-farmers — no more of each other\'s news, and reconnecting takes a new request.',
+                title: 'Remove this cofarmer?',
+                message: 'You will stop being cofarmers and will no longer see each other\'s news. To connect again, one of you must send a new request.',
                 confirmText: 'Remove',
             });
             if (!ok) return;
@@ -54,7 +54,7 @@
                 wrap.querySelectorAll('button').forEach((b) => (b.disabled = false));
             }
         } catch (_) {
-            toast('Network error — try again.', 'error');
+            toast('No connection. Try again.', 'error');
             wrap.querySelectorAll('button').forEach((b) => (b.disabled = false));
         }
     });

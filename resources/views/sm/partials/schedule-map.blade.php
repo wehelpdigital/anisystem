@@ -49,8 +49,8 @@
     {{-- No key, no map — say so instead of a grey void. --}}
     <div class="cmap-nokey">
         <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
-        <p class="font-bold text-gray-800">The map needs a Google Maps key</p>
-        <p class="text-sm text-gray-500">Set <code class="font-mono text-xs bg-gray-100 rounded px-1">GOOGLE_MAPS_KEY</code> in the environment and redeploy. The rest of the room works without it.</p>
+        <p class="font-bold text-gray-800">The map is not set up yet</p>
+        <p class="text-sm text-gray-500">The rest of the room still works. For the site admin: set <code class="font-mono text-xs bg-gray-100 rounded px-1">GOOGLE_MAPS_KEY</code> in the environment and redeploy.</p>
     </div>
 @else
     @if (! empty($attachLot) && $mapChrome !== 'lot')
@@ -126,9 +126,9 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20L18 6M18 6h-7M18 6v7"/></svg>
                     <span>Arrow: drag to point</span>
                 </button>
-                <button type="button" class="cmap-mrow" data-mtool="path" data-short="Multi-line">
+                <button type="button" class="cmap-mrow" data-mtool="path" data-short="Path">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-6 4 3 6-8"/><path stroke-linecap="round" d="M3 17h.01M8 11h.01M12 14h.01M18 6h.01"/></svg>
-                    <span>Multi-line: tap points, tap the first to close</span>
+                    <span>Path: tap points, then tap the first point to close it</span>
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="rect" data-short="Box">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg>
@@ -179,7 +179,7 @@
                     <label class="form-label" for="cmapPinName">What is here?</label>
                     <input type="text" id="cmapPinName" class="form-input" maxlength="80"
                            placeholder="e.g. Pump house, Lot A gate, water source">
-                    <p class="form-hint">Optional. A pin with no name is still a place.</p>
+                    <p class="form-hint">Optional. You can leave it blank.</p>
                 </div>
                 <div class="cmap-pin-at" id="cmapPinAt"></div>
                 <button type="button" class="btn w-full sweep-fill sweep-green cmap-pin-keep"
@@ -272,7 +272,7 @@
             </div>
             <div class="sheet-body" style="padding-bottom:1.1rem">
                 <p class="cmap-save-hint" id="cmapSaveHint"></p>
-                <label class="cmap-save-label" for="cmapSaveName">Title</label>
+                <label class="cmap-save-label" for="cmapSaveName">Map name</label>
                 <input type="text" id="cmapSaveName" class="form-input" placeholder="e.g. North lot irrigation plan" autocomplete="off">
                 <label class="cmap-save-label" for="cmapSaveDesc">What is this map about? (optional)</label>
                 <textarea id="cmapSaveDesc" class="form-textarea" rows="3"></textarea>
@@ -331,7 +331,7 @@
                 <textarea id="cmapTextInput" class="form-textarea" rows="3" maxlength="500"
                     placeholder="North gate&#10;keep clear"></textarea>
                 <p class="cmap-text-left" id="cmapTextLeft"></p>
-                <label class="cmap-save-label">Lettering</label>
+                <label class="cmap-save-label">Letter style</label>
                 {{-- Each one is written in itself — the name of a typeface
                      tells a farmer nothing, the shape of it tells them
                      everything. The stacks are set from JS so there is one
@@ -375,7 +375,7 @@
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><path stroke-linecap="round" d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22M12 12h.01"/></svg>
         </button>
         @endif
-        <button type="button" class="cmap-tool is-active" id="cmapLayer" title="Toggle map / satellite" aria-label="Toggle map or satellite view" aria-pressed="true">
+        <button type="button" class="cmap-tool is-active" id="cmapLayer" title="Switch between map and satellite" aria-label="Switch between map and satellite view" aria-pressed="true">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>
         </button>
         @if ($cmapOwn || \App\Support\WorkerContext::canEdit())
@@ -411,7 +411,7 @@
                      for the same reason the shelf's New map does. --}}
                 <button type="button" class="cmap-mrow" data-maction="new">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>
-                    <span>Start a new map<small>Clears the canvas. Saved maps stay on the shelf</small></span>
+                    <span>Start a new map<small>Clears the map. Your saved maps are kept</small></span>
                 </button>
                 <button type="button" class="cmap-mrow" data-maction="open">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>
@@ -453,7 +453,7 @@
              caption says what is happening. --}}
         <div class="cmap-veil" id="cmapVeil">
             @include('sm.partials.wait-card')
-            <span class="cmap-veil-txt">Finding your ground…</span>
+            <span class="cmap-veil-txt">Loading the map…</span>
         </div>
         {{-- Google turned the site away (the key's allowed websites do not
              include this address). Said in our words rather than Google's
@@ -2423,7 +2423,7 @@
     // it can drag it without hunting for it first.
     let editing = null, saveTimer = null, pendingEdit = null, selVertex = null, pendingPoint = null;
     function showEditBar(o) {
-        const KINDS = { pen: 'drawing', line: 'line', path: 'multi-line', rect: 'box', area: 'area', text: 'label', arrow: 'arrow' };
+        const KINDS = { pen: 'drawing', line: 'line', path: 'path', rect: 'box', area: 'area', text: 'label', arrow: 'arrow' };
         document.getElementById('cmapEditLbl').textContent = 'Editing ' + (KINDS[o.kind] || 'shape');
         document.getElementById('cmapDelPoint').hidden = true;
         // Only a label has words behind it.
@@ -4026,7 +4026,7 @@
         if (!silent) {
             const n = objIndex.size;
             const ok = window.confirmAction
-                ? await confirmAction({ title: 'Start a blank map?', message: 'Removes the ' + n + ' shape' + (n === 1 ? '' : 's') + ' on the canvas' + (SID > 0 ? ' for the whole team' : '') + '. Save the current map first if you want to keep it.', confirmText: 'Start blank' })
+                ? await confirmAction({ title: 'Start a blank map?', message: 'Removes the ' + n + ' shape' + (n === 1 ? '' : 's') + ' on this map' + (SID > 0 ? ' for the whole team' : '') + '. Save the current map first if you want to keep it.', confirmText: 'Start blank' })
                 : confirm('Start a blank map? This clears the current shapes for everyone.');
             if (!ok) return;
         }
@@ -4281,7 +4281,7 @@
         document.getElementById('cmapGps')?.addEventListener('click', (e) => toggleGps(e.currentTarget));
         document.getElementById('cmapClear')?.addEventListener('click', async () => {
             const ok = window.confirmAction
-                ? await confirmAction({ title: 'Clear the map?', message: SID > 0 ? 'Removes every shape for the whole team.' : 'Removes every shape on this canvas. Saved maps stay on your shelf.', confirmText: 'Clear map' })
+                ? await confirmAction({ title: 'Clear the map?', message: SID > 0 ? 'Removes every shape for the whole team.' : 'Removes every shape on this map. Your saved maps are kept.', confirmText: 'Clear map' })
                 : confirm('Clear the map for everyone?');
             if (!ok) return;
             try {
@@ -4457,7 +4457,7 @@
             loading = false;
             const t = document.querySelector('#cmapVeil .cmap-veil-txt');
             if (t) t.textContent = 'Could not load Google Maps.';
-            if (window.toast) toast('Could not load Google Maps. Check the API key.', 'error');
+            if (window.toast) toast('Could not load Google Maps. Check your connection and try again.', 'error');
         };
         document.head.appendChild(s);
     };

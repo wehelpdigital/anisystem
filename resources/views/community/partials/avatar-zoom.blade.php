@@ -219,8 +219,8 @@
         const fillCounts = () => {
             if (!glance || seq !== openSeq) return;
             const rows = [];
-            if (glance.mutual > 0) rows.push([glance.mutual, 'mutual co-farmer']);
-            if (glance.coFarmers > 0) rows.push([glance.coFarmers, 'co-farmer']);
+            if (glance.mutual > 0) rows.push([glance.mutual, 'mutual cofarmer']);
+            if (glance.coFarmers > 0) rows.push([glance.coFarmers, 'cofarmer']);
             if (glance.followers > 0) rows.push([glance.followers, 'follower']);
             counts.innerHTML = '';
             rows.forEach(([n, word]) => {

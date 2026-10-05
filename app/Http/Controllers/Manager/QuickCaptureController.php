@@ -54,7 +54,7 @@ class QuickCaptureController extends BaseScheduleController
 
         $title = filled($request->input('title'))
             ? trim((string) $request->input('title'))
-            : 'Quick capture — ' . Carbon::now()->format('M j, Y g:i A');
+            : 'Quick capture · ' . Carbon::now()->format('M j, Y g:i A');
 
         // One capture, one note. The photos ride along as its attachments —
         // the same shape the notes module writes when you attach several by
@@ -151,13 +151,13 @@ class QuickCaptureController extends BaseScheduleController
             'clip' => 'required|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v|max:2097152',
         ], [
             'clip.required' => 'Record something first.',
-            'clip.max' => 'That clip is larger than 300 MB — record a shorter one.',
+            'clip.max' => 'That clip is larger than 300 MB. Record a shorter one.',
         ]);
 
 
         $title = filled($request->input('title'))
             ? trim((string) $request->input('title'))
-            : 'Quick record — ' . Carbon::now()->format('M j, Y g:i A');
+            : 'Quick record · ' . Carbon::now()->format('M j, Y g:i A');
 
         $body = filled($request->input('note'))
             ? HtmlSanitizer::rich($request->input('note'))
@@ -261,7 +261,7 @@ class QuickCaptureController extends BaseScheduleController
             'clip' => 'required|file|max:51200|mimetypes:audio/webm,audio/ogg,audio/mp4,audio/mpeg,audio/aac,audio/wav,audio/x-wav,audio/x-m4a,video/webm',
         ], [
             'clip.required' => 'Record something first.',
-            'clip.max' => 'That recording is larger than 50 MB — record a shorter one.',
+            'clip.max' => 'That recording is larger than 50 MB. Record a shorter one.',
             'clip.mimetypes' => 'That does not sound like an audio recording.',
         ]);
 
@@ -272,7 +272,7 @@ class QuickCaptureController extends BaseScheduleController
 
         $title = filled($request->input('title'))
             ? trim((string) $request->input('title'))
-            : 'Voice note — ' . Carbon::now()->format('M j, Y g:i A');
+            : 'Voice note · ' . Carbon::now()->format('M j, Y g:i A');
         $body = filled($request->input('note'))
             ? HtmlSanitizer::rich($request->input('note'))
             : null;
@@ -323,7 +323,7 @@ class QuickCaptureController extends BaseScheduleController
             ? trim((string) $request->input('albumTitle'))
             : (filled($request->input('title'))
                 ? trim((string) $request->input('title'))
-                : 'Quick capture — ' . Carbon::now()->format('M j, Y'));
+                : 'Quick capture · ' . Carbon::now()->format('M j, Y'));
 
         // An album asked about on its own beats one inferred from the note.
         // Quick Record never asks, so the note stays the fallback there and

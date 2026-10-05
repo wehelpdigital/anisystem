@@ -32,7 +32,7 @@ class SchedulePhotoController extends BaseScheduleController
     {
         $schedule = $this->schedule($request->query('scheduleId'));
         if (! ScheduleTeam::canAccess($schedule, (int) Auth::id())) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         $after = max(0, (int) $request->query('after', 0));
@@ -77,7 +77,7 @@ class SchedulePhotoController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         $path = null;
@@ -86,7 +86,7 @@ class SchedulePhotoController extends BaseScheduleController
                 'photo' => 'required|file|mimes:jpeg,jpg,png,webp|max:15360',
             ]);
             if ($v->fails()) {
-                return $this->jsonFail('That is not a picture this can draw on — use a JPEG, PNG or WebP up to 15 MB.', 422);
+                return $this->jsonFail('You cannot draw on that file. Use a JPEG, PNG or WebP picture up to 15 MB.', 422);
             }
             $path = MediaStore::putFile($request->file('photo'), 'team-photos', $schedule->id);
         } else {
@@ -98,12 +98,12 @@ class SchedulePhotoController extends BaseScheduleController
                 return $this->jsonFail('Pick a photo, upload one, or take one.', 422);
             }
             if (! preg_match('/\.(jpe?g|png|webp)$/i', parse_url($p, PHP_URL_PATH) ?: $p)) {
-                return $this->jsonFail('Only a photo can go under the pens — clips cannot be drawn over.', 422);
+                return $this->jsonFail('You can only draw on a photo, not on a video clip.', 422);
             }
             $path = $p;
         }
         if ($path === null) {
-            return $this->jsonFail('Could not keep that photo.', 500);
+            return $this->jsonFail('Could not save that photo.', 500);
         }
 
         // A new photo is a new sheet: whatever was drawn on the old one is
@@ -114,7 +114,7 @@ class SchedulePhotoController extends BaseScheduleController
         $payload = ['action' => 'photo', 'url' => MediaStore::url($path), 'gen' => $path, 'actorUserId' => $meId];
         $this->emit($schedule->id, $payload);
 
-        return $this->jsonOk('Photo is up — draw away.', ['data' => $payload]);
+        return $this->jsonOk('Photo is ready. Start drawing.', ['data' => $payload]);
     }
 
     /** One stroke (possibly a continuation), or a clear. */
@@ -123,7 +123,7 @@ class SchedulePhotoController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         if ($request->input('type') === 'clear') {
@@ -144,7 +144,7 @@ class SchedulePhotoController extends BaseScheduleController
             'uid' => 'nullable|string|max:40',
         ]);
         if ($v->fails()) {
-            return $this->jsonFail('Invalid stroke.', 422);
+            return $this->jsonFail('That line could not be drawn. Please try again.', 422);
         }
 
         // Normalized to the PHOTO, not the screen: 0..1 across the image's own
@@ -184,7 +184,7 @@ class SchedulePhotoController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         $uid = (string) $request->input('uid', '');
@@ -196,7 +196,7 @@ class SchedulePhotoController extends BaseScheduleController
         // means taking back the whole line, not its last flushed piece.
         $last = $q->clone()->orderByDesc('id')->first();
         if (! $last) {
-            return $this->jsonOk('Nothing of yours to take back.', ['data' => ['ids' => []]]);
+            return $this->jsonOk('You have nothing to undo.', ['data' => ['ids' => []]]);
         }
         $ids = $last->strokeUid
             ? $q->clone()->where('strokeUid', $last->strokeUid)->pluck('id')->all()
@@ -205,7 +205,7 @@ class SchedulePhotoController extends BaseScheduleController
 
         $this->emit($schedule->id, ['action' => 'remove', 'ids' => array_map('intval', $ids), 'actorUserId' => $meId]);
 
-        return $this->jsonOk('Taken back.', ['data' => ['ids' => array_map('intval', $ids)]]);
+        return $this->jsonOk('Undone.', ['data' => ['ids' => array_map('intval', $ids)]]);
     }
 
     /** File the drawn-over photo: a new note, the team album, or a chosen album. */
@@ -214,7 +214,7 @@ class SchedulePhotoController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
         // Same line the whiteboard draws: membership lets you draw, filing the
         // result into the schedule's records is the note right. The gallery
@@ -222,7 +222,7 @@ class SchedulePhotoController extends BaseScheduleController
         // for full edit rights here would mean a notes-only worker could draw
         // all afternoon and never keep anything, which defeats the room.
         if (! \App\Support\WorkerContext::canAddNotes()) {
-            return $this->jsonFail('You are not allowed to save to this schedule.', 403);
+            return $this->jsonFail('You are not allowed to save to this season.', 403);
         }
 
         $v = Validator::make($request->all(), [
@@ -242,7 +242,7 @@ class SchedulePhotoController extends BaseScheduleController
         }
         $path = MediaStore::putBinary($binary['bytes'], 'team-photos', $binary['ext'], $schedule->id);
         if ($path === null) {
-            return $this->jsonFail('Could not keep that image.', 500);
+            return $this->jsonFail('Could not save that image.', 500);
         }
 
         $title = (string) $request->input('title');
@@ -268,7 +268,7 @@ class SchedulePhotoController extends BaseScheduleController
                 ->where('id', (int) $request->input('albumId'))
                 ->first();
             if (! $album) {
-                return $this->jsonFail('That album is not on this schedule.', 404);
+                return $this->jsonFail('That album is not in this season.', 404);
             }
         } else {
             // "Just put it in the gallery." Every gallery picture lives in an

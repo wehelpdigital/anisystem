@@ -272,7 +272,7 @@
     @media (min-width: 640px) { .va-pm { grid-template-columns: 1fr 1fr; } }
     .va-pm ul { font-size: .76rem; line-height: 1.5; padding-left: 1rem; }
     .va-pm .is-plus li { list-style: '✓ '; color: #2d5016; }
-    .va-pm .is-minus li { list-style: '– '; color: #92400e; }
+    .va-pm .is-minus li { list-style: '✗ '; color: #92400e; }
     .wp-why { font-size: .8rem; color: var(--color-gray-600); line-height: 1.55; margin-top: .45rem; }
     .va-src { font-size: .68rem; color: var(--color-gray-400); margin-top: .3rem; }
     html.dark .va-rec { border-color: #222b1a; }
@@ -558,7 +558,7 @@
         const y = Number(year) || 0;
         const label = seasonsFor(country || state.country || (OPT && OPT.country))[season] || ((OPT && OPT.seasons && OPT.seasons[season]) || '');
         const crosses = season === 'dry' || season === 'winter';
-        return crosses && y ? `${label} ${y}–${String(y + 1).slice(-2)}` : `${label} ${y || ''}`.trim();
+        return crosses && y ? `${label} ${y} to ${y + 1}` : `${label} ${y || ''}`.trim();
     };
     let step = 0;
     const STEPS = 8;
@@ -599,7 +599,7 @@
             const y = Number(state.year || (OPT.years || [new Date().getFullYear()])[0]);
             const subs = seasonSubs(y);
             $id('vaSeasons').innerHTML = Object.entries(seasonsFor(state.country)).map(([k, label]) => `
-                <button type="button" class="wtp-choice${state.season === k ? ' is-on' : ''}" data-season="${k}"><span class="c-e">${seasonIcons[k] || '🌱'}</span><span>${esc(label)}${(k === 'dry' || k === 'winter') ? ' ' + y + '–' + String(y + 1).slice(-2) : ''}<small>${esc(subs[k] || '')}</small></span></button>`).join('');
+                <button type="button" class="wtp-choice${state.season === k ? ' is-on' : ''}" data-season="${k}"><span class="c-e">${seasonIcons[k] || '🌱'}</span><span>${esc(label)}${(k === 'dry' || k === 'winter') ? ' ' + y + ' to ' + (y + 1) : ''}<small>${esc(subs[k] || '')}</small></span></button>`).join('');
         };
         paintSeasons();
         window.__vaPaintSeasons = paintSeasons;
@@ -649,7 +649,7 @@
         if (!OPT.quote) { q.hidden = true; return; }
         q.classList.toggle('is-min', quoteMin);
         $id('vaQuoteHead').setAttribute('aria-expanded', quoteMin ? 'false' : 'true');
-        $id('vaQuoteCost').innerHTML = `One research costs <b>${OPT.quote} credits</b>. You have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
+        $id('vaQuoteCost').innerHTML = `One variety research costs <b>${OPT.quote} credits</b>. You have ${creditCoin(OPT.unlimited ? '∞' : Number(OPT.balance).toLocaleString())}. Nothing is charged until you press Run.`;
         $id('vaQuoteHint').textContent = `${OPT.quote} credits`;
         q.hidden = false;
     }
@@ -697,7 +697,7 @@
         const order = state.priorities.map((k, i) => `${i + 1}. ${OPT.priorities[k]?.label || k}`).join(' · ');
         $id('vaReview').innerHTML = `${esc(crop.icon || '🌱')} <b>${esc(crop.label || '')}</b> · 📍 ${esc(state.location)}${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(rulesFor(state.country).name || state.country) : ''}`
             + ` · ${esc(seasonSaid(state.season, state.year))}`
-            + `<br><span class="text-xs">${esc(OPT.soils[state.soil] || '')}${state.elevation ? ' · ' + esc(String((OPT.elevations || {})[state.elevation] || state.elevation).split(' — ')[0]) : ''}`
+            + `<br><span class="text-xs">${esc(String(OPT.soils[state.soil] || '').split(' — ')[0])}${state.elevation ? ' · ' + esc(String((OPT.elevations || {})[state.elevation] || state.elevation).split(' — ')[0]) : ''}`
             + ` · ${state.varieties.length ? esc(state.varieties.join(', ')) : 'Anee picks the varieties'}`
             + (state.problems.length ? ` · ${state.problems.length} problem${state.problems.length === 1 ? '' : 's'} checked` : '') + '</span>'
             + `<br><span class="text-xs">${esc(order)}</span>`;

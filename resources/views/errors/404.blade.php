@@ -1,5 +1,5 @@
 @extends('errors.layout')
 @section('code', '404')
 @section('emoji', '🧭')
-@section('title', 'This field is empty')
-@section('message', "We couldn't find the page you're looking for. It may have been moved, harvested, or the link was mistyped.")
+@section('title', 'Page not found')
+@section('message', "We could not find this page. It may have moved, or the link may have a typo.")

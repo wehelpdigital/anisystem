@@ -11,12 +11,12 @@
     <section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900 spark-field">
         <div class="absolute inset-0 bg-dot-grid opacity-50" aria-hidden="true"></div>
         <div class="relative max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center animate-fade-up" style="z-index:1">
-            <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Simple, farmer-sized pricing</p>
+            <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Simple prices made for farmers</p>
             <h1 class="mt-2 font-heading text-4xl sm:text-5xl font-bold text-white text-balance">Start Free. Grow When You're Ready.</h1>
             <p class="mt-5 text-brand-100 text-base sm:text-lg">
-                The Libre plan is free forever, with no card and no trial clock. Upgrades are paid in {{ \App\Support\Region::currencyName() }},
-                through {{ \App\Support\Region::payMethod() }}. The AI technician runs on credits on top, so you only ever pay Anee
-                for what you actually ask.
+                The Libre plan is free forever. No card, and no trial that runs out. Upgrades are paid in {{ \App\Support\Region::currencyName() }}
+                through {{ \App\Support\Region::payMethod() }}. Anee, the AI technician, uses credits on top of your plan, so you only pay her
+                for what you ask.
             </p>
         </div>
     </section>
@@ -93,7 +93,7 @@
                                             <span class="pr-amount is-free">Free</span>
                                             <span class="pr-per">forever</span>
                                         </span>
-                                        <span class="pr-year">No card. No trial clock. Yours to keep.</span>
+                                        <span class="pr-year">No card. No trial that runs out. Yours to keep.</span>
                                         <span class="pr-day">{{ \App\Support\Region::money(0) }} a day, for as long as you like</span>
                                     @else
                                         {{-- Pesos at home, dollars on the international face (App\Support\Region). --}}
@@ -136,7 +136,7 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
                     Start for free forever on {{ $pdFree !== false ? $tiers[$pdFree]['name'] : 'Libre' }}
                 </a>
-                <p class="pd-note">No payments, no trial time.</p>
+                <p class="pd-note">No payment. No trial that runs out.</p>
                 <a href="{{ route('pricing.compare') }}" class="pd-more">Compare every plan side by side
                     <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </div>
@@ -148,13 +148,13 @@
     {{-- ================= FAQ ================= --}}
     <section class="py-16 sm:py-20 bg-white">
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
-            <h2 class="font-heading text-3xl font-bold text-ink text-center reveal">Fair questions</h2>
+            <h2 class="font-heading text-3xl font-bold text-ink text-center reveal">Common questions</h2>
             <div class="mt-8 space-y-3">
                 @foreach ([
-                    ['Do my workers need their own subscriptions?', 'No. Worker logins ride on the owner\'s plan. You invite them, set what each may see or edit, and they use anee.io free.'],
-                    ['What happens when my plan lapses?', 'Your data stays safe and readable. Renew any time and pick up exactly where the season left off. Days from early renewals stack, so nothing is wasted.'],
+                    ['Do my workers need their own subscriptions?', 'No. Workers log in under the owner\'s plan. You invite them, choose what each one may see or edit, and they use anee.io for free.'],
+                    ['What happens when my plan ends?', 'Your data stays safe and you can still read it. Renew any time and pick up where the season left off. If you renew early, the new days are added on top, so nothing is wasted.'],
                     ['Do credits expire?', 'No. Credits sit on your account until you spend them, across seasons.'],
-                    ['Can I use it on a computer too?', 'Yes. anee.io is a web app. It is built phone-first for the field, and the same account works in any browser.'],
+                    ['Can I use it on a computer too?', 'Yes. anee.io is a web app. It is made first for phones in the field, and the same account works in any browser.'],
                     ['Is my farm data private?', 'Yes. Your schedules, notes and money figures are yours alone unless you publish something to the community on purpose.'],
                 ] as [$q, $a])
                     <details class="group rounded-2xl bg-white ring-1 ring-gray-200 px-5 py-4 reveal">

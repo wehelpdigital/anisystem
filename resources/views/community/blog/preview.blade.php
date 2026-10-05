@@ -8,7 +8,7 @@
      happened is not part of what this will look like. --}}
 @extends('layouts.app')
 
-@section('title', $post->title . ' — Preview')
+@section('title', 'Preview: ' . $post->title)
 @section('body-class', 'plaza-ground')
 @section('page-title', 'Preview')
 @section('page-subtitle', \Illuminate\Support\Str::limit($post->title, 40))
@@ -111,7 +111,7 @@
 @section('content')
 <div class="article">
     <div class="prev-flag">
-        <b>Preview</b> — this is how it will look in anee.io.
+        <b>Preview.</b> This is how it will look in anee.io.
         {{ $post->isPublished ? 'This article is published.' : 'This article is still a draft; nobody else can open it.' }}
     </div>
 

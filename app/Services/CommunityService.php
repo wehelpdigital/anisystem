@@ -35,7 +35,7 @@ class CommunityService
         if ($activities < self::MIN_ACTIVITIES) {
             $need = self::MIN_ACTIVITIES - $activities;
             $reasons[] = "Add {$need} more " . ($need === 1 ? 'activity' : 'activities')
-                . ' — a plan needs at least ' . self::MIN_ACTIVITIES . ' to be worth following.';
+                . '. A plan needs at least ' . self::MIN_ACTIVITIES . ' to be worth following.';
         }
         if ($lots < self::MIN_LOTS) {
             $reasons[] = 'Add at least one lot, so people can see what the plan was grown on.';

@@ -6,7 +6,7 @@
     {{-- Nothing behind the login is anybody's to index. --}}
     <meta name="robots" content="noindex, nofollow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Admin') — anee.io</title>
+    <title>@yield('title', 'Admin') | anee.io</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -289,14 +289,14 @@
         <div class="ad-top-in">
             {{-- The way back. An admin is a client with a second hat, and the
                  first hat is one tap away. --}}
-            <a href="/app" class="ad-back" title="Back to the client panel" aria-label="Back to the client panel">
+            <a href="/app" class="ad-back" title="Back to the app" aria-label="Back to the app">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
             </a>
             <div class="flex-1 min-w-0">
                 <p class="ad-title">Admin panel</p>
                 <p class="ad-sub">@yield('subtitle', 'anee.io')</p>
             </div>
-            <button type="button" class="ad-navtag" id="adminNavBtn" aria-haspopup="dialog" title="Open another module">
+            <button type="button" class="ad-navtag" id="adminNavBtn" aria-haspopup="dialog" title="Go to another section">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h10"/></svg>
                 <span>{{ $adminHere }}</span>
                 <svg class="ad-navtag-c" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
@@ -317,33 +317,33 @@
     <div class="sheet hidden" id="adminNavSheet" style="--sheet-width:24rem">
         <div class="sheet-handle"></div>
         <div class="sheet-header">
-            <h3 class="sheet-title">Open a module</h3>
+            <h3 class="sheet-title">Go to a section</h3>
             <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
         </div>
         <div class="sheet-body">
             <a class="ad-nav-row {{ request()->routeIs('admin.dashboard') ? 'is-on' : '' }}" href="{{ route('admin.dashboard') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg>
-                <span class="min-w-0"><b>Dashboard</b><i>Registrations, sales and the platform's pulse</i></span>
+                <span class="min-w-0"><b>Dashboard</b><i>Sign ups, sales and how the app is doing</i></span>
             </a>
             <a class="ad-nav-row {{ request()->routeIs('admin.clients') ? 'is-on' : '' }}" href="{{ route('admin.clients') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-1.33-7.77"/></svg>
-                <span class="min-w-0"><b>Clients</b><i>Every account, and what can be done for it</i></span>
+                <span class="min-w-0"><b>Clients</b><i>Every account and what you can do for it</i></span>
             </a>
             <a class="ad-nav-row {{ request()->routeIs('admin.support') ? 'is-on' : '' }}" href="{{ route('admin.support') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8m-8 4h5m-9 7l3.5-3.5H19a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14z"/></svg>
-                <span class="min-w-0"><b>Support</b><i>Tickets, grouped by the person who raised them</i></span>
+                <span class="min-w-0"><b>Support</b><i>Help requests, grouped by person</i></span>
             </a>
             <a class="ad-nav-row {{ request()->routeIs('admin.reports') ? 'is-on' : '' }}" href="{{ route('admin.reports') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21V4m0 1l9-2 9 4-9 2-9-4zm0 8l9-2 9 4-9 2-9-4z"/></svg>
-                <span class="min-w-0"><b>Reports</b><i>What the community flagged</i></span>
+                <span class="min-w-0"><b>Reports</b><i>What the community reported</i></span>
             </a>
             <a class="ad-nav-row {{ request()->routeIs('admin.orders') ? 'is-on' : '' }}" href="{{ route('admin.orders') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h2m4 0h4M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/></svg>
-                <span class="min-w-0"><b>Orders</b><i>Payments to approve, and every purchase since</i></span>
+                <span class="min-w-0"><b>Orders</b><i>Payments to approve and all past purchases</i></span>
             </a>
             <a class="ad-nav-row {{ request()->routeIs('admin.sales') ? 'is-on' : '' }}" href="{{ route('admin.sales') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8m0 0v5m0-5h-5"/></svg>
-                <span class="min-w-0"><b>Sales Analysis</b><i>What a peso of advertising actually bought</i></span>
+                <span class="min-w-0"><b>Sales Analysis</b><i>What each peso spent on ads brought in</i></span>
             </a>
         </div>
     </div>

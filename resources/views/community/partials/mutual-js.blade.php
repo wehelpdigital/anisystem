@@ -72,12 +72,12 @@
 <div class="sheet hidden" id="mutualSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title" id="mutualSheetTitle">Mutual co-farmers</h3>
+        <h3 class="sheet-title" id="mutualSheetTitle">Mutual cofarmers</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body" style="padding-bottom:1.1rem">
         <input type="search" id="mutualSheetFind" class="form-input mut-find"
-               placeholder="Search these co-farmers…" autocomplete="off">
+               placeholder="Search these cofarmers…" autocomplete="off">
         <div id="mutualSheetList"><p class="mut-state">Loading…</p></div>
     </div>
 </div>
@@ -94,7 +94,7 @@
         const list = document.getElementById('mutualSheetList');
         const title = document.getElementById('mutualSheetTitle');
         if (!list) return;
-        title.textContent = 'Mutual co-farmers';
+        title.textContent = 'Mutual cofarmers';
         list.innerHTML = '<p class="mut-state">Loading…</p>';
         window.openSheet?.('mutualSheet');
         try {
@@ -102,9 +102,9 @@
                 { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
             const d = (await res.json()).data || {};
             const who = btn.getAttribute('data-mutual-name');
-            title.textContent = (d.count || 0) + ' mutual ' + ((d.count || 0) === 1 ? 'co-farmer' : 'co-farmers')
+            title.textContent = (d.count || 0) + ' mutual ' + ((d.count || 0) === 1 ? 'cofarmer' : 'cofarmers')
                 + (who ? ' with ' + who : '');
-            list.innerHTML = d.html || '<p class="mut-state">Nobody shared — yet.</p>';
+            list.innerHTML = d.html || '<p class="mut-state">No shared cofarmers yet.</p>';
         } catch (_) {
             list.innerHTML = '<p class="mut-state">Could not load the list just now.</p>';
         }

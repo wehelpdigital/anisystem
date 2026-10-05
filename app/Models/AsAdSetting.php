@@ -28,7 +28,7 @@ class AsAdSetting extends BaseModel
     public static function current(): self
     {
         return static::query()->orderBy('id')->first() ?? new static([
-            'isEnabled' => false, 'label' => 'Sponsored', 'upsell' => 'Go ad-free with a paid plan', 'feedEvery' => 6,
+            'isEnabled' => false, 'label' => 'Sponsored', 'upsell' => 'Remove ads with a paid plan', 'feedEvery' => 6,
         ]);
     }
 }

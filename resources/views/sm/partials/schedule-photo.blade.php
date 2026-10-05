@@ -49,7 +49,7 @@
                     <button type="button" class="cph-tool" data-cph-tool="rect" title="Box"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg></button>
                     <button type="button" class="cph-tool" data-cph-tool="circle" title="Circle"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg></button>
                     <button type="button" class="cph-tool" data-cph-tool="text" title="Text"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 6h14M12 6v13"/></svg></button>
-                    <button type="button" class="cph-tool" data-cph-tool="eraser" title="Eraser (lines only, the photo stays)"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20h10M6.5 14.5l8-8a2 2 0 012.8 0l2.2 2.2a2 2 0 010 2.8l-8 8H8l-3.5-3.5a1.5 1.5 0 010-2.1l2-2z"/></svg></button>
+                    <button type="button" class="cph-tool" data-cph-tool="eraser" title="Eraser: removes lines, the photo stays"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 20h10M6.5 14.5l8-8a2 2 0 012.8 0l2.2 2.2a2 2 0 010 2.8l-8 8H8l-3.5-3.5a1.5 1.5 0 010-2.1l2-2z"/></svg></button>
                     <button type="button" class="cph-tool" data-cph-tool="move" title="Move and zoom the photo"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v20M2 12h20M12 2l-3 3m3-3l3 3M12 22l-3-3m3 3l3-3M2 12l3-3m-3 3l3 3M22 12l-3-3m3 3l-3 3"/></svg></button>
                 </div>
             </div>
@@ -100,7 +100,7 @@
         <div class="cph-srcs">
             <button type="button" class="cph-src" id="cphPickBtn">
                 <span class="cph-src-ic"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h4l2 2h6a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/><path stroke-linecap="round" stroke-linejoin="round" d="M7 15l3-3.5 2.4 2.8L15 11l3 4"/></svg></span>
-                <span class="cph-src-t"><b>From the gallery</b><small>A photo already saved in this schedule.</small></span>
+                <span class="cph-src-t"><b>From the gallery</b><small>A photo already saved in this season.</small></span>
                 <svg class="cph-src-go" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
             </button>
             <button type="button" class="cph-src" id="cphUploadBtn">
@@ -170,9 +170,9 @@
             <textarea id="cphSaveDesc" class="form-input form-textarea" rows="2" maxlength="2000" placeholder="Notes about this photo (optional)"></textarea>
         </div>
         <div class="cph-dests" id="cphDests">
-            <label class="cph-dest"><input type="radio" name="cphDest" value="note" checked><span><b>A new note</b><small>In the schedule's notebook</small></span></label>
+            <label class="cph-dest"><input type="radio" name="cphDest" value="note" checked><span><b>A new note</b><small>In the season's notebook</small></span></label>
             <label class="cph-dest"><input type="radio" name="cphDest" value="gallery"><span><b>The Gallery</b><small>Filed in the “Team photos” album</small></span></label>
-            <label class="cph-dest"><input type="radio" name="cphDest" value="album"><span><b>An album</b><small>One the schedule already has</small></span></label>
+            <label class="cph-dest"><input type="radio" name="cphDest" value="album"><span><b>An album</b><small>One the season already has</small></span></label>
         </div>
         <select id="cphAlbumSel" class="form-input hidden"></select>
         <p class="cph-teamnote">It will be saved as a team image.</p>

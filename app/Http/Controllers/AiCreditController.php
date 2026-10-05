@@ -76,7 +76,7 @@ class AiCreditController extends Controller
         }
         if ($pending = $this->pendingPurchase($user->id)) {
             return redirect()->route('ai.credits')
-                ->with('success', 'Order ' . $pending->orderNumber . ' is still awaiting verification.');
+                ->with('success', 'Order ' . $pending->orderNumber . ' is still being checked.');
         }
 
         return view('ai.credits-payment', [
@@ -110,22 +110,22 @@ class AiCreditController extends Controller
             'screenshot' => ['nullable', 'required_without:referenceNumber', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
             'notes' => ['nullable', 'string', 'max:2000'],
         ], [
-            'amountSent.min' => 'The amount sent must be at least ' . \App\Support\Region::money($price) . ' — the full pack price.',
+            'amountSent.min' => 'The amount sent must be at least ' . \App\Support\Region::money($price) . ', the full pack price.',
             'gcashPhone.regex' => 'Enter the GCash number in the format 09XXXXXXXXX (11 digits).',
-            'referenceNumber.required_without' => 'Provide the ' . ($payPH ? 'GCash reference number' : 'PayPal transaction ID') . ' or upload a screenshot of the payment.',
-            'screenshot.required_without' => 'Upload a screenshot of the payment or provide the ' . ($payPH ? 'GCash reference number' : 'PayPal transaction ID') . '.',
+            'referenceNumber.required_without' => 'Enter the ' . ($payPH ? 'GCash reference number' : 'PayPal transaction ID') . ' or upload a screenshot of the payment.',
+            'screenshot.required_without' => 'Upload a screenshot of the payment or enter the ' . ($payPH ? 'GCash reference number' : 'PayPal transaction ID') . '.',
         ]);
 
         // Per-user mutex, so a double submit cannot create two orders.
         $lock = Cache::lock('anisystem:ai-credits:' . $user->id, 15);
         if (! $lock->get()) {
-            return back()->withInput()->with('error', 'We are still processing your previous submission. Please wait a moment.');
+            return back()->withInput()->with('error', 'We are still saving your last payment. Please wait a moment.');
         }
 
         try {
             if ($pending = $this->pendingPurchase($user->id)) {
                 return redirect()->route('ai.credits')
-                    ->with('success', 'Order ' . $pending->orderNumber . ' is still awaiting verification.');
+                    ->with('success', 'Order ' . $pending->orderNumber . ' is still being checked.');
             }
 
             $purchase = $this->checkout->purchaseCredits(
@@ -142,14 +142,14 @@ class AiCreditController extends Controller
         } catch (\Throwable $e) {
             Log::error('anee.io AI credit checkout failed for user ' . $user->id . ': ' . $e->getMessage());
 
-            return back()->withInput()->with('error', 'We could not submit your payment right now. Please try again in a moment.');
+            return back()->withInput()->with('error', 'We could not send your payment right now. Please try again in a moment.');
         } finally {
             $lock->release();
         }
 
         return redirect()->route('ai.credits')->with(
             'success',
-            'Payment submitted. Order ' . $purchase->orderNumber . ' — your credits appear once it is verified.'
+            'Payment sent. Order ' . $purchase->orderNumber . ': your credits appear once we have checked it.'
         );
     }
 

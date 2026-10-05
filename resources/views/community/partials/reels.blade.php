@@ -20,7 +20,7 @@
              thing the word names, and they belong together. --}}
         <button type="button" class="rl-new" id="rlNew">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
-            Make one
+            Make a story
         </button>
     </div>
     <div class="rl-rail" id="rlRail"></div>
@@ -43,7 +43,7 @@
     {{-- Step one: where the video comes from. --}}
     <div class="rl-pick" id="rlPick">
         <div class="rl-pick-inner">
-            <p class="rl-pick-lead">A minute, no more — and it fills the screen.</p>
+            <p class="rl-pick-lead">Up to one minute, and it fills the screen.</p>
             <button type="button" class="rl-source" id="rlRecord">
                 <span class="rl-source-ico">🎥</span>
                 <span><b>Record now</b><i>Film it where you are standing</i></span>
@@ -168,7 +168,7 @@
                 <p class="rl-hint">Pinch and twist the picture to place it by hand.</p>
                 <p class="rl-swatch-lbl">Backdrop</p>
                 <div class="rl-swatches" id="rlBackdrops"></div>
-                <button type="button" class="rl-reset" id="rlFrameReset">Put it back</button>
+                <button type="button" class="rl-reset" id="rlFrameReset">Reset</button>
             </div>
 
             {{-- Two sounds, and how loud each of them is. --}}
@@ -183,7 +183,7 @@
                     <input type="range" id="rlVolOwn" min="0" max="1" step=".05" value="0">
                     <b id="rlVolOwnSay">off</b>
                 </label>
-                <p class="rl-hint">Choosing music used to throw away what the camera heard. Now both are kept, at whatever balance you set.</p>
+                <p class="rl-hint">Both sounds are kept. Use the sliders to set how loud each one is.</p>
             </div>
 
             <div class="rl-panel hidden" id="rlLooksPanel">
@@ -199,8 +199,8 @@
 
     <div class="rl-busy hidden" id="rlBusy">
         <div class="rl-spin"></div>
-        <p>Preparing your reel…</p>
-        <small>Trimming, filling the screen, and making it small enough to travel.</small>
+        <p>Preparing your story…</p>
+        <small>Trimming it, fitting it to the screen and making the file smaller.</small>
     </div>
 </div>
 
@@ -214,7 +214,7 @@
     <div class="sheet-body space-y-1">
         <button type="button" class="rl-opt" data-rl-add-text>
             <span class="rl-opt-ic">🅣</span>
-            <span class="rl-opt-txt"><b>Words</b><i>Pick a font, a colour and a size — then drag them where you want</i></span>
+            <span class="rl-opt-txt"><b>Words</b><i>Pick a font, a colour and a size, then drag the words where you want them</i></span>
         </button>
         <button type="button" class="rl-opt" data-rl-add-image>
             <span class="rl-opt-ic">🖼️</span>
@@ -250,7 +250,7 @@
         {{-- Openly-licensed music, searched live. The library folder still
              comes first when the owner has put anything in it. --}}
         <form class="rl-find" id="rlMusicFind" onsubmit="return false">
-            <input type="search" id="rlMusicQ" class="form-input" placeholder="Search free music — kundiman, acoustic, drums…" autocomplete="off">
+            <input type="search" id="rlMusicQ" class="form-input" placeholder="Search free music: kundiman, acoustic, drums…" autocomplete="off">
             <button type="submit" class="btn btn-primary btn-sm shrink-0">Search</button>
         </form>
         <div id="rlMusicList" class="space-y-1"></div>
@@ -597,7 +597,7 @@
             const items = ((await r.json()).data || {}).items || [];
             reels = items;
             rail.innerHTML = items.map((it, i) => `
-                <button type="button" class="rl-tile" data-reel="${i}" aria-label="Play reel by ${esc(it.author.name)}">
+                <button type="button" class="rl-tile" data-reel="${i}" aria-label="Play story by ${esc(it.author.name)}">
                     ${it.poster
                         ? `<img src="${esc(it.poster)}" alt="" loading="lazy">`
                         /* No cover on the row — an older reel, or one posted
@@ -609,7 +609,7 @@
                 </button>`).join('');
             if (!items.length) {
                 rail.innerHTML = '<p style="font-size:.8rem;color:var(--color-gray-400);padding:.5rem 0">'
-                    + 'Wala pang stories — ikaw ang mauna.</p>';
+                    + 'Wala pang stories. Ikaw ang mauna.</p>';
             }
         } catch (_) {
             // The covers could not be fetched; making one still can be.
@@ -699,7 +699,7 @@
         const ok = window.confirmAction
             ? await window.confirmAction({
                 title: 'Delete this story?',
-                message: 'It comes off the wall and out of the rail for everyone.',
+                message: 'It will be removed from the wall and the stories row for everyone.',
                 confirmText: 'Delete',
             })
             : true;
@@ -902,7 +902,7 @@
         $('rlPick').classList.add('hidden');
         $('rlEdit').classList.remove('hidden');
         $('rlPost').classList.remove('hidden');
-        $('rlStep').textContent = 'Make it yours';
+        $('rlStep').textContent = 'Edit your story';
         paintLooks();
     }
 

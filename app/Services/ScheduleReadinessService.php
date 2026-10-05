@@ -78,11 +78,11 @@ class ScheduleReadinessService
             if ($missing->count() === $lots->count()) {
                 $items[] = [
                     'key' => 'no-day-zero',
-                    'label' => "No {$dayType} 0 anchored",
+                    'label' => "No {$dayType} 0 set",
                     // Lands where the fix is made. The message names the
                     // activity first, so sending the tap to Lots left people
                     // looking for a tick box that is not there.
-                    'detail' => "Nothing is counting days yet. Add the sowing activity and tick \"this is day zero\" on it — or set a day-0 date on the lot in Lots — and every card gets its {$dayType} number.",
+                    'detail' => "Nothing is counting days yet. Add the sowing activity and tick \"this is day zero\" on it, or set a day zero date on the lot in Lots. Then every card gets its {$dayType} number.",
                     'module' => 'activities',
                     'severity' => 'blocking',
                 ];
@@ -94,8 +94,8 @@ class ScheduleReadinessService
                         ? "1 lot has no {$dayType} 0"
                         : "{$missing->count()} lots have no {$dayType} 0",
                     'detail' => trim($names) !== ''
-                        ? "{$names} will not show day numbers until a day 0 is set — tick \"this is day zero\" on an activity that covers them, or give the lot a day-0 date."
-                        : "Some lots will not show day numbers until a day 0 is set — tick \"this is day zero\" on an activity that covers them, or give the lot a day-0 date.",
+                        ? "{$names} will not show day numbers until a day zero is set. Tick \"this is day zero\" on an activity that covers them, or give the lot a day zero date."
+                        : "Some lots will not show day numbers until a day zero is set. Tick \"this is day zero\" on an activity that covers them, or give the lot a day zero date.",
                     'module' => 'activities',
                     'severity' => 'advice',
                 ];
@@ -119,7 +119,7 @@ class ScheduleReadinessService
                     'label' => $noDate->count() === 1
                         ? '1 activity has no date'
                         : "{$noDate->count()} activities have no date",
-                    'detail' => 'They sit under "No date" and will not appear anywhere in the timeline.',
+                    'detail' => 'They sit under "No date" and do not show on the board.',
                     'module' => 'activities',
                     'severity' => 'blocking',
                 ];
@@ -168,7 +168,7 @@ class ScheduleReadinessService
                 'label' => $drafts->count() === 1
                     ? '1 activity still in drafts'
                     : "{$drafts->count()} activities still in drafts",
-                'detail' => 'Drafts are hidden from the timeline. Restore them when they are ready.',
+                'detail' => 'Drafts are hidden from the board. Restore them when they are ready.',
                 'module' => 'activities',
                 'severity' => 'advice',
             ];

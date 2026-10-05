@@ -35,7 +35,7 @@
                  the reader is already in, and does not need a title. --}}
             <p class="reply-lead">
                 <span class="avatar avatar-sm {{ \App\Support\CommunityAvatar::hue(auth()->user()->full_name ?? '?') }}">{{ auth()->user()->initials ?? '?' }}</span>
-                <span><i>Add a comment. Type @ to tag a co-farmer.</i></span>
+                <span><i>Add a comment. Type @ to tag a cofarmer.</i></span>
             </p>
             @include('community.partials.wall-comment-form', ['postId' => ''])
         </div>
@@ -54,7 +54,7 @@
         <div class="sh-preview" id="sharePreview" hidden>
             <span class="sh-preview-shot" id="sharePreviewShot" hidden><img src="" alt=""></span>
             <span class="sh-preview-txt">
-                <b id="sharePreviewWho">A co-farmer</b>
+                <b id="sharePreviewWho">A cofarmer</b>
                 <i id="sharePreviewBody"></i>
             </span>
         </div>
@@ -74,7 +74,7 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h8m-8-4h5m-6 12V6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H8l-3 4z"/></svg>
                 </span>
                 <span class="sh-txt">
-                    <b>Send to a co-farmer</b>
+                    <b>Send to a cofarmer</b>
                     <i>As a private message</i>
                 </span>
                 <svg class="sh-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -109,11 +109,11 @@
 <div class="sheet hidden" id="shareDmSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Send to a co-farmer</h3>
+        <h3 class="sheet-title">Send to a cofarmer</h3>
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-1" id="shareDmList">
-        <p class="text-sm text-gray-400 text-center py-6">Loading your co-farmers…</p>
+        <p class="text-sm text-gray-400 text-center py-6">Loading your cofarmers…</p>
     </div>
 </div>
 
@@ -350,7 +350,7 @@
              * tap opens the room (the is-on branch above). */
             const card = btn.closest('[data-discussion-card]');
             card?.querySelectorAll('.fd-open').forEach((el) => {
-                el.textContent = 'Take a look inside';
+                el.textContent = 'Open this discussion';
                 el.classList.add('is-on');   // stays green: it is still the way in
             });
             window.toast?.('Sali ka na sa ' + (btn.dataset.name || 'usapan') + '.');
@@ -511,7 +511,7 @@
         const who = card.querySelector('.fp-name, .font-semibold');
         const body = card.querySelector('.fp-body, .feed-post-body, .wall-post-body');
         const shot = card.querySelector('.post-media img, .fp-media img, img.post-photo');
-        $('sharePreviewWho').textContent = (who?.textContent || 'A co-farmer').trim().slice(0, 60);
+        $('sharePreviewWho').textContent = (who?.textContent || 'A cofarmer').trim().slice(0, 60);
         $('sharePreviewBody').textContent = (body?.textContent || '').trim().slice(0, 160);
         const shotBox = $('sharePreviewShot');
         if (shot && shot.getAttribute('src')) {
@@ -571,20 +571,20 @@
     $('shareToMessage')?.addEventListener('click', async () => {
         window.closeSheet?.('wallShareSheet');
         const list = $('shareDmList');
-        list.innerHTML = '<p class="text-sm text-gray-400 text-center py-6">Loading your co-farmers…</p>';
+        list.innerHTML = '<p class="text-sm text-gray-400 text-center py-6">Loading your cofarmers…</p>';
         window.openSheet?.('shareDmSheet');
         try {
             const r = await fetch(URLS.cofarmers, { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
             const j = await r.json();
             const people = (j.data && j.data.items) || [];
             if (!people.length) {
-                list.innerHTML = '<p class="text-sm text-gray-400 text-center py-6">You have no co-farmers yet.</p>';
+                list.innerHTML = '<p class="text-sm text-gray-400 text-center py-6">You have no cofarmers yet.</p>';
                 return;
             }
             list.innerHTML = people.map((p) => `<button type="button" class="ai-attach-opt js-dm-to" data-user="${p.id}">`
-                + `<span class="ic">${p.initials || '?'}</span><span>${p.name || 'Co-farmer'}</span></button>`).join('');
+                + `<span class="ic">${p.initials || '?'}</span><span>${p.name || 'Cofarmer'}</span></button>`).join('');
         } catch (err) {
-            list.innerHTML = '<p class="text-sm text-gray-400 text-center py-6">Could not load your co-farmers.</p>';
+            list.innerHTML = '<p class="text-sm text-gray-400 text-center py-6">Could not load your cofarmers.</p>';
         }
     });
     document.addEventListener('click', async (e) => {

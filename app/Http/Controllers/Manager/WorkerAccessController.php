@@ -63,7 +63,7 @@ class WorkerAccessController extends Controller
             'voiceAccess'      => 'nullable|boolean',
         ]);
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
+            return response()->json(['success' => false, 'message' => 'Please check what you entered.', 'errors' => $validator->errors()], 422);
         }
 
         $email = mb_strtolower(trim($request->input('email')));
@@ -112,7 +112,7 @@ class WorkerAccessController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => $existing->full_name . ' already has an account — access granted.',
+                'message' => $existing->full_name . ' already has an account. Access given.',
                 'data' => ['grant' => $this->grantData($grant)],
             ]);
         }
@@ -176,7 +176,7 @@ class WorkerAccessController extends Controller
             'voiceAccess'      => 'nullable|boolean',
         ]);
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
+            return response()->json(['success' => false, 'message' => 'Please check what you entered.', 'errors' => $validator->errors()], 422);
         }
 
         $email = mb_strtolower(trim($request->input('email')));
@@ -221,7 +221,7 @@ class WorkerAccessController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'That email already has an account — access granted (their existing password is unchanged).',
+                'message' => 'That email already has an account. Access given, and their password stays the same.',
                 'data' => ['grant' => $this->grantData($grant)],
             ]);
         }
@@ -247,7 +247,7 @@ class WorkerAccessController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Login created for ' . $email . '. Share the email + password so they can sign in.',
+            'message' => 'Login created for ' . $email . '. Give them the email and password so they can log in.',
             'data' => ['grant' => $this->grantData($grant)],
         ]);
     }
@@ -302,7 +302,7 @@ class WorkerAccessController extends Controller
             'voiceAccess'      => 'nullable|boolean',
         ]);
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'message' => 'Validation failed.', 'errors' => $validator->errors()], 422);
+            return response()->json(['success' => false, 'message' => 'Please check what you entered.', 'errors' => $validator->errors()], 422);
         }
 
         $grant = WorkerGrant::active()
@@ -310,7 +310,7 @@ class WorkerAccessController extends Controller
             ->where('id', (int) $request->input('id'))
             ->first();
         if (! $grant) {
-            return response()->json(['success' => false, 'message' => 'Grant not found.'], 404);
+            return response()->json(['success' => false, 'message' => 'That access was not found.'], 404);
         }
 
         $grant->fill([
@@ -358,12 +358,12 @@ class WorkerAccessController extends Controller
             ->where('id', (int) $request->input('id'))
             ->first();
         if (! $grant) {
-            return response()->json(['success' => false, 'message' => 'Grant not found.'], 404);
+            return response()->json(['success' => false, 'message' => 'That access was not found.'], 404);
         }
 
         $grant->update(['status' => WorkerGrant::STATUS_REVOKED, 'deleteStatus' => 0]);
 
-        return response()->json(['success' => true, 'message' => 'Access revoked.']);
+        return response()->json(['success' => true, 'message' => 'Access removed.']);
     }
 
     /**
@@ -393,14 +393,14 @@ class WorkerAccessController extends Controller
             ->where('id', (int) $request->input('id'))
             ->first();
         if (! $grant) {
-            return response()->json(['success' => false, 'message' => 'Grant not found.'], 404);
+            return response()->json(['success' => false, 'message' => 'That access was not found.'], 404);
         }
 
         $worker = $grant->workerUserId ? User::active()->find($grant->workerUserId) : null;
         if (! $worker) {
             return response()->json([
                 'success' => false,
-                'message' => 'This worker has no login yet — send them a registration link instead.',
+                'message' => 'This worker has no login yet. Send them a sign up link instead.',
             ], 422);
         }
 

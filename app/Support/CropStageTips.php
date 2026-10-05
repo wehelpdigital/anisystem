@@ -25,13 +25,13 @@ class CropStageTips
         'rice' => [
             0 => [
                 'do' => [
-                    'Keep water shallow — 2 to 3 cm. Deep water at this point drowns new roots.',
+                    'Keep water shallow, 2 to 3 cm. Deep water at this point drowns new roots.',
                     'Walk the field on day 3 and again on day 7 and replace any seedling that did not take.',
                     'Keep the levees tight; a leaking levee costs you the fertiliser you are about to apply.',
                 ],
                 'watch' => [
                     'Yellowing at the tips is normal transplanting shock and passes in about a week.',
-                    'Golden apple snails go for the softest seedlings first — hand-pick at dawn, or bait along the channels.',
+                    'Golden apple snails go for the softest seedlings first. Pick them by hand at dawn, or bait along the channels.',
                 ],
             ],
             1 => [
@@ -49,7 +49,7 @@ class CropStageTips
                 'do' => [
                     'Second nitrogen split. This is the fertiliser that decides how many stems you carry.',
                     'Raise water to 3 to 5 cm now that the plant is established.',
-                    'Count tillers on a few hills — under 15 by day 35 means the field is behind.',
+                    'Count tillers on a few hills. Under 15 by day 35 means the field is behind.',
                 ],
                 'watch' => [
                     'Rice black bug and green leafhopper build up here; check at night with a torch.',
@@ -58,13 +58,13 @@ class CropStageTips
             ],
             3 => [
                 'do' => [
-                    'The panicle-initiation fertiliser — usually the biggest single decision of the season.',
+                    'The panicle initiation fertiliser. This is usually the biggest single decision of the season.',
                     'Never let the field dry between now and flowering.',
-                    'Split the top-dress if the leaves are already dark; the plant cannot use it all at once.',
+                    'Split the top dress if the leaves are already dark; the plant cannot use it all at once.',
                 ],
                 'watch' => [
                     'Water stress here shows up as fewer grains per panicle, and nothing later fixes it.',
-                    'Sheath blight starts at the waterline in a dense crop — look low, not high.',
+                    'Sheath blight starts at the waterline in a dense crop. Look low, not high.',
                 ],
             ],
             4 => [
@@ -75,7 +75,7 @@ class CropStageTips
                 ],
                 'watch' => [
                     'Deadhearts and whiteheads mean stem borer, and whiteheads mean you are already late.',
-                    'Neck blast shows on the panicle base — humid, overcast weeks are the risky ones.',
+                    'Neck blast shows on the panicle base. Humid, overcast weeks are the risky ones.',
                 ],
             ],
             5 => [
@@ -85,7 +85,7 @@ class CropStageTips
                     'If you must spray, do it late afternoon when flowering has closed for the day.',
                 ],
                 'watch' => [
-                    'A hot, dry spell during flowering causes empty grains — you will only see it at harvest.',
+                    'A hot, dry spell during flowering causes empty grains, and you will only see it at harvest.',
                     'Rice bug arrives at first milk; it is the classic cause of pecky, discoloured grain.',
                 ],
             ],
@@ -102,13 +102,13 @@ class CropStageTips
             ],
             7 => [
                 'do' => [
-                    'Harvest when 80 to 85% of the grains have gone golden — usually 30 to 35 days after flowering.',
+                    'Harvest when 80 to 85% of the grains have gone golden, usually 30 to 35 days after flowering.',
                     'Thresh the same day, and get the grain under a dryer or on a mat within a day.',
                     'Dry down to 14% for selling, 12% if it is going into storage.',
                 ],
                 'watch' => [
                     'Grain left in the heap overnight heats and yellows, and buyers pay less for it.',
-                    'Over-drying cracks the grain and the mill recovery drops.',
+                    'Drying too far cracks the grain and the mill recovery drops.',
                 ],
             ],
         ],
@@ -121,23 +121,23 @@ class CropStageTips
                 ],
                 'watch' => [
                     'Cutworms sever seedlings at the base overnight; look for wilted plants lying flat.',
-                    'Crusted soil after heavy rain can stop emergence — break it gently.',
+                    'Crusted soil after heavy rain can stop emergence. Break it gently.',
                 ],
             ],
             1 => [
                 'do' => [
-                    'First side-dress of nitrogen, banded beside the row rather than broadcast.',
+                    'First side dress of nitrogen, banded beside the row rather than broadcast.',
                     'Weed by day 20. Corn loses more to early weeds than to almost anything else.',
                     'Thin doubles if you planted heavy; two plants in one hill make two small ears.',
                 ],
                 'watch' => [
-                    'Fall armyworm feeds inside the whorl — check the funnel of the newest leaf.',
+                    'Fall armyworm feeds inside the whorl. Check the funnel of the newest leaf.',
                     'Purple leaves usually mean cold, wet soil locking up phosphorus, not a shortage of it.',
                 ],
             ],
             2 => [
                 'do' => [
-                    'Second side-dress before the plant is knee to waist high.',
+                    'Second side dress before the plant is knee to waist high.',
                     'Hill up soil around the base for anchorage against wind.',
                     'Make sure water is available from here on; the plant is setting its final size.',
                 ],
@@ -148,7 +148,7 @@ class CropStageTips
             ],
             3 => [
                 'do' => [
-                    'Keep the soil moist — this is the thirstiest week of the crop.',
+                    'Keep the soil moist. This is the thirstiest week of the crop.',
                     'Finish all field traffic before the tassel opens.',
                 ],
                 'watch' => [
@@ -162,7 +162,7 @@ class CropStageTips
                 ],
                 'watch' => [
                     'Silks cut by earworm or drought mean missing kernels at the tip.',
-                    'Very hot, dry afternoons kill pollen — early morning irrigation helps.',
+                    'Very hot, dry afternoons kill pollen. Early morning irrigation helps.',
                 ],
             ],
             5 => [
@@ -177,7 +177,7 @@ class CropStageTips
             ],
             6 => [
                 'do' => [
-                    'For grain, harvest at the black layer — around 20 to 25% moisture — then dry to 14%.',
+                    'For grain, harvest at the black layer (around 20 to 25% moisture), then dry to 14%.',
                     'For green corn, pick at 70 to 75 days while the kernel still spurts milk.',
                     'Dry on a clean surface; grit in the grain costs you at the buying station.',
                 ],
@@ -198,7 +198,7 @@ class CropStageTips
                     'Desucker to one follower so the mat does not compete with itself.',
                     'Remove dry and diseased leaves and take them out of the block.',
                 ],
-                'watch' => ['Sigatoka spots start as fine streaks on the underside of a leaf.', 'Yellowing that climbs from the oldest leaves upward can be Panama disease — mark that mat.'],
+                'watch' => ['Sigatoka spots start as fine streaks on the underside of a leaf.', 'Yellowing that climbs from the oldest leaves upward can be Panama disease. Mark that mat.'],
             ],
             2 => [
                 'do' => ['Keep potassium up; this is what the bunch will spend.', 'Prop tall plants before they are carrying weight.'],
@@ -213,7 +213,7 @@ class CropStageTips
                 'watch' => ['A leaning plant will go over in the first strong wind, bunch and all.'],
             ],
             5 => [
-                'do' => ['Harvest at three-quarters full for a market that is a day or more away.', 'Cut with the stalk and handle the fingers as little as possible.'],
+                'do' => ['Harvest at three quarters full for a market that is a day or more away.', 'Cut with the stalk and handle the fingers as little as possible.'],
                 'watch' => ['Latex staining on the peel is what buyers downgrade first.'],
             ],
         ],
@@ -228,11 +228,11 @@ class CropStageTips
                 'watch' => ['Rain during flowering brings anthracnose, and anthracnose in flower means no crop.'],
             ],
             2 => [
-                'do' => ['Keep soil moisture steady — swings cause fruit drop.', 'Continue the spray programme through fruit set.'],
-                'watch' => ['Most of what set will drop; that is normal, and panic-spraying does not stop it.'],
+                'do' => ['Keep soil moisture steady. Swings cause fruit drop.', 'Continue the spray programme through fruit set.'],
+                'watch' => ['Most of what set will drop; that is normal, and spraying in a panic does not stop it.'],
             ],
             3 => [
-                'do' => ['Bag the fruit once it is chicken-egg size.', 'Feed potassium for size and sweetness.'],
+                'do' => ['Bag the fruit once it is the size of a chicken egg.', 'Feed potassium for size and sweetness.'],
                 'watch' => ['Fruit fly stings before bagging are the usual cause of rejects at packing.'],
             ],
             4 => [
@@ -251,7 +251,7 @@ class CropStageTips
                 'watch' => ['Setts planted too deep rot before they sprout.'],
             ],
             1 => [
-                'do' => ['First fertiliser at tillering — the number of millable canes is decided here.', 'Weed thoroughly; cane is slow to close the row.'],
+                'do' => ['First fertiliser at tillering. The number of millable canes is decided here.', 'Weed thoroughly; cane is slow to close the row.'],
                 'watch' => ['Early shoot borer kills the primary shoot and shows as deadhearts.'],
             ],
             2 => [
@@ -263,19 +263,19 @@ class CropStageTips
                 'watch' => ['Late nitrogen or late rain drops the Brix at the mill.'],
             ],
             4 => [
-                'do' => ['Harvest on the mill schedule and deliver the same day where you can.', 'Cut at ground level — the bottom internodes carry the most sugar.'],
+                'do' => ['Harvest on the mill schedule and deliver the same day where you can.', 'Cut at ground level. The bottom internodes carry the most sugar.'],
                 'watch' => ['Cut cane left standing for days loses weight and sugar every hour.'],
             ],
         ],
 
         'coconut' => [
             0 => [
-                'do' => ['Water through the dry months of the first year.', 'Keep a weed-free ring a metre and a half wide.'],
+                'do' => ['Water through the dry months of the first year.', 'Keep a ring a metre and a half wide free of weeds.'],
                 'watch' => ['Rhinoceros beetle bores into the crown of young palms.'],
             ],
             1 => [
                 'do' => ['Feed twice a year, salt included.', 'Keep the ring clean and mulched.'],
-                'watch' => ['Neglected young palms simply take longer to bear — years, not months.'],
+                'watch' => ['Neglected young palms simply take longer to bear: years, not months.'],
             ],
             2 => [
                 'do' => ['Potassium and salt as the palm starts to flower.', 'Clear old fronds and nuts that harbour beetles.'],
@@ -290,22 +290,22 @@ class CropStageTips
         'vegetables' => [
             0 => [
                 'do' => ['Water lightly and often; the roots are shallow.', 'Shade at midday in harsh weather until they harden.'],
-                'watch' => ['Damping-off takes whole trays in wet, still conditions.'],
+                'watch' => ['Damping off takes whole trays in wet, still conditions.'],
             ],
             1 => [
                 'do' => ['Nitrogen for frame and leaf.', 'Stake or trellis before the plants need it, not after.', 'Mulch to keep soil off the leaves.'],
                 'watch' => ['Aphids and whitefly build up fast in dry weather.'],
             ],
             2 => [
-                'do' => ['Keep moisture even — swings cause flower drop and split fruit.', 'Ease off nitrogen; too much now gives leaves instead of fruit.'],
-                'watch' => ['Blossom-end rot is a calcium and watering problem, not a disease.'],
+                'do' => ['Keep moisture even. Swings cause flower drop and split fruit.', 'Ease off nitrogen; too much now gives leaves instead of fruit.'],
+                'watch' => ['Blossom end rot is a calcium and watering problem, not a disease.'],
             ],
             3 => [
-                'do' => ['Potassium through fruiting.', 'Pick regularly; an over-ripe fruit left on the plant slows the next one.'],
+                'do' => ['Potassium through fruiting.', 'Pick regularly; an overripe fruit left on the plant slows the next one.'],
                 'watch' => ['Fruit and pod borers arrive with the first fruit.'],
             ],
             4 => [
-                'do' => ['Harvest in the cool of the morning and get the produce into shade at once.', 'Grade as you pick — it is faster than sorting twice.'],
+                'do' => ['Harvest in the cool of the morning and get the produce into shade at once.', 'Grade as you pick. It is faster than sorting twice.'],
                 'watch' => ['Field heat left in the crate is what costs you a day of shelf life.'],
             ],
         ],
@@ -323,23 +323,23 @@ class CropStageTips
         'rice' => [
             0 => [
                 'do' => [
-                    'Keep the field saturated but not flooded until the shoots are through — seed under standing water rots.',
+                    'Keep the field saturated but not flooded until the shoots are through. Seed under standing water rots.',
                     'Sow onto a level bed. Every dip becomes a puddle that drowns its seed, every hump a dry patch that does not germinate.',
-                    'Plan the first weed pass now: a direct-seeded field and its weeds start on the same day.',
+                    'Plan the first weed pass now: a direct seeded field and its weeds start on the same day.',
                 ],
                 'watch' => [
                     'Birds and rats take broadcast seed before it is even up. Watch the first three days.',
-                    'A crust after heavy rain traps the shoots underneath it — break it gently.',
+                    'A crust after heavy rain traps the shoots underneath it. Break it gently.',
                 ],
             ],
             1 => [
                 'do' => [
-                    'Bring water up to 2–3 cm once the seedlings stand, and hold it there to hold the weeds down.',
-                    'First nitrogen at 10–15 days, on a field with only a film of water.',
+                    'Bring water up to 2 to 3 cm once the seedlings stand, and hold it there to hold the weeds down.',
+                    'First nitrogen at 10 to 15 days, on a field with only a film of water.',
                     'Thin or fill in the worst patches while the plants are still small enough to move.',
                 ],
                 'watch' => [
-                    'Weeds are the single biggest cause of a poor direct-seeded crop, and they are cheapest to beat in this fortnight.',
+                    'Weeds are the single biggest cause of a poor direct seeded crop, and they are cheapest to beat in this fortnight.',
                     'Golden apple snails clear whole patches of young seedlings overnight.',
                 ],
             ],

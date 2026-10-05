@@ -739,8 +739,8 @@
         $id('wtpProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
             <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
         // "Not sure" is the empty answer, so it is not a box to tick.
-        $id('wtpSoil').innerHTML = Object.entries(OPT.soilConditions || {}).filter(([k]) => k !== 'unsure').map(([k, label]) => `
-            <label class="wtp-prob" data-soil="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
+        $id('wtpSoil').innerHTML = Object.entries(OPT.soilConditions || {}).filter(([k]) => k !== 'unsure').map(([k, label]) => { const [n, sub] = String(label).split(' — '); return `
+            <label class="wtp-prob" data-soil="${k}"><input type="checkbox" value="${k}"><span>${esc(n)}${sub ? `<small class="block text-xs text-gray-500">${esc(sub)}</small>` : ''}</span></label>`; }).join('');
         $id('wtpDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
 
         paintQuote();

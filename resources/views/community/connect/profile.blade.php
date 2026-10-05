@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $member->full_name . ' — Community')
+@section('title', $member->full_name . ' · Community')
 @section('body-class', 'plaza-ground pf-full')
 @section('page-title', 'Community')
 @section('help-key', 'community-profile')
@@ -44,8 +44,8 @@
             <div class="pf-request-head">
                 <span class="pf-request-ico" aria-hidden="true">🤝</span>
                 <div class="pf-request-txt">
-                    <b>{{ $member->firstName }} wants to be your co-farmer</b>
-                    <span>{{ $member->full_name }} sent you a co-farmer request. Accept to see each other's news and chat any time.</span>
+                    <b>{{ $member->firstName }} wants to be your cofarmer</b>
+                    <span>{{ $member->full_name }} sent you a cofarmer request. Accept to see each other's news and chat any time.</span>
                 </div>
             </div>
             <span class="conn-action pf-request-acts" data-member-id="{{ $member->id }}" data-status="pending_in">
@@ -77,7 +77,7 @@
                 @if ($status === 'connected')
                     <span class="conn-action pf-connected-wrap" data-member-id="{{ $member->id }}" data-status="connected">
                         <button type="button" class="pf-connected conn-btn" data-action="disconnect"
-                                title="Remove {{ $member->firstName }} as a co-farmer">🤝 Connected</button>
+                                title="Remove {{ $member->firstName }} as a cofarmer">🤝 Connected</button>
                     </span>
                 @elseif (in_array($status, ['none', 'pending_out'], true))
                     {{-- Not tied yet: Connect stands where Connected will,
@@ -151,7 +151,7 @@
                         <span class="pf-stat"><b>{{ $followingCount }}</b><i>following</i></span>
                     @endif
                     @if ($connectionCount > 0)
-                        <span class="pf-stat"><b>{{ $connectionCount }}</b><i>{{ \Illuminate\Support\Str::plural('co-farmer', $connectionCount) }}</i></span>
+                        <span class="pf-stat"><b>{{ $connectionCount }}</b><i>{{ \Illuminate\Support\Str::plural('cofarmer', $connectionCount) }}</i></span>
                     @endif
                     @if ($pfMutual > 0)
                         {{-- Just "mutual": the long word was what clipped this
@@ -168,7 +168,7 @@
                  the number opens. Absent entirely when nothing is shared. --}}
             @if (! $isSelf && ($mutualUsers ?? collect())->isNotEmpty())
                 <button type="button" class="pf-mutual-fan js-mutual" data-mutual-user="{{ $member->id }}" data-mutual-name="{{ $member->firstName }}"
-                        title="See your mutual co-farmers" aria-label="See your mutual co-farmers">
+                        title="See your mutual cofarmers" aria-label="See your mutual cofarmers">
                     @foreach ($mutualUsers as $mu)
                         <span class="pf-fan-face">@include('community.partials.avatar', ['user' => $mu, 'size' => 'avatar-sm', 'link' => false])</span>
                     @endforeach
@@ -212,7 +212,7 @@
     @php
         $about = array_filter([
             'Location' => $member->location,
-            'Does' => $member->profession,
+            'Work' => $member->profession,
             'Farming for' => filled($member->yearsFarming)
                 ? $member->yearsFarming . ' ' . \Illuminate\Support\Str::plural('year', (int) $member->yearsFarming)
                 : null,

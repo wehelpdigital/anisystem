@@ -19,7 +19,7 @@
     <div class="card !p-0 overflow-hidden">
         <div id="orList"></div>
         <div id="orEmpty" class="hidden text-center py-10">
-            <p class="font-bold text-gray-900">Nothing here</p>
+            <p class="font-bold text-gray-900">No orders here</p>
             <p class="text-sm text-gray-400">Payments land here the moment a buyer sends their proof.</p>
         </div>
     </div>
@@ -161,12 +161,12 @@
             ${(ai.checks || []).length ? '<div class="od-checks">' + ai.checks.map((c) => `<div class="od-check">${icon(c.ok)}<div><b>${esc(c.label)}</b><small>${esc(c.detail)}</small></div></div>`).join('') + '</div>' : ''}
             ${read.app ? `<div class="od-sec"><h4>What Anee read</h4>${facts([
                 ['App', read.app + (read.kind ? ' · ' + read.kind.replace(/_/g, ' ') : '')],
-                ['Amount', read.amount != null ? peso(o, read.amount) : '—'],
+                ['Amount', read.amount != null ? peso(o, read.amount) : 'Not found'],
                 ['To', [read.recipientName, read.recipientNumber].filter(Boolean).join(' · ')],
                 ['From', read.senderName],
                 ['Ref No.', read.ref],
                 ['When', read.dateTime],
-                ['Sure it is genuine', read.authenticity != null ? read.authenticity + ' / 100' : ''],
+                ['How sure it is real', read.authenticity != null ? read.authenticity + ' / 100' : ''],
                 ['Her note', read.notes],
             ])}</div>` : ''}`;
     }

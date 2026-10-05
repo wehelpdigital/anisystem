@@ -2,4 +2,4 @@
 @section('code', '500')
 @section('emoji', '🚜')
 @section('title', 'Something broke on our end')
-@section('message', "A gear slipped in the machine — this isn't your fault. Our team has been notified. Please try again in a moment.")
+@section('message', "This is not your fault. Our team has been told. Please try again in a moment.")

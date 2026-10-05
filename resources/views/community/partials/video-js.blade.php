@@ -102,7 +102,7 @@
         const mins = Math.floor(secs / 60), rest = Math.round(secs % 60);
         const said = mins ? (mins + ' minute' + (mins > 1 ? 's' : '') + (rest ? ' ' + rest + ' seconds' : ''))
                           : (Math.round(secs) + ' seconds');
-        say('That clip is ' + said + ' long. Clips can be up to one minute — trim it and try again.', 'error');
+        say('That clip is ' + said + ' long. Clips can be up to one minute. Trim it and try again.', 'error');
 
         return true;
     }
@@ -294,14 +294,14 @@
         if (el) el.textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
     }
     async function openRecorder(host) {
-        if (!navigator.mediaDevices || !window.MediaRecorder) { say('Recording is not supported on this device — upload a video instead.', 'error'); return; }
+        if (!navigator.mediaDevices || !window.MediaRecorder) { say('This device cannot record video here. Upload a video instead.', 'error'); return; }
         targetHost = host;
         recordedBlob = null;
         buildModal();
         try {
             stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: true });
         } catch (_) {
-            say('Camera/microphone permission was denied.', 'error');
+            say('Camera or microphone permission was denied.', 'error');
             return;
         }
         const prev = modal.querySelector('.pvm-preview');
@@ -328,7 +328,7 @@
             const prev = modal.querySelector('.pvm-preview');
             prev.srcObject = null; prev.muted = false;
             prev.src = URL.createObjectURL(recordedBlob); prev.controls = true;
-            btn.textContent = '● Re-record';
+            btn.textContent = '● Record again';
             const use = modal.querySelector('.pvm-use');
             use.classList.toggle('hidden', recordedBlob.size === 0);
         };
@@ -344,7 +344,7 @@
         capId = setTimeout(() => {
             if (recorder && recorder.state === 'recording') {
                 recorder.stop();
-                say('A minute is the most a clip can be — that is what was kept.');
+                say('Clips can be up to one minute, so recording stopped there.');
             }
         }, MAX_SECONDS * 1000);
         btn.textContent = '■ Stop';

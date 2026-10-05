@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Payment Submitted')
+@section('title', 'Payment Sent')
 @section('page-title', 'Order Status')
 @section('page-subtitle', $subscription->orderNumber ?? '')
 
@@ -41,7 +41,7 @@
                     @endif
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900">
-                    {{ $status === 'pending' ? 'Payment submitted!' : 'Order '.$badgeLabel }}
+                    {{ $status === 'pending' ? 'Payment sent!' : 'Order status: '.$badgeLabel }}
                 </h2>
                 @if ($status === 'pending')
                     <p class="text-sm text-gray-600 mt-2 max-w-xs mx-auto">

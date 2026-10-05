@@ -11,7 +11,7 @@
     <video x-ref="vid" poster="{{ asset($poster) }}" controls preload="none" playsinline
            @play="playing = true" @pause="playing = false" @ended="playing = false">
         <source src="{{ $__vidSrc }}" type="video/mp4">
-        Sorry, your browser does not support embedded videos.
+        Your browser cannot play this video.
     </video>
     <button type="button" class="vid-play" x-show="!playing" @click="$refs.vid.play()"
             aria-label="Play: {{ $label }}">

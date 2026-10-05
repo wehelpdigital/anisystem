@@ -558,7 +558,7 @@
         // raw 404 in the sheet reads as "this season has no photos" rather than
         // "nobody wired this up". Say which.
         if (!WIRED && !cfg.allSchedules && !cfg.endpoint) {
-            state.textContent = 'The gallery is not connected on this install yet.';
+            state.textContent = 'The gallery cannot open here yet.';
             return;
         }
 

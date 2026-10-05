@@ -58,11 +58,11 @@ class CommunitySpam
                 continue;
             }
             if ($old === $new) {
-                return 'You just posted exactly this. Say something new — repeats do not count.';
+                return 'You just posted exactly this. Say something new. Repeats do not count.';
             }
             similar_text($new, $old, $pct);
             if ($pct >= self::SIMILAR_PCT) {
-                return 'That is almost word-for-word what you just posted. Say something new — repeats do not count.';
+                return 'That is almost the same as what you just posted. Say something new. Repeats do not count.';
             }
         }
 

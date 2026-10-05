@@ -154,7 +154,7 @@
             if (d.locked) {
                 return `
             <button type="button" class="wx-day" style="opacity:.72" data-tier-lock="{{ \App\Support\Tier::scheduleUnlocksAt($schedule ?? null, 'weatherDays') }}"
-                    data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::scheduleUnlocksAt($schedule ?? null, 'weatherDays'), 'The full forecast comes with {plan} — your plan reads today and tomorrow.') }}"
+                    data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::scheduleUnlocksAt($schedule ?? null, 'weatherDays'), 'The full forecast comes with {plan}. Your plan shows today and tomorrow.') }}"
                     title="Upgrade to unlock ${esc(d.dow || 'this day')}">
                 <div class="wx-day-dow">${esc(d.dow || '')}</div>
                 <div class="wx-day-emoji" style="display:flex;align-items:center;justify-content:center;min-height:42px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem;color:var(--color-gray-400)"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></div>
@@ -164,10 +164,10 @@
             }
             return `
             <button type="button" class="wx-day ${d.isToday ? 'is-today' : ''}" data-wx-day="${esc(d.date || '')}"
-                    aria-expanded="false" title="${esc(d.text)} — tap for this day's hours">
+                    aria-expanded="false" title="${esc(d.text)}. Tap for this day's hours">
                 <div class="wx-day-dow">${esc(d.isToday ? 'Today' : d.dow)}</div>
                 <div class="wx-day-emoji">${skyArt(d, 42)}</div>
-                <div class="wx-day-temp">${d.max != null ? d.max + '&deg;' : '&ndash;'}<small>${d.min != null ? '/' + d.min + '&deg;' : ''}</small></div>
+                <div class="wx-day-temp">${d.max != null ? d.max + '&deg;' : ''}<small>${d.min != null ? '/' + d.min + '&deg;' : ''}</small></div>
                 <div class="wx-day-pop">${d.pop != null ? '&#128167;' + d.pop + '%' : '&nbsp;'}</div>
                 <svg class="wx-day-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
             </button>`;
@@ -178,7 +178,7 @@
        is it going to rain, and how hard. */
     function hoursPanel(day, hours) {
         if (!hours || !hours.length) {
-            return `<p class="text-sm text-gray-500 mt-2">No hour-by-hour reading for ${esc(day.isToday ? 'today' : day.dow)}.</p>`;
+            return `<p class="text-sm text-gray-500 mt-2">No hourly reading for ${esc(day.isToday ? 'today' : day.dow)}.</p>`;
         }
         const wet = hours.filter((h) => (h.pop || 0) >= 50);
         const peak = hours.reduce((a, b) => ((b.pop || 0) > (a.pop || 0) ? b : a), hours[0]);
@@ -186,8 +186,8 @@
             ? `Rain looks likely from <b>${esc(wet[0].hour)}</b> (${wet[0].pop}%). `
               + `Wettest hour is <b>${esc(peak.hour)}</b> at <b>${peak.pop}%</b>, and ${wet.length} `
               + `${wet.length === 1 ? 'hour is' : 'hours are'} at or above 50%.`
-            : `No hour reaches a 50% chance of rain — the wettest is <b>${esc(peak.hour)}</b> at `
-              + `<b>${peak.pop != null ? peak.pop + '%' : '&mdash;'}</b>. A good window for field work.`;
+            : `No hour reaches a 50% chance of rain. The wettest is <b>${esc(peak.hour)}</b>`
+              + `${peak.pop != null ? ' at <b>' + peak.pop + '%</b>' : ''}. A good window for field work.`;
         return `
             <div class="wx-open-hd">
                 <span class="wx-open-day">${esc(day.isToday ? 'Today' : day.dow)}${day.text ? ' &middot; ' + esc(day.text) : ''}</span>
@@ -198,8 +198,8 @@
                 <div class="wx-hour ${h.isNow ? 'is-now' : ''}" title="${esc(h.text)}${h.mm != null ? ' &middot; ' + h.mm + ' mm' : ''}">
                     <div class="wx-hour-time">${esc(h.isNow ? 'Now' : h.hour)}</div>
                     <div class="wx-hour-emoji">${skyArt(h, 34, h.night)}</div>
-                    <div class="wx-hour-temp">${h.temp != null ? h.temp + '&deg;' : '&ndash;'}</div>
-                    <div class="wx-hour-pop ${(h.pop || 0) < 20 ? 'is-dry' : ''}">&#128167;${h.pop != null ? h.pop + '%' : '&mdash;'}</div>
+                    <div class="wx-hour-temp">${h.temp != null ? h.temp + '&deg;' : ''}</div>
+                    <div class="wx-hour-pop ${(h.pop || 0) < 20 ? 'is-dry' : ''}">${h.pop != null ? '&#128167;' + h.pop + '%' : ''}</div>
                 </div>`).join('')}</div>
             <p class="wx-legend mt-1">Swipe the hours sideways. &#128167; is the chance of rain in that hour.</p>`;
     }
@@ -212,7 +212,7 @@
             ? `Today around <b>${esc(loc.place)}</b>: ${esc(String(today.text).toLowerCase())}, `
               + `${today.max != null ? '<b>' + today.max + '&deg;</b> at the warmest' : 'temperature unavailable'}`
               + `${today.min != null ? ', down to <b>' + today.min + '&deg;</b>' : ''}. `
-              + `There is a <b>${today.pop != null ? today.pop + '%' : '&mdash;'}</b> chance of rain &mdash; ${rainWord(today.pop)}.`
+              + `${today.pop != null ? `There is a <b>${today.pop}%</b> chance of rain: ${rainWord(today.pop)}.` : 'There is no rain figure for today.'}`
             : 'No reading for today.';
         /* The card wears today's sky as a tint and carries what that sky
          * means for the work. A forecast that stops at "80% chance of rain"

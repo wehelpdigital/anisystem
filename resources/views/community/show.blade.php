@@ -2,7 +2,7 @@
 
 @inject('community', 'App\Services\CommunityService')
 
-@section('title', $plan->title . ' — Community')
+@section('title', $plan->title . ' · Community')
 @section('body-class', 'plaza-ground')
 @section('page-title', $isOwner ? 'Your shared plan' : 'Shared plan')
 @section('page-subtitle', $plan->title)
@@ -100,7 +100,7 @@
                     data-id="{{ $plan->id }}" data-title="{{ $plan->title }}"
                     data-summary="{{ $plan->publicSummary }}" data-region="{{ $plan->publicRegion }}">Edit what's shared</button>
             <button type="button" class="btn btn-white btn-sm text-red-600 js-unpublish"
-                    data-id="{{ $plan->id }}" data-title="{{ $plan->title }}">Unshare</button>
+                    data-id="{{ $plan->id }}" data-title="{{ $plan->title }}">Stop sharing</button>
         </div>
     @endif
 </div>
@@ -141,7 +141,7 @@
         <textarea id="rateReview" class="form-textarea mt-3" rows="2" maxlength="500"
                   placeholder="Optional. What worked? What would you change?">{{ $myRating->review ?? '' }}</textarea>
         <button type="button" class="btn btn-primary btn-sm mt-3" id="rateSaveBtn">
-            {{ $myRating ? 'Update rating' : 'Submit rating' }}
+            {{ $myRating ? 'Update rating' : 'Save rating' }}
         </button>
     </div>
 @endif

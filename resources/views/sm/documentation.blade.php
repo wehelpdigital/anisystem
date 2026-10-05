@@ -1,6 +1,6 @@
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Documentation — ' . $schedule->title)
+@section('title', 'Documentation: ' . $schedule->title)
 @section('page-title', 'Documentation')
 @section('page-subtitle', $schedule->title)
 @section('help-key', 'documentation')
@@ -58,7 +58,7 @@
                 <input type="text" id="docNewTag" class="form-input flex-1 min-w-0!" maxlength="100" placeholder="e.g. Mixing Chart">
                 <button type="button" class="btn btn-white shrink-0" id="docNewTagAdd">Add</button>
             </div>
-            <p class="form-hint">Saved to this schedule so you can pick it again later.</p>
+            <p class="form-hint">Saved to this season so you can pick it again later.</p>
         </div>
 
         <div class="mb-4">
@@ -507,7 +507,7 @@
             const label = ENTRIES[id] ? (ENTRIES[id].title || ENTRIES[id].typeLabel) : 'this document';
             const ok = await confirmAction({
                 title: 'Delete document?',
-                message: '"' + label + '" will be removed from this schedule.',
+                message: '"' + label + '" will be removed from this season.',
                 confirmText: 'Delete',
             });
             if (!ok) return;

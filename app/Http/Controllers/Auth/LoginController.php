@@ -45,7 +45,7 @@ class LoginController extends Controller
 
         if (! $authenticated) {
             throw ValidationException::withMessages([
-                'email' => 'These credentials do not match our records.',
+                'email' => 'That email and password do not match. Please try again.',
             ]);
         }
 
@@ -55,7 +55,7 @@ class LoginController extends Controller
             $request->session()->put('signup.email', $user->email);
 
             return redirect()->route('verify.notice')
-                ->with('error', 'Please confirm your email first — check your inbox for the link.');
+                ->with('error', 'Please confirm your email first. Check your inbox for the link.');
         }
 
         if ($user->status !== 'active') {

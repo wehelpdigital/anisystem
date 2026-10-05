@@ -157,7 +157,7 @@
         <p class="mod-say">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 11v5m0-8h.01"/></svg>
             <span>{{ $say }}@if (! empty($sayLink)) <a href="{{ $sayLink['href'] }}">{{ $sayLink['label'] }}</a>@endif</span>
-            <button type="button" class="mod-say-x" title="Put this away" aria-label="Put this away">
+            <button type="button" class="mod-say-x" title="Hide this note" aria-label="Hide this note">
                 <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
             </button>
         </p>

@@ -62,7 +62,7 @@ class ScheduleChatController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         $name = (string) \Illuminate\Support\Str::of(Auth::user()?->full_name ?: 'Someone')
@@ -99,7 +99,7 @@ class ScheduleChatController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         // The chat panel polls this every few seconds while it is docked in
@@ -139,7 +139,7 @@ class ScheduleChatController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         // The room page itself polls the roster on a slower beat than the
@@ -175,7 +175,7 @@ class ScheduleChatController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         $validator = Validator::make($request->all(), [
@@ -187,7 +187,7 @@ class ScheduleChatController extends BaseScheduleController
             'kind' => 'nullable|in:video,audio,file',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $body = trim((string) $request->input('body'));
@@ -201,7 +201,7 @@ class ScheduleChatController extends BaseScheduleController
             try {
                 $attachments[] = $this->keepAttachment($request->file('clip'), (string) $request->input('kind'), (int) $schedule->id);
             } catch (\Throwable $e) {
-                return $this->jsonFail($e->getMessage() ?: 'Could not keep that attachment.', 422);
+                return $this->jsonFail($e->getMessage() ?: 'Could not save that attachment.', 422);
             }
         }
 
@@ -264,7 +264,7 @@ class ScheduleChatController extends BaseScheduleController
 
         $path = \App\Support\MediaStore::putFile($file, 'schedule-chat', $scheduleId);
         if ($path === null) {
-            throw new \RuntimeException('Could not keep that file.');
+            throw new \RuntimeException('Could not save that file.');
         }
 
         return [
@@ -406,7 +406,7 @@ class ScheduleChatController extends BaseScheduleController
         $schedule = $this->schedule($request->query('scheduleId'));
         $meId = (int) Auth::id();
         if (! ScheduleTeam::canAccess($schedule, $meId)) {
-            return $this->jsonFail('You are not part of this schedule team.', 403);
+            return $this->jsonFail('You are not on this season\'s team.', 403);
         }
 
         $upto = (int) $request->input('upto');

@@ -29,11 +29,11 @@
     <section class="relative isolate overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800 to-brand-900 spark-field">
         <div class="absolute inset-0 bg-dot-grid opacity-50" aria-hidden="true"></div>
         <div class="relative max-w-3xl mx-auto px-4 sm:px-6 py-14 sm:py-16 text-center animate-fade-up" style="z-index:1">
-            <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Pricing comparison</p>
+            <p class="text-sm font-bold uppercase tracking-wider text-accent-400">Compare plans</p>
             <h1 class="mt-2 font-heading text-4xl sm:text-5xl font-bold text-white text-balance">Every Plan, Side by Side</h1>
             <p class="mt-5 text-brand-100 text-base sm:text-lg">
-                Each limit below is the very one the app keeps. {{ $pcFree !== false ? $pcPlans[$pcFree]['name'] : 'Libre' }} is free forever;
-                the other plans are paid in {{ \App\Support\Region::currencyName() }} through {{ \App\Support\Region::payMethod() }}.
+                Every limit below is the same one the app uses. {{ $pcFree !== false ? $pcPlans[$pcFree]['name'] : 'Libre' }} is free forever.
+                The other plans are paid in {{ \App\Support\Region::currencyName() }} through {{ \App\Support\Region::payMethod() }}.
             </p>
             <a href="{{ route('pricing') }}" class="pc-back">
                 <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5m6-6l-6 6 6 6"/></svg>
@@ -135,7 +135,7 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
                     Start for free forever on {{ $pcFree !== false ? $pcPlans[$pcFree]['name'] : 'Libre' }}
                 </a>
-                <p>No payments, no trial time. Upgrade inside the app whenever the farm needs more.</p>
+                <p>No payment. No trial that runs out. Upgrade inside the app when your farm needs more.</p>
             </div>
         </div>
     </section>

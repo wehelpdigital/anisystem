@@ -34,8 +34,8 @@
     <div class="flex items-start md:items-center gap-2.5">
         <span class="mem-info-ico" aria-hidden="true">i</span>
         <p class="text-sm text-gray-600 leading-relaxed grow">
-            These are members <strong>not yet in your contacts</strong>. Search by name, place, crop or what
-            somebody does — one field looks at all of it.
+            These are members who are <strong>not yet your cofarmers</strong>. Search them by name, place,
+            crop or work.
         </p>
         <button type="button" class="btn-ghost rounded-full w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-700 shrink-0"
                 id="memInfoClose" aria-label="Hide this note">✕</button>
@@ -70,15 +70,15 @@
     <div class="sheet-body" style="padding-bottom:1.1rem">
         <form method="GET" action="{{ route('community.connect.members') }}" role="search">
             <input type="search" name="q" value="{{ $filters['q'] }}" class="form-input w-full mb-3"
-                   placeholder="Name, place, crop, or what they do…" autocomplete="off">
-            <button type="submit" class="btn btn-primary w-full">Show the members</button>
+                   placeholder="Name, place, crop or work…" autocomplete="off">
+            <button type="submit" class="btn btn-primary w-full">Search members</button>
         </form>
     </div>
 </div>
 
 @if ($members->isEmpty())
     <div class="card p-8 text-center text-sm text-gray-500">
-        {{ $anyFilter ? 'No members match that search.' : "You're connected with everyone here — check back as more farmers join." }}
+        {{ $anyFilter ? 'No members match that search.' : "You're connected with everyone here. Check back as more farmers join." }}
     </div>
 @else
     <div id="membersGrid">

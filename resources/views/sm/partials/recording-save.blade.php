@@ -42,7 +42,7 @@
                 </select>
                 <p class="form-hint">Also put this video in a Gallery album.</p>
             </div>
-            <p class="form-hint" id="recSaveHint">Saves to the Team box in the Gallery. Everyone on the schedule can see it.</p>
+            <p class="form-hint" id="recSaveHint">Saves to the Team box in the Gallery. Everyone on this season can see it.</p>
         </div>
         <div class="rs-foot">
             <button type="button" class="btn btn-ghost" data-rs-cancel>Discard</button>

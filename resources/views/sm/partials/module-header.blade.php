@@ -15,7 +15,7 @@
         'tags' => ['label' => 'Tags', 'route' => 'sm.tags'],
         'growth' => ['label' => 'Growth Stages', 'route' => 'sm.growth'],
         'gallery' => ['label' => 'Gallery', 'route' => 'sm.gallery'],
-        'ai' => ['label' => 'AI Technician', 'route' => 'sm.ai'],
+        'ai' => ['label' => 'Chat Anee', 'route' => 'sm.ai'],
     ];
     // The two the owner closed to workers. This row is how a module page is
     // reached when it is opened on its own rather than inside the Activities

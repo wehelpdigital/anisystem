@@ -90,7 +90,7 @@ class UndoJournalController extends BaseScheduleController
     {
         $module = (string) $request->query('module', '');
         if (! preg_match('/^(activities|draw|map)(:[A-Za-z0-9:_-]{1,30})?$/', $module)) {
-            abort(response()->json(['success' => false, 'message' => 'Unknown undo journal.'], 422));
+            abort(response()->json(['success' => false, 'message' => 'Undo is not available here.'], 422));
         }
 
         return $module;

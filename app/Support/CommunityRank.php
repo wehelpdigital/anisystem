@@ -51,7 +51,7 @@ class CommunityRank
             'how' => 'Pass on something worth reading, with your own words above it.'],
         'comments' => ['emoji' => '💬', 'pts' => 5, 'group' => 'Say something',
             'label' => 'Comment on a post',
-            'how' => 'Answer a co-farmer on the wall.'],
+            'how' => 'Answer a cofarmer on the wall.'],
         'topics' => ['emoji' => '🗣️', 'pts' => 10, 'group' => 'Say something',
             'label' => 'Start a discussion topic',
             'how' => 'Open a question inside a discussion room.'],
@@ -60,7 +60,7 @@ class CommunityRank
             'how' => 'Answer inside a discussion room.'],
         'reactionsGiven' => ['emoji' => '👍', 'pts' => 1, 'group' => 'Say something',
             'label' => 'React to a post',
-            'how' => 'A thumbs-up, a heart — small, but it counts.'],
+            'how' => 'A thumbs up or a heart. Small, but it counts.'],
         'blogComments' => ['emoji' => '📰', 'pts' => 5, 'group' => 'Say something',
             'label' => 'Comment on a blog article',
             'how' => 'Join the conversation under the technicians\' articles.'],
@@ -85,16 +85,16 @@ class CommunityRank
             'label' => 'Gain a follower',
             'how' => 'Somebody chose to hear more of you.'],
         'coFarmers' => ['emoji' => '🤝', 'pts' => 15, 'group' => 'What comes back',
-            'label' => 'Gain a co-farmer',
-            'how' => 'An accepted connection — the strongest tie there is here.'],
+            'label' => 'Gain a cofarmer',
+            'how' => 'An accepted connection, the strongest tie in the community.'],
         'bookmarksReceived' => ['emoji' => '🔖', 'pts' => 2, 'group' => 'What comes back',
             'label' => 'Your post gets saved',
             'how' => 'Somebody kept your post to come back to.'],
 
         // --- Work the farm -------------------------------------------------
         'aiQuestions' => ['emoji' => '🤖', 'pts' => 5, 'group' => 'Work the farm',
-            'label' => 'Ask the AI Technician',
-            'how' => 'Every question you put to the technician counts.'],
+            'label' => 'Ask Anee',
+            'how' => 'Every question you ask Anee counts.'],
         'seasons' => ['emoji' => '🌾', 'pts' => 20, 'group' => 'Work the farm',
             'label' => 'Start a cropping schedule',
             'how' => 'A new season planned in the Schedule Manager.'],
@@ -111,7 +111,7 @@ class CommunityRank
         // --- Show up -------------------------------------------------------
         'days' => ['emoji' => '📅', 'pts' => 3, 'group' => 'Show up',
             'label' => 'Visit anee.io',
-            'how' => 'Each day you open the app counts once — counted from today onward.'],
+            'how' => 'Each day you open the app counts once, from today on.'],
     ];
 
     /**

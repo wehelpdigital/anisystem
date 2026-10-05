@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '#' . $tag . ' — Community')
+@section('title', '#' . $tag . ' · Community')
 @section('body-class', 'plaza-ground')
 @section('page-title', 'Community')
 @section('page-subtitle', 'Posts tagged #' . $tag)
@@ -28,7 +28,7 @@
     <div class="card p-8 text-center">
         <div class="empty-tile">🔖</div>
         <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Wala pang posts na may #{{ $tag }}</p>
-        <p class="text-sm text-gray-500 mt-1">Be the first — use <strong>#{{ $tag }}</strong> in a post.</p>
+        <p class="text-sm text-gray-500 mt-1">Be the first. Use <strong>#{{ $tag }}</strong> in a post.</p>
     </div>
 @endif
 
@@ -41,7 +41,7 @@
                 <p class="text-sm leading-tight">
                     <a href="{{ route('community.connect.profile', ['userId' => $author->id]) }}" class="font-semibold text-gray-900 hover:text-brand-700">{{ $author->full_name }}</a>
                     @include('community.partials.top-badge', ['topUser' => $author])
-                    @if (in_array((int) $post->authorUserId, $friendIds, true))<span class="badge badge-green align-middle ml-1">Co-farmer</span>@endif
+                    @if (in_array((int) $post->authorUserId, $friendIds, true))<span class="badge badge-green align-middle ml-1">Cofarmer</span>@endif
                 </p>
                 <p class="text-xs text-gray-400">@if ($place)@include('community.partials.place', ['place' => $place]) · @endif{{ $post->created_at?->diffForHumans() }}</p>
             </div>
@@ -54,14 +54,14 @@
         @include('community.partials.react-bar', ['type' => 'wallpost', 'id' => $post->id, 'summary' => $post->reactionSummary ?? null])
         <div class="mt-3 pt-2 border-t border-gray-100">
             <a href="{{ route('community.connect.profile', ['userId' => $author->id]) }}#wallpost-{{ $post->id }}" class="text-xs font-semibold text-brand-700 hover:text-brand-800">
-                💬 {{ $post->comments_count }} {{ $post->comments_count === 1 ? 'comment' : 'comments' }} — view on wall →
+                💬 {{ $post->comments_count }} {{ $post->comments_count === 1 ? 'comment' : 'comments' }} · View on wall →
             </a>
         </div>
     </article>
 @endforeach
 
 @if ($groupPosts->isNotEmpty())
-    <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mt-6 mb-2">From your groups</p>
+    <p class="text-xs font-bold text-gray-400 uppercase tracking-wide mt-6 mb-2">From your discussions</p>
     @foreach ($groupPosts as $post)
         <article class="card p-4 mb-3">
             <header class="flex items-start gap-3">

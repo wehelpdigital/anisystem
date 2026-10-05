@@ -12,7 +12,7 @@
 <div class="sheet hidden" id="shareScheduleSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Share this schedule</h3>
+        <h3 class="sheet-title">Share this season</h3>
         <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-4">
@@ -45,7 +45,7 @@
 
         {{-- Community PM --}}
         <div>
-            <label class="form-label">Send to a co-farmer</label>
+            <label class="form-label">Send to a cofarmer</label>
             <div id="shareCofarmers" class="space-y-1 max-h-56 overflow-y-auto rounded-xl border border-gray-100 p-1">
                 <p class="text-sm text-gray-400 px-2 py-3 text-center" id="shareCofarmersHint">Loading…</p>
             </div>
@@ -105,7 +105,7 @@
             const items = (res.data && res.data.items) || [];
             cofarmersLoaded = true;
             if (!items.length) {
-                box.innerHTML = '<p class="text-sm text-gray-400 px-2 py-3 text-center">No co-farmers yet. Find them in the Community.</p>';
+                box.innerHTML = '<p class="text-sm text-gray-400 px-2 py-3 text-center">No cofarmers yet. Find them in the Community.</p>';
                 return;
             }
             box.innerHTML = items.map((u) => {
@@ -136,7 +136,7 @@
                 body: { body: SHARE_TITLE + '\n' + PUBLIC_URL },
             });
             send.textContent = 'Sent ✓';
-            window.toast('Sent to your co-farmer.');
+            window.toast('Sent to your cofarmer.');
         } catch (err) {
             send.disabled = false;
             send.textContent = original;

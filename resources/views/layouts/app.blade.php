@@ -330,7 +330,7 @@
                                 <p class="font-bold text-gray-900 text-sm">Notifications</p>
                                 <div class="flex items-center gap-3">
                                     <button type="button" @click="markAll()" x-show="unread > 0"
-                                        class="text-xs font-semibold text-brand-600 hover:text-brand-700">Mark all read</button>
+                                        class="text-xs font-semibold text-brand-600 hover:text-brand-700">Mark all as read</button>
                                     <button type="button" @click="open = false"
                                         class="btn-ghost p-1.5 rounded-full text-gray-400" aria-label="Close">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6L6 18"/></svg>
@@ -343,7 +343,7 @@
                                 </template>
                                 <template x-if="!loading && items.length === 0">
                                     <div class="px-4 py-10 text-center">
-                                        <p class="text-sm text-gray-500">You're all caught up.</p>
+                                        <p class="text-sm text-gray-500">No notifications yet.</p>
                                     </div>
                                 </template>
                                 <template x-for="n in items" :key="n.id">
@@ -439,14 +439,14 @@
                                  a browser that cannot install. --}}
                             <button type="button" id="pwaInstallBtn" hidden
                                 class="w-full text-left block rounded-lg px-3 py-2.5 text-sm font-medium text-brand-700 hover:bg-brand-50">
-                                Install to device
+                                Install the app
                             </button>
                             {{-- The way to reach a person. It existed as a page
                                  and had no door: nothing in the app linked to
                                  it, so a grower with a problem had nowhere to
                                  go but the phone. --}}
                             <a href="{{ route('support.index') }}" class="flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50">
-                                <span>Help &amp; Support</span>
+                                <span>Help and Support</span>
                                 @php $openTickets = \App\Models\SupportTicket::where('userId', auth()->id())->where('deleteStatus', 1)->whereIn('status', ['open', 'answered'])->count(); @endphp
                                 @if ($openTickets)
                                     <span class="badge badge-green">{{ $openTickets }}</span>

@@ -653,8 +653,8 @@
         $id('wpMonths').innerHTML = OPT.months.map((m, i) => `
             <button type="button" class="wtp-choice" data-month="${esc(m.key)}"><span class="c-e">🗓️</span><span>${esc(m.label)}${i === 0 ? '<small>This month</small>' : ''}</span></button>`).join('');
         const soilIcons = { clay: '🧱', loam: '🟤', sandy: '🏖️', silty: '🌊', rocky: '⛰️', unsure: '🤷' };
-        $id('wpSoils').innerHTML = Object.entries(OPT.soils).map(([k, label]) => `
-            <button type="button" class="wtp-choice" data-soil="${k}"><span class="c-e">${soilIcons[k] || '🟫'}</span><span>${esc(label)}</span></button>`).join('');
+        $id('wpSoils').innerHTML = Object.entries(OPT.soils).map(([k, label]) => { const [n, sub] = String(label).split(' — '); return `
+            <button type="button" class="wtp-choice" data-soil="${k}"><span class="c-e">${soilIcons[k] || '🟫'}</span><span>${esc(n)}${sub ? `<small>${esc(sub)}</small>` : ''}</span></button>`; }).join('');
         const waterIcons = { irrigated: '🚰', limited: '🚿', rainfed: '🌧️' };
         $id('wpWaters').innerHTML = Object.entries(OPT.waters).map(([k, label]) => `
             <button type="button" class="wtp-choice" data-water="${k}"><span class="c-e">${waterIcons[k] || '💧'}</span><span>${esc(label)}</span></button>`).join('');
@@ -678,8 +678,8 @@
         paintPrio();
         group('wpExcludes', 'exclude', OPT.families, { grain: '🌾', vegetable: '🥬', root: '🍠', legume: '🫘', tree: '🌳' }, state.exclude);
         const aimIcons = { sell: '🏪', family: '🍚', both: '⚖️' };
-        $id('wpAims').innerHTML = Object.entries(OPT.aims).map(([k, label]) => `
-            <button type="button" class="wtp-choice" data-aim="${k}"><span class="c-e">${aimIcons[k] || '🌱'}</span><span>${esc(label)}</span></button>`).join('');
+        $id('wpAims').innerHTML = Object.entries(OPT.aims).map(([k, label]) => { const [n, sub] = String(label).split(' — '); return `
+            <button type="button" class="wtp-choice" data-aim="${k}"><span class="c-e">${aimIcons[k] || '🌱'}</span><span>${esc(n)}${sub ? `<small>${esc(sub)}</small>` : ''}</span></button>`; }).join('');
         $id('wpProbs').innerHTML = Object.entries(OPT.problems).map(([k, label]) => `
             <label class="wtp-prob" data-prob="${k}"><input type="checkbox" value="${k}"><span>${esc(label)}</span></label>`).join('');
         $id('wpDots').innerHTML = Array.from({ length: STEPS }, (_, i) => `<span class="wtp-dot${i === 0 ? ' is-on' : ''}"></span>`).join('');
@@ -838,7 +838,7 @@
     function review() {
         const month = (OPT.months.find((m) => m.key === state.startMonth) || {}).label || '';
         $id('wpReview').innerHTML = `📍 <b>${esc(state.location)}</b>${state.country && state.country !== (OPT.country || '') ? ' · ' + esc(rulesFor(state.country).name || state.country) : ''} · starting ${esc(month)}`
-            + `<br><span class="text-xs">${esc(OPT.soils[state.soil] || '')} · ${esc(OPT.waters[state.water] || '')} · ${esc(OPT.aims[state.aim] || '')}`
+            + `<br><span class="text-xs">${esc(shortOf(OPT.soils[state.soil]))} · ${esc(OPT.waters[state.water] || '')} · ${esc(shortOf(OPT.aims[state.aim]))}`
             + (state.problems.length ? ` · ${state.problems.length} problem${state.problems.length === 1 ? '' : 's'}` : '')
             + (() => { const n = state.cropsAsked.length + (state.cropsOther ? state.cropsOther.split(',').filter((x) => x.trim()).length : 0); return n ? ` · ${n} crop${n === 1 ? '' : 's'} you picked` : ''; })()
             + (state.priorities.length ? ` · top priority: ${esc(shortOf((OPT.priorities || {})[state.priorities[0]] || state.priorities[0]).toLowerCase())}` : '')

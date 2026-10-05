@@ -203,7 +203,7 @@ class AiController extends Controller
         $settings = AiSetting::current();
 
         if (! $settings->isUsable()) {
-            return $this->json(false, 'The AI Technician is not switched on yet. Please check back soon.', [], 503);
+            return $this->json(false, 'Anee is not switched on yet. Please check back soon.', [], 503);
         }
 
         $validator = Validator::make($request->all(), [
@@ -226,7 +226,7 @@ class AiController extends Controller
             'attachProtocolReviewId' => 'nullable|integer',
         ]);
         if ($validator->fails()) {
-            return $this->json(false, 'Validation failed.', ['errors' => $validator->errors()], 422);
+            return $this->json(false, $validator->errors()->first(), ['errors' => $validator->errors()], 422);
         }
 
         $prompt = trim($request->input('message'));
@@ -306,7 +306,7 @@ class AiController extends Controller
         if ($balance < $estimate && ! $this->credits->unlimited($payerId)) {
             $whose = $payerId === (int) Auth::id() ? 'You have' : 'This farm has';
             return $this->json(false, $balance <= 0
-                ? $whose . ' no AI Credits left. Top up to keep asking questions.'
+                ? $whose . ' no credits left. Top up to keep asking.'
                 : 'You need about ' . ceil($estimate) . ' credits for this question and have ' . number_format((int) floor($balance)) . '.',
                 ['balance' => $balance, 'needed' => $estimate, 'outOfCredits' => true], 402);
         }
@@ -596,11 +596,11 @@ class AiController extends Controller
             'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:8192',
         ], [
             'image.required' => 'Pick a photo first.',
-            'image.mimes' => 'Allowed types: JPG, PNG, WebP.',
-            'image.max' => 'Photo is too large — max 8 MB.',
+            'image.mimes' => 'Use a JPG, PNG or WebP photo.',
+            'image.max' => 'That photo is too big. The limit is 8 MB.',
         ]);
         if ($validator->fails()) {
-            return $this->json(false, 'Validation failed.', ['errors' => $validator->errors()], 422);
+            return $this->json(false, $validator->errors()->first(), ['errors' => $validator->errors()], 422);
         }
 
         // Shrunk on arrival as well as in the browser: see ModelImage::shrinkUpload.
@@ -715,7 +715,7 @@ class AiController extends Controller
             strtolower((string) parse_url((string) config('mother.url'), PHP_URL_HOST)),
         ]);
         if (! $ours || ! in_array($host, $ours, true)) {
-            return $this->json(false, 'That file is not ours to attach.', [], 403);
+            return $this->json(false, 'That file cannot be attached.', [], 403);
         }
 
         // The models take stills. A clip has to be asked about in words.
@@ -723,7 +723,7 @@ class AiController extends Controller
         // does not hide the extension — a private copy of this regex is how
         // .avi got treated as a photo everywhere it was written out.
         if (\App\Support\SeasonMedia::kindOf((string) parse_url($url, PHP_URL_PATH)) === 'video') {
-            return $this->json(false, 'The technician reads photos, not video — take a still from it and ask about that.', [], 422);
+            return $this->json(false, 'Anee reads photos, not videos. Take a screenshot of the video and ask about that.', [], 422);
         }
 
         try {
@@ -738,7 +738,7 @@ class AiController extends Controller
             if (! in_array($mime, ['image/jpeg', 'image/png', 'image/webp'], true)) {
                 @unlink($tmp);
 
-                return $this->json(false, 'That is not a photo the technician can read.', [], 422);
+                return $this->json(false, 'That is not a photo Anee can read.', [], 422);
             }
 
             $ext = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'][$mime];
@@ -747,7 +747,7 @@ class AiController extends Controller
             @unlink($tmp);
 
             if ($stored === null) {
-                throw new \RuntimeException('Could not keep a copy.');
+                throw new \RuntimeException('Could not save a copy of that photo.');
             }
         } catch (\Throwable $e) {
             return $this->json(false, $e->getMessage() ?: 'Could not attach that photo.', [], 500);
@@ -768,7 +768,7 @@ class AiController extends Controller
             'deleteStatus' => 1,
         ]);
 
-        return $this->json(true, 'Started a new conversation.', ['conversationId' => $conversation->id]);
+        return $this->json(true, 'New chat started.', ['conversationId' => $conversation->id]);
     }
 
     /** Rename a chat session (titles otherwise come from the first question). */
@@ -780,7 +780,7 @@ class AiController extends Controller
             ->first();
 
         if (! $conversation) {
-            return $this->json(false, 'Conversation not found.', [], 404);
+            return $this->json(false, 'That chat was not found.', [], 404);
         }
 
         $title = trim((string) $request->input('title', ''));
@@ -822,7 +822,7 @@ class AiController extends Controller
             ->where('userId', Auth::id())
             ->find((int) $request->query('conversationId'));
         if (! $conversation) {
-            return $this->json(false, 'That conversation is gone.', [], 404);
+            return $this->json(false, 'That chat is gone.', [], 404);
         }
 
         $messages = $conversation->messages()
@@ -868,14 +868,14 @@ class AiController extends Controller
             'description' => 'nullable|string|max:2000',
         ]);
         if ($validator->fails()) {
-            return $this->json(false, 'Validation failed.', ['errors' => $validator->errors()], 422);
+            return $this->json(false, $validator->errors()->first(), ['errors' => $validator->errors()], 422);
         }
 
         $conversation = AiConversation::active()
             ->where('userId', Auth::id())
             ->find((int) $request->input('conversationId'));
         if (! $conversation) {
-            return $this->json(false, 'That conversation is gone.', [], 404);
+            return $this->json(false, 'That chat is gone.', [], 404);
         }
 
         $schedule = AsCroppingSchedule::active()
@@ -883,12 +883,12 @@ class AiController extends Controller
             ->where('id', (int) $request->input('scheduleId'))
             ->first();
         if (! $schedule) {
-            return $this->json(false, 'That schedule is not yours to write to.', [], 404);
+            return $this->json(false, 'That season is not yours to write to.', [], 404);
         }
         // Writing the notebook is the note right — the same line every other
         // door into the schedule's records draws for a worker.
         if (\App\Support\WorkerContext::activeGrant() && ! \App\Support\WorkerContext::canAddNotes()) {
-            return $this->json(false, 'You are not allowed to write notes on this schedule.', [], 403);
+            return $this->json(false, 'You are not allowed to add notes to this season.', [], 403);
         }
 
         $activity = null;
@@ -897,13 +897,13 @@ class AiController extends Controller
                 ->where('croppingScheduleId', $schedule->id)
                 ->find((int) $request->input('activityId'));
             if (! $activity) {
-                return $this->json(false, 'That task is not on this schedule.', [], 404);
+                return $this->json(false, 'That task is not in this season.', [], 404);
             }
         }
 
         $messages = $conversation->messages()->orderBy('id')->limit(120)->get();
         if ($messages->isEmpty()) {
-            return $this->json(false, 'This conversation has no messages yet.', [], 422);
+            return $this->json(false, 'This chat is empty. Ask a question first.', [], 422);
         }
 
         $tech = AiSetting::current()?->assistantName ?: 'AI Technician';
@@ -932,7 +932,7 @@ class AiController extends Controller
 
         $title = trim((string) $request->input('title'))
             ?: ('AI · ' . ($conversation->title ?: 'Conversation')
-                . ($activity ? ' — ' . ($activity->activityTitle ?: 'Task') : ''));
+                . ($activity ? ' · ' . ($activity->activityTitle ?: 'Task') : ''));
         $note = \App\Models\AsScheduleNote::create([
             'croppingScheduleId' => $schedule->id,
             'userId' => (int) Auth::id(),
@@ -943,8 +943,8 @@ class AiController extends Controller
         ]);
 
         return $this->json(true, $activity
-            ? 'Saved this conversation onto the task, in the schedule notebook.'
-            : 'Saved this conversation to the schedule notebook.', ['noteId' => (int) $note->id]);
+            ? 'Saved this chat to the task, in the season notes.'
+            : 'Saved this chat to the season notes.', ['noteId' => (int) $note->id]);
     }
 
     /**
@@ -963,19 +963,19 @@ class AiController extends Controller
             'description' => 'nullable|string|max:2000',
         ]);
         if ($validator->fails()) {
-            return $this->json(false, 'Validation failed.', ['errors' => $validator->errors()], 422);
+            return $this->json(false, $validator->errors()->first(), ['errors' => $validator->errors()], 422);
         }
 
         $conversation = AiConversation::active()
             ->where('userId', Auth::id())
             ->find((int) $request->input('conversationId'));
         if (! $conversation) {
-            return $this->json(false, 'That conversation is gone.', [], 404);
+            return $this->json(false, 'That chat is gone.', [], 404);
         }
 
         $messages = $conversation->messages()->orderBy('id')->limit(120)->get();
         if ($messages->isEmpty()) {
-            return $this->json(false, 'This conversation has no messages yet.', [], 422);
+            return $this->json(false, 'This chat is empty. Ask a question first.', [], 422);
         }
 
         $tech = AiSetting::current()?->assistantName ?: 'AI Technician';
@@ -1056,12 +1056,12 @@ class AiController extends Controller
             ->first();
 
         if (! $conversation) {
-            return $this->json(false, 'Conversation not found.', [], 404);
+            return $this->json(false, 'That chat was not found.', [], 404);
         }
 
         $conversation->update(['deleteStatus' => 0]);
 
-        return $this->json(true, 'Conversation deleted.');
+        return $this->json(true, 'Chat deleted.');
     }
 
     /** Pin this thread to a day or an activity of its schedule (or clear it). */
@@ -1073,7 +1073,7 @@ class AiController extends Controller
             ->first();
 
         if (! $conversation) {
-            return $this->json(false, 'Conversation not found.', [], 404);
+            return $this->json(false, 'That chat was not found.', [], 404);
         }
 
         $linkType = $request->input('linkType'); // 'date' | 'activity' | 'none'
@@ -1092,7 +1092,7 @@ class AiController extends Controller
                     ->where('croppingScheduleId', $conversation->croppingScheduleId)->first()
                 : null;
             if (! $activity) {
-                return $this->json(false, 'That activity is not part of this plan.', [], 422);
+                return $this->json(false, 'That task is not part of this season.', [], 422);
             }
             $conversation->linkedActivityId = $activity->id;
         }
@@ -1100,7 +1100,7 @@ class AiController extends Controller
         $conversation->save();
         $conversation->loadMissing('linkedActivity');
 
-        return $this->json(true, $linkType === 'none' ? 'Link removed.' : 'Thread linked.', [
+        return $this->json(true, $linkType === 'none' ? 'Link removed.' : 'Chat linked.', [
             'linkLabel' => $conversation->link_label,
             'linkedDate' => $conversation->linkedDate?->format('Y-m-d'),
             'linkedActivityId' => $conversation->linkedActivityId,
@@ -1356,7 +1356,7 @@ class AiController extends Controller
         $userId = (int) Auth::id();
         $schedule = $this->planFor($request->query('scheduleId'), $userId);
         if (! $schedule) {
-            return $this->json(false, 'That plan could not be found.', [], 404);
+            return $this->json(false, 'That season could not be found.', [], 404);
         }
 
         $text = $this->planContext($schedule->id, $userId);

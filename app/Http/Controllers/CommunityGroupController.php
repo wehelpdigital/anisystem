@@ -992,7 +992,7 @@ class CommunityGroupController extends Controller
     {
         $key = config('services.giphy.key');
         if (! $key) {
-            return response()->json(['success' => false, 'message' => 'GIF search is not configured.'], 422);
+            return response()->json(['success' => false, 'message' => 'GIF search is not set up yet.'], 422);
         }
 
         $q = trim((string) $request->query('q', ''));
@@ -1005,10 +1005,10 @@ class CommunityGroupController extends Controller
                 'rating' => 'g',
             ]));
         } catch (\Throwable $e) {
-            return response()->json(['success' => false, 'message' => 'GIF search is unreachable right now.'], 502);
+            return response()->json(['success' => false, 'message' => 'GIF search is not working right now. Please try again later.'], 502);
         }
         if (! $res->successful()) {
-            return response()->json(['success' => false, 'message' => 'GIF search failed.'], 502);
+            return response()->json(['success' => false, 'message' => 'GIF search did not work. Please try again.'], 502);
         }
 
         $gifs = collect($res->json('data') ?? [])->map(fn ($g) => [
@@ -1225,7 +1225,7 @@ class CommunityGroupController extends Controller
         $group = $this->group($id);
         $meId = (int) Auth::id();
         if (! $this->isMember($group->id, $meId)) {
-            return response()->json(['success' => false, 'message' => 'Join the group to see the chat.'], 403);
+            return response()->json(['success' => false, 'message' => 'Join the discussion to see the chat.'], 403);
         }
 
         $after = (int) $request->query('after', 0);
@@ -1552,7 +1552,7 @@ class CommunityGroupController extends Controller
         $group = $this->group($id);
         $meId = (int) Auth::id();
         if (! $this->isMember($group->id, $meId)) {
-            return response()->json(['success' => false, 'message' => 'Join the group to chat.'], 403);
+            return response()->json(['success' => false, 'message' => 'Join the discussion to chat.'], 403);
         }
 
         $data = $request->validate([
@@ -1577,7 +1577,7 @@ class CommunityGroupController extends Controller
         }
 
         if ($body === '' && ! $imagePath && ! $videoPath) {
-            return response()->json(['success' => false, 'message' => 'Write a message or add a photo/video.'], 422);
+            return response()->json(['success' => false, 'message' => 'Write a message or add a photo or video.'], 422);
         }
 
         $msg = CommunityGroupMessage::create([

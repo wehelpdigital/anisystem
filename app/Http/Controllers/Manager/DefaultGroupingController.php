@@ -38,7 +38,7 @@ class DefaultGroupingController extends BaseScheduleController
         ]);
 
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $validLotIds = AsScheduleLot::active()
@@ -76,12 +76,12 @@ class DefaultGroupingController extends BaseScheduleController
                 }
             });
         } catch (\Throwable $e) {
-            return $this->jsonFail('Failed to save default groupings: ' . $e->getMessage(), 500);
+            return $this->jsonFail('Could not save the default groups: ' . $e->getMessage(), 500);
         }
 
         $fresh = $schedule->fresh(['defaultGroupings.lots']);
 
-        return $this->jsonOk('Default groupings saved.', [
+        return $this->jsonOk('Default groups saved.', [
             'data' => $fresh->defaultGroupings->map(function ($g) {
                 return [
                     'id'          => $g->id,

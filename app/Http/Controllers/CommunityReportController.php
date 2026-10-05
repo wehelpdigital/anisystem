@@ -45,7 +45,7 @@ class CommunityReportController extends Controller
         // Reporting your own is not a report; it is a delete you have not
         // done yet.
         if ((int) ($subject['userId'] ?? 0) === $meId) {
-            return $this->json(false, 'This is yours — you can delete it instead.', [], 422);
+            return $this->json(false, 'This is yours. You can delete it instead.', [], 422);
         }
 
         /* Once each. A second report from the same person on the same thing
@@ -57,7 +57,7 @@ class CommunityReportController extends Controller
             ->where('targetId', (int) $data['id'])
             ->exists();
         if ($already) {
-            return $this->json(true, 'You have already reported this — the team is looking at it.');
+            return $this->json(true, 'You already reported this. The team is looking at it.');
         }
 
         CommunityReport::create([
@@ -72,7 +72,7 @@ class CommunityReportController extends Controller
             'deleteStatus' => 1,
         ]);
 
-        return $this->json(true, 'Thank you — the team will take a look.');
+        return $this->json(true, 'Thank you. The team will take a look.');
     }
 
     /**
@@ -98,7 +98,7 @@ class CommunityReportController extends Controller
         if ($type === 'topic') {
             $row = CommunityGroupPost::active()->find($id);
 
-            return $row ? ['userId' => (int) $row->userId, 'text' => $say($row->title . ' — ' . $row->body)] : null;
+            return $row ? ['userId' => (int) $row->userId, 'text' => $say($row->title . ': ' . $row->body)] : null;
         }
         if ($type === 'reply') {
             $row = CommunityGroupReply::active()->find($id);
@@ -108,13 +108,13 @@ class CommunityReportController extends Controller
         if ($type === 'group') {
             $row = CommunityGroup::active()->find($id);
 
-            return $row ? ['userId' => (int) $row->createdByUserId, 'text' => $say($row->name . ' — ' . $row->description)] : null;
+            return $row ? ['userId' => (int) $row->createdByUserId, 'text' => $say($row->name . ': ' . $row->description)] : null;
         }
         if ($type === 'member') {
             // The profile's flag: the member themselves is the subject.
             $row = \App\Models\User::where('id', $id)->where('deleteStatus', 1)->first();
 
-            return $row ? ['userId' => (int) $row->id, 'text' => $say($row->full_name . ' — member profile')] : null;
+            return $row ? ['userId' => (int) $row->id, 'text' => $say($row->full_name . ' (member profile)')] : null;
         }
 
         return null;

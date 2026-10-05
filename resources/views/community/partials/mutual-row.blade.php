@@ -44,7 +44,7 @@
         </div>
         <p class="mut-counts">
             <span><b>{{ $followers }}</b> {{ \Illuminate\Support\Str::plural('follower', $followers) }}</span>
-            <span><b>{{ $coFarmers }}</b> {{ \Illuminate\Support\Str::plural('co-farmer', $coFarmers) }}</span>
+            <span><b>{{ $coFarmers }}</b> {{ \Illuminate\Support\Str::plural('cofarmer', $coFarmers) }}</span>
             @if ($mutual > 0)<span><b>{{ $mutual }}</b> mutual</span>@endif
         </p>
     </div>

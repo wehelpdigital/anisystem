@@ -25,6 +25,6 @@
             </span>
         </button>
     @empty
-        <p class="text-xs text-gray-400 py-2">Wala pang usapan — say hi to a co-farmer.</p>
+        <p class="text-xs text-gray-400 py-2">Wala pang usapan. Say hi to a cofarmer.</p>
     @endforelse
 </div>

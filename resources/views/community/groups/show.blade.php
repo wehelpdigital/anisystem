@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $group->name . ' — Discussions')
+@section('title', $group->name . ' · Discussions')
 @section('page-title', $group->name)
 @section('help-key', 'community-discussions')
 @section('page-subtitle', 'Discussion')
@@ -893,7 +893,7 @@
             <div class="card p-8 text-center" id="postsEmpty">
                 <div class="empty-tile">🌱</div>
                 <p class="font-bold text-gray-900" style="font-family:var(--font-heading)">Tahimik pa rito</p>
-                <p class="text-sm text-gray-500 mt-1">{{ \App\Support\Region::ph() ? "Ikaw ang mauna — share what's happening sa bukid mo." : "Be the first — share what's happening on your farm." }}</p>
+                <p class="text-sm text-gray-500 mt-1">{{ \App\Support\Region::ph() ? "Ikaw ang mauna. Share what's happening sa bukid mo." : "Be the first. Share what's happening on your farm." }}</p>
             </div>
         @else
             @include('community.groups.partials.posts', ['posts' => $posts, 'group' => $group])
@@ -912,7 +912,7 @@
         <div class="disc-tail" id="postsTail">
             <button type="button" id="loadMoreBtn" class="btn btn-white btn-sm" data-next="2" data-infinite @unless ($hasMore) hidden @endunless>Show older topics</button>
             <div class="disc-spin" id="postsSpin" role="status" aria-label="Loading older topics" hidden><i></i><i></i><i></i></div>
-            <p class="disc-end" id="postsEnd" @if ($hasMore) hidden @endif>🌾 Nasa dulo ka na — iyan ang buong usapan.</p>
+            <p class="disc-end" id="postsEnd" @if ($hasMore) hidden @endif>🌾 Nasa dulo ka na. Iyan ang buong usapan.</p>
         </div>
     @endif
 
@@ -2389,7 +2389,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!asks.length) { qNone.classList.remove('hidden'); return; }
                 qList.innerHTML = asks.map((p) => row(p, p.place || p.asked, `
                     <button type="button" class="dq-btn is-yes" data-door-yes>Accept</button>
-                    <button type="button" class="dq-btn is-no" data-door-no>No</button>
+                    <button type="button" class="dq-btn is-no" data-door-no>Decline</button>
                 `)).join('');
             } catch (_) {
                 qList.innerHTML = '<p class="mr-say">Could not load requests.</p>';

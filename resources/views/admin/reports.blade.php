@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title', 'Reports')
-@section('subtitle', 'What the community flagged')
+@section('subtitle', 'Posts and members that people reported')
 
 {{-- The filter chips ride in the sticky header. --}}
 @section('bar')
@@ -17,8 +17,8 @@
     <div class="card !p-0 overflow-hidden">
         <div id="rpList"></div>
         <div id="rpEmpty" class="hidden text-center py-10">
-            <p class="font-bold text-gray-900">Nothing flagged</p>
-            <p class="text-sm text-gray-400">A quiet plaza is a healthy one.</p>
+            <p class="font-bold text-gray-900">No reports here</p>
+            <p class="text-sm text-gray-400">When a member reports a post or a person, it shows here.</p>
         </div>
     </div>
     <div class="ad-more" id="rpMore" hidden><span class="ad-spin"></span> Loading more…</div>
@@ -81,7 +81,7 @@
             ${r.details ? `<p class="text-xs text-gray-500">${esc(r.details)}</p>` : ''}
             <p class="rp-who">Reported by <b>${esc(r.reporter)}</b>${r.target ? ` · about <b>${esc(r.target)}</b>` : ''}</p>
             <div class="rp-acts">
-                <a class="btn btn-white btn-sm" href="${esc(r.url)}" target="_blank" rel="noopener">Open where it lives ↗</a>
+                <a class="btn btn-white btn-sm" href="${esc(r.url)}" target="_blank" rel="noopener">Open it in the app ↗</a>
                 ${r.status === 'open' ? `
                     <button type="button" class="btn btn-primary btn-sm" data-rp-set="handled">Mark handled</button>
                     <button type="button" class="btn btn-white btn-sm" data-rp-set="dismissed">Dismiss</button>`

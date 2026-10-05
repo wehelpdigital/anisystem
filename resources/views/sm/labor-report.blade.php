@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Labor Report — ' . $schedule->title)
+@section('title', 'Labor Report: ' . $schedule->title)
 @section('page-title', 'Labor Report')
 @section('page-subtitle', $schedule->title)
 @section('back', \App\Support\BackTo::url(route('sm.reports', ['id' => $schedule->id]), $schedule->id))
@@ -447,7 +447,7 @@
         <div class="flex items-center gap-3 mb-2">
             <button type="button" id="lrLotsAll" class="text-xs font-bold text-brand-700">Select all</button>
             <span class="text-gray-300">·</span>
-            <button type="button" id="lrLotsNone" class="text-xs font-bold text-brand-700">None (all lots)</button>
+            <button type="button" id="lrLotsNone" class="text-xs font-bold text-brand-700">Clear (all lots)</button>
         </div>
         <div class="dt-rows" id="lrLotsList">
             @foreach ($schedule->lots as $lot)
@@ -474,7 +474,7 @@
         <div class="flex items-center gap-3 mb-2">
             <button type="button" id="lrWorkersAll" class="text-xs font-bold text-brand-700">Select all</button>
             <span class="text-gray-300">·</span>
-            <button type="button" id="lrWorkersNone" class="text-xs font-bold text-brand-700">None (all workers)</button>
+            <button type="button" id="lrWorkersNone" class="text-xs font-bold text-brand-700">Clear (all workers)</button>
         </div>
         <div class="dt-rows" id="lrWorkersList">
             @foreach ($schedule->workers as $w)
@@ -729,8 +729,12 @@ const __init = () => {
         const parts = [];
         if (f.workerIds) parts.push(`${f.workerIds.length} ${f.workerIds.length === 1 ? 'worker' : 'workers'}`);
         if (f.lotIds) parts.push(`${f.lotIds.length} ${f.lotIds.length === 1 ? 'lot' : 'lots'}`);
-        if (f.dasMin !== undefined || f.dasMax !== undefined) parts.push(`${dayWord()} ${f.dasMin ?? '−∞'} to ${f.dasMax ?? '+∞'}`);
-        if (f.startDate || f.endDate) parts.push(`${f.startDate || '…'} to ${f.endDate || '…'}`);
+        if (f.dasMin !== undefined && f.dasMax !== undefined) parts.push(`${dayWord()} ${f.dasMin} to ${f.dasMax}`);
+        else if (f.dasMin !== undefined) parts.push(`${dayWord()} ${f.dasMin} onward`);
+        else if (f.dasMax !== undefined) parts.push(`up to ${dayWord()} ${f.dasMax}`);
+        if (f.startDate && f.endDate) parts.push(`${f.startDate} to ${f.endDate}`);
+        else if (f.startDate) parts.push(`from ${f.startDate}`);
+        else if (f.endDate) parts.push(`until ${f.endDate}`);
         $id('laborFilterHint').textContent = parts.length ? `Covers: ${parts.join(' · ')}` : 'Covers the whole season, every lot and every worker.';
     }
 
@@ -1035,7 +1039,7 @@ const __init = () => {
                 <div class="lr-bcard-top"><b>${esc(w.name)}</b><span class="lr-bcard-amt">${fmtPeso(w.total)}</span></div>
                 <div class="lr-bcard-meta">
                     <span class="badge badge-gray">${fmtPeso(w.costPerHalfDay)} / half day</span>
-                    <span class="badge badge-gray">${w.halfDays}H / ${w.wholeDays}W${w.naCount > 0 ? ` / ${w.naCount}N` : ''}</span>
+                    <span class="badge badge-gray">${w.halfDays} half · ${w.wholeDays} whole${w.naCount > 0 ? ` · ${w.naCount} time not set` : ''}</span>
                 </div>
                 <div class="lr-bphase">
                     <span><i style="background:${PHASE.pre}"></i>Land Prep ${fmtPeso(w.preDayZeroTotal || 0)}</span>
@@ -1062,7 +1066,7 @@ const __init = () => {
         const payOf = (a, wid) => { const h = (a.workers || []).find((x) => String(x.id) === wid); return h ? (h.pay || 0) : 0; };
         const amt = (a) => (BREAK_WORKER === null ? (a.cost || 0) : payOf(a, BREAK_WORKER));
         const card = (a) => {
-            const tr = a.timeRequired === 'whole' ? 'Whole day' : (a.timeRequired === 'half' ? 'Half day' : 'N/A');
+            const tr = a.timeRequired === 'whole' ? 'Whole day' : (a.timeRequired === 'half' ? 'Half day' : 'Time not set');
             const hands = (a.workers || []);
             const key = typeKey(a);
             const color = TYPE_COLOR[key] || '#94a3b8';
@@ -1283,24 +1287,24 @@ const __init = () => {
         const main = ph.cropping || { count: 0, cost: 0 };
         const una = ph.unanchored || { count: 0, cost: 0 };
         const lines = [];
-        lines.push(`LABOR REPORT — ${d.scheduleTitle || ''}`);
+        lines.push(`LABOR REPORT: ${d.scheduleTitle || ''}`);
         lines.push('='.repeat(50));
         lines.push(`Generated: ${new Date().toLocaleString(((window.ANEE_REGION || {}).locale || 'en-PH'), { dateStyle: 'medium', timeStyle: 'short' })}`);
         lines.push('');
         lines.push(`TOTAL: ${fmtPeso(d.grandTotal)}`);
         lines.push(`  Land Preparation (${DAY_TYPE} < 0):    ${fmtPeso(pre.cost)}  (${pre.count})`);
         lines.push(`  Main Cropping (${DAY_TYPE} 0 onwards): ${fmtPeso(main.cost)}  (${main.count})`);
-        if (una.count > 0) lines.push(`  Unanchored (no ${DAY_TYPE} 0):         ${fmtPeso(una.cost)}  (${una.count})`);
-        lines.push(`Activities: ${d.totalActivities} · Assignments: ${t.totalAssignments || 0} · ${t.halfDays || 0}H / ${t.wholeDays || 0}W / ${t.naCount || 0}N`);
+        if (una.count > 0) lines.push(`  No start day (no ${DAY_TYPE} 0):       ${fmtPeso(una.cost)}  (${una.count})`);
+        lines.push(`Activities: ${d.totalActivities} · Worker assignments: ${t.totalAssignments || 0} · Half days: ${t.halfDays || 0} · Whole days: ${t.wholeDays || 0} · Time not set: ${t.naCount || 0}`);
         lines.push(`Covers: ${$id('laborFilterHint')?.textContent?.replace(/^Covers:? /, '') || 'the whole season'}`);
         lines.push('');
         lines.push('BY WORKER');
         lines.push('-'.repeat(50));
-        (d.perWorker || []).forEach((w) => lines.push(`${w.name}: ${fmtPeso(w.total)}  (rate ${fmtPeso(w.costPerHalfDay)} · ${w.halfDays}H/${w.wholeDays}W${w.naCount ? '/' + w.naCount + 'N' : ''})`));
+        (d.perWorker || []).forEach((w) => lines.push(`${w.name}: ${fmtPeso(w.total)}  (${fmtPeso(w.costPerHalfDay)} per half day · ${w.halfDays} half · ${w.wholeDays} whole${w.naCount ? ' · ' + w.naCount + ' time not set' : ''})`));
         lines.push('');
         lines.push('BY ACTIVITY');
         lines.push('-'.repeat(50));
-        (d.perActivity || []).forEach((a) => lines.push(`${a.activityTitle} — ${a.targetDate || 'no date'} — ${fmtPeso(a.cost)}`));
+        (d.perActivity || []).forEach((a) => lines.push(`${a.activityTitle} · ${a.targetDate || 'no date'} · ${fmtPeso(a.cost)}`));
         return lines.join('\n');
     }
 

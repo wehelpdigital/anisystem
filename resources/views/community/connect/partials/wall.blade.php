@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const body = document.getElementById('wallBody').value.trim();
         const img = document.getElementById('wallImage').files[0];
         const vid = window.plazaVideoFile ? window.plazaVideoFile(host) : null;
-        if (!body && !img && !vid) { toast('Write something or add a photo/video.', 'error'); return; }
+        if (!body && !img && !vid) { toast('Write something, or add a photo or video.', 'error'); return; }
         const fd = new FormData();
         fd.append('render', 'feed');   // hand back the wall's own card
         if (body) fd.append('body', body);
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (window.plazaClearVideo) window.plazaClearVideo(host);
                 toast(data.message);
             } else toast(data.message || 'Could not post.', 'error');
-        } catch (_) { toast('Network error — try again.', 'error'); }
+        } catch (_) { toast('No connection. Try again.', 'error'); }
         finally { btn.disabled = false; btn.textContent = prev; }
     });
 

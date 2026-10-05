@@ -34,7 +34,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
             </button>
         </div>
-        <p class="pymk-empty hidden" id="pymkEmpty">No suggestions yet — connect with a few co-farmers and this fills up.</p>
+        <p class="pymk-empty hidden" id="pymkEmpty">No suggestions yet. Connect with a few cofarmers and people will show up here.</p>
     </div>
 </section>
 

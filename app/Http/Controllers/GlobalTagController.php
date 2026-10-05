@@ -351,7 +351,7 @@ class GlobalTagController extends Controller
 
                 return array_merge($base, ['icon' => $a['icon'],
                     'title' => trim((string) $row->title) ?: $a['label'],
-                    'sub' => 'saved run · ' . $day($row->created_at),
+                    'sub' => 'saved result · ' . $day($row->created_at),
                     'when' => $row->created_at ? substr((string) $row->created_at, 0, 10) : null,
                     'url' => route($a['route'])]);
             default: // gnote

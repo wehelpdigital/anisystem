@@ -23,7 +23,7 @@ class SoilConditions
         'alkaline' => 'Alkaline — high pH (pale young leaves, white crust)',
         'sodic' => 'Sodic — high sodium (crusts, seals, water sits, dispersive)',
         'saline' => 'Saline — salty (white crust, burnt leaf tips, brackish water)',
-        'acid_sulfate' => 'Acid sulfate — very sour (yellow mottles, rusty-red water, old mangrove or swamp land)',
+        'acid_sulfate' => 'Acid sulfate — very sour (yellow mottles, rusty red water, old mangrove or swamp land)',
     ];
 
     public const PH_WORDS = ['acidic', 'neutral', 'alkaline'];

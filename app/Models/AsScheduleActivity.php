@@ -23,7 +23,7 @@ class AsScheduleActivity extends BaseModel
         'foliar_spray'   => 'Foliar Spray',
         'herbicide'      => 'Herbicide',
         'pesticide'      => 'Pesticide / Insecticide',
-        'copper_fungicide' => 'Copper-based Fungicide / Bactericide',
+        'copper_fungicide' => 'Copper Fungicide / Bactericide',
         'fungicide'      => 'Fungicide',
         'microbial'      => 'Microbial / Bio',
         'harvest'        => 'Harvest',

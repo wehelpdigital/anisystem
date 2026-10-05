@@ -118,16 +118,16 @@ class CropProtocolController extends Controller
      */
     public const METHODS = [
         'transplanted' => ['label' => 'Transplanted', 'sub' => 'Seedlings raised in a seedbed, then set out in puddled paddies', 'icon' => '🌱'],
-        'direct_wet' => ['label' => 'Direct-seeded, wet', 'sub' => 'Pre-germinated seed broadcast on puddled soil', 'icon' => '💧'],
-        'direct_dry' => ['label' => 'Direct-seeded, dry', 'sub' => 'Dry seed sown into dry or moist soil', 'icon' => '🌤️'],
-        'direct' => ['label' => 'Direct-seeded', 'sub' => 'Seed sown straight into the field', 'icon' => '🌱'],
+        'direct_wet' => ['label' => 'Direct seeded, wet', 'sub' => 'Soaked, sprouted seed broadcast on puddled soil', 'icon' => '💧'],
+        'direct_dry' => ['label' => 'Direct seeded, dry', 'sub' => 'Dry seed sown into dry or moist soil', 'icon' => '🌤️'],
+        'direct' => ['label' => 'Direct seeded', 'sub' => 'Seed sown straight into the field', 'icon' => '🌱'],
         'nursery' => ['label' => 'From seedlings', 'sub' => 'Raised in a seedbed or seedling tray, then transplanted', 'icon' => '🪴'],
         'sets' => ['label' => 'From sets, bulbs or cloves', 'sub' => 'Small bulbs or cloves planted straight in', 'icon' => '🧅'],
         'cuttings' => ['label' => 'From cuttings', 'sub' => 'Stem cuttings, vine cuttings or setts planted straight in', 'icon' => '🌿'],
         'tubers' => ['label' => 'From tubers or rhizomes', 'sub' => 'Seed tubers, corms, setts or rhizome pieces planted in', 'icon' => '🥔'],
         'suckers' => ['label' => 'From suckers or slips', 'sub' => 'Suckers, slips, crowns or clump divisions from a mother plant', 'icon' => '🌴'],
         'sprouted' => ['label' => 'From a sprouted fruit', 'sub' => 'The whole fruit planted once it has shot', 'icon' => '🍈'],
-        'tree_seedlings' => ['label' => 'From nursery seedlings', 'sub' => 'Grafted, budded, tissue-cultured or seed-grown planting material', 'icon' => '🌳'],
+        'tree_seedlings' => ['label' => 'From nursery seedlings', 'sub' => 'Grafted, budded, tissue cultured or grown from seed', 'icon' => '🌳'],
     ];
 
     /**
@@ -318,7 +318,7 @@ class CropProtocolController extends Controller
             'fertHistory' => 'nullable|string|max:200',
         ]);
         if ($v->fails()) {
-            return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
+            return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
         }
         /* The method must be one this crop actually uses -- the page only
            offers those, but the door checks too. */
@@ -371,7 +371,7 @@ class CropProtocolController extends Controller
             try {
                 DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
                     'status' => 'failed',
-                    'error' => 'The protocol took too long and was stopped. Nothing was charged — please try again.',
+                    'error' => 'The protocol took too long and was stopped. Nothing was charged. Please try again.',
                     'updated_at' => now(),
                 ]);
             } catch (\Throwable $e) {
@@ -418,7 +418,7 @@ class CropProtocolController extends Controller
                 \Illuminate\Support\Facades\Log::warning('crop-protocol: unparsable answer', [
                     'head' => mb_substr((string) $result['text'], 0, 400),
                 ]);
-                throw new \RuntimeException($result['error'] ?? 'The protocol came back unreadable. Nothing was charged — please try again.');
+                throw new \RuntimeException($result['error'] ?? 'The protocol could not be read. Nothing was charged. Please try again.');
             }
             $report = $this->tidy($report, $p);
             $report['webSources'] = $result['sources'];
@@ -429,7 +429,7 @@ class CropProtocolController extends Controller
             $crop = CropCatalog::CROPS[$p['crop']] ?? ['label' => 'Crop'];
             $note = AiUsage::record('protocol', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged,
-                mb_substr('Crop Protocol Analysis — ' . $crop['label'] . ', ' . $p['location'] . $note, 0, 250));
+                mb_substr('Crop Protocol Analysis: ' . $crop['label'] . ', ' . $p['location'] . $note, 0, 250));
 
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report),
@@ -751,8 +751,8 @@ class CropProtocolController extends Controller
         if ($r->status === 'pending') {
             if ($this->dead($r)) {
                 $why = \Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(15))
-                    ? 'The protocol took too long and was stopped. Nothing was charged — please try again.'
-                    : 'The protocol was interrupted mid-way (the server restarted under it). Nothing was charged — please run it again.';
+                    ? 'The protocol took too long and was stopped. Nothing was charged. Please try again.'
+                    : 'The protocol was stopped halfway because the server restarted. Nothing was charged. Please run it again.';
                 DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
                     'status' => 'failed', 'deleteStatus' => 0,
                     'error' => $why,
@@ -894,7 +894,7 @@ class CropProtocolController extends Controller
             ->where('kind', 'protocol')
             ->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
-        return $this->json(true, 'Protocol removed.');
+        return $this->json(true, 'Protocol deleted.');
     }
 
     /** Rename a saved protocol and describe it in your own words. */
@@ -917,7 +917,7 @@ class CropProtocolController extends Controller
                 'updated_at' => now(),
             ]);
         if (! $updated) {
-            return $this->json(false, 'That protocol is not on your shelf.', [], 404);
+            return $this->json(false, 'That protocol is not in your saved list.', [], 404);
         }
 
         return $this->json(true, 'Protocol updated.', ['title' => $title, 'description' => $description ?: null]);

@@ -18,8 +18,8 @@
     $isWorker = \App\Support\WorkerContext::activeGrant() !== null;
     $sheetLock = $mayEdit ? '' : ' is-locked';
     $sheetNoteLock = $mayNote ? '' : ' is-locked';
-    $whyNoEdit = 'Only someone who can edit the plan may do this';
-    $whyNoNote = 'You are not allowed to write notes on this schedule';
+    $whyNoEdit = 'You do not have permission to edit this plan';
+    $whyNoNote = 'You do not have permission to add notes here';
 
     /* THREE DOTS WITH NOTHING BEHIND THEM.
      *
@@ -159,7 +159,7 @@
             </div>
 
             <div id="activityDraftHint" class="hidden rounded-lg bg-blue-50 border border-blue-200 text-blue-800 text-xs px-3 py-2">
-                Saves to <strong>Drafts</strong> for the date below. It stays off the timeline until you restore it.
+                Saves to <strong>Drafts</strong> for the date below. It stays off the board until you restore it.
             </div>
             <div class="keep-on-workers">
                 <label class="form-label" for="activityTitle">Title <span class="text-red-500">*</span></label>
@@ -200,7 +200,7 @@
                             {{ $lot->lotName }}
                         </button>
                     @endforeach
-                    <button type="button" class="chip chip-dashed" id="quickAddLotBtn" data-chip-manual>+ Lot</button>
+                    <button type="button" class="chip chip-dashed" id="quickAddLotBtn" data-chip-manual>+ New lot</button>
                 </div>
                 {{-- Said only when it matters: an activity already saved
                      against several lots is about to become one. --}}
@@ -437,12 +437,12 @@
                     <label class="form-label">Time required</label>
                     <button type="button" class="tt-open is-set" id="activityTimeBtn" aria-haspopup="dialog">
                         <svg class="tt-open-ico" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        <span class="tt-open-val" id="activityTimeText">Half Day</span>
+                        <span class="tt-open-val" id="activityTimeText">Half day</span>
                     </button>
                     <select id="activityTimeRequired" class="hidden" tabindex="-1" aria-hidden="true">
-                        <option value="half" selected>Half Day</option>
-                        <option value="whole">Whole Day</option>
-                        <option value="n/a">N/A</option>
+                        <option value="half" selected>Half day</option>
+                        <option value="whole">Whole day</option>
+                        <option value="n/a">No set time</option>
                     </select>
                 </div>
             </div>
@@ -506,7 +506,7 @@
                 <button type="button" class="crop-tag" id="activityWorkersBtn"
                     @unless ($tierWorkers) data-tier-lock="{{ $rungWorkers }}" data-lock-say="{{ \App\Support\Tier::say($rungWorkers, 'Workers come with {plan}. Track the crew, their days and their pay on every activity.') }}" @endunless>
                     <span class="crop-tag-e {{ $tierWorkers ? '' : 'tl-dim' }}">👷</span>
-                    <span class="crop-tag-t is-none {{ $tierWorkers ? '' : 'tl-dim' }}" id="activityWorkersNow">{{ $tierWorkers ? 'Nobody assigned (N/A)' : 'Workers: ' . \App\Support\Tier::planName($rungWorkers) . ' plan' }}</span>
+                    <span class="crop-tag-t is-none {{ $tierWorkers ? '' : 'tl-dim' }}" id="activityWorkersNow">{{ $tierWorkers ? 'Nobody assigned' : 'Workers: ' . \App\Support\Tier::planName($rungWorkers) . ' plan' }}</span>
                     @unless ($tierWorkers)<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endunless
                     <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>
@@ -567,14 +567,14 @@
                  the JS keeps its handles either way, and the server ignores
                  item payloads from a hand this section was closed to. --}}
             <div id="activityItemsSection" @unless(\App\Support\WorkerContext::canWriteModule('inventory')) hidden @endunless>
-                <span class="form-label"><span id="itemsSectionLabel" class="{{ $tierInventory ? '' : 'tl-dim' }}">Materials &amp; Items</span> <span class="text-gray-400 font-normal">(optional)</span>
+                <span class="form-label"><span id="itemsSectionLabel" class="{{ $tierInventory ? '' : 'tl-dim' }}">Materials &amp; items</span> <span class="text-gray-400 font-normal">(optional)</span>
                     @unless ($tierInventory)<span class="tl-lock ml-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endunless</span>
                 <div class="flex flex-wrap items-center gap-1.5">
                     <div id="itemsContainer" class="contents"></div>
                     {{-- On a plan without the Inventory the button stays and opens the upgrade sheet. --}}
                     <button type="button" id="itemsToggleBtn" class="chip chip-dashed {{ $tierInventory ? '' : 'tl-dim' }}" aria-expanded="false" data-chip-manual
                         @unless ($tierInventory) data-tier-lock="{{ $rungInventory }}" data-lock-say="{{ \App\Support\Tier::say($rungInventory, 'The Inventory comes with {plan}. Track your stock and what each activity uses.') }}" @endunless>
-                        <span id="itemsToggleLabel">+ Item</span>
+                        <span id="itemsToggleLabel">+ Add item</span>
                     </button>
                 </div>
                 <p id="itemsContainerEmpty" class="text-xs text-gray-400 mt-1.5">No items added yet.</p>
@@ -691,7 +691,7 @@
             @endphp
             <div id="activityImagesSection">
                 @if ($actMayShoot)
-                <span class="form-label">Reference images <span class="text-gray-400 font-normal">(optional, max 8 MB each)</span></span>
+                <span class="form-label">Photos <span class="text-gray-400 font-normal">(optional, up to 8 MB each)</span></span>
                 <div id="activityImagesGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-2"></div>
                 <button type="button" id="activityImageUploadBtn" class="btn btn-white w-full">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -700,7 +700,7 @@
                 @endif
 
                 @if ($actMayFilm)
-                <span class="form-label mt-4">Reference videos <span class="text-gray-400 font-normal">(optional, max 100 MB each)</span></span>
+                <span class="form-label mt-4">Videos <span class="text-gray-400 font-normal">(optional, up to 100 MB each)</span></span>
                 <div id="activityVideosGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-2"></div>
                 <button type="button" id="activityVideoUploadBtn" class="btn btn-white w-full">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
@@ -746,14 +746,14 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">×</button>
     </div>
     <div class="sheet-body">
-        <p class="form-hint mt-0 mb-2">Pick none for nobody assigned (N/A).</p>
+        <p class="form-hint mt-0 mb-2">Pick no one to leave this task unassigned.</p>
                 <div id="activityWorkersContainer" class="flex flex-wrap gap-2">
                     @foreach ($schedule->workers as $w)
                         <button type="button" class="chip worker-chip" data-worker-id="{{ $w->id }}" aria-pressed="false">
                             {{ $w->workerName }}
                         </button>
                     @endforeach
-                    <button type="button" class="chip chip-dashed" id="quickAddWorkerBtn" data-chip-manual>+ Worker</button>
+                    <button type="button" class="chip chip-dashed" id="quickAddWorkerBtn" data-chip-manual>+ New worker</button>
                 </div>
                 <div id="quickAddWorkerForm" class="hidden mt-2 p-3 rounded-xl border border-dashed border-gray-300 space-y-2.5">
                     <div class="flex items-center justify-between">
@@ -902,7 +902,7 @@
             <span class="w-9 h-9 rounded-xl bg-gray-100 text-gray-500 flex items-center justify-center shrink-0">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
             </span>
-            All cropping schedules
+            All seasons
         </a>
         @php $tierShut = fn (string $k) => in_array($k, ['workers', 'inventory'], true) && ! \App\Support\Tier::scheduleCan($schedule, $k); @endphp
         @foreach ($modNav as [$key, $label, $icon])
@@ -1066,7 +1066,7 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 11l7-7 7 7M5 19l7-7 7 7"/></svg>
             </span>
             <span class="grow min-w-0">
-                <span class="vf-name">Contract all</span>
+                <span class="vf-name">Collapse all</span>
                 <span class="vf-sub">Close every day and card</span>
             </span>
             <span class="vf-go">Fold</span>
@@ -1173,7 +1173,7 @@
                 </div>
 
                 <div class="mir-sec">
-                    <p class="mir-sec-h">Narrow</p>
+                    <p class="mir-sec-h">Filter</p>
                     {{-- Lot and activity type both narrow whatever else is
                          being asked rather than replacing it — "herbicide, on
                          Apartado 1" is one question, not two. Each is a tag
@@ -1187,7 +1187,7 @@
                         </button>
                         <button type="button" class="mir-pickbtn" id="mirrorTypesBtn" data-pick="types">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5a2 2 0 011.41.59l7 7a2 2 0 010 2.82l-5 5a2 2 0 01-2.82 0l-7-7A2 2 0 013 10V5a2 2 0 012-2z"/></svg>
-                            <span class="mir-pickbtn-t">Activity Type</span>
+                            <span class="mir-pickbtn-t">Activity type</span>
                         </button>
                         <button type="button" class="mir-pickbtn" id="mirrorTagsBtn" data-pick="tags">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-5 5a2 2 0 01-2.828 0l-7-7A2 2 0 013 11V5a2 2 0 012-2h2z"/></svg>
@@ -1197,7 +1197,7 @@
                 </div>
 
                 <div class="mir-sec">
-                    <p class="mir-sec-h">Move about</p>
+                    <p class="mir-sec-h">View</p>
                     <div class="mir-tools">
                         <button type="button" class="mir-tool" id="mirrorTodayBtn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
@@ -1221,7 +1221,7 @@
     </div>
     {{-- Copying a long season takes a moment; an empty screen reads as
          broken, so the wait says it is working. --}}
-    <div class="mir-load" id="mirrorLoad" role="status" aria-label="Reading the plan"><i></i><i></i><i></i></div>
+    <div class="mir-load" id="mirrorLoad" role="status" aria-label="Loading the plan"><i></i><i></i><i></i></div>
     <div class="mir-body" id="mirrorBody"></div>
     <p class="mir-none hidden" id="mirrorNone">Nothing matches that.</p>
 
@@ -1268,11 +1268,11 @@
                 ['growthStageBtn', 'Growth stage', 'M12 21c0-4 1-7 4-9M12 21c0-5-2-8-6-9m6 9V8m0 0c0-2.5 1.5-4 4-4 0 2.5-1.5 4-4 4zm0 0C12 5.5 10.5 4 6.5 4c0 2.5 1.5 4 5.5 4z', '', ''],
                 ['openNotesBtn', 'Notes', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z', '', ''],
                 // Today's camera, without first finding today on the board.
-                ['captureTodayPhotoBtn', 'Capture a photo', 'M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9zm12 4a3 3 0 11-6 0 3 3 0 016 0z', '', ''],
+                ['captureTodayPhotoBtn', 'Take a photo', 'M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9zm12 4a3 3 0 11-6 0 3 3 0 016 0z', '', ''],
                 ['recordTodayVideoBtn', 'Record a video', 'M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z', '', ''],
                 ['collabRoomBtn', 'Collab Room', 'M3 4h18M5 4v11a2 2 0 002 2h10a2 2 0 002-2V4M8 9h8M8 12h5M12 17v4m-3 0h6', '', ''],
-                ['contractAllBtn', 'Contract All', 'M5 11l7-7 7 7M5 19l7-7 7 7', '', ''],
-                ['toggleHiddenBtn', 'Show Hidden', 'M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21', '', 'actHiddenLabel'],
+                ['contractAllBtn', 'Collapse all', 'M5 11l7-7 7 7M5 19l7-7 7 7', '', ''],
+                ['toggleHiddenBtn', 'Show hidden', 'M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21', '', 'actHiddenLabel'],
             ];
             // The AI chat bubble is hidden on phones (it covered the board), so
             // the menu is how it opens there. Forwarding to the bubble's own
@@ -1345,7 +1345,7 @@
         @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetLock }}" data-action="email-day" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-            Email this date
+            Email this day
         </button>
         @endif
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50{{ $sheetNoteLock }}" data-action="date-note-btn" @disabled(! $mayNote) @if(! $mayNote) title="{{ $whyNoNote }}" @endif>
@@ -1371,7 +1371,7 @@
         @if ($mayShoot)
         <button type="button" class="day-menu-action w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50" data-action="capture-photo">
             <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.66-.9l.82-1.2A2 2 0 0110.07 4h3.86a2 2 0 011.66.9l.82 1.2a2 2 0 001.66.9H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-            Capture a photo
+            Take a photo
         </button>
         @endif
         @if ($mayFilm)
@@ -1548,7 +1548,7 @@
             <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="email" data-needs-line="Emailing this activity" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Email this activity</button>
             @endif
             {{-- Reading what went on this ground before is a read. It stays. --}}
-            <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="advanced" data-needs-line="What went on this ground before">Advanced info</button>
+            <button type="button" class="btn btn-ghost justify-start!" data-card-menu-action="advanced" data-needs-line="What went on this ground before">Past work here</button>
             @if (! \App\Support\WorkerContext::activeGrant() || $mayEdit)
             <button type="button" class="btn btn-ghost justify-start!{{ $sheetLock }}" data-card-menu-action="tag" data-needs-line="Tagging a drawing, map or note" @disabled(! $mayEdit) @if(! $mayEdit) title="{{ $whyNoEdit }}" @endif>Tag a drawing, map or note</button>
             @endif
@@ -1566,7 +1566,7 @@
 <div class="sheet hidden" id="advInfoSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title truncate" id="advInfoTitle">Advanced info</h3>
+        <h3 class="sheet-title truncate" id="advInfoTitle">Past work here</h3>
         <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body" style="padding-bottom:1rem">
@@ -1601,7 +1601,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16"/></svg>
             </span>
             <span class="cash-pick-txt">
-                <span class="cash-pick-name">Range total</span>
+                <span class="cash-pick-name">Total for several days</span>
                 <span class="cash-pick-sub">Total from this day to another day</span>
             </span>
             <svg class="cash-pick-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
@@ -1633,7 +1633,7 @@
 <div class="sheet hidden" id="dateDiffSheet" style="--sheet-width:26rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title truncate" id="dateDiffTitle">Date difference</h3>
+        <h3 class="sheet-title truncate" id="dateDiffTitle">Days between</h3>
         <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body dd-body" id="dateDiffBody"></div>
@@ -1704,7 +1704,7 @@
         </div>
         {{-- Send this day straight to a community connection --}}
         <div>
-            <label class="form-label">Send to a co-farmer</label>
+            <label class="form-label">Send to a cofarmer</label>
             <div class="js-share-cofarmers space-y-1 max-h-52 overflow-y-auto rounded-xl border border-gray-100 p-1" data-link-input="dayShareLink">
                 <p class="text-sm text-gray-400 px-2 py-3 text-center">Loading…</p>
             </div>
@@ -1747,7 +1747,7 @@
         <div class="border-t border-gray-200"></div>
 
         <div>
-            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Send to a co-farmer</p>
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Send to a cofarmer</p>
             <p class="text-sm text-gray-600 mb-2">Send the public plan link as a message to one of your community connections.</p>
             <div class="js-share-cofarmers space-y-1 max-h-52 overflow-y-auto rounded-xl border border-gray-100 p-1" data-link-input="quickShareLink">
                 <p class="text-sm text-gray-400 px-2 py-3 text-center">Loading…</p>
@@ -1929,7 +1929,7 @@
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
             </div>
             <p class="font-bold text-gray-900">Nothing left to set up</p>
-            <p class="text-sm text-gray-500 mt-1">This cropping plan has everything it needs.</p>
+            <p class="text-sm text-gray-500 mt-1">This plan has everything it needs.</p>
         </div>
     </div>
 </div>
@@ -1970,7 +1970,7 @@
 <div class="sheet sheet-full hidden" id="dateNoteSheet" style="--sheet-width:30rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title" id="dateNoteSheetTitle">Note for this date</h3>
+        <h3 class="sheet-title" id="dateNoteSheetTitle">Note for this day</h3>
         <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-3">
@@ -2060,7 +2060,7 @@
         <input type="hidden" id="dayIncomeId">
         <p class="text-sm text-gray-600" id="dayIncomeForDate"></p>
         <div>
-            <label class="form-label" for="dayIncomeAmount">Amount (&#8369;)</label>
+            <label class="form-label" for="dayIncomeAmount">Amount ({{ \App\Support\Region::symbol() }})</label>
             <input type="number" id="dayIncomeAmount" class="form-input" inputmode="decimal" step="0.01" min="0" placeholder="0.00">
         </div>
         <div>
@@ -2118,7 +2118,7 @@
         <div id="draftsListContainer" class="space-y-2"></div>
         <div id="draftsEmpty" class="text-center text-gray-500 py-8 hidden">
             <p class="font-bold text-gray-800 mb-1">No drafts.</p>
-            <p class="text-sm">Tap the archive button on an activity to keep it here without deleting it.</p>
+            <p class="text-sm">Tap <b>Move to drafts</b> on an activity to keep it here without deleting it.</p>
         </div>
     </div>
 </div>
@@ -2145,7 +2145,7 @@
 <div class="sheet hidden" id="reportPickerSheet" style="--sheet-width:28rem">
     <div class="sheet-handle"></div>
     <div class="sheet-header">
-        <h3 class="sheet-title">Generate a report</h3>
+        <h3 class="sheet-title">Make a report</h3>
         <button data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-2">
@@ -2297,7 +2297,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3.5 7.5l8.5 6 8.5-6M4.5 5.5h15a1 1 0 011 1v11a1 1 0 01-1 1h-15a1 1 0 01-1-1v-11a1 1 0 011-1z"/></svg>
             </span>
             <div class="ew-what-text">
-                <span class="ew-kicker" id="ewWhatHead">What is going out</span>
+                <span class="ew-kicker" id="ewWhatHead">What you are sending</span>
                 <b id="emailWhoWhat">Loading…</b>
                 <i id="emailWhoWhen"></i>
             </div>
@@ -2409,9 +2409,9 @@
     </div>
     <div class="sheet-body">
         <div class="pick-list" data-pick-for="activityTimeRequired">
-            <button type="button" class="pick-row" data-value="half"><b>Half Day</b><i>A morning or an afternoon.</i></button>
-            <button type="button" class="pick-row" data-value="whole"><b>Whole Day</b><i>Morning and afternoon, with full day pay.</i></button>
-            <button type="button" class="pick-row" data-value="n/a"><b>N/A</b><i>A job not measured in days.</i></button>
+            <button type="button" class="pick-row" data-value="half"><b>Half day</b><i>A morning or an afternoon.</i></button>
+            <button type="button" class="pick-row" data-value="whole"><b>Whole day</b><i>Morning and afternoon, with full day pay.</i></button>
+            <button type="button" class="pick-row" data-value="n/a"><b>No set time</b><i>A job not measured in days.</i></button>
         </div>
     </div>
 </div>

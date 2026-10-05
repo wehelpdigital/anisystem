@@ -158,7 +158,7 @@
             @csrf
             <button type="submit" class="ch-signout">
                 <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 16l4-4m0 0l-4-4m4 4H9m4 8H6a2 2 0 01-2-2V6a2 2 0 012-2h7"/></svg>
-                Sign out
+                Log out
             </button>
         </form>
         <p class="ch-foot">You can switch any time from the account menu.</p>

@@ -4,7 +4,7 @@
 {!! \App\Support\EmailSkin::wrap(
     '<p style="margin:0 0 16px;">Hi ' . e($workerName) . ', here is the plan for <strong>' . e($dateLabel) . '</strong> on ' . e($scheduleTitle) . '.</p>'
     . $listHtml
-    . \App\Support\EmailSkin::note('Sent with anee.io. If anything looks off, check with the farm before you head out.'),
+    . \App\Support\EmailSkin::note('Sent with anee.io. If anything looks wrong, check with the farm owner before you go out.'),
     e($dateLabel),
     [
         'face' => 'salute',

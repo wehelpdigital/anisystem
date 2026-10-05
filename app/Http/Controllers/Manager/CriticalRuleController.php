@@ -23,15 +23,15 @@ class CriticalRuleController extends BaseScheduleController
             'ruleText' => 'required|string|max:20000',
         ], [
             'ruleText.required' => 'Enter the rule text.',
-            'ruleText.max'      => 'Rule text is too long.',
+            'ruleText.max'      => 'The rule is too long.',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $ruleText = HtmlSanitizer::rich($request->input('ruleText'));
         if (! filled(trim(strip_tags($ruleText)))) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => ['ruleText' => ['Enter the rule text.']]]);
+            return $this->jsonFail('Enter the rule text.', 422, ['errors' => ['ruleText' => ['Enter the rule text.']]]);
         }
 
         $maxOrder = (int) AsScheduleCriticalRule::active()
@@ -57,7 +57,7 @@ class CriticalRuleController extends BaseScheduleController
             'ruleText' => 'required|string|max:20000',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $row = AsScheduleCriticalRule::active()
@@ -68,7 +68,7 @@ class CriticalRuleController extends BaseScheduleController
 
         $ruleText = HtmlSanitizer::rich($request->input('ruleText'));
         if (! filled(trim(strip_tags($ruleText)))) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => ['ruleText' => ['Enter the rule text.']]]);
+            return $this->jsonFail('Enter the rule text.', 422, ['errors' => ['ruleText' => ['Enter the rule text.']]]);
         }
 
         $row->update(['ruleText' => $ruleText]);
@@ -104,7 +104,7 @@ class CriticalRuleController extends BaseScheduleController
             'items.*.sortOrder' => 'required|integer|min:0',
         ]);
         if ($validator->fails()) {
-            return $this->jsonFail('Validation failed.', 422, ['errors' => $validator->errors()]);
+            return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $items    = (array) $request->input('items');
@@ -125,7 +125,7 @@ class CriticalRuleController extends BaseScheduleController
                 }
             });
         } catch (\Throwable $e) {
-            return $this->jsonFail('Failed to reorder: ' . $e->getMessage(), 500);
+            return $this->jsonFail('Could not save the new order: ' . $e->getMessage(), 500);
         }
 
         return $this->jsonOk('Order saved.', ['count' => count($items)]);

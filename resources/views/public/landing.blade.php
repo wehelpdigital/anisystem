@@ -14,10 +14,10 @@
         ->filter(fn ($v) => is_string($v) && $v !== '' && strlen($v) <= 200)->all();
     $signup = route('signup') . ($keep ? '?' . http_build_query($keep) : '');
     $shots = [
-        'board' => ['lp/board.webp', 'The anee.io season board: each day with its growth stage, an open herbicide task on its DAT count', 1600],
+        'board' => ['lp/board.webp', 'The anee.io season board: each day with its growth stage, and an open herbicide task with its DAT count', 1600],
         'growth' => ['lp/growth.webp', 'The growth stage of a rice lot, with what to do now and what to watch for', 1600],
         'weather' => ['lp/weather.webp', 'The forecast for a lot in Muñoz: the chance of rain by the day and by the hour', 1566],
-        'hub' => ['lp/hub.webp', 'A season\'s modules in anee.io: lots, workers, inventory, weather, growth stages, maps, Anee, reports and more', 1566],
+        'hub' => ['lp/hub.webp', 'The parts of a season in anee.io: lots, workers, inventory, weather, growth stages, maps, Anee, reports and more', 1566],
         'report-top' => ['lp/report-top.webp', 'An anee.io season report: net profit, money in and out, harvest per hectare', 1600],
         'report-money' => ['lp/report-money.webp', 'Where the money went, by category and by month', 1600],
         'datediff' => ['lp/datediff.webp', 'The days between a herbicide and a fungicide, measured in one tap', 1600],
@@ -287,7 +287,7 @@
         $photoAlts = [
             'storm' => 'Freshly transplanted paddies under a grey, rainy sky',
             'tractor' => 'A farmer plowing a flooded paddy with a diesel hand tractor',
-            'sacks' => 'A farmer among the fertilizer sacks in his shed, working out his notebook',
+            'sacks' => 'A farmer among the fertilizer sacks in his shed, writing in his notebook',
             'palay-phone' => 'A farmer checking anee.io on his phone among ripening palay',
             'anee-chat-hand' => 'Anee answering a photo of a rice field, on a farmer\'s phone in the field',
         ];
@@ -379,7 +379,7 @@
                                 <p class="loss-n"><span data-n="{{ $n }}">{{ $n }}</span><small>%</small></p>
                                 <p class="loss-l">{{ $l['title'] ?? '' }}</p>
                                 @if (trim($l['text'] ?? '') !== '')<p class="loss-p">{{ $l['text'] }}</p>@endif
-                                <p class="loss-peso">{{ \App\Support\Region::ph() && $peso !== '' ? $peso . ' lost per hectare' : 'up to ' . $n . '% of a hectare\'s gross, lost' }}</p>
+                                <p class="loss-peso">{{ \App\Support\Region::ph() && $peso !== '' ? $peso . ' lost per hectare' : 'up to ' . $n . '% of what a hectare earns, lost' }}</p>
                                 <div class="loss-bar" aria-hidden="true"><i></i></div>
                             </div>
                         </div>

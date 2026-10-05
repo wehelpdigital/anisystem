@@ -648,7 +648,7 @@ class CommunityController extends Controller
             'publicRegion' => 'nullable|string|max:120',
         ]);
         if ($validator->fails()) {
-            return $this->json(false, 'Validation failed.', ['errors' => $validator->errors()], 422);
+            return $this->json(false, 'Please check what you entered.', ['errors' => $validator->errors()], 422);
         }
 
         $schedule->update([
@@ -675,7 +675,7 @@ class CommunityController extends Controller
             'isQuestion' => 'nullable|boolean',
         ]);
         if ($validator->fails()) {
-            return $this->json(false, 'Validation failed.', ['errors' => $validator->errors()], 422);
+            return $this->json(false, 'Please check what you entered.', ['errors' => $validator->errors()], 422);
         }
 
         // A reply may only attach to a top-level comment on this same plan,
@@ -746,7 +746,7 @@ class CommunityController extends Controller
             'review' => 'nullable|string|max:500',
         ]);
         if ($validator->fails()) {
-            return $this->json(false, 'Validation failed.', ['errors' => $validator->errors()], 422);
+            return $this->json(false, 'Please check what you entered.', ['errors' => $validator->errors()], 422);
         }
 
         CommunityRating::updateOrCreate(

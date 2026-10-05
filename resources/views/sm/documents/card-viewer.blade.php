@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Card Viewer — {{ $schedule->title }}</title>
+    <title>Card Viewer: {{ $schedule->title }}</title>
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     {{-- html2canvas: client-side DOM-to-canvas rasterizer used by the
          "Save as Image" toolbar button. MIT licensed, ~46KB minified. --}}
@@ -908,7 +908,7 @@
         <strong class="cv-current">1</strong> / <span class="cv-total">{{ count($slides) + 1 }}</span>
     </span>
     <select class="cv-jump" title="Jump to a specific slide">
-        <option value="0">— Cover —</option>
+        <option value="0">Cover</option>
         @foreach($slides as $i => $s)
             <option value="{{ $i + 1 }}">
                 Day {{ $s['dayIndex'] }} · {{ $s['date']->format('D, M j, Y') }}
@@ -916,7 +916,7 @@
         @endforeach
     </select>
     <span class="cv-spacer"></span>
-    <button class="cv-iconbtn" id="cvToggleIrrigationBtn" title="Hide / show irrigation sections on every slide"><i class="bx bx-water"></i> <span class="cv-toggle-irr-label">Hide Irrigation</span></button>
+    <button class="cv-iconbtn" id="cvToggleIrrigationBtn" title="Hide or show irrigation on every slide"><i class="bx bx-water"></i> <span class="cv-toggle-irr-label">Hide Irrigation</span></button>
     <button class="cv-iconbtn" id="cvFullscreenBtn" title="Toggle fullscreen"><i class="bx bx-fullscreen"></i> Fullscreen</button>
     <button class="cv-iconbtn" id="cvSaveImageBtn" title="Save current page as a PNG image"><i class="bx bx-image-add"></i> Save as Image</button>
     <button class="cv-iconbtn" id="cvPrintPageBtn" title="Print only the current page"><i class="bx bx-file"></i> Print Page</button>
@@ -936,7 +936,7 @@
                 <h1>{{ $schedule->title }}</h1>
                 @if($firstDate && $lastDate)
                     <div class="cv-cover-span">
-                        {{ $firstDate->format('F j, Y') }} &ndash; {{ $lastDate->format('F j, Y') }}
+                        {{ $firstDate->format('F j, Y') }} to {{ $lastDate->format('F j, Y') }}
                         @if($activeVersion)
                             &middot; Version: {{ $activeVersion->versionName }}
                         @endif
@@ -970,7 +970,7 @@
                     @endif
                     @if($schedule->dayType)
                         <div class="cv-cover-fact">
-                            <span class="cv-cover-fact-label">Day reference</span>
+                            <span class="cv-cover-fact-label">Day count</span>
                             <span class="cv-cover-fact-value">{{ $schedule->dayType }}</span>
                         </div>
                     @endif
@@ -986,13 +986,13 @@
 
                 @if($cvHasRules)
                     <div class="cv-cover-rules">
-                        <h2>Critical Rules &mdash; Read Every Time</h2>
+                        <h2>Critical Rules: Read Every Time</h2>
                         <ol>
                             @foreach($criticalRules as $rule)
                                 <li class="rich-inline">{!! $rule->ruleText !!}</li>
                             @endforeach
                             @foreach($cvRuleEntries as $entry)
-                                <li class="rich-inline">@if($entry->title)<strong>{{ $entry->title }} &mdash; </strong>@endif{!! $entry->content !!}</li>
+                                <li class="rich-inline">@if($entry->title)<strong>{{ $entry->title }}: </strong>@endif{!! $entry->content !!}</li>
                             @endforeach
                         </ol>
                     </div>
@@ -1024,8 +1024,8 @@
 
                 @if(!$cvHasRules && !$cvHasIntro && $cvCustomEntries->count() === 0)
                     <p class="cv-cover-empty">
-                        No protocol introduction or critical rules defined yet.
-                        Use the <strong>Documentation</strong> page of this schedule to add them.
+                        No introduction or critical rules yet.
+                        Add them on the <strong>Documentation</strong> page of this season.
                     </p>
                 @endif
             </div>
@@ -1082,13 +1082,13 @@
                         <span class="cv-rules-banner-mark">&#9888;</span>
                         <span class="cv-rules-banner-count">{{ $cvRuleTotal }}</span>
                         critical {{ \Illuminate\Support\Str::plural('rule', $cvRuleTotal) }}
-                        apply every day &mdash; see cover page.
+                        apply every day. See the cover page.
                     </p>
                 @endif
 
                 @if($note)
                     <blockquote class="cv-day-note">
-                        <span class="cv-day-note-label">Note &mdash;</span>
+                        <span class="cv-day-note-label">Note:</span>
                         <span class="rich-inline">{!! $note->noteContent !!}</span>
                     </blockquote>
                 @endif
@@ -1168,7 +1168,7 @@
                             Activities
                             <span class="cv-doc-section-count">
                                 {{ $activitiesForDay->count() }}
-                                {{ \Illuminate\Support\Str::plural('item', $activitiesForDay->count()) }}
+                                {{ \Illuminate\Support\Str::plural('activity', $activitiesForDay->count()) }}
                             </span>
                         </h2>
                         <ol class="cv-doc-list">
@@ -1179,7 +1179,7 @@
                                     $isMultiDay = $end->gt($start);
                                     $multiCurrent = $isMultiDay ? ($start->diffInDays($dateCarbon) + 1) : null;
                                     $multiTotal   = $isMultiDay ? ($start->diffInDays($end) + 1) : null;
-                                    $timeLabel = ['half' => 'Half day', 'whole' => 'Whole day', 'n/a' => 'N/A'][$a->timeRequired] ?? ucfirst($a->timeRequired);
+                                    $timeLabel = ['half' => 'Half day', 'whole' => 'Whole day', 'n/a' => 'Not set'][$a->timeRequired] ?? ucfirst($a->timeRequired);
                                     $typeLabel = $a->activityType ? (\App\Models\AsScheduleActivity::ACTIVITY_TYPES[$a->activityType] ?? null) : null;
                                 @endphp
                                 <li class="cv-doc-item cv-item-prio-{{ $a->priority }}">
@@ -1207,8 +1207,8 @@
                                     <div class="cv-doc-meta">
                                         @if($isMultiDay)
                                             <div class="cv-doc-meta-row">
-                                                <span class="cv-doc-meta-label">Span</span>
-                                                <span class="cv-doc-meta-value">{{ $start->format('M j') }} &ndash; {{ $end->format('M j, Y') }}</span>
+                                                <span class="cv-doc-meta-label">Dates</span>
+                                                <span class="cv-doc-meta-value">{{ $start->format('M j') }} to {{ $end->format('M j, Y') }}</span>
                                             </div>
                                         @endif
                                         <div class="cv-doc-meta-row">
@@ -1251,7 +1251,7 @@
                                             @endphp
                                             @if(!empty($materialBits))
                                                 <div class="cv-doc-meta-row">
-                                                    <span class="cv-doc-meta-label">Items</span>
+                                                    <span class="cv-doc-meta-label">Materials</span>
                                                     <span class="cv-doc-meta-value">{{ implode(', ', $materialBits) }}</span>
                                                 </div>
                                             @endif
@@ -1273,7 +1273,7 @@
 
                 @if($activitiesForDay->count() === 0 && empty($irrEntries))
                     <div class="cv-empty-msg">
-                        No activities or irrigation scheduled &mdash; this day has a note only.
+                        No activities or irrigation on this day. It has a note only.
                     </div>
                 @endif
 
@@ -1297,8 +1297,8 @@
         <section class="cv-slide" data-index="1">
             <div class="cv-slide-body">
                 <div class="cv-empty-msg" style="padding: 60px 20px;">
-                    No activities, irrigation, or notes scheduled yet. Add some on the Activities
-                    page and they'll appear as daily slides here.
+                    No activities, irrigation or notes yet. Add some on the Activities
+                    page and each day shows up here as a slide.
                 </div>
             </div>
         </section>
@@ -1327,7 +1327,7 @@
                     <li class="rich-inline">{!! $rule->ruleText !!}</li>
                 @endforeach
                 @foreach($cvRuleEntries as $entry)
-                    <li class="rich-inline">@if($entry->title)<strong>{{ $entry->title }} &mdash; </strong>@endif{!! $entry->content !!}</li>
+                    <li class="rich-inline">@if($entry->title)<strong>{{ $entry->title }}: </strong>@endif{!! $entry->content !!}</li>
                 @endforeach
             </ol>
             <button class="cv-modal-close" type="button">Close</button>
@@ -1464,14 +1464,14 @@
     if ($saveBtn) {
         $saveBtn.addEventListener('click', async () => {
             if (typeof html2canvas === 'undefined') {
-                alert('Image capture library failed to load. Check your connection and try again.');
+                alert('Could not load the image tool. Check your connection and try again.');
                 return;
             }
             const active = document.querySelector('.cv-slide.active');
             if (!active) return;
 
             $saveBtn.disabled = true;
-            $saveBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Capturing…';
+            $saveBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Saving…';
 
             try {
                 // Capture the full slide regardless of viewport scroll. We
@@ -1496,7 +1496,7 @@
 
                 canvas.toBlob((blob) => {
                     if (!blob) {
-                        alert('Failed to encode image.');
+                        alert('Could not make the image. Try again.');
                         return;
                     }
                     const url = URL.createObjectURL(blob);
@@ -1511,7 +1511,7 @@
                 }, 'image/png');
             } catch (err) {
                 console.error('Save as Image failed:', err);
-                alert('Could not save image: ' + (err && err.message ? err.message : 'unknown error'));
+                alert('Could not save the image: ' + (err && err.message ? err.message : 'something went wrong.'));
             } finally {
                 $saveBtn.disabled = false;
                 $saveBtn.innerHTML = SAVE_BTN_LABEL;
@@ -1532,7 +1532,7 @@
         const item = btn.closest('.cv-doc-item');
         if (!item) return;
         if (typeof html2canvas === 'undefined') {
-            alert('Image capture library failed to load. Reload the page and try again.');
+            alert('Could not load the image tool. Reload the page and try again.');
             return;
         }
 
@@ -1562,7 +1562,7 @@
                 },
             });
             canvas.toBlob((blob) => {
-                if (!blob) { alert('Failed to encode image.'); return; }
+                if (!blob) { alert('Could not make the image. Try again.'); return; }
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url; a.download = filename;
@@ -1573,7 +1573,7 @@
             }, 'image/png');
         } catch (err) {
             console.error('Activity image capture failed:', err);
-            alert('Could not save image: ' + (err && err.message ? err.message : 'unknown error'));
+            alert('Could not save the image: ' + (err && err.message ? err.message : 'something went wrong.'));
         } finally {
             btn.classList.remove('is-busy');
         }

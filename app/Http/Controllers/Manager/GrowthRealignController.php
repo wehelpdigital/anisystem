@@ -87,7 +87,7 @@ class GrowthRealignController extends BaseScheduleController
         $settings = AiSetting::current();
         $credits = app(AiCreditService::class);
         if (! $payer->canUseAi() || ! $settings->isUsable()) {
-            return $this->jsonFail('The AI Technician is not available right now.', 403);
+            return $this->jsonFail('Anee is not available right now.', 403);
         }
         $asOf = now('Asia/Manila');
         $reading = $this->reading($schedule, $lot, $asOf);
@@ -242,7 +242,7 @@ class GrowthRealignController extends BaseScheduleController
             $found = $result['data'];
             if ($found === null) {
                 Log::warning('growth-realign: unparsable answer', ['head' => mb_substr((string) $result['text'], 0, 400)]);
-                throw new \RuntimeException($result['error'] ?? 'The answer came back unreadable. Nothing was charged — please try again.');
+                throw new \RuntimeException($result['error'] ?? 'The answer could not be read. Nothing was charged. Please try again.');
             }
 
             $row = AsGrowthRealign::findOrFail($id);
@@ -252,7 +252,7 @@ class GrowthRealignController extends BaseScheduleController
             $price = AiPrices::of('realign');
             $note = AiUsage::record('realign', (int) $row->userId, $payerId, $id, $settings, $result, $price);
             $credits->chargeAllowingNegative($payerId, (float) $price,
-                mb_substr('Realign by Anee — ' . mb_substr((string) $lot->lotName, 0, 80) . ' · ' . $row->asOf?->format('M j, Y') . $note, 0, 250));
+                mb_substr('Realign by Anee: ' . mb_substr((string) $lot->lotName, 0, 80) . ' · ' . $row->asOf?->format('M j, Y') . $note, 0, 250));
 
             $row->update(['result' => $applied, 'credits' => $price, 'status' => 'ready', 'error' => null]);
         } catch (\Throwable $e) {
@@ -352,17 +352,17 @@ class GrowthRealignController extends BaseScheduleController
     private function whyNot(AsScheduleLot $lot): ?string
     {
         if (! CropStages::normalize($lot->crop)) {
-            return 'No crop set on this lot yet — say what is growing here in Lots first.';
+            return 'No crop is set on this lot yet. First say what is growing here in Lots.';
         }
 
-        return 'This lot has no day zero yet — set one in Lots, or tick "this is day zero" on the activity that starts the count.';
+        return 'This lot has no day zero yet. Set one in Lots, or tick "this is day zero" on the activity that starts the count.';
     }
 
     private function lotOf($schedule, int $lotId): AsScheduleLot
     {
         $lot = $schedule->lots()->where('id', $lotId)->first();
         if (! $lot) {
-            abort(response()->json(['success' => false, 'message' => 'That lot is not on this schedule.'], 404));
+            abort(response()->json(['success' => false, 'message' => 'That lot is not in this season.'], 404));
         }
 
         return $lot;

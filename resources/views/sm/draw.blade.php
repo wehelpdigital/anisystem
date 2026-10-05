@@ -107,7 +107,7 @@
         </span>
         <div class="min-w-0 grow">
             <p class="dr-kept-title" id="drKeptTitle">Saved as a picture.</p>
-            <p class="dr-kept-say" id="drKeptSay">This shelf only keeps drawings. Find the picture in the Gallery and on its note.</p>
+            <p class="dr-kept-say" id="drKeptSay">This list only keeps drawings you can change. Find the picture in the Gallery and on its note.</p>
             <div class="dr-kept-acts">
                 <a class="btn btn-sm btn-white" id="drKeptGallery" href="{{ route('gallery.hub') }}">Open the Gallery</a>
                 <a class="btn btn-sm btn-white hidden" id="drKeptNote" href="#">Open the note</a>
@@ -137,7 +137,7 @@
             </button>
         </div>
         <div class="sheet-body" style="padding-bottom:1rem">
-            <label class="form-label" for="drTitle">Title <span class="text-red-500">*</span></label>
+            <label class="form-label" for="drTitle">Name <span class="text-red-500">*</span></label>
             <input type="text" id="drTitle" class="form-input" maxlength="191" placeholder="Field sketch">
             {{-- A drawing is a note like any other, and a note nobody can read
                  six weeks later is half a record. What it shows, and why it
@@ -191,7 +191,7 @@
                 document.getElementById('drKeptTitle').textContent =
                     '“' + (row.title || 'Drawing') + '” was saved as a picture.';
                 document.getElementById('drKeptSay').textContent =
-                    'This shelf only keeps drawings. '
+                    'This list only keeps drawings you can change. '
                     + 'Find the picture in the Gallery and on its note.';
                 const noteLink = document.getElementById('drKeptNote');
                 // Only a notebook (a season's, or your own Global Notes) can
@@ -256,7 +256,7 @@
                         <div class="dr-tags">${tags.join('')}</div>
                         <span class="dr-when">${esc(d.when || '')}</span>
                         ${mayWrite(d) ? `<div class="dr-acts">
-                            <button type="button" class="dr-act" data-edit title="${d.team ? 'Draw over a copy' : 'Open in the pad'}" aria-label="Edit">
+                            <button type="button" class="dr-act" data-edit title="${d.team ? 'Draw over a copy' : 'Open and edit'}" aria-label="Edit">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/></svg>
                             </button>
                             <button type="button" class="dr-act is-danger" data-del title="Delete" aria-label="Delete">
@@ -355,7 +355,7 @@
                         ? 'Saving over the drawing you opened.'
                         : (objects
                             ? 'Saved as a drawing. You can change it later.'
-                            : 'Saved as a picture. It goes to the Gallery and its note, not this shelf.');
+                            : 'Saved as a picture. It goes to the Gallery and its note, not this list.');
                     window.openSheet('drSaveSheet');
                     window.smFocus('drTitle', { delay: 120 });
                 }, seed.url || null, {
@@ -426,7 +426,7 @@
                         setTimeout(() => { paint(); toast('Drawing deleted.'); }, calm ? 0 : 300);
                     } catch (err) {
                         cardEl.classList.remove('is-going');
-                        toast(err.message || 'Could not delete that.', 'error');
+                        toast(err.message || 'Could not delete that drawing.', 'error');
                     }
                     return;
                 }
@@ -492,7 +492,7 @@
                         if (!window.smReturnToOrigin?.() && REF_BACK) location.href = REF_BACK;
                     }
                 } catch (err) {
-                    toast(err.message || 'Could not save that.', 'error');
+                    toast(err.message || 'Could not save the drawing.', 'error');
                 } finally { btn.disabled = false; }
             });
             document.getElementById('drTitle').addEventListener('keydown', (e) => {

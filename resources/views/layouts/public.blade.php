@@ -45,7 +45,7 @@
         }
     @endphp
     <title>{!! $pageTitle !!}</title>
-    <meta name="description" content="@yield('meta_description', 'anee.io — the cropping schedule manager for ' . \App\Support\Region::t('farmersOf') . '. Plan lots, workers, materials, activities and irrigation in one mobile-friendly web app.')">
+    <meta name="description" content="@yield('meta_description', 'anee.io is the cropping schedule manager for ' . \App\Support\Region::t('farmersOf') . '. Plan your lots, workers, materials, activities and irrigation in one web app that works on any phone.')">
     {{-- Indexable only once the mother app's switch says so (App\Support\Seo). --}}
     <meta name="robots" content="{{ \App\Support\Seo::robots() }}">
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}?v=anee">
@@ -238,7 +238,7 @@
                                     <span class="block text-xs font-medium text-gray-500">Libre is free forever</span>
                                 </a>
                                 <a href="{{ route('pricing.compare') }}" class="block rounded-xl px-3 py-2.5 hover:bg-brand-50 {{ request()->routeIs('pricing.compare', 'ph.pricing.compare') ? 'bg-brand-50' : '' }}">
-                                    <span class="block text-sm font-bold text-gray-900">Pricing Comparison</span>
+                                    <span class="block text-sm font-bold text-gray-900">Compare plans</span>
                                     <span class="block text-xs font-medium text-gray-500">Every plan side by side</span>
                                 </a>
                             </div>
@@ -282,7 +282,7 @@
                 ['how', 'How It Works', 'M6 21a2 2 0 100-4 2 2 0 000 4zM18 7a2 2 0 100-4 2 2 0 000 4zM6 17V11a4 4 0 014-4h6M18 7v6a4 4 0 01-4 4H8'],
                 ['features', 'Features', 'M4 5h6v6H4zM14 5h6v6h-6zM4 15h6v4H4zM14 15h6v4h-6z'],
                 ['pricing', 'Pricing', 'M7 7h.01M3 12l9-9h8v8l-9 9-8-8z'],
-                ['pricing.compare', 'Pricing Comparison', 'M9 17V7m0 10H5a2 2 0 01-2-2V9a2 2 0 012-2h4m0 10h6m-6-10h6m0 10V7m0 10h4a2 2 0 002-2V9a2 2 0 00-2-2h-4'],
+                ['pricing.compare', 'Compare plans', 'M9 17V7m0 10H5a2 2 0 01-2-2V9a2 2 0 012-2h4m0 10h6m-6-10h6m0 10V7m0 10h4a2 2 0 002-2V9a2 2 0 00-2-2h-4'],
                 ['about', 'About', 'M12 11v6m0-10h.01M12 21a9 9 0 110-18 9 9 0 010 18z'],
                 ['tutorial', 'Tutorial', 'M15 10l4.6-2.3A1 1 0 0121 8.6v6.8a1 1 0 01-1.4.9L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'],
                 ['contact', 'Contact', 'M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'],
@@ -332,7 +332,7 @@
                 @endif
 
                 <div class="pm-face">
-                    <span>Site edition</span>
+                    <span>Where you farm</span>
                     @include('partials.face-switch')
                 </div>
             </div>
@@ -371,7 +371,7 @@
                         <li><a href="{{ url('/ask-anee') }}">Ask Anee for free</a></li>
                         <li><a href="{{ url('/questions') }}">Farmers' questions</a></li>
                         <li><a href="{{ route('pricing') }}">Pricing</a></li>
-                        <li><a href="{{ route('pricing.compare') }}">Pricing comparison</a></li>
+                        <li><a href="{{ route('pricing.compare') }}">Compare plans</a></li>
                         <li><a href="{{ route('about') }}">About anee.io</a></li>
                         <li><a href="{{ route('tutorial') }}">Tutorial</a></li>
                         <li><a href="{{ route('contact') }}">Contact us</a></li>
@@ -431,8 +431,8 @@
                      stretch the wordmark sideways. --}}
                 <img src="{{ asset('images/site/logo-white.png') }}?v=anee" alt="anee.io" class="block h-8 w-auto max-w-full object-contain object-left mb-4">
                 <p class="text-sm leading-relaxed text-gray-400">
-                    anee.io is the cropping schedule manager empowering {{ \App\Support\Region::t('farmersOf') }} with
-                    education, technology, and quality products for a sustainable agricultural future.
+                    anee.io is the cropping schedule manager that helps {{ \App\Support\Region::t('farmersOf') }} with
+                    farm lessons, simple technology and quality products, for farms that last.
                 </p>
             </div>
             <div class="md:justify-self-end">

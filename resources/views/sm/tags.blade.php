@@ -1,6 +1,6 @@
 @extends(request()->boolean('partial') ? 'layouts.partial' : 'layouts.app')
 
-@section('title', 'Tags — ' . $schedule->title)
+@section('title', 'Tags · ' . $schedule->title)
 @section('page-title', 'Tags')
 @section('help-key', 'tags')
 @section('page-subtitle', $schedule->title)
@@ -148,7 +148,7 @@ const __init = () => {
         if (!window.confirmAction) { toast('Something went wrong. Please try again.', 'error'); return; }
         const ok = await window.confirmAction({
             title: `Delete the tag "${t ? t.name : ''}"?`,
-            message: `The tag comes off every item that has it. The items are not deleted.`,
+            message: `The tag is taken off everything that has it. Nothing else is deleted.`,
             confirmText: 'Delete tag',
         });
         if (!ok) return;

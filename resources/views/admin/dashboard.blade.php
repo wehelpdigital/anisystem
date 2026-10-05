@@ -16,7 +16,7 @@
     <div class="grid gap-3 md:grid-cols-2 mt-3">
         <div class="card p-4">
             <p class="font-bold text-gray-900 text-sm">New clients</p>
-            <p class="text-xs text-gray-400 mb-1">Registrations, last 12 months</p>
+            <p class="text-xs text-gray-400 mb-1">New sign ups, last 12 months</p>
             <div class="ch-wrap" id="chartClients"><div class="ad-skel w-full h-24"></div></div>
         </div>
         <div class="card p-4">

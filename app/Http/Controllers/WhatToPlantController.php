@@ -89,7 +89,7 @@ class WhatToPlantController extends Controller
         'flat' => 'Flat',
         'gentle' => 'Gently sloping',
         'steep' => 'Steep — water runs off fast',
-        'low' => 'Low-lying — water collects',
+        'low' => 'Low ground — water collects',
     ];
 
     public const ELEVATIONS = [
@@ -294,10 +294,10 @@ class WhatToPlantController extends Controller
             'exclude.*' => 'string|max:24',
         ]);
         if ($v->fails()) {
-            return $this->json(false, 'Validation failed.', ['errors' => $v->errors()], 422);
+            return $this->json(false, $v->errors()->first(), ['errors' => $v->errors()], 422);
         }
         if (count(self::picks(self::FAMILIES, $request->input('exclude'))) >= count(self::FAMILIES)) {
-            return $this->json(false, 'Keep at least one crop family in play — you have left out all of them.', [], 422);
+            return $this->json(false, 'Keep at least one crop group. You left out all of them.', [], 422);
         }
 
         $balance = $this->credits->balance($payer->id);
@@ -376,7 +376,7 @@ class WhatToPlantController extends Controller
                 \Illuminate\Support\Facades\Log::warning('what-to-plant: unparsable answer', [
                     'head' => mb_substr((string) $result['text'], 0, 400),
                 ]);
-                throw new \RuntimeException($result['error'] ?? 'The analysis came back unreadable. Nothing was charged — please try again.');
+                throw new \RuntimeException($result['error'] ?? 'The analysis could not be read. Nothing was charged. Please try again.');
             }
 
             $charged = (float) AiPrices::of('what');
@@ -384,7 +384,7 @@ class WhatToPlantController extends Controller
             $p = json_decode((string) ($row->params ?? '[]'), true) ?: [];
             $note = AiUsage::record('what', (int) $row->userId, $payerId, $id, $settings, $result, (int) $charged);
             $this->credits->chargeAllowingNegative($payerId, $charged,
-                mb_substr('What-to-plant analysis — ' . ($p['location'] ?? '') . $note, 0, 250));
+                mb_substr('What to Plant analysis: ' . ($p['location'] ?? '') . $note, 0, 250));
 
             DB::table('as_plant_analyses')->where('id', $id)->update([
                 'report' => json_encode($report),
@@ -429,8 +429,8 @@ class WhatToPlantController extends Controller
         if ($r->status === 'pending') {
             if ($this->dead($r)) {
                 $why = \Illuminate\Support\Carbon::parse($r->created_at)->lt(now()->subMinutes(20))
-                    ? 'The analysis took too long and was stopped. Nothing was charged — please try again.'
-                    : 'The analysis was interrupted mid-way (the server restarted under it). Nothing was charged — please run it again.';
+                    ? 'The analysis took too long and was stopped. Nothing was charged. Please try again.'
+                    : 'The analysis was stopped halfway because the server restarted. Nothing was charged. Please run it again.';
                 DB::table('as_plant_analyses')->where('id', $id)->where('status', 'pending')->update([
                     'status' => 'failed', 'deleteStatus' => 0,
                     'error' => $why,
@@ -553,7 +553,7 @@ class WhatToPlantController extends Controller
             ->where('kind', 'what')
             ->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
-        return $this->json(true, 'Analysis removed.');
+        return $this->json(true, 'Analysis deleted.');
     }
 
     /** Rename a saved analysis and describe it in your own words. */
@@ -576,7 +576,7 @@ class WhatToPlantController extends Controller
                 'updated_at' => now(),
             ]);
         if (! $updated) {
-            return $this->json(false, 'That analysis is not on your shelf.', [], 404);
+            return $this->json(false, 'That analysis is not in your saved list.', [], 404);
         }
 
         return $this->json(true, 'Analysis updated.', ['title' => $title, 'description' => $description ?: null]);

@@ -39,7 +39,7 @@
                         <label class="form-label" for="password_confirmation">Confirm password</label>
                         <input type="password" id="password_confirmation" name="password_confirmation" class="form-input" required minlength="8">
                     </div>
-                    <button type="submit" class="btn btn-primary w-full">Set password &amp; log in</button>
+                    <button type="submit" class="btn btn-primary w-full">Set password and log in</button>
                 </form>
             </div>
         </div>

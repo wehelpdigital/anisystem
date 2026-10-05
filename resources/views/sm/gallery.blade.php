@@ -84,7 +84,7 @@
         </div>
     </div>
     <div class="ga-all" id="gaAll"></div>
-    <p class="ga-none hidden" id="gaAllNone">Nothing here yet. Pictures from notes, days, drawings and maps in this schedule show up here on their own.</p>
+    <p class="ga-none hidden" id="gaAllNone">Nothing here yet. Pictures from notes, days, drawings and maps in this season show up here on their own.</p>
 </div>
 
 {{-- ============================== albums ============================== --}}
@@ -116,7 +116,7 @@
 
 {{-- ============================= team box ============================= --}}
 <div class="ga-pane" data-pane="team" hidden>
-    <p class="tb-say">Everything made in the Collab Room: call and camera recordings, whiteboard drawings and team maps. Anyone on this schedule can find them here.</p>
+    <p class="tb-say">Everything made in the Collab Room: call and camera recordings, whiteboard drawings and team maps. Anyone on this season can find them here.</p>
 
     <div class="ga-filters tb-filters" id="tbFilters">
         <button type="button" class="ga-filter is-on" data-tb="">Everything</button>
@@ -655,7 +655,7 @@
             }
 
             fill($('gaVideos'), EVERYTHING.filter((m) => m.kind === 'video'),
-                '<p class="ga-none">No videos in this schedule yet.</p>');
+                '<p class="ga-none">No videos in this season yet.</p>');
         }
 
         /* ---- Which shelf ------------------------------------------------
