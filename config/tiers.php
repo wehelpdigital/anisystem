@@ -170,7 +170,7 @@ return [
         'features' => [
             '3 active seasons (+5 archived)',
             'Up to 5 lots per season',
-            'Full weather, maps, video & voice recording',
+            'Full weather, maps, video and voice recording',
             'All reports',
             'Offline mode for the field',
             'Workers (without logins) and inventory',
