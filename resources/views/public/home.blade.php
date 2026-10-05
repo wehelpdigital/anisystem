@@ -210,9 +210,13 @@
     <section class="hp-sec bg-gray-50 bg-drift">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
-                <p class="hp-kick is-red">What guessing costs you</p>
-                <h2 class="hp-h2">Guessing can cost you <em class="is-red">a big part of your harvest.</em></h2>
-                <p class="hp-p">Crop studies show how much harvest is lost when farm work is guessed. Each card below is money that never reaches your pocket.</p>
+                <p class="hp-kick is-red">The real cost of guessing</p>
+                <h2 class="hp-h2">Guessing is the most <em class="is-red">expensive</em> thing on your farm.</h2>
+                <p class="hp-p">
+                    A spray a few days late, a dose that was guessed, planting in the wrong week. Each one looks small,
+                    but crop studies show how much harvest they take from every hectare. <b>Here is where that money
+                    goes.</b>
+                </p>
             </div>
 
             <div class="mt-12 grid gap-5 md:grid-cols-2">
@@ -243,28 +247,6 @@
             <p class="mt-4 text-center text-xs text-gray-400 reveal">
                 Percent ranges come from FAO crop loss and {{ $ph ? 'Philippine rice' : 'published crop' }} research estimates{{ $ph ? '. Peso ranges assume a palay hectare that earns ₱85,000 to ₱100,000 before costs' : '' }}. Your own numbers will be different.
             </p>
-
-            <div class="loss-pivot reveal">
-                <span><img src="{{ $face }}" alt="Anee">How anee.io stops these losses</span>
-            </div>
-
-            <div class="hp-fix-grid">
-                @foreach ([
-                    ['Acting late', 'Acting early', 'See the weather for each lot and what to watch for at each growth stage, so you act on the right day.'],
-                    ['The wrong fix', 'The right fix first', 'Take a photo of the leaf and Anee tells you what it is before you spend a ' . $peso . '.'],
-                    ['Fertilizer on the wrong day', 'Fertilizer on the right day', 'Every urea and complete fertilizer application is dated from each lot\'s own planting day. Move the plan and every date follows.'],
-                    ['Waiting for answers', 'Answers right away', 'Ask Anee any time' . ($ph ? ', in Tagalog or English' : '') . '. She knows your lots, their stages and the weather, and answers in minutes.'],
-                    ['Untracked spending', 'Every ' . $peso . ' written down', 'Labor, materials and services add up as you go, and the reports match to the ' . ($ph ? 'peso' : 'cent') . '.'],
-                    ['Farm myths', 'Advice based on science', 'Ask Anee before you try something. Her answers are based on crop science and your own records.'],
-                    ['Water at the wrong time', 'Water by growth stage', 'Irrigation is on the same board as your other tasks, with the forecast for each lot beside it.'],
-                    ['Planting by habit', 'Planting at the best time', 'The When to Plant Analysis checks your town\'s weather history and the El Niño or La Niña outlook before you plant.'],
-                ] as $i => [$from, $to, $p])
-                    <div class="hp-fix reveal" style="--reveal-delay: {{ ($i % 2) * 0.08 }}s">
-                        <p class="hp-fix-k"><s>{{ $from }}</s>{!! $arrow !!}<b>{{ $to }}</b></p>
-                        <p class="hp-fix-p">{{ $p }}</p>
-                    </div>
-                @endforeach
-            </div>
 
             <div class="hp-cta reveal">
                 <div class="hp-cta-row">
@@ -1023,17 +1005,6 @@
     .hp-why-badge svg { width: .85rem; height: .85rem; }
     .hp-why-a p { margin-top: .35rem; font-size: .92rem; line-height: 1.6; color: #fff; }
 
-    /* ---- fixes ---- */
-    .hp-fix-grid { display: grid; gap: 1rem; }
-    @media (min-width: 768px) { .hp-fix-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    .hp-fix { border-radius: 1.2rem; padding: 1.1rem 1.2rem; background: #fff; border: 1px solid #dcead0;
-        transition: transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease), border-color .28s var(--hp-ease); }
-    .hp-fix:hover { transform: translateY(-3px); border-color: #a8cc7e; box-shadow: 0 18px 36px -26px rgb(47 82 25 / .55); }
-    .hp-fix-k { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; font-weight: 800; font-size: .95rem; line-height: 1.3; }
-    .hp-fix-k s { color: #b91c1c; text-decoration-thickness: 2px; text-decoration-color: rgb(185 28 28 / .5); }
-    .hp-fix-k svg { width: 1rem; height: 1rem; color: #9ca3af; flex: none; }
-    .hp-fix-k b { color: var(--hp-deep); }
-    .hp-fix-p { margin-top: .45rem; font-size: .88rem; color: #4b5563; line-height: 1.6; }
 
     /* ---- the seven steps ---- */
     .hp-st { margin-top: 3rem; display: grid; gap: 1.5rem; }
@@ -1318,7 +1289,7 @@
         .hp-biz-b, .hp-final-face, .hp-live, .hp-read i, .hp-sum-ico, .hp-sum-ico svg, .hp-vs.is-visible .hp-vs-new > span { animation: none !important; }
         .hp-st-tab.is-on.is-timing .hp-st-bar i { animation: none; }
         .hp-phone.is-hero, .hp-st-pane, .hp-tool, .hp-msg, .hp-read, .hp-film, .hp-film-tag, .hp-modal, .hp-modal-box, .hp-sticky,
-        .hp-go, .hp-alt, .hp-why-card, .hp-fix, .hp-st-tab, .hp-gain, .hp-reel-card .hp-phone, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
+        .hp-go, .hp-alt, .hp-why-card, .hp-st-tab, .hp-gain, .hp-reel-card .hp-phone, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
         .hp-chat .hp-msg, .hp-chat .hp-read { opacity: 1; transform: none; }
         .hp-mark-line { -webkit-clip-path: none; clip-path: none; }
     }
