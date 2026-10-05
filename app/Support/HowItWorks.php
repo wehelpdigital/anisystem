@@ -316,13 +316,11 @@ class HowItWorks
 
         // Hand placed on the owner's word (2026-10-02): where a tool should sit
         // a little off the spot the desktop burst gives it, in rem [right, down].
-        $nudge = [
-            'variety' => [0, -2.5],     // up a little
-            // ('review' sat 7rem further left until it moved to Step 2, 2026-10-02.)
-            'access' => [0, 5.6],       // Team logins, further down
-            'board' => [0, 5.6],        // Today on the board, further down
-            'season' => [-6.9, 6.25],   // Anee Season Report, further down and left
-        ];
+        // Since 2026-10-05 every line in a step is one length, which is what
+        // the old nudges were reaching for by hand (Team logins, Today on the
+        // board and Anee Season Report further down; Variety up a little);
+        // kept on, they would make those lines the odd ones out again.
+        $nudge = [];
         foreach ($stages as &$st) {
             foreach ($st['items'] as &$it) {
                 $it['nudge'] = $nudge[$it['key']] ?? null;

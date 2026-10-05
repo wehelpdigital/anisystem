@@ -1244,7 +1244,10 @@
                 {{-- Anee and her tools. On a desk the script scatters the tools
                      around her (.is-scatter); a phone shows them as a grid of
                      icons. Any tool opens the film modal below. --}}
-                <div class="hw-field" style="--fh: {{ 26 + count($st['items']) * 1.8 }}rem">
+                {{-- An odd count puts one tool straight below Anee, and every line
+                     in a step is as long as that one can be: it needs the height. --}}
+                @php $fh = 26 + count($st['items']) * 1.8; if (count($st['items']) % 2) $fh = max(37, $fh); @endphp
+                <div class="hw-field" style="--fh: {{ $fh }}rem">
                 <div class="hw-hub" aria-hidden="true">
                     <i class="hw-ring"></i><i class="hw-ring"></i>
                     <span class="hw-hub-core"><img src="{{ asset('images/anee/emoji/' . $st['face'] . '.png') }}" alt="" loading="lazy"></span>
@@ -1758,14 +1761,29 @@
             const W = fieldEl.clientWidth, H = fieldEl.clientHeight, n = items.length;
             if (!W || !H || !n) return;
             const cx = W / 2, cy = H / 2, hr = hub.offsetWidth / 2 + 28, pad = 18;
+            const rim = hub.offsetWidth / 2 + 6;   // where every line leaves Anee (as draw() has it)
             const box = items.map((it) => ({ w: it.offsetWidth, h: it.querySelector('.hw-chip').offsetHeight }));
             let seed = [...(st.dataset.stage || 'x')].reduce((a, c) => (a * 31 + c.charCodeAt(0)) % 233280, 7);
             const rnd = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
-            const p = box.map((b, i) => {
+            // Every line in a step is the same length (the owner's call,
+            // 2026-10-05: long streaks beside stubs looked lopsided). Each
+            // tool's direction is spaced evenly round Anee, read on the
+            // field's own oval so a wide field spreads them sideways; the
+            // length is the longest the tightest tool has room for, and no
+            // longer than LINE, so a step of four does not fling its tools
+            // to the corners while the next step keeps them close.
+            const reach = (b, ux, uy) => Math.min(Math.abs(ux) > 1e-3 ? b.w / 2 / Math.abs(ux) : Infinity, Math.abs(uy) > 1e-3 ? b.h / 2 / Math.abs(uy) : Infinity);
+            const room = (b, ux, uy) => Math.min(Math.abs(ux) > 1e-3 ? (cx - b.w / 2) / Math.abs(ux) : Infinity, Math.abs(uy) > 1e-3 ? (cy - b.h / 2) / Math.abs(uy) : Infinity) - rim - reach(b, ux, uy);
+            const dir = box.map((b, i) => {
                 const a = -Math.PI / 2 + (i + .5) * (2 * Math.PI / n) + (rnd() - .5) * .08;
-                const k = i % 2 ? .6 + rnd() * .06 : .93 + rnd() * .07;
-                return { x: cx + Math.cos(a) * (cx - b.w / 2 - 6) * k, y: cy + Math.sin(a) * (cy - b.h / 2 - 6) * k };
+                const x = Math.cos(a) * W, y = Math.sin(a) * H, l = Math.hypot(x, y) || 1;
+                return [x / l, y / l];
             });
+            const LINE = 220;
+            const len = Math.max(60, Math.min(LINE, ...box.map((b, i) => room(b, dir[i][0], dir[i][1]))));
+            const inField = (q, b) => ({ x: Math.min(W - b.w / 2, Math.max(b.w / 2, q.x)), y: Math.min(H - b.h / 2, Math.max(b.h / 2, q.y)) });
+            const at = (b, ux, uy) => { const d = rim + len + reach(b, ux, uy); return inField({ x: cx + ux * d, y: cy + uy * d }, b); };
+            const p = box.map((b, i) => at(b, dir[i][0], dir[i][1]));
             for (let round = 0; round < 160; round++) {
                 let moved = false;
                 for (let i = 0; i < n; i++) {
@@ -1789,6 +1807,14 @@
                     p[i].y = Math.min(H - box[i].h / 2, Math.max(box[i].h / 2, p[i].y));
                 }
                 if (!moved) break;
+                // Two tools pushed apart slide round Anee rather than out or
+                // in: each goes back to the step's one length along its new
+                // line. The last rounds let a push stand, so a crowded step
+                // still ends with nothing touching.
+                if (round < 110) p.forEach((q, i) => {
+                    const vx = q.x - cx, vy = q.y - cy, l = Math.hypot(vx, vy) || 1;
+                    p[i] = at(box[i], vx / l, vy / l);
+                });
             }
             // A tool the owner placed by hand moves off its burst spot by its
             // own nudge (rem, right and down), still kept inside the field.
