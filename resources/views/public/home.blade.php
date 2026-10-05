@@ -187,9 +187,14 @@
                 <span class="hp-sum-op" aria-hidden="true">=</span>
                 <div class="hp-sum-card is-way reveal" style="--reveal-delay: .24s">
                     <span class="hp-sum-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8m0 0h-5m5 0v5"/></svg></span>
-                    <p class="hp-sum-k">The only way up is a higher yield.</p>
+                    <p class="hp-sum-k">The only way up is a <span class="hp-hl">higher yield.</span></p>
                     <p class="hp-sum-p">Yield more from the same hectare with precision farming: the right work, in the right amount, on the right day.</p>
                     <span class="hp-sum-brand"><img src="{{ asset('images/logo-mark.png') }}" alt="" onerror="this.remove()">anee.io shows you how.</span>
+                    <ul class="hp-sum-how">
+                        <li>It dates every task from each lot's own planting day, so fertilizer and sprays go in on time.</li>
+                        <li>Anee checks your crop, its growth stage and the weather before you spend.</li>
+                        <li>It writes down every {{ $peso }}, so you can see what works and do it again.</li>
+                    </ul>
                 </div>
             </div>
 
@@ -1281,6 +1286,17 @@
     .is-up .hp-sum-list li::before { background: #dc2626; opacity: .7; }
     .is-down .hp-sum-list li::before { background: #d97706; opacity: .7; }
     .hp-sum-p { margin-top: .7rem; font-size: .98rem; line-height: 1.6; color: #e4f0d6; }
+    /* "higher yield." in the green card: gold, with an underline that
+       draws itself in once the card has scrolled into view. */
+    .hp-hl { color: var(--hp-sun); background-image: linear-gradient(var(--hp-sun), var(--hp-sun)); background-repeat: no-repeat;
+        background-position: 0 100%; background-size: 0% 3px; padding-bottom: .12em;
+        transition: background-size .9s var(--hp-ease) .45s; }
+    .hp-sum-card.is-visible .hp-hl, html:not(.js) .hp-hl { background-size: 100% 3px; }
+    .hp-sum-how { margin-top: .75rem; display: grid; gap: .55rem; }
+    .hp-sum-how li { position: relative; padding-left: 1.6rem; font-size: .92rem; line-height: 1.55; color: #e4f0d6; }
+    .hp-sum-how li::before { content: ''; position: absolute; left: 0; top: .2em; width: 1.05rem; height: 1.05rem; border-radius: 999px;
+        background: var(--hp-sun) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314210c' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E") center / 70% no-repeat; }
+    @media (prefers-reduced-motion: reduce) { .hp-hl { transition: none; background-size: 100% 3px; } }
     .hp-sum-brand { margin-top: auto; padding-top: 1.1rem; display: inline-flex; align-items: center; gap: .5rem; font-weight: 800; color: var(--hp-sun); }
     .hp-sum-brand img { width: 1.5rem; height: 1.5rem; object-fit: contain; }
     .hp-sum-op { align-self: center; justify-self: center; font-family: var(--font-heading); font-size: 2.6rem; font-weight: 800; line-height: 1;
