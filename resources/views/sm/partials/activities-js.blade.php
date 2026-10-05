@@ -12175,7 +12175,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Lifting a finger after a drag also fires a click; that must not be read
-    // as "tap the card to edit it".
+    // as "tap the card to edit it". Many phones never send that click (the
+    // drag's moves were prevented), so the flag also lapses on its own:
+    // left armed, it ate the farmer's next real tap, such as the tick on the
+    // card they had just moved.
     let swallowNextClick = false;
     document.addEventListener('click', (e) => {
         if (!swallowNextClick) return;
@@ -12188,7 +12191,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!touchDrag) return;
         const td = touchDrag;
         touchDrag = null;
-        if (td.active) swallowNextClick = true;
+        if (td.active) {
+            swallowNextClick = true;
+            setTimeout(() => { swallowNextClick = false; }, 400);
+        }
         clearTimeout(td.timer);
         if (td.raf) cancelAnimationFrame(td.raf);
         td.ghost?.remove();
