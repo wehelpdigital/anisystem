@@ -59,10 +59,10 @@
                 </span>
                 <h1 class="hp-h1 animate-fade-up" style="animation-delay:.06s">
                     Manage your crops for a
-                    {{-- The promise, underlined by hand: a gold brush stroke that
-                         draws itself under the words once the page has settled,
-                         then a thinner second stroke, the way a pen goes back. --}}
-                    <span class="hp-mark"><span class="hp-shimmer">higher yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" pathLength="1" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/><path class="b" pathLength="1" d="M28 21 C 90 15, 170 22, 272 17"/></svg></span>
+                    {{-- The promise, underlined by hand: one gold brush stroke that
+                         draws itself under the words once the page has settled
+                         (one line only, on the owner's word). --}}
+                    <span class="hp-mark"><span class="hp-shimmer">higher yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" pathLength="1" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
                 </h1>
                 <p class="hp-lede animate-fade-up" style="animation-delay:.12s">
                     @if ($ph)
@@ -1001,7 +1001,6 @@
     .hp-mark-line path { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; }
     .hp-mark-line .a { stroke: #f5c518; stroke-width: 7px; filter: drop-shadow(0 3px 8px rgb(245 197 24 / .45));
         animation: hpDraw .95s var(--hp-ease) .75s forwards, hpGlint 4.5s ease-in-out 2.4s infinite; }
-    .hp-mark-line .b { stroke: #fde68a; stroke-width: 3px; opacity: .85; animation: hpDraw .7s var(--hp-ease) 1.45s forwards; }
     @keyframes hpDraw { to { stroke-dashoffset: 0; } }
     @keyframes hpGlint { 0%, 100% { stroke: #f5c518; } 50% { stroke: #fde68a; } }
     .hp-lede { margin-top: 1.4rem; max-width: 36rem; font-size: clamp(1.02rem, 1.7vw, 1.18rem); line-height: 1.7; color: #dde6d4; }
