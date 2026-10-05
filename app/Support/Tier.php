@@ -208,6 +208,22 @@ final class Tier
             : 'the ' . self::planName($tier) . ' plan';
     }
 
+    /**
+     * Why Anee is shut, said the same at every Anee door: the plan that
+     * brings her, and whose account it must be on (a worker rides the
+     * farm owner's). "This analysis runs on Anee, who comes with Libre + Anee
+     * and every plan above it."
+     */
+    public static function aneeNeeds(User $payer, string $what = 'This analysis'): string
+    {
+        $plan = self::withPlan(self::unlocksAt('ai', self::of($payer)));
+
+        return (int) $payer->id === (int) Auth::id()
+            ? $what . ' runs on Anee, who comes with ' . $plan . ' and every plan above it.'
+            : $what . ' runs on Anee, and the farm owner\'s plan does not include her. She comes with '
+                . $plan . ' and every plan above it.';
+    }
+
     /** A door's words with `{plan}` filled in for a rung: what data-lock-say carries. */
     public static function say(string $rung, string $words): string
     {

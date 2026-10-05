@@ -118,9 +118,9 @@
             <div class="st-offline-say">
                 <p><b>What works offline.</b> Your main pages open from a saved copy: the dashboard,
                 each season's board and the notes hub. Any page you opened before opens too. You can
-                <b>tick an activity done</b> and use <b>Quick Tools</b> for a photo, voice note or video.
-                These save on this phone and upload when the signal returns. The yellow bar counts what is waiting.</p>
-                <p><b>Coming soon.</b> More offline actions, like adding a note or editing an activity.</p>
+                <b>tick an activity done</b>, <b>add or edit an activity</b>, <b>write a note</b> and use
+                <b>Quick Tools</b> for a photo, voice note or video. These save on this phone and upload when
+                the signal returns. The yellow bar counts what is waiting.</p>
                 <p><b>If something changed while you were away.</b> The last save wins. Your change still
                 goes in, and a note tells you the farm may have changed. Refresh to see the latest.</p>
             </div>

@@ -18,7 +18,7 @@
              asked. What stays is the word for a plan that cannot. --}}
         @unless (auth()->user()->canWorkerAccounts())
             <div class="card p-4 mb-4 border-amber-200">
-                <p class="text-sm text-gray-700"><strong>🔒 Worker logins</strong> are a <strong>Boss/Lifetime</strong> feature. <a href="{{ route('account.subscription') }}" class="text-brand-600 font-semibold">Upgrade</a> to give workers their own login and email notifications.</p>
+                <p class="text-sm text-gray-700"><strong>🔒 Worker logins</strong> come with <strong>{{ \App\Support\Tier::withPlan(\App\Support\Tier::unlocksAt('workerLogins')) }}</strong>. <a href="{{ route('account.subscription') }}" class="text-brand-600 font-semibold">Upgrade</a> to give workers their own login and email notifications.</p>
             </div>
         @endunless
 
@@ -581,6 +581,7 @@ const __init = () => {
        learns it in place and the next activity has it without a reload. */
     const tellBoard = (name, detail) => document.dispatchEvent(new CustomEvent(name, { detail }));
     const CAN_LOGINS = @json($canWorkerLogins);
+    const LOGINS_PLAN = @json(\App\Support\Tier::withPlan(\App\Support\Tier::unlocksAt('workerLogins')));
     let editingWorker = null;   // the worker whose sheet is open (for login controls)
 
     const list = document.getElementById('workersList');
@@ -791,7 +792,7 @@ const __init = () => {
         if (d.onRoster) { say = `${escapeHtml(a.name)} is already a worker on this schedule.`; stop = true; }
         else if (d.login === 'active') say = 'They already have access to your farm. They join as a worker with the rights you gave them.';
         else if (CAN_LOGINS) say = 'They join as a worker and can view this farm. You can change what they open from their card later.';
-        else say = 'They join as a worker with this name and email. Worker logins come with the Boss plan.';
+        else say = `They join as a worker with this name and email. Worker logins come with ${escapeHtml(LOGINS_PLAN)}.`;
         out.innerHTML = `<div class="wa-card">
                 <span class="wa-face">${face}</span>
                 <span class="wa-who"><b>${escapeHtml(a.name)}</b><span>${escapeHtml(a.email)}</span>${a.since ? `<span>On anee.io since ${escapeHtml(a.since)}</span>` : ''}</span>

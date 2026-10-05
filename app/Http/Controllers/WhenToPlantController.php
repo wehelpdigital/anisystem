@@ -9,6 +9,7 @@ use App\Support\AiUsage;
 use App\Services\AiClient;
 use App\Services\AiCreditService;
 use App\Support\CropCatalog;
+use App\Support\Tier;
 use App\Support\WorkerContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -114,9 +115,8 @@ class WhenToPlantController extends Controller
             'canUse' => $canUse,
             'whyNot' => $canUse ? null
                 : ($settings->isUsable()
-                    ? 'This analysis runs on the AI Technician, which needs a Boss or Lifetime plan'
-                        . ((int) $payer->id === (int) Auth::id() ? '.' : ' on the farm owner\'s account.')
-                    : 'The AI Technician is not switched on yet. Please check back soon.'),
+                    ? Tier::aneeNeeds($payer)
+                    : 'Anee is not switched on yet. Please check back soon.'),
         ]]);
     }
 
@@ -142,7 +142,9 @@ class WhenToPlantController extends Controller
         $payer = $this->payer();
         $settings = AiSetting::current();
         if (! $payer->canUseAi() || ! $settings->isUsable()) {
-            return $this->json(false, 'The analysis needs the AI Technician (Boss or Lifetime plan).', [], 403);
+            return $this->json(false, $payer->canUseAi()
+                ? 'Anee is not switched on yet. Please check back soon.'
+                : Tier::aneeNeeds($payer, 'The analysis'), [], 403);
         }
 
         /* THE MONTHS, NOT A SEASON (the owner's call, 2026-09-28): the old

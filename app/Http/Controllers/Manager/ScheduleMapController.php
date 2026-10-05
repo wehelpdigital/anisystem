@@ -387,6 +387,17 @@ class ScheduleMapController extends BaseScheduleController
     }
 
     /**
+     * The search box: places by name (App\Support\PlaceSearch). Asked once
+     * per Enter, never per keystroke; the map flies to the one picked.
+     */
+    public function places(Request $request)
+    {
+        $words = mb_substr(trim((string) $request->query('q', '')), 0, 120);
+
+        return $this->jsonOk('ok', ['data' => ['places' => \App\Support\PlaceSearch::find($words)]]);
+    }
+
+    /**
      * A picture for the shelf, for EVERY saved map: the filed one when its
      * file still answers, else one redrawn from the save's own shapes — they
      * live in the row, so they survive the wiped disks that ate the files.

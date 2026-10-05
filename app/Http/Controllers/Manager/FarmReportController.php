@@ -10,6 +10,7 @@ use App\Services\AiClient;
 use App\Services\AiCreditService;
 use App\Support\AiPrices;
 use App\Support\AiUsage;
+use App\Support\Tier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -589,8 +590,9 @@ class FarmReportController extends BaseScheduleController
 
         [$blockers, $warnings] = $this->aneeChecks($schedule, $kind);
         if (! $payer->canUseAi() || ! $settings->isUsable()) {
-            $blockers[] = 'This report runs on the AI Technician, which needs a Boss or Lifetime plan'
-                . ((int) $payer->id === (int) Auth::id() ? '.' : ' on the farm owner\'s account.');
+            $blockers[] = $payer->canUseAi()
+                ? 'Anee is not switched on yet. Please check back soon.'
+                : Tier::aneeNeeds($payer, 'This report');
         }
 
         return $this->jsonOk('ok', ['data' => [
@@ -651,7 +653,9 @@ class FarmReportController extends BaseScheduleController
         $credits = app(AiCreditService::class);
 
         if (! $payer->canUseAi() || ! $settings->isUsable()) {
-            return $this->jsonFail('This report needs the AI Technician (Boss or Lifetime plan).', 403);
+            return $this->jsonFail($payer->canUseAi()
+                ? 'Anee is not switched on yet. Please check back soon.'
+                : Tier::aneeNeeds($payer, 'This report'), 403);
         }
         [$blockers] = $this->aneeChecks($schedule, $kind);
         if ($blockers !== []) {

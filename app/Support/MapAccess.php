@@ -239,7 +239,9 @@ class MapAccess
                 'season' => $r->originScheduleId ? ($seasons[$r->originScheduleId] ?? null) : null,
                 'imagePath' => $path,
                 'imageUrl' => MediaStore::url($path),
-                'thumbUrl' => self::thumbUrl((int) $r->id),
+                // A map with no shapes and no picture has nothing to draw:
+                // its card keeps the map mark instead of asking for a 404.
+                'thumbUrl' => ($path || json_decode((string) $r->objects, true)) ? self::thumbUrl((int) $r->id) : null,
                 'url' => self::url((int) $r->id),
                 'noteHref' => self::noteHref($note),
             ];

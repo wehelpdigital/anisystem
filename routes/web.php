@@ -826,6 +826,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-map-trace', [App\Http\Controllers\Manager\ScheduleMapController::class, 'trace'])->name('sm.map.trace');
     Route::get('/app/sm-map-saves', [App\Http\Controllers\Manager\ScheduleMapController::class, 'saves'])->name('sm.map.saves');
     Route::get('/app/sm-map-thumb', [App\Http\Controllers\Manager\ScheduleMapController::class, 'thumb'])->name('sm.map.thumb');
+    Route::get('/app/sm-map-places', [App\Http\Controllers\Manager\ScheduleMapController::class, 'places'])->middleware('throttle:20,1')->name('sm.map.places');
     Route::get('/app/sm-map-basemap', [App\Http\Controllers\Manager\ScheduleMapController::class, 'basemap'])->name('sm.map.basemap');
     // The map as its own module in the schedule hub (the Collab Room embeds
     // the same partial as a tab).

@@ -100,7 +100,7 @@
             // why undo appeared to do nothing: it removed a shape the map had
             // no record of, so nothing left the screen.
             sc.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(MAPS_KEY)
-                + '&libraries=geometry,places&v=weekly&loading=async&callback=__locMapBoot';
+                + '&libraries=geometry&v=weekly&loading=async&callback=__locMapBoot';
             sc.async = true;
             sc.onerror = () => reject(new Error('load failed'));
             document.head.appendChild(sc);

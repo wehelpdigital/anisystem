@@ -209,7 +209,16 @@
                 </button>
             </div>
             <div class="sheet-body" style="padding-bottom:1rem">
-                <input type="search" id="cmapSearch" class="form-input" placeholder="{{ \App\Support\Region::ph() ? 'Town, barangay, landmark…' : 'Town, road, landmark…' }}" autocomplete="off">
+                {{-- Found on Find (or Enter), never per keystroke: the places
+                     come from OpenStreetMap through our own server
+                     (App\Support\PlaceSearch), whose rules ask for that. --}}
+                <form class="cmap-savesearch cmap-placebox" id="cmapSearchForm" role="search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
+                    <input type="search" id="cmapSearch" placeholder="{{ \App\Support\Region::ph() ? 'Town, barangay, landmark…' : 'Town, road, landmark…' }}" autocomplete="off" enterkeyhint="search" aria-label="Place name">
+                    <button type="submit" class="cmap-placego">Find</button>
+                </form>
+                <p class="cmap-placesay" id="cmapSearchSay" aria-live="polite">Type a place, then tap Find.</p>
+                <div class="cmap-saves" id="cmapSearchHits"></div>
             </div>
         </div>
         <button type="button" class="cmap-tool" id="cmapColorBtn" title="Drawing colour" aria-label="Choose drawing colour">
@@ -743,6 +752,19 @@
     .cmap-tag.is-note { background: #e4efd4; color: #3d6823; text-decoration: none; }
     .cmap-tag.is-note:hover { background: #d3e7bb; }
     .cmap-saves-empty { font-size: .8rem; color: var(--color-gray-500); text-align: center; padding: 1.2rem 0; }
+    /* Find a place: the saved-maps search box with a Find button in it, and
+       the places found rising in one after another. */
+    .cmap-placebox { padding: .3rem .3rem .3rem .7rem; margin-bottom: .45rem; }
+    .cmap-placego { flex-shrink: 0; padding: .45rem .9rem; border-radius: .55rem; font-size: .8rem; font-weight: 800;
+        color: #fff; background: linear-gradient(140deg, #6b9f3d, #3d6823);
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .cmap-placego:active { transform: scale(.96); }
+    .cmap-placego:disabled { opacity: .6; }
+    .cmap-placesay { font-size: .76rem; color: var(--color-gray-500); margin: 0 .15rem .6rem; min-height: 1.1em; }
+    .cmap-placehit { animation: cmapHitIn .28s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--i, 0) * 45ms); }
+    .cmap-placehit .cmap-saverow-s { white-space: normal; }
+    @keyframes cmapHitIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .cmap-placehit { animation: none; } }
     /* Select-tool action bar: floats over the map while a shape is held. */
     .cmap-editbar { position: absolute; left: 50%; bottom: .85rem; transform: translateX(-50%) translateY(0);
         z-index: 6; display: flex; align-items: center; gap: .4rem; padding: .4rem .55rem; border-radius: 999px;
@@ -864,6 +886,7 @@
         basemap: @json(route('sm.map.basemap')),
         save: @json(route('sm.map.save')),
         load: @json(route('sm.map.load')),
+        places: @json(route('sm.map.places')),
         undoJournal: @json(route('sm.undo.get')),
     };
     /* THE ERRAND, IF THERE IS ONE.
@@ -4204,19 +4227,43 @@
             // Search means typing — focusing here is the point, not a nuisance.
             window.smFocus('cmapSearch', { delay: 320 });
         });
-        // Search jumps the map anywhere by name; without Places on the key the
-        // box goes away rather than sitting dead.
-        try {
-            const inp = document.getElementById('cmapSearch');
-            const ac = new (G().places.Autocomplete)(inp, { fields: ['geometry'] });
-            ac.addListener('place_changed', () => {
-                const g = ac.getPlace().geometry;
-                if (!g) return;
-                window.closeSheet?.('cmapSearchSheet');
-                if (g.viewport) map.fitBounds(g.viewport);
-                else { map.setCenter(g.location); map.setZoom(17); }
-            });
-        } catch (_) { document.getElementById('cmapSearchBtn')?.remove(); }
+        /* Search jumps the map anywhere by name. Google's place search is not
+           on the site's maps key (asking it is what put "This page can't load
+           Google Maps correctly" over the map), so the places come from our
+           own server, which asks OpenStreetMap: once per Find, never per
+           keystroke. One place found flies straight there; more are listed. */
+        const flyTo = (p) => {
+            window.closeSheet?.('cmapSearchSheet');
+            const b = p.bbox;
+            // A point-sized box (a hall, a shop) would zoom past the imagery.
+            if (b && (b[1] - b[0] > 0.002 || b[3] - b[2] > 0.002)) {
+                map.fitBounds({ south: b[0], north: b[1], west: b[2], east: b[3] });
+            } else { map.setCenter({ lat: p.lat, lng: p.lng }); map.setZoom(17); }
+        };
+        document.getElementById('cmapSearchForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.currentTarget, go = form.querySelector('.cmap-placego');
+            const say = document.getElementById('cmapSearchSay'), hits = document.getElementById('cmapSearchHits');
+            const words = document.getElementById('cmapSearch').value.trim();
+            if (words.length < 2) { say.textContent = 'Type at least two letters of a place.'; return; }
+            go.disabled = true;
+            say.textContent = 'Looking…';
+            hits.innerHTML = '';
+            try {
+                const r = await api(`${URLS.places}?q=${encodeURIComponent(words)}`);
+                const places = (r.data && r.data.places) || [];
+                if (!places.length) { say.textContent = 'No place found by that name. Try the town or the barangay.'; return; }
+                if (places.length === 1) { say.textContent = 'Type a place, then tap Find.'; flyTo(places[0]); return; }
+                say.textContent = 'Pick the one you mean.';
+                hits.innerHTML = places.map((p, i) => `<button type="button" class="cmap-saverow cmap-placehit" data-hit="${i}" style="--i:${i}">
+                        <span class="cmap-mark"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-7.5 7-12a7 7 0 10-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg></span>
+                        <span class="cmap-saverow-main"><span class="cmap-saverow-t">${esc(p.name)}</span>${p.label ? `<span class="cmap-saverow-s">${esc(p.label)}</span>` : ''}</span>
+                    </button>`).join('');
+                hits.querySelectorAll('[data-hit]').forEach((b) => b.addEventListener('click', () => flyTo(places[+b.dataset.hit])));
+            } catch (err) {
+                say.textContent = (err && err.message) || 'The search could not answer just now. Try again.';
+            } finally { go.disabled = false; }
+        });
         document.getElementById('cmapFinish').addEventListener('click', () => {
             if (tempPts.length < 2) return;
             const pts = tempPts, kind = tool === 'area' ? 'area' : 'path';
@@ -4404,7 +4451,7 @@
         window.__cmapBoot = () => { booted = true; buildMap(); armErrand(); };
         const s = document.createElement('script');
         s.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(KEY)
-            + '&libraries=geometry,places&v=weekly&loading=async&callback=__cmapBoot';
+            + '&libraries=geometry&v=weekly&loading=async&callback=__cmapBoot';
         s.async = true;
         s.onerror = () => {
             loading = false;

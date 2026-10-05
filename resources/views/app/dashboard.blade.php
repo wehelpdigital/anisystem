@@ -1229,7 +1229,7 @@
                     <img class="dash-anee-face" src="{{ $aiSettings->faceUrl() }}" alt="" width="56" height="56">
                     <div class="min-w-0">
                         <h2 class="dash-anee-h" id="dashAneeH">{{ $aneeName }}</h2>
-                        <p class="dash-anee-p">Your smart farm technician. Ask about your crops or send a photo. Anee answers 24/7, so you never wait for a technician. Ask in {{ \App\Support\Region::ph() ? 'English or Tagalog' : 'plain English' }}.{{ $canUseAi ? '' : ' On Boss and Lifetime plans.' }}</p>
+                        <p class="dash-anee-p">Your smart farm technician. Ask about your crops or send a photo. Anee answers 24/7, so you never wait for a technician. Ask in {{ \App\Support\Region::ph() ? 'English or Tagalog' : 'plain English' }}.{{ $canUseAi ? '' : ' She comes with ' . \App\Support\Tier::withPlan(\App\Support\Tier::farmUnlocksAt('ai')) . '.' }}</p>
                     </div>
                 </div>
 
