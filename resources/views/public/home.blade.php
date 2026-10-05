@@ -58,11 +58,11 @@
                     {{ $R::t('cropsLine') }}
                 </span>
                 <h1 class="hp-h1 animate-fade-up" style="animation-delay:.06s">
-                    Manage your crops for a
+                    The only app you need for a
                     {{-- The promise, underlined by hand: one gold brush stroke that
                          draws itself under the words once the page has settled
                          (one line only, on the owner's word). --}}
-                    <span class="hp-mark"><span class="hp-shimmer">higher yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
+                    <span class="hp-mark"><span class="hp-shimmer">higher yield</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
                 </h1>
                 <p class="hp-lede animate-fade-up" style="animation-delay:.12s">
                     @if ($ph)
@@ -996,12 +996,16 @@
         background-size: 220% 100%; animation: hpShimmer 6s linear infinite; }
     @keyframes hpShimmer { from { background-position: 0% 0; } to { background-position: -220% 0; } }
     /* The hand drawn underline under "higher yield". */
-    .hp-mark { position: relative; display: inline-block; white-space: nowrap; padding-bottom: .08em; }
+    .hp-mark { position: relative; display: inline-block; white-space: nowrap; }
+    /* Gradient text paints only inside its own box, and the h1's tight line
+       height cut the tails of the g and y off: the box reaches below them
+       now, and gives the room back so the lines stay where they were. */
+    .hp-mark .hp-shimmer { padding: .04em .03em .2em; margin: -.04em -.03em -.2em; }
     /* Drawn by revealing the whole stroke from left to right with a clip, not
        by animating a dash: a dash on a stretched, non-scaling stroke is
        measured differently by each browser, and on some phones the line
        showed under "yield" first and ended under "higher" only. */
-    .hp-mark-line { position: absolute; left: -2%; bottom: -.16em; width: 104%; height: .34em; overflow: visible; pointer-events: none;
+    .hp-mark-line { position: absolute; left: -2%; bottom: -.3em; width: 104%; height: .3em; overflow: visible; pointer-events: none;
         -webkit-clip-path: inset(-60% 102% -60% -4%); clip-path: inset(-60% 102% -60% -4%);
         animation: hpReveal 1.2s cubic-bezier(.65,0,.35,1) .7s forwards; }
     .hp-mark-line path { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
@@ -1009,7 +1013,7 @@
         animation: hpGlint 4.5s ease-in-out 2.4s infinite; }
     @keyframes hpReveal { to { -webkit-clip-path: inset(-60% -4% -60% -4%); clip-path: inset(-60% -4% -60% -4%); } }
     @keyframes hpGlint { 0%, 100% { stroke: #f5c518; } 50% { stroke: #fde68a; } }
-    .hp-lede { margin-top: 1.4rem; max-width: 36rem; font-size: clamp(1.02rem, 1.7vw, 1.18rem); line-height: 1.7; color: #dde6d4; }
+    .hp-lede { margin-top: 1.9rem; max-width: 36rem; font-size: clamp(1.02rem, 1.7vw, 1.18rem); line-height: 1.7; color: #dde6d4; }
     .hp-hero-acts { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .8rem; }
     .hp-trust { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; font-size: .9rem; font-weight: 700; color: #e6eddd; }
     .hp-trust li { display: inline-flex; align-items: center; gap: .4rem; }
