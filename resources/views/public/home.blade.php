@@ -59,7 +59,7 @@
                     {{ $R::t('cropsLine') }}
                 </span>
                 <h1 class="hp-h1 animate-fade-up" style="animation-delay:.06s">
-                    Everything your farm needs for a
+                    Everything Your Farm Needs for a
                     {{-- The promise, underlined by hand: one gold brush stroke that
                          draws itself under the words once the page has settled
                          (one line only, on the owner's word). The first word
@@ -71,7 +71,7 @@
                          engines and screen readers. Each word wears its own
                          shimmer: a gradient clipped to text does not reach
                          into a moving child. --}}
-                    <span class="hp-mark"><span class="hp-rot" data-words="higher,stable,bigger,better,steady,record,greater,maximum"><span class="hp-rot-w hp-shimmer">higher</span></span> <span class="hp-shimmer">yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
+                    <span class="hp-mark"><span class="hp-rot" data-words="Higher,Stable,Bigger,Better,Steady,Record,Greater,Maximum"><span class="hp-rot-w hp-shimmer">Higher</span></span> <span class="hp-shimmer">Yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
                 </h1>
                 <p class="hp-lede animate-fade-up" style="animation-delay:.12s">
                     @if ($ph)
@@ -155,7 +155,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick is-red">The inconvenient truth</p>
-                <h2 class="hp-h2">Traditional farming is <em class="is-red">not profitable</em> anymore.</h2>
+                <h2 class="hp-h2">Traditional Farming Is <em class="is-red">Not Profitable</em> Anymore.</h2>
                 <p class="hp-p">
                     Fertilizer, diesel and the extra sprays and work that unpredictable weather forces on you cost
                     more every season. But the price you get for your {{ $ph ? 'palay' : 'harvest' }} stays low. When
@@ -211,7 +211,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick is-red">The real cost of guessing</p>
-                <h2 class="hp-h2">Guessing is the most <em class="is-red">expensive</em> thing on your farm.</h2>
+                <h2 class="hp-h2">Guessing Is the Most <em class="is-red">Expensive</em> Thing on Your Farm.</h2>
                 <p class="hp-p">
                     A spray a few days late, a dose that was guessed, planting in the wrong week. Each one looks small,
                     but crop studies show how much harvest they take from every hectare. <b>Here is where that money
@@ -269,7 +269,7 @@
         <div class="relative max-w-6xl mx-auto px-4 sm:px-6 hp-sec" style="z-index:1">
             <div class="hp-head reveal">
                 <p class="hp-kick">The old calendar is not enough</p>
-                <h2 class="hp-h2">Modern farming wins by <em>precision.</em></h2>
+                <h2 class="hp-h2">Modern Farming Wins by <em>Precision.</em></h2>
                 <p class="hp-p">
                     The weather no longer follows the old planting calendar. Rain comes early, dry spells last
                     longer, and pests show up before you expect them. The farmers who do well today do <b>the right
@@ -327,7 +327,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">{{ $ph ? 'From pagtatanim to ani' : 'From planting to harvest' }}</p>
-                <h2 class="hp-h2">Your whole season in <em>{{ count($stages) }} steps.</em></h2>
+                <h2 class="hp-h2">Your Whole Season in <em>{{ count($stages) }} Steps.</em></h2>
                 <p class="hp-p">Each step has its own tools, and Anee helps in every one. Tap a step, then a tool, to see it work on a real phone.</p>
             </div>
 
@@ -402,7 +402,7 @@
             <div class="hp-anee-grid">
                 <div class="reveal">
                     <p class="hp-kick">Meet Anee</p>
-                    <h2 class="hp-h2">Your AI farm technician <em>knows your farm.</em></h2>
+                    <h2 class="hp-h2">Your AI Farm Technician <em>Knows Your Farm.</em></h2>
                     <p class="hp-p">
                         Anee is not a regular chatbot. Before she answers, she looks at your lots, their growth stages,
                         your records and the weather. So when you ask "should I spray tomorrow?", she answers for your
@@ -474,7 +474,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">See the app</p>
-                <h2 class="hp-h2">See the real app <em>on a real phone.</em></h2>
+                <h2 class="hp-h2">See the Real App <em>on a Real Phone.</em></h2>
                 <p class="hp-p">Short recordings of anee.io, exactly as you will use it in the field.</p>
             </div>
 
@@ -521,7 +521,7 @@
             </div>
             <div class="reveal">
                 <p class="hp-kick">Your farm is a business</p>
-                <h2 class="hp-h2">Your farm is a business. <em>Run it like one.</em></h2>
+                <h2 class="hp-h2">Your Farm Is a Business. <em>Run It Like One.</em></h2>
                 <p class="hp-p">
                     The sari-sari store takes GCash, tricycles are booked by app, and the trader who buys your
                     {{ $R::t('rice') }} keeps records on a computer. They all earn more because they keep good
@@ -560,7 +560,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">Why farmers switch</p>
-                <h2 class="hp-h2">Traditional farming <em>vs anee.io</em></h2>
+                <h2 class="hp-h2">Traditional Farming <em>vs anee.io</em></h2>
                 <p class="hp-p">Your season does not have to live in your head or on loose paper. Here is what changes when the whole plan is in one place.</p>
             </div>
 
@@ -606,7 +606,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">Simple pricing</p>
-                <h2 class="hp-h2">Start free. <em>Upgrade when you need more.</em></h2>
+                <h2 class="hp-h2">Start Free. <em>Upgrade When You Need More.</em></h2>
                 <p class="hp-p">Libre is free forever. When your farm needs more, upgrade inside the app and pay with {{ $R::payMethod() }}.</p>
                 <div class="hp-billing" role="group" aria-label="Billing">
                     <button type="button" :class="yearly ? '' : 'is-on'" @click="yearly = false">Monthly</button>
@@ -690,7 +690,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">Palay, mais, gulay and more</p>
-                <h2 class="hp-h2">One cropping calendar works for <em>every crop you grow.</em></h2>
+                <h2 class="hp-h2">One Cropping Calendar Works for <em>Every Crop You Grow.</em></h2>
                 <p class="hp-p">anee.io knows 85 Philippine crops, from palay and mais to gulay and fruit trees. Set the day you sow, transplant or plant, and every task after it gets its day count.</p>
             </div>
             <div class="mt-12 grid gap-5 sm:grid-cols-2">
@@ -726,7 +726,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">Free farm guides</p>
-                <h2 class="hp-h2">Read free guides made <em>for Filipino farmers.</em></h2>
+                <h2 class="hp-h2">Read Free Guides Made <em>for Filipino Farmers.</em></h2>
                 <p class="hp-p">How to plant palay and mais, what to do about the rice bug and the rice black bug, and how much fertilizer a hectare needs. Written for Philippine farms and free to read.</p>
             </div>
             {{-- What farmers search for most, each a link to the guide that answers it. --}}
@@ -797,7 +797,7 @@
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">Questions</p>
-                <h2 class="hp-h2">Here is what farmers ask <em>about anee.io.</em></h2>
+                <h2 class="hp-h2">Here Is What Farmers Ask <em>About anee.io.</em></h2>
             </div>
             <div class="mt-10 space-y-3" x-data="{ open: 0 }">
                 @foreach ($faqs as $i => [$q, $a])
@@ -841,7 +841,7 @@
         <div class="hp-final-shade" aria-hidden="true"></div>
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 hp-sec text-center reveal on-dark" style="z-index:1">
             <img src="{{ $faceLg }}" alt="" class="hp-final-face">
-            <h2 class="hp-h2">Your best season starts with <em>a free account.</em></h2>
+            <h2 class="hp-h2">Your Best Season Starts With <em>a Free Account.</em></h2>
             <p class="hp-p">Set up your first season tonight. Tomorrow morning, anee.io already knows what each lot needs.</p>
             <div class="hp-cta">
                 <div class="hp-cta-row">

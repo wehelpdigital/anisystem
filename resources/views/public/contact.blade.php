@@ -33,8 +33,8 @@
         <div class="relative max-w-5xl mx-auto px-4 sm:px-6 ct2-hero-in text-center on-dark" style="z-index:1">
             <span class="ct2-chip animate-fade-up">Contact us</span>
             <h1 class="ct2-h1 animate-fade-up" style="animation-delay:.06s">
-                We are here
-                <span class="hp-mark"><span class="hp-shimmer">to help.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
+                We Are Here
+                <span class="hp-mark"><span class="hp-shimmer">to Help.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
             </h1>
             <p class="ct2-lede animate-fade-up" style="animation-delay:.12s">
                 Questions about plans, {{ $pay }} payments or setting up your season? Write to us. A real person reads
@@ -88,7 +88,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">Get an answer faster</p>
-                <h2 class="hp-h2">Pick the quickest way <em>for your question.</em></h2>
+                <h2 class="hp-h2">Pick the Quickest Way <em>for Your Question.</em></h2>
                 <p class="hp-p">Some questions do not need to wait for an email.</p>
             </div>
             <div class="ct2-doors">
@@ -138,7 +138,7 @@
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">Quick answers</p>
-                <h2 class="hp-h2">Here is what people <em>ask us most.</em></h2>
+                <h2 class="hp-h2">Here Is What People <em>Ask Us Most.</em></h2>
             </div>
             <div class="mt-10 space-y-3" x-data="{ open: 0 }">
                 @foreach ($quick as $i => [$q, $a])
@@ -166,7 +166,7 @@
     <section class="ct2-final">
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 hp-sec text-center reveal on-dark" style="z-index:1">
             <img src="{{ $faceLg }}" alt="" class="ct2-final-face">
-            <h2 class="hp-h2">Not a member yet? <em>Start free today.</em></h2>
+            <h2 class="hp-h2">Not a Member Yet? <em>Start Free Today.</em></h2>
             <p class="hp-p">Set up your first season in minutes. If you get stuck, we are one email away.</p>
             <div class="hp-cta">
                 <div class="hp-cta-row">

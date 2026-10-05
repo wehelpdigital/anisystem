@@ -32,8 +32,8 @@
         <div class="relative max-w-5xl mx-auto px-4 sm:px-6 ab-hero-in text-center on-dark" style="z-index:1">
             <span class="ab-chip animate-fade-up">About anee.io</span>
             <h1 class="ab-h1 animate-fade-up" style="animation-delay:.06s">
-                Built by farmers, for
-                <span class="hp-mark"><span class="hp-shimmer">{{ $ph ? 'Filipino farmers.' : 'every farmer.' }}</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
+                Built by Farmers, for
+                <span class="hp-mark"><span class="hp-shimmer">{{ $ph ? 'Filipino Farmers.' : 'Every Farmer.' }}</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
             </h1>
             <p class="ab-lede animate-fade-up" style="animation-delay:.12s">
                 anee.io started as the system our own agronomists and technicians use on client farms. Now it is open
@@ -64,7 +64,7 @@
             </div>
             <div class="reveal">
                 <p class="hp-kick">Our story</p>
-                <h2 class="hp-h2">Our name comes from <em>ani, the harvest.</em></h2>
+                <h2 class="hp-h2">Our Name Comes From <em>Ani, the Harvest.</em></h2>
                 <p class="hp-p">
                     <b>Ani</b> means harvest. It is the whole point of a season, and the one score every farmer keeps.
                     @if ($ph)
@@ -91,7 +91,7 @@
         <div class="relative max-w-6xl mx-auto px-4 sm:px-6" style="z-index:1">
             <div class="hp-head reveal">
                 <p class="hp-kick">Our mission</p>
-                <h2 class="hp-h2">Help every {{ $ph ? 'Filipino ' : '' }}farmer grow <em>more from the same land.</em></h2>
+                <h2 class="hp-h2">Help Every {{ $ph ? 'Filipino ' : '' }}Farmer Grow <em>More From the Same Land.</em></h2>
                 <p class="hp-p">
                     Fertilizer and fuel cost more every year, and the price at harvest does not keep up. We believe the
                     answer is not another product to buy. It is better farm management, made simple enough to follow
@@ -125,7 +125,7 @@
         <div class="max-w-5xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">How anee.io began</p>
-                <h2 class="hp-h2">From our fields <em>to yours.</em></h2>
+                <h2 class="hp-h2">From Our Fields <em>to Yours.</em></h2>
                 <p class="hp-p">anee.io was not made in an office. It grew out of years of work on real farms.</p>
             </div>
             <ol class="ab-path">
@@ -161,7 +161,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 ab-two is-top">
             <div class="reveal">
                 <p class="hp-kick">Why we built it</p>
-                <h2 class="hp-h2">Made for farms <em>in the Philippines.</em></h2>
+                <h2 class="hp-h2">Made for Farms <em>in the Philippines.</em></h2>
                 <p class="hp-p">
                     Farming still employs about one in five working Filipinos, and most farms here are small. Our guide to
                     <a href="{{ url('/blog/agriculture-in-the-philippine-economy') }}" class="ab-link">agriculture in the Philippine economy</a>
@@ -213,7 +213,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">The app</p>
-                <h2 class="hp-h2">What anee.io <em>does for you.</em></h2>
+                <h2 class="hp-h2">What anee.io <em>Does for You.</em></h2>
                 <p class="hp-p">One app for the whole season, from planning to the final report.</p>
             </div>
             <div class="ab-does">
@@ -247,7 +247,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">What we stand for</p>
-                <h2 class="hp-h2">The values <em>behind every tool.</em></h2>
+                <h2 class="hp-h2">The Values <em>Behind Every Tool.</em></h2>
             </div>
             <div class="ab-values">
                 @foreach ([
@@ -278,7 +278,7 @@
         <div class="ab-final-shade" aria-hidden="true"></div>
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 hp-sec text-center reveal on-dark" style="z-index:1">
             <img src="{{ $faceLg }}" alt="" class="ab-final-face">
-            <h2 class="hp-h2">Reach your crop's full potential <em>this season.</em></h2>
+            <h2 class="hp-h2">Reach Your Crop's Full Potential <em>This Season.</em></h2>
             <p class="hp-p">Start planning with the same system our own technicians use. It is free to start.</p>
             <div class="hp-cta">
                 <div class="hp-cta-row">
