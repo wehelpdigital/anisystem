@@ -62,7 +62,7 @@
                     {{-- The promise, underlined by hand: one gold brush stroke that
                          draws itself under the words once the page has settled
                          (one line only, on the owner's word). --}}
-                    <span class="hp-mark"><span class="hp-shimmer">higher yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" pathLength="1" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
+                    <span class="hp-mark"><span class="hp-shimmer">higher yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
                 </h1>
                 <p class="hp-lede animate-fade-up" style="animation-delay:.12s">
                     @if ($ph)
@@ -997,11 +997,17 @@
     @keyframes hpShimmer { from { background-position: 0% 0; } to { background-position: -220% 0; } }
     /* The hand drawn underline under "higher yield". */
     .hp-mark { position: relative; display: inline-block; white-space: nowrap; padding-bottom: .08em; }
-    .hp-mark-line { position: absolute; left: -2%; bottom: -.16em; width: 104%; height: .34em; overflow: visible; pointer-events: none; }
-    .hp-mark-line path { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; }
+    /* Drawn by revealing the whole stroke from left to right with a clip, not
+       by animating a dash: a dash on a stretched, non-scaling stroke is
+       measured differently by each browser, and on some phones the line
+       showed under "yield" first and ended under "higher" only. */
+    .hp-mark-line { position: absolute; left: -2%; bottom: -.16em; width: 104%; height: .34em; overflow: visible; pointer-events: none;
+        -webkit-clip-path: inset(-60% 102% -60% -4%); clip-path: inset(-60% 102% -60% -4%);
+        animation: hpReveal 1.2s cubic-bezier(.65,0,.35,1) .7s forwards; }
+    .hp-mark-line path { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
     .hp-mark-line .a { stroke: #f5c518; stroke-width: 7px; filter: drop-shadow(0 3px 8px rgb(245 197 24 / .45));
-        animation: hpDraw .95s var(--hp-ease) .75s forwards, hpGlint 4.5s ease-in-out 2.4s infinite; }
-    @keyframes hpDraw { to { stroke-dashoffset: 0; } }
+        animation: hpGlint 4.5s ease-in-out 2.4s infinite; }
+    @keyframes hpReveal { to { -webkit-clip-path: inset(-60% -4% -60% -4%); clip-path: inset(-60% -4% -60% -4%); } }
     @keyframes hpGlint { 0%, 100% { stroke: #f5c518; } 50% { stroke: #fde68a; } }
     .hp-lede { margin-top: 1.4rem; max-width: 36rem; font-size: clamp(1.02rem, 1.7vw, 1.18rem); line-height: 1.7; color: #dde6d4; }
     .hp-hero-acts { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .8rem; }
@@ -1398,13 +1404,13 @@
 
     @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
-        .hp-hero-bg, .hp-hero-glow, .hp-stage-ring, .hp-shimmer, .hp-mark-line path, .hp-go::after, .hp-tour-dot::before, .hp-float, .hp-down, .hp-marquee-track,
+        .hp-hero-bg, .hp-hero-glow, .hp-stage-ring, .hp-shimmer, .hp-mark-line, .hp-mark-line path, .hp-go::after, .hp-tour-dot::before, .hp-float, .hp-down, .hp-marquee-track,
         .hp-biz-b, .hp-final-face, .hp-live, .hp-read i, .hp-vs.is-visible .hp-vs-new > span { animation: none !important; }
         .hp-st-tab.is-on.is-timing .hp-st-bar i { animation: none; }
         .hp-phone.is-hero, .hp-st-pane, .hp-tool, .hp-msg, .hp-read, .hp-film, .hp-film-tag, .hp-modal, .hp-modal-box, .hp-sticky,
         .hp-go, .hp-alt, .hp-fact, .hp-why-card, .hp-fix, .hp-st-tab, .hp-gain, .hp-reel-card .hp-phone, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
         .hp-chat .hp-msg, .hp-chat .hp-read { opacity: 1; transform: none; }
-        .hp-mark-line path { stroke-dashoffset: 0; }
+        .hp-mark-line { -webkit-clip-path: none; clip-path: none; }
         .hp-marquee-track { flex-wrap: wrap; width: auto; justify-content: center; }
         .hp-marquee-set + .hp-marquee-set { display: none; }
     }
