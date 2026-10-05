@@ -62,9 +62,9 @@
                 </h1>
                 <p class="hp-lede animate-fade-up" style="animation-delay:.12s">
                     @if ($ph)
-                        anee.io is the farm app for Filipino farmers. Your whole season lives on your phone: every lot
-                        counted from its own day zero, every task on its right day, every peso written down. And Anee,
-                        your AI farm technician, answers in Tagalog or English, day and night.
+                        anee.io is the farm app for Filipino farmers who grow palay, mais and gulay. From pagtatanim to
+                        ani, it tells you what to do each day, keeps track of every peso, and lets you ask Anee, your AI
+                        farm technician, in Tagalog or English, any time.
                     @else
                         anee.io puts your whole season on your phone: every field counted from its own day zero, every
                         task on its right day, every dollar written down, and Anee, your AI farm technician, ready with
@@ -139,7 +139,7 @@
                 @foreach ([
                     [$ph ? 85 : 86, $ph ? 'Philippine crops, each with its own day count' : 'crops, each with its own day count'],
                     [$tools->count(), 'tools in one app, from planning to profit'],
-                    [count($stages), 'steps that carry a season from plan to report'],
+                    [count($stages), 'steps from planning to the final report'],
                     ['24/7', 'Anee answers, day and night'],
                 ] as $i => [$n, $l])
                     <div class="hp-fact reveal" style="--reveal-delay: {{ $i * 0.08 }}s">
@@ -180,51 +180,51 @@
         </div>
     </section>
 
-    {{-- ================= WHY: FARMING BY INTERVENTION ================= --}}
-    {{-- The argument the whole site rests on: the calendar stopped being
-         enough. Modern farming wins by intervention, reading the change
-         early and acting on the right day, and that is the app's job. --}}
+    {{-- ================= WHY: FARMING WITH PRECISION ================= --}}
+    {{-- The argument the whole site rests on: the old calendar stopped being
+         enough. Modern farming wins by precision (the right work, the right
+         amount, the right day), and that is the app's job. The owner asked
+         for the word "precision" and for plain words (2026-10-05). --}}
     <section class="hp-why spark-field on-dark">
         <img src="{{ asset('images/site/photos/storm-paddies.jpg') }}" alt="Farmers transplanting rice under a heavy grey sky" class="hp-why-bg" loading="lazy">
         <div class="hp-why-shade" aria-hidden="true"></div>
         <div class="relative max-w-6xl mx-auto px-4 sm:px-6 hp-sec" style="z-index:1">
             <div class="hp-head reveal">
-                <p class="hp-kick">Why plans must bend</p>
-                <h2 class="hp-h2">Modern farming wins by <em>intervention</em></h2>
+                <p class="hp-kick">The old calendar is not enough</p>
+                <h2 class="hp-h2">Modern farming wins by <em>precision</em></h2>
                 <p class="hp-p">
-                    The old way follows a fixed calendar and hopes. But the seasons stopped keeping to it. El Niño
-                    and La Niña swing, storms land early, and pests arrive before the book says they should. The
-                    farmers who do well today <b>see the change coming and act on the right day</b>. That is the
-                    job anee.io was built to do.
+                    The weather no longer follows the old planting calendar. Rain comes early, dry spells last
+                    longer, and pests show up before you expect them. The farmers who do well today do <b>the right
+                    work, in the right amount, on the right day</b>. anee.io helps you do exactly that.
                 </p>
             </div>
 
             <div class="hp-why-grid">
                 @foreach ([
-                    ['The weather turns', 'A dry spell stretches, or a week of rain moves in ahead of your spray day.',
-                     'A forecast for each lot and planting analyses that read El Niño and La Niña see it early. When the plan must move, you drag it and every date follows.',
+                    ['The weather changes', 'A dry spell goes on, or rain comes right before your spray day.',
+                     'You see the forecast for each lot ahead of time. If you need to move the plan, drag it and every date moves with it.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999A5.002 5.002 0 105.9 12.1 4 4 0 003 15zM13 21l-2 2m6-4l-2 2m-8-2l-2 2"/>'],
-                    ['A pest lands first', 'Yellow leaves, streaks and holes, and the technician\'s next visit is days away.',
-                     'Take a photo and Anee checks it against your crop and its stage, so you treat the right problem at the right dose, today.',
+                    ['Pests come early', 'Yellow leaves or holes appear, like from the rice bug or thrips, and help is days away.',
+                     'Take a photo and Anee tells you what it is and what to do, so you treat the right problem with the right dose today.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/>'],
-                    ['The crop runs ahead or behind', 'Heat pushed the stages faster than the plan, or a cold spell held them back.',
-                     'See the growth stage of each lot on any date, with what to do and what to watch for. Realign by Anee finds the stage the crop is truly in.',
+                    ['The crop grows faster or slower', 'Hot days make it grow faster than the plan. Cool days slow it down.',
+                     'See the growth stage of each lot on any day, with what to do and what to watch for. Anee can check the real stage for you.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
-                    ['Costs creep up during the season', 'An extra spray here, a job done twice there, and your profit quietly disappears.',
-                     'Labor, materials and services add up in ' . $R::symbol() . ' as the season runs, so you know what each action costs before you decide.',
+                    ['Costs go up', 'One extra spray, one job done twice, and your profit gets smaller without you noticing.',
+                     'Labor, materials and services add up in ' . $R::symbol() . ' as you go, so you know the cost before you spend.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
                 ] as $i => [$t, $w, $a, $ico])
                     <div class="hp-why-card reveal" style="--reveal-delay: {{ $i * 0.08 }}s">
                         <div class="hp-why-top">
                             <span class="hp-why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">{!! $ico !!}</svg></span>
                             <div>
-                                <p class="hp-why-when">When</p>
+                                <p class="hp-why-when">The problem</p>
                                 <h3 class="hp-why-t">{{ $t }}</h3>
                             </div>
                         </div>
                         <p class="hp-why-w">{{ $w }}</p>
                         <div class="hp-why-a">
-                            <span class="hp-why-badge">{!! $tick !!}anee.io</span>
+                            <span class="hp-why-badge">{!! $tick !!}What anee.io does</span>
                             <p>{{ $a }}</p>
                         </div>
                     </div>
@@ -233,7 +233,7 @@
 
             <div class="hp-cta reveal">
                 <div class="hp-cta-row">
-                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and act on time {!! $arrow !!}</a>
+                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and farm with precision {!! $arrow !!}</a>
                 </div>
                 <p class="hp-cta-note">Your first season plan is free, and it moves when the weather does.</p>
             </div>
@@ -247,23 +247,22 @@
     <section class="hp-sec bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
-                <p class="hp-kick">What every farm is up against</p>
-                <h2 class="hp-h2">The costs are not coming back down. <em>So the yield has to come up.</em></h2>
+                <p class="hp-kick">Farming costs keep rising</p>
+                <h2 class="hp-h2">Costs keep going up. <em>So your harvest has to go up too.</em></h2>
                 <p class="hp-p">
-                    Most of what squeezes a farm is out of your hands. What is yours is the return on every
-                    {{ $peso }} you have already spent, and the honest way to raise it is to raise the yield that
-                    money buys.
+                    You cannot control the price of fertilizer, fuel or palay. What you can control is how well you
+                    use what you already bought. A bigger harvest from the same field is the best way to earn more.
                 </p>
             </div>
 
             <div class="sq-grid mt-12">
                 @foreach ([
-                    ['Fertilizer prices keep climbing', 'The sack costs more each season. That money only comes back if every gram lands on the right lot, at the right stage, on the right day.', '<path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M6 21V9l6-5 6 5v12M10 21v-5h4v5"/><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 12.5h5"/>'],
-                    ['The weather no longer keeps to the calendar', 'A plan based on habit gets caught. A plan based on each lot\'s day count, with that lot\'s forecast beside it, moves before the sky does.', '<path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/><path stroke-linecap="round" d="M8 21l-1 2M12 21l-1 2M16 21l-1 2"/>'],
-                    ['The soil is tired', 'Decades of the same crop and the same salts. Soil like that punishes a wrong dose twice: in the wasted input, and in the harvest it could not carry.', '<path stroke-linecap="round" stroke-linejoin="round" d="M2.5 15.5c3-1.6 6-1.6 9 0s6 1.6 9 0"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.5 19.5c3-1.6 6-1.6 9 0s6 1.6 9 0"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 11.5V4m0 0L9 6.5M12 4l3 2.5"/>'],
-                    ['Fuel costs more than ever', 'Every pass of the tractor and every hour the pump runs costs fuel. Fewer wasted passes is diesel that stays in the tank.', '<path stroke-linecap="round" stroke-linejoin="round" d="M4 21V5a2 2 0 012-2h5a2 2 0 012 2v16M3 21h12"/><path stroke-linecap="round" stroke-linejoin="round" d="M13 10h3a2 2 0 012 2v5a1.5 1.5 0 003 0v-7l-2.5-2.5"/><path stroke-linecap="round" d="M6.5 7.5h4"/>'],
-                    ['A price set far away', 'An import decision or a shipping cost moves your selling price months before harvest. You cannot argue with it. You can bring more sacks.', '<path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"/><circle cx="12" cy="12" r="9"/>'],
-                    ['The one thing still in your hands', 'Management. The same inputs, used on time and written down, give a bigger harvest than a bigger budget spent from memory.', '<path stroke-linecap="round" stroke-linejoin="round" d="M4 19l6-6 4 4 6-8"/><path stroke-linecap="round" stroke-linejoin="round" d="M20 9V5h-4"/>', true],
+                    ['Fertilizer costs more', 'A sack of urea fertilizer or complete fertilizer 14 14 14 costs more every season. It only pays off if you apply it on the right day and in the right amount.', '<path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M6 21V9l6-5 6 5v12M10 21v-5h4v5"/><path stroke-linecap="round" stroke-linejoin="round" d="M9.5 12.5h5"/>'],
+                    ['The weather is hard to predict', 'Planting by habit gets caught by the rain. Planting by day count, with the forecast beside it, lets you move first.', '<path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/><path stroke-linecap="round" d="M8 21l-1 2M12 21l-1 2M16 21l-1 2"/>'],
+                    ['The soil is tired', 'Years of the same crop wear the soil down. A wrong dose then hurts twice: you waste the fertilizer, and you lose harvest.', '<path stroke-linecap="round" stroke-linejoin="round" d="M2.5 15.5c3-1.6 6-1.6 9 0s6 1.6 9 0"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.5 19.5c3-1.6 6-1.6 9 0s6 1.6 9 0"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 11.5V4m0 0L9 6.5M12 4l3 2.5"/>'],
+                    ['Fuel costs more', 'Every tractor pass and every hour of pumping water costs diesel. Fewer wasted trips means more money saved.', '<path stroke-linecap="round" stroke-linejoin="round" d="M4 21V5a2 2 0 012-2h5a2 2 0 012 2v16M3 21h12"/><path stroke-linecap="round" stroke-linejoin="round" d="M13 10h3a2 2 0 012 2v5a1.5 1.5 0 003 0v-7l-2.5-2.5"/><path stroke-linecap="round" d="M6.5 7.5h4"/>'],
+                    ['Prices you cannot control', 'Imports can push the palay price down before you harvest. You cannot change the price, but you can harvest more sacks.', '<path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"/><circle cx="12" cy="12" r="9"/>'],
+                    ['What you can control', 'How you manage your farm. The same inputs, used on time and written down, give a bigger harvest than spending more.', '<path stroke-linecap="round" stroke-linejoin="round" d="M4 19l6-6 4 4 6-8"/><path stroke-linecap="round" stroke-linejoin="round" d="M20 9V5h-4"/>', true],
                 ] as $i => $sq)
                     <div class="sq-card reveal{{ ($sq[3] ?? false) ? ' is-lead' : '' }}" style="--reveal-delay: {{ ($i % 3) * 0.07 }}s">
                         <span class="sq-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">{!! $sq[2] !!}</svg></span>
@@ -275,45 +274,45 @@
 
             <div class="hp-truth reveal">
                 <p class="hp-truth-k">Before you buy another sack</p>
-                <p class="hp-truth-h">The problem is not a product. <span>It is how you manage your farm.</span></p>
+                <p class="hp-truth-h">A new product will not fix it. <span>Better farm management will.</span></p>
                 <p class="hp-truth-p">
-                    Harvests are lost to a spray three days late, a dose that was guessed, water that missed its
-                    stage and costs nobody wrote down. No sack fixes a late decision. anee.io is not another product
-                    to buy. <b>It is the system that makes every product you already buy pay off.</b>
+                    Most harvest is lost to a spray done three days late, a guessed dose, water at the wrong time
+                    and costs nobody wrote down. anee.io is not another product to buy. <b>It helps every product you
+                    already buy work better.</b>
                 </p>
             </div>
 
             <div class="hp-cta reveal">
                 <div class="hp-cta-row">
-                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and raise your return {!! $arrow !!}</a>
+                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and grow more {!! $arrow !!}</a>
                 </div>
-                <p class="hp-cta-note">More yield from the same hectare is the only raise a farmer can give themselves.</p>
+                <p class="hp-cta-note">A bigger harvest from the same hectare is the raise you give yourself.</p>
             </div>
         </div>
     </section>
 
-    {{-- ================= THE COST OF GUESSING ================= --}}
+    {{-- ================= WHAT GUESSING COSTS ================= --}}
     {{-- The stakes in numbers: what a season bleeds when nobody intervenes,
          and the anee.io answer to each leak. The counters count up and the
          red bars fill when the cards scroll into view. --}}
     <section class="hp-sec bg-gray-50 bg-drift">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
-                <p class="hp-kick is-red">The price of guessing</p>
-                <h2 class="hp-h2">What a season loses without intervention</h2>
-                <p class="hp-p">Crop research keeps putting numbers on the harvest that guesswork gives away. Every card below is money that never reaches your pocket.</p>
+                <p class="hp-kick is-red">What guessing costs you</p>
+                <h2 class="hp-h2">How much a season can lose when you guess</h2>
+                <p class="hp-p">Crop studies show how much harvest is lost when farm work is guessed. Each card below is money that never reaches your pocket.</p>
             </div>
 
             <div class="mt-12 grid gap-5 md:grid-cols-2">
                 @foreach ([
-                    ['n' => 40, 'img' => 'palay-heads.jpg', 'l' => 'Yield lost to pests and diseases', 'p' => 'When the treatment comes late, or never comes at all.', 'peso' => '₱25,000 to ₱40,000'],
-                    ['n' => 30, 'img' => 'sacks.jpg', 'l' => 'Wasted on the wrong fix', 'p' => 'A misread problem means you buy the wrong product at full price, while the real problem keeps eating.', 'peso' => '₱18,000 to ₱30,000'],
-                    ['n' => 30, 'img' => 'palay-phone.jpg', 'l' => 'Yield lost to myths that are not true', 'p' => 'Remedies heard from others and beliefs about lucky days, tried on a whole field before anyone checked.', 'peso' => '₱18,000 to ₱30,000'],
-                    ['n' => 30, 'img' => 'sacks-shed.jpg', 'l' => 'Profit lost to untracked spending', 'p' => 'Costs you remember but never write down leak all season, and only show up when you settle the accounts.', 'peso' => '₱18,000 to ₱30,000'],
-                    ['n' => 25, 'img' => 'transplant.jpg', 'l' => 'Yield lost to fertilizer on the wrong day', 'p' => 'The right sack in the wrong week feeds the field a small part of what it paid for.', 'peso' => '₱15,000 to ₱25,000'],
-                    ['n' => 25, 'img' => 'storm-paddies.jpg', 'l' => 'Yield lost to water at the wrong time', 'p' => 'Dry at flowering, flooded at ripening. The stage the water missed never comes back.', 'peso' => '₱15,000 to ₱25,000'],
-                    ['n' => 20, 'img' => 'farmer-hijab.jpg', 'l' => 'Yield lost to delayed decisions', 'p' => 'Waiting days for an answer while the problem keeps growing.', 'peso' => '₱12,000 to ₱20,000'],
-                    ['n' => 20, 'img' => 'hero-planting.jpg', 'l' => 'Yield lost to planting at the wrong time', 'p' => 'A season started out of habit instead of by the real climate calendar pays for it at harvest.', 'peso' => '₱12,000 to ₱20,000'],
+                    ['n' => 40, 'img' => 'palay-heads.jpg', 'l' => 'Lost to pests and diseases', 'p' => 'When the rice bug, thrips or fall armyworm are treated late, or not at all.', 'peso' => '₱25,000 to ₱40,000'],
+                    ['n' => 30, 'img' => 'sacks.jpg', 'l' => 'Wasted on the wrong fix', 'p' => 'If you guess the problem wrong, you pay full price for the wrong product while the real problem grows.', 'peso' => '₱18,000 to ₱30,000'],
+                    ['n' => 30, 'img' => 'palay-phone.jpg', 'l' => 'Lost to farm myths', 'p' => 'Remedies heard from others, or lucky planting days, tried on a whole field before anyone checked.', 'peso' => '₱18,000 to ₱30,000'],
+                    ['n' => 30, 'img' => 'sacks-shed.jpg', 'l' => 'Lost to spending nobody tracked', 'p' => 'Small costs you never write down add up all season, and you only see them at the end.', 'peso' => '₱18,000 to ₱30,000'],
+                    ['n' => 25, 'img' => 'transplant.jpg', 'l' => 'Lost to fertilizer on the wrong day', 'p' => 'Urea fertilizer applied in the wrong week gives the crop only a small part of what you paid for.', 'peso' => '₱15,000 to ₱25,000'],
+                    ['n' => 25, 'img' => 'storm-paddies.jpg', 'l' => 'Lost to water at the wrong time', 'p' => 'Too dry at flowering or too wet at ripening, and that harvest does not come back.', 'peso' => '₱15,000 to ₱25,000'],
+                    ['n' => 20, 'img' => 'farmer-hijab.jpg', 'l' => 'Lost to waiting for answers', 'p' => 'Days spent waiting for advice while the problem keeps growing.', 'peso' => '₱12,000 to ₱20,000'],
+                    ['n' => 20, 'img' => 'hero-planting.jpg', 'l' => 'Lost to planting at the wrong time', 'p' => 'Pagtatanim by habit instead of by the weather shows up as a smaller ani.', 'peso' => '₱12,000 to ₱20,000'],
                 ] as $i => $loss)
                     <div class="loss-card loss-card2 reveal" style="--loss: {{ $loss['n'] }}%; --reveal-delay: {{ ($i % 2) * 0.08 }}s">
                         <div class="loss-img"><img src="{{ asset('images/site/photos/' . $loss['img']) }}" alt="" loading="lazy"></div>
@@ -330,23 +329,23 @@
             </div>
 
             <p class="mt-4 text-center text-xs text-gray-400 reveal">
-                Percent ranges come from FAO crop loss and {{ $ph ? 'Philippine rice' : 'published crop' }} research estimates{{ $ph ? '. Peso ranges assume a typical palay hectare that earns ₱85,000 to ₱100,000 before costs' : '' }}. Your farm's exact numbers vary, and that is the point.
+                Percent ranges come from FAO crop loss and {{ $ph ? 'Philippine rice' : 'published crop' }} research estimates{{ $ph ? '. Peso ranges assume a palay hectare that earns ₱85,000 to ₱100,000 before costs' : '' }}. Your own numbers will be different.
             </p>
 
             <div class="loss-pivot reveal">
-                <span><img src="{{ $face }}" alt="Anee">The answer is Anee, and the system built around her</span>
+                <span><img src="{{ $face }}" alt="Anee">How anee.io stops these losses</span>
             </div>
 
             <div class="hp-fix-grid">
                 @foreach ([
-                    ['Acting late', 'Caught early', 'Weather for each lot, what to watch for at each growth stage, and Anee ready day and night. You act on the right day, not the day you remembered.'],
-                    ['The wrong fix', 'The right reading first', 'Take a photo of the leaf and Anee checks it against your crop and its stage before a ' . $peso . ' is spent.'],
-                    ['Fertilizer on the wrong day', 'Counted from day zero', 'Every application lands on its day, counted from each lot\'s own sowing date. Move the plan and every date follows.'],
-                    ['Waiting for answers', 'Anee answers now', 'Ask anytime' . ($ph ? ', in Tagalog or English' : '') . '. She reads your lots, stages and weather and answers in minutes, so you decide today.'],
-                    ['Untracked spending', 'Every ' . $peso . ' on the record', 'Labor, materials and services add up as the season runs, and the reports agree to the ' . ($ph ? 'peso' : 'cent') . '.'],
-                    ['Myths', 'Checked against science', 'Ask Anee first. Her answers rest on crop science and your own records, so a rumor never gets a whole hectare to experiment on.'],
-                    ['Water at the wrong time', 'Set by stage', 'Irrigation sits on the same board as everything else, with each lot\'s forecast beside it.'],
-                    ['Planting on habit', 'The right time named first', 'The When to Plant Analysis reads your town\'s climate record and the El Niño and La Niña outlook before you choose day zero.'],
+                    ['Acting late', 'Acting early', 'See the weather for each lot and what to watch for at each growth stage, so you act on the right day.'],
+                    ['The wrong fix', 'The right fix first', 'Take a photo of the leaf and Anee tells you what it is before you spend a ' . $peso . '.'],
+                    ['Fertilizer on the wrong day', 'Fertilizer on the right day', 'Every urea and complete fertilizer application is dated from each lot\'s own planting day. Move the plan and every date follows.'],
+                    ['Waiting for answers', 'Answers right away', 'Ask Anee any time' . ($ph ? ', in Tagalog or English' : '') . '. She knows your lots, their stages and the weather, and answers in minutes.'],
+                    ['Untracked spending', 'Every ' . $peso . ' written down', 'Labor, materials and services add up as you go, and the reports match to the ' . ($ph ? 'peso' : 'cent') . '.'],
+                    ['Farm myths', 'Advice based on science', 'Ask Anee before you try something. Her answers are based on crop science and your own records.'],
+                    ['Water at the wrong time', 'Water by growth stage', 'Irrigation is on the same board as your other tasks, with the forecast for each lot beside it.'],
+                    ['Planting by habit', 'Planting at the best time', 'The When to Plant Analysis checks your town\'s weather history and the El Niño or La Niña outlook before you plant.'],
                 ] as $i => [$from, $to, $p])
                     <div class="hp-fix reveal" style="--reveal-delay: {{ ($i % 2) * 0.08 }}s">
                         <p class="hp-fix-k"><s>{{ $from }}</s>{!! $arrow !!}<b>{{ $to }}</b></p>
@@ -360,7 +359,7 @@
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and stop the losses {!! $arrow !!}</a>
                     <a href="{{ $ask }}" class="hp-alt"><img src="{{ $face }}" alt="" class="hp-face">Ask Anee about your crop</a>
                 </div>
-                <p class="hp-cta-note">The day by day timeline, the growth stages and the labor report are on the free plan.</p>
+                <p class="hp-cta-note">The daily task list, the growth stages and the labor report are free.</p>
             </div>
         </div>
     </section>
@@ -373,9 +372,9 @@
     <section class="hp-sec bg-brand-mesh hp-steps" data-steps>
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
-                <p class="hp-kick">From planning to profit</p>
+                <p class="hp-kick">{{ $ph ? 'From pagtatanim to ani' : 'From planting to harvest' }}</p>
                 <h2 class="hp-h2">Your whole season in <em>{{ count($stages) }} steps</em></h2>
-                <p class="hp-p">Each step has its tools, and Anee is in every one. Tap a step, then a tool, and watch it work on a real phone.</p>
+                <p class="hp-p">Each step has its own tools, and Anee helps in every one. Tap a step, then a tool, to see it work on a real phone.</p>
             </div>
 
             <div class="hp-st reveal">
@@ -433,7 +432,7 @@
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start your first season free {!! $arrow !!}</a>
                     <a href="{{ route('how') }}" class="hp-alt">See all {{ $tools->count() }} tools step by step</a>
                 </div>
-                <p class="hp-cta-note">The season board, the lots and the growth stages work on the free plan. The rest comes with the paid plans below.</p>
+                <p class="hp-cta-note">The season board, your lot and the growth stages are free. The other tools come with the paid plans below.</p>
             </div>
         </div>
     </section>
@@ -449,11 +448,11 @@
             <div class="hp-anee-grid">
                 <div class="reveal">
                     <p class="hp-kick">Meet Anee</p>
-                    <h2 class="hp-h2">An AI technician who <em>already knows your farm</em></h2>
+                    <h2 class="hp-h2">Your AI farm technician <em>who knows your farm</em></h2>
                     <p class="hp-p">
-                        Anee is not an ordinary chatbot. Before she answers, she reads your season: your lots, their
-                        growth stages, your records and the weather. So "should I spray tomorrow?" gets an answer about
-                        your tomorrow, on your field. Ask {{ $ph ? 'in Tagalog or English, ' : '' }}even with a photo.
+                        Anee is not a regular chatbot. Before she answers, she looks at your lots, their growth stages,
+                        your records and the weather. So when you ask "should I spray tomorrow?", she answers for your
+                        own field. Ask {{ $ph ? 'in Tagalog or English, ' : '' }}and send a photo if you like.
                     </p>
                     <div class="hp-powers">
                         @foreach ($aneeTools as $i => $it)
@@ -463,8 +462,8 @@
                         @endforeach
                     </div>
                     <p class="hp-anee-price">
-                        Anee comes with Libre + Anee at {{ $aneePrice }} a month, and with every plan above it.
-                        Try her first: ask one question free each week, no account needed.
+                        Anee comes with Libre + Anee for {{ $aneePrice }} a month, and with every plan above it.
+                        Want to try her first? Ask one question free each week. No account needed.
                     </p>
                     <div class="hp-cta is-left">
                         <div class="hp-cta-row">
@@ -520,9 +519,9 @@
     <section class="hp-sec bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
-                <p class="hp-kick">See it work</p>
-                <h2 class="hp-h2">Exactly as it runs <em>in the field</em></h2>
-                <p class="hp-p">Short recordings of the real app on a phone. Nothing staged and nothing drawn.</p>
+                <p class="hp-kick">See the app</p>
+                <h2 class="hp-h2">The real app, <em>on a real phone</em></h2>
+                <p class="hp-p">Short recordings of anee.io, exactly as you will use it in the field.</p>
             </div>
 
             <div class="hp-reel" data-reel>
@@ -568,23 +567,22 @@
             </div>
             <div class="reveal">
                 <p class="hp-kick">Your farm is a business</p>
-                <h2 class="hp-h2">Every business already upgraded. <em>It's the farm's turn.</em></h2>
+                <h2 class="hp-h2">Your farm is a business. <em>Run it like one.</em></h2>
                 <p class="hp-p">
-                    The sari-sari store takes payment by phone, the tricycle line runs on an app, and the trader who
-                    buys your {{ $R::t('rice') }} works from a spreadsheet. Every business that took the step to
-                    technology got faster, wasted less and earned more, while most farms still run from memory and a
-                    worn notebook. Farming is a business too, and it deserves the same upgrade, made for the field and
-                    priced for the farmer.
+                    The sari-sari store takes GCash, tricycles are booked by app, and the trader who buys your
+                    {{ $R::t('rice') }} keeps records on a computer. They all earn more because they keep good
+                    records. Most farms still run on memory and an old notebook. {{ $ph ? 'From the palayan of Nueva Ecija to the vegetable farms of Benguet, ' : '' }}your
+                    farm deserves the same tools, made for the field and priced for farmers.
                 </p>
                 <div class="hp-biz-built">
                     <p class="hp-biz-h">Built by farmers. Run on our own farms.</p>
-                    <p class="hp-biz-p">anee.io was not designed in an office. Our own farms run on it every day, and everything in it is here because we needed it in our own fields first.</p>
+                    <p class="hp-biz-p">anee.io was not made in an office. We use it on our own farms every day, and every tool in it is there because we needed it first.</p>
                 </div>
                 <div class="hp-gains">
                     @foreach ([
                         ['Higher yield', 'Every job on its right day.', '<path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>'],
                         ['Lower cost', 'Every ' . $peso . ' written down.', '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
-                        ['Exact numbers', 'Reports that agree to the ' . ($ph ? 'peso' : 'cent') . '.', '<path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>'],
+                        ['Exact numbers', 'Reports that match to the ' . ($ph ? 'peso' : 'cent') . '.', '<path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>'],
                         ['A smarter next season', 'Each season teaches the next.', '<path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>'],
                     ] as $i => [$t, $p, $ico])
                         <div class="hp-gain reveal" style="--reveal-delay: {{ $i * 0.07 }}s">
@@ -609,7 +607,7 @@
             <div class="hp-head reveal">
                 <p class="hp-kick">Why farmers switch</p>
                 <h2 class="hp-h2">Traditional farming <em>vs anee.io</em></h2>
-                <p class="hp-p">The season does not have to live in your head and on scattered paper. See what changes when the whole plan is in one place.</p>
+                <p class="hp-p">Your season does not have to live in your head or on loose paper. Here is what changes when the whole plan is in one place.</p>
             </div>
 
             @php
@@ -654,8 +652,8 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">Simple pricing</p>
-                <h2 class="hp-h2">Start free. <em>Grow when the farm does.</em></h2>
-                <p class="hp-p">Libre is free forever. Upgrade inside the app with {{ $R::payMethod() }} when the farm needs more.</p>
+                <h2 class="hp-h2">Start free. <em>Upgrade when you need more.</em></h2>
+                <p class="hp-p">Libre is free forever. When your farm needs more, upgrade inside the app and pay with {{ $R::payMethod() }}.</p>
                 <div class="hp-billing" role="group" aria-label="Billing">
                     <button type="button" :class="yearly ? '' : 'is-on'" @click="yearly = false">Monthly</button>
                     <button type="button" :class="yearly ? 'is-on' : ''" @click="yearly = true">Yearly <span>save more</span></button>
@@ -721,17 +719,17 @@
     @php
         $crops = [
             ['Palay', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z', 100,
-                'Plan pagtatanim ng palay from the rice seeds and the punla to the ani. Urea and complete fertilizer 14 14 14 go on their day after transplanting, and a reminder to scout for the rice bug waits on the board before the milk stage.',
-                [['/crops/palay', 'Palay guide'], ['/problems/rice-bug', 'Rice bug']]],
+                'Plan pagtatanim ng palay from the rice seeds and the punla to the ani. Fertilizer urea and complete fertilizer 14 14 14 go on their day after transplanting, and a reminder to check for the rice bug (alitangya) comes before the milk stage.',
+                [['/crops/palay', 'Palay guide'], ['/crops/rice-varieties-philippines', 'Rice varieties'], ['/problems/rice-bug', 'Rice bug']]],
             ['Mais', 'M12 3c-2.5 2-4 5-4 9s1.5 7 4 9c2.5-2 4-5 4-9s-1.5-7-4-9zm0 4v10M9.5 9.5L12 11l2.5-1.5M9.5 13.5L12 15l2.5-1.5', 45,
                 'Yellow or white corn, counted by days after planting: corn seeds and spacing, fertilizer days, fall armyworm checks, and the corn kernel at harvest.',
-                [['/crops/corn-seeds', 'Corn seeds'], ['/problems/fall-armyworm', 'Fall armyworm']]],
+                [['/crops/corn-seeds', 'Corn seeds'], ['/crops/corn-kernel', 'Corn kernel'], ['/problems/fall-armyworm', 'Fall armyworm']]],
             ['Gulay', 'M12 21c-4.4 0-8-3.1-8-7 0-3.3 2.6-6 6-6.8V4h4v3.2c3.4.8 6 3.5 6 6.8 0 3.9-3.6 7-8 7z', 150,
-                'Pechay, tomato, eggplant and ampalaya on one calendar, bed by bed, with foliar fertilizer days and thrips and anthracnose checks for each.',
-                [['/crops/vegetables-philippines', 'Vegetables guide'], ['/problems/thrips', 'Thrips']]],
+                'Pechay, tomato, eggplant and ampalaya, the vegetables in the Philippines that farms grow most, on one calendar with foliar fertilizer days and thrips and anthracnose checks.',
+                [['/crops/vegetables-philippines', 'Vegetables guide'], ['/crops/pagtatanim-ng-gulay', 'Pagtatanim ng gulay'], ['/problems/thrips', 'Thrips']]],
             ['Niyog, saging at puno', 'M12 21v-8m0 0c-3 0-6-2-7-5 3 0 5 1 7 3m0 2c3 0 6-2 7-5-3 0-5 1-7 3m0-3V3', 30,
                 'Coconut, banana and fruit trees count their age in months, with fertilizer plans that follow the PCA and DA guides.',
-                [['/crops/coconut-fertilizer', 'Coconut fertilizer'], ['/crops/banana-farming-philippines', 'Banana farming']]],
+                [['/crops/coconut-fertilizer', 'Coconut fertilizer'], ['/crops/banana-farming-philippines', 'Banana farming'], ['/crops/pagtatanim-ng-puno', 'Pagtatanim ng puno']]],
         ];
     @endphp
     <section class="hp-sec bg-gray-50">
@@ -739,7 +737,7 @@
             <div class="hp-head reveal">
                 <p class="hp-kick">Palay, mais, gulay and more</p>
                 <h2 class="hp-h2">One cropping calendar for <em>every crop you grow</em></h2>
-                <p class="hp-p">anee.io knows 85 Philippine crops. Set the day you sow, transplant or plant, and every task after it gets its day count, lot by lot.</p>
+                <p class="hp-p">anee.io knows 85 Philippine crops, from palay and mais to gulay and fruit trees. Set the day you sow, transplant or plant, and every task after it gets its day count.</p>
             </div>
             <div class="mt-12 grid gap-5 sm:grid-cols-2">
                 @foreach ($crops as $i => [$name, $icon, $hue, $text, $links])
@@ -775,7 +773,21 @@
             <div class="hp-head reveal">
                 <p class="hp-kick">Free farm guides</p>
                 <h2 class="hp-h2">Guides for <em>Filipino farmers</em></h2>
-                <p class="hp-p">How to plant palay and mais, what to do about the rice bug and the black bug, and how much fertilizer a hectare really needs. Written for the Philippine field and free to read.</p>
+                <p class="hp-p">How to plant palay and mais, what to do about the rice bug and the rice black bug, and how much fertilizer a hectare needs. Written for Philippine farms and free to read.</p>
+            </div>
+            {{-- What farmers search for most, each a link to the guide that answers it. --}}
+            <div class="hp-topics reveal">
+                @foreach ([
+                    ['/crops/palay', 'Palay'], ['/crops/pagtatanim-ng-palay', 'Pagtatanim ng palay'], ['/blog/palayan-nueva-ecija', 'Palayan in Nueva Ecija'],
+                    ['/blog/ani-meaning', 'Ani meaning'], ['/blog/urea-fertilizer', 'Fertilizer urea'], ['/blog/complete-fertilizer-14-14-14', 'Fertilizer 14 14 14'],
+                    ['/blog/16-20-0-fertilizer', '16 20 0 fertilizer'], ['/blog/ammonium-sulfate-21-0-0', '21 0 0 fertilizer'], ['/blog/foliar-fertilizer', 'Foliar fertilizer'], ['/blog/organic-fertilizer-examples', 'Examples of organic fertilizer'],
+                    ['/blog/fertilizer-for-plants', 'Fertilizer for plants'], ['/blog/fungicides', 'Fungicide guide'], ['/blog/fertilizer-and-pesticide-authority', 'Fertilizer and Pesticide Authority'], ['/problems/rice-bug', 'Rice bug'],
+                    ['/problems/rice-black-bug', 'Rice black bug'], ['/problems/thrips', 'Thrips insect'], ['/problems/fall-armyworm', 'Fall armyworm'], ['/problems/cutworm', 'Cutworm'],
+                    ['/crops/rice-varieties-philippines', 'Rice varieties in the Philippines'], ['/blog/palay-price-philippines', 'Palay price in the Philippines'],
+                    ['/crops/corn-kernel', 'Corn kernel'], ['/crops/corn-seeds', 'Corn seeds'], ['/crops/vegetables-philippines', 'Vegetables in the Philippines'],
+                ] as $i => [$href, $label])
+                    <a href="{{ url($href) }}" class="hp-topic" style="--h: {{ ($i * 41) % 150 + 30 }}">{{ $label }}</a>
+                @endforeach
             </div>
             <div class="mt-12 grid gap-8 lg:grid-cols-3">
                 @foreach ($guides as $sec => $pages)
@@ -797,7 +809,7 @@
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Put the guide on your calendar {!! $arrow !!}</a>
                     <a href="{{ $ask }}" class="hp-alt"><img src="{{ $face }}" alt="" class="hp-face">Ask Anee about your crop</a>
                 </div>
-                <p class="hp-cta-note">Reading is free. Planning your own season by it is free too.</p>
+                <p class="hp-cta-note">Reading the guides is free. Planning your own season with them is free too.</p>
             </div>
         </div>
     </section>
@@ -821,6 +833,8 @@
              'No. anee.io runs in the browser of any phone, so you plan and tick tasks right in the field. On the Solo Farmer and Farm Owner plans it keeps working where there is no signal and syncs when the signal returns.'],
             ['Can my workers use it too?',
              'Yes. Every morning at 6 AM the team gets the day\'s plan by email. On the Farm Owner plan each worker can have their own login, and you decide what they may see and change.'],
+            ['Can anee.io help with the rice bug, thrips and fall armyworm?',
+             'Yes. Take a photo and Anee tells you what the pest or disease is and what to do, including when a fungicide or insecticide is needed. Your season board also reminds you when to check for the rice bug and other pests at each growth stage.'],
             ['Where can I read about fertilizer and pests?',
              'Our free guides cover fertilizer urea, complete fertilizer 14 14 14 and 16 20 0, the rice bug, thrips, fall armyworm and more. Start from the crop guides, the crop problems or the blog.'],
         ];
@@ -874,7 +888,7 @@
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 hp-sec text-center reveal on-dark" style="z-index:1">
             <img src="{{ $faceLg }}" alt="" class="hp-final-face">
             <h2 class="hp-h2">Your best season starts with <em>a free account</em></h2>
-            <p class="hp-p">Set up your first season tonight. Tomorrow morning, the app already knows what each lot needs.</p>
+            <p class="hp-p">Set up your first season tonight. Tomorrow morning, anee.io already knows what each lot needs.</p>
             <div class="hp-cta">
                 <div class="hp-cta-row">
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Create your free account {!! $arrow !!}</a>
@@ -1347,6 +1361,13 @@
     .hg-all { font-size: .88rem; font-weight: 800; color: #3d6823; text-decoration: none; }
     .hg-all:hover { text-decoration: underline; }
 
+    /* ---- the most searched guides, as links ---- */
+    .hp-topics { margin: 2.2rem auto 0; max-width: 60rem; display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+    .hp-topic { padding: .45rem .9rem; border-radius: 999px; font-size: .86rem; font-weight: 800; text-decoration: none;
+        color: hsl(var(--h) 50% 26%); background: hsl(var(--h) 55% 95%); box-shadow: inset 0 0 0 1px hsl(var(--h) 45% 86%);
+        transition: background-color .28s var(--hp-ease), transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
+    .hp-topic:hover { transform: translateY(-2px); background: hsl(var(--h) 60% 90%); box-shadow: inset 0 0 0 1px hsl(var(--h) 45% 72%); }
+
     /* ---- final call, sticky bar ---- */
     .hp-final { position: relative; isolation: isolate; overflow: hidden; }
     .hp-final-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
@@ -1369,7 +1390,7 @@
         .hp-biz-b, .hp-final-face, .hp-live, .hp-read i, .hp-vs.is-visible .hp-vs-new > span { animation: none !important; }
         .hp-st-tab.is-on.is-timing .hp-st-bar i { animation: none; }
         .hp-phone.is-hero, .hp-st-pane, .hp-tool, .hp-msg, .hp-read, .hp-film, .hp-film-tag, .hp-modal, .hp-modal-box, .hp-sticky,
-        .hp-go, .hp-alt, .hp-fact, .hp-why-card, .hp-fix, .hp-st-tab, .hp-gain, .hp-reel-card .hp-phone, .hp-q, .hc-card, .hg-list a, .hq-body { transition: none !important; }
+        .hp-go, .hp-alt, .hp-fact, .hp-why-card, .hp-fix, .hp-st-tab, .hp-gain, .hp-reel-card .hp-phone, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
         .hp-chat .hp-msg, .hp-chat .hp-read { opacity: 1; transform: none; }
         .hp-marquee-track { flex-wrap: wrap; width: auto; justify-content: center; }
         .hp-marquee-set + .hp-marquee-set { display: none; }
