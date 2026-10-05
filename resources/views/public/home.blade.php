@@ -338,7 +338,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">{{ $ph ? 'From pagtatanim to ani' : 'From planting to harvest' }}</p>
-                <h2 class="hp-h2">Your Whole Season in <em>{{ count($stages) }} Steps.</em></h2>
+                <h2 class="hp-h2">Your Whole Season in <em>{{ count($stages) }} <span class="hp-nw">Steps.<span class="hp-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5.4 12.6l4.3 4.3 8.9-9.6" pathLength="1"/></svg></span></span></em></h2>
                 <p class="hp-p">Each step has its own tools, and Anee helps in every one. Tap a step, then a tool, to see it work on a real phone.</p>
             </div>
 
@@ -939,6 +939,29 @@
     @media (prefers-reduced-motion: reduce) { .hp-loss-warn { animation: none; } }
     .hp-loss-src { margin-top: 1.1rem; text-align: center; font-size: .78rem; line-height: 1.5; color: rgb(255 255 255 / .5); }
 
+    /* ---- the check after "7 Steps." ----
+       A green badge that pops in once the heading scrolls into view, draws
+       its check, then breathes a soft ring now and then. The stroke is a
+       fixed size icon (not stretched), so pathLength=1 dashes the same in
+       every browser. */
+    .hp-nw { white-space: nowrap; }
+    .hp-tick { position: relative; display: inline-grid; place-items: center; width: .8em; height: .8em; margin-left: .26em;
+        vertical-align: -.06em; border-radius: 999px; background: var(--hp-green);
+        box-shadow: 0 8px 18px -8px rgb(47 82 25 / .75); transform: scale(0) rotate(-35deg); }
+    .hp-tick svg { width: 74%; height: 74%; overflow: visible; }
+    .hp-tick path { fill: none; stroke: #fff; stroke-width: 3.1; stroke-linecap: round; stroke-linejoin: round;
+        stroke-dasharray: 1; stroke-dashoffset: 1; }
+    .hp-tick::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+        box-shadow: 0 0 0 0 rgb(95 160 50 / .55); }
+    .is-visible .hp-tick { animation: hpTickPop .62s cubic-bezier(.34,1.56,.64,1) .45s forwards; }
+    .is-visible .hp-tick path { animation: hpTickDraw .5s cubic-bezier(.65,0,.35,1) .9s forwards; }
+    .is-visible .hp-tick::after { animation: hpTickRing 4s ease-out 1.3s infinite; }
+    html:not(.js) .hp-tick { transform: none; }
+    html:not(.js) .hp-tick path { stroke-dashoffset: 0; }
+    @keyframes hpTickPop { to { transform: none; } }
+    @keyframes hpTickDraw { to { stroke-dashoffset: 0; } }
+    @keyframes hpTickRing { 0% { box-shadow: 0 0 0 0 rgb(95 160 50 / .55); } 30%, 100% { box-shadow: 0 0 0 .32em rgb(95 160 50 / 0); } }
+
     /* ---- the turning word in the headline ---- */
     .hp-rot { display: inline-block; position: relative; white-space: nowrap; vertical-align: top;
         transition: width .55s var(--hp-ease); }
@@ -1271,6 +1294,9 @@
         .hp-go, .hp-alt, .hp-why-card, .hp-st-tab, .hp-gain, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
         .hp-chat .hp-msg, .hp-chat .hp-read { opacity: 1; transform: none; }
         .hp-mark-line { -webkit-clip-path: none; clip-path: none; }
+        .hp-tick, .hp-tick path, .hp-tick::after { animation: none !important; }
+        .hp-tick { transform: none; }
+        .hp-tick path { stroke-dashoffset: 0; }
     }
 </style>
 @endpush
