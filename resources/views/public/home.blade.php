@@ -472,53 +472,6 @@
         </div>
     </section>
 
-    {{-- ================= SEE IT WORK ================= --}}
-    {{-- Eight of the phone recordings, each playing while it is on screen. On
-         a phone they sit in a row you swipe through. --}}
-    @php
-        $reel = collect(['board', 'growth', 'weather', 'offline', 'stock', 'capture', 'profit', 'community'])
-            ->map(fn ($k) => isset($tools[$k]) ? array_merge($tools[$k], ['film' => $filmOf($k)]) : null)
-            ->filter(fn ($x) => $x && $x['film'])->values();
-    @endphp
-    @if ($reel->isNotEmpty())
-    <section class="hp-sec bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="hp-head reveal">
-                <p class="hp-kick">See the app</p>
-                <h2 class="hp-h2">See the Real App <em>on a Real Phone.</em></h2>
-                <p class="hp-p">Short recordings of anee.io, exactly as you will use it in the field.</p>
-            </div>
-
-            <div class="hp-reel" data-reel>
-                @foreach ($reel as $i => $it)
-                    <figure class="hp-reel-card reveal" style="--reveal-delay: {{ ($i % 4) * 0.07 }}s">
-                        <div class="hp-phone is-sm">
-                            <div class="hp-phone-scr">
-                                <video class="hp-film" muted playsinline loop preload="none" poster="{{ $it['film']['poster'] }}" data-reel-film aria-label="{{ $it['name'] }} on a phone">
-                                    <source src="{{ $it['film']['src'] }}" type="video/mp4">
-                                </video>
-                            </div>
-                        </div>
-                        <figcaption>
-                            <b>{{ $it['name'] }}</b>
-                            <span>{{ $it['short'] }}</span>
-                            <a href="{{ $toolUrl($it) }}">Read more {!! $arrow !!}</a>
-                        </figcaption>
-                    </figure>
-                @endforeach
-            </div>
-
-            <div class="hp-cta reveal">
-                <div class="hp-cta-row">
-                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Try it on your own farm, free {!! $arrow !!}</a>
-                    <a href="{{ route('features') }}" class="hp-alt">See every feature</a>
-                </div>
-                <p class="hp-cta-note">Some tools come with the paid plans. The plans below say which.</p>
-            </div>
-        </div>
-    </section>
-    @endif
-
     {{-- ================= YOUR FARM IS A BUSINESS, BUILT BY FARMERS ================= --}}
     {{-- The second half of the argument (every business already upgraded,
          it is the farm's turn), and who is saying it: farmers, whose own
@@ -1142,22 +1095,6 @@
     .hp-chat.is-done .hp-chat-again { opacity: 1; pointer-events: auto; }
     .hp-chat-again:hover { background: rgb(255 255 255 / .28); }
 
-    /* ---- the reel ---- */
-    .hp-reel { margin-top: 3rem; display: grid; grid-auto-flow: column; grid-auto-columns: 62%; gap: 1.1rem; overflow-x: auto;
-        scroll-snap-type: x mandatory; padding: .5rem 1rem 1.5rem; margin-left: -1rem; margin-right: -1rem; scrollbar-width: none; }
-    .hp-reel::-webkit-scrollbar { display: none; }
-    @media (min-width: 640px) { .hp-reel { grid-auto-columns: 38%; } }
-    @media (min-width: 1024px) { .hp-reel { grid-auto-flow: row; grid-template-columns: repeat(4, minmax(0, 1fr)); overflow: visible; margin: 3rem 0 0; padding: 0; gap: 2.2rem 1.5rem; } }
-    .hp-reel-card { scroll-snap-align: center; display: flex; flex-direction: column; align-items: center; text-align: center; margin: 0; }
-    .hp-reel-card .hp-phone { transition: transform .4s var(--hp-ease), box-shadow .4s var(--hp-ease); }
-    .hp-reel-card:hover .hp-phone { transform: translateY(-6px) rotate(-1deg); }
-    .hp-reel-card figcaption { margin-top: 1rem; display: flex; flex-direction: column; align-items: center; gap: .2rem; max-width: 14rem; }
-    .hp-reel-card figcaption b { font-size: 1rem; font-weight: 800; color: var(--hp-ink); }
-    .hp-reel-card figcaption span { font-size: .84rem; color: #6b7280; line-height: 1.45; }
-    .hp-reel-card figcaption a { margin-top: .3rem; display: inline-flex; align-items: center; gap: .3rem; font-size: .82rem; font-weight: 800; color: var(--hp-green); }
-    .hp-reel-card figcaption a svg { width: .9rem; height: .9rem; transition: transform .28s var(--hp-ease); }
-    .hp-reel-card figcaption a:hover svg { transform: translateX(3px); }
-
     /* ---- the farm as a business ---- */
     .hp-biz { display: grid; gap: 3rem; align-items: center; }
     @media (min-width: 1024px) { .hp-biz { grid-template-columns: .95fr 1.05fr; gap: 4rem; } }
@@ -1331,7 +1268,7 @@
         .hp-biz-b, .hp-final-face, .hp-live, .hp-read i, .hp-sum-ico, .hp-sum-ico svg, .hp-vs.is-visible .hp-vs-new > span { animation: none !important; }
         .hp-st-tab.is-on.is-timing .hp-st-bar i { animation: none; }
         .hp-phone.is-hero, .hp-st-pane, .hp-tool, .hp-msg, .hp-read, .hp-film, .hp-film-tag, .hp-modal, .hp-modal-box, .hp-sticky,
-        .hp-go, .hp-alt, .hp-why-card, .hp-st-tab, .hp-gain, .hp-reel-card .hp-phone, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
+        .hp-go, .hp-alt, .hp-why-card, .hp-st-tab, .hp-gain, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
         .hp-chat .hp-msg, .hp-chat .hp-read { opacity: 1; transform: none; }
         .hp-mark-line { -webkit-clip-path: none; clip-path: none; }
     }
@@ -1564,10 +1501,6 @@
         chat.querySelector('[data-chat-again]')?.addEventListener('click', run);
     }
 
-    /* The reel: each film plays while it is on screen. */
-    document.querySelectorAll('[data-reel-film]').forEach((v) => {
-        seen(v, (on) => { if (on) { if (v.preload === 'none') v.preload = 'metadata'; play(v); } else v.pause(); }, { threshold: 0.6 });
-    });
 
     /* The versus table ticks its answers in, row by row. */
     const vs = document.querySelector('.hp-vs');
