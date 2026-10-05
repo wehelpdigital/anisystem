@@ -145,7 +145,7 @@
     <section class="hp-sec hp-truth2" id="hp-truth">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
-                <p class="hp-kick is-red">The truth</p>
+                <p class="hp-kick is-red">The inconvenient truth</p>
                 <h2 class="hp-h2">Traditional farming is <em class="is-red">not profitable anymore.</em></h2>
                 <p class="hp-p">
                     Fertilizer, diesel and the extra sprays and work that unpredictable weather forces on you cost
@@ -190,54 +190,6 @@
                     <a href="{{ route('how') }}" class="hp-alt">See how it works</a>
                 </div>
                 <p class="hp-cta-note">Free forever on Libre. No card needed.</p>
-            </div>
-        </div>
-    </section>
-
-    {{-- ================= PROOF: WHAT IS INSIDE ================= --}}
-    <section class="hp-proof" id="hp-proof">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="hp-facts">
-                @foreach ([
-                    [$ph ? 85 : 86, $ph ? 'Philippine crops, each with its own day count' : 'crops, each with its own day count'],
-                    [$tools->count(), 'tools in one app, from planning to profit'],
-                    [count($stages), 'steps from planning to the final report'],
-                    ['24/7', 'Anee answers, day and night'],
-                ] as $i => [$n, $l])
-                    <div class="hp-fact reveal" style="--reveal-delay: {{ $i * 0.08 }}s">
-                        <b>@if (is_int($n))<span data-countup="{{ $n }}">{{ $n }}</span>@else{{ $n }}@endif</b>
-                        <span>{{ $l }}</span>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-
-        {{-- The crops, drifting by: the calendar is not only for palay. --}}
-        <div class="hp-marquee" aria-hidden="true">
-            <div class="hp-marquee-track">
-                @php
-                    $cropNames = $ph
-                        ? ['Palay', 'Mais', 'Monggo', 'Mani', 'Sitaw', 'Kamote', 'Gabi', 'Ubi', 'Luya', 'Petsay', 'Repolyo', 'Kangkong', 'Kamatis', 'Talong', 'Ampalaya', 'Kalabasa', 'Pipino', 'Okra', 'Sili', 'Sibuyas', 'Bawang', 'Tubo', 'Pinya', 'Saging', 'Papaya', 'Mangga', 'Niyog', 'Kalamansi', 'Langka', 'Lansones', 'Rambutan', 'Durian', 'Kape', 'Kakaw', 'Malunggay']
-                        : ['Rice', 'Corn', 'Mungbean', 'Peanut', 'Soybean', 'Sweet potato', 'Cassava', 'Potato', 'Carrot', 'Cabbage', 'Lettuce', 'Tomato', 'Eggplant', 'Squash', 'Cucumber', 'Okra', 'Chili', 'Onion', 'Garlic', 'Sugarcane', 'Pineapple', 'Banana', 'Papaya', 'Mango', 'Coconut', 'Citrus', 'Avocado', 'Coffee', 'Cacao', 'Strawberry'];
-                @endphp
-                @foreach ([1, 2] as $copy)
-                    <div class="hp-marquee-set">
-                        @foreach ($cropNames as $i => $c)
-                            <span class="hp-crop" style="--h: {{ ($i * 37) % 160 + 40 }}">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z"/></svg>{{ $c }}
-                            </span>
-                        @endforeach
-                    </div>
-                @endforeach
-            </div>
-        </div>
-
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="hp-cta is-tight reveal">
-                <div class="hp-cta-row">
-                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free with your crop {!! $arrow !!}</a>
-                </div>
-                <p class="hp-cta-note">{{ $ph ? 'Palay, mais, gulay or fruit trees.' : 'Grains, vegetables or fruit trees.' }} The calendar counts the days for you.</p>
             </div>
         </div>
     </section>
@@ -1133,27 +1085,6 @@
     .hp-modal-x:hover { background: rgb(0 0 0 / .8); transform: rotate(90deg); }
     .hp-modal-x svg { width: 1.1rem; height: 1.1rem; }
 
-    /* ---- proof ---- */
-    .hp-proof { position: relative; padding: 3.5rem 0 4rem; background: #fff; overflow: hidden; }
-    .hp-facts { display: grid; gap: 1rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    @media (min-width: 900px) { .hp-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-    .hp-fact { padding: 1.3rem 1rem; border-radius: 1.25rem; text-align: center; background: linear-gradient(170deg, #f6faf1, #fff);
-        border: 1px solid #e4ecdb; transition: transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
-    .hp-fact:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -26px rgb(20 33 12 / .5); }
-    .hp-fact b { display: block; font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 800; line-height: 1;
-        color: transparent; -webkit-background-clip: text; background-clip: text; background-image: linear-gradient(135deg, #2f5219, #6b9f3d); }
-    .hp-fact > span { display: block; margin-top: .5rem; font-size: .86rem; font-weight: 700; color: #5b6b50; line-height: 1.4; }
-    .hp-marquee { margin-top: 2.4rem; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-        mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-    .hp-marquee-track { display: flex; width: max-content; animation: hpMarquee 60s linear infinite; }
-    .hp-marquee:hover .hp-marquee-track { animation-play-state: paused; }
-    .hp-marquee-set { display: flex; gap: .6rem; padding-right: .6rem; }
-    @keyframes hpMarquee { to { transform: translateX(-50%); } }
-    .hp-crop { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .95rem; border-radius: 999px; white-space: nowrap;
-        font-size: .9rem; font-weight: 800; color: hsl(var(--h) 45% 25%); background: hsl(var(--h) 55% 95%);
-        box-shadow: inset 0 0 0 1px hsl(var(--h) 45% 85%); }
-    .hp-crop svg { width: 1rem; height: 1rem; color: hsl(var(--h) 50% 38%); }
-
     /* ---- why (intervention) ---- */
     .hp-why { position: relative; isolation: isolate; overflow: hidden; }
     .hp-why-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
@@ -1480,15 +1411,13 @@
 
     @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
-        .hp-hero-bg, .hp-hero-glow, .hp-stage-ring, .hp-shimmer, .hp-mark-line, .hp-mark-line path, .hp-go::after, .hp-tour-dot::before, .hp-float, .hp-down, .hp-marquee-track,
+        .hp-hero-bg, .hp-hero-glow, .hp-stage-ring, .hp-shimmer, .hp-mark-line, .hp-mark-line path, .hp-go::after, .hp-tour-dot::before, .hp-float, .hp-down,
         .hp-biz-b, .hp-final-face, .hp-live, .hp-read i, .hp-sum-ico, .hp-sum-ico svg, .hp-vs.is-visible .hp-vs-new > span { animation: none !important; }
         .hp-st-tab.is-on.is-timing .hp-st-bar i { animation: none; }
         .hp-phone.is-hero, .hp-st-pane, .hp-tool, .hp-msg, .hp-read, .hp-film, .hp-film-tag, .hp-modal, .hp-modal-box, .hp-sticky,
-        .hp-go, .hp-alt, .hp-fact, .hp-why-card, .hp-fix, .hp-st-tab, .hp-gain, .hp-reel-card .hp-phone, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
+        .hp-go, .hp-alt, .hp-why-card, .hp-fix, .hp-st-tab, .hp-gain, .hp-reel-card .hp-phone, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
         .hp-chat .hp-msg, .hp-chat .hp-read { opacity: 1; transform: none; }
         .hp-mark-line { -webkit-clip-path: none; clip-path: none; }
-        .hp-marquee-track { flex-wrap: wrap; width: auto; justify-content: center; }
-        .hp-marquee-set + .hp-marquee-set { display: none; }
     }
 </style>
 @endpush
