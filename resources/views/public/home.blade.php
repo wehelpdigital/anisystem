@@ -158,29 +158,29 @@
             <div class="hp-sum">
                 <div class="hp-sum-card is-up reveal">
                     <span class="hp-sum-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m0 0l-6 6m6-6l6 6"/></svg></span>
-                    <p class="hp-sum-k">Costs keep going up</p>
+                    <p class="hp-sum-k">Costs keep going up.</p>
                     <ul class="hp-sum-list">
-                        <li>{{ $ph ? 'A sack of urea or complete fertilizer 14 14 14 costs more every season' : 'Every sack of fertilizer costs more each season' }}</li>
-                        <li>Diesel for the tractor, the pump and every trip to town</li>
-                        <li>Extra sprays and work when rain, heat or pests come early</li>
+                        <li>{{ $ph ? 'A sack of urea or complete fertilizer 14 14 14 costs more every season.' : 'Every sack of fertilizer costs more each season.' }}</li>
+                        <li>Diesel for the tractor, the pump and every trip to town costs more too.</li>
+                        <li>Rain, heat or pests that come early mean extra sprays and work.</li>
                     </ul>
                 </div>
                 <span class="hp-sum-op" aria-hidden="true">+</span>
                 <div class="hp-sum-card is-down reveal" style="--reveal-delay: .12s">
                     <span class="hp-sum-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m0 0l6-6m-6 6l-6-6"/></svg></span>
-                    <p class="hp-sum-k">Prices stay low</p>
+                    <p class="hp-sum-k">Prices stay low.</p>
                     <ul class="hp-sum-list">
-                        <li>{{ $ph ? 'The palay price at harvest barely moves' : 'The price at harvest barely moves' }}</li>
-                        <li>Imports can push it down before you sell</li>
-                        <li>You cannot set the price you get</li>
+                        <li>{{ $ph ? 'The palay price at harvest barely moves.' : 'The price at harvest barely moves.' }}</li>
+                        <li>Imports can push it down before you sell.</li>
+                        <li>You cannot set the price you get.</li>
                     </ul>
                 </div>
                 <span class="hp-sum-op" aria-hidden="true">=</span>
                 <div class="hp-sum-card is-way reveal" style="--reveal-delay: .24s">
                     <span class="hp-sum-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8m0 0h-5m5 0v5"/></svg></span>
-                    <p class="hp-sum-k">The only way up: a higher yield</p>
+                    <p class="hp-sum-k">The only way up is a higher yield.</p>
                     <p class="hp-sum-p">Grow more from the same hectare with precision farming: the right work, in the right amount, on the right day.</p>
-                    <span class="hp-sum-brand"><img src="{{ asset('images/logo-mark.png') }}" alt="" onerror="this.remove()">anee.io shows you how</span>
+                    <span class="hp-sum-brand"><img src="{{ asset('images/logo-mark.png') }}" alt="" onerror="this.remove()">anee.io shows you how.</span>
                 </div>
             </div>
 
@@ -253,7 +253,7 @@
         <div class="relative max-w-6xl mx-auto px-4 sm:px-6 hp-sec" style="z-index:1">
             <div class="hp-head reveal">
                 <p class="hp-kick">The old calendar is not enough</p>
-                <h2 class="hp-h2">Modern farming wins by <em>precision</em></h2>
+                <h2 class="hp-h2">Modern farming wins by <em>precision.</em></h2>
                 <p class="hp-p">
                     The weather no longer follows the old planting calendar. Rain comes early, dry spells last
                     longer, and pests show up before you expect them. The farmers who do well today do <b>the right
@@ -263,16 +263,16 @@
 
             <div class="hp-why-grid">
                 @foreach ([
-                    ['The weather changes', 'A dry spell goes on, or rain comes right before your spray day.',
+                    ['The weather changes.', 'A dry spell goes on, or rain comes right before your spray day.',
                      'You see the forecast for each lot ahead of time. If you need to move the plan, drag it and every date moves with it.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999A5.002 5.002 0 105.9 12.1 4 4 0 003 15zM13 21l-2 2m6-4l-2 2m-8-2l-2 2"/>'],
-                    ['Pests come early', 'Yellow leaves or holes appear, like from the rice bug or thrips, and help is days away.',
+                    ['Pests come early.', 'Yellow leaves or holes appear, like from the rice bug or thrips, and help is days away.',
                      'Take a photo and Anee tells you what it is and what to do, so you treat the right problem with the right dose today.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/>'],
-                    ['The crop grows faster or slower', 'Hot days make it grow faster than the plan. Cool days slow it down.',
+                    ['The crop grows faster or slower.', 'Hot days make it grow faster than the plan. Cool days slow it down.',
                      'See the growth stage of each lot on any day, with what to do and what to watch for. Anee can check the real stage for you.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
-                    ['Costs go up', 'One extra spray, one job done twice, and your profit gets smaller without you noticing.',
+                    ['Costs go up.', 'One extra spray, one job done twice, and your profit gets smaller without you noticing.',
                      'Labor, materials and services add up in ' . $R::symbol() . ' as you go, so you know the cost before you spend.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
                 ] as $i => [$t, $w, $a, $ico])
@@ -335,7 +335,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick is-red">What guessing costs you</p>
-                <h2 class="hp-h2">How much a season can lose when you guess</h2>
+                <h2 class="hp-h2">Guessing can cost you <em class="is-red">a big part of your harvest.</em></h2>
                 <p class="hp-p">Crop studies show how much harvest is lost when farm work is guessed. Each card below is money that never reaches your pocket.</p>
             </div>
 
@@ -409,7 +409,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">{{ $ph ? 'From pagtatanim to ani' : 'From planting to harvest' }}</p>
-                <h2 class="hp-h2">Your whole season in <em>{{ count($stages) }} steps</em></h2>
+                <h2 class="hp-h2">Your whole season in <em>{{ count($stages) }} steps.</em></h2>
                 <p class="hp-p">Each step has its own tools, and Anee helps in every one. Tap a step, then a tool, to see it work on a real phone.</p>
             </div>
 
@@ -484,7 +484,7 @@
             <div class="hp-anee-grid">
                 <div class="reveal">
                     <p class="hp-kick">Meet Anee</p>
-                    <h2 class="hp-h2">Your AI farm technician <em>who knows your farm</em></h2>
+                    <h2 class="hp-h2">Your AI farm technician <em>knows your farm.</em></h2>
                     <p class="hp-p">
                         Anee is not a regular chatbot. Before she answers, she looks at your lots, their growth stages,
                         your records and the weather. So when you ask "should I spray tomorrow?", she answers for your
@@ -556,7 +556,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">See the app</p>
-                <h2 class="hp-h2">The real app, <em>on a real phone</em></h2>
+                <h2 class="hp-h2">See the real app <em>on a real phone.</em></h2>
                 <p class="hp-p">Short recordings of anee.io, exactly as you will use it in the field.</p>
             </div>
 
@@ -772,7 +772,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">Palay, mais, gulay and more</p>
-                <h2 class="hp-h2">One cropping calendar for <em>every crop you grow</em></h2>
+                <h2 class="hp-h2">One cropping calendar works for <em>every crop you grow.</em></h2>
                 <p class="hp-p">anee.io knows 85 Philippine crops, from palay and mais to gulay and fruit trees. Set the day you sow, transplant or plant, and every task after it gets its day count.</p>
             </div>
             <div class="mt-12 grid gap-5 sm:grid-cols-2">
@@ -808,7 +808,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">Free farm guides</p>
-                <h2 class="hp-h2">Guides for <em>Filipino farmers</em></h2>
+                <h2 class="hp-h2">Read free guides made <em>for Filipino farmers.</em></h2>
                 <p class="hp-p">How to plant palay and mais, what to do about the rice bug and the rice black bug, and how much fertilizer a hectare needs. Written for Philippine farms and free to read.</p>
             </div>
             {{-- What farmers search for most, each a link to the guide that answers it. --}}
@@ -879,7 +879,7 @@
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">Questions</p>
-                <h2 class="hp-h2">What farmers ask <em>about anee.io</em></h2>
+                <h2 class="hp-h2">Here is what farmers ask <em>about anee.io.</em></h2>
             </div>
             <div class="mt-10 space-y-3" x-data="{ open: 0 }">
                 @foreach ($faqs as $i => [$q, $a])
@@ -923,7 +923,7 @@
         <div class="hp-final-shade" aria-hidden="true"></div>
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 hp-sec text-center reveal on-dark" style="z-index:1">
             <img src="{{ $faceLg }}" alt="" class="hp-final-face">
-            <h2 class="hp-h2">Your best season starts with <em>a free account</em></h2>
+            <h2 class="hp-h2">Your best season starts with <em>a free account.</em></h2>
             <p class="hp-p">Set up your first season tonight. Tomorrow morning, anee.io already knows what each lot needs.</p>
             <div class="hp-cta">
                 <div class="hp-cta-row">
