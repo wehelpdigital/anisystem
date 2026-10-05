@@ -62,13 +62,14 @@
                     {{-- The promise, underlined by hand: one gold brush stroke that
                          draws itself under the words once the page has settled
                          (one line only, on the owner's word). --}}
-                    <span class="hp-mark"><span class="hp-shimmer">higher yield</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
+                    <span class="hp-mark"><span class="hp-shimmer">higher yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
                 </h1>
                 <p class="hp-lede animate-fade-up" style="animation-delay:.12s">
                     @if ($ph)
-                        anee.io is the farm app for Filipino farmers who grow palay, mais and gulay. From pagtatanim to
-                        ani, it tells you what to do each day, keeps track of every peso, and lets you ask Anee, your AI
-                        farm technician, in Tagalog or English, any time.
+                        anee.io is the farm app designed for Filipino farmers who grow palay, mais and gulay. From
+                        pagtatanim to ani, it helps you manage your crop, keeps track of every peso, and lets you ask
+                        Anee, your smart farm technician, any time, in Filipino or English. Just as serious businesses
+                        become successful and accurate through systems, smart, successful farmers use anee.io.
                     @else
                         anee.io puts your whole season on your phone: every field counted from its own day zero, every
                         task on its right day, every dollar written down, and Anee, your AI farm technician, ready with
