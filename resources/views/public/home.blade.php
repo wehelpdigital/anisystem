@@ -1273,9 +1273,14 @@
     .is-up .hp-sum-k { color: #991b1b; }
     .is-down .hp-sum-k { color: #92400e; }
     .is-way .hp-sum-k { color: #fff; font-size: 1.3rem; }
-    .hp-sum-list { margin-top: .7rem; display: grid; gap: .5rem; }
-    .hp-sum-list li { position: relative; padding-left: 1.05rem; font-size: .92rem; line-height: 1.5; color: #4b5563; }
-    .hp-sum-list li::before { content: ''; position: absolute; left: 0; top: .55em; width: .42rem; height: .42rem; border-radius: 999px; background: currentColor; opacity: .45; }
+    /* Each line on its own row, a thin rule between them, for easy reading. */
+    .hp-sum-list { margin-top: .5rem; display: grid; }
+    .hp-sum-list li { position: relative; padding: .8rem 0 .8rem 1.1rem; font-size: .93rem; line-height: 1.55; color: #4b5563; }
+    .hp-sum-list li + li { border-top: 1px solid rgb(0 0 0 / .08); }
+    .hp-sum-list li:last-child { padding-bottom: 0; }
+    .is-up .hp-sum-list li + li { border-top-color: #fbd0d0; }
+    .is-down .hp-sum-list li + li { border-top-color: #f8e3a3; }
+    .hp-sum-list li::before { content: ''; position: absolute; left: 0; top: calc(.8rem + .55em); width: .42rem; height: .42rem; border-radius: 999px; background: currentColor; opacity: .45; }
     .is-up .hp-sum-list li::before { background: #dc2626; opacity: .7; }
     .is-down .hp-sum-list li::before { background: #d97706; opacity: .7; }
     .hp-sum-p { margin-top: .7rem; font-size: .98rem; line-height: 1.6; color: #e4f0d6; }
