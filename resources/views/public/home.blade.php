@@ -58,7 +58,7 @@
                     {{ $R::t('cropsLine') }}
                 </span>
                 <h1 class="hp-h1 animate-fade-up" style="animation-delay:.06s">
-                    The only app you need for a
+                    Everything your farm needs for a
                     {{-- The promise, underlined by hand: one gold brush stroke that
                          draws itself under the words once the page has settled
                          (one line only, on the owner's word). --}}
