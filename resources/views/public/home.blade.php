@@ -207,7 +207,7 @@
     {{-- The stakes in numbers: what a season bleeds when nobody intervenes,
          and the anee.io answer to each leak. The counters count up and the
          red bars fill when the cards scroll into view. --}}
-    <section class="hp-sec bg-gray-50 bg-drift">
+    <section class="hp-sec hp-loss-dark on-dark">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick is-red">The real cost of guessing</p>
@@ -244,7 +244,7 @@
                 @endforeach
             </div>
 
-            <p class="mt-4 text-center text-xs text-gray-400 reveal">
+            <p class="hp-loss-src reveal">
                 Percent ranges come from FAO crop loss and {{ $ph ? 'Philippine rice' : 'published crop' }} research estimates{{ $ph ? '. Peso ranges assume a palay hectare that earns ₱85,000 to ₱100,000 before costs' : '' }}. Your own numbers will be different.
             </p>
 
@@ -954,6 +954,17 @@
         box-shadow: inset 0 0 0 1px rgb(255 255 255 / .25); animation: hpNudge 2.4s var(--hp-ease) infinite; }
     .hp-down svg { width: 1.2rem; height: 1.2rem; }
     @keyframes hpNudge { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 6px); } }
+
+    /* ---- what guessing costs: a dark, warm band so the red cards burn ---- */
+    .hp-loss-dark { position: relative; overflow: hidden;
+        background: radial-gradient(70% 55% at 50% 0%, rgb(185 28 28 / .32), transparent 72%),
+                    radial-gradient(60% 50% at 100% 100%, rgb(127 29 29 / .25), transparent 70%),
+                    linear-gradient(180deg, #1c1311 0%, #120c0a 100%); }
+    .hp-loss-dark > * { position: relative; }
+    .on-dark .hp-kick.is-red { color: #fca5a5; }
+    .on-dark .hp-h2 em.is-red { color: #f87171; }
+    .hp-loss-dark .loss-card { border-color: rgb(254 202 202 / .5); box-shadow: 0 24px 50px -30px rgb(0 0 0 / .8); }
+    .hp-loss-src { margin-top: 1.1rem; text-align: center; font-size: .78rem; line-height: 1.5; color: rgb(255 255 255 / .5); }
 
     /* ---- the turning word in the headline ---- */
     .hp-rot { display: inline-block; position: relative; white-space: nowrap; vertical-align: top;
