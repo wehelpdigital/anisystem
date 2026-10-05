@@ -203,66 +203,6 @@
         </div>
     </section>
 
-    {{-- ================= WHY: FARMING WITH PRECISION ================= --}}
-    {{-- The argument the whole site rests on: the old calendar stopped being
-         enough. Modern farming wins by precision (the right work, the right
-         amount, the right day), and that is the app's job. The owner asked
-         for the word "precision" and for plain words (2026-10-05). --}}
-    <section class="hp-why spark-field on-dark">
-        <img src="{{ asset('images/site/photos/storm-paddies.jpg') }}" alt="Farmers transplanting rice under a heavy grey sky" class="hp-why-bg" loading="lazy">
-        <div class="hp-why-shade" aria-hidden="true"></div>
-        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 hp-sec" style="z-index:1">
-            <div class="hp-head reveal">
-                <p class="hp-kick">The old calendar is not enough</p>
-                <h2 class="hp-h2">Modern farming wins by <em>precision.</em></h2>
-                <p class="hp-p">
-                    The weather no longer follows the old planting calendar. Rain comes early, dry spells last
-                    longer, and pests show up before you expect them. The farmers who do well today do <b>the right
-                    work, in the right amount, on the right day</b>. anee.io helps you do exactly that.
-                </p>
-            </div>
-
-            <div class="hp-why-grid">
-                @foreach ([
-                    ['The weather changes.', 'A dry spell goes on, or rain comes right before your spray day.',
-                     'You see the forecast for each lot ahead of time. If you need to move the plan, drag it and every date moves with it.',
-                     '<path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999A5.002 5.002 0 105.9 12.1 4 4 0 003 15zM13 21l-2 2m6-4l-2 2m-8-2l-2 2"/>'],
-                    ['Pests come early.', 'Yellow leaves or holes appear, like from the rice bug or thrips, and help is days away.',
-                     'Take a photo and Anee tells you what it is and what to do, so you treat the right problem with the right dose today.',
-                     '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/>'],
-                    ['The crop grows faster or slower.', 'Hot days make it grow faster than the plan. Cool days slow it down.',
-                     'See the growth stage of each lot on any day, with what to do and what to watch for. Anee can check the real stage for you.',
-                     '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
-                    ['Costs go up.', 'One extra spray, one job done twice, and your profit gets smaller without you noticing.',
-                     'Labor, materials and services add up in ' . $R::symbol() . ' as you go, so you know the cost before you spend.',
-                     '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
-                ] as $i => [$t, $w, $a, $ico])
-                    <div class="hp-why-card reveal" style="--reveal-delay: {{ $i * 0.08 }}s">
-                        <div class="hp-why-top">
-                            <span class="hp-why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">{!! $ico !!}</svg></span>
-                            <div>
-                                <p class="hp-why-when">The problem</p>
-                                <h3 class="hp-why-t">{{ $t }}</h3>
-                            </div>
-                        </div>
-                        <p class="hp-why-w">{{ $w }}</p>
-                        <div class="hp-why-a">
-                            <span class="hp-why-badge">{!! $tick !!}What anee.io does</span>
-                            <p>{{ $a }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-
-            <div class="hp-cta reveal">
-                <div class="hp-cta-row">
-                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and farm with precision {!! $arrow !!}</a>
-                </div>
-                <p class="hp-cta-note">Your first season plan is free, and it moves when the weather does.</p>
-            </div>
-        </div>
-    </section>
-
     {{-- ================= WHAT GUESSING COSTS ================= --}}
     {{-- The stakes in numbers: what a season bleeds when nobody intervenes,
          and the anee.io answer to each leak. The counters count up and the
@@ -332,6 +272,66 @@
                     <a href="{{ $ask }}" class="hp-alt"><img src="{{ $face }}" alt="" class="hp-face">Ask Anee about your crop</a>
                 </div>
                 <p class="hp-cta-note">The daily task list, the growth stages and the labor report are free.</p>
+            </div>
+        </div>
+    </section>
+
+    {{-- ================= WHY: FARMING WITH PRECISION ================= --}}
+    {{-- The argument the whole site rests on: the old calendar stopped being
+         enough. Modern farming wins by precision (the right work, the right
+         amount, the right day), and that is the app's job. The owner asked
+         for the word "precision" and for plain words (2026-10-05). --}}
+    <section class="hp-why spark-field on-dark">
+        <img src="{{ asset('images/site/photos/storm-paddies.jpg') }}" alt="Farmers transplanting rice under a heavy grey sky" class="hp-why-bg" loading="lazy">
+        <div class="hp-why-shade" aria-hidden="true"></div>
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6 hp-sec" style="z-index:1">
+            <div class="hp-head reveal">
+                <p class="hp-kick">The old calendar is not enough</p>
+                <h2 class="hp-h2">Modern farming wins by <em>precision.</em></h2>
+                <p class="hp-p">
+                    The weather no longer follows the old planting calendar. Rain comes early, dry spells last
+                    longer, and pests show up before you expect them. The farmers who do well today do <b>the right
+                    work, in the right amount, on the right day</b>. anee.io helps you do exactly that.
+                </p>
+            </div>
+
+            <div class="hp-why-grid">
+                @foreach ([
+                    ['The weather changes.', 'A dry spell goes on, or rain comes right before your spray day.',
+                     'You see the forecast for each lot ahead of time. If you need to move the plan, drag it and every date moves with it.',
+                     '<path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999A5.002 5.002 0 105.9 12.1 4 4 0 003 15zM13 21l-2 2m6-4l-2 2m-8-2l-2 2"/>'],
+                    ['Pests come early.', 'Yellow leaves or holes appear, like from the rice bug or thrips, and help is days away.',
+                     'Take a photo and Anee tells you what it is and what to do, so you treat the right problem with the right dose today.',
+                     '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2m0 0a7 7 0 017 7v3a3 3 0 01-3 3H8a3 3 0 01-3-3v-3a7 7 0 017-7zM9 12h.01M15 12h.01M9.5 17h5"/>'],
+                    ['The crop grows faster or slower.', 'Hot days make it grow faster than the plan. Cool days slow it down.',
+                     'See the growth stage of each lot on any day, with what to do and what to watch for. Anee can check the real stage for you.',
+                     '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
+                    ['Costs go up.', 'One extra spray, one job done twice, and your profit gets smaller without you noticing.',
+                     'Labor, materials and services add up in ' . $R::symbol() . ' as you go, so you know the cost before you spend.',
+                     '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
+                ] as $i => [$t, $w, $a, $ico])
+                    <div class="hp-why-card reveal" style="--reveal-delay: {{ $i * 0.08 }}s">
+                        <div class="hp-why-top">
+                            <span class="hp-why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">{!! $ico !!}</svg></span>
+                            <div>
+                                <p class="hp-why-when">The problem</p>
+                                <h3 class="hp-why-t">{{ $t }}</h3>
+                            </div>
+                        </div>
+                        <p class="hp-why-w">{{ $w }}</p>
+                        <div class="hp-why-a">
+                            <span class="hp-why-badge">{!! $tick !!}What anee.io does</span>
+                            <p>{{ $a }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="hp-cta reveal">
+                <div class="hp-cta-row">
+                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and farm with precision {!! $arrow !!}</a>
+                </div>
+                <p class="hp-cta-note">Your first season plan is free, and it moves when the weather does.</p>
             </div>
         </div>
     </section>
