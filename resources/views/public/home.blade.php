@@ -655,18 +655,35 @@
             'phone' => 'M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z',
             'screen' => 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
             'sprout' => 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z',
+            'food' => 'M6 3v18M3 3v5a3 3 0 006 0V3M17 21V3c-2 1-3 4-3 8h3',
+            'gym' => 'M6 7v10M3 9v6M18 7v10M21 9v6M6 12h12',
+            'ride' => 'M5 18a3 3 0 100-6 3 3 0 000 6zm14 0a3 3 0 100-6 3 3 0 000 6zM5 15h3l3-6h4l4 6M13 9l-1.5-3H9',
+            'work' => 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
         ];
+        // Every business around the farm already runs on a system (the
+        // owner's list, 2026-10-06). The farm is the last one.
         $others = $ph
-            ? [['Sari-sari store', 'Takes GCash', 'store'], ['Tricycle', 'Booked by app', 'phone'], ['Palay trader', 'Books on a computer', 'screen']]
-            : [['Corner store', 'Takes cards', 'store'], ['Rides', 'Booked by app', 'phone'], ['Grain buyer', 'Books on a computer', 'screen']];
+            ? [['Sari-sari store', 'Point of sale and inventory', 'store'], ['Restaurant', 'Delivery and online orders', 'food'], ['Gym', 'A membership app', 'gym'],
+               ['Habal-habal', 'A booking app', 'ride'], ['Raketero', 'Booked online', 'work']]
+            : [['Corner store', 'Point of sale and inventory', 'store'], ['Restaurant', 'Delivery and online orders', 'food'], ['Gym', 'A membership app', 'gym'],
+               ['Motorbike rides', 'A booking app', 'ride'], ['Freelancer', 'Booked online', 'work']];
     @endphp
     <section class="hp-sec bg-brand-mesh bg-drift">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 hp-biz">
             <div class="hp-biz-left">
                 <div class="hp-biz-pics reveal">
-                    <img src="{{ asset('images/site/photos/powered-by.jpg') }}" alt="Three farmers in their rice field with a Powered by anee.io sign" class="hp-biz-a" loading="lazy">
-                    <img src="{{ asset('images/site/photos/inspect.jpg') }}" alt="A farmer in her rice field, checking the season on anee.io" class="hp-biz-b" loading="lazy">
-                    <span class="hp-biz-pill"><i class="hp-live"></i>In our own fields, every day</span>
+                    {{-- Planting day, run from a phone (the owner's photo, 2026-10-06;
+                         cropped to 4:3, brightened, 1200 and 760 wide). --}}
+                    <img src="{{ asset('images/site/photos/farmer-phone-planting.webp') }}"
+                         srcset="{{ asset('images/site/photos/farmer-phone-planting-760.webp') }} 760w, {{ asset('images/site/photos/farmer-phone-planting.webp') }} 1200w"
+                         sizes="(min-width: 1024px) 34rem, 100vw" width="1200" height="900"
+                         alt="A smiling farmer checks anee.io on his phone while his crew transplants palay in the flooded field behind him"
+                         title="Planting day, run from a phone with anee.io" class="hp-biz-a" loading="lazy" decoding="async">
+                    <figure class="hp-biz-inset">
+                        <img src="{{ asset('images/site/photos/powered-by.jpg') }}" alt="Three farmers in their rice field with a Powered by anee.io sign"
+                             title="Our own fields, powered by anee.io" loading="lazy" decoding="async">
+                        <figcaption class="hp-biz-pill"><i class="hp-live"></i>In our own fields, every day</figcaption>
+                    </figure>
 
                     {{-- A season's books, the way the Profit Report keeps them. --}}
                     <div class="hp-ledger" data-ledger aria-label="An example season's books">
@@ -692,21 +709,23 @@
                     <h2 class="hp-h2">Your Farm Is a Business. <em>Run It Like One.</em></h2>
                     <p class="hp-p">
                         @if ($ph)
-                            The sari-sari store takes GCash. Tricycles are booked by app. The trader who buys your palay keeps
-                            the books on a computer.
+                            The sari-sari store has a point of sale and keeps its inventory. Restaurants take orders for
+                            delivery. Gyms run their members on an app. Habal-habal riders get booked by app, and even the
+                            raketero down the street gets booked online.
                         @else
-                            The corner store takes cards. Rides are booked by app. The buyer of your grain keeps the books on
-                            a computer.
+                            The corner store has a point of sale and keeps its inventory. Restaurants take orders for delivery.
+                            Gyms run their members on an app. Riders get booked by app, and even freelancers get booked online.
                         @endif
-                        Every business around you runs on good records, and that is how they earn. Most farms still run on
-                        memory and an old notebook. <b>Your farm deserves the same tools,</b> made for the field and priced
-                        for farmers.
+                        Every business around you runs on a system. So why is the farm, the business that feeds all of them,
+                        still run on memory and an old notebook? <b>Not anymore. Now farmers have anee.io,</b> a system made
+                        for the field and priced for farmers.
                     </p>
                 </div>
 
-                {{-- Everyone else upgraded: three businesses tick, then the farm's
-                     notebook turns into anee.io. --}}
-                <div class="hp-biz-up reveal" aria-label="The businesses around you already upgraded. Your farm can too.">
+                {{-- Everyone else upgraded: the businesses tick one by one, then
+                     the farm's notebook turns into anee.io. --}}
+                <p class="hp-biz-k reveal">Every business has a system. Now farms do too.</p>
+                <div class="hp-biz-up reveal" aria-label="The businesses around you already run on a system. Now farms do too.">
                     @foreach ($others as $k => [$ot, $os, $oi])
                         <div class="hp-biz-u" style="--k: {{ $k }}">
                             <span class="hp-biz-ui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $bizIco[$oi] }}"/></svg></span>
@@ -714,10 +733,10 @@
                             <i class="hp-biz-ok" aria-hidden="true">{!! $tick !!}</i>
                         </div>
                     @endforeach
-                    <div class="hp-biz-u is-farm" style="--k: 3">
+                    <div class="hp-biz-u is-farm" style="--k: {{ count($others) }}">
                         <span class="hp-biz-ui"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $bizIco['sprout'] }}"/></svg></span>
                         <b>Your farm</b>
-                        <small class="hp-biz-swap"><span class="is-q">Still a notebook?</span><span class="is-a">Runs on anee.io</span></small>
+                        <small class="hp-biz-swap"><span class="is-q">Still a notebook?</span><span class="is-a">Now runs on anee.io</span></small>
                         <i class="hp-biz-ok" aria-hidden="true">{!! $tick !!}</i>
                     </div>
                 </div>
@@ -1597,7 +1616,9 @@
         .hp-tvs-old { border-left: 1px solid rgb(255 255 255 / .1); }
         /* The Anee column draws its own lines: the row's faint one
            disappeared against its green. */
-        .hp-tvs-row + .hp-tvs-row .hp-tvs-new { box-shadow: inset 0 1px 0 rgb(245 197 24 / .32); }
+        /* Drawn on the row's own line (1px above the cell), so it lines
+           up with the line across the technician column. */
+        .hp-tvs-row + .hp-tvs-row .hp-tvs-new { box-shadow: 0 -1px 0 rgb(245 197 24 / .32); }
         .hp-tvs-row + .hp-tvs-row { border-top-color: rgb(255 255 255 / .12); }
         .hp-tvs-new { border-radius: 0; background: rgb(168 204 126 / .1); }
         .hp-tvs-row:hover .hp-tvs-new { background: rgb(168 204 126 / .16); }
@@ -1632,15 +1653,21 @@
     /* ---- the farm as a business ---- */
     .hp-biz { display: grid; gap: 3rem; align-items: center; }
     @media (min-width: 1024px) { .hp-biz { grid-template-columns: .95fr 1.05fr; gap: 4rem; } }
-    .hp-biz-pics { position: relative; padding: 2.2rem 0 3.5rem 0; }
-    .hp-biz-a { width: 88%; border-radius: 1.6rem; object-fit: cover; aspect-ratio: 4 / 3; box-shadow: 0 30px 60px -36px rgb(20 33 12 / .7); }
-    .hp-biz-b { position: absolute; right: 0; bottom: 0; width: 42%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 1.3rem;
-        border: 6px solid #fff; box-shadow: 0 30px 60px -30px rgb(20 33 12 / .7); animation: hpBob 7s ease-in-out infinite; }
-    .hp-biz-pill { position: absolute; left: 1rem; bottom: 4.6rem; display: inline-flex; align-items: center; padding: .45rem .85rem; border-radius: 999px;
-        font-size: .8rem; font-weight: 800; color: var(--hp-ink); background: rgb(255 255 255 / .94); box-shadow: 0 12px 26px -14px rgb(0 0 0 / .5); }
+    /* The farmer and his phone fill the frame on the right; the inset of
+       our own fields sits on the sky at the top left, and the books on the
+       field at the bottom left, so neither covers him. */
+    .hp-biz-pics { position: relative; padding: 2.4rem 0 6.5rem 2.2rem; }
+    .hp-biz-a { display: block; width: 100%; height: auto; border-radius: 1.6rem; object-fit: cover; aspect-ratio: 4 / 3;
+        box-shadow: 0 30px 60px -36px rgb(20 33 12 / .7); }
+    .hp-biz-inset { position: absolute; left: 0; top: 0; z-index: 2; width: 34%; margin: 0; rotate: -4deg; animation: hpBob 7s ease-in-out infinite; }
+    .hp-biz-inset img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 1.1rem; border: 5px solid #fff;
+        box-shadow: 0 24px 46px -24px rgb(20 33 12 / .75); }
+    .hp-biz-pill { position: absolute; left: 50%; bottom: -.9rem; translate: -50% 0; white-space: nowrap; display: inline-flex; align-items: center;
+        padding: .4rem .8rem; border-radius: 999px; font-size: .74rem; font-weight: 800; color: var(--hp-ink); background: #fff;
+        box-shadow: 0 12px 26px -14px rgb(0 0 0 / .5); }
 
     /* A season's books over the photos; on a phone, under them. */
-    .hp-ledger { position: absolute; right: 0; top: 0; z-index: 2; width: min(16.5rem, 62%); padding: .95rem 1rem 1rem; border-radius: 1.2rem;
+    .hp-ledger { position: absolute; left: 0; bottom: 0; z-index: 2; width: min(16.5rem, 56%); padding: .95rem 1rem 1rem; border-radius: 1.2rem;
         color: var(--hp-ink); background: rgb(255 255 255 / .97); box-shadow: 0 30px 60px -28px rgb(20 33 12 / .65), 0 0 0 1px rgb(20 33 12 / .05);
         animation: hpBob 8s ease-in-out 1s infinite; }
     .hp-ledger-k { font-size: .66rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6b7f5a; }
@@ -1659,11 +1686,10 @@
     .hp-ledger-keys span { display: inline-flex; align-items: center; gap: .3rem; }
     .hp-ledger-keys span::before { content: ''; width: .5rem; height: .5rem; border-radius: 2px; }
     @media (max-width: 639.98px) {
-        .hp-biz-pics { padding: 0; }
-        .hp-biz-a { width: 100%; }
-        .hp-biz-b { display: none; }
-        .hp-ledger { position: relative; width: auto; margin: -2.2rem .8rem 0; animation: none; }
-        .hp-biz-pill { bottom: auto; top: 1rem; }
+        .hp-biz-pics { padding: 1.6rem 0 0 1rem; }
+        .hp-biz-inset { width: 32%; }
+        .hp-biz-pill { left: -.4rem; translate: none; font-size: .66rem; padding: .32rem .6rem; }
+        .hp-ledger { position: relative; left: auto; bottom: auto; width: auto; margin: -2.2rem .8rem 0 -.2rem; animation: none; }
     }
     /* Under 1024 the words come first and the pictures follow. */
     @media (max-width: 1023.98px) { .hp-biz-left { order: 2; } }
@@ -1676,9 +1702,9 @@
     .hp-biz-quote figcaption img { width: 1.25rem; height: 1.25rem; object-fit: contain; }
 
     /* Everyone else upgraded; then the farm does. */
-    .hp-biz-up { margin-top: 1.6rem; display: grid; gap: .55rem; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    @media (max-width: 559.98px) { .hp-biz-up { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    .hp-biz-u { position: relative; padding: .85rem .6rem .8rem; border-radius: 1rem; text-align: center; background: #fff; border: 1px solid #e4ecdb;
+    .hp-biz-up { margin-top: .8rem; display: grid; gap: .6rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    @media (max-width: 479.98px) { .hp-biz-up { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .hp-biz-u { position: relative; padding: .8rem .55rem .75rem; border-radius: 1rem; text-align: center; background: #fff; border: 1px solid #e4ecdb;
         transition: border-color .45s var(--hp-ease), background-color .45s var(--hp-ease), box-shadow .45s var(--hp-ease); }
     .hp-biz-ui { width: 2.3rem; height: 2.3rem; margin: 0 auto; border-radius: .8rem; display: grid; place-items: center; color: var(--hp-green); background: #eef5e5;
         transition: color .45s var(--hp-ease), background-color .45s var(--hp-ease); }
@@ -1689,11 +1715,12 @@
         color: #fff; background: var(--hp-green); box-shadow: 0 6px 12px -6px rgb(47 82 25 / .8); scale: 0;
         transition: scale .45s cubic-bezier(.34,1.56,.64,1); transition-delay: calc(.35s + var(--k) * .4s); }
     .hp-biz-ok svg { width: 12px; height: 12px; stroke-width: 3.4; }
-    .hp-biz-u.is-farm .hp-biz-ok { transition-delay: 2.15s; }
-    .hp-biz-u.is-farm { border-style: dashed; border-color: #f2b8b5; background: #fffafa; transition-delay: 1.75s; }
-    .hp-biz-u.is-farm .hp-biz-ui { color: #b91c1c; background: #fdecea; transition-delay: 1.75s; }
+    .hp-biz-ok { transition-delay: calc(.3s + var(--k) * .3s); }
+    .hp-biz-u.is-farm .hp-biz-ok { transition-delay: 2.5s; }
+    .hp-biz-u.is-farm { border-style: dashed; border-color: #f2b8b5; background: #fffafa; transition-delay: 2.1s; }
+    .hp-biz-u.is-farm .hp-biz-ui { color: #b91c1c; background: #fdecea; transition-delay: 2.1s; }
     .hp-biz-swap { position: relative; display: grid !important; }
-    .hp-biz-swap span { grid-area: 1 / 1; transition: opacity .4s var(--hp-ease), translate .4s var(--hp-ease); transition-delay: 1.75s; }
+    .hp-biz-swap span { grid-area: 1 / 1; transition: opacity .4s var(--hp-ease), translate .4s var(--hp-ease); transition-delay: 2.1s; }
     .hp-biz-swap .is-q { color: #b91c1c; font-weight: 700; }
     .hp-biz-swap .is-a { color: var(--hp-green); font-weight: 800; opacity: 0; translate: 0 6px; }
     .hp-biz-up.is-visible .hp-biz-ok { scale: 1; }
@@ -1705,7 +1732,7 @@
     html:not(.js) .hp-biz-swap .is-q { opacity: 0; }
     html:not(.js) .hp-biz-swap .is-a { opacity: 1; translate: none; }
 
-    .hp-biz-k { margin-top: 1.6rem; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-green); }
+    .hp-biz-k { margin-top: 1.5rem; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-green); }
     .hp-gains { margin-top: .7rem; display: grid; gap: .7rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
     @media (max-width: 479.98px) { .hp-gains { grid-template-columns: 1fr; } }
     .hp-gain { display: flex; align-items: flex-start; gap: .7rem; padding: .85rem; border-radius: 1rem; background: #fff; border: 1px solid #e4ecdb;
@@ -1909,7 +1936,7 @@
         .hp-tvs-race.is-slow i::before { transform: scaleX(.9); }
         .hp-tvs-race.is-fast i::before { transform: scaleX(1); }
         .hp-anee-reads li, .hp-anee-ri, .hp-anee-out { transition: none !important; }
-        .hp-ledger, .hp-biz-b { animation: none !important; }
+        .hp-ledger, .hp-biz-inset { animation: none !important; }
         .hp-ledger-bar i, .hp-biz-u, .hp-biz-ui, .hp-biz-ok, .hp-biz-swap span { transition: none !important; }
         .hp-mark-line { -webkit-clip-path: none; clip-path: none; }
         .hp-tick, .hp-tick path, .hp-tick::after { animation: none !important; }
