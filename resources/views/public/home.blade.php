@@ -276,22 +276,93 @@
     {{-- The argument the whole site rests on: the old calendar stopped being
          enough. Modern farming wins by precision (the right work, the right
          amount, the right day), and that is the app's job. The owner asked
-         for the word "precision" and for plain words (2026-10-05). --}}
+         for the word "precision" and for plain words (2026-10-05).
+
+         Rebuilt 2026-10-06 ("make this section better"): the three rights
+         are spelled out beside a picture of one of them happening (the old
+         calendar's "Day 30" crossed out behind the day the crop is really
+         ready, the same Lot 2 job the hero's card names), and the four
+         problems read as one list, "when this happens" on the left and what
+         anee.io does on the right, instead of four boxes that each repeated
+         both labels. --}}
     <section class="hp-why spark-field on-dark">
         <img src="{{ asset('images/site/photos/storm-paddies.jpg') }}" alt="Farmers transplanting rice under a heavy grey sky" class="hp-why-bg" loading="lazy">
         <div class="hp-why-shade" aria-hidden="true"></div>
         <div class="relative max-w-6xl mx-auto px-4 sm:px-6 hp-sec" style="z-index:1">
-            <div class="hp-head reveal">
-                <p class="hp-kick">The old calendar is not enough</p>
-                <h2 class="hp-h2">Modern Farming Wins by <em>Precision.</em></h2>
-                <p class="hp-p">
-                    The weather no longer follows the old planting calendar. Rain comes early, dry spells last
-                    longer, and pests show up before you expect them. The farmers who do well today do <b>the right
-                    work, in the right amount, on the right day</b>. anee.io helps you do exactly that.
-                </p>
+            <div class="hp-prec-top">
+                <div class="hp-prec-copy">
+                    <div class="reveal">
+                        <p class="hp-kick">The old calendar is not enough</p>
+                        <h2 class="hp-h2">Modern Farming Wins by <em>Precision.</em></h2>
+                        <p class="hp-p">
+                            The weather no longer follows the old planting calendar. Rain comes early, dry spells last
+                            longer, and pests show up before you expect them. The farms that earn well today do not work
+                            harder. <b>They work with precision.</b>
+                        </p>
+                    </div>
+                    <ol class="hp-prec-rights">
+                        @foreach ([
+                            ['The right work.', 'What your crop needs at the stage it is in, lot by lot.'],
+                            ['The right amount.', 'How much of each material, and what it costs, before you buy.'],
+                            ['The right day.', 'Each lot\'s growth stage and weather, so you act when it counts.'],
+                        ] as $i => [$rt, $rw])
+                            <li class="reveal" style="--reveal-delay: {{ 0.1 + $i * 0.1 }}s">
+                                <span class="hp-prec-n" aria-hidden="true">{{ $i + 1 }}</span>
+                                <span><b>{{ $rt }}</b><span>{{ $rw }}</span></span>
+                            </li>
+                        @endforeach
+                    </ol>
+                    <p class="hp-prec-close reveal" style="--reveal-delay: .4s">anee.io helps you get all three right, all season long.</p>
+                </div>
+
+                {{-- One right, happening: the calendar on the wall says day 30;
+                     the crop says today. Drawn for the eye only (aria-hidden):
+                     the copy beside it already says all of this in words. --}}
+                <div class="hp-prec-vis reveal" aria-hidden="true">
+                    <svg class="hp-prec-reticle" viewBox="0 0 200 200" fill="none">
+                        <g class="hp-prec-spin">
+                            <circle cx="100" cy="100" r="96" stroke-dasharray="3 7"/>
+                            <path d="M100 0v14M100 186v14M0 100h14M186 100h14"/>
+                        </g>
+                        <circle cx="100" cy="100" r="70"/>
+                        <circle cx="100" cy="100" r="42"/>
+                        <path d="M100 40v22M100 138v22M40 100h22M138 100h22"/>
+                    </svg>
+                    <div class="hp-prec-old">
+                        <span class="hp-prec-old-top">Old calendar</span>
+                        <span class="hp-prec-old-day">30</span>
+                        <span class="hp-prec-old-t">Top dress</span>
+                        <svg class="hp-prec-old-x" viewBox="0 0 100 60" preserveAspectRatio="none"><path d="M8 50 L92 10"/></svg>
+                    </div>
+                    <div class="hp-prec-card">
+                        <div class="hp-prec-hd">
+                            <span class="hp-prec-lot"><i></i>Lot 2</span>
+                            <span class="hp-prec-when">Today, {{ $ph ? 'DAT' : 'DAP' }} 21</span>
+                            <span class="hp-prec-on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/></svg>On target</span>
+                        </div>
+                        <p class="hp-prec-task">Top dress urea</p>
+                        <ul class="hp-prec-checks">
+                            @foreach ([
+                                ['Right work', 'Active tillering. The crop needs nitrogen now.'],
+                                ['Right amount', '2 bags of urea for Lot 2. No more, no less.'],
+                                ['Right day', 'Today, not day 30. Warm days moved the crop ahead.'],
+                            ] as $k => [$cl, $cv])
+                                <li style="--k: {{ $k }}">
+                                    <span class="hp-prec-chk"><svg viewBox="0 0 24 24"><path d="M5.4 12.6l4.3 4.3 8.9-9.6" pathLength="1"/></svg></span>
+                                    <span><small>{{ $cl }}</small><b>{{ $cv }}</b></span>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <div class="hp-prec-foot">
+                            <span class="hp-prec-bar"><i></i></span>
+                            <b>Nothing wasted. Nothing late.</b>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="hp-why-grid">
+            <div class="hp-prec-rows">
+                <div class="hp-prec-cols" aria-hidden="true"><span>When this happens</span><span>What anee.io does</span></div>
                 @foreach ([
                     ['The weather changes.', 'A dry spell goes on, or rain comes right before your spray day.',
                      'You see the forecast for each lot ahead of time. If you need to move the plan, drag it and every date moves with it.',
@@ -306,17 +377,21 @@
                      'Labor, materials and services add up in ' . $R::symbol() . ' as you go, so you know the cost before you spend.',
                      '<path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'],
                 ] as $i => [$t, $w, $a, $ico])
-                    <div class="hp-why-card reveal" style="--reveal-delay: {{ $i * 0.08 }}s">
-                        <div class="hp-why-top">
-                            <span class="hp-why-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">{!! $ico !!}</svg></span>
+                    <div class="hp-prec-row reveal" style="--reveal-delay: {{ $i * 0.08 }}s; --i: {{ $i }}">
+                        <div class="hp-prec-prob">
+                            <span class="hp-prec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">{!! $ico !!}</svg></span>
                             <div>
-                                <p class="hp-why-when">The problem</p>
-                                <h3 class="hp-why-t">{{ $t }}</h3>
+                                <h3>{{ $t }}</h3>
+                                <p>{{ $w }}</p>
                             </div>
                         </div>
-                        <p class="hp-why-w">{{ $w }}</p>
-                        <div class="hp-why-a">
-                            <span class="hp-why-badge">{!! $tick !!}What anee.io does</span>
+                        <span class="hp-prec-flow" aria-hidden="true">
+                            <span class="hp-prec-flow-t">What anee.io does</span>
+                            <i class="hp-prec-line"><b></b></i>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>
+                        </span>
+                        <div class="hp-prec-ans">
+                            <span class="hp-prec-ok">{!! $tick !!}</span>
                             <p>{{ $a }}</p>
                         </div>
                     </div>
@@ -1007,29 +1082,132 @@
     .hp-modal-x:hover { background: rgb(0 0 0 / .8); transform: rotate(90deg); }
     .hp-modal-x svg { width: 1.1rem; height: 1.1rem; }
 
-    /* ---- why (intervention) ---- */
+    /* ---- why (precision) ---- */
     .hp-why { position: relative; isolation: isolate; overflow: hidden; }
     .hp-why-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
-    .hp-why-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgb(20 36 12 / .95), rgb(20 36 12 / .86) 50%, rgb(20 36 12 / .96)); }
-    .hp-why-grid { margin-top: 3rem; display: grid; gap: 1.1rem; }
-    @media (min-width: 720px) { .hp-why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; } }
-    .hp-why-card { display: flex; flex-direction: column; border-radius: 1.4rem; padding: 1.3rem; background: rgb(255 255 255 / .07);
-        box-shadow: inset 0 0 0 1px rgb(255 255 255 / .14); backdrop-filter: blur(10px);
-        transition: transform .28s var(--hp-ease), background-color .28s var(--hp-ease); }
-    .hp-why-card:hover { transform: translateY(-4px); background: rgb(255 255 255 / .1); }
-    .hp-why-top { display: flex; align-items: center; gap: .85rem; }
-    .hp-why-ico { flex: none; width: 2.9rem; height: 2.9rem; border-radius: 1rem; display: grid; place-items: center;
+    .hp-why-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgb(20 36 12 / .94), rgb(20 36 12 / .8) 45%, rgb(20 36 12 / .95)); }
+    /* The three rights, beside one of them happening. */
+    .hp-prec-top { display: grid; gap: 3rem; align-items: center; }
+    @media (min-width: 1024px) { .hp-prec-top { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 4rem; } }
+    .hp-prec-copy { max-width: 40rem; margin: 0 auto; text-align: center; }
+    @media (min-width: 1024px) { .hp-prec-copy { margin: 0; text-align: left; } }
+    .hp-prec-rights { margin-top: 1.9rem; display: grid; gap: .7rem; text-align: left; list-style: none; padding: 0; }
+    .hp-prec-rights li { display: flex; align-items: center; gap: .95rem; padding: .85rem 1.05rem; border-radius: 1.15rem;
+        background: rgb(255 255 255 / .06); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .12); backdrop-filter: blur(8px);
+        transition: background-color .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
+    .hp-prec-rights li:hover { background: rgb(255 255 255 / .1); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .45); }
+    .hp-prec-n { flex: none; width: 2.3rem; height: 2.3rem; border-radius: 999px; display: grid; place-items: center;
+        font-family: var(--font-heading); font-weight: 800; color: var(--hp-ink); background: var(--hp-sun);
+        box-shadow: 0 0 0 5px rgb(245 197 24 / .16); }
+    .hp-prec-rights b { display: block; font-family: var(--font-heading); font-size: 1.06rem; font-weight: 800; color: #fff; line-height: 1.25; }
+    .hp-prec-rights b + span { display: block; margin-top: .15rem; font-size: .92rem; line-height: 1.5; color: #c9d5bd; }
+    .hp-prec-close { margin-top: 1.2rem; font-weight: 800; color: var(--hp-sun); text-wrap: balance; }
+
+    /* The picture: a target, the old calendar, and today's job on Lot 2. */
+    .hp-prec-vis { position: relative; display: grid; place-items: center; padding: 6.6rem 0 1.5rem 2.2rem; }
+    .hp-prec-reticle { position: absolute; left: 50%; top: 50%; width: min(30rem, 108%); translate: -50% -50%; color: rgb(245 197 24 / .3);
+        pointer-events: none; }
+    .hp-prec-reticle circle, .hp-prec-reticle path { stroke: currentColor; stroke-width: .8; }
+    .hp-prec-spin { transform-origin: 100px 100px; animation: hpSpin 70s linear infinite; }
+    .hp-prec-old { position: absolute; left: 0; top: .6rem; z-index: 0; width: 8.4rem; padding-bottom: .9rem; overflow: hidden;
+        display: flex; flex-direction: column; align-items: center; border-radius: 1rem; background: #f6f0e1; color: #3f3423;
+        box-shadow: 0 26px 50px -22px rgb(0 0 0 / .8); rotate: -9deg; }
+    .hp-prec-old-top { align-self: stretch; padding: .45rem .5rem; text-align: center; font-size: .6rem; font-weight: 800;
+        letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; color: #fff; background: #b91c1c; }
+    .hp-prec-old-day { margin-top: .5rem; font-family: var(--font-heading); font-size: 3rem; font-weight: 800; line-height: 1; }
+    .hp-prec-old-t { margin-top: .2rem; font-size: .8rem; font-weight: 800; color: #6b5a40; }
+    .hp-prec-old-x { position: absolute; left: 10%; top: 34%; width: 80%; height: 48%; overflow: visible;
+        -webkit-clip-path: inset(-20% 102% -20% -2%); clip-path: inset(-20% 102% -20% -2%); }
+    .hp-prec-old-x path { fill: none; stroke: #dc2626; stroke-width: 5px; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+    .hp-prec-card { position: relative; z-index: 1; width: min(21.5rem, 100%); padding: 1.15rem 1.15rem 1rem; border-radius: 1.4rem;
+        color: var(--hp-ink); background: #fff; box-shadow: 0 44px 90px -34px rgb(0 0 0 / .9), 0 0 0 1px rgb(255 255 255 / .6); }
+    .hp-prec-hd { display: flex; align-items: center; flex-wrap: wrap; gap: .45rem; font-size: .74rem; font-weight: 800; }
+    .hp-prec-lot { display: inline-flex; align-items: center; gap: .35rem; padding: .22rem .6rem; border-radius: 999px; color: #fff; background: #5b3aa6; }
+    .hp-prec-lot i { width: .4rem; height: .4rem; border-radius: 999px; background: #fff; }
+    .hp-prec-when { color: #4b5563; }
+    .hp-prec-on { margin-left: auto; display: inline-flex; align-items: center; gap: .3rem; padding: .22rem .6rem; border-radius: 999px;
+        color: var(--hp-deep); background: #e4f0d6; }
+    .hp-prec-on svg { width: .9rem; height: .9rem; }
+    .hp-prec-task { margin-top: .7rem; font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; line-height: 1.2; }
+    .hp-prec-checks { margin-top: .8rem; display: grid; gap: .55rem; list-style: none; padding: 0; }
+    .hp-prec-checks li { display: flex; align-items: flex-start; gap: .65rem; padding: .6rem .7rem; border-radius: .9rem; background: #f4f7f0; }
+    .hp-prec-checks small { display: block; font-size: .64rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-green); }
+    .hp-prec-checks b { display: block; margin-top: .1rem; font-size: .86rem; font-weight: 700; line-height: 1.4; color: var(--hp-ink); }
+    .hp-prec-chk { flex: none; display: grid; place-items: center; width: 1.6rem; height: 1.6rem; margin-top: .1rem; border-radius: 999px;
+        background: var(--hp-green); box-shadow: 0 6px 14px -6px rgb(47 82 25 / .8); }
+    .hp-prec-chk svg { width: 70%; height: 70%; overflow: visible; }
+    .hp-prec-chk path { fill: none; stroke: #fff; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
+    .hp-prec-foot { margin-top: .9rem; display: flex; align-items: center; gap: .7rem; font-size: .82rem; }
+    .hp-prec-bar { flex: 1; height: .4rem; border-radius: 999px; background: #e7ecdf; overflow: hidden; }
+    .hp-prec-bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--hp-green), var(--hp-sun)); }
+
+    /* How it plays once the picture scrolls into view: the old calendar
+       tips in and is crossed out, today's job rises over it, and its three
+       checks tick one after another while the bar fills. Before that (with
+       scripts on) the pieces wait in their starting places; without scripts,
+       or for a visitor who asked for less motion, everything is simply done. */
+    html.js .hp-prec-vis:not(.is-visible) .hp-prec-old { opacity: 0; translate: -1rem 1rem; }
+    html.js .hp-prec-vis:not(.is-visible) .hp-prec-card { opacity: 0; translate: 0 1.5rem; }
+    .hp-prec-old, .hp-prec-card { transition: opacity .7s var(--hp-ease), translate .9s var(--hp-ease); }
+    .hp-prec-card { transition-delay: .25s; }
+    html.js .hp-prec-checks li { opacity: .45; transition: opacity .4s var(--hp-ease); transition-delay: calc(1.05s + var(--k) * .45s); }
+    html.js .hp-prec-chk { scale: 0; }
+    html.js .hp-prec-chk path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+    html.js .hp-prec-bar i { width: 0; transition: width 1.5s cubic-bezier(.65,0,.35,1) .95s; }
+    html.js .hp-prec-on { opacity: 0; translate: 0 -.3rem; transition: opacity .4s var(--hp-ease) 2.4s, translate .4s var(--hp-ease) 2.4s; }
+    .hp-prec-vis.is-visible .hp-prec-checks li { opacity: 1; }
+    .hp-prec-vis.is-visible .hp-prec-chk { animation: hpPrecPop .5s cubic-bezier(.34,1.56,.64,1) calc(1s + var(--k) * .45s) forwards; }
+    @keyframes hpPrecPop { to { scale: 1; } }
+    .hp-prec-vis.is-visible .hp-prec-chk path { animation: hpTickDraw .4s cubic-bezier(.65,0,.35,1) calc(1.25s + var(--k) * .45s) forwards; }
+    .hp-prec-vis.is-visible .hp-prec-bar i { width: 100%; }
+    .hp-prec-vis.is-visible .hp-prec-on { opacity: 1; translate: none; }
+    .hp-prec-vis.is-visible .hp-prec-old-x { animation: hpReveal .55s cubic-bezier(.65,0,.35,1) .75s forwards; }
+    html:not(.js) .hp-prec-old-x { -webkit-clip-path: none; clip-path: none; }
+    html:not(.js) .hp-prec-bar i { width: 100%; }
+    @media (max-width: 479.98px) {
+        .hp-prec-vis { padding: 6.9rem 0 1rem 1.2rem; }
+        .hp-prec-old { width: 7.2rem; }
+        .hp-prec-old-day { font-size: 2.5rem; }
+    }
+
+    /* When this happens, and what anee.io does. */
+    .hp-prec-rows { margin-top: 4.5rem; }
+    .hp-prec-cols { display: none; }
+    .hp-prec-row { display: grid; gap: .85rem; padding: 1.1rem; border-radius: 1.4rem; background: rgb(255 255 255 / .05);
+        box-shadow: inset 0 0 0 1px rgb(255 255 255 / .12); backdrop-filter: blur(10px);
+        transition: background-color .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
+    .hp-prec-row + .hp-prec-row { margin-top: .9rem; }
+    .hp-prec-row:hover { background: rgb(255 255 255 / .09); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .35); }
+    .hp-prec-prob { display: flex; align-items: flex-start; gap: .85rem; }
+    .hp-prec-ico { flex: none; width: 2.7rem; height: 2.7rem; border-radius: .95rem; display: grid; place-items: center;
         color: #fca5a5; background: rgb(248 113 113 / .14); box-shadow: inset 0 0 0 1px rgb(248 113 113 / .3); }
-    .hp-why-ico svg { width: 1.5rem; height: 1.5rem; }
-    .hp-why-when { font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #fca5a5; }
-    .hp-why-t { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: #fff; line-height: 1.25; }
-    .hp-why-w { margin-top: .8rem; font-size: .92rem; line-height: 1.6; color: #c9d5bd; }
-    .hp-why-a { margin-top: 1rem; padding: .9rem 1rem; border-radius: 1rem; background: rgb(168 204 126 / .12);
-        box-shadow: inset 0 0 0 1px rgb(168 204 126 / .28); flex: 1 1 auto; }
-    .hp-why-badge { display: inline-flex; align-items: center; gap: .35rem; font-size: .72rem; font-weight: 800; letter-spacing: .06em;
-        text-transform: uppercase; color: var(--hp-sun); }
-    .hp-why-badge svg { width: .85rem; height: .85rem; }
-    .hp-why-a p { margin-top: .35rem; font-size: .92rem; line-height: 1.6; color: #fff; }
+    .hp-prec-ico svg { width: 1.4rem; height: 1.4rem; }
+    .hp-prec-prob h3 { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #fff; line-height: 1.25; }
+    .hp-prec-prob p { margin-top: .25rem; font-size: .9rem; line-height: 1.55; color: #c9d5bd; }
+    .hp-prec-flow { display: flex; align-items: center; gap: .55rem; color: var(--hp-sun); }
+    .hp-prec-flow-t { flex: none; font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .hp-prec-flow svg { flex: none; width: 1rem; height: 1rem; }
+    .hp-prec-line { position: relative; flex: 1; height: 2px; border-radius: 2px;
+        background: linear-gradient(90deg, rgb(248 113 113 / .5), rgb(245 197 24 / .85)); }
+    .hp-prec-line b { position: absolute; left: 0; top: 50%; width: .45rem; height: .45rem; margin-top: -.225rem; border-radius: 999px;
+        background: var(--hp-sun); box-shadow: 0 0 10px 1px rgb(245 197 24 / .8); opacity: 0;
+        animation: hpPrecFlow 2.8s var(--hp-ease) infinite; animation-delay: calc(var(--i) * .4s); }
+    @keyframes hpPrecFlow { 0% { left: 0; opacity: 0; } 15%, 80% { opacity: 1; } 100% { left: calc(100% - .45rem); opacity: 0; } }
+    .hp-prec-ans { display: flex; align-items: flex-start; gap: .7rem; padding: .9rem 1rem; border-radius: 1rem;
+        background: rgb(168 204 126 / .12); box-shadow: inset 0 0 0 1px rgb(168 204 126 / .28); }
+    .hp-prec-ok { flex: none; width: 1.55rem; height: 1.55rem; margin-top: .05rem; border-radius: 999px; display: grid; place-items: center;
+        color: var(--hp-ink); background: var(--hp-sun); }
+    .hp-prec-ok svg { width: .85rem; height: .85rem; }
+    .hp-prec-ans p { font-size: .93rem; line-height: 1.55; color: #fff; }
+    @media (min-width: 900px) {
+        .hp-prec-cols { display: grid; grid-template-columns: minmax(0, 1fr) 4.5rem minmax(0, 1.15fr); padding: 0 1.25rem .85rem;
+            font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+        .hp-prec-cols span:first-child { color: #fca5a5; }
+        .hp-prec-cols span:last-child { grid-column: 3; color: var(--hp-sun); }
+        .hp-prec-row { grid-template-columns: minmax(0, 1fr) 4.5rem minmax(0, 1.15fr); align-items: center; gap: 0; padding: 1.1rem 1.25rem; }
+        .hp-prec-flow { padding: 0 .55rem; gap: .2rem; }
+        .hp-prec-flow-t { display: none; }
+    }
 
 
     /* ---- the seven steps ---- */
@@ -1310,10 +1488,18 @@
         .hp-biz-b, .hp-final-face, .hp-live, .hp-read i, .hp-sum-ico, .hp-sum-ico svg, .hp-vs.is-visible .hp-vs-new > span { animation: none !important; }
         .hp-st-tab.is-on.is-timing .hp-st-bar i { animation: none; }
         .hp-phone.is-hero, .hp-st-pane, .hp-tool, .hp-msg, .hp-read, .hp-film, .hp-film-tag, .hp-modal, .hp-modal-box, .hp-sticky,
-        .hp-go, .hp-alt, .hp-why-card, .hp-st-tab, .hp-gain, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
+        .hp-go, .hp-alt, .hp-prec-row, .hp-prec-rights li, .hp-prec-old, .hp-prec-card, .hp-prec-checks li, .hp-prec-bar i, .hp-prec-on, .hp-st-tab, .hp-gain, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
         .hp-chat .hp-msg, .hp-chat .hp-read { opacity: 1; transform: none; }
         .hp-mark-line { -webkit-clip-path: none; clip-path: none; }
         .hp-tick, .hp-tick path, .hp-tick::after { animation: none !important; }
+        .hp-prec-spin, .hp-prec-line b, .hp-prec-chk, .hp-prec-chk path, .hp-prec-old-x { animation: none !important; }
+        .hp-prec-line b { opacity: 0; }
+        html.js .hp-prec-vis .hp-prec-old, html.js .hp-prec-vis .hp-prec-card { opacity: 1 !important; translate: none !important; }
+        html.js .hp-prec-checks li, html.js .hp-prec-on { opacity: 1 !important; translate: none !important; }
+        html.js .hp-prec-chk { scale: 1 !important; }
+        html.js .hp-prec-chk path { stroke-dashoffset: 0 !important; }
+        html.js .hp-prec-bar i { width: 100% !important; }
+        .hp-prec-old-x { -webkit-clip-path: none; clip-path: none; }
         .hp-tick { transform: none; }
         .hp-tick path { stroke-dashoffset: 0; }
     }
