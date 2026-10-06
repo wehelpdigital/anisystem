@@ -1626,7 +1626,6 @@
             <div class="hp-cta reveal">
                 <div class="hp-cta-row">
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Put the guide on your calendar {!! $arrow !!}</a>
-                    <a href="{{ $ask }}" class="hp-alt"><img src="{{ $face }}" alt="" class="hp-face">Ask Anee about your crop</a>
                 </div>
                 <p class="hp-cta-note">Reading the guides is free. Planning your own season with them is free too.</p>
             </div>
@@ -1687,7 +1686,6 @@
             <div class="hp-cta reveal">
                 <div class="hp-cta-row">
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Create your free account {!! $arrow !!}</a>
-                    <a href="{{ $ask }}" class="hp-alt"><img src="{{ $face }}" alt="" class="hp-face">Still unsure? Ask Anee</a>
                 </div>
             </div>
         </div>
@@ -3035,9 +3033,8 @@
     .hg-shelves { margin-top: 2.8rem; display: grid; gap: 1.4rem; }
     @media (min-width: 768px) { .hg-shelves { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem; } }
     .hg-shelf { position: relative; display: flex; flex-direction: column; gap: 1rem; padding: 1.15rem; border-radius: 1.6rem; background: #fff;
-        border: 1px solid hsl(var(--h) 30% 88%); box-shadow: 0 30px 60px -46px rgb(20 33 12 / .55);
+        border: 1px solid hsl(var(--h) 30% 88%); border-top: 4px solid hsl(var(--h) 55% 45%); box-shadow: 0 30px 60px -46px rgb(20 33 12 / .55);
         transition: transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
-    .hg-shelf::before { content: ''; position: absolute; left: 1.4rem; right: 1.4rem; top: -1px; height: 3px; border-radius: 0 0 3px 3px; background: hsl(var(--h) 55% 45%); }
     .hg-shelf:hover { transform: translateY(-3px); box-shadow: 0 36px 70px -44px rgb(20 33 12 / .6); }
     .hg-head { display: flex; align-items: center; gap: .75rem; }
     .hg-ico { flex: none; width: 2.6rem; height: 2.6rem; border-radius: .9rem; display: grid; place-items: center; color: hsl(var(--h) 60% 26%);
