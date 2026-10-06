@@ -10,12 +10,19 @@ use Illuminate\Support\Str;
 /**
  * The public site's guides, blog and feature pages (2026-10-01).
  *
- * Four sections, each with a hub and its pages:
+ * The sections, each with a hub and its pages:
  *
  *   crops     /crops, /crops/{slug}          crop guides
- *   problems  /problems, /problems/{slug}    pests, diseases, weeds
+ *   pests     /pests, /pests/{slug}          insect and mite pests
+ *   diseases  /diseases, /diseases/{slug}    crop diseases
+ *   weeds     /weeds, /weeds/{slug}          weeds and grasses (a catalogue
+ *                                            of rice weeds and the guides)
  *   blog      /blog, /blog/{slug}            fertilizer, pesticides, words, culture
  *   features  /features (the tour), /features/{slug}
+ *
+ * Pests, diseases and weeds were one "problems" section until 2026-10-06.
+ * /problems is now a front door to the three, and /problems/{slug} sends
+ * an old address to the page's new home.
  *
  * A page is blocks (see render()), written as JSON files in
  * database/site-pages and edited afterwards in the mother app's block builder
@@ -34,6 +41,34 @@ class SitePages
             'intro' => 'How to plant, feed and harvest the crops Filipino farms live on, from palay and mais to vegetables, coconut and banana. Written for the field, in English and Tagalog.',
             'kicker' => 'Crop guides',
         ],
+        'pests' => [
+            'label' => 'Crop Pests',
+            'crumb' => 'Crop pests',
+            'hubTitle' => 'Crop Pests in the Philippines',
+            'metaTitle' => 'Crop Pests in the Philippines: Insects of Rice and Corn',
+            'metaDescription' => 'Spot and stop the insect pests of Philippine farms: rice bug, black bug, brown planthopper, leaffolder, fall armyworm, corn borer, thrips and mites.',
+            'intro' => 'Know which insect is on your crop before you buy a spray. Each guide shows the signs, the damage, the right time to act and the ways to manage it.',
+            'kicker' => 'Crop pests',
+        ],
+        'diseases' => [
+            'label' => 'Crop Diseases',
+            'crumb' => 'Crop diseases',
+            'hubTitle' => 'Crop Diseases in the Philippines',
+            'metaTitle' => 'Crop Diseases in the Philippines: Signs and Control',
+            'metaDescription' => 'Learn the signs of common crop diseases in the Philippines, like sheath blight, anthracnose and fusarium wilt, and how to manage them before they spread.',
+            'intro' => 'A spot on a leaf can be a fungus, a bacterium or just the weather. These guides show the signs of each disease, why it comes and what to do before it spreads.',
+            'kicker' => 'Crop diseases',
+        ],
+        'weeds' => [
+            'label' => 'Weeds and Grasses',
+            'crumb' => 'Weeds and grasses',
+            'hubTitle' => 'Weeds and Grasses in Philippine Rice Fields',
+            'metaTitle' => 'Rice Field Weeds in the Philippines: Names and Control',
+            'metaDescription' => 'A field guide to the weeds of Philippine rice fields: grasses, sedges and broadleaves, their local names, photos and how to control each one.',
+            'intro' => 'Damo steals the light, water and fertilizer your palay needs. Find the weeds in your field by their look and their local names, then see what to do about each one at every age of your rice.',
+            'kicker' => 'Weeds and grasses',
+        ],
+        // The old one section door, kept as the front door to the three.
         'problems' => [
             'label' => 'Crop Problems',
             'crumb' => 'Crop problems',
@@ -160,6 +195,16 @@ class SitePages
         }
     }
 
+    /** Where a page that used to live under /problems lives now (or null). */
+    public static function movedProblem(string $slug): ?AsSitePage
+    {
+        try {
+            return AsSitePage::live()->whereIn('section', ['pests', 'diseases', 'weeds'])->where('slug', $slug)->first();
+        } catch (\Throwable $e) {
+            return null;
+        }
+    }
+
     /** A section's live pages, in order. */
     public static function inSection(string $section): Collection
     {
@@ -178,14 +223,14 @@ class SitePages
     public static function homePicks(int $n = 5): array
     {
         try {
-            $rows = AsSitePage::live()->whereIn('section', ['crops', 'problems', 'blog'])
+            $rows = AsSitePage::live()->whereIn('section', ['crops', 'pests', 'weeds', 'blog'])
                 ->orderBy('sortOrder')->orderBy('title')
                 ->get(['id', 'section', 'slug', 'lang', 'category', 'title', 'excerpt', 'heroImage']);
         } catch (\Throwable $e) {
             return [];
         }
         $out = [];
-        foreach (['crops', 'problems', 'blog'] as $s) {
+        foreach (['crops', 'pests', 'weeds', 'blog'] as $s) {
             $pages = $rows->where('section', $s)->take($n)->values();
             if ($pages->isNotEmpty()) {
                 $out[$s] = $pages;
@@ -327,10 +372,10 @@ class SitePages
                     ->orderBy('sortOrder')->orderBy('id')->limit($n)->get(['section', 'slug', 'title', 'metaTitle'])
                     ->map(fn ($p) => ['url' => self::url($p->section, $p->slug), 'label' => self::shortTitle($p)])->all();
 
-                return ['crops' => $pick('crops', 6), 'problems' => $pick('problems', 6), 'blog' => $pick('blog', 6)];
+                return ['crops' => $pick('crops', 6), 'pests' => $pick('pests', 6), 'weeds' => $pick('weeds', 6), 'blog' => $pick('blog', 6)];
             });
         } catch (\Throwable $e) {
-            return ['crops' => [], 'problems' => [], 'blog' => []];
+            return ['crops' => [], 'pests' => [], 'weeds' => [], 'blog' => []];
         }
     }
 

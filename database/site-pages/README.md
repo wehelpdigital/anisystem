@@ -18,9 +18,14 @@ Sections and their addresses:
 | section  | hub        | page                 |
 |----------|------------|----------------------|
 | crops    | /crops     | /crops/{slug}        |
-| problems | /problems  | /problems/{slug}     |
+| pests    | /pests     | /pests/{slug}        |
+| diseases | /diseases  | /diseases/{slug}     |
+| weeds    | /weeds     | /weeds/{slug}        |
 | blog     | /blog      | /blog/{slug}         |
 | features | /features  | /features/{slug}     |
+
+/problems is the front door to pests, diseases and weeds, and an old
+/problems/{slug} address moves to the page's new home (2026-10-06).
 
 See `STYLE.md` for the writing rules and the page format, and run
 `python database/site-pages/check.py` before committing a page, and

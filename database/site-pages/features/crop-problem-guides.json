@@ -30,7 +30,7 @@
     },
     {
       "type": "text",
-      "text": "Every guide follows the same order, so you know where to look. It opens with a photo and what the problem is. Then come the signs in the field, why it builds up and how to manage it, with cultural control first and chemicals last. Each one ends with the questions farmers ask and the sources behind it, from PhilRice, IRRI, the DA and the product labels.\n\nOn the [crop problems page](/problems), filter by rice pests, corn pests, crop pests, rice diseases, crop diseases or weeds."
+      "text": "Every guide follows the same order, so you know where to look. It opens with a photo and what the problem is. Then come the signs in the field, why it builds up and how to manage it, with cultural control first and chemicals last. Each one ends with the questions farmers ask and the sources behind it, from PhilRice, IRRI, the DA and the product labels.\n\nThe guides sit behind three doors: [crop pests](/pests), [crop diseases](/diseases) and [weeds and grasses](/weeds). The weeds door holds a catalogue of 81 rice weeds, each with its local names, and a weed control helper that shows what to do at every age of your rice."
     },
     {
       "type": "heading",
@@ -41,11 +41,11 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[Brown planthopper](/problems/brown-planthopper): the sap sucker behind hopperburn, and why an early spray can make it worse",
-        "[Rice black bug](/problems/rice-black-bug): the itim na atangya that hides at the base of the hill and leaves bugburn",
-        "[Rice bug](/problems/rice-bug): the atangya that empties milky grains, with counts that tell you when to act",
-        "[Rice leaffolder](/problems/rice-leaffolder): the mambibilot that folds leaves, and when its damage really matters",
-        "[Rice insects](/problems/rice-insects): the main pests by crop stage, and the spiders and wasps that eat them for free"
+        "[Brown planthopper](/pests/brown-planthopper): the sap sucker behind hopperburn, and why an early spray can make it worse",
+        "[Rice black bug](/pests/rice-black-bug): the itim na atangya that hides at the base of the hill and leaves bugburn",
+        "[Rice bug](/pests/rice-bug): the atangya that empties milky grains, with counts that tell you when to act",
+        "[Rice leaffolder](/pests/rice-leaffolder): the mambibilot that folds leaves, and when its damage really matters",
+        "[Rice insects](/pests/rice-insects): the main pests by crop stage, and the spiders and wasps that eat them for free"
       ]
     },
     {
@@ -57,9 +57,9 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[Fall armyworm](/problems/fall-armyworm): the caterpillar first reported in Cagayan in 2019, and how to scout for it",
-        "[Asian corn borer](/problems/asian-corn-borer): the stalk borer, with detasseling, Trichogramma and Bt corn",
-        "[Cutworm](/problems/cutworm): the night feeder that cuts corn seedlings and young vegetable stems"
+        "[Fall armyworm](/pests/fall-armyworm): the caterpillar first reported in Cagayan in 2019, and how to scout for it",
+        "[Asian corn borer](/pests/asian-corn-borer): the stalk borer, with detasseling, Trichogramma and Bt corn",
+        "[Cutworm](/pests/cutworm): the night feeder that cuts corn seedlings and young vegetable stems"
       ]
     },
     {
@@ -71,12 +71,12 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "[Sheath blight](/problems/sheath-blight): the sheath blight disease of dense, well fed palay in hot, humid weather",
-        "[Anthracnose](/problems/anthracnose): black, sunken spots on mango, rotting sili and the kulot of onion",
-        "[Fusarium wilt](/problems/fusarium-wilt): Panama disease in banana and wilt in tomato",
-        "[Thrips](/problems/thrips): the thrips insect behind silvery onion leaves and curled sili",
-        "[Hanip, mites and aphids](/problems/hanip-mites-and-aphids): what hanip means in the field, and how to control mites and aphids",
-        "[Common weeds in the Philippines](/problems/common-weeds-philippines): the grasses, sedges and broadleaves of rice and corn, with their local names"
+        "[Sheath blight](/diseases/sheath-blight): the sheath blight disease of dense, well fed palay in hot, humid weather",
+        "[Anthracnose](/diseases/anthracnose): black, sunken spots on mango, rotting sili and the kulot of onion",
+        "[Fusarium wilt](/diseases/fusarium-wilt): Panama disease in banana and wilt in tomato",
+        "[Thrips](/pests/thrips): the thrips insect behind silvery onion leaves and curled sili",
+        "[Hanip, mites and aphids](/pests/hanip-mites-and-aphids): what hanip means in the field, and how to control mites and aphids",
+        "[Common weeds in the Philippines](/weeds/common-weeds-philippines): the grasses, sedges and broadleaves of rice and corn, with their local names"
       ]
     },
     {
@@ -86,7 +86,7 @@
     },
     {
       "type": "text",
-      "text": "Start with what you see, not with a chemical. Walk the field, note the crop stage and look closely at the leaf, the stem and the base of the hill. Then match it against the guide. Many problems look alike from the road. A brown patch in palay (rice still in the husk) may be hopperburn, bugburn or a disease, and each needs a different answer. Our [rice insects](/problems/rice-insects) guide shows how to tell an insect from a disease before you spray."
+      "text": "Start with what you see, not with a chemical. Walk the field, note the crop stage and look closely at the leaf, the stem and the base of the hill. Then match it against the guide. Many problems look alike from the road. A brown patch in palay (rice still in the husk) may be hopperburn, bugburn or a disease, and each needs a different answer. Our [rice insects](/pests/rice-insects) guide shows how to tell an insect from a disease before you spray."
     },
     {
       "type": "steps",
@@ -191,7 +191,7 @@
           "url": "/features/growth-stages-and-weather"
         },
         {
-          "label": "AI agricultural technician",
+          "label": "Anee, the smart farm technician",
           "url": "/features/ai-agricultural-technician"
         },
         {

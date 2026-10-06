@@ -1,0 +1,297 @@
+{
+  "section": "weeds",
+  "slug": "slender-amaranth",
+  "sortOrder": 460,
+  "lang": "en",
+  "category": "Broadleaves",
+  "title": "Slender Amaranth: Spot the Spineless Kulitis in Your Rice Field",
+  "metaTitle": "Slender Amaranth in Rice: Identification and Control",
+  "metaDescription": "Slender amaranth, or kulitis, has no spines but still hosts a rice root nematode. Learn to spot it in rainfed fields and clear it before it seeds.",
+  "focusKeyword": "slender amaranth",
+  "keywords": [
+    "slender amaranth",
+    "kulitis",
+    "uray babae",
+    "Amaranthus viridis",
+    "broadleaf weed in rice"
+  ],
+  "excerpt": "Slender amaranth is a soft, spineless broadleaf weed that grows in rainfed lowland rice fields in the Philippines. It looks a lot like its spiny cousin, but its reddish stems carry no thorns. This page shows how to tell it apart, why it matters to your palay, and how to control it before it drops seed.",
+  "heroImage": {
+    "src": "/images/site/weeds/slender-amaranth.webp",
+    "thumb": "/images/site/weeds/slender-amaranth-480.webp",
+    "alt": "Slender amaranth (Amaranthus viridis), a broadleaf weed of Philippine rice fields",
+    "credit": "Tauʻolunga, CC BY SA 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Slender Amaranth?"
+    },
+    {
+      "type": "text",
+      "text": "This weed belongs to the amaranth family. Farmers call it alom alom, ayang babae, halom, kilitis, kalunai, kudiapa, kulitis or uray babae, depending on where they live. The word babae in two of these names sets it apart from the spiny kind, which some call ayang lalaki. Slender amaranth grows in rainfed lowland rice fields, mostly on patches of soil that dry out between rains.\n\nAs an annual, it grows, flowers and dies within one season. It spreads only by seed, and its dense flower spikes ripen a large crop of tiny seeds. Those seeds wait in the soil and sprout when the field has no standing water. Since the stems feel soft and carry no spines, the plant comes out easily by hand, but only if you catch it before it seeds."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about slender amaranth",
+      "rows": [
+        [
+          "Name",
+          "Slender amaranth"
+        ],
+        [
+          "Scientific name",
+          "Amaranthus viridis"
+        ],
+        [
+          "Family",
+          "Amaranthaceae"
+        ],
+        [
+          "Weed group",
+          "Broadleaves ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Alom alom, ayang babae, halom, kilitis, kalunai, kudiapa, kulitis, uray babae"
+        ],
+        [
+          "Life cycle",
+          "Annual"
+        ],
+        [
+          "Spreads by",
+          "Seeds"
+        ],
+        [
+          "Where it grows",
+          "Rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Slender Amaranth"
+    },
+    {
+      "type": "text",
+      "text": "Start with the stem. It branches a lot, stays slender and fleshy, and usually turns reddish. Run your fingers along it and you will find no spines at the leaf joints. The leaves grow one at a time along the stem, broad and oval in shape. Now look at the leaf tip: it has a small notch with a tiny bristle. Like other broadleaf weeds, the leaves have netted veins. Finally, find the green or greenish white flowers in clusters at the leaf angles and in thick spikes."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Slender, fleshy, reddish stems that branch many times from the base.",
+        "No spines at all where the leaves and branches join the stem.",
+        "Broad oval leaves with a small notch and a short bristle at the tip.",
+        "Green or greenish white flowers in clusters at the leaf angles and in dense spikes.",
+        "Look alike tip: spiny amaranth has sharp paired spines, while this one feels smooth and safe to grab."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Like its spiny cousin, this weed is a C4 plant. It makes good use of strong sun and heat, so it can grow quickly in open patches between the rice hills. One plant can produce 7,000 seeds, enough to fill a corner of the field with seedlings the next season. It also competes with palay for water and fertilizer, and its leaves can shade young rice.\n\nThere is a hidden cost as well. Reports list slender amaranth as an alternative host of Meloidogyne graminicola, the nematode that causes galls on rice roots. So while it stands on levees or fallow ground, it can help that pest survive until the next crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Slender Amaranth"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Pull plants by hand while they are young. The stems carry no spines, so you can grab them bare handed, but take the whole root.",
+        "Remove plants before the flower spikes ripen, and carry them out so the tiny seeds do not fall on the soil.",
+        "Clean levees and fallow plots between crops, since this weed can keep the rice root knot nematode alive there.",
+        "Keep a steady flood where you can. Fewer amaranth seeds sprout under standing water than on dry, exposed soil."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Broadleaves"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold slender amaranth down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for broadleaves by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Bensulfuron methyl, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Bensulfuron methyl, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl",
+          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "Metsulfuron methyl plus chlorimuron ethyl",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Slender Amaranth Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Prepare the land well: flood, plow, let the weed seeds sprout, then kill them when you harrow. Level the field so water covers it evenly.",
+        "Pull escapes before they flower and set seed, and carry them out of the paddy instead of leaving them on the bund.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [broadleaf weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Slender Amaranth?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Slender Amaranth"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is slender amaranth called in the Philippines?",
+          "a": "It has many local names. Farmers call it kulitis, alom alom, halom, kilitis, kalunai, kudiapa, ayang babae or uray babae. Some of these names also cover spiny amaranth, so check the stem before you decide. If the stem feels smooth with no spines at the leaf joints, you have the slender kind."
+        },
+        {
+          "q": "How do I control it in my rice field?",
+          "a": "First, keep the levees and fallow plots clean, and use clean seed. Then keep standing water in the field where your supply allows, since amaranth seeds sprout poorly under flood. Hand weed young plants before the spikes ripen. If you choose a herbicide, pick one made for broadleaf weeds that fits the age of your rice, and always follow the FPA registered label."
+        },
+        {
+          "q": "Why is it a problem if it has no spines?",
+          "a": "Because the danger does not come from spines. It is a fast growing C4 weed that can produce 7,000 seeds per plant. Reports also name it as a host of Meloidogyne graminicola, a nematode that forms galls on rice roots. Weak, galled roots take up less water and food, so a field full of this weed can hurt your next crop too."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More broadleaf weeds of rice",
+      "items": [
+        {
+          "label": "Heartshape false pickerelweed",
+          "url": "/weeds/monochoria-vaginalis"
+        },
+        {
+          "label": "Gooseweed",
+          "url": "/weeds/gooseweed"
+        },
+        {
+          "label": "Seedbox",
+          "url": "/weeds/ludwigia-hyssopifolia"
+        },
+        {
+          "label": "False daisy",
+          "url": "/weeds/false-daisy"
+        },
+        {
+          "label": "Water hyacinth",
+          "url": "/weeds/water-hyacinth"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

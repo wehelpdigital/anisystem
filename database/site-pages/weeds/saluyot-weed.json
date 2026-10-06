@@ -1,0 +1,298 @@
+{
+  "section": "weeds",
+  "slug": "saluyot-weed",
+  "sortOrder": 450,
+  "lang": "en",
+  "category": "Broadleaves",
+  "title": "Saluyot Weed in Rice Fields: How to Spot and Control It",
+  "metaTitle": "Saluyot Weed in Rice: Identification and Control",
+  "metaDescription": "Saluyot weed is the same plant as the vegetable, but in your palay it steals light and fertilizer. See how to spot it and stop it before it seeds.",
+  "focusKeyword": "saluyot weed",
+  "keywords": [
+    "saluyot weed",
+    "saluyot",
+    "jute mallow",
+    "tagabang",
+    "broadleaf weed in rice"
+  ],
+  "excerpt": "The saluyot weed is the same jute mallow that many Filipinos cook as a vegetable. But inside a rice crop, it acts as a damo. It grows in rainfed lowland rice fields in the Philippines. This page shows you how to spot it early and how it competes with your palay. Then it shows how to control it before it sets seed.",
+  "heroImage": {
+    "src": "/images/site/weeds/saluyot-weed.webp",
+    "thumb": "/images/site/weeds/saluyot-weed-480.webp",
+    "alt": "Jute mallow (Corchorus olitorius), a broadleaf weed of Philippine rice fields",
+    "credit": "Dinesh Valke from Thane, India, CC BY SA 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Saluyot Weed?"
+    },
+    {
+      "type": "text",
+      "text": "Saluyot is an upright plant with a woody stem. Its English name is jute mallow, and it belongs to the jute family, Tiliaceae. Most of us know it from the palengke and the kitchen. Some farmers also call it tagabang or tugabang. In a garden it is a crop. Inside a rice paddy, nobody planted it, so we call it a saluyot weed because it takes what the rice needs.\n\nYou will find it in rainfed lowland rice fields. Its life lasts one season only. Within one crop it sprouts, grows, flowers, sets seed and dies. Seed is its only way to spread. Each long pod splits when dry and drops many small seeds on the soil. Those seeds stay in the bukid and sprout again with the next crop, so a few plants left today mean many more next season."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about saluyot weed",
+      "rows": [
+        [
+          "Name",
+          "Saluyot weed"
+        ],
+        [
+          "Scientific name",
+          "Corchorus olitorius"
+        ],
+        [
+          "Family",
+          "Tiliaceae"
+        ],
+        [
+          "Weed group",
+          "Broadleaves ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Saluyot, tagabang, tugabang"
+        ],
+        [
+          "Life cycle",
+          "Annual"
+        ],
+        [
+          "Spreads by",
+          "Seeds"
+        ],
+        [
+          "Where it grows",
+          "Rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Saluyot Weed"
+    },
+    {
+      "type": "text",
+      "text": "Look for an upright plant with a woody stem among your rice hills. The leaves are oval to long and pointed, with saw toothed edges. Check where each leaf meets the stem, since small clusters of leaves often grow there. As a broadleaf weed, it has wide leaves with netted veins, unlike grasses and sedges. When it blooms, the flowers are yellow. Then long, slender pods with ten ribs form, each ending in a single beak."
+    },
+    {
+      "type": "list",
+      "items": [
+        "An upright plant with a woody stem standing among the rice hills.",
+        "Oval to long pointed leaves with saw toothed edges, the same leaves you cook at home.",
+        "Small clusters of leaves growing near the point where each leaf joins the stem.",
+        "Yellow flowers that soon turn into long, slender seed pods.",
+        "Pods with ten ribs that run along the length and end in a single beak.",
+        "Look alike tip: salsaluyot is smaller, and its pods carry 6 to 8 wings instead of ribs."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Saluyot is good food, but in a rice crop it competes with your palay for sunlight, water and fertilizer. Its upright stem and wide leaves cast shade on the rice nearby. Young rice suffers most, because it cannot yet outgrow the weed. Every bit of fertilizer it takes is fertilizer your crop does not get.\n\nSince it is an annual that spreads by seed, each plant left to mature fills the soil with seeds for the next season. Its woody stems can also get in the way at harvest. Seeds and pod pieces may mix with the harvested palay and lower its quality. That matters most if you keep seed for planting. Weedy spots can also give insects and rats a place to hide."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Saluyot Weed"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Pull the plants by hand while they are young, before the yellow flowers open. If you want to eat the leaves, take them only from a field that was not sprayed.",
+        "Do not let even a few plants form pods. Each pod drops many seeds, and those seeds come back with every new crop.",
+        "Keep standing water in the paddy when rain allows. Most weeds that grow from seed sprout more easily on exposed soil than under water.",
+        "If you want saluyot for the table, plant it in a separate garden plot, not inside the paddy, and pick it before it seeds."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Broadleaves"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold saluyot weed down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for broadleaves by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Bensulfuron methyl, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Bensulfuron methyl, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl",
+          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "Metsulfuron methyl plus chlorimuron ethyl",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Saluyot Weed Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Prepare the land well: flood, plow, let the weed seeds sprout, then kill them when you harrow. Level the field so water covers it evenly.",
+        "Pull escapes before they flower and set seed, and carry them out of the paddy instead of leaving them on the bund.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [broadleaf weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Saluyot Weed?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Saluyot Weed"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is saluyot called in Tagalog and other local names?",
+          "a": "In Tagalog and in most markets it is simply saluyot. Some farmers also call it tagabang or tugabang. In English it is jute mallow, and its scientific name is Corchorus olitorius. So when your neighbor says saluyot is growing in the palay, this is the plant they mean. It is a crop in the garden but a weed in the paddy."
+        },
+        {
+          "q": "How do I control saluyot in my rice field?",
+          "a": "Prevention comes first. Prepare the land well, use clean binhi, and keep water in the paddy when you can. Then pull young plants by hand before they flower. If the stand is heavy, pick a herbicide made for broadleaf weeds that fits the age of your rice. Always follow the FPA registered label on the product."
+        },
+        {
+          "q": "Is the saluyot weed in my field the same as the saluyot sold in the market?",
+          "a": "Yes, it is the same plant, Corchorus olitorius, and you can eat it as a vegetable. Still, inside a rice crop it behaves as a weed. It takes light, water and fertilizer from your palay, and its seeds fill the soil for next season. So remove it early, and grow your saluyot for cooking in a garden plot instead."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More broadleaf weeds of rice",
+      "items": [
+        {
+          "label": "Heartshape false pickerelweed",
+          "url": "/weeds/monochoria-vaginalis"
+        },
+        {
+          "label": "Gooseweed",
+          "url": "/weeds/gooseweed"
+        },
+        {
+          "label": "Seedbox",
+          "url": "/weeds/ludwigia-hyssopifolia"
+        },
+        {
+          "label": "False daisy",
+          "url": "/weeds/false-daisy"
+        },
+        {
+          "label": "Water hyacinth",
+          "url": "/weeds/water-hyacinth"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

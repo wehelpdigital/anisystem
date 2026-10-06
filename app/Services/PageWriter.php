@@ -171,7 +171,7 @@ class PageWriter
     }
 
     /** The pages a writer may link to, "url — title", from the live site. */
-    public static function urlMap(int $cap = 140): string
+    public static function urlMap(int $cap = 240): string
     {
         $lines = ['/ — home', '/features — every feature', '/pricing — plans and prices', '/signup — create a free account',
             '/ask-anee — ask Anee a free farming question', '/questions — farmers\' questions answered by Anee'];
@@ -189,7 +189,7 @@ class PageWriter
     /** The paths the map offers, for checking the links a page came back with. */
     public static function knownPaths(): array
     {
-        $paths = ['/', '/features', '/pricing', '/signup', '/about', '/contact', '/tutorial', '/crops', '/problems', '/blog', '/ask-anee', '/questions'];
+        $paths = ['/', '/features', '/pricing', '/signup', '/about', '/contact', '/tutorial', '/crops', '/problems', '/pests', '/diseases', '/weeds', '/blog', '/ask-anee', '/questions'];
         try {
             foreach (AsSitePage::live()->get(['section', 'slug']) as $p) {
                 $paths[] = parse_url(SitePages::url($p->section, $p->slug), PHP_URL_PATH);
@@ -225,7 +225,10 @@ class PageWriter
             'questions' => "A farmer asked Anee this question on the public site:\n\"" . ($b['question'] ?? '') . "\"\n"
                 . (! empty($b['farm']) ? 'Their farm: ' . $b['farm'] . ".\n" : '')
                 . "Write the page that answers it, as an article anyone with the same question can read and use. Answer the question directly in the excerpt and first section, then explain. Speak to the farmer's situation (the crop, the size, the place) where it changes the answer, without naming or quoting the person.\n",
-            default => 'Write a ' . ($section === 'blog' ? 'blog post' : ($section === 'crops' ? 'crop guide' : 'crop problem guide')) . " for anee.io.\nTopic: " . ($b['topic'] ?? '') . "\n",
+            default => 'Write a ' . match ($section) {
+                'blog' => 'blog post', 'crops' => 'crop guide', 'pests' => 'crop pest guide', 'diseases' => 'crop disease guide',
+                'weeds' => 'weed guide (name the active ingredients, never a brand)', default => 'crop problem guide',
+            } . " for anee.io.\nTopic: " . ($b['topic'] ?? '') . "\n",
         };
         $current = ! empty($b['current']) ? "\nThe page as it stands now (improve and complete it, keep what is right):\n" . mb_substr(json_encode($b['current'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 0, 30000) . "\n" : '';
 

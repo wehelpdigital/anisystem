@@ -1,0 +1,325 @@
+{
+  "section": "weeds",
+  "slug": "weed-management-in-rice",
+  "sortOrder": 10,
+  "lang": "en",
+  "category": "Weed guides",
+  "title": "Weed Management in Rice: The Whole Season Plan for Clean Palay",
+  "metaTitle": "Weed Management in Rice: The Whole Season Plan",
+  "metaDescription": "Weed management in rice for one season: clean seed, land preparation, water, hand weeding, Azolla and herbicides by rice age, transplanted or direct seeded.",
+  "focusKeyword": "weed management in rice",
+  "keywords": [
+    "weed management in rice",
+    "weed control in rice",
+    "rice weeds",
+    "weeds in tagalog",
+    "common weeds in the philippines"
+  ],
+  "excerpt": "Good weed management in rice starts before the first plowing and runs until the palay leaves shade the water. This guide sets out one season in order: keep weed seed out, prepare the land, use water, weed, let nature help, and spray only as a last tool. A table shows what to do at each rice age.",
+  "heroImage": {
+    "src": "/images/site/photos/transplant.jpg",
+    "alt": "Farmers transplanting palay into a flooded, freshly leveled field, where weed management in rice begins",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why weeds cost so much palay"
+    },
+    {
+      "type": "text",
+      "text": "Left alone, weeds can cut rice yield by 44 to 96 percent, says PhilRice's eDamuhan weed app, because they take the nutrients, sunlight and water meant for the palay. They also raise your cost of production, and their seeds in the harvest lower its price. Weeds shelter diseases, insects and rats too. For example, the [rice bug](/pests/rice-bug) lives on wild grasses between crops, and the [rice black bug](/pests/rice-black-bug) feeds on weeds as well.\n\nIRRI's Rice Knowledge Bank says to control weeds from planting until the rice canopy closes. The eDamuhan steps cover the first 40 days, so weed management in rice is won or lost early."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Know your rice weeds first"
+    },
+    {
+      "type": "text",
+      "text": "Weeds in Tagalog are damo, but the word alone will not tell you how to kill one. Rice weeds fall into three groups that need different herbicides. Grasses have round, hollow, jointed stems. Sedges have solid, three sided stems, and broadleaves have wide leaves with a net of veins. Perennials such as [purple nutsedge](/weeds/purple-nutsedge), or mutha, also regrow from tubers and creeping stems.\n\nSee our guide to the [types of weeds](/weeds/types-of-weeds), the [common weeds in the Philippines](/weeds/common-weeds-philippines) with local names, and the full [weed catalogue](/weeds). If a plant puzzles you, photograph it and ask [Anee](/features/ai-agricultural-technician), the smart farm technician in anee.io."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Weed management in rice starts with prevention"
+    },
+    {
+      "type": "text",
+      "text": "The cheapest weed never reaches your paddy. IRRI quotes an old saying: one year of seeds, seven years of weeds. So keep each door shut."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Clean seed.** Pure, full and uniform seed carries no weed seed and gives 85 percent germination or better.",
+        "**A clean punlaan (seedbed).** Weeds there ride to the field with the seedlings.",
+        "**Clean canals and bunds.** Weeds on the pilapil drop seeds into the irrigation water.",
+        "**Clean tools and machines.** Mud on a hand tractor or harvester carries weed seed from farm to farm.",
+        "**A clean fallow.** Stop weeds from flowering after harvest, so fewer seeds wait in the soil."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Prepare the land to kill weeds"
+    },
+    {
+      "type": "text",
+      "text": "Good land preparation buries weeds, tears shoots from roots and makes dormant seeds sprout so you can kill them. It also drains the food stored in perennial weeds. PhilRice's eDamuhan gives this sequence."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Flood early",
+          "text": "Once water is available, flood the field within one to two days."
+        },
+        {
+          "title": "Plow and hold the water",
+          "text": "Plow, then keep the field flooded for about a week to soften the clods and rot the stubble."
+        },
+        {
+          "title": "Drain and let weeds sprout",
+          "text": "Let the water drain on its own, so weed seeds sprout in the moist soil."
+        },
+        {
+          "title": "Harrow two to three times",
+          "text": "Harrow a week apart. Each pass kills the weeds that came up since the last one."
+        },
+        {
+          "title": "Level evenly",
+          "text": "A well leveled field holds even water, leaves weeds no high spots and makes kuhol (golden apple snails) easier to manage."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Use water as a weed control"
+    },
+    {
+      "type": "text",
+      "text": "IRRI calls water the best weed control, because most grasses and some sedges cannot sprout or grow under a flood. Keep about 2 to 5 cm of water in the field. If water allows, keep it flooded from transplanting until the canopy covers the soil. Still, wet land weeds such as [gabi gabi](/weeds/monochoria-vaginalis) thrive in flooded paddies, and dry land weeds take over rainfed fields that dry out.\n\nWater also finishes a post emergence spray. Bring it back 1 to 3 days after spraying, 3 to 5 cm deep, and hold it for 4 to 5 days to keep the weeds under but the young rice above it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Hand weeding and the rotary weeder"
+    },
+    {
+      "type": "text",
+      "text": "Hand weeding with a sickle or bolo is slow but thorough. Pull the whole plant or cut off the seed head before it ripens, so a weed that survived a spray leaves no seed. IRRI advises starting within two weeks of planting. Pile pulled weeds on the bund, since some survive in standing water.\n\nA rotary weeder works faster but needs straight rows. It cuts, tramples and buries the weeds between them. Run it when weeds have three to four leaves, with 2 to 3 cm of water, then hand pull the weeds near the hills."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Biological control: let nature help"
+    },
+    {
+      "type": "text",
+      "text": "Biological control uses insects, microbes and plants to keep weeds below the level that cuts yield. It matters most in organic rice, where the rules ban synthetic pesticides."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Azolla.** This freshwater fern fixes nitrogen with blue green algae. eDamuhan says it can cut weed growth by up to 80 percent in transplanted and direct seeded rice.",
+        "**The Altica beetle.** This small black beetle eats the leaves of [Ludwigia weeds](/weeds/ludwigia-hyssopifolia), the kahoy kahoy of the paddies. Spare it from needless insecticide sprays.",
+        "**Two fungi.** Alternaria alternata f.sp. sphenocleae blights [gooseweed](/weeds/gooseweed), and the rust Puccinia philippinensis attacks purple nutsedge."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Herbicides: the last tool, not the first"
+    },
+    {
+      "type": "text",
+      "text": "Careless herbicide use harms people, animals and water. Spraying one kind again and again, at the wrong dose or time, also breeds weeds it cannot kill. So spray only when prevention, water and weeding fall behind.\n\nA pre plant spray hits weeds before you plant, never once rice is up. Pre emergence herbicides go on the soil before weeds come up, and post emergence ones hit weeds with leaves. Choices vary by region, so ask your local agricultural officer and read our guide to [herbicides for rice weeds](/weeds/herbicides-for-rice-weeds)."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "FPA registered, label followed",
+      "text": "Use only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) and follow the label for rate and timing. The FPA guide Gabay sa Tamang Paggamit ng Pestisidyo covers safe handling."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Weed control in rice by crop age"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice's eDamuhan sets out these steps by days after planting, for lipat tanim and sabog tanim. Broadcast rice has no rows, so a rotary weeder does not fit it."
+    },
+    {
+      "type": "table",
+      "caption": "Steps by rice age, from PhilRice's eDamuhan",
+      "rows": [
+        [
+          "Rice age",
+          "Transplanted (lipat tanim)",
+          "Direct seeded (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Keep the soil saturated. Pre emergence herbicide only if the field was weedy last season.",
+          "Same as transplanted."
+        ],
+        [
+          "6 to 10 days",
+          "Hand pull weeds at two to three leaves. Spray post emergence only if you cannot.",
+          "Spray an early post emergence herbicide while weeds are small."
+        ],
+        [
+          "11 to 20 days",
+          "Keep water in. Hand or rotary weeding, Azolla, and spare the Altica beetle. Spray only if weeding falls behind.",
+          "Keep water in. Hand weed and spare the Altica beetle. Spray only if weeding falls behind."
+        ],
+        [
+          "21 to 30 days",
+          "Top up the water and keep weeding. Spray only if weeding falls behind.",
+          "Top up the water and hand weed. Spray only if needed."
+        ],
+        [
+          "31 to 40 days",
+          "Top up the water and hand weed. Spray only as a rescue.",
+          "Hand pull the last weeds before they flower."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The direct seeded steps stop at day 30, so the last cell follows IRRI's rule: never let weeds set seed. After any post emergence spray, follow the water rule above. The [weed control helper](/weeds#control) lists the active ingredients for each window and weed group."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Let anee.io keep the weeding days"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, the [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero. So each weeding lands on the right day, even when you planted your lots a week apart. Anee also reads your weather, so you can ask if today suits a spray."
+    },
+    {
+      "type": "cta",
+      "title": "Put every weeding day on your calendar",
+      "text": "Plan your weed management in rice on anee.io, and each weeding and spray follows your lot's own planting day.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Weedy rice: prevention is the only cure"
+    },
+    {
+      "type": "text",
+      "text": "[Weedy rice](/weeds/weedy-rice), or halo, lahok and sabag, is rice too. So no selective herbicide can kill it inside a rice crop. Prevention is the whole fight. Plant certified seed, clean the harvester before it enters your field, and pull off types early, before their grain drops. Each harrowing in land preparation also kills a flush of sprouted seed."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Herbicide resistance and barnyard grass"
+    },
+    {
+      "type": "text",
+      "text": "Some [barnyard grass](/weeds/barnyard-grass), or bayakibok, in direct seeded areas of the Philippines now resists butachlor and propanil. Resistance builds when one herbicide group goes on again and again, at the wrong dose or time, until only survivors seed the next crop.\n\nCheck the group number on each label and switch groups between seasons. For example, butachlor is group 15 and propanil group 5 in the HRAC numbering. Also pull any grass that survives a spray before it flowers."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions farmers ask about weeds in rice"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "When should I weed my rice field?",
+          "a": "Start within two weeks of planting, says IRRI, and keep the field clean until the canopy shades the soil, about the first 40 days."
+        },
+        {
+          "q": "Can I control weeds in rice without herbicides?",
+          "a": "Yes, in many fields. Clean seed, good land preparation, water, hand or rotary weeding and Azolla can keep a paddy clean."
+        },
+        {
+          "q": "Why do weeds come back after I spray?",
+          "a": "The herbicide may not match the weed group or rice age, the field may have dried out after spraying, or the weeds may resist that group."
+        },
+        {
+          "q": "What do you call weeds in Tagalog?",
+          "a": "Damo. Each weed also has local names, like mutha for purple nutsedge and bayakibok for barnyard grass. See our [farm words in Tagalog](/blog/farm-words-in-tagalog)."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More weed guides",
+      "items": [
+        {
+          "label": "All rice weeds",
+          "url": "/weeds"
+        },
+        {
+          "label": "Types of weeds",
+          "url": "/weeds/types-of-weeds"
+        },
+        {
+          "label": "Common weeds in the Philippines",
+          "url": "/weeds/common-weeds-philippines"
+        },
+        {
+          "label": "Herbicides for rice weeds",
+          "url": "/weeds/herbicides-for-rice-weeds"
+        },
+        {
+          "label": "Weedy rice",
+          "url": "/weeds/weedy-rice"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification and management app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "PhilRice eDamuhan on Google Play",
+          "url": "https://play.google.com/store/apps/details?id=ph.gov.philrice.edamuhan"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Weeds",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Cultural weed control",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/cultural-weed-control"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Manual weed control",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/manual-weed-control"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Mechanical weed control",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/mechanical-weed-control"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Chemical weed control",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/chemical-weed-control"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "https://fpa.da.gov.ph"
+        }
+      ]
+    }
+  ]
+}

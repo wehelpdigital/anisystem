@@ -203,7 +203,7 @@
     },
     {
       "type": "text",
-      "text": "Ang cutworm ay uod na nagtatago sa lupa sa araw at kumakain sa gabi, at madalas nitong pinuputol ang batang punla. Ang payo ng DA Bicol: hanapin at tirisin, mag spray ng botanical, at takpan ng net ang punla. Tingnan ang aming pahina sa [cutworm](/problems/cutworm).\n\nPara sa aphids, magtanim ng luya, marigold, basil o tanglad bilang pantaboy at gumamit ng yellow sticky trap. Sa langaw ng bunga ng ampalaya, balutin ng diyaryo ang batang bunga. Kung gagamit ng kemikal, siguraduhing rehistrado sa FPA at sundin ang label."
+      "text": "Ang cutworm ay uod na nagtatago sa lupa sa araw at kumakain sa gabi, at madalas nitong pinuputol ang batang punla. Ang payo ng DA Bicol: hanapin at tirisin, mag spray ng botanical, at takpan ng net ang punla. Tingnan ang aming pahina sa [cutworm](/pests/cutworm).\n\nPara sa aphids, magtanim ng luya, marigold, basil o tanglad bilang pantaboy at gumamit ng yellow sticky trap. Sa langaw ng bunga ng ampalaya, balutin ng diyaryo ang batang bunga. Kung gagamit ng kemikal, siguraduhing rehistrado sa FPA at sundin ang label."
     },
     {
       "type": "callout",
@@ -313,7 +313,7 @@
         },
         {
           "label": "Cutworm",
-          "url": "/problems/cutworm"
+          "url": "/pests/cutworm"
         },
         {
           "label": "Mga salitang pangsaka sa Tagalog",

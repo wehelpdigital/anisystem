@@ -27,7 +27,7 @@ class MotherWriterController extends Controller
             return $refused;
         }
         $in = $request->validate([
-            'section' => 'required|string|in:crops,problems,blog,features,questions',
+            'section' => 'required|string|in:crops,pests,diseases,weeds,problems,blog,features,questions',
             'topic' => 'required|string|max:300',
             'focusKeyword' => 'nullable|string|max:120',
             'keywords' => 'nullable|array|max:20',

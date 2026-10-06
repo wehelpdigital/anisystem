@@ -23,11 +23,39 @@ class SitePageController extends Controller
         $section = (string) $request->route('section');
         abort_unless(isset(SitePages::SECTIONS[$section]) && $section !== 'features', 404);
 
+        // The weeds have their own front page: a catalogue to filter, the
+        // weed control helper by rice age, and the guides.
+        if ($section === 'weeds') {
+            return view('public.site.weeds-hub', [
+                'section' => $section,
+                'meta' => SitePages::SECTIONS[$section],
+                'pages' => SitePages::inSection($section),
+                'control' => \App\Support\WeedControl::TABLE,
+            ]);
+        }
+        // /problems: the door to pests, diseases and weeds.
+        if ($section === 'problems') {
+            return view('public.site.problems-hub', [
+                'section' => $section,
+                'meta' => SitePages::SECTIONS[$section],
+                'groups' => collect(['pests', 'diseases', 'weeds'])->mapWithKeys(fn ($s) => [$s => SitePages::inSection($s)]),
+            ]);
+        }
+
         return view('public.site.hub', [
             'section' => $section,
             'meta' => SitePages::SECTIONS[$section],
             'pages' => SitePages::inSection($section),
         ]);
+    }
+
+    /** An old /problems/{slug} address: to the page's new home, for good. */
+    public function movedProblem(Request $request)
+    {
+        $page = SitePages::movedProblem((string) $request->route('slug'));
+        abort_unless($page, 404);
+
+        return redirect(SitePages::pageUrl($page), 301);
     }
 
     public function show(Request $request)
@@ -72,7 +100,7 @@ class SitePageController extends Controller
 
     public function sitemap()
     {
-        $static = ['/', '/how-it-works', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/problems', '/blog', '/ask-anee', '/questions'];
+        $static = ['/', '/how-it-works', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/problems', '/pests', '/diseases', '/weeds', '/blog', '/ask-anee', '/questions'];
         $urls = array_map(fn ($p) => ['loc' => url($p), 'lastmod' => null], $static);
         try {
             foreach (AsSitePage::live()->orderBy('section')->orderBy('sortOrder')->get(['section', 'slug', 'updated_at']) as $p) {

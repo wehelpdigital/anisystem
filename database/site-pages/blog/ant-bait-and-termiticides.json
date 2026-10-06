@@ -21,7 +21,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Most ants do little direct harm to crops. The trouble is what they protect. Ants guard mealybugs, aphids and scale insects for the sweet honeydew they give off, and they chase away the ladybugs and wasps that would eat them. So a mango branch or a pineapple row full of ants often hides a sucking pest problem. Our guide to [hanip, mites and aphids](/problems/hanip-mites-and-aphids) covers the sap suckers themselves.\n\nAnts also carry off seeds from seedbeds, move into pots in the nursery and bite the hands of workers. But not every langgam is an enemy. Red weaver ants, the big biting hantik that sew leaves into nests, hunt many pests in mango, citrus and cacao. Research programs in the Philippines study them as biological control, so think twice before you poison a hantik tree."
+      "text": "Most ants do little direct harm to crops. The trouble is what they protect. Ants guard mealybugs, aphids and scale insects for the sweet honeydew they give off, and they chase away the ladybugs and wasps that would eat them. So a mango branch or a pineapple row full of ants often hides a sucking pest problem. Our guide to [hanip, mites and aphids](/pests/hanip-mites-and-aphids) covers the sap suckers themselves.\n\nAnts also carry off seeds from seedbeds, move into pots in the nursery and bite the hands of workers. But not every langgam is an enemy. Red weaver ants, the big biting hantik that sew leaves into nests, hunt many pests in mango, citrus and cacao. Research programs in the Philippines study them as biological control, so think twice before you poison a hantik tree."
     },
     {
       "type": "heading",
@@ -206,7 +206,7 @@
       "items": [
         {
           "label": "Hanip, mites and aphids",
-          "url": "/problems/hanip-mites-and-aphids"
+          "url": "/pests/hanip-mites-and-aphids"
         },
         {
           "label": "Karate, Cymbush and Selecron",

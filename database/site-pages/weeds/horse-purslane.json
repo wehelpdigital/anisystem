@@ -1,0 +1,297 @@
+{
+  "section": "weeds",
+  "slug": "horse-purslane",
+  "sortOrder": 360,
+  "lang": "en",
+  "category": "Broadleaves",
+  "title": "Horse Purslane in Rice Fields: How to Spot and Control It",
+  "metaTitle": "Horse Purslane in Rice Fields: Identification and Control",
+  "metaDescription": "Horse purslane is a fleshy creeping weed of rainfed rice that farmers mix up with purslane. Learn the leaf trick that tells them apart and how to stop it.",
+  "focusKeyword": "horse purslane",
+  "keywords": [
+    "horse purslane",
+    "toston",
+    "alusiman",
+    "Trianthema portulacastrum",
+    "broadleaf weed in rice"
+  ],
+  "excerpt": "Horse purslane is a fleshy, creeping broadleaf weed with green or purplish stems and white to pink flowers. Farmers call it toston, ayam or tabatabukol, and some use alusiman, the same name as purslane. It spreads over rainfed lowland rice fields. This page shows you how to spot it, how to tell it from purslane, and how to control it.",
+  "heroImage": {
+    "src": "/images/site/weeds/horse-purslane.webp",
+    "thumb": "/images/site/weeds/horse-purslane-480.webp",
+    "alt": "Desert horse purslane (Trianthema portulacastrum), a broadleaf weed of Philippine rice fields",
+    "credit": "Graham Racher, CC BY SA 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Horse Purslane?"
+    },
+    {
+      "type": "text",
+      "text": "Horse purslane, or Trianthema portulacastrum, belongs to the ice plant family, Aizoaceae. Its local names include alusiman, ayam, kantataba, tabatabukol and toston. Two of these, alusiman and kantataba, also name common purslane, so the two weeds often get mixed up. You will see it in rainfed lowland rice fields, mostly on moist soil that is not flooded.\n\nThis weed is an annual. It sprouts, grows, flowers and dies within one season, and it spreads by seed. Its thick, fleshy stems and leaves store water, so it stays green even when the field dries between rains. That is why a few plants left to seed can cover more ground in the next crop, and a careless weeding can leave survivors behind."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about horse purslane",
+      "rows": [
+        [
+          "Name",
+          "Horse purslane"
+        ],
+        [
+          "Scientific name",
+          "Trianthema portulacastrum"
+        ],
+        [
+          "Family",
+          "Aizoaceae"
+        ],
+        [
+          "Weed group",
+          "Broadleaves ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Alusiman, ayam, kantataba, tabatabukol, toston"
+        ],
+        [
+          "Life cycle",
+          "Annual"
+        ],
+        [
+          "Spreads by",
+          "Seeds"
+        ],
+        [
+          "Where it grows",
+          "Rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Horse Purslane"
+    },
+    {
+      "type": "text",
+      "text": "Look low, near the soil, for a fleshy plant that creeps flat along the ground. Its stems are flat, juicy and green or purplish. As a broadleaf, its leaves are wide and flat, unlike grasses and sedges. They are oval to almost round, smooth and slightly wavy at the edge. Check how they sit. The leaves come in opposite pairs, and one leaf in each pair is bigger than the other. Its small flowers are white or pale pink to purple."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Low, creeping plants with flat, fleshy stems in green or purplish shades.",
+        "Smooth, oval to almost round leaves with slightly wavy edges.",
+        "Leaves in opposite pairs, with one leaf clearly bigger than its partner.",
+        "Small white, pale pink or purple flowers tucked at the leaf joints.",
+        "Look alike tip: common purslane has yellow flowers and leaves set one by one, not in pairs."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Horse purslane spreads flat and fast, covering bare soil between the rice rows. It takes water and fertilizer that your palay needs, and young rice feels the loss most. In rainfed fields, where water already runs short, that hurts even more.\n\nSince it stores water in its fleshy stems, it can stay alive after you pull it. Plants left lying on moist soil may hang on and still ripen their seed. Then the next crop starts with even more seedlings. Dense mats also make hand weeding slow and tiring."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Horse Purslane"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Carry pulled plants out of the field. Their fleshy stems hold water, so they can stay alive on the soil and still ripen seed.",
+        "Weed early, before the small flowers open, so the plants have no chance to drop seed.",
+        "Keep water in the field when rain allows, since standing water keeps this dryland creeper from sprouting and spreading.",
+        "Check the leaves before you plan your control. Unequal opposite pairs mean this weed, while alternate leaves mean common purslane."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Broadleaves"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold horse purslane down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for broadleaves by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Bensulfuron methyl, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Bensulfuron methyl, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl",
+          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "Metsulfuron methyl plus chlorimuron ethyl",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Horse Purslane Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Prepare the land well: flood, plow, let the weed seeds sprout, then kill them when you harrow. Level the field so water covers it evenly.",
+        "Pull escapes before they flower and set seed, and carry them out of the paddy instead of leaving them on the bund.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [broadleaf weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Horse Purslane?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Horse Purslane"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is horse purslane called in the Philippines?",
+          "a": "Local names include toston, ayam, tabatabukol, alusiman and kantataba. Its scientific name is Trianthema portulacastrum. Take care with alusiman and kantataba, because farmers use those names for common purslane too. So check the leaves to be sure. This weed has leaves in unequal opposite pairs, while common purslane has leaves set one by one."
+        },
+        {
+          "q": "How do I control toston in my rice field?",
+          "a": "Prepare the land well and keep water in the field when rain allows, since standing water holds back this dryland weed. Hand weed early, before it flowers, and carry every pulled plant out of the field. If you need a herbicide, choose one by weed group and the age of your rice, and always follow the FPA registered label."
+        },
+        {
+          "q": "Why does this weed survive after I pull it?",
+          "a": "Its stems and leaves are thick and fleshy, and they store water. So a pulled plant can stay green on moist soil for a while and may still ripen its seed. That is why you should never leave pulled plants in the field. Put them in a sack and dry them out on high ground, away from the rice."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More broadleaf weeds of rice",
+      "items": [
+        {
+          "label": "Heartshape false pickerelweed",
+          "url": "/weeds/monochoria-vaginalis"
+        },
+        {
+          "label": "Gooseweed",
+          "url": "/weeds/gooseweed"
+        },
+        {
+          "label": "Seedbox",
+          "url": "/weeds/ludwigia-hyssopifolia"
+        },
+        {
+          "label": "False daisy",
+          "url": "/weeds/false-daisy"
+        },
+        {
+          "label": "Water hyacinth",
+          "url": "/weeds/water-hyacinth"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

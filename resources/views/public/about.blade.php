@@ -193,7 +193,7 @@
                         ['/crops/palay', 'Palay', 'Palay in English, its growth stages, and how palay becomes rice.'],
                         ['/crops/corn-kernel', 'Corn kernel and mais', 'Parts of the corn plant, corn types and the corn kernel price.'],
                         ['/blog/urea-fertilizer', 'Fertilizer urea and 14 14 14', 'What each fertilizer does and when it goes in.'],
-                        ['/problems/rice-bug', 'Rice bug and thrips', 'Signs, thresholds and control of the pests that hit hardest.'],
+                        ['/pests/rice-bug', 'Rice bug and thrips', 'Signs, thresholds and control of the pests that hit hardest.'],
                         ['/blog/fertilizer-and-pesticide-authority', 'Fertilizer and Pesticide Authority', 'How to check that a product is registered before you buy.'],
                     ] as $i => [$href, $name, $line])
                         <a href="{{ url($href) }}" class="ab-guide reveal" style="--reveal-delay: {{ $i * 0.06 }}s">

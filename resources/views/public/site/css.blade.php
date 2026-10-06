@@ -75,6 +75,8 @@
         transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
     .sp-toc a:hover, .sp-toc a.is-on { background: #f3f8ec; color: #2d5016; }
     .sp-toc a.is-on { font-weight: 700; }
+    .sp-wcard p { margin-top: .4rem; font-size: .86rem; line-height: 1.55; color: #4b5563; }
+    .sp-wcard .btn { margin-top: .8rem; width: 100%; justify-content: center; }
     .sp-promo { border-radius: 1.1rem; padding: 1.2rem; color: #e8efe1; background: linear-gradient(140deg, #2d5016, #24400f 70%); }
     .sp-promo b { display: block; font-family: var(--font-heading); font-size: 1.05rem; color: #fff; }
     .sp-promo p { margin-top: .4rem; font-size: .86rem; line-height: 1.55; color: #cfe0bd; }

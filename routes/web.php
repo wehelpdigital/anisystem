@@ -235,7 +235,15 @@ Route::post('/contact', [App\Http\Controllers\PublicController::class, 'submitCo
 Route::get('/crops', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'crops')->name('site.crops');
 Route::get('/crops/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'crops')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.crops.show');
 Route::get('/problems', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'problems')->name('site.problems');
-Route::get('/problems/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'problems')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.problems.show');
+// Pests, diseases and weeds got their own sections (2026-10-06); an old
+// /problems/{slug} address moves the visitor to the page's new home.
+Route::get('/problems/{slug}', [App\Http\Controllers\SitePageController::class, 'movedProblem'])->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.problems.show');
+Route::get('/pests', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'pests')->name('site.pests');
+Route::get('/pests/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'pests')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.pests.show');
+Route::get('/diseases', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'diseases')->name('site.diseases');
+Route::get('/diseases/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'diseases')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.diseases.show');
+Route::get('/weeds', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'weeds')->name('site.weeds');
+Route::get('/weeds/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'weeds')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.weeds.show');
 Route::get('/blog', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'blog')->name('site.blog');
 Route::get('/blog/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'blog')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.blog.show');
 Route::get('/features/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'features')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.features.show');

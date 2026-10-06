@@ -1,0 +1,289 @@
+{
+  "section": "diseases",
+  "slug": "anthracnose",
+  "sortOrder": 70,
+  "lang": "en",
+  "category": "Crop diseases",
+  "title": "Anthracnose: Signs, Spread and Control on Mango, Sili and Onion",
+  "metaTitle": "Anthracnose on Mango, Chili and Onion: Signs and Control",
+  "metaDescription": "Anthracnose rots mango, chili, papaya and onion in wet weather. Learn the signs, how it spreads, and the cultural and fungicide steps that keep it down.",
+  "focusKeyword": "anthracnose",
+  "keywords": [
+    "anthracnose",
+    "diseased in tagalog",
+    "fungicide",
+    "ortiva top fungicide"
+  ],
+  "excerpt": "Anthracnose is the fungal disease behind black, sunken spots on ripening mango and rotting sili pods. It also causes the twisted onion leaves known locally as kulot. Colletotrichum fungi cause it and rain spreads it. Even a mango that looks clean at harvest can break out in spots once it ripens. This guide shows you how to spot anthracnose early, cut its sources, and use a fungicide only where it pays.",
+  "heroImage": {
+    "src": "/images/site/guides/problems-anthracnose.webp",
+    "alt": "Mango flower cluster with blackened, dried flowers from anthracnose blossom blight",
+    "credit": "Scot Nelson, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Anthracnose is common wherever Filipino farmers grow fruit and vegetables. A 2025 checklist of Philippine records counted 55 named Colletotrichum species on 106 host plants. Anthracnose was the main disease. So a mango grower, a sili grower and an onion grower can all be fighting the same family of fungi.\n\nThe disease goes after the part you sell: the flowers that should set fruit, the pods, the bulbs and the ripe fruit. For onion, PCAARRD reports that the anthracnose twister complex can destroy up to 80 percent of a harvest in Nueva Ecija. With mango, much of the loss shows up after harvest, when the fruit ripens in the crate."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What causes anthracnose and how it spreads"
+    },
+    {
+      "type": "text",
+      "text": "Colletotrichum fungi survive on dead twigs, old leaves, fallen fruit and weeds. In chili, they also ride on seed saved from sick pods. Their spores sit in sticky pink to orange masses, so water moves them best. Rain splash, dripping dew and wind driven rain carry them from an old spot to new flowers, leaves and young fruit. That is why anthracnose flares up in the wet season and after every long rainy spell.\n\nOn mango and papaya, the fungus often infects young fruit and then waits. It stays quiet until the fruit ripens, and then the spots break out. A harvest that looked clean can rot within days in storage.\n\nWounds make it easier. Scars from [thrips](/pests/thrips), stings from fruit flies and bruises from rough handling all open a door for the fungus. For onion, UPLB researchers have listed barnyard grass, spreading dayflower and four sedges as possible alternate hosts, so the [common weeds](/weeds/common-weeds-philippines) around your field matter too."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Diseased in Tagalog: how to describe what you see"
+    },
+    {
+      "type": "text",
+      "text": "Diseased in Tagalog is 'may sakit', and a diseased mango tree is 'punong mangga na may sakit'. When you ask a technician for help, say what you see and where. For example, 'may itim na batik ang bunga' means black spots on the fruit, 'natutuyo ang bulaklak' means the flowers are drying up, and 'kulot ang dahon ng sibuyas' means the onion leaves curl and twist. Our list of [farm words in Tagalog](/blog/farm-words-in-tagalog) has more terms like these."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Anthracnose signs on each crop"
+    },
+    {
+      "type": "table",
+      "caption": "Common anthracnose signs on Philippine crops",
+      "rows": [
+        [
+          "Crop",
+          "Where to look",
+          "What you see"
+        ],
+        [
+          "Mango",
+          "Flower clusters, young leaves, fruit",
+          "Flowers turn black and dry up, a stage called blossom blight. Leaves get dark spots. Ripening fruit shows black spots that spread and join."
+        ],
+        [
+          "Chili (sili)",
+          "Ripening pods",
+          "Sunken, water soaked spots that grow into rings, often with orange or black spore dots. Pods shrivel and rot."
+        ],
+        [
+          "Onion (sibuyas)",
+          "Leaves and neck",
+          "Spots with orange to black spore masses, leaves that curl and twist, a long neck and thin bulbs. This is the anthracnose twister complex, or kulot."
+        ],
+        [
+          "Papaya",
+          "Ripening fruit",
+          "Round, water soaked, sunken spots that keep growing. Small reddish brown spots called chocolate spot come from the same fungus."
+        ],
+        [
+          "Beans and tomato",
+          "Pods and ripe fruit",
+          "Dark, sunken spots on bean pods and round, sunken spots on ripe tomatoes."
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Anthracnose or bacterial black spot?",
+      "text": "On mango fruit, anthracnose spots sink into the skin, and in humid weather you often see tiny pink or orange dots of spores inside them. Bacterial black spot, a different disease, makes raised black spots that crack open. Each needs its own plan, so get the name right first."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to control anthracnose before you spray"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Remove the sources",
+          "text": "Prune dead twigs, pick off dried mummy fruit, and rake up fallen leaves and rotten fruit. Bury them or carry them out of the field, because next season's spores live in this trash."
+        },
+        {
+          "title": "Open up the canopy",
+          "text": "Prune mango trees so light and air reach the inside. Leaves and flowers then dry faster after rain, and the fungus needs wet surfaces to infect."
+        },
+        {
+          "title": "Plan flowering around the rain",
+          "text": "Wet flowers are where mango anthracnose starts. If you can choose when to induce flowering, aim for a drier stretch, and watch the forecast in the weeks after."
+        },
+        {
+          "title": "Bag the fruit",
+          "text": "In a Philippine trial on Carabao mango, paper bags on the fruit gave the least disease when the fruit also got a 10 minute dip in water at 53 degrees Celsius after harvest. In that same trial, every unbagged, untreated fruit from the rainy season crop developed anthracnose. Bagging plus the hot water dip cut it by 83 percent."
+        },
+        {
+          "title": "Start clean in vegetables",
+          "text": "For sili, buy seed from a trusted source instead of saving it from spotted pods. Rotate away from pepper and tomato, pull rotten pods early, and water at the base instead of over the leaves."
+        },
+        {
+          "title": "Keep onion fields weeded",
+          "text": "Clear the weeds that may host the onion anthracnose twister fungi and plant healthy seedlings. UPLB researchers are also testing biological control such as Trichoderma, which few onion farmers use yet."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fungicide choices for anthracnose"
+    },
+    {
+      "type": "text",
+      "text": "A fungicide protects healthy tissue. It will not turn a black spot green again, so the goal is to shield new flowers, flushes and young fruit before rain spreads the spores. On mango, the stages to protect are the flower clusters and the developing fruit.\n\nEvery fungicide label carries a FRAC group code that tells you how the product works. Rotating between groups keeps the fungus from growing resistant. Our guide to [fungicides in the Philippines](/blog/fungicides) covers the common brands."
+    },
+    {
+      "type": "table",
+      "caption": "Fungicide groups used against anthracnose",
+      "rows": [
+        [
+          "FRAC group",
+          "Example active ingredients",
+          "How it works",
+          "Watch out for"
+        ],
+        [
+          "M (multi site)",
+          "Mancozeb, chlorothalonil, copper",
+          "Stays on the surface and stops spores before they enter",
+          "Heavy rain washes it off. Low risk of resistance."
+        ],
+        [
+          "11 (strobilurins)",
+          "Azoxystrobin",
+          "Moves into the leaf and stops the fungus from making energy",
+          "High risk of resistance. Never spray it alone back to back."
+        ],
+        [
+          "3 (triazoles)",
+          "Difenoconazole, propiconazole",
+          "Moves into the plant and stops the fungus from building its cell membranes",
+          "Medium risk of resistance. Rotate or mix with another group."
+        ],
+        [
+          "1 (benzimidazoles)",
+          "Carbendazim, thiophanate methyl",
+          "Moves into the plant and stops the fungus from dividing",
+          "Resistance in Colletotrichum is common. Do not rely on it alone."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Ortiva Top fungicide on mango and onion"
+    },
+    {
+      "type": "text",
+      "text": "One product you will see at agri supply stores is Ortiva Top fungicide from Syngenta. It combines azoxystrobin from group 11 and difenoconazole from group 3. Its Philippine label lists anthracnose on mango and on onion, along with scab and stem end rot on mango and other diseases on rice, corn and vegetables. Use it only on the crops named on the label, at the label rate and interval. Rotate it with a product from another group."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Read the label before you mix",
+      "text": "Rates, spray intervals, the number of sprays per season and the days to wait before harvest differ per product and per crop. Buy only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) for your crop, wear gloves and a mask, and never spray into the wind."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io helps you stay ahead of anthracnose"
+    },
+    {
+      "type": "text",
+      "text": "Anthracnose control is mostly timing: scout at flowering, protect before a wet week, and remember where the disease started last season. With anee.io, all three sit in one place.\n\nPick a date and the [growth stages and weather](/features/growth-stages-and-weather) view shows where each lot stands, from flowering to fruit set, next to the week's forecast for that lot. When you find spots, take a photo and ask [Anee, the smart farm technician](/features/ai-agricultural-technician). Anee looks at the picture, reads your schedule and weather first, and answers in Tagalog or English.\n\nYour photos and [notes](/features/notes-photos-and-voice) stay in the gallery, so next season you know which trees or which corner of the field got sick first. The [inventory](/features/farm-inventory-and-expenses) also keeps count of every fungicide you buy and what each spray used."
+    },
+    {
+      "type": "cta",
+      "title": "Show Anee a photo of the spots",
+      "text": "Sign up for anee.io, set up your lots and growth stages, and when spots appear, send Anee a picture. You get an answer in Tagalog or English that fits your crop and its stage.",
+      "label": "Sign up for anee.io",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Anthracnose questions farmers ask"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can anthracnose be cured?",
+          "a": "Not on the tissue it has already spotted. A fungicide protects healthy flowers, leaves and fruit from new infection. Remove what is sick, clean up the sources in the field, and protect the new growth."
+        },
+        {
+          "q": "What is diseased in Tagalog?",
+          "a": "Diseased in Tagalog is 'may sakit'. A sick plant is 'halamang may sakit', and the disease itself is 'sakit'. You can describe the problem to Anee in Tagalog."
+        },
+        {
+          "q": "Is Ortiva Top fungicide registered for anthracnose?",
+          "a": "Its Philippine label from Syngenta lists anthracnose on mango and on onion. For any other crop, check the label and the FPA registration first, and rotate it with a fungicide from another group."
+        },
+        {
+          "q": "Why do my mangoes rot after harvest when they looked clean?",
+          "a": "The fungus often infects young fruit and waits until ripening. Bagging fruit on the tree and a hot water dip after harvest cut anthracnose in Philippine trials on Carabao mango."
+        },
+        {
+          "q": "When should I spray mango against anthracnose?",
+          "a": "Protect the flower clusters and the young fruit, above all when rain falls during flowering. Follow the product label for the spray interval and the last spray before harvest."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Fungicides used in the Philippines",
+          "url": "/blog/fungicides"
+        },
+        {
+          "label": "Thrips on rice, onion, chili and mango",
+          "url": "/pests/thrips"
+        },
+        {
+          "label": "Fusarium wilt",
+          "url": "/diseases/fusarium-wilt"
+        },
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "Pagtatanim ng puno",
+          "url": "/crops/pagtatanim-ng-puno"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "Syngenta Philippines, Ortiva Top 325 SC product label",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/ortiva-top-325-sc"
+        },
+        {
+          "label": "PCAARRD, UPLB researchers develop sustainable control against onion anthracnose twister disease",
+          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/uplb-researchers-develop-sustainable-control-against-onion-anthracnose-twister-disease"
+        },
+        {
+          "label": "Balendres (2025), Checklist of Colletotrichum species associated with plant diseases in the Philippines",
+          "url": "https://www.maxapress.com/article/doi/10.48130/sif-0025-0021"
+        },
+        {
+          "label": "Buganic, Lizada and de Ramos (1997), Disease control in Philippine Carabao mango with preharvest bagging and postharvest hot water treatment, Acta Horticulturae 455",
+          "url": "https://www.actahort.org/books/455/455_101.htm"
+        },
+        {
+          "label": "PCAARRD, Best practices address decline in mango production and quality",
+          "url": "https://www.pcaarrd.dost.gov.ph/index.php/quick-information-dispatch-qid-articles/best-practices-address-decline-in-mango-production-and-quality"
+        },
+        {
+          "label": "FRAC Code List 2024, Fungicide Resistance Action Committee",
+          "url": "https://www.frac.info/media/kufnaceb/frac-code-list-2024.pdf"
+        }
+      ]
+    }
+  ]
+}

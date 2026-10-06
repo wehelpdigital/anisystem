@@ -1,0 +1,298 @@
+{
+  "section": "weeds",
+  "slug": "creeping-water-primrose",
+  "sortOrder": 310,
+  "lang": "en",
+  "category": "Broadleaves",
+  "title": "Creeping Water Primrose: How to Spot and Control It in Rice Fields",
+  "metaTitle": "Creeping Water Primrose in Rice: Identify and Control It",
+  "metaDescription": "Creeping water primrose, or Kangkong dapa, floats and roots at its nodes in wet palay fields. See how to spot it and clear it before it spreads.",
+  "focusKeyword": "creeping water primrose",
+  "keywords": [
+    "creeping water primrose",
+    "Kangkong dapa",
+    "Ludwigia adscendens",
+    "broadleaf weed",
+    "water weeds in rice"
+  ],
+  "excerpt": "Creeping water primrose is a floating, creeping broadleaf weed that farmers call Kangkong dapa. It grows in both irrigated and rainfed lowland rice fields in the Philippines, wherever water stands for long. This page shows you how to spot it by its white flowers and spongy roots, and how to control it before it takes over.",
+  "heroImage": {
+    "src": "/images/site/weeds/creeping-water-primrose.webp",
+    "thumb": "/images/site/weeds/creeping-water-primrose-480.webp",
+    "alt": "Creeping water primrose (Ludwigia adscendens), a broadleaf weed of Philippine rice fields",
+    "credit": "Yahya, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Creeping Water Primrose?"
+    },
+    {
+      "type": "text",
+      "text": "Botanists place creeping water primrose in the evening primrose family, Onagraceae. Its scientific name is Ludwigia adscendens. In the bukid, farmers know it as Kangkong dapa. Because it is a broadleaf weed, it is neither a grass nor a sedge. Its stems either creep over wet mud or float on the water.\n\nYou will find it in irrigated and rainfed lowland rice fields, wherever water stays for a long time. As a perennial, it does not die after one cropping. Instead, it keeps growing from its stems season after season. Two things help it spread: seeds and cuttings. Any broken piece of stem that lands on wet soil or water can root and start a new plant. So careless weeding can leave you with more plants, not fewer."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about creeping water primrose",
+      "rows": [
+        [
+          "Name",
+          "Creeping water primrose"
+        ],
+        [
+          "Scientific name",
+          "Ludwigia adscendens"
+        ],
+        [
+          "Family",
+          "Onagraceae"
+        ],
+        [
+          "Weed group",
+          "Broadleaves ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Kangkong dapa"
+        ],
+        [
+          "Life cycle",
+          "Perennial"
+        ],
+        [
+          "Spreads by",
+          "Seeds and cuttings"
+        ],
+        [
+          "Where it grows",
+          "Irrigated and rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Creeping Water Primrose"
+    },
+    {
+      "type": "text",
+      "text": "Look for long stems that creep over the mud or float on the water. At each node, the stem sends down roots, and you will often see clusters of white, spongy air roots there too. The leaves are oblong to elliptic and can reach 8 cm long. As a broadleaf weed, it has wide leaves with netted veins, unlike grasses and sedges. Its flowers have five white petals with a yellow center."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Long stems creeping on the mud or floating on standing water in the paddy.",
+        "Roots growing from the nodes all along the stem, not only at the base.",
+        "Clusters of white, spongy air roots that look like small floats on the stem.",
+        "Oblong to elliptic leaves, up to 8 cm long, with netted veins.",
+        "White flowers with five petals and a yellow center, held just above the water.",
+        "Look alike tip: its white petals set it apart from the yellow flowered kahoy kahoy weeds of the same family."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Creeping water primrose spreads fast over wet ground and water. Its stems form a thick mat that shades young palay and crowds the rice hills. The weed also takes water and fertilizer that your rice needs, so the crop grows weaker where the mat is thick.\n\nBecause it is a perennial that roots at its nodes, it does not go away after harvest. Old stems keep living on the field edges and in canals, ready to creep back in. Thick mats can also slow the water in ditches and give shelter to pests. That is why the longer you leave it, the harder and costlier it gets to clean."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Creeping Water Primrose"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Every stem piece that touches wet soil can root, so pull out whole stems and carry them to dry ground, away from the water.",
+        "Scoop floating mats out of the paddy and irrigation canals with a rake or net, and never throw the pieces back into the water.",
+        "Clean canals and field edges before land preparation, since perennial stems hiding there creep back into the field after planting.",
+        "Avoid chopping the stems into small bits during weeding, because each cutting can grow into a new plant."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Broadleaves"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold creeping water primrose down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for broadleaves by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Bensulfuron methyl, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Bensulfuron methyl, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl",
+          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "Metsulfuron methyl plus chlorimuron ethyl",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Creeping Water Primrose Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Plow and harrow well, and rake out the runners, roots or pieces you turn up. A small piece left in wet soil can grow a new plant.",
+        "Pull escapes before they flower and set seed, and carry them out of the paddy instead of leaving them on the bund.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [broadleaf weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Creeping Water Primrose?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Creeping Water Primrose"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is creeping water primrose called in Tagalog?",
+          "a": "Farmers call it Kangkong dapa. Its scientific name is Ludwigia adscendens, and it is a relative of the yellow flowered kahoy kahoy weeds. Local names can change between provinces. So check for the white flowers with a yellow center and the clusters of white, spongy roots on the stem to be sure you have the right plant."
+        },
+        {
+          "q": "How do I control it in my rice field?",
+          "a": "Start by cleaning canals and bunds before planting, since old stems hide there. During the season, pull or scoop out whole stems, and keep the pieces out of the water. If you need a herbicide, choose one for broadleaf weeds that matches the age of your rice. Always follow the FPA registered label on the product."
+        },
+        {
+          "q": "Why does it keep coming back after I weed it?",
+          "a": "It is a perennial, and its stems root at the nodes. When weeding breaks the stems, small pieces left on the mud or in the water can root again. Seeds in the soil also sprout later on. That is why you need to remove whole stems, dry them on high ground, and clean the canals that feed your field."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More broadleaf weeds of rice",
+      "items": [
+        {
+          "label": "Heartshape false pickerelweed",
+          "url": "/weeds/monochoria-vaginalis"
+        },
+        {
+          "label": "Gooseweed",
+          "url": "/weeds/gooseweed"
+        },
+        {
+          "label": "Seedbox",
+          "url": "/weeds/ludwigia-hyssopifolia"
+        },
+        {
+          "label": "False daisy",
+          "url": "/weeds/false-daisy"
+        },
+        {
+          "label": "Water hyacinth",
+          "url": "/weeds/water-hyacinth"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

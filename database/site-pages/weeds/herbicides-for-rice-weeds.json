@@ -1,0 +1,373 @@
+{
+  "section": "weeds",
+  "slug": "herbicides-for-rice-weeds",
+  "sortOrder": 20,
+  "lang": "en",
+  "category": "Weed guides",
+  "title": "Herbicides for Rice: Active Ingredients, Groups and Timing by Rice Age",
+  "metaTitle": "Herbicides for Rice: Active Ingredients by Rice Age",
+  "metaDescription": "Herbicides for rice by active ingredient: what to spray at each rice age, how herbicide groups slow resistance, and how to use FPA registered products.",
+  "focusKeyword": "herbicides for rice",
+  "keywords": [
+    "herbicides for rice",
+    "herbicide for rice",
+    "rice herbicide",
+    "fertilizer and pesticide authority",
+    "pre emergence herbicide",
+    "post emergence herbicide"
+  ],
+  "excerpt": "Choosing herbicides for rice comes down to three questions. How old is your palay (the growing rice), which weeds are up, and what did you spray last season? This guide lists the active ingredients PhilRice's eDamuhan weed app recommends at each rice age. It also shows how to spray them safely.",
+  "heroImage": {
+    "src": "/images/site/photos/inspect.jpg",
+    "alt": "A farmer in a green palay field checks her phone before choosing herbicides for rice",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When herbicides for rice make sense"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice warns that weeds left alone can cut rice yield by 44 to 96 percent. Still, a herbicide is not the first tool to reach for.\n\nFirst come clean seed, clean bunds and canals, and a well leveled field (see [pagtatanim ng palay](/crops/pagtatanim-ng-palay)). Next comes water, since a flooded field keeps many weed seeds from sprouting. Then you weed by hand or with a rotary weeder while the weeds are small. Our guide to [weed management in rice](/weeds/weed-management-in-rice) covers each step.\n\nA herbicide earns its place when those steps cannot keep up, for example after a season thick with weeds. Even then, eDamuhan says the right product changes with the region and the weed, so follow your local agricultural officer."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The three timings: pre plant, pre emergence and post emergence"
+    },
+    {
+      "type": "text",
+      "text": "Each herbicide label names its timing. Spraying at the wrong time wastes money, and eDamuhan warns that it helps breed resistant weeds."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Pre plant.** You spray weeds that are already growing, before you transplant or sow. Never use it once rice is in the field.",
+        "**Pre emergence.** A pre emergence herbicide goes on the soil after planting, before the weeds come up. That is the 0 to 5 day window below.",
+        "**Post emergence.** A post emergence herbicide goes on weeds that are up and have green, active leaves. Early post emergence, at 6 to 10 days, hits them at two to three leaves."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Shop by active ingredient, not by brand"
+    },
+    {
+      "type": "text",
+      "text": "The active ingredient is the chemical in the pack that kills the weed. Many brands sell the same ingredient under different names and prices, so the brand alone tells you little.\n\nEvery registered label lists the active ingredient and its amount. So bring the ingredient name to the agrivet store and compare the packs that carry it. A name like pretilachlor plus butachlor means two ingredients in one registered product."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Herbicide groups and why you rotate them"
+    },
+    {
+      "type": "text",
+      "text": "Herbicides also fall into groups by the way they kill a weed. The Herbicide Resistance Action Committee (HRAC) numbers each group. These are the groups on this page:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Group 1**, ACCase inhibitors, the grass killers: cyhalofop butyl, metamifop, profoxydim and fenoxaprop P ethyl.",
+        "**Group 2**, ALS inhibitors: bensulfuron methyl, bispyribac sodium, chlorimuron ethyl, ethoxysulfuron, flucetosulfuron, metsulfuron methyl, penoxsulam, pyrazosulfuron ethyl, pyribenzoxim and triafamone.",
+        "**Group 3**, root and shoot growth inhibitors: pendimethalin.",
+        "**Group 4**, synthetic auxins, the broadleaf killers: 2,4 D, MCPA and florpyrauxifen benzyl.",
+        "**Group 5**, photosynthesis inhibitors: propanil.",
+        "**Group 6**, photosynthesis inhibitors: bentazone.",
+        "**Group 13**, pigment inhibitors: clomazone.",
+        "**Group 14**, PPO inhibitors: oxadiazon.",
+        "**Group 15**, seedling growth inhibitors: butachlor and pretilachlor.",
+        "**Group 27**, HPPD inhibitors: tefuryltrione."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Spray one group season after season, and the few weeds it cannot kill survive and take over. PhilRice's eDamuhan blames the same kind used again and again, wrong doses and wrong timing. So rotate groups between seasons. A new brand with the same ingredient is not a rotation. Labels do not always print the group, so check the ingredient against this list."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The barnyard grass lesson"
+    },
+    {
+      "type": "text",
+      "text": "A 2017 review by weed scientist Aurora Baltazar tells the story of [barnyard grass](/weeds/barnyard-grass). In Philippine rice monocrop areas, farmers sprayed butachlor (group 15) and propanil (group 5) without a break for 7 to 9 years. In the 1990s, barnyard grass there became resistant to both. Farmers then moved to bispyribac (group 2) and cyhalofop (group 1). PhilRice still lists resistant types in direct seeded areas.\n\nSo if a herbicide fails on barnyard grass, do not raise the dose. Switch groups, and lean on water and hand weeding."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Weedy rice: no herbicide can single it out"
+    },
+    {
+      "type": "text",
+      "text": "[Weedy rice](/weeds/weedy-rice) is the same species as your palay, so no selective herbicide can kill it inside a rice crop. Prevention is everything: clean certified seed, a clean harvester and thresher, and pulling off types before their grains drop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Herbicides for rice by age: the active ingredients that work"
+    },
+    {
+      "type": "text",
+      "text": "Both tables come from the recommendations in PhilRice's eDamuhan app. Count the rice age in days after transplanting or seeding, and find that row. Then read the column for your weed group. Our guide to [types of weeds](/weeds/types-of-weeds) shows how to tell the groups apart."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Transplanted rice (lipat tanim)"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients by rice age in transplanted rice, from PhilRice eDamuhan",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Grasses",
+          "Sedges",
+          "Broadleaves"
+        ],
+        [
+          "0 to 5, pre emergence",
+          "Butachlor, Butachlor plus 2,4 D IBE, Clomazone, Oxadiazon, Pendimethalin, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Bensulfuron methyl, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone"
+        ],
+        [
+          "6 to 10, early post emergence",
+          "Bispyribac sodium, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Bensulfuron methyl, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20, post emergence",
+          "Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl, Profoxydim",
+          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl",
+          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30, post emergence",
+          "Fenoxaprop P ethyl plus ethoxysulfuron, Metamifop plus penoxsulam",
+          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl",
+          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl"
+        ],
+        [
+          "31 to 40, rescue only",
+          "None listed, pull by hand",
+          "Metsulfuron methyl plus chlorimuron ethyl",
+          "Metsulfuron methyl plus chlorimuron ethyl"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Direct seeded rice (sabog tanim)"
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients by rice age in direct seeded rice, from PhilRice eDamuhan",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Grasses",
+          "Sedges",
+          "Broadleaves"
+        ],
+        [
+          "0 to 5, pre emergence",
+          "Butachlor, Butachlor plus 2,4 D IBE, Butachlor with safener, Clomazone, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor",
+          "Butachlor, Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pretilachlor, Pretilachlor plus butachlor",
+          "Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10, early post emergence",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Metamifop, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20, post emergence",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop, Penoxsulam plus cyhalofop butyl, Profoxydim, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30, post emergence",
+          "Cyhalofop butyl plus bispyribac sodium, Metamifop, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl",
+          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl",
+          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Mixed weeds and late weeds"
+    },
+    {
+      "type": "text",
+      "text": "After 30 days, eDamuhan lists no grass herbicide, and the direct seeded table ends. So pull late weeds by hand and keep the water up."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "Two or three weed groups in one field?",
+      "text": "Then you need an ingredient that appears in every one of their columns at that age. The [weed control helper](/weeds#control) finds that overlap for you, with each ingredient's group and the steps for that age."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Safe use: label, clothing, water and empty containers"
+    },
+    {
+      "type": "text",
+      "text": "eDamuhan warns that misused herbicides put people, animals and the environment at risk. So follow these steps:"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Buy only FPA registered products",
+          "text": "Buy from a licensed dealer and check the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) registration on the label. The FPA guide Gabay sa Tamang Paggamit ng Pestisidyo explains the label warnings."
+        },
+        {
+          "title": "Read the whole label",
+          "text": "It gives the rate, the timing and the weeds covered. Never guess a rate, and never raise it after a failed spray."
+        },
+        {
+          "title": "Cover up",
+          "text": "Wear long sleeves, long pants, boots, gloves and eye and face cover. Stand upwind when you mix, and never blow into a blocked nozzle."
+        },
+        {
+          "title": "Watch the rain",
+          "text": "A post emergence herbicide needs dry hours on the leaves. A University of Arkansas rice table puts that rain free time at 1 to 24 hours, by ingredient. So check the label and your forecast first."
+        },
+        {
+          "title": "Bring the water back",
+          "text": "Return the water 1 to 3 days after a post emergence spray, 3 to 5 cm deep. Hold it for 4 to 5 days to keep the weeds under, with the young rice above it."
+        },
+        {
+          "title": "Triple rinse the container",
+          "text": "As the FPA teaches, drain the pack into the spray tank for 30 seconds. Rinse it at least 3 times, each time with water of at least a tenth of its volume. Pour every rinse into the tank, never into a canal. Then return it to your dealer, the FPA's collection point."
+        },
+        {
+          "title": "Ask your municipal agriculturist",
+          "text": "Herbicides vary by region and weed, as eDamuhan says. Your agriculturist knows the resistance cases near you."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ask Anee before you buy a rice herbicide"
+    },
+    {
+      "type": "text",
+      "text": "A spray bought for the wrong weed group is money lost. So snap a photo in anee.io and ask [Anee](/features/ai-agricultural-technician), the smart farm technician, which weed it is and which group it belongs to. Anee answers in Tagalog or English and reads your season first, so she knows your rice age.\n\nThe [cropping calendar](/features/cropping-calendar) dates each spray window from your lot's own day zero. Also log each herbicide in [inventory](/features/farm-inventory-and-expenses), so next season you see which group you used and can rotate."
+    },
+    {
+      "type": "cta",
+      "title": "Know the weed before you buy the herbicide",
+      "text": "Ask Anee about any weed from a photo, and let anee.io date every spray and weeding window.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about herbicides for rice"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the best herbicide for rice?",
+          "a": "There is no single best one. The right herbicide for rice depends on rice age, planting method, weed group and the group you used last season. Use the tables above, and buy only FPA registered products."
+        },
+        {
+          "q": "What is the difference between a pre emergence and a post emergence herbicide?",
+          "a": "A pre emergence herbicide goes on the soil before weeds come up, in the first 5 days. A post emergence herbicide hits weeds that are already up, from about day 6."
+        },
+        {
+          "q": "Why did my rice herbicide stop working?",
+          "a": "The weeds may have become resistant after you sprayed the same group again and again. Switch to another group next season, and ask your municipal agriculturist."
+        },
+        {
+          "q": "Is there a herbicide for weedy rice?",
+          "a": "Not inside a rice crop. Weedy rice is rice too, so no selective herbicide can kill it without harming your palay. Prevent it with clean seed and clean machines."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More weed guides",
+      "items": [
+        {
+          "label": "Weeds and grasses of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        },
+        {
+          "label": "Types of weeds",
+          "url": "/weeds/types-of-weeds"
+        },
+        {
+          "label": "Common weeds in the Philippines",
+          "url": "/weeds/common-weeds-philippines"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "/blog/fertilizer-and-pesticide-authority"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: Weed identification app boosts farmers' yield (eDamuhan)",
+          "url": "https://www.philrice.gov.ph/weed-identification-app-boosts-farmers-yield/"
+        },
+        {
+          "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Chemical weed control",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/chemical-weed-control"
+        },
+        {
+          "label": "HRAC Global: Herbicide mode of action classification",
+          "url": "https://hracglobal.com/tools/2024-hrac-global-herbicide-moa-classification"
+        },
+        {
+          "label": "Baltazar, A. M. (2017). Herbicide resistant weeds in the Philippines: status and resistance mechanisms. Weed Biology and Management",
+          "url": "https://www.ukdr.uplb.edu.ph/journal-articles/1368"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority: Guidelines and manuals, including Gabay sa Tamang Paggamit ng Pestisidyo",
+          "url": "https://fpa.da.gov.ph/resources/publications/guidelines-manual/"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority: Empty pesticide container disposal and triple rinsing",
+          "url": "https://fpa.da.gov.ph/fpa-meets-with-denr-emb-and-da-to-discuss-empty-pesticide-container-disposal/"
+        },
+        {
+          "label": "University of Arkansas Extension: Rainfall free periods for post emergence rice herbicides",
+          "url": "https://www.uaex.uada.edu/publications/pdf/MP44/rice-rainfall-free-periods-postemergence-herbicides.pdf"
+        }
+      ]
+    }
+  ]
+}

@@ -150,7 +150,7 @@
     },
     {
       "type": "text",
-      "text": "There is no cure. No fungicide controls TR4, and the fungus survives more than 30 years in the soil. It spreads through infected suckers, soil, surface water and farm tools. So prevention is everything. Read our full page on [Fusarium wilt](/problems/fusarium-wilt)."
+      "text": "There is no cure. No fungicide controls TR4, and the fungus survives more than 30 years in the soil. It spreads through infected suckers, soil, surface water and farm tools. So prevention is everything. Read our full page on [Fusarium wilt](/diseases/fusarium-wilt)."
     },
     {
       "type": "list",
@@ -189,7 +189,7 @@
     },
     {
       "type": "text",
-      "text": "Banana bunchy top is a virus spread by the banana aphid, Pentalonia nigronervosa. Early signs are dark green dashes at the base of new leaves. Later the leaves bunch into a rosette at the top and the plant stops growing. There is no cure. The DA method is to spray the aphids on plants within 6 meters first, then dig out and chop the sick plant. Replant with clean material 3 to 5 days later. See our page on [aphids](/problems/hanip-mites-and-aphids)."
+      "text": "Banana bunchy top is a virus spread by the banana aphid, Pentalonia nigronervosa. Early signs are dark green dashes at the base of new leaves. Later the leaves bunch into a rosette at the top and the plant stops growing. There is no cure. The DA method is to spray the aphids on plants within 6 meters first, then dig out and chop the sick plant. Replant with clean material 3 to 5 days later. See our page on [aphids](/pests/hanip-mites-and-aphids)."
     },
     {
       "type": "heading",
@@ -247,7 +247,7 @@
       "items": [
         {
           "label": "Fusarium wilt",
-          "url": "/problems/fusarium-wilt"
+          "url": "/diseases/fusarium-wilt"
         },
         {
           "label": "Coconut fertilizer",

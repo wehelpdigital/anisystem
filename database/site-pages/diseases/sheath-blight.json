@@ -1,0 +1,245 @@
+{
+  "section": "diseases",
+  "slug": "sheath-blight",
+  "sortOrder": 130,
+  "lang": "en",
+  "category": "Rice diseases",
+  "title": "Sheath Blight of Rice: Symptoms, Causes and Control",
+  "metaTitle": "Sheath Blight in Rice: Symptoms, Causes and Fungicides",
+  "metaDescription": "Sheath blight climbs the rice plant from the waterline in dense, heavily fertilized fields. Learn the signs, the causes and how to control it.",
+  "focusKeyword": "sheath blight",
+  "keywords": [
+    "sheath blight",
+    "sheath blight disease",
+    "fungicide",
+    "armure fungicide"
+  ],
+  "excerpt": "Sheath blight is a fungal disease of rice caused by Rhizoctonia solani. It starts as greenish gray spots on the leaf sheath near the water and climbs the plant until leaves and young tillers die. It thrives in dense, heavily fertilized palay in hot, humid weather, which is why PhilRice sees it often in irrigated and rainfed fields that get a lot of nitrogen.",
+  "heroImage": {
+    "src": "/images/site/guides/problems-sheath-blight.webp",
+    "alt": "A rice leaf with the large gray and tan lesions of sheath blight, among ripening panicles",
+    "credit": "Peggy Greb, USDA Agricultural Research Service, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What causes sheath blight disease"
+    },
+    {
+      "type": "text",
+      "text": "The fungus Rhizoctonia solani lives in the soil and survives between crops, partly as sclerotia, small hard resting bodies that float on the paddy water. It does not spread through airborne spores. Instead, its threads grow along the plant from sheath to sheath, and from hill to hill wherever leaves touch.\n\nIRRI ranks sheath blight disease as one of the most important rice diseases after blast, and a growing concern where farms plant denser and fertilize heavier. PhilRice puts the possible yield loss at up to 50 percent. The disease shrinks the green leaf area of the canopy and kills young tillers, and those two losses are what cut the yield."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Sheath blight symptoms"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Oval or elliptical greenish gray spots, about 1 to 3 centimeters long, on the leaf sheath just above the water line",
+        "Spots that grow and join, with grayish white centers and brown borders",
+        "Lesions that climb to the upper sheaths and the leaves, then move to the next hill",
+        "Irregular, banded green and brown patches on the leaves, which later turn white",
+        "Poor panicle exertion when the flag leaf gets infected",
+        "Small sclerotia on and near the lesions"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "You usually see it from tillering to the milk stage. Stem rot and stem borer damage can look similar, so look for the typical lesions and the sclerotia before you decide. If you see white, empty panicles with no sheath lesions, read our guide to [rice insects](/pests/rice-insects) instead."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why some fields get hit hard"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Hot weather, about 28 to 32 degrees Celsius",
+        "Humidity of 85 to 100 percent inside the canopy",
+        "High nitrogen, which builds a thick canopy",
+        "High seeding rates or close spacing",
+        "Fungus already in the soil from past crops",
+        "Highly susceptible semi dwarf, high yielding varieties",
+        "The rainy season, when plants are more vulnerable"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The disease follows the same habits that push yields up. A farmer who adds extra urea and plants thick to chase a bigger harvest can build the perfect home for the fungus. Our guides to [fertilizer for rice](/blog/fertilizer-for-rice) and [urea fertilizer](/blog/urea-fertilizer) show how to split nitrogen instead of piling it on."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to manage the disease"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Cultural control"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Use the right seeding rate",
+          "text": "Follow the recommended amount of seed and avoid close spacing. Wider spacing lets air and light into the canopy."
+        },
+        {
+          "title": "Fit nitrogen to the season",
+          "text": "Use a reasonable nitrogen rate for the season and split it. Too much nitrogen feeds the disease."
+        },
+        {
+          "title": "Clean the bunds",
+          "text": "Control weeds in the paddy and on the bunds, especially the levees."
+        },
+        {
+          "title": "Drain at maximum tillering",
+          "text": "PhilRice advises draining the field for a few days at maximum tillering. IRRI also notes that draining fairly early in the season reduces epidemics."
+        },
+        {
+          "title": "Bury the stubble",
+          "text": "After harvest, plow deeply to bury infected stubble and weeds, and expose the soil to strong sun."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Resistant varieties"
+    },
+    {
+      "type": "text",
+      "text": "IRRI states that no resistant rice variety is available for cultivation yet, so do not count on the seed alone. Some varieties suffer less than others, though. Ask your Municipal Agriculture Office which ones held up in your area, and see our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Biological control"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice promotes biological control. Its Tagalog guide recommends Trichoderma harzianum, a friendly fungus, and its English guide lists other antagonists such as Trichoderma viride, Bacillus subtilis and Pseudomonas fluorescens. A PhilRice and UPLB study also found an Aspergillus fungus from organically fertilized soil that slowed Rhizoctonia solani in small plots. It is still a research lead, though, and not yet a product you can buy."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fungicide options for sheath blight"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice advises applying a recommended fungicide only when you need it. Scout from maximum tillering and look low: part the hills and check the sheaths near the water. If lesions keep climbing the plants and spreading across hills in wet, humid weather, talk to your agricultural technician about a spray.\n\nCommon active ingredients against this disease include the triazoles difenoconazole and propiconazole and the strobilurin azoxystrobin. Two Syngenta products show how makers combine them. Armure 300 EC mixes difenoconazole and propiconazole, and its Philippine product page lists sheath blight on rice. Ortiva Top 325 SC mixes azoxystrobin and difenoconazole, and lists the same disease plus rice blast on rice.\n\nSheath blight starts low, so an Armure fungicide spray, or any other product, has to reach the lower sheaths. Follow the label for the rate, spray volume, timing and number of sprays. Use only FPA registered products, and rotate between fungicide groups so the fungus does not adapt. Our [fungicides guide](/blog/fungicides) explains the groups."
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "No insecticide stops this disease",
+      "text": "It is a fungus, not an insect. If you sprayed an insecticide and the spots kept spreading, that is why. Keep your insecticide money for real pests like the [brown planthopper](/pests/brown-planthopper)."
+    },
+    {
+      "type": "text",
+      "text": "anee.io can carry much of this for you. The [growth stages](/features/growth-stages-and-weather) view shows when each lot reaches maximum tillering, the time to drain and start checking the lower sheaths. The weekly forecast for each lot warns you of the hot, humid stretches the fungus likes. If you find odd spots, send a photo to Anee, the [smart farm technician](/features/ai-agricultural-technician), who answers in Tagalog or English. And the [farm inventory](/features/farm-inventory-and-expenses) tracks the fungicide you bought and what each spray cost."
+    },
+    {
+      "type": "cta",
+      "title": "Spot the risky weeks before the fungus does",
+      "text": "anee.io shows each lot's growth stage and the week's weather at your farm, and lets Anee read a photo of the spots on your palay.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Sheath blight questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What causes sheath blight in rice?",
+          "a": "The soilborne fungus Rhizoctonia solani. Dense planting, high nitrogen, heat and humidity in the canopy help it spread."
+        },
+        {
+          "q": "What does sheath blight look like?",
+          "a": "Oval greenish gray spots on the leaf sheath near the water, which later get grayish white centers and brown borders. The spots climb the plant and spread to nearby hills."
+        },
+        {
+          "q": "Which fungicide works on sheath blight?",
+          "a": "Products with difenoconazole, propiconazole or azoxystrobin are common examples, such as Armure 300 EC and Ortiva Top 325 SC. Use FPA registered products and follow the label."
+        },
+        {
+          "q": "Can I prevent sheath blight without fungicide?",
+          "a": "Cultural control goes a long way. Use the right seeding rate and spacing, split nitrogen, clean the bunds, drain at maximum tillering and plow under the stubble after harvest."
+        },
+        {
+          "q": "Is there a resistant variety?",
+          "a": "IRRI reports no resistant variety available for cultivation yet. Some varieties show less damage, so ask your Municipal Agriculture Office."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Fungicides guide",
+          "url": "/blog/fungicides"
+        },
+        {
+          "label": "Rice insects in the Philippines",
+          "url": "/pests/rice-insects"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        },
+        {
+          "label": "Rice varieties in the Philippines",
+          "url": "/crops/rice-varieties-philippines"
+        },
+        {
+          "label": "Palay",
+          "url": "/crops/palay"
+        },
+        {
+          "label": "Growth stages and weather",
+          "url": "/features/growth-stages-and-weather"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Sheath blight",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/diseases/item/sheath-blight"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: Sheath blight",
+          "url": "https://www.pinoyrice.com/sheath-blight/"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: Pamamahala ng sheath blight",
+          "url": "https://www.pinoyrice.com/pamamahala-ng-sheath-blight/"
+        },
+        {
+          "label": "PhilRice: Fungi found to control sheath blight",
+          "url": "https://www.philrice.gov.ph/fungi-found-to-control-sheath-blight/"
+        },
+        {
+          "label": "Syngenta Philippines: Armure 300 EC",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/armure-300-ec"
+        },
+        {
+          "label": "Syngenta Philippines: Ortiva Top 325 SC",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/ortiva-top-325-sc"
+        }
+      ]
+    }
+  ]
+}

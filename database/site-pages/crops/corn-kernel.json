@@ -245,7 +245,7 @@
     },
     {
       "type": "text",
-      "text": "Watch for these pests from the whorl stage to harvest. The [asiatic corn borer](/problems/asian-corn-borer) bores into stalks, tassels and ear shanks, and in bad attacks the ears break and drop. The [fall armyworm](/problems/fall-armyworm) feeds in the whorl and can later bore into the ears. Corn earworms also cut the silks, which leaves unfilled kernels at the tip."
+      "text": "Watch for these pests from the whorl stage to harvest. The [asiatic corn borer](/pests/asian-corn-borer) bores into stalks, tassels and ear shanks, and in bad attacks the ears break and drop. The [fall armyworm](/pests/fall-armyworm) feeds in the whorl and can later bore into the ears. Corn earworms also cut the silks, which leaves unfilled kernels at the tip."
     },
     {
       "type": "heading",
@@ -295,11 +295,11 @@
         },
         {
           "label": "Asian corn borer",
-          "url": "/problems/asian-corn-borer"
+          "url": "/pests/asian-corn-borer"
         },
         {
           "label": "Fall armyworm",
-          "url": "/problems/fall-armyworm"
+          "url": "/pests/fall-armyworm"
         },
         {
           "label": "Growth stages and weather on anee.io",

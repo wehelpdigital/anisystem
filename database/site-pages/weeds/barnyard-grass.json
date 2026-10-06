@@ -1,0 +1,303 @@
+{
+  "section": "weeds",
+  "slug": "barnyard-grass",
+  "sortOrder": 100,
+  "lang": "en",
+  "category": "Grasses",
+  "title": "Barnyard Grass in Palay: How to Spot It and Control It",
+  "metaTitle": "Barnyard Grass in Rice Fields: How to Spot and Stop It",
+  "metaDescription": "Barnyard grass looks like rice seedlings, and some types resist butachlor and propanil. Learn how to spot it early and keep it out of your palay.",
+  "focusKeyword": "barnyard grass",
+  "keywords": [
+    "barnyard grass",
+    "Echinochloa crus galli",
+    "bayakibok",
+    "humay humay",
+    "grass weed in rice fields"
+  ],
+  "excerpt": "Barnyard grass is a tall, fast growing grass weed of irrigated and rainfed lowland rice fields in the Philippines. When young, it looks almost exactly like palay, so many plants escape weeding. This page shows how to spot it, how much harm it does and how to control it, even where some herbicides no longer work.",
+  "heroImage": {
+    "src": "/images/site/weeds/barnyard-grass.webp",
+    "thumb": "/images/site/weeds/barnyard-grass-480.webp",
+    "alt": "Barnyard grass (Echinochloa crus galli), a grass weed of Philippine rice fields",
+    "credit": "Robert H. Mohlenbrock, USDA SCS, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Barnyard Grass?"
+    },
+    {
+      "type": "text",
+      "text": "Barnyard grass (Echinochloa crus galli) belongs to the grass family, just like palay. Its local names include antena, bayakibok, biyuro, humay humay, marapagay, naik, palay pato and telebisyon. Names like humay humay and palay pato show how closely it copies rice. You will find it in both irrigated and rainfed lowland fields.\n\nThis weed is an annual, and it spreads only by seed. It also moves fast. It grows, flowers and drops seed in a short time, well before the rice is ready for harvest. In that short life, each plant can scatter thousands of seeds across your paddy. So a few missed plants this season can mean a thick stand next season."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about barnyard grass",
+      "rows": [
+        [
+          "Name",
+          "Barnyard grass"
+        ],
+        [
+          "Scientific name",
+          "Echinochloa crus galli"
+        ],
+        [
+          "Family",
+          "Poaceae (Graminae)"
+        ],
+        [
+          "Weed group",
+          "Grasses ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Antena, bayakibok, biyuro, humay humay, marapagay, naik, palay pato, telebisyon"
+        ],
+        [
+          "Life cycle",
+          "Annual"
+        ],
+        [
+          "Spreads by",
+          "Seeds"
+        ],
+        [
+          "Where it grows",
+          "Irrigated and rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Barnyard Grass"
+    },
+    {
+      "type": "text",
+      "text": "Like other grasses, it has round, hollow stems with clear joints, or nodes. Its stems are thick and spongy, and the plant can stand up to 200 cm tall. The roots are thick too. Fold back a leaf where it meets the stem. This weed has no ligule there, while rice has one. Later, a soft, nodding panicle appears, pinkish, purplish or green. Its crowded, pointed spikelets carry long awns, about 2.5 cm, often red or purple."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Tall clumps with thick, spongy stems that can reach up to 200 cm.",
+        "Look alike tip: no ligule at the leaf collar, while a rice seedling always has one.",
+        "A soft, drooping panicle that turns pinkish or purplish, or stays green.",
+        "Spikelets packed tight on the branches, each one oval with a pointed tip.",
+        "Long awns of about 2.5 cm, often colored red or purple, stick out of the seed head."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "This weed is a C4 plant, so it grows fast in strong sun and heat. It can complete its life cycle within 42 to 64 days after it sprouts. In that time, each plant makes an average of 2,000 to 40,000 seeds. Early on, hand weeding is hard because the seedlings look like rice.\n\nIn direct seeded rice, it can cut yield by 18 to 57 percent when 10 to 80 plants grow in each square meter. Some types in direct seeded areas of the Philippines also resist the chloroacetamide (butachlor) and acetanilide (propanil) herbicide groups. Besides that, it feeds the rice bug and the rice black bug when no rice is in the field."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Barnyard Grass"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Check each hill early. Fold back the leaf collar, and if you find no ligule, pull the plant out with its roots.",
+        "Flood the field as soon as the rice can take it. A steady layer of water holds back many of its seeds from sprouting.",
+        "Pull plants before the panicles open, since each one can finish its life and drop seed within 42 to 64 days of sprouting.",
+        "If a herbicide stops working, do not just raise the dose. Switch to a different herbicide group and lean harder on water and hand weeding."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Grasses"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold barnyard grass down, choose an active ingredient that works on grasses at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for grasses by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Butachlor, Butachlor plus 2,4 D IBE, Clomazone, Oxadiazon, Pendimethalin, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor, Butachlor plus 2,4 D IBE, Butachlor with safener, Clomazone, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Metamifop, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl, Profoxydim",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop, Penoxsulam plus cyhalofop butyl, Profoxydim, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "Fenoxaprop P ethyl plus ethoxysulfuron, Metamifop plus penoxsulam",
+          "Cyhalofop butyl plus bispyribac sodium, Metamifop, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "No herbicide listed at this age. Hand weed and keep the water up.",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "When a spray stops working",
+      "text": "Some types of this weed in Philippine direct seeded rice areas resist the chloroacetamide (butachlor) and acetanilide (propanil) herbicide groups, so a spray that once worked may now fail."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Barnyard Grass Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Prepare the land well: flood, plow, let the weed seeds sprout, then kill them when you harrow. Level the field so water covers it evenly.",
+        "Pull escapes before the seed heads open, and clean the thresher and harvester before they enter the field.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [grass weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Barnyard Grass?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Barnyard Grass"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What do farmers call barnyard grass in the Philippines?",
+          "a": "It has many local names. You may hear antena, bayakibok, biyuro, humay humay, marapagay, naik, palay pato or telebisyon, depending on the region. Its scientific name is Echinochloa crus galli. A few of these names also cover close relatives, such as Echinochloa glabrescens. So check the plant itself before you decide which weed you have."
+        },
+        {
+          "q": "How do I control barnyard grass in rice?",
+          "a": "Start with clean seed and a level field, then keep water in the paddy once the rice can take it. Next, hand weed early and check every hill for the missing ligule. If you use a herbicide, choose one for grass weeds that fits the age of your rice. Always follow the FPA registered label, and switch groups if one stops working."
+        },
+        {
+          "q": "Why does my herbicide no longer kill it?",
+          "a": "Some types growing in direct seeded rice areas of the Philippines resist the chloroacetamide group, which includes butachlor, and the acetanilide group, which includes propanil. When farmers spray the same group season after season, resistant plants take over. So rotate groups, follow the FPA label, and back up every spray with good water control and hand weeding."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More grass weeds of rice",
+      "items": [
+        {
+          "label": "Weedy rice",
+          "url": "/weeds/weedy-rice"
+        },
+        {
+          "label": "Chinese sprangletop",
+          "url": "/weeds/chinese-sprangletop"
+        },
+        {
+          "label": "Echinochloa glabrescens",
+          "url": "/weeds/echinochloa-glabrescens"
+        },
+        {
+          "label": "Jungle rice",
+          "url": "/weeds/jungle-rice"
+        },
+        {
+          "label": "Wrinkle grass",
+          "url": "/weeds/ischaemum-rugosum"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

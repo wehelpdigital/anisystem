@@ -298,7 +298,7 @@
   "*why fertilizer is important",
   "*what fertilizer for plants"
  ],
- "problems/common-weeds-philippines": [
+ "weeds/common-weeds-philippines": [
   "weeds in tagalog",
   "*broadleaves",
   "*broadleaves weeds",
@@ -309,13 +309,13 @@
   "*sofit",
   "*grasses weeds"
  ],
- "problems/thrips": [
+ "pests/thrips": [
   "*thrips insect",
   "*thrips",
   "philippines insects",
   "selecron insecticide"
  ],
- "problems/rice-insects": [
+ "pests/rice-insects": [
   "thrips insect",
   "rice bug",
   "rice bugs",
@@ -357,13 +357,13 @@
   "*pagtatanim ng halaman",
   "humus fertilizer"
  ],
- "problems/anthracnose": [
+ "diseases/anthracnose": [
   "diseased in tagalog",
   "fungicide",
   "*anthracnose",
   "ortiva top fungicide"
  ],
- "problems/hanip-mites-and-aphids": [
+ "pests/hanip-mites-and-aphids": [
   "thrips",
   "mite in tagalog",
   "mites in tagalog",
@@ -397,7 +397,7 @@
   "fertilizer granules",
   "*fertilizer application methods"
  ],
- "problems/rice-bug": [
+ "pests/rice-bug": [
   "*alitangya",
   "bugs in tagalog",
   "*rice bug",
@@ -470,7 +470,7 @@
   "*fertilizer 16 16 16",
   "*fertilizer 20 20 20"
  ],
- "problems/rice-black-bug": [
+ "pests/rice-black-bug": [
   "rice bug",
   "*rice black bug",
   "*rice black bugs",
@@ -494,18 +494,18 @@
   "sheath blight disease",
   "sheath blight"
  ],
- "problems/sheath-blight": [
+ "diseases/sheath-blight": [
   "fungicide",
   "armure fungicide",
   "*sheath blight disease",
   "*sheath blight"
  ],
- "problems/fusarium-wilt": [
+ "diseases/fusarium-wilt": [
   "fungicide",
   "*fusarium wilt",
   "banana farming philippines"
  ],
- "problems/cutworm": [
+ "pests/cutworm": [
   "corn seedling",
   "*cutworm",
   "cymbush insecticide"
@@ -542,18 +542,18 @@
   "fertilizer nitrogen",
   "*ammonia nitrate fertilizer"
  ],
- "problems/fall-armyworm": [
+ "pests/fall-armyworm": [
   "*fall armyworm",
   "insecticide karate",
   "asian corn borer",
   "cymbush"
  ],
- "problems/asian-corn-borer": [
+ "pests/asian-corn-borer": [
   "fall armyworm",
   "*asian corn borer",
   "*asiatic corn borer"
  ],
- "problems/rice-leaffolder": [
+ "pests/rice-leaffolder": [
   "virtako insecticide",
   "rice insect",
   "*rice leaffolder"
@@ -572,7 +572,7 @@
   "*banana farming philippines",
   "fertilizer with high potassium"
  ],
- "problems/brown-planthopper": [
+ "pests/brown-planthopper": [
   "*planthopper",
   "*plant hopper",
   "*brown planthopper",

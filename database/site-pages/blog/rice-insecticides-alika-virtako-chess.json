@@ -27,7 +27,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "A rice insecticide only works if it matches the pest. So before any product talk, look closely at your field. Deadhearts and whiteheads point to stem borer. Folded, scraped leaves point to leaffolder. Yellowing at the base of the hills, with insects that drop onto the water when you tap the stems, points to planthoppers. Empty, spotted grains at the milk stage point to rice bug.\n\nIf you are not sure, start with our guide to [rice insects](/problems/rice-insects). Then come back here and pick the product whose label names your pest."
+      "text": "A rice insecticide only works if it matches the pest. So before any product talk, look closely at your field. Deadhearts and whiteheads point to stem borer. Folded, scraped leaves point to leaffolder. Yellowing at the base of the hills, with insects that drop onto the water when you tap the stems, points to planthoppers. Empty, spotted grains at the milk stage point to rice bug.\n\nIf you are not sure, start with our guide to [rice insects](/pests/rice-insects). Then come back here and pick the product whose label names your pest."
     },
     {
       "type": "heading",
@@ -79,7 +79,7 @@
     },
     {
       "type": "text",
-      "text": "Alika 247 ZC mixes lambda cyhalothrin, a pyrethroid in IRAC group 3A, with thiamethoxam, a neonicotinoid in group 4A. The pyrethroid knocks insects down on contact. Thiamethoxam moves inside the plant, so insects that suck sap take it in as they feed. The ZC formulation holds both, one in tiny capsules and one as a suspension.\n\nSyngenta Philippines lists rice among the crops for Alika insecticide, with stem borer, leafhoppers and rice bug as the rice targets. The company says it protects for up to 14 days. The FPA label also gives the safety and reentry instructions, so read those before anyone walks back into a sprayed field.\n\nFor [rice bug](/problems/rice-bug), timing is everything. IRRI advises scouting from just before flowering until the hard dough stage, counting bugs early in the morning or late in the afternoon. Direct control may be needed if you find more than 10 rice bugs in 20 hills. Below that, natural enemies such as wasps and spiders often keep the bugs in check."
+      "text": "Alika 247 ZC mixes lambda cyhalothrin, a pyrethroid in IRAC group 3A, with thiamethoxam, a neonicotinoid in group 4A. The pyrethroid knocks insects down on contact. Thiamethoxam moves inside the plant, so insects that suck sap take it in as they feed. The ZC formulation holds both, one in tiny capsules and one as a suspension.\n\nSyngenta Philippines lists rice among the crops for Alika insecticide, with stem borer, leafhoppers and rice bug as the rice targets. The company says it protects for up to 14 days. The FPA label also gives the safety and reentry instructions, so read those before anyone walks back into a sprayed field.\n\nFor [rice bug](/pests/rice-bug), timing is everything. IRRI advises scouting from just before flowering until the hard dough stage, counting bugs early in the morning or late in the afternoon. Direct control may be needed if you find more than 10 rice bugs in 20 hills. Below that, natural enemies such as wasps and spiders often keep the bugs in check."
     },
     {
       "type": "heading",
@@ -88,7 +88,7 @@
     },
     {
       "type": "text",
-      "text": "Virtako 40 WG pairs chlorantraniliprole, a diamide in IRAC group 28, with the same thiamethoxam found in Alika. The diamide stops caterpillars from feeding, which is why Virtako insecticide is a common pick for stem borer and [rice leaffolder](/problems/rice-leaffolder). Its FPA rice listing is the widest of the three, from green leafhopper to rice black bug.\n\nThe Philippine product is a wettable granule packed in small sachets that you mix in the knapsack. Do not confuse it with the Virtako granules sold in India, a different formulation broadcast by hand. The label on a Philippine pack is the one that counts here.\n\nIRRI also reminds farmers that rice at the vegetative stage can usually recover from leaffolder damage. Early season sprays often give little return and can wipe out the natural enemies that keep planthoppers down. So save the diamide for damage that threatens the flag leaf or the panicle."
+      "text": "Virtako 40 WG pairs chlorantraniliprole, a diamide in IRAC group 28, with the same thiamethoxam found in Alika. The diamide stops caterpillars from feeding, which is why Virtako insecticide is a common pick for stem borer and [rice leaffolder](/pests/rice-leaffolder). Its FPA rice listing is the widest of the three, from green leafhopper to rice black bug.\n\nThe Philippine product is a wettable granule packed in small sachets that you mix in the knapsack. Do not confuse it with the Virtako granules sold in India, a different formulation broadcast by hand. The label on a Philippine pack is the one that counts here.\n\nIRRI also reminds farmers that rice at the vegetative stage can usually recover from leaffolder damage. Early season sprays often give little return and can wipe out the natural enemies that keep planthoppers down. So save the diamide for damage that threatens the flag leaf or the panicle."
     },
     {
       "type": "heading",
@@ -97,7 +97,7 @@
     },
     {
       "type": "text",
-      "text": "Chess 50 WG contains only pymetrozine, IRAC group 9B. It acts on the sense organs that insects use for balance and movement. Hoppers that pick it up stop feeding and slowly starve. Syngenta says Chess insecticide protects for up to 21 days and is highly selective for beneficial insects.\n\nThe FPA rice listing names the brown planthopper, the green leafhopper and the rice black bug. Many farmers and store receipts spell it plant hopper, two words, but it is the same insect. Because its pre harvest interval on rice is 36 days, Chess is a tool for the tillering and booting stages, not for the last weeks before harvest.\n\nBefore you spray, read our [brown planthopper](/problems/brown-planthopper) guide. IRRI warns that planthopper outbreaks often follow insecticides that kill spiders, mirid bugs and water striders. If natural enemies outnumber the hoppers, IRRI says the risk of hopperburn is low."
+      "text": "Chess 50 WG contains only pymetrozine, IRAC group 9B. It acts on the sense organs that insects use for balance and movement. Hoppers that pick it up stop feeding and slowly starve. Syngenta says Chess insecticide protects for up to 21 days and is highly selective for beneficial insects.\n\nThe FPA rice listing names the brown planthopper, the green leafhopper and the rice black bug. Many farmers and store receipts spell it plant hopper, two words, but it is the same insect. Because its pre harvest interval on rice is 36 days, Chess is a tool for the tillering and booting stages, not for the last weeks before harvest.\n\nBefore you spray, read our [brown planthopper](/pests/brown-planthopper) guide. IRRI warns that planthopper outbreaks often follow insecticides that kill spiders, mirid bugs and water striders. If natural enemies outnumber the hoppers, IRRI says the risk of hopperburn is low."
     },
     {
       "type": "heading",
@@ -200,15 +200,15 @@
       "items": [
         {
           "label": "Brown planthopper",
-          "url": "/problems/brown-planthopper"
+          "url": "/pests/brown-planthopper"
         },
         {
           "label": "Rice bug",
-          "url": "/problems/rice-bug"
+          "url": "/pests/rice-bug"
         },
         {
           "label": "Rice black bug",
-          "url": "/problems/rice-black-bug"
+          "url": "/pests/rice-black-bug"
         },
         {
           "label": "Karate, Cymbush and Selecron",

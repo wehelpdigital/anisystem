@@ -134,7 +134,7 @@
     },
     {
       "type": "text",
-      "text": "Kung gusto mong subukang magtanim, basahin ang aming gabay sa [pagtatanim ng mais](/crops/pagtatanim-ng-mais) at kung paano pumili ng [binhi ng mais](/crops/corn-seeds). Bantayan din ang [fall armyworm](/problems/fall-armyworm), ang uod na kumakain sa ubod ng batang mais.\n\nSa anee.io, makikita mo ang yugto ng mais sa bawat lote ayon sa bilang ng araw mula nang itanim, kasama ang dapat gawin at dapat bantayan sa yugtong iyon. Kapag may uod o sakit kang nakita, kunan ito ng litrato at itanong kay [Anee, ang AI technician](/features/ai-agricultural-technician). Sumasagot siya sa Tagalog o English."
+      "text": "Kung gusto mong subukang magtanim, basahin ang aming gabay sa [pagtatanim ng mais](/crops/pagtatanim-ng-mais) at kung paano pumili ng [binhi ng mais](/crops/corn-seeds). Bantayan din ang [fall armyworm](/pests/fall-armyworm), ang uod na kumakain sa ubod ng batang mais.\n\nSa anee.io, makikita mo ang yugto ng mais sa bawat lote ayon sa bilang ng araw mula nang itanim, kasama ang dapat gawin at dapat bantayan sa yugtong iyon. Kapag may uod o sakit kang nakita, kunan ito ng litrato at itanong kay [Anee, ang AI technician](/features/ai-agricultural-technician). Sumasagot siya sa Tagalog o English."
     },
     {
       "type": "callout",
@@ -201,7 +201,7 @@
         },
         {
           "label": "Fall armyworm sa mais",
-          "url": "/problems/fall-armyworm"
+          "url": "/pests/fall-armyworm"
         }
       ]
     },

@@ -1,0 +1,297 @@
+{
+  "section": "weeds",
+  "slug": "chinese-sprangletop",
+  "sortOrder": 110,
+  "lang": "en",
+  "category": "Grasses",
+  "title": "Chinese Sprangletop in Rice: How to Spot It and Control It",
+  "metaTitle": "Chinese Sprangletop in Rice Fields: Spot It and Stop It",
+  "metaDescription": "Chinese sprangletop makes 27,000 seeds a plant and can cut rice yield by up to 48 percent. Learn to spot this slender grass weed and stop it early.",
+  "focusKeyword": "Chinese sprangletop",
+  "keywords": [
+    "Chinese sprangletop",
+    "Leptochloa chinensis",
+    "sprangletop in rice",
+    "palay maya",
+    "grass weed in rice fields"
+  ],
+  "excerpt": "Chinese sprangletop is a slender, tufted grass weed of irrigated and rainfed lowland rice fields in the Philippines. Its thin, sometimes reddish leaves hide well among young palay. This page shows how to spot it, how much harm it does to your crop and how to control it before it sets seed.",
+  "heroImage": {
+    "src": "/images/site/weeds/chinese-sprangletop.webp",
+    "thumb": "/images/site/weeds/chinese-sprangletop-480.webp",
+    "alt": "Chinese sprangletop (Leptochloa chinensis), a grass weed of Philippine rice fields",
+    "credit": "Ping an Chang, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Chinese Sprangletop?"
+    },
+    {
+      "type": "text",
+      "text": "Chinese sprangletop (Leptochloa chinensis) belongs to the grass family. Local names include kuring kuring, marapagay, maroy paroy, salay maya and palay maya. You will find it in both irrigated and rainfed lowland rice fields. It grows in slim, upright tufts that can reach 120 cm, so it can easily keep pace with the rice around it.\n\nMost plants live for only one season, so it usually behaves as an annual. Still, some plants live on and act like perennials. It spreads mainly by seed, and each plant makes a great many. Pieces of stem can also take root. So a cut stem left lying on wet soil may start a new plant."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about Chinese sprangletop",
+      "rows": [
+        [
+          "Name",
+          "Chinese sprangletop"
+        ],
+        [
+          "Scientific name",
+          "Leptochloa chinensis"
+        ],
+        [
+          "Family",
+          "Poaceae (Graminae)"
+        ],
+        [
+          "Weed group",
+          "Grasses ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Kuring kuring, marapagay, maroy paroy, salay maya, palay maya"
+        ],
+        [
+          "Life cycle",
+          "Annual, sometimes perennial"
+        ],
+        [
+          "Spreads by",
+          "Primarily seeds but can also propagate culm cuttings"
+        ],
+        [
+          "Where it grows",
+          "Irrigated and rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Chinese Sprangletop"
+    },
+    {
+      "type": "text",
+      "text": "Like other grasses, it has round, hollow stems with clear joints, or nodes. Look for slender, upright tufts up to 120 cm tall. The leaves are long, flat and thin, almost papery, and some turn reddish or purplish. Later, a narrow panicle appears, shaped like an egg in outline, with many thin branches that carry small spikelets. Next to the heavy heads of barnyard grass, this seed head looks light and airy."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Slender, upright tufts stand up to 120 cm tall between the rice hills.",
+        "Leaves are flat, thin and papery, and some show a red or purple tint.",
+        "A narrow, open panicle with many fine branches holds tiny spikelets.",
+        "Pulled stems left lying on wet soil can root again and start new tufts.",
+        "Look alike tip: its thin, airy seed head differs from the dense, drooping head of barnyard grass."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Chinese sprangletop is a C4 weed, so it grows fast in strong sun and heat. While it grows, it takes water, light and fertilizer from your rice. Each plant can also make 27,000 seeds. So a few plants left to ripen can load your soil with seed for the next crop.\n\nWhen it competes at 16 plants per square meter, it can cut rice yield by as much as 48 percent. Besides that, it hosts other rice pests, such as the green leafhopper and the zigzag leafhopper. These insects can stay alive on the weed between crops. Then they move into your new palay as soon as you plant it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Chinese Sprangletop"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Carry pulled plants out of the paddy instead of leaving them on wet soil, since stem pieces can root again.",
+        "Hand weed early, before the thin panicles open. Each plant can shed thousands of seeds, so good timing matters more than extra effort.",
+        "Keep a steady layer of water in the field once the rice can take it. Its seeds sprout best on moist soil without standing water.",
+        "Check between the hills for reddish or purplish tufts, because its thin leaves blend in with young rice."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Grasses"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold Chinese sprangletop down, choose an active ingredient that works on grasses at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for grasses by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Butachlor, Butachlor plus 2,4 D IBE, Clomazone, Oxadiazon, Pendimethalin, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor, Butachlor plus 2,4 D IBE, Butachlor with safener, Clomazone, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Metamifop, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl, Profoxydim",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop, Penoxsulam plus cyhalofop butyl, Profoxydim, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "Fenoxaprop P ethyl plus ethoxysulfuron, Metamifop plus penoxsulam",
+          "Cyhalofop butyl plus bispyribac sodium, Metamifop, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "No herbicide listed at this age. Hand weed and keep the water up.",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Chinese Sprangletop Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Plow and harrow well, and rake out the runners, roots or pieces you turn up. A small piece left in wet soil can grow a new plant.",
+        "Pull escapes before the seed heads open, and clean the thresher and harvester before they enter the field.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [grass weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Chinese Sprangletop?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Chinese Sprangletop"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What do farmers call Chinese sprangletop in the Philippines?",
+          "a": "Farmers call it kuring kuring, marapagay, maroy paroy, salay maya or palay maya, depending on the province. Its scientific name is Leptochloa chinensis. Note that marapagay also goes to barnyard grass and to Echinochloa glabrescens. So look for the slim tufts, the thin papery leaves and the light, airy seed head before you decide."
+        },
+        {
+          "q": "How do I control sprangletop in my palay?",
+          "a": "Start with clean seed and a level field. Keep water in the paddy once the rice can take it, since the seeds sprout best on moist soil. Then hand weed early and carry the pulled plants out. If you need a herbicide, choose one for grass weeds that fits the age of your rice, and always follow the FPA registered label."
+        },
+        {
+          "q": "Does sprangletop spread rice pests?",
+          "a": "Yes, it can. It serves as an alternate host of the green leafhopper and the zigzag leafhopper. These insects can stay on the weed between crops, then move back into your rice. Green leafhoppers also carry tungro. So a clean field and clean bunds give these pests less to live on while the paddy rests."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More grass weeds of rice",
+      "items": [
+        {
+          "label": "Barnyard grass",
+          "url": "/weeds/barnyard-grass"
+        },
+        {
+          "label": "Weedy rice",
+          "url": "/weeds/weedy-rice"
+        },
+        {
+          "label": "Echinochloa glabrescens",
+          "url": "/weeds/echinochloa-glabrescens"
+        },
+        {
+          "label": "Jungle rice",
+          "url": "/weeds/jungle-rice"
+        },
+        {
+          "label": "Wrinkle grass",
+          "url": "/weeds/ischaemum-rugosum"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

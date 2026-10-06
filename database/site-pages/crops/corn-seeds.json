@@ -138,7 +138,7 @@
         "**Weeds.** The first 30 days are the most critical for weed competition. If weeds build up, off bar at 15 to 20 days after planting.",
         "**Basal fertilizer.** At planting, apply all the phosphorus and potassium and half the nitrogen, plus at least ten bags of organic fertilizer per hectare. Base the rate on a soil test, and see our [fertilizer calculation](/blog/fertilizer-calculation) guide.",
         "**Hilling up and nitrogen.** Hill up at 21 to 30 days after planting, at the same time you side dress the second half of the nitrogen, usually as [urea fertilizer](/blog/urea-fertilizer).",
-        "**Pests.** [Cutworms](/problems/cutworm) cut seedlings at the soil line at night, and field crickets cut them too. The [fall armyworm](/problems/fall-armyworm) feeds in the young whorl, even in Bt fields, so scout every week."
+        "**Pests.** [Cutworms](/pests/cutworm) cut seedlings at the soil line at night, and field crickets cut them too. The [fall armyworm](/pests/fall-armyworm) feeds in the young whorl, even in Bt fields, so scout every week."
       ]
     },
     {
@@ -201,15 +201,15 @@
         },
         {
           "label": "Cutworm",
-          "url": "/problems/cutworm"
+          "url": "/pests/cutworm"
         },
         {
           "label": "Fall armyworm",
-          "url": "/problems/fall-armyworm"
+          "url": "/pests/fall-armyworm"
         },
         {
           "label": "Asian corn borer",
-          "url": "/problems/asian-corn-borer"
+          "url": "/pests/asian-corn-borer"
         },
         {
           "label": "Cropping calendar on anee.io",

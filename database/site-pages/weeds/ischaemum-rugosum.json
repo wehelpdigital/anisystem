@@ -1,0 +1,296 @@
+{
+  "section": "weeds",
+  "slug": "ischaemum-rugosum",
+  "sortOrder": 125,
+  "lang": "en",
+  "category": "Grasses",
+  "title": "Ischaemum rugosum: How to Spot and Control Wrinkle Grass in Rice",
+  "metaTitle": "Ischaemum rugosum in Rice: Spot and Stop Wrinkle Grass",
+  "metaDescription": "Ischaemum rugosum, or wrinkle grass, can cut rice yield by up to 60 percent and lower grain quality. Learn to spot its ridged spikelets and control it.",
+  "focusKeyword": "Ischaemum rugosum",
+  "keywords": [
+    "Ischaemum rugosum",
+    "wrinkle grass",
+    "trigo trigohan",
+    "bika bika",
+    "grass weed in rice fields"
+  ],
+  "excerpt": "Ischaemum rugosum, also known as wrinkle grass, is a tall grass weed of irrigated and rainfed lowland rice fields in the Philippines. Its purplish stems and ridged spikelets set it apart from palay. This page shows how to spot it, how it hurts both your yield and your grain quality, and how to control it.",
+  "heroImage": {
+    "src": "/images/site/weeds/ischaemum-rugosum.webp",
+    "thumb": "/images/site/weeds/ischaemum-rugosum-480.webp",
+    "alt": "Wrinkle grass (Ischaemum rugosum), a grass weed of Philippine rice fields",
+    "credit": "prossington, CC BY 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Ischaemum rugosum?"
+    },
+    {
+      "type": "text",
+      "text": "Ischaemum rugosum belongs to the grass family. In English it goes by wrinkle grass, a name that fits the small ridges on its spikelets. Filipino farmers know it by many local names, such as ipot doron, bika bika, bulo bulo, gulong lapas, limba limba, salsaladay, tinitrigo and trigo trigohan. It grows in both irrigated and rainfed lowland rice fields.\n\nThis weed is an annual, and it spreads only by seed. Each plant makes thousands of seeds in one season. Seeds that drop in the field sprout with the next crop. Seeds caught at harvest end up mixed with your palay. So every plant you miss causes trouble twice, once in the soil and once in the sack."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about Ischaemum rugosum",
+      "rows": [
+        [
+          "Name",
+          "Ischaemum rugosum"
+        ],
+        [
+          "English name",
+          "Wrinkle grass"
+        ],
+        [
+          "Family",
+          "Poaceae (Graminae)"
+        ],
+        [
+          "Weed group",
+          "Grasses ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Ipot doron, bika bika, bulo bulo, gulong lapas, limba limba, salsaladay, tinitrigo, trigo trigohan"
+        ],
+        [
+          "Life cycle",
+          "Annual"
+        ],
+        [
+          "Spreads by",
+          "Seeds"
+        ],
+        [
+          "Where it grows",
+          "Irrigated and rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Ischaemum rugosum"
+    },
+    {
+      "type": "text",
+      "text": "Like other grasses, it has round, hollow stems with clear joints, or nodes. The plant stands upright and can reach 100 cm. Its stems are purplish, with long hairs at the nodes. The leaves are flat and fairly wide. While young, the seed head looks like one single spike. As it matures, it splits into two spikes that sit side by side. Look closely at a spikelet, and you will see clear cross ridges on its lower glume."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Upright plants grow up to 100 cm tall, with purplish stems.",
+        "Long hairs grow at the nodes along each purplish stem.",
+        "Leaves are flat and wide, and they spread out from the stems.",
+        "The young seed head looks single, then splits into two spikes as it ripens.",
+        "Each spikelet shows clear cross ridges, like wrinkles, on its lower glume."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Ischaemum rugosum is a C4 plant, so it thrives in strong sun and heat. One plant makes an average of 4,000 seeds. If you leave it uncontrolled, it can cut rice yield by as much as 60 percent. While it grows, it takes water, light and fertilizer that your rice needs to fill its grains.\n\nIt also hurts the quality of your harvest. At harvest, the reaper or the combine can pick up its seeds along with the palay. Once mixed in, they lower the quality of your rice grains. So the damage does not stop in the field. It follows your harvest all the way to the sack you sell."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Ischaemum rugosum"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Pull it before the seed head splits and ripens, so its seeds never reach your harvest or your soil.",
+        "Walk the field once more just before harvest. Remove any plants you missed, so their seeds do not mix with your palay.",
+        "Use clean seed and clean your harvester or thresher between fields, since its seeds can travel with harvested grain."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Grasses"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold Ischaemum rugosum down, choose an active ingredient that works on grasses at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for grasses by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Butachlor, Butachlor plus 2,4 D IBE, Clomazone, Oxadiazon, Pendimethalin, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor, Butachlor plus 2,4 D IBE, Butachlor with safener, Clomazone, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Metamifop, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl, Profoxydim",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop, Penoxsulam plus cyhalofop butyl, Profoxydim, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "Fenoxaprop P ethyl plus ethoxysulfuron, Metamifop plus penoxsulam",
+          "Cyhalofop butyl plus bispyribac sodium, Metamifop, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "No herbicide listed at this age. Hand weed and keep the water up.",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Ischaemum rugosum Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Prepare the land well: flood, plow, let the weed seeds sprout, then kill them when you harrow. Level the field so water covers it evenly.",
+        "Pull escapes before the seed heads open, and clean the thresher and harvester before they enter the field.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [grass weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Ischaemum rugosum?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Ischaemum rugosum"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What do farmers call Ischaemum rugosum in the Philippines?",
+          "a": "Local names include ipot doron, bika bika, bulo bulo, gulong lapas, limba limba, salsaladay, tinitrigo and trigo trigohan. Its English name is wrinkle grass. These names differ from one province to the next. So check for the purplish, hairy nodes and the ridged spikelets before you decide which weed you have."
+        },
+        {
+          "q": "How do I control wrinkle grass in my rice field?",
+          "a": "Prevent it first with clean seed and a clean harvester. Keep water in the paddy once the rice can take it. Then hand weed early, well before the seed head splits. If you need a herbicide, pick one made for grass weeds that suits the age of your rice. Always follow the FPA registered label."
+        },
+        {
+          "q": "Why does wrinkle grass matter at harvest time?",
+          "a": "Because its seeds can end up in your harvest. When they mix with the palay, they lower the quality of your rice grains. One plant makes 4,000 seeds on average, so even a few late plants add up. That is why it pays to walk the field before harvest and pull any plants you missed."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More grass weeds of rice",
+      "items": [
+        {
+          "label": "Barnyard grass",
+          "url": "/weeds/barnyard-grass"
+        },
+        {
+          "label": "Weedy rice",
+          "url": "/weeds/weedy-rice"
+        },
+        {
+          "label": "Chinese sprangletop",
+          "url": "/weeds/chinese-sprangletop"
+        },
+        {
+          "label": "Echinochloa glabrescens",
+          "url": "/weeds/echinochloa-glabrescens"
+        },
+        {
+          "label": "Jungle rice",
+          "url": "/weeds/jungle-rice"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

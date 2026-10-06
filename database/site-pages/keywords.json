@@ -94,14 +94,14 @@
   "volume": 2900,
   "pages": [
    "blog/farm-words-in-tagalog",
-   "problems/common-weeds-philippines"
+   "weeds/common-weeds-philippines"
   ]
  },
  "thrips insect": {
   "volume": 2900,
   "pages": [
-   "problems/thrips",
-   "problems/rice-insects"
+   "pests/thrips",
+   "pests/rice-insects"
   ]
  },
  "pagtatanim": {
@@ -116,15 +116,15 @@
   "volume": 2900,
   "pages": [
    "blog/farm-words-in-tagalog",
-   "problems/anthracnose"
+   "diseases/anthracnose"
   ]
  },
  "thrips": {
   "volume": 2900,
   "pages": [
-   "problems/thrips",
+   "pests/thrips",
    "crops/vegetables-philippines",
-   "problems/hanip-mites-and-aphids"
+   "pests/hanip-mites-and-aphids"
   ]
  },
  "foliar fertilizer": {
@@ -138,7 +138,7 @@
  "alitangya": {
   "volume": 2400,
   "pages": [
-   "problems/rice-bug",
+   "pests/rice-bug",
    "blog/farm-words-in-tagalog"
   ]
  },
@@ -175,7 +175,7 @@
   "volume": 2400,
   "pages": [
    "blog/farm-words-in-tagalog",
-   "problems/rice-bug"
+   "pests/rice-bug"
   ]
  },
  "fertilizer 14 14 14": {
@@ -218,9 +218,9 @@
  "rice bug": {
   "volume": 1900,
   "pages": [
-   "problems/rice-bug",
-   "problems/rice-insects",
-   "problems/rice-black-bug"
+   "pests/rice-bug",
+   "pests/rice-insects",
+   "pests/rice-black-bug"
   ]
  },
  "rice palay price philippines": {
@@ -240,8 +240,8 @@
  "rice bugs": {
   "volume": 1900,
   "pages": [
-   "problems/rice-bug",
-   "problems/rice-insects"
+   "pests/rice-bug",
+   "pests/rice-insects"
   ]
  },
  "16 20 0 fertilizer": {
@@ -264,16 +264,16 @@
   "volume": 1600,
   "pages": [
    "blog/fungicides",
-   "problems/anthracnose",
-   "problems/sheath-blight",
-   "problems/fusarium-wilt"
+   "diseases/anthracnose",
+   "diseases/sheath-blight",
+   "diseases/fusarium-wilt"
   ]
  },
  "corn seedling": {
   "volume": 1600,
   "pages": [
    "crops/corn-seeds",
-   "problems/cutworm"
+   "pests/cutworm"
   ]
  },
  "fertilizer complete": {
@@ -295,7 +295,7 @@
   "volume": 1300,
   "pages": [
    "blog/farm-words-in-tagalog",
-   "problems/hanip-mites-and-aphids"
+   "pests/hanip-mites-and-aphids"
   ]
  },
  "agriculture in economy": {
@@ -323,7 +323,7 @@
   "volume": 1300,
   "pages": [
    "blog/farm-words-in-tagalog",
-   "problems/hanip-mites-and-aphids"
+   "pests/hanip-mites-and-aphids"
   ]
  },
  "21 0 0 fertilizer": {
@@ -344,7 +344,7 @@
  "anthracnose": {
   "volume": 1300,
   "pages": [
-   "problems/anthracnose",
+   "diseases/anthracnose",
    "blog/fungicides",
    "crops/vegetables-philippines"
   ]
@@ -373,8 +373,8 @@
  "fall armyworm": {
   "volume": 1000,
   "pages": [
-   "problems/fall-armyworm",
-   "problems/asian-corn-borer",
+   "pests/fall-armyworm",
+   "pests/asian-corn-borer",
    "crops/pagtatanim-ng-mais"
   ]
  },
@@ -388,7 +388,7 @@
  "cutworm": {
   "volume": 1000,
   "pages": [
-   "problems/cutworm",
+   "pests/cutworm",
    "crops/pagtatanim-ng-gulay"
   ]
  },
@@ -424,14 +424,14 @@
   "volume": 1000,
   "pages": [
    "blog/rice-insecticides-alika-virtako-chess",
-   "problems/rice-bug"
+   "pests/rice-bug"
   ]
  },
  "rice black bug": {
   "volume": 1000,
   "pages": [
-   "problems/rice-black-bug",
-   "problems/rice-insects"
+   "pests/rice-black-bug",
+   "pests/rice-insects"
   ]
  },
  "pagtatanim ng palay": {
@@ -453,7 +453,7 @@
   "volume": 880,
   "pages": [
    "blog/rice-insecticides-alika-virtako-chess",
-   "problems/rice-leaffolder"
+   "pests/rice-leaffolder"
   ]
  },
  "urea fertilizer price": {
@@ -488,7 +488,7 @@
  "fusarium wilt": {
   "volume": 880,
   "pages": [
-   "problems/fusarium-wilt",
+   "diseases/fusarium-wilt",
    "crops/banana-farming-philippines"
   ]
  },
@@ -530,15 +530,15 @@
  "broadleaves": {
   "volume": 880,
   "pages": [
-   "problems/common-weeds-philippines",
+   "weeds/common-weeds-philippines",
    "crops/pagtatanim-ng-palay"
   ]
  },
  "philippines insects": {
   "volume": 880,
   "pages": [
-   "problems/rice-insects",
-   "problems/thrips"
+   "pests/rice-insects",
+   "pests/thrips"
   ]
  },
  "palay picture": {
@@ -558,14 +558,14 @@
  "planthopper": {
   "volume": 880,
   "pages": [
-   "problems/brown-planthopper",
-   "problems/rice-insects"
+   "pests/brown-planthopper",
+   "pests/rice-insects"
   ]
  },
  "plant hopper": {
   "volume": 880,
   "pages": [
-   "problems/brown-planthopper",
+   "pests/brown-planthopper",
    "blog/rice-insecticides-alika-virtako-chess"
   ]
  },
@@ -573,13 +573,13 @@
   "volume": 880,
   "pages": [
    "blog/karate-cymbush-selecron-insecticides",
-   "problems/cutworm"
+   "pests/cutworm"
   ]
  },
  "broadleaves weeds": {
   "volume": 880,
   "pages": [
-   "problems/common-weeds-philippines",
+   "weeds/common-weeds-philippines",
    "crops/pagtatanim-ng-mais"
   ]
  },
@@ -594,7 +594,7 @@
   "volume": 720,
   "pages": [
    "blog/karate-cymbush-selecron-insecticides",
-   "problems/rice-bug"
+   "pests/rice-bug"
   ]
  },
  "rice variety in the philippines": {
@@ -607,29 +607,29 @@
  "brown planthopper": {
   "volume": 720,
   "pages": [
-   "problems/brown-planthopper",
+   "pests/brown-planthopper",
    "blog/rice-insecticides-alika-virtako-chess",
-   "problems/rice-insects"
+   "pests/rice-insects"
   ]
  },
  "brown plant hopper symptoms": {
   "volume": 720,
   "pages": [
-   "problems/brown-planthopper",
-   "problems/rice-insects"
+   "pests/brown-planthopper",
+   "pests/rice-insects"
   ]
  },
  "grass in tagalog": {
   "volume": 720,
   "pages": [
    "blog/farm-words-in-tagalog",
-   "problems/common-weeds-philippines"
+   "weeds/common-weeds-philippines"
   ]
  },
  "sedges weeds": {
   "volume": 720,
   "pages": [
-   "problems/common-weeds-philippines",
+   "weeds/common-weeds-philippines",
    "crops/pagtatanim-ng-palay"
   ]
  },
@@ -665,15 +665,15 @@
  "sedge weed": {
   "volume": 720,
   "pages": [
-   "problems/common-weeds-philippines",
+   "weeds/common-weeds-philippines",
    "crops/palay"
   ]
  },
  "rice black bugs": {
   "volume": 720,
   "pages": [
-   "problems/rice-black-bug",
-   "problems/rice-insects"
+   "pests/rice-black-bug",
+   "pests/rice-insects"
   ]
  },
  "fertilizer nitrogen": {
@@ -686,7 +686,7 @@
  "black rice bug": {
   "volume": 720,
   "pages": [
-   "problems/rice-black-bug",
+   "pests/rice-black-bug",
    "blog/farm-words-in-tagalog"
   ]
  },
@@ -715,22 +715,22 @@
   "volume": 720,
   "pages": [
    "blog/karate-cymbush-selecron-insecticides",
-   "problems/fall-armyworm"
+   "pests/fall-armyworm"
   ]
  },
  "hanip insect": {
   "volume": 590,
   "pages": [
-   "problems/hanip-mites-and-aphids",
+   "pests/hanip-mites-and-aphids",
    "blog/farm-words-in-tagalog"
   ]
  },
  "asian corn borer": {
   "volume": 590,
   "pages": [
-   "problems/asian-corn-borer",
+   "pests/asian-corn-borer",
    "crops/pagtatanim-ng-mais",
-   "problems/fall-armyworm"
+   "pests/fall-armyworm"
   ]
  },
  "fertilizer urea price": {
@@ -743,7 +743,7 @@
  "asiatic corn borer": {
   "volume": 590,
   "pages": [
-   "problems/asian-corn-borer",
+   "pests/asian-corn-borer",
    "crops/corn-kernel"
   ]
  },
@@ -807,8 +807,8 @@
  "rice insect": {
   "volume": 590,
   "pages": [
-   "problems/rice-insects",
-   "problems/rice-leaffolder"
+   "pests/rice-insects",
+   "pests/rice-leaffolder"
   ]
  },
  "foliar fertilizer spray": {
@@ -856,8 +856,8 @@
  "rice insects": {
   "volume": 590,
   "pages": [
-   "problems/rice-insects",
-   "problems/rice-bug"
+   "pests/rice-insects",
+   "pests/rice-bug"
   ]
  },
  "fertilizer for coconut tree": {
@@ -886,14 +886,14 @@
   "volume": 480,
   "pages": [
    "blog/karate-cymbush-selecron-insecticides",
-   "problems/thrips"
+   "pests/thrips"
   ]
  },
  "armure fungicide": {
   "volume": 480,
   "pages": [
    "blog/fungicides",
-   "problems/sheath-blight"
+   "diseases/sheath-blight"
   ]
  },
  "yara winner fertilizer": {
@@ -934,7 +934,7 @@
  "common weeds in the philippines": {
   "volume": 480,
   "pages": [
-   "problems/common-weeds-philippines",
+   "weeds/common-weeds-philippines",
    "crops/pagtatanim-ng-palay"
   ]
  },
@@ -942,7 +942,7 @@
   "volume": 480,
   "pages": [
    "blog/fungicides",
-   "problems/anthracnose"
+   "diseases/anthracnose"
   ]
  },
  "fertilizer for coconut": {
@@ -977,7 +977,7 @@
   "volume": 480,
   "pages": [
    "blog/karate-cymbush-selecron-insecticides",
-   "problems/fall-armyworm"
+   "pests/fall-armyworm"
   ]
  },
  "complete fertilizer 14 14 14": {
@@ -1018,7 +1018,7 @@
  "alibangbang insect": {
   "volume": 480,
   "pages": [
-   "problems/rice-insects",
+   "pests/rice-insects",
    "blog/farm-words-in-tagalog"
   ]
  },
@@ -1033,7 +1033,7 @@
   "volume": 480,
   "pages": [
    "blog/rice-insecticides-alika-virtako-chess",
-   "problems/brown-planthopper"
+   "pests/brown-planthopper"
   ]
  },
  "agricultural technician": {
@@ -1053,7 +1053,7 @@
  "tayangaw": {
   "volume": 480,
   "pages": [
-   "problems/rice-bug",
+   "pests/rice-bug",
    "blog/farm-words-in-tagalog"
   ]
  },
@@ -1101,15 +1101,15 @@
  "aphids scientific name": {
   "volume": 390,
   "pages": [
-   "problems/hanip-mites-and-aphids",
+   "pests/hanip-mites-and-aphids",
    "crops/vegetables-philippines"
   ]
  },
  "rice leaffolder": {
   "volume": 390,
   "pages": [
-   "problems/rice-leaffolder",
-   "problems/rice-insects"
+   "pests/rice-leaffolder",
+   "pests/rice-insects"
   ]
  },
  "rice brands in the philippines": {
@@ -1130,7 +1130,7 @@
   "volume": 390,
   "pages": [
    "blog/karate-cymbush-selecron-insecticides",
-   "problems/rice-bug"
+   "pests/rice-bug"
   ]
  },
  "agricultural engineer course": {
@@ -1163,7 +1163,7 @@
   "volume": 390,
   "pages": [
    "crops/banana-farming-philippines",
-   "problems/fusarium-wilt"
+   "diseases/fusarium-wilt"
   ]
  },
  "top dressing fertilizer": {
@@ -1204,7 +1204,7 @@
  "sofit": {
   "volume": 390,
   "pages": [
-   "problems/common-weeds-philippines",
+   "weeds/common-weeds-philippines",
    "crops/pagtatanim-ng-palay"
   ]
  },
@@ -1252,8 +1252,8 @@
  "black bug insect": {
   "volume": 390,
   "pages": [
-   "problems/rice-black-bug",
-   "problems/rice-insects"
+   "pests/rice-black-bug",
+   "pests/rice-insects"
   ]
  },
  "fertilizer for plants and flowers": {
@@ -1274,7 +1274,7 @@
   "volume": 390,
   "pages": [
    "blog/farm-words-in-tagalog",
-   "problems/rice-insects"
+   "pests/rice-insects"
   ]
  },
  "fish amino acid fertilizer": {
@@ -1287,7 +1287,7 @@
  "grasses weeds": {
   "volume": 390,
   "pages": [
-   "problems/common-weeds-philippines",
+   "weeds/common-weeds-philippines",
    "crops/pagtatanim-ng-mais"
   ]
  },
@@ -1377,14 +1377,14 @@
  "rice ear bug": {
   "volume": 320,
   "pages": [
-   "problems/rice-bug",
-   "problems/rice-insects"
+   "pests/rice-bug",
+   "pests/rice-insects"
   ]
  },
  "sheath blight disease": {
   "volume": 320,
   "pages": [
-   "problems/sheath-blight",
+   "diseases/sheath-blight",
    "blog/fungicides"
   ]
  },
@@ -1398,9 +1398,9 @@
  "sheath blight": {
   "volume": 320,
   "pages": [
-   "problems/sheath-blight",
+   "diseases/sheath-blight",
    "blog/fungicides",
-   "problems/rice-insects"
+   "pests/rice-insects"
   ]
  },
  "humus fertilizer": {

@@ -1,0 +1,250 @@
+{
+  "section": "pests",
+  "slug": "rice-leaffolder",
+  "sortOrder": 140,
+  "lang": "en",
+  "category": "Rice pests",
+  "title": "Rice Leaffolder: Damage, When It Matters and How to Control It",
+  "metaTitle": "Rice Leaffolder: How to Spot Damage and When to Spray",
+  "metaDescription": "The rice leaffolder folds palay leaves and scrapes them white. Learn when the damage really costs yield, how natural enemies help, and when to spray.",
+  "focusKeyword": "rice leaffolder",
+  "keywords": [
+    "rice leaffolder",
+    "rice insect",
+    "virtako insecticide"
+  ],
+  "excerpt": "The rice leaffolder, Cnaphalocrocis medinalis, is a small moth whose caterpillar folds a rice leaf into a tube and scrapes the green from the inside. PhilRice calls it mambibilot or maniniklop. The white streaks look alarming, but rice often recovers from damage in the early weeks, so knowing when it truly matters saves you money.",
+  "heroImage": {
+    "src": "/images/site/guides/problems-rice-leaffolder.webp",
+    "alt": "A rice leaffolder caterpillar inside a rice leaf that it has pulled shut with silk threads",
+    "credit": "Badal Chandra Sarker, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to recognize the rice leaffolder"
+    },
+    {
+      "type": "text",
+      "text": "The adult is a light brown moth with a wingspan of 1.2 to 2 centimeters and a dark band along the outer edges of the wings. By day it rests in shady, grassy spots, and at night it flies to lights. The caterpillar is a clear, pale green and grows up to 2.5 centimeters long. A second species, Marasmia patnalis, causes the same kind of damage in Philippine fields.\n\nEggs are flat, oval and whitish yellow, laid one or two at a time on young leaves. They hatch in 4 to 7 days. Then the caterpillar feeds inside folded leaves for 15 to 25 days before it pupates, and the moth comes out 6 to 8 days later. The whole cycle takes 25 to 52 days."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Signs of leaffolder damage"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Leaves folded lengthwise into tubes and held shut with silk",
+        "Long, white, see through streaks where the caterpillar scraped the leaf",
+        "Leaf tips sometimes fastened to the base of the same leaf",
+        "Caterpillar droppings inside the fold",
+        "In heavy attacks, fields that look scorched, with many folded leaves"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Leaffolders feed from the seedling stage to flowering. PhilRice says plants are at risk for up to about 10 weeks after transplanting."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When rice leaffolder damage matters"
+    },
+    {
+      "type": "text",
+      "text": "Not all white leaves cost you grain. IRRI explains that during the vegetative stage the crop can generally recover from leaffolder feeding. The damage becomes important in the reproductive stage, once it covers more than half of the flag leaf and the next two youngest leaves on each tiller. The flag leaf feeds the filling grain, so protect it most.\n\nPhilippine researchers have also tested action thresholds for leaffolders on rice (Litsinger and others, 2006, listed under Sources). So ask your technician for the local threshold instead of spraying because the leaves look bad."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What makes leaffolders build up"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Heavy fertilizer, especially nitrogen such as [urea fertilizer](/blog/urea-fertilizer)",
+        "High humidity and shady parts of the field",
+        "Grassy weeds in the field and along its borders",
+        "Rice after rice under irrigation, and ratoon crops",
+        "Insecticide sprays that kill natural enemies and cause resurgence",
+        "The rainy season, when leaffolders are more common"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to scout and decide"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Scout weekly from tillering",
+          "text": "Walk the field each week from tillering to flowering and look at the youngest leaves for fresh folds."
+        },
+        {
+          "title": "Open a few folds",
+          "text": "Unroll some folded leaves. An empty fold may mean the caterpillar has moved on or died, and then the damage will not grow there."
+        },
+        {
+          "title": "Focus on the flag leaf",
+          "text": "From booting on, check the flag leaf and the two leaves below it. IRRI calls the damage important when it affects more than half of the flag leaf and the next two youngest leaves on each tiller. Act only if yours is heading that way."
+        },
+        {
+          "title": "Count the helpers",
+          "text": "Note the spiders, wasps and other natural enemies you see. Many helpers mean the pest is already under attack."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "anee.io keeps this simple. The [cropping calendar](/features/cropping-calendar) counts days after transplanting for each lot, so a weekly scouting task falls on the right dates. The [growth stages](/features/growth-stages-and-weather) view shows when each lot reaches booting and heading, when the flag leaf matters most. Add notes and photos to the lot, and ask Anee, the [smart farm technician](/features/ai-agricultural-technician), whether the folds you found call for action. She answers in Tagalog or English."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Natural enemies of the rice leaffolder"
+    },
+    {
+      "type": "text",
+      "text": "Many small wasps lay their eggs in leaffolder eggs and caterpillars. A 2012 review by Gurr and colleagues found that these parasitoids can reach high rates of parasitism, though not in every field or season. Spiders and other hunters in the paddy add to the pressure.\n\nThe same review makes a point every farmer should hear. Because the damage looks dramatic, farmers spray early, and those early sprays disrupt biological control of the leaffolder and of other pests. It also notes that rice can tolerate heavy leaf loss with no effect on grain yield. It suggests that flowering plants on the bunds, which feed parasitic wasps with nectar, may help against the leaffolder too."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Control: cultural first, chemical last"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Use resistant varieties where your Municipal Agriculture Office has them.",
+        "Follow rice with a different crop or a fallow period, and avoid ratooning.",
+        "Flood and plow the field after harvest if you can.",
+        "Remove grassy weeds from the field and the bunds.",
+        "Plant at a moderate density and use balanced fertilizer rates, as in our guide to [fertilizer for rice](/blog/fertilizer-for-rice).",
+        "Avoid insecticides in the early crop stages. IRRI notes that early sprays rarely pay back and can trigger outbreaks of the [brown planthopper](/pests/brown-planthopper)."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Spare the early weeks",
+      "text": "Leaffolder folds in the first month look bad but usually do not cost yield. Hold the spray and keep scouting. If a spray is ever needed, it will be at the flag leaf stage."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Chlorantraniliprole and the Virtako insecticide"
+    },
+    {
+      "type": "text",
+      "text": "If the flag leaf is at real risk and your technician agrees, an insecticide for chewing pests can help. Chlorantraniliprole, a Group 28 diamide in the IRAC system, is one active ingredient used against leaffolders. FMC's Prevathon 5SC contains chlorantraniliprole alone, and its Philippine label lists leaffolder and stem borer on rice.\n\nThe Virtako insecticide (Virtako 40 WG) from Syngenta pairs chlorantraniliprole with thiamethoxam. Its Philippine product page lists stem borer, black bug and green leafhopper on rice, not leaffolder. So check the label on the pack before you use it for this rice insect. Karate 2.5 EC, a lambda cyhalothrin product, does list leaffolder on rice, but as a broad spectrum pyrethroid it also kills natural enemies.\n\nWhatever you choose, follow the label rate and interval, respect the FPA registration, and rotate insecticide groups so the pest does not build resistance. Our guides to [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) and to [Karate, Cymbush and Selecron](/blog/karate-cymbush-selecron-insecticides) compare these products."
+    },
+    {
+      "type": "cta",
+      "title": "Protect the flag leaf on time",
+      "text": "anee.io shows when each lot reaches booting and heading, reminds your team to scout, and lets Anee read a photo of the folded leaves.",
+      "label": "Create a free account",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rice leaffolder questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the leaffolder called in Tagalog?",
+          "a": "PhilRice uses mambibilot and maniniklop. Both names describe how the caterpillar rolls or folds the leaf."
+        },
+        {
+          "q": "Does leaffolder damage reduce yield?",
+          "a": "Early damage usually does not, because the plant recovers. Damage to the flag leaf and the next two leaves in the reproductive stage can cut yield."
+        },
+        {
+          "q": "When should I spray for leaffolder?",
+          "a": "Only when damage in the reproductive stage is heading past half of the flag leaf and the next two youngest leaves on each tiller, and your technician agrees. Avoid early sprays, which can trigger planthopper outbreaks."
+        },
+        {
+          "q": "Is Virtako registered for leaffolder?",
+          "a": "Syngenta's Philippine page lists stem borer, black bug and green leafhopper on rice for Virtako 40 WG. Check the label on your pack. FMC's Prevathon 5SC, another chlorantraniliprole product, lists leaffolder on rice."
+        },
+        {
+          "q": "What kills leaffolders naturally?",
+          "a": "Small parasitic wasps attack the eggs and caterpillars, and spiders hunt in the paddy too. Early sprays kill these helpers, so hold off in the first weeks."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Rice insects in the Philippines",
+          "url": "/pests/rice-insects"
+        },
+        {
+          "label": "Brown planthopper",
+          "url": "/pests/brown-planthopper"
+        },
+        {
+          "label": "Rice bug (atangya)",
+          "url": "/pests/rice-bug"
+        },
+        {
+          "label": "Alika, Virtako and Chess",
+          "url": "/blog/rice-insecticides-alika-virtako-chess"
+        },
+        {
+          "label": "Karate, Cymbush and Selecron",
+          "url": "/blog/karate-cymbush-selecron-insecticides"
+        },
+        {
+          "label": "Fertilizer for rice",
+          "url": "/blog/fertilizer-for-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank: Rice leaffolder",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-leaffolder"
+        },
+        {
+          "label": "PhilRice Pinoy Rice Knowledge Bank: Leaffolder (Mambibilot o Maniniklop)",
+          "url": "https://www.pinoyrice.com/leaffolder-mambibilot-o-maniniklop/"
+        },
+        {
+          "label": "Litsinger and others (2006), Evaluation of action thresholds for chronic rice insect pests in the Philippines. III. Leaffolders",
+          "url": "https://www.tandfonline.com/doi/abs/10.1080/09670870600664490"
+        },
+        {
+          "label": "Gurr and others (2012), Parasitoids of the rice leaffolder Cnaphalocrocis medinalis, Agricultural and Forest Entomology",
+          "url": "https://resjournals.onlinelibrary.wiley.com/doi/10.1111/j.1461-9563.2011.00550.x"
+        },
+        {
+          "label": "FMC Philippines: Prevathon 5SC",
+          "url": "https://ag.fmc.com/ph/en/products/insecticides/prevathon-5sc-insect-control"
+        },
+        {
+          "label": "Syngenta Philippines: Virtako 40 WG",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/virtako-40-wg"
+        },
+        {
+          "label": "Syngenta Philippines: Karate 2.5 EC",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/karate-25-ec"
+        }
+      ]
+    }
+  ]
+}

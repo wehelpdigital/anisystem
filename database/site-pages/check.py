@@ -44,16 +44,16 @@ TRANSITIONS = [
     "in other words", "for this reason", "that means", "this means", "above", "besides that", "on top of that",
 ]
 
-SECTIONS = {"crops", "problems", "blog", "features"}
+SECTIONS = {"crops", "pests", "diseases", "weeds", "blog", "features"}
 BLOCK_TYPES = {"heading", "text", "list", "steps", "table", "callout", "image", "quote", "faq", "cta", "links", "sources"}
 
-SITE_URLS = {"/", "/features", "/pricing", "/about", "/tutorial", "/contact", "/signup", "/crops", "/problems", "/blog"}
+SITE_URLS = {"/", "/features", "/pricing", "/about", "/tutorial", "/contact", "/signup", "/crops", "/problems", "/pests", "/diseases", "/weeds", "/blog"}
 
 
 def url_map():
     text = open(os.path.join(HERE, "STYLE.md"), encoding="utf-8").read()
     part = text.split("## 8. URL map", 1)[1]
-    return SITE_URLS | set(re.findall(r"(/(?:features|crops|problems|blog)/[a-z0-9\-]+)", part))
+    return SITE_URLS | set(re.findall(r"(/(?:features|crops|pests|diseases|weeds|blog)/[a-z0-9\-]+)", part))
 
 
 LINK = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
@@ -219,7 +219,10 @@ def check(path, urls, focus_seen):
 
     body = [t for k, t in pieces if k in ("excerpt", "para", "item", "cell", "h2", "h3", "h4")]
     all_words = sum(len(words(t)) for t in body)
-    lo, hi = (600, 1100) if sec == "features" else (900, 1800)
+    # A weed in the catalogue is a profile, not a long guide, though its
+    # ingredient table by rice age adds about 250 words (2026-10-06).
+    profile = sec == "weeds" and page.get("category") in ("Grasses", "Sedges", "Broadleaves")
+    lo, hi = (600, 1100) if sec == "features" else (650, 1700) if profile else (900, 1800)
     if all_words < lo:
         errs.append("only %d words (at least %d)" % (all_words, lo))
     elif all_words > hi:
@@ -362,6 +365,8 @@ def main():
         sys.exit(1 if coverage(files) else 0)
     urls = url_map()
     files = sys.argv[1:] or sorted(glob.glob(os.path.join(HERE, "*", "*.json")))
+    # "weeds/x.json" means the page next to this script, from any folder.
+    files = [f if os.path.isabs(f) or os.path.exists(f) else os.path.join(HERE, f) for f in files]
     focus_seen = {}
     # Every page's keyphrase counts against the ones being checked.
     for f in sorted(glob.glob(os.path.join(HERE, "*", "*.json"))):
@@ -374,7 +379,6 @@ def main():
             pass
     bad = 0
     for f in files:
-        f = f if os.path.isabs(f) else os.path.join(HERE, f) if not os.path.exists(f) else f
         errs, warns = check(f, urls, focus_seen)
         name = os.path.relpath(f, HERE).replace("\\", "/")
         if errs:

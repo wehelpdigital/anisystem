@@ -1,0 +1,297 @@
+{
+  "section": "weeds",
+  "slug": "carabao-grass",
+  "sortOrder": 180,
+  "lang": "en",
+  "category": "Grasses",
+  "title": "Carabao Grass in Rice Fields: How to Spot and Control It",
+  "metaTitle": "Carabao Grass in Rice: How to Identify and Control It",
+  "metaDescription": "Carabao grass creeps into rainfed palay on long purple runners. Learn how to spot it and keep this perennial grass from taking over your bukid.",
+  "focusKeyword": "carabao grass",
+  "keywords": [
+    "carabao grass",
+    "Paspalum conjugatum",
+    "kulape",
+    "bantotan",
+    "perennial grass weed in rice"
+  ],
+  "excerpt": "Carabao grass is a creeping perennial grass weed of rainfed lowland rice fields in the Philippines. It spreads on long, flat, reddish purple runners and ends in a pair of slender spikes. This page shows how to spot it, how it hurts your palay and how to control it before it forms a thick mat.",
+  "heroImage": {
+    "src": "/images/site/weeds/carabao-grass.webp",
+    "thumb": "/images/site/weeds/carabao-grass-480.webp",
+    "alt": "Carabao grass (Paspalum conjugatum), a grass weed of Philippine rice fields",
+    "credit": "Forest and Kim Starr, CC BY 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Carabao Grass?"
+    },
+    {
+      "type": "text",
+      "text": "Carabao grass (Paspalum conjugatum) belongs to the grass family. Its local names include kauat kauat, lakatan, maligoy, pad pad, kolokawayan, bantotan, kulape and laau laau. In rice farming, it shows up in rainfed lowland fields, where water does not always stand in the paddy. It is also a familiar sight on bunds, paths and grazing land.\n\nThis weed is a perennial, so it does not die at the end of the season. It spreads by seed and also by stem cuttings. Its long runners creep across the ground and can take root along the way. When a hoe or a plow cuts these runners, each piece can root again and start a new patch."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about carabao grass",
+      "rows": [
+        [
+          "Name",
+          "Carabao grass"
+        ],
+        [
+          "Scientific name",
+          "Paspalum conjugatum"
+        ],
+        [
+          "Family",
+          "Poaceae (Graminae)"
+        ],
+        [
+          "Weed group",
+          "Grasses ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Kauat kauat, lakatan, maligoy, pad pad, kolokawayan, bantotan, kulape, laau laau"
+        ],
+        [
+          "Life cycle",
+          "Perennial"
+        ],
+        [
+          "Spreads by",
+          "Seeds and stem cuttings"
+        ],
+        [
+          "Where it grows",
+          "Rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Carabao Grass"
+    },
+    {
+      "type": "text",
+      "text": "Like other grasses, it has jointed stems with clear nodes, but its runners are flat rather than round. They creep a long way, often reddish purple, with hairy nodes. The leaves are flat and narrow, with hairs on the blades and sheaths. A collar of fine hairs sits just below each leaf blade. The ligule is short with a flat top, backed by a ring of hairs. At the top, two slender spikes branch apart, carrying blunt spikelets."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Long, flat runners creep over the soil and show a reddish purple color.",
+        "The joints along each runner carry a fringe of fine hairs.",
+        "Leaf blades and sheaths are hairy, with a collar of fine hairs below each blade.",
+        "The short, squared ligule has a ring of hairs on its back.",
+        "Each seed head ends in two slender spikes that branch apart at the tip.",
+        "Look alike tip: knotgrass also has paired spikes, but they stand upright like a Y, while these spread wide."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Carabao grass forms a thick, low mat. Where it takes hold, it covers the soil and keeps taking water, light and fertilizer that your palay needs. Since it is a perennial, old patches are already growing when you plant. So your young rice has to compete from the very first day.\n\nIt is also hard to clear. Cutting or plowing breaks its runners into pieces, and each piece can root again. As a result, careless weeding can spread it even further. Thick mats on bunds and field edges can give rice pests a place to hide between crops. Its seeds can also end up in your harvest."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Carabao Grass"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Lift whole runners out by hand or with a hoe, then carry them off the field. Pieces left on moist soil can root again.",
+        "Clean the bunds and paths around your paddy, since its runners creep from there into the field.",
+        "Keep water in the paddy when you can. This grass grows best on moist soil, so standing water helps hold it back."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Grasses"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold carabao grass down, choose an active ingredient that works on grasses at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for grasses by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Butachlor, Butachlor plus 2,4 D IBE, Clomazone, Oxadiazon, Pendimethalin, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor, Butachlor plus 2,4 D IBE, Butachlor with safener, Clomazone, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Metamifop, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl, Profoxydim",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop, Penoxsulam plus cyhalofop butyl, Profoxydim, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "Fenoxaprop P ethyl plus ethoxysulfuron, Metamifop plus penoxsulam",
+          "Cyhalofop butyl plus bispyribac sodium, Metamifop, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "No herbicide listed at this age. Hand weed and keep the water up.",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Carabao Grass Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Plow and harrow well, and rake out the runners, roots or pieces you turn up. A small piece left in wet soil can grow a new plant.",
+        "Pull escapes before the seed heads open, and clean the thresher and harvester before they enter the field.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [grass weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Carabao Grass?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Carabao Grass"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What do farmers call carabao grass in local languages?",
+          "a": "Farmers know it as kauat kauat, lakatan, maligoy, pad pad, kolokawayan, bantotan, kulape or laau laau, depending on the province. Its scientific name is Paspalum conjugatum. Since names change from place to place, check the plant itself. Look for flat, reddish purple runners and a seed head that ends in two slender spikes."
+        },
+        {
+          "q": "How do I control it in my rice field?",
+          "a": "Start by cleaning bunds and paths, so runners cannot creep in. Keep water in the paddy when you can, since it grows best on moist soil. Then hand weed early and lift out whole runners, not just the leaves. If you need a herbicide, pick one for grass weeds that fits the age of your rice. Always follow the FPA registered label."
+        },
+        {
+          "q": "Can my carabao or cattle eat it?",
+          "a": "Yes, carabao and cattle do graze it, and it is a common grass on grazing land. Grazing keeps it short, but it will not clear it from a rice field. The runners stay alive and keep spreading. So treat grazing as a way to use it on idle land, not as a way to control it in your paddy."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More grass weeds of rice",
+      "items": [
+        {
+          "label": "Barnyard grass",
+          "url": "/weeds/barnyard-grass"
+        },
+        {
+          "label": "Weedy rice",
+          "url": "/weeds/weedy-rice"
+        },
+        {
+          "label": "Chinese sprangletop",
+          "url": "/weeds/chinese-sprangletop"
+        },
+        {
+          "label": "Echinochloa glabrescens",
+          "url": "/weeds/echinochloa-glabrescens"
+        },
+        {
+          "label": "Jungle rice",
+          "url": "/weeds/jungle-rice"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

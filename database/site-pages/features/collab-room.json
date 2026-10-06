@@ -70,7 +70,7 @@
     },
     {
       "type": "text",
-      "text": "The Photo tab puts one picture in the middle and hands everyone a pen. Pick a photo from the gallery, upload one or take one. Then circle the [rice bug](/problems/rice-bug) on the panicle, or ring the window panes that [fall armyworm](/problems/fall-armyworm) left on a corn leaf, and the whole team looks at the same spot. Save the marked picture as a note or into the gallery's Team photos album."
+      "text": "The Photo tab puts one picture in the middle and hands everyone a pen. Pick a photo from the gallery, upload one or take one. Then circle the [rice bug](/pests/rice-bug) on the panicle, or ring the window panes that [fall armyworm](/pests/fall-armyworm) left on a corn leaf, and the whole team looks at the same spot. Save the marked picture as a note or into the gallery's Team photos album."
     },
     {
       "type": "heading",
@@ -168,7 +168,7 @@
         },
         {
           "label": "Rice bug",
-          "url": "/problems/rice-bug"
+          "url": "/pests/rice-bug"
         }
       ]
     },

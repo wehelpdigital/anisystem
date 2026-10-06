@@ -1,0 +1,257 @@
+{
+  "section": "pests",
+  "slug": "thrips",
+  "sortOrder": 20,
+  "lang": "en",
+  "category": "Crop pests",
+  "title": "Thrips: The Tiny Insect Behind Silvery Leaves on Rice, Onion, Sili and Mango",
+  "metaTitle": "Thrips Insect on Rice, Onion, Chili and Mango: Control Guide",
+  "metaDescription": "Thrips are tiny insects that scar rice, onion, chili and mango. Learn the species, the damage, how to monitor with sticky traps and how to rotate sprays.",
+  "focusKeyword": "thrips",
+  "keywords": [
+    "thrips",
+    "thrips insect",
+    "philippines insects",
+    "selecron insecticide"
+  ],
+  "excerpt": "Thrips are slender insects about a millimeter long that rasp the skin of leaves, flowers and fruit and suck up what leaks out. The thrips insect leaves silvery streaks on onion, rolled tips on young palay, bronze and upward curled leaves on sili, and brown scars on mango. Because they hide in leaf folds and flowers, you often see the damage before you see the pest.",
+  "heroImage": {
+    "src": "/images/site/guides/problems-thrips.webp",
+    "alt": "Thrips crawling on a white chili pepper flower held between a farmer's fingers",
+    "credit": "Metin GÜLEŞCİ, CC BY 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Thrips belong to the insect order Thysanoptera, which means fringed wings. Look at one under a hand lens and you will see two pairs of narrow wings edged with long hairs. Most species drop to the soil or leaf litter to pupate, and in warm weather a generation can take as little as two weeks. So numbers climb fast in a hot, dry spell.\n\nThese are among the smallest Philippine insects a farmer has to manage, but the damage adds up. On top of the feeding scars, some species carry plant viruses. Chilli thrips, for example, can spread capsicum chlorosis virus and watermelon silver mottle virus. For the other pests of palay, see our guide to [rice insects](/pests/rice-insects)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Thrips species on Philippine crops"
+    },
+    {
+      "type": "table",
+      "caption": "The main species on rice, onion, chili and mango",
+      "rows": [
+        [
+          "Crop",
+          "Main species",
+          "Damage you see"
+        ],
+        [
+          "Rice (palay)",
+          "Rice thrips, Stenchaetothrips biformis",
+          "Silvery streaks or yellow patches, leaves rolled from the edge to the middle, withered tips. Worst on seedlings in the dry season."
+        ],
+        [
+          "Onion",
+          "Onion thrips, Thrips tabaci",
+          "Silvery patches and streaks on the leaves. Heavy feeding withers the leaves and cuts bulb size."
+        ],
+        [
+          "Chili (sili)",
+          "Chilli thrips, Scirtothrips dorsalis",
+          "Young leaves, buds and fruit turn bronze, and the leaves curl upward and twist."
+        ],
+        [
+          "Eggplant, melon, beans",
+          "Melon thrips, Thrips palmi",
+          "Silvery or brown leaves that curl upward like a boat, scarred fruit, stunted tips."
+        ],
+        [
+          "Mango",
+          "Thrips hawaiiensis and Scirtothrips dorsalis, among others",
+          "Damaged flowers and brown scars on the fruit skin, known in Davao as 'chico chico'."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice thrips in the seedbed"
+    },
+    {
+      "type": "text",
+      "text": "IRRI notes that rice thrips attack at the seedling stage or about two weeks after early sowing. They do the most harm in the dry season. A field with no standing water suffers more. But drought also rolls rice leaves, so unroll a curled leaf and look for yellow larvae and dark brown adults inside before you blame the pest.\n\nIf they are there, IRRI suggests flooding the field to submerge the plants for two days. Ask your municipal agriculturist which resistant rice varieties are available in your area, and see our page on [palay](/crops/palay) for the crop stages."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Mango thrips at flowering"
+    },
+    {
+      "type": "text",
+      "text": "Scirtothrips dorsalis is present in most mango areas of the country. In a Carabao mango orchard in Piat, Cagayan, researchers found Thrips hawaiiensis to be the main species on the flowers, with Scirtothrips dorsalis a distant second. They advise watching flowers and young fruit closely in the summer months, when warm weather pushes their numbers up."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to monitor thrips"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Tap and count",
+          "text": "Hold a white sheet of paper or a plastic tray under a flower cluster, a young shoot or an onion plant and tap it. Thrips drop and show up as tiny moving dashes. In the Cagayan mango study, researchers sampled five flowering twigs per tree this way."
+        },
+        {
+          "title": "Hang sticky traps",
+          "text": "Blue or bright yellow sticky traps catch the flying adults. Blue often draws more, but results change with the species and the crop, so try both at the start of the season. Hang them at crop height and count the catch every week."
+        },
+        {
+          "title": "Look inside the folds",
+          "text": "Unroll curled rice leaves, open the neck of onion leaves, and check the underside of young sili leaves. That is where larvae hide."
+        },
+        {
+          "title": "Write it down",
+          "text": "Note the date, the lot and the count. A count that rises from week to week tells you more than a single look."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Natural enemies of thrips"
+    },
+    {
+      "type": "text",
+      "text": "These pests have plenty of enemies in a field that is not sprayed too often. IRRI lists predatory thrips, lady beetles, anthocorid bugs and rove beetles as the ones that feed on them in rice. In vegetables and orchards, minute pirate bugs, green lacewings and predatory mites also eat them.\n\nBroad spectrum sprays kill these helpers too, which leaves the next wave with nothing to stop it. So start with the soft steps. Weed around the crop, because grasses and weeds host them, and avoid planting the same host crop in overlapping batches. Horticultural oil and insecticidal soap work on contact and spare more of the natural enemies."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Insecticide rotation for thrips"
+    },
+    {
+      "type": "text",
+      "text": "These insects build resistance fast when one insecticide group goes on over and over. Every insecticide label shows an IRAC group number. Rotate between groups from one spray to the next, and never tank mix two products from the same group. Spray only when your counts call for it, aim for the leaf folds and flowers where they hide, and respect the days to harvest on the label."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Group 1B, organophosphates**, such as profenofos. Fast acting but hard on natural enemies.",
+        "**Group 5, spinosyns**, such as spinosad. Strong on thrips, but it can harm natural enemies, so keep it off open flowers.",
+        "**Contact options**, such as horticultural oil and insecticidal soap. Gentler, but they need good coverage and repeat sprays."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Selecron insecticide and thrips"
+    },
+    {
+      "type": "text",
+      "text": "Selecron insecticide from Syngenta contains profenofos, an organophosphate in IRAC group 1B. Its Philippine label lists thrips on cotton, potato, eggplant and watermelon, and blossom thrips on mango. The same label does not list rice or onion. Syngenta's Karate and Cymbush pages do list thrips on onion, so ask your dealer which product is registered for your crop. Profenofos is toxic to people as well as insects, so wear gloves, a mask and long sleeves. Our guide to [Karate, Cymbush and Selecron insecticides](/blog/karate-cymbush-selecron-insecticides) covers the product in more detail."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Follow the label and the FPA registration",
+      "text": "Use only insecticides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) for your crop and your pest, at the label rate and interval. Read the days to wait before harvest, and never mix your own cocktail of chemicals."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io helps you catch thrips early"
+    },
+    {
+      "type": "text",
+      "text": "The damage builds in days, so timing matters more than the product. The [growth stages and weather](/features/growth-stages-and-weather) view in anee.io shows when each lot reaches the seedling, flowering or bulbing stage. Its forecast also warns you of a hot, dry week.\n\nPut a weekly scouting task on the [cropping calendar](/features/cropping-calendar), then log trap counts and photos in your notes. Not sure what you found? Send a close up photo to [Anee, the smart farm technician](/features/ai-agricultural-technician), and ask in Tagalog or English whether it looks like thrips, mites or something else. If the pest has eight legs, it is a mite, and our page on [hanip, mites and aphids](/pests/hanip-mites-and-aphids) takes over."
+    },
+    {
+      "type": "cta",
+      "title": "Let the growth stages tell you when to scout",
+      "text": "Sign up for anee.io, set up your lots, and get each lot's stage and weather in one view. When you find damage, Anee reads the photo and answers in Tagalog or English.",
+      "label": "Sign up for anee.io",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Thrips questions farmers ask"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What does the thrips insect look like?",
+          "a": "Adults are slender, about a millimeter long, pale yellow to dark brown, with two pairs of narrow wings fringed with long hairs. The young ones have no wings and often look pale yellow."
+        },
+        {
+          "q": "What is the best sticky trap color for thrips?",
+          "a": "Blue and bright yellow sticky traps both catch them. Blue often catches more, but it depends on the species and the crop, so try both."
+        },
+        {
+          "q": "Can I use Selecron insecticide on onion thrips?",
+          "a": "Not under its Philippine label, which lists thrips on cotton, potato, eggplant, watermelon and mango blossoms, but not onion. Use a product registered for onion thrips and follow its label."
+        },
+        {
+          "q": "Why are my rice leaves rolled and silvery at the tips?",
+          "a": "In the dry season, rice thrips are a likely cause, but drought also rolls leaves. Unroll a leaf and look for the insects inside. If you find them, IRRI suggests flooding the field for two days."
+        },
+        {
+          "q": "Do thrips spread disease?",
+          "a": "Some do. Chilli thrips can carry plant viruses, and the feeding scars of many species give fungi such as [anthracnose](/diseases/anthracnose) an easy way in."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Rice insects in the Philippines",
+          "url": "/pests/rice-insects"
+        },
+        {
+          "label": "Hanip, mites and aphids",
+          "url": "/pests/hanip-mites-and-aphids"
+        },
+        {
+          "label": "Karate, Cymbush and Selecron insecticides",
+          "url": "/blog/karate-cymbush-selecron-insecticides"
+        },
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "Anthracnose",
+          "url": "/diseases/anthracnose"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "IRRI Rice Knowledge Bank, Rice thrips",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/insects/item/rice-thrips"
+        },
+        {
+          "label": "Reyes, Cayabyab and Copuyoc (2021), Diversity and abundance of thrips in a Carabao mango orchard at Piat, Cagayan, The Philippine Entomologist",
+          "url": "https://thephilippineentomologist.org/wp-content/uploads/2022/05/1-TPE-35-2-July-December-2021-Reyes-et-al_Mango-thrips-Draft-2.pdf"
+        },
+        {
+          "label": "Syngenta Philippines, Selecron 500 EC product label",
+          "url": "https://www.syngenta.com.ph/product/crop-protection/selecron-500-ec"
+        },
+        {
+          "label": "UC IPM Pest Notes, Thrips",
+          "url": "https://ipm.ucanr.edu/PMG/PESTNOTES/pn7429.html"
+        },
+        {
+          "label": "University of Florida IFAS, Chili thrips",
+          "url": "https://mrec.ifas.ufl.edu/lsolab/thrips/chili-thrips/"
+        },
+        {
+          "label": "Pacific Pests, Pathogens and Weeds, Melon thrips fact sheet",
+          "url": "https://apps.lucidcentral.org/ppp_v9/text/web_full/entities/melon_thrips_106.htm"
+        }
+      ]
+    }
+  ]
+}

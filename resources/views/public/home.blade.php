@@ -1361,13 +1361,13 @@
         $crops = [
             ['Palay', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z', 100, ['palay.webp', 'Ripe palay heads in a rice field'],
                 'Plan pagtatanim ng palay from the rice seeds and the punla to the ani. Fertilizer urea and complete fertilizer 14 14 14 go on their day after transplanting, and a reminder to check for the rice bug (alitangya) comes before the milk stage.',
-                [['/crops/palay', 'Palay guide'], ['/crops/rice-varieties-philippines', 'Rice varieties'], ['/problems/rice-bug', 'Rice bug']]],
+                [['/crops/palay', 'Palay guide'], ['/crops/rice-varieties-philippines', 'Rice varieties'], ['/pests/rice-bug', 'Rice bug']]],
             ['Mais', 'M12 3c-2.5 2-4 5-4 9s1.5 7 4 9c2.5-2 4-5 4-9s-1.5-7-4-9zm0 4v10M9.5 9.5L12 11l2.5-1.5M9.5 13.5L12 15l2.5-1.5', 45, ['mais.webp', 'Young corn plants in rows'],
                 'Yellow or white corn, counted by days after planting: corn seeds and spacing, fertilizer days, fall armyworm checks, and the corn kernel at harvest.',
-                [['/crops/corn-seeds', 'Corn seeds'], ['/crops/corn-kernel', 'Corn kernel'], ['/problems/fall-armyworm', 'Fall armyworm']]],
+                [['/crops/corn-seeds', 'Corn seeds'], ['/crops/corn-kernel', 'Corn kernel'], ['/pests/fall-armyworm', 'Fall armyworm']]],
             ['Gulay', 'M12 21c-4.4 0-8-3.1-8-7 0-3.3 2.6-6 6-6.8V4h4v3.2c3.4.8 6 3.5 6 6.8 0 3.9-3.6 7-8 7z', 150, ['gulay.webp', 'Vegetable farms on a mountain slope'],
                 'Pechay, tomato, eggplant and ampalaya, the vegetables in the Philippines that farms grow most, on one calendar with foliar fertilizer days and thrips and anthracnose checks.',
-                [['/crops/vegetables-philippines', 'Vegetables guide'], ['/crops/pagtatanim-ng-gulay', 'Pagtatanim ng gulay'], ['/problems/thrips', 'Thrips']]],
+                [['/crops/vegetables-philippines', 'Vegetables guide'], ['/crops/pagtatanim-ng-gulay', 'Pagtatanim ng gulay'], ['/pests/thrips', 'Thrips']]],
             ['Niyog, saging at puno', 'M12 21v-8m0 0c-3 0-6-2-7-5 3 0 5 1 7 3m0 2c3 0 6-2 7-5-3 0-5 1-7 3m0-3V3', 30, ['puno.webp', 'Banana trees along a farm road'],
                 'Coconut, banana and fruit trees count their age in months, with fertilizer plans that follow the PCA and DA guides.',
                 [['/crops/coconut-fertilizer', 'Coconut fertilizer'], ['/crops/banana-farming-philippines', 'Banana farming'], ['/crops/pagtatanim-ng-puno', 'Pagtatanim ng puno']]],
@@ -1425,15 +1425,16 @@
                     ['/crops/palay', 'Palay'], ['/crops/pagtatanim-ng-palay', 'Pagtatanim ng palay'], ['/blog/palayan-nueva-ecija', 'Palayan in Nueva Ecija'],
                     ['/blog/ani-meaning', 'Ani meaning'], ['/blog/urea-fertilizer', 'Fertilizer urea'], ['/blog/complete-fertilizer-14-14-14', 'Fertilizer 14 14 14'],
                     ['/blog/16-20-0-fertilizer', '16 20 0 fertilizer'], ['/blog/ammonium-sulfate-21-0-0', '21 0 0 fertilizer'], ['/blog/foliar-fertilizer', 'Foliar fertilizer'], ['/blog/organic-fertilizer-examples', 'Examples of organic fertilizer'],
-                    ['/blog/fertilizer-for-plants', 'Fertilizer for plants'], ['/blog/fungicides', 'Fungicide guide'], ['/blog/fertilizer-and-pesticide-authority', 'Fertilizer and Pesticide Authority'], ['/problems/rice-bug', 'Rice bug'],
-                    ['/problems/rice-black-bug', 'Rice black bug'], ['/problems/thrips', 'Thrips insect'], ['/problems/fall-armyworm', 'Fall armyworm'], ['/problems/cutworm', 'Cutworm'],
+                    ['/blog/fertilizer-for-plants', 'Fertilizer for plants'], ['/blog/fungicides', 'Fungicide guide'], ['/blog/fertilizer-and-pesticide-authority', 'Fertilizer and Pesticide Authority'], ['/pests/rice-bug', 'Rice bug'],
+                    ['/pests/rice-black-bug', 'Rice black bug'], ['/pests/thrips', 'Thrips insect'], ['/pests/fall-armyworm', 'Fall armyworm'], ['/pests/cutworm', 'Cutworm'],
+                    ['/weeds/common-weeds-philippines', 'Common weeds in the Philippines'], ['/weeds/purple-nutsedge', 'Purple nutsedge'], ['/weeds/makahiya', 'Makahiya'],
                     ['/crops/rice-varieties-philippines', 'Rice varieties in the Philippines'], ['/blog/palay-price-philippines', 'Palay price in the Philippines'],
                     ['/crops/corn-kernel', 'Corn kernel'], ['/crops/corn-seeds', 'Corn seeds'], ['/crops/vegetables-philippines', 'Vegetables in the Philippines'],
                 ] as $i => [$href, $label])
                     <a href="{{ url($href) }}" class="hp-topic" style="--h: {{ ($i * 41) % 150 + 30 }}">{{ $label }}</a>
                 @endforeach
             </div>
-            <div class="mt-12 grid gap-8 lg:grid-cols-3">
+            <div class="mt-12 grid gap-8 md:grid-cols-2 xl:grid-cols-4">
                 @foreach ($guides as $sec => $pages)
                     @php $SP = \App\Support\SitePages::class; @endphp
                     <div class="hg-col reveal" style="--reveal-delay: {{ $loop->index * 0.07 }}s">
@@ -1444,7 +1445,7 @@
                                 <li><a href="{{ $SP::pageUrl($p) }}">{{ $SP::shortTitle($p) }}</a></li>
                             @endforeach
                         </ul>
-                        <a href="{{ $SP::url($sec) }}" class="hg-all">{{ ['crops' => 'All crop guides', 'problems' => 'All crop problems', 'blog' => 'The whole blog'][$sec] }} ›</a>
+                        <a href="{{ $SP::url($sec) }}" class="hg-all">{{ ['crops' => 'All crop guides', 'pests' => 'All crop pests', 'weeds' => 'All weeds and grasses', 'blog' => 'The whole blog'][$sec] }} ›</a>
                     </div>
                 @endforeach
             </div>
@@ -1480,7 +1481,7 @@
             ['Can anee.io help with the rice bug, thrips and fall armyworm?',
              'Yes. Take a photo and Anee tells you what the pest or disease is and what to do, including when a fungicide or insecticide is needed. Your season board also reminds you when to check for the rice bug and other pests at each growth stage.'],
             ['Where can I read about fertilizer and pests?',
-             'Our free guides cover fertilizer urea, complete fertilizer 14 14 14 and 16 20 0, the rice bug, thrips, fall armyworm and more. Start from the crop guides, the crop problems or the blog.'],
+             'Our free guides cover fertilizer urea, complete fertilizer 14 14 14 and 16 20 0, the rice bug, thrips, fall armyworm and more. Start from the crop guides, the crop pests, the weeds and grasses or the blog.'],
         ];
     @endphp
     <section class="hp-sec bg-gray-50">
@@ -1505,7 +1506,8 @@
             </div>
             <div class="mt-6 flex flex-wrap justify-center gap-2 text-sm">
                 <a href="{{ url('/crops') }}" class="hc-link" style="--h: 100">Crop guides ›</a>
-                <a href="{{ url('/problems') }}" class="hc-link" style="--h: 30">Crop problems ›</a>
+                <a href="{{ url('/pests') }}" class="hc-link" style="--h: 30">Crop pests ›</a>
+                <a href="{{ url('/weeds') }}" class="hc-link" style="--h: 80">Weeds and grasses ›</a>
                 <a href="{{ url('/blog') }}" class="hc-link" style="--h: 150">The blog ›</a>
             </div>
             <div class="hp-cta reveal">

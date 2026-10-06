@@ -1,0 +1,309 @@
+{
+  "section": "weeds",
+  "slug": "knotgrass",
+  "sortOrder": 195,
+  "lang": "en",
+  "category": "Grasses",
+  "title": "Knotgrass in Rice Fields: How to Spot It and Stop Its Runners",
+  "metaTitle": "Knotgrass in Rice: How to Identify and Control It",
+  "metaDescription": "Knotgrass can cut irrigated rice yield by up to 46 percent and regrows from broken runners. Learn how shade, deep water and harrowing beat it.",
+  "focusKeyword": "knotgrass",
+  "keywords": [
+    "knotgrass",
+    "Paspalum distichum",
+    "bakbaka",
+    "damong ube",
+    "perennial grass weed in rice"
+  ],
+  "excerpt": "Knotgrass is a creeping perennial grass weed of irrigated and rainfed lowland rice fields in the Philippines. It spreads mostly by runners above and below the ground, and broken pieces grow back with ease. This page shows how to spot it, how it hurts your palay and how shade, water and harrowing help you control it.",
+  "heroImage": {
+    "src": "/images/site/weeds/knotgrass.webp",
+    "thumb": "/images/site/weeds/knotgrass-480.webp",
+    "alt": "Knotgrass (Paspalum distichum), a grass weed of Philippine rice fields",
+    "credit": "Josep Gesti, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Knotgrass?"
+    },
+    {
+      "type": "text",
+      "text": "Knotgrass (Paspalum distichum) belongs to the grass family. Farmers call it bakbaka, barit, damong ube, lubid lubid, malit kalabaw or ragitnit. It grows in both irrigated and rainfed lowland rice fields. Its long, branching runners crawl across the mud, while reddish stems stand up to 50 cm tall.\n\nThis weed is a perennial, so it survives from one crop to the next. It spreads mainly through rhizomes under the soil and stolons on top of it. Now and then it also grows from seed. Since every piece of runner can take root, chopping it up during weeding often makes the patch bigger instead of smaller. That is why it calls for a different plan than most grass weeds."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about knotgrass",
+      "rows": [
+        [
+          "Name",
+          "Knotgrass"
+        ],
+        [
+          "Scientific name",
+          "Paspalum distichum"
+        ],
+        [
+          "Family",
+          "Poaceae (Graminae)"
+        ],
+        [
+          "Weed group",
+          "Grasses ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Bakbaka, barit, damong ube, lubid lubid, malit kalabaw, ragitnit"
+        ],
+        [
+          "Life cycle",
+          "Perennial"
+        ],
+        [
+          "Spreads by",
+          "Rhizomes and aerial stems (stolons), occasionally seeds"
+        ],
+        [
+          "Where it grows",
+          "Irrigated and rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Knotgrass"
+    },
+    {
+      "type": "text",
+      "text": "Like other grasses, it has round, hollow stems with clear joints, or nodes. Look for long runners that creep and branch across the paddy. From these runners, reddish stems rise straight up and reach about 50 cm. At the top, two upright spikes form a shape like the letter Y. Carabao grass also has paired spikes, but they spread wide. The name bakbaka also goes to Bermuda grass, which grows two or three leaves at each runner joint."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Long runners creep and branch across the mud, rooting as they go.",
+        "Reddish stems stand upright and reach about 50 cm tall.",
+        "Each seed head has two upright spikes shaped like the letter Y.",
+        "Torn runner pieces left in the mud grow back into new plants.",
+        "Growth slows in deep water and under a thick, shading rice canopy."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Knotgrass is a C4 weed, so it grows fast in sun and heat. Wide spacing in your rice gives it room to spread. In irrigated rice planted at 15 by 15 cm, it can cut yield by 4 percent. At 20 by 20 cm, the loss rises to 45 percent, and at 25 by 25 cm it reaches 46 percent.\n\nIt is also hard to kill. Hand weeding breaks the runners, and the loose pieces regrow with ease. Herbicides often miss it too, because its stolons can escape the effect of the spray. So you need more than one method to beat it."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Its weak spot",
+      "text": "This grass has three weak spots you can use. First, shade slows its shoots, so a thick rice canopy keeps it small. Next, deep flooding also holds back its shoot growth. Finally, harrow the field more than once before the final leveling and planting. Each pass cuts down its growth before your rice goes in. Put all three together for the best effect."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Knotgrass"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant at a closer spacing, such as 15 by 15 cm, so the rice canopy closes fast and shades it out.",
+        "Harrow the field several times before final leveling. Repeated passes weaken the runners before your rice goes in.",
+        "Keep the water deep once your rice can take it, since deep flooding slows its shoots.",
+        "When you hand weed, carry every runner piece out of the paddy. Loose fragments left in the mud grow back easily."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Grasses"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold knotgrass down, choose an active ingredient that works on grasses at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for grasses by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Butachlor, Butachlor plus 2,4 D IBE, Clomazone, Oxadiazon, Pendimethalin, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor, Butachlor plus 2,4 D IBE, Butachlor with safener, Clomazone, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Metamifop, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl, Profoxydim",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop, Penoxsulam plus cyhalofop butyl, Profoxydim, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "Fenoxaprop P ethyl plus ethoxysulfuron, Metamifop plus penoxsulam",
+          "Cyhalofop butyl plus bispyribac sodium, Metamifop, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "No herbicide listed at this age. Hand weed and keep the water up.",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "When a spray stops working",
+      "text": "Herbicides often fail on knotgrass, because its stolons can escape the toxic effect of the spray, so back any herbicide with harrowing, deep water and shade."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Knotgrass Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Plow and harrow well, and rake out the runners, roots or pieces you turn up. A small piece left in wet soil can grow a new plant.",
+        "Pull escapes before the seed heads open, and clean the thresher and harvester before they enter the field.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [grass weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Knotgrass?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Knotgrass"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What do farmers call knotgrass in the Philippines?",
+          "a": "Farmers call it bakbaka, barit, damong ube, lubid lubid, malit kalabaw or ragitnit, depending on the region. Its scientific name is Paspalum distichum. Some of these names cover other weeds too. For example, bakbaka also goes to Bermuda grass, and barit to southern cutgrass. So check for reddish upright stems and the Y shaped pair of spikes."
+        },
+        {
+          "q": "How do I control it in my rice field?",
+          "a": "Use several methods together. Harrow more than once before final leveling, plant at closer spacing and keep the water deep once the rice can take it. When you hand weed, carry every runner piece out of the field. If you need a herbicide, choose one for grass weeds that fits the age of your rice, and always follow the FPA registered label."
+        },
+        {
+          "q": "Why does weeding by hand make it worse?",
+          "a": "Because pulling breaks its runners, and the loose pieces root again with ease. So a patch you weeded can come back thicker than before. When you weed, lift the runners out whole if you can, and carry every piece out of the paddy. Then let shade, deep water and repeated harrowing do the rest of the work."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More grass weeds of rice",
+      "items": [
+        {
+          "label": "Barnyard grass",
+          "url": "/weeds/barnyard-grass"
+        },
+        {
+          "label": "Weedy rice",
+          "url": "/weeds/weedy-rice"
+        },
+        {
+          "label": "Chinese sprangletop",
+          "url": "/weeds/chinese-sprangletop"
+        },
+        {
+          "label": "Echinochloa glabrescens",
+          "url": "/weeds/echinochloa-glabrescens"
+        },
+        {
+          "label": "Jungle rice",
+          "url": "/weeds/jungle-rice"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,310 @@
+{
+  "section": "weeds",
+  "slug": "purple-nutsedge",
+  "sortOrder": 130,
+  "lang": "en",
+  "category": "Sedges",
+  "title": "Purple Nutsedge: How to Spot and Control Mutha in Your Rice Field",
+  "metaTitle": "Purple Nutsedge in Rice: How to Identify and Control It",
+  "metaDescription": "Purple nutsedge can cut rice yield by 42 percent. Learn to spot it, why its tubers keep coming back, and how flooding helps you stop it in your palay.",
+  "focusKeyword": "purple nutsedge",
+  "keywords": [
+    "purple nutsedge",
+    "Cyperus rotundus",
+    "mutha",
+    "barsanga",
+    "sedge weed in rice"
+  ],
+  "excerpt": "Purple nutsedge is a stubborn perennial sedge of irrigated and rainfed lowland rice fields in the Philippines. Farmers call it barsanga, mutha or sudsud, and its scientific name is Cyperus rotundus. Instead of seed, it spreads through tubers and rhizomes hidden in the soil. This page shows how to spot it and how to control it with timing, water and weeding.",
+  "heroImage": {
+    "src": "/images/site/weeds/purple-nutsedge.webp",
+    "thumb": "/images/site/weeds/purple-nutsedge-480.webp",
+    "alt": "Purple nutsedge (Cyperus rotundus), a sedge weed of Philippine rice fields",
+    "credit": "Macleay Grass Man, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Purple Nutsedge?"
+    },
+    {
+      "type": "text",
+      "text": "This damo is a sedge from the Cyperaceae family. Farmers know it as barsanga, mutha or sudsud. In the past, purple nutsedge was a problem mainly in upland rice areas of the Philippines. Over time it adapted, and now it also infests irrigated and rainfed lowland fields.\n\nIt is a perennial, and it spreads through tubers and rhizomes instead of relying on seed. Under the soil it builds a network of a basal bulb, rhizomes, tubers and roots. That network lets it push up many young shoots quickly. So one plant soon becomes a patch, and pulling the leaves alone does not kill it. That is why it is so hard to get rid of. You have to deal with what lies under the soil, not just what you see above it."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about purple nutsedge",
+      "rows": [
+        [
+          "Name",
+          "Purple nutsedge"
+        ],
+        [
+          "Scientific name",
+          "Cyperus rotundus"
+        ],
+        [
+          "Family",
+          "Cyperaceae"
+        ],
+        [
+          "Weed group",
+          "Sedges ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Barsanga, mutha, sudsud"
+        ],
+        [
+          "Life cycle",
+          "Perennial"
+        ],
+        [
+          "Spreads by",
+          "Tubers and rhizomes"
+        ],
+        [
+          "Where it grows",
+          "Irrigated and rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Purple Nutsedge"
+    },
+    {
+      "type": "text",
+      "text": "Like all sedges, it has a solid, three sided stem with no nodes. The stem stands erect, feels smooth and does not branch. Its leaves are also dark green. At the top of the stem, the flowers sit in red brown spikelets, which give the plant its purple tint. Dig gently around the base and you will find the giveaway, a bulb with rhizomes and small tubers in the soil."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Smooth, erect, three sided stems that do not branch.",
+        "Dark green leaves growing from the base of the plant.",
+        "Flower heads with red brown spikelets at the top of each stem.",
+        "Small tubers and a bulb at the base when you dig up a plant.",
+        "Many young shoots coming up close together, linked by rhizomes under the soil.",
+        "Patches that come back in the same spots after weeding or plowing."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Purple nutsedge is a C4 plant, and experts consider it the worst weed on the planet. It multiplies fast in the soil, survives harsh conditions and infests many crops. In the Philippines it used to dominate only upland rice areas. Now it has adapted and infests irrigated and rainfed lowlands as well.\n\nIn full competition with upland rice, it reduces yield by 42 percent. Even in flooded fields, it still cuts the yield of transplanted rice by 38 percent and wet direct seeded rice by 28 percent. One study suggested controlling it at 14 to 29 days after transplanting for transplanted rice. For wet direct seeded rice, the window is 18 to 26 days after seeding."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Its weak spot",
+      "text": "This weed has a few weak points you can use. Its tubers cannot sprout if you plow them under and flood the field at the same time. So plow, then bring in water right away. In wet seeded rice, flooding as early as 7 days after seeding reduces its growth. Nature also helps. A leaf rust caused by Puccinia philippinensis attacks its leaves, and Bactra moth larvae feed on its bulbs."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Purple Nutsedge"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Dig out plants with their bulbs, rhizomes and tubers, because any tuber left in the soil can send up new shoots.",
+        "Plow the tubers under and flood the field at the same time, since buried tubers cannot sprout that way.",
+        "In wet direct seeded rice, bring water into the field as early as 7 days after seeding to slow its growth.",
+        "Focus your weeding at 14 to 29 days after transplanting, or 18 to 26 days after wet direct seeding."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Sedges"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold purple nutsedge down, choose an active ingredient that works on sedges at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for sedges by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Butachlor, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor, Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl",
+          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "Metsulfuron methyl plus chlorimuron ethyl",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "When a spray stops working",
+      "text": "This weed is vulnerable to herbicides such as 2,4 D, MCPA or bispyribac sodium, used at the right rice age and always by the FPA registered label."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Purple Nutsedge Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Plow and harrow well, and rake out the runners, roots or pieces you turn up. A small piece left in wet soil can grow a new plant.",
+        "Pull escapes before their flower clusters turn brown, since one clump drops a great deal of tiny seed.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [sedge weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Purple Nutsedge?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Purple Nutsedge"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What do farmers call purple nutsedge in Tagalog and other local languages?",
+          "a": "Farmers know it as barsanga, mutha or sudsud. Its scientific name is Cyperus rotundus. Note that barsanga is also a local name for haspan flatsedge, so check the base of the plant before you decide. A plant with small tubers in the soil and red brown spikelets on top is most likely this weed."
+        },
+        {
+          "q": "How do I kill it in my rice field?",
+          "a": "Combine several steps. Plow the tubers under and flood the field at the same time. In wet seeded rice, flood as early as 7 days after seeding. Dig out escapes with their tubers. If you use a herbicide, choose one that works on sedges and fits your rice age, and always follow the FPA registered label."
+        },
+        {
+          "q": "Why does it keep coming back after I weed?",
+          "a": "It comes back because the part you see is only the top. Below the soil it keeps a basal bulb, rhizomes, tubers and roots. These let it send up many new shoots quickly. Pulling the leaves alone leaves the tubers behind. So dig out the tubers, and use flooding to keep buried ones from sprouting."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More sedge weeds of rice",
+      "items": [
+        {
+          "label": "Smallflower umbrella sedge",
+          "url": "/weeds/smallflower-umbrella-sedge"
+        },
+        {
+          "label": "Rice flatsedge",
+          "url": "/weeds/rice-flatsedge"
+        },
+        {
+          "label": "Globe fringerush",
+          "url": "/weeds/globe-fringerush"
+        },
+        {
+          "label": "Cyperus compactus",
+          "url": "/weeds/cyperus-compactus"
+        },
+        {
+          "label": "Annual sedge",
+          "url": "/weeds/cyperus-compressus"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

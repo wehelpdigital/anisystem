@@ -14,6 +14,8 @@
     $isFeature = $page->section === 'features';
     $isQuestion = $page->section === 'questions';
     $feat = $isFeature ? $S::feature($page) : null;
+    // A weed of rice: its catalogue facts (App\Support\WeedCatalogue).
+    $weed = $page->section === 'weeds' ? \App\Support\WeedCatalogue::get($page->slug) : null;
     // A tall picture on a feature page is a phone screen: it stands in a
     // phone beside the words instead of being cropped into a banner.
     $portrait = false;
@@ -86,6 +88,9 @@
                             <span class="sp-fico"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $feat['icon'] }}"/></svg></span>
                             <span>{{ $feat['name'] }}</span>
                         </div>
+                    @elseif ($weed)
+                        {{-- A weed's group opens the catalogue on that group. --}}
+                        <a href="{{ $S::url('weeds') }}?group={{ $weed['group'] }}#catalogue" class="sp-chip">{{ $page->category }}</a>
                     @elseif ($page->category)
                         <span class="sp-chip">{{ $page->category }}</span>
                     @endif
@@ -99,9 +104,10 @@
                         </div>
                     @else
                     <div class="sp-meta mt-4">
+                        @if ($weed && $weed['sci'] !== $weed['name'])<span class="italic">{{ $weed['sci'] }}</span>@endif
                         <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 2"/></svg>{{ $minutes }} min read</span>
                         <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>Updated {{ $updated->timezone('Asia/Manila')->format('F j, Y') }}</span>
-                        <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ $isQuestion ? 'Answered by Anee, the anee.io AI technician' : 'By the anee.io agriculture team' }}</span>
+                        <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ $isQuestion ? 'Answered by Anee, the anee.io smart farm technician' : 'By the anee.io agriculture team' }}</span>
                     </div>
                     @endif
                 </div>
@@ -162,11 +168,19 @@
                             </nav>
                         </div>
                     @endif
+                    @if ($weed)
+                        {{-- The helper, opened on this weed's group. --}}
+                        <div class="sp-card sp-wcard">
+                            <h4>Weed control by rice age</h4>
+                            <p>Pick how you planted and how old your rice is, and see the active ingredients that work on {{ strtolower(\App\Support\WeedControl::GROUPS[$weed['group']]['label']) }} at that age.</p>
+                            <a href="{{ $S::url('weeds') }}?group={{ $weed['group'] }}#control" class="btn btn-outline btn-sm">Open the helper</a>
+                        </div>
+                    @endif
                     <div class="sp-promo">
                         <b>{{ $page->lang === 'tl' ? 'Ang buong season mo, nasa isang app' : 'Your whole season in one app' }}</b>
                         <p>{{ $page->lang === 'tl'
-                            ? 'Kalendaryo ng bawat gawain, abono at gastos na nakatala, at si Anee, ang AI technician na sumasagot sa Tagalog.'
-                            : 'A cropping calendar that dates every task, a record of your fertilizer and costs, and Anee, the AI technician who answers in Tagalog or English.' }}</p>
+                            ? 'Kalendaryo ng bawat gawain, abono at gastos na nakatala, at si Anee, ang smart farm technician na sumasagot sa Tagalog.'
+                            : 'A cropping calendar that dates every task, a record of your fertilizer and costs, and Anee, the smart farm technician who answers in Tagalog or English.' }}</p>
                         <a href="{{ route('signup') }}" class="btn btn-accent">{{ $page->lang === 'tl' ? 'Magsimula nang libre' : 'Start free' }}</a>
                     </div>
                     @if ($related->count())
@@ -203,7 +217,9 @@
                 <div class="sp-tabs">
                     <a href="{{ $S::url('questions') }}" class="{{ $isQuestion ? 'is-on' : '' }}">Farmers' questions</a>
                     <a href="{{ $S::url('crops') }}" class="{{ $page->section === 'crops' ? 'is-on' : '' }}">Crop guides</a>
-                    <a href="{{ $S::url('problems') }}" class="{{ $page->section === 'problems' ? 'is-on' : '' }}">Crop problems</a>
+                    <a href="{{ $S::url('pests') }}" class="{{ $page->section === 'pests' ? 'is-on' : '' }}">Crop pests</a>
+                    <a href="{{ $S::url('diseases') }}" class="{{ $page->section === 'diseases' ? 'is-on' : '' }}">Crop diseases</a>
+                    <a href="{{ $S::url('weeds') }}" class="{{ $page->section === 'weeds' ? 'is-on' : '' }}">Weeds and grasses</a>
                     <a href="{{ $S::url('blog') }}" class="{{ $page->section === 'blog' ? 'is-on' : '' }}">Blog</a>
                     <a href="{{ route('features') }}" class="{{ $page->section === 'features' ? 'is-on' : '' }}">Features</a>
                 </div>

@@ -216,7 +216,7 @@
     },
     {
       "type": "text",
-      "text": "Thrips are tiny insects that rasp leaves and suck the sap, leaving silvery scars that turn brown. Melon thrips (Thrips palmi) attack ampalaya, melons, talong and tomato. Check the undersides of young leaves and the flowers, then see our page on [thrips](/problems/thrips)."
+      "text": "Thrips are tiny insects that rasp leaves and suck the sap, leaving silvery scars that turn brown. Melon thrips (Thrips palmi) attack ampalaya, melons, talong and tomato. Check the undersides of young leaves and the flowers, then see our page on [thrips](/pests/thrips)."
     },
     {
       "type": "heading",
@@ -225,7 +225,7 @@
     },
     {
       "type": "text",
-      "text": "Aphids are soft green or black insects that cluster on shoots and under leaves, curling them and spreading viruses. Two common aphids cause much of the damage, and their scientific names help when you read DA bulletins and pesticide labels. The cotton or melon aphid, Aphis gossypii, feeds on talong, okra, sili and gourds. The green peach aphid, Myzus persicae, prefers pechay, cabbage and potato. See our page on [mites and aphids](/problems/hanip-mites-and-aphids)."
+      "text": "Aphids are soft green or black insects that cluster on shoots and under leaves, curling them and spreading viruses. Two common aphids cause much of the damage, and their scientific names help when you read DA bulletins and pesticide labels. The cotton or melon aphid, Aphis gossypii, feeds on talong, okra, sili and gourds. The green peach aphid, Myzus persicae, prefers pechay, cabbage and potato. See our page on [mites and aphids](/pests/hanip-mites-and-aphids)."
     },
     {
       "type": "heading",
@@ -234,7 +234,7 @@
     },
     {
       "type": "text",
-      "text": "Cutworms are moth larvae that hide in the soil by day and feed at night, often cutting seedlings at the soil line. The common cutworm, Spodoptera litura, also strips pechay and cabbage leaves. The DA Bicol guide says to handpick them, spray botanicals and net the seedlings. More on our [cutworm](/problems/cutworm) page."
+      "text": "Cutworms are moth larvae that hide in the soil by day and feed at night, often cutting seedlings at the soil line. The common cutworm, Spodoptera litura, also strips pechay and cabbage leaves. The DA Bicol guide says to handpick them, spray botanicals and net the seedlings. More on our [cutworm](/pests/cutworm) page."
     },
     {
       "type": "heading",
@@ -243,7 +243,7 @@
     },
     {
       "type": "text",
-      "text": "Anthracnose is a fungal disease caused by Colletotrichum. It makes sunken, dark spots on fruit and leaves, and it spreads fastest in warm, wet weather. The DA lists it among the prevalent diseases of tomato, and it also hits sili and ampalaya. Plant tolerant varieties where you can, remove infected fruit, and read our [anthracnose](/problems/anthracnose) page for the fungicide groups used against it."
+      "text": "Anthracnose is a fungal disease caused by Colletotrichum. It makes sunken, dark spots on fruit and leaves, and it spreads fastest in warm, wet weather. The DA lists it among the prevalent diseases of tomato, and it also hits sili and ampalaya. Plant tolerant varieties where you can, remove infected fruit, and read our [anthracnose](/diseases/anthracnose) page for the fungicide groups used against it."
     },
     {
       "type": "callout",
@@ -317,11 +317,11 @@
         },
         {
           "label": "Thrips",
-          "url": "/problems/thrips"
+          "url": "/pests/thrips"
         },
         {
           "label": "Anthracnose",
-          "url": "/problems/anthracnose"
+          "url": "/diseases/anthracnose"
         }
       ]
     },

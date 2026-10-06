@@ -1,0 +1,302 @@
+{
+  "section": "weeds",
+  "slug": "southern-crabgrass",
+  "sortOrder": 205,
+  "lang": "en",
+  "category": "Grasses",
+  "title": "Southern Crabgrass: How to Spot and Control It in Rice Fields",
+  "metaTitle": "Southern Crabgrass in Rice: Spot It and Shade It Out",
+  "metaDescription": "Southern crabgrass can cut rice yield by as much as 62 percent. Learn how to spot it and how a thick rice canopy shades this weed out.",
+  "focusKeyword": "southern crabgrass",
+  "keywords": [
+    "southern crabgrass",
+    "Digitaria ciliaris",
+    "saka saka",
+    "crabgrass in rice",
+    "grass weed in rice fields"
+  ],
+  "excerpt": "Southern crabgrass is a creeping grass weed of rainfed lowland rice fields in the Philippines. It lies low on the soil, then raises thin spikes shaped like fingers. This page shows how to spot it, how much yield it can take and how to control it, including a simple shading trick that works well against it.",
+  "heroImage": {
+    "src": "/images/site/weeds/southern-crabgrass.webp",
+    "thumb": "/images/site/weeds/southern-crabgrass-480.webp",
+    "alt": "Southern crabgrass (Digitaria ciliaris), a grass weed of Philippine rice fields",
+    "credit": "Nativeplants garden, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Southern Crabgrass?"
+    },
+    {
+      "type": "text",
+      "text": "Southern crabgrass (Digitaria ciliaris) is a creeping member of the grass family. In the provinces farmers call it baludgangan, halos or saka saka. It is a common damo in rainfed lowland rice fields, where water does not always stand in the paddy. The lower part of each stem lies on the ground, while the tip turns up toward the light.\n\nThis weed is an annual. It sprouts, flowers, sets seed and dies within one season. It spreads only by seed, but each plant makes plenty of them. So every new flush comes from seeds that earlier plants dropped into the soil. That is why stopping plants before they set seed pays off in the seasons that follow."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about southern crabgrass",
+      "rows": [
+        [
+          "Name",
+          "Southern crabgrass"
+        ],
+        [
+          "Scientific name",
+          "Digitaria ciliaris"
+        ],
+        [
+          "Family",
+          "Poaceae (Graminae)"
+        ],
+        [
+          "Weed group",
+          "Grasses ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Baludgangan, halos, saka saka"
+        ],
+        [
+          "Life cycle",
+          "Annual"
+        ],
+        [
+          "Spreads by",
+          "Seeds"
+        ],
+        [
+          "Where it grows",
+          "Rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Southern Crabgrass"
+    },
+    {
+      "type": "text",
+      "text": "Look for a low grass that creeps before it climbs. Like other grasses, it has jointed stems with clear nodes, but its stems are smooth and flat rather than round. The leaves are thin and narrow, shaped like the head of a lance. A thin, clear ligule wraps around the stem where the leaf blade begins. At the top, 3 to 6 slim spikes fan out like fingers, set in loose rings near the tip."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Smooth, flat stems lie on the soil at the base and turn upward at the tip.",
+        "Leaves are thin, narrow and pointed, shaped like the head of a lance.",
+        "A clear, papery ligule clasps the stem where each leaf blade begins.",
+        "Seed heads carry 3 to 6 slender spikes that spread like fingers near the top.",
+        "Plants stay thin and weak wherever a dense rice canopy shades the ground."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "This grass is a C4 weed. It makes food fast in bright sun and heat, so it can outgrow young palay in open, sunny gaps. Then it takes the water, light and fertilizer that your rice needs to fill its grains.\n\nThe damage can be heavy. In fact, southern crabgrass can cut rice yield by as much as 62 percent. Each plant also drops an average of 1,700 seeds. So every plant you miss adds to the weed pressure in your next crop. Since it creeps along the ground, it also covers bare soil quickly in rainfed fields."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Its weak spot",
+      "text": "This grass cannot stand shade. It is very sensitive to shading, so a thick rice canopy is one of your best tools against it. Plant at the right spacing, use healthy seedlings and feed the crop on time. Then the rice closes its rows early. Once the leaves cover the ground, this weed stays weak and thin underneath."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Southern Crabgrass"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Close the canopy fast. Replant missing hills within the first weeks, so no sunny gaps stay open for the weed.",
+        "Keep water standing in the field when you can, since this grass grows best on moist soil without standing water.",
+        "Hand weed before the finger spikes open. An annual like this one returns only from seed, so stopping seed set shrinks the next flush."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Grasses"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold southern crabgrass down, choose an active ingredient that works on grasses at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for grasses by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Butachlor, Butachlor plus 2,4 D IBE, Clomazone, Oxadiazon, Pendimethalin, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor, Butachlor plus 2,4 D IBE, Butachlor with safener, Clomazone, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Metamifop, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl, Profoxydim",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop, Penoxsulam plus cyhalofop butyl, Profoxydim, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "Fenoxaprop P ethyl plus ethoxysulfuron, Metamifop plus penoxsulam",
+          "Cyhalofop butyl plus bispyribac sodium, Metamifop, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "No herbicide listed at this age. Hand weed and keep the water up.",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Southern Crabgrass Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Prepare the land well: flood, plow, let the weed seeds sprout, then kill them when you harrow. Level the field so water covers it evenly.",
+        "Pull escapes before the seed heads open, and clean the thresher and harvester before they enter the field.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [grass weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Southern Crabgrass?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Southern Crabgrass"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What do farmers call southern crabgrass in local languages?",
+          "a": "Filipino farmers know it as baludgangan, halos or saka saka, depending on the area. Its scientific name is Digitaria ciliaris. Local names change from town to town, so it helps to check the plant itself. Look for flat, smooth stems that creep at the base, and a seed head with 3 to 6 thin finger spikes."
+        },
+        {
+          "q": "How do I get rid of crabgrass in my palay field?",
+          "a": "Start with prevention: clean seed, a level field and water kept in the paddy when you can. Then hand weed early, before the spikes shed seed. A thick, even rice stand also shades it out. If you need a herbicide, choose one for grass weeds that fits the age of your rice, and always follow the FPA registered label."
+        },
+        {
+          "q": "Why does crabgrass come back every season?",
+          "a": "It is an annual, so each new flush grows from seed already in your soil. One plant drops an average of 1,700 seeds. If even a few plants set seed, your next crop will face a fresh wave. But if you weed before flowering for two or three seasons in a row, the seed supply in your soil will shrink."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More grass weeds of rice",
+      "items": [
+        {
+          "label": "Barnyard grass",
+          "url": "/weeds/barnyard-grass"
+        },
+        {
+          "label": "Weedy rice",
+          "url": "/weeds/weedy-rice"
+        },
+        {
+          "label": "Chinese sprangletop",
+          "url": "/weeds/chinese-sprangletop"
+        },
+        {
+          "label": "Echinochloa glabrescens",
+          "url": "/weeds/echinochloa-glabrescens"
+        },
+        {
+          "label": "Jungle rice",
+          "url": "/weeds/jungle-rice"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

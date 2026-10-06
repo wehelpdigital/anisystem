@@ -1,0 +1,297 @@
+{
+  "section": "weeds",
+  "slug": "lindernia-procumbens",
+  "sortOrder": 390,
+  "lang": "en",
+  "category": "Broadleaves",
+  "title": "Lindernia procumbens: How to Spot and Control It in Rice Fields",
+  "metaTitle": "Lindernia procumbens in Rice: Identification and Control",
+  "metaDescription": "Lindernia procumbens, or Lalagang, is a small broadleaf weed of rainfed palay. Learn to spot its square stems and stop it before it drops seed.",
+  "focusKeyword": "Lindernia procumbens",
+  "keywords": [
+    "Lindernia procumbens",
+    "Lalagang",
+    "prostrate false pimpernel",
+    "broadleaf weed",
+    "broadleaf weeds in rice"
+  ],
+  "excerpt": "Lindernia procumbens is a small broadleaf weed that farmers know as Lalagang. It comes up in rainfed lowland rice fields in the Philippines, often in the gaps between young palay. This page shows you how to spot it by its square stems and pale flowers, and how to control it before it drops seed.",
+  "heroImage": {
+    "src": "/images/site/weeds/lindernia-procumbens.webp",
+    "thumb": "/images/site/weeds/lindernia-procumbens-480.webp",
+    "alt": "Prostrate false pimpernel (Lindernia procumbens), a broadleaf weed of Philippine rice fields",
+    "credit": "Show_ryu, CC BY SA 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Lindernia procumbens?"
+    },
+    {
+      "type": "text",
+      "text": "In English, Lindernia procumbens goes by the name prostrate false pimpernel. It is a low, soft plant from the figwort family, Scrophulariaceae. In the bukid, farmers call it Lalagang. Since it belongs to the broadleaf group, it is not a grass and not a sedge. Some plants lie flat and spread over the mud, while others stand up straight.\n\nYou will find it mostly in rainfed lowland rice fields, where the soil is wet but standing water does not always last. As an annual, each plant lives for only one season. Seed is its only way to spread. Each plant leaves tiny seeds in the soil, and these sprout when the field is moist and open to the sun. That is why a field that had it last season often gets it again."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about Lindernia procumbens",
+      "rows": [
+        [
+          "Name",
+          "Lindernia procumbens"
+        ],
+        [
+          "English name",
+          "Prostrate false pimpernel"
+        ],
+        [
+          "Family",
+          "Scrophulariaceae"
+        ],
+        [
+          "Weed group",
+          "Broadleaves ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Lalagang"
+        ],
+        [
+          "Life cycle",
+          "Annual"
+        ],
+        [
+          "Spreads by",
+          "Seeds"
+        ],
+        [
+          "Where it grows",
+          "Rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Lindernia procumbens"
+    },
+    {
+      "type": "text",
+      "text": "Look for a small plant with slender stems that feel square when you roll them between your fingers. The stems have four sides. Its leaves are elliptic, with very short stalks and smooth edges without teeth. Like other broadleaf weeds, the leaves are wide with netted veins, unlike the narrow blades of grasses and sedges. The flowers are small and white to lilac. Some plants spread low over the soil, while others grow upright."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Thin stems with four sides that feel square when you roll them between your fingers.",
+        "Elliptic leaves on very short stalks, with smooth edges and no teeth.",
+        "Small white to lilac flowers peeking out between young palay in rainfed fields.",
+        "Plants that creep low over the mud in one spot but stand upright in another.",
+        "Wide, net veined leaves that set it apart from the grassy and sedge weeds nearby."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Lindernia procumbens is small, but it still takes what your palay needs. Its roots pull water and fertilizer from the same soil as the rice. When many plants grow close together, they form a low mat that crowds young rice hills. The harm is worst early, while the palay is still short and slow to cover the ground.\n\nBecause it is an annual that spreads by seed, every plant left to flower adds seed to the soil. Those seeds wait for the next planting. Low weeds like this also give some insect pests a place to hide between the rice hills. So a field that looks only a little weedy can still lose yield, season after season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Lindernia procumbens"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Hand weed or use a rotary weeder early, before the white to lilac flowers open, because each flower can turn into a capsule full of tiny seeds.",
+        "Keep a shallow layer of water in the field after transplanting where you can, since small broadleaf seeds sprout best on moist, exposed soil.",
+        "Level the field well during land preparation so no high spots stay dry, because open, drying patches give this weed room to sprout.",
+        "Pull the plants out with their roots and carry them to the bund, instead of leaving flowering plants on the mud to drop seed."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Broadleaves"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold Lindernia procumbens down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for broadleaves by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Bensulfuron methyl, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Bensulfuron methyl, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl",
+          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "Metsulfuron methyl plus chlorimuron ethyl",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Lindernia procumbens Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Prepare the land well: flood, plow, let the weed seeds sprout, then kill them when you harrow. Level the field so water covers it evenly.",
+        "Pull escapes before they flower and set seed, and carry them out of the paddy instead of leaving them on the bund.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [broadleaf weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Lindernia procumbens?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Lindernia procumbens"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is Lindernia procumbens called in Tagalog or local dialects?",
+          "a": "Farmers call it Lalagang. Its English name is prostrate false pimpernel. Using the local name helps when you ask a neighbor or your agricultural technician about it. Still, local names can change from one town to the next. So check for the square, four sided stems and the white to lilac flowers to be sure you have the right weed."
+        },
+        {
+          "q": "How do I control this weed in my rice field?",
+          "a": "Start with prevention. Use clean seed and level the field well. Keep shallow water in the paddy where you can, and hand weed early, before the plants flower. If you still need a herbicide, choose one made for broadleaf weeds that fits the age of your rice. Always follow the FPA registered label of the product you buy."
+        },
+        {
+          "q": "Why does this weed keep coming back every season?",
+          "a": "It is an annual, so the old plants die after one season. But they leave tiny seeds behind in the soil. Those seeds sprout again once the field is wet and open to sunlight. If you let even a few plants flower, the seed bank in your soil grows bigger. That is why early weeding, before flowering, pays off more than late weeding."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More broadleaf weeds of rice",
+      "items": [
+        {
+          "label": "Heartshape false pickerelweed",
+          "url": "/weeds/monochoria-vaginalis"
+        },
+        {
+          "label": "Gooseweed",
+          "url": "/weeds/gooseweed"
+        },
+        {
+          "label": "Seedbox",
+          "url": "/weeds/ludwigia-hyssopifolia"
+        },
+        {
+          "label": "False daisy",
+          "url": "/weeds/false-daisy"
+        },
+        {
+          "label": "Water hyacinth",
+          "url": "/weeds/water-hyacinth"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

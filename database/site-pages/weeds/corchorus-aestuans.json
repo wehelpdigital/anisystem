@@ -1,0 +1,297 @@
+{
+  "section": "weeds",
+  "slug": "corchorus-aestuans",
+  "sortOrder": 305,
+  "lang": "en",
+  "category": "Broadleaves",
+  "title": "Corchorus aestuans: How to Spot and Control Salsaluyot in Palay",
+  "metaTitle": "Corchorus aestuans in Rice: Spot and Control Salsaluyot",
+  "metaDescription": "Corchorus aestuans, or salsaluyot, is a broadleaf weed of rainfed rice. Learn to know its winged pods and stop it before it drops seed.",
+  "focusKeyword": "Corchorus aestuans",
+  "keywords": [
+    "Corchorus aestuans",
+    "salsaluyot",
+    "East Indian jute",
+    "broadleaf weed in rice",
+    "broadleaves weeds"
+  ],
+  "excerpt": "Corchorus aestuans is a small broadleaf weed that many farmers call salsaluyot. It is a close cousin of saluyot, but it grows smaller. You will see it in rainfed lowland rice fields in the Philippines. This page shows you how to spot it among your palay and how it steals from the crop. It also shows how to control it before it drops seed.",
+  "heroImage": {
+    "src": "/images/site/weeds/corchorus-aestuans.webp",
+    "thumb": "/images/site/weeds/corchorus-aestuans-480.webp",
+    "alt": "East Indian jute (Corchorus aestuans), a broadleaf weed of Philippine rice fields",
+    "credit": "Dinesh Valke from Thane, India, CC BY SA 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Corchorus aestuans?"
+    },
+    {
+      "type": "text",
+      "text": "Corchorus aestuans is an upright plant with a hard, woody stem. Farmers call it salsaluyot, because it looks like a smaller saluyot. In English it goes by East Indian jute, and it belongs to the jute family, Tiliaceae. It is a broadleaf weed, so its leaves are wide, not long blades like palay or grass.\n\nYou will find this damo in rainfed lowland rice fields. Its whole life lasts one season only. Within one crop it sprouts, grows, flowers, sets seed and dies. Seed is its only way to spread. Each long pod holds many small seeds, and these fall to the soil when the pod dries and splits open. Then they wait in the bukid and sprout with the next crop. So one plant you leave standing now can become many plants next season."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about Corchorus aestuans",
+      "rows": [
+        [
+          "Name",
+          "Corchorus aestuans"
+        ],
+        [
+          "English name",
+          "East Indian jute"
+        ],
+        [
+          "Family",
+          "Tiliaceae"
+        ],
+        [
+          "Weed group",
+          "Broadleaves ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Salsaluyot"
+        ],
+        [
+          "Life cycle",
+          "Annual"
+        ],
+        [
+          "Spreads by",
+          "Seeds"
+        ],
+        [
+          "Where it grows",
+          "Rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Corchorus aestuans"
+    },
+    {
+      "type": "text",
+      "text": "Look for an upright plant with a woody stem, shorter than true saluyot. The leaves are oval or long oval, with a rounded base and fine, rounded teeth along the edge. Like other broadleaf weeds, the leaves are wide with netted veins, unlike grasses and sedges. The flowers are yellow. Still, the best clue is the pod. It is long, carries 6 to 8 thin wings along its sides, and ends in a beak split into three points."
+    },
+    {
+      "type": "list",
+      "items": [
+        "An upright plant with a woody stem standing among the rice hills, smaller than true saluyot.",
+        "Oval leaves with a rounded base and fine, rounded teeth along the edges.",
+        "Yellow flowers among the leaves, a sign that seed pods will soon follow.",
+        "Long pods with 6 to 8 thin wings running along their length.",
+        "A pod tip that splits into three short points instead of one beak.",
+        "Look alike tip: true saluyot grows bigger, and its pods have ten ribs instead of wings."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Like most broadleaf weeds, this plant competes with your palay for sunlight, water and fertilizer. It stands upright and spreads its leaves, so it shades the young rice beside it. That shade hurts most early in the season, when the rice is still small. Also, every bag of fertilizer you apply feeds the weed, not only the crop.\n\nBecause it is an annual that spreads by seed, every plant left to mature adds to the seed supply in your soil. Its woody stems can also get in the way at harvest. Seeds and pod pieces may mix with the harvested palay and lower its quality, which matters if you keep part of it as binhi. Weedy patches can give insects and rats a place to hide too."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Corchorus aestuans"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Pull the plants by hand while they are young, before the yellow flowers open. If pods have formed, carry the plants out of the field so no seed drops.",
+        "Since it spreads only by seed, clean the bunds and field edges too. Plants on the pilapil can seed back into the paddy every season.",
+        "Keep standing water in the paddy when rain or irrigation allows. Most weeds that grow from seed sprout more easily on exposed soil than under water."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Broadleaves"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold Corchorus aestuans down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for broadleaves by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Bensulfuron methyl, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Bensulfuron methyl, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl",
+          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "Metsulfuron methyl plus chlorimuron ethyl",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Corchorus aestuans Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Prepare the land well: flood, plow, let the weed seeds sprout, then kill them when you harrow. Level the field so water covers it evenly.",
+        "Pull escapes before they flower and set seed, and carry them out of the paddy instead of leaving them on the bund.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [broadleaf weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Corchorus aestuans?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Corchorus aestuans"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What do farmers call Corchorus aestuans in the Philippines?",
+          "a": "Many Filipino farmers call it salsaluyot. The name fits, because the plant looks like a small saluyot. In English it is called East Indian jute. It is a different species from the saluyot sold in the market. Inside a rice field, it acts as a damo that takes light, water and fertilizer from your palay."
+        },
+        {
+          "q": "How do I control salsaluyot in my rice field?",
+          "a": "Start with prevention. Use clean binhi, prepare the land well, and keep water in the paddy where you can. Next, pull young plants by hand before they flower. If you need a herbicide, choose one made for broadleaf weeds and matched to the age of your rice. Always follow the FPA registered label on the product."
+        },
+        {
+          "q": "Is salsaluyot the same plant as the saluyot we eat?",
+          "a": "No, they are two close cousins in the same genus. The saluyot sold in the market is Corchorus olitorius. Salsaluyot is smaller, and its pods carry 6 to 8 wings with a three pointed tip, while saluyot pods have ten ribs. In a rice field, both act as weeds, so pull them out before they seed."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More broadleaf weeds of rice",
+      "items": [
+        {
+          "label": "Heartshape false pickerelweed",
+          "url": "/weeds/monochoria-vaginalis"
+        },
+        {
+          "label": "Gooseweed",
+          "url": "/weeds/gooseweed"
+        },
+        {
+          "label": "Seedbox",
+          "url": "/weeds/ludwigia-hyssopifolia"
+        },
+        {
+          "label": "False daisy",
+          "url": "/weeds/false-daisy"
+        },
+        {
+          "label": "Water hyacinth",
+          "url": "/weeds/water-hyacinth"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

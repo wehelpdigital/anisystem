@@ -1,0 +1,358 @@
+{
+  "section": "weeds",
+  "slug": "types-of-weeds",
+  "sortOrder": 30,
+  "lang": "en",
+  "category": "Weed guides",
+  "title": "Types of Weeds in Rice: How to Tell Grasses, Sedges and Broadleaves Apart",
+  "metaTitle": "Types of Weeds in Rice: Grasses, Sedges, Broadleaves",
+  "metaDescription": "The types of weeds in a Philippine rice field: grasses, sedges and broadleaves. Learn to tell them apart in the field and pick the right control.",
+  "focusKeyword": "types of weeds",
+  "keywords": [
+    "types of weeds",
+    "grasses weeds",
+    "sedges weeds",
+    "sedge weed",
+    "broadleaves",
+    "broadleaves weeds",
+    "grass in tagalog",
+    "weeds in tagalog"
+  ],
+  "excerpt": "Every weed in your palayan, the rice field, belongs to one of three types of weeds: grasses, sedges or broadleaves. The group decides which herbicide works and whether flood water will stop the weed. This guide shows how to sort any weed on the spot, with the local names Filipino farmers use.",
+  "heroImage": {
+    "src": "/images/site/weeds/three-types-of-weeds.webp",
+    "thumb": "/images/site/weeds/three-types-of-weeds-480.webp",
+    "alt": "The three types of weeds side by side: barnyard grass, a grass, purple nutsedge, a sedge, and Monochoria vaginalis, a broadleaf",
+    "credit": "From left: Robert H. Mohlenbrock, USDA SCS, Public domain. Macleay Grass Man, CC BY 2.0. Dinesh Valke, CC BY SA 2.0. All via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why sort weeds before you act"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice's eDamuhan weed app warns that weeds left alone can cut rice yield by 44 to 96 percent. But not every weed answers to the same fix. A grass killer does nothing to mutha, and the flood that drowns one weed lets another thrive.\n\nSo name the group first. Then check its life cycle, the water it likes and how it handles heat. To meet the worst ones by name, see [common weeds in the Philippines](/weeds/common-weeds-philippines)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Damo: weeds in Tagalog and the three groups"
+    },
+    {
+      "type": "text",
+      "text": "Damo is the word for grass in Tagalog, and it is also the everyday word for weeds in Tagalog. So \"may damo sa palayan\" could mean a grass, a sedge or a broadleaf. Each group needs its own plan. Our list of [farm words in Tagalog](/blog/farm-words-in-tagalog) has more field terms."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The three types of weeds and how to tell them apart"
+    },
+    {
+      "type": "text",
+      "text": "PhilRice sorts every rice weed into grasses, sedges and broadleaves. Grasses and sedges both have long, narrow leaves with parallel veins, so they fool many farmers. To tell them apart, check the stem and the leaf collar, where the blade meets the stem."
+    },
+    {
+      "type": "table",
+      "caption": "How to tell the types of weeds apart",
+      "rows": [
+        [
+          "Feature",
+          "Grasses",
+          "Sedges",
+          "Broadleaves"
+        ],
+        [
+          "Leaves",
+          "Long, narrow, in two rows",
+          "Long, narrow, often in three rows",
+          "Wide, in many shapes"
+        ],
+        [
+          "Ligules and auricles",
+          "Ligule, sometimes auricles",
+          "None",
+          "None"
+        ],
+        [
+          "Veins",
+          "Parallel",
+          "Parallel",
+          "Netted in most"
+        ],
+        [
+          "Leaf sheath",
+          "Split open around the stem",
+          "Closed around the stem",
+          "Varies"
+        ],
+        [
+          "Stem shape",
+          "Round and hollow",
+          "Triangular, usually solid",
+          "Varies, often branched"
+        ],
+        [
+          "Nodes",
+          "Clear joints",
+          "No joints",
+          "Leaves grow from joints"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The rolling test for a sedge weed"
+    },
+    {
+      "type": "text",
+      "text": "Roll the stem between your thumb and finger. A sedge weed feels like a pencil with three sides. A grass stem rolls smoothly because it is round, and it is hollow between the joints. The old rule of thumb: sedges have edges.\n\nNext, peel back a leaf where it meets the stem. A grass shows a thin collar, the ligule, and an open sheath. A sedge has no ligule, and its sheath wraps the stem like a closed tube."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Grasses: weeds with round, hollow stems"
+    },
+    {
+      "type": "text",
+      "text": "Grasses are the hardest weeds to catch early, because their seedlings look like young palay. Watch for these:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[Barnyard grass](/weeds/barnyard-grass), Echinochloa crus galli: bayakibok, telebisyon. Some of it in direct seeded areas already resists the butachlor and propanil groups.",
+        "[Jungle rice](/weeds/jungle-rice), Echinochloa colona: dukayang, lau lau.",
+        "[Chinese sprangletop](/weeds/chinese-sprangletop), Leptochloa chinensis: palay maya, kuring kuring.",
+        "[Wrinkle grass](/weeds/ischaemum-rugosum), Ischaemum rugosum: bulo bulo, limba limba.",
+        "[Knotgrass](/weeds/knotgrass), Paspalum distichum: barit, malit kalabaw. A perennial that creeps by rhizomes and stolons.",
+        "[Weedy rice](/weeds/weedy-rice): halo, lahok, sabag. It is rice too, so no selective herbicide can kill it inside a rice crop. Clean seed, clean machines and early pulling are the defense."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Sedges: weeds with three sided stems"
+    },
+    {
+      "type": "text",
+      "text": "Sedges love wet soil. Most are annuals that spread by seed, but mutha creeps underground with tubers and rhizomes. Watch for these sedges weeds:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[Purple nutsedge](/weeds/purple-nutsedge), Cyperus rotundus: mutha, sudsud. A C4 perennial that grows back from tubers and rhizomes.",
+        "[Smallflower umbrella sedge](/weeds/smallflower-umbrella-sedge), Cyperus difformis: payong payong, ubod ubod. A C3 annual.",
+        "[Rice flatsedge](/weeds/rice-flatsedge), Cyperus iria: taga taga, siraw siraw.",
+        "[Globe fringerush](/weeds/globe-fringerush), Fimbristylis miliacea: gumi, buntot pusa.",
+        "[Rock bulrush](/weeds/scirpus-juncoides), Scirpus juncoides: apulid, balbas kalabaw.",
+        "[Giant bulrush](/weeds/giant-bulrush), Scirpus grossus: tikiw."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Broadleaves: weeds with wide leaves"
+    },
+    {
+      "type": "text",
+      "text": "Broadleaves are the easiest weeds to spot. They come from many plant families, so their shapes vary. Still, most broadleaves weeds carry a net of veins across a wide leaf:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "[Heartshape false pickerelweed](/weeds/monochoria-vaginalis), Monochoria vaginalis: gabi gabi. It spreads by seeds and tubers.",
+        "[Gooseweed](/weeds/gooseweed), Sphenoclea zeylanica: mais mais, silisilihan.",
+        "[False daisy](/weeds/false-daisy), Eclipta prostrata: higis manok, tinta tinta.",
+        "[Seedbox](/weeds/ludwigia-hyssopifolia), Ludwigia hyssopifolia: kahoy kahoy, malapako.",
+        "[Spiny amaranth](/weeds/spiny-amaranth), Amaranthus spinosus: kulitis, uray. A C4 weed of rainfed fields.",
+        "[Water hyacinth](/weeds/water-hyacinth), Eichhornia crassipes: water lily. A floating perennial that spreads by stolons."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Types of weeds by life cycle"
+    },
+    {
+      "type": "text",
+      "text": "Next, ask how long the weed lives. That tells you whether one clean weeding is enough."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Annuals** go from seed to seed within one season or less than a year. Stop them before they set seed.",
+        "**Simple perennials** live more than a year. They spread by seed and by plant parts, and they grow back after you cut the shoot.",
+        "**Creeping perennials** also spread by stolons (stems running above the ground), rhizomes (stems running below it), tubers, aerial bulblets and bulbs. For example, [Bermuda grass](/weeds/bermuda-grass) runs on stolons and rhizomes, while mutha comes back from its tubers."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Perennials need a different plan, because cutting the top leaves the food store underground. So PhilRice leans on land preparation: tillage that separates shoots from roots, dries them out and uses up the reserves below. When you hand weed, pull the whole plant. Keep bunds and canals clean too."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where weeds grow: wet, wet to dry and dry"
+    },
+    {
+      "type": "text",
+      "text": "The eDamuhan app also sorts weeds by the water they need. This tells you how much your flood can do."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Wet** weeds sprout and grow in very wet or flooded soil. Flooding does not stop them, so you still weed or spray.",
+        "**Wet to dry** weeds are dry land weeds that put up with some flooding. A steady flood slows them.",
+        "**Dry** weeds grow on moist to dry land. Water controls these best."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "IRRI's Rice Knowledge Bank calls water the best weed control, since most grasses and some sedges cannot sprout or grow under a flood. It suggests 2 to 5 cm of water on a well leveled field, because weeds take hold on dry high spots. Also, eDamuhan lists floating weeds like [water lettuce](/weeds/water-lettuce) for irrigated fields, but [goosegrass](/weeds/goosegrass) and [southern crabgrass](/weeds/southern-crabgrass) for rainfed ones."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "C3 and C4 weeds: flooded versus rainfed fields"
+    },
+    {
+      "type": "text",
+      "text": "C3 weeds form a 3 carbon compound first when they make food from sunlight. They like moderate heat and plenty of water, but very high heat wastes their energy through photorespiration. That is why most of them rule flooded rice fields. Umbrella sedge, false daisy, seedbox and gabi gabi are C3 weeds.\n\nC4 weeds use a more efficient path that forms a 4 carbon compound first. They thrive in hot, dry places like rainfed fields. Barnyard grass, goosegrass, mutha and spiny amaranth are C4 weeds.\n\nSo in a flooded field, expect C3 weeds to lead. When a rainfed field dries out in a hot spell, C4 weeds get the upper hand, so walk it more often and weed early."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why the type of weed decides the herbicide"
+    },
+    {
+      "type": "text",
+      "text": "Many herbicides work on only one or two groups. Take the PhilRice recommendations behind our weed control helper. On their own, cyhalofop butyl, metamifop and profoxydim are group 1 grass killers, and they appear on the grass lists only. Next, 2,4 D amine and 2,4 D IBE are group 4 broadleaf killers, listed for sedges and broadleaves but never for grasses.\n\nSo a farmer who mistakes mutha for a grass may spray a grass killer for nothing. Name the group, then count the days after planting. Our [weed control helper](/weeds#control) takes both and lists the active ingredients that fit, each with its herbicide group."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Use only FPA registered herbicides",
+      "text": "Buy only products registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority) and follow the label. Rotate herbicide groups, because one group sprayed season after season breeds resistant weeds. Ask your municipal agricultural officer what suits your area."
+    },
+    {
+      "type": "text",
+      "text": "For spray timing by rice age, read [herbicides for rice weeds](/weeds/herbicides-for-rice-weeds). For the whole season plan, see [weed management in rice](/weeds/weed-management-in-rice)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ask Anee which group it is"
+    },
+    {
+      "type": "text",
+      "text": "Not sure? Photograph the weed close enough to show the stem and the leaf collar. Then ask [Anee](/features/ai-agricultural-technician), the smart farm technician in anee.io, which group it belongs to. Anee answers in Tagalog or English and reads your season first, so the advice fits the age of your rice.\n\nAfter that, let the [cropping calendar](/features/cropping-calendar) date every weeding and spray from each lot's own day zero."
+    },
+    {
+      "type": "cta",
+      "title": "Know your weeds, time your weeding",
+      "text": "Ask Anee about any weed you photograph and keep every weeding day on your anee.io calendar.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the types of weeds"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What are the three types of weeds in rice?",
+          "a": "Grasses, sedges and broadleaves. Grasses have round, hollow stems with joints. Sedges have triangular stems without joints. Broadleaves have wide leaves, most with a net of veins."
+        },
+        {
+          "q": "How do I tell a sedge from a grass?",
+          "a": "Roll the stem between your fingers. Three edges means a sedge. A smooth, round stem with joints means a grass."
+        },
+        {
+          "q": "What is damo in English?",
+          "a": "Damo means both grass and weed. That is why farmers give each weed a local name, like mutha for purple nutsedge."
+        },
+        {
+          "q": "Does flooding kill all weeds?",
+          "a": "No. Water stops most grasses and some sedges, but weeds of the wet group grow well in flooded soil. You still need to weed by hand or spray."
+        },
+        {
+          "q": "Why does mutha keep coming back?",
+          "a": "Mutha is a creeping perennial that regrows from tubers and rhizomes, so cutting the top does not finish it. Pull the whole plant, and prepare the land well so tillage dries the shoots and uses up the food in the tubers."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More weed guides",
+      "items": [
+        {
+          "label": "Weeds and grasses in rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Common weeds in the Philippines",
+          "url": "/weeds/common-weeds-philippines"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        },
+        {
+          "label": "Herbicides for rice weeds",
+          "url": "/weeds/herbicides-for-rice-weeds"
+        },
+        {
+          "label": "Pagtatanim ng palay",
+          "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Farm words in Tagalog",
+          "url": "/blog/farm-words-in-tagalog"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan weed app on Google Play",
+          "url": "https://play.google.com/store/apps/details?id=ph.gov.philrice.edamuhan"
+        },
+        {
+          "label": "PhilRice: Weed identification app boosts farmers' yield",
+          "url": "https://www.philrice.gov.ph/weed-identification-app-boosts-farmers-yield/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Weeds",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Cultural weed control",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/cultural-weed-control"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "University of Illinois Extension: Telling apart grasses, sedges, rushes",
+          "url": "https://extension.illinois.edu/blogs/grasses-glance/2023-04-17-telling-apart-grasses-sedges-rushes"
+        },
+        {
+          "label": "Fertilizer and Pesticide Authority",
+          "url": "https://fpa.da.gov.ph"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,302 @@
+{
+  "section": "weeds",
+  "slug": "yellow-velvetleaf",
+  "sortOrder": 500,
+  "lang": "en",
+  "category": "Broadleaves",
+  "title": "Yellow Velvetleaf (Pala Pala): How to Spot and Control It in Rice",
+  "metaTitle": "Yellow Velvetleaf in Rice: Identification and Control",
+  "metaDescription": "Yellow velvetleaf, or pala pala, can cut transplanted rice yield by up to 63 percent. Learn to spot it and beat it with land prep and water care.",
+  "focusKeyword": "yellow velvetleaf",
+  "keywords": [
+    "yellow velvetleaf",
+    "pala pala",
+    "Limnocharis flava",
+    "broadleaf weed in rice"
+  ],
+  "excerpt": "Yellow velvetleaf is an upright water weed with broad, light green leaves and yellow flowers. Farmers call it pala pala. It grows in irrigated and rainfed lowland rice fields in the Philippines, and it does best when flooded. This page shows you how to spot it and how much harvest it can take. It also shows how to control it before it spreads.",
+  "heroImage": {
+    "src": "/images/site/weeds/yellow-velvetleaf.webp",
+    "thumb": "/images/site/weeds/yellow-velvetleaf-480.webp",
+    "alt": "Yellow velvetleaf (Limnocharis flava), a broadleaf weed of Philippine rice fields",
+    "credit": "Michael Wolf, CC BY SA 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Yellow Velvetleaf?"
+    },
+    {
+      "type": "text",
+      "text": "Yellow velvetleaf is a water loving herb from the Butomaceae family. Farmers call it pala pala. It stands upright in the mud, with broad, light green leaves held up on stalks that are triangular. The leaves feel thin, like paper. Weed experts group it with the broadleaf weeds, even if it does not look like a typical one.\n\nIt grows in irrigated and rainfed lowland rice fields. Being a perennial, it can live on from season to season. It spreads in two ways. First, it makes seeds inside round fruits. It also forms small new plantlets called ramets, and these grow into new plants. So a single clump left in a canal or a wet corner can spread back into the field."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about yellow velvetleaf",
+      "rows": [
+        [
+          "Name",
+          "Yellow velvetleaf"
+        ],
+        [
+          "Scientific name",
+          "Limnocharis flava"
+        ],
+        [
+          "Family",
+          "Butomaceae"
+        ],
+        [
+          "Weed group",
+          "Broadleaves ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Pala pala"
+        ],
+        [
+          "Life cycle",
+          "Perennial"
+        ],
+        [
+          "Spreads by",
+          "Seeds and small offshoot plants (ramets)"
+        ],
+        [
+          "Where it grows",
+          "Irrigated and rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Yellow Velvetleaf"
+    },
+    {
+      "type": "text",
+      "text": "Look for an upright plant standing in the water, with broad, light green leaves on long stalks. The leaves are oval to wide elliptic, 6 to 20 cm long, and thin like paper. If you roll a leaf stalk between your fingers, you will feel three flat sides instead of a round stalk. The stems are hollow and smooth. Its leaves are broad, unlike the narrow blades of grasses and sedges. When it blooms, the flowers are yellow with three parts, and round fruits follow."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Upright, light green leaves standing above the water on long stalks.",
+        "Leaf stalks with three flat sides that feel triangular between your fingers.",
+        "Thin, papery leaves, oval to wide elliptic, about 6 to 20 cm long.",
+        "Yellow flowers with three parts, later followed by round fruits.",
+        "Hollow stems with a smooth surface, easy to see when you cut one."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Pala pala is a strong competitor, most of all in flooded fields. One field study tested it on irrigated transplanted rice, using the variety NSIC Rc 144. When the weed competed for the whole season, yield dropped by 18 percent at 10 plants per square meter. The loss rose to 23 percent at 20 plants, 30 percent at 25 plants, and 48 percent at 30 plants.\n\nThe damage grows with the number of weeds. When the stand reached 50 to 60 plants per square meter, the rice yield fell by 63 percent. In plain words, a thick stand of this weed can take more than half of your harvest. So do not wait for it to fill the paddy."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Its weak spot",
+      "text": "Pala pala loves water, and it weakens when the field turns drier. Use that against it. Prepare the land thoroughly, so old plants and ramets are destroyed before you plant. Then manage your water with care. Level the field so low spots do not stay flooded for long, and dry the field when your crop and water supply allow. Good land preparation plus careful water work keeps this weed down."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Yellow Velvetleaf"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Dig out whole clumps with their bases, not just the leaves. If you only cut the leaves, the perennial base can grow again.",
+        "Remove the flowering stalks before the round fruits ripen or ramets form, so no new seeds or plantlets reach the paddy.",
+        "Clean canals and corners where the field stays wet longest. A clump left there can spread back into the rice.",
+        "Level the field well during land preparation, so no low spots stay flooded and give this water loving weed a place to hide."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Broadleaves"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold yellow velvetleaf down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for broadleaves by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Bensulfuron methyl, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Bensulfuron methyl, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl",
+          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "Metsulfuron methyl plus chlorimuron ethyl",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Yellow Velvetleaf Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Plow and harrow well, and rake out the runners, roots or pieces you turn up. A small piece left in wet soil can grow a new plant.",
+        "Pull escapes before they flower and set seed, and carry them out of the paddy instead of leaving them on the bund.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [broadleaf weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Yellow Velvetleaf?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Yellow Velvetleaf"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What do Filipino farmers call this weed?",
+          "a": "Farmers call it pala pala. Its scientific name is Limnocharis flava. You will see it standing upright in flooded paddies and wet canals, with light green leaves and yellow flowers. So if your neighbor talks about pala pala in the palay, this is the weed they mean. Treat it seriously, because it can take a big share of the harvest."
+        },
+        {
+          "q": "How do I control pala pala in my rice field?",
+          "a": "Start with thorough land preparation to destroy old plants and ramets. Level the field and manage water well, since the weed weakens when the soil turns drier. Dig out clumps by hand, bases included. If you need a herbicide, pick one for broadleaf weeds that fits the age of your rice. Always follow the FPA registered label."
+        },
+        {
+          "q": "How much harvest can yellow velvetleaf take?",
+          "a": "Quite a lot. In a field study on transplanted rice, 30 plants per square meter cut yield by 48 percent. At 50 to 60 plants per square meter, the loss reached 63 percent. Even 10 plants per square meter cost 18 percent of the harvest. So control it early, before it spreads across the paddy."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More broadleaf weeds of rice",
+      "items": [
+        {
+          "label": "Heartshape false pickerelweed",
+          "url": "/weeds/monochoria-vaginalis"
+        },
+        {
+          "label": "Gooseweed",
+          "url": "/weeds/gooseweed"
+        },
+        {
+          "label": "Seedbox",
+          "url": "/weeds/ludwigia-hyssopifolia"
+        },
+        {
+          "label": "False daisy",
+          "url": "/weeds/false-daisy"
+        },
+        {
+          "label": "Water hyacinth",
+          "url": "/weeds/water-hyacinth"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

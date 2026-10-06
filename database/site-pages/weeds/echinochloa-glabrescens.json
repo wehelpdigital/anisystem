@@ -1,0 +1,293 @@
+{
+  "section": "weeds",
+  "slug": "echinochloa-glabrescens",
+  "sortOrder": 115,
+  "lang": "en",
+  "category": "Grasses",
+  "title": "Echinochloa glabrescens: How to Spot and Control It in Palay",
+  "metaTitle": "Echinochloa glabrescens in Rice: Spot It and Stop It",
+  "metaDescription": "Echinochloa glabrescens can cut rice yield by 6 to 73 percent. Learn how to tell this look alike grass from palay and how to control it early.",
+  "focusKeyword": "Echinochloa glabrescens",
+  "keywords": [
+    "Echinochloa glabrescens",
+    "telebisyon",
+    "humay humay",
+    "grass weed in rice fields",
+    "barnyard grass relative"
+  ],
+  "excerpt": "Echinochloa glabrescens is an upright grass weed that sprouts right alongside rice seedlings in irrigated and rainfed lowland fields of the Philippines. It is a close relative of barnyard grass and just as hard to tell from young palay. This page shows how to spot it, how much harm it does and how to control it.",
+  "heroImage": {
+    "src": "",
+    "alt": "Echinochloa glabrescens with narrow purplish seed heads standing upright among green rice plants",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Echinochloa glabrescens?"
+    },
+    {
+      "type": "text",
+      "text": "Echinochloa glabrescens is a grass weed with no common English name, so most farmers use local names. You may hear telebisyon, antena, dawa dawa, marapagay, paray paray or humay humay. A name like humay humay hints at how much it looks like rice. It grows in both irrigated and rainfed lowland rice fields, so watch for it in transplanted and direct seeded crops alike.\n\nThis weed is an annual, and it spreads only by seed. Its seedlings come up at the same time as the rice, both in transplanted fields and after direct seeding. When the seeds ripen, they drop from the panicle onto the soil. So the plants you miss this season leave plenty of seed waiting for your next crop."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about Echinochloa glabrescens",
+      "rows": [
+        [
+          "Name",
+          "Echinochloa glabrescens"
+        ],
+        [
+          "Family",
+          "Poaceae (Graminae)"
+        ],
+        [
+          "Weed group",
+          "Grasses ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Telebisyon, antena, dawa dawa, marapagay, paray paray, humay humay"
+        ],
+        [
+          "Life cycle",
+          "Annual"
+        ],
+        [
+          "Spreads by",
+          "Seeds"
+        ],
+        [
+          "Where it grows",
+          "Irrigated and rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Echinochloa glabrescens"
+    },
+    {
+      "type": "text",
+      "text": "Like other grasses, it has round, hollow stems with clear joints, or nodes. This plant grows upright and can reach 100 cm. Fold back a leaf where it joins the stem. Like its cousins in the Echinochloa group, it has no ligule there, while rice has one. Later, look for a narrow panicle shaped like a pyramid, with many short spikes. The spikelets are green to purplish and fall off when ripe. Awns, if any, are about 1 cm long."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Upright clumps stand among the rice and can reach up to 100 cm.",
+        "Look alike tip: there is no ligule at the leaf collar, but rice always has one.",
+        "Narrow seed heads shaped like a pyramid, each one carrying many short spikes.",
+        "Spikelets turn from green to purplish and drop to the ground when ripe.",
+        "Awns stay short, about 1 cm, and some plants have no awns at all.",
+        "Compared with barnyard grass, it stands shorter and has a narrower panicle with much shorter awns."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Echinochloa glabrescens competes hard with rice, most of all when its seedlings grow up with the rice seedlings. This happens both at transplanting and after direct seeding. Since the two start together, the weed takes its share of water, light and fertilizer from the very first days.\n\nThe losses climb as the weed spreads. At an infestation level of 5 percent, average rice yield loss is 6 percent. At 40 percent infestation, the loss reaches 73 percent. It also feeds the rice bug and the rice black bug when no rice is in the field. As a result, these pests stay close by and move into your next crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Echinochloa glabrescens"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Check hills closely in the first weeks after planting. Fold back the leaf collar, and pull any plant that has no ligule.",
+        "Weed before the panicles ripen. The spikelets drop when mature, so late weeding leaves the seed already in your soil.",
+        "Weed the seedbed well before you pull the punla, because its seedlings can ride along with rice seedlings into the field.",
+        "Keep a steady layer of water in the paddy once the rice can take it, so fewer new seedlings come up."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Grasses"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold Echinochloa glabrescens down, choose an active ingredient that works on grasses at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for grasses by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Butachlor, Butachlor plus 2,4 D IBE, Clomazone, Oxadiazon, Pendimethalin, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor, Butachlor plus 2,4 D IBE, Butachlor with safener, Clomazone, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Metamifop, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl, Profoxydim",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop, Penoxsulam plus cyhalofop butyl, Profoxydim, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "Fenoxaprop P ethyl plus ethoxysulfuron, Metamifop plus penoxsulam",
+          "Cyhalofop butyl plus bispyribac sodium, Metamifop, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "No herbicide listed at this age. Hand weed and keep the water up.",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Echinochloa glabrescens Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Prepare the land well: flood, plow, let the weed seeds sprout, then kill them when you harrow. Level the field so water covers it evenly.",
+        "Pull escapes before the seed heads open, and clean the thresher and harvester before they enter the field.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [grass weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Echinochloa glabrescens?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Echinochloa glabrescens"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What do farmers call Echinochloa glabrescens locally?",
+          "a": "Farmers call it telebisyon, antena, dawa dawa, marapagay, paray paray or humay humay, depending on the area. It has no common English name. Several of these names also go to barnyard grass, its close relative. So look at the plant itself. This one is shorter, with a narrow panicle and short awns or none at all."
+        },
+        {
+          "q": "How do I control this weed in my rice field?",
+          "a": "Prevention comes first. Use clean seed, weed the seedbed and level the field well. Then keep water in the paddy once the rice can take it. Next, hand weed early and check each hill for the missing ligule. If you need a herbicide, pick one for grass weeds that suits the age of your rice, and always follow the FPA registered label."
+        },
+        {
+          "q": "Can this weed attract rice pests to my field?",
+          "a": "Yes. It serves as alternate food for the rice bug and the rice black bug when no rice is in the field. So both pests can stay alive on it between crops and then move back to your palay. Clear it from bunds, canals and fallow paddies before you plant, so these pests have less to live on."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More grass weeds of rice",
+      "items": [
+        {
+          "label": "Barnyard grass",
+          "url": "/weeds/barnyard-grass"
+        },
+        {
+          "label": "Weedy rice",
+          "url": "/weeds/weedy-rice"
+        },
+        {
+          "label": "Chinese sprangletop",
+          "url": "/weeds/chinese-sprangletop"
+        },
+        {
+          "label": "Jungle rice",
+          "url": "/weeds/jungle-rice"
+        },
+        {
+          "label": "Wrinkle grass",
+          "url": "/weeds/ischaemum-rugosum"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

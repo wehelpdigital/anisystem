@@ -1,0 +1,297 @@
+{
+  "section": "weeds",
+  "slug": "bermuda-grass",
+  "sortOrder": 175,
+  "lang": "en",
+  "category": "Grasses",
+  "title": "Bermuda Grass in Rice Fields: How to Spot and Control It",
+  "metaTitle": "Bermuda Grass in Rice: Identification and Control",
+  "metaDescription": "Bermuda grass creeps into rainfed palay and grows back from its runners. See how to spot it early and keep it out of your bukid this season.",
+  "focusKeyword": "Bermuda grass",
+  "keywords": [
+    "Bermuda grass",
+    "Cynodon dactylon",
+    "bakbaka",
+    "kawad kawad",
+    "grass weed in rice fields"
+  ],
+  "excerpt": "Bermuda grass is a tough, creeping perennial grass weed that spreads across rainfed lowland rice fields in the Philippines. It roots at every joint of its runners, so one plant soon covers a wide patch of bukid. This page shows how to spot it, how it hurts your harvest and how to control it.",
+  "heroImage": {
+    "src": "/images/site/weeds/bermuda-grass.webp",
+    "thumb": "/images/site/weeds/bermuda-grass-480.webp",
+    "alt": "Bermuda grass (Cynodon dactylon), a grass weed of Philippine rice fields",
+    "credit": "Robert Flogaus Faust, CC BY 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Bermuda Grass?"
+    },
+    {
+      "type": "text",
+      "text": "Bermuda grass (Cynodon dactylon) is a low, creeping member of the grass family. Farmers in different provinces call it bakbaka, buku buku, galud galud or kawad kawad. In palay country it shows up most in rainfed lowland fields, where the soil dries out between rains. It also creeps in from dry bunds and field edges.\n\nThis weed is a perennial, so it lives on from one season to the next. It spreads in two ways. First, it makes seeds on small spikes shaped like fingers. Next, and more important, it grows runners above the ground called stolons and stems under the ground called rhizomes. Every joint can put down roots and start a new plant. That is why plowing can chop one clump into many pieces and plant them all over your field."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about Bermuda grass",
+      "rows": [
+        [
+          "Name",
+          "Bermuda grass"
+        ],
+        [
+          "Scientific name",
+          "Cynodon dactylon"
+        ],
+        [
+          "Family",
+          "Poaceae (Graminae)"
+        ],
+        [
+          "Weed group",
+          "Grasses ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Bakbaka, buku buku, galud galud, kawad kawad"
+        ],
+        [
+          "Life cycle",
+          "Perennial"
+        ],
+        [
+          "Spreads by",
+          "Seeds and vegetative parts (stolons and rhizomes)"
+        ],
+        [
+          "Where it grows",
+          "Rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Bermuda Grass"
+    },
+    {
+      "type": "text",
+      "text": "Look for a low mat of fine grass that hugs the ground. Like other grasses, it has round, hollow stems marked by clear joints, or nodes. Each joint on a long runner roots into the soil and carries two or three leaves. Long white hairs circle the ligule, the spot where the leaf blade meets the stem. At the top of each flowering stem, 3 to 7 thin spikes spread out like fingers, each about 4 cm long."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Thin runners creep over dry soil and put down roots at every joint.",
+        "Two or three leaves grow from each joint along the long runners.",
+        "Long white hairs ring the ligule, where the leaf blade joins the stem.",
+        "Seed heads carry 3 to 7 slender spikes, about 4 cm long, spread like fingers.",
+        "Look alike tip: torpedo grass and knotgrass also creep, but this weed has 2 or 3 leaves per runner joint."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "This grass is a C4 plant. That means it makes food very well in strong sun and heat, so it keeps growing fast even when the field dries out. Its thick mats take water, light and fertilizer that your palay needs, most of all along dry patches and field edges.\n\nIt also gives rice diseases a place to hide. Bipolaris oryzae, the fungus behind brown spot, and Rhizoctonia solani, the fungus behind sheath blight, can live on it while no rice is growing. Then they move back to your next crop. Each seed head can also make up to 230 seeds, on top of the runners that keep spreading."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Bermuda Grass"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Dig out each clump together with its runners and underground stems. Any piece you leave in the soil can sprout into a new plant.",
+        "Keep standing water in the field when you can. This grass thrives in dry soil and grows weak under steady flooding.",
+        "Clean the bunds and field edges before land preparation, since the runners creep from there into the paddy.",
+        "After plowing, rake out the chopped runners and dry them in the sun so the pieces cannot root again."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Grasses"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold Bermuda grass down, choose an active ingredient that works on grasses at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for grasses by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Butachlor, Butachlor plus 2,4 D IBE, Clomazone, Oxadiazon, Pendimethalin, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor, Butachlor plus 2,4 D IBE, Butachlor with safener, Clomazone, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Metamifop, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl, Profoxydim",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop, Penoxsulam plus cyhalofop butyl, Profoxydim, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "Fenoxaprop P ethyl plus ethoxysulfuron, Metamifop plus penoxsulam",
+          "Cyhalofop butyl plus bispyribac sodium, Metamifop, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "No herbicide listed at this age. Hand weed and keep the water up.",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Bermuda Grass Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Plow and harrow well, and rake out the runners, roots or pieces you turn up. A small piece left in wet soil can grow a new plant.",
+        "Pull escapes before the seed heads open, and clean the thresher and harvester before they enter the field.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [grass weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Bermuda Grass?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Bermuda Grass"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What do Filipino farmers call Bermuda grass?",
+          "a": "It goes by several local names. You may hear bakbaka, buku buku, galud galud or kawad kawad, depending on the province. All of these point to the same creeping weed, Cynodon dactylon. If a neighbor uses a different name, compare the runners and the finger shaped spikes so you both mean the same plant."
+        },
+        {
+          "q": "How do I control Bermuda grass in my rice field?",
+          "a": "Start with prevention. Clean your bunds and field edges, and keep water in the field when you can, because this grass hates standing water. Then hand weed early and pull out the runners and underground stems, not just the leaves. If you need a herbicide, choose one made for grass weeds that fits the age of your rice, and always follow the FPA registered label."
+        },
+        {
+          "q": "Why does it keep coming back after weeding?",
+          "a": "It is a perennial that stores food in its underground stems. When you cut or pull only the top, the rhizomes and runner pieces left in the soil send up new shoots. Plowing can even spread those pieces across the field. So dig out the whole plant, carry the pieces out of the paddy, and check the patch again after two weeks."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More grass weeds of rice",
+      "items": [
+        {
+          "label": "Barnyard grass",
+          "url": "/weeds/barnyard-grass"
+        },
+        {
+          "label": "Weedy rice",
+          "url": "/weeds/weedy-rice"
+        },
+        {
+          "label": "Chinese sprangletop",
+          "url": "/weeds/chinese-sprangletop"
+        },
+        {
+          "label": "Echinochloa glabrescens",
+          "url": "/weeds/echinochloa-glabrescens"
+        },
+        {
+          "label": "Jungle rice",
+          "url": "/weeds/jungle-rice"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

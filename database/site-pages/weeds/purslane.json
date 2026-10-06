@@ -1,0 +1,297 @@
+{
+  "section": "weeds",
+  "slug": "purslane",
+  "sortOrder": 445,
+  "lang": "en",
+  "category": "Broadleaves",
+  "title": "Purslane in Rice Fields: How to Spot and Control Alusiman",
+  "metaTitle": "Purslane in Rice Fields: How to Identify and Control It",
+  "metaDescription": "Purslane, or alusiman, is a fleshy creeping weed of rainfed rice that regrows from stem pieces. Learn to spot it and keep it from spreading in your field.",
+  "focusKeyword": "purslane",
+  "keywords": [
+    "purslane",
+    "alusiman",
+    "olasiman",
+    "Portulaca oleracea",
+    "broadleaf weed in rice"
+  ],
+  "excerpt": "Purslane is a low, fleshy broadleaf weed with reddish stems and small yellow flowers. Farmers call it alusiman, olasiman or kantataba. It spreads across rainfed lowland rice fields, mostly on soil that is moist but not flooded. This page shows you how to spot it, why it grows back after weeding, and how to control it in your palay.",
+  "heroImage": {
+    "src": "/images/site/weeds/purslane.webp",
+    "thumb": "/images/site/weeds/purslane-480.webp",
+    "alt": "Common purslane (Portulaca oleracea), a broadleaf weed of Philippine rice fields",
+    "credit": "Didier Descouens, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Purslane?"
+    },
+    {
+      "type": "text",
+      "text": "Purslane, or Portulaca oleracea, belongs to the family Portulacaceae. Its local names include alusiman, kantataba, ngalug and olasiman. It is a succulent herb, which means its stems and leaves hold water. That helps it get through hot, dry days in rainfed lowland rice fields, where the soil dries out between rains. You can spot it fast by its fleshy, reddish stems.\n\nMost plants live for one season, but some keep going and act as perennials. It spreads in two ways. It makes many tiny seeds, and it also grows from stem pieces. A broken stem that lands on moist soil can root and start a new plant. That is why chopping it up and leaving it in the field only spreads it further."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about purslane",
+      "rows": [
+        [
+          "Name",
+          "Purslane"
+        ],
+        [
+          "Scientific name",
+          "Portulaca oleracea"
+        ],
+        [
+          "Family",
+          "Portulacaceae"
+        ],
+        [
+          "Weed group",
+          "Broadleaves ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Alusiman, kantataba, ngalug, olasiman"
+        ],
+        [
+          "Life cycle",
+          "Annual, sometimes perennial"
+        ],
+        [
+          "Spreads by",
+          "Seeds and stem cuttings"
+        ],
+        [
+          "Where it grows",
+          "Rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Purslane"
+    },
+    {
+      "type": "text",
+      "text": "Look low, close to the ground. This weed creeps and spreads flat instead of standing up. Its stems are smooth, branched, fleshy and reddish. The leaves are thick and juicy, shaped like a small paddle, and wider at the tip than at the base. They sit right on the stem, one at a time, with no stalk. As a broadleaf, it has flat leaves, unlike grasses and sedges. Small yellow flowers with five petals open among the leaves."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Flat, spreading mats of smooth, reddish, fleshy stems close to the soil.",
+        "Thick, juicy, paddle shaped leaves with no stalk, set one by one along the stem.",
+        "Small yellow flowers with five petals tucked among the leaves.",
+        "New plants rooting from stem pieces left on moist soil after weeding.",
+        "Look alike tip: horse purslane has leaves in unequal opposite pairs, while this weed has alternate leaves."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Purslane stays low, but it covers the soil fast and takes water and fertilizer that your palay needs. Young rice in rainfed fields feels this most, because water there runs short already. Dense mats also crowd new seedlings between the rows.\n\nIts fleshy stems make it hard to kill by hand. Pulled plants can stay alive on the soil for a while and root again. So a field weeded carelessly can end up with more plants than before. Seeds left in the soil also bring a new flush with the next crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Purslane"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Never chop it and leave the pieces. Stem pieces root again on moist soil, so bag pulled plants and carry them out of the field.",
+        "Do not leave pulled plants on the bunds to dry. Their fleshy stems hold water and can stay alive long enough to root.",
+        "Keep water in the field when rain allows, since standing water keeps this dryland weed from sprouting and spreading.",
+        "Weed before the yellow flowers set seed, so you cut down the seed it leaves in the soil."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Broadleaves"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold purslane down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for broadleaves by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Bensulfuron methyl, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Bensulfuron methyl, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl",
+          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "Metsulfuron methyl plus chlorimuron ethyl",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Purslane Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Plow and harrow well, and rake out the runners, roots or pieces you turn up. A small piece left in wet soil can grow a new plant.",
+        "Pull escapes before they flower and set seed, and carry them out of the paddy instead of leaving them on the bund.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [broadleaf weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Purslane?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Purslane"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What are the local names of purslane?",
+          "a": "Farmers know it as alusiman, olasiman, kantataba or ngalug, depending on the region. Its scientific name is Portulaca oleracea. Take note that alusiman and kantataba also refer to a look alike weed with leaves in unequal opposite pairs. So check the leaves first before you plan your control."
+        },
+        {
+          "q": "How do I control alusiman in my rice field?",
+          "a": "Start with a well prepared field, and hold water in it when rain allows. Hand weed early, and carry every pulled plant out of the field, since stem pieces root again. Do not let plants flower and seed. If you need a herbicide, choose one by weed group and the age of your rice, and always follow the FPA registered label."
+        },
+        {
+          "q": "Can you eat alusiman from the rice field?",
+          "a": "Yes, it is a well known edible green, and many Filipino families cook it, especially in Ilocos. But only eat plants you are sure of, and never pick them from a field sprayed with herbicide or insecticide. Wash them well. If you are unsure whether someone sprayed the plant, leave it and take it out of the field as a weed."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More broadleaf weeds of rice",
+      "items": [
+        {
+          "label": "Heartshape false pickerelweed",
+          "url": "/weeds/monochoria-vaginalis"
+        },
+        {
+          "label": "Gooseweed",
+          "url": "/weeds/gooseweed"
+        },
+        {
+          "label": "Seedbox",
+          "url": "/weeds/ludwigia-hyssopifolia"
+        },
+        {
+          "label": "False daisy",
+          "url": "/weeds/false-daisy"
+        },
+        {
+          "label": "Water hyacinth",
+          "url": "/weeds/water-hyacinth"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

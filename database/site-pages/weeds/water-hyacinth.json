@@ -1,0 +1,298 @@
+{
+  "section": "weeds",
+  "slug": "water-hyacinth",
+  "sortOrder": 170,
+  "lang": "en",
+  "category": "Broadleaves",
+  "title": "Water Hyacinth: How to Spot and Control It in Rice Fields",
+  "metaTitle": "Water Hyacinth in Rice: Identification and Control",
+  "metaDescription": "Water hyacinth blocks irrigation canals and holds back rice growth. Learn to spot its spongy leaf stalks and purple flowers, and how to clear it.",
+  "focusKeyword": "water hyacinth",
+  "keywords": [
+    "water hyacinth",
+    "water lily",
+    "Eichhornia crassipes",
+    "floating weed in rice",
+    "broadleaf weed"
+  ],
+  "excerpt": "Water hyacinth is a floating weed with swollen, spongy leaf stalks and purple flowers. Many Filipino farmers simply call it water lily. It grows in irrigated lowland rice fields and also in the canals that feed them. This page shows you how to spot it and how it hurts your palay and your irrigation. It also shows how to control it before it covers the water.",
+  "heroImage": {
+    "src": "/images/site/weeds/water-hyacinth.webp",
+    "thumb": "/images/site/weeds/water-hyacinth-480.webp",
+    "alt": "Water hyacinth (Eichhornia crassipes), a broadleaf weed of Philippine rice fields",
+    "credit": "Juan Carlos Fonseca Mata, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Water Hyacinth?"
+    },
+    {
+      "type": "text",
+      "text": "Water hyacinth floats on the water instead of rooting in the soil. Its roots hang down into the water like a beard. A short stem holds a rosette of shiny, rounded leaves on swollen, spongy stalks that work like floats. Many Filipinos call it water lily, but it is not a true lily. It belongs to the pickerelweed family, Pontederiaceae, and weed experts group it with the broadleaves.\n\nYou will find it in irrigated lowland rice fields and their canals. It is a perennial, so it keeps living from season to season. It spreads in three ways. First, it sends out runners that grow new daughter plants. Next, any broken piece can float away and start a new plant. Finally, it also makes seeds. That is why one small clump can cover a canal before you notice."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about water hyacinth",
+      "rows": [
+        [
+          "Name",
+          "Water hyacinth"
+        ],
+        [
+          "Scientific name",
+          "Eichhornia crassipes"
+        ],
+        [
+          "Family",
+          "Pontederiaceae"
+        ],
+        [
+          "Weed group",
+          "Broadleaves ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Water lily"
+        ],
+        [
+          "Life cycle",
+          "Perennial"
+        ],
+        [
+          "Spreads by",
+          "Stolons, plant fragments, seeds"
+        ],
+        [
+          "Where it grows",
+          "Irrigated lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Water Hyacinth"
+    },
+    {
+      "type": "text",
+      "text": "Look for plants floating on the water surface in a tight rosette. The leaves are oval to almost round, shiny and thick. If you squeeze a leaf stalk, it feels swollen and spongy, like foam, because it is full of air. Below the water, dark roots often hang loose instead of gripping the soil. Its leaves are broad, unlike the narrow blades of grasses and sedges. When it flowers, it shows many purple blooms on an upright stalk."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Rosettes of shiny, rounded leaves floating on the water in the paddy or canal.",
+        "Swollen, spongy leaf stalks that feel like foam when you squeeze them.",
+        "Dark roots trailing below the plant, often hanging loose in the water.",
+        "Many purple flowers clustered on an upright stalk above the leaves.",
+        "Small daughter plants joined to the mother plant by runners on the water.",
+        "Floating mats that slow canal flow or crowd the water at the paddy inlet."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "This weed hurts a rice farm in two places, the canal and the paddy. In the canal, thick mats slow the flow and block the water your palay needs. Gates and inlets clog, so fields at the end of the line may get too little water. Inside the paddy, the floating plants crowd the rice and hold back its growth. Together, these effects can cause heavy economic losses in rice fields.\n\nThere is another risk. Water hyacinth can carry disease organisms that infect several other crops. So a canal full of it is not only a water problem. It can also pass trouble on to the crops you or your neighbors grow nearby."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Water Hyacinth"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Scoop the plants out of canals and the paddy with a net or rake while the patch is still small. Daughter plants multiply fast on open water.",
+        "Pile removed plants on high, dry ground far from the water. Broken pieces that fall back into a canal can start new plants.",
+        "Put a simple screen or net at the paddy water inlet. It catches floating plants before they drift in from the canal.",
+        "Work with your irrigators association to clear the canals together. Plants left upstream will float down and fill your field again."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Broadleaves"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold water hyacinth down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for broadleaves by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Bensulfuron methyl, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Bensulfuron methyl, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl",
+          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "Metsulfuron methyl plus chlorimuron ethyl",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Water Hyacinth Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Plow and harrow well, and rake out the runners, roots or pieces you turn up. A small piece left in wet soil can grow a new plant.",
+        "Pull escapes before they flower and set seed, and carry them out of the paddy instead of leaving them on the bund.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [broadleaf weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Water Hyacinth?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Water Hyacinth"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What do Filipino farmers call water hyacinth?",
+          "a": "In the Philippines, many farmers call it water lily. You will hear that name in the bukid and along rivers, but the plant is not a true lily. Its scientific name is Eichhornia crassipes, and it belongs to the pickerelweed family, Pontederiaceae. Whatever you call it, treat it as a weed once it reaches your canal or paddy."
+        },
+        {
+          "q": "How do I get rid of water lily in my rice field and canal?",
+          "a": "Prevention comes first. Keep canals clean and screen the water inlet so plants cannot drift in with the irrigation water. Then scoop out every plant you see with a net or rake, and dry them on high ground. If you need a herbicide, pick one for broadleaf weeds that fits the age of your rice. Always follow the FPA registered label."
+        },
+        {
+          "q": "Why does it come back after I clear the canal?",
+          "a": "It spreads from pieces as well as seeds. A small broken piece left in the water can grow into a new plant, and runners keep making daughter plants. Plants upstream can also float down into your canal. So clear every piece, take the plants away from the water's edge, and check the canal often so new plants never get a start."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More broadleaf weeds of rice",
+      "items": [
+        {
+          "label": "Heartshape false pickerelweed",
+          "url": "/weeds/monochoria-vaginalis"
+        },
+        {
+          "label": "Gooseweed",
+          "url": "/weeds/gooseweed"
+        },
+        {
+          "label": "Seedbox",
+          "url": "/weeds/ludwigia-hyssopifolia"
+        },
+        {
+          "label": "False daisy",
+          "url": "/weeds/false-daisy"
+        },
+        {
+          "label": "Alyce clover",
+          "url": "/weeds/alyce-clover"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

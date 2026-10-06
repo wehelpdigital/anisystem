@@ -184,7 +184,7 @@
     },
     {
       "type": "text",
-      "text": "Tatlong grupo ng weeds ang karaniwan sa palayan: sedges, grasses at broadleaves. Sa listahan ng IRRI ng 12 pinakamahirap na damo ng palay sa Asya, kabilang ang Echinochloa colona, Cyperus iria at Fimbristylis miliacea. Ayon sa PalayCheck, kontrolin ang damo sa unang 45 araw. Unahin ang maayos na paghahanda ng lupa, malinis na binhi at tamang tubig, saka ang pagbubunot. Herbicide ang huling opsyon.\n\nHalimbawa ng pre emergent herbicide ang Sofit 300 EC ng Syngenta, na may pretilachlor (Group K3). Ayon sa label, inilalagay ito 0 hanggang 4 na araw pagkatapos maghasik o maglipat. Sundin ang rate sa label at bumili lang ng produktong rehistrado sa FPA. Para makilala ang common weeds in the Philippines, tingnan ang aming [gabay sa damo](/problems/common-weeds-philippines)."
+      "text": "Tatlong grupo ng weeds ang karaniwan sa palayan: sedges, grasses at broadleaves. Sa listahan ng IRRI ng 12 pinakamahirap na damo ng palay sa Asya, kabilang ang Echinochloa colona, Cyperus iria at Fimbristylis miliacea. Ayon sa PalayCheck, kontrolin ang damo sa unang 45 araw. Unahin ang maayos na paghahanda ng lupa, malinis na binhi at tamang tubig, saka ang pagbubunot. Herbicide ang huling opsyon.\n\nHalimbawa ng pre emergent herbicide ang Sofit 300 EC ng Syngenta, na may pretilachlor (Group K3). Ayon sa label, inilalagay ito 0 hanggang 4 na araw pagkatapos maghasik o maglipat. Sundin ang rate sa label at bumili lang ng produktong rehistrado sa FPA. Para makilala ang common weeds in the Philippines, tingnan ang aming [gabay sa damo](/weeds/common-weeds-philippines)."
     },
     {
       "type": "heading",
@@ -193,7 +193,7 @@
     },
     {
       "type": "text",
-      "text": "Ang unang depensa ay resistant na variety at sabay sabay na pagtatanim pagkatapos ng 30 araw na pahinga ng bukid. Sa pahingang iyon, nawawalan ng pagkain ang karamihan sa insekto. Maglibot din sa bukid bawat linggo.\n\nBabala ng PalayCheck: huwag mag spray laban sa mga kumakain ng dahon sa loob ng 30 DAT o 40 DAS. Pinapatay ng maagang spray ang mga kaibigang insekto, gaya ng gagamba na kumakain ng planthopper. Kilalanin ang mga kalaban sa [rice insects](/problems/rice-insects) at [brown planthopper](/problems/brown-planthopper)."
+      "text": "Ang unang depensa ay resistant na variety at sabay sabay na pagtatanim pagkatapos ng 30 araw na pahinga ng bukid. Sa pahingang iyon, nawawalan ng pagkain ang karamihan sa insekto. Maglibot din sa bukid bawat linggo.\n\nBabala ng PalayCheck: huwag mag spray laban sa mga kumakain ng dahon sa loob ng 30 DAT o 40 DAS. Pinapatay ng maagang spray ang mga kaibigang insekto, gaya ng gagamba na kumakain ng planthopper. Kilalanin ang mga kalaban sa [rice insects](/pests/rice-insects) at [brown planthopper](/pests/brown-planthopper)."
     },
     {
       "type": "callout",
@@ -307,11 +307,11 @@
         },
         {
           "label": "Common weeds sa palayan",
-          "url": "/problems/common-weeds-philippines"
+          "url": "/weeds/common-weeds-philippines"
         },
         {
           "label": "Rice insects",
-          "url": "/problems/rice-insects"
+          "url": "/pests/rice-insects"
         },
         {
           "label": "Cropping calendar ng anee.io",

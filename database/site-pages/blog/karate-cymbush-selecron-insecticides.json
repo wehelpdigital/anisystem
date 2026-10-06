@@ -29,7 +29,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Before you pick up any of these bottles, name the pest. A chewing caterpillar, a sucking hopper and a tiny thrips each call for a different tool. If you grow rice, our guide to [rice insects](/problems/rice-insects) helps you match the damage to the insect. Vegetable growers can start with [thrips](/problems/thrips) or [hanip, mites and aphids](/problems/hanip-mites-and-aphids).\n\nOnce you know the pest, the table below shows which of the three products actually lists it."
+      "text": "Before you pick up any of these bottles, name the pest. A chewing caterpillar, a sucking hopper and a tiny thrips each call for a different tool. If you grow rice, our guide to [rice insects](/pests/rice-insects) helps you match the damage to the insect. Vegetable growers can start with [thrips](/pests/thrips) or [hanip, mites and aphids](/pests/hanip-mites-and-aphids).\n\nOnce you know the pest, the table below shows which of the three products actually lists it."
     },
     {
       "type": "heading",
@@ -121,7 +121,7 @@
     },
     {
       "type": "text",
-      "text": "Karate insecticide and Cymbush share IRAC group 3A. So does the lambda cyhalothrin in Alika. If you switch from one to the other against the same pest, the insects face the same mode of action every time, and resistant ones survive to breed. IRAC advises against treating back to back generations of one pest with the same group.\n\nThere is a second risk in rice. IRRI links brown planthopper outbreaks to sprays that kill spiders, mirid bugs and water striders. Broad spectrum pyrethroids do not spare those natural enemies. So read our [brown planthopper](/problems/brown-planthopper) guide before you spray a pyrethroid early in the season."
+      "text": "Karate insecticide and Cymbush share IRAC group 3A. So does the lambda cyhalothrin in Alika. If you switch from one to the other against the same pest, the insects face the same mode of action every time, and resistant ones survive to breed. IRAC advises against treating back to back generations of one pest with the same group.\n\nThere is a second risk in rice. IRRI links brown planthopper outbreaks to sprays that kill spiders, mirid bugs and water striders. Broad spectrum pyrethroids do not spare those natural enemies. So read our [brown planthopper](/pests/brown-planthopper) guide before you spray a pyrethroid early in the season."
     },
     {
       "type": "heading",
@@ -211,15 +211,15 @@
         },
         {
           "label": "Brown planthopper",
-          "url": "/problems/brown-planthopper"
+          "url": "/pests/brown-planthopper"
         },
         {
           "label": "Rice leaffolder",
-          "url": "/problems/rice-leaffolder"
+          "url": "/pests/rice-leaffolder"
         },
         {
           "label": "Thrips",
-          "url": "/problems/thrips"
+          "url": "/pests/thrips"
         },
         {
           "label": "Ant bait and termiticides",

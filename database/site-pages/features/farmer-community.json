@@ -72,7 +72,7 @@
       "type": "callout",
       "tone": "tip",
       "title": "Share what works, and why",
-      "text": "When a spray or a fertilizer plan works, post the day count and the product's active ingredient, not only the brand. It helps a grower in another province judge if it fits his field. For common rice pests, see our guide to [rice insects](/problems/rice-insects)."
+      "text": "When a spray or a fertilizer plan works, post the day count and the product's active ingredient, not only the brand. It helps a grower in another province judge if it fits his field. For common rice pests, see our guide to [rice insects](/pests/rice-insects)."
     },
     {
       "type": "text",
@@ -137,7 +137,7 @@
         },
         {
           "label": "Rice insects",
-          "url": "/problems/rice-insects"
+          "url": "/pests/rice-insects"
         }
       ]
     }

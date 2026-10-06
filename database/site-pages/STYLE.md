@@ -76,8 +76,9 @@ cover, reveal, supports.
 - SEO title: 60 characters or less (the site adds " | anee.io").
 - Meta description: 120 to 156 characters, contains the keyphrase, says why
   to click.
-- Length: crop, problem and blog pages 900 to 1600 words; feature pages 600
-  to 1000 words.
+- Length: crop, pest, disease, weed guide and blog pages 900 to 1600 words;
+  weed profiles (the catalogue) 650 to 1700 words, tables included; feature
+  pages 600 to 1000 words.
 - Headings: H2 for sections, H3 inside them; never skip levels; a heading at
   least every 300 words.
 - Paragraphs: 150 words at most, usually 2 to 4 sentences.
@@ -218,7 +219,7 @@ season (a "cropping schedule"). It has:
 ## 8. URL map (link only to these)
 
 Site: / (home), /features, /pricing, /about, /tutorial, /contact, /signup,
-/crops, /problems, /blog
+/crops, /problems, /pests, /diseases, /weeds, /blog
 
 Features:
 /features/ai-agricultural-technician, /features/cropping-calendar,
@@ -248,12 +249,54 @@ Crops:
 /crops/coconut-fertilizer, /crops/banana-farming-philippines,
 /crops/pagtatanim-ng-puno
 
-Problems:
-/problems/rice-bug, /problems/rice-black-bug, /problems/brown-planthopper,
-/problems/rice-insects, /problems/rice-leaffolder, /problems/thrips,
-/problems/fall-armyworm, /problems/asian-corn-borer, /problems/cutworm,
-/problems/anthracnose, /problems/fusarium-wilt, /problems/sheath-blight,
-/problems/common-weeds-philippines, /problems/hanip-mites-and-aphids
+Pests:
+/pests/rice-bug, /pests/rice-black-bug, /pests/brown-planthopper,
+/pests/rice-insects, /pests/rice-leaffolder, /pests/thrips,
+/pests/fall-armyworm, /pests/asian-corn-borer, /pests/cutworm,
+/pests/hanip-mites-and-aphids
+
+Diseases:
+/diseases/anthracnose, /diseases/fusarium-wilt, /diseases/sheath-blight
+
+Weeds (guides):
+/weeds/weed-management-in-rice, /weeds/herbicides-for-rice-weeds,
+/weeds/types-of-weeds, /weeds/common-weeds-philippines
+
+Weeds (the catalogue, one profile per weed of rice):
+/weeds/alyce-clover, /weeds/ammannia-baccifera,
+/weeds/asian-spiderflower, /weeds/balloon-vine, /weeds/barnyard-grass,
+/weeds/basilicum-polystachyon, /weeds/benghal-dayflower,
+/weeds/bermuda-grass, /weeds/carabao-grass, /weeds/chamber-bitter,
+/weeds/chinese-sprangletop, /weeds/climbing-dayflower,
+/weeds/corchorus-aestuans, /weeds/creeping-water-primrose,
+/weeds/crowfoot-grass, /weeds/cutleaf-groundcherry,
+/weeds/cyperus-compactus, /weeds/cyperus-compressus,
+/weeds/cyperus-digitatus, /weeds/cyperus-distans, /weeds/cyperus-haspan,
+/weeds/cyperus-imbricatus, /weeds/doveweed,
+/weeds/echinochloa-glabrescens, /weeds/eclipta-zippeliana,
+/weeds/false-daisy, /weeds/forked-fimbry, /weeds/fringed-spiderflower,
+/weeds/giant-bulrush, /weeds/giant-salvinia,
+/weeds/giant-sensitive-plant, /weeds/globe-fringerush, /weeds/goosegrass,
+/weeds/gooseweed, /weeds/hedyotis-biflora, /weeds/hedyotis-corymbosa,
+/weeds/hedyotis-diffusa, /weeds/horse-purslane,
+/weeds/hydrolea-zeylanica, /weeds/indian-heliotrope,
+/weeds/indian-jointvetch, /weeds/ischaemum-rugosum, /weeds/jungle-rice,
+/weeds/kangkong-weed, /weeds/knotgrass, /weeds/lindernia-antipoda,
+/weeds/lindernia-procumbens, /weeds/littlebell,
+/weeds/ludwigia-decurrens, /weeds/ludwigia-hyssopifolia,
+/weeds/ludwigia-octovalvis, /weeds/ludwigia-perennis, /weeds/makahiya,
+/weeds/malachra-capitata, /weeds/malachra-fasciata,
+/weeds/melochia-concatenata, /weeds/merremia-emarginata,
+/weeds/monochoria-vaginalis, /weeds/paspalum-scrobiculatum,
+/weeds/phyllanthus-debilis, /weeds/purple-nutsedge, /weeds/purslane,
+/weeds/rice-flatsedge, /weeds/saluyot-weed, /weeds/scirpus-juncoides,
+/weeds/sessile-joyweed, /weeds/slender-amaranth,
+/weeds/smallflower-umbrella-sedge, /weeds/southern-crabgrass,
+/weeds/southern-cutgrass, /weeds/sphaeranthus-africanus,
+/weeds/spiny-amaranth, /weeds/texasweed, /weeds/torpedo-grass,
+/weeds/valley-redstem, /weeds/water-clover, /weeds/water-hyacinth,
+/weeds/water-lettuce, /weeds/weedy-rice, /weeds/wild-bushbean,
+/weeds/yellow-velvetleaf
 
 Blog:
 /blog/urea-fertilizer, /blog/complete-fertilizer-14-14-14,

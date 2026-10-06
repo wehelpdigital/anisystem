@@ -1,0 +1,296 @@
+{
+  "section": "weeds",
+  "slug": "phyllanthus-debilis",
+  "sortOrder": 440,
+  "lang": "en",
+  "category": "Broadleaves",
+  "title": "Phyllanthus debilis: How to Spot and Control Niruri in Rice Fields",
+  "metaTitle": "Phyllanthus debilis in Rice Fields: Spot and Control It",
+  "metaDescription": "Phyllanthus debilis, or niruri, is a slender broadleaf weed of rainfed rice. Learn how to tell it from chamber bitter and how to keep it out of your field.",
+  "focusKeyword": "Phyllanthus debilis",
+  "keywords": [
+    "Phyllanthus debilis",
+    "niruri weed",
+    "talikod",
+    "sampasampalukan",
+    "broadleaf weed in rice"
+  ],
+  "excerpt": "Phyllanthus debilis is a slender, hairless broadleaf weed that farmers know as niruri, talikod or sampasampalukan. It comes up in rainfed lowland rice fields, mostly on soil that is not under water. This page shows you how to spot it, how to tell it apart from chamber bitter, and how to control it in your palay.",
+  "heroImage": {
+    "src": "/images/site/weeds/phyllanthus-debilis.webp",
+    "thumb": "/images/site/weeds/phyllanthus-debilis-480.webp",
+    "alt": "Niruri (Phyllanthus debilis), a broadleaf weed of Philippine rice fields",
+    "credit": "Forest and Kim Starr, CC BY 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Phyllanthus debilis?"
+    },
+    {
+      "type": "text",
+      "text": "Phyllanthus debilis is an upright, slender herb from the spurge family, Euphorbiaceae. Farmers across the islands give it many names: kurukalunggai, malakirum kirum, ngingihel, sampasampalukan, san pedro, sursampalok, talikod, taltalikod and turutalikod. In English, some call it niruri. A few of these names, like sursampalok and turutalikod, also refer to its cousin, chamber bitter.\n\nYou find it in rainfed lowland rice fields. As an annual, it finishes its life within one season. It spreads only by seed. The tiny seeds form inside small round capsules under the leaves, and they drop to the soil once ripe. If you let a few plants mature, the seed supply in your field grows for the next crop. So it pays to weed before the capsules ripen."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about Phyllanthus debilis",
+      "rows": [
+        [
+          "Name",
+          "Phyllanthus debilis"
+        ],
+        [
+          "English name",
+          "Niruri"
+        ],
+        [
+          "Family",
+          "Euphorbiaceae"
+        ],
+        [
+          "Weed group",
+          "Broadleaves ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "kurukalunggai, malakirum kirum, ngingihel, sampasampalukan, san pedro, sursampalok, talikod, taltalikod, turutalikod"
+        ],
+        [
+          "Life cycle",
+          "Annual"
+        ],
+        [
+          "Spreads by",
+          "Seeds"
+        ],
+        [
+          "Where it grows",
+          "Rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Phyllanthus debilis"
+    },
+    {
+      "type": "text",
+      "text": "Look for a slender, upright plant with thin branches and no hairs. Its many small leaves line up neatly in rows along each branch, almost like a tiny tamarind leaf. The name sampasampalukan points to that look. The leaves are oblong, with very short stalks. As a broadleaf, its leaves are flat with netted veins, unlike grasses and sedges. Turn a branch over and you will see small flowers on clear stalks and smooth round capsules."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Slender, upright, hairless plants with thin branches standing among the rice hills.",
+        "Many small oblong leaves set neatly in rows along each branch, like a tamarind leaf.",
+        "Tiny flowers hanging under the branches, each on a clear, visible stalk.",
+        "Smooth, round seed capsules lined up under the leaves.",
+        "Look alike tip: chamber bitter is smaller, with reddish stems, nearly stalkless flowers and rough capsules."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "This weed is small, but a thick stand still competes with your palay for light, water and fertilizer. Each plant takes nutrients that you paid for and meant for the rice. Young rice feels this the most, before its leaves close over the rows.\n\nSince it lives only one season, its real danger is the seed it leaves behind. Plants that escape weeding drop seed into the soil. Then the next crop starts with even more weeds. In rainfed fields, those seeds wait for the soil to turn moist, and then they come up together."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Phyllanthus debilis"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Pull plants while young, before the capsules under the leaves ripen and drop seed into the soil.",
+        "Keep a shallow layer of water in the field when rain allows, since standing water keeps many land weeds like this from sprouting.",
+        "Weed the bunds and field edges as well, because plants there set seed unnoticed and reseed the field."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Broadleaves"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold Phyllanthus debilis down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for broadleaves by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Bensulfuron methyl, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Bensulfuron methyl, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl",
+          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "Metsulfuron methyl plus chlorimuron ethyl",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Phyllanthus debilis Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Prepare the land well: flood, plow, let the weed seeds sprout, then kill them when you harrow. Level the field so water covers it evenly.",
+        "Pull escapes before they flower and set seed, and carry them out of the paddy instead of leaving them on the bund.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [broadleaf weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Phyllanthus debilis?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Phyllanthus debilis"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What are the local names of Phyllanthus debilis?",
+          "a": "It has many local names. Farmers call it talikod, taltalikod, turutalikod, sampasampalukan, sursampalok, san pedro, kurukalunggai, malakirum kirum or ngingihel, depending on the region. In English, it goes by niruri. Some of these names also cover chamber bitter, a close look alike, so check the stems and capsules before you decide."
+        },
+        {
+          "q": "How do I control niruri in my rice field?",
+          "a": "Start with prevention. Prepare the land well and do not let plants on the bunds set seed. Keep water in the field when you can, since standing water stops many land weeds from sprouting. Hand weed early, before the capsules ripen. If you use a herbicide, choose one by weed group and the age of your rice, and always follow the FPA registered label."
+        },
+        {
+          "q": "How can I tell Phyllanthus debilis from chamber bitter?",
+          "a": "The two look almost the same. But chamber bitter is smaller and has reddish stems and branches. Its flowers have no stalks or very short ones, and its capsules feel rough. Niruri has flowers on clear stalks and smooth capsules. Their anthers also open in different ways, sideways in niruri and lengthwise in chamber bitter."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More broadleaf weeds of rice",
+      "items": [
+        {
+          "label": "Heartshape false pickerelweed",
+          "url": "/weeds/monochoria-vaginalis"
+        },
+        {
+          "label": "Gooseweed",
+          "url": "/weeds/gooseweed"
+        },
+        {
+          "label": "Seedbox",
+          "url": "/weeds/ludwigia-hyssopifolia"
+        },
+        {
+          "label": "False daisy",
+          "url": "/weeds/false-daisy"
+        },
+        {
+          "label": "Water hyacinth",
+          "url": "/weeds/water-hyacinth"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

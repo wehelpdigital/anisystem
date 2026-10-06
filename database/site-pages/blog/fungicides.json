@@ -185,7 +185,7 @@
     },
     {
       "type": "text",
-      "text": "Read the full symptoms and scouting steps on our [sheath blight](/problems/sheath-blight) page before you decide to spray."
+      "text": "Read the full symptoms and scouting steps on our [sheath blight](/diseases/sheath-blight) page before you decide to spray."
     },
     {
       "type": "heading",
@@ -194,7 +194,7 @@
     },
     {
       "type": "text",
-      "text": "Anthracnose is a family of diseases caused by Colletotrichum fungi. On mango it shows as black spots on flowers, leaves and fruit, and it often shows up again after harvest as the fruit ripens. On onion it twists and rots the leaves. See our [anthracnose](/problems/anthracnose) guide for field signs and cultural control.\n\nMildew in Tagalog is amag, the same word farmers use for mold on bread or on damp clothes. Do not confuse it with agiw, which means cobwebs, not a plant disease. Powdery mildew leaves a white, floury coat on leaves. Downy mildew shows pale patches on top of the leaf and a gray or purplish fuzz underneath. Neither Armure nor Ortiva Top lists mildew on its Philippine registration, so look for a product whose label names your crop and that exact disease."
+      "text": "Anthracnose is a family of diseases caused by Colletotrichum fungi. On mango it shows as black spots on flowers, leaves and fruit, and it often shows up again after harvest as the fruit ripens. On onion it twists and rots the leaves. See our [anthracnose](/diseases/anthracnose) guide for field signs and cultural control.\n\nMildew in Tagalog is amag, the same word farmers use for mold on bread or on damp clothes. Do not confuse it with agiw, which means cobwebs, not a plant disease. Powdery mildew leaves a white, floury coat on leaves. Downy mildew shows pale patches on top of the leaf and a gray or purplish fuzz underneath. Neither Armure nor Ortiva Top lists mildew on its Philippine registration, so look for a product whose label names your crop and that exact disease."
     },
     {
       "type": "callout",
@@ -254,15 +254,15 @@
       "items": [
         {
           "label": "Sheath blight",
-          "url": "/problems/sheath-blight"
+          "url": "/diseases/sheath-blight"
         },
         {
           "label": "Anthracnose",
-          "url": "/problems/anthracnose"
+          "url": "/diseases/anthracnose"
         },
         {
           "label": "Fusarium wilt",
-          "url": "/problems/fusarium-wilt"
+          "url": "/diseases/fusarium-wilt"
         },
         {
           "label": "Alika, Virtako and Chess for rice",

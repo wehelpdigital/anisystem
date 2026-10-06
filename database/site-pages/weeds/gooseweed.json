@@ -1,0 +1,309 @@
+{
+  "section": "weeds",
+  "slug": "gooseweed",
+  "sortOrder": 155,
+  "lang": "en",
+  "category": "Broadleaves",
+  "title": "Gooseweed: How to Spot and Control It in Rice Fields",
+  "metaTitle": "Gooseweed in Rice Fields: Identification and Control",
+  "metaDescription": "Gooseweed can cut rice yield by 45 percent, and some plants resist 2,4 D. Learn to spot it early and control it before it takes over your palay.",
+  "focusKeyword": "gooseweed",
+  "keywords": [
+    "gooseweed",
+    "silisilihan",
+    "Sphenoclea zeylanica",
+    "mais mais weed",
+    "broadleaf weed in rice"
+  ],
+  "excerpt": "Gooseweed is an upright broadleaf weed with soft, hollow stems and a green, finger like flower spike. Farmers call it silisilihan, mais mais or burat aso. It grows in both irrigated and rainfed lowland rice fields across the Philippines. This page shows you how to spot it early and how to control it before it cuts your harvest.",
+  "heroImage": {
+    "src": "/images/site/weeds/gooseweed.webp",
+    "thumb": "/images/site/weeds/gooseweed-480.webp",
+    "alt": "Gooseweed (Sphenoclea zeylanica), a broadleaf weed of Philippine rice fields",
+    "credit": "Vengolis, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Gooseweed?"
+    },
+    {
+      "type": "text",
+      "text": "Gooseweed, or Sphenoclea zeylanica, belongs to the family Sphenocleaceae. Its local names include balabalanob, burat aso, mais mais and silisilihan. The names mais mais and silisilihan compare it to corn and chili. You will find it in irrigated and rainfed lowland rice fields, and it does well in wet, muddy soil.\n\nThis weed is an annual, so it lives for one season and spreads only by seed. Each green flower spike carries many small flowers, and each one leaves seed behind. Since the plant thrives in flooded fields, water alone will not stop it. That is why you need to weed it out early, before the spikes mature and drop seed into the mud."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about gooseweed",
+      "rows": [
+        [
+          "Name",
+          "Gooseweed"
+        ],
+        [
+          "Scientific name",
+          "Sphenoclea zeylanica"
+        ],
+        [
+          "Family",
+          "Sphenocleaceae"
+        ],
+        [
+          "Weed group",
+          "Broadleaves ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Balabalanob, burat aso, mais mais, silisilihan"
+        ],
+        [
+          "Life cycle",
+          "Annual"
+        ],
+        [
+          "Spreads by",
+          "Seeds"
+        ],
+        [
+          "Where it grows",
+          "Irrigated and rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Gooseweed"
+    },
+    {
+      "type": "text",
+      "text": "This weed stands upright and branches out between the rice hills. Squeeze a stem and you will feel that it is soft and hollow. As a broadleaf, its leaves are flat with netted veins, unlike grasses and sedges. They are narrow, oblong to lance shaped, pointed at the tip and set on short stalks. The best clue is the flower spike. It looks like a small green cylinder, with white to greenish flowers."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Upright, branched plants with soft, hollow stems standing among the rice.",
+        "Narrow, pointed leaves on short stalks, oblong to lance shaped.",
+        "Green, cylinder shaped flower spikes at the top, like a small corn cob.",
+        "Tiny white to greenish flowers set along the green spike.",
+        "Plants that survive a 2,4 D spray, which may point to a resistant variant."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Gooseweed can cut rice yield by 45 percent. It grows tall and leafy in flooded fields, so it competes with your palay for light, water and fertilizer. A thick stand can also shade young rice between the rows.\n\nThere is another problem. Some variants of this weed resist 2,4 D, a common broadleaf herbicide. So spraying the same product season after season may leave resistant plants alive. Those survivors then drop seed and fill your field with more of the same."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Its weak spot",
+      "text": "This weed has a natural enemy. A fungus called Alternaria alternata f. sp. sphenocleae infects it. When researchers inoculated plants with 10 spores per milliliter, the plants showed blight and wilting after 24 hours. By 6 days, all the plants had died. So this fungus may become a natural control in the future. For now, ask your municipal agriculturist before you try any fungus based method."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Gooseweed"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Hand weed early, before the green spikes ripen, because each spike can drop many seeds into the mud.",
+        "Do not count on flooding to stop it. This weed thrives in standing water, so keep weeding even in a flooded field.",
+        "If plants survive a 2,4 D spray, pull them by hand before they seed, so resistant plants do not spread.",
+        "Change your control method across seasons instead of relying on one product every time."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Broadleaves"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold gooseweed down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for broadleaves by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Bensulfuron methyl, Butachlor plus 2,4 D IBE, Oxadiazon, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor plus 2,4 D IBE, Butachlor with safener, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Bensulfuron methyl, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bentazone, Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Penoxsulam plus cyhalofop butyl, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "2,4 D amine, 2,4 D IBE, Fenoxaprop P ethyl plus ethoxysulfuron, MCPA, Metamifop plus penoxsulam, Metsulfuron methyl plus chlorimuron ethyl",
+          "Cyhalofop butyl plus bispyribac sodium, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "Metsulfuron methyl plus chlorimuron ethyl",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "When a spray stops working",
+      "text": "Some variants of gooseweed resist 2,4 D, according to reports, so this herbicide may not kill every plant in your field."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Gooseweed Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Prepare the land well: flood, plow, let the weed seeds sprout, then kill them when you harrow. Level the field so water covers it evenly.",
+        "Pull escapes before they flower and set seed, and carry them out of the paddy instead of leaving them on the bund.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [broadleaf weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Gooseweed?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Gooseweed"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is gooseweed called in Tagalog?",
+          "a": "Farmers know it by several names. Common ones are silisilihan, mais mais, burat aso and balabalanob, depending on the region. Its scientific name is Sphenoclea zeylanica. The names compare it to chili and corn, and its green, cylinder shaped flower spike does look a bit like a tiny corn cob."
+        },
+        {
+          "q": "How do I control silisilihan in my rice field?",
+          "a": "Start with a clean, well leveled field and clean seed. Water will not stop it, so hand weed early, before the spikes ripen. If you use a herbicide, choose one by weed group and the age of your rice, and always follow the FPA registered label. Keep in mind that some variants resist 2,4 D."
+        },
+        {
+          "q": "Is this weed really harmful to my palay?",
+          "a": "Yes. It can cut rice yield by 45 percent. It grows tall in flooded fields and takes light, water and fertilizer from your palay. Some variants also resist 2,4 D, which makes them harder to kill. So treat it as a serious weed and remove it early, before it sets seed."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More broadleaf weeds of rice",
+      "items": [
+        {
+          "label": "Heartshape false pickerelweed",
+          "url": "/weeds/monochoria-vaginalis"
+        },
+        {
+          "label": "Seedbox",
+          "url": "/weeds/ludwigia-hyssopifolia"
+        },
+        {
+          "label": "False daisy",
+          "url": "/weeds/false-daisy"
+        },
+        {
+          "label": "Water hyacinth",
+          "url": "/weeds/water-hyacinth"
+        },
+        {
+          "label": "Alyce clover",
+          "url": "/weeds/alyce-clover"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

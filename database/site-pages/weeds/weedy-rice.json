@@ -1,0 +1,241 @@
+{
+  "section": "weeds",
+  "slug": "weedy-rice",
+  "sortOrder": 105,
+  "lang": "en",
+  "category": "Grasses",
+  "title": "Weedy Rice in Your Palay: How to Spot It and Keep It Out",
+  "metaTitle": "Weedy Rice: How to Spot It and Keep It Out of Your Field",
+  "metaDescription": "Weedy rice can cut yield by 20 to 90 percent and lower the price of milled rice. Learn to spot it in your palay and stop it before it spreads.",
+  "focusKeyword": "weedy rice",
+  "keywords": [
+    "weedy rice",
+    "red rice weed",
+    "halo",
+    "lahok",
+    "weedy rice in palay"
+  ],
+  "excerpt": "Weedy rice is rice that behaves like a weed. It grows side by side with your palay in irrigated and rainfed lowland fields across the Philippines. Because it is the same species as your crop, it is hard to spot and even harder to kill. This page shows how to spot it, how it hurts your harvest and how to keep it out.",
+  "heroImage": {
+    "src": "",
+    "alt": "Weedy rice plants standing taller than the crop with awned, early ripening panicles in a paddy",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Weedy Rice?"
+    },
+    {
+      "type": "text",
+      "text": "Weedy rice carries the same scientific name as the rice you plant, Oryza sativa. Farmers call it halo, lahok, sabag or weder weder. It shows up in both irrigated and rainfed lowland rice fields. From a distance it looks like your crop. Up close, though, it grows taller, makes fewer tillers and ripens earlier.\n\nThis weed is an annual, and it spreads only by seed. On some types, the grains drop as soon as they ripen, even at a light touch. Those seeds fall into the paddy before you harvest and wait in the soil. Other grains end up in your harvest and in the seed you save. So you plant them again next season without knowing it."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about weedy rice",
+      "rows": [
+        [
+          "Name",
+          "Weedy rice"
+        ],
+        [
+          "Scientific name",
+          "Oryza sativa"
+        ],
+        [
+          "Family",
+          "Poaceae (Graminae)"
+        ],
+        [
+          "Weed group",
+          "Grasses ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Halo, lahok, sabag, weder weder"
+        ],
+        [
+          "Life cycle",
+          "Annual"
+        ],
+        [
+          "Spreads by",
+          "Seeds"
+        ],
+        [
+          "Where it grows",
+          "Irrigated and rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Weedy Rice"
+    },
+    {
+      "type": "text",
+      "text": "Like other grasses, it has round, hollow stems with clear joints, or nodes, just like your palay. So look at the whole plant instead of the stem. Weedy plants usually stand taller than the crop and have fewer tillers. Most grains carry short to long awns, colored white, yellow or purple. Peel a grain, and you will often find red bran, though some grains are off white. These plants also mature ahead of your crop."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plants stand taller than the crop around them and have fewer tillers.",
+        "Grains carry short to long awns that are white, yellow or purple.",
+        "Peeled grains often show red bran, though some grains are off white.",
+        "Panicles ripen earlier than the rest of the palay in the same field.",
+        "On some types, ripe grains fall off at a light touch of your hand."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Weedy rice takes up more nutrients from the soil than cultivated rice, nitrogen most of all. So it eats into the fertilizer you paid for. At 5 to 40 plants per square meter, it can cut the yield of your rice by 20 to 90 percent.\n\nThe damage goes past the field. Its colored grains mix with your palay during harvest, so the milled rice loses quality and sells for a lower price. Control is also very hard, most of all in direct seeded rice. Since it shares the same shape and growth habits as your crop, both hand weeding and spraying struggle to single it out."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Weedy Rice"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Plant clean, certified seed. Never save seed from a field that had this weed, since its grains hide in the harvest.",
+        "Pull off types as soon as they head out, before their grains ripen and drop into the soil.",
+        "Clean your harvester, thresher and tools before they enter your field, so they do not bring in seeds from other farms.",
+        "Before planting, let the field sprout its weedy seeds, then plow them under. Transplanting in rows also makes off types easier to spot."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "No spray picks it out",
+      "text": "No selective herbicide can kill weedy rice inside a rice crop, because it is rice too. So prevention is everything: clean seed, clean machines and early pulling. See the [weed management guide](/weeds/weed-management-in-rice) for the full prevention plan."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Weedy Rice Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Prepare the land well: flood, plow, let the weed seeds sprout, then kill them when you harrow. Level the field so water covers it evenly.",
+        "Pull escapes before the seed heads open, and clean the thresher and harvester before they enter the field.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [grass weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Weedy Rice?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Weedy Rice"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What do farmers call weedy rice in the Philippines?",
+          "a": "Farmers call it halo, lahok, sabag or weder weder, depending on the area. It belongs to the same species as your crop, Oryza sativa. That is why it is so hard to tell apart in the seedling stage. The easiest clues come later: taller plants, fewer tillers, colored awns and grains with red bran."
+        },
+        {
+          "q": "How do I get rid of it in my field?",
+          "a": "Prevention is everything. Plant clean, certified seed and clean the harvester before it enters. Before planting, let weedy seeds sprout, then plow them under. Keep water on the field early to hold back new seedlings, and pull off types before they shed seed. No herbicide can single it out in a rice crop, so choose herbicides for other weeds by group and rice age, following the FPA registered label."
+        },
+        {
+          "q": "Why do I find red grains in my milled rice?",
+          "a": "Red grains in milled rice often come from this weed. Most of its grains have a red bran layer, and they mix with your palay at harvest. That lowers the quality and the price of your milled rice. If you see red grains, walk the field next season and pull the tall, early ripening plants before they shed."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More grass weeds of rice",
+      "items": [
+        {
+          "label": "Barnyard grass",
+          "url": "/weeds/barnyard-grass"
+        },
+        {
+          "label": "Chinese sprangletop",
+          "url": "/weeds/chinese-sprangletop"
+        },
+        {
+          "label": "Echinochloa glabrescens",
+          "url": "/weeds/echinochloa-glabrescens"
+        },
+        {
+          "label": "Jungle rice",
+          "url": "/weeds/jungle-rice"
+        },
+        {
+          "label": "Wrinkle grass",
+          "url": "/weeds/ischaemum-rugosum"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}

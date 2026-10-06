@@ -2,7 +2,8 @@
 @php
     $S = \App\Support\SitePages::class;
     $h = is_array($p->heroImage) ? $p->heroImage : [];
-    $src = $S::img($h['src'] ?? null) ?: asset('images/site/fields-aerial.jpg');
+    // A small copy when the page has one (the weed profiles do).
+    $src = $S::img($h['thumb'] ?? ($h['src'] ?? null)) ?: asset('images/site/fields-aerial.jpg');
 @endphp
 <a href="{{ $S::pageUrl($p) }}" class="sp-tile" data-cat="{{ $p->category }}">
     <img src="{{ $src }}" alt="{{ $h['alt'] ?? $p->title }}" loading="lazy">

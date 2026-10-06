@@ -1,0 +1,298 @@
+{
+  "section": "weeds",
+  "slug": "paspalum-scrobiculatum",
+  "sortOrder": 200,
+  "lang": "en",
+  "category": "Grasses",
+  "title": "Paspalum scrobiculatum: How to Spot and Control This Rice Field Grass",
+  "metaTitle": "Paspalum scrobiculatum in Rice: ID and Control Guide",
+  "metaDescription": "Paspalum scrobiculatum, or kodo millet, invades rainfed palay. Learn its local names, how to spot it early and how to keep it out of your rice field.",
+  "focusKeyword": "Paspalum scrobiculatum",
+  "keywords": [
+    "Paspalum scrobiculatum",
+    "kodo millet",
+    "bias biasin",
+    "sabung sabungan",
+    "grass weed in rice"
+  ],
+  "excerpt": "Paspalum scrobiculatum is an annual grass weed of rainfed lowland rice fields in the Philippines. Its English name is kodo millet. It grows from seed and fights your palay for light, water and fertilizer. This page shows how to spot it in the field and how to control it before it drops seed.",
+  "heroImage": {
+    "src": "/images/site/weeds/paspalum-scrobiculatum.webp",
+    "thumb": "/images/site/weeds/paspalum-scrobiculatum-480.webp",
+    "alt": "Kodo millet (Paspalum scrobiculatum), a grass weed of Philippine rice fields",
+    "credit": "David Eickhoff from Pearl City, Hawaii, USA, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What Is Paspalum scrobiculatum?"
+    },
+    {
+      "type": "text",
+      "text": "This damo is a grass from the Poaceae family, the same family as palay. Farmers know it as bias biasin, angangsug or sabung sabungan. In India, farmers grow the same species as a grain called kodo millet. Here at home, Paspalum scrobiculatum turns up as a weed in rainfed lowland rice fields, where the water comes from rain alone.\n\nIt is an annual, so each plant lives for only one season. It spreads by seed, and its stems do not creep along the ground to root at the joints. Every plant that flowers drops fresh seeds into the soil. Those seeds then wait for the next planting. So the best time to stop it is before its seed heads turn reddish brown."
+    },
+    {
+      "type": "table",
+      "caption": "Quick facts about Paspalum scrobiculatum",
+      "rows": [
+        [
+          "Name",
+          "Paspalum scrobiculatum"
+        ],
+        [
+          "English name",
+          "Kodo millet"
+        ],
+        [
+          "Family",
+          "Poaceae (Graminae)"
+        ],
+        [
+          "Weed group",
+          "Grasses ([see the three groups](/weeds/types-of-weeds))"
+        ],
+        [
+          "Local names",
+          "Bias biasin, angangsug, sabung sabungan"
+        ],
+        [
+          "Life cycle",
+          "Annual"
+        ],
+        [
+          "Spreads by",
+          "Seeds"
+        ],
+        [
+          "Where it grows",
+          "Rainfed lowland rice fields"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Identify Paspalum scrobiculatum"
+    },
+    {
+      "type": "text",
+      "text": "Like all grasses, this weed has a round, hollow stem with nodes, or joints, along its length. The stems are smooth and slender, with a purplish color near the base. They stand up instead of creeping. Leaf blades are flat and narrow, and their edges feel rough between your fingers. The leaf sheath is dark green and hairy close to the blade. Where the blade meets the sheath, look for a long, brown, papery ligule."
+    },
+    {
+      "type": "list",
+      "items": [
+        "Stem bases turn purplish, while the rest of the slender stem stays smooth.",
+        "Run a finger along the leaf edge and you will feel that it is rough.",
+        "Seed heads carry three to four spike like branches set one after another along the stalk.",
+        "Spikelets sit in two neat rows, round to egg shaped, pale at first and reddish brown later.",
+        "Tiny purple stigmas peek out of the spikelets when the plant is in flower.",
+        "The plant stands upright and never roots along the ground like a creeping grass."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why It Hurts Your Palay"
+    },
+    {
+      "type": "text",
+      "text": "Like other grass weeds, Paspalum scrobiculatum competes with palay for sunlight, water and fertilizer. Because it is a grass too, its young plants can look a lot like rice seedlings. As a result, some plants slip past early weeding and keep feeding on nutrients meant for your crop.\n\nOnce it flowers, it drops seed that adds to the weed seed bank in your soil. Then the problem grows a little bigger each season. Its seeds can also mix with harvested palay and lower the quality of seed you keep for planting. Thick stands give shelter to rats and insect pests close to the rice hills, too."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to Control Paspalum scrobiculatum"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Keep water standing in the paddy whenever the rains allow, because a flooded soil surface holds back many grass seeds from sprouting.",
+        "Pull young plants by hand before seed heads appear. It spreads by seed only, so no flowering plant means no new seed.",
+        "Weed the bunds and field edges as well, because plants left there shed seed that washes back into the paddy.",
+        "After harvest, cut or pull any plants still standing before they drop seed, so the next crop starts cleaner."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What to Do at Each Age of Your Rice"
+    },
+    {
+      "type": "list",
+      "items": [
+        "**0 to 5 days:** keep the soil saturated. Use a pre emergence herbicide only if the field had many weeds last season.",
+        "**6 to 10 days:** hand weed in transplanted rice. In direct seeded rice, this is the window for an early post emergence spray.",
+        "**11 to 20 days:** keep water in the field, weed by hand or with a rotary weeder, and let Azolla and the Altica beetle help. Spray only if those fail.",
+        "**21 to 30 days:** top up the water and keep weeding. Spray only if weeding fails.",
+        "**31 to 40 days (transplanted rice):** hand weed. A spray this late is only a rescue.",
+        "After any post emergence spray, bring the water back within 1 to 3 days at 3 to 5 cm and hold it for 4 to 5 days. Keep young rice above it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Active Ingredients That Work on Grasses"
+    },
+    {
+      "type": "text",
+      "text": "If water and weeding cannot hold Paspalum scrobiculatum down, choose an active ingredient that works on grasses at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for grasses by rice age",
+      "rows": [
+        [
+          "Rice age (days after planting)",
+          "Transplanted rice (lipat tanim)",
+          "Direct seeded rice (sabog tanim)"
+        ],
+        [
+          "0 to 5 days",
+          "Butachlor, Butachlor plus 2,4 D IBE, Clomazone, Oxadiazon, Pendimethalin, Penoxsulam plus butachlor, Pretilachlor, Pyrazosulfuron ethyl plus pretilachlor, Tefuryltrione plus triafamone",
+          "Butachlor, Butachlor plus 2,4 D IBE, Butachlor with safener, Clomazone, Oxadiazon, Pendimethalin, Pretilachlor, Pretilachlor plus butachlor"
+        ],
+        [
+          "6 to 10 days",
+          "Bispyribac sodium, Butachlor plus propanil, Clomazone plus propanil, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Pendimethalin, Penoxsulam plus cyhalofop butyl",
+          "Bispyribac sodium, Butachlor plus propanil, Cyhalofop butyl, Cyhalofop butyl plus florpyrauxifen benzyl, Flucetosulfuron, Metamifop, Pendimethalin, Penoxsulam, Penoxsulam plus cyhalofop butyl, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "11 to 20 days",
+          "Bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop plus penoxsulam, Penoxsulam plus cyhalofop butyl, Profoxydim",
+          "Bispyribac sodium, Cyhalofop butyl plus bispyribac sodium, Cyhalofop butyl plus ethoxysulfuron, Cyhalofop butyl plus florpyrauxifen benzyl, Fenoxaprop P ethyl plus ethoxysulfuron, Flucetosulfuron, Metamifop, Penoxsulam plus cyhalofop butyl, Profoxydim, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "21 to 30 days",
+          "Fenoxaprop P ethyl plus ethoxysulfuron, Metamifop plus penoxsulam",
+          "Cyhalofop butyl plus bispyribac sodium, Metamifop, Pyribenzoxim, Pyribenzoxim plus cyhalofop butyl"
+        ],
+        [
+          "31 to 40 days",
+          "No herbicide listed at this age. Hand weed and keep the water up.",
+          "Not listed for direct seeded rice"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Spray Safely"
+    },
+    {
+      "type": "callout",
+      "tone": "info",
+      "title": "",
+      "text": "Use only herbicides registered with the [Fertilizer and Pesticide Authority](/blog/fertilizer-and-pesticide-authority), and follow the label on the pack: the rate, the timing, the water and the protective clothing. Switch herbicide groups between seasons so the weeds do not learn to survive them. Our [guide to herbicides for rice](/weeds/herbicides-for-rice-weeds) explains the groups."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep Paspalum scrobiculatum Out Next Season"
+    },
+    {
+      "type": "list",
+      "items": [
+        "Plant clean, certified seed. Weed seeds mixed into the punla are the easiest way in.",
+        "Keep the seedbed, the canals and the bunds free of weeds, so seed does not wash or blow into the paddy.",
+        "Prepare the land well: flood, plow, let the weed seeds sprout, then kill them when you harrow. Level the field so water covers it evenly.",
+        "Pull escapes before the seed heads open, and clean the thresher and harvester before they enter the field.",
+        "Keep the field clean after harvest and through the fallow, so fewer seeds build up in the soil for next season."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These steps work for every [grass weed](/weeds/types-of-weeds) in the paddy, not only this one. The [weed management guide](/weeds/weed-management-in-rice) puts them in order for a whole season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Not Sure It Is Paspalum scrobiculatum?"
+    },
+    {
+      "type": "text",
+      "text": "Take a clear photo of the leaf, the stem and the flower or seed head, then ask [Anee, the smart farm technician](/features/ai-agricultural-technician) in anee.io, in Tagalog or English. Anee tells you which weed it most likely is, its group, and what to do at the age of your rice. You can also put the weeding days on your [cropping calendar](/features/cropping-calendar), so the team knows when to go in."
+    },
+    {
+      "type": "cta",
+      "title": "Stay ahead of the weeds this season",
+      "text": "anee.io keeps your weeding, spraying and water on one calendar, and Anee answers when a plant looks wrong.\nWeeding days on the season calendar\nPhotos and notes for every lot\nAnee, the smart farm technician, in Tagalog or English",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions Farmers Ask About Paspalum scrobiculatum"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What do Filipino farmers call Paspalum scrobiculatum?",
+          "a": "Farmers call it bias biasin, angangsug or sabung sabungan. In English it goes by kodo millet, since the same species grows as a grain crop in India. It belongs to the grass family, Poaceae. When you ask a technician for help, give one of these local names or show a photo of the reddish brown seed heads."
+        },
+        {
+          "q": "How do I control this grass in my rice field?",
+          "a": "Start with clean seed and a well leveled field so water covers the soil evenly. Keep the paddy flooded when the rain allows. Next, pull young plants by hand before they flower. If you need a herbicide, choose one made for grass weeds that fits the age of your rice. Always follow the FPA registered label."
+        },
+        {
+          "q": "Why does it keep coming back every season?",
+          "a": "It comes back from seed. Each plant that flowers drops seeds into the soil, and some stay there until the next land preparation. So even a few plants left to flower can start a new flush of weeds. Weed before flowering every season, and over time you will have fewer seeds waiting in the soil."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "More grass weeds of rice",
+      "items": [
+        {
+          "label": "Barnyard grass",
+          "url": "/weeds/barnyard-grass"
+        },
+        {
+          "label": "Weedy rice",
+          "url": "/weeds/weedy-rice"
+        },
+        {
+          "label": "Chinese sprangletop",
+          "url": "/weeds/chinese-sprangletop"
+        },
+        {
+          "label": "Echinochloa glabrescens",
+          "url": "/weeds/echinochloa-glabrescens"
+        },
+        {
+          "label": "Jungle rice",
+          "url": "/weeds/jungle-rice"
+        },
+        {
+          "label": "All weeds of rice",
+          "url": "/weeds"
+        },
+        {
+          "label": "Weed management in rice",
+          "url": "/weeds/weed-management-in-rice"
+        }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        {
+          "label": "PhilRice: eDamuhan, the weed identification app",
+          "url": "https://www.philrice.gov.ph/edamuhan/"
+        },
+        {
+          "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
+          "url": "http://www.knowledgebank.irri.org/training/fact-sheets/pest-management/weeds/main-weeds-of-rice-in-asia"
+        },
+        {
+          "label": "FPA: Registered pesticide products",
+          "url": "https://fpa.da.gov.ph/resources/reports/registered-products/"
+        }
+      ]
+    }
+  ]
+}
