@@ -1704,19 +1704,21 @@
         <img src="{{ asset('images/site/photos/team-thumbs.jpg') }}" alt="Two farmers giving a thumbs up beside their rice field" class="hp-final-bg" loading="lazy">
         <div class="hp-final-shade" aria-hidden="true"></div>
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 hp-sec text-center reveal on-dark" style="z-index:1">
-            {{-- Where you are now, and where you could be (2026-10-07): five
-                 parts of a farmer's season as they are today, each with where
-                 anee.io takes it, an arrow between the two. --}}
+            {{-- Where you are now, and where you could be (2026-10-07): the
+                 farmer's life today (money, debt, worry, risk, the next
+                 generation) and where it could be, an arrow between the two. --}}
             <p class="hp-kick">Think about it</p>
-            <h2 class="hp-h2">Think About Where Your Farm Is Now. <em>Then Where It Could Be With anee.io.</em></h2>
-            <p class="hp-p">Same field, same hands, same rain. Here is the distance between the season you have now and the one anee.io helps you run.</p>
+            <h2 class="hp-h2">Think About Where You Are Now. <em>Then Where You Could Be With anee.io.</em></h2>
+            <p class="hp-p">Same field, same hands, same rain. What changes is the life your farm gives back to you and your family.</p>
             @php
+                // Not features: the life a farm gives you now, and the one it could (the owner's ask, 2026-10-07).
                 $ws = [
-                    ['Your season lives in your memory and a notebook.', 'Every task sits on a calendar dated from your own planting day.'],
-                    ['A sick leaf means days of waiting, or a guess at the store.', 'You send Anee a photo and know what to do in seconds.'],
-                    ['You find out about the rain after the spray is on.', 'You see the weather for every lot before you spend a peso.'],
-                    ['At harvest, you are not sure the season made money.', 'You know what every lot cost and earned, to the peso.'],
-                    ['Every season starts from scratch.', 'Your best season becomes the plan for the next one.'],
+                    ['Money is tight, and the season is hard to budget.', 'You know what the season will cost before you plant, and the money lasts to harvest.'],
+                    ['You borrow to finish the season, and the interest eats the harvest.', 'You pay for the next season from your own savings.'],
+                    ['You work from dawn to dark and still lie awake worrying.', 'You end each day knowing tomorrow is already planned.'],
+                    ['One bad season can wipe out years of hard work.', 'You see trouble coming early and protect what you have built.'],
+                    ['Your harvest stays the same, year after year.', 'Every season, your yield and your income grow.'],
+                    ['Your children see farming as a hard life to escape.', 'Your children see a farm worth taking over.'],
                 ];
             @endphp
             <div class="hp-ws" aria-label="Where your farm is now, and where it could be with anee.io">
