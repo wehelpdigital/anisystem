@@ -891,7 +891,11 @@ html.js .reveal {
     transition-delay: var(--reveal-delay, 0s);
     will-change: opacity, transform;
 }
-html.js .reveal.is-visible { opacity: 1; transform: none; }
+/* Once in place, the element goes back to being painted with the page:
+   a will-change left on keeps every revealed block on a layer of its own,
+   and a layer that lands on a half pixel (a centered container in an odd
+   width window) draws its icons and text soft. */
+html.js .reveal.is-visible { opacity: 1; transform: none; will-change: auto; }
 
 /* One-shot entrance for above-the-fold content (pure CSS, runs on load). */
 @keyframes fade-up {

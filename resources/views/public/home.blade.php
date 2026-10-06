@@ -467,7 +467,7 @@
                                             </p>
                                             <p class="hp-info-w">{{ $it['what'] }}</p>
                                             <ul class="hp-info-g">
-                                                @foreach ($it['gets'] as $g)<li>{!! $tick !!}<span>{{ $g }}</span></li>@endforeach
+                                                @foreach ($it['gets'] as $g)<li><span class="hp-info-ok">{!! $tick !!}</span><span>{{ $g }}</span></li>@endforeach
                                             </ul>
                                             <a href="{{ $toolUrl($it) }}" class="hp-info-more">Read more about it {!! $arrow !!}</a>
                                         </div>
@@ -528,10 +528,6 @@
                             </a>
                         @endforeach
                     </div>
-                    <p class="hp-anee-price">
-                        Anee comes with Libre + Anee for {{ $aneePrice }} a month, and with every plan above it.
-                        Want to try her first? Ask one question free each week. No account needed.
-                    </p>
                     <div class="hp-cta is-left">
                         <div class="hp-cta-row">
                             <a href="{{ $ask }}" class="btn btn-accent btn-lg hp-go">Ask Anee a free question {!! $arrow !!}</a>
@@ -1372,8 +1368,14 @@
     .hp-info-w { margin-top: .65rem; font-size: .93rem; line-height: 1.62; color: #374151; }
     .hp-info-g { margin-top: .8rem; display: grid; gap: .42rem; list-style: none; padding: 0; }
     .hp-info-g li { display: flex; align-items: flex-start; gap: .5rem; font-size: .88rem; font-weight: 700; line-height: 1.4; color: var(--hp-deep); }
-    .hp-info-g svg { flex: none; width: 1.15rem; height: 1.15rem; margin-top: .05rem; padding: .22rem; border-radius: 999px; color: #fff; background: var(--hp-green); }
-    .hp-info.is-on .hp-info-g li { animation: hpInfoIn .45s var(--hp-ease) both; }
+    /* Whole pixels and a thicker stroke: the tick used to be an 11.4px
+       drawing inside a padded svg, which rendered soft (2026-10-06). */
+    .hp-info-ok { flex: none; width: 20px; height: 20px; margin-top: 1px; border-radius: 999px; display: grid; place-items: center;
+        color: #fff; background: var(--hp-green); }
+    .hp-info-ok svg { width: 14px; height: 14px; stroke-width: 3.2; }
+    /* backwards, not both: an animation that keeps holding its end keeps
+       the row on its own layer, and a layer at a half pixel blurs. */
+    .hp-info.is-on .hp-info-g li { animation: hpInfoIn .45s var(--hp-ease) backwards; }
     .hp-info.is-on .hp-info-g li:nth-child(2) { animation-delay: .07s; }
     .hp-info.is-on .hp-info-g li:nth-child(3) { animation-delay: .14s; }
     @keyframes hpInfoIn { from { opacity: 0; translate: -6px 0; } to { opacity: 1; translate: none; } }
@@ -1398,8 +1400,6 @@
     .hp-power img { flex: none; width: 2.15rem; height: 2.15rem; padding: .28rem; border-radius: .7rem; background: #fff; object-fit: contain; }
     .hp-power b { display: block; font-size: .86rem; font-weight: 800; line-height: 1.25; }
     .hp-power small { display: block; margin-top: .1rem; font-size: .76rem; line-height: 1.35; color: #c3d2b5; }
-    .hp-anee-price { margin-top: 1.4rem; padding: .85rem 1rem; border-radius: 1rem; font-size: .9rem; line-height: 1.6; color: #e6eddd;
-        background: rgb(245 197 24 / .1); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .3); }
     .hp-chat { position: relative; max-width: 28rem; margin: 0 auto; border-radius: 1.6rem; background: #fff; color: var(--hp-ink); overflow: hidden;
         box-shadow: 0 50px 90px -40px rgb(0 0 0 / .85), 0 0 0 1px rgb(255 255 255 / .1); }
     .hp-chat-top { display: flex; align-items: center; gap: .7rem; padding: .9rem 1.1rem; background: linear-gradient(135deg, #2f5219, #4a7c2a); color: #fff; }
@@ -1511,7 +1511,7 @@
         .hp-vs-head { top: 81px; }
         .hp-vs-group { scroll-margin-top: 9.5rem; }
     }
-    .hp-vs-group.is-visible .hp-vs-new > span { animation: hpPop .5s var(--hp-ease) both; animation-delay: calc(var(--i, 0) * 80ms + .15s); }
+    .hp-vs-group.is-visible .hp-vs-new > span { animation: hpPop .5s var(--hp-ease) backwards; animation-delay: calc(var(--i, 0) * 80ms + .15s); }
     @keyframes hpPop { from { transform: scale(0); } 60% { transform: scale(1.2); } to { transform: scale(1); } }
 
     /* ---- pricing toggle, questions ---- */
