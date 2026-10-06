@@ -74,7 +74,7 @@
                          engines and screen readers. Each word wears its own
                          shimmer: a gradient clipped to text does not reach
                          into a moving child. --}}
-                    <span class="hp-mark"><span class="hp-rot" data-words="Higher,Stable,Bigger,Better,Steady,Record,Greater,Maximum"><span class="hp-rot-w hp-shimmer">Higher</span></span> <span class="hp-shimmer">Yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
+                    <span class="hp-mark"><span class="hp-rot" data-words="Higher,Stable,Bigger,Better,Steady,Secured,Record,Greater,Maximum"><span class="hp-rot-w hp-shimmer">Higher</span></span> <span class="hp-shimmer">Yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M5 15 C 55 7, 105 19, 160 12 S 255 6, 295 13"/></svg></span>
                 </h1>
                 <p class="hp-lede animate-fade-up" style="animation-delay:.12s">
                     @if ($ph)
@@ -496,7 +496,7 @@
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start your first season free {!! $arrow !!}</a>
                     <a href="{{ route('how') }}" class="hp-alt">See all {{ $tools->count() }} tools step by step</a>
                 </div>
-                <p class="hp-cta-note">The season board, your lot and the growth stages are free. The other tools come with the paid plans below.</p>
+                <p class="hp-cta-note">The season board, your lot and the growth stages are free. The other tools come with the paid plans.</p>
             </div>
         </div>
     </section>
@@ -758,6 +758,162 @@
         </div>
     </section>
 
+    {{-- ================= YOUR TEAM IN THE FIELD, YOUR FARM FROM SPACE ================= --}}
+    {{-- For the farm owner (2026-10-06): be in the field without being in
+         it. A feed of the day as the workers send it in (a tick, photos, a
+         voice note, a note written with no signal, Anee in the Collab
+         Room), the six team tools that make it happen, and the field health
+         maps from space, with a satellite over the paddies and radar rings
+         passing through the clouds.
+
+         The satellite maps (optical plus radar, every 5 to 10 days) are the
+         owner's coming feature, said here as the product; the owner asked
+         for it this way. Keep the words in line with what ships. --}}
+    <section class="hp-sec bg-white bg-drift">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="hp-head reveal">
+                <p class="hp-kick">For farm owners</p>
+                <h2 class="hp-h2">Be in the Field <em>Without Being in the Field.</em></h2>
+                <p class="hp-p">
+                    Your workers carry the farm in their pocket. They tick each job as it gets done, snap photos, record short
+                    videos and leave voice notes, even at the far lot with no signal. You see every update from wherever you
+                    are, plan with them on maps and drawings, and talk it through in the Collab Room. <b>It feels like you are
+                    standing in your field, even when you are far away.</b>
+                </p>
+            </div>
+
+            <div class="hp-team">
+                {{-- The day as it comes in from the field. --}}
+                <div class="hp-feed reveal" data-feed aria-label="An example of updates from your workers during the day">
+                    <div class="hp-feed-top">
+                        <span><b>Today on your farm</b><small>Wet season palay 2026</small></span>
+                        <span class="hp-feed-live"><i class="hp-live"></i>Live from the field</span>
+                    </div>
+                    <ol class="hp-feed-list">
+                        <li class="hp-feed-item">
+                            <span class="hp-feed-av" style="--h: 205">JD</span>
+                            <div class="hp-feed-tx">
+                                <p><b>Juan</b> <span>on Lot 2</span><time>7:48 AM</time></p>
+                                <p>Hand weeding is done.</p>
+                                <span class="hp-feed-done">{!! $tick !!}Ticked done</span>
+                            </div>
+                        </li>
+                        <li class="hp-feed-item">
+                            <span class="hp-feed-av" style="--h: 330">MS</span>
+                            <div class="hp-feed-tx">
+                                <p><b>Maria</b> <span>on Lot 1</span><time>9:15 AM</time></p>
+                                <p>Sent 2 photos from the field.</p>
+                                <span class="hp-feed-pics">
+                                    <img src="{{ asset('images/site/home-team/field.webp') }}" alt="" width="200" height="150" loading="lazy">
+                                    <img src="{{ asset('images/site/home-team/palay-heads.webp') }}" alt="" width="200" height="150" loading="lazy">
+                                </span>
+                            </div>
+                        </li>
+                        <li class="hp-feed-item">
+                            <span class="hp-feed-av" style="--h: 30">PR</span>
+                            <div class="hp-feed-tx">
+                                <p><b>Pedro</b> <span>on Lot 2</span><time>10:02 AM</time></p>
+                                <p>Recorded a voice note.</p>
+                                <span class="hp-feed-voice" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>
+                                    <span class="hp-feed-wave">@for ($w = 0; $w < 16; $w++)<i style="--w: {{ [5, 9, 13, 7, 11, 15, 8, 12, 6, 14, 10, 7, 12, 9, 5, 8][$w] }}; --d: {{ $w * 0.07 }}s"></i>@endfor</span>
+                                    <b>0:18</b>
+                                </span>
+                            </div>
+                        </li>
+                        <li class="hp-feed-item">
+                            <span class="hp-feed-av" style="--h: 205">JD</span>
+                            <div class="hp-feed-tx">
+                                <p><b>Juan</b> <span>at the far lot</span><time>11:20 AM</time></p>
+                                <p>Wrote a note with no signal: the canal gate is leaking.</p>
+                                <span class="hp-feed-sync"><i class="is-off">Saved on the phone</i><i class="is-on">{!! $tick !!}Synced</i></span>
+                            </div>
+                        </li>
+                        <li class="hp-feed-item is-anee">
+                            <img class="hp-feed-av" src="{{ $face }}" alt="">
+                            <div class="hp-feed-tx">
+                                <p><b>Anee</b> <span>in the Collab Room</span><time>11:31 AM</time></p>
+                                <p>Rain after 3 PM. Spray Lot 1 this morning.</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="hp-team-cards">
+                    @foreach ([
+                        ['Collab Room', 'A room for each season: chat with photos and voice notes, a shared whiteboard, live cameras, and Anee answering your whole team.', 'M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z'],
+                        ['Plan on the map', 'Trace each field on a satellite view, measure it, and pin the pump, the gate or the spot that floods.', 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7'],
+                        ['Draw it together', 'Sketch the plan over a photo of the field, so every worker follows the same picture.', 'M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'],
+                        ['Offline at the far lot', 'Your workers keep ticking tasks and writing notes with no signal. It all comes in once the signal is back.', 'M3 3l18 18M8.5 16.5a5 5 0 017 0M5 12.86a10 10 0 015.17-2.69M19 12.86a10 10 0 00-2.07-1.55M2 8.82a15 15 0 014.17-2.65M22 8.82a15 15 0 00-11.29-3.76M12 20h.01'],
+                        ['Photos, videos and voice', 'They snap it, film it or just say it. You get proof from the field, saved with the day and the task.', 'M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z'],
+                        ['A login for each worker', 'Each one sees only what you allow, and the day\'s plan lands in every inbox at 6 AM.', 'M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z'],
+                    ] as $i => [$ct, $cp, $ci])
+                        <div class="hp-team-card reveal" style="--reveal-delay: {{ ($i % 2) * 0.07 }}s">
+                            <span class="hp-team-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $ci }}"/></svg></span>
+                            <div><h3>{{ $ct }}</h3><p>{{ $cp }}</p></div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- Field health maps from space. --}}
+            <div class="hp-sky on-dark">
+                <div class="hp-sky-copy reveal">
+                    <p class="hp-kick">Field health from space</p>
+                    <h3 class="hp-sky-h">Watch Your Fields From Space, <em>Even Through the Clouds.</em></h3>
+                    <p class="hp-sky-p">
+                        anee.io is powered by advanced dual satellite technology. We combine high resolution satellite photos with
+                        cloud penetrating radar to give you an updated field health map every 5 to 10 days. Track your crops from
+                        above and spot hidden problems early, even during heavy monsoon rains, without buying an expensive drone.
+                    </p>
+                    <div class="hp-sky-stats">
+                        <div><b>Every 5 to 10 days</b><small>A fresh field health map</small></div>
+                        <div><b>Through the clouds</b><small>Radar sees your crop in the monsoon</small></div>
+                        <div><b>No drone needed</b><small>Nothing to buy, nothing to fly</small></div>
+                    </div>
+                </div>
+
+                <div class="hp-sat reveal" aria-hidden="true">
+                    <span class="hp-sat-stars"></span>
+                    <span class="hp-sat-ground"><span class="hp-sat-plane">
+                        <span class="hp-sat-grid"><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i></span>
+                        <span class="hp-sat-grid is-health"><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#f2c94c"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#f2c94c"></i><i style="--c:#e8590c"></i><i style="--c:#f2c94c"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#f2c94c"></i><i style="--c:#f2c94c"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i></span>
+                        <i class="hp-sat-scan"></i>
+                    </span></span>
+                    <span class="hp-sat-cloud is-a"></span>
+                    <span class="hp-sat-cloud is-b"></span>
+                    <span class="hp-sat-beam"></span>
+                    <span class="hp-sat-wave"></span><span class="hp-sat-wave" style="--d: 1s"></span><span class="hp-sat-wave" style="--d: 2s"></span>
+                    <span class="hp-sat-craft">
+                        <svg viewBox="0 0 160 80">
+                            <g class="hp-sat-panel"><rect x="4" y="26" width="50" height="28" rx="3"/><path d="M16.5 26v28M29 26v28M41.5 26v28M4 40h50"/></g>
+                            <path class="hp-sat-arm" d="M54 40h14M92 40h14"/>
+                            <rect class="hp-sat-body" x="68" y="24" width="24" height="32" rx="4"/>
+                            <path class="hp-sat-foil" d="M70 32h20M70 40h20M70 48h20"/>
+                            <path class="hp-sat-arm" d="M80 56v8"/>
+                            <path class="hp-sat-dish" d="M70 64a10 6 0 0020 0z"/>
+                            <circle class="hp-sat-blink" cx="80" cy="18" r="3"/><path class="hp-sat-arm" d="M80 24v-3"/>
+                            <g class="hp-sat-panel"><rect x="106" y="26" width="50" height="28" rx="3"/><path d="M118.5 26v28M131 26v28M143.5 26v28M106 40h50"/></g>
+                        </svg>
+                    </span>
+                    <span class="hp-sat-tag is-photo"><i></i>High resolution photos</span>
+                    <span class="hp-sat-tag is-radar"><i></i>Radar through clouds</span>
+                    <span class="hp-sat-legend">
+                        <span><i style="--c: #2f9e44"></i>Healthy</span><span><i style="--c: #f2c94c"></i>Watch</span><span><i style="--c: #e8590c"></i>Problem</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="hp-cta reveal">
+                <div class="hp-cta-row">
+                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free and bring your team in {!! $arrow !!}</a>
+                    <a href="{{ $toolUrl($tools['collab']) }}" class="hp-alt">See the Collab Room</a>
+                </div>
+                <p class="hp-cta-note">Workers and offline mode come with Solo Farmer. Worker logins and the Collab Room come with Farm Owner.</p>
+            </div>
+        </div>
+    </section>
+
     {{-- ================= TRADITIONAL vs ANEE.IO ================= --}}
     <section class="hp-sec bg-gray-50">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
@@ -866,73 +1022,6 @@
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start planning the anee.io way, free {!! $arrow !!}</a>
                 </div>
                 <p class="hp-cta-note">Your notebook can retire gently.</p>
-            </div>
-        </div>
-    </section>
-
-    {{-- ================= PRICING: THE TIERS ================= --}}
-    <section class="hp-sec bg-white bg-drift" id="pricing" x-data="{ yearly: false }">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="hp-head reveal">
-                <p class="hp-kick">Simple pricing</p>
-                <h2 class="hp-h2">Start Free. <em>Upgrade When You Need More.</em></h2>
-                <p class="hp-p">Libre is free forever. When your farm needs more, upgrade inside the app and pay with {{ $R::payMethod() }}.</p>
-                <div class="hp-billing" role="group" aria-label="Billing">
-                    <button type="button" :class="yearly ? '' : 'is-on'" @click="yearly = false">Monthly</button>
-                    <button type="button" :class="yearly ? 'is-on' : ''" @click="yearly = true">Yearly <span>save more</span></button>
-                </div>
-            </div>
-
-            <div class="mt-12 pr-grid">
-                @foreach ($tiers as $key => $tier)
-                    @php $isStar = $key === 'owner'; @endphp
-                    <div class="pr-card hp-pr reveal {{ $isStar ? 'is-star' : '' }}" style="--reveal-delay: {{ $loop->index * 0.07 }}s">
-                        @if ($isStar)<span class="pr-flag">Most complete</span>@endif
-                        <span class="pr-name">{{ $tier['name'] }}</span>
-                        <span class="pr-for">{{ $tier['tagline'] }}</span>
-
-                        @if (empty($tier['price']))
-                            <span class="pr-price">
-                                <span class="pr-amount is-free">Free</span>
-                                <span class="pr-per">forever</span>
-                            </span>
-                            <span class="pr-year">No card. No time limit. Yours to keep.</span>
-                        @else
-                            @php $hpM = $R::tierPrice($key, 'month'); $hpY = $R::tierPrice($key, 'year'); @endphp
-                            <span class="pr-price" x-show="!yearly">
-                                <span class="pr-amount">{{ $R::priceTag($hpM) }}</span>
-                                <span class="pr-per">a month</span>
-                            </span>
-                            <span class="pr-price" x-show="yearly" x-cloak>
-                                <span class="pr-amount">{{ $R::priceTag($hpY) }}</span>
-                                <span class="pr-per">a year</span>
-                            </span>
-                            <span class="pr-year" x-show="!yearly">or {{ $R::priceTag($hpY) }} a year, about {{ $R::priceTag(round($hpY / 12, 2)) }} a month</span>
-                            <span class="pr-year" x-show="yearly" x-cloak>About {{ $R::priceTag(round($hpY / 12, 2)) }} a month, paid once with {{ $R::payMethod() }}</span>
-                        @endif
-
-                        <ul class="pr-list">
-                            @foreach ($tier['features'] as $feature)
-                                <li>{!! $tick !!}{{ $feature }}</li>
-                            @endforeach
-                            @foreach ($tier['excludes'] as $missing)
-                                <li class="is-off"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>{{ $missing }}</li>
-                            @endforeach
-                        </ul>
-
-                        <a href="{{ $signup }}" class="btn {{ $isStar ? 'btn-accent hp-go' : (empty($tier['price']) ? 'btn-primary' : 'btn-outline') }}">
-                            {{ empty($tier['price']) ? 'Start for free' : 'Start free, then upgrade' }}
-                        </a>
-                    </div>
-                @endforeach
-            </div>
-
-            <div class="hp-cta reveal">
-                <div class="hp-cta-row">
-                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Create your free account {!! $arrow !!}</a>
-                    <a href="{{ route('pricing') }}" class="hp-alt">See the full pricing page</a>
-                </div>
-                <p class="hp-cta-note">Every account starts free on Libre. You upgrade inside the app, pay with {{ $R::payMethod() }}, and our team checks the payment.</p>
             </div>
         </div>
     </section>
@@ -1615,8 +1704,11 @@
         .hp-tvs-new { border-radius: 0; background: rgb(168 204 126 / .1); }
         .hp-tvs-row:hover .hp-tvs-new { background: rgb(168 204 126 / .16); }
     }
-    .hp-chat { position: relative; max-width: 28rem; margin: 0 auto; border-radius: 1.6rem; background: #fff; color: var(--hp-ink); overflow: hidden;
-        box-shadow: 0 50px 90px -40px rgb(0 0 0 / .85), 0 0 0 1px rgb(255 255 255 / .1); }
+    /* The window's own colour is the header's green at the top and the
+       body's at the bottom: a white window showed through the rounded top
+       corners as a thin white line (2026-10-06). */
+    .hp-chat { position: relative; max-width: 28rem; margin: 0 auto; border-radius: 1.6rem; color: var(--hp-ink); overflow: hidden;
+        background: linear-gradient(180deg, #34591c 50%, #f6f8f3 50%); box-shadow: 0 50px 90px -40px rgb(0 0 0 / .85); }
     .hp-chat-top { display: flex; align-items: center; gap: .7rem; padding: .9rem 1.1rem; background: linear-gradient(135deg, #2f5219, #4a7c2a); color: #fff; }
     .hp-chat-top b { display: block; font-size: 1rem; }
     .hp-chat-top small { display: flex; align-items: center; font-size: .75rem; color: #dceccb; }
@@ -1712,6 +1804,150 @@
     .hp-gain b { display: block; font-size: .9rem; font-weight: 800; color: var(--hp-ink); line-height: 1.25; }
     .hp-gain small { display: block; margin-top: .15rem; font-size: .8rem; color: #6b7280; line-height: 1.4; }
 
+    /* ---- your team in the field, your farm from space ---- */
+    .hp-team { margin-top: 3rem; display: grid; gap: 2rem; }
+    @media (min-width: 1024px) { .hp-team { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 3rem; align-items: center; } }
+    /* Same trick as the chat window: green behind the green header, so no
+       light line shows at the rounded top corners. */
+    .hp-feed { border-radius: 1.6rem; overflow: hidden; background: linear-gradient(180deg, #34591c 50%, #f6f8f3 50%);
+        box-shadow: 0 40px 80px -50px rgb(20 33 12 / .6), 0 1px 3px rgb(20 33 12 / .08); }
+    .hp-feed-top { display: flex; align-items: center; justify-content: space-between; gap: .8rem; padding: .95rem 1.15rem; color: #fff;
+        background: linear-gradient(135deg, #2f5219, #4a7c2a); }
+    .hp-feed-top b { display: block; font-size: .98rem; }
+    .hp-feed-top small { display: block; font-size: .74rem; color: #dceccb; }
+    .hp-feed-live { flex: none; display: inline-flex; align-items: center; padding: .28rem .65rem; border-radius: 999px; font-size: .72rem; font-weight: 800;
+        background: rgb(255 255 255 / .16); }
+    .hp-feed-list { display: grid; align-content: start; gap: .6rem; min-height: 27rem; padding: .95rem; list-style: none; margin: 0; background: #f6f8f3; }
+    .hp-feed-item { display: flex; align-items: flex-start; gap: .7rem; padding: .75rem .85rem; border-radius: 1rem; background: #fff;
+        box-shadow: 0 8px 20px -16px rgb(0 0 0 / .45); opacity: 0; translate: 0 12px; transition: opacity .45s var(--hp-ease), translate .45s var(--hp-ease); }
+    .hp-feed-item.is-in { opacity: 1; translate: none; }
+    html:not(.js) .hp-feed-item { opacity: 1; translate: none; }
+    .hp-feed-item.is-anee { background: #fffbea; box-shadow: inset 0 0 0 1px #f6e3a0, 0 8px 20px -16px rgb(0 0 0 / .45); }
+    .hp-feed-av { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: grid; place-items: center; font-size: .74rem; font-weight: 800;
+        color: #fff; background: hsl(var(--h, 120) 45% 42%); object-fit: cover; }
+    .hp-feed-tx { min-width: 0; flex: 1; }
+    .hp-feed-tx p { font-size: .86rem; line-height: 1.45; color: #374151; }
+    .hp-feed-tx p:first-child { display: flex; align-items: baseline; gap: .35rem; font-size: .8rem; color: #6b7280; }
+    .hp-feed-tx p:first-child b { font-size: .86rem; color: var(--hp-ink); }
+    .hp-feed-tx time { margin-left: auto; font-size: .7rem; color: #9ca3af; white-space: nowrap; }
+    .hp-feed-done, .hp-feed-sync i { display: inline-flex; align-items: center; gap: .3rem; margin-top: .4rem; padding: .2rem .55rem; border-radius: 999px;
+        font-size: .72rem; font-weight: 800; font-style: normal; }
+    .hp-feed-done { color: var(--hp-deep); background: #e7f3dc; }
+    .hp-feed-done svg, .hp-feed-sync svg { width: 11px; height: 11px; stroke-width: 3.4; }
+    .hp-feed-pics { margin-top: .45rem; display: flex; gap: .4rem; }
+    .hp-feed-pics img { width: 4.4rem; height: 3.3rem; border-radius: .6rem; object-fit: cover; }
+    .hp-feed-voice { margin-top: .45rem; display: inline-flex; align-items: center; gap: .5rem; padding: .35rem .7rem .35rem .45rem; border-radius: 999px;
+        color: #fff; background: var(--hp-green); }
+    .hp-feed-voice > svg { width: 1.2rem; height: 1.2rem; padding: .2rem; border-radius: 999px; background: rgb(255 255 255 / .2); }
+    .hp-feed-voice b { font-size: .72rem; }
+    .hp-feed-wave { display: inline-flex; align-items: center; gap: 2px; height: 16px; }
+    .hp-feed-wave i { width: 2px; height: calc(var(--w) * 1px); border-radius: 2px; background: #fff; transform-origin: center; }
+    .hp-feed-item.is-in .hp-feed-wave i { animation: hpWave 1.1s ease-in-out var(--d) infinite; }
+    @keyframes hpWave { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(.35); } }
+    .hp-feed-sync { position: relative; display: inline-grid; }
+    .hp-feed-sync i { grid-area: 1 / 1; transition: opacity .4s var(--hp-ease); }
+    .hp-feed-sync .is-off { color: #92400e; background: #fef3c7; }
+    .hp-feed-sync .is-on { color: var(--hp-deep); background: #e7f3dc; opacity: 0; }
+    .hp-feed-item.is-in .hp-feed-sync .is-off { opacity: 0; transition-delay: 1.3s; }
+    .hp-feed-item.is-in .hp-feed-sync .is-on { opacity: 1; transition-delay: 1.3s; }
+    html:not(.js) .hp-feed-sync .is-off { opacity: 0; }
+    html:not(.js) .hp-feed-sync .is-on { opacity: 1; }
+
+    .hp-team-cards { display: grid; gap: .8rem; grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr)); }
+    .hp-team-card { display: flex; align-items: flex-start; gap: .8rem; padding: 1rem 1.1rem; border-radius: 1.15rem; background: #fff; border: 1px solid #e4ecdb;
+        transition: border-color .28s var(--hp-ease), box-shadow .28s var(--hp-ease), opacity .6s ease, transform .6s var(--hp-ease); }
+    .hp-team-card:hover { border-color: #b9d69a; box-shadow: 0 18px 34px -26px rgb(20 33 12 / .55); }
+    /* The reveal's own transition would otherwise snap the hover. */
+    html.js .hp-team-card.reveal { transition: opacity .6s ease, transform .6s var(--hp-ease), border-color .28s var(--hp-ease), box-shadow .28s var(--hp-ease);
+        transition-delay: var(--reveal-delay, 0s), var(--reveal-delay, 0s), 0s, 0s; }
+    .hp-team-ico { flex: none; width: 2.5rem; height: 2.5rem; border-radius: .85rem; display: grid; place-items: center; color: #fff; background: var(--hp-green);
+        box-shadow: 0 10px 18px -12px rgb(47 82 25 / .9); }
+    .hp-team-ico svg { width: 1.3rem; height: 1.3rem; }
+    .hp-team-card h3 { font-family: var(--font-heading); font-size: 1rem; font-weight: 800; color: var(--hp-ink); line-height: 1.25; }
+    .hp-team-card p { margin-top: .25rem; font-size: .86rem; line-height: 1.5; color: #4b5563; }
+
+    /* The band from space. */
+    .hp-sky { margin-top: 4.5rem; display: grid; gap: 2rem; padding: 1.5rem; border-radius: 2rem; color: #e2e8f0;
+        background: radial-gradient(80% 90% at 85% 10%, #1f3b63 0%, transparent 60%), linear-gradient(160deg, #0b1324 0%, #0f1c33 55%, #13291c 100%);
+        box-shadow: 0 50px 100px -60px rgb(11 19 36 / .9); }
+    @media (min-width: 900px) { .hp-sky { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); padding: 2.4rem; gap: 2.8rem; align-items: center; } }
+    .hp-sky-h { margin-top: .7rem; font-family: var(--font-heading); font-size: clamp(1.55rem, 3.2vw, 2.2rem); font-weight: 800; line-height: 1.12;
+        letter-spacing: -.01em; color: #fff; text-wrap: balance; }
+    .hp-sky-h em { font-style: normal; color: var(--hp-sun); }
+    .hp-sky-p { margin-top: .9rem; color: #cbd5e1; line-height: 1.7; text-wrap: pretty; }
+    .hp-sky-stats { margin-top: 1.4rem; display: grid; gap: .6rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    @media (max-width: 559.98px) { .hp-sky-stats { grid-template-columns: 1fr; } }
+    .hp-sky-stats div { padding: .8rem .9rem; border-radius: 1rem; background: rgb(255 255 255 / .06); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .12); }
+    .hp-sky-stats b { display: block; font-family: var(--font-heading); font-size: .95rem; font-weight: 800; color: var(--hp-sun); line-height: 1.25; }
+    .hp-sky-stats small { display: block; margin-top: .2rem; font-size: .78rem; line-height: 1.4; color: #cbd5e1; }
+
+    /* The satellite over the paddies: the health map is scanned in, radar
+       rings pass through the clouds, and it all goes round again. */
+    .hp-sat { position: relative; aspect-ratio: 5 / 4; border-radius: 1.4rem; overflow: hidden; isolation: isolate;
+        background: radial-gradient(110% 80% at 50% 0%, #1d2d50 0%, #0b1324 55%, #070c16 100%); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); }
+    .hp-sat-stars { position: absolute; inset: 0 0 45% 0; opacity: .8; animation: hpTwinkle 3.5s ease-in-out infinite alternate;
+        background-image: radial-gradient(1.2px 1.2px at 8% 20%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 22% 8%, #fff 50%, transparent 51%),
+            radial-gradient(1.4px 1.4px at 37% 30%, #dbeafe 50%, transparent 51%), radial-gradient(1px 1px at 55% 12%, #fff 50%, transparent 51%),
+            radial-gradient(1.2px 1.2px at 72% 26%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 88% 10%, #dbeafe 50%, transparent 51%),
+            radial-gradient(1.3px 1.3px at 93% 38%, #fff 50%, transparent 51%), radial-gradient(1px 1px at 14% 44%, #fff 50%, transparent 51%),
+            radial-gradient(1px 1px at 63% 42%, #fff 50%, transparent 51%), radial-gradient(1.2px 1.2px at 47% 5%, #fff 50%, transparent 51%); }
+    @keyframes hpTwinkle { from { opacity: .45; } to { opacity: .95; } }
+    .hp-sat-ground { position: absolute; left: -6%; right: -6%; bottom: -6%; height: 64%; perspective: 520px; }
+    .hp-sat-plane { position: absolute; inset: 0; transform: rotateX(52deg) rotateZ(-8deg); transform-origin: 50% 75%; }
+    .hp-sat-grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(6, 1fr); gap: 4px; padding: 4px;
+        border-radius: 8px; background: #2c3b20; box-shadow: 0 0 60px 10px rgb(47 158 68 / .15); }
+    .hp-sat-grid i { border-radius: 3px; background: var(--c); }
+    .hp-sat-grid.is-health { -webkit-clip-path: inset(0 100% 0 0); clip-path: inset(0 100% 0 0); }
+    .hp-sat-grid.is-health i { box-shadow: inset 0 0 0 1px rgb(255 255 255 / .18); }
+    .hp-sat-scan { position: absolute; top: -3%; bottom: -3%; left: 0; width: 3px; opacity: 0; border-radius: 3px;
+        background: linear-gradient(transparent, #7dd3fc, transparent); box-shadow: 0 0 16px 5px rgb(125 211 252 / .6); }
+    .hp-sat.is-visible .hp-sat-grid.is-health { animation: hpSatScan 9s linear infinite; }
+    .hp-sat.is-visible .hp-sat-scan { animation: hpSatLine 9s linear infinite; }
+    @keyframes hpSatScan { 0% { clip-path: inset(0 100% 0 0); opacity: 1; } 40%, 86% { clip-path: inset(0 0 0 0); opacity: 1; } 100% { clip-path: inset(0 0 0 0); opacity: 0; } }
+    @keyframes hpSatLine { 0% { left: 0; opacity: 1; } 40% { left: 100%; opacity: 1; } 42%, 100% { left: 100%; opacity: 0; } }
+    .hp-sat-craft { position: absolute; left: 50%; top: 9%; width: 34%; translate: -50% 0; z-index: 3; animation: hpSatFloat 6s ease-in-out infinite;
+        filter: drop-shadow(0 10px 18px rgb(0 0 0 / .5)); }
+    .hp-sat-craft svg { display: block; width: 100%; }
+    @keyframes hpSatFloat { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-8px) rotate(3deg); } }
+    .hp-sat-panel rect { fill: #1e40af; stroke: #93c5fd; stroke-width: 1.5; }
+    .hp-sat-panel path { stroke: #93c5fd; stroke-width: 1; opacity: .7; }
+    .hp-sat-arm { stroke: #cbd5e1; stroke-width: 2.5; stroke-linecap: round; }
+    .hp-sat-body { fill: #e9b949; stroke: #fde68a; stroke-width: 1.5; }
+    .hp-sat-foil { stroke: #b7791f; stroke-width: 1.5; }
+    .hp-sat-dish { fill: #e2e8f0; }
+    .hp-sat-blink { fill: #4ade80; animation: hpLive 2s ease-out infinite; }
+    .hp-sat-beam { position: absolute; left: 50%; top: 23%; width: 70%; height: 50%; translate: -50% 0; z-index: 1;
+        -webkit-clip-path: polygon(46% 0, 54% 0, 100% 100%, 0 100%); clip-path: polygon(46% 0, 54% 0, 100% 100%, 0 100%);
+        background: linear-gradient(rgb(250 204 21 / .42), rgb(250 204 21 / 0)); animation: hpSatBeam 3s ease-in-out infinite; }
+    @keyframes hpSatBeam { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+    .hp-sat-wave { position: absolute; left: 50%; top: 26%; width: 80%; aspect-ratio: 1; translate: -50% -50%; z-index: 2; border-radius: 999px;
+        border: 2px solid rgb(125 211 252 / .75); -webkit-clip-path: inset(50% 0 0 0); clip-path: inset(50% 0 0 0); opacity: 0; scale: .1;
+        animation: hpSatWave 3s ease-out var(--d, 0s) infinite; }
+    @keyframes hpSatWave { 0% { scale: .1; opacity: .9; } 100% { scale: 1.5; opacity: 0; } }
+    .hp-sat-cloud { position: absolute; z-index: 2; height: 8%; width: 24%; border-radius: 999px; background: rgb(241 245 249 / .78); filter: blur(2.5px);
+        animation: hpSatCloud 22s linear infinite; }
+    .hp-sat-cloud::before, .hp-sat-cloud::after { content: ''; position: absolute; border-radius: 999px; background: inherit; }
+    .hp-sat-cloud::before { width: 45%; height: 150%; left: 18%; bottom: 25%; }
+    .hp-sat-cloud::after { width: 35%; height: 120%; left: 50%; bottom: 30%; }
+    .hp-sat-cloud.is-a { top: 40%; left: -30%; }
+    .hp-sat-cloud.is-b { top: 50%; left: -30%; width: 19%; opacity: .7; animation-duration: 30s; animation-delay: -14s; }
+    @keyframes hpSatCloud { from { transform: translateX(0); } to { transform: translateX(650%); } }
+    .hp-sat-tag { position: absolute; z-index: 4; display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .6rem; border-radius: 999px;
+        font-size: .68rem; font-weight: 800; color: #0b1324; background: rgb(255 255 255 / .92); box-shadow: 0 8px 18px -10px rgb(0 0 0 / .6); }
+    .hp-sat-tag i { width: .5rem; height: .5rem; border-radius: 999px; }
+    .hp-sat-tag.is-photo { left: 5%; top: 30%; }
+    .hp-sat-tag.is-photo i { background: #facc15; }
+    .hp-sat-tag.is-radar { right: 5%; top: 40%; }
+    .hp-sat-tag.is-radar i { background: #38bdf8; }
+    .hp-sat-legend { position: absolute; left: 50%; bottom: 4%; translate: -50% 0; z-index: 4; display: flex; gap: .7rem; padding: .35rem .8rem; border-radius: 999px;
+        white-space: nowrap; font-size: .68rem; font-weight: 800; color: #0b1324; background: rgb(255 255 255 / .92); }
+    .hp-sat-legend span { display: inline-flex; align-items: center; gap: .3rem; }
+    .hp-sat-legend i { width: .55rem; height: .55rem; border-radius: 2px; background: var(--c); }
+    @media (max-width: 479.98px) {
+        .hp-sat-tag { font-size: .6rem; padding: .25rem .5rem; }
+        .hp-sat-legend { font-size: .62rem; gap: .5rem; }
+    }
+
     /* ---- versus ---- */
     .hp-vs-jump { margin-top: 2.2rem; display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
     .hp-vs-chip { display: inline-flex; align-items: center; gap: .45rem; padding: .42rem .5rem .42rem .85rem; border-radius: 999px;
@@ -1775,13 +2011,6 @@
     @keyframes hpPop { from { transform: scale(0); } 60% { transform: scale(1.2); } to { transform: scale(1); } }
 
     /* ---- pricing toggle, questions ---- */
-    .hp-billing { margin-top: 1.6rem; display: inline-flex; gap: .25rem; padding: .3rem; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px #e1ead6; }
-    .hp-billing button { border: 0; background: transparent; border-radius: 999px; padding: .45rem 1.05rem; font-size: .88rem; font-weight: 800; color: #6b7f5a; cursor: pointer;
-        transition: background-color .28s var(--hp-ease), color .28s var(--hp-ease); }
-    .hp-billing button.is-on { background: var(--hp-green); color: #fff; }
-    .hp-billing button span { font-weight: 600; opacity: .8; }
-    .hp-pr { transition: transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
-    .hp-pr:hover { transform: translateY(-4px); }
     .hp-q { border-radius: 1.1rem; background: #fff; border: 1px solid #e5e7eb; overflow: hidden; transition: border-color .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
     .hp-q.is-open { border-color: #b9d69a; box-shadow: 0 16px 34px -26px rgb(47 82 25 / .55); }
     .hp-q-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; text-align: left;
@@ -1906,6 +2135,10 @@
         .hp-tvs-race.is-fast i::before { transform: scaleX(1); }
         .hp-anee-reads li, .hp-anee-ri, .hp-anee-out { transition: none !important; }
         .hp-heart svg, .hp-heart::after { animation: none !important; }
+        .hp-feed-item, .hp-feed-sync i, .hp-team-card { transition: none !important; }
+        .hp-feed-wave i, .hp-sat-stars, .hp-sat-craft, .hp-sat-blink, .hp-sat-beam, .hp-sat-wave, .hp-sat-cloud, .hp-sat-grid.is-health, .hp-sat-scan { animation: none !important; }
+        .hp-sat-grid.is-health { -webkit-clip-path: none; clip-path: none; }
+        .hp-sat-wave { opacity: .5; scale: .9; }
         .hp-biz-u, .hp-biz-ui, .hp-biz-ok, .hp-biz-swap span { transition: none !important; }
         .hp-mark-line { -webkit-clip-path: none; clip-path: none; }
         .hp-tick, .hp-tick path, .hp-tick::after { animation: none !important; }
@@ -2184,6 +2417,22 @@
         else seen(readList, (v) => { on = v; clearTimeout(t); if (v) { reset(); step(); } }, { threshold: 0.3 });
     }
 
+
+    /* The day on the farm, coming in one update at a time while it is on
+       screen; a pause to read it, then it starts the day again. */
+    const feed = document.querySelector('[data-feed]');
+    if (feed) {
+        const items = [...feed.querySelectorAll('.hp-feed-item')];
+        let k = 0, t = null, on = false;
+        const reset = () => { items.forEach((it) => it.classList.remove('is-in')); k = 0; };
+        const step = () => {
+            if (!on) return;
+            if (k < items.length) { items[k++].classList.add('is-in'); t = setTimeout(step, 1500); return; }
+            t = setTimeout(() => { reset(); t = setTimeout(step, 700); }, 5500);
+        };
+        if (reduce) items.forEach((it) => it.classList.add('is-in'));
+        else seen(feed, (v) => { on = v; clearTimeout(t); if (v) { reset(); step(); } }, { threshold: 0.3 });
+    }
 
     /* On a phone, the way in stays one tap away once the hero has gone by,
        and steps aside for the last call and the footer. */
