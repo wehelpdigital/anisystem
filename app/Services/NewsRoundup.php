@@ -603,8 +603,41 @@ class NewsRoundup
             'excerpt' => $c($d['excerpt'] ?? ''),
             'category' => 'Agriculture News',
             'heroImage' => $hero,
-            'blocks' => ArticleStyle::cleanBlocks($blocks),
+            'blocks' => self::divide(ArticleStyle::cleanBlocks($blocks)),
         ]];
+    }
+
+    /**
+     * Thin lines between the parts (2026-10-07): before every section (an
+     * H2) but the first, and between the stories inside a section (an H3
+     * that follows another story). Safe to run twice: a line already there
+     * is not doubled.
+     */
+    public static function divide(array $blocks): array
+    {
+        $out = [];
+        $seenH2 = false;
+        $sinceH2 = 0;
+        foreach ($blocks as $b) {
+            $type = $b['type'] ?? '';
+            $last = end($out);
+            $after = $last && ($last['type'] ?? '') === 'divider';
+            if ($type === 'heading' && (int) ($b['level'] ?? 2) === 2) {
+                if ($seenH2 && ! $after) {
+                    $out[] = ['type' => 'divider'];
+                }
+                $seenH2 = true;
+                $sinceH2 = 0;
+            } elseif ($type === 'heading' && (int) ($b['level'] ?? 2) === 3) {
+                if ($sinceH2 > 0 && ! $after) {
+                    $out[] = ['type' => 'divider'];
+                }
+                $sinceH2++;
+            }
+            $out[] = $b;
+        }
+
+        return $out;
     }
 
     /** A picture we can show: it answers, and it is an image. */

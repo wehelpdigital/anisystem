@@ -163,6 +163,9 @@
     .sp-sources ol { margin-top: .4rem; padding-left: 1.2rem; list-style: decimal; display: grid; gap: .25rem; }
     .sp-sources a { color: #4b5563; word-break: break-word; }
     .sp-divider { border: 0; border-top: 1px solid #e5ebdf; }
+    /* A line between parts gets room on both sides, and the heading under it sits closer to it. */
+    .sp-body > .sp-divider { margin-top: 2.2rem; }
+    .sp-body > .sp-divider + h2, .sp-body > .sp-divider + h3 { margin-top: 1.6rem; }
 
     /* ---- cards (hubs, "keep reading") ---- */
     .sp-grid { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
