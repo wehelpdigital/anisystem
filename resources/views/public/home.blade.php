@@ -3033,7 +3033,7 @@
     .hg-shelves { margin-top: 2.8rem; display: grid; gap: 1.4rem; }
     @media (min-width: 768px) { .hg-shelves { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem; } }
     .hg-shelf { position: relative; display: flex; flex-direction: column; gap: 1rem; padding: 1.15rem; border-radius: 1.6rem; background: #fff;
-        border: 1px solid hsl(var(--h) 30% 88%); border-top: 4px solid hsl(var(--h) 55% 45%); box-shadow: 0 30px 60px -46px rgb(20 33 12 / .55);
+        border: 1px solid hsl(var(--h) 30% 88%); box-shadow: 0 30px 60px -46px rgb(20 33 12 / .55);
         transition: transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
     .hg-shelf:hover { transform: translateY(-3px); box-shadow: 0 36px 70px -44px rgb(20 33 12 / .6); }
     .hg-head { display: flex; align-items: center; gap: .75rem; }
