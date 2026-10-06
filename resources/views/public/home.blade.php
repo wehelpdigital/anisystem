@@ -248,7 +248,7 @@
                         <div class="loss-img"><img src="{{ asset('images/site/photos/' . $loss['img']) }}" alt="" loading="lazy"></div>
                         <div class="loss-body">
                             <p class="loss-upto">Up to</p>
-                            <p class="loss-n"><span data-countup="{{ $loss['n'] }}">0</span><small>%</small></p>
+                            <p class="loss-n"><span data-countup="{{ $loss['n'] }}">{{ $loss['n'] }}</span><small>%</small></p>
                             <p class="loss-l">{{ $loss['l'] }}</p>
                             <p class="loss-p">{{ $loss['p'] }}</p>
                             <p class="loss-peso">{{ $ph ? $loss['peso'] . ' lost per hectare' : 'up to ' . $loss['n'] . '% of what a hectare earns, lost' }}</p>
@@ -417,7 +417,7 @@
             <div class="hp-head reveal">
                 <p class="hp-kick">{{ $ph ? 'From pagtatanim to ani' : 'From planting to harvest' }}</p>
                 <h2 class="hp-h2">Your Whole Season in <em>{{ count($stages) }} <span class="hp-nw">Steps.<span class="hp-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5.4 12.6l4.3 4.3 8.9-9.6" pathLength="1"/></svg></span></span></em></h2>
-                <p class="hp-p">Each step has its own tools, and Anee helps in every one. Tap a step, then a tool, to see it work on a real phone.</p>
+                <p class="hp-p">Each step has its own tools, and Anee helps in every one. Tap a step, then a tool, to read what it does and watch it work on a real phone.</p>
             </div>
 
             <div class="hp-st reveal">
@@ -439,15 +439,38 @@
                                 <p class="hp-st-when">Step {{ $i + 1 }} · {{ $st['when'] }}</p>
                                 <h3 class="hp-st-h">{{ $st['title'] }}</h3>
                                 <p class="hp-st-p">{{ $st['lede'] }}</p>
+                                {{-- Every tool says what it is for in one line, and the one
+                                     picked opens its whole explanation below (2026-10-06,
+                                     the owner: "see the explanation for each feature"). All
+                                     of them are in the page; only the picked one shows. --}}
                                 <div class="hp-tools">
                                     @foreach ($st['items'] as $j => $it)
                                         @php $f = $filmOf($it['key']); @endphp
-                                        <button type="button" class="hp-tool{{ $j === 0 ? ' is-on' : '' }}" style="--j: {{ $j }}"
+                                        <button type="button" class="hp-tool{{ $j === 0 ? ' is-on' : '' }}" style="--j: {{ $j }}" data-tool="{{ $it['key'] }}"
+                                                aria-pressed="{{ $j === 0 ? 'true' : 'false' }}" aria-controls="hpInfo-{{ $it['key'] }}"
                                                 @if ($f) data-src="{{ $f['src'] }}" data-poster="{{ $f['poster'] }}" @endif
-                                                data-name="{{ $it['name'] }}" data-short="{{ $it['short'] }}" data-link="{{ $toolUrl($it) }}">
+                                                data-name="{{ $it['name'] }}">
                                             <span class="hp-tool-ico{{ str_starts_with($it['icon'], 'anee/') ? ' is-face' : '' }}"><img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy"></span>
-                                            <span class="hp-tool-t">{{ $it['name'] }}@if ($it['anee'])<i class="hp-anee-tag">Anee</i>@endif</span>
+                                            <span class="hp-tool-tx">
+                                                <span class="hp-tool-t">{{ $it['name'] }}@if ($it['anee'])<i class="hp-anee-tag">Anee</i>@endif</span>
+                                                <span class="hp-tool-s">{{ $it['short'] }}</span>
+                                            </span>
                                         </button>
+                                    @endforeach
+                                </div>
+                                <div class="hp-infos">
+                                    @foreach ($st['items'] as $j => $it)
+                                        <div class="hp-info{{ $j === 0 ? ' is-on' : '' }}" id="hpInfo-{{ $it['key'] }}" data-info="{{ $it['key'] }}">
+                                            <p class="hp-info-k">
+                                                <span class="hp-info-ico{{ str_starts_with($it['icon'], 'anee/') ? ' is-face' : '' }}"><img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy"></span>
+                                                <span>{{ $it['name'] }}@if ($it['anee'])<i class="hp-anee-tag">Anee does it</i>@endif</span>
+                                            </p>
+                                            <p class="hp-info-w">{{ $it['what'] }}</p>
+                                            <ul class="hp-info-g">
+                                                @foreach ($it['gets'] as $g)<li>{!! $tick !!}<span>{{ $g }}</span></li>@endforeach
+                                            </ul>
+                                            <a href="{{ $toolUrl($it) }}" class="hp-info-more">Read more about it {!! $arrow !!}</a>
+                                        </div>
                                     @endforeach
                                 </div>
                             </div>
@@ -464,8 +487,6 @@
                             </div>
                             <span class="hp-film-tag" data-step-tag>{{ $stages[0]['items'][0]['name'] }}</span>
                         </div>
-                        <p class="hp-st-short" data-step-short>{{ $stages[0]['items'][0]['short'] }}</p>
-                        <a href="{{ $toolUrl($stages[0]['items'][0]) }}" class="hp-st-more" data-step-link>Read more about it {!! $arrow !!}</a>
                     </div>
                 </div>
             </div>
@@ -497,10 +518,13 @@
                         your records and the weather. So when you ask "should I spray tomorrow?", she answers for your
                         own field. Ask {{ $ph ? 'in Tagalog or English, ' : '' }}and send a photo if you like.
                     </p>
+                    {{-- Each of Anee's tools with what it is for, not a cloud of names. --}}
+                    <p class="hp-powers-k">{{ $aneeTools->count() }} things Anee does for you</p>
                     <div class="hp-powers">
                         @foreach ($aneeTools as $i => $it)
-                            <a href="{{ $toolUrl($it) }}" class="hp-power reveal" style="--reveal-delay: {{ $i * 0.04 }}s">
-                                <img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy">{{ $it['name'] }}
+                            <a href="{{ $toolUrl($it) }}" class="hp-power reveal" style="--reveal-delay: {{ $i * 0.03 }}s">
+                                <img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy">
+                                <span><b>{{ $it['name'] }}</b><small>{{ $it['short'] }}</small></span>
                             </a>
                         @endforeach
                     </div>
@@ -603,33 +627,99 @@
             <div class="hp-head reveal">
                 <p class="hp-kick">Why farmers switch</p>
                 <h2 class="hp-h2">Traditional Farming <em>vs anee.io</em></h2>
-                <p class="hp-p">Your season does not have to live in your head or on loose paper. Here is what changes when the whole plan is in one place.</p>
+                <p class="hp-p">Your season does not have to live in your head or on loose paper. Here is everything that changes when the whole season is in one place.</p>
             </div>
 
+            {{-- The long list (2026-10-06, the owner: "not just a limited list, so
+                 the farmer can see all the advantages"): every way the season
+                 changes, in eight groups a visitor can jump between. Every
+                 line is something the app does today; keep it that way. --}}
             @php
-                $compare = [
-                    ['Season planning', 'Kept in your head or scattered across notebooks.', 'One clear plan for each season and each farm, always with you.'],
-                    ['Activity timing', 'Guessed from memory. Easy to spray or fertilize a few days late.', 'Every task dated from each lot\'s day zero. Right day, every time.'],
-                    ['Labor cost', 'Added up by hand at the end, often a nasty surprise.', 'Worker rates add up in ' . $R::symbol() . ' as the work gets done.'],
-                    ['Materials and budget', 'Rough estimates. Overspending creeps in unnoticed.', 'What the plan needs against what is in the shed, priced ahead.'],
-                    ['Expert advice', $R::t('techVisit'), 'Anee answers crop questions anytime, even from a photo of a leaf.'],
-                    ['Records and photos', 'Little proof of what was done, and when.', 'Photos, voice notes and notes kept with every task and stage.'],
-                    ['The whole team', 'Hard to hand over to family or workers.', 'Each worker gets the day\'s plan by email at 6 AM, and their own login if you allow it.'],
-                    ['Next season', 'Starts from memory again.', 'Starts from your best lot\'s real record, ready to repeat.'],
+                $peso = $ph ? 'peso' : 'dollar';
+                $vsGroups = [
+                    ['Planning the season', 'M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z', [
+                        ['When to plant', 'By habit, or when the neighbors start.', 'Anee names the best planting window for your town from its weather record and the months ahead.'],
+                        ['What to plant', 'Whatever you planted last season.', 'Anee ranks the crops that fit your land, soil, water and season.'],
+                        ['Choosing a variety', 'Whatever the seed store has, or what a friend says.', 'Varieties compared for your area: yield, maturity and resistance, with the sources.'],
+                        ['Season planning', 'Kept in your head or scattered across notebooks.', 'Every task of the season written on its day, from land prep to harvest.'],
+                        ['Fertilizer and spray plan', 'Copied from a neighbor or a product label.', 'Anee writes a protocol for your variety: the fertilizer and when, the sprays and the water.'],
+                        ['Checking the plan', 'Nobody checks it until something goes wrong.', 'Anee reviews your plan and points out a rate too high, a spray too close to harvest or a stage with nothing planned.'],
+                    ]],
+                    ['Your fields', 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7', [
+                        ['Field size', 'Estimated by paces or from an old title.', 'Trace the field on a satellite map and get its area and the length of each side.'],
+                        ['Several fields', 'One timing for all, even when sown weeks apart.', 'Each lot counts from its own day zero, with its own crop and variety.'],
+                        ['Explaining the plan', 'Said by mouth, and remembered differently by each person.', 'Draw the plan once, over a photo of the field if you like, and everyone works from the same picture.'],
+                    ]],
+                    ['Timing and growth', 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', [
+                        ['Activity timing', 'Guessed from memory. Easy to spray or fertilize a few days late.', 'Every task dated from each lot\'s day zero. Right day, every time.'],
+                        ['Growth stage', 'Guessed by looking at the plants.', 'Each lot shows its growth stage on any day, with what to do and what to watch for.'],
+                        ['A crop that runs ahead or behind', 'The old calendar goes on as if nothing changed.', 'Anee reads the lot and moves its stage count to match the crop.'],
+                        ['Weather', 'The radio or the sky, for the whole province.', 'The forecast where your field is, beside your plan, with a reminder when rain falls on a spray day.'],
+                        ['Daily reminders', 'Remembered, or forgotten.', 'A tip for your crop\'s stage on your dashboard every morning.'],
+                        ['Changing the plan', 'Cross it out, write it again and hope everyone heard.', 'Drag a task to a new day and the board changes for the whole team.'],
+                    ]],
+                    ['Pests and problems', 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z', [
+                        ['Expert advice', $R::t('techVisit'), 'Anee answers crop questions any time' . ($ph ? ', in Tagalog or English,' : '') . ' even from a photo of a leaf.'],
+                        ['A sick plant', 'Guess the problem and buy what the store suggests.', 'Send a photo. Anee tells you what it is and what to do, with your lot and its stage in mind.'],
+                        ['Learning about pests', 'Ask around and hope the advice fits your crop.', 'Free guides to the pests, diseases and weeds of your crops, with what to do step by step.'],
+                        ['Other farmers\' experience', 'Only the neighbors you happen to meet.', 'A community of growers who trade what worked, with photos and voice.'],
+                        ['Halfway through the season', 'You find out how it went at harvest.', 'Anee checks the season so far and names the risks in the coming weeks.'],
+                    ]],
+                    ['Materials and money', 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', [
+                        ['Materials and budget', 'Rough estimates. Overspending creeps in unnoticed.', 'What the plan needs against what is in the shed, so you buy only what is missing.'],
+                        ['Stock in the shed', 'Counted by looking, and often wrong.', 'Tick a task done and the stock counts itself. Undo it and it goes back.'],
+                        ['Labor cost', 'Added up by hand at the end, often a nasty surprise.', 'Worker rates add up in ' . $R::symbol() . ' as the work gets done.'],
+                        ['Expenses', 'Receipts lost and small costs forgotten.', 'Every ' . $peso . ' the season cost, in one report built from your records.'],
+                        ['Profit', 'Known roughly at the end, if at all.', 'Harvest sales against every cost, so you see the real profit of the season.'],
+                    ]],
+                    ['Your team', 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z', [
+                        ['The day\'s work', 'Told one by one, and something gets missed.', 'Each worker gets the day\'s plan by email at 6 AM: what to do and on which lot.'],
+                        ['Who worked', 'Remembered on payday, and argued about.', 'Tick who came on each task, whole day or half day, and the payroll adds itself up.'],
+                        ['Who sees what', 'Share everything or nothing.', 'Each person gets a login that can view or edit only what you allow, and every change is kept in a diary.'],
+                        ['Team talk', 'Scattered across texts and calls.', 'A room for each season with chat, a whiteboard and live cameras, and Anee in the room.'],
+                    ]],
+                    ['Records', 'M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9zM15 13a3 3 0 11-6 0 3 3 0 016 0z', [
+                        ['Records and photos', 'Little proof of what was done, and when.', 'Photos, clips and voice notes kept with each task and each day.'],
+                        ['Notes in the field', 'A scrap of paper in a pocket.', 'Snap it, film it or just say it, and it lands with the season.'],
+                        ['No signal at the far lot', 'Write it down later, if you remember.', 'Keep working offline. Changes wait on the phone and go up when the signal comes back.'],
+                        ['Papers and receipts', 'In a drawer, or lost.', 'The season\'s papers and files kept together, easy to find next year.'],
+                        ['Buyers and suppliers', 'Numbers on old phones and paper.', 'One contact list of buyers, traders, workers and suppliers, with notes.'],
+                    ]],
+                    ['Harvest and next season', 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6', [
+                        ['Harvest records', 'The yield is remembered. The moisture and the price are not.', 'Yield, moisture, price and buyer kept for each lot.'],
+                        ['Learning from the season', 'Hard to say what went right and what went wrong.', 'Anee reads your finished season and shows what to keep and what to change.'],
+                        ['Comparing seasons', 'Memory against memory.', 'Two seasons side by side, line by line, and Anee explains what changed.'],
+                        ['Next season', 'Starts from memory again.', 'Your best lot\'s real record becomes next season\'s recipe.'],
+                    ]],
                 ];
+                $vsCount = collect($vsGroups)->sum(fn ($g) => count($g[2]));
             @endphp
 
-            <div class="hp-vs reveal">
-                <div class="hp-vs-head">
-                    <span></span>
+            <nav class="hp-vs-jump reveal" aria-label="Jump to a part of the list">
+                @foreach ($vsGroups as $gi => [$gt, $gico, $rows])
+                    <a href="#vs-{{ $gi }}" class="hp-vs-chip">{{ $gt }}<b>{{ count($rows) }}</b></a>
+                @endforeach
+            </nav>
+
+            <div class="hp-vs">
+                <div class="hp-vs-head" aria-hidden="true">
+                    <span class="is-n">{{ $vsCount }} things that change</span>
                     <span class="is-old">By memory and paper</span>
                     <span class="is-new"><img src="{{ asset('images/logo-mark.png') }}" alt="" onerror="this.remove()">With anee.io</span>
                 </div>
-                @foreach ($compare as $i => [$dim, $old, $new])
-                    <div class="hp-vs-row" style="--i: {{ $i }}">
-                        <b class="hp-vs-dim">{{ $dim }}</b>
-                        <p class="hp-vs-old"><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></span><em class="hp-vs-label">Traditional</em>{{ $old }}</p>
-                        <p class="hp-vs-new"><span aria-hidden="true">{!! $tick !!}</span><em class="hp-vs-label">With anee.io</em>{{ $new }}</p>
+                @foreach ($vsGroups as $gi => [$gt, $gico, $rows])
+                    <div class="hp-vs-group reveal" id="vs-{{ $gi }}">
+                        <h3 class="hp-vs-gt">
+                            <span class="hp-vs-gi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $gico }}"/></svg></span>
+                            {{ $gt }}<small>{{ count($rows) }}</small>
+                        </h3>
+                        @foreach ($rows as $i => [$dim, $old, $new])
+                            <div class="hp-vs-row" style="--i: {{ $i }}">
+                                <b class="hp-vs-dim">{{ $dim }}</b>
+                                <p class="hp-vs-old"><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></span><em class="hp-vs-label">Traditional:</em> {{ $old }}</p>
+                                <p class="hp-vs-new"><span aria-hidden="true">{!! $tick !!}</span><em class="hp-vs-label">With anee.io:</em> {{ $new }}</p>
+                            </div>
+                        @endforeach
                     </div>
                 @endforeach
             </div>
@@ -714,16 +804,16 @@
     @if ($ph)
     @php
         $crops = [
-            ['Palay', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z', 100,
+            ['Palay', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z', 100, ['palay.webp', 'Ripe palay heads in a rice field'],
                 'Plan pagtatanim ng palay from the rice seeds and the punla to the ani. Fertilizer urea and complete fertilizer 14 14 14 go on their day after transplanting, and a reminder to check for the rice bug (alitangya) comes before the milk stage.',
                 [['/crops/palay', 'Palay guide'], ['/crops/rice-varieties-philippines', 'Rice varieties'], ['/problems/rice-bug', 'Rice bug']]],
-            ['Mais', 'M12 3c-2.5 2-4 5-4 9s1.5 7 4 9c2.5-2 4-5 4-9s-1.5-7-4-9zm0 4v10M9.5 9.5L12 11l2.5-1.5M9.5 13.5L12 15l2.5-1.5', 45,
+            ['Mais', 'M12 3c-2.5 2-4 5-4 9s1.5 7 4 9c2.5-2 4-5 4-9s-1.5-7-4-9zm0 4v10M9.5 9.5L12 11l2.5-1.5M9.5 13.5L12 15l2.5-1.5', 45, ['mais.webp', 'Young corn plants in rows'],
                 'Yellow or white corn, counted by days after planting: corn seeds and spacing, fertilizer days, fall armyworm checks, and the corn kernel at harvest.',
                 [['/crops/corn-seeds', 'Corn seeds'], ['/crops/corn-kernel', 'Corn kernel'], ['/problems/fall-armyworm', 'Fall armyworm']]],
-            ['Gulay', 'M12 21c-4.4 0-8-3.1-8-7 0-3.3 2.6-6 6-6.8V4h4v3.2c3.4.8 6 3.5 6 6.8 0 3.9-3.6 7-8 7z', 150,
+            ['Gulay', 'M12 21c-4.4 0-8-3.1-8-7 0-3.3 2.6-6 6-6.8V4h4v3.2c3.4.8 6 3.5 6 6.8 0 3.9-3.6 7-8 7z', 150, ['gulay.webp', 'Vegetable farms on a mountain slope'],
                 'Pechay, tomato, eggplant and ampalaya, the vegetables in the Philippines that farms grow most, on one calendar with foliar fertilizer days and thrips and anthracnose checks.',
                 [['/crops/vegetables-philippines', 'Vegetables guide'], ['/crops/pagtatanim-ng-gulay', 'Pagtatanim ng gulay'], ['/problems/thrips', 'Thrips']]],
-            ['Niyog, saging at puno', 'M12 21v-8m0 0c-3 0-6-2-7-5 3 0 5 1 7 3m0 2c3 0 6-2 7-5-3 0-5 1-7 3m0-3V3', 30,
+            ['Niyog, saging at puno', 'M12 21v-8m0 0c-3 0-6-2-7-5 3 0 5 1 7 3m0 2c3 0 6-2 7-5-3 0-5 1-7 3m0-3V3', 30, ['puno.webp', 'Banana trees along a farm road'],
                 'Coconut, banana and fruit trees count their age in months, with fertilizer plans that follow the PCA and DA guides.',
                 [['/crops/coconut-fertilizer', 'Coconut fertilizer'], ['/crops/banana-farming-philippines', 'Banana farming'], ['/crops/pagtatanim-ng-puno', 'Pagtatanim ng puno']]],
         ];
@@ -736,10 +826,13 @@
                 <p class="hp-p">anee.io knows 85 Philippine crops, from palay and mais to gulay and fruit trees. Set the day you sow, transplant or plant, and every task after it gets its day count.</p>
             </div>
             <div class="mt-12 grid gap-5 sm:grid-cols-2">
-                @foreach ($crops as $i => [$name, $icon, $hue, $text, $links])
+                @foreach ($crops as $i => [$name, $icon, $hue, [$pic, $alt], $text, $links])
                     <div class="hc-card reveal" style="--h: {{ $hue }}; --reveal-delay: {{ ($i % 2) * 0.06 }}s">
-                        <span class="hc-ico"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg></span>
-                        <div class="min-w-0">
+                        <div class="hc-pic">
+                            <img src="{{ asset('images/site/home-crops/' . $pic) }}" alt="{{ $alt }}" loading="lazy" width="720" height="405">
+                            <span class="hc-ico"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg></span>
+                        </div>
+                        <div class="hc-body">
                             <h3 class="font-heading text-xl font-bold text-ink">{{ $name }}</h3>
                             <p class="mt-2 text-sm sm:text-[15px] text-gray-600 leading-relaxed">{{ $text }}</p>
                             <div class="mt-3 flex flex-wrap gap-2">
@@ -1244,45 +1337,67 @@
     .hp-st-when { font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-green); }
     .hp-st-h { margin-top: .4rem; font-family: var(--font-heading); font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 800; color: var(--hp-ink); line-height: 1.15; }
     .hp-st-p { margin-top: .7rem; color: #4b5563; line-height: 1.65; }
-    .hp-tools { margin-top: 1.3rem; display: grid; gap: .55rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    @media (min-width: 1200px) { .hp-tools { grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); } }
-    @media (max-width: 639.98px) {
-        .hp-tool { flex-direction: column; align-items: flex-start; gap: .4rem; padding: .6rem; }
-        .hp-tool-t { font-size: .8rem; }
-        .hp-anee-tag { display: table; margin: .25rem 0 0; }
-    }
-    .hp-tool { display: flex; align-items: center; gap: .65rem; padding: .55rem .7rem; border-radius: .9rem; text-align: left; cursor: pointer;
+    /* The tools: each with its one line; as many columns as fit. */
+    .hp-tools { margin-top: 1.3rem; display: grid; gap: .55rem; grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr)); }
+    .hp-tool { display: flex; align-items: center; gap: .7rem; padding: .6rem .75rem; border-radius: 1rem; text-align: left; cursor: pointer;
         background: #f7faf3; border: 1px solid #e4ecdb; opacity: 0; transform: translateY(8px);
         transition: opacity .4s var(--hp-ease), transform .4s var(--hp-ease), border-color .28s var(--hp-ease), background-color .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
     .hp-st-pane.is-on .hp-tool { opacity: 1; transform: none; transition-delay: calc(var(--j) * 50ms + .1s), calc(var(--j) * 50ms + .1s), 0s, 0s, 0s; }
     .hp-tool:hover { border-color: #b9d69a; background: #fff; }
-    .hp-tool.is-on { border-color: var(--hp-green); background: #fff; box-shadow: 0 10px 22px -16px rgb(47 82 25 / .7); }
-    .hp-tool-ico { flex: none; width: 2.2rem; height: 2.2rem; border-radius: .7rem; display: grid; place-items: center; background: #fff;
+    .hp-tool.is-on { border-color: var(--hp-green); background: #fff; box-shadow: 0 10px 22px -16px rgb(47 82 25 / .7), inset 3px 0 0 var(--hp-green); }
+    .hp-tool-ico { flex: none; width: 2.3rem; height: 2.3rem; border-radius: .75rem; display: grid; place-items: center; background: #fff;
         box-shadow: inset 0 0 0 1px #e4ecdb; }
-    .hp-tool-ico img { width: 1.45rem; height: 1.45rem; object-fit: contain; }
+    .hp-tool-ico img { width: 1.5rem; height: 1.5rem; object-fit: contain; }
     .hp-tool-ico.is-face img { width: 100%; height: 100%; border-radius: inherit; object-fit: cover; }
-    .hp-tool-t { min-width: 0; font-size: .88rem; font-weight: 800; color: var(--hp-ink); line-height: 1.25; }
+    .hp-tool-tx { min-width: 0; }
+    .hp-tool-t { display: block; font-size: .88rem; font-weight: 800; color: var(--hp-ink); line-height: 1.25; }
+    .hp-tool-s { display: block; margin-top: .12rem; font-size: .78rem; line-height: 1.35; color: #6b7f5a; }
     .hp-anee-tag { display: inline-block; margin-left: .35rem; padding: .05rem .4rem; border-radius: 999px; font-style: normal; font-size: .62rem;
         font-weight: 800; letter-spacing: .04em; text-transform: uppercase; vertical-align: .1em; color: #5c4400; background: #fdeeb2; }
+
+    /* The picked tool, explained. All of a step's explanations share one
+       cell, so the box keeps the height of the longest and nothing below
+       it jumps when another tool is picked. */
+    .hp-infos { margin-top: 1rem; display: grid; }
+    .hp-info { grid-area: 1 / 1; display: flex; flex-direction: column; padding: 1.15rem 1.25rem 1.1rem; border-radius: 1.25rem;
+        background: linear-gradient(160deg, #f8fbf4, #eef6e4); box-shadow: inset 0 0 0 1px #d9e8c8;
+        opacity: 0; visibility: hidden; translate: 0 8px; transition: opacity .35s var(--hp-ease), translate .35s var(--hp-ease), visibility .35s; }
+    .hp-info.is-on { opacity: 1; visibility: visible; translate: none; }
+    .hp-info-k { display: flex; align-items: center; gap: .6rem; font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800;
+        line-height: 1.25; color: var(--hp-ink); }
+    .hp-info-ico { flex: none; width: 2.1rem; height: 2.1rem; border-radius: .7rem; display: grid; place-items: center; background: #fff;
+        box-shadow: 0 6px 14px -8px rgb(47 82 25 / .5); }
+    .hp-info-ico img { width: 1.35rem; height: 1.35rem; object-fit: contain; }
+    .hp-info-ico.is-face img { width: 100%; height: 100%; border-radius: inherit; object-fit: cover; }
+    .hp-info-w { margin-top: .65rem; font-size: .93rem; line-height: 1.62; color: #374151; }
+    .hp-info-g { margin-top: .8rem; display: grid; gap: .42rem; list-style: none; padding: 0; }
+    .hp-info-g li { display: flex; align-items: flex-start; gap: .5rem; font-size: .88rem; font-weight: 700; line-height: 1.4; color: var(--hp-deep); }
+    .hp-info-g svg { flex: none; width: 1.15rem; height: 1.15rem; margin-top: .05rem; padding: .22rem; border-radius: 999px; color: #fff; background: var(--hp-green); }
+    .hp-info.is-on .hp-info-g li { animation: hpInfoIn .45s var(--hp-ease) both; }
+    .hp-info.is-on .hp-info-g li:nth-child(2) { animation-delay: .07s; }
+    .hp-info.is-on .hp-info-g li:nth-child(3) { animation-delay: .14s; }
+    @keyframes hpInfoIn { from { opacity: 0; translate: -6px 0; } to { opacity: 1; translate: none; } }
+    .hp-info-more { margin-top: auto; padding-top: .9rem; display: inline-flex; align-items: center; gap: .35rem; align-self: flex-start;
+        font-size: .88rem; font-weight: 800; color: var(--hp-green); }
+    .hp-info-more svg { width: 1rem; height: 1rem; transition: transform .28s var(--hp-ease); }
+    .hp-info-more:hover svg { transform: translateX(3px); }
     .hp-st-show { display: flex; flex-direction: column; align-items: center; gap: 1.6rem; }
     .hp-st-show .hp-phone { width: min(15rem, 54vw); }
-    .hp-st-short { max-width: 15rem; text-align: center; font-size: .88rem; font-weight: 700; color: #5b6b50; line-height: 1.45; min-height: 2.6em;
-        transition: opacity .3s var(--hp-ease); }
-    .hp-st-more { display: inline-flex; align-items: center; gap: .35rem; margin-top: -1rem; font-size: .88rem; font-weight: 800; color: var(--hp-green); }
-    .hp-st-more svg { width: 1rem; height: 1rem; transition: transform .28s var(--hp-ease); }
-    .hp-st-more:hover svg { transform: translateX(3px); }
 
     /* ---- Anee ---- */
     .hp-anee { position: relative; overflow: hidden; color: #e8efe1;
         background: radial-gradient(90% 120% at 85% 10%, #2d4a1a 0%, transparent 60%), linear-gradient(160deg, #10160c 0%, #1c2416 55%, #24301a 100%); }
     .hp-anee-grid { display: grid; gap: 3rem; align-items: center; }
     @media (min-width: 1024px) { .hp-anee-grid { grid-template-columns: 1.05fr .95fr; gap: 4rem; } }
-    .hp-powers { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: .5rem; }
-    .hp-power { display: inline-flex; align-items: center; gap: .45rem; padding: .42rem .8rem .42rem .45rem; border-radius: 999px;
-        font-size: .82rem; font-weight: 800; color: #fff; text-decoration: none; background: rgb(255 255 255 / .08);
-        box-shadow: inset 0 0 0 1px rgb(255 255 255 / .16); transition: background-color .28s var(--hp-ease), transform .28s var(--hp-ease); }
-    .hp-power:hover { background: rgb(245 197 24 / .18); transform: translateY(-2px); }
-    .hp-power img { width: 1.5rem; height: 1.5rem; padding: .15rem; border-radius: 999px; background: #fff; object-fit: contain; }
+    .hp-powers-k { margin-top: 1.7rem; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-sun); }
+    .hp-powers { margin-top: .7rem; display: grid; gap: .5rem; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
+    .hp-power { display: flex; align-items: center; gap: .65rem; padding: .55rem .75rem .55rem .55rem; border-radius: 1rem;
+        color: #fff; text-decoration: none; background: rgb(255 255 255 / .06); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .13);
+        transition: background-color .28s var(--hp-ease), box-shadow .28s var(--hp-ease), opacity .6s ease, transform .6s var(--hp-ease); }
+    .hp-power:hover { background: rgb(245 197 24 / .13); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .5); }
+    .hp-power img { flex: none; width: 2.15rem; height: 2.15rem; padding: .28rem; border-radius: .7rem; background: #fff; object-fit: contain; }
+    .hp-power b { display: block; font-size: .86rem; font-weight: 800; line-height: 1.25; }
+    .hp-power small { display: block; margin-top: .1rem; font-size: .76rem; line-height: 1.35; color: #c3d2b5; }
     .hp-anee-price { margin-top: 1.4rem; padding: .85rem 1rem; border-radius: 1rem; font-size: .9rem; line-height: 1.6; color: #e6eddd;
         background: rgb(245 197 24 / .1); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .3); }
     .hp-chat { position: relative; max-width: 28rem; margin: 0 auto; border-radius: 1.6rem; background: #fff; color: var(--hp-ink); overflow: hidden;
@@ -1338,11 +1453,26 @@
     .hp-gain small { display: block; margin-top: .15rem; font-size: .78rem; color: #6b7280; line-height: 1.4; }
 
     /* ---- versus ---- */
-    .hp-vs { margin-top: 3rem; border-radius: 1.6rem; overflow: hidden; background: #fff; border: 1px solid #e5e7eb;
+    .hp-vs-jump { margin-top: 2.2rem; display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+    .hp-vs-chip { display: inline-flex; align-items: center; gap: .45rem; padding: .42rem .5rem .42rem .85rem; border-radius: 999px;
+        font-size: .82rem; font-weight: 800; color: var(--hp-deep); text-decoration: none; background: #fff; border: 1px solid #dfe8d3;
+        transition: border-color .28s var(--hp-ease), transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
+    .hp-vs-chip:hover { border-color: var(--hp-green); transform: translateY(-2px); box-shadow: 0 10px 20px -14px rgb(47 82 25 / .6); }
+    .hp-vs-chip b { min-width: 1.5rem; padding: .08rem .4rem; border-radius: 999px; text-align: center; font-size: .72rem; color: #fff; background: var(--hp-green); }
+    /* clip, not hidden: hidden would make the table its own scroller and
+       the sticky column titles would stop sticking. */
+    .hp-vs { margin-top: 1.6rem; border-radius: 1.6rem; overflow: clip; background: #fff; border: 1px solid #e5e7eb;
         box-shadow: 0 30px 60px -48px rgb(20 33 12 / .6); }
     .hp-vs-head { display: none; }
-    .hp-vs-row { display: grid; gap: .5rem; padding: 1.1rem 1.2rem; border-top: 1px solid #f0f2ed; }
-    .hp-vs-row:first-of-type { border-top: 0; }
+    .hp-vs-group { scroll-margin-top: 6rem; }
+    .hp-vs-group + .hp-vs-group { border-top: 1px solid #e3eada; }
+    .hp-vs-gt { display: flex; align-items: center; gap: .65rem; padding: .85rem 1.2rem; font-family: var(--font-heading); font-size: 1.02rem;
+        font-weight: 800; color: var(--hp-ink); background: linear-gradient(90deg, #f3f8ec, #fbfcf9); }
+    .hp-vs-gt small { margin-left: auto; padding: .1rem .55rem; border-radius: 999px; font-family: inherit; font-size: .72rem; color: var(--hp-deep); background: #e1eed2; }
+    .hp-vs-gi { flex: none; width: 2.1rem; height: 2.1rem; border-radius: .7rem; display: grid; place-items: center; color: #fff; background: var(--hp-green);
+        box-shadow: 0 8px 16px -10px rgb(47 82 25 / .9); }
+    .hp-vs-gi svg { width: 1.15rem; height: 1.15rem; }
+    .hp-vs-row { display: grid; gap: .45rem; padding: .95rem 1.2rem; border-top: 1px solid #f0f2ed; transition: background-color .28s var(--hp-ease); }
     .hp-vs-dim { font-family: var(--font-heading); font-weight: 800; color: var(--hp-ink); }
     .hp-vs-old, .hp-vs-new { display: flex; gap: .6rem; align-items: flex-start; font-size: .9rem; line-height: 1.5; }
     .hp-vs-old { color: #6b7280; }
@@ -1351,22 +1481,37 @@
     .hp-vs-old > span { color: #9ca3af; background: #f3f4f6; }
     .hp-vs-new > span { color: #fff; background: var(--hp-green); }
     .hp-vs-old svg, .hp-vs-new > span svg { width: .75rem; height: .75rem; }
-    .hp-vs-label { display: none; }
+    /* Said for screen readers; the column titles say it for the eye. */
+    .hp-vs-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
     @media (min-width: 768px) {
-        .hp-vs-head { display: grid; grid-template-columns: 1fr 1.1fr 1.2fr; }
-        .hp-vs-head span { padding: 1.1rem 1.4rem; font-family: var(--font-heading); font-weight: 800; }
+        .hp-vs-head { display: grid; grid-template-columns: 1fr 1.1fr 1.25fr; position: sticky; top: 65px; z-index: 3;
+            box-shadow: 0 10px 20px -18px rgb(20 33 12 / .5); }
+        .hp-vs-head span { padding: 1rem 1.4rem; font-family: var(--font-heading); font-weight: 800; }
+        .hp-vs-head .is-n { color: var(--hp-deep); background: #fff; font-size: .9rem; display: flex; align-items: center; }
         .hp-vs-head .is-old { color: #6b7280; background: #f9fafb; }
         .hp-vs-head .is-new { display: flex; align-items: center; gap: .5rem; color: #fff; background: var(--hp-deep); }
         .hp-vs-head .is-new img { width: 1.3rem; height: 1.3rem; object-fit: contain; }
-        .hp-vs-row { grid-template-columns: 1fr 1.1fr 1.2fr; gap: 0; padding: 0; align-items: stretch; }
-        .hp-vs-row > * { padding: 1rem 1.4rem; }
-        .hp-vs-dim { display: flex; align-items: center; }
+        .hp-vs-group { scroll-margin-top: 8.5rem; }
+        .hp-vs-gt { padding: .8rem 1.4rem; }
+        .hp-vs-row { grid-template-columns: 1fr 1.1fr 1.25fr; gap: 0; padding: 0; align-items: stretch; }
+        .hp-vs-row > * { padding: .9rem 1.4rem; }
+        .hp-vs-row:hover { background: #fcfdfb; }
+        .hp-vs-dim { display: flex; align-items: center; font-size: .95rem; }
         .hp-vs-old { border-left: 1px solid #f0f2ed; }
         .hp-vs-new { border-radius: 0; background: #f6faf1; }
-        .hp-vs-row:first-of-type { border-top: 1px solid #f0f2ed; }
+        .hp-vs-row:hover .hp-vs-new { background: #eff7e6; }
     }
-    .hp-vs.is-visible .hp-vs-new > span { animation: hpPop .5s var(--hp-ease) both; animation-delay: calc(var(--i, 0) * 90ms + .2s); }
-    .hp-vs-row { --i: 0; }
+    @media (max-width: 767.98px) {
+        .hp-vs-gt { padding: .75rem 1rem; }
+        .hp-vs-row { gap: .35rem; padding: .8rem 1rem; }
+        .hp-vs-old { font-size: .84rem; }
+        .hp-vs-new { font-size: .88rem; padding: .5rem .6rem; }
+    }
+    @media (min-width: 1024px) {
+        .hp-vs-head { top: 81px; }
+        .hp-vs-group { scroll-margin-top: 9.5rem; }
+    }
+    .hp-vs-group.is-visible .hp-vs-new > span { animation: hpPop .5s var(--hp-ease) both; animation-delay: calc(var(--i, 0) * 80ms + .15s); }
     @keyframes hpPop { from { transform: scale(0); } 60% { transform: scale(1.2); } to { transform: scale(1); } }
 
     /* ---- pricing toggle, questions ---- */
@@ -1383,8 +1528,14 @@
         font-family: var(--font-heading); font-weight: 800; color: var(--hp-ink); background: none; border: 0; cursor: pointer; }
     .hp-q-btn svg { flex: none; width: 1.25rem; height: 1.25rem; color: var(--hp-green); transition: transform .28s var(--hp-ease); }
     .hp-q.is-open .hp-q-btn svg { transform: rotate(45deg); }
-    .hc-card { display: flex; gap: 1rem; align-items: flex-start; padding: 1.4rem; border-radius: 1.25rem; background: #fff; border: 1px solid #e5ebdf;
+    .hc-card { display: flex; flex-direction: column; border-radius: 1.4rem; overflow: hidden; background: #fff; border: 1px solid #e5ebdf;
         transition: transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease), border-color .28s var(--hp-ease); }
+    .hc-pic { position: relative; aspect-ratio: 16 / 7; overflow: hidden; }
+    .hc-pic img { width: 100%; height: 100%; object-fit: cover; transition: scale .6s var(--hp-ease); }
+    .hc-card:hover .hc-pic img { scale: 1.05; }
+    .hc-pic::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgb(20 33 12 / .35)); }
+    .hc-pic .hc-ico { position: absolute; left: 1.2rem; bottom: .9rem; z-index: 1; box-shadow: 0 10px 20px -10px rgb(0 0 0 / .6), inset 0 0 0 1px hsl(var(--h) 50% 80%); }
+    .hc-body { min-width: 0; padding: 1.15rem 1.4rem 1.4rem; }
     .hc-card:hover { transform: translateY(-3px); border-color: hsl(var(--h) 45% 75%); box-shadow: 0 20px 40px -30px hsl(var(--h) 40% 20% / .55); }
     .hc-ico { flex: none; width: 3.1rem; height: 3.1rem; border-radius: 1rem; display: grid; place-items: center; color: hsl(var(--h) 60% 30%);
         background: linear-gradient(145deg, hsl(var(--h) 70% 94%), hsl(var(--h) 60% 85%)); box-shadow: inset 0 0 0 1px hsl(var(--h) 50% 80%); }
@@ -1485,7 +1636,7 @@
     @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
         .hp-hero-bg, .hp-hero-glow, .hp-stage-ring, .hp-shimmer, .hp-mark-line, .hp-mark-line path, .hp-go::after, .hp-tour-dot::before, .hp-float, .hp-down,
-        .hp-biz-b, .hp-final-face, .hp-live, .hp-read i, .hp-sum-ico, .hp-sum-ico svg, .hp-vs.is-visible .hp-vs-new > span { animation: none !important; }
+        .hp-biz-b, .hp-final-face, .hp-live, .hp-read i, .hp-sum-ico, .hp-sum-ico svg, .hp-vs-group.is-visible .hp-vs-new > span { animation: none !important; }
         .hp-st-tab.is-on.is-timing .hp-st-bar i { animation: none; }
         .hp-phone.is-hero, .hp-st-pane, .hp-tool, .hp-msg, .hp-read, .hp-film, .hp-film-tag, .hp-modal, .hp-modal-box, .hp-sticky,
         .hp-go, .hp-alt, .hp-prec-row, .hp-prec-rights li, .hp-prec-old, .hp-prec-card, .hp-prec-checks li, .hp-prec-bar i, .hp-prec-on, .hp-st-tab, .hp-gain, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
@@ -1655,15 +1806,18 @@
         const panes = [...steps.querySelectorAll('.hp-st-pane')];
         const video = steps.querySelector('[data-step-film]');
         const tag = steps.querySelector('[data-step-tag]');
-        const short = steps.querySelector('[data-step-short]');
-        const more = steps.querySelector('[data-step-link]');
-        const DWELL = 9000;
+        // Long enough to read the first tool's explanation before the next step.
+        const DWELL = 12000;
         let at = 0, timer = null, live = false, held = false;
         const pickTool = (btn) => {
             if (!btn) return;
-            btn.parentElement.querySelectorAll('.hp-tool').forEach((b) => b.classList.toggle('is-on', b === btn));
-            if (short) short.textContent = btn.dataset.short || '';
-            if (more) more.href = btn.dataset.link || more.href;
+            const pane = btn.closest('.hp-st-pane');
+            pane.querySelectorAll('.hp-tool').forEach((b) => {
+                const on = b === btn;
+                b.classList.toggle('is-on', on);
+                b.setAttribute('aria-pressed', on ? 'true' : 'false');
+            });
+            pane.querySelectorAll('.hp-info').forEach((x) => x.classList.toggle('is-on', x.dataset.info === btn.dataset.tool));
             if (btn.dataset.src) swapFilm(video, tag, btn.dataset.src, btn.dataset.poster, btn.dataset.name);
             else if (tag) tag.textContent = btn.dataset.name || '';
         };
@@ -1698,9 +1852,13 @@
         });
         steps.querySelectorAll('.hp-tool').forEach((b) => b.addEventListener('click', () => {
             held = true; clearTimeout(timer); tabs[at].classList.remove('is-timing'); pickTool(b);
-            // On a phone the film sits under the tools: bring it into view.
-            const r = video.getBoundingClientRect();
-            if (r.top > innerHeight * .55 || r.bottom < 0) video.closest('.hp-phone').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+            // On a phone the explanation sits under the tools (and the film
+            // under it): bring the explanation into view if it is not.
+            const info = b.closest('.hp-st-pane').querySelector('.hp-info.is-on');
+            if (info && innerWidth < 768) {
+                const r = info.getBoundingClientRect();
+                if (r.top > innerHeight * .7 || r.bottom < 80) info.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+            }
         }));
         seen(steps.querySelector('.hp-st'), (on) => {
             live = on;
@@ -1732,10 +1890,6 @@
         chat.querySelector('[data-chat-again]')?.addEventListener('click', run);
     }
 
-
-    /* The versus table ticks its answers in, row by row. */
-    const vs = document.querySelector('.hp-vs');
-    if (vs) vs.querySelectorAll('.hp-vs-row').forEach((r, i) => r.style.setProperty('--i', i));
 
     /* On a phone, the way in stays one tap away once the hero has gone by,
        and steps aside for the last call and the footer. */
