@@ -281,10 +281,10 @@
     .pd-deck.pd-instant .pd-fog, .pd-deck.pd-instant .pr-flag, .pd-deck.pd-instant .pd-peek { transition: none; }
 
     /* The flag rides above the card's coloured band and border (the band is
-       z-index 4 inside the face), centred on the top edge, with a ring of
+       z-index 4 inside the face), a little below the top edge, dark green, with a ring of
        white so the edge does not run through it. */
-    .pd-card .pr-flag { z-index: 6; top: -.95rem; transform: translate(-50%, 0); line-height: 1.2;
-        box-shadow: 0 0 0 3px #fff, 0 8px 18px -8px rgb(47 82 25 / .7);
+    .pd-card .pr-flag { z-index: 6; top: -.6rem; transform: translate(-50%, 0); line-height: 1.2; background: #1f3a0e;
+        box-shadow: 0 0 0 3px #fff, 0 8px 18px -8px rgb(20 33 12 / .8);
         transition: opacity .35s var(--pd-ease) .2s, transform .45s var(--pd-ease) .2s; }
     .pd-card.is-back .pr-flag { opacity: 0; transform: translate(-50%, .5rem); transition-delay: 0s; }
 
