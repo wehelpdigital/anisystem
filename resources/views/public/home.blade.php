@@ -1148,8 +1148,11 @@
                 <div class="hp-sat reveal" aria-hidden="true">
                     <span class="hp-sat-stars"></span>
                     <span class="hp-sat-ground"><span class="hp-sat-plane">
-                        <span class="hp-sat-grid"><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i><i style="--c:#4d6a3a"></i><i style="--c:#536b40"></i><i style="--c:#68744a"></i><i style="--c:#5b7444"></i></span>
-                        <span class="hp-sat-grid is-health"><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#f2c94c"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#f2c94c"></i><i style="--c:#e8590c"></i><i style="--c:#f2c94c"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#f2c94c"></i><i style="--c:#f2c94c"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i><i style="--c:#2f9e44"></i><i style="--c:#69c06a"></i><i style="--c:#2f9e44"></i></span>
+                        {{-- A real aerial map of rice paddies, and the field health map the scan
+                             reveals over it: a vegetation index read from the same picture, with
+                             canals, roads and trees left grey and two paddies showing stress. --}}
+                        <img class="hp-sat-map" src="{{ asset('images/site/home-team/sat-field.webp') }}" alt="" width="1400" height="640" loading="lazy">
+                        <img class="hp-sat-map is-health" src="{{ asset('images/site/home-team/sat-health.webp') }}" alt="" width="1400" height="640" loading="lazy">
                         <i class="hp-sat-scan"></i>
                     </span></span>
                     <span class="hp-sat-cloud is-a"></span>
@@ -2537,14 +2540,12 @@
     @keyframes hpTwinkle { from { opacity: .45; } to { opacity: .95; } }
     .hp-sat-ground { position: absolute; left: -6%; right: -6%; bottom: -6%; height: 64%; perspective: 520px; }
     .hp-sat-plane { position: absolute; inset: 0; transform: rotateX(52deg) rotateZ(-8deg); transform-origin: 50% 75%; }
-    .hp-sat-grid { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(6, 1fr); gap: 4px; padding: 4px;
-        border-radius: 8px; background: #2c3b20; box-shadow: 0 0 60px 10px rgb(47 158 68 / .15); }
-    .hp-sat-grid i { border-radius: 3px; background: var(--c); }
-    .hp-sat-grid.is-health { -webkit-clip-path: inset(0 100% 0 0); clip-path: inset(0 100% 0 0); }
-    .hp-sat-grid.is-health i { box-shadow: inset 0 0 0 1px rgb(255 255 255 / .18); }
+    .hp-sat-map { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 8px;
+        box-shadow: 0 0 0 1px rgb(255 255 255 / .12), 0 0 60px 10px rgb(47 158 68 / .15); }
+    .hp-sat-map.is-health { -webkit-clip-path: inset(0 100% 0 0); clip-path: inset(0 100% 0 0); }
     .hp-sat-scan { position: absolute; top: -3%; bottom: -3%; left: 0; width: 3px; opacity: 0; border-radius: 3px;
         background: linear-gradient(transparent, #7dd3fc, transparent); box-shadow: 0 0 16px 5px rgb(125 211 252 / .6); }
-    .hp-sat.is-visible .hp-sat-grid.is-health { animation: hpSatScan 9s linear infinite; }
+    .hp-sat.is-visible .hp-sat-map.is-health { animation: hpSatScan 9s linear infinite; }
     .hp-sat.is-visible .hp-sat-scan { animation: hpSatLine 9s linear infinite; }
     @keyframes hpSatScan { 0% { clip-path: inset(0 100% 0 0); opacity: 1; } 40%, 86% { clip-path: inset(0 0 0 0); opacity: 1; } 100% { clip-path: inset(0 0 0 0); opacity: 0; } }
     @keyframes hpSatLine { 0% { left: 0; opacity: 1; } 40% { left: 100%; opacity: 1; } 42%, 100% { left: 100%; opacity: 0; } }
@@ -3085,8 +3086,8 @@
         .hp-acc, .hp-rc, .hp-act, .hp-loc-pin, .hp-loc-map, .hp-cam img, .hp-call-av, .hp-wb-ink, .hp-wb-hand text, .hp-room-bar { animation: none !important; }
         .hp-acc, .hp-rc, .hp-task { opacity: 1; translate: none; }
         .hp-wb-ink { stroke-dashoffset: 0; }
-        .hp-feed-wave i, .hp-sat-stars, .hp-sat-craft, .hp-sat-blink, .hp-sat-beam, .hp-sat-wave, .hp-sat-cloud, .hp-sat-grid.is-health, .hp-sat-scan { animation: none !important; }
-        .hp-sat-grid.is-health { -webkit-clip-path: none; clip-path: none; }
+        .hp-feed-wave i, .hp-sat-stars, .hp-sat-craft, .hp-sat-blink, .hp-sat-beam, .hp-sat-wave, .hp-sat-cloud, .hp-sat-map.is-health, .hp-sat-scan { animation: none !important; }
+        .hp-sat-map.is-health { -webkit-clip-path: none; clip-path: none; }
         .hp-sat-wave { opacity: .5; scale: .9; }
         .hp-biz-u, .hp-biz-ui, .hp-biz-ok, .hp-biz-swap span { transition: none !important; }
         .hp-mark-line { -webkit-clip-path: none; clip-path: none; }
