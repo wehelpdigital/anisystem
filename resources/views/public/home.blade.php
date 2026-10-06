@@ -1067,7 +1067,7 @@
                                 <span class="hp-loc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.4-2.7A1 1 0 013 16.4V5.6a1 1 0 011.4-.9L9 7m0 13l6-3m-6 3V7m6 10l4.6 2.3a1 1 0 001.4-.9V7.6a1 1 0 00-.6-.9L15 4m0 13V4m0 0L9 7"/></svg>Satellite</span>
                                 <span class="hp-loc-zoom"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" d="M12 6v12M6 12h12"/></svg></i><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" d="M6 12h12"/></svg></i></span>
                                 <span class="hp-loc-tag" style="left: 13%; top: 62%">Lot 1</span>
-                                <span class="hp-loc-tag" style="left: 88%; top: 72%">Lot 2</span>
+                                <span class="hp-loc-tag" style="left: 85%; top: 74%">Lot 2</span>
                                 <span class="hp-loc-scale"><i></i>50 m</span>
                                 <span class="hp-loc-pin is-a" style="--h: 205">JD</span>
                                 <span class="hp-loc-pin is-b" style="--h: 330">MS</span>
@@ -1181,7 +1181,8 @@
 
             {{-- Typhoon watch (2026-10-06): a live satellite map of the
                  Philippines in the manner of Zoom Earth, the clouds drifting,
-                 a typhoon turning along its forecast path inside its cone,
+                 a typhoon turning along its curving forecast path (west over the sea,
+                 bending north over Luzon, recurving northeast) inside its cone,
                  your farm pinned with how close the storm passes, and a day
                  by day timeline; beside it, Anee's plan for every lot. The
                  storm rides the SVG (SMIL), so it scales with the map; the
@@ -1211,22 +1212,22 @@
                     <span class="hp-storm-clouds"></span>
                     <svg class="hp-storm-svg" viewBox="0 0 1280 1000" data-storm>
                         <defs>
-                            <path id="hpStormPath" d="M1210 760 C 1100 700, 1050 660, 990 630 S 860 560, 760 500 S 610 400, 520 350 S 380 270, 300 240 S 150 180, 80 160"/>
+                            <path id="hpStormPath" d="M1255 880 C 1224 875, 1131 865, 1070 850 C 1009 835, 946 815, 890 790 C 834 765, 783 733, 735 700 C 687 667, 641 627, 600 590 C 559 553, 522 514, 490 478 C 458 442, 428 405, 410 372 C 392 339, 384 306, 382 278 C 380 250, 388 226, 398 205 C 408 184, 437 161, 445 152"/>
                         </defs>
-                        <path class="hp-storm-cone" d="M1210 760 L1005 604 L785 457 L555 290 L345 163 L135 65 Q 60 150 25 255 L255 317 L485 410 L735 543 L975 656 Z"/>
+                        <path class="hp-storm-cone" d="M1255 880 L1256 874 L1231 869 L1195 861 L1155 852 L1113 841 L1075 830 L1040 817 L1005 803 L970 789 L937 773 L905 756 L876 738 L847 718 L819 698 L792 677 L766 655 L741 633 L717 610 L693 586 L670 561 L648 537 L628 513 L608 490 L589 466 L572 443 L556 421 L540 398 L526 376 L514 356 L504 339 L499 324 L495 312 L493 300 L492 289 L492 279 L493 270 L494 268 L496 267 L498 265 L501 262 L504 258 L502 265 L506 263 L514 257 L524 249 L445 152 Q 460 137 445 152 L445 152 L352 68 L342 80 L328 96 L311 119 L292 152 L284 174 L277 198 L272 226 L270 255 L271 286 L276 312 L283 338 L293 365 L306 393 L321 420 L340 446 L360 470 L381 493 L403 514 L424 535 L447 557 L472 579 L498 600 L524 622 L552 643 L580 664 L609 685 L640 705 L671 726 L704 745 L736 763 L769 780 L803 796 L838 811 L875 824 L912 836 L950 847 L988 856 L1027 863 L1065 870 L1106 875 L1150 879 L1193 882 L1229 884 L1254 886 Z"/>
                         <use class="hp-storm-track" href="#hpStormPath"/>
-                        @foreach ([[1210, 760, 'Mon'], [990, 630, 'Tue'], [760, 500, 'Wed'], [520, 350, 'Thu'], [300, 240, 'Fri'], [80, 160, 'Sat']] as [$dx, $dy, $dn])
+                        @foreach ([[1255, 880, 'Mon'], [1006, 832, 'Tue'], [776, 727, 'Wed'], [578, 570, 'Thu'], [414, 379, 'Fri'], [445, 152, 'Sat']] as [$dx, $dy, $dn])
                             <g class="hp-storm-day"><circle cx="{{ $dx }}" cy="{{ $dy }}" r="9"/><text x="{{ $dx }}" y="{{ $dy - 22 }}">{{ $dn }}</text></g>
                         @endforeach
-                        <path class="hp-storm-gap" d="M330 405 L 352 266"/>
-                        <text class="hp-storm-km" x="356" y="350">110 km</text>
+                        <path class="hp-storm-gap" d="M330 405 L 407 366"/>
+                        <text class="hp-storm-km" x="356" y="370" text-anchor="end">110 km</text>
                         <g class="hp-storm-eye">
                             <animateMotion dur="16s" repeatCount="indefinite" rotate="0"><mpath href="#hpStormPath"/></animateMotion>
                             <g>
                                 <image href="{{ asset('images/site/storm/typhoon.webp') }}" x="-170" y="-170" width="340" height="340"/>
                                 <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="7s" repeatCount="indefinite"/>
                             </g>
-                            <text class="hp-storm-name" x="0" y="-186">Typhoon · 185 km/h</text>
+                            <text class="hp-storm-name" x="0" y="-128">Typhoon · 185 km/h</text>
                         </g>
                     </svg>
                     <span class="hp-storm-farm"><i></i><b>Your farm</b></span>
@@ -1247,12 +1248,12 @@
                         <img src="{{ $face }}" alt="">
                         <span><b>Anee's typhoon plan</b><small>Lot 1 and Lot 2, wet season palay</small></span>
                     </div>
-                    <p class="hp-storm-say">The typhoon crosses the east coast on Thursday night and passes about 110 km north of your farm. Expect strong wind and heavy rain from Wednesday night.</p>
+                    <p class="hp-storm-say">The typhoon bends north and crosses the east coast early Friday, passing about 110 km northeast of your farm. Expect strong wind and heavy rain from Thursday night.</p>
                     <ol class="hp-storm-steps">
                         <li style="--k: 0"><b>Tuesday</b>Harvest Lot 1. It is 30 days after heading and ready, so the grain is safer in sacks than in the field.</li>
                         <li style="--k: 1"><b>Wednesday</b>Clear the canals and open the drains, so the water has somewhere to go.</li>
-                        <li style="--k: 2"><b>Wednesday</b>Move the seedbed trays to higher ground and tie down the shed roof.</li>
-                        <li style="--k: 3"><b>Friday</b>Hold the urea on Lot 2 until the rain stops. Heavy rain would wash it away.</li>
+                        <li style="--k: 2"><b>Thursday</b>Move the seedbed trays to higher ground and tie down the shed roof.</li>
+                        <li style="--k: 3"><b>Saturday</b>Hold the urea on Lot 2 until the rain stops. Heavy rain would wash it away.</li>
                     </ol>
                     <p class="hp-storm-done">{!! $tick !!}Added to your season calendar</p>
                 </div>
@@ -1495,7 +1496,8 @@
                 [['/crops/coconut-fertilizer', 'Coconut fertilizer'], ['/crops/banana-farming-philippines', 'Banana farming'], ['/crops/pagtatanim-ng-puno', 'Pagtatanim ng puno']]],
         ];
     @endphp
-    <section class="hp-sec bg-gray-50">
+    {{-- White, so it does not run on from the gray Traditional vs anee.io table above. --}}
+    <section class="hp-sec bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">Palay, mais, gulay and more</p>
@@ -1534,7 +1536,7 @@
     {{-- ================= GUIDES (the Philippine face) ================= --}}
     @if (! empty($guides))
     @include('public.site.css')
-    <section class="hp-sec bg-white">
+    <section class="hp-sec hp-guides-bg">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
                 <p class="hp-kick">Free farm guides</p>
@@ -2362,7 +2364,7 @@
     .hp-room-top b { font-size: .92rem; }
     .hp-room-top small { font-size: .74rem; color: #dceccb; }
     .hp-room-on { margin-left: auto; display: inline-flex; align-items: center; padding: .22rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 800; background: rgb(255 255 255 / .16); }
-    .hp-room-panes { display: grid; height: 22rem; overflow: hidden; background: #f6f8f3; }
+    .hp-room-panes { display: grid; grid-template-rows: minmax(0, 1fr); height: 22rem; overflow: hidden; background: #f6f8f3; }
     .hp-room-pane { grid-area: 1 / 1; padding: 1rem; opacity: 0; visibility: hidden; translate: 0 8px;
         transition: opacity .4s var(--hp-ease), translate .4s var(--hp-ease), visibility .4s; }
     .hp-room-pane.is-on { opacity: 1; visibility: visible; translate: none; }
@@ -2408,8 +2410,11 @@
     .hp-call-bar b { font-variant-numeric: tabular-nums; color: var(--hp-green); }
     .hp-call-end { margin-left: auto; padding: .25rem .7rem; border-radius: 999px; color: #fff; background: #dc2626; font-size: .72rem; }
 
-    .hp-cams { display: grid; gap: .55rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .hp-cam { position: relative; margin: 0; overflow: hidden; border-radius: 1rem; aspect-ratio: 3 / 4; background: #1f2937; }
+    /* The two feeds fit the window's fixed height: a 3 by 4 frame while it
+       fits, shorter (the picture still covering it) where a wide window would
+       push its bottom out of view. */
+    .hp-cams { display: grid; gap: .55rem; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: minmax(0, 1fr); height: 100%; }
+    .hp-cam { position: relative; margin: 0; overflow: hidden; border-radius: 1rem; aspect-ratio: 3 / 4; max-height: 100%; align-self: center; justify-self: center; background: #1f2937; }
     .hp-cam img { width: 100%; height: 100%; object-fit: cover; }
     .hp-room-pane.is-on .hp-cam img { animation: hpCamPan 9s ease-in-out infinite alternate; }
     @keyframes hpCamPan { from { scale: 1.02; translate: 0 0; } to { scale: 1.12; translate: -3% -2%; } }
@@ -2429,7 +2434,7 @@
     .hp-loc-zoom i { width: 1.7rem; height: 1.7rem; display: grid; place-items: center; color: #374151; }
     .hp-loc-zoom i + i { border-top: 1px solid #e5e7eb; }
     .hp-loc-zoom svg { width: .85rem; height: .85rem; }
-    .hp-loc-tag { position: absolute; translate: -50% -50%; padding: .18rem .5rem; border-radius: .45rem; font-size: .66rem; font-weight: 800; color: #fff;
+    .hp-loc-tag { position: absolute; translate: -50% -50%; white-space: nowrap; padding: .18rem .5rem; border-radius: .45rem; font-size: .66rem; font-weight: 800; color: #fff;
         background: rgb(15 26 10 / .55); border: 1px dashed rgb(245 197 24 / .9); backdrop-filter: blur(2px); }
     .hp-loc-scale { position: absolute; left: .6rem; bottom: .55rem; display: inline-flex; align-items: center; gap: .35rem; font-size: .62rem; font-weight: 800; color: #fff;
         text-shadow: 0 1px 2px rgb(0 0 0 / .8); }
@@ -2625,7 +2630,7 @@
     .hp-storm-farm { position: absolute; left: 25.78%; top: 40.5%; width: 0; height: 0; }
     .hp-storm-farm i { position: absolute; left: -.55rem; top: -.55rem; width: 1.1rem; height: 1.1rem; border-radius: 999px; background: #f5c518; box-shadow: 0 0 0 3px #0b1324; }
     .hp-storm-farm i::after { content: ''; position: absolute; inset: -3px; border-radius: inherit; animation: hpAkPulse 2s ease-out infinite; }
-    .hp-storm-farm b { position: absolute; left: .9rem; top: -.75rem; white-space: nowrap; padding: .2rem .55rem; border-radius: .5rem; font-size: .7rem; font-weight: 800;
+    .hp-storm-farm b { position: absolute; right: .9rem; top: -.75rem; white-space: nowrap; padding: .2rem .55rem; border-radius: .5rem; font-size: .7rem; font-weight: 800;
         color: #0b1324; background: #f5c518; box-shadow: 0 8px 18px -8px rgb(0 0 0 / .6); }
     .hp-storm-top { position: absolute; left: .7rem; top: .7rem; display: inline-flex; align-items: center; gap: .1rem .45rem; flex-wrap: wrap; max-width: 60%;
         padding: .35rem .7rem; border-radius: .7rem; font-size: .74rem; font-weight: 800; color: #fff; background: rgb(11 19 36 / .72); backdrop-filter: blur(6px); }
@@ -2671,6 +2676,9 @@
         .hp-storm-clouds, .hp-storm-farm i::after, .hp-storm-steps li { animation: none !important; }
         .hp-storm-steps li, .hp-storm-done { opacity: 1; translate: none; transition: none; }
     }
+
+    /* The guides sit on a soft green, between the white crops and the gray questions. */
+    .hp-guides-bg { background: radial-gradient(60% 50% at 90% 0%, #fdf6dc 0%, transparent 60%), linear-gradient(180deg, #f6faf1 0%, #eef5e6 100%); }
 
     /* ---- the community ---- */
     .hp-comm { background: radial-gradient(70% 60% at 10% 0%, #fdf6dc 0%, transparent 60%), linear-gradient(180deg, #fbfcf7 0%, #f1f7ea 100%); }
