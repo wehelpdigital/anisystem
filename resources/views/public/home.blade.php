@@ -1737,7 +1737,6 @@
             <div class="hp-cta">
                 <div class="hp-cta-row">
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Create your free account {!! $arrow !!}</a>
-                    <a href="{{ $ask }}" class="hp-alt"><img src="{{ $face }}" alt="" class="hp-face">Ask Anee a free question</a>
                 </div>
                 <p class="hp-cta-note">Free forever on Libre. No card needed. <a href="{{ route('contact') }}">Talk to us</a> if you have a question for a person.</p>
             </div>
