@@ -84,7 +84,7 @@
                         become successful and accurate through systems, smart, successful farmers use anee.io.
                     @else
                         anee.io puts your whole season on your phone: every field counted from its own day zero, every
-                        task on its right day, every dollar written down, and Anee, your AI farm technician, ready with
+                        task on its right day, every dollar written down, and Anee, your smart farm technician, ready with
                         answers day and night.
                     @endif
                 </p>
@@ -502,32 +502,63 @@
     </section>
 
     {{-- ================= MEET ANEE ================= --}}
-    {{-- Anee in action: a farmer's photo question, what she reads first, and
-         her answer, played once as the band scrolls into view (the How It
-         Works chat, word for word). Her price is said plainly: she is not on
-         Libre, and the free question needs no account. --}}
-    @php $chat = $HW::chat(); $aneeTools = $tools->filter(fn ($it) => $it['anee'])->values(); @endphp
+    {{-- Anee, said the owner's way (2026-10-06): a smart farm technician, not
+         "an AI": she reads the whole farm before she answers, so the answer
+         is for this field and it comes in seconds. Three parts: what she
+         reads (lit one by one, on a loop), her answer playing on a loop in
+         the chat window, and what a technician visit costs against her.
+         Her price is not said here (the owner took that note out); the
+         pricing section says it. --}}
+    @php
+        $chat = $HW::chat();
+        // On this page the chat shows what she reads, the same list as beside it.
+        $chat['reading'] = ['Reading your photo', 'Checking Lot 2, its stage and your protocol', 'Checking the weather and your past seasons', 'Searching the latest research'];
+        $aneeReads = [
+            ['Your lots', 'Each field, its crop, variety and growth stage today.', 'map'],
+            ['Your protocol', 'Your plan, and what you already applied.', 'plan'],
+            ['Weather and climate', 'The forecast for your farm and your town\'s climate record.', 'cloud'],
+            ['Your history', 'Past seasons, harvests and the notes you kept.', 'chart'],
+            ['Your field today', 'The photos you send of what you see right now.', 'camera'],
+            ['Online research', 'The latest studies, guides and product labels.', 'search'],
+            ['Farm knowledge', 'What anee.io knows about 85 ' . ($ph ? 'Philippine ' : '') . 'crops, stage by stage.', 'book'],
+        ];
+        $aneeVs = [
+            ['Time', 'clock', 'Days of waiting for a visit, if one is free.', 'An answer in seconds, day or night.', true],
+            ['Cost', 'peso', 'A visit fee, plus travel and a day away from the field.', 'Comes with your plan. Each answer uses a few credits.', false],
+            ['Precision', 'target', 'General advice from a short look at the field, without your records.', 'Built on your lot, its stage, the weather and what you already applied.', false],
+            ['Efficiency', 'bolt', 'The problem keeps spreading while you wait.', 'Act today, while the problem is still small.', false],
+            ['Knows your farm', 'user', 'Starts from zero at every visit.', 'Knows your lots, your plan and your past seasons.', false],
+            ['Follow up questions', 'repeat', 'Another visit, another fee.', 'Ask again any time. She picks up where you left off.', false],
+        ];
+        $svg = fn ($k, $w = '1.9') => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' . $w . '" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="' . ['map' => 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7', 'plan' => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01', 'cloud' => 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z', 'chart' => 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z', 'camera' => 'M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9zM15 13a3 3 0 11-6 0 3 3 0 016 0z', 'search' => 'M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z', 'book' => 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253', 'clock' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 'peso' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'target' => 'M12 21a9 9 0 100-18 9 9 0 000 18zm0-4a5 5 0 100-10 5 5 0 000 10zm0-4a1 1 0 100-2 1 1 0 000 2z', 'bolt' => 'M13 10V3L4 14h7v7l9-11h-7z', 'user' => 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z', 'repeat' => 'M4 4v5h5M20 20v-5h-5M5.1 15a7.5 7.5 0 0013.4 2M18.9 9A7.5 7.5 0 005.5 7'][$k] . '"/></svg>';
+        $xMark = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" aria-hidden="true"><path stroke-linecap="round" d="M7 7l10 10M17 7L7 17"/></svg>';
+    @endphp
     <section class="hp-anee spark-field on-dark">
         <div class="relative max-w-6xl mx-auto px-4 sm:px-6 hp-sec" style="z-index:1">
             <div class="hp-anee-grid">
                 <div class="reveal">
                     <p class="hp-kick">Meet Anee</p>
-                    <h2 class="hp-h2">Your AI Farm Technician <em>Knows Your Farm.</em></h2>
+                    <h2 class="hp-h2">Your Smart Farm Technician <em>Already Knows Your Farm.</em></h2>
                     <p class="hp-p">
-                        Anee is not a regular chatbot. Before she answers, she looks at your lots, their growth stages,
-                        your records and the weather. So when you ask "should I spray tomorrow?", she answers for your
-                        own field. Ask {{ $ph ? 'in Tagalog or English, ' : '' }}and send a photo if you like.
+                        Anee is not a chatbot that guesses. She is a <b>smart farm technician</b> who studies your whole farm
+                        before she answers, then gives you the most accurate answer for your field in seconds. That gives you
+                        what every farm needs more of: <b>time, precision, efficiency and lower cost.</b>
                     </p>
-                    {{-- Each of Anee's tools with what it is for, not a cloud of names. --}}
-                    <p class="hp-powers-k">{{ $aneeTools->count() }} things Anee does for you</p>
-                    <div class="hp-powers">
-                        @foreach ($aneeTools as $i => $it)
-                            <a href="{{ $toolUrl($it) }}" class="hp-power reveal" style="--reveal-delay: {{ $i * 0.03 }}s">
-                                <img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy">
-                                <span><b>{{ $it['name'] }}</b><small>{{ $it['short'] }}</small></span>
-                            </a>
+
+                    <p class="hp-anee-k">What Anee reads before she answers</p>
+                    <ul class="hp-anee-reads" data-reads>
+                        @foreach ($aneeReads as [$rt, $rw, $ri])
+                            <li>
+                                <span class="hp-anee-ri">{!! $svg($ri) !!}</span>
+                                <span><b>{{ $rt }}</b><small>{{ $rw }}</small></span>
+                            </li>
                         @endforeach
-                    </div>
+                    </ul>
+                    <p class="hp-anee-out" data-reads-out>
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        Then your answer, in seconds
+                    </p>
+
                     <div class="hp-cta is-left">
                         <div class="hp-cta-row">
                             <a href="{{ $ask }}" class="btn btn-accent btn-lg hp-go">Ask Anee a free question {!! $arrow !!}</a>
@@ -540,7 +571,7 @@
                     <div class="hp-chat" data-chat>
                         <div class="hp-chat-top">
                             <img src="{{ $face }}" alt="" class="hp-face is-lg">
-                            <span><b>Anee</b><small><i class="hp-live"></i>Your AI farm technician</small></span>
+                            <span><b>Anee</b><small><i class="hp-live"></i>Your smart farm technician</small></span>
                         </div>
                         <div class="hp-chat-body">
                             <div class="hp-msg is-me">
@@ -560,11 +591,45 @@
                                 </ol>
                             </div>
                         </div>
-                        <button type="button" class="hp-chat-again" data-chat-again>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M5.1 15a7.5 7.5 0 1 0 1.4-7.5L4 9"/></svg>
-                            Play again
-                        </button>
                     </div>
+                </div>
+            </div>
+
+            {{-- A technician visit against Anee: what it costs, how long it
+                 takes, and what the advice is built on. Fair to the people
+                 who do the job; the point is the waiting and the guesswork. --}}
+            <div class="hp-tvs">
+                <div class="hp-tvs-head reveal">
+                    <p class="hp-kick">A technician visit or Anee</p>
+                    <h3 class="hp-tvs-h">Expert Help Should Not <em>Take Days.</em></h3>
+                    <p class="hp-tvs-p">
+                        A technician visit costs money, takes days to arrange, and the advice comes from a short look at your
+                        field. By then the problem has spread. Anee answers right away, from everything she knows about your farm.
+                    </p>
+                </div>
+                <div class="hp-tvs-t reveal">
+                    <div class="hp-tvs-cols" aria-hidden="true">
+                        <span></span>
+                        <span class="is-old">{!! $svg('user', '2') !!}A technician visit</span>
+                        <span class="is-new"><img src="{{ $face }}" alt="">Anee</span>
+                    </div>
+                    @foreach ($aneeVs as $i => [$vk, $vi, $vo, $vn, $race])
+                        <div class="hp-tvs-row" style="--i: {{ $i }}">
+                            <b class="hp-tvs-k"><span>{!! $svg($vi) !!}</span>{{ $vk }}</b>
+                            <div class="hp-tvs-old">
+                                <i>{!! $xMark !!}</i>
+                                <p><em class="hp-vs-label">A technician visit:</em> {{ $vo }}
+                                    @if ($race)<span class="hp-tvs-race is-slow" aria-hidden="true"><i></i><b>Days of waiting</b></span>@endif
+                                </p>
+                            </div>
+                            <div class="hp-tvs-new">
+                                <i>{!! $tick !!}</i>
+                                <p><em class="hp-vs-label">Anee:</em> {{ $vn }}
+                                    @if ($race)<span class="hp-tvs-race is-fast" aria-hidden="true"><i></i><b>Seconds</b></span>@endif
+                                </p>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -905,7 +970,7 @@
     @php
         $faqs = [
             ['What is anee.io?',
-             'anee.io is a farm app for Filipino farmers. It keeps your cropping calendar, lots, workers, fertilizer and costs for the whole season in one place, and Anee, the AI agricultural technician, answers questions about your crop.'],
+             'anee.io is a farm app for Filipino farmers. It keeps your cropping calendar, lots, workers, fertilizer and costs for the whole season in one place, and Anee, the smart farm technician, answers questions about your crop.'],
             ['Can I plan pagtatanim ng palay in anee.io?',
              'Yes. Set the day you sow or transplant and every task gets its day count: basal fertilizer, urea top dressing, weeding, water and harvest. Each lot keeps its own day zero, so a lot planted a week late keeps its own timing.'],
             ['Does it work for mais, gulay and fruit trees?',
@@ -913,7 +978,7 @@
             ['Can Anee answer in Tagalog?',
              'Yes. Anee answers in Tagalog or English. She reads your schedule, growth stages and weather first, and she can look at a photo of a pest or a sick leaf. She comes with the Libre + Anee plan and up, and anyone can ask her one free question a week on the Try and Ask Anee page.'],
             ['Is anee.io free?',
-             'Yes. The Libre plan is free forever with one active cropping schedule. Libre + Anee adds the AI technician for ' . $aneePrice . ' a month, and the Solo Farmer and Farm Owner plans add workers, inventory, all reports and offline mode.'],
+             'Yes. The Libre plan is free forever with one active cropping schedule. Libre + Anee adds Anee, the smart farm technician, for ' . $aneePrice . ' a month, and the Solo Farmer and Farm Owner plans add workers, inventory, all reports and offline mode.'],
             ['Do I need a computer?',
              'No. anee.io runs in the browser of any phone, so you plan and tick tasks right in the field. On the Solo Farmer and Farm Owner plans it keeps working where there is no signal and syncs when the signal returns.'],
             ['Can my workers use it too?',
@@ -1391,15 +1456,79 @@
         background: radial-gradient(90% 120% at 85% 10%, #2d4a1a 0%, transparent 60%), linear-gradient(160deg, #10160c 0%, #1c2416 55%, #24301a 100%); }
     .hp-anee-grid { display: grid; gap: 3rem; align-items: center; }
     @media (min-width: 1024px) { .hp-anee-grid { grid-template-columns: 1.05fr .95fr; gap: 4rem; } }
-    .hp-powers-k { margin-top: 1.7rem; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-sun); }
-    .hp-powers { margin-top: .7rem; display: grid; gap: .5rem; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
-    .hp-power { display: flex; align-items: center; gap: .65rem; padding: .55rem .75rem .55rem .55rem; border-radius: 1rem;
-        color: #fff; text-decoration: none; background: rgb(255 255 255 / .06); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .13);
-        transition: background-color .28s var(--hp-ease), box-shadow .28s var(--hp-ease), opacity .6s ease, transform .6s var(--hp-ease); }
-    .hp-power:hover { background: rgb(245 197 24 / .13); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .5); }
-    .hp-power img { flex: none; width: 2.15rem; height: 2.15rem; padding: .28rem; border-radius: .7rem; background: #fff; object-fit: contain; }
-    .hp-power b { display: block; font-size: .86rem; font-weight: 800; line-height: 1.25; }
-    .hp-power small { display: block; margin-top: .1rem; font-size: .76rem; line-height: 1.35; color: #c3d2b5; }
+    /* What Anee reads: lit one after another, then the answer, on a loop. */
+    .hp-anee-k { margin-top: 1.7rem; font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-sun); }
+    .hp-anee-reads { margin-top: .7rem; display: grid; gap: .5rem; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); list-style: none; padding: 0; }
+    .hp-anee-reads li { display: flex; align-items: center; gap: .65rem; padding: .55rem .75rem .55rem .55rem; border-radius: 1rem;
+        background: rgb(255 255 255 / .06); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .13);
+        transition: background-color .35s var(--hp-ease), box-shadow .35s var(--hp-ease); }
+    .hp-anee-ri { flex: none; width: 2.15rem; height: 2.15rem; border-radius: .7rem; display: grid; place-items: center;
+        color: var(--hp-sun); background: rgb(245 197 24 / .12); transition: color .35s var(--hp-ease), background-color .35s var(--hp-ease), scale .35s var(--hp-ease); }
+    .hp-anee-ri svg { width: 1.15rem; height: 1.15rem; }
+    .hp-anee-reads b { display: block; font-size: .86rem; font-weight: 800; line-height: 1.25; color: #fff; }
+    .hp-anee-reads small { display: block; margin-top: .1rem; font-size: .76rem; line-height: 1.35; color: #c3d2b5; }
+    .hp-anee-reads li.is-reading { background: rgb(245 197 24 / .13); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .65), 0 0 26px -10px rgb(245 197 24 / .7); }
+    .hp-anee-reads li.is-reading .hp-anee-ri { scale: 1.08; }
+    .hp-anee-reads li.is-read .hp-anee-ri { color: var(--hp-ink); background: var(--hp-sun); }
+    .hp-anee-out { margin-top: .9rem; display: inline-flex; align-items: center; gap: .45rem; padding: .55rem 1rem; border-radius: 999px;
+        font-size: .88rem; font-weight: 800; color: var(--hp-ink); background: var(--hp-sun); opacity: .3; translate: 0 4px;
+        transition: opacity .45s var(--hp-ease), translate .45s var(--hp-ease), box-shadow .45s var(--hp-ease); }
+    .hp-anee-out svg { width: 1rem; height: 1rem; }
+    .hp-anee-out.is-on { opacity: 1; translate: none; box-shadow: 0 0 0 6px rgb(245 197 24 / .18), 0 14px 30px -12px rgb(245 197 24 / .7); }
+
+    /* A technician visit against Anee. */
+    .hp-tvs { margin-top: 5.5rem; }
+    .hp-tvs-head { max-width: 46rem; margin: 0 auto; text-align: center; }
+    .hp-tvs-h { margin-top: .7rem; font-family: var(--font-heading); font-size: clamp(1.6rem, 3.6vw, 2.4rem); font-weight: 800; line-height: 1.12;
+        letter-spacing: -.01em; color: #fff; text-wrap: balance; }
+    .hp-tvs-h em { font-style: normal; color: var(--hp-sun); }
+    .hp-tvs-p { margin-top: .9rem; color: #d3dec7; line-height: 1.7; text-wrap: pretty; }
+    .hp-tvs-t { margin-top: 2.2rem; border-radius: 1.5rem; overflow: hidden; background: rgb(255 255 255 / .04);
+        box-shadow: inset 0 0 0 1px rgb(255 255 255 / .12), 0 40px 80px -50px rgb(0 0 0 / .9); backdrop-filter: blur(10px); }
+    .hp-tvs-cols { display: none; }
+    .hp-tvs-row { display: grid; gap: .55rem; padding: 1rem 1.1rem; border-top: 1px solid rgb(255 255 255 / .08); }
+    .hp-tvs-row:first-of-type { border-top: 0; }
+    .hp-tvs-k { display: flex; align-items: center; gap: .6rem; font-family: var(--font-heading); font-weight: 800; color: #fff; }
+    .hp-tvs-k span { flex: none; width: 2rem; height: 2rem; border-radius: .65rem; display: grid; place-items: center; color: var(--hp-sun); background: rgb(245 197 24 / .12); }
+    .hp-tvs-k svg { width: 1.05rem; height: 1.05rem; }
+    .hp-tvs-old, .hp-tvs-new { display: flex; align-items: flex-start; gap: .6rem; font-size: .9rem; line-height: 1.5; }
+    .hp-tvs-old p, .hp-tvs-new p { min-width: 0; flex: 1; }
+    .hp-tvs-old { color: #b9c4ad; }
+    .hp-tvs-new { color: #fff; font-weight: 600; padding: .6rem .7rem; border-radius: .9rem; background: rgb(168 204 126 / .12); }
+    .hp-tvs-old > i, .hp-tvs-new > i { flex: none; width: 20px; height: 20px; margin-top: 1px; border-radius: 999px; display: grid; place-items: center; }
+    .hp-tvs-old > i { color: #fca5a5; background: rgb(248 113 113 / .18); }
+    .hp-tvs-new > i { color: var(--hp-ink); background: var(--hp-sun); }
+    .hp-tvs-old > i svg, .hp-tvs-new > i svg { width: 12px; height: 12px; }
+    .hp-tvs-new > i svg { stroke-width: 3.4; }
+    .hp-tvs-t.is-visible .hp-tvs-old > i, .hp-tvs-t.is-visible .hp-tvs-new > i { animation: hpPop .5s var(--hp-ease) backwards; }
+    .hp-tvs-t.is-visible .hp-tvs-old > i { animation-delay: calc(var(--i) * 110ms + .2s); }
+    .hp-tvs-t.is-visible .hp-tvs-new > i { animation-delay: calc(var(--i) * 110ms + .35s); }
+    /* The race: the visit's bar crawls toward "days", Anee's fills at once. */
+    .hp-tvs-race { display: block; margin-top: .6rem; }
+    .hp-tvs-race i { position: relative; display: block; height: .45rem; border-radius: 999px; overflow: hidden; background: rgb(255 255 255 / .1); }
+    .hp-tvs-race i::before { content: ''; position: absolute; inset: 0; border-radius: inherit; transform-origin: left; transform: scaleX(0); }
+    .hp-tvs-race.is-slow i::before { background: linear-gradient(90deg, #f87171, #fca5a5); }
+    .hp-tvs-race.is-fast i::before { background: linear-gradient(90deg, var(--hp-sun), #fde68a); }
+    .hp-tvs-t.is-visible .hp-tvs-race.is-slow i::before { animation: hpRaceSlow 7s linear infinite; }
+    .hp-tvs-t.is-visible .hp-tvs-race.is-fast i::before { animation: hpRaceFast 7s var(--hp-ease) infinite; }
+    @keyframes hpRaceSlow { 0% { transform: scaleX(0); opacity: 1; } 88% { transform: scaleX(.9); opacity: 1; } 100% { transform: scaleX(.9); opacity: 0; } }
+    @keyframes hpRaceFast { 0% { transform: scaleX(0); opacity: 1; } 7% { transform: scaleX(1); } 88% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
+    .hp-tvs-race b { display: block; margin-top: .3rem; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .hp-tvs-race.is-slow b { color: #fca5a5; }
+    .hp-tvs-race.is-fast b { color: var(--hp-sun); }
+    @media (min-width: 820px) {
+        .hp-tvs-cols { display: grid; grid-template-columns: 13rem minmax(0, 1fr) minmax(0, 1fr); }
+        .hp-tvs-cols span { display: flex; align-items: center; gap: .55rem; padding: .95rem 1.3rem; font-family: var(--font-heading); font-size: .98rem; font-weight: 800; }
+        .hp-tvs-cols svg { width: 1.2rem; height: 1.2rem; }
+        .hp-tvs-cols .is-old { color: #fca5a5; background: rgb(248 113 113 / .07); }
+        .hp-tvs-cols .is-new { color: var(--hp-ink); background: var(--hp-sun); }
+        .hp-tvs-cols img { width: 1.7rem; height: 1.7rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px rgb(20 33 12 / .25); }
+        .hp-tvs-row { grid-template-columns: 13rem minmax(0, 1fr) minmax(0, 1fr); gap: 0; padding: 0; align-items: stretch; }
+        .hp-tvs-row > * { padding: 1rem 1.3rem; }
+        .hp-tvs-old { border-left: 1px solid rgb(255 255 255 / .08); }
+        .hp-tvs-new { border-radius: 0; background: rgb(168 204 126 / .1); }
+        .hp-tvs-row:hover .hp-tvs-new { background: rgb(168 204 126 / .16); }
+    }
     .hp-chat { position: relative; max-width: 28rem; margin: 0 auto; border-radius: 1.6rem; background: #fff; color: var(--hp-ink); overflow: hidden;
         box-shadow: 0 50px 90px -40px rgb(0 0 0 / .85), 0 0 0 1px rgb(255 255 255 / .1); }
     .hp-chat-top { display: flex; align-items: center; gap: .7rem; padding: .9rem 1.1rem; background: linear-gradient(135deg, #2f5219, #4a7c2a); color: #fff; }
@@ -1411,10 +1540,13 @@
     .hp-msg.is-me { align-self: flex-end; color: #fff; background: #4a7c2a; border-bottom-right-radius: .35rem; }
     .hp-msg-photo { width: 100%; max-height: 8.5rem; object-fit: cover; border-radius: .7rem; margin-bottom: .55rem; }
     .hp-msg.is-anee { align-self: flex-start; background: #fff; box-shadow: 0 8px 20px -14px rgb(0 0 0 / .4); border-bottom-left-radius: .35rem; }
-    .hp-msg.is-anee b { display: block; color: var(--hp-deep); }
+    .hp-msg.is-anee > b { display: block; color: var(--hp-deep); }
+    .hp-msg.is-anee li b { color: var(--hp-deep); }
     .hp-msg.is-anee p { margin-top: .3rem; color: #4b5563; }
     .hp-msg.is-anee ol { margin-top: .5rem; padding-left: 1.1rem; list-style: decimal; display: grid; gap: .3rem; color: #374151; }
     .hp-reading { display: flex; flex-direction: column; gap: .35rem; }
+    .hp-chat-body > * { transition: opacity .4s var(--hp-ease); }
+    .hp-chat.is-fading .hp-chat-body > * { opacity: 0 !important; }
     .hp-read { display: inline-flex; align-items: center; gap: .5rem; align-self: flex-start; padding: .35rem .7rem; border-radius: 999px;
         font-size: .76rem; font-weight: 700; color: #5b6b50; background: #fff; box-shadow: inset 0 0 0 1px #e4ecdb;
         opacity: 0; transform: translateX(-8px); transition: opacity .4s var(--hp-ease), transform .4s var(--hp-ease); }
@@ -1422,13 +1554,7 @@
     .hp-read.is-done i { animation: none; border-color: var(--hp-green); background: var(--hp-green); }
     @keyframes hpSpinner { to { transform: rotate(360deg); } }
     .hp-chat.s1 .hp-msg.is-me, .hp-chat.s5 .hp-msg.is-anee { opacity: 1; transform: none; }
-    .hp-chat.s2 .hp-read:nth-child(1), .hp-chat.s3 .hp-read:nth-child(-n+2), .hp-chat.s4 .hp-read, .hp-chat.s5 .hp-read { opacity: 1; transform: none; }
-    .hp-chat-again { position: absolute; right: .8rem; top: .9rem; display: inline-flex; align-items: center; gap: .3rem; padding: .3rem .7rem;
-        border-radius: 999px; border: 0; font-size: .72rem; font-weight: 800; color: #fff; background: rgb(255 255 255 / .16); cursor: pointer;
-        opacity: 0; pointer-events: none; transition: opacity .3s var(--hp-ease), background-color .28s var(--hp-ease); }
-    .hp-chat-again svg { width: .85rem; height: .85rem; }
-    .hp-chat.is-done .hp-chat-again { opacity: 1; pointer-events: auto; }
-    .hp-chat-again:hover { background: rgb(255 255 255 / .28); }
+    .hp-read.is-shown { opacity: 1; transform: none; }
 
     /* ---- the farm as a business ---- */
     .hp-biz { display: grid; gap: 3rem; align-items: center; }
@@ -1641,6 +1767,10 @@
         .hp-phone.is-hero, .hp-st-pane, .hp-tool, .hp-msg, .hp-read, .hp-film, .hp-film-tag, .hp-modal, .hp-modal-box, .hp-sticky,
         .hp-go, .hp-alt, .hp-prec-row, .hp-prec-rights li, .hp-prec-old, .hp-prec-card, .hp-prec-checks li, .hp-prec-bar i, .hp-prec-on, .hp-st-tab, .hp-gain, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
         .hp-chat .hp-msg, .hp-chat .hp-read { opacity: 1; transform: none; }
+        .hp-tvs-race i::before, .hp-tvs-old > i, .hp-tvs-new > i { animation: none !important; }
+        .hp-tvs-race.is-slow i::before { transform: scaleX(.9); }
+        .hp-tvs-race.is-fast i::before { transform: scaleX(1); }
+        .hp-anee-reads li, .hp-anee-ri, .hp-anee-out { transition: none !important; }
         .hp-mark-line { -webkit-clip-path: none; clip-path: none; }
         .hp-tick, .hp-tick path, .hp-tick::after { animation: none !important; }
         .hp-prec-spin, .hp-prec-line b, .hp-prec-chk, .hp-prec-chk path, .hp-prec-old-x { animation: none !important; }
@@ -1867,27 +1997,55 @@
         }, { threshold: 0.3 });
     }
 
-    /* Anee's answer, played once as the band comes into view. */
+    /* Anee's answer plays on a loop while the chat is on screen: the
+       question, what she reads one line at a time, her answer, a pause to
+       read it, then it fades and starts again. */
     const chat = document.querySelector('[data-chat]');
     if (chat) {
         const reads = [...chat.querySelectorAll('.hp-read')];
-        let timers = [];
+        let timers = [], live = false;
+        const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+        const stop = () => { timers.forEach(clearTimeout); timers = []; };
         const run = () => {
-            timers.forEach(clearTimeout); timers = [];
-            chat.className = 'hp-chat';
-            reads.forEach((r) => r.classList.remove('is-done'));
-            if (reduce) { chat.classList.add('s1', 's5', 'is-done'); reads.forEach((r) => r.classList.add('is-done')); return; }
-            const at = (ms, fn) => timers.push(setTimeout(fn, ms));
-            at(200, () => chat.classList.add('s1'));
-            at(1100, () => chat.classList.add('s2'));
-            at(2000, () => { reads[0]?.classList.add('is-done'); chat.classList.add('s3'); });
-            at(2900, () => { reads[1]?.classList.add('is-done'); chat.classList.add('s4'); });
-            at(3800, () => { reads[2]?.classList.add('is-done'); chat.classList.add('s5'); });
-            at(4400, () => chat.classList.add('is-done'));
+            stop();
+            chat.classList.remove('s1', 's5', 'is-done', 'is-fading');
+            reads.forEach((r) => r.classList.remove('is-shown', 'is-done'));
+            if (reduce) { chat.classList.add('s1', 's5', 'is-done'); reads.forEach((r) => r.classList.add('is-shown', 'is-done')); return; }
+            at(250, () => chat.classList.add('s1'));
+            reads.forEach((r, i) => {
+                at(1200 + i * 850, () => r.classList.add('is-shown'));
+                at(1200 + i * 850 + 800, () => r.classList.add('is-done'));
+            });
+            const end = 1200 + reads.length * 850 + 150;
+            at(end, () => chat.classList.add('s5'));
+            at(end + 600, () => chat.classList.add('is-done'));
+            at(end + 8500, () => chat.classList.add('is-fading'));
+            at(end + 9000, () => { if (live) run(); });
         };
-        let ran = false;
-        seen(chat, (on) => { if (on && !ran) { ran = true; run(); } }, { threshold: 0.45 });
-        chat.querySelector('[data-chat-again]')?.addEventListener('click', run);
+        seen(chat, (on) => {
+            live = on;
+            if (on && !timers.length) run();
+            if (!on) stop();
+        }, { threshold: 0.35 });
+    }
+
+    /* What Anee reads, lit one after another, then the answer; again and
+       again while it is on screen. */
+    const readList = document.querySelector('[data-reads]');
+    if (readList) {
+        const items = [...readList.querySelectorAll('li')];
+        const out = document.querySelector('[data-reads-out]');
+        let k = 0, t = null, on = false;
+        const reset = () => { items.forEach((li) => li.classList.remove('is-reading', 'is-read')); out?.classList.remove('is-on'); k = 0; };
+        const step = () => {
+            if (!on) return;
+            if (k > 0) { items[k - 1].classList.remove('is-reading'); items[k - 1].classList.add('is-read'); }
+            if (k < items.length) { items[k].classList.add('is-reading'); k++; t = setTimeout(step, 700); return; }
+            out?.classList.add('is-on');
+            t = setTimeout(() => { reset(); t = setTimeout(step, 700); }, 3400);
+        };
+        if (reduce) { items.forEach((li) => li.classList.add('is-read')); out?.classList.add('is-on'); }
+        else seen(readList, (v) => { on = v; clearTimeout(t); if (v) { reset(); step(); } }, { threshold: 0.3 });
     }
 
 
