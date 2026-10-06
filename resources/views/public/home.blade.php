@@ -2347,9 +2347,12 @@
         background-position: 0 100%; background-size: 0% 3px; padding-bottom: .12em;
         transition: background-size .9s var(--hp-ease) .45s; }
     .hp-sum-card.is-visible .hp-hl, html:not(.js) .hp-hl { background-size: 100% 3px; }
-    .hp-sum-how { margin-top: .75rem; display: grid; gap: .55rem; }
-    .hp-sum-how li { position: relative; padding-left: 1.6rem; font-size: .92rem; line-height: 1.55; color: #e4f0d6; }
-    .hp-sum-how li::before { content: ''; position: absolute; left: 0; top: .2em; width: 1.05rem; height: 1.05rem; border-radius: 999px;
+    .hp-sum-how { margin-top: .6rem; display: grid; }
+    /* A thin line between the items, as in the two cards beside it. */
+    .hp-sum-how li { position: relative; padding: .7rem 0 .7rem 1.6rem; font-size: .92rem; line-height: 1.55; color: #e4f0d6; }
+    .hp-sum-how li + li { border-top: 1px solid rgb(255 255 255 / .16); }
+    .hp-sum-how li:last-child { padding-bottom: 0; }
+    .hp-sum-how li::before { content: ''; position: absolute; left: 0; top: calc(.7rem + .2em); width: 1.05rem; height: 1.05rem; border-radius: 999px;
         background: var(--hp-sun) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314210c' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E") center / 70% no-repeat; }
     @media (prefers-reduced-motion: reduce) { .hp-hl { transition: none; background-size: 100% 3px; } }
     .hp-sum-brand { margin-top: auto; padding-top: 1.1rem; display: inline-flex; align-items: center; gap: .5rem; font-weight: 800; color: var(--hp-sun); }
