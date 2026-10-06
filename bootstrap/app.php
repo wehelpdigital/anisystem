@@ -76,6 +76,15 @@ return Application::configure(basePath: dirname(__DIR__))
         // Hourly, because each schedule picks its own send time; the command
         // itself decides whose hour it is and never sends the same day twice.
         $schedule->command('digests:send')->hourly();
+        // The farm news roundup asks every morning; it writes only every few
+        // days and only when the feeds have new stories (App\Services\NewsRoundup).
+        $schedule->call(function () {
+            $news = app(\App\Services\NewsRoundup::class);
+            [$run] = $news->open('schedule', false);
+            if ($run) {
+                $news->work($run);
+            }
+        })->name('news-roundup')->dailyAt('07:00')->timezone('Asia/Manila');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         // An expired/stale CSRF token (page left open past the session

@@ -46,7 +46,7 @@
                     <a href="{{ $S::url('pests') }}" class="{{ $section === 'pests' ? 'is-on' : '' }}">Crop pests</a>
                     <a href="{{ $S::url('diseases') }}" class="{{ $section === 'diseases' ? 'is-on' : '' }}">Crop diseases</a>
                     <a href="{{ $S::url('weeds') }}" class="{{ $section === 'weeds' ? 'is-on' : '' }}">Weeds and grasses</a>
-                    <a href="{{ $S::url('blog') }}" class="{{ $section === 'blog' ? 'is-on' : '' }}">Blog</a>
+                    <a href="{{ $S::url('blog') }}" class="{{ $section === 'blog' ? 'is-on' : '' }}">Latest in Agriculture</a>
                 </div>
             </div>
         </div>

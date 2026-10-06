@@ -235,14 +235,36 @@ class PageWriter
         return $about
             . (! empty($b['notes']) ? "The editor's instructions: " . $b['notes'] . "\n" : '')
             . $current
-            . "\n--- Voice ---\n"
+            . self::voiceRules($lang)
+            . self::seoRules($focus, $words, $keywords)
+            . self::linkRules()
+            . self::honestRules()
+            . "Mention once in the body how anee.io helps with this exact topic, and include one cta block that promotes it for this topic (higher yield, lower cost, less guesswork), with \"label\": \"Try it for free\" and \"url\": \"/signup\". Its text: one sentence, then two or three short benefit lines, each on its own line (separated by a single newline).\n"
+            . "\n--- Blocks ---\nThe page body is a list of blocks, exactly these kinds:\n"
+            . "heading {level: 2 or 3, text} | text {text: paragraphs separated by a blank line, inline [label](/url) and **bold** only} | list {ordered: true/false, items: [strings]} | steps {items: [{title, text}]} | table {caption, rows: [[header cells], [cells]...]} | callout {tone: tip, warn or info, title, text} | quote {text, cite} | faq {items: [{q, a}]} (3 to 6 questions people really ask) | cta {title, text, label, url} | links {title, items: [{label, url}]} (3 to 6 related pages from the list) | sources {items: [{label, url}]} | divider {}\n"
+            . "A good shape: 1 or 2 text blocks, then H2 sections with text, lists, tables or steps as the content needs, a callout, the cta about two thirds down, a faq, a links block, a sources block last. The excerpt is the first paragraph (shown under the title): do not repeat it as the first text block.\n"
+            . "\n--- Answer ---\nReturn ONLY this JSON object, no fences, no commentary:\n"
+            . '{"title": "...", "slug": "words-of-the-keyphrase", "metaTitle": "...", "metaDescription": "...", "focusKeyword": "...", "mainKeywords": ["1 or 2 main keywords"], "keywordsUsed": ["the secondary keywords you used"], "excerpt": "...", "category": "a short category, e.g. Palay, Mais, Fertilizer, Pests", "lang": "' . $lang . '", "crop": "one crop key or null", "blocks": [ ... ]}'
+            . "\nCrop keys: {$crops}\n";
+    }
+
+    /* The house rules in pieces, so a page written another way (the farm
+     * news roundup, App\Services\NewsRoundup) is held to the same ones. */
+
+    public static function voiceRules(string $lang): string
+    {
+        return "\n--- Voice ---\n"
             . ($lang === 'tl'
                 ? "Write in natural Filipino as a Filipino farm writer would, with the English terms farmers really use (fertilizer, urea, insecticide, hectare). Not stiff textbook Tagalog.\n"
                 : "Write in English as a Filipino agriculturist talking to farmers: plain words, short sentences, real field detail (cavans, hectares, the DA, PhilRice, wet and dry seasons, typhoons, local names). Common Filipino farm words (palay, mais, abono, punla, ani) are fine, each explained once.\n")
             . "Write as the anee.io agriculture team (\"we\"), not as a chat: no greetings, no emoji, no :anee: codes. Be exact: numbers, names, active ingredients and dates must be true (use the research notes when given). When a value varies, give the range and the source. Never invent a statistic, a study, a product claim or a quote. Pesticides: name the active ingredient and the group, and tell the reader to follow the product label and its FPA registration. Never give a spray rate you did not verify. No fluff opening, no hype, no filler conclusion.\n"
             . "\n--- Forbidden words ---\nNever use: " . implode(', ', array_keys(ArticleStyle::SWAPS)) . ".\n"
-            . "No dashes of any kind in the text (no em dash, en dash or hyphen: write \"well drained soil\", \"14 14 14\", \"day 30 after transplanting\"). No semicolons, no ampersands, no ellipses, no arrows, no emoji, no % sign (write \"percent\"), straight quotes only.\n"
-            . "\n--- SEO (Yoast) ---\n"
+            . "No dashes of any kind in the text (no em dash, en dash or hyphen: write \"well drained soil\", \"14 14 14\", \"day 30 after transplanting\"). No semicolons, no ampersands, no ellipses, no arrows, no emoji, no % sign (write \"percent\"), straight quotes only.\n";
+    }
+
+    public static function seoRules(string $focus, string $words, array $keywords): string
+    {
+        return "\n--- SEO (Yoast) ---\n"
             . ($focus !== '' ? "The focus keyphrase is \"{$focus}\".\n" : "Choose one focus keyphrase: the phrase a farmer would type into Google for this, 2 to 5 words, preferably one of the keywords below when one fits.\n")
             . "Put the focus keyphrase in the title, at the start of the metaTitle, in the metaDescription, in the slug, in the excerpt (the first paragraph) and in at least one H2. Use it naturally, about 1 percent of words, and use synonyms and the secondary keywords for the rest.\n"
             . "Meta tags: metaTitle 35 to 60 characters, starting with the focus keyphrase (the site adds \" | anee.io\"). metaDescription 120 to 156 characters, one or two active sentences with the focus keyphrase and a reason to click. The slug: the keyphrase words, lower case, joined by hyphens.\n"
@@ -252,17 +274,18 @@ class PageWriter
             . ($keywords ? "\nKeywords from our keyword research, with monthly searches:\n- " . implode("\n- ", $keywords) . "\n"
                 . "MAIN KEYWORDS: choose 1 or 2 of these, the highest search volume ones that truly fit this topic, and use each one at least 2 times in the content (the excerpt, an H2, the paragraphs), naturally. Return them as mainKeywords.\n"
                 . "Secondary keywords: weave in the others that fit the topic, at least three if they fit. Never force one: a keyword that does not belong to this topic is left out.\n"
-                . "Every keyword reads naturally and in proper case: rewrite the word order (\"fertilizer urea\" becomes \"urea fertilizer\", \"fertilizer yara\" becomes \"Yara fertilizer\"), capitalize names of brands, agencies and varieties (Atlas, Yara, Fertilizer and Pesticide Authority, PhilRice, NSIC Rc 222), and use a farmer's own word where a keyword would sound odd (binhi or seed, not \"corn kernel\", when seeds are meant).\n" : '')
-            . "\n--- Links ---\nAt least 3 internal links inside the body text as [label](/path), using ONLY these pages:\n" . self::urlMap() . "\n"
-            . "At least 1 outbound link to an authoritative source, in a sources block (full https addresses from the research notes).\n"
-            . "\n--- anee.io, honestly ---\nOnly claim what anee.io really does: a cropping calendar that dates every task from each lot's own day zero (DAS, DAT or DAP), Anee the AI technician who answers in Tagalog or English and can look at a photo of a pest or a sick plant, growth stages for 85 Philippine crops with the weather forecast per lot, When to Plant and What to Plant analyses, Variety Research, Crop Protocol Analysis, the Protocol Builder, workers and payroll, inventory that tracks fertilizer and chemicals, labor, expenses and profit reports, notes with photos and voice, farm maps, a farmer community. Free to start (Libre), paid plans for more.\n"
-            . "Mention once in the body how anee.io helps with this exact topic, and include one cta block that promotes it for this topic (higher yield, lower cost, less guesswork), with \"label\": \"Try it for free\" and \"url\": \"/signup\". Its text: one sentence, then two or three short benefit lines, each on its own line (separated by a single newline).\n"
-            . "\n--- Blocks ---\nThe page body is a list of blocks, exactly these kinds:\n"
-            . "heading {level: 2 or 3, text} | text {text: paragraphs separated by a blank line, inline [label](/url) and **bold** only} | list {ordered: true/false, items: [strings]} | steps {items: [{title, text}]} | table {caption, rows: [[header cells], [cells]...]} | callout {tone: tip, warn or info, title, text} | quote {text, cite} | faq {items: [{q, a}]} (3 to 6 questions people really ask) | cta {title, text, label, url} | links {title, items: [{label, url}]} (3 to 6 related pages from the list) | sources {items: [{label, url}]} | divider {}\n"
-            . "A good shape: 1 or 2 text blocks, then H2 sections with text, lists, tables or steps as the content needs, a callout, the cta about two thirds down, a faq, a links block, a sources block last. The excerpt is the first paragraph (shown under the title): do not repeat it as the first text block.\n"
-            . "\n--- Answer ---\nReturn ONLY this JSON object, no fences, no commentary:\n"
-            . '{"title": "...", "slug": "words-of-the-keyphrase", "metaTitle": "...", "metaDescription": "...", "focusKeyword": "...", "mainKeywords": ["1 or 2 main keywords"], "keywordsUsed": ["the secondary keywords you used"], "excerpt": "...", "category": "a short category, e.g. Palay, Mais, Fertilizer, Pests", "lang": "' . $lang . '", "crop": "one crop key or null", "blocks": [ ... ]}'
-            . "\nCrop keys: {$crops}\n";
+                . "Every keyword reads naturally and in proper case: rewrite the word order (\"fertilizer urea\" becomes \"urea fertilizer\", \"fertilizer yara\" becomes \"Yara fertilizer\"), capitalize names of brands, agencies and varieties (Atlas, Yara, Fertilizer and Pesticide Authority, PhilRice, NSIC Rc 222), and use a farmer's own word where a keyword would sound odd (binhi or seed, not \"corn kernel\", when seeds are meant).\n" : '');
+    }
+
+    public static function linkRules(): string
+    {
+        return "\n--- Links ---\nAt least 3 internal links inside the body text as [label](/path), using ONLY these pages:\n" . self::urlMap() . "\n"
+            . "At least 1 outbound link to an authoritative source, in a sources block (full https addresses from the research notes).\n";
+    }
+
+    public static function honestRules(): string
+    {
+        return "\n--- anee.io, honestly ---\nOnly claim what anee.io really does: a cropping calendar that dates every task from each lot's own day zero (DAS, DAT or DAP), Anee the smart farm technician who answers in Tagalog or English and can look at a photo of a pest or a sick plant, growth stages for 85 Philippine crops with the weather forecast per lot, When to Plant and What to Plant analyses, Variety Research, Crop Protocol Analysis, the Protocol Builder, workers and payroll, inventory that tracks fertilizer and chemicals, labor, expenses and profit reports, notes with photos and voice, farm maps, a farmer community. Free to start (Libre), paid plans for more.\n";
     }
 
     private function parse(string $text): ?array

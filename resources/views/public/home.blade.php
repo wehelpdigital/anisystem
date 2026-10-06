@@ -1139,9 +1139,9 @@
                         above and spot hidden problems early, even during heavy monsoon rains, without buying an expensive drone.
                     </p>
                     <div class="hp-sky-stats">
-                        <div><b>Every 5 to 10 days</b><small>A fresh field health map</small></div>
-                        <div><b>Through the clouds</b><small>Radar sees your crop in the monsoon</small></div>
-                        <div><b>No drone needed</b><small>Nothing to buy, nothing to fly</small></div>
+                        <div><b>Every 5 to 10 days</b><small>A fresh field health map of every lot you farm</small></div>
+                        <div><b>Through clouds</b><small>Radar sees your crop in the monsoon</small></div>
+                        <div><b>No drone needed</b><small>Nothing to buy, nothing to fly, nothing to charge</small></div>
                     </div>
                 </div>
 
@@ -1582,7 +1582,7 @@
                     'crops' => ['Crop Guides', 'Planting, feeding and harvest, crop by crop', 100, 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z', 'All crop guides'],
                     'pests' => ['Crop Pests', 'Know the insect before you buy a spray', 22, 'M12 8a3 3 0 100-6 3 3 0 000 6zm0 0v13m-6-9h12M7 7L4 4m13 3l3-3M6 16l-3 3m15-3l3 3M8 12a4 4 0 008 0', 'All crop pests'],
                     'weeds' => ['Weeds and Grasses', 'Every weed of the rice field, and its control', 75, 'M6 21c0-6 1.2-11 4-15M12 21V3.5M18 21c0-6-1.2-11-4-15', 'All weeds and grasses'],
-                    'blog' => ['From the Blog', 'Fertilizer, prices, farm words and more', 205, 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z', 'The whole blog'],
+                    'blog' => ['Latest in Agriculture', 'Farm news with what it means for you, and more', 205, 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z', 'All the latest'],
                 ];
             @endphp
             <div class="hg-shelves">
@@ -1601,7 +1601,7 @@
                             @if ($n)<span class="hg-count">{{ $n }} {{ $sec === 'blog' ? 'posts' : 'guides' }}</span>@endif
                         </div>
                         <a href="{{ $SP::pageUrl($lead) }}" class="hg-lead">
-                            <img src="{{ $leadSrc }}" alt="{{ $leadHero['alt'] ?? $lead->title }}" loading="lazy" width="1200" height="675">
+                            <img src="{{ $leadSrc }}" alt="{{ $leadHero['alt'] ?? $lead->title }}" loading="lazy" width="1200" height="675" referrerpolicy="no-referrer">
                             <span class="hg-lead-in">
                                 @if ($lead->category)<span class="hg-cat">{{ $lead->category }}</span>@endif
                                 <b>{{ $lead->title }}</b>
@@ -1612,7 +1612,7 @@
                         <ul class="hg-rows">
                             @foreach ($pages->slice(1)->take(4) as $p)
                                 <li><a href="{{ $SP::pageUrl($p) }}" class="hg-row">
-                                    <img src="{{ $guideThumb($p) }}" alt="" loading="lazy" width="96" height="72">
+                                    <img src="{{ $guideThumb($p) }}" alt="" loading="lazy" width="96" height="72" referrerpolicy="no-referrer">
                                     <span>@if ($p->category)<small>{{ $p->category }}</small>@endif<b>{{ $SP::shortTitle($p) }}</b></span>
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
                                 </a></li>
@@ -1654,7 +1654,7 @@
             ['Can anee.io help with the rice bug, thrips and fall armyworm?',
              'Yes. Take a photo and Anee tells you what the pest or disease is and what to do, including when a fungicide or insecticide is needed. Your season board also reminds you when to check for the rice bug and other pests at each growth stage.'],
             ['Where can I read about fertilizer and pests?',
-             'Our free guides cover fertilizer urea, complete fertilizer 14 14 14 and 16 20 0, the rice bug, thrips, fall armyworm and more. Start from the crop guides, the crop pests, the weeds and grasses or the blog.'],
+             'Our free guides cover fertilizer urea, complete fertilizer 14 14 14 and 16 20 0, the rice bug, thrips, fall armyworm and more. Start from the crop guides, the crop pests, the weeds and grasses or Latest in Agriculture.'],
         ];
     @endphp
     <section class="hp-sec bg-gray-50">
@@ -1704,9 +1704,33 @@
         <img src="{{ asset('images/site/photos/team-thumbs.jpg') }}" alt="Two farmers giving a thumbs up beside their rice field" class="hp-final-bg" loading="lazy">
         <div class="hp-final-shade" aria-hidden="true"></div>
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 hp-sec text-center reveal on-dark" style="z-index:1">
-            <img src="{{ $faceLg }}" alt="" class="hp-final-face">
-            <h2 class="hp-h2">Your Best Season Starts With <em>a Free Account.</em></h2>
-            <p class="hp-p">Set up your first season tonight. Tomorrow morning, anee.io already knows what each lot needs.</p>
+            {{-- Think about it (2026-10-07): the same season told twice, row by
+                 row, the way it goes without Anee and the way it goes with her. --}}
+            <p class="hp-kick">Think about it</p>
+            <h2 class="hp-h2">Picture Your Next Season. <em>Now Picture It With Anee.</em></h2>
+            <p class="hp-p">Same field, same hands, same rain. The only thing that changes is who is helping you decide.</p>
+            @php
+                $ws = [
+                    ['You guess the day to fertilize, and the bag goes on a week late.', 'Every task is dated from your own planting day, and Anee reminds you that morning.'],
+                    ['A yellow leaf means days of waiting for a technician, or a guess at the store.', 'You send Anee a photo and know what it is and what to do, in seconds.'],
+                    ['Rain washes off the spray you just paid for.', 'You see the weather for every lot, and Anee tells you when to spray.'],
+                    ['At harvest, you are not sure the season made money.', 'Every peso is on record, and the profit report shows what each lot earned.'],
+                    ['Next season starts from memory again.', 'Your best lot\'s season becomes next season\'s plan.'],
+                ];
+            @endphp
+            <div class="hp-ws" aria-label="Your season without Anee and with Anee">
+                <div class="hp-ws-head" aria-hidden="true">
+                    <span class="is-no">Without Anee</span>
+                    <span class="is-yes"><img src="{{ $face }}" alt="">With Anee</span>
+                </div>
+                @foreach ($ws as $i => [$no, $yes])
+                    <div class="hp-ws-row" style="--k: {{ $i }}">
+                        <div class="hp-ws-no"><span class="sr-only">Without Anee: </span><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" d="M7 7l10 10M17 7L7 17"/></svg></i><p>{{ $no }}</p></div>
+                        <div class="hp-ws-yes"><span class="sr-only">With Anee: </span><i aria-hidden="true">{!! $tick !!}</i><p>{{ $yes }}</p></div>
+                    </div>
+                @endforeach
+            </div>
+            <p class="hp-ws-close">Your best season starts with <b>a free account.</b></p>
             <div class="hp-cta">
                 <div class="hp-cta-row">
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Create your free account {!! $arrow !!}</a>
@@ -3146,8 +3170,44 @@
     .hp-final { position: relative; isolation: isolate; overflow: hidden; }
     .hp-final-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
     .hp-final-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(160deg, rgb(20 36 12 / .93), rgb(29 51 15 / .82) 55%, rgb(47 82 25 / .78)); }
-    .hp-final-face { width: 5rem; height: 5rem; margin: 0 auto 1rem; border-radius: 999px; object-fit: cover;
-        box-shadow: 0 0 0 4px var(--hp-sun), 0 0 0 12px rgb(245 197 24 / .18); animation: hpBob 5s ease-in-out infinite; }
+    /* Think about it: each row is the same moment of the season, without
+       Anee (dim, crossed) and with her (lit, ticked). The rows arrive one by
+       one, the "with" half a beat after its "without". */
+    .hp-ws { margin: 2.4rem auto 0; max-width: 56rem; text-align: left; display: grid; gap: .6rem; }
+    .hp-ws-head { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; padding: 0 .2rem; }
+    .hp-ws-head span { display: inline-flex; align-items: center; gap: .5rem; font-size: .78rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .hp-ws-head .is-no { color: #a7b39c; }
+    .hp-ws-head .is-yes { color: var(--hp-sun); }
+    .hp-ws-head img { width: 1.7rem; height: 1.7rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px var(--hp-sun); }
+    .hp-ws-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+    .hp-ws-no, .hp-ws-yes { display: flex; align-items: flex-start; gap: .7rem; padding: .9rem 1rem; border-radius: 1.1rem; }
+    .hp-ws-no { background: rgb(255 255 255 / .05); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); }
+    .hp-ws-no p { font-size: .95rem; line-height: 1.55; color: #b9c4ae; }
+    .hp-ws-yes { background: linear-gradient(135deg, rgb(245 197 24 / .16), rgb(245 197 24 / .06)); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .35), 0 18px 36px -26px rgb(0 0 0 / .8); }
+    .hp-ws-yes p { font-size: .97rem; line-height: 1.55; font-weight: 600; color: #fff; }
+    .hp-ws-no i, .hp-ws-yes i { flex: none; width: 1.6rem; height: 1.6rem; margin-top: .05rem; border-radius: 999px; display: grid; place-items: center; }
+    .hp-ws-no i { color: #f1a7a1; background: rgb(225 87 74 / .18); }
+    .hp-ws-yes i { color: #3b2f00; background: var(--hp-sun); box-shadow: 0 0 0 4px rgb(245 197 24 / .18); }
+    .hp-ws-no i svg, .hp-ws-yes i svg { width: .85rem; height: .85rem; }
+    .hp-ws-close { margin-top: 2rem; font-family: var(--font-heading); font-size: clamp(1.25rem, 2.6vw, 1.6rem); font-weight: 800; color: #fff; }
+    .hp-ws-close b { color: var(--hp-sun); }
+    @media (max-width: 639.98px) {
+        .hp-ws-head { display: none; }
+        .hp-ws-row { grid-template-columns: 1fr; gap: .35rem; }
+        .hp-ws-row + .hp-ws-row { margin-top: .5rem; }
+        .hp-ws-no { padding: .7rem .85rem; }
+    }
+    html.js .hp-ws-no, html.js .hp-ws-yes { opacity: 0; transform: translateY(10px); }
+    html.js .hp-ws-yes { transform: translateX(14px); }
+    .reveal.is-visible .hp-ws-no { animation: hpWsIn .5s var(--hp-ease) calc(.25s + var(--k) * .45s) forwards; }
+    .reveal.is-visible .hp-ws-yes { animation: hpWsIn .55s var(--hp-ease) calc(.5s + var(--k) * .45s) forwards; }
+    .reveal.is-visible .hp-ws-yes i { animation: hpWsTick .5s var(--hp-ease) calc(.8s + var(--k) * .45s) both; }
+    @keyframes hpWsIn { to { opacity: 1; transform: none; } }
+    @keyframes hpWsTick { from { transform: scale(.4); } 60% { transform: scale(1.15); } to { transform: scale(1); } }
+    @media (prefers-reduced-motion: reduce) {
+        html.js .hp-ws-no, html.js .hp-ws-yes { opacity: 1; transform: none; }
+        .reveal.is-visible .hp-ws-no, .reveal.is-visible .hp-ws-yes, .reveal.is-visible .hp-ws-yes i { animation: none; }
+    }
     .hp-sticky { position: fixed; left: .75rem; right: .75rem; bottom: calc(.75rem + env(safe-area-inset-bottom, 0px)); z-index: 38;
         display: flex; gap: .6rem; align-items: center; padding: .55rem; border-radius: 1.3rem; background: rgb(16 22 12 / .92);
         backdrop-filter: blur(10px); box-shadow: 0 20px 40px -18px rgb(0 0 0 / .7);

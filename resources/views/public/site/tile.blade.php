@@ -6,7 +6,7 @@
     $src = $S::img($h['thumb'] ?? ($h['src'] ?? null)) ?: asset('images/site/fields-aerial.jpg');
 @endphp
 <a href="{{ $S::pageUrl($p) }}" class="sp-tile" data-cat="{{ $p->category }}">
-    <img src="{{ $src }}" alt="{{ $h['alt'] ?? $p->title }}" loading="lazy">
+    <img src="{{ $src }}" alt="{{ $h['alt'] ?? $p->title }}" loading="lazy" referrerpolicy="no-referrer">
     <span class="in">
         @if ($p->category)<span class="cat">{{ $p->category }}</span>@endif
         <b>{{ $p->title }}</b>

@@ -123,8 +123,9 @@
                     </figure>
                 @elseif ($heroSrc)
                     <figure class="sp-figure mt-7 {{ $isFeature ? 'is-product' : '' }}">
-                        <img src="{{ $heroSrc }}" alt="{{ $hero['alt'] ?? $page->title }}" fetchpriority="high">
-                        @if (trim((string) ($hero['credit'] ?? '')) !== '')<figcaption>Photo: {{ $hero['credit'] }}</figcaption>@endif
+                        {{-- A news roundup's picture is the original report's: shown from there, credited and linked to it. --}}
+                        <img src="{{ $heroSrc }}" alt="{{ $hero['alt'] ?? $page->title }}" fetchpriority="high" referrerpolicy="no-referrer">
+                        @if (trim((string) ($hero['credit'] ?? '')) !== '')<figcaption>Photo: {!! $S::inline($hero['credit']) !!}</figcaption>@endif
                     </figure>
                 @endif
                 </div>
@@ -220,7 +221,7 @@
                     <a href="{{ $S::url('pests') }}" class="{{ $page->section === 'pests' ? 'is-on' : '' }}">Crop pests</a>
                     <a href="{{ $S::url('diseases') }}" class="{{ $page->section === 'diseases' ? 'is-on' : '' }}">Crop diseases</a>
                     <a href="{{ $S::url('weeds') }}" class="{{ $page->section === 'weeds' ? 'is-on' : '' }}">Weeds and grasses</a>
-                    <a href="{{ $S::url('blog') }}" class="{{ $page->section === 'blog' ? 'is-on' : '' }}">Blog</a>
+                    <a href="{{ $S::url('blog') }}" class="{{ $page->section === 'blog' ? 'is-on' : '' }}">Latest in Agriculture</a>
                     <a href="{{ route('features') }}" class="{{ $page->section === 'features' ? 'is-on' : '' }}">Features</a>
                 </div>
                 @endunless

@@ -63,6 +63,7 @@
     .sp-figure.is-product img { aspect-ratio: 16 / 8.5; border-radius: 1.05rem; box-shadow: none; object-position: top center; }
     .sp-figure img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; border-radius: 1.25rem; box-shadow: 0 24px 48px -30px rgb(20 33 12 / .5); }
     .sp-figure figcaption { margin-top: .5rem; font-size: .75rem; color: #9ca3af; }
+    .sp-figure figcaption a, .sp-img figcaption a { color: #4b5563; font-weight: 700; text-decoration: underline; text-decoration-color: #c9d6bb; text-underline-offset: 2px; }
 
     .sp-wrap { display: grid; gap: 2.5rem; }
     @media (min-width: 1024px) { .sp-wrap { grid-template-columns: minmax(0, 1fr) 19rem; gap: 3.5rem; } }
@@ -120,6 +121,11 @@
     .sp-img { margin: 0; }
     .sp-img img { width: 100%; border-radius: 1rem; }
     .sp-img figcaption { margin-top: .45rem; font-size: .8rem; color: #6b7280; }
+    .sp-img.is-news { position: relative; }
+    .sp-img.is-news img { aspect-ratio: 16 / 9; object-fit: cover; border-radius: 1.1rem; background: #eef2ea; box-shadow: 0 18px 40px -30px rgb(20 33 12 / .55); }
+    .sp-img.is-news figcaption { position: absolute; left: .7rem; bottom: .7rem; margin: 0; max-width: calc(100% - 1.4rem); padding: .3rem .65rem; border-radius: 999px;
+        font-size: .72rem; color: #fff; background: rgb(15 23 12 / .68); backdrop-filter: blur(4px); }
+    .sp-img.is-news figcaption a { color: #fff; text-decoration-color: rgb(255 255 255 / .55); }
     .sp-quote { border-left: 4px solid #86b556; padding: .3rem 0 .3rem 1.1rem; font-family: var(--font-heading); font-size: 1.15rem; color: #1f3312; }
     .sp-quote cite { display: block; margin-top: .4rem; font-family: inherit; font-size: .85rem; font-style: normal; color: #6b7280; }
     .sp-faq { display: grid; gap: .6rem; }

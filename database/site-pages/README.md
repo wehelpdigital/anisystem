@@ -37,3 +37,13 @@ section (pages answering the biggest searches first).
 Pictures borrowed from Wikimedia Commons are saved under
 `public/images/site/guides/` and credited (author, licence) in the page's
 `heroImage.credit`.
+
+## Latest in Agriculture (the blog, 2026-10-07)
+
+The blog section is called Latest in Agriculture on the site (the address
+stays /blog). Besides the shipped posts here, it carries farm news roundups
+that anee.io writes itself every few days from the RSS feeds kept in the
+mother app (AniSystem > Latest in Agriculture): App\Services\NewsRoundup,
+called by /cron/news-roundup?key=... (the key is the site setting
+news.cron_key). Roundups live only in the database (kind = roundup), never
+as files here, so a sync never touches them.

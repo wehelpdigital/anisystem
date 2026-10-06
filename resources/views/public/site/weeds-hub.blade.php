@@ -226,7 +226,7 @@
                             <a href="{{ $S::url('pests') }}">Crop pests</a>
                             <a href="{{ $S::url('diseases') }}">Crop diseases</a>
                             <a href="{{ $S::url('weeds') }}" class="is-on">Weeds and grasses</a>
-                            <a href="{{ $S::url('blog') }}">Blog</a>
+                            <a href="{{ $S::url('blog') }}">Latest in Agriculture</a>
                         </div>
                     </div>
                 </div>

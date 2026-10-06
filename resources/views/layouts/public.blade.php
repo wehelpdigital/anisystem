@@ -215,7 +215,7 @@
                         </button>
                         <div x-show="g" x-cloak x-transition.opacity.duration.200ms class="absolute left-1/2 -translate-x-1/2 top-full pt-3 w-72">
                             <div class="rounded-2xl bg-white shadow-card-lg ring-1 ring-black/5 p-2">
-                                @foreach ([['crops', 'Crop guides', 'Palay, mais, gulay, coconut, banana'], ['pests', 'Crop pests', 'Rice bug, black bug, armyworm, thrips'], ['diseases', 'Crop diseases', 'Sheath blight, anthracnose, fusarium wilt'], ['weeds', 'Weeds and grasses', 'Grasses, sedges, broadleaves and their control'], ['blog', 'Blog', 'Fertilizer, pesticides, prices, Tagalog farm words']] as [$sec, $lab, $sub])
+                                @foreach ([['crops', 'Crop guides', 'Palay, mais, gulay, coconut, banana'], ['pests', 'Crop pests', 'Rice bug, black bug, armyworm, thrips'], ['diseases', 'Crop diseases', 'Sheath blight, anthracnose, fusarium wilt'], ['weeds', 'Weeds and grasses', 'Grasses, sedges, broadleaves and their control'], ['blog', 'Latest in Agriculture', 'Farm news roundups, prices, fertilizer, farm words']] as [$sec, $lab, $sub])
                                     <a href="{{ url('/' . $sec) }}" class="block rounded-xl px-3 py-2.5 hover:bg-brand-50">
                                         <span class="block text-sm font-bold text-gray-900">{{ $lab }}</span>
                                         <span class="block text-xs font-medium text-gray-500">{{ $sub }}</span>
@@ -292,7 +292,7 @@
                 ['pests', 'Crop pests', 'Rice bug, black bug, armyworm, thrips', 'M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z', 30],
                 ['diseases', 'Crop diseases', 'Sheath blight, anthracnose, wilt', 'M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3zM9 12l2 2 4-4', 0],
                 ['weeds', 'Weeds and grasses', 'Grasses, sedges and broadleaves', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z', 80],
-                ['blog', 'Blog', 'Fertilizer, pesticides, prices, farm words', 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z', 150],
+                ['blog', 'Latest in Agriculture', 'Farm news, prices, fertilizer, farm words', 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z', 150],
             ];
         @endphp
         <div id="pmPanel" class="pm lg:hidden" x-show="open" x-cloak
@@ -360,7 +360,7 @@
          are the /ph face's (they are written for Philippine farms). --}}
     @php
         $footLinks = \App\Support\Region::ph() ? \App\Support\SitePages::footerLinks() : [];
-        $footCols = array_filter([['crops', 'Crop guides', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z'], ['pests', 'Crop pests', 'M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z'], ['weeds', 'Weeds and grasses', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z'], ['blog', 'From the blog', 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z']], fn ($c) => ! empty($footLinks[$c[0]]));
+        $footCols = array_filter([['crops', 'Crop guides', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z'], ['pests', 'Crop pests', 'M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z'], ['weeds', 'Weeds and grasses', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z'], ['blog', 'Latest in Agriculture', 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z']], fn ($c) => ! empty($footLinks[$c[0]]));
     @endphp
     <section class="pf" aria-label="Site links">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-14">
@@ -386,7 +386,7 @@
                         <button type="button" class="pf-h" @click="o = !o" :aria-expanded="o"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $icon }}"/></svg><span>{{ $lab }}</span><i class="pf-plus" aria-hidden="true"></i></button>
                         <div class="pf-fold"><ul class="pf-list">
                             @foreach ($footLinks[$sec] as $l)<li><a href="{{ $l['url'] }}">{{ $l['label'] }}</a></li>@endforeach
-                            <li><a href="{{ url('/' . $sec) }}" class="pf-all">See all {{ strtolower($lab) === 'from the blog' ? 'blog posts' : strtolower($lab) }} ›</a></li>
+                            <li><a href="{{ url('/' . $sec) }}" class="pf-all">See all {{ strtolower($lab) === 'latest in agriculture' ? 'the latest' : strtolower($lab) }} ›</a></li>
                         </ul></div>
                     </div>
                 @endforeach

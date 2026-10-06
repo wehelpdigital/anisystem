@@ -33,6 +33,9 @@ class PageSchema
         $updated = $page->updated_at ?? now();
         $published = $page->publishedAt ?? $updated;
         $isQuestion = $page->section === 'questions';
+        // A farm news roundup (App\Services\NewsRoundup) is news: a NewsArticle
+        // that lists the reports it covers.
+        $isNews = ($page->kind ?? null) === 'roundup';
         $isFeature = $page->section === 'features';
         $seoTitle = trim((string) ($page->metaTitle ?: $page->title));
         $description = (string) ($page->metaDescription ?: Str::limit(SitePages::plain($page->excerpt), 155));
@@ -65,7 +68,12 @@ class PageSchema
                 $img['height'] = $size[1];
             }
             if (trim((string) ($hero['credit'] ?? '')) !== '') {
-                $img['creditText'] = (string) $hero['credit'];
+                // The credit as words; a link inside it is the picture's own page.
+                $img['creditText'] = SitePages::plain((string) $hero['credit']);
+                $img['copyrightNotice'] = SitePages::plain((string) $hero['credit']);
+                if (preg_match('/\]\((https?:\/\/[^)\s]+)\)/', (string) $hero['credit'], $m)) {
+                    $img['acquireLicensePage'] = $m[1];
+                }
             }
             $graph[] = $img;
         }
@@ -119,7 +127,7 @@ class PageSchema
                 }
             }
             $graph[] = array_filter([
-                '@type' => $page->section === 'blog' ? 'BlogPosting' : 'Article',
+                '@type' => $isNews ? 'NewsArticle' : ($page->section === 'blog' ? 'BlogPosting' : 'Article'),
                 '@id' => $canonical . '#article',
                 'isPartOf' => ['@id' => $pageId],
                 'mainEntityOfPage' => ['@id' => $pageId],
@@ -135,7 +143,23 @@ class PageSchema
                 'keywords' => $keywords ? implode(', ', $keywords) : null,
                 'wordCount' => SitePages::wordCount($page),
                 'citation' => $sources ?: null,
+                'isAccessibleForFree' => true,
+                'copyrightHolder' => ['@id' => $org],
+                'copyrightYear' => (int) $published->format('Y'),
+                // The reports a roundup covers, each one's own page.
+                'mentions' => $isNews && $sources ? array_map(fn ($s) => ['@type' => 'NewsArticle', 'headline' => Str::limit(Str::after($s['name'], ': '), 110, ''),
+                    'url' => $s['url'], 'publisher' => ['@type' => 'Organization', 'name' => Str::before($s['name'], ': ')]], $sources) : null,
             ], fn ($v) => $v !== null);
+            if ($isNews && $sources) {
+                $graph[] = [
+                    '@type' => 'ItemList',
+                    '@id' => $canonical . '#stories',
+                    'name' => 'The stories in this roundup',
+                    'numberOfItems' => count($sources),
+                    'itemListElement' => array_map(fn ($s, $n) => ['@type' => 'ListItem', 'position' => $n + 1, 'url' => $s['url'], 'name' => $s['name']],
+                        $sources, array_keys($sources)),
+                ];
+            }
         }
 
         $graph[] = [

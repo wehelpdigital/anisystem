@@ -495,6 +495,10 @@ Route::middleware(['auth', 'admin.panel'])->prefix('admin')->group(function () {
     Route::post('/orders/{id}/recheck', [App\Http\Controllers\Admin\AdminOrdersController::class, 'recheck'])->whereNumber('id')->name('admin.orders.recheck');
 });
 
+// The farm news roundup's cron address (Latest in Agriculture): key-checked
+// in the controller; it writes one only every few days and only when there is news.
+Route::get('/cron/news-roundup', [App\Http\Controllers\NewsCronController::class, 'run'])->name('cron.news-roundup');
+
 // The mother app deciding an order: token-checked in the controller, no
 // session, no CSRF (it is a server calling a server).
 // Write with Anee, for the mother app's page builder: a server calling a

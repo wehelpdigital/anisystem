@@ -79,13 +79,15 @@ class SitePages
             'kicker' => 'Crop problems',
         ],
         'blog' => [
-            'label' => 'Blog',
-            'crumb' => 'Blog',
-            'hubTitle' => 'The anee.io Farming Blog',
-            'metaTitle' => 'Farming Blog: Fertilizer, Pesticides and Rice Prices',
-            'metaDescription' => 'Fertilizer grades and how to compute them, pesticides and the FPA, palay prices, farm words in Tagalog and the stories behind our crops.',
-            'intro' => 'Fertilizer grades and how to compute them, pesticides and the rules on them, palay prices, farm words in Tagalog, and the stories behind the crops we grow.',
-            'kicker' => 'From the blog',
+            // "Blog" until 2026-10-07: the address stays /blog, the name is
+            // the section's job now, the farm news roundups first.
+            'label' => 'Latest in Agriculture',
+            'crumb' => 'Latest in Agriculture',
+            'hubTitle' => 'Latest in Agriculture',
+            'metaTitle' => 'Latest in Agriculture: Philippine Farm News and Guides',
+            'metaDescription' => 'Philippine farm news every few days, with what each story means for your farm, plus fertilizer guides, palay prices and farm words in Tagalog.',
+            'intro' => 'Philippine farm news every few days, with what each story means for your farm and a link to the full report. Plus our guides to fertilizer, pesticides, palay prices and farm words in Tagalog.',
+            'kicker' => 'Latest in Agriculture',
         ],
         // Try and Ask Anee's answers (2026-10-01): one page per question a
         // visitor asked, at /question/{slug}, listed at /questions.
