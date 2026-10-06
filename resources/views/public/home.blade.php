@@ -1663,8 +1663,8 @@
     .hp-heart::after { content: ''; position: absolute; inset: 0; border-radius: inherit; animation: hpHeartRing 1.6s ease-out infinite; }
     @keyframes hpHeart { 0%, 100% { transform: scale(1); } 14% { transform: scale(1.24); } 28% { transform: scale(1); } 42% { transform: scale(1.15); } 70% { transform: scale(1); } }
     @keyframes hpHeartRing { 0% { box-shadow: 0 0 0 0 rgb(47 158 79 / .45); } 70%, 100% { box-shadow: 0 0 0 .6rem rgb(47 158 79 / 0); } }
-    .hp-biz-quote blockquote { position: relative; margin-top: .75rem; font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700;
-        line-height: 1.55; color: var(--hp-ink); text-wrap: pretty; }
+    .hp-biz-quote blockquote { position: relative; margin-top: .75rem; font-size: 1rem; font-weight: 400;
+        line-height: 1.7; color: #374151; text-wrap: pretty; }
     .hp-biz-quote figcaption { margin-top: 1rem; padding-top: .9rem; border-top: 1px dashed #dfe9d3; display: flex; align-items: center; gap: .7rem; }
     .hp-biz-quote figcaption img { flex: none; width: 2.7rem; height: 2.7rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 3px #e5f4dc; }
     .hp-biz-quote figcaption b { display: block; font-size: .88rem; font-weight: 800; color: var(--hp-ink); }
