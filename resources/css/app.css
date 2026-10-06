@@ -411,6 +411,11 @@ html.dark #aneeUpgradeBox .au-ring { background: #2f4d24; box-shadow: 0 0 0 4px 
 html.dark .btn-accent { color: #1a1a1a; }
 .btn-accent:disabled, .btn-accent[disabled] { color: rgb(26 26 26 / .55); }
 .btn-outline { @apply border-2 border-brand-600 text-brand-700 bg-white hover:bg-brand-50; }
+/* The outline button on a dark band: see through, white words and a light
+   edge. The white text used to sit on btn-outline's white fill and vanish. */
+.btn-on-dark { color: #fff; background: rgb(255 255 255 / .08); border: 2px solid rgb(255 255 255 / .45);
+    transition: background-color .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+.btn-on-dark:hover { color: #fff; background: rgb(255 255 255 / .16); border-color: rgb(255 255 255 / .75); }
 .btn-ghost { @apply text-gray-600 bg-transparent hover:bg-gray-100; }
 .btn-danger { @apply bg-red-600 text-white hover:bg-red-700; }
 .btn-danger-outline { @apply border-2 border-red-500 text-red-600 bg-white hover:bg-red-50; }

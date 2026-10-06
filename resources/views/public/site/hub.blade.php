@@ -76,11 +76,11 @@
             <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-white text-balance">Plan the season, then let anee.io keep count</h2>
             <p class="mt-4 text-[#cdd8c0] leading-relaxed max-w-2xl mx-auto">
                 Build the cropping calendar from these guides, track every bag of fertilizer and every peso, and ask Anee,
-                the AI technician, when a leaf looks wrong. In Tagalog or English.
+                the smart farm technician, when a leaf looks wrong. In Tagalog or English.
             </p>
             <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
                 <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start free</a>
-                <a href="{{ route('features') }}" class="btn btn-outline btn-lg !text-white !border-white/40 hover:!bg-white/10">See every feature</a>
+                <a href="{{ route('features') }}" class="btn btn-lg btn-on-dark">See every feature</a>
             </div>
         </div>
     </section>

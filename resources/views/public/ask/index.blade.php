@@ -427,7 +427,7 @@
         </p>
         <div class="mt-8 flex flex-col sm:flex-row justify-center gap-3">
             <a href="{{ route('signup') }}?utm_source=ask-anee&utm_medium=page" class="btn btn-accent btn-lg">Try it for free</a>
-            <a href="{{ route('features') }}" class="btn btn-outline btn-lg !text-white !border-white/40 hover:!bg-white/10">See every feature</a>
+            <a href="{{ route('features') }}" class="btn btn-lg btn-on-dark">See every feature</a>
         </div>
     </div>
 </section>
