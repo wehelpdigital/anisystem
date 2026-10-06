@@ -1033,6 +1033,104 @@
         </div>
     </section>
 
+    {{-- ================= THE COMMUNITY ================= --}}
+    {{-- The anee.io community (2026-10-06): a feed post that gathers
+         reactions and an answer from Anee, the discussion rooms with new
+         posts landing, a member levelling up on the ladder of 100 levels and
+         ten titles, and a cofarmer request being accepted. It plays as one
+         loop while on screen. Every part is in the app: the plaza feed,
+         discussion rooms (open, password or approval), cofarmers and
+         follows, direct messages, the ranking ladder, and Anee and the
+         anee.io technicians answering in the rooms. --}}
+    <section class="hp-sec hp-comm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="hp-head reveal">
+                <p class="hp-kick">The anee.io community</p>
+                <h2 class="hp-h2">Grow Together With Farmers <em>Across the Philippines.</em></h2>
+                <p class="hp-p">
+                    You are not farming alone. Ask in a discussion room, share a photo of what worked, follow the growers you
+                    learn from and connect as cofarmers. <b>Every helpful post moves you up a ladder of 100 levels.</b>
+                </p>
+            </div>
+
+            <div class="hp-comm-grid">
+                <div class="hp-comm-stage reveal" data-comm aria-hidden="true">
+                    {{-- A post in the feed --}}
+                    <div class="hp-cpost">
+                        <div class="hp-cpost-hd">
+                            <span class="hp-feed-av" style="--h: 330">RM</span>
+                            <span><b>Rosa Mendoza</b><small>Rice Growers PH · 2 hours ago</small></span>
+                            <span class="hp-crank-chip">Lv 23 · Green Thumb</span>
+                        </div>
+                        <p class="hp-cpost-t">Malinis na ang palayan bago mag 20 DAT. Salamat sa tips dito sa grupo!</p>
+                        <img class="hp-cpost-img" src="{{ asset('images/site/home-crops/palay.webp') }}" alt="" width="720" height="405" loading="lazy">
+                        <div class="hp-cpost-react">
+                            <span class="is-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/></svg><b data-comm-count="24" data-comm-to="31">24</b></span>
+                            <span class="is-heart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg><b data-comm-count="9" data-comm-to="14">9</b></span>
+                            <span class="is-comment"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg><b data-comm-count="3" data-comm-to="4">3</b></span>
+                        </div>
+                        <div class="hp-cpost-reply">
+                            <img class="hp-feed-av" src="{{ $face }}" alt="">
+                            <p><b>Anee</b> Ang ganda ng tubo! Bantayan ang rice bug pag namumulaklak na.</p>
+                        </div>
+                    </div>
+
+                    <div class="hp-cside">
+                        {{-- Discussion rooms --}}
+                        <div class="hp-crooms">
+                            <p class="hp-room-ph">Discussion rooms</p>
+                            <div class="hp-croom"><span class="hp-croom-i" style="--h: 100">RG</span><span><b>Rice Growers PH</b><small>Open to all</small></span><i class="hp-croom-new">3 new</i></div>
+                            <div class="hp-croom"><span class="hp-croom-i" style="--h: 30">PM</span><span><b>Presyo at Merkado</b><small>Open to all</small></span><i class="hp-croom-new">5 new</i></div>
+                            <div class="hp-croom"><span class="hp-croom-i" style="--h: 150">ON</span><span><b>Organic at Natural Farming</b><small class="is-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>By approval</small></span><i class="hp-croom-new">1 new</i></div>
+                        </div>
+
+                        {{-- The ladder --}}
+                        <div class="hp-clevel">
+                            <div class="hp-clevel-hd">
+                                <span class="hp-clevel-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8m-4-4v4m-5-17h10v4a5 5 0 01-10 0V4zm10 1h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3"/></svg></span>
+                                <span><small>Your level</small><b><span data-lv-from>Lv 19</span><span data-lv-to>Lv 20</span></b></span>
+                                <span class="hp-clevel-title"><i class="is-old">Rising Farmer</i><i class="is-new">Green Thumb</i></span>
+                            </div>
+                            <span class="hp-clevel-bar"><i></i></span>
+                            <span class="hp-clevel-ladder">@for ($t = 1; $t <= 10; $t++)<i class="{{ $t <= 2 ? 'is-done' : ($t === 3 ? 'is-next' : '') }}"></i>@endfor</span>
+                            <small class="hp-clevel-k">100 levels, ten titles, from New Member to Farm Immortal</small>
+                        </div>
+                    </div>
+
+                    {{-- A cofarmer request, accepted --}}
+                    <div class="hp-cconn">
+                        <span class="hp-feed-av" style="--h: 205">JD</span>
+                        <span class="hp-cconn-t"><i class="is-ask"><b>Juan Dela Cruz</b> wants to be your cofarmer</i><i class="is-yes"><b>You and Juan</b> are now cofarmers</i></span>
+                        <span class="hp-cconn-btn"><i class="is-ask">Accept</i><i class="is-yes">{!! $tick !!}</i></span>
+                    </div>
+                </div>
+
+                <div class="hp-comm-feats">
+                    @foreach ([
+                        ['News feed', 'Share photos, videos and wins from your field, and see what other farmers are doing.', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>'],
+                        ['Discussion rooms', 'Join rooms by crop or topic. A room can be open to all, behind a password or by approval.', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>'],
+                        ['Cofarmers and followers', 'Connect with farmers you trust and follow the growers you learn from.', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>'],
+                        ['Messages', 'Talk one on one, with photos and voice notes.', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>'],
+                        ['A ladder of 100 levels', 'Ten titles from New Member to Farm Immortal. Posts, answers and help all count.', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 21h8m-4-4v4m-5-17h10v4a5 5 0 01-10 0V4zm10 1h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3"/></svg>'],
+                        ['Answers in the rooms', 'Anee and the anee.io technicians join the rooms, so a question never waits long.', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>'],
+                    ] as $i => [$ft, $fp, $fi])
+                        <div class="hp-team-card reveal" style="--reveal-delay: {{ ($i % 2) * 0.07 }}s">
+                            <span class="hp-team-ico">{!! $fi !!}</span>
+                            <div><h3>{{ $ft }}</h3><p>{{ $fp }}</p></div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="hp-cta reveal">
+                <div class="hp-cta-row">
+                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Join the community free {!! $arrow !!}</a>
+                </div>
+                <p class="hp-cta-note">Every plan joins the community, Libre included. Starting your own discussion room comes with Farm Owner.</p>
+            </div>
+        </div>
+    </section>
+
     {{-- ================= TRADITIONAL vs ANEE.IO ================= --}}
     <section class="hp-sec bg-gray-50">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
@@ -2206,6 +2304,92 @@
         .hp-sat-legend { font-size: .62rem; gap: .5rem; }
     }
 
+    /* ---- the community ---- */
+    .hp-comm { background: radial-gradient(70% 60% at 10% 0%, #fdf6dc 0%, transparent 60%), linear-gradient(180deg, #fbfcf7 0%, #f1f7ea 100%); }
+    .hp-comm-grid { margin-top: 3rem; display: grid; gap: 2rem; }
+    @media (min-width: 1024px) { .hp-comm-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 3rem; align-items: center; } }
+    .hp-comm-feats { display: grid; gap: .8rem; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
+    @media (min-width: 1024px) { .hp-comm-feats { grid-template-columns: 1fr; } }
+    .hp-comm-stage { position: relative; display: grid; gap: 1rem; padding-bottom: 3.6rem; }
+    @media (min-width: 640px) { .hp-comm-stage { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); align-items: start; } }
+    .hp-cpost, .hp-crooms, .hp-clevel { border-radius: 1.3rem; background: #fff; border: 1px solid #e4ecdb; box-shadow: 0 30px 60px -44px rgb(20 33 12 / .6); }
+    .hp-cpost { padding: .95rem; }
+    .hp-cpost-hd { display: flex; align-items: center; gap: .55rem; flex-wrap: wrap; }
+    .hp-cpost-hd b { display: block; font-size: .86rem; color: var(--hp-ink); }
+    .hp-cpost-hd small { display: block; font-size: .72rem; color: #6b7280; }
+    .hp-crank-chip { margin-left: auto; padding: .18rem .55rem; border-radius: 999px; font-size: .66rem; font-weight: 800; color: #14532d; background: #dcfce7; }
+    .hp-cpost-t { margin-top: .6rem; font-size: .86rem; line-height: 1.5; color: #374151; }
+    .hp-cpost-img { margin-top: .6rem; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: .9rem; }
+    .hp-cpost-react { margin-top: .6rem; display: flex; gap: .45rem; }
+    .hp-cpost-react span { display: inline-flex; align-items: center; gap: .3rem; padding: .25rem .6rem; border-radius: 999px; font-size: .76rem; font-weight: 800;
+        color: #374151; background: #f3f4f6; transition: background-color .3s var(--hp-ease), color .3s var(--hp-ease), transform .3s var(--hp-ease); }
+    .hp-cpost-react svg { width: 1rem; height: 1rem; }
+    .hp-cpost-react b { font-variant-numeric: tabular-nums; }
+    .hp-comm-stage.c2 .hp-cpost-react .is-thumb { color: #1d4ed8; background: #dbeafe; transform: scale(1.06); }
+    .hp-comm-stage.c2 .hp-cpost-react .is-heart { color: #be123c; background: #ffe4e6; }
+    .hp-cpost-reply { margin-top: .6rem; display: flex; align-items: flex-start; gap: .5rem; padding: .55rem .65rem; border-radius: .9rem; background: #fffbea;
+        box-shadow: inset 0 0 0 1px #f6e3a0; opacity: 0; translate: 0 8px; transition: opacity .45s var(--hp-ease), translate .45s var(--hp-ease); }
+    .hp-cpost-reply .hp-feed-av { width: 1.8rem; height: 1.8rem; }
+    .hp-cpost-reply p { font-size: .8rem; line-height: 1.45; color: #374151; }
+    .hp-cpost-reply b { color: var(--hp-deep); margin-right: .25rem; }
+    .hp-comm-stage.c3 .hp-cpost-reply { opacity: 1; translate: none; }
+
+    .hp-cside { display: grid; gap: 1rem; }
+    .hp-crooms { padding: .9rem; }
+    .hp-croom { display: flex; align-items: center; gap: .55rem; padding: .5rem .2rem; }
+    .hp-croom + .hp-croom { border-top: 1px solid #f0f2ed; }
+    .hp-croom-i { flex: none; width: 2.1rem; height: 2.1rem; border-radius: .7rem; display: grid; place-items: center; font-size: .66rem; font-weight: 800; color: #fff;
+        background: hsl(var(--h) 45% 40%); }
+    .hp-croom b { display: block; font-size: .82rem; color: var(--hp-ink); line-height: 1.25; }
+    .hp-croom small { display: inline-flex; align-items: center; gap: .25rem; font-size: .7rem; color: #6b7280; }
+    .hp-croom small svg { width: .8rem; height: .8rem; }
+    .hp-croom-new { margin-left: auto; flex: none; padding: .15rem .5rem; border-radius: 999px; font-style: normal; font-size: .66rem; font-weight: 800; color: #fff;
+        background: #dc2626; scale: 0; transition: scale .4s cubic-bezier(.34,1.56,.64,1); }
+    .hp-comm-stage.c4 .hp-croom-new { scale: 1; }
+    .hp-comm-stage.c4 .hp-croom:nth-child(3) .hp-croom-new { transition-delay: .2s; }
+    .hp-comm-stage.c4 .hp-croom:nth-child(4) .hp-croom-new { transition-delay: .4s; }
+
+    .hp-clevel { padding: .95rem; }
+    .hp-clevel-hd { display: flex; align-items: center; gap: .6rem; }
+    .hp-clevel-badge { flex: none; width: 2.4rem; height: 2.4rem; border-radius: .8rem; display: grid; place-items: center; color: #713f12; background: #fde68a;
+        transition: transform .5s cubic-bezier(.34,1.56,.64,1), box-shadow .5s var(--hp-ease); }
+    .hp-clevel-badge svg { width: 1.3rem; height: 1.3rem; }
+    .hp-comm-stage.c5 .hp-clevel-badge { transform: rotate(-8deg) scale(1.12); box-shadow: 0 0 0 6px rgb(245 197 24 / .25); }
+    .hp-clevel-hd small { display: block; font-size: .7rem; color: #6b7280; }
+    .hp-clevel-hd b { position: relative; display: grid; font-family: var(--font-heading); font-size: 1.05rem; color: var(--hp-ink); }
+    .hp-clevel-hd b span, .hp-clevel-title i { grid-area: 1 / 1; transition: opacity .35s var(--hp-ease), translate .35s var(--hp-ease); }
+    [data-lv-to], .hp-clevel-title .is-new { opacity: 0; translate: 0 6px; }
+    .hp-comm-stage.c5 [data-lv-from], .hp-comm-stage.c5 .hp-clevel-title .is-old { opacity: 0; translate: 0 -6px; transition-delay: 1.1s; }
+    .hp-comm-stage.c5 [data-lv-to], .hp-comm-stage.c5 .hp-clevel-title .is-new { opacity: 1; translate: none; transition-delay: 1.1s; }
+    .hp-clevel-title { margin-left: auto; display: grid; padding: .2rem .6rem; border-radius: 999px; font-size: .7rem; font-weight: 800; color: #14532d; background: #dcfce7; }
+    .hp-clevel-title i { font-style: normal; }
+    .hp-clevel-bar { margin-top: .7rem; display: block; height: .5rem; border-radius: 999px; overflow: hidden; background: #eef2ea; }
+    .hp-clevel-bar i { display: block; height: 100%; width: 62%; border-radius: inherit; background: linear-gradient(90deg, var(--hp-green), var(--hp-sun));
+        transition: width 1.1s cubic-bezier(.65,0,.35,1); }
+    .hp-comm-stage.c5 .hp-clevel-bar i { width: 100%; }
+    .hp-clevel-ladder { margin-top: .7rem; display: flex; gap: .3rem; }
+    .hp-clevel-ladder i { flex: 1; height: .4rem; border-radius: 999px; background: #e5e7eb; transition: background-color .4s var(--hp-ease) 1.1s; }
+    .hp-clevel-ladder .is-done { background: var(--hp-green); }
+    .hp-comm-stage.c5 .hp-clevel-ladder .is-next { background: var(--hp-sun); }
+    .hp-clevel-k { display: block; margin-top: .5rem; font-size: .72rem; color: #6b7280; }
+
+    .hp-cconn { position: absolute; left: 50%; bottom: 0; translate: -50% 12px; width: min(23rem, 100%); display: flex; align-items: center; gap: .6rem; padding: .6rem .7rem;
+        border-radius: 1rem; background: #fff; box-shadow: 0 24px 48px -26px rgb(20 33 12 / .6), 0 0 0 1px rgb(20 33 12 / .06);
+        opacity: 0; transition: opacity .45s var(--hp-ease), translate .45s var(--hp-ease); }
+    .hp-comm-stage.c6 .hp-cconn { opacity: 1; translate: -50% 0; }
+    .hp-cconn-t { flex: 1; display: grid; font-size: .8rem; color: #374151; line-height: 1.35; }
+    .hp-cconn-t i, .hp-cconn-btn i { grid-area: 1 / 1; font-style: normal; transition: opacity .35s var(--hp-ease); }
+    .hp-cconn-t b { color: var(--hp-ink); }
+    .hp-cconn-btn { flex: none; display: grid; place-items: center; min-width: 4.6rem; height: 2rem; padding: 0 .7rem; border-radius: 999px; font-size: .76rem; font-weight: 800;
+        color: #fff; background: var(--hp-green); transition: background-color .35s var(--hp-ease); }
+    .hp-cconn-btn svg { width: 14px; height: 14px; stroke-width: 3.2; }
+    .hp-cconn .is-yes { opacity: 0; }
+    .hp-comm-stage.c7 .hp-cconn .is-ask { opacity: 0; }
+    .hp-comm-stage.c7 .hp-cconn .is-yes { opacity: 1; }
+    .hp-comm-stage.c7 .hp-cconn-btn { background: #16a34a; }
+    html:not(.js) .hp-cpost-reply, html:not(.js) .hp-cconn { opacity: 1; translate: none; }
+    html:not(.js) .hp-cconn { translate: -50% 0; }
+
     /* ---- versus ---- */
     .hp-vs-jump { margin-top: 2.2rem; display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
     .hp-vs-chip { display: inline-flex; align-items: center; gap: .45rem; padding: .42rem .5rem .42rem .85rem; border-radius: 999px;
@@ -2398,6 +2582,8 @@
         .hp-heart svg, .hp-heart::after { animation: none !important; }
         .hp-feed-item, .hp-feed-sync i, .hp-team-card { transition: none !important; }
         .hp-room-pane, .hp-room-tab, .hp-task-box, .hp-task-t { transition: none !important; }
+        .hp-cpost-react span, .hp-cpost-reply, .hp-croom-new, .hp-clevel-badge, .hp-clevel-hd b span, .hp-clevel-title i, .hp-clevel-bar i,
+        .hp-clevel-ladder i, .hp-cconn, .hp-cconn-t i, .hp-cconn-btn i, .hp-cconn-btn { transition: none !important; }
         .hp-acc, .hp-rc, .hp-task, .hp-loc-pin, .hp-cam img, .hp-call-av, .hp-wb-ink, .hp-room-bar { animation: none !important; }
         .hp-acc, .hp-rc, .hp-task { opacity: 1; translate: none; }
         .hp-wb-ink { stroke-dashoffset: 0; }
@@ -2735,6 +2921,38 @@
             if (on) schedule();
             else { clearTimeout(timer); clearInterval(tick); tabs[at].classList.remove('is-timing'); }
         }, { threshold: 0.3 });
+    }
+
+    /* The community plays as one loop while on screen: the post gathers
+       reactions, Anee answers, the rooms light up, a level is reached, a
+       cofarmer request is accepted; a pause, then it starts again. */
+    const comm = document.querySelector('[data-comm]');
+    if (comm) {
+        const counts = [...comm.querySelectorAll('[data-comm-count]')];
+        let timers = [], live = false;
+        const steps = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7'];
+        const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+        const stop = () => { timers.forEach(clearTimeout); timers = []; };
+        const countUp = () => counts.forEach((b) => {
+            const from = +b.dataset.commCount, to = +b.dataset.commTo, t0 = performance.now();
+            const tick = (t) => { const p = Math.min(1, (t - t0) / 1200); b.textContent = Math.round(from + (to - from) * p); if (p < 1) requestAnimationFrame(tick); };
+            requestAnimationFrame(tick);
+        });
+        const run = () => {
+            stop();
+            comm.classList.remove(...steps);
+            counts.forEach((b) => { b.textContent = b.dataset.commCount; });
+            if (reduce) { comm.classList.add(...steps); counts.forEach((b) => { b.textContent = b.dataset.commTo; }); return; }
+            at(300, () => comm.classList.add('c1'));
+            at(900, () => { comm.classList.add('c2'); countUp(); });
+            at(2300, () => comm.classList.add('c3'));
+            at(3500, () => comm.classList.add('c4'));
+            at(4700, () => comm.classList.add('c5'));
+            at(7000, () => comm.classList.add('c6'));
+            at(8600, () => comm.classList.add('c7'));
+            at(13000, () => { if (live) run(); });
+        };
+        seen(comm, (on) => { live = on; if (on && !timers.length) run(); if (!on) stop(); }, { threshold: 0.3 });
     }
 
     /* On a phone, the way in stays one tap away once the hero has gone by,
