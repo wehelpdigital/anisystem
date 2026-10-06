@@ -29,7 +29,7 @@
     },
     {
       "type": "text",
-      "text": "Left alone, weeds can cut rice yield by 44 to 96 percent, says PhilRice's eDamuhan weed app, because they take the nutrients, sunlight and water meant for the palay. They also raise your cost of production, and their seeds in the harvest lower its price. Weeds shelter diseases, insects and rats too. For example, the [rice bug](/pests/rice-bug) lives on wild grasses between crops, and the [rice black bug](/pests/rice-black-bug) feeds on weeds as well.\n\nIRRI's Rice Knowledge Bank says to control weeds from planting until the rice canopy closes. The eDamuhan steps cover the first 40 days, so weed management in rice is won or lost early."
+      "text": "Left alone, weeds can cut rice yield by 44 to 96 percent, says PhilRice, because they take the nutrients, sunlight and water meant for the palay. They also raise your cost of production, and their seeds in the harvest lower its price. Weeds shelter diseases, insects and rats too. For example, the [rice bug](/pests/rice-bug) lives on wild grasses between crops, and the [rice black bug](/pests/rice-black-bug) feeds on weeds as well.\n\nIRRI's Rice Knowledge Bank says to control weeds from planting until the rice canopy closes. The PhilRice steps cover the first 40 days, so weed management in rice is won or lost early."
     },
     {
       "type": "heading",
@@ -67,7 +67,7 @@
     },
     {
       "type": "text",
-      "text": "Good land preparation buries weeds, tears shoots from roots and makes dormant seeds sprout so you can kill them. It also drains the food stored in perennial weeds. PhilRice's eDamuhan gives this sequence."
+      "text": "Good land preparation buries weeds, tears shoots from roots and makes dormant seeds sprout so you can kill them. It also drains the food stored in perennial weeds. PhilRice gives this sequence."
     },
     {
       "type": "steps",
@@ -125,7 +125,7 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Azolla.** This freshwater fern fixes nitrogen with blue green algae. eDamuhan says it can cut weed growth by up to 80 percent in transplanted and direct seeded rice.",
+        "**Azolla.** This freshwater fern fixes nitrogen with blue green algae. PhilRice says it can cut weed growth by up to 80 percent in transplanted and direct seeded rice.",
         "**The Altica beetle.** This small black beetle eats the leaves of [Ludwigia weeds](/weeds/ludwigia-hyssopifolia), the kahoy kahoy of the paddies. Spare it from needless insecticide sprays.",
         "**Two fungi.** Alternaria alternata f.sp. sphenocleae blights [gooseweed](/weeds/gooseweed), and the rust Puccinia philippinensis attacks purple nutsedge."
       ]
@@ -152,11 +152,11 @@
     },
     {
       "type": "text",
-      "text": "PhilRice's eDamuhan sets out these steps by days after planting, for lipat tanim and sabog tanim. Broadcast rice has no rows, so a rotary weeder does not fit it."
+      "text": "PhilRice sets out these steps by days after planting, for lipat tanim and sabog tanim. Broadcast rice has no rows, so a rotary weeder does not fit it."
     },
     {
       "type": "table",
-      "caption": "Steps by rice age, from PhilRice's eDamuhan",
+      "caption": "Steps by rice age, from PhilRice",
       "rows": [
         [
           "Rice age",
@@ -288,12 +288,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: eDamuhan, the weed identification and management app",
-          "url": "https://www.philrice.gov.ph/edamuhan/"
-        },
-        {
-          "label": "PhilRice eDamuhan on Google Play",
-          "url": "https://play.google.com/store/apps/details?id=ph.gov.philrice.edamuhan"
+          "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"
         },
         {
           "label": "IRRI Rice Knowledge Bank: Weeds",

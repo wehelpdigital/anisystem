@@ -135,7 +135,7 @@
     },
     {
       "type": "text",
-      "text": "If water and weeding cannot hold Ischaemum rugosum down, choose an active ingredient that works on grasses at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+      "text": "If water and weeding cannot hold Ischaemum rugosum down, choose an active ingredient that works on grasses at the age of your rice. The table follows PhilRice recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
     },
     {
       "type": "table",
@@ -279,8 +279,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: eDamuhan, the weed identification app",
-          "url": "https://www.philrice.gov.ph/edamuhan/"
+          "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"
         },
         {
           "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",

@@ -16,9 +16,10 @@
   ],
   "excerpt": "Cyperus compactus is a tall sedge weed of irrigated and rainfed lowland rice fields in the Philippines. It can live for more than one season, and it spreads by seed and by underground stems. This page shows how to spot it among your palay, how it hurts the crop, and how to control it before it spreads.",
   "heroImage": {
-    "src": "",
-    "alt": "Cyperus compactus sedge with tall erect stems and round reddish brown flower heads in a rice paddy",
-    "credit": ""
+    "src": "/images/site/weeds/cyperus-compactus.webp",
+    "thumb": "/images/site/weeds/cyperus-compactus-480.webp",
+    "alt": "Cyperus compactus, a sedge weed of Philippine rice fields",
+    "credit": "scallions, CC BY, via iNaturalist"
   },
   "blocks": [
     {
@@ -28,7 +29,7 @@
     },
     {
       "type": "text",
-      "text": "This damo is a sedge from the Cyperaceae family. It has no common English name, and the PhilRice eDamuhan list gives no Filipino local name for it either. So this page calls it by its scientific name, Cyperus compactus. You will find it in both irrigated and rainfed lowland rice fields.\n\nIt is usually a perennial, but some plants live for one season only. It spreads in two ways. First, it drops seeds that sprout when farmers prepare the field. Second, it sends out rhizomes, which are stems that creep under the soil and push up new shoots. Because these rhizomes stay hidden, a clump you cut at the surface can grow back from below. That is why digging works better than cutting with this sedge."
+      "text": "This damo is a sedge from the Cyperaceae family. It has no common English name, and PhilRice's weed list gives no Filipino local name for it either. So this page calls it by its scientific name, Cyperus compactus. You will find it in both irrigated and rainfed lowland rice fields.\n\nIt is usually a perennial, but some plants live for one season only. It spreads in two ways. First, it drops seeds that sprout when farmers prepare the field. Second, it sends out rhizomes, which are stems that creep under the soil and push up new shoots. Because these rhizomes stay hidden, a clump you cut at the surface can grow back from below. That is why digging works better than cutting with this sedge."
     },
     {
       "type": "table",
@@ -130,7 +131,7 @@
     },
     {
       "type": "text",
-      "text": "If water and weeding cannot hold Cyperus compactus down, choose an active ingredient that works on sedges at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+      "text": "If water and weeding cannot hold Cyperus compactus down, choose an active ingredient that works on sedges at the age of your rice. The table follows PhilRice recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
     },
     {
       "type": "table",
@@ -224,7 +225,7 @@
       "items": [
         {
           "q": "What is the common name of Cyperus compactus?",
-          "a": "It has no widely used English name, and the PhilRice eDamuhan list gives no Filipino local name for it. So most people know it by its scientific name. When you report it to a technician, use that name or show a photo of its tall stems and round, reddish brown flower heads."
+          "a": "It has no widely used English name, and PhilRice's weed list gives no Filipino local name for it. So most people know it by its scientific name. When you report it to a technician, use that name or show a photo of its tall stems and round, reddish brown flower heads."
         },
         {
           "q": "How do I control it in my rice field?",
@@ -274,8 +275,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: eDamuhan, the weed identification app",
-          "url": "https://www.philrice.gov.ph/edamuhan/"
+          "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"
         },
         {
           "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",

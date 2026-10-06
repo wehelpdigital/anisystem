@@ -33,7 +33,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice's eDamuhan weed app warns that weeds left alone can cut rice yield by 44 to 96 percent. But not every weed answers to the same fix. A grass killer does nothing to mutha, and the flood that drowns one weed lets another thrive.\n\nSo name the group first. Then check its life cycle, the water it likes and how it handles heat. To meet the worst ones by name, see [common weeds in the Philippines](/weeds/common-weeds-philippines)."
+      "text": "PhilRice warns that weeds left alone can cut rice yield by 44 to 96 percent. But not every weed answers to the same fix. A grass killer does nothing to mutha, and the flood that drowns one weed lets another thrive.\n\nSo name the group first. Then check its life cycle, the water it likes and how it handles heat. To meet the worst ones by name, see [common weeds in the Philippines](/weeds/common-weeds-philippines)."
     },
     {
       "type": "heading",
@@ -202,7 +202,7 @@
     },
     {
       "type": "text",
-      "text": "The eDamuhan app also sorts weeds by the water they need. This tells you how much your flood can do."
+      "text": "PhilRice also sorts weeds by the water they need. This tells you how much your flood can do."
     },
     {
       "type": "list",
@@ -215,7 +215,7 @@
     },
     {
       "type": "text",
-      "text": "IRRI's Rice Knowledge Bank calls water the best weed control, since most grasses and some sedges cannot sprout or grow under a flood. It suggests 2 to 5 cm of water on a well leveled field, because weeds take hold on dry high spots. Also, eDamuhan lists floating weeds like [water lettuce](/weeds/water-lettuce) for irrigated fields, but [goosegrass](/weeds/goosegrass) and [southern crabgrass](/weeds/southern-crabgrass) for rainfed ones."
+      "text": "IRRI's Rice Knowledge Bank calls water the best weed control, since most grasses and some sedges cannot sprout or grow under a flood. It suggests 2 to 5 cm of water on a well leveled field, because weeds take hold on dry high spots. Also, PhilRice lists floating weeds like [water lettuce](/weeds/water-lettuce) for irrigated fields, but [goosegrass](/weeds/goosegrass) and [southern crabgrass](/weeds/southern-crabgrass) for rainfed ones."
     },
     {
       "type": "heading",
@@ -325,12 +325,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: eDamuhan weed app on Google Play",
-          "url": "https://play.google.com/store/apps/details?id=ph.gov.philrice.edamuhan"
-        },
-        {
-          "label": "PhilRice: Weed identification app boosts farmers' yield",
-          "url": "https://www.philrice.gov.ph/weed-identification-app-boosts-farmers-yield/"
+          "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"
         },
         {
           "label": "IRRI Rice Knowledge Bank: Weeds",

@@ -17,9 +17,10 @@
   ],
   "excerpt": "Eclipta zippeliana is a hairy broadleaf weed that looks almost the same as false daisy. That is why farmers call both plants higis manok. It grows in irrigated and rainfed lowland rice fields in the Philippines. This page shows you how to tell the two apart and how this weed competes with your palay. It also shows how to control it before it seeds.",
   "heroImage": {
-    "src": "",
-    "alt": "Eclipta zippeliana with hairy light green leaves and small white flower heads in a paddy",
-    "credit": ""
+    "src": "/images/site/weeds/eclipta-zippeliana.webp",
+    "thumb": "/images/site/weeds/eclipta-zippeliana-480.webp",
+    "alt": "Eclipta zippeliana, a broadleaf weed of Philippine rice fields that many botanists now group with false daisy",
+    "credit": "Greg III Espera, CC BY, via iNaturalist"
   },
   "blocks": [
     {
@@ -131,7 +132,7 @@
     },
     {
       "type": "text",
-      "text": "If water and weeding cannot hold Eclipta zippeliana down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+      "text": "If water and weeding cannot hold Eclipta zippeliana down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows PhilRice recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
     },
     {
       "type": "table",
@@ -275,8 +276,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: eDamuhan, the weed identification app",
-          "url": "https://www.philrice.gov.ph/edamuhan/"
+          "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"
         },
         {
           "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",

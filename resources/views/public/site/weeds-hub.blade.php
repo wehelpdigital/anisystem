@@ -280,7 +280,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
             <div class="wk-sec-h">
                 <h2>Weeds of Philippine Rice Fields</h2>
-                <p>{{ $weeds->count() }} weeds of palay, from PhilRice's eDamuhan catalogue. Search by any name you know, English, scientific or local, like bayakibok or gabi gabi.</p>
+                <p>{{ $weeds->count() }} weeds that grow in Philippine rice fields. Search by any name you know, English, scientific or local, like bayakibok or gabi gabi.</p>
             </div>
             <div class="wk-tools mt-7">
                 <label class="wk-search">
@@ -331,7 +331,7 @@
                 <h2 class="mt-3">Weed Control by Rice Age</h2>
                 <p>
                     Tell us how you planted, how old your rice is and which weeds you see. You get what to do first and the active ingredients that work at that age,
-                    from PhilRice's eDamuhan recommendations. Active ingredients only, never brands.
+                    from PhilRice recommendations. Active ingredients only, never brands.
                 </p>
             </div>
             <div class="wc mt-8">

@@ -16,7 +16,7 @@
     "pre emergence herbicide",
     "post emergence herbicide"
   ],
-  "excerpt": "Choosing herbicides for rice comes down to three questions. How old is your palay (the growing rice), which weeds are up, and what did you spray last season? This guide lists the active ingredients PhilRice's eDamuhan weed app recommends at each rice age. It also shows how to spray them safely.",
+  "excerpt": "Choosing herbicides for rice comes down to three questions. How old is your palay (the growing rice), which weeds are up, and what did you spray last season? This guide lists the active ingredients PhilRice recommends at each rice age. It also shows how to spray them safely.",
   "heroImage": {
     "src": "/images/site/photos/inspect.jpg",
     "alt": "A farmer in a green palay field checks her phone before choosing herbicides for rice",
@@ -30,7 +30,7 @@
     },
     {
       "type": "text",
-      "text": "PhilRice warns that weeds left alone can cut rice yield by 44 to 96 percent. Still, a herbicide is not the first tool to reach for.\n\nFirst come clean seed, clean bunds and canals, and a well leveled field (see [pagtatanim ng palay](/crops/pagtatanim-ng-palay)). Next comes water, since a flooded field keeps many weed seeds from sprouting. Then you weed by hand or with a rotary weeder while the weeds are small. Our guide to [weed management in rice](/weeds/weed-management-in-rice) covers each step.\n\nA herbicide earns its place when those steps cannot keep up, for example after a season thick with weeds. Even then, eDamuhan says the right product changes with the region and the weed, so follow your local agricultural officer."
+      "text": "PhilRice warns that weeds left alone can cut rice yield by 44 to 96 percent. Still, a herbicide is not the first tool to reach for.\n\nFirst come clean seed, clean bunds and canals, and a well leveled field (see [pagtatanim ng palay](/crops/pagtatanim-ng-palay)). Next comes water, since a flooded field keeps many weed seeds from sprouting. Then you weed by hand or with a rotary weeder while the weeds are small. Our guide to [weed management in rice](/weeds/weed-management-in-rice) covers each step.\n\nA herbicide earns its place when those steps cannot keep up, for example after a season thick with weeds. Even then, PhilRice says the right product changes with the region and the weed, so follow your local agricultural officer."
     },
     {
       "type": "heading",
@@ -39,7 +39,7 @@
     },
     {
       "type": "text",
-      "text": "Each herbicide label names its timing. Spraying at the wrong time wastes money, and eDamuhan warns that it helps breed resistant weeds."
+      "text": "Each herbicide label names its timing. Spraying at the wrong time wastes money, and PhilRice warns that it helps breed resistant weeds."
     },
     {
       "type": "list",
@@ -86,7 +86,7 @@
     },
     {
       "type": "text",
-      "text": "Spray one group season after season, and the few weeds it cannot kill survive and take over. PhilRice's eDamuhan blames the same kind used again and again, wrong doses and wrong timing. So rotate groups between seasons. A new brand with the same ingredient is not a rotation. Labels do not always print the group, so check the ingredient against this list."
+      "text": "Spray one group season after season, and the few weeds it cannot kill survive and take over. PhilRice blames the same kind used again and again, wrong doses and wrong timing. So rotate groups between seasons. A new brand with the same ingredient is not a rotation. Labels do not always print the group, so check the ingredient against this list."
     },
     {
       "type": "heading",
@@ -113,7 +113,7 @@
     },
     {
       "type": "text",
-      "text": "Both tables come from the recommendations in PhilRice's eDamuhan app. Count the rice age in days after transplanting or seeding, and find that row. Then read the column for your weed group. Our guide to [types of weeds](/weeds/types-of-weeds) shows how to tell the groups apart."
+      "text": "Both tables follow PhilRice recommendations. Count the rice age in days after transplanting or seeding, and find that row. Then read the column for your weed group. Our guide to [types of weeds](/weeds/types-of-weeds) shows how to tell the groups apart."
     },
     {
       "type": "heading",
@@ -122,7 +122,7 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients by rice age in transplanted rice, from PhilRice eDamuhan",
+      "caption": "Active ingredients by rice age in transplanted rice, from PhilRice",
       "rows": [
         [
           "Rice age (days after planting)",
@@ -169,7 +169,7 @@
     },
     {
       "type": "table",
-      "caption": "Active ingredients by rice age in direct seeded rice, from PhilRice eDamuhan",
+      "caption": "Active ingredients by rice age in direct seeded rice, from PhilRice",
       "rows": [
         [
           "Rice age (days after planting)",
@@ -210,7 +210,7 @@
     },
     {
       "type": "text",
-      "text": "After 30 days, eDamuhan lists no grass herbicide, and the direct seeded table ends. So pull late weeds by hand and keep the water up."
+      "text": "After 30 days, PhilRice lists no grass herbicide, and the direct seeded table ends. So pull late weeds by hand and keep the water up."
     },
     {
       "type": "callout",
@@ -225,7 +225,7 @@
     },
     {
       "type": "text",
-      "text": "eDamuhan warns that misused herbicides put people, animals and the environment at risk. So follow these steps:"
+      "text": "PhilRice warns that misused herbicides put people, animals and the environment at risk. So follow these steps:"
     },
     {
       "type": "steps",
@@ -256,7 +256,7 @@
         },
         {
           "title": "Ask your municipal agriculturist",
-          "text": "Herbicides vary by region and weed, as eDamuhan says. Your agriculturist knows the resistance cases near you."
+          "text": "Herbicides vary by region and weed, as PhilRice says. Your agriculturist knows the resistance cases near you."
         }
       ]
     },
@@ -335,10 +335,6 @@
     {
       "type": "sources",
       "items": [
-        {
-          "label": "PhilRice: Weed identification app boosts farmers' yield (eDamuhan)",
-          "url": "https://www.philrice.gov.ph/weed-identification-app-boosts-farmers-yield/"
-        },
         {
           "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
           "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"

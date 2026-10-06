@@ -43,6 +43,7 @@
     $face = asset('images/anee/avatar-160.jpg');
     $faceLg = asset('images/anee/avatar-512.jpg');
     $arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>';
+    $pin = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0113 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>';
     $tick = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
 @endphp
 
@@ -673,24 +674,26 @@
                 {{-- Everything she checks, circling her. --}}
                 <div class="hp-ak-orbit reveal" aria-label="What Anee checks: every task you did, your notes, photos and reports, weather data, growth stages, deep farm knowledge and online research">
                     <span class="hp-ak-ring is-1" aria-hidden="true"></span><span class="hp-ak-ring is-2" aria-hidden="true"></span>
-                    <span class="hp-ak-core" aria-hidden="true"><img src="{{ $face }}" alt=""><i>Analyzing</i></span>
+                    {{-- Anee thinking, the same clip her wait screen plays in the app. --}}
+                    <span class="hp-ak-core" aria-hidden="true"><video src="{{ asset('videos/anee/thinking.mp4') }}" poster="{{ asset('videos/anee/thinking.jpg') }}"
+                        muted playsinline loop preload="metadata" disablepictureinpicture disableremoteplayback tabindex="-1" data-ak-think></video><i>Analyzing</i></span>
                     <span class="hp-ak-spin" aria-hidden="true"><span class="hp-ak-src" style="--n: 0"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg><b>Every task you did</b></span></span><span class="hp-ak-src" style="--n: 1"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg><b>Your notes</b></span></span><span class="hp-ak-src" style="--n: 2"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9zM15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg><b>Your photos</b></span></span><span class="hp-ak-src" style="--n: 3"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg><b>Your reports</b></span></span><span class="hp-ak-src" style="--n: 4"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg><b>Weather data</b></span></span><span class="hp-ak-src" style="--n: 5"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z"/></svg><b>Growth stages</b></span></span><span class="hp-ak-src" style="--n: 6"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><b>Deep farm knowledge</b></span></span><span class="hp-ak-src" style="--n: 7"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg><b>Online research</b></span></span></span>
                 </div>
 
                 <p class="hp-ak-names" aria-hidden="true">@foreach (['Every task you did', 'Your notes', 'Your photos', 'Your reports', 'Weather data', 'Growth stages', 'Deep farm knowledge', 'Online research'] as $nm)<span>{{ $nm }}</span>@endforeach</p>
 
                 {{-- What she turns it into. --}}
+                {{-- One tool at a time, fading into the next; its name rides
+                     in the card, and the dots under it pick one by hand. --}}
                 <div class="hp-ak-tools reveal" data-ak>
-                    <div class="hp-ak-tabs" role="tablist" aria-label="Anee's analysis tools">
-                        @foreach ($akTools as $i => [$tk, $tt, $td, $ti])
-                            <button type="button" role="tab" class="hp-ak-tab{{ $i === 0 ? ' is-on' : '' }}" data-ak-tab="{{ $tk }}" aria-selected="{{ $i === 0 ? 'true' : 'false' }}">
-                                <span class="hp-ak-ti">{!! $ti !!}</span><b>{{ $tt }}</b><i class="hp-room-bar" aria-hidden="true"></i>
-                            </button>
-                        @endforeach
-                    </div>
                     <div class="hp-ak-panes">
                         @foreach ($akTools as $i => [$tk, $tt, $td, $ti])
-                            <div class="hp-ak-pane{{ $i === 0 ? ' is-on' : '' }}" data-ak-pane="{{ $tk }}">
+                            <div class="hp-ak-pane{{ $i === 0 ? ' is-on' : '' }}" data-ak-pane="{{ $tk }}" id="hpAk-{{ $tk }}" role="tabpanel" aria-label="{{ $tt }}">
+                                <div class="hp-ak-ph">
+                                    <span class="hp-ak-ti">{!! $ti !!}</span>
+                                    <h3>{{ $tt }}</h3>
+                                    <span class="hp-ak-num">{{ $i + 1 }} of {{ count($akTools) }}</span>
+                                </div>
                                 <p class="hp-ak-desc">{{ $td }}</p>
                                 <div class="hp-ak-show" aria-hidden="true">
                                     @if ($tk === 'realign')
@@ -737,6 +740,12 @@
                                     @endif
                                 </div>
                             </div>
+                        @endforeach
+                    </div>
+                    <div class="hp-ak-picks" role="tablist" aria-label="Anee's analysis tools">
+                        @foreach ($akTools as $i => [$tk, $tt])
+                            <button type="button" role="tab" class="hp-ak-pick{{ $i === 0 ? ' is-on' : '' }}" data-ak-tab="{{ $tk }}" aria-controls="hpAk-{{ $tk }}"
+                                    aria-selected="{{ $i === 0 ? 'true' : 'false' }}" aria-label="{{ $tt }}"><i aria-hidden="true"></i></button>
                         @endforeach
                     </div>
                 </div>
@@ -1030,7 +1039,7 @@
                             <div class="hp-rc is-them" style="--k: 0"><span class="hp-feed-av" style="--h: 330">MS</span><p>Good morning po. The water in Lot 2 is low near the gate.</p></div>
                             <div class="hp-rc is-me" style="--k: 1"><p>Thanks Maria. I will open the canal at 7.</p></div>
                             <div class="hp-rc is-them" style="--k: 2"><span class="hp-feed-av" style="--h: 30">PR</span><p class="hp-rc-voice">{!! '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg>' !!}<span class="hp-feed-wave">@for ($w = 0; $w < 12; $w++)<i style="--w: {{ [6, 11, 8, 14, 9, 12, 5, 13, 7, 10, 6, 9][$w] }}; --d: {{ $w * 0.08 }}s"></i>@endfor</span><b>0:12</b></p></div>
-                            <div class="hp-rc is-them is-anee" style="--k: 3"><img class="hp-feed-av" src="{{ $face }}" alt=""><p>Rain comes after 3 PM. Spray Lot 1 this morning.</p></div>
+                            <div class="hp-rc is-them" style="--k: 3"><span class="hp-feed-av" style="--h: 205">JD</span><p>Canal is open po. Lot 2 is filling up now.</p></div>
                         </div>
                         {{-- Group call --}}
                         <div class="hp-room-pane" id="hpRoom-call" data-room-pane="call">
@@ -1052,8 +1061,14 @@
                         </div>
                         {{-- Location sharing --}}
                         <div class="hp-room-pane" id="hpRoom-location" data-room-pane="location">
+                            {{-- A satellite view of the farm, the way the app's map shows it. --}}
                             <div class="hp-loc">
-                                @for ($c = 0; $c < 12; $c++)<i class="hp-loc-lot"></i>@endfor
+                                <img class="hp-loc-map" src="{{ asset('images/site/home-team/sat.webp') }}" alt="" width="880" height="440" loading="lazy">
+                                <span class="hp-loc-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.4-2.7A1 1 0 013 16.4V5.6a1 1 0 011.4-.9L9 7m0 13l6-3m-6 3V7m6 10l4.6 2.3a1 1 0 001.4-.9V7.6a1 1 0 00-.6-.9L15 4m0 13V4m0 0L9 7"/></svg>Satellite</span>
+                                <span class="hp-loc-zoom"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" d="M12 6v12M6 12h12"/></svg></i><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" d="M6 12h12"/></svg></i></span>
+                                <span class="hp-loc-tag" style="left: 13%; top: 62%">Lot 1</span>
+                                <span class="hp-loc-tag" style="left: 88%; top: 72%">Lot 2</span>
+                                <span class="hp-loc-scale"><i></i>50 m</span>
                                 <span class="hp-loc-pin is-a" style="--h: 205">JD</span>
                                 <span class="hp-loc-pin is-b" style="--h: 330">MS</span>
                                 <span class="hp-loc-pin is-c" style="--h: 30">PR</span>
@@ -1062,25 +1077,50 @@
                         </div>
                         {{-- Team tasks --}}
                         <div class="hp-room-pane" id="hpRoom-tasks" data-room-pane="tasks">
-                            <p class="hp-room-ph">Today, Lot 1 and Lot 2</p>
-                            @foreach ([['Top dress urea, Lot 2', 'JD', 205], ['Hand weeding, Lot 1', 'MS', 330], ['Check the canal gate', 'PR', 30], ['Scout for rice bug', 'JD', 205]] as $k => [$tt, $ta, $th])
-                                <div class="hp-task" style="--k: {{ $k }}">
-                                    <span class="hp-task-box">{!! $tick !!}</span>
-                                    <span class="hp-task-t">{{ $tt }}</span>
-                                    <span class="hp-feed-av" style="--h: {{ $th }}">{{ $ta }}</span>
+                            {{-- The Activities board: the day, its stage and weather, then each task card. --}}
+                            <div class="hp-act-day">
+                                <span class="hp-act-dow">SAT</span><b>Oct 3</b>
+                                <span class="hp-act-n">3</span>
+                                <span class="hp-act-chip is-stage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z"/></svg>Active tillering</span>
+                                <span class="hp-act-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg>31°</span>
+                            </div>
+                            @foreach ([['Top dress urea', 'Lot 2', 'DAT+25', 'High', 'Fertilizer', [['JD', 205]], 'is-done'], ['Hand weeding', 'Lot 1', 'DAT+22', 'Medium', 'Weeding', [['MS', 330], ['PR', 30]], 'is-done2'], ['Scout for rice bug', 'Lot 1', 'DAT+22', 'Low', 'Monitoring', [['JD', 205]], '']] as $k => [$tt, $tl, $td, $tp, $ty, $tw, $tst])
+                                <div class="hp-act {{ $tst }}" style="--k: {{ $k }}">
+                                    <div class="hp-act-top">
+                                        <span class="hp-act-box">{!! $tick !!}</span>
+                                        <b class="hp-act-t">{{ $tt }}</b>
+                                        <span class="hp-act-who">@foreach ($tw as [$wi, $wh])<span class="hp-feed-av" style="--h: {{ $wh }}">{{ $wi }}</span>@endforeach</span>
+                                    </div>
+                                    <div class="hp-act-meta">
+                                        <span class="hp-act-lot">{!! $pin !!}{{ $tl }}<i></i>{{ $td }}</span>
+                                        <span class="hp-act-pr is-{{ strtolower($tp) }}">{{ strtoupper($tp) }}</span>
+                                        <span class="hp-act-ty">{{ $ty }}</span>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
                         {{-- Whiteboard --}}
                         <div class="hp-room-pane" id="hpRoom-board" data-room-pane="board">
-                            <svg class="hp-wb" viewBox="0 0 300 200">
-                                <rect class="hp-wb-lot" x="20" y="24" width="120" height="70" rx="6"/>
-                                <rect class="hp-wb-lot" x="160" y="24" width="120" height="70" rx="6"/>
-                                <rect class="hp-wb-lot" x="20" y="110" width="260" height="66" rx="6"/>
-                                <path class="hp-wb-ink is-a" d="M30 100 C 80 96, 120 104, 170 100 S 250 96, 276 102" pathLength="1"/>
-                                <path class="hp-wb-ink is-b" d="M212 60 L 238 86 M238 86 L 222 84 M238 86 L 236 70" pathLength="1"/>
-                                <circle class="hp-wb-ink is-c" cx="80" cy="143" r="16" pathLength="1"/>
-                                <text x="34" y="50">Lot 1</text><text x="174" y="50">Lot 2</text><text x="104" y="148">Seedbed here</text>
+                            {{-- A sketch of the farm, drawn stroke by stroke as a teammate
+                                 would: crooked paddies with overshooting corners, rice tufts,
+                                 the canal and an arrow, a scribbled seedbed, a tree, the shed. --}}
+                            <svg class="hp-wb" viewBox="0 0 300 150">
+                                <path class="hp-wb-ink is-lot" style="--o: 0" pathLength="1" d="M15 31 Q 66 23 117 16 M113 13 Q 120 44 127 75 M129 72 Q 79 80 25 87 M28 90 Q 21 59 18 27"/>
+                                <path class="hp-wb-ink is-lot" style="--o: 1.3" pathLength="1" d="M137 24 Q 182 14 229 15 M226 12 Q 233 36 239 59 M241 56 Q 229 76 214 95 M217 93 Q 182 90 147 91 M150 93 Q 144 57 140 20"/>
+                                <path class="hp-wb-ink is-tuft" style="--o: 2.7" pathLength="1" d="M34 74 l 3 -7 l 3 7 M92 66 l 3 -7 l 3 7 M98 36 l 3 -7 l 3 7 M156 80 l 3 -7 l 3 7 M204 36 l 3 -7 l 3 7 M211 76 l 3 -7 l 3 7"/>
+                                <path class="hp-wb-ink is-canal" style="--o: 3.1" pathLength="1" d="M266 6 C 257 38, 273 68, 262 98 S 255 128, 269 148"/>
+                                <path class="hp-wb-ink is-canal is-thin" style="--o: 3.6" pathLength="1" d="M273 30 q 4 -4 8 0 M270 120 q 4 -4 8 0"/>
+                                <path class="hp-wb-ink is-arrow" style="--o: 4" pathLength="1" d="M261 84 C 251 83, 243 76, 237 66 M237 66 L 236 77 M237 66 L 246 71"/>
+                                <path class="hp-wb-ink is-seed" style="--o: 4.8" pathLength="1" d="M34 113 c 7 -10 30 -10 37 1 c 4 10 -10 17 -22 16 c -14 -1 -21 -8 -15 -17 c 4 -5 12 -7 20 -6"/>
+                                <path class="hp-wb-ink is-seed is-thin" style="--o: 5.3" pathLength="1" d="M42 120 l 9 -8 M47 126 l 14 -12 M58 126 l 8 -7"/>
+                                <path class="hp-wb-ink is-tree" style="--o: 6" pathLength="1" d="M148 142 L 148 127 M148 127 c -10 1 -13 -10 -5 -13 c -1 -9 11 -12 14 -4 c 9 -2 12 9 4 12 c 1 6 -7 9 -13 5"/>
+                                <path class="hp-wb-ink is-shed" style="--o: 6.5" pathLength="1" d="M182 142 L 182 122 L 194 111 L 206 122 L 206 142 Z M190 142 L 190 131 L 198 131 L 198 142"/>
+                                <g class="hp-wb-hand">
+                                    <text x="48" y="54" style="--o: 1.1">Lot 1</text>
+                                    <text x="168" y="58" style="--o: 2.4">Lot 2</text>
+                                    <text x="80" y="128" style="--o: 5.6">Seedbed</text>
+                                    <text x="222" y="126" style="--o: 4.4">canal</text>
+                                </g>
                             </svg>
                             <span class="hp-wb-note">Water goes in from the east canal</span>
                         </div>
@@ -1147,7 +1187,7 @@
 
     {{-- ================= THE COMMUNITY ================= --}}
     {{-- The anee.io community (2026-10-06): a feed post that gathers
-         reactions and an answer from Anee, the discussion rooms with new
+         reactions and a reply from a fellow grower, the discussion rooms with new
          posts landing, a member levelling up on the ladder of 100 levels and
          ten titles, and a cofarmer request being accepted. It plays as one
          loop while on screen. Every part is in the app: the plaza feed,
@@ -1182,8 +1222,8 @@
                             <span class="is-comment"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg><b data-comm-count="3" data-comm-to="4">3</b></span>
                         </div>
                         <div class="hp-cpost-reply">
-                            <img class="hp-feed-av" src="{{ $face }}" alt="">
-                            <p><b>Anee</b> Ang ganda ng tubo! Bantayan ang rice bug pag namumulaklak na.</p>
+                            <span class="hp-feed-av" style="--h: 165">BS</span>
+                            <p><b>Ben Santos</b> Ang ganda ng tubo! Bantayan ang rice bug pag namumulaklak na.</p>
                         </div>
                     </div>
 
@@ -1554,6 +1594,8 @@
 @endsection
 
 @push('head')
+{{-- The Collab Room whiteboard's handwriting: only the letters it writes. --}}
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap&text=Lot12Sedbcan%20" rel="stylesheet">
 <style>
     /* ===================== THE HOMEPAGE ===================== */
     /* ---- hero ---- */
@@ -2293,13 +2335,25 @@
         font-size: .68rem; font-weight: 800; color: #fff; background: rgb(0 0 0 / .55); }
     .hp-cam figcaption i { width: .45rem; height: .45rem; border-radius: 999px; background: #ef4444; animation: hpLive 1.6s ease-out infinite; box-shadow: 0 0 0 0 rgb(239 68 68 / .6); }
 
-    .hp-loc { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); gap: 4px; padding: 4px;
-        height: 16.5rem; border-radius: 1rem; background: #2c3b20; overflow: hidden; }
-    .hp-loc-lot { border-radius: 4px; background: #4f7a36; }
-    .hp-loc-lot:nth-child(3n) { background: #5f8c40; }
-    .hp-loc-lot:nth-child(4n+1) { background: #6a9a48; }
+    .hp-loc { position: relative; height: 16.5rem; border-radius: 1rem; background: #2c3b20; overflow: hidden; box-shadow: inset 0 0 0 1px rgb(0 0 0 / .08); }
+    .hp-loc-map { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); }
+    .hp-room-pane.is-on .hp-loc-map { animation: hpLocDrift 16s ease-in-out infinite alternate; }
+    @keyframes hpLocDrift { from { transform: scale(1.04); } to { transform: scale(1.1) translate(-1.5%, 1%); } }
+    .hp-loc-chip { position: absolute; left: .6rem; top: .6rem; display: inline-flex; align-items: center; gap: .3rem; padding: .3rem .6rem; border-radius: .6rem;
+        font-size: .7rem; font-weight: 800; color: var(--hp-ink); background: rgb(255 255 255 / .94); box-shadow: 0 6px 14px -8px rgb(0 0 0 / .6); }
+    .hp-loc-chip svg { width: .95rem; height: .95rem; color: var(--hp-green); }
+    .hp-loc-zoom { position: absolute; right: .6rem; top: .6rem; display: grid; border-radius: .6rem; overflow: hidden; background: rgb(255 255 255 / .94);
+        box-shadow: 0 6px 14px -8px rgb(0 0 0 / .6); }
+    .hp-loc-zoom i { width: 1.7rem; height: 1.7rem; display: grid; place-items: center; color: #374151; }
+    .hp-loc-zoom i + i { border-top: 1px solid #e5e7eb; }
+    .hp-loc-zoom svg { width: .85rem; height: .85rem; }
+    .hp-loc-tag { position: absolute; translate: -50% -50%; padding: .18rem .5rem; border-radius: .45rem; font-size: .66rem; font-weight: 800; color: #fff;
+        background: rgb(15 26 10 / .55); border: 1px dashed rgb(245 197 24 / .9); backdrop-filter: blur(2px); }
+    .hp-loc-scale { position: absolute; left: .6rem; bottom: .55rem; display: inline-flex; align-items: center; gap: .35rem; font-size: .62rem; font-weight: 800; color: #fff;
+        text-shadow: 0 1px 2px rgb(0 0 0 / .8); }
+    .hp-loc-scale i { width: 2.6rem; height: .35rem; border: 2px solid #fff; border-top: 0; box-shadow: 0 1px 2px rgb(0 0 0 / .5); }
     .hp-loc-pin { position: absolute; width: 1.9rem; height: 1.9rem; margin: -.95rem 0 0 -.95rem; border-radius: 999px; display: grid; place-items: center;
-        font-size: .6rem; font-weight: 800; color: #fff; background: hsl(var(--h) 50% 42%); box-shadow: 0 0 0 3px #fff, 0 8px 16px -6px rgb(0 0 0 / .6); }
+        font-size: .6rem; font-weight: 800; color: #fff; background: hsl(var(--h) 50% 42%); box-shadow: 0 0 0 3px #fff, 0 0 0 9px hsl(var(--h) 60% 55% / .3), 0 8px 16px -6px rgb(0 0 0 / .6); }
     .hp-loc-pin.is-a { left: 22%; top: 30%; }
     .hp-loc-pin.is-b { left: 70%; top: 72%; }
     .hp-loc-pin.is-c { left: 55%; top: 34%; }
@@ -2312,27 +2366,67 @@
     .hp-loc-say { margin-top: .6rem; display: inline-flex; align-items: center; padding: .35rem .7rem; border-radius: 999px; font-size: .76rem; font-weight: 800;
         color: var(--hp-deep); background: #fff; box-shadow: 0 6px 14px -12px rgb(0 0 0 / .5); }
 
-    .hp-task { display: flex; align-items: center; gap: .6rem; padding: .6rem .7rem; border-radius: .9rem; background: #fff; box-shadow: 0 6px 16px -14px rgb(0 0 0 / .5); }
-    .hp-task + .hp-task { margin-top: .45rem; }
-    .hp-task-box { flex: none; width: 1.3rem; height: 1.3rem; border-radius: .4rem; display: grid; place-items: center; color: transparent; border: 2px solid #cfdcc0;
-        transition: background-color .3s var(--hp-ease), border-color .3s var(--hp-ease), color .3s var(--hp-ease); transition-delay: calc(.7s + var(--k) * .55s); }
-    .hp-task-box svg { width: 11px; height: 11px; stroke-width: 3.4; }
-    .hp-task-t { flex: 1; font-size: .84rem; font-weight: 700; color: #374151; transition: color .3s var(--hp-ease); transition-delay: calc(.7s + var(--k) * .55s); }
-    .hp-task .hp-feed-av { width: 1.7rem; height: 1.7rem; font-size: .6rem; }
-    .hp-room-pane.is-on .hp-task:not(:last-child) .hp-task-box { color: #fff; background: var(--hp-green); border-color: var(--hp-green); }
-    .hp-room-pane.is-on .hp-task:not(:last-child) .hp-task-t { color: #9ca3af; text-decoration: line-through; }
+    /* Team tasks, drawn like the app's Activities board: the day's green
+       header with its stage and weather, then the task cards with the lot
+       chip, the priority and the type; two get ticked off as you watch. */
+    .hp-act-day { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .5rem; padding: .6rem .75rem; border-radius: .9rem;
+        background: #dff2e1; box-shadow: inset 3px 0 0 #3fae5a; }
+    .hp-act-dow { font-size: .78rem; font-weight: 800; color: #2f9a4b; }
+    .hp-act-day b { font-size: .98rem; font-weight: 800; color: var(--hp-ink); }
+    .hp-act-n { min-width: 1.4rem; height: 1.4rem; padding: 0 .35rem; border-radius: 999px; display: grid; place-items: center; font-size: .68rem; font-weight: 800;
+        color: #2f9a4b; background: #fff; }
+    .hp-act-chip { display: inline-flex; align-items: center; gap: .25rem; padding: .18rem .5rem; border-radius: 999px; font-size: .66rem; font-weight: 800; color: #374151; background: #fff; }
+    .hp-act-chip.is-stage { margin-left: auto; color: #4d5a1c; background: #f4f6d8; box-shadow: inset 0 0 0 1px #e3e7b2; }
+    .hp-act-chip svg { width: .8rem; height: .8rem; }
+    .hp-act { position: relative; margin-top: .5rem; padding: .6rem .7rem .65rem .9rem; border-radius: .9rem; background: #fff; box-shadow: 0 6px 16px -14px rgb(0 0 0 / .5);
+        opacity: 0; translate: 0 8px; }
+    .hp-act::before { content: ''; position: absolute; left: 0; top: .5rem; bottom: .5rem; width: 3px; border-radius: 3px; background: #5b2fb3; }
+    .hp-room-pane.is-on .hp-act { animation: hpRoomIn .45s var(--hp-ease) calc(.15s + var(--k) * .3s) forwards; }
+    .hp-act-top { display: flex; align-items: center; gap: .5rem; }
+    .hp-act-box { flex: none; width: 1.25rem; height: 1.25rem; border-radius: .4rem; display: grid; place-items: center; color: transparent; border: 2px solid #d1d5db;
+        transition: background-color .3s var(--hp-ease), border-color .3s var(--hp-ease), color .3s var(--hp-ease); }
+    .hp-act-box svg { width: 11px; height: 11px; stroke-width: 3.4; }
+    .hp-act-t { flex: 1; min-width: 0; font-size: .86rem; font-weight: 800; color: var(--hp-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        transition: color .3s var(--hp-ease); }
+    .hp-act-who { display: inline-flex; }
+    .hp-act-who .hp-feed-av { width: 1.5rem; height: 1.5rem; font-size: .55rem; box-shadow: 0 0 0 2px #fff; }
+    .hp-act-who .hp-feed-av + .hp-feed-av { margin-left: -.35rem; }
+    .hp-act-meta { margin-top: .4rem; display: flex; flex-wrap: wrap; align-items: center; gap: .3rem; }
+    .hp-act-lot { display: inline-flex; align-items: center; gap: .3rem; padding: .16rem .5rem; border-radius: .45rem; font-size: .66rem; font-weight: 800; color: #fff; background: #5b2fb3; }
+    .hp-act-lot svg { width: .75rem; height: .75rem; }
+    .hp-act-lot i { width: 1px; align-self: stretch; background: rgb(255 255 255 / .4); }
+    .hp-act-pr, .hp-act-ty { padding: .16rem .45rem; border-radius: .45rem; font-size: .62rem; font-weight: 800; }
+    .hp-act-pr.is-high { color: #fff; background: #e1574a; }
+    .hp-act-pr.is-medium { color: #5a3a00; background: #f4b546; }
+    .hp-act-pr.is-low { color: #1e4d8c; background: #dbeafe; }
+    .hp-act-ty { color: #3d6823; background: #e9f3dc; }
+    /* Ticked off: the first once the cards are in, the second a beat later. */
+    .hp-room-pane.is-on .hp-act.is-done .hp-act-box, .hp-room-pane.is-on .hp-act.is-done2 .hp-act-box { color: #fff; background: #2f9a4b; border-color: #2f9a4b; }
+    .hp-room-pane.is-on .hp-act.is-done .hp-act-t, .hp-room-pane.is-on .hp-act.is-done2 .hp-act-t { color: #9ca3af; text-decoration: line-through; }
+    .hp-room-pane.is-on .hp-act.is-done .hp-act-box, .hp-room-pane.is-on .hp-act.is-done .hp-act-t { transition-delay: 1.4s; }
+    .hp-room-pane.is-on .hp-act.is-done2 .hp-act-box, .hp-room-pane.is-on .hp-act.is-done2 .hp-act-t { transition-delay: 2.4s; }
 
-    .hp-wb { display: block; width: 100%; height: auto; border-radius: 1rem; background: #fff; box-shadow: 0 6px 16px -14px rgb(0 0 0 / .5); }
-    .hp-wb-lot { fill: #eef5e5; stroke: #b9d69a; stroke-width: 1.5; }
-    .hp-wb text { font-size: 11px; font-weight: 800; fill: #4a7c2a; font-family: inherit; }
-    .hp-wb-ink { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
-    .hp-wb-ink.is-a { stroke: #2563eb; }
-    .hp-wb-ink.is-b { stroke: #dc2626; }
-    .hp-wb-ink.is-c { stroke: #e9a80b; }
-    .hp-room-pane.is-on .hp-wb-ink { animation: hpWbDraw 1.1s cubic-bezier(.65,0,.35,1) forwards; }
-    .hp-room-pane.is-on .hp-wb-ink.is-b { animation-delay: .9s; }
-    .hp-room-pane.is-on .hp-wb-ink.is-c { animation-delay: 1.7s; }
+    /* The whiteboard is a sketch: wobbly hand drawn lots, a canal, an
+       arrow and a scribbled seedbed, each stroke drawn in turn, then the
+       handwriting. */
+    .hp-wb { display: block; width: 100%; height: auto; border-radius: 1rem; box-shadow: 0 6px 16px -14px rgb(0 0 0 / .5);
+        background: radial-gradient(circle, #e7ece1 1px, transparent 1.2px) 0 0 / 14px 14px, #fff; }
+    .hp-wb-ink { fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+    .hp-wb-ink.is-lot { stroke: #2f5219; }
+    .hp-wb-ink.is-canal { stroke: #2563eb; stroke-width: 3.4; }
+    .hp-wb-ink.is-arrow { stroke: #dc2626; stroke-width: 3; }
+    .hp-wb-ink.is-seed { stroke: #e9a80b; stroke-width: 2.8; }
+    .hp-wb-ink.is-thin { stroke-width: 1.8; }
+    .hp-wb-ink.is-tuft { stroke: #4a7c2a; stroke-width: 1.8; }
+    .hp-wb-ink.is-tree { stroke: #3f8f3a; stroke-width: 2.2; }
+    .hp-wb-ink.is-shed { stroke: #7c4a1e; stroke-width: 2.2; }
+    .hp-room-pane.is-on .hp-wb-ink { animation: hpWbDraw .7s cubic-bezier(.65,0,.35,1) calc(.2s + var(--o) * .38s) forwards; }
     @keyframes hpWbDraw { to { stroke-dashoffset: 0; } }
+    .hp-wb-hand text { font-family: 'Caveat', 'Comic Sans MS', cursive; font-size: 17px; font-weight: 700; fill: #2f5219; opacity: 0; }
+    .hp-wb-hand text:nth-child(3) { fill: #b07800; }
+    .hp-wb-hand text:nth-child(4) { fill: #2563eb; font-size: 15px; }
+    .hp-room-pane.is-on .hp-wb-hand text { animation: hpWbWrite .5s var(--hp-ease) calc(.4s + var(--o) * .38s) forwards; }
+    @keyframes hpWbWrite { from { opacity: 0; translate: 0 3px; } to { opacity: 1; translate: none; } }
     .hp-wb-note { display: inline-block; margin-top: .6rem; padding: .45rem .7rem; border-radius: .6rem; font-size: .76rem; font-weight: 800; color: #713f12;
         background: #fef3c7; rotate: -2deg; box-shadow: 0 6px 14px -10px rgb(0 0 0 / .45); }
 
@@ -2505,7 +2599,9 @@
     html:not(.js) .hp-cconn { translate: -50% 0; }
 
     /* ---- Anee knows your farm ---- */
-    .hp-ak { background: radial-gradient(60% 50% at 85% 10%, #fff6d6 0%, transparent 60%), linear-gradient(180deg, #ffffff 0%, #f4f9ee 100%); }
+    /* overflow-x clip: the turning ring of sources is a square whose corners
+       swing past a phone's edge as it turns. */
+    .hp-ak { overflow-x: clip; background: radial-gradient(60% 50% at 85% 10%, #fff6d6 0%, transparent 60%), linear-gradient(180deg, #ffffff 0%, #f4f9ee 100%); }
     .hp-ak-grid { margin-top: 3rem; display: grid; gap: 2.5rem; }
     .hp-ak-grid > * { min-width: 0; }
     @media (min-width: 1024px) { .hp-ak-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 3.5rem; align-items: center; } }
@@ -2515,7 +2611,7 @@
     .hp-ak-ring.is-2 { inset: 30%; border-style: solid; border-color: #e1edd2; background: radial-gradient(circle, rgb(245 197 24 / .12), transparent 70%); }
     .hp-ak-core { position: absolute; left: 50%; top: 50%; width: 32%; aspect-ratio: 1; translate: -50% -50%; z-index: 2; border-radius: 999px; display: grid; place-items: center;
         background: #fff; box-shadow: 0 0 0 6px rgb(245 197 24 / .35), 0 30px 60px -30px rgb(20 33 12 / .7); }
-    .hp-ak-core img { width: 86%; height: 86%; border-radius: 999px; object-fit: cover; }
+    .hp-ak-core video { width: 86%; height: 86%; border-radius: 999px; object-fit: cover; background: #e4efd4; }
     .hp-ak-core i { position: absolute; bottom: -1.1rem; left: 50%; translate: -50% 0; white-space: nowrap; padding: .25rem .7rem; border-radius: 999px; font-style: normal;
         font-size: .72rem; font-weight: 800; color: var(--hp-ink); background: var(--hp-sun); box-shadow: 0 8px 18px -10px rgb(0 0 0 / .5); }
     .hp-ak-core::after { content: ''; position: absolute; inset: -6px; border-radius: inherit; animation: hpAkPulse 2.4s ease-out infinite; }
@@ -2541,24 +2637,29 @@
     }
 
     .hp-ak-tools { border-radius: 1.6rem; background: #fff; border: 1px solid #e1ead6; box-shadow: 0 40px 80px -56px rgb(20 33 12 / .65); overflow: hidden; }
-    .hp-ak-tabs { display: flex; overflow-x: auto; scrollbar-width: none; gap: .35rem; padding: .7rem; background: #f6faf1; border-bottom: 1px solid #e7efdd; }
-    .hp-ak-tabs::-webkit-scrollbar { display: none; }
-    .hp-ak-tab { position: relative; overflow: hidden; flex: none; display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .75rem; border-radius: .9rem; cursor: pointer;
-        border: 1px solid transparent; background: transparent; font-size: .82rem; color: #4b5563;
-        transition: background-color .28s var(--hp-ease), border-color .28s var(--hp-ease), color .28s var(--hp-ease); }
-    .hp-ak-tab b { font-weight: 800; }
-    .hp-ak-tab:hover { background: #fff; }
-    .hp-ak-tab.is-on { color: var(--hp-ink); background: #fff; border-color: #cfe3b8; box-shadow: 0 8px 18px -14px rgb(47 82 25 / .7); }
-    .hp-ak-ti { width: 1.7rem; height: 1.7rem; border-radius: .55rem; display: grid; place-items: center; color: var(--hp-green); background: #eef5e5;
-        transition: color .28s var(--hp-ease), background-color .28s var(--hp-ease); }
-    .hp-ak-tab.is-on .hp-ak-ti { color: #fff; background: var(--hp-green); }
-    .hp-ak-ti svg { width: 1rem; height: 1rem; }
-    .hp-ak-tab.is-on.is-timing .hp-room-bar { animation: hpBar var(--ak-dwell, 5s) linear forwards; }
+    /* The tools take turns: the card cross fades from one to the next, and
+       the dots under it show which is on and how long until the next. */
+    .hp-ak-ph { display: flex; align-items: center; gap: .65rem; }
+    .hp-ak-ph h3 { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; line-height: 1.25; color: var(--hp-ink); }
+    .hp-ak-num { margin-left: auto; flex: none; font-size: .72rem; font-weight: 800; color: #6b7f5a; padding: .2rem .55rem; border-radius: 999px; background: #f1f6ea; }
+    .hp-ak-ti { flex: none; width: 2.2rem; height: 2.2rem; border-radius: .75rem; display: grid; place-items: center; color: #fff; background: var(--hp-green);
+        box-shadow: 0 10px 18px -12px rgb(47 82 25 / .9); }
+    .hp-ak-ti svg { width: 1.2rem; height: 1.2rem; }
+    .hp-ak-picks { display: flex; justify-content: center; gap: .45rem; padding: 0 1rem 1.15rem; }
+    .hp-ak-pick { position: relative; width: .6rem; height: .6rem; padding: 0; border: 0; border-radius: 999px; overflow: hidden; cursor: pointer; background: #dbe7cd;
+        transition: width .4s var(--hp-ease), background-color .4s var(--hp-ease); }
+    .hp-ak-pick::before { content: ''; position: absolute; inset: -.6rem -.25rem; }
+    .hp-ak-pick:hover { background: #c4d9ab; }
+    .hp-ak-pick.is-on { width: 2.2rem; background: #dbe7cd; }
+    .hp-ak-pick i { position: absolute; inset: 0; border-radius: inherit; transform-origin: left; transform: scaleX(0); background: var(--hp-green); }
+    .hp-ak-pick.is-on.is-held i { transform: scaleX(1); }
+    .hp-ak-pick.is-on.is-timing i { animation: hpBar var(--ak-dwell, 5s) linear forwards; }
+    .hp-ak-pick:focus-visible { outline: 2px solid var(--hp-green); outline-offset: 3px; }
     .hp-ak-panes { display: grid; }
-    .hp-ak-pane { grid-area: 1 / 1; padding: 1.2rem 1.3rem 1.4rem; opacity: 0; visibility: hidden; translate: 0 8px;
-        transition: opacity .4s var(--hp-ease), translate .4s var(--hp-ease), visibility .4s; }
-    .hp-ak-pane.is-on { opacity: 1; visibility: visible; translate: none; }
-    .hp-ak-desc { font-size: .95rem; line-height: 1.6; color: #374151; }
+    .hp-ak-pane { grid-area: 1 / 1; padding: 1.3rem 1.3rem 1.1rem; opacity: 0; visibility: hidden;
+        transition: opacity .6s var(--hp-ease), visibility .6s; }
+    .hp-ak-pane.is-on { opacity: 1; visibility: visible; }
+    .hp-ak-desc { margin-top: .75rem; font-size: .95rem; line-height: 1.6; color: #374151; }
     .hp-ak-show { margin-top: 1rem; min-height: 15.5rem; padding: 1rem; border-radius: 1.1rem; background: #f6f8f3; }
     .hp-ak-k { font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6b7f5a; }
     .hp-ak-note { margin-top: .9rem; display: flex; align-items: flex-start; gap: .5rem; font-size: .84rem; line-height: 1.5; color: #374151; padding: .6rem .7rem;
@@ -2817,12 +2918,12 @@
         .hp-heart svg, .hp-heart::after { animation: none !important; }
         .hp-feed-item, .hp-feed-sync i, .hp-team-card { transition: none !important; }
         .hp-room-pane, .hp-room-tab, .hp-task-box, .hp-task-t { transition: none !important; }
-        .hp-ak-spin, .hp-ak-in, .hp-ak-core::after, .hp-ak-row, .hp-ak-rep, .hp-ak-cmprow { animation: none !important; }
+        .hp-ak-spin, .hp-ak-in, .hp-ak-core::after, .hp-ak-pick i, .hp-ak-row, .hp-ak-rep, .hp-ak-cmprow { animation: none !important; }
         .hp-ak-row, .hp-ak-rep, .hp-ak-cmprow { opacity: 1; translate: none; }
-        .hp-ak-pane, .hp-ak-tab, .hp-ak-note, .hp-ak-mark, .hp-ak-bar i, .hp-ak-chip, .hp-ak-q, .hp-ak-a { transition: none !important; }
+        .hp-ak-pane, .hp-ak-pick, .hp-ak-note, .hp-ak-mark, .hp-ak-bar i, .hp-ak-chip, .hp-ak-q, .hp-ak-a { transition: none !important; }
         .hp-cpost-react span, .hp-cpost-reply, .hp-croom-new, .hp-clevel-badge, .hp-clevel-hd b span, .hp-clevel-title i, .hp-clevel-bar i,
         .hp-clevel-ladder i, .hp-cconn, .hp-cconn-t i, .hp-cconn-btn i, .hp-cconn-btn { transition: none !important; }
-        .hp-acc, .hp-rc, .hp-task, .hp-loc-pin, .hp-cam img, .hp-call-av, .hp-wb-ink, .hp-room-bar { animation: none !important; }
+        .hp-acc, .hp-rc, .hp-act, .hp-loc-pin, .hp-loc-map, .hp-cam img, .hp-call-av, .hp-wb-ink, .hp-wb-hand text, .hp-room-bar { animation: none !important; }
         .hp-acc, .hp-rc, .hp-task { opacity: 1; translate: none; }
         .hp-wb-ink { stroke-dashoffset: 0; }
         .hp-feed-wave i, .hp-sat-stars, .hp-sat-craft, .hp-sat-blink, .hp-sat-beam, .hp-sat-wave, .hp-sat-cloud, .hp-sat-grid.is-health, .hp-sat-scan { animation: none !important; }
@@ -3172,10 +3273,8 @@
         const show = (i) => {
             at = (i + tabs.length) % tabs.length;
             const key = tabs[at].dataset.akTab;
-            tabs.forEach((t, k) => { const on = k === at; t.classList.toggle('is-on', on); t.classList.remove('is-timing'); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
+            tabs.forEach((t, k) => { const on = k === at; t.classList.toggle('is-on', on); t.classList.remove('is-timing'); t.classList.toggle('is-held', on && held); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
             panes.forEach((p) => p.classList.toggle('is-on', p.dataset.akPane === key));
-            const strip = tabs[at].parentElement;
-            if (strip.scrollWidth > strip.clientWidth) strip.scrollTo({ left: tabs[at].offsetLeft - 8, behavior: reduce ? 'auto' : 'smooth' });
             schedule();
         };
         const schedule = () => {
@@ -3187,7 +3286,20 @@
             timer = setTimeout(() => show(at + 1), DWELL);
         };
         tabs.forEach((t, i) => t.addEventListener('click', () => { held = true; show(i); }));
+        // Arrow keys move along the dots, as a tab list should.
+        ak.querySelector('.hp-ak-picks').addEventListener('keydown', (e) => {
+            const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+            if (!d) return;
+            e.preventDefault(); held = true; show(at + d); tabs[at].focus();
+        });
         seen(ak, (on) => { live = on; if (on) schedule(); else { clearTimeout(timer); tabs[at].classList.remove('is-timing'); } }, { threshold: 0.3 });
+    }
+
+    /* Anee thinks in the middle of her sources, only while she is on screen
+       (and holds still for a visitor who asked for less motion). */
+    const think = document.querySelector('[data-ak-think]');
+    if (think && !reduce) {
+        seen(think, (on) => { if (on) { const p = think.play(); if (p && p.catch) p.catch(() => {}); } else think.pause(); }, { threshold: 0.2 });
     }
 
     /* The community plays as one loop while on screen: the post gathers

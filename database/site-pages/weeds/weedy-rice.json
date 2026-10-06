@@ -17,9 +17,10 @@
   ],
   "excerpt": "Weedy rice is rice that behaves like a weed. It grows side by side with your palay in irrigated and rainfed lowland fields across the Philippines. Because it is the same species as your crop, it is hard to spot and even harder to kill. This page shows how to spot it, how it hurts your harvest and how to keep it out.",
   "heroImage": {
-    "src": "",
-    "alt": "Weedy rice plants standing taller than the crop with awned, early ripening panicles in a paddy",
-    "credit": ""
+    "src": "/images/site/weeds/weedy-rice.webp",
+    "thumb": "/images/site/weeds/weedy-rice-480.webp",
+    "alt": "Awned rice grains in a farmer's hand. Weedy rice is the same species as palay, Oryza sativa",
+    "credit": "Utain Pummarin, CC BY, via iNaturalist"
   },
   "blocks": [
     {
@@ -224,8 +225,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: eDamuhan, the weed identification app",
-          "url": "https://www.philrice.gov.ph/edamuhan/"
+          "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"
         },
         {
           "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",

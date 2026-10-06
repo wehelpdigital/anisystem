@@ -29,7 +29,7 @@
     },
     {
       "type": "text",
-      "text": "This weed carries the scientific name Ammannia coccinea, and it belongs to the loosestrife family. The eDamuhan catalogue lists no Filipino local name for it, so this page uses its English name. Valley redstem grows in both irrigated and rainfed lowland rice fields. It does well in wet paddies, which is why it can stand right among the rice hills.\n\nAs an annual, each plant lives for one season. It spreads by seed, and its small flowers turn into seed capsules close to the leaf joints. The English name comes from its stems, which can take on a red tint as the plant ages. Because it lives and seeds within one crop, stopping it before it flowers keeps next season's field cleaner."
+      "text": "This weed carries the scientific name Ammannia coccinea, and it belongs to the loosestrife family. PhilRice's weed list gives no Filipino local name for it, so this page uses its English name. Valley redstem grows in both irrigated and rainfed lowland rice fields. It does well in wet paddies, which is why it can stand right among the rice hills.\n\nAs an annual, each plant lives for one season. It spreads by seed, and its small flowers turn into seed capsules close to the leaf joints. The English name comes from its stems, which can take on a red tint as the plant ages. Because it lives and seeds within one crop, stopping it before it flowers keeps next season's field cleaner."
     },
     {
       "type": "table",
@@ -134,7 +134,7 @@
     },
     {
       "type": "text",
-      "text": "If water and weeding cannot hold valley redstem down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows the PhilRice eDamuhan recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
+      "text": "If water and weeding cannot hold valley redstem down, choose an active ingredient that works on broadleaves at the age of your rice. The table follows PhilRice recommendations. Shop by the ingredient on the label, never by the brand. If your field also has other kinds of weeds, the [weed control helper](/weeds#control) finds the ingredients that cover all of them."
     },
     {
       "type": "table",
@@ -228,7 +228,7 @@
       "items": [
         {
           "q": "What is valley redstem commonly called?",
-          "a": "Its English name is the common one, and its scientific name is Ammannia coccinea. The eDamuhan catalogue lists no Filipino local name for it. So when you ask neighbors about it, describe the plant instead: an upright weed about knee high, with paired leaves that hug the stem and small purplish flowers at the leaf joints."
+          "a": "Its English name is the common one, and its scientific name is Ammannia coccinea. PhilRice's weed list gives no Filipino local name for it. So when you ask neighbors about it, describe the plant instead: an upright weed about knee high, with paired leaves that hug the stem and small purplish flowers at the leaf joints."
         },
         {
           "q": "How do I control this weed in my rice field?",
@@ -278,8 +278,8 @@
       "type": "sources",
       "items": [
         {
-          "label": "PhilRice: eDamuhan, the weed identification app",
-          "url": "https://www.philrice.gov.ph/edamuhan/"
+          "label": "PhilRice: Weeds in irrigated and rainfed lowland ricefields in the Philippines, second edition",
+          "url": "https://www.philrice.gov.ph/wp-content/uploads/2019/03/weeds-in-irrigated-and-rainfed-lowland-ricefields-in-the-philippines-2nd-edition.pdf"
         },
         {
           "label": "IRRI Rice Knowledge Bank: Main weeds of rice in Asia",
