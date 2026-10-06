@@ -899,21 +899,37 @@
     .hp-float-ico svg { width: 1.2rem; height: 1.2rem; }
     .hp-float-ico.is-green { color: #2f5219; background: #e4f0d6; }
     .hp-float-ico.is-sky { color: #1d4ed8; background: #dbeafe; }
-    .hp-float.f1 { left: 0; top: 14%; animation-delay: .7s, 1.6s; }
-    .hp-float.f2 { right: 0; top: 42%; animation-delay: 1s, 0s; }
-    .hp-float.f3 { left: 4%; bottom: 8%; max-width: 16rem; animation-delay: 1.3s, .8s; }
+    /* The cards ride the phone's edges, mostly outside it, so the film on
+       the screen stays in view (2026-10-06: they used to sit across it).
+       Placed from the stage's middle, which is the phone's middle: --ph is
+       half the phone's width (the phone is min(16.5rem, 64vw)), --ov how far
+       a card laps onto the phone's frame. */
+    .hp-hero-stage { --ph: min(8.25rem, 32vw); --ov: 1.5rem; }
+    .hp-float { width: max-content; max-width: 13rem; }
+    .hp-float.f1 { right: calc(50% + var(--ph) - var(--ov)); top: 10%; animation-delay: .7s, 1.6s; }
+    .hp-float.f2 { left: calc(50% + var(--ph) - var(--ov)); top: 46%; animation-delay: 1s, 0s; }
+    .hp-float.f3 { right: calc(50% + var(--ph) - var(--ov)); bottom: 13%; animation-delay: 1.3s, .8s; }
     @keyframes hpFloatIn { from { opacity: 0; transform: translateY(18px) scale(.94); } to { opacity: 1; transform: none; } }
     @keyframes hpBob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
-    @media (max-width: 1023.98px) {
-        .hp-float { max-width: 12.5rem; padding: .55rem .7rem; }
-        .hp-float.f1 { left: 0; top: 6%; }
-        .hp-float.f2 { right: 0; top: 46%; }
-        .hp-float.f3 { left: 0; bottom: 15%; }
+    /* Where there is little room beside the phone (a phone's screen, and the
+       narrow two column hero from 1024 to 1279), each card shrinks to its
+       icon and its first line. */
+    @media (max-width: 639.98px), (min-width: 1024px) and (max-width: 1279.98px) {
+        .hp-float { gap: .45rem; max-width: none; white-space: nowrap; padding: .42rem .65rem .42rem .42rem; border-radius: .9rem; }
+        .hp-float small { display: none; }
+        .hp-float b { font-size: .76rem; }
+        .hp-float-ico { width: 1.8rem; height: 1.8rem; border-radius: .6rem; }
+        .hp-float-ico svg { width: 1rem; height: 1rem; }
+        .hp-float .hp-face.is-lg { width: 1.8rem; height: 1.8rem; }
+    }
+    @media (min-width: 1024px) and (max-width: 1279.98px) { .hp-hero-stage { --ov: 2rem; } }
+    /* On a phone the cards sit at the page's edge, and only their tips
+       reach onto the phone. */
+    @media (max-width: 639.98px) {
+        .hp-float.f1, .hp-float.f3 { right: auto; left: -.75rem; }
+        .hp-float.f2 { left: auto; right: -.75rem; }
     }
     @media (max-width: 420px) {
-        .hp-float { max-width: 10.5rem; }
-        .hp-float small { font-size: .7rem; }
-        .hp-float-ico { width: 1.9rem; height: 1.9rem; }
         .hp-face.is-lg { width: 2rem; height: 2rem; }
     }
     .hp-down { position: absolute; left: 50%; bottom: 1.2rem; transform: translateX(-50%); width: 2.6rem; height: 2.6rem;
