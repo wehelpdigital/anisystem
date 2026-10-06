@@ -280,7 +280,11 @@
     .pd-deck.pd-instant .pd-card, .pd-deck.pd-instant .pd-inner,
     .pd-deck.pd-instant .pd-fog, .pd-deck.pd-instant .pr-flag, .pd-deck.pd-instant .pd-peek { transition: none; }
 
-    .pd-card .pr-flag { z-index: 3; transform: translate(-50%, 0);
+    /* The flag rides above the card's coloured band and border (the band is
+       z-index 4 inside the face), centred on the top edge, with a ring of
+       white so the edge does not run through it. */
+    .pd-card .pr-flag { z-index: 6; top: -.95rem; transform: translate(-50%, 0); line-height: 1.2;
+        box-shadow: 0 0 0 3px #fff, 0 8px 18px -8px rgb(47 82 25 / .7);
         transition: opacity .35s var(--pd-ease) .2s, transform .45s var(--pd-ease) .2s; }
     .pd-card.is-back .pr-flag { opacity: 0; transform: translate(-50%, .5rem); transition-delay: 0s; }
 
