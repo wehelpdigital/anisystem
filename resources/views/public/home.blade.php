@@ -1558,18 +1558,68 @@
                     <a href="{{ url($href) }}" class="hp-topic" style="--h: {{ ($i * 41) % 150 + 30 }}">{{ $label }}</a>
                 @endforeach
             </div>
-            <div class="mt-12 grid gap-8 md:grid-cols-2 xl:grid-cols-4">
+            {{-- Four shelves, two by two (2026-10-07): each section's newest guide
+                 as a picture card, then four more with small pictures, and
+                 the way to the whole shelf. --}}
+            @php
+                $SP = \App\Support\SitePages::class;
+                $guideCount = [];
+                try {
+                    $guideCount = \App\Models\AsSitePage::live()->whereIn('section', array_keys($guides))
+                        ->selectRaw('section, count(*) as n')->groupBy('section')->pluck('n', 'section')->all();
+                } catch (\Throwable $e) {}
+                // A small copy for a small picture: the page's own thumb, or the -480 twin beside its picture.
+                $guideThumb = function ($p) use ($SP) {
+                    $h = is_array($p->heroImage) ? $p->heroImage : [];
+                    $src = (string) ($h['thumb'] ?? ($h['src'] ?? ''));
+                    if ($src !== '' && ! isset($h['thumb']) && str_starts_with($src, '/images/')) {
+                        $twin = preg_replace('/\.(jpe?g|png|webp)$/i', '-480.webp', $src);
+                        if ($twin && is_file(public_path(ltrim($twin, '/')))) { $src = $twin; }
+                    }
+                    return $SP::img($src) ?: asset('images/site/fields-aerial.jpg');
+                };
+                $shelf = [
+                    'crops' => ['Crop Guides', 'Planting, feeding and harvest, crop by crop', 100, 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z', 'All crop guides'],
+                    'pests' => ['Crop Pests', 'Know the insect before you buy a spray', 22, 'M12 8a3 3 0 100-6 3 3 0 000 6zm0 0v13m-6-9h12M7 7L4 4m13 3l3-3M6 16l-3 3m15-3l3 3M8 12a4 4 0 008 0', 'All crop pests'],
+                    'weeds' => ['Weeds and Grasses', 'Every weed of the rice field, and its control', 75, 'M6 21c0-6 1.2-11 4-15M12 21V3.5M18 21c0-6-1.2-11-4-15', 'All weeds and grasses'],
+                    'blog' => ['From the Blog', 'Fertilizer, prices, farm words and more', 205, 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z', 'The whole blog'],
+                ];
+            @endphp
+            <div class="hg-shelves">
                 @foreach ($guides as $sec => $pages)
-                    @php $SP = \App\Support\SitePages::class; @endphp
-                    <div class="hg-col reveal" style="--reveal-delay: {{ $loop->index * 0.07 }}s">
-                        <p class="hg-kick">{{ $SP::SECTIONS[$sec]['label'] }}</p>
-                        @include('public.site.tile', ['p' => $pages->first()])
-                        <ul class="hg-list">
-                            @foreach ($pages->slice(1) as $p)
-                                <li><a href="{{ $SP::pageUrl($p) }}">{{ $SP::shortTitle($p) }}</a></li>
+                    @php
+                        [$shName, $shSub, $shHue, $shIcon, $shAll] = $shelf[$sec] ?? [$SP::SECTIONS[$sec]['label'], '', 100, 'M5 13l4 4L19 7', 'See all'];
+                        $lead = $pages->first();
+                        $leadHero = is_array($lead->heroImage) ? $lead->heroImage : [];
+                        $leadSrc = $SP::img($leadHero['src'] ?? null) ?: asset('images/site/fields-aerial.jpg');
+                        $n = $guideCount[$sec] ?? null;
+                    @endphp
+                    <div class="hg-shelf reveal" style="--h: {{ $shHue }}; --reveal-delay: {{ $loop->index * 0.08 }}s">
+                        <div class="hg-head">
+                            <span class="hg-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ $shIcon }}"/></svg></span>
+                            <span class="hg-name"><b>{{ $shName }}</b><small>{{ $shSub }}</small></span>
+                            @if ($n)<span class="hg-count">{{ $n }} {{ $sec === 'blog' ? 'posts' : 'guides' }}</span>@endif
+                        </div>
+                        <a href="{{ $SP::pageUrl($lead) }}" class="hg-lead">
+                            <img src="{{ $leadSrc }}" alt="{{ $leadHero['alt'] ?? $lead->title }}" loading="lazy" width="1200" height="675">
+                            <span class="hg-lead-in">
+                                @if ($lead->category)<span class="hg-cat">{{ $lead->category }}</span>@endif
+                                <b>{{ $lead->title }}</b>
+                                <span class="hg-read">{{ $lead->lang === 'tl' ? 'Basahin' : 'Read the guide' }}
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6l6 6-6 6"/></svg></span>
+                            </span>
+                        </a>
+                        <ul class="hg-rows">
+                            @foreach ($pages->slice(1)->take(4) as $p)
+                                <li><a href="{{ $SP::pageUrl($p) }}" class="hg-row">
+                                    <img src="{{ $guideThumb($p) }}" alt="" loading="lazy" width="96" height="72">
+                                    <span>@if ($p->category)<small>{{ $p->category }}</small>@endif<b>{{ $SP::shortTitle($p) }}</b></span>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                                </a></li>
                             @endforeach
                         </ul>
-                        <a href="{{ $SP::url($sec) }}" class="hg-all">{{ ['crops' => 'All crop guides', 'pests' => 'All crop pests', 'weeds' => 'All weeds and grasses', 'blog' => 'The whole blog'][$sec] }} ›</a>
+                        <a href="{{ $SP::url($sec) }}" class="hg-all">{{ $shAll }}
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6l6 6-6 6"/></svg></a>
                     </div>
                 @endforeach
             </div>
@@ -2981,14 +3031,54 @@
     .hq-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .28s var(--hp-ease); }
     .hq-body.is-open { grid-template-rows: 1fr; }
     .hq-body > div { overflow: hidden; }
-    .hg-col { display: flex; flex-direction: column; gap: .8rem; min-width: 0; }
-    .hg-kick { font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #3d6823; }
-    .hg-list { display: grid; gap: .1rem; border-top: 1px solid #e5ebdf; padding-top: .4rem; }
-    .hg-list a { display: block; padding: .5rem .2rem; font-size: .92rem; font-weight: 600; color: #14210c; text-decoration: none; border-bottom: 1px dashed #e5ebdf;
-        transition: color .28s var(--hp-ease), padding .28s var(--hp-ease); }
-    .hg-list a:hover { color: #3d6823; padding-left: .45rem; }
-    .hg-all { font-size: .88rem; font-weight: 800; color: #3d6823; text-decoration: none; }
-    .hg-all:hover { text-decoration: underline; }
+    /* The guide shelves: two by two, each a card with its own tint. */
+    .hg-shelves { margin-top: 2.8rem; display: grid; gap: 1.4rem; }
+    @media (min-width: 768px) { .hg-shelves { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem; } }
+    .hg-shelf { position: relative; display: flex; flex-direction: column; gap: 1rem; padding: 1.15rem; border-radius: 1.6rem; background: #fff;
+        border: 1px solid hsl(var(--h) 30% 88%); box-shadow: 0 30px 60px -46px rgb(20 33 12 / .55);
+        transition: transform .28s var(--hp-ease), box-shadow .28s var(--hp-ease); }
+    .hg-shelf::before { content: ''; position: absolute; left: 1.4rem; right: 1.4rem; top: -1px; height: 3px; border-radius: 0 0 3px 3px; background: hsl(var(--h) 55% 45%); }
+    .hg-shelf:hover { transform: translateY(-3px); box-shadow: 0 36px 70px -44px rgb(20 33 12 / .6); }
+    .hg-head { display: flex; align-items: center; gap: .75rem; }
+    .hg-ico { flex: none; width: 2.6rem; height: 2.6rem; border-radius: .9rem; display: grid; place-items: center; color: hsl(var(--h) 60% 26%);
+        background: linear-gradient(145deg, hsl(var(--h) 60% 95%), hsl(var(--h) 50% 87%)); box-shadow: inset 0 0 0 1px hsl(var(--h) 40% 80%); }
+    .hg-ico svg { width: 1.35rem; height: 1.35rem; }
+    .hg-name { min-width: 0; flex: 1; }
+    .hg-name b { display: block; font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: var(--hp-ink); line-height: 1.2; }
+    .hg-name small { display: block; margin-top: .1rem; font-size: .8rem; color: #6b7280; line-height: 1.35; }
+    .hg-count { flex: none; padding: .25rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 800; color: hsl(var(--h) 55% 26%); background: hsl(var(--h) 55% 94%); }
+    .hg-lead { position: relative; display: block; overflow: hidden; border-radius: 1.15rem; aspect-ratio: 16 / 9; background: hsl(var(--h) 30% 88%); text-decoration: none; isolation: isolate; }
+    .hg-lead img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--hp-ease); }
+    .hg-lead::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, transparent 30%, rgb(10 18 6 / .25) 50%, rgb(10 18 6 / .86) 100%); }
+    .hg-lead:hover img { transform: scale(1.05); }
+    .hg-lead-in { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; flex-direction: column; align-items: flex-start; gap: .4rem; padding: 1rem 1.1rem 1.05rem; }
+    .hg-cat { padding: .2rem .55rem; border-radius: 999px; font-size: .66rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: hsl(var(--h) 60% 20%);
+        background: hsl(var(--h) 70% 90% / .95); }
+    .hg-lead-in b { font-family: var(--font-heading); font-size: clamp(1.05rem, 1.7vw, 1.3rem); font-weight: 800; line-height: 1.25; color: #fff; text-wrap: balance;
+        text-shadow: 0 2px 12px rgb(0 0 0 / .4); }
+    .hg-read { display: inline-flex; align-items: center; gap: .35rem; font-size: .8rem; font-weight: 800; color: var(--hp-sun); }
+    .hg-read svg { width: .9rem; height: .9rem; transition: transform .28s var(--hp-ease); }
+    .hg-lead:hover .hg-read svg { transform: translateX(3px); }
+    .hg-rows { display: grid; grid-template-columns: minmax(0, 1fr); gap: .15rem; }
+    .hg-row { display: flex; align-items: center; gap: .8rem; padding: .45rem .5rem; border-radius: .9rem; text-decoration: none;
+        transition: background-color .28s var(--hp-ease); }
+    .hg-row:hover { background: hsl(var(--h) 50% 96%); }
+    .hg-row img { flex: none; width: 4rem; height: 3rem; border-radius: .65rem; object-fit: cover; background: hsl(var(--h) 30% 90%); }
+    .hg-row span { flex: 1; min-width: 0; }
+    .hg-row small { display: block; font-size: .66rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: hsl(var(--h) 45% 38%); }
+    .hg-row b { display: block; font-size: .92rem; font-weight: 700; line-height: 1.3; color: var(--hp-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hg-row svg { flex: none; width: 1rem; height: 1rem; color: hsl(var(--h) 40% 55%); transition: transform .28s var(--hp-ease), color .28s var(--hp-ease); }
+    .hg-row:hover svg { transform: translateX(3px); color: hsl(var(--h) 55% 32%); }
+    .hg-all { margin-top: auto; display: flex; align-items: center; justify-content: center; gap: .45rem; padding: .75rem 1rem; border-radius: 1rem;
+        font-size: .9rem; font-weight: 800; color: hsl(var(--h) 60% 22%); text-decoration: none; background: hsl(var(--h) 55% 95%);
+        box-shadow: inset 0 0 0 1px hsl(var(--h) 40% 86%); transition: background-color .28s var(--hp-ease); }
+    .hg-all:hover { background: hsl(var(--h) 55% 90%); }
+    .hg-all svg { width: 1rem; height: 1rem; transition: transform .28s var(--hp-ease); }
+    .hg-all:hover svg { transform: translateX(3px); }
+    @media (max-width: 479.98px) {
+        .hg-shelf { padding: .9rem; border-radius: 1.3rem; }
+        .hg-row b { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    }
 
     /* ---- the truth: costs up, plus prices down, equals one way out ---- */
     .hp-truth2 { background: linear-gradient(180deg, #ffffff 0%, #fbf8f1 100%); }
@@ -3077,7 +3167,7 @@
         .hp-biz-b, .hp-final-face, .hp-live, .hp-read i, .hp-sum-ico, .hp-sum-ico svg, .hp-vs-group.is-visible .hp-vs-new > span { animation: none !important; }
         .hp-st-tab.is-on.is-timing .hp-st-bar i { animation: none; }
         .hp-phone.is-hero, .hp-st-pane, .hp-tool, .hp-msg, .hp-read, .hp-film, .hp-film-tag, .hp-modal, .hp-modal-box, .hp-sticky,
-        .hp-go, .hp-alt, .hp-prec-row, .hp-prec-rights li, .hp-prec-old, .hp-prec-card, .hp-prec-checks li, .hp-prec-bar i, .hp-prec-on, .hp-st-tab, .hp-gain, .hp-q, .hc-card, .hg-list a, .hq-body, .hp-topic { transition: none !important; }
+        .hp-go, .hp-alt, .hp-prec-row, .hp-prec-rights li, .hp-prec-old, .hp-prec-card, .hp-prec-checks li, .hp-prec-bar i, .hp-prec-on, .hp-st-tab, .hp-gain, .hp-q, .hc-card, .hg-shelf, .hg-lead img, .hg-row, .hg-row svg, .hg-all, .hg-all svg, .hg-read svg, .hq-body, .hp-topic { transition: none !important; }
         .hp-chat .hp-msg, .hp-chat .hp-read { opacity: 1; transform: none; }
         .hp-tvs-race i::before, .hp-tvs-old > i, .hp-tvs-new > i { animation: none !important; }
         .hp-tvs-race.is-slow i::before { transform: scaleX(.9); }
