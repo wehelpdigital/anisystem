@@ -1740,7 +1740,7 @@
 
     .hp-float { position: absolute; z-index: 2; display: flex; align-items: center; gap: .65rem; max-width: 15rem;
         padding: .7rem .85rem; border-radius: 1.1rem; color: var(--hp-ink); background: rgb(255 255 255 / .94);
-        box-shadow: 0 24px 48px -24px rgb(0 0 0 / .7); backdrop-filter: blur(8px);
+        box-shadow: 0 2px 6px rgb(0 0 0 / .18), 0 14px 30px -10px rgb(0 0 0 / .55), 0 30px 60px -28px rgb(0 0 0 / .7); backdrop-filter: blur(8px);
         animation: hpFloatIn .9s var(--hp-ease) both, hpBob 6s ease-in-out infinite; }
     .hp-float b { display: block; font-size: .82rem; font-weight: 800; line-height: 1.25; }
     .hp-float small { display: block; font-size: .74rem; color: #4b5563; line-height: 1.35; }
