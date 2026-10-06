@@ -639,6 +639,118 @@
         </div>
     </section>
 
+    {{-- ================= ANEE KNOWS YOUR FARM ================= --}}
+    {{-- Anee's farm analysis (2026-10-06): everything she checks (the
+         tasks done, notes, photos, reports, weather, growth stages, deep farm
+         knowledge and online research) circling her, and five of the tools
+         that turn it into answers, each a tab with a small moving picture:
+         Realign by Anee, Analyze So Far, the Season Report, Compare Reports
+         and a report or analysis attached to a chat. All five are in the
+         app (HowItWorks: realign, sofar, season, compare, and the attach chip
+         on Anee's chat). --}}
+    @php
+        $akTools = [
+            ['realign', 'Realign growth stages', 'When a crop runs ahead or behind, Anee reads the lot and finds the stage it is truly in.', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M5.1 15a7.5 7.5 0 0013.4 1.5M18.9 9A7.5 7.5 0 005.5 7.5"/></svg>'],
+            ['sofar', 'Analyze So Far', 'Halfway through the season, she checks each lot, the risks ahead and what to do next.', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h4l3-8 4 16 3-8h4"/></svg>'],
+            ['season', 'Season Report', 'After harvest, a plain story of your season: what went well, what went wrong, what to change.', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.5a.56.56 0 011.04 0l2.13 5.11 5.52.44a.56.56 0 01.32.99l-4.2 3.6 1.28 5.38a.56.56 0 01-.84.61L12 16.77l-4.73 2.86a.56.56 0 01-.84-.61l1.28-5.38-4.2-3.6a.56.56 0 01.32-.99l5.52-.44 2.13-5.11z"/></svg>'],
+            ['compare', 'Compare Reports', 'Two seasons side by side, line by line, and Anee explains what changed and why.', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18M5 7h14M5 7l-3 7a4 4 0 006 0L5 7zm14 0l-3 7a4 4 0 006 0l-3-7z"/></svg>'],
+            ['attach', 'Attach to a chat', 'Attach any report or analysis to a chat and ask Anee about it in your own words.', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>'],
+        ];
+    @endphp
+    <section class="hp-sec hp-ak">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="hp-head reveal">
+                <p class="hp-kick">Anee's farm analysis</p>
+                <h2 class="hp-h2">Anee Knows Your Farm <em>Better Than Anyone.</em></h2>
+                <p class="hp-p">
+                    Anee never answers from one question alone. She checks everything you did this season, every note and
+                    every photo, your reports and your weather, then adds deep farm knowledge and fresh research from the
+                    internet. <b>That is how you get the most accurate answer possible, for your own field.</b>
+                </p>
+            </div>
+
+            <div class="hp-ak-grid">
+                {{-- Everything she checks, circling her. --}}
+                <div class="hp-ak-orbit reveal" aria-label="What Anee checks: every task you did, your notes, photos and reports, weather data, growth stages, deep farm knowledge and online research">
+                    <span class="hp-ak-ring is-1" aria-hidden="true"></span><span class="hp-ak-ring is-2" aria-hidden="true"></span>
+                    <span class="hp-ak-core" aria-hidden="true"><img src="{{ $face }}" alt=""><i>Analyzing</i></span>
+                    <span class="hp-ak-spin" aria-hidden="true"><span class="hp-ak-src" style="--n: 0"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg><b>Every task you did</b></span></span><span class="hp-ak-src" style="--n: 1"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg><b>Your notes</b></span></span><span class="hp-ak-src" style="--n: 2"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9zM15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg><b>Your photos</b></span></span><span class="hp-ak-src" style="--n: 3"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg><b>Your reports</b></span></span><span class="hp-ak-src" style="--n: 4"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg><b>Weather data</b></span></span><span class="hp-ak-src" style="--n: 5"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z"/></svg><b>Growth stages</b></span></span><span class="hp-ak-src" style="--n: 6"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><b>Deep farm knowledge</b></span></span><span class="hp-ak-src" style="--n: 7"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg><b>Online research</b></span></span></span>
+                </div>
+
+                <p class="hp-ak-names" aria-hidden="true">@foreach (['Every task you did', 'Your notes', 'Your photos', 'Your reports', 'Weather data', 'Growth stages', 'Deep farm knowledge', 'Online research'] as $nm)<span>{{ $nm }}</span>@endforeach</p>
+
+                {{-- What she turns it into. --}}
+                <div class="hp-ak-tools reveal" data-ak>
+                    <div class="hp-ak-tabs" role="tablist" aria-label="Anee's analysis tools">
+                        @foreach ($akTools as $i => [$tk, $tt, $td, $ti])
+                            <button type="button" role="tab" class="hp-ak-tab{{ $i === 0 ? ' is-on' : '' }}" data-ak-tab="{{ $tk }}" aria-selected="{{ $i === 0 ? 'true' : 'false' }}">
+                                <span class="hp-ak-ti">{!! $ti !!}</span><b>{{ $tt }}</b><i class="hp-room-bar" aria-hidden="true"></i>
+                            </button>
+                        @endforeach
+                    </div>
+                    <div class="hp-ak-panes">
+                        @foreach ($akTools as $i => [$tk, $tt, $td, $ti])
+                            <div class="hp-ak-pane{{ $i === 0 ? ' is-on' : '' }}" data-ak-pane="{{ $tk }}">
+                                <p class="hp-ak-desc">{{ $td }}</p>
+                                <div class="hp-ak-show" aria-hidden="true">
+                                    @if ($tk === 'realign')
+                                        <div class="hp-ak-re">
+                                            <p class="hp-ak-k">Lot 2 · NSIC Rc222</p>
+                                            <div class="hp-ak-track">
+                                                @foreach (['Seedling', 'Tillering', 'Panicle initiation', 'Flowering', 'Ripening'] as $si => $sn)<span class="hp-ak-stage" style="--s: {{ $si }}">{{ $sn }}</span>@endforeach
+                                                <i class="hp-ak-mark is-cal"><b>Calendar</b></i><i class="hp-ak-mark is-real"><b>Anee found</b></i>
+                                            </div>
+                                            <p class="hp-ak-note"><span class="hp-ak-dot"></span>The crop is 6 days ahead of the calendar. Lot 2's stage count moves to match, and your calendar dates stay.</p>
+                                        </div>
+                                    @elseif ($tk === 'sofar')
+                                        <div class="hp-ak-list">
+                                            <div class="hp-ak-row" style="--k: 0"><b>Lot 1</b><span class="is-good">On track</span></div>
+                                            <div class="hp-ak-row" style="--k: 1"><b>Lot 2</b><span class="is-warn">Water low, irrigate this week</span></div>
+                                            <div class="hp-ak-row" style="--k: 2"><b>Risk ahead</b><span class="is-bad">Rice bug at flowering</span></div>
+                                            <div class="hp-ak-row" style="--k: 3"><b>Next step</b><span class="is-good">Scout Lot 1 at 70 DAT</span></div>
+                                        </div>
+                                    @elseif ($tk === 'season')
+                                        <div class="hp-ak-report">
+                                            <p class="hp-ak-k">Season report · Wet season palay 2026</p>
+                                            <div class="hp-ak-rep" style="--k: 0"><span class="is-good">What went well</span><i></i><i></i></div>
+                                            <div class="hp-ak-rep" style="--k: 1"><span class="is-bad">What went wrong</span><i></i><i></i></div>
+                                            <div class="hp-ak-rep" style="--k: 2"><span class="is-next">What to change next season</span><i></i><i></i></div>
+                                        </div>
+                                    @elseif ($tk === 'compare')
+                                        <div class="hp-ak-cmp">
+                                            @foreach ([['Yield', 72, 86], ['Fertilizer cost', 80, 64], ['Labor days', 70, 58]] as $ci => [$cl, $ca, $cb])
+                                                <div class="hp-ak-cmprow" style="--k: {{ $ci }}">
+                                                    <b>{{ $cl }}</b>
+                                                    <span class="hp-ak-bar is-a" style="--w: {{ $ca }}%"><i></i></span>
+                                                    <span class="hp-ak-bar is-b" style="--w: {{ $cb }}%"><i></i></span>
+                                                </div>
+                                            @endforeach
+                                            <p class="hp-ak-legend"><span class="is-a">Dry season</span><span class="is-b">Wet season</span></p>
+                                            <p class="hp-ak-note"><img src="{{ $face }}" alt="">Yield went up while fertilizer went down: the split urea doses landed on the right days.</p>
+                                        </div>
+                                    @else
+                                        <div class="hp-ak-chat">
+                                            <span class="hp-ak-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg>Profit Report · Wet season 2026</span>
+                                            <p class="hp-ak-q">Why is Lot 2 earning less than Lot 1?</p>
+                                            <p class="hp-ak-a"><img src="{{ $face }}" alt=""><span>Lot 2 spent more on labor for two extra weedings, and its yield per hectare was lower after the late top dress.</span></p>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <div class="hp-cta reveal">
+                <div class="hp-cta-row">
+                    <a href="{{ $ask }}" class="btn btn-accent btn-lg hp-go">Ask Anee a free question {!! $arrow !!}</a>
+                    <a href="{{ $signup }}" class="hp-alt">Create your free account</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     {{-- ================= YOUR FARM IS A BUSINESS, BUILT BY FARMERS ================= --}}
     {{-- The second half of the argument (every business around the farm
          already runs on a system, so what does the farmer have?), shown
@@ -2390,6 +2502,127 @@
     html:not(.js) .hp-cpost-reply, html:not(.js) .hp-cconn { opacity: 1; translate: none; }
     html:not(.js) .hp-cconn { translate: -50% 0; }
 
+    /* ---- Anee knows your farm ---- */
+    .hp-ak { background: radial-gradient(60% 50% at 85% 10%, #fff6d6 0%, transparent 60%), linear-gradient(180deg, #ffffff 0%, #f4f9ee 100%); }
+    .hp-ak-grid { margin-top: 3rem; display: grid; gap: 2.5rem; }
+    .hp-ak-grid > * { min-width: 0; }
+    @media (min-width: 1024px) { .hp-ak-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 3.5rem; align-items: center; } }
+    /* The orbit: Anee in the middle, what she checks going round her. */
+    .hp-ak-orbit { position: relative; width: min(30rem, 100%); aspect-ratio: 1; margin: 0 auto; }
+    .hp-ak-ring { position: absolute; inset: 9%; border-radius: 999px; border: 1.5px dashed #c8dcb2; }
+    .hp-ak-ring.is-2 { inset: 30%; border-style: solid; border-color: #e1edd2; background: radial-gradient(circle, rgb(245 197 24 / .12), transparent 70%); }
+    .hp-ak-core { position: absolute; left: 50%; top: 50%; width: 32%; aspect-ratio: 1; translate: -50% -50%; z-index: 2; border-radius: 999px; display: grid; place-items: center;
+        background: #fff; box-shadow: 0 0 0 6px rgb(245 197 24 / .35), 0 30px 60px -30px rgb(20 33 12 / .7); }
+    .hp-ak-core img { width: 86%; height: 86%; border-radius: 999px; object-fit: cover; }
+    .hp-ak-core i { position: absolute; bottom: -1.1rem; left: 50%; translate: -50% 0; white-space: nowrap; padding: .25rem .7rem; border-radius: 999px; font-style: normal;
+        font-size: .72rem; font-weight: 800; color: var(--hp-ink); background: var(--hp-sun); box-shadow: 0 8px 18px -10px rgb(0 0 0 / .5); }
+    .hp-ak-core::after { content: ''; position: absolute; inset: -6px; border-radius: inherit; animation: hpAkPulse 2.4s ease-out infinite; }
+    @keyframes hpAkPulse { 0% { box-shadow: 0 0 0 0 rgb(245 197 24 / .5); } 80%, 100% { box-shadow: 0 0 0 1.4rem rgb(245 197 24 / 0); } }
+    .hp-ak-spin { position: absolute; inset: 0; animation: hpAkSpin 48s linear infinite; }
+    /* Each source sits on the ring (41 percent of the orbit's width from
+       the middle) and its label stays upright while the ring turns. */
+    .hp-ak-orbit { container-type: inline-size; }
+    .hp-ak-src { position: absolute; left: 50%; top: 50%; width: 0; height: 0; --a: calc(var(--n) * 45deg);
+        transform: rotate(var(--a)) translateY(-41cqw) rotate(calc(-1 * var(--a))); }
+    .hp-ak-in { position: absolute; left: 0; top: 0; translate: -50% -50%; display: inline-flex; align-items: center; gap: .35rem; white-space: nowrap;
+        animation: hpAkCounter 48s linear infinite; }
+    .hp-ak-in > svg { flex: none; width: 2rem; height: 2rem; padding: .4rem; border-radius: .7rem; color: #fff; background: var(--hp-green); box-shadow: 0 10px 18px -10px rgb(47 82 25 / .9); }
+    .hp-ak-in > b { font-size: .74rem; font-weight: 800; color: var(--hp-ink); padding: .2rem .5rem; border-radius: 999px; background: rgb(255 255 255 / .92);
+        box-shadow: 0 6px 14px -10px rgb(0 0 0 / .45); }
+    @keyframes hpAkSpin { to { transform: rotate(360deg); } }
+    @keyframes hpAkCounter { to { transform: rotate(-360deg); } }
+    .hp-ak-names { display: none; }
+    @media (max-width: 639.98px) {
+        .hp-ak-in > b { display: none; }
+        .hp-ak-names { display: flex; flex-wrap: wrap; justify-content: center; gap: .35rem; margin-top: 1.6rem; }
+        .hp-ak-names span { padding: .25rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 800; color: var(--hp-deep); background: #fff; border: 1px solid #dfe8d3; }
+    }
+
+    .hp-ak-tools { border-radius: 1.6rem; background: #fff; border: 1px solid #e1ead6; box-shadow: 0 40px 80px -56px rgb(20 33 12 / .65); overflow: hidden; }
+    .hp-ak-tabs { display: flex; overflow-x: auto; scrollbar-width: none; gap: .35rem; padding: .7rem; background: #f6faf1; border-bottom: 1px solid #e7efdd; }
+    .hp-ak-tabs::-webkit-scrollbar { display: none; }
+    .hp-ak-tab { position: relative; overflow: hidden; flex: none; display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .75rem; border-radius: .9rem; cursor: pointer;
+        border: 1px solid transparent; background: transparent; font-size: .82rem; color: #4b5563;
+        transition: background-color .28s var(--hp-ease), border-color .28s var(--hp-ease), color .28s var(--hp-ease); }
+    .hp-ak-tab b { font-weight: 800; }
+    .hp-ak-tab:hover { background: #fff; }
+    .hp-ak-tab.is-on { color: var(--hp-ink); background: #fff; border-color: #cfe3b8; box-shadow: 0 8px 18px -14px rgb(47 82 25 / .7); }
+    .hp-ak-ti { width: 1.7rem; height: 1.7rem; border-radius: .55rem; display: grid; place-items: center; color: var(--hp-green); background: #eef5e5;
+        transition: color .28s var(--hp-ease), background-color .28s var(--hp-ease); }
+    .hp-ak-tab.is-on .hp-ak-ti { color: #fff; background: var(--hp-green); }
+    .hp-ak-ti svg { width: 1rem; height: 1rem; }
+    .hp-ak-tab.is-on.is-timing .hp-room-bar { animation: hpBar var(--ak-dwell, 5s) linear forwards; }
+    .hp-ak-panes { display: grid; }
+    .hp-ak-pane { grid-area: 1 / 1; padding: 1.2rem 1.3rem 1.4rem; opacity: 0; visibility: hidden; translate: 0 8px;
+        transition: opacity .4s var(--hp-ease), translate .4s var(--hp-ease), visibility .4s; }
+    .hp-ak-pane.is-on { opacity: 1; visibility: visible; translate: none; }
+    .hp-ak-desc { font-size: .95rem; line-height: 1.6; color: #374151; }
+    .hp-ak-show { margin-top: 1rem; min-height: 15.5rem; padding: 1rem; border-radius: 1.1rem; background: #f6f8f3; }
+    .hp-ak-k { font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6b7f5a; }
+    .hp-ak-note { margin-top: .9rem; display: flex; align-items: flex-start; gap: .5rem; font-size: .84rem; line-height: 1.5; color: #374151; padding: .6rem .7rem;
+        border-radius: .9rem; background: #fffbea; box-shadow: inset 0 0 0 1px #f6e3a0; opacity: 0; transition: opacity .45s var(--hp-ease) 1.6s; }
+    .hp-ak-note img { width: 1.6rem; height: 1.6rem; border-radius: 999px; flex: none; }
+    .hp-ak-pane.is-on .hp-ak-note { opacity: 1; }
+    .hp-ak-dot { flex: none; width: .55rem; height: .55rem; margin-top: .4rem; border-radius: 999px; background: var(--hp-sun); }
+
+    .hp-ak-track { position: relative; margin-top: 1rem; display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; padding: 1.9rem 0 1.9rem; }
+    .hp-ak-stage { padding: .55rem .2rem; border-radius: .5rem; text-align: center; font-size: .66rem; font-weight: 800; color: #3d5a24; background: #e4efd6; }
+    .hp-ak-stage:nth-child(2) { background: #d3e7bd; }
+    .hp-ak-stage:nth-child(3) { background: #c2dda5; }
+    .hp-ak-mark { position: absolute; top: 0; font-style: normal; translate: -50% 0; transition: left 1.2s cubic-bezier(.65,0,.35,1) .6s; }
+    .hp-ak-mark b { display: block; padding: .15rem .5rem; border-radius: 999px; font-size: .64rem; font-weight: 800; white-space: nowrap; }
+    .hp-ak-mark::after { content: ''; position: absolute; left: 50%; top: 100%; width: 2px; height: 1.9rem; translate: -50% 0; }
+    .hp-ak-mark.is-cal { left: 30%; top: auto; bottom: 0; }
+    .hp-ak-mark.is-cal::after { top: auto; bottom: 100%; }
+    .hp-ak-mark.is-cal b { color: #6b7280; background: #e5e7eb; }
+    .hp-ak-mark.is-cal::after { background: #9ca3af; }
+    .hp-ak-mark.is-real { left: 30%; z-index: 1; }
+    .hp-ak-mark.is-real b { color: var(--hp-ink); background: var(--hp-sun); }
+    .hp-ak-mark.is-real::after { background: var(--hp-sun); }
+    .hp-ak-pane.is-on .hp-ak-mark.is-real { left: 52%; }
+
+    .hp-ak-list { display: grid; gap: .5rem; }
+    .hp-ak-row, .hp-ak-rep, .hp-ak-cmprow { opacity: 0; translate: 0 8px; }
+    .hp-ak-pane.is-on .hp-ak-row, .hp-ak-pane.is-on .hp-ak-rep, .hp-ak-pane.is-on .hp-ak-cmprow { animation: hpRoomIn .45s var(--hp-ease) calc(.2s + var(--k) * .4s) forwards; }
+    .hp-ak-row { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .65rem .8rem; border-radius: .9rem; background: #fff;
+        box-shadow: 0 6px 16px -14px rgb(0 0 0 / .5); font-size: .84rem; }
+    .hp-ak-row b { color: var(--hp-ink); }
+    .hp-ak-row span, .hp-ak-rep span { padding: .2rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 800; text-align: right; }
+    .is-good { color: #14532d; background: #dcfce7; }
+    .is-warn { color: #92400e; background: #fef3c7; }
+    .is-bad { color: #991b1b; background: #fee2e2; }
+    .is-next { color: #1e3a8a; background: #dbeafe; }
+    .hp-ak-report { display: grid; gap: .6rem; }
+    .hp-ak-rep { display: grid; gap: .35rem; padding: .7rem .8rem; border-radius: .9rem; background: #fff; box-shadow: 0 6px 16px -14px rgb(0 0 0 / .5); }
+    .hp-ak-rep span { justify-self: start; }
+    .hp-ak-rep i { display: block; height: .45rem; border-radius: 999px; background: #e5e7eb; }
+    .hp-ak-rep i:last-child { width: 70%; }
+
+    .hp-ak-cmp { display: grid; gap: .7rem; }
+    .hp-ak-cmprow { display: grid; grid-template-columns: 7.5rem 1fr; gap: .25rem .7rem; align-items: center; font-size: .8rem; }
+    .hp-ak-cmprow b { grid-row: span 2; color: var(--hp-ink); }
+    .hp-ak-bar { display: block; height: .55rem; border-radius: 999px; background: #e5e7eb; overflow: hidden; }
+    .hp-ak-bar i { display: block; height: 100%; width: 0; border-radius: inherit; transition: width 1s cubic-bezier(.65,0,.35,1); transition-delay: calc(.4s + var(--k) * .4s); }
+    .hp-ak-bar.is-a i { background: #9ca3af; }
+    .hp-ak-bar.is-b i { background: var(--hp-green); }
+    .hp-ak-pane.is-on .hp-ak-bar i { width: var(--w); }
+    .hp-ak-legend { display: flex; gap: 1rem; font-size: .72rem; font-weight: 800; color: #6b7280; }
+    .hp-ak-legend span::before { content: ''; display: inline-block; width: .6rem; height: .6rem; margin-right: .3rem; border-radius: 2px; vertical-align: -.05rem; }
+    .hp-ak-legend .is-a::before { background: #9ca3af; }
+    .hp-ak-legend .is-b::before { background: var(--hp-green); }
+
+    .hp-ak-chat { display: grid; gap: .7rem; }
+    .hp-ak-chip { justify-self: end; display: inline-flex; align-items: center; gap: .35rem; padding: .35rem .7rem; border-radius: .8rem; font-size: .74rem; font-weight: 800;
+        color: var(--hp-deep); background: #fff; box-shadow: inset 0 0 0 1px #cfe3b8; opacity: 0; translate: 0 6px; transition: opacity .4s var(--hp-ease) .2s, translate .4s var(--hp-ease) .2s; }
+    .hp-ak-chip svg { width: .9rem; height: .9rem; }
+    .hp-ak-q { justify-self: end; max-width: 85%; padding: .6rem .8rem; border-radius: 1rem; border-bottom-right-radius: .3rem; font-size: .84rem; color: #fff; background: var(--hp-green);
+        opacity: 0; translate: 0 6px; transition: opacity .4s var(--hp-ease) .8s, translate .4s var(--hp-ease) .8s; }
+    .hp-ak-a { display: flex; align-items: flex-start; gap: .5rem; opacity: 0; translate: 0 6px; transition: opacity .4s var(--hp-ease) 1.8s, translate .4s var(--hp-ease) 1.8s; }
+    .hp-ak-a img { width: 1.9rem; height: 1.9rem; border-radius: 999px; flex: none; }
+    .hp-ak-a span { padding: .6rem .8rem; border-radius: 1rem; border-bottom-left-radius: .3rem; font-size: .84rem; line-height: 1.5; color: #374151; background: #fff;
+        box-shadow: 0 6px 16px -14px rgb(0 0 0 / .5); }
+    .hp-ak-pane.is-on .hp-ak-chip, .hp-ak-pane.is-on .hp-ak-q, .hp-ak-pane.is-on .hp-ak-a { opacity: 1; translate: none; }
+
     /* ---- versus ---- */
     .hp-vs-jump { margin-top: 2.2rem; display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
     .hp-vs-chip { display: inline-flex; align-items: center; gap: .45rem; padding: .42rem .5rem .42rem .85rem; border-radius: 999px;
@@ -2582,6 +2815,9 @@
         .hp-heart svg, .hp-heart::after { animation: none !important; }
         .hp-feed-item, .hp-feed-sync i, .hp-team-card { transition: none !important; }
         .hp-room-pane, .hp-room-tab, .hp-task-box, .hp-task-t { transition: none !important; }
+        .hp-ak-spin, .hp-ak-in, .hp-ak-core::after, .hp-ak-row, .hp-ak-rep, .hp-ak-cmprow { animation: none !important; }
+        .hp-ak-row, .hp-ak-rep, .hp-ak-cmprow { opacity: 1; translate: none; }
+        .hp-ak-pane, .hp-ak-tab, .hp-ak-note, .hp-ak-mark, .hp-ak-bar i, .hp-ak-chip, .hp-ak-q, .hp-ak-a { transition: none !important; }
         .hp-cpost-react span, .hp-cpost-reply, .hp-croom-new, .hp-clevel-badge, .hp-clevel-hd b span, .hp-clevel-title i, .hp-clevel-bar i,
         .hp-clevel-ladder i, .hp-cconn, .hp-cconn-t i, .hp-cconn-btn i, .hp-cconn-btn { transition: none !important; }
         .hp-acc, .hp-rc, .hp-task, .hp-loc-pin, .hp-cam img, .hp-call-av, .hp-wb-ink, .hp-room-bar { animation: none !important; }
@@ -2921,6 +3157,35 @@
             if (on) schedule();
             else { clearTimeout(timer); clearInterval(tick); tabs[at].classList.remove('is-timing'); }
         }, { threshold: 0.3 });
+    }
+
+    /* Anee's analysis tools take turns while on screen, until the visitor
+       picks one. */
+    const ak = document.querySelector('[data-ak]');
+    if (ak) {
+        const tabs = [...ak.querySelectorAll('[data-ak-tab]')];
+        const panes = [...ak.querySelectorAll('[data-ak-pane]')];
+        const DWELL = 5200;
+        let at = 0, timer = null, live = false, held = false;
+        const show = (i) => {
+            at = (i + tabs.length) % tabs.length;
+            const key = tabs[at].dataset.akTab;
+            tabs.forEach((t, k) => { const on = k === at; t.classList.toggle('is-on', on); t.classList.remove('is-timing'); t.setAttribute('aria-selected', on ? 'true' : 'false'); });
+            panes.forEach((p) => p.classList.toggle('is-on', p.dataset.akPane === key));
+            const strip = tabs[at].parentElement;
+            if (strip.scrollWidth > strip.clientWidth) strip.scrollTo({ left: tabs[at].offsetLeft - 8, behavior: reduce ? 'auto' : 'smooth' });
+            schedule();
+        };
+        const schedule = () => {
+            clearTimeout(timer);
+            if (held || !live || reduce) return;
+            void tabs[at].offsetWidth;
+            tabs[at].style.setProperty('--ak-dwell', DWELL + 'ms');
+            tabs[at].classList.add('is-timing');
+            timer = setTimeout(() => show(at + 1), DWELL);
+        };
+        tabs.forEach((t, i) => t.addEventListener('click', () => { held = true; show(i); }));
+        seen(ak, (on) => { live = on; if (on) schedule(); else { clearTimeout(timer); tabs[at].classList.remove('is-timing'); } }, { threshold: 0.3 });
     }
 
     /* The community plays as one loop while on screen: the post gathers
