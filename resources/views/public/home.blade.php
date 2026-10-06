@@ -1707,8 +1707,8 @@
             {{-- Where you are now, and where you could be (2026-10-07): the
                  farmer's life today (money, debt, worry, risk, the next
                  generation) and where it could be, an arrow between the two. --}}
-            <p class="hp-kick">Think about it</p>
-            <h2 class="hp-h2">Think About Where You Are Now. <em>Then Where You Could Be With anee.io.</em></h2>
+            <p class="hp-kick">Think about it, seriously</p>
+            <h2 class="hp-h2 hp-final-h"><span>Think About Where You Are Now.</span> <em>Then Where You Could Be With anee.io.</em></h2>
             <p class="hp-p">Same field, same hands, same rain. What changes is the life your farm gives back to you and your family.</p>
             @php
                 // Not features: the life a farm gives you now, and the one it could (the owner's ask, 2026-10-07).
@@ -3173,6 +3173,9 @@
     /* ---- final call, sticky bar ---- */
     .hp-final { position: relative; isolation: isolate; overflow: hidden; }
     .hp-final-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+    /* The question leads small, the promise is the title (owner, 2026-10-07). */
+    .hp-final-h span { display: block; margin-bottom: .45rem; font-size: clamp(1.15rem, 2.3vw, 1.6rem); line-height: 1.25; letter-spacing: -.005em; color: #e4ecdb; }
+    .hp-final-h em { display: block; font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.06; }
     .hp-final-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(160deg, rgb(20 36 12 / .93), rgb(29 51 15 / .82) 55%, rgb(47 82 25 / .78)); }
     /* Think about it: each row is the same moment of the season, without
        Anee (dim, crossed) and with her (lit, ticked). The rows arrive one by
